@@ -3,3 +3,38 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+.clear {
+  display: block;
+  clear: both;
+}
+
+a, button {
+  cursor: pointer;
+}
+
+button.red {
+  padding: 7px 18px;
+  border-radius: 30px;
+  background-color: #EB3324;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+button.red:hover, button.red:focus {
+  background-color: #CD4533;
+}
