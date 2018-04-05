@@ -1,1 +1,1 @@
-export {default} from "./ClientTemplate";
+export { default } from "./ClientTemplate";
