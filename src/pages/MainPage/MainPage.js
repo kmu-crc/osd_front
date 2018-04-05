@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import ClientTemplate from '../../templates/ClientTemplate';
-class MainPage extends React.Component {
+
+class MainPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <div>desginList</div>
+        XXXX
       </ClientTemplate>
     );
   }
 }
+
 export default MainPage;
