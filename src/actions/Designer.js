@@ -1,25 +1,24 @@
 import * as types from './ActionTypes';
 
-export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
+export function GetDesignerListRequest(sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designList", { 
+    return fetch("http://localhost:8080/designer/designerList", { 
       headers: { 'Content-Type': 'application/json' }, 
       method: "get" 
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("design data >>", data);
-        dispatch(GetDesignList(data))
+        console.log("Designer data >>", data);
+        dispatch(GetDesignerList(data))
       }).catch((error) => {
         console.log("err", error);
       })
   }
 };
 
-export function GetDesignList(data) {
+export function GetDesignerList(data) {
   return {
-      type: types.GET_DESIGN_LIST,
-      DesignList : data
+      type: types.GET_DESIGNER_LIST,
+      DesignerList : data
   }
 };
-
