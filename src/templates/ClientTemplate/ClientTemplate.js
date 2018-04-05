@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header } from "../../components";
+import Header from "../../components/Header";
 
 class ClientTemplate extends React.Component {
   constructor(props) {

@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import ClientTemplate from '../../templates';
+import ClientTemplate from '../../templates/ClientTemplate';
 class MainPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-
-  }
-
   render() {
     return(
       <ClientTemplate>
@@ -16,9 +9,4 @@ class MainPage extends React.Component {
     );
   }
 }
-
-MainPage.propTypes = {
-
-};
-
 export default MainPage;

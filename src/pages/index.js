@@ -1,1 +1,0 @@
-import MainPage from "./MainPage";
