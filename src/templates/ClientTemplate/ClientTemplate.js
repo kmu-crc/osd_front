@@ -3,12 +3,6 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 class ClientTemplate extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-
-  }
   render() {
     return(
       <div>
@@ -19,9 +13,5 @@ class ClientTemplate extends Component {
     );
   }
 }
-
-ClientTemplate.propTypes = {
-
-};
 
 export default ClientTemplate;

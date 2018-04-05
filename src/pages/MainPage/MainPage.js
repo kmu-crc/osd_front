@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
-import ClientTemplate from '../../templates';
-class MainPage extends React.Component {
-  constructor(props) {
-    super(props);
+import ClientTemplate from '../../templates/ClientTemplate';
 
-    this.state = {};
-
-  }
-
+class MainPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <div>desginList</div>
+        XXXX
       </ClientTemplate>
     );
   }
 }
-
-MainPage.propTypes = {
-
-};
 
 export default MainPage;
