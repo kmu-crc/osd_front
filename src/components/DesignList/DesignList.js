@@ -11,23 +11,8 @@ const Wrapper = styled.div`
 `;
 
 class DesignList extends Component {
-  state = {
-    list: []
-  };
-
-  componentDidMount(){
-    fetch("http://localhost:3000/design/designList")
-    .then(res => res.json())
-    .then((design) => {
-      this.setState({
-        list: design
-      });
-      console.log(design);
-    });
-  }
-
   render(){
-    let list = this.state.list;
+    let list = this.props.DesignList;
     return(
       <Wrapper>
         <ul>

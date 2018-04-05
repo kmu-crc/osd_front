@@ -17,7 +17,7 @@ class Design extends Component {
     let design = this.props.design;
     return(
       <Designli>
-        <div>{design.thumbnailUrl.s_img}</div>
+        <div><img src={design.thumbnailUrl.s_img} /></div>
         <div>{design.title}</div>
         <div>{design.categoryName.name}</div>
         <div>{design.userName.nick_name}</div>
