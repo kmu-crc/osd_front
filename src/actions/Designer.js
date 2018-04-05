@@ -9,7 +9,12 @@ export function GetDesignerListRequest(sort) {
         return response.json();
       }).then((data) => {
         console.log("Designer data >>", data);
-        dispatch(GetDesignerList(data))
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetDesignerList(data));
+        }   
       }).catch((error) => {
         console.log("err", error);
       })

@@ -9,7 +9,12 @@ export function GetGroupListRequest(sort) {
         return response.json();
       }).then((data) => {
         console.log("group data >>", data);
-        dispatch(GetGroupList(data))
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetGroupList(data))
+        }
       }).catch((error) => {
         console.log("err", error);
       })

@@ -9,7 +9,12 @@ export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
         return response.json();
       }).then((data) => {
         console.log("design data >>", data);
-        dispatch(GetDesignList(data))
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetDesignList(data));
+        }
       }).catch((error) => {
         console.log("err", error);
       })
