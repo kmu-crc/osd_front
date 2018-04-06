@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Link, Route, NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 // css styling
 
@@ -16,14 +17,16 @@ class Group extends Component {
   render(){
     let group = this.props.group;
     return(
-      <Groupli>
-        <div>{group.title}</div>
-        <div>{group.create_time}</div>
-        <div>{group.userName}</div>
-        <div>{group.count.like}</div>
-        <div>{group.count.member}</div>
-        <div>{group.count.design}</div>
-      </Groupli>
+      <NavLink to={"/groupDetail/"+group.uid}>
+        <Groupli>
+          <div>{group.title}</div>
+          <div>{group.create_time}</div>
+          <div>{group.userName}</div>
+          <div>{group.count.like}</div>
+          <div>{group.count.member}</div>
+          <div>{group.count.design}</div>
+        </Groupli>
+      </NavLink>
     );
   }
 }
