@@ -4,10 +4,11 @@ import { GetDesignListRequest } from "../../actions/Design";
 import DesignList from "../../components/DesignList";
 
 class DesignListContainer extends Component {
+
   componentWillMount(){
     this.props.GetDesignListRequest(null, null, null);
-    console.log(this.props.DesignList)
   }
+  
   render() {
     return(
       <div>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // css styling
 
-const Wrapper = styled.div`
+const FormContainer = styled.div`
   padding: 30px 50px 80px 50px
   position: relative;
   margin-right: 80px;
@@ -74,7 +74,7 @@ const MainBtn = styled.button`
 class CreateInfo extends Component{
   render(){
     return(
-        <Wrapper>
+        <FormContainer>
           <form>
             <List>
               <label>디자인 제목</label>
@@ -110,7 +110,7 @@ class CreateInfo extends Component{
             </List>
             <MainBtn><a href="">NEXT</a></MainBtn>
           </form>
-        </Wrapper>
+        </FormContainer>
     );
   }
 }
