@@ -20,6 +20,7 @@ export const AUTH_GET_STATUS_VALUE = "AUTH_GET_STATUS_VALUE";
 
 // design List
 export const GET_DESIGN_LIST = "GET_DESIGN_LIST";
+export const GET_DESIGN_DETAIL = "GET_DESIGN_DETAIL";
 
 // group List
 export const GET_GROUP_LIST = "GET_GROUP_LIST";

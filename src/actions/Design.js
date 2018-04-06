@@ -28,3 +28,32 @@ export function GetDesignList(data) {
   }
 };
 
+export function GetDesignDetailRequest(id) {
+  return (dispatch) => {
+    console.log(id);
+    return fetch("http://localhost:8080/design/designDetail/"+id, { 
+      headers: { 'Content-Type': 'application/json' }, 
+      method: "get" 
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("design Detail data >>", data);
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetDesignDetail(data));
+        }
+      }).catch((error) => {
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetDesignDetail(data) {
+  return {
+    type: types.GET_DESIGN_DETAIL,
+    DesignDetail : data
+  }
+};
+
