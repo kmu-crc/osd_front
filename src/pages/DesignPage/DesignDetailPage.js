@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
-import ClientTemplate from '../../templates/ClientTemplate';
-import DesignDetailContainer from '../../containers/DesignDetailContainer';
+import React, { Component } from "react";
+import ClientTemplate from "../../templates/ClientTemplate";
+import DesignDetailContainer from "../../containers/DesignDetailContainer";
 
-class DesignDetailPage extends Component {
+export class DesignDetailPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <div>here</div>
-        <DesignDetailContainer />
+        <DesignDetailContainer id={this.props.match.params.id}/>
      </ClientTemplate>
     );
   }
 }
-
-export default DesignDetailPage;

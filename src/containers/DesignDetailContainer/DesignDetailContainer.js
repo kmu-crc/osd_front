@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { GetDesignDetailRequest } from "../../actions/Design";
 import DesignDetail from "../../components/DesignDetail";
 
 class DesignDetailContainer extends Component {
 
-  componentWillMount(){
-    console.log(this.params.id);
-    this.props.GetDesignDetailRequest(this.params.id);
+  componentDidMount() {
+    this.props.GetDesignDetailRequest(this.props.id);
   }
-  
+
   render() {
-    return(
+    return (
       <div>
-        <DesignDetail DesignDetail={this.props.DesignDetail}/>
+        <DesignDetail DesignDetail={this.props.DesignDetail} />
       </div>
     );
   }
@@ -23,14 +22,13 @@ const mapStateToProps = (state) => {
   return {
     DesignDetail: state.DesignDetail.status.DesignDetail
   };
-  console.log(state);
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignDetailRequest: (id) => {
-        return dispatch(GetDesignDetailRequest(id))
-      }
+    GetDesignDetailRequest: (id) => {
+      return dispatch(GetDesignDetailRequest(id))
+    }
   };
 };
 

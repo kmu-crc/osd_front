@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link, Route, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Link, Route, NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 // css styling
 

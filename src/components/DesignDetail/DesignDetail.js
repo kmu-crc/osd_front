@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class DesignDetail extends Component {
   render(){
+    const designDetail = this.props.DesignDetail;
     return(
-      <div>hi</div>
+      <div>{designDetail.title}</div>
     );
   }
 }
