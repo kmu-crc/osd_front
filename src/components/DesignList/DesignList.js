@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Design from '../Design';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import Design from "../Design";
+import styled from "styled-components";
 
 // css styling
 

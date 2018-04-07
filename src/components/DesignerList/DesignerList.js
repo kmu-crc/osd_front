@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import Designer from '../Designer';
+import React, { Component } from "react";
+import styled from "styled-components";
+import Designer from "../Designer";
 
 // css styling
 

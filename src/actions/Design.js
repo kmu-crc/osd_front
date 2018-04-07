@@ -30,7 +30,6 @@ export function GetDesignList(data) {
 
 export function GetDesignDetailRequest(id) {
   return (dispatch) => {
-    console.log(id);
     return fetch("http://localhost:8080/design/designDetail/"+id, { 
       headers: { "Content-Type": "application/json" }, 
       method: "get" 
