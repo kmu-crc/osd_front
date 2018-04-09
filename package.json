@@ -37,6 +37,7 @@
     "react-dom": "^16.3.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
+    "react-facebook-login": "^4.0.1",
     "react-router-dom": "^4.2.2",
     "react-styled-components": "^0.1.11",
     "react-thunk": "^1.0.0",
@@ -59,7 +60,7 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "HTTPS=true node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
