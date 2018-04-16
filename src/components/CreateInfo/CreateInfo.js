@@ -6,9 +6,14 @@ import styled from 'styled-components';
 const FormContainer = styled.div`
   padding: 30px 50px 80px 50px
   position: relative;
-  margin-right: 80px;
   background-color: #fff;
   box-shadow: 0 1px 5px #c7c7c7;
+  @media (max-width: 960px) {
+    margin-right: 0;
+  }
+  @media (min-width: 960px) {
+    margin-right: 80px;
+  }
 `;
 
 const List = styled.div`
@@ -24,10 +29,11 @@ const List = styled.div`
   }
   & label {
     display: block;
-    width: 15%;
+    width: 20%;
     line-height: 60px;
     text-align: left;
     float: left;
+    min-width: 88px;
   }
   & select {
     width: 20%;
@@ -38,7 +44,7 @@ const List = styled.div`
 `;
 
 const Input = styled.input`
-  width: 80%;
+  width: 75%;
   height: 30px;
   margin-top: 10px;
   float: left;
