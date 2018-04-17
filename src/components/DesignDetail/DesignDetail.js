@@ -18,7 +18,7 @@ class DesignDetail extends Component {
     return(
       <Wrapper>
         <Title>{designDetail.title}</Title>
-        <span>{designDetail.count.like_count}</span>
+        <div>{designDetail.categoryName.name}</div>
         {/* <div>
           <span>{designDetail.categoryName.name}</span>
           <span>팀원 {designDetail.count.member_count}명</span>

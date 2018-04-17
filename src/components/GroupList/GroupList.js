@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import Group from '../Group';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import Group from "../Group";
+import styled from "styled-components";
+import { Link } from "react-router-dom"
 
 // css styling
 
@@ -45,7 +46,7 @@ class GroupList extends Component {
     return(
       <Wrapper>
         <BtnWrap>
-          <button>새 그룹 추가 +</button>
+          <button><Link to="/createGroup">새 그룹 추가 +</Link></button>
         </BtnWrap>
         <ul>
           {list.map(group =>

@@ -4,7 +4,12 @@ class GroupDetail extends Component {
   render(){
     const groupDetail = this.props.GroupDetail;
     return(
-      <div>{groupDetail.title}</div>
+      <div>
+        <div>{groupDetail.title}</div>
+        <div>{groupDetail.explanation}</div>
+        <div>{groupDetail.update_time}</div>
+        
+      </div>
     );
   }
 }

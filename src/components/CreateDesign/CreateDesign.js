@@ -24,7 +24,7 @@ const Header = styled.h2`
   font-weight: 400;
   padding-left: 50px;
   color: #D7382C;
-`
+`;
 
 const TapContainer = styled.div`
   width: 25%;
