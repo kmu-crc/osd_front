@@ -20,8 +20,7 @@ const Header = styled.h2`
 const Container = styled.form`
   width: 80%;
   margin: auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0;
   position: relative;
   & .red {
     position: absolute;
