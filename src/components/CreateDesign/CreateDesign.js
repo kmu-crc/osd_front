@@ -9,6 +9,7 @@ import CreateAuth from '../CreateAuth';
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
+  min-width: 660px;
   padding: 20px 30px;
 `;
 
@@ -23,14 +24,18 @@ const Header = styled.h2`
   font-weight: 400;
   padding-left: 50px;
   color: #D7382C;
-`
+`;
 
 const TapContainer = styled.div`
   width: 25%;
   float: left;
   padding-top: 20px;
+  @media (max-width: 768px) {
+    display: none;
+  }
   & ul {
-    width: 240px;
+    display: block;
+    width: 85%;
     margin: auto;
     border-top: 20px solid #000;
     border-bottom: 20px solid #000;
@@ -58,9 +63,14 @@ const TapContainer = styled.div`
 `;
 
 const RouterContainer = styled.div`
-  width: 75%;
   float: left;
   padding-top: 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    width: 75%;
+  }
 `;
 
 class CreateDesign extends Component {

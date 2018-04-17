@@ -79,10 +79,10 @@ class Header extends Component {
         </Logo>
         <NavContainer>
           <NavUl>
-            <NavLi><a href="design">디자인</a></NavLi>
-            <NavLi><a href="group">그룹</a></NavLi>
-            <NavLi><a href="designer">디자이너</a></NavLi>
-            <button className="red"><a href="createDesign">디자인 등록</a></button>
+            <NavLi><a href="/design">디자인</a></NavLi>
+            <NavLi><a href="/group">그룹</a></NavLi>
+            <NavLi><a href="/designer">디자이너</a></NavLi>
+            <button className="red"><a href="/createDesign">디자인 등록</a></button>
           </NavUl>
         </NavContainer>
         <InfoContainer>
