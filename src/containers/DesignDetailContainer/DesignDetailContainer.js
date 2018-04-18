@@ -14,8 +14,8 @@ class DesignDetailContainer extends Component {
   render() {
     return (
       <div>
-        <DesignDetail DesignDetail={this.props.DesignDetail} />
-        <DetailView DesignDetailView={this.props.DesignDetailView} />
+        <DesignDetail DesignDetail={this.props.DesignDetail}
+       DesignDetailView={this.props.DesignDetailView} />
       </div>
     );
   }

@@ -104,8 +104,19 @@ const Container = styled.div`
 `;
 
 class DesignDetail extends Component {
+  changeActive = (e) => {
+    let target = e.target;
+    console.log(target);
+    const tabNum = target.parentNode.children.length;
+    for (var i = 0; i < tabNum; i++) {
+      target.parentNode.children[i].className = "";
+      target.className = "active";
+    }
+  };
   render(){
     let designDetail = this.props.DesignDetail;
+    let designDetailView = this.props.DesignDetailView;
+    console.log(designDetailView);
     return(
       <div>
       {designDetail.length !== 0 &&
@@ -126,10 +137,9 @@ class DesignDetail extends Component {
           <TabContainer>
             <NaviTab>
               <ul>
-                <li><Link to="issue">ISSUE</Link></li>
-                <li><Link to="step">STEP</Link></li>
-                <li className="active"><Link to="view">VIEW</Link></li>
-                <div className="clear"></div>
+                <li onClick={this.changeActive}><div>ISSUE</div></li>
+                <li onClick={this.changeActive}><div>STEP</div></li>
+                <li onClick={this.changeActive}><div>VIEW</div></li>
               </ul>
             </NaviTab>
             <Container>

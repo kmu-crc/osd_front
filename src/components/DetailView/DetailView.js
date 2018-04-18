@@ -5,7 +5,9 @@ class DetailView extends Component {
     let detailView = this.props.DesignDetailView;
     console.log(detailView);
     return(
-      <div></div>
+      <div>
+        디자인뷰
+      </div>
     );
   }
 }
