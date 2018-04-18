@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link, Route } from "react-router-dom";
 import styled from "styled-components";
 import DetailView from "../DetailView";
+import DetailStep from "../DetailStep";
+import DetailIssue from "../DetailIssue";
 
 // css styling
 
@@ -104,19 +105,25 @@ const Container = styled.div`
 `;
 
 class DesignDetail extends Component {
+  state = {
+    activeTab: 0
+  };
+
   changeActive = (e) => {
     let target = e.target;
-    console.log(target);
     const tabNum = target.parentNode.children.length;
     for (var i = 0; i < tabNum; i++) {
       target.parentNode.children[i].className = "";
       target.className = "active";
     }
+    this.setState({
+      activeTab: target.getAttribute("id")
+    });
   };
+
   render(){
     let designDetail = this.props.DesignDetail;
     let designDetailView = this.props.DesignDetailView;
-    console.log(designDetailView);
     return(
       <div>
       {designDetail.length !== 0 &&
@@ -137,15 +144,13 @@ class DesignDetail extends Component {
           <TabContainer>
             <NaviTab>
               <ul>
-                <li onClick={this.changeActive}><div>ISSUE</div></li>
-                <li onClick={this.changeActive}><div>STEP</div></li>
-                <li onClick={this.changeActive}><div>VIEW</div></li>
+                <li onClick={this.changeActive} id="2">ISSUE</li>
+                <li onClick={this.changeActive} id="1">STEP</li>
+                <li onClick={this.changeActive} id="0">VIEW</li>
               </ul>
             </NaviTab>
             <Container>
-              <Route path="/designDetail" component={DetailView}/>
-              {/* <Route path="step" component={DetailStep}/>
-              <Route path="issue" component={DetailIssue}/> */}
+              {this.state.activeTab == 0? <DetailView /> : this.state.activeTab == 1? <DetailStep /> : <DetailIssue />}
             </Container>
           </TabContainer>
         </Wrapper>
