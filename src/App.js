@@ -6,6 +6,7 @@ import CreateDesignPage from "./pages/CreateDesignPage";
 import SignUpContainer from "./containers/SignUpContainer";
 import SignInContainer from "./containers/SignInContainer";
 import RequiresAuth from "./containers/RequiresAuth";
+import UpdateUserInfoContainer from "./containers/UpdateUserInfoContainer";
 
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/signin" component={SignInContainer}/>
           <Route path="/createdesign" component={CreateDesignPage}/>
           <Route path="/design" component={RequiresAuth(DesignListPage)}/>
+          <Route path="/updateuserinfo" component={RequiresAuth(UpdateUserInfoContainer)}/>
         </Switch>
       </BrowserRouter>
     );
