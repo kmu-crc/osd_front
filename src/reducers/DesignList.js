@@ -15,7 +15,6 @@ export default function DesignList(state, action) {
     state = initialState;
 
   switch (action.type) {
-    /* LOGIN */
     case types.GET_DESIGN_LIST:
       return update(state, {
         status: {

@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import ClientTemplate from "../../templates/ClientTemplate";
-import DesignListContainer from "../../containers/DesignListContainer";
+import GroupDetailContainer from "../../containers/GroupDetailContainer";
 
-class DesignListPage extends Component {
+export class GroupDetailPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <DesignListContainer />
+        <GroupDetailContainer id={this.props.match.params.id}/>
      </ClientTemplate>
     );
   }
 }
 
-export default DesignListPage;

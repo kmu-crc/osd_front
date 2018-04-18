@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Route } from 'react-router-dom';
 import CreateInfo from '../CreateInfo';
+import CreateAuth from '../CreateAuth';
 
 // css styling
 
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
+  min-width: 660px;
   padding: 20px 30px;
 `;
 
@@ -22,14 +24,18 @@ const Header = styled.h2`
   font-weight: 400;
   padding-left: 50px;
   color: #D7382C;
-`
+`;
 
 const TapContainer = styled.div`
   width: 25%;
   float: left;
   padding-top: 20px;
+  @media (max-width: 768px) {
+    display: none;
+  }
   & ul {
-    width: 240px;
+    display: block;
+    width: 85%;
     margin: auto;
     border-top: 20px solid #000;
     border-bottom: 20px solid #000;
@@ -57,9 +63,14 @@ const TapContainer = styled.div`
 `;
 
 const RouterContainer = styled.div`
-  width: 75%;
   float: left;
   padding-top: 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    width: 75%;
+  }
 `;
 
 class CreateDesign extends Component {
@@ -70,13 +81,13 @@ class CreateDesign extends Component {
         <Container>
           <TapContainer>
             <ul>
-              <li><Link to="/createdesign/info">디자인 정보 입력</Link></li>
-              <li><Link to="/createdesign/auth">권한 설정</Link></li>
+              <li><Link to="/createDesign">디자인 정보 입력</Link></li>
+              <li><Link to="/createDesign/auth">권한 설정</Link></li>
             </ul>
           </TapContainer>
           <RouterContainer>
-            <Route path="/createdesign/info" component={CreateInfo} />
-            {/* <Route path="/createdesign/auth" component={CreateAuth} /> */}
+            <Route exact path="/createDesign" component={CreateInfo} />
+            <Route path="/createDesign/auth" component={CreateAuth} />
           </RouterContainer>
           <div className="clear"></div>
         </Container>

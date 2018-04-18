@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import ClientTemplate from "../../templates/ClientTemplate";
-import DesignListContainer from "../../containers/DesignListContainer";
+import CreateGroup from "../../components/CreateGroup";
 
-class DesignListPage extends Component {
+class CreateGroupPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <DesignListContainer />
+        <CreateGroup />
      </ClientTemplate>
     );
   }
 }
 
-export default DesignListPage;
+export default CreateGroupPage;
