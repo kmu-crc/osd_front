@@ -1,91 +1,236 @@
 
-import * as types from './AcionTypes';
-import axios from 'axios';
+import * as types from "./ActionTypes";
 
-export function loginRequest(userEmail, password) {
-    return (dispatch) => {
-        dispatch(login());
+export function SignUpRequest(data) {
+  return (dispatch) => {
+    dispatch(SignUp());
 
-        return axios.post("http://localhost:7777/api/user/login", { userEmail, password }, { headers: { 'Content-Type': 'application/json' } })
-            .then((response) => {
-                dispatch(loginSuccess(response.data.token));
-            }).catch((error) => {
-                dispatch(loginFailure());
-            })
-    }
+    return fetch("http://localhost:8080/users/signUp", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        dispatch(SignUpSuccess(res));
+      }).catch((error) => {
+        dispatch(SignUpFailure());
+      })
+  }
 };
 
-export function login() {
-    return {
-        type: types.AUTH_LOGIN
-    }
+export function SignUp() {
+  return {
+    type: types.AUTH_SIGNUP
+  }
 };
 
-export function loginSuccess(token) {
-    return {
-        type: types.AUTH_LOGIN_SUCCESS,
-        token : token
-    }
+export function SignUpSuccess() {
+  return {
+    type: types.AUTH_SIGNUP_SUCCESS
+  }
 };
 
-export function loginFailure() {
-    return {
-        type: types.AUTH_LOGIN_FAILURE
-    }
+export function SignUpFailure() {
+  return {
+    type: types.AUTH_SIGNUP_FAILURE
+  }
+};
+
+export function SignInRequest(data) {
+  return (dispatch) => {
+    dispatch(SignIn());
+
+    return fetch("http://localhost:8080/users/signIn", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+      .then(function (res) {
+        console.log("res", res);
+        return res.json();
+      })
+      .then(function (res) {
+        if (res.isMember && res.isPassword) {
+          return dispatch(SignInSuccess(res.token));
+        } else {
+          if (!res.isMember) {
+            return dispatch(SignInIsNotMember())
+          } else if (!res.isPassword) {
+            return dispatch(SignInIsNotPassword())
+          }
+        };
+      }).catch((error) => {
+        return dispatch(SignInFailure());
+      })
+  }
+};
+
+export function SignIn() {
+  return {
+    type: types.AUTH_SIGNIN
+  }
+};
+
+export function SignInIsNotMember() {
+  return {
+    type: types.AUTH_SIGNIN_IS_NOT_MEMBER,
+    success: false,
+  }
+};
+
+export function SignInIsNotPassword() {
+  return {
+    type: types.AUTH_SIGNIN_IS_NOT_PASSWORD,
+    success: false,
+  }
 }
 
-export function getStatusRequest(token) {
-    return (dispatch) => {
-        dispatch(getStatus());
-        return axios.get('http://localhost:7777/api/user/check', { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
-            .then((response) => {
-                return dispatch(getStatusSuccess(response.data.info.userEmail, token));
-            }).catch((error) => {
-                dispatch(getStatusFailure());
-            });
-    };
-}
+export function SignInSuccess(token) {
+  return {
+    type: types.AUTH_SIGNIN_SUCCESS,
+    token: token
+  }
+};
 
-export function getStatus() {
-    return {
-        type: types.AUTH_GET_STATUS
-    };
-}
+export function SignInFailure() {
+  return {
+    type: types.AUTH_SIGNIN_FAILURE,
+    success: false
+  }
+};
+export function FBSignUpRequest(data) {
+  return (dispatch) => {
+    dispatch(FBSignUp());
 
-export function getStatusSuccess(userEmail, token) {
-    return {
-        type: types.AUTH_GET_STATUS_SUCCESS,
-        userEmail : userEmail,
-        token : token
-    };
-}
+    return fetch("http://localhost:8080/users/FBSignUp", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        if (res.success) {
+          return dispatch(FBSignInSuccess(res.token));
+        } else {
+          return dispatch(FBSignUpOverlapMember(res.error))
+        }
+      }).catch((error) => {
+        return dispatch(FBSignInFailure());
+      })
+  }
+};
 
-export function getStatusFailure() {
-    return {
-        type: types.AUTH_GET_STATUS_FAILURE
-    };
-}
+export function FBSignUp() {
+  return {
+    type: types.AUTH_FBSIGNUP
+  }
+};
 
-export function getStatusValueFunc(){
-    return (dispatch) => {
-        return Promise.resolve(dispatch(getStatusValue()));
-    }
-}
+export function FBSignUpOverlapMember(err) {
+  return {
+    type: types.AUTH_FBSIGNUP_OVERLAP_MEMBER,
+    success: false,
+    message: err
+  }
+};
 
-export function getStatusValue(){
-    return {
-        type: types.AUTH_GET_STATUS_VALUE
-    }
-}
+export function FBSignUpSuccess(token) {
+  return {
+    type: types.AUTH_FBSIGNUP_SUCCESS,
+    token: token
+  }
+};
 
-export function getLogoutsRequest() {
-    return (dispatch) => {
-        return Promise.resolve(dispatch(getLogout()));
-    };
-}
+export function FBSignUpFailure() {
+  return {
+    type: types.AUTH_FBSIGNUP_FAILURE
+  }
+};
 
-export function getLogout() {
-    return {
-        type: types.AUTH_LOGOUT
-    };
+export function FBSignInRequest(data) {
+  return (dispatch) => {
+    dispatch(FBSignIn());
+
+    return fetch("http://localhost:8080/users/FBSignIn", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        if (res.isMember) {
+          return dispatch(FBSignInSuccess(res.token));
+        } else {
+          return dispatch(FBSignInIsNotMember())
+        }
+      }).catch((error) => {
+        return dispatch(FBSignInFailure());
+      })
+  }
+};
+
+export function FBSignIn() {
+  return {
+    type: types.AUTH_FBSIGNIN
+  }
+};
+
+export function FBSignInIsNotMember() {
+  return {
+    type: types.AUTH_FBSIGNIN_IS_NOT_MEMBER,
+    success: false,
+  }
+};
+
+export function FBSignInSuccess(token) {
+  return {
+    type: types.AUTH_FBSIGNIN_SUCCESS,
+    token: token
+  }
+};
+
+export function FBSignInFailure() {
+  return {
+    type: types.AUTH_FBSIGNIN_FAILURE
+  }
+};
+
+export function CheckTokenRequest(token) {
+  return (dispatch) => {
+    dispatch(CkeckToken());
+    return fetch("http://localhost:8080/users/check", { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          return dispatch(CkeckTokenSuccess(res.info, token));
+        } else {
+          return dispatch(CkeckTokenFailure());
+        }
+      })
+      .catch(err => dispatch(CkeckTokenFailure()));
+  };
+};
+
+export function CkeckToken() {
+  return {
+    type: types.AUTH_CHECK_TOKEN
+  }
+};
+
+export function CkeckTokenSuccess(info, token) {
+  return {
+    type: types.AUTH_CHECK_TOKEN_SUCCESS,
+    info,
+    token
+  }
+};
+
+export function CkeckTokenFailure() {
+  return {
+    type: types.AUTH_CHECK_TOKEN_FAILURE
+  }
+};
+
+
+export function SignOutRequest() {
+  return (dispatch) => {
+    return dispatch(SignOut());
+  };
+};
+
+export function SignOut() {
+  return {
+    type: types.AUTH_SIGNOUT
+  }
 }

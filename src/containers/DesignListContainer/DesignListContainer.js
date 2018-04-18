@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { GetDesignListRequest } from "../../actions/Design";
 import DesignList from "../../components/DesignList";
 

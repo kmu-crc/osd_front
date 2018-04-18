@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Header from "../../components/Header";
+import HeaderContainer from "../../containers/HeaderContainer";
 import Footer from "../../components/Footer";
 
 class ClientTemplate extends Component {
   render() {
     return(
       <div>
-        <Header />
+        <HeaderContainer />
         {this.props.children}
         <Footer />
       </div>
