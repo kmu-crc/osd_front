@@ -8,8 +8,8 @@ export const Container = styled.div`
       ${(props) => props.container ? `width: 768px` : null}
   }
 
-  @media only screen and (min-width: 992px){
-      ${(props) => props.container ? `width: 992px` : null}
+  @media only screen and (min-width: 960px){
+      ${(props) => props.container ? `width: 960px` : null}
   }
 
   @media only screen and (min-width: 1200px){
@@ -50,7 +50,7 @@ export const Columns = styled.div`
       ${(props) => props.smPush && `margin-left:${getPercent(props.smPush)}`};
   }
 
-  @media only screen and (min-width: 992px){
+  @media only screen and (min-width: 960px){
       ${(props) => props.md ? getWidthString(props.md) : props.width ? getWidthString(props.width) : null};
       ${(props) => props.mdPush && `margin-left:${getPercent(props.mdPush)}`};
   }

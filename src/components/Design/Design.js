@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, Route, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "../../eximg.jpeg";
+import { Columns } from "../Grid/index";
 
 // css styling
 

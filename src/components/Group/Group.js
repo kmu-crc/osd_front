@@ -73,7 +73,7 @@ class Group extends Component {
     return(
       <NavLink to={"/groupDetail/"+group.uid}>
         <Groupli>
-          <div className="date">{(group.create_time).split('T')[0]} 개설</div>
+          <div className="date">{(group.create_time).split("T")[0]} 개설</div>
           <div className="title">{group.title}</div>
           <div className="owner">{group.userName}</div>
           <Count>
