@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Link, Route } from "react-router-dom";
 import styled from "styled-components";
+import DetailView from "../DetailView";
+import DetailStep from "../DetailStep";
+import DetailIssue from "../DetailIssue";
 
 // css styling
 
@@ -42,22 +44,86 @@ const Count = styled.div`
 
 const TabContainer = styled.div`
   width: 100%;
+  padding: 0 20px;
 `;
 
-const NaviTab = styled.ul`
-  width: 360px;
-  & li {
-    width: 120px;
+const NaviTab = styled.div`
+  margin: 0 auto;
+  border-bottom: 2px solid #191919;
+  overflow: hidden;
+  transition: border 250ms ease;
+  & ul {
+    margin: 0;
+    padding: 0;
+    padding-left: 48px;
+    overflow: hidden;
     float: left;
+  }
+  & li {
+    display: block;
+    float: right;
+    padding: 10px 24px 8px;
+    background-color: #FFF;
+    margin-right: 46px;
+    z-index: 2;
+    position: relative;
+    cursor: pointer;
+    color: #191919;
+    transition: all 250ms ease;
+  }
+  & li:before, & li:after {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 44px;
+    background-color: #FFF;
+    transition: all 250ms ease;
+    border-top: 1px solid #f2f2f2;
+  }
+  & li:before {
+    right: -24px;
+    transform: skew(30deg, 0deg);
+    box-shadow: rgba(0,0,0,.1) 3px 2px 5px, inset rgba(255,255,255,.09) -1px 0;
+  }
+  & li:after {
+    left: -24px;
+    transform: skew(-30deg, 0deg);
+    box-shadow: rgba(0,0,0,.1) -3px 2px 5px, inset rgba(255,255,255,.09) 1px 0;
+  }
+  & li.active, & li.active:before, & li.active:after {
+    background-color: #191919;
+    color: #fff;
+    border-top: none;
   }
 `;
 
 const Container = styled.div`
+  min-height: 500px;
+  background-color: #f2f2f2;
 `;
 
 class DesignDetail extends Component {
+  state = {
+    activeTab: 0
+  };
+
+  changeActive = (e) => {
+    let target = e.target;
+    const tabNum = target.parentNode.children.length;
+    for (var i = 0; i < tabNum; i++) {
+      target.parentNode.children[i].className = "";
+      target.className = "active";
+    }
+    this.setState({
+      activeTab: target.getAttribute("id")
+    });
+  };
+
   render(){
     let designDetail = this.props.DesignDetail;
+    let designDetailView = this.props.DesignDetailView;
     return(
       <div>
       {designDetail.length !== 0 &&
@@ -77,16 +143,16 @@ class DesignDetail extends Component {
           <div className="explanation">{designDetail.explanation}</div>
           <TabContainer>
             <NaviTab>
-              <li><Link to="view">VIEW</Link></li>
-              <li><Link to="step">STEP</Link></li>
-              <li><Link to="issue">ISSUE</Link></li>
+              <ul>
+                <li onClick={this.changeActive} id="2">ISSUE</li>
+                <li onClick={this.changeActive} id="1">STEP</li>
+                <li onClick={this.changeActive} id="0">VIEW</li>
+              </ul>
             </NaviTab>
             <Container>
-              {/* <Route path="view" component={DetailView}/>
-              <Route path="step" component={DetailStep}/>
-              <Route path="issue" component={DetailIssue}/> */}
+              {this.state.activeTab == 0? <DetailView /> : this.state.activeTab == 1? <DetailStep /> : <DetailIssue />}
             </Container>
-            </TabContainer>
+          </TabContainer>
         </Wrapper>
       }
       </div>

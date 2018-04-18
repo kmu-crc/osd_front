@@ -33,6 +33,7 @@ export const AUTH_CHECK_TOKEN_FAILURE = "AUTH_CHECK_TOKEN_FAILURE";
 // design List
 export const GET_DESIGN_LIST = "GET_DESIGN_LIST";
 export const GET_DESIGN_DETAIL = "GET_DESIGN_DETAIL";
+export const GET_DESIGN_DETAIL_VIEW = "GET_DESIGN_DETAIL_VIEW";
 
 // group List
 export const GET_GROUP_LIST = "GET_GROUP_LIST";
