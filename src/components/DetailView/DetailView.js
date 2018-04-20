@@ -97,7 +97,7 @@ const Form = styled.form`
     text-align: center;
   }
   & textarea {
-    margin-right: 20px;
+    margin-right: 25px;
     width: 70%;
     height: 60px;
     border-radius: 3px;
@@ -107,6 +107,7 @@ const Form = styled.form`
     position: absolute;
     top: 50%;
     margin-top: -16px;
+    background-color: #a4a4a4;
   }
 `;
 

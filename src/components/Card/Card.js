@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 // css styling
@@ -30,18 +31,18 @@ class Card extends Component {
   render(){
     let card = this.props.cardDetail;
     return(
-      <CardContainer>
-      {card.length !== 0 && 
-        <div>
-          <h4>{card.title}</h4>
-          <span>{card.nick_name}</span>
-          <span>{card.comment_count}</span>
-          {card.is_complete_card === 0 && 
-            <span>대표선택됨</span>
-          }
-          <span className="date">{card.update_time}</span>
-        </div>
-      }
+      <CardContainer onClick={this.props.handleClick}>
+        {card.length !== 0 && 
+          <div>
+            <h4>{card.title}</h4>
+            <span>{card.nick_name}</span>
+            <span>{card.comment_count}</span>
+            {card.is_complete_card === 0 && 
+              <span>대표선택됨</span>
+            }
+            <span className="date">{card.update_time}</span>
+          </div>
+        }
       </CardContainer>
     );
   }
