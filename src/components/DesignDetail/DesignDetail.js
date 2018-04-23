@@ -74,6 +74,7 @@ const BtnManage = styled.div`
 
 const TabContainer = Container.extend`
   padding: 0 20px;
+  position: relative;
 `;
 
 const NaviTab = styled.div`
@@ -129,8 +130,7 @@ const NaviTab = styled.div`
 `;
 
 const Content = styled.div`
-  min-height: 500px;
-  background-color: #f9f9f9;
+  min-height: 300px;
 `;
 
 class DesignDetail extends Component {

@@ -112,6 +112,34 @@ export function GetDesignDetailStep(data) {
   }
 };
 
+export function GetDesignDetailStepCardRequest(id, card_id) {
+  return (dispatch) => {
+    return fetch("http://localhost:8080/design/designDetail/"+id+"/cardDetail/"+card_id, { 
+      headers: { "Content-Type": "application/json" }, 
+      method: "get" 
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("design Detail Card data >>", data);
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetDesignDetailStepCard(data));
+        }
+      }).catch((error) => {
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetDesignDetailStepCard(data) {
+  return {
+    type: types.GET_DESIGN_DETAIL_STEP_CARD,
+    DesignDetailStepCard : data
+  }
+};
+
 export function GetDesignDetailIssueRequest(id) {
   return (dispatch) => {
     return fetch("http://localhost:8080/design/designDetail/"+id+"/issue", { 

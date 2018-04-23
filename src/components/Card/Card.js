@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import DesignDetailStepCardContainer from "../../containers/DesignDetailStepCardContainer";
 
 // css styling
 const CardContainer = styled.div`
@@ -9,7 +10,7 @@ const CardContainer = styled.div`
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 5px #999898;
-  margin-top: 15px;
+  margin-top: 5px;
   padding: 10px 5px;
   cursor: pointer;
   & span {
@@ -28,10 +29,23 @@ const CardContainer = styled.div`
 `;
 
 class Card extends Component {
+  state = {
+    modal: false,
+    changeMode: this.props.changeMode
+  }
+
+  openModal = (e) => {
+    if (this.state.changeMode === false) {
+      this.setState({
+        modal: !(this.state.modal)
+      });
+    }
+  }
+
   render(){
     let card = this.props.cardDetail;
     return(
-      <CardContainer onClick={this.props.handleClick}>
+      <CardContainer onClick={this.openModal}>
         {card.length !== 0 && 
           <div>
             <h4>{card.title}</h4>
@@ -43,6 +57,8 @@ class Card extends Component {
             <span className="date">{card.update_time}</span>
           </div>
         }
+        {this.state.modal === false? <div></div> : 
+        <DesignDetailStepCardContainer id={this.props.designId} card_id={card.uid}/>}
       </CardContainer>
     );
   }
