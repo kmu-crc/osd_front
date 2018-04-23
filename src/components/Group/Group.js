@@ -43,6 +43,7 @@ const GroupImg = styled.div`
   width: 100%;
   height: 140px;
   overflow: hidden;
+  padding: 20px;
   & img {
     width: 100%;
   }
