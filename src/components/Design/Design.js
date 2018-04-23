@@ -10,11 +10,11 @@ const DesignCon = Columns.extend`
  `;
 
 const Designli = styled.li`
-  width: 95%;
+  width: 93%;
   margin: auto;
   // width: 200px;
   // margin: 0 10px 20px;
-  height: 290px;
+  height: 270px;
   // float: left;
   font-size: 13px;
   border-radius: 6px 6px 3px 3px;
@@ -31,7 +31,7 @@ const Designli = styled.li`
 
 const ImgPart = styled.div`
   width: 100%;
-  height: 158px;
+  height: 140px;
   overflow: hidden;
   & img {
     width: auto;
