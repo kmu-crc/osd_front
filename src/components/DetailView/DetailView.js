@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Row, Columns } from "../Grid";
+import eximg from "../../eximg.jpeg";
 
 // css styling
 
@@ -29,10 +30,13 @@ const Header = Columns.extend`
 const ImageWrapper = styled.div`
   border: 1px solid #999;
   width: 90%;
-  height: 300px;
   margin: auto;
   margin-bottom: 10px;
   text-align: center;
+  & img {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const Source = Columns.extend`
@@ -123,7 +127,7 @@ class DetailView extends Component {
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
             <div className="content">{view.content}</div>
             <ImageWrapper>
-              {view.imageInfo.link}
+              <img src={eximg}/>
             </ImageWrapper>
             <Source width={12}>
               <h4>첨부파일</h4>
