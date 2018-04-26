@@ -65,9 +65,6 @@ const AuthCheck = styled.div`
     &:hover{
       background-color: #CD4533;
     }
-    & a {
-      color: #fff;
-    }
  `;
 
 
@@ -97,7 +94,7 @@ class CreateAuth extends Component {
                 </AuthCheck>
                 <div className="clear"></div>
               </List>
-            <MainBtn><a href="/detail/stepEmpty">완료</a></MainBtn>
+            <MainBtn>완료</MainBtn>
           </form>
       </FormContainer>
     );

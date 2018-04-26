@@ -38,34 +38,17 @@ const Board = Columns.extend`
 `;
 
 class DetailStep extends Component {
-  state = {
-    changeMode: false
-  }
-  onChangeMode = (e) => {
-    this.setState({
-      changeMode: !(this.state.changeMode)
-    });
-    if (this.state.changeMode === true) {
-      e.target.style.backgroundColor = "fff";
-      e.target.innerHTML = "순서 변경";
-    } else if (this.state.changeMode === false) {
-      e.target.style.backgroundColor = "f00";
-      e.target.innerHTML = "확인";
-    }
-  }
 
   render(){
     let step = this.props.DesignDetailStep;
     return(
     <BoardContainer>
-      <button type="button" className="changeBtn" onClick={this.onChangeMode}>순서 변경</button> 
       {step.length !== 0 && 
         <div>
           {step.map(board => 
-            <Board xs={4} sm={3} width={2} key={board.uid}>
+            <Board xs={4} sm={3} md={3} width={2} key={board.uid}>
               <div className="boardList">
                 <h4>{board.title}</h4>
-                {this.state.changeMode === true? 
                   <div>
                     <SortablePane direction="vertical" margin={5} onResizeStop>
                     {board.cardData.map(card => 
@@ -73,20 +56,13 @@ class DetailStep extends Component {
                         <Pane className="pane" id={card.order} key={card.order} 
                               width="100%" height={80} maxHeight={120}
                               isResizable={{x: false, y: false, xy: false}}>
-                          <Card cardDetail={card} designId={board.design_id} changeMode={this.state.changeMode}/>
+                          <Card cardDetail={card} designId={board.design_id}/>
                         </Pane>
                         :
-                        <Card key={card.uid} cardDetail={card} designId={board.design_id} changeMode={this.state.changeMode}/>
+                        <Card key={card.order} cardDetail={card} designId={board.design_id}/>
                     )}
                     </SortablePane>
                   </div>  
-                  : 
-                  <div>
-                    {board.cardData.map(card => 
-                        <Card key={card.uid} cardDetail={card} designId={board.design_id} changeMode={this.state.changeMode}/>
-                    )}
-                  </div>
-                }
               </div>
             </Board>
           )}

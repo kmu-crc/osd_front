@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Route } from 'react-router-dom';
 import CreateInfo from '../CreateInfo';
+import CreateTemplate from '../CreateTemplate';
 import CreateAuth from '../CreateAuth';
 
 // css styling
@@ -82,11 +83,13 @@ class CreateDesign extends Component {
           <TapContainer>
             <ul>
               <li><Link to="/createDesign">디자인 정보 입력</Link></li>
+              <li><Link to="/createDesign/template">템플릿 설정</Link></li>
               <li><Link to="/createDesign/auth">권한 설정</Link></li>
             </ul>
           </TapContainer>
           <RouterContainer>
             <Route exact path="/createDesign" component={CreateInfo} />
+            <Route path="/createDesign/template" component={CreateTemplate} />
             <Route path="/createDesign/auth" component={CreateAuth} />
           </RouterContainer>
           <div className="clear"></div>

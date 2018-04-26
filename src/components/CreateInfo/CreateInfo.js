@@ -71,9 +71,6 @@ const MainBtn = styled.button`
     &:hover {
       background-color: #CD4533;
     }
-    & a {
-      color: #fff;
-    }
  `;
 
 
@@ -114,7 +111,7 @@ class CreateInfo extends Component{
                 <option></option>
               </select>
             </List>
-            <MainBtn><a href="">NEXT</a></MainBtn>
+            <MainBtn>NEXT</MainBtn>
           </form>
         </FormContainer>
     );

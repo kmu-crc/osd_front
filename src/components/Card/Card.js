@@ -31,16 +31,15 @@ const CardContainer = styled.div`
 class Card extends Component {
   state = {
     modal: false,
-    changeMode: this.props.changeMode
   }
 
-  openModal = (e) => {
-    if (this.state.changeMode === false) {
-      this.setState({
-        modal: !(this.state.modal)
-      });
-    }
-  }
+  // openModal = (e) => {
+  //   if (this.state.changeMode === false) {
+  //     this.setState({
+  //       modal: !(this.state.modal)
+  //     });
+  //   }
+  // }
 
   render(){
     let card = this.props.cardDetail;
