@@ -65,7 +65,7 @@ export function GetDesignDetailViewRequest(id) {
         return response.json();
       }).then((data) => {
         console.log("design Detail View data >>", data);
-        if (!data) {
+        if (!data || data.length === 0) {
           console.log("no data");
           return;
         } else {
@@ -121,7 +121,7 @@ export function GetDesignDetailStepCardRequest(id, card_id) {
         return response.json();
       }).then((data) => {
         console.log("design Detail Card data >>", data);
-        if (!data) {
+        if (!data || data.length === 0) {
           console.log("no data");
           return;
         } else {
@@ -149,7 +149,7 @@ export function GetDesignDetailIssueRequest(id) {
         return response.json();
       }).then((data) => {
         console.log("design Detail Issue data >>", data);
-        if (!data) {
+        if (!data || data.length === 0) {
           console.log("no data");
           return;
         } else {
@@ -167,4 +167,3 @@ export function GetDesignDetailIssue(data) {
     DesignDetailIssue : data
   }
 };
-
