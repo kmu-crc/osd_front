@@ -21,6 +21,10 @@ const ViewWrapper = styled.div`
   & h4 {
     font-size: 16px;
   }
+  & > .noData {
+    text-align: center;
+    font-size: 16px;
+  }
 `;
 
 const Header = Columns.extend`
@@ -122,15 +126,17 @@ const Form = styled.form`
 class DetailView extends Component {
   render(){
     let view = this.props.DesignDetailView;
+    let len = Object.keys(view).length;
+    console.log(len);
     return(
       <div>
-        {view.length !== 0 && 
+        {len !== 0? 
           <ViewWrapper>
             <Header width={10}>{view.title}</Header>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
             <div className="content">{view.content}</div>
             <ImageWrapper>
-              <img src={eximg}/>
+              <img src={eximg} alt=""/>
             </ImageWrapper>
             <Source width={12}>
               <h4>첨부파일</h4>
@@ -160,6 +166,13 @@ class DetailView extends Component {
             </Comment>
             <Row/>
           </ViewWrapper>
+        :
+        <ViewWrapper>
+          <div className="noData">
+            <p>등록된 디자인이 없습니다.</p>
+            <button class="red">디자인 등록</button>
+          </div>
+        </ViewWrapper>
         }
       </div>
     );
