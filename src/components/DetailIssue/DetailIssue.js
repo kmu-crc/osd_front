@@ -9,6 +9,10 @@ const IssueWrapper = styled.div`
   position: relative;
   padding: 20px 0;
   background-color: #FAFBFC;
+  & > .noData {
+    font-size: 14px;
+    text-align: center;
+  }
 `;
 
 const SearchWrapper = Columns.extend`
@@ -90,7 +94,7 @@ class DetailIssue extends Component {
     let issue = this.props.DesignDetailIssue;
     return(
       <div>
-        {issue.length !== 0 &&
+        {issue.length !== 0?
           <IssueWrapper>
             <SearchWrapper width={10}>
               <input placeholder="검색어를 입력해 주세요"/>
@@ -117,6 +121,12 @@ class DetailIssue extends Component {
                 )}
               </ul>
             </ListWrapper>
+          </IssueWrapper>
+          :
+          <IssueWrapper>
+            <div className="noData">
+                <p>등록된 이슈가 없습니다.</p>
+            </div>
           </IssueWrapper>
         }
       </div>
