@@ -8,6 +8,7 @@ const IssueWrapper = styled.div`
   min-width: 660px;
   position: relative;
   padding: 20px 0;
+  background-color: #FAFBFC;
 `;
 
 const SearchWrapper = Columns.extend`
