@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 
 // css styling
 
@@ -111,7 +113,7 @@ class CreateInfo extends Component{
                 <option></option>
               </select>
             </List>
-            <MainBtn>NEXT</MainBtn>
+            <MainBtn><Link to="/createDesign/auth">NEXT</Link></MainBtn>
           </form>
         </FormContainer>
     );
