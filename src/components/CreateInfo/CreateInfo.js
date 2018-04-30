@@ -113,7 +113,7 @@ class CreateInfo extends Component{
                 <option></option>
               </select>
             </List>
-            <MainBtn><Link to="/createDesign/auth">NEXT</Link></MainBtn>
+            <MainBtn><Link to="/createDesign/template">NEXT</Link></MainBtn>
           </form>
         </FormContainer>
     );

@@ -148,7 +148,6 @@ const Content = styled.div`
 
 class DesignDetail extends Component {
   state = {
-    activeView: true,
     activeStep: false,
     activeMoreBtn: false,
     activeInfo: false,
@@ -261,8 +260,7 @@ class DesignDetail extends Component {
             <Content>
               {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
               : this.state.activeStep === true? <DesignDetailStepContainer id={this.props.id}/>
-              : this.state.activeView === true? <DesignDetailViewContainer id={this.props.id}/>
-              : null}
+              : <DesignDetailViewContainer id={this.props.id}/>}
             </Content>
           </TabContainer>
         </Wrapper>

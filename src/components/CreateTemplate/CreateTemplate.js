@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import Project from './project.png';
-import Design from './design.png';
+import React, { Component } from "react";
+import styled from "styled-components";
+import Project from "./project.png";
+import Design from "./design.png";
+import { Link } from "react-router-dom";
 
 // css styling
 
@@ -77,7 +78,7 @@ class Template extends Component{
               </div>
               <Clear></Clear>
             </TemplateList>
-            <MainBtn>NEXT</MainBtn>
+            <MainBtn><Link to="/createDesign/auth">NEXT</Link></MainBtn>
           </form>
         </FormContainer>
     );

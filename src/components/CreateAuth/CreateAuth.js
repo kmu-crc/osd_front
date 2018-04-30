@@ -95,7 +95,7 @@ class CreateAuth extends Component {
                 </AuthCheck>
                 <div className="clear"></div>
               </List>
-            <MainBtn><Link to="/design">완료</Link></MainBtn>
+            <MainBtn><Link to="/designDetail/4">완료</Link></MainBtn>
           </form>
       </FormContainer>
     );
