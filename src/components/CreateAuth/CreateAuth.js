@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // css styling
 
@@ -94,7 +95,7 @@ class CreateAuth extends Component {
                 </AuthCheck>
                 <div className="clear"></div>
               </List>
-            <MainBtn>완료</MainBtn>
+            <MainBtn><Link to="/design">완료</Link></MainBtn>
           </form>
       </FormContainer>
     );
