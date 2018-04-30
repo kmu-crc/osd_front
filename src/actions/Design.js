@@ -67,10 +67,9 @@ export function GetDesignDetailViewRequest(id) {
         console.log("design Detail View data >>", data);
         if (!data || data.length === 0) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignDetailView(data));
+          data = [];
         }
+        dispatch(GetDesignDetailView(data));
       }).catch((error) => {
         console.log("err", error);
       })

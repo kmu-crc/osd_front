@@ -124,10 +124,13 @@ const Form = styled.form`
 
 
 class DetailView extends Component {
+  componentDidMount() {
+    this.props.GetDesignDetailViewRequest(this.props.id);
+  }
+
   render(){
     let view = this.props.DesignDetailView;
-    let len = Object.keys(view).length;
-    console.log(len);
+    let len = Object.keys(view).length;   
     return(
       <div>
         {len !== 0? 
@@ -170,7 +173,7 @@ class DetailView extends Component {
         <ViewWrapper>
           <div className="noData">
             <p>등록된 디자인이 없습니다.</p>
-            <button class="red">디자인 등록</button>
+            <button className="red">디자인 등록</button>
           </div>
         </ViewWrapper>
         }

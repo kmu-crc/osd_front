@@ -148,11 +148,16 @@ const Content = styled.div`
 
 class DesignDetail extends Component {
   state = {
+    activeView: true,
     activeStep: false,
     activeMoreBtn: false,
     activeInfo: false,
     activeIssue: false
   };
+
+  componentWillMount() {
+    this.props.GetDesignDetailRequest(this.props.id);
+  }
 
   onActiveMoreBtn = (e) => {
     this.setState({
@@ -254,9 +259,10 @@ class DesignDetail extends Component {
           </HeadContainer>
           <TabContainer>
             <Content>
-              {this.state.activeIssue === true && <DesignDetailIssueContainer id={designDetail.uid} />}
-              {this.state.activeStep === true? <DesignDetailStepContainer id={designDetail.uid}/> :
-              <DesignDetailViewContainer id={designDetail.uid}/>}
+              {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
+              : this.state.activeStep === true? <DesignDetailStepContainer id={this.props.id}/>
+              : this.state.activeView === true? <DesignDetailViewContainer id={this.props.id}/>
+              : null}
             </Content>
           </TabContainer>
         </Wrapper>
