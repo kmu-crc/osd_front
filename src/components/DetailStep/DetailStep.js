@@ -35,20 +35,58 @@ const Board = Columns.extend`
     font-weight: normal;
     font-size: 15px;
   }
+  & h4.boardTitle > input {
+    height: 30px;
+    width: 100%;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+`;
+
+const EmptyCard = styled.div`
+  width: 100%;
+  min-height: 80px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px #999898;
+  margin-top: 5px;
+  padding: 10px 5px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 class DetailStep extends Component {
+  state = {
+    isEdit: -1,
+    titleValue: ""
+  };
+
+  activeEdit = (e) => {
+    this.setState({
+      isEdit: e.target.id,
+      titleValue: e.target.innerHTML
+    });
+  }
+
+  onEdit = (e) => {
+    this.setState({
+      titleValue: e.target.value
+    });
+  }
 
   render(){
     let step = this.props.DesignDetailStep;
     return(
     <BoardContainer>
-      {step.length !== 0 && 
+      {step.length !== 0 &&
         <div>
           {step.map(board => 
             <Board xs={4} sm={3} md={3} width={2} key={board.uid}>
               <div className="boardList">
-                <h4>{board.title}</h4>
+                <h4 className="boardTitle" id={board.uid}>
+                  {this.state.isEdit == board.uid? <input value={this.state.titleValue} onChange={this.onEdit}/> 
+                  : <div id={board.uid} onClick={this.activeEdit}>{board.title}</div>}
+                </h4>
                   <div>
                     <SortablePane direction="vertical" margin={5} onResizeStop>
                     {board.cardData.map(card => 
@@ -66,9 +104,18 @@ class DetailStep extends Component {
               </div>
             </Board>
           )}
-          <Row/>
         </div>
-      }
+      }      
+      <Board xs={4} sm={3} md={3} width={2}>
+        <div className="boardList">
+          <h4 className="boardTitle" id="new">
+            {this.state.isEdit === "new"? <input value={this.state.titleValue} onChange={this.onEdit}/> 
+            : <div id="new" onClick={this.activeEdit}>새 주제 추가 +</div>}
+          </h4>
+          <EmptyCard>새 카드 추가 +</EmptyCard>
+        </div>
+      </Board>
+      <Row/> 
     </BoardContainer>
     );
   }
