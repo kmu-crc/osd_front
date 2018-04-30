@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Row, Columns } from "../Grid";
 import eximg from "../../eximg.jpeg";
+import { Link } from "react-router-dom";
 
 // css styling
 
@@ -173,7 +174,7 @@ class DetailView extends Component {
         <ViewWrapper>
           <div className="noData">
             <p>등록된 디자인이 없습니다.</p>
-            <button className="red">디자인 등록</button>
+            <button className="red"><Link to={this.props.id+"/createView"}>업로드</Link></button>
           </div>
         </ViewWrapper>
         }
