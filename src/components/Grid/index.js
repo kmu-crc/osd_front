@@ -42,7 +42,7 @@ function getPercent(span) {
 export const Columns = styled.div`
   box-sizing: border-box;
   float: left;
-  padding: 0 1rem;
+  padding: 0 0.125rem;
   ${(props) => (props.xs ? getWidthString(props.xs) : props.width ? getWidthString(props.width) : `width: 100%`)};
   ${(props) => props.xsPush && `margin-left:${getPercent(props.xsPush)}`};
 

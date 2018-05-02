@@ -1,19 +1,25 @@
 import React, { Component } from "react";
-import { Link, Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "../../eximg.jpeg";
+import { Columns, Row } from "../Grid/index";
 
 // css styling
 
+const DesignCon = Columns.extend`
+ `;
+
 const Designli = styled.li`
-  width: 200px;
-  height: 290px;
-  float: left;
+  width: 93%;
+  margin: 0 auto 20px;
+  // width: 200px;
+  // margin: 0 10px 20px;
+  height: 270px;
+  // float: left;
   font-size: 13px;
   border-radius: 6px 6px 3px 3px;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;
-  margin: 0 10px 20px;
   & a {
     cursor: pointer;
     display: block;
@@ -25,7 +31,7 @@ const Designli = styled.li`
 
 const ImgPart = styled.div`
   width: 100%;
-  height: 158px;
+  height: 140px;
   overflow: hidden;
   & img {
     width: auto;
@@ -69,6 +75,7 @@ class Design extends Component {
     let design = this.props.design;
     return(
       <NavLink to={"/designDetail/"+design.uid}>
+      <DesignCon xs={4} sm={3} md={3} width={2}>
         <Designli>
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
@@ -79,10 +86,11 @@ class Design extends Component {
               <div>{design.count.like_count}</div>
               <div>{design.count.member_count}</div>
               <div>{design.count.card_count}</div>
-              <div className="clear"></div>
+              <Row/>
             </Count>
           </TextPart>
         </Designli>
+        </DesignCon>
       </NavLink>
     );
   }

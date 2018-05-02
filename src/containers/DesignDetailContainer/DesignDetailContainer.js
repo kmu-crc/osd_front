@@ -12,7 +12,7 @@ class DesignDetailContainer extends Component {
   render() {
     return (
       <div>
-        <DesignDetail DesignDetail={this.props.DesignDetail} />
+        <DesignDetail DesignDetail={this.props.DesignDetail}/>
       </div>
     );
   }
@@ -20,7 +20,7 @@ class DesignDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignDetail: state.DesignDetail.status.DesignDetail
+    DesignDetail: state.DesignDetail.status.DesignDetail,
   };
 };
 

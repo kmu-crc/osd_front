@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import { Link, Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { Container, Columns, Row } from "../Grid/index";
+import eximg from "../../eximg.jpeg";
 
 // css styling
 
 const Groupli = styled.li`
-  width: 310px;
-  margin: 0 10px 20px;
-  height: 240px;
-  float: left;
+  width: 95%;
+  height: 370px;
+  margin: 0 auto 20px;
+  // width: 310px;
+  // float: left;
   border-radius: 6px 6px 3px 3px;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;
-  padding: 10px 20px;
   font-size: 13px;
   &:hover {
     border-bottom: 0.5px solid dimgray;
@@ -32,6 +34,22 @@ const Groupli = styled.li`
     float: left;
     width: 100px;
   }
+`;
+
+const GroupCon = Columns.extend`
+`;
+
+const GroupImg = styled.div`
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  & img {
+    width: 100%;
+  }
+`;
+
+const GroupInfo = styled.div`
+  padding: 10px 20px;
 `;
 
 const Count = styled.div`
@@ -60,7 +78,7 @@ const Img = styled.div`
   margin-top: 15px;
   & .imgBox {
     float: left;
-    width: 80px;
+    width: 30%;
     height: 60px;
     background-color: #f2f2f2;
     margin: 10px 3px 0;
@@ -72,27 +90,34 @@ class Group extends Component {
     let group = this.props.group;
     return(
       <NavLink to={"/groupDetail/"+group.uid}>
+      <GroupCon xs={6} sm={6} md={4} width={3}>
         <Groupli>
-          <div className="date">{(group.create_time).split('T')[0]} 개설</div>
-          <div className="title">{group.title}</div>
-          <div className="owner">{group.userName}</div>
-          <Count>
-            <div>{group.count.like}</div>
-            <div>{group.count.member}</div>
-            <div>{group.count.design}</div>
+          <GroupImg>
+            <img src={eximg} />
+          </GroupImg>
+          <GroupInfo>
+            <div className="date">{(group.create_time).split("T")[0]} 개설</div>
+            <div className="title">{group.title}</div>
+            <div className="owner">{group.userName}</div>
+            <Count>
+              <div>{group.count.like}</div>
+              <div>{group.count.member}</div>
+              <div>{group.count.design}</div>
+              <div className="clear"></div>
+            </Count>
             <div className="clear"></div>
-          </Count>
-          <div className="clear"></div>
-          <ButtonWrap>
-            <button className="red">가입신청</button>
-            <button className="red">관리</button>
-          </ButtonWrap>
-          <Img>
-            {group.designTop3.map(design => 
-              <div className="imgBox" key={design.uid}><img src={design.s_img} alt=""/></div>
-            )}
-          </Img>
+            <ButtonWrap>
+              <button className="red">가입신청</button>
+              <button className="red">관리</button>
+            </ButtonWrap>
+            <Img>
+              {group.designTop3.map(design => 
+                <div className="imgBox" key={design.uid}><img src={design.s_img} alt=""/></div>
+              )}
+            </Img>
+          </GroupInfo>
         </Groupli>
+        </GroupCon>
       </NavLink>
     );
   }
