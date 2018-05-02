@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SignUpPage from "../../pages/SignUpPage";
-import { SignUpRequest, FBSignUpRequest } from "../../actions/Authentication";
+import SignUpForm from "../../components/SignUpForm";
+import { SignUpRequest, FBSignUpRequest, CheckEmailRequest } from "../../actions/Authentication";
 
 class SignUpContainer extends Component {
   render() {
     return(
-      <SignUpPage {...this.props}/>
+      <SignUpForm {...this.props}/>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignList: state.DesignList.status.DesignList
+    CheckEmail: state.Authentication.checkStatus.checkEmail
   };
 };
 
@@ -23,7 +23,10 @@ const mapDispatchToProps = (dispatch) => {
         return dispatch(SignUpRequest(data));
       },
       FBSignUpRequest: (data) => {
-        return dispatch(FBSignUpRequest(data))
+        return dispatch(FBSignUpRequest(data));
+      },
+      CheckEmailRequest: (email) => {
+        return dispatch(CheckEmailRequest(email));
       }
   };
 };

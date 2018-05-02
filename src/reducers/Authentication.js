@@ -13,6 +13,12 @@ const initialState = {
   },
   error: {
     message: null
+  },
+  check: {
+    status: "INIT"
+  },
+  checkStatus: {
+    checkEmail: false
   }
 };
 
@@ -133,6 +139,30 @@ export default function Authentication(state, action) {
           isLoggedIn: { $set: false },
           userInfo: { $set: null },
           token: { $set: null }
+        }
+      });
+    case types.AUTH_CHECK_EMAIL:
+      return update(state, {
+        check: {
+          status: { $set: "WAITING" }
+        }
+      });
+    case types.AUTH_CHECK_EMAIL_SUCCESS:
+      return update(state, {
+        check: {
+          status: { $set: "SUCCESS" }
+        },
+        checkStatus: {
+          checkEmail: { $set: action.checkEmail }
+        }
+      });
+    case types.AUTH_CHECK_EMAIL_FAILURE:
+      return update(state, {
+        check: {
+          status: { $set: "FAILURE" }
+        },
+        checkStatus: {
+          checkEmail: { $set: action.checkEmail }
         }
       });
     case types.AUTH_SIGNOUT:

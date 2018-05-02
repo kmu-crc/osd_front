@@ -233,4 +233,43 @@ export function SignOut() {
   return {
     type: types.AUTH_SIGNOUT
   }
-}
+};
+
+export function CheckEmailRequest(email) {
+  return (dispatch) => {
+    dispatch(CheckEmail());
+    return fetch("http://localhost:8080/users/checkEmail", { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify({email}) })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          return dispatch(CheckEmailSuccess());
+        } else {
+          return dispatch(CheckEmailFailure(res.error));
+        }
+      })
+      .catch(err => dispatch(CheckEmailFailure()));
+  };
+};
+
+export function CheckEmail() {
+  return {
+    type: types.AUTH_CHECK_EMAIL
+  }
+};
+
+export function CheckEmailSuccess() {
+  return {
+    type: types.AUTH_CHECK_EMAIL_SUCCESS,
+    checkEmail: true
+  }
+};
+
+
+export function CheckEmailFailure(err) {
+  return {
+    type: types.AUTH_CHECK_EMAIL_FAILURE,
+    checkEmail: false,
+    error: err
+  }
+};
+

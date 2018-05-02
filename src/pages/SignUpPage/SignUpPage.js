@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import ClientTemplate from "../../templates/ClientTemplate";
+import SignUpContainer from "../../containers/SignUpContainer";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 const SignUpContent = styled.div`
@@ -34,20 +35,22 @@ const FromFilde = styled.div`
 
 class SignUpPage extends Component {
   state = {
-    useDetail: false
+    useDetail: false,
+    checkEmail: false
   }
   handleFormSubmit = (event) => {
-    event.preventDefault();
-    let data = event.target
-    let formData = {
-      email: data.email.value,
-      password: data.password.value,
-      nickName: data.nick_name.value
-    }
-    console.log("form", formData);
-    this.props.SignUpRequest(formData).then(data => {
-      this.props.history.push("/design");
-    });
+    console.log(event);
+    // event.preventDefault();
+    // let data = event.target
+    // let formData = {
+    //   email: data.email.value,
+    //   password: data.password.value,
+    //   nickName: data.nick_name.value
+    // }
+    // console.log("form", formData);
+    // this.props.SignUpRequest(formData).then(data => {
+    //   this.props.history.push("/design");
+    // });
   }
   onClickFBSignUpbtn = (data) => {
     console.log(data);
@@ -75,10 +78,52 @@ class SignUpPage extends Component {
   handleDetailFormSubmit = (data) => {
     console.log("data");
   }
+
+  handleEmailCheck = () => {
+    this.props.CheckEmailRequest(this.email.value).then(data => {
+      console.log(data);
+      if (data.checkEmail) {
+        alert("사용가능한 email입니다.");
+        this.setState({ checkEmail: true });
+      } else {
+        alert(data.error);
+        this.setState({ checkEmail: false });
+      }
+    });
+  }
   render() {
+    const SignUpUser = () => {
+      return (
+        <div>
+          <FromFilde>
+            <label htmlFor="email">email</label>
+            <input type="email" id="email" name="email" ref={ref => this.email = ref} />
+            <button type="button" onClick={this.handleEmailCheck} >email 중복검사</button>
+          </FromFilde>
+          <FromFilde>
+            <label htmlFor="password">passord</label>
+            <input type="password" id="password" name="password" />
+          </FromFilde>
+          <FromFilde>
+            <label htmlFor="nick_name">Nick Name</label>
+            <input type="text" id="nick_name" name="nick_name" />
+          </FromFilde>
+          <button type="submit">회원가입 하기</button>
+          <FacebookLogin
+            appId="1846803492017708"
+            fields="name,email"
+            autoLoad={false}
+            callback={this.onClickFBSignUpbtn}
+            render={renderProps => (
+              <button type="button" onClick={renderProps.onClick}>facebook 회원가입</button>
+            )} />
+        </div>
+      )
+    };
     return (
       <ClientTemplate>
         <SignUpContent>
+          <SignUpContainer onSubmit={this.handleFormSubmit}/>
           {this.state.useDetail
             ? <InsertDetail method="post" onSubmit={this.handleDetailFormSubmit}>
               <FromFilde>
@@ -95,28 +140,7 @@ class SignUpPage extends Component {
               </FromFilde>
             </InsertDetail>
             : <SignUpCard method="post" onSubmit={this.handleFormSubmit}>
-              <FromFilde>
-                <label htmlFor="email">email</label>
-                <input type="email" id="email" name="email" />
-                <button type="button">email 중복검사</button>
-              </FromFilde>
-              <FromFilde>
-                <label htmlFor="password">passord</label>
-                <input type="password" id="password" name="password" />
-              </FromFilde>
-              <FromFilde>
-                <label htmlFor="nick_name">Nick Name</label>
-                <input type="text" id="nick_name" name="nick_name" />
-              </FromFilde>
-              <button type="submit">회원가입 하기</button>
-              <FacebookLogin
-                appId="1846803492017708"
-                fields="name,email"
-                autoLoad={false}
-                callback={this.onClickFBSignUpbtn}
-                render={renderProps => (
-                  <button type="button" onClick={renderProps.onClick}>facebook 회원가입</button>
-                )} />
+              <SignUpUser />
             </SignUpCard>
           }
         </SignUpContent>

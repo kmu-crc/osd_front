@@ -8,7 +8,7 @@ import CreateDesignPage from "./pages/CreateDesignPage";
 import CreateGroupPage from "./pages/CreateGroupPage";
 import ModifyGroupPage from "./pages/ModifyGroupPage";
 import UpdateUserInfoContainer from "./containers/UpdateUserInfoContainer";
-import SignUpContainer from "./containers/SignUpContainer";
+import SignUpPage from "./pages/SignUpPage";
 import SignInContainer from "./containers/SignInContainer";
 import RequiresAuth from "./containers/RequiresAuth";
 
@@ -26,7 +26,7 @@ class App extends Component {
           <Route path="/group" component={GroupListPage}/>
           <Route path="designerDetail/:id" component={DesignerDetailPage}/>
           <Route path="/designer" component={DesignerListPage}/>
-          <Route path="/signup" component={SignUpContainer}/>
+          <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInContainer}/>
           <Route path="/updateuserinfo" component={RequiresAuth(UpdateUserInfoContainer)}/>
         </Switch>
