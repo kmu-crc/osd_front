@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 // css styling
 
 const FormContainer = styled.div`
-  padding: 30px 50px 80px 50px
-  position: relative;
+  width: 80%;
+  margin: auto;
   background-color: #fff;
-  box-shadow: 0 1px 5px #c7c7c7;
-  @media (max-width: 960px) {
-    margin-right: 0;
+  & .mainInfo, & .authInfo {
+    padding: 20px 30px 20px 40px;
+    box-shadow: 0 1px 5px #c7c7c7;
   }
-  @media (min-width: 960px) {
-    margin-right: 80px;
+  & .authInfo {
+    margin-top: 10px;
   }
 `;
 
@@ -22,7 +22,7 @@ const List = styled.div`
   width: 100%;
   height: 60px;
   & button {
-    padding: 6px 12px;
+    padding: 3px 8px;
     font-size: 18px;
     background-color: #e9e9e9;
     color: #343434;
@@ -59,63 +59,87 @@ const FileInput = styled.input`
   margin-top: 10px;
 `;
 
-const MainBtn = styled.button`
-    padding: 7px 25px;
-    border-radius: 30px;
-    background-color: #EB3324;
-    border: none;
-    color: #fff;
-    font-size: 14px;
-    position: absolute;
-    bottom: 30px;
-    right: 50%;
-    margin-right: -43px;
-    &:hover {
-      background-color: #CD4533;
-    }
- `;
-
+const AuthCheck = styled.div`
+  float: left;
+  & label {
+    display: inline;
+    width: 80px;
+    text-align: right;
+    font-size: 15px;
+  }
+  & input {
+    width: 20px;
+    float: left;
+    margin-right: 40px;
+    margin-top: 22px;
+  }
+`;
 
 class CreateInfo extends Component{
   render(){
     return(
         <FormContainer>
           <form>
-            <List>
-              <label>디자인 제목</label>
-              <Input placeholder="디자인 제목을 입력해 주세요.(최대 20자)"/>
-            </List>
-            <List>
-              <label>디자인 설명</label>
-              <Input placeholder="내용을 입력해 주세요."/>
-            </List>
-            <List>
-              <label>썸네일 업로드</label>
-              <FileInput />
-              <button>+</button>
-            </List>
-            <List>
-              <label>카테고리</label>
-              <select>
-                <option>의상</option>
-                <option>자동차</option>
-                <option>웹</option>
-              </select>
-              <select>
-                <option>의상</option>
-                <option>자동차</option>
-                <option>웹</option>
-              </select>
-            </List>
-            <List>
-              <label>멤버추가</label>
-              <select>
-                <option></option>
-              </select>
-            </List>
-            <MainBtn><Link to="/createDesign/template">NEXT</Link></MainBtn>
+            <div className="mainInfo">
+              <h3>디자인 정보 입력</h3>
+              <List>
+                <label>디자인 제목</label>
+                <Input placeholder="디자인 제목을 입력해 주세요.(최대 20자)"/>
+              </List>
+              <List>
+                <label>디자인 설명</label>
+                <Input placeholder="내용을 입력해 주세요."/>
+              </List>
+              <List>
+                <label>썸네일 업로드</label>
+                <FileInput />
+                <button>+</button>
+              </List>
+              <List>
+                <label>카테고리</label>
+                <select>
+                  <option>의상</option>
+                  <option>자동차</option>
+                  <option>웹</option>
+                </select>
+                <select>
+                  <option>의상</option>
+                  <option>자동차</option>
+                  <option>웹</option>
+                </select>
+              </List>
+              <List>
+                <label>멤버추가</label>
+                <select>
+                  <option></option>
+                </select>
+              </List>
+            </div>
+            <div className="authInfo">
+              <h3>권한 설정</h3>
+                <List>
+                  <label>라이센스</label>
+                  <AuthCheck>
+                    <label>수정 가능</label>
+                    <input type="checkbox"/>
+                    <label>상업적 이용</label>
+                    <input type="checkbox"/>
+                    <label>원작자 표시</label>
+                    <input type="checkbox"/>
+                  </AuthCheck>
+                </List>
+                <div className="clear"></div>
+                <List>
+                  <label>디자인 공개 여부</label>
+                  <AuthCheck>
+                    <label>공개</label>
+                    <input type="checkbox" checked/>
+                  </AuthCheck>
+                  <div className="clear"></div>
+                </List>
+              </div>
           </form>
-        </FormContainer>
+      </FormContainer>
     );
   }
 }

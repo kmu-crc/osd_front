@@ -19,6 +19,9 @@ const HeadContainer = styled.div`
   font-size: 13px;
   padding: 20px 30px 10px;
   border-bottom: 1px solid #e6ebf1;
+  & .explanation {
+    padding: 20px 10px 10px;
+  }
   & button.btnIssue {
     float: right;
     width: 100px;
@@ -75,9 +78,14 @@ const SubInfo = styled.div`
 
 const Cate = Columns.extend`
   margin-top: 15px;
+  font-size: 13px;
   & span {
+    margin-right: 15px;
+    max-width: 33%;
+  }
+  & .cate {
     color: #EB3324;
-    font-size: 13px;
+    margin-right: 30px;
   }
 `;
 
@@ -104,41 +112,6 @@ const BtnModal = styled.ul`
   }
 `;
 
-const ModalInfo = styled.div`
-  position: absolute;
-  border: 2px solid rgba(27,31,35,0.15);
-  box-shadow: 0 3px 12px rgba(27,31,35,0.15);
-  width: 600px;
-  z-index: 2;
-  background-color: #fff;
-  padding: 30px;
-  top: 100px;
-  left: 50%;
-  margin-left: -300px;
-  & .closeModal {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 16px;
-    border: 0;
-  }
-`;
-
-const InfoLine = styled.div`
-  width: 100%;
-  font-size: 14px;
-  min-height: 30px;
-  & .label {
-    width: 80px;
-    float: left;
-    text-align: center;
-    margin-right: 10px;
-  }
-  & .content {
-    float: left;
-  }
-`;
-
 const TabContainer = styled.div`
 `;
 
@@ -150,7 +123,6 @@ class DesignDetail extends Component {
   state = {
     activeStep: false,
     activeMoreBtn: false,
-    activeInfo: false,
     activeIssue: false
   };
 
@@ -161,12 +133,6 @@ class DesignDetail extends Component {
   onActiveMoreBtn = (e) => {
     this.setState({
       activeMoreBtn: !(this.state.activeMoreBtn)
-    });
-  }
-
-  onActiveInfo = (e) => {
-    this.setState({
-      activeInfo: !(this.state.activeInfo)
     });
   }
 
@@ -206,7 +172,6 @@ class DesignDetail extends Component {
               <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
                 {this.state.activeMoreBtn === true && 
                   <BtnModal>
-                    <li onClick={this.onActiveInfo}>디자인 정보</li>
                     <li>파생디자인 생성</li>
                     <li>원본디자인 보기</li>
                     <li>수정</li>
@@ -221,40 +186,13 @@ class DesignDetail extends Component {
             </SubInfo>
             <Row/>
             <Cate xs={4} sm={4} width={6}>
-              <span>{designDetail.categoryName.name}</span>
+              <span className="cate">{designDetail.categoryName.name}</span>
+              <span className="owner">:) {designDetail.userName}</span>
+              <span className="member">:) {designDetail.count.member_count}명</span>
             </Cate>
             <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
             <Row/>
-            {this.state.activeInfo === true && 
-              <ModalInfo>
-                <InfoLine>
-                  <div className="label">디자인명 : </div>
-                  <div className="content">{designDetail.title}</div>
-                  <Row/>
-                </InfoLine>
-                <InfoLine>
-                  <div className="label">설명 : </div>
-                  <div className="content">{designDetail.explanation}</div>
-                  <Row/>
-                </InfoLine>
-                <InfoLine>
-                  <div className="label">팀장 : </div>
-                  <div className="content">{designDetail.userName}</div>
-                  <Row/>
-                </InfoLine>
-                <InfoLine>
-                  <div className="label">멤버 : </div>
-                  <div className="content">{designDetail.count.member_count}명</div>
-                  <Row/>
-                </InfoLine>
-                <InfoLine>
-                  <div className="label">생성일 : </div>
-                  <div className="content">{designDetail.create_time}</div>
-                  <Row/>
-                </InfoLine>
-                <button className="closeModal" onClick={this.onActiveInfo}>X</button>
-              </ModalInfo>
-            }
+            <div className="explanation">{designDetail.explanation}</div>
           </HeadContainer>
           <TabContainer>
             <Content>

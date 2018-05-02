@@ -7,12 +7,15 @@ import { Link } from "react-router-dom";
 // css styling
 
 const ViewWrapper = styled.div`
-  padding: 40px;
+  padding: 20px 40px;
   font-size: 16px;
   & .date {
     color: #a4a4a4;
     font-weight: 400;
     font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: right;
   }
   & .content {
     width: 100%;
@@ -26,10 +29,6 @@ const ViewWrapper = styled.div`
     text-align: center;
     font-size: 16px;
   }
-`;
-
-const Header = Columns.extend`
-  font-size: 20px;
 `;
 
 const ImageWrapper = styled.div`
@@ -136,9 +135,7 @@ class DetailView extends Component {
       <div>
         {len !== 0? 
           <ViewWrapper>
-            <Header width={10}>{view.title}</Header>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
-            <div className="content">{view.content}</div>
             <ImageWrapper>
               <img src={eximg} alt=""/>
             </ImageWrapper>
@@ -174,7 +171,7 @@ class DetailView extends Component {
         <ViewWrapper>
           <div className="noData">
             <p>등록된 디자인이 없습니다.</p>
-            <button className="red"><Link to={this.props.id+"/createView"}>업로드</Link></button>
+            <button className="red"><Link to="">업로드</Link></button>
           </div>
         </ViewWrapper>
         }

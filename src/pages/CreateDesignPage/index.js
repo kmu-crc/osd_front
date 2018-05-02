@@ -1,2 +1,2 @@
 export { default } from "./CreateDesignPage";
-export { CreateViewPage } from "./CreateViewPage";
+// export { CreateViewPage } from "./CreateViewPage";
