@@ -10,8 +10,6 @@ const Groupli = styled.li`
   width: 95%;
   height: 370px;
   margin: 0 auto 20px;
-  // width: 310px;
-  // float: left;
   border-radius: 6px 6px 3px 3px;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;

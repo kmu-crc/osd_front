@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Link, Route } from 'react-router-dom';
-import CreateInfo from '../CreateInfo';
-import CreateAuth from '../CreateAuth';
+import React, { Component } from "react";
+import styled from "styled-components";
+import CreateInfo from "../CreateInfo";
+import CreateView from "../CreateView";
+import { Container, Row } from "../Grid";
+import { Link } from "react-router-dom";
 
 // css styling
 
@@ -10,14 +11,8 @@ const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
   min-width: 660px;
-  padding: 20px 30px;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  margin: auto;
-  background-color: #F9F9F9;
-  height: 600px;
+  padding: 20px 30px 90px;
+  position: relative;
 `;
 
 const Header = styled.h2`
@@ -26,71 +21,69 @@ const Header = styled.h2`
   color: #D7382C;
 `;
 
-const TapContainer = styled.div`
-  width: 25%;
-  float: left;
-  padding-top: 20px;
-  @media (max-width: 768px) {
-    display: none;
+const RouterContainer = Container.extend`
+`;
+
+const CheckTemp = styled.div`
+  width: 80%;
+  margin: 20px auto;
+  & h3 {
+    float: left;
   }
-  & ul {
-    display: block;
-    width: 85%;
-    margin: auto;
-    border-top: 20px solid #000;
-    border-bottom: 20px solid #000;
-    list-style: none;
-    background-color: #1E1E1E;
-    border-radius: 6px;
-    padding: 0;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-  }
-  & li {
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    border-top: 0.7px solid #383838;
-    border-bottom: 0.7px solid #383838;
-    padding-left: 30px;
-    font-weight: 200;
-    &: hover {
-      background-color: #2c2c2c;
-    }
-    & a {
-      color: #fff;
-    }
+  & input {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 20px 0 0 10px;
   }
 `;
 
-const RouterContainer = styled.div`
-  float: left;
-  padding-top: 20px;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-  @media (min-width: 768px) {
-    width: 75%;
+const MainBtn = styled.button`
+  padding: 7px 25px;
+  border-radius: 30px;
+  background-color: #EB3324;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  bottom: 0px;
+  right: 50%;
+  margin-right: -43px;
+  &:hover {
+    background-color: #CD4533;
   }
 `;
 
 class CreateDesign extends Component {
+  state = {
+    isProject: true
+  };
+
+  onProjectActive = (e) => {
+    this.setState({
+      isProject: !(this.state.isProject)
+    });
+  }
+
   render(){
     return(
       <Wrapper>
-        <Header>새 디자인 생성</Header>
-        <Container>
-          <TapContainer>
-            <ul>
-              <li><Link to="/createDesign">디자인 정보 입력</Link></li>
-              <li><Link to="/createDesign/auth">권한 설정</Link></li>
-            </ul>
-          </TapContainer>
-          <RouterContainer>
-            <Route exact path="/createDesign" component={CreateInfo} />
-            <Route path="/createDesign/auth" component={CreateAuth} />
-          </RouterContainer>
-          <div className="clear"></div>
-        </Container>
+        <Header>새 디자인 등록</Header>
+        <RouterContainer>
+          <CreateInfo/>
+          <CheckTemp>
+            <h3>과정 기록 사용</h3>
+            <input type="checkbox" checked={this.state.isProject === true && "checked"}onChange={this.onProjectActive}/>
+            <Row/>
+          </CheckTemp>
+          {this.state.isProject === false &&
+            <CreateView/>
+          }
+        </RouterContainer>
+        <div className="clear"></div>
+        {this.state.isProject === false? 
+        <MainBtn><Link to="/designDetail/1">완료</Link></MainBtn>
+        : <MainBtn><Link to="/designDetail/4">완료</Link></MainBtn> }
       </Wrapper>
     );
   }

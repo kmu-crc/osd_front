@@ -18,6 +18,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/createdesign" component={CreateDesignPage}/>
+          {/* <Route path="/designDetail/:id/createView" component={CreateViewPage}/> */}
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design" component={DesignListPage}/>
           <Route path="/createGroup" component={CreateGroupPage}/>
