@@ -121,12 +121,11 @@ const Content = styled.div`
 
 class DesignDetail extends Component {
   state = {
-    activeStep: false,
     activeMoreBtn: false,
     activeIssue: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id);
   }
 
@@ -138,9 +137,7 @@ class DesignDetail extends Component {
 
   onActiveStep = () => {
     alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
-    this.setState({
-      activeStep: !(this.state.activeStep)
-    });
+    // 확인 누르면 api 요청 보내서 template = 2로 바꿔야 함!
   }
 
   onActiveIssue = (e) => {
@@ -176,7 +173,7 @@ class DesignDetail extends Component {
                     <li>원본디자인 보기</li>
                     <li>수정</li>
                     <li>삭제</li>
-                    {this.state.activeStep === false &&
+                    {designDetail.template == 1 &&
                     <li className="activeStep" onClick={this.onActiveStep}>프로젝트형으로 변경</li>
                     }
                   </BtnModal>
@@ -197,7 +194,7 @@ class DesignDetail extends Component {
           <TabContainer>
             <Content>
               {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
-              : this.state.activeStep === true? <DesignDetailStepContainer id={this.props.id}/>
+              : designDetail.template == 2? <DesignDetailStepContainer id={this.props.id}/>
               : <DesignDetailViewContainer id={this.props.id}/>}
             </Content>
           </TabContainer>

@@ -56,12 +56,12 @@ const MainBtn = styled.button`
 
 class CreateDesign extends Component {
   state = {
-    isDesign: false
+    isProject: true
   };
 
-  onDesignActive = (e) => {
+  onProjectActive = (e) => {
     this.setState({
-      isDesign: !(this.state.isDesign)
+      isProject: !(this.state.isProject)
     });
   }
 
@@ -72,16 +72,16 @@ class CreateDesign extends Component {
         <RouterContainer>
           <CreateInfo/>
           <CheckTemp>
-            <h3>작품을 바로 업로드하시겠습니까?</h3>
-            <input type="checkbox" onChange={this.onDesignActive}/>
+            <h3>과정 기록 사용</h3>
+            <input type="checkbox" checked={this.state.isProject === true && "checked"}onChange={this.onProjectActive}/>
             <Row/>
           </CheckTemp>
-          {this.state.isDesign === true &&
+          {this.state.isProject === false &&
             <CreateView/>
           }
         </RouterContainer>
         <div className="clear"></div>
-        {this.state.isDesign === true? 
+        {this.state.isProject === false? 
         <MainBtn><Link to="/designDetail/1">완료</Link></MainBtn>
         : <MainBtn><Link to="/designDetail/4">완료</Link></MainBtn> }
       </Wrapper>

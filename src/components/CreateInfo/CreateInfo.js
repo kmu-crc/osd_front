@@ -133,7 +133,7 @@ class CreateInfo extends Component{
                   <label>디자인 공개 여부</label>
                   <AuthCheck>
                     <label>공개</label>
-                    <input type="checkbox" checked/>
+                    <input type="checkbox"/>
                   </AuthCheck>
                   <div className="clear"></div>
                 </List>
