@@ -11,14 +11,15 @@ import UpdateUserInfoContainer from "./containers/UpdateUserInfoContainer";
 import SignUpPage from "./pages/SignUpPage";
 import SignInContainer from "./containers/SignInContainer";
 import RequiresAuth from "./containers/RequiresAuth";
+import MainPage from "./pages/MainPage/MainPage";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <Switch>
+          <Route path="/" component={MainPage}/>
           <Route path="/createdesign" component={CreateDesignPage}/>
-          {/* <Route path="/designDetail/:id/createView" component={CreateViewPage}/> */}
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design" component={DesignListPage}/>
           <Route path="/createGroup" component={CreateGroupPage}/>
