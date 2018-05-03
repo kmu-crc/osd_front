@@ -46,6 +46,8 @@ export const GET_DESIGN_DETAIL_ISSUE = "GET_DESIGN_DETAIL_ISSUE";
 // group List
 export const GET_GROUP_LIST = "GET_GROUP_LIST";
 export const GET_GROUP_DETAIL = "GET_GROUP_DETAIL";
+export const CREATE_NEW_GROUP = "CREATE_NEW_GROUP";
+export const CREATE_GROUP_FAILURE = "CREATE_GROUP_FAILURE";
 
 // designer List
 export const GET_DESIGNER_LIST = "GET_DESIGNER_LIST";

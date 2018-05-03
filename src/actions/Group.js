@@ -55,3 +55,31 @@ export function GetGroupDetail(data) {
     GroupDetail : data
   }
 };
+
+export function CreateNewGroupRequest(data) {
+  return (dispatch) => {
+    dispatch(CreateNewGroup());
+    return fetch("http://localhost:8080/group/createGroup", { 
+      headers: { "Content-Type": "application/json" }, 
+      method: "POST", 
+      body: JSON.stringify(data) 
+    }).then((response) => {
+      return response.json();
+    }).catch((error) => {
+      dispatch(CreateGroupFailure());
+      console.log(error);
+    })
+  }
+};
+
+export function CreateNewGroup() {
+  return {
+    type: types.CREATE_NEW_GROUP
+  }
+};
+
+export function CreateGroupFailure() {
+  return {
+    type: types.CREATE_GROUP_FAILURE
+  }
+};
