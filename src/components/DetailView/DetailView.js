@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Row, Columns } from "../Grid";
-import eximg from "../../eximg.jpeg";
+import eximg from "../../source/eximg.jpeg";
 import { Link } from "react-router-dom";
 
 // css styling
 
 const ViewWrapper = styled.div`
-  padding: 20px 40px;
+  padding: 20px 40px 50px;
   font-size: 16px;
   & .date {
     color: #a4a4a4;

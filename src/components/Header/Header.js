@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import logo from "../../logo.png";
+import logo from "../../source/logo.png";
 import { SetSession } from "../../modules/Sessions";
 import { Row, Columns } from "../Grid";
 import { Grid, Container } from 'semantic-ui-react'

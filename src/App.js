@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/" component={MainPage}/>
+          <Route exact path="/" component={MainPage}/>
           <Route path="/createdesign" component={CreateDesignPage}/>
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design" component={DesignListPage}/>
