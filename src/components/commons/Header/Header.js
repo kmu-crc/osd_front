@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import logo from "../../logo.png";
-import { SetSession } from "../../modules/Sessions";
-import { Row, Columns } from "../Grid";
+import logo from "../../../logo.png";
+import { SetSession } from "../../../modules/Sessions";
+import { Row, Columns } from "../../Grid";
 import { Grid, Container } from 'semantic-ui-react'
 
 // css styling
@@ -73,8 +73,8 @@ class Header extends Component {
     const LoginNav = () => {
       return (
         <NavUserInterface>
-          <li><NavLink to="/signin">kwonjounghun</NavLink></li>
-          <li><button onClick={this.handleSignOut}>SignUp</button></li>
+          <li><NavLink to="/signin">{this.props.userInfo.nickName}</NavLink></li>
+          <li><button onClick={this.handleSignOut}>SignOut</button></li>
         </NavUserInterface>
       )
     }
