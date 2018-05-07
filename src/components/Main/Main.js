@@ -24,6 +24,9 @@ const TextWrapper = styled.div`
   & .ui.grid {
     padding-bottom: 2rem;
   }
+  & .ui.grid+.grid {
+    margin-top: 3rem;
+  }
 `;
 
 const InfoContainer = styled(Grid)`
@@ -89,12 +92,27 @@ const BestContainer = styled(Grid)`
     background-image: url(${myPage});
     background-position: 50% 80%;
   }
+  & .bestHeader {
+    font-size : 20px;
+    margin-top: 20px;
+  }
 `;
 
 const Search = styled(Grid)`
   & .ui.selection.dropdown {
     min-width: 100px;
   }
+`;
+
+
+const HowToUse = styled(Grid)`
+& button {
+  border: 1px solid #f00;
+  background-color: #fff;
+  padding: 7px 18px;
+  color: #f00;
+  border-radius: 3px;
+}
 `;
 
 const options = [
@@ -178,14 +196,18 @@ class Main extends Component {
               </Grid.Column>
             </Grid.Row>
           </BestContainer>
-          <Search container={true} textAlign="center">
+          {/* <Search container={true} textAlign="center">
             <h3>원하는 내용을 검색해보세요</h3>
             <Input type="text" placeholder="Search..." action>
               <input />
               <Select compact options={options} defaultValue="전체" />
               <Button type="submit">Search</Button>
             </Input>
-          </Search>
+          </Search> */}
+          <HowToUse container={true} textAlign="center">
+            <h3>오픈디자인 서비스에 대해 더 궁금하신가요?</h3>
+            <button>홍보 영상 보러가기</button>
+          </HowToUse>
         </TextWrapper>
       </div>
     );
@@ -193,3 +215,7 @@ class Main extends Component {
 }
 
 export default Main;
+
+
+
+
