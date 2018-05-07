@@ -163,15 +163,15 @@ class Main extends Component {
           <BestContainer padded={true} columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <div className="best topDesign">인기 디자인</div>
+                <Link to="/design"><div className="best topDesign">인기 디자인</div></Link>
               </Grid.Column>
               <Grid.Column>
-                <div className="best topDesigner ">인기 디자이너</div>
+                <Link to="/designer"><div className="best topDesigner ">인기 디자이너</div></Link>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <div className="best topGroup">추천 그룹</div>
+                <Link to="/group"><div className="best topGroup">추천 그룹</div></Link>
               </Grid.Column>
               <Grid.Column>
                 <div className="best myInfo">나의 정보</div>
