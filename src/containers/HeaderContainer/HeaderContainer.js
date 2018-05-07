@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Header from "../../components/Header";
-import { SignOutRequest } from "../../actions/Authentication";
+import Header from "../../components/commons/Header";
+import { SignOutRequest } from "../../actions/Registration";
 
 class HeaderContainer extends Component {
   render() {
@@ -14,7 +14,8 @@ class HeaderContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    valid: state.Authentication.status.valid
+    valid: state.Authentication.status.valid,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
