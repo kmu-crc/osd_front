@@ -21,14 +21,6 @@ const FormContainer = styled.div`
 const List = styled.div`
   width: 100%;
   height: 60px;
-  & button {
-    padding: 3px 8px;
-    font-size: 18px;
-    background-color: #e9e9e9;
-    color: #343434;
-    margin-top: 10px;
-    margin-left: 10px;
-  }
   & label {
     display: block;
     width: 20%;
@@ -92,8 +84,7 @@ class CreateInfo extends Component{
               </List>
               <List>
                 <label>썸네일 업로드</label>
-                <FileInput />
-                <button>+</button>
+                <FileInput type="file" />
               </List>
               <List>
                 <label>카테고리</label>

@@ -85,7 +85,7 @@ class CreateDesign extends Component {
         <Row/>
         <Grid container={true} textAlign="center">
           {this.state.useProject === false? 
-          <Link to="/designDetail/1"><MainBtn>완료</MainBtn></Link>
+          <Link to="/designDetail/1"><MainBtn disabled="false">완료</MainBtn></Link>
           : <Link to="/designDetail/4"><MainBtn>완료</MainBtn></Link> }
         </Grid>
       </Wrapper>
