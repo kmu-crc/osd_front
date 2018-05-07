@@ -12,10 +12,7 @@ const DesignCon = Columns.extend`
 const Designli = styled.li`
   width: 93%;
   margin: 0 auto 20px;
-  // width: 200px;
-  // margin: 0 10px 20px;
   height: 270px;
-  // float: left;
   font-size: 13px;
   border-radius: 6px 6px 3px 3px;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
@@ -34,7 +31,7 @@ const ImgPart = styled.div`
   height: 140px;
   overflow: hidden;
   & img {
-    width: auto;
+    width: 100%;
     height: 100%;
   }
 `;

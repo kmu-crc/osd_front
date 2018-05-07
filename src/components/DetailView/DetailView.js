@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Row, Columns } from "../Grid";
 import eximg from "../../eximg.jpeg";
+import { Link } from "react-router-dom";
 
 // css styling
 
 const ViewWrapper = styled.div`
-  padding: 40px;
+  padding: 20px 40px;
   font-size: 16px;
   & .date {
     color: #a4a4a4;
     font-weight: 400;
     font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: right;
   }
   & .content {
     width: 100%;
@@ -21,10 +25,10 @@ const ViewWrapper = styled.div`
   & h4 {
     font-size: 16px;
   }
-`;
-
-const Header = Columns.extend`
-  font-size: 20px;
+  & > .noData {
+    text-align: center;
+    font-size: 16px;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -62,7 +66,10 @@ const Comment = Columns.extend`
   }
 `;
 
-const CommentBox = Columns.extend`
+const CommentBox = styled.div`
+  display: inline-block;
+  min-width: 200px;
+  max-width: 80%;
   border: 1px solid #d1d5da;
   border-radius: 3px;
   & .cmtInfo {
@@ -92,9 +99,8 @@ const Form = styled.form`
   padding: 0 30px;
   position: relative;
   & label {
-    margin-right: 30px;
     display: block;
-    width: 40px;
+    width: 70px;
     float: left;
     height: 60px;
     line-height: 60px;
@@ -102,7 +108,8 @@ const Form = styled.form`
   }
   & textarea {
     margin-right: 25px;
-    width: 70%;
+    width: 80%;
+    min-width: 200px;
     height: 60px;
     border-radius: 3px;
     border: 1px solid #a4a4a4;
@@ -117,17 +124,20 @@ const Form = styled.form`
 
 
 class DetailView extends Component {
+  componentDidMount() {
+    this.props.GetDesignDetailViewRequest(this.props.id);
+  }
+
   render(){
     let view = this.props.DesignDetailView;
+    let len = Object.keys(view).length;   
     return(
       <div>
-        {view.length !== 0 && 
+        {len !== 0? 
           <ViewWrapper>
-            <Header width={10}>{view.title}</Header>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
-            <div className="content">{view.content}</div>
             <ImageWrapper>
-              <img src={eximg}/>
+              <img src={eximg} alt=""/>
             </ImageWrapper>
             <Source width={12}>
               <h4>첨부파일</h4>
@@ -138,7 +148,7 @@ class DetailView extends Component {
                 {view.commentInfo.map(cmt => 
                   <li key={cmt.uid}>
                     <div className="cmtPic"></div>
-                    <CommentBox width={10}>
+                    <CommentBox>
                       <div className="cmtInfo">
                         <div className="cmtUser">user id</div>
                         <span className="cmtDate">commented on {(cmt.update_time).split("T")[0]}</span>
@@ -157,6 +167,13 @@ class DetailView extends Component {
             </Comment>
             <Row/>
           </ViewWrapper>
+        :
+        <ViewWrapper>
+          <div className="noData">
+            <p>등록된 디자인이 없습니다.</p>
+            <button className="red"><Link to="">업로드</Link></button>
+          </div>
+        </ViewWrapper>
         }
       </div>
     );

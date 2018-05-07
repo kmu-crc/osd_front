@@ -4,15 +4,10 @@ import { GetDesignDetailViewRequest } from "../../actions/Design";
 import DetailView from "../../components/DetailView";
 
 class DesignDetailViewContainer extends Component {
-
-  componentDidMount() {
-    this.props.GetDesignDetailViewRequest(this.props.id);
-  }
-
   render() {
     return (
       <div>
-        <DetailView DesignDetailView={this.props.DesignDetailView} />
+        <DetailView {...this.props}/>
       </div>
     );
   }

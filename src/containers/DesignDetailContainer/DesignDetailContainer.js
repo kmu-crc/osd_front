@@ -4,15 +4,10 @@ import { GetDesignDetailRequest } from "../../actions/Design";
 import DesignDetail from "../../components/DesignDetail";
 
 class DesignDetailContainer extends Component {
-
-  componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id);
-  }
-
   render() {
     return (
       <div>
-        <DesignDetail DesignDetail={this.props.DesignDetail}/>
+        <DesignDetail {...this.props}/>
       </div>
     );
   }

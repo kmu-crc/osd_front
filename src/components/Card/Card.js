@@ -31,16 +31,15 @@ const CardContainer = styled.div`
 class Card extends Component {
   state = {
     modal: false,
-    changeMode: this.props.changeMode
   }
 
-  openModal = (e) => {
-    if (this.state.changeMode === false) {
-      this.setState({
-        modal: !(this.state.modal)
-      });
-    }
-  }
+  // openModal = (e) => {
+  //   if (this.state.changeMode === false) {
+  //     this.setState({
+  //       modal: !(this.state.modal)
+  //     });
+  //   }
+  // }
 
   render(){
     let card = this.props.cardDetail;
@@ -51,9 +50,6 @@ class Card extends Component {
             <h4>{card.title}</h4>
             <span>{card.nick_name}</span>
             <span>{card.comment_count}</span>
-            {card.is_complete_card === 0 && 
-              <span>대표선택됨</span>
-            }
             <span className="date">{card.update_time}</span>
           </div>
         }

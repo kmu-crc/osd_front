@@ -35,37 +35,58 @@ const Board = Columns.extend`
     font-weight: normal;
     font-size: 15px;
   }
+  & h4.boardTitle > input {
+    height: 30px;
+    width: 100%;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+`;
+
+const EmptyCard = styled.div`
+  width: 100%;
+  min-height: 80px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px #999898;
+  margin-top: 5px;
+  padding: 10px 5px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 class DetailStep extends Component {
   state = {
-    changeMode: false
-  }
-  onChangeMode = (e) => {
+    isEdit: -1,
+    titleValue: ""
+  };
+
+  activeEdit = (e) => {
     this.setState({
-      changeMode: !(this.state.changeMode)
+      isEdit: e.target.id,
+      titleValue: e.target.innerHTML
     });
-    if (this.state.changeMode === true) {
-      e.target.style.backgroundColor = "fff";
-      e.target.innerHTML = "순서 변경";
-    } else if (this.state.changeMode === false) {
-      e.target.style.backgroundColor = "f00";
-      e.target.innerHTML = "확인";
-    }
+  }
+
+  onEdit = (e) => {
+    this.setState({
+      titleValue: e.target.value
+    });
   }
 
   render(){
     let step = this.props.DesignDetailStep;
     return(
     <BoardContainer>
-      <button type="button" className="changeBtn" onClick={this.onChangeMode}>순서 변경</button> 
-      {step.length !== 0 && 
+      {step.length !== 0 &&
         <div>
           {step.map(board => 
-            <Board xs={4} sm={3} width={2} key={board.uid}>
+            <Board xs={4} sm={3} md={3} width={2} key={board.uid}>
               <div className="boardList">
-                <h4>{board.title}</h4>
-                {this.state.changeMode === true? 
+                <h4 className="boardTitle" id={board.uid}>
+                  {this.state.isEdit == board.uid? <input value={this.state.titleValue} onChange={this.onEdit}/> 
+                  : <div id={board.uid} onClick={this.activeEdit}>{board.title}</div>}
+                </h4>
                   <div>
                     <SortablePane direction="vertical" margin={5} onResizeStop>
                     {board.cardData.map(card => 
@@ -73,26 +94,28 @@ class DetailStep extends Component {
                         <Pane className="pane" id={card.order} key={card.order} 
                               width="100%" height={80} maxHeight={120}
                               isResizable={{x: false, y: false, xy: false}}>
-                          <Card cardDetail={card} designId={board.design_id} changeMode={this.state.changeMode}/>
+                          <Card cardDetail={card} designId={board.design_id}/>
                         </Pane>
                         :
-                        <Card key={card.uid} cardDetail={card} designId={board.design_id} changeMode={this.state.changeMode}/>
+                        <Card key={card.order} cardDetail={card} designId={board.design_id}/>
                     )}
                     </SortablePane>
                   </div>  
-                  : 
-                  <div>
-                    {board.cardData.map(card => 
-                        <Card key={card.uid} cardDetail={card} designId={board.design_id} changeMode={this.state.changeMode}/>
-                    )}
-                  </div>
-                }
               </div>
             </Board>
           )}
-          <Row/>
         </div>
-      }
+      }      
+      <Board xs={4} sm={3} md={3} width={2}>
+        <div className="boardList">
+          <h4 className="boardTitle" id="new">
+            {this.state.isEdit === "new"? <input value={this.state.titleValue} onChange={this.onEdit}/> 
+            : <div id="new" onClick={this.activeEdit}>새 주제 추가 +</div>}
+          </h4>
+          <EmptyCard>새 카드 추가 +</EmptyCard>
+        </div>
+      </Board>
+      <Row/> 
     </BoardContainer>
     );
   }

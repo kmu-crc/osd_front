@@ -12,121 +12,107 @@ const Wrapper = Container.extend`
   min-width: 660px;
   padding: 20px 0;
   position: relative;
-  & h3 {
-    min-width: 300px;
-    float: left;
-    font-size: 24px;
-    margin-right: 50px;
-  }
+`;
+
+const HeadContainer = styled.div`
+  min-height: 100px;
+  font-size: 13px;
+  padding: 20px 30px 10px;
+  border-bottom: 1px solid #e6ebf1;
   & .explanation {
-    width: 800px;
-    margin: 20px 5px 40px;
+    padding: 20px 10px 10px;
   }
+  & button.btnIssue {
+    float: right;
+    width: 100px;
+    margin-right: 282px;
+    padding: 5px 0;
+    margin-top: 10px;
+    background: transparent;
+    border-radius: 3px;
+  }
+`;
+
+const Title = Columns.extend`
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const SubInfo = styled.div`
-  color: #EB3324;
-  font-size: 13px;
-  float: left;
-  margin-top: 30px;
+  border: 1px solid rgba(27,31,35,0.35);
+  float: right;
+  border-radius: 3px;
   & span {
-    margin-right: 5px;
-  }
-`;
-
-const Count = styled.div`
-  & span {
-    float: left;
-    margin-right: 30px;
     color: dimgray;
     font-weight: 400;
-    font-size: 13px;
-    padding-left: 20px;
-  }
-`;
-
-const BtnWrapper = styled.div`
-  position: absolute;
-  right: 0;
-  top: 30px;
-  width: 140px;
-  text-align: center;
-  & button {
-    padding: 7px 18px;
-    border-radius: 3px;
-  }
-  & .long {
-    background-color: #f2f2f2;
-    font-size: 13px;
-    margin-bottom: 5px;
-  }
-`;
-
-const BtnManage = styled.div`
-  margin-bottom: 10px;
-  & button {
-    background-color: #a4a4a4;
-    font-size: 12px;
-    margin-left: 2px;
-    margin-right: 2px;
-  }
-`;
-
-const TabContainer = Container.extend`
-  padding: 0 20px;
-  position: relative;
-`;
-
-const NaviTab = styled.div`
-  margin: 0 auto;
-  border-bottom: 2px solid #191919;
-  overflow: hidden;
-  transition: border 250ms ease;
-  & ul {
-    margin: 0;
-    padding: 0;
-    padding-left: 48px;
-    overflow: hidden;
     float: left;
-  }
-  & li {
     display: block;
-    float: right;
-    padding: 10px 24px 8px;
-    background-color: #FFF;
-    margin-right: 46px;
-    z-index: 2;
-    position: relative;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+  }
+  & span.text {
+    border-right: 1px solid rgba(27,31,35,0.35);
+    background-color: #e6ebf1;
+    background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
+    width: 60px;
+    font-weight: bold;
+  }
+  & span.number {
+    border-right: 1px solid rgba(27,31,35,0.35);
+    width: 40px;
+  }
+  & span.more {
+    width: 80px;
+    background-color: #e6ebf1;
+    background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
     cursor: pointer;
-    color: #191919;
-    transition: all 250ms ease;
+    font-weight: bold;
+    position: relative;
   }
-  & li:before, & li:after {
-    display: block;
-    content: " ";
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 44px;
-    background-color: #FFF;
-    transition: all 250ms ease;
-    border-top: 1px solid #f2f2f2;
+  & span.more:hover {
+    background-image: linear-gradient(-180deg, #eff3f6 0%, #eff3f6 100%);
   }
-  & li:before {
-    right: -24px;
-    transform: skew(30deg, 0deg);
-    box-shadow: rgba(0,0,0,.1) 3px 2px 5px, inset rgba(255,255,255,.09) -1px 0;
+`;
+
+const Cate = Columns.extend`
+  margin-top: 15px;
+  font-size: 13px;
+  & span {
+    margin-right: 15px;
+    max-width: 33%;
   }
-  & li:after {
-    left: -24px;
-    transform: skew(-30deg, 0deg);
-    box-shadow: rgba(0,0,0,.1) -3px 2px 5px, inset rgba(255,255,255,.09) 1px 0;
+  & .cate {
+    color: #EB3324;
+    margin-right: 30px;
   }
-  & li.active, & li.active:before, & li.active:after {
-    background-color: #191919;
-    color: #fff;
-    border-top: none;
+`;
+
+const BtnModal = styled.ul`
+  position: absolute;
+  top: 35px;
+  left: 0;
+  text-align: left;
+  width: 140px;
+  border: 1px solid rgba(27,31,35,0.15);
+  box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+  border-radius: 3px;
+  font-weight: normal;
+  background-color: #fff;
+  z-index: 2;
+  & li {
+    padding: 0 10px;
   }
+  & li:hover {
+    background-image: linear-gradient(-180deg, #eff3f6 0%, #eff3f6 100%);
+  }
+  & li.activeStep {
+    color: #EB3324;
+  }
+`;
+
+const TabContainer = styled.div`
 `;
 
 const Content = styled.div`
@@ -135,20 +121,35 @@ const Content = styled.div`
 
 class DesignDetail extends Component {
   state = {
-    activeTab: 0
+    activeMoreBtn: false,
+    activeIssue: false
   };
 
-  changeActive = (e) => {
-    let target = e.target;
-    const tabNum = target.parentNode.children.length;
-    for (var i = 0; i < tabNum; i++) {
-      target.parentNode.children[i].className = "";
-      target.className = "active";
-    }
+  componentDidMount() {
+    this.props.GetDesignDetailRequest(this.props.id);
+  }
+
+  onActiveMoreBtn = (e) => {
     this.setState({
-      activeTab: target.getAttribute("id")
+      activeMoreBtn: !(this.state.activeMoreBtn)
     });
-  };
+  }
+
+  onActiveStep = () => {
+    alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
+    // 확인 누르면 api 요청 보내서 isProject = 1로 바꿔야 함!
+  }
+
+  onActiveIssue = (e) => {
+    this.setState({
+      activeIssue: !(this.state.activeIssue)
+    });
+    if (this.state.activeIssue === true) {
+      e.target.innerHTML = "★ 공지보기";
+    } else if (this.state.activeIssue === false) {
+      e.target.innerHTML = "★ 공지닫기";
+    }
+  }
 
   render(){
     let designDetail = this.props.DesignDetail;
@@ -156,39 +157,45 @@ class DesignDetail extends Component {
       <div>
       {designDetail.length !== 0 &&
         <Wrapper container={true}>
-          <h3>{designDetail.title}</h3>
-          <SubInfo>
-            <span>{designDetail.categoryName.name} /</span>
-            <span>팀원 {designDetail.count.member_count}명</span>
-          </SubInfo>
-          <Row/>
-          <Count>
-            <span>{designDetail.count.total_view_count}</span>
-            <span>{designDetail.count.like_count}</span>
-            <span>{designDetail.children_count["count(*)"]}</span>
+          <HeadContainer>
+            <Title xs={4} sm={4} width={6}>{designDetail.title}</Title>
+            <SubInfo>
+              <span className="text">조회수</span>
+              <span className="number">{designDetail.count.total_view_count}</span>
+              <span className="text">좋아요</span>
+              <span className="number">{designDetail.count.like_count}</span>
+              <span className="text">파생</span>
+              <span className="number">{designDetail.children_count["count(*)"]}</span>
+              <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
+                {this.state.activeMoreBtn === true && 
+                  <BtnModal>
+                    <li>파생디자인 생성</li>
+                    <li>원본디자인 보기</li>
+                    <li>수정</li>
+                    <li>삭제</li>
+                    {designDetail.isProject == 0 &&
+                    <li className="activeStep" onClick={this.onActiveStep}>프로젝트형으로 변경</li>
+                    }
+                  </BtnModal>
+                }
+              </span>
+              <Row/>
+            </SubInfo>
             <Row/>
-          </Count>
-          <div className="explanation">{designDetail.explanation}</div>
-          <BtnWrapper>
-            <BtnManage>
-              <button><Link to="">수정</Link></button>
-              <button>삭제</button>
-            </BtnManage>
-            <button className="long"><Link to="">파생디자인 생성</Link></button>
-            <button className="long"><Link to="">원본디자인 보기</Link></button>
-          </BtnWrapper>
+            <Cate xs={4} sm={4} width={6}>
+              <span className="cate">{designDetail.categoryName.name}</span>
+              <span className="owner">:) {designDetail.userName}</span>
+              <span className="member">:) {designDetail.count.member_count}명</span>
+            </Cate>
+            <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
+            <Row/>
+            <div className="explanation">{designDetail.explanation}</div>
+          </HeadContainer>
           <TabContainer>
-            <NaviTab>
-              <ul>
-                <li onClick={this.changeActive} id="2">ISSUE</li>
-                <li onClick={this.changeActive} id="1">STEP</li>
-                <li className="active" onClick={this.changeActive} id="0">VIEW</li>
-              </ul>
-            </NaviTab>
             <Content>
-              {this.state.activeTab == 0? <DesignDetailViewContainer id={designDetail.uid}/> 
-              : this.state.activeTab == 1? <DesignDetailStepContainer id={designDetail.uid}/> 
-              : <DesignDetailIssueContainer id={designDetail.uid}/>}
+              {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
+              : designDetail.isProject == 1? <DesignDetailStepContainer id={this.props.id}/>
+              : <DesignDetailViewContainer id={this.props.id}/>}
             </Content>
           </TabContainer>
         </Wrapper>
