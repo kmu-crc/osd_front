@@ -122,7 +122,9 @@ const Content = styled.div`
 class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
-    activeIssue: false
+    activeIssue: false,
+    isProject: false,
+    isUpload: false
   };
 
   componentDidMount() {
@@ -149,6 +151,12 @@ class DesignDetail extends Component {
     } else if (this.state.activeIssue === false) {
       e.target.innerHTML = "★ 공지닫기";
     }
+  }
+
+  onGoStep = (e) => {
+    this.setState({
+      isProject: true
+    });
   }
 
   render(){
@@ -194,8 +202,8 @@ class DesignDetail extends Component {
           <TabContainer>
             <Content>
               {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
-              : designDetail.isProject == 1? <DesignDetailStepContainer id={this.props.id}/>
-              : <DesignDetailViewContainer id={this.props.id}/>}
+              : designDetail.isProject == 1 || this.state.isProject === true? <DesignDetailStepContainer id={this.props.id}/>
+              : <DesignDetailViewContainer goStep={this.onGoStep} id={this.props.id}/>}
             </Content>
           </TabContainer>
         </Wrapper>

@@ -41,11 +41,11 @@ class CreateView extends Component {
           <form>
             <List>
               <label>작품 업로드</label>
-              <input type="file" className="file"/>
+              <input type="file" className="file" onChange={this.props.fileTrue}/>
             </List>
             <List>
               <label>소스 파일 업로드</label>
-              <input type="file" className="file"/>
+              <input type="file" className="file" onChange={this.props.fileTrue}/>
             </List>
           </form>
       </FormContainer>

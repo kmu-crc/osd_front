@@ -58,12 +58,19 @@ const MainBtn = styled.button`
 
 class CreateDesign extends Component {
   state = {
-    useProject: true
+    useProject: true,
+    fileTrue: false
   };
 
   onProjectActive = (e) => {
     this.setState({
       useProject: !(this.state.useProject)
+    });
+  }
+
+  goFileTrue = (e) => {
+    this.setState({
+      fileTrue: true 
     });
   }
 
@@ -79,14 +86,15 @@ class CreateDesign extends Component {
             <Row/>
           </CheckTemp>
           {this.state.useProject === false &&
-            <CreateView/>
+            <CreateView fileTrue={this.goFileTrue}/>
           }
         </RouterContainer>
         <Row/>
         <Grid container={true} textAlign="center">
           {this.state.useProject === false? 
-          <Link to="/designDetail/1"><MainBtn disabled="false">완료</MainBtn></Link>
-          : <Link to="/designDetail/4"><MainBtn>완료</MainBtn></Link> }
+            this.state.fileTrue === true? <Link to="/designDetail/1"><MainBtn>등록</MainBtn></Link>
+            : <Link to="/designDetail/2"><MainBtn>등록</MainBtn></Link>
+          : <Link to="/designDetail/4"><MainBtn>등록</MainBtn></Link> }
         </Grid>
       </Wrapper>
     );

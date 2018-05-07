@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Container, Row, Columns } from "../Grid";
 import eximg from "../../source/eximg.jpeg";
 import { Link } from "react-router-dom";
+import CreateView from "../CreateView";
 
 // css styling
 
@@ -28,6 +29,20 @@ const ViewWrapper = styled.div`
   & > .noData {
     text-align: center;
     font-size: 16px;
+    padding-top: 30px;
+  }
+  & > .noData .red {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  & > .upload .gokBiS {
+    font-size: 14px;
+    box-shadow: none;
+  }
+  & > .upload button{
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
   }
 `;
 
@@ -122,8 +137,40 @@ const Form = styled.form`
   }
 `;
 
+const MainBtn = styled.button`
+  padding: 7px 25px;
+  border-radius: 30px;
+  background-color: #EB3324;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  &:hover {
+    background-color: #CD4533;
+  }
+`;
+
+const GoStepBtn = styled.button`
+  position: absolute;
+  top: 135px;
+  right: 0;
+  padding: 5px 10px;
+  border-radius: 3px;   
+`;
+
 
 class DetailView extends Component {
+  state = {
+    isUpload: false
+  }
+
+  activeUpload = () => {
+    this.setState({
+      isUpload: true
+    });
+  } 
+
   componentDidMount() {
     this.props.GetDesignDetailViewRequest(this.props.id);
   }
@@ -169,12 +216,21 @@ class DetailView extends Component {
           </ViewWrapper>
         :
         <ViewWrapper>
+          {this.state.isUpload === true? 
+          <div className="upload">
+            <CreateView />
+            <Link to="/designDetail/1"><MainBtn>등록</MainBtn></Link>
+          </div>
+          : 
           <div className="noData">
             <p>등록된 디자인이 없습니다.</p>
-            <button className="red"><Link to="">업로드</Link></button>
+            <button onClick={this.activeUpload} className="red">파일 업로드</button>
+            <button onClick={this.props.goStep} className="red">과정 기록</button>
           </div>
+          }
         </ViewWrapper>
         }
+        <GoStepBtn onClick={this.props.goStep}>과정 기록</GoStepBtn>
       </div>
     );
   }
