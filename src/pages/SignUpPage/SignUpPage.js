@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import ClientTemplate from "../../templates/ClientTemplate";
 import SignUpContainer from "../../containers/SignUpContainer";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 const SignUpContent = styled.div`
   width: 100%;
-  height:100vh;
+  padding: 20px 0;
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -17,12 +16,11 @@ const SignUpContent = styled.div`
 
 const SignUpCard = styled.form`
   width: 600px;
-  height: 400px;
   padding: 50px 20px;
   background-color: #fff;
 `;
 
-const InsertDetail = styled.form`
+const InsertDetail = styled.div`
   width: 600px;
   padding: 50px 20px;
   background-color: #fff;
@@ -38,16 +36,13 @@ class SignUpPage extends Component {
     useDetail: false,
     checkEmail: false
   }
-  handleFormSubmit = (event) => {
-    console.log(event);
-    // event.preventDefault();
-    // let data = event.target
-    // let formData = {
-    //   email: data.email.value,
-    //   password: data.password.value,
-    //   nickName: data.nick_name.value
-    // }
-    // console.log("form", formData);
+  handleFormSubmit = (data) => {
+    console.log(data);
+    let formData = {
+      email: data.email,
+      password: data.password,
+      nick_name: data.nick_name
+    }
     // this.props.SignUpRequest(formData).then(data => {
     //   this.props.history.push("/design");
     // });
@@ -92,57 +87,12 @@ class SignUpPage extends Component {
     });
   }
   render() {
-    const SignUpUser = () => {
-      return (
-        <div>
-          <FromFilde>
-            <label htmlFor="email">email</label>
-            <input type="email" id="email" name="email" ref={ref => this.email = ref} />
-            <button type="button" onClick={this.handleEmailCheck} >email 중복검사</button>
-          </FromFilde>
-          <FromFilde>
-            <label htmlFor="password">passord</label>
-            <input type="password" id="password" name="password" />
-          </FromFilde>
-          <FromFilde>
-            <label htmlFor="nick_name">Nick Name</label>
-            <input type="text" id="nick_name" name="nick_name" />
-          </FromFilde>
-          <button type="submit">회원가입 하기</button>
-          <FacebookLogin
-            appId="1846803492017708"
-            fields="name,email"
-            autoLoad={false}
-            callback={this.onClickFBSignUpbtn}
-            render={renderProps => (
-              <button type="button" onClick={renderProps.onClick}>facebook 회원가입</button>
-            )} />
-        </div>
-      )
-    };
     return (
       <ClientTemplate>
         <SignUpContent>
-          <SignUpContainer onSubmit={this.handleFormSubmit}/>
-          {this.state.useDetail
-            ? <InsertDetail method="post" onSubmit={this.handleDetailFormSubmit}>
-              <FromFilde>
-                <label htmlFor="email">email</label>
-                <input type="email" id="email" name="email" />
-              </FromFilde>
-              <FromFilde>
-                <label htmlFor="password">passord</label>
-                <input type="password" id="password" name="password" />
-              </FromFilde>
-              <FromFilde>
-                <label htmlFor="nick_name">Nick Name</label>
-                <input type="text" id="nick_name" name="nick_name" />
-              </FromFilde>
-            </InsertDetail>
-            : <SignUpCard method="post" onSubmit={this.handleFormSubmit}>
-              <SignUpUser />
-            </SignUpCard>
-          }
+          <InsertDetail>
+            <SignUpContainer method="post" onSubmit={this.handleFormSubmit} />
+          </InsertDetail>
         </SignUpContent>
       </ClientTemplate>
     );

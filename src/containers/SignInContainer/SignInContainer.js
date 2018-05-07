@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import SignInPage from "../../pages/SignInPage";
-import { SignInRequest, FBSignInRequest } from "../../actions/Authentication";
+import { withRouter } from "react-router-dom";
+import SignInForm from "../../components/SignInForm";
+import { SignInRequest, FBSignInRequest } from "../../actions/Registration";
 
 class SignInContainer extends Component {
   render() {
     return (
-      <SignInPage {...this.props}/>
+      <SignInForm {...this.props}/>
     );
   }
 }
@@ -22,4 +23,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignInContainer);
+export default withRouter(connect(null, mapDispatchToProps)(SignInContainer));

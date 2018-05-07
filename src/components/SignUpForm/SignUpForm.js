@@ -1,70 +1,115 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { Component } from "react";
+import { Form, Button, Icon, Modal, Input } from "semantic-ui-react";
+import { InputField, OverlapField } from "../commons/FormField";
+import ValidateForm from "../commons/ValidateForm";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-const validate = values => {
-  const errors = {}
-  if (!values.username) {
-    errors.username = 'Required'
-  } else if (values.username.length > 15) {
-    errors.username = 'Must be 15 characters or less'
+class SignUpForm extends Component {
+  state = {
+    SignUpData: {
+      email: null,
+      FB_user_id: null,
+      nick_name: null
+    },
+    open: false,
+    isOnlyEmail: false,
+    error: null
   }
-  if (!values.email) {
-    errors.email = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
+
+  closeConfigShow = (closeOnEscape, closeOnRootNodeClick) => () => {
+    this.setState({ closeOnEscape, closeOnRootNodeClick, open: true })
   }
-  if (!values.age) {
-    errors.age = 'Required'
-  } else if (isNaN(Number(values.age))) {
-    errors.age = 'Must be a number'
-  } else if (Number(values.age) < 18) {
-    errors.age = 'Sorry, you must be at least 18 years old'
+
+  close = () => this.setState({ open: false })
+
+  handleSubmit = (data) => {
+    // password2는 회원가입에 직접적으로 필요한 속성이 아니기 때문에 전송시 삭제합니다.
+    delete data.password2;
+    this.props.SignUpRequest(data).then(res => {
+      if (res.type === "AUTH_SIGNUP_SUCCESS") {
+        this.props.history.push("/design");
+      }
+    })
   }
-  return errors
+  handleSignUpFB = (response) => {
+    this.setState({
+      SignUpData: {
+        email: response.email,
+        FB_user_id: response.userID,
+        nick_name: response.name
+      }
+    })
+    if (response.email == null || !response.email) {
+      return this.setState({ open: true })
+    } else {
+      this.handleSubmitFB();
+    }
+  }
+  handleSubmitFB = (data) => {
+    console.log(data);
+    this.setState({
+      open: false,
+      SignUpData: {
+        ...this.state.SignUpData,
+        email: data.email
+      }
+    });
+    this.props.FBSignUpRequest(this.state.SignUpData).then(data => {
+      if (data.type === "AUTH_FBSIGNUP_SUCCESS") {
+        this.props.history.push("/design");
+      }
+    })
+  }
+
+  render() {
+    const { open, closeOnEscape, closeOnRootNodeClick } = this.state
+    return (
+      <div>
+        <ValidateForm onSubmit={this.handleSubmit}>
+          <InputField name="email" type="text"
+            placeholder="E-Mail" label="email" validates={["required", "email", "checkEmail"]} />
+          <InputField name="nick_name" type="text"
+            placeholder="닉네임을 입력해주세요" label="닉네임" validates={["required", "checkNickName"]} />
+          <OverlapField name="password" type="password"
+            placeholder="Password" label="password" validates={["required"]} />
+          <Form.Group>
+            <Form.Field control={Button} type="submit">회원가입</Form.Field>
+            <FacebookLogin
+              appId="1846803492017708"
+              autoLoad={false}
+              fields="name,email"
+              callback={this.handleSignUpFB}
+              render={renderProps => (
+                <Button onClick={renderProps.onClick} type="button" color="facebook"><Icon disabled name='facebook f' />FaceBook 회원가입</Button>
+              )}
+            />
+          </Form.Group>
+        </ValidateForm>
+        <Modal
+          open={open}
+          closeOnEscape={closeOnEscape}
+          closeOnRootNodeClick={closeOnRootNodeClick}
+          onClose={this.close}
+        >
+          <ValidateForm onSubmit={this.handleSubmitFB}>
+            <Modal.Header>
+              Delete Your Account
+          </Modal.Header>
+            <Modal.Content>
+
+              <InputField name="email" type="text"
+                placeholder="E-Mail" label="email" validates={["required", "email", "checkEmail"]} />
+            </Modal.Content>
+            <Modal.Actions>
+              <Button type="button" negative content='닫기' onClick={this.close} />
+              <Button type="submit" positive labelPosition="right" icon='checkmark' content="등록" />
+            </Modal.Actions>
+          </ValidateForm>
+        </Modal>
+      </div>
+
+    );
+  }
 }
-
-const warn = values => {
-  const warnings = {}
-  if (values.age < 19) {
-    warnings.age = 'Hmm, you seem a bit young...'
-  }
-  return warnings
-}
-
-const renderField = ({
-  input,
-  label,
-  type,
-  meta: { touched, error, warning }
-}) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} />
-      {touched &&
-        ((error && <span>{error}</span>) ||
-          (warning && <span>{warning}</span>))}
-    </div>
-  </div>
-)
-
-let SignUpForm = (props) => {
-  const { handleSubmit } = props;
-  return (
-    <form onSubmit={handleSubmit}>
-      <Field name="email" type="text"
-        placeholder="ID" component={renderField} label="email"/>
-      <Field name="password" type="password"
-        placeholder="Password" component={renderField} label="password" />
-      <button type="submit">Login</button>
-    </form>
-  );
-}
-
-SignUpForm = reduxForm({
-  form: 'SignUp',  // form의 이름을 지어준다.
-  validate, // <--- validation function given to redux-form
-  warn // <--- warning function given to redux-form
-})(SignUpForm);
 
 export default SignUpForm;

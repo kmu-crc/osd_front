@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HeaderContainer from "../../containers/HeaderContainer";
-import Footer from "../../components/Footer";
+import Footer from "../../components/commons/Footer";
 
 class ClientTemplate extends Component {
   render() {

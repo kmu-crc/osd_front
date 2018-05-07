@@ -11,14 +11,12 @@ const initialState = {
     token: null,
     userInfo: null
   },
-  error: {
-    message: null
-  },
   check: {
     status: "INIT"
   },
   checkStatus: {
-    checkEmail: false
+    checkEmail: false,
+    checkNickNAme: false
   }
 };
 
@@ -27,97 +25,6 @@ export default function Authentication(state, action) {
     state = initialState;
 
   switch (action.type) {
-    /* LOGIN */
-    case types.AUTH_SIGNIN:
-      return update(state, {
-        login: {
-          status: { $set: "WAITING" }
-        }
-      });
-    case types.AUTH_SIGNIN_SUCCESS:
-      return update(state, {
-        login: {
-          status: { $set: "SUCCESS" }
-        },
-        status: {
-          isLoggedIn: { $set: true },
-          token: { $set: action.token }
-        }
-      });
-    case types.AUTH_SIGNIN_FAILURE:
-      return update(state, {
-        login: {
-          status: { $set: "FAILURE" }
-        }
-      });
-    case types.AUTH_SIGNIN_IS_NOT_MEMBER:
-      return update(state, {
-        login: {
-          status: { $set: "NOTMEMBER" }
-        }
-      });
-    case types.AUTH_SIGNIN_IS_NOT_PASSWORD:
-      return update(state, {
-        login: {
-          status: { $set: "NOTMATCHINGPASSWORD" }
-        }
-      });
-    case types.AUTH_FBSIGNUP:
-      return update(state, {
-        login: {
-          status: { $set: "WAITING" }
-        }
-      });
-    case types.AUTH_FBSIGNUP_SUCCESS:
-      return update(state, {
-        login: {
-          status: { $set: "SUCCESS" }
-        },
-        status: {
-          isLoggedIn: { $set: true },
-          token: { $set: action.token }
-        }
-      });
-    case types.AUTH_FBSIGNUP_FAILURE:
-      return update(state, {
-        login: {
-          status: { $set: "FAILURE" }
-        }
-      });
-    case types.AUTH_FBSIGNUP_OVERLAP_MEMBER:
-      return update(state, {
-        login: {
-          status: { $set: "OVERLAP_MEMBER" }
-        }
-      });
-    case types.AUTH_FBSIGNIN:
-      return update(state, {
-        login: {
-          status: { $set: "WAITING" }
-        }
-      });
-    case types.AUTH_FBSIGNIN_SUCCESS:
-      return update(state, {
-        login: {
-          status: { $set: "SUCCESS" }
-        },
-        status: {
-          isLoggedIn: { $set: true },
-          token: { $set: action.token }
-        }
-      });
-    case types.AUTH_FBSIGNIN_FAILURE:
-      return update(state, {
-        login: {
-          status: { $set: "FAILURE" }
-        }
-      });
-    case types.AUTH_FBSIGNIN_IS_NOT_MEMBER:
-      return update(state, {
-        login: {
-          status: { $set: "NOTMEMBER" }
-        }
-      });
     case types.AUTH_CHECK_TOKEN:
       return update(state, {
         status: {
@@ -163,6 +70,30 @@ export default function Authentication(state, action) {
         },
         checkStatus: {
           checkEmail: { $set: action.checkEmail }
+        }
+      });
+      case types.AUTH_CHECK_NICKNAME:
+      return update(state, {
+        check: {
+          status: { $set: "WAITING" }
+        }
+      });
+    case types.AUTH_CHECK_NICKNAME_SUCCESS:
+      return update(state, {
+        check: {
+          status: { $set: "SUCCESS" }
+        },
+        checkStatus: {
+          checkNickNAme: { $set: action.checkNickNAme }
+        }
+      });
+    case types.AUTH_CHECK_NICKNAME_FAILURE:
+      return update(state, {
+        check: {
+          status: { $set: "FAILURE" }
+        },
+        checkStatus: {
+          checkNickNAme: { $set: action.checkNickNAme }
         }
       });
     case types.AUTH_SIGNOUT:
