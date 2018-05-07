@@ -65,7 +65,7 @@ export const GetSession = (key) => {
     } else {
       token = getCookie(key);
     }
-    if(token == null){
+    if(token === "null" || token == null){
       reject(null);
     } else {
       resolve(token);
