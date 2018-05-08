@@ -1,88 +1,69 @@
 import React, { Component } from "react";
 import Design from "../Design";
 import styled from "styled-components";
-import { Container, Columns, Row } from "../Grid/index";
+// import { Container, Columns, Row } from "../Grid/index";
+import { Grid, Input, Select } from "semantic-ui-react";
 
 // css styling
 
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
-  padding: 40px 0px;
+  padding: 1rem 3rem 5rem;
   min-width: 660px;
   & ul {
     margin-top: 30px;
   }
-  //   margin: 100px auto 0;
-  //   @media (min-width: 768px) and (max-width: 960px) {
-  //     width: 660px;
-  //   }
-  //   @media (min-width: 960px) and (max-width: 1200px) {
-  //     width: 880px;
-  //   }
-  //   @media (min-width: 1200px) and (max-width: 1320px) {
-  //     width: 1100px;
-  //   }
-  //   @media (min-width: 1320px) {
-  //     width: 1320px;
-  //   }
-  // }
 `;
 
-const Category = Columns.extend`
-  width: 300px;
-  float: left;
-  & select {
-    width: 140px;
-    height: 30px;
-    font-size: 13px;
-    margin-right: 5px;
+const MenuContainer = styled(Grid)`
+  font-size: 13px;
+  & .sorting {
+    text-align: right;
   }
 `;
 
-const Sorting = Columns.extend`
-  width: 100px;
-  float: right;
-  & select {
-    width: 100px;
-    height: 30px;
-    font-size: 13px;
-    float: right;
-  }
+const ListContainer = styled(Grid)`
+
 `;
+
+const categoryLevel1 = [
+  { key: "fashion", value: "fashion", text: "패션" },
+  { key: "product", value: "product", text: "제품" },
+  { key: "comm", value: "comm", text: "커뮤니케이션" },
+  { key: "place", value: "place", text: "공간" },
+  { key: "enter", value: "enter", text: "엔터테인먼트" },
+  { key: "new", value: "new", text: "새분야" },
+];
+
+const sorting = [
+  { key: "date", value: "date", text: "최신순" },
+  { key: "like", value: "like", text: "좋아요순" }
+];
 
 class DesignList extends Component {
   render(){
     let list = this.props.DesignList;
     return(
       <Wrapper>
-        <Container container={true}>
-        <Category xs={4} sm={5} width={4}>
-          <select>
-            <option>패션</option>
-            <option>제품</option>
-            <option>커뮤니케이션</option>
-            <option>공간</option>
-            <option>엔터테인먼트</option>
-          </select>
-          <select>
-            <option>의상</option>
-          </select>
-        </Category>
-        <Sorting width={2}>
-          <select>
-            <option>최신순</option>
-            <option>인기순</option>
-          </select>
-        </Sorting>
-        <Row />
-        <ul>
-          {list.map(design =>
-            <Design key={design.uid} design={design}/>
-          )}
-          <Row/>
-        </ul>
-        </Container>
+        <MenuContainer devided="vertically" padded={true} columns={2}>
+          <Grid.Row>
+            <Grid.Column className="category">
+              <Select placeholder="1차 카테고리" options={categoryLevel1} />
+              <Select placeholder="2차 카테고리" options={categoryLevel1} />
+            </Grid.Column>
+            <Grid.Column className="sorting">
+              <Select options={sorting} />
+            </Grid.Column>
+          </Grid.Row>
+        </MenuContainer>
+        <ListContainer padded={true} columns={6} as="ul">
+          <Grid.Row>
+            {list.map(design =>
+              <Grid.Column key={design.uid}><Design design={design}/></Grid.Column>
+            )}
+          </Grid.Row>
+        </ListContainer>
       </Wrapper>
     );
   }
