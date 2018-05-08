@@ -3,14 +3,12 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "../../source/eximg.jpeg";
 import { Columns, Row } from "../Grid/index";
+import { Grid, Icon } from "semantic-ui-react";
 
 // css styling
 
-const DesignCon = Columns.extend`
- `;
-
 const Designli = styled.li`
-  width: 93%;
+  width: 100%;
   margin: 0 auto 20px;
   height: 270px;
   font-size: 13px;
@@ -72,7 +70,6 @@ class Design extends Component {
     let design = this.props.design;
     return(
       <NavLink to={"/designDetail/"+design.uid}>
-      <DesignCon xs={4} sm={3} md={3} width={2}>
         <Designli>
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
@@ -87,7 +84,6 @@ class Design extends Component {
             </Count>
           </TextPart>
         </Designli>
-        </DesignCon>
       </NavLink>
     );
   }
