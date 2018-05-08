@@ -10,6 +10,7 @@ const BoardContainer = styled.div`
   height: 100%;
   min-width: 660px;
   padding-top: 10px;
+  padding-bottom: 30px;
   & .changeBtn {
     position: absolute;
     top: 0;

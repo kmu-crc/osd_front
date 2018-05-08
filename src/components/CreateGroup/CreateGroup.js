@@ -70,22 +70,21 @@ class CreateGroup extends Component {
   render(){
     return(
       <Wrapper>
-        <Header>새 그룹 생성</Header>
+        <Header>새 그룹 등록</Header>
         <Container>
           <List>
             <label>그룹 이름</label>
-            <input placeholder="그룹 이름을 입력해주세요(최대 16자)"/>
+            <input name="title" placeholder="그룹 이름을 입력해주세요(최대 16자)"/>
           </List>
           <List>
             <label>그룹 설명</label>
-            <input className="text" placeholder="그룹 설명을 입력해주세요"/>
+            <input name="explanation" className="text" placeholder="그룹 설명을 입력해주세요"/>
           </List>
           <List>
             <label>썸네일 업로드</label>
-            <input className="file"/>
-            <button>+</button>
+            <input type="file" className="file"/>
           </List>
-          <button className="red">그룹 생성</button>
+          <button className="red">그룹 등록</button>
         </Container>
       </Wrapper>
     );

@@ -15,14 +15,6 @@ const FormContainer = styled.div`
 const List = styled.div`
   width: 100%;
   height: 60px;
-  & button {
-    padding: 3px 8px;
-    font-size: 18px;
-    background-color: #e9e9e9;
-    color: #343434;
-    margin-top: 10px;
-    margin-left: 10px;
-  }
   & label {
     display: block;
     width: 20%;
@@ -49,13 +41,11 @@ class CreateView extends Component {
           <form>
             <List>
               <label>작품 업로드</label>
-              <input className="file"/>
-              <button>+</button>
+              <input type="file" className="file" onChange={this.props.fileTrue}/>
             </List>
             <List>
               <label>소스 파일 업로드</label>
-              <input className="file"/>
-              <button>+</button>
+              <input type="file" className="file" onChange={this.props.fileTrue}/>
             </List>
           </form>
       </FormContainer>

@@ -5,7 +5,7 @@ import Footer from "../../components/commons/Footer";
 class ClientTemplate extends Component {
   render() {
     return(
-      <div>
+      <div style={{position: "relative"}}>
         <HeaderContainer />
         {this.props.children}
         <Footer />

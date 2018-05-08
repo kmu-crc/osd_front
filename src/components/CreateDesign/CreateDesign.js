@@ -4,6 +4,7 @@ import CreateInfo from "../CreateInfo";
 import CreateView from "../CreateView";
 import { Container, Row } from "../Grid";
 import { Link } from "react-router-dom";
+import { Grid } from "semantic-ui-react";
 
 // css styling
 
@@ -11,8 +12,11 @@ const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
   min-width: 660px;
-  padding: 20px 30px 90px;
+  padding: 20px 30px 30px;
   position: relative;
+  & .ui.grid {
+    margin: 0;
+  }
 `;
 
 const Header = styled.h2`
@@ -45,10 +49,8 @@ const MainBtn = styled.button`
   border: none;
   color: #fff;
   font-size: 14px;
-  position: absolute;
-  bottom: 0px;
-  right: 50%;
-  margin-right: -43px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   &:hover {
     background-color: #CD4533;
   }
@@ -56,12 +58,19 @@ const MainBtn = styled.button`
 
 class CreateDesign extends Component {
   state = {
-    useProject: true
+    useProject: true,
+    fileTrue: false
   };
 
   onProjectActive = (e) => {
     this.setState({
       useProject: !(this.state.useProject)
+    });
+  }
+
+  goFileTrue = (e) => {
+    this.setState({
+      fileTrue: true 
     });
   }
 
@@ -77,13 +86,16 @@ class CreateDesign extends Component {
             <Row/>
           </CheckTemp>
           {this.state.useProject === false &&
-            <CreateView/>
+            <CreateView fileTrue={this.goFileTrue}/>
           }
         </RouterContainer>
-        <div className="clear"></div>
-        {this.state.useProject === false? 
-        <MainBtn><Link to="/designDetail/1">완료</Link></MainBtn>
-        : <MainBtn><Link to="/designDetail/4">완료</Link></MainBtn> }
+        <Row/>
+        <Grid container={true} textAlign="center">
+          {this.state.useProject === false? 
+            this.state.fileTrue === true? <Link to="/designDetail/1"><MainBtn>등록</MainBtn></Link>
+            : <Link to="/designDetail/2"><MainBtn>등록</MainBtn></Link>
+          : <Link to="/designDetail/4"><MainBtn>등록</MainBtn></Link> }
+        </Grid>
       </Wrapper>
     );
   }
