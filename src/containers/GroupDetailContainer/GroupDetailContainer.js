@@ -4,16 +4,10 @@ import { GetGroupDetailRequest } from "../../actions/Group";
 import GroupDetail from "../../components/GroupDetail";
 
 class GroupDetailContainer extends Component {
-
-  componentDidMount(){
-    console.log(this.props.id);
-    this.props.GetGroupDetailRequest(this.props.id);
-  }
-  
   render() {
     return(
       <div>
-        <GroupDetail GroupDetail={this.props.GroupDetail}/>
+        <GroupDetail {...this.props}/>
       </div>
     );
   }

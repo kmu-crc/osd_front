@@ -4,7 +4,7 @@ import { Row } from "../Grid";
 import DesignDetailViewContainer from "../../containers/DesignDetailViewContainer";
 import DesignDetailStepContainer from "../../containers/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "../../containers/DesignDetailIssueContainer";
-import { Grid, Icon } from 'semantic-ui-react'
+import { Grid, Icon } from "semantic-ui-react";
 
 // css styling
 
@@ -34,7 +34,6 @@ const HeadContainer = styled(Grid)`
   & .title {
     font-size: 24px;
     font-weight: bold;
-    max-width: 85%;
   }
   & .explanation {
     margin-top: 20px;
@@ -160,8 +159,9 @@ class DesignDetail extends Component {
           <HeadContainer divided="vertically" padded={true}>
             <Grid.Row columns={2}>
               <Grid.Column computer={8} tablet={6} mobile={6}>
-                <h3 className="title">{designDetail.title}<button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button></h3>
-                
+                <h3 className="title">{designDetail.title}
+                  <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
+                </h3>
                 <Row/>
                 <Cate>
                   <span className="cate">{designDetail.categoryName.name}</span>
