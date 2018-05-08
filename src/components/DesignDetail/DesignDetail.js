@@ -5,6 +5,7 @@ import { Container, Row, Columns } from "../Grid";
 import DesignDetailViewContainer from "../../containers/DesignDetailViewContainer";
 import DesignDetailStepContainer from "../../containers/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "../../containers/DesignDetailIssueContainer";
+import { Icon } from 'semantic-ui-react'
 
 // css styling
 
@@ -56,7 +57,7 @@ const SubInfo = styled.div`
     border-right: 1px solid rgba(27,31,35,0.35);
     background-color: #e6ebf1;
     background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-    width: 60px;
+    width: 70px;
     font-weight: bold;
   }
   & span.number {
@@ -168,11 +169,20 @@ class DesignDetail extends Component {
           <HeadContainer>
             <Title xs={4} sm={4} width={6}>{designDetail.title}</Title>
             <SubInfo>
-              <span className="text">조회수</span>
+              <span className="text">
+                <Icon name="unhide" color="grey" size="tiny"></Icon>
+                조회수
+              </span>
               <span className="number">{designDetail.count.total_view_count}</span>
-              <span className="text">좋아요</span>
+              <span className="text">
+                <Icon name="heart" color="grey" size="tiny"></Icon>
+                좋아요
+              </span>
               <span className="number">{designDetail.count.like_count}</span>
-              <span className="text">파생</span>
+              <span className="text">
+                <Icon name="window restore" color="grey" size="tiny"></Icon>
+                파생
+              </span>
               <span className="number">{designDetail.children_count["count(*)"]}</span>
               <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
                 {this.state.activeMoreBtn === true && 
@@ -192,8 +202,14 @@ class DesignDetail extends Component {
             <Row/>
             <Cate xs={4} sm={4} width={6}>
               <span className="cate">{designDetail.categoryName.name}</span>
-              <span className="owner">:) {designDetail.userName}</span>
-              <span className="member">:) {designDetail.count.member_count}명</span>
+              <span className="owner">
+                <Icon name="user" size="tiny"></Icon>
+                {designDetail.userName}
+              </span>
+              <span className="member">
+                <Icon name="group" size="tiny"></Icon>
+                {designDetail.count.member_count}명
+              </span>
             </Cate>
             <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
             <Row/>
