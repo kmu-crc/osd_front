@@ -23,18 +23,17 @@ const HeadContainer = styled(Grid)`
   font-size: 13px;
   border-bottom: 1px solid #e6ebf1;
   & button.btnIssue {
-    float: left;
     margin-left: 10px;
     width: 80px;
     height: 24px;
     margin-top: 6px;
     background: transparent;
     border-radius: 3px;
+    font-size: 13px;
   }
   & .title {
     font-size: 24px;
     font-weight: bold;
-    float: left;
     max-width: 85%;
   }
   & .explanation {
@@ -160,9 +159,9 @@ class DesignDetail extends Component {
         <Wrapper>
           <HeadContainer divided="vertically" padded={true}>
             <Grid.Row columns={2}>
-              <Grid.Column>
-                <h3 className="title">{designDetail.title}</h3>
-                <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
+              <Grid.Column computer={8} tablet={6} mobile={6}>
+                <h3 className="title">{designDetail.title}<button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button></h3>
+                
                 <Row/>
                 <Cate>
                   <span className="cate">{designDetail.categoryName.name}</span>
@@ -177,7 +176,7 @@ class DesignDetail extends Component {
                 </Cate>
                 <div className="explanation">{designDetail.explanation}</div>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column computer={8} tablet={10} mobile={10}>
                 <SubInfo>
                 <span className="text">
                   <Icon name="unhide" color="grey" size="tiny"></Icon>
