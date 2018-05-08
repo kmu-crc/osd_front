@@ -31,14 +31,15 @@ const RouterContainer = Container.extend`
 const CheckTemp = styled.div`
   width: 80%;
   margin: 20px auto;
-  & h3 {
+  & span {
     float: left;
+    font-size: 16px;
   }
   & input {
     float: left;
     width: 20px;
     height: 20px;
-    margin: 20px 0 0 10px;
+    margin-right: 20px;
   }
 `;
 
@@ -58,20 +59,17 @@ const MainBtn = styled.button`
 
 class CreateDesign extends Component {
   state = {
-    useProject: true,
-    fileTrue: false
+    useProject: true
   };
 
-  onProjectActive = (e) => {
+  onProjectActive = () => {
     this.setState({
       useProject: !(this.state.useProject)
     });
   }
 
-  goFileTrue = (e) => {
-    this.setState({
-      fileTrue: true 
-    });
+  goFileTrue = () => {
+    console.log("file upload");
   }
 
   render(){
@@ -81,7 +79,9 @@ class CreateDesign extends Component {
         <RouterContainer>
           <CreateInfo/>
           <CheckTemp>
-            <h3>과정 기록 사용</h3>
+            <span>디자인형</span>
+            <input type="checkbox" checked={this.state.useProject === false && "checked"} onChange={this.onProjectActive}/>
+            <span>프로젝트형</span>
             <input type="checkbox" checked={this.state.useProject === true && "checked"} onChange={this.onProjectActive}/>
             <Row/>
           </CheckTemp>
@@ -91,10 +91,7 @@ class CreateDesign extends Component {
         </RouterContainer>
         <Row/>
         <Grid container={true} textAlign="center">
-          {this.state.useProject === false? 
-            this.state.fileTrue === true? <Link to="/designDetail/1"><MainBtn>등록</MainBtn></Link>
-            : <Link to="/designDetail/2"><MainBtn>등록</MainBtn></Link>
-          : <Link to="/designDetail/4"><MainBtn>등록</MainBtn></Link> }
+          <Link to="/design"><MainBtn>등록</MainBtn></Link>
         </Grid>
       </Wrapper>
     );

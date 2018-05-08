@@ -1,43 +1,57 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Container, Row, Columns } from "../Grid";
+import { Row } from "../Grid";
 import DesignDetailViewContainer from "../../containers/DesignDetailViewContainer";
 import DesignDetailStepContainer from "../../containers/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "../../containers/DesignDetailIssueContainer";
-import { Icon } from 'semantic-ui-react'
+import { Grid, Icon } from 'semantic-ui-react'
 
 // css styling
 
-const Wrapper = Container.extend`
+const Wrapper = styled.div`
   min-width: 660px;
   padding: 20px 0;
   position: relative;
+  & .ui.grid {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
 `;
 
-const HeadContainer = styled.div`
+const HeadContainer = styled(Grid)`
   min-height: 100px;
   font-size: 13px;
-  padding: 20px 30px 10px;
   border-bottom: 1px solid #e6ebf1;
-  & .explanation {
-    padding: 20px 10px 10px;
-  }
   & button.btnIssue {
-    float: right;
-    width: 100px;
-    margin-right: 282px;
-    padding: 5px 0;
-    margin-top: 10px;
+    float: left;
+    margin-left: 10px;
+    width: 80px;
+    height: 24px;
+    margin-top: 6px;
     background: transparent;
     border-radius: 3px;
   }
+  & .title {
+    font-size: 24px;
+    font-weight: bold;
+    float: left;
+    max-width: 85%;
+  }
+  & .explanation {
+    margin-top: 20px;
+  }
 `;
 
-const Title = Columns.extend`
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
+const Cate = styled.div`
+  font-size: 13px;
+  & span {
+    margin-right: 15px;
+    max-width: 33%;
+  }
+  & .cate {
+    color: #EB3324;
+    margin-right: 30px;
+  }
 `;
 
 const SubInfo = styled.div`
@@ -77,19 +91,6 @@ const SubInfo = styled.div`
   }
 `;
 
-const Cate = Columns.extend`
-  margin-top: 15px;
-  font-size: 13px;
-  & span {
-    margin-right: 15px;
-    max-width: 33%;
-  }
-  & .cate {
-    color: #EB3324;
-    margin-right: 30px;
-  }
-`;
-
 const BtnModal = styled.ul`
   position: absolute;
   top: 35px;
@@ -114,18 +115,15 @@ const BtnModal = styled.ul`
 `;
 
 const TabContainer = styled.div`
+  min-height: 300px;
+  position: relative;
 `;
 
-const Content = styled.div`
-  min-height: 300px;
-`;
 
 class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
-    activeIssue: false,
-    isProject: false,
-    isUpload: false
+    activeIssue: false
   };
 
   componentDidMount() {
@@ -140,7 +138,7 @@ class DesignDetail extends Component {
 
   onActiveStep = () => {
     alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
-    // 확인 누르면 api 요청 보내서 isProject = 1로 바꿔야 함!
+    // 확인 누르면 api 요청 보내서 is_project = 1로 바꿔야 함!
   }
 
   onActiveIssue = (e) => {
@@ -154,73 +152,67 @@ class DesignDetail extends Component {
     }
   }
 
-  onGoStep = (e) => {
-    this.setState({
-      isProject: true
-    });
-  }
-
   render(){
     let designDetail = this.props.DesignDetail;
     return(
       <div>
       {designDetail.length !== 0 &&
-        <Wrapper container={true}>
-          <HeadContainer>
-            <Title xs={4} sm={4} width={6}>{designDetail.title}</Title>
-            <SubInfo>
-              <span className="text">
-                <Icon name="unhide" color="grey" size="tiny"></Icon>
-                조회수
-              </span>
-              <span className="number">{designDetail.count.total_view_count}</span>
-              <span className="text">
-                <Icon name="heart" color="grey" size="tiny"></Icon>
-                좋아요
-              </span>
-              <span className="number">{designDetail.count.like_count}</span>
-              <span className="text">
-                <Icon name="window restore" color="grey" size="tiny"></Icon>
-                파생
-              </span>
-              <span className="number">{designDetail.children_count["count(*)"]}</span>
-              <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
-                {this.state.activeMoreBtn === true && 
-                  <BtnModal>
-                    <li>파생디자인 생성</li>
-                    <li>원본디자인 보기</li>
-                    <li>수정</li>
-                    <li>삭제</li>
-                    {designDetail.isProject == 0 &&
-                    <li className="activeStep" onClick={this.onActiveStep}>프로젝트형으로 변경</li>
-                    }
-                  </BtnModal>
-                }
-              </span>
-              <Row/>
-            </SubInfo>
-            <Row/>
-            <Cate xs={4} sm={4} width={6}>
-              <span className="cate">{designDetail.categoryName.name}</span>
-              <span className="owner">
-                <Icon name="user" size="tiny"></Icon>
-                {designDetail.userName}
-              </span>
-              <span className="member">
-                <Icon name="group" size="tiny"></Icon>
-                {designDetail.count.member_count}명
-              </span>
-            </Cate>
-            <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
-            <Row/>
-            <div className="explanation">{designDetail.explanation}</div>
+        <Wrapper>
+          <HeadContainer divided="vertically" padded={true}>
+            <Grid.Row columns={2}>
+              <Grid.Column>
+                <h3 className="title">{designDetail.title}</h3>
+                <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
+                <Row/>
+                <Cate>
+                  <span className="cate">{designDetail.categoryName.name}</span>
+                  <span className="owner">
+                    <Icon name="user" size="tiny"></Icon>
+                    {designDetail.userName}
+                  </span>
+                  <span className="member">
+                    <Icon name="group" size="tiny"></Icon>
+                    {designDetail.count.member_count}명
+                  </span>
+                </Cate>
+                <div className="explanation">{designDetail.explanation}</div>
+              </Grid.Column>
+              <Grid.Column>
+                <SubInfo>
+                <span className="text">
+                  <Icon name="unhide" color="grey" size="tiny"></Icon>
+                  조회수
+                </span>
+                <span className="number">{designDetail.count.total_view_count}</span>
+                <span className="text">
+                  <Icon name="heart" color="grey" size="tiny"></Icon>
+                  좋아요
+                </span>
+                <span className="number">{designDetail.count.like_count}</span>
+                <span className="text">
+                  <Icon name="window restore" color="grey" size="tiny"></Icon>
+                  파생
+                </span>
+                <span className="number">{designDetail.children_count["count(*)"]}</span>
+                <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
+                  {this.state.activeMoreBtn === true && 
+                    <BtnModal>
+                      <li>파생디자인 생성</li>
+                      <li>원본디자인 보기</li>
+                      <li>수정</li>
+                      <li>삭제</li>
+                    </BtnModal>
+                  }
+                </span>
+                <Row/>
+              </SubInfo>
+              </Grid.Column>
+            </Grid.Row>
           </HeadContainer>
           <TabContainer>
-            <Content>
-              {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
-              : designDetail.isProject == 1 || this.state.isProject === true? <DesignDetailStepContainer id={this.props.id}/>
-              : <DesignDetailViewContainer goStep={this.onGoStep} id={this.props.id}/>}
-            </Content>
+            {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
+            : designDetail.is_project == 1? <DesignDetailStepContainer id={this.props.id}/>
+            : <DesignDetailViewContainer goStep={this.onActiveStep} id={this.props.id}/>}
           </TabContainer>
         </Wrapper>
       }
