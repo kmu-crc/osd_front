@@ -76,12 +76,14 @@ class Design extends Component {
             <div className="title">{design.title}</div>
             <div className="userName">{design.userName.nick_name}</div>
             <div className="cate">{design.categoryName.name}</div>
+            {design.count != null &&
             <Count>
               <div>{design.count.like_count}</div>
               <div>{design.count.member_count}</div>
               <div>{design.count.card_count}</div>
               <Row/>
             </Count>
+            }
           </TextPart>
         </Designli>
       </NavLink>

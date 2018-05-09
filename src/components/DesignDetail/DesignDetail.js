@@ -4,7 +4,7 @@ import { Row } from "../Grid";
 import DesignDetailViewContainer from "../../containers/DesignDetailViewContainer";
 import DesignDetailStepContainer from "../../containers/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "../../containers/DesignDetailIssueContainer";
-import { Grid, Icon } from 'semantic-ui-react'
+import { Grid, Icon } from "semantic-ui-react";
 
 // css styling
 
@@ -34,7 +34,6 @@ const HeadContainer = styled(Grid)`
   & .title {
     font-size: 24px;
     font-weight: bold;
-    max-width: 85%;
   }
   & .explanation {
     margin-top: 20px;
@@ -153,6 +152,16 @@ class DesignDetail extends Component {
 
   render(){
     let designDetail = this.props.DesignDetail;
+    let count;
+    if (designDetail.count != null) {
+      count = designDetail.count;
+    } else {
+      count = {
+        total_view_count: 0,
+        member_count: 0,
+        like_count: 0
+      };
+    }
     return(
       <div>
       {designDetail.length !== 0 &&
@@ -160,8 +169,9 @@ class DesignDetail extends Component {
           <HeadContainer divided="vertically" padded={true}>
             <Grid.Row columns={2}>
               <Grid.Column computer={8} tablet={6} mobile={6}>
-                <h3 className="title">{designDetail.title}<button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button></h3>
-                
+                <h3 className="title">{designDetail.title}
+                  <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
+                </h3>
                 <Row/>
                 <Cate>
                   <span className="cate">{designDetail.categoryName.name}</span>
@@ -171,7 +181,7 @@ class DesignDetail extends Component {
                   </span>
                   <span className="member">
                     <Icon name="group" size="tiny"></Icon>
-                    {designDetail.count.member_count}명
+                    {count.member_count}명
                   </span>
                 </Cate>
                 <div className="explanation">{designDetail.explanation}</div>
@@ -182,12 +192,12 @@ class DesignDetail extends Component {
                   <Icon name="unhide" color="grey" size="tiny"></Icon>
                   조회수
                 </span>
-                <span className="number">{designDetail.count.total_view_count}</span>
+                <span className="number">{count.total_view_count}</span>
                 <span className="text">
                   <Icon name="heart" color="grey" size="tiny"></Icon>
                   좋아요
                 </span>
-                <span className="number">{designDetail.count.like_count}</span>
+                <span className="number">{count.like_count}</span>
                 <span className="text">
                   <Icon name="window restore" color="grey" size="tiny"></Icon>
                   파생
