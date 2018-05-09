@@ -152,6 +152,16 @@ class DesignDetail extends Component {
 
   render(){
     let designDetail = this.props.DesignDetail;
+    let count;
+    if (designDetail.count != null) {
+      count = designDetail.count;
+    } else {
+      count = {
+        total_view_count: 0,
+        member_count: 0,
+        like_count: 0
+      };
+    }
     return(
       <div>
       {designDetail.length !== 0 &&
@@ -171,7 +181,7 @@ class DesignDetail extends Component {
                   </span>
                   <span className="member">
                     <Icon name="group" size="tiny"></Icon>
-                    {designDetail.count.member_count}명
+                    {count.member_count}명
                   </span>
                 </Cate>
                 <div className="explanation">{designDetail.explanation}</div>
@@ -182,12 +192,12 @@ class DesignDetail extends Component {
                   <Icon name="unhide" color="grey" size="tiny"></Icon>
                   조회수
                 </span>
-                <span className="number">{designDetail.count.total_view_count}</span>
+                <span className="number">{count.total_view_count}</span>
                 <span className="text">
                   <Icon name="heart" color="grey" size="tiny"></Icon>
                   좋아요
                 </span>
-                <span className="number">{designDetail.count.like_count}</span>
+                <span className="number">{count.like_count}</span>
                 <span className="text">
                   <Icon name="window restore" color="grey" size="tiny"></Icon>
                   파생

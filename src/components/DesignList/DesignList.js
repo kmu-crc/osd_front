@@ -45,26 +45,32 @@ class DesignList extends Component {
   render(){
     let list = this.props.DesignList;
     return(
-      <Wrapper>
-        <MenuContainer devided="vertically" padded={true} columns={2}>
-          <Grid.Row>
-            <Grid.Column className="category">
-              <Select placeholder="1차 카테고리" options={categoryLevel1} />
-              <Select placeholder="2차 카테고리" options={categoryLevel1} />
-            </Grid.Column>
-            <Grid.Column className="sorting">
-              <Select options={sorting} />
-            </Grid.Column>
-          </Grid.Row>
-        </MenuContainer>
-        <ListContainer padded={true} columns={6} as="ul">
-          <Grid.Row>
-            {list.map(design =>
-              <Grid.Column key={design.uid}><Design design={design}/></Grid.Column>
-            )}
-          </Grid.Row>
-        </ListContainer>
-      </Wrapper>
+      <div>
+        {list != null && list.length > 0 ?
+        <Wrapper>
+          <MenuContainer devided="vertically" padded={true} columns={2}>
+            <Grid.Row>
+              <Grid.Column className="category">
+                <Select placeholder="1차 카테고리" options={categoryLevel1} />
+                <Select placeholder="2차 카테고리" options={categoryLevel1} />
+              </Grid.Column>
+              <Grid.Column className="sorting">
+                <Select options={sorting} />
+              </Grid.Column>
+            </Grid.Row>
+          </MenuContainer>
+          <ListContainer padded={true} columns={6} as="ul">
+            <Grid.Row>
+              {list.map(design =>
+                <Grid.Column key={design.uid}><Design design={design}/></Grid.Column>
+              )}
+            </Grid.Row>
+          </ListContainer>
+        </Wrapper>
+        :
+        <p>등록된 디자인이 없습니다.</p>
+        }
+      </div>
     );
   }
 }

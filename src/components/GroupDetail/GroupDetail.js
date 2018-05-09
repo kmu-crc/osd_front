@@ -143,7 +143,17 @@ class GroupDetail extends Component {
   }
 
   render(){
-    const groupDetail = this.props.GroupDetail;
+    let groupDetail = this.props.GroupDetail;
+    let count;
+    if (groupDetail.count != null) {
+      count = groupDetail.count;
+    } else {
+      count = {
+        member: 0,
+        like: 0,
+        design: 0
+      };
+    }
     return(
       <div>
         {groupDetail.length !== 0 && 
@@ -162,7 +172,7 @@ class GroupDetail extends Component {
                     </span>
                     <span className="member">
                       <Icon name="group" size="tiny"></Icon>
-                      {groupDetail.count.member}명
+                      {count.member}명
                     </span>
                   </Cate>
                   <div className="explanation">{groupDetail.explanation}</div>
@@ -173,12 +183,12 @@ class GroupDetail extends Component {
                     <Icon name="heart" color="grey" size="tiny"></Icon>
                     좋아요
                   </span>
-                  <span className="number">{groupDetail.count.like}</span>
+                  <span className="number">{count.like}</span>
                   <span className="text">
                     <Icon name="window restore" color="grey" size="tiny"></Icon>
                     디자인수
                   </span>
-                  <span className="number">{groupDetail.count.design}</span>
+                  <span className="number">{count.design}</span>
                   <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
                     {this.state.activeMoreBtn === true && 
                       <BtnModal>
