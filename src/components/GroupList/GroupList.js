@@ -3,6 +3,8 @@ import Group from "../Group";
 import styled from "styled-components";
 import { Link } from "react-router-dom"
 import { Container, Columns, Row } from "../Grid/index";
+import Sorting from "../commons/Sorting";
+import ContentList from "../commons/ContentList";
 
 // css styling
 
@@ -55,12 +57,7 @@ class GroupList extends Component {
               <button><Link to="/createGroup">새 그룹 추가 +</Link></button>
             </BtnWrap>
             <Row/>
-            <ul>
-              {list.map(group =>
-                <Group key={group.uid} group={group}/>
-              )}
-              <div className="clear"></div>
-            </ul>
+            <ContentList data={list} type="group"/>
             </Container>
           </Wrapper>
           :

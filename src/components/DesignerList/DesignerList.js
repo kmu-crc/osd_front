@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Designer from "../Designer";
+import Sorting from "../commons/Sorting";
 
 // css styling
 
