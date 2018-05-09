@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "../../source/eximg.jpeg";
-import { Columns, Row } from "../Grid/index";
-import { Grid, Icon } from "semantic-ui-react";
+import { Row } from "../Grid/index";
 
 // css styling
 

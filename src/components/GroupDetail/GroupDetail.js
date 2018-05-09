@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Icon, Select } from "semantic-ui-react";
 import { Row } from "../Grid";
-import DesignList from "../DesignList";
 import Sorting from "../commons/Sorting";
 import ContentList from "../commons/ContentList";
 
@@ -116,10 +115,21 @@ const BtnModal = styled.ul`
 const TabContainer = styled.div`
   min-height: 300px;
   position: relative;
+  width: 100%;
+  padding: 1rem 3rem 5rem;
+  min-width: 660px;
+  & ul {
+    margin-top: 30px;
+  }
+`;
+
+const MenuContainer = styled(Grid)`
+  font-size: 13px;
   & .typeSelect {
-    position: absolute;
-    right: 0;
-    top: 0;
+    text-align: right;
+  }
+  & .sorting {
+    text-align: center;
   }
 `;
 
@@ -205,7 +215,7 @@ class GroupDetail extends Component {
                   </span>
                   <span className="number">{count.like}</span>
                   <span className="text">
-                    <Icon name="window restore" color="grey" size="tiny"></Icon>
+                    <Icon name="signup" color="grey" size="tiny"></Icon>
                     디자인
                   </span>
                   <span className="number">{count.design}</span>
@@ -229,14 +239,17 @@ class GroupDetail extends Component {
               </Grid.Row>
             </HeadContainer>
             <TabContainer>
-              <div className="typeSelect">
-                <Select placeholder="디자인" options={type} onContextMenu={this.typeChange}/>
-              </div>
-              <div>
-                {this.state.type === "design" ? 
-                <ContentList data={groupDetail.designList} type="design"/>
-                : <div>그룹 리스트</div>}
-              </div>
+              <MenuContainer devided="vertically" padded={true} columns={2}>
+                <Grid.Row>
+                  <Grid.Column computer={13} tablet={12} mobile={10} className="typeSelect">
+                    <Select placeholder="디자인" options={type} onContextMenu={this.typeChange}/>
+                  </Grid.Column>
+                  <Sorting computer={3} tablet={4} mobile={6}/>
+                </Grid.Row>
+              </MenuContainer>
+              {this.state.type === "design" ? 
+              <ContentList data={groupDetail.designList} type="design"/>
+              : <div>그룹 리스트</div>}
             </TabContainer>
           </Wrapper>
         }

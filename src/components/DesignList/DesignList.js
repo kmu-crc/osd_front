@@ -33,9 +33,9 @@ class DesignList extends Component {
         {list != null && list.length > 0 ?
         <Wrapper>
           <MenuContainer devided="vertically" padded={true} columns={2}>
-            <Grid.Row>
-              <Category />
-              <Sorting />
+            <Grid.Row stretched={false}>
+              <Category computer={8} tablet={10} mobile={12}/>
+              <Sorting computer={8} tablet={6} mobile={4}/>
             </Grid.Row>
           </MenuContainer>
           <ContentList data={list} type="design"/>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Group from "../Group";
 import styled from "styled-components";
-import { Link } from "react-router-dom"
-import { Container, Columns, Row } from "../Grid/index";
+import { Link } from "react-router-dom";
+// import { Container, Columns, Row } from "../Grid/index";
+import { Grid } from "semantic-ui-react";
 import Sorting from "../commons/Sorting";
 import ContentList from "../commons/ContentList";
 
@@ -11,28 +11,16 @@ import ContentList from "../commons/ContentList";
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
-  padding: 40px 0px;
+  padding: 1rem 3rem 5rem;
   min-width: 660px;
-  // & ul {
-  //   min-width: 660px;
-  //   margin: auto;
-  //   @media (min-width: 768px) and (max-width: 960px) {
-  //     width: 660px;
-  //   }
-  //   @media (min-width: 960px) and (max-width: 1320px) {
-  //     width: 990px;
-  //   }
-  //   @media (min-width: 1320px) {
-  //     width: 1320px;
-  //   }
-  // }
 `;
 
-const BtnWrap = Columns.extend`
-  text-align: right;
-  margin: 0px 0 20px;
-  float: right;
-  & button {
+const MenuContainer = styled(Grid)`
+  font-size: 13px;
+  & .sorting {
+    text-align: right;
+  }
+  & .addGroup button{
     padding: 5px 18px;
     font-size: 14px;
     border: 1px solid rgba(25,25,25,0.2);
@@ -40,10 +28,11 @@ const BtnWrap = Columns.extend`
     background-color: #fff;
     border-radius: 5px;
   }
-  & button:hover {
+  & .addGroup button:hover {
     background-color: #f2f2f2;
   }
 `;
+
 
 class GroupList extends Component {
   render(){
@@ -52,13 +41,15 @@ class GroupList extends Component {
       <div>
         {list != null && list.length > 0 ?
           <Wrapper>
-            <Container container={true}>
-            <BtnWrap width={2}>
-              <button><Link to="/createGroup">새 그룹 추가 +</Link></button>
-            </BtnWrap>
-            <Row/>
+            <MenuContainer devided="vertically" padded={true} columns={2}>
+              <Grid.Row stretched={false}>
+                <Grid.Column className="addGroup">
+                  <Link to="/createGroup"><button>새 그룹 추가 +</button></Link>
+                </Grid.Column>
+                <Sorting/>
+              </Grid.Row>
+            </MenuContainer>
             <ContentList data={list} type="group"/>
-            </Container>
           </Wrapper>
           :
           <p>등록된 그룹이 없습니다.</p>

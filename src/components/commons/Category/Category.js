@@ -13,7 +13,10 @@ const categoryLevel1 = [
 class Category extends Component {
   render(){
     return(
-      <Grid.Column className="category">
+      <Grid.Column className="category"
+                   computer={this.props.computer? this.props.computer : null} 
+                   tablet={this.props.tablet? this.props.tablet : null} 
+                   mobile={this.props.mobile? this.props.mobile : null}>
         <Select placeholder="1차 카테고리" options={categoryLevel1} />
         <Select placeholder="2차 카테고리" options={categoryLevel1} />
       </Grid.Column>
