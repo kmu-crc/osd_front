@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Icon } from "semantic-ui-react";
+import { Grid, Icon, Select } from "semantic-ui-react";
 import { Row } from "../Grid";
+import Sorting from "../commons/Sorting";
+import ContentList from "../commons/ContentList";
 
 // css styling
 
@@ -12,6 +14,7 @@ const Wrapper = styled.div`
   & .ui.grid {
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 0;
   }
 `;
 
@@ -112,13 +115,35 @@ const BtnModal = styled.ul`
 const TabContainer = styled.div`
   min-height: 300px;
   position: relative;
+  width: 100%;
+  padding: 1rem 3rem 5rem;
+  min-width: 660px;
+  & ul {
+    margin-top: 30px;
+  }
 `;
+
+const MenuContainer = styled(Grid)`
+  font-size: 13px;
+  & .typeSelect {
+    text-align: right;
+  }
+  & .sorting {
+    text-align: center;
+  }
+`;
+
+const type = [
+  { key: "design", value: "design", text: "디자인" },
+  { key: "group", value: "group", text: "그룹" }
+];
 
 
 class GroupDetail extends Component {
   state = {
     activeMoreBtn: false,
-    activeIssue: false
+    activeIssue: false,
+    type: "design"
   };
 
   componentDidMount() {
@@ -140,6 +165,11 @@ class GroupDetail extends Component {
     } else if (this.state.activeIssue === false) {
       e.target.innerHTML = "★ 공지닫기";
     }
+  }
+
+  typeChange = (e) => {
+    console.log(e.target);
+
   }
 
   render(){
@@ -185,10 +215,15 @@ class GroupDetail extends Component {
                   </span>
                   <span className="number">{count.like}</span>
                   <span className="text">
-                    <Icon name="window restore" color="grey" size="tiny"></Icon>
-                    디자인수
+                    <Icon name="signup" color="grey" size="tiny"></Icon>
+                    디자인
                   </span>
                   <span className="number">{count.design}</span>
+                  <span className="text">
+                    <Icon name="window restore" color="grey" size="tiny"></Icon>
+                    그룹
+                  </span>
+                  <span className="number">0</span>
                   <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
                     {this.state.activeMoreBtn === true && 
                       <BtnModal>
@@ -204,6 +239,17 @@ class GroupDetail extends Component {
               </Grid.Row>
             </HeadContainer>
             <TabContainer>
+              <MenuContainer devided="vertically" padded={true} columns={2}>
+                <Grid.Row>
+                  <Grid.Column computer={13} tablet={12} mobile={10} className="typeSelect">
+                    <Select placeholder="디자인" options={type} onContextMenu={this.typeChange}/>
+                  </Grid.Column>
+                  <Sorting computer={3} tablet={4} mobile={6}/>
+                </Grid.Row>
+              </MenuContainer>
+              {this.state.type === "design" ? 
+              <ContentList data={groupDetail.designList} type="design"/>
+              : <div>그룹 리스트</div>}
             </TabContainer>
           </Wrapper>
         }
