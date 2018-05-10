@@ -44,7 +44,7 @@ class SignInForm extends Component {
             autoLoad={false}
             callback={this.onClickFBSignInbtn}
             render={renderProps => (
-              <Button onClick={renderProps.onClick} type="button" color="facebook"><Icon disabled name='facebook f' />FaceBook 회원가입</Button>
+              <Button onClick={renderProps.onClick} type="button" color="facebook"><Icon disabled name='facebook f' />FaceBook 로그인</Button>
             )}
           />
         </Form.Group>
