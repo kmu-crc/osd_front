@@ -28,10 +28,10 @@ export default function CheckAuth(Component) {
         this.props.CheckTokenRequest(token).then(data => {
           if (data.info) {
             if (!data.info.isDetail) {
-              if(this.props.location.pathname === "/updateuserinfo"){
+              if(this.props.location.pathname === "/inserUserDetail"){
                 this.setState({ valid: true });
               } else {
-                this.props.history.push("/updateuserinfo");
+                this.props.history.push("/inserUserDetail");
               }
             } else {
               this.setState({ valid: true });
