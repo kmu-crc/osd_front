@@ -7,7 +7,7 @@ import DesignerListPage, { DesignerDetailPage } from "./pages/DesignerPage";
 import CreateDesignPage from "./pages/CreateDesignPage";
 import CreateGroupPage from "./pages/CreateGroupPage";
 import ModifyGroupPage from "./pages/ModifyGroupPage";
-import UpdateUserInfoContainer from "./containers/UpdateUserInfoContainer";
+import InserUserDetailPage from "./pages/InserUserDetailPage"
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import RequiresAuth from "./containers/RequiresAuth";
@@ -30,7 +30,7 @@ class App extends Component {
           <Route path="/designer" component={DesignerListPage}/>
           <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInPage}/>
-          <Route path="/updateuserinfo" component={RequiresAuth(UpdateUserInfoContainer)}/>
+          <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>
         </Switch>
       </BrowserRouter>
     );
