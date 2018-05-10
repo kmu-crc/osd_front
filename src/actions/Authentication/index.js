@@ -111,3 +111,41 @@ export function CheckNickNameFailure(err) {
     error: err
   }
 };
+
+export function CheckFBUserRequest(FB_user_id) {
+  return (dispatch) => {
+    dispatch(CheckFBUser());
+    return fetch("http://localhost:8080/users/checkFBUser", { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(FB_user_id) })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          return dispatch(CheckFBUserSuccess());
+        } else {
+          return dispatch(CheckFBUserFailure(res.error));
+        }
+      })
+      .catch(err => dispatch(CheckFBUserFailure()));
+  };
+};
+
+export function CheckFBUser() {
+  return {
+    type: types.AUTH_CHECK_FBUSER
+  }
+};
+
+export function CheckFBUserSuccess() {
+  return {
+    type: types.AUTH_CHECK_FBUSER_SUCCESS,
+    checkFBUser: true
+  }
+};
+
+
+export function CheckFBUserFailure(err) {
+  return {
+    type: types.AUTH_CHECK_FBUSER_FAILURE,
+    checkFBUser: false,
+    error: err
+  }
+};
