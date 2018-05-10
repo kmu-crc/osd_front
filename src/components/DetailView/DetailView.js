@@ -137,40 +137,16 @@ const Form = styled.form`
   }
 `;
 
-const MainBtn = styled.button`
-  padding: 7px 25px;
-  border-radius: 30px;
-  background-color: #EB3324;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  &:hover {
-    background-color: #CD4533;
-  }
-`;
-
 const GoStepBtn = styled.button`
   position: absolute;
-  top: 135px;
-  right: 0;
+  top: -30px;
+  right: 2rem;
   padding: 5px 10px;
   border-radius: 3px;   
 `;
 
 
 class DetailView extends Component {
-  state = {
-    isUpload: false
-  }
-
-  activeUpload = () => {
-    this.setState({
-      isUpload: true
-    });
-  } 
-
   componentDidMount() {
     this.props.GetDesignDetailViewRequest(this.props.id);
   }
@@ -180,7 +156,7 @@ class DetailView extends Component {
     let len = Object.keys(view).length;   
     return(
       <div>
-        {len !== 0? 
+        {len !== 0 &&
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
             <ImageWrapper>
@@ -214,23 +190,8 @@ class DetailView extends Component {
             </Comment>
             <Row/>
           </ViewWrapper>
-        :
-        <ViewWrapper>
-          {this.state.isUpload === true? 
-          <div className="upload">
-            <CreateView />
-            <Link to="/designDetail/1"><MainBtn>등록</MainBtn></Link>
-          </div>
-          : 
-          <div className="noData">
-            <p>등록된 디자인이 없습니다.</p>
-            <button onClick={this.activeUpload} className="red">파일 업로드</button>
-            <button onClick={this.props.goStep} className="red">과정 기록</button>
-          </div>
-          }
-        </ViewWrapper>
         }
-        <GoStepBtn onClick={this.props.goStep}>과정 기록</GoStepBtn>
+        <GoStepBtn onClick={this.props.goStep}>프로젝트형으로 변경</GoStepBtn>
       </div>
     );
   }

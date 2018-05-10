@@ -12,16 +12,25 @@ const Designerli = styled.div`
   background-color: #fff;
 `;
 
+const Count = styled.div``;
+
 class Designer extends Component {
   render(){
     let designer = this.props.designer;
     return(
       <Designerli>
-        <div>{designer.imgURL.m_img}</div>
+        {/* {designer.myProfileImg.m_img == null?
+        <div>등록된 사진이 없습니다.</div> :
+        <div>{designer.myProfileImg.m_img}</div>
+        } */}
         <div>{designer.nick_name}</div>
-        <div>{designer.count.total_like}</div>
-        <div>{designer.count.total_design}</div>
-        <div>{designer.count.total_view}</div>
+        {designer.count != null &&
+        <Count>
+          <div>{designer.count.total_like}</div>
+          <div>{designer.count.total_design}</div>
+          <div>{designer.count.total_view}</div>
+        </Count>
+        }
       </Designerli>
     );
   }

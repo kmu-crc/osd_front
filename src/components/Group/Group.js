@@ -7,7 +7,7 @@ import eximg from "../../source/eximg.jpeg";
 // css styling
 
 const Groupli = styled.li`
-  width: 95%;
+  width: 100%;
   height: 370px;
   margin: 0 auto 20px;
   border-radius: 6px 6px 3px 3px;
@@ -32,9 +32,6 @@ const Groupli = styled.li`
     float: left;
     width: 100px;
   }
-`;
-
-const GroupCon = Columns.extend`
 `;
 
 const GroupImg = styled.div`
@@ -88,21 +85,22 @@ class Group extends Component {
     let group = this.props.group;
     return(
       <NavLink to={"/groupDetail/"+group.uid}>
-      <GroupCon xs={6} sm={6} md={4} width={3}>
         <Groupli>
           <GroupImg>
-            <img src={eximg} />
+            <img src={eximg} alt=""/>
           </GroupImg>
           <GroupInfo>
             <div className="date">{(group.create_time).split("T")[0]} 개설</div>
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
+            {group.count != null &&
             <Count>
               <div>{group.count.like}</div>
               <div>{group.count.member}</div>
               <div>{group.count.design}</div>
               <div className="clear"></div>
             </Count>
+            }
             <div className="clear"></div>
             <ButtonWrap>
               <button className="red">가입신청</button>
@@ -115,7 +113,6 @@ class Group extends Component {
             </Img>
           </GroupInfo>
         </Groupli>
-        </GroupCon>
       </NavLink>
     );
   }
