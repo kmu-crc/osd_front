@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, TextArea, Icon } from "semantic-ui-react";
-class ValidateForm extends React.Component {
+import { Form } from "semantic-ui-react";
+class ValidateForm extends Component {
   state = {
     submit: false
   }
@@ -16,7 +16,14 @@ class ValidateForm extends React.Component {
           data.focus();
           break;
         } else {
-          fromData[data.name] = data.value;
+          if(data.type === "file"){
+            fromData[data.name] = data.files[0];
+          } else if(data.type === "checkbox") {
+            fromData[data.name] = data.checked;
+          } else {
+            fromData[data.name] = data.value;
+          }
+
           this.setState({ submit: true });
         }
       }
@@ -29,7 +36,7 @@ class ValidateForm extends React.Component {
   }
   render() {
     return (
-      <Form onSubmit={this.handelSubmit}>
+      <Form onSubmit={this.handelSubmit} >
         {this.props.children}
       </Form>
     );
