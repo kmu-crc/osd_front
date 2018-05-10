@@ -6,7 +6,7 @@ export class GroupDetailPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <GroupDetailContainer id={this.props.match.params.id}/>
+        <GroupDetailContainer id={this.props.match.params.id} history={this.props.history}/>
      </ClientTemplate>
     );
   }

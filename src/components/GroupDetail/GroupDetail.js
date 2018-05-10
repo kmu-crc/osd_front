@@ -143,11 +143,20 @@ class GroupDetail extends Component {
   state = {
     activeMoreBtn: false,
     activeIssue: false,
-    type: "design"
+    type: "design",
+    sort: "date"
   };
 
   componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id);
+    if (this.state.type === "design") {
+      this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
+    }
+  }
+
+  // props가 업데이트 됐을때 다시 요청을 보내고 싶었음 -> 효과있는지 확인 필요
+  componentWillReceiveProps(nextProps) {
+    this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
   }
 
   onActiveMoreBtn = (e) => {
@@ -168,8 +177,41 @@ class GroupDetail extends Component {
   }
 
   typeChange = (e) => {
-    console.log(e.target);
+    let target = e.target;
+    let text = target.childNodes[0].textContent;
+    if (text === "디자인") {
+      text = "design";
+      this.setState({
+        type: "design"
+      });
+    } else if (text === "그룹") {
+      text = "group";
+      this.setState({
+        type: "group"
+      });
+    }
+    let sort = this.state.sort;
+    let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
+    this.props.history.push(`/${url}/${text}/${sort}`);
+  }
 
+  sortChange = (e) => {
+    let target = e.target;
+    let text = target.childNodes[0].textContent;
+    if (text === "최신순") {
+      text = "date";
+      this.setState({
+        sort: "date"
+      });
+    } else if (text === "좋아요순") {
+      text = "like";
+      this.setState({
+        sort: "like"
+      });
+    }
+    let type = this.state.type;
+    let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
+    this.props.history.push(`/${url}/${type}/${text}`);
   }
 
   render(){
@@ -242,9 +284,9 @@ class GroupDetail extends Component {
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row>
                   <Grid.Column computer={13} tablet={12} mobile={10} className="typeSelect">
-                    <Select placeholder="디자인" options={type} onContextMenu={this.typeChange}/>
+                    <Select placeholder="디자인" options={type} onBlur={this.typeChange}/>
                   </Grid.Column>
-                  <Sorting computer={3} tablet={4} mobile={6}/>
+                  <Sorting computer={3} tablet={4} mobile={6} handleChange={this.sortChange}/>
                 </Grid.Row>
               </MenuContainer>
               {this.state.type === "design" ? 

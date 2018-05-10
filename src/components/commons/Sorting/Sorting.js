@@ -13,7 +13,7 @@ class Sorting extends Component {
                    computer={this.props.computer? this.props.computer : null} 
                    tablet={this.props.tablet? this.props.tablet : null} 
                    mobile={this.props.mobile? this.props.mobile : null}>
-        <Select placeholder="최신순" options={sorting} />
+        <Select placeholder="최신순" options={sorting} onBlur={this.props.handleChange}/>
       </Grid.Column>
     )
   }
