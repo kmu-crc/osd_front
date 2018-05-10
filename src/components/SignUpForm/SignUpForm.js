@@ -38,12 +38,19 @@ class SignUpForm extends Component {
         FB_user_id: response.userID,
         nick_name: response.name
       }
+    });
+    this.props.CheckFBUserRequest({FB_user_id: response.userID}).then( data => {
+      if(data.checkFBUser){
+        if (response.email == null || !response.email) {
+          return this.setState({ open: true })
+        } else {
+          this.handleSubmitFB();
+        }
+      } else {
+        alert(data.error);
+      }
+
     })
-    if (response.email == null || !response.email) {
-      return this.setState({ open: true })
-    } else {
-      this.handleSubmitFB();
-    }
   }
   handleSubmitFB = (data) => {
     console.log(data);
@@ -69,7 +76,7 @@ class SignUpForm extends Component {
           <InputField name="email" type="text"
             placeholder="E-Mail" label="email" validates={["required", "email", "checkEmail"]} />
           <InputField name="nick_name" type="text"
-            placeholder="닉네임을 입력해주세요" label="닉네임" validates={["required", "checkNickName"]} />
+            placeholder="닉네임을 입력해주세요" label="닉네임" validates={["required", "NotSpecialCharacters", "checkNickName"]} />
           <OverlapField name="password" type="password"
             placeholder="Password" label="password" validates={["required"]} />
           <Form.Group>
