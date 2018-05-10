@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import SignUpForm from "../../components/SignUpForm";
 import { SignUpRequest, FBSignUpRequest } from "../../actions/Registration";
-import { CheckEmailRequest, CheckNickNameRequest } from "../../actions/Authentication";
+import { CheckEmailRequest, CheckNickNameRequest, CheckFBUserRequest } from "../../actions/Authentication";
 
 class SignUpContainer extends Component {
   render() {
@@ -33,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       CheckNickNameRequest: (NickName) => {
         return dispatch(CheckNickNameRequest(NickName));
+      },
+      CheckFBUserRequest: (FB_user_id) => {
+        return dispatch(CheckFBUserRequest(FB_user_id));
       }
   };
 };
