@@ -143,20 +143,20 @@ class GroupDetail extends Component {
   state = {
     activeMoreBtn: false,
     activeIssue: false,
-    type: "design",
-    sort: "date"
+    type: null,
+    sort: null
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    console.log(this.props.type);
+    console.log(typeof(this.props.type));
     this.props.GetGroupDetailRequest(this.props.id);
-    if (this.state.type === "design") {
-      this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
-    }
-  }
-
-  // props가 업데이트 됐을때 다시 요청을 보내고 싶었음 -> 효과있는지 확인 필요
-  componentWillReceiveProps(nextProps) {
     this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
+    if (this.props.type === "design" || this.props.type === "null") {
+      this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
+    } else if (this.props.type === "group") {
+      this.props.GetGroupInGroupRequest(this.props.id, this.state.sort);
+    }
   }
 
   onActiveMoreBtn = (e) => {
@@ -181,15 +181,12 @@ class GroupDetail extends Component {
     let text = target.childNodes[0].textContent;
     if (text === "디자인") {
       text = "design";
-      this.setState({
-        type: "design"
-      });
     } else if (text === "그룹") {
       text = "group";
-      this.setState({
-        type: "group"
-      });
     }
+    this.setState({
+      type: text
+    });
     let sort = this.state.sort;
     let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
     this.props.history.push(`/${url}/${text}/${sort}`);
@@ -200,15 +197,12 @@ class GroupDetail extends Component {
     let text = target.childNodes[0].textContent;
     if (text === "최신순") {
       text = "date";
-      this.setState({
-        sort: "date"
-      });
     } else if (text === "좋아요순") {
       text = "like";
-      this.setState({
-        sort: "like"
-      });
     }
+    this.setState({
+      sort: text
+    });
     let type = this.state.type;
     let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
     this.props.history.push(`/${url}/${type}/${text}`);
@@ -216,6 +210,7 @@ class GroupDetail extends Component {
 
   render(){
     let groupDetail = this.props.GroupDetail;
+    let designList = this.props.DesignInGroup;
     let count;
     if (groupDetail.count != null) {
       count = groupDetail.count;
@@ -289,8 +284,8 @@ class GroupDetail extends Component {
                   <Sorting computer={3} tablet={4} mobile={6} handleChange={this.sortChange}/>
                 </Grid.Row>
               </MenuContainer>
-              {this.state.type === "design" ? 
-              <ContentList data={groupDetail.designList} type="design"/>
+              {(this.props.type === "design" || this.props.type === "null" || this.props.type === undefined) ? 
+              <ContentList data={designList} type="design"/>
               : <div>그룹 리스트</div>}
             </TabContainer>
           </Wrapper>

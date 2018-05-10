@@ -56,26 +56,25 @@ export function GetGroupDetail(data) {
   }
 };
 
-// 그룹 안에 속한 디자인/그룹 리스트 가져오기
+// 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, sort) {
   return (dispatch) => {
-    // return fetch("http://localhost:8080/group/groupDetail/"+id+"/design"+sort, { 
-    //   headers: { "Content-Type": "application/json" }, 
-    //   method: "get" 
-    // }).then((response) => {
-    //     return response.json();
-    //   }).then((data) => {
-    //     console.log("design in group data >>", data);
-    //     if (!data) {
-    //       console.log("no data");
-    //       return;
-    //     } else {
-    //       dispatch(GetDesignInGroup(data));
-    //     }
-    //   }).catch((error) => {
-    //     console.log("err", error);
-    //   })
-    console.log("get design list");
+    return fetch("http://localhost:8080/group/groupDetail/"+id+"/design/"+sort, { 
+      headers: { "Content-Type": "application/json" }, 
+      method: "get" 
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("design in group data >>", data);
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetDesignInGroup(data));
+        }
+      }).catch((error) => {
+        console.log("err", error);
+      })
   }
 };
 
@@ -83,6 +82,38 @@ export function GetDesignInGroup(data) {
   return {
     type: types.GET_DESIGN_IN_GROUP,
     DesignInGroup : data
+  }
+};
+
+// 그룹 안에 속한 그룹 리스트 가져오기
+export function GetGroupInGroupRequest(id, sort) {
+  return (dispatch) => {
+    // return fetch("http://localhost:8080/group/groupDetail/"+id+"/group/"+sort, { 
+    //   headers: { "Content-Type": "application/json" }, 
+    //   method: "get" 
+    // }).then((response) => {
+    //     return response.json();
+    //   }).then((data) => {
+    //     console.log("group in group data >>", data);
+    //     if (!data) {
+    //       console.log("no data");
+    //       return;
+    //     } else {
+    //       dispatch(GetGroupInGroup(data));
+    //     }
+    //   }).catch((error) => {
+    //     console.log("err", error);
+    //   })
+    let data = "group data example";
+    // dispatch(GetTypeInGroupRequest("group"));
+    dispatch(GetGroupInGroup(data));
+  }
+};
+
+export function GetGroupInGroup(data) {
+  return {
+    type: types.GET_GROUP_IN_GROUP,
+    GroupInGroup : data
   }
 };
 
