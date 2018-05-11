@@ -14,9 +14,10 @@ class ContentList extends Component {
   render(){
     let data = this.props.data;
     const type = this.props.type;
+    console.log(data);
     return(
       <ListContainer padded={true} columns={ type === "design"? 6 : 4} as="ul">
-      {data !== null && data.length > 0 ? 
+      {data != null && data.length > 0 ? 
         <Grid.Row stretched={false}>
         {data.map(content =>
           <Grid.Column key={content.uid}>
@@ -25,7 +26,7 @@ class ContentList extends Component {
         )}
       </Grid.Row>
       :
-      <p>등록된 컨텐츠가 없습니다.</p>
+      <Grid.Row>등록된 컨텐츠가 없습니다.</Grid.Row>
       }
       </ListContainer>
     );
