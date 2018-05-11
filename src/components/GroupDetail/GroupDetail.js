@@ -147,15 +147,53 @@ class GroupDetail extends Component {
     sort: null
   };
 
+  // 렌더링 직전에 한번 도는 코드
   componentWillMount() {
-    console.log(this.props.type);
-    console.log(typeof(this.props.type));
     this.props.GetGroupDetailRequest(this.props.id);
+    //일단 무조건 디자인 리스트부터 불러옴
     this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
-    if (this.props.type === "design" || this.props.type === "null") {
-      this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
+    //새로고침 했을 경우에 적용 -> url에 맞게 값 불러옴
+    if (this.props.type === "design" || this.props.type === "null" || this.props.type === undefined) {
+      console.log("1");
+      this.props.GetDesignInGroupRequest(this.props.id, this.props.sort);
     } else if (this.props.type === "group") {
-      this.props.GetGroupInGroupRequest(this.props.id, this.state.sort);
+      console.log("2");
+      this.props.GetGroupInGroupRequest(this.props.id, this.props.sort);
+    }
+  }
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("this");
+  //   console.log(this.props.type);
+  //   console.log(nextProps);
+  //   if (nextProps.type === "design") {
+  //     //this.props.GetDesignInGroupRequest(this.props.id, "null");
+  //   } else if (nextProps.type === "group") {
+  //     //this.props.GetGroupInGroupRequest(this.props.id, nextProps.sort);
+  //   }
+  // }
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    const typeChange = nextProps.type !== this.props.type;
+    const sortChange = nextProps.sort !== this.props.sort;
+
+    if (typeChange || sortChange) {
+      console.log("바뀌어야 함");
+
+      if (nextProps.type === "design") {
+        console.log("first");
+        this.props.GetDesignInGroupRequest(this.props.id, nextProps.sort);
+        console.log("later?");
+        return true;
+
+      } else if (nextProps.type === "group") {
+        this.props.GetGroupInGroupRequest(this.props.id, nextProps.sort);
+        return true;
+      }
+
+    } else {
+      console.log("안바뀜");
+      return false;
     }
   }
 
@@ -211,6 +249,7 @@ class GroupDetail extends Component {
   render(){
     let groupDetail = this.props.GroupDetail;
     let designList = this.props.DesignInGroup;
+    console.log(designList);
     let count;
     if (groupDetail.count != null) {
       count = groupDetail.count;
