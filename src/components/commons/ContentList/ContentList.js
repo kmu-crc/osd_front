@@ -15,7 +15,7 @@ class ContentList extends Component {
     let data = this.props.data;
     const type = this.props.type;
     return(
-      <ListContainer padded={true} columns={ type === "design"? 6 : 4} as="ul">
+      <ListContainer padded={true} columns={ type === "design"? 6 : 1} as="ul">
       {data != null && data.length > 0 ? 
         <Grid.Row stretched={false}>
         {data.map(content =>

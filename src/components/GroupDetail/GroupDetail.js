@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Icon, Select, Dropdown } from "semantic-ui-react";
+import { Grid, Icon, Dropdown } from "semantic-ui-react";
 import { Row } from "../Grid";
 import Sorting from "../commons/Sorting";
 import ContentList from "../commons/ContentList";

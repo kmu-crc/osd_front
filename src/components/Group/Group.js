@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "../../source/eximg.jpeg";
+import { Grid, Icon } from "semantic-ui-react";
 
 // css styling
 
 const Groupli = styled.li`
-  width: 100%;
-  height: 370px;
-  margin: 0 auto 20px;
+  width: 90%;
+  height: 140px;
+  margin: 0 auto 30px;
   border-radius: 6px 6px 3px 3px;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;
@@ -16,11 +17,27 @@ const Groupli = styled.li`
   &:hover {
     border-bottom: 0.5px solid dimgray;
   }
+`;
+
+const GroupImg = styled.div`
+  float: left;
+  width: 15%;
+  height: 100%;
+  overflow: hidden;
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const GroupInfo = styled.div`
+  width: 45%;
+  float: left;
+  padding: 10px 20px;
   & .title {
-    margin: 10px 0;
-    font-size: 16px;
+    margin: 5px 0;
+    font-size: 18px;
     font-weight: bold;
-    height: 38px;
   }
   & .date {
     color: dimgray;
@@ -29,21 +46,10 @@ const Groupli = styled.li`
   }
   & .owner {
     float: left;
-    width: 100px;
   }
-`;
-
-const GroupImg = styled.div`
-  width: 100%;
-  height: 140px;
-  overflow: hidden;
-  & img {
-    width: 100%;
+  & .owner span {
+    margin-right: 15px;
   }
-`;
-
-const GroupInfo = styled.div`
-  padding: 10px 20px;
 `;
 
 const Count = styled.div`
@@ -51,6 +57,7 @@ const Count = styled.div`
   & div {
     float: left;
     width: 40px;
+    color: grey;
   }
   & .clear {
     clear: both;
@@ -67,17 +74,19 @@ const ButtonWrap = styled.div`
   }
 `;
 
-const Img = styled.div`
-  border-top: 1px solid #f2f2f2;
-  margin-top: 15px;
+const ThumbImg = styled.div`
+  width: 40%;
+  height: 100%;
+  float: left;
   & .imgBox {
     float: left;
     width: 30%;
-    height: 60px;
+    height: 120px;
     background-color: #f2f2f2;
-    margin: 10px 3px 0;
+    margin: 10px 5px;
   }
 `;
+
 
 class Group extends Component {
   render(){
@@ -91,11 +100,23 @@ class Group extends Component {
           <GroupInfo>
             <div className="date">{(group.create_time).split("T")[0]} 개설</div>
             <div className="title">{group.title}</div>
-            <div className="owner">{group.userName}</div>
+            <div className="owner">
+              <span>그룹장: {group.userName}</span>
+              <span>멤버수 : {group.member? group.member : 0}</span>
+            </div>
             <Count>
-              <div>{group.like? group.like : 0}</div>
-              <div>{group.member? group.member : 0}</div>
-              <div>{group.design? group.design : 0}</div>
+              <div>
+                <Icon name="heart" color="grey" size="mini"></Icon>
+                {group.like? group.like : 0}
+              </div>
+              <div>
+                <Icon name="signup" color="grey" size="mini"></Icon>
+                {group.design? group.design : 0}
+              </div>
+              <div>
+                <Icon name="window restore" color="grey" size="mini"></Icon>
+                0
+              </div>
               <div className="clear"></div>
             </Count>
             <div className="clear"></div>
@@ -103,12 +124,14 @@ class Group extends Component {
               <button className="red">가입신청</button>
               <button className="red">관리</button>
             </ButtonWrap>
-            <Img>
-              {group.designTop3.map(design => 
-                <div className="imgBox" key={design.uid}><img src={design.s_img} alt=""/></div>
-              )}
-            </Img>
           </GroupInfo>
+          <ThumbImg>
+            {group.designTop3.map(design => 
+              <div className="imgBox" key={design.uid}><img src={design.s_img} alt=""/></div>
+            )}
+            <div className="clear"></div>
+          </ThumbImg>
+          <div className="clear"></div>
         </Groupli>
       </NavLink>
     );
