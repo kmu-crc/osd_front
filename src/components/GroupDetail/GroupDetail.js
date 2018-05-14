@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Icon, Select } from "semantic-ui-react";
+import { Grid, Icon, Select, Dropdown } from "semantic-ui-react";
 import { Row } from "../Grid";
 import Sorting from "../commons/Sorting";
 import ContentList from "../commons/ContentList";
@@ -151,10 +151,12 @@ class GroupDetail extends Component {
 
   // 렌더링 직전에 한번 도는 코드
   componentWillMount() {
-    console.log("re");
+    //그룹에 대한 기본 정보 불러오기
     this.props.GetGroupDetailRequest(this.props.id);
-    //일단 무조건 디자인 리스트부터 불러옴
+
+    //그룹에 있는 컨텐츠 불러오기 -> 일단 무조건 디자인 리스트부터 불러옴
     this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
+
     //새로고침 했을 경우에 적용 -> url에 맞게 값 불러옴
     if (this.props.type === "design" || this.props.type === null || this.props.type === "null") {
       this.props.GetDesignInGroupRequest(this.props.id, this.props.sort).then(()=>{
@@ -188,60 +190,46 @@ class GroupDetail extends Component {
     }
   }
 
-  typeChange = (e) => {
-    let target = e.target;
-    let text = target.childNodes[0].textContent;
-    if (text === "디자인") {
-      text = "design";
-      this.props.GetDesignInGroupRequest(this.props.id, this.props.sort);
-    } else if (text === "그룹") {
-      text = "group";
-      this.props.GetGroupInGroupRequest(this.props.id, this.props.sort);
-    }
-    this.setState({
-      type: text
-    });
-    if (text === "design") {
-      this.setState({
-        designData: this.props.DesignInGroup
+  typeChange = (e, {value}) => {
+    let sort = this.props.sort;
+    if (value === "design") {
+      this.props.GetDesignInGroupRequest(this.props.id, sort).then(()=>{
+        this.setState({
+          designData: this.props.DesignInGroup,
+          type: value
+        });
       });
-    } else if (text === "group") {
-      this.setState({
-        groupData: this.props.GroupInGroup
+    } else if (value === "group") {
+      this.props.GetGroupInGroupRequest(this.props.id, sort).then(()=>{
+        this.setState({
+          groupData: this.props.GroupInGroup,
+          type: value
+        });
       });
     }
-    let sort = this.state.sort;
     let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
-    this.props.history.replace(`/${url}/${text}/${sort}`);
+    this.props.history.replace(`/${url}/${value}/${sort}`);
   }
 
-  sortChange = (e) => {
-    let target = e.target;
-    let text = target.childNodes[0].textContent;
-    if (text === "최신순") {
-      text = "date";
-    } else if (text === "좋아요순") {
-      text = "like";
-    }
-    this.setState({
-      sort: text
-    });
+  sortChange = (e, {value}) => {
     let type = this.props.type;
     if (type === "design" || type === "null") {
-      this.props.GetDesignInGroupRequest(this.props.id, text).then(()=>{
+      this.props.GetDesignInGroupRequest(this.props.id, value).then(()=>{
         this.setState({
-          designData: this.props.DesignInGroup
+          designData: this.props.DesignInGroup,
+          sort: value
         });
       });
     } else if (type === "group") {
-      this.props.GetGroupInGroupRequest(this.props.id, text).then(()=>{
+      this.props.GetGroupInGroupRequest(this.props.id, value).then(()=>{
         this.setState({
-          groupData: this.props.GroupInGroup
+          groupData: this.props.GroupInGroup,
+          sort: value
         });
       });
     }
     let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
-    this.props.history.replace(`/${url}/${type}/${text}`);
+    this.props.history.replace(`/${url}/${type}/${value}`);
   }
 
   render(){
@@ -316,9 +304,9 @@ class GroupDetail extends Component {
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row>
                   <Grid.Column computer={13} tablet={12} mobile={10} className="typeSelect">
-                    <Select placeholder="디자인" options={type} onBlur={this.typeChange}/>
+                    <Dropdown selection placeholder="디자인" options={type} onChange={this.typeChange} value={this.state.type}/>
                   </Grid.Column>
-                  <Sorting computer={3} tablet={4} mobile={6} handleChange={this.sortChange}/>
+                  <Sorting computer={3} tablet={4} mobile={6} handleChange={this.sortChange} value={this.state.sort}/>
                 </Grid.Row>
               </MenuContainer>
               {this.props.type === "design" || this.props.type === null || this.props.type === "null" ? 

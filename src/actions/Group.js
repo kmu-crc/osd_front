@@ -11,10 +11,9 @@ export function GetGroupListRequest(sort) {
         console.log("group data >>", data);
         if (!data) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetGroupList(data))
+          data = [];
         }
+        dispatch(GetGroupList(data));
       }).catch((error) => {
         console.log("err", error);
       });
@@ -39,10 +38,9 @@ export function GetGroupDetailRequest(id) {
         console.log("group Detail data >>", data);
         if (!data) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetGroupDetail(data));
+          data = [];
         }
+        dispatch(GetGroupDetail(data));
       }).catch((error) => {
         console.log("err", error);
       });
@@ -68,10 +66,9 @@ export function GetDesignInGroupRequest(id, sort) {
         console.log("design in group data >>", data);
         if (!data) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignInGroup(data));
+          data = [];
         }
+        dispatch(GetDesignInGroup(data));
       }).catch((error) => {
         console.log("err", error);
       });
@@ -97,10 +94,9 @@ export function GetGroupInGroupRequest(id, sort) {
         console.log("group in group data >>", data);
         if (!data) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetGroupInGroup(data));
+          data = [];
         }
+        dispatch(GetGroupInGroup(data));
       }).catch((error) => {
         console.log("err", error);
       });
