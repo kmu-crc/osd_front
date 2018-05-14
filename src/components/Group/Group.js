@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { Container, Columns, Row } from "../Grid/index";
 import eximg from "../../source/eximg.jpeg";
 
 // css styling
@@ -93,14 +92,12 @@ class Group extends Component {
             <div className="date">{(group.create_time).split("T")[0]} 개설</div>
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
-            {group.count != null &&
             <Count>
-              <div>{group.count.like}</div>
-              <div>{group.count.member}</div>
-              <div>{group.count.design}</div>
+              <div>{group.like? group.like : 0}</div>
+              <div>{group.member? group.member : 0}</div>
+              <div>{group.design? group.design : 0}</div>
               <div className="clear"></div>
             </Count>
-            }
             <div className="clear"></div>
             <ButtonWrap>
               <button className="red">가입신청</button>
