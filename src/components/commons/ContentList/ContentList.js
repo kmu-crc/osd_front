@@ -14,7 +14,6 @@ class ContentList extends Component {
   render(){
     let data = this.props.data;
     const type = this.props.type;
-    console.log(data);
     return(
       <ListContainer padded={true} columns={ type === "design"? 6 : 4} as="ul">
       {data != null && data.length > 0 ? 

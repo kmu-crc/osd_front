@@ -145,7 +145,8 @@ class GroupDetail extends Component {
     activeIssue: false,
     type: this.props.type,
     sort: this.props.sort,
-    designData: this.props.DesignInGroup
+    designData: this.props.DesignInGroup,
+    groupData: this.props.GroupInGroup
   };
 
   // 렌더링 직전에 한번 도는 코드
@@ -162,7 +163,11 @@ class GroupDetail extends Component {
         });
       });
     } else if (this.props.type === "group") {
-      this.props.GetGroupInGroupRequest(this.props.id, this.props.sort);
+      this.props.GetGroupInGroupRequest(this.props.id, this.props.sort).then(()=>{
+        this.setState({
+          groupData: this.props.GroupInGroup
+        });
+      });
     }
   }
 
@@ -188,20 +193,26 @@ class GroupDetail extends Component {
     let text = target.childNodes[0].textContent;
     if (text === "디자인") {
       text = "design";
+      this.props.GetDesignInGroupRequest(this.props.id, this.props.sort);
     } else if (text === "그룹") {
       text = "group";
+      this.props.GetGroupInGroupRequest(this.props.id, this.props.sort);
     }
     this.setState({
       type: text
     });
-    this.props.GetDesignInGroupRequest(this.props.id, this.state.sort).then(()=>{
+    if (text === "design") {
       this.setState({
         designData: this.props.DesignInGroup
       });
-    });
+    } else if (text === "group") {
+      this.setState({
+        groupData: this.props.GroupInGroup
+      });
+    }
     let sort = this.state.sort;
     let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
-    this.props.history.push(`/${url}/${text}/${sort}`);
+    this.props.history.replace(`/${url}/${text}/${sort}`);
   }
 
   sortChange = (e) => {
@@ -215,19 +226,28 @@ class GroupDetail extends Component {
     this.setState({
       sort: text
     });
-    this.props.GetDesignInGroupRequest(this.props.id, text).then(()=>{
-      this.setState({
-        designData: this.props.DesignInGroup
+    let type = this.props.type;
+    if (type === "design" || type === "null") {
+      this.props.GetDesignInGroupRequest(this.props.id, text).then(()=>{
+        this.setState({
+          designData: this.props.DesignInGroup
+        });
       });
-    });
-    let type = this.state.type;
+    } else if (type === "group") {
+      this.props.GetGroupInGroupRequest(this.props.id, text).then(()=>{
+        this.setState({
+          groupData: this.props.GroupInGroup
+        });
+      });
+    }
     let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
-    this.props.history.push(`/${url}/${type}/${text}`);
+    this.props.history.replace(`/${url}/${type}/${text}`);
   }
 
   render(){
     let groupDetail = this.props.GroupDetail;
     let designList = this.state.designData;
+    let groupList = this.state.groupData;
     let count;
     if (groupDetail.count != null) {
       count = groupDetail.count;
@@ -303,7 +323,7 @@ class GroupDetail extends Component {
               </MenuContainer>
               {this.props.type === "design" || this.props.type === null || this.props.type === "null" ? 
               <ContentList data={designList} type="design"/>
-              : <div>그룹 리스트</div>
+              : <ContentList data={groupList} type="group"/>
               }
             </TabContainer>
           </Wrapper>

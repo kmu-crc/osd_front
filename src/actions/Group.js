@@ -17,7 +17,7 @@ export function GetGroupListRequest(sort) {
         }
       }).catch((error) => {
         console.log("err", error);
-      })
+      });
   }
 };
 
@@ -45,7 +45,7 @@ export function GetGroupDetailRequest(id) {
         }
       }).catch((error) => {
         console.log("err", error);
-      })
+      });
   }
 };
 
@@ -74,7 +74,7 @@ export function GetDesignInGroupRequest(id, sort) {
         }
       }).catch((error) => {
         console.log("err", error);
-      })
+      });
   }
 };
 
@@ -88,25 +88,22 @@ export function GetDesignInGroup(data) {
 // 그룹 안에 속한 그룹 리스트 가져오기
 export function GetGroupInGroupRequest(id, sort) {
   return (dispatch) => {
-    // return fetch("http://localhost:8080/group/groupDetail/"+id+"/group/"+sort, { 
-    //   headers: { "Content-Type": "application/json" }, 
-    //   method: "get" 
-    // }).then((response) => {
-    //     return response.json();
-    //   }).then((data) => {
-    //     console.log("group in group data >>", data);
-    //     if (!data) {
-    //       console.log("no data");
-    //       return;
-    //     } else {
-    //       dispatch(GetGroupInGroup(data));
-    //     }
-    //   }).catch((error) => {
-    //     console.log("err", error);
-    //   })
-    let data = "group data example";
-    // dispatch(GetTypeInGroupRequest("group"));
-    dispatch(GetGroupInGroup(data));
+    return fetch("http://localhost:8080/group/groupDetail/"+id+"/group/"+sort, { 
+      headers: { "Content-Type": "application/json" }, 
+      method: "get" 
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("group in group data >>", data);
+        if (!data) {
+          console.log("no data");
+          return;
+        } else {
+          dispatch(GetGroupInGroup(data));
+        }
+      }).catch((error) => {
+        console.log("err", error);
+      });
   }
 };
 
