@@ -58,6 +58,7 @@ const Count = styled.div`
     float: left;
     width: 40px;
     color: grey;
+    margin-right: 3px;
   }
   & .clear {
     clear: both;
