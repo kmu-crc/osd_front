@@ -12,7 +12,7 @@ class DesignListContainer extends Component {
   render() {
     return(
       <div>
-        <DesignList DesignList={this.props.DesignList}/>
+        <DesignList userValid={this.props.valid} userInfo={this.props.userInfo} DesignList={this.props.DesignList}/>
       </div>
     );
   }
@@ -20,7 +20,9 @@ class DesignListContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignList: state.DesignList.status.DesignList
+    DesignList: state.DesignList.status.DesignList,
+    valid: state.Authentication.status.valid,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

@@ -150,6 +150,7 @@ const type = [
 
 class GroupDetail extends Component {
   state = {
+    id: this.props.id,
     activeMoreBtn: false,
     activeIssue: false,
     type: this.props.type,

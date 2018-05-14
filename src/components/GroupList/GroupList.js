@@ -40,18 +40,21 @@ const MenuContainer = styled(Grid)`
 
 class GroupList extends Component {
   render(){
+    let userValid = this.props.userValid;
     let list = this.props.GroupList;
     return(
       <Wrapper>
         <MenuContainer devided="vertically" padded={true} columns={2}>
           <Grid.Row stretched={false}>
             <Grid.Column className="addGroup">
-              <Link to="/createGroup"><button>새 그룹 추가 +</button></Link>
+              {userValid? <Link to="/createGroup"><button>새 그룹 추가 +</button></Link> :
+              <button disabled>새 그룹 추가 +</button>
+              }  
             </Grid.Column>
             <Sorting/>
           </Grid.Row>
         </MenuContainer>
-        <ContentList data={list} type="group"/>
+        <ContentList data={list} user={this.props.userInfo} type="group"/>
       </Wrapper>
     );
   }

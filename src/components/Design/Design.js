@@ -60,7 +60,7 @@ const Count = styled.div`
   font-weight: 400;
   font-size: 12px;
   & div {
-    float: left;
+    float: right;
     width: 40px;
   }
 `;
@@ -68,6 +68,7 @@ const Count = styled.div`
 class Design extends Component {
   render(){
     let design = this.props.design;
+    let user = this.props.user;
     return(
       <NavLink to={"/designDetail/"+design.uid}>
         <Designli>
@@ -89,7 +90,6 @@ class Design extends Component {
                 <Icon name="window restore" color="grey" size="mini"></Icon>
                 {design.card_count? design.card_count : 0}
               </div>
-              <Row/>
             </Count>
           </TextPart>
         </Designli>

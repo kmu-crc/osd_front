@@ -40,7 +40,7 @@ class DesignList extends Component {
             <Sorting computer={8} tablet={6} mobile={4}/>
           </Grid.Row>
         </MenuContainer>
-        <ContentList data={list} type="design"/>
+        <ContentList data={list} user={this.props.userInfo} type="design"/>
       </Wrapper>
     );
   }

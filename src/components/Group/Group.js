@@ -7,9 +7,9 @@ import { Grid, Icon } from "semantic-ui-react";
 // css styling
 
 const Groupli = styled.li`
-  width: 90%;
-  height: 140px;
-  margin: 0 auto 30px;
+  width: 100%;
+  height: 160px;
+  margin: 0 auto 15px;
   border-radius: 6px 6px 3px 3px;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;
@@ -21,8 +21,10 @@ const Groupli = styled.li`
 
 const GroupImg = styled.div`
   float: left;
-  width: 15%;
-  height: 100%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50% 50%;
+  margin: 10px;
   overflow: hidden;
   & img {
     width: 100%;
@@ -32,10 +34,12 @@ const GroupImg = styled.div`
 
 const GroupInfo = styled.div`
   width: 45%;
+  height: 100%;
   float: left;
   padding: 10px 20px;
+  position: relative;
   & .title {
-    margin: 5px 0;
+    margin: 10px 0;
     font-size: 18px;
     font-weight: bold;
   }
@@ -52,12 +56,18 @@ const GroupInfo = styled.div`
   }
 `;
 
+const SubWrap = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+`;
+
 const Count = styled.div`
-  float: right;
+  float: left;
   & div {
     float: left;
     width: 40px;
-    color: grey;
+    color: black;
     margin-right: 3px;
   }
   & .clear {
@@ -67,7 +77,7 @@ const Count = styled.div`
 `;
 
 const ButtonWrap = styled.div`
-  margin-top: 10px;
+  float: left;
   & button {
     font-size: 12px;
     padding: 4px 15px;
@@ -78,13 +88,13 @@ const ButtonWrap = styled.div`
 const ThumbImg = styled.div`
   width: 40%;
   height: 100%;
-  float: left;
+  float: right;
   & .imgBox {
-    float: left;
+    float: right;
     width: 30%;
-    height: 120px;
+    height: 140px;
     background-color: #f2f2f2;
-    margin: 10px 5px;
+    margin: 10px 10px 10px 0px;
   }
   & p {
     width: 100%;
@@ -96,10 +106,14 @@ const ThumbImg = styled.div`
 
 
 class Group extends Component {
+  refresh = (e) => {
+    Component.forceUpdate();
+  }
   render(){
     let group = this.props.group;
+    let user = this.props.user;
     return(
-      <NavLink to={"/groupDetail/"+group.uid}>
+      <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>
           <GroupImg>
             <img src={eximg} alt=""/>
@@ -111,26 +125,28 @@ class Group extends Component {
               <span>그룹장: {group.userName}</span>
               <span>멤버수 : {group.member? group.member : 0}</span>
             </div>
-            <Count>
-              <div>
-                <Icon name="heart" color="grey" size="mini"></Icon>
-                {group.like? group.like : 0}
-              </div>
-              <div>
-                <Icon name="signup" color="grey" size="mini"></Icon>
-                {group.design? group.design : 0}
-              </div>
-              <div>
-                <Icon name="window restore" color="grey" size="mini"></Icon>
-                0
-              </div>
-              <div className="clear"></div>
-            </Count>
             <div className="clear"></div>
-            <ButtonWrap>
-              <button className="red">가입신청</button>
-              <button className="red">관리</button>
-            </ButtonWrap>
+            <SubWrap>
+              <ButtonWrap>
+                { (user != null && user.uid !== group.user_id) && <button className="red">가입신청</button> }
+                { (user != null && user.uid === group.user_id ) && <button className="red">관리</button> }
+              </ButtonWrap>
+              <Count>
+                <div>
+                  <Icon name="heart" color="black" size="mini"></Icon>
+                  {group.like? group.like : 0}
+                </div>
+                <div>
+                  <Icon name="signup" color="black" size="mini"></Icon>
+                  {group.design? group.design : 0}
+                </div>
+                <div>
+                  <Icon name="window restore" color="black" size="mini"></Icon>
+                  0
+                </div>
+                <div className="clear"></div>
+              </Count>
+            </SubWrap>
           </GroupInfo>
           {group.designTop3.length > 0 ? 
             <ThumbImg>
