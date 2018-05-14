@@ -22,6 +22,10 @@ const MenuContainer = styled(Grid)`
   & .sorting {
     text-align: right;
   }
+  & .ui.default.dropdown:not(.button)>.text, 
+  & .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
 `;
 
 

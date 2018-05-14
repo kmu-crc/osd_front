@@ -31,6 +31,10 @@ const MenuContainer = styled(Grid)`
   & .addGroup button:hover {
     background-color: #f2f2f2;
   }
+  & .ui.default.dropdown:not(.button)>.text, 
+  & .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
 `;
 
 

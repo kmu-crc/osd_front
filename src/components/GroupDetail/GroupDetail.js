@@ -131,6 +131,15 @@ const MenuContainer = styled(Grid)`
   & .sorting {
     text-align: center;
   }
+  & .ui.default.dropdown:not(.button)>.text, 
+  & .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
+  & h3 {
+    float: left;
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 
 const type = [
@@ -260,7 +269,7 @@ class GroupDetail extends Component {
                   <Cate>
                     <span className="owner">
                       <Icon name="user" size="tiny"></Icon>
-                      {groupDetail.user_id}
+                      {groupDetail.userName}
                     </span>
                     <span className="member">
                       <Icon name="group" size="tiny"></Icon>
@@ -304,6 +313,11 @@ class GroupDetail extends Component {
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row>
                   <Grid.Column computer={13} tablet={12} mobile={10} className="typeSelect">
+                    {this.props.type === "design" || this.props.type === null || this.props.type === "null" ?
+                      <h3>디자인 총 {designList.length}건</h3>
+                      :
+                      <h3>그룹 총 {groupList.length}건</h3>
+                    }
                     <Dropdown selection placeholder="디자인" options={type} onChange={this.typeChange} value={this.state.type}/>
                   </Grid.Column>
                   <Sorting computer={3} tablet={4} mobile={6} handleChange={this.sortChange} value={this.state.sort}/>
