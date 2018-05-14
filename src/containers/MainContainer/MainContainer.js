@@ -1,12 +1,19 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import Main from "../../components/Main";
 
 class MainContainer extends Component {
   render() {
     return(
-      <Main/>
+      <Main userValid={this.props.valid}/>
     );
   }
 }
 
-export default MainContainer;
+const mapStateToProps = (state) => {
+  return {
+    valid: state.Authentication.status.valid
+  };
+};
+
+export default connect(mapStateToProps)(MainContainer);
