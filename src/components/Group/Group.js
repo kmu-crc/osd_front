@@ -85,6 +85,12 @@ const ThumbImg = styled.div`
     background-color: #f2f2f2;
     margin: 10px 5px;
   }
+  & p {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 60px;
+  }
 `;
 
 
@@ -125,12 +131,16 @@ class Group extends Component {
               <button className="red">관리</button>
             </ButtonWrap>
           </GroupInfo>
-          <ThumbImg>
+          {group.designTop3.length > 0 ? 
+            <ThumbImg>
             {group.designTop3.map(design => 
               <div className="imgBox" key={design.uid}><img src={design.s_img} alt=""/></div>
             )}
             <div className="clear"></div>
-          </ThumbImg>
+            </ThumbImg>
+            :
+            <ThumbImg><p>등록된 디자인이 없습니다.</p></ThumbImg>
+          }
           <div className="clear"></div>
         </Groupli>
       </NavLink>
