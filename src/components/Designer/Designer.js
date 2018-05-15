@@ -24,13 +24,11 @@ class Designer extends Component {
         <div>{designer.myProfileImg.m_img}</div>
         } */}
         <div>{designer.nick_name}</div>
-        {designer.count != null &&
         <Count>
-          <div>{designer.count.total_like}</div>
-          <div>{designer.count.total_design}</div>
-          <div>{designer.count.total_view}</div>
+          <div>{designer.total_like}</div>
+          <div>{designer.total_design}</div>
+          <div>{designer.total_view}</div>
         </Count>
-        }
       </Designerli>
     );
   }
