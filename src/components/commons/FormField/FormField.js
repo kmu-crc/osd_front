@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Icon, Select, Checkbox } from "semantic-ui-react";
+import { Form, Input, Icon, Dropdown, Checkbox } from "semantic-ui-react";
 import Validates from "../../../modules/Validates";
 
 export class InputField extends Component {
@@ -9,7 +9,7 @@ export class InputField extends Component {
     value: ""
   }
   componentWillMount() {
-    if(!this.props.validates){
+    if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
     }
     if (this.props.value) {
@@ -51,7 +51,7 @@ export class InputField extends Component {
           await Validates[vali](value).then(whatIsStatus);
         }
       }
-    }else {
+    } else {
       this.setState({
         status: "SUCCESS",
         message: null,
@@ -63,10 +63,10 @@ export class InputField extends Component {
     const { label, type, name, placeholder } = this.props;
     return (
       <Form.Field>
-          <label>{label}</label>
-          <input status={this.state.status} value={this.state.value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
-          {this.state.status == null ? <span>{this.state.message}</span> : null}
-        </Form.Field>
+        <label>{label}</label>
+        <input status={this.state.status} value={this.state.value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </Form.Field>
     )
   }
 }
@@ -155,15 +155,15 @@ export class OverlapField extends Component {
     return (
       <div>
         <Form.Field>
-            <label>{label}</label>
-            <input status={this.state[name].status} value={this.state[name].value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
-            {this.state[name].status == null ? <span>{this.state[name].message}</span> : null}
-          </Form.Field>
-          <Form.Field>
-            <label>{label} 확인</label>
-            <input status={this.state[name + "2"].status} value={this.state[name + "2"].value} name={name + "2"} type={type} placeholder={placeholder + " 확인"} onChange={this.overlapCheck} onBlur={this.overlapCheck} />
-            {this.state[name + "2"].status == null ? <span>{this.state[name + "2"].message}</span> : null}
-          </Form.Field>
+          <label>{label}</label>
+          <input status={this.state[name].status} value={this.state[name].value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+          {this.state[name].status == null ? <span>{this.state[name].message}</span> : null}
+        </Form.Field>
+        <Form.Field>
+          <label>{label} 확인</label>
+          <input status={this.state[name + "2"].status} value={this.state[name + "2"].value} name={name + "2"} type={type} placeholder={placeholder + " 확인"} onChange={this.overlapCheck} onBlur={this.overlapCheck} />
+          {this.state[name + "2"].status == null ? <span>{this.state[name + "2"].message}</span> : null}
+        </Form.Field>
       </div>
 
     )
@@ -177,7 +177,7 @@ export class TextAreaField extends Component {
     value: ""
   }
   componentWillMount() {
-    if(!this.props.validates){
+    if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
     }
     if (this.props.value) {
@@ -218,7 +218,7 @@ export class TextAreaField extends Component {
           await Validates[vali](value).then(whatIsStatus);
         }
       }
-    }else {
+    } else {
       this.setState({
         status: "SUCCESS",
         message: null,
@@ -230,10 +230,10 @@ export class TextAreaField extends Component {
     const { label, type, name, placeholder } = this.props;
     return (
       <Form.Field>
-          <label>{label}</label>
-          <textarea status={this.state.status} value={this.state.value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} ></textarea>
-          {this.state.status == null ? <span>{this.state.message}</span> : null}
-        </Form.Field>
+        <label>{label}</label>
+        <textarea status={this.state.status} value={this.state.value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} ></textarea>
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </Form.Field>
     )
   }
 }
@@ -245,7 +245,98 @@ export class SelectField extends Component {
     value: ""
   }
   componentWillMount() {
-    if(!this.props.validates){
+    if (!this.props.validates) {
+      this.setState({ status: "SUCCESS" });
+    }
+    if (this.props.value) {
+      this.setState({ value: this.props.value });
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.options) !== JSON.stringify(this.props.options)) {
+      console.log(this.props.options[0].value);
+      this.setState({ value: this.props.options[0].value });
+      if (this.props.getValue) this.props.getValue(this.props.options[0].value);
+    }
+  }
+  onChangeValue = async (event, { text, value }) => {
+    const target = event.target;
+    console.log(text, value)
+    let MenuValue = target.childNodes[0].textContent;
+    // let value = "";
+    if (this.props.options) {
+      this.props.options.map(data => {
+        console.log(data, MenuValue);
+        if (data.text === MenuValue) {
+          value = data.value;
+        }
+      })
+    }
+    let next = true;
+    // loop 안에서 새로운 함수를 정의하지 못하게 권장하기 때문에 반복문에 사용될 함수를 미리 정의
+    const whatIsStatus = (status) => {
+      if (!status) {
+        this.setState({
+          status: "SUCCESS",
+          message: null,
+          value
+        });
+      } else {
+        this.setState({
+          status: null,
+          message: status,
+          value
+        });
+        // 검증에 실패하였기 때문에 다음 반복문을 멈추기 위하여 next값을 false로 바꿔준다.
+        next = false;
+      }
+    }
+    this.setState({ value });
+    if (this.props.getValue) this.props.getValue(value);
+    if (this.props.validates) {
+      for (let vali of this.props.validates) {
+        //첫번째 검증을 통과하지 못하면 반복문을 멈춘다.
+        if (!next) break;
+        if (!Validates[vali]) {
+          // Validates에 전달받은 이름의 검증 로직이 없으면 잘못전달되었다고 콘솔에 띄운다.
+          console.log("잘못된 값입니다.");
+        } else {
+          await Validates[vali](value).then(whatIsStatus);
+        }
+      }
+    } else {
+      this.setState({
+        status: "SUCCESS",
+        message: null,
+        value
+      });
+    }
+  }
+  render() {
+    const { label, options, name, placeholder } = this.props;
+    return (
+      <Form.Field>
+        <label>{label}</label>
+        <select style={{ display: "none" }} status={this.state.status} value={this.state.value} name={name} >
+          {this.props.options ? options.map(data => {
+            return <option key={data.text} value={data.value}>{data.text}</option>
+          }) : null}
+        </select>
+        <Dropdown selection options={options} onChange={this.onChangeValue} value={this.state.value} />
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </Form.Field>
+    )
+  }
+}
+
+export class FileField extends Component {
+  state = {
+    status: null,
+    message: null,
+    value: ""
+  }
+  componentWillMount() {
+    if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
     }
     if (this.props.value) {
@@ -254,16 +345,11 @@ export class SelectField extends Component {
   }
   onChangeValue = async (event) => {
     const target = event.target;
-    let MenuValue = target.childNodes[0].textContent;
-    let value = "";
-    if(this.props.options){
-      this.props.options.map( data => {
-        console.log(data, MenuValue);
-        if(data.text === MenuValue){
-          value = data.value;
-        }
-      })
+    const value = target.files[0];
+    if (this.props.freeView) {
+      this.props.freeView(value);
     }
+    console.log(value);
     let next = true;
     // loop 안에서 새로운 함수를 정의하지 못하게 권장하기 때문에 반복문에 사용될 함수를 미리 정의
     const whatIsStatus = (status) => {
@@ -304,91 +390,13 @@ export class SelectField extends Component {
     }
   }
   render() {
-    const { label, options, name, placeholder } = this.props;
-    return (
-      <Form.Field>
-          <label>{label}</label>
-          <select style={{display: "none"}} status={this.state.status} value={this.state.value} name={name}>
-            <option disabled value="">{placeholder}</option>
-            { this.props.options ? options.map( data => {
-              return <option key={data.text} value={data.value}>{data.text}</option>
-            }): null}
-          </select>
-          <Select placeholder={placeholder} options={options} onBlur={this.onChangeValue} />
-          {this.state.status == null ? <span>{this.state.message}</span> : null}
-        </Form.Field>
-    )
-  }
-}
-
-export class FileField extends Component {
-  state = {
-    status: null,
-    message: null,
-    value: ""
-  }
-  componentWillMount() {
-    if(!this.props.validates){
-      this.setState({ status: "SUCCESS" });
-    }
-    if (this.props.value) {
-      this.setState({ value: this.props.value });
-    }
-  }
-  onChangeValue = async (event) => {
-    const target = event.target;
-    const value = target.files[0];
-    if(this.props.freeView){
-      this.props.freeView(value);
-    }
-    console.log(value);
-    let next = true;
-    // loop 안에서 새로운 함수를 정의하지 못하게 권장하기 때문에 반복문에 사용될 함수를 미리 정의
-    const whatIsStatus = (status) => {
-      if (!status) {
-        this.setState({
-          status: "SUCCESS",
-          message: null,
-          value
-        });
-      } else {
-        this.setState({
-          status: null,
-          message: status,
-          value
-        });
-        // 검증에 실패하였기 때문에 다음 반복문을 멈추기 위하여 next값을 false로 바꿔준다.
-        next = false;
-      }
-    }
-    this.setState({ value });
-    if (this.props.validates) {
-      for (let vali of this.props.validates) {
-        //첫번째 검증을 통과하지 못하면 반복문을 멈춘다.
-        if (!next) break;
-        if (!Validates[vali]) {
-          // Validates에 전달받은 이름의 검증 로직이 없으면 잘못전달되었다고 콘솔에 띄운다.
-          console.log("잘못된 값입니다.");
-        } else {
-          await Validates[vali](value).then(whatIsStatus);
-        }
-      }
-    }else {
-      this.setState({
-        status: "SUCCESS",
-        message: null,
-        value
-      });
-    }
-  }
-  render() {
     const { label, name, placeholder } = this.props;
     return (
       <Form.Field>
-          <label>{label}</label>
-          <input type="file" status={this.state.status} name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
-          {this.state.status == null ? <span>{this.state.message}</span> : null}
-        </Form.Field>
+        <label>{label}</label>
+        <input type="file" status={this.state.status} name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </Form.Field>
     )
   }
 }
@@ -400,14 +408,14 @@ export class CheckBoxField extends Component {
     value: ""
   }
   componentWillMount() {
-    if(!this.props.validates){
+    if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
     }
     if (this.props.value) {
       this.setState({ value: this.props.value });
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     this.checkbox._reactInternalFiber.child.child.stateNode.attributes.status = this.state.status;
   }
   onChangeValue = async (event) => {
@@ -452,7 +460,7 @@ export class CheckBoxField extends Component {
           await Validates[vali](value).then(whatIsStatus);
         }
       }
-    }else {
+    } else {
       this.setState({
         status: "SUCCESS",
         message: null,
@@ -464,10 +472,10 @@ export class CheckBoxField extends Component {
     const { label, name, placeholder } = this.props;
     return (
       <Form.Field>
-          <label>{label}</label>
-          <Checkbox status={this.state.status} name={name} ref={ ref => this.checkbox = ref} label={placeholder} onClick={this.onChangeValue} />
-          {this.state.status == null ? <span>{this.state.message}</span> : null}
-        </Form.Field>
+        <label>{label}</label>
+        <Checkbox status={this.state.status} name={name} ref={ref => this.checkbox = ref} label={placeholder} onClick={this.onChangeValue} />
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </Form.Field>
     )
   }
 }
