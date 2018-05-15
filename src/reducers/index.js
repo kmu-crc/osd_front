@@ -10,6 +10,7 @@ import GroupDetail from "./GroupDetail";
 import DesignerList from "./DesignerList";
 import { SignIn, SignUp } from "./Registration";
 import { UserInfo } from "./Users";
+import { Categorys } from "./Categorys";
 import { reducer as formReducer } from 'redux-form';
 
 import { combineReducers } from "redux";
@@ -28,5 +29,6 @@ export default combineReducers({
     SignIn,
     SignUp,
     UserInfo,
+    Categorys,
     form: formReducer
 });
