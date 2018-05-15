@@ -12,6 +12,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import RequiresAuth from "./containers/RequiresAuth";
 import MainPage from "./pages/MainPage/MainPage";
+import TestPage from "./pages/TestPage";
 
 class App extends Component {
   render() {
@@ -19,7 +20,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={MainPage}/>
-          <Route path="/createdesign" component={CreateDesignPage}/>
+          <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)}/>
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design" component={DesignListPage}/>
           <Route path="/createGroup" component={CreateGroupPage}/>
@@ -31,6 +32,7 @@ class App extends Component {
           <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>
+          <Route path="/test" component={TestPage} />
         </Switch>
       </BrowserRouter>
     );
