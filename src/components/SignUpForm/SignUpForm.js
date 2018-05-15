@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Icon, Modal, Input } from "semantic-ui-react";
 import { InputField, OverlapField } from "../commons/FormField";
+import FormDataToJson from "../../modules/FormDataToJson"
 import ValidateForm from "../commons/ValidateForm";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
@@ -23,9 +24,10 @@ class SignUpForm extends Component {
   close = () => this.setState({ open: false })
 
   handleSubmit = (data) => {
+    let formData = FormDataToJson(data);
     // password2는 회원가입에 직접적으로 필요한 속성이 아니기 때문에 전송시 삭제합니다.
-    delete data.password2;
-    this.props.SignUpRequest(data).then(res => {
+    delete formData.password2;
+    this.props.SignUpRequest(formData).then(res => {
       if (res.type === "AUTH_SIGNUP_SUCCESS") {
         this.props.history.push("/design");
       }
@@ -114,7 +116,6 @@ class SignUpForm extends Component {
           </ValidateForm>
         </Modal>
       </div>
-
     );
   }
 }
