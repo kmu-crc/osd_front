@@ -1,3 +1,6 @@
+body {
+  background-color: #e7e7e7
+}
 .App {
   text-align: center;
 }
@@ -32,4 +35,8 @@
 }
 .field{
   margin-bottom: 2rem;
+}
+
+.checked::after{
+  content: "\e800";
 }
