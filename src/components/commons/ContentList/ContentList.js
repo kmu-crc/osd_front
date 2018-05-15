@@ -15,14 +15,18 @@ class ContentList extends Component {
     let data = this.props.data;
     const type = this.props.type;
     return(
-      <ListContainer padded={true} columns={ type === "design"? 6 : 4} as="ul">
+      <ListContainer padded={true} columns={ type === "design"? 6 : 1} as="ul">
+      {data != null && data.length > 0 ? 
         <Grid.Row stretched={false}>
-          {data.map(content =>
-            <Grid.Column key={content.uid}>
-            { type === "design"? <Design design={content}/> : <Group group={content}/> }      
-            </Grid.Column>
-          )}
-        </Grid.Row>
+        {data.map(content =>
+          <Grid.Column key={content.uid}>
+          { type === "design"? <Design design={content} user={this.props.user}/> : <Group group={content} user={this.props.user}/> }      
+          </Grid.Column>
+        )}
+      </Grid.Row>
+      :
+      <Grid.Row>등록된 컨텐츠가 없습니다.</Grid.Row>
+      }
       </ListContainer>
     );
   }

@@ -6,7 +6,7 @@ class GroupListPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <GroupListContainer />
+        <GroupListContainer/>
      </ClientTemplate>
     );
   }

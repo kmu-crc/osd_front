@@ -22,6 +22,10 @@ const MenuContainer = styled(Grid)`
   & .sorting {
     text-align: right;
   }
+  & .ui.default.dropdown:not(.button)>.text, 
+  & .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
 `;
 
 
@@ -29,21 +33,15 @@ class DesignList extends Component {
   render(){
     let list = this.props.DesignList;
     return(
-      <div>
-        {list != null && list.length > 0 ?
-        <Wrapper>
-          <MenuContainer devided="vertically" padded={true} columns={2}>
-            <Grid.Row stretched={false}>
-              <Category computer={8} tablet={10} mobile={12}/>
-              <Sorting computer={8} tablet={6} mobile={4}/>
-            </Grid.Row>
-          </MenuContainer>
-          <ContentList data={list} type="design"/>
-        </Wrapper>
-        :
-        <p>등록된 디자인이 없습니다.</p>
-        }
-      </div>
+      <Wrapper>
+        <MenuContainer devided="vertically" padded={true} columns={2}>
+          <Grid.Row stretched={false}>
+            <Category computer={8} tablet={10} mobile={12}/>
+            <Sorting computer={8} tablet={6} mobile={4}/>
+          </Grid.Row>
+        </MenuContainer>
+        <ContentList data={list} user={this.props.userInfo} type="design"/>
+      </Wrapper>
     );
   }
 }

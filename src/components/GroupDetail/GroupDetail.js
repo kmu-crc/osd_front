@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Icon, Select } from "semantic-ui-react";
+import { Grid, Icon, Dropdown } from "semantic-ui-react";
 import { Row } from "../Grid";
 import Sorting from "../commons/Sorting";
 import ContentList from "../commons/ContentList";
@@ -131,6 +131,15 @@ const MenuContainer = styled(Grid)`
   & .sorting {
     text-align: center;
   }
+  & .ui.default.dropdown:not(.button)>.text, 
+  & .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
+  & h3 {
+    float: left;
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 
 const type = [
@@ -141,13 +150,37 @@ const type = [
 
 class GroupDetail extends Component {
   state = {
+    id: this.props.id,
     activeMoreBtn: false,
     activeIssue: false,
-    type: "design"
+    type: this.props.type,
+    sort: this.props.sort,
+    designData: this.props.DesignInGroup,
+    groupData: this.props.GroupInGroup
   };
 
-  componentDidMount() {
+  // 렌더링 직전에 한번 도는 코드
+  componentWillMount() {
+    //그룹에 대한 기본 정보 불러오기
     this.props.GetGroupDetailRequest(this.props.id);
+
+    //그룹에 있는 컨텐츠 불러오기 -> 일단 무조건 디자인 리스트부터 불러옴
+    this.props.GetDesignInGroupRequest(this.props.id, this.state.sort);
+
+    //새로고침 했을 경우에 적용 -> url에 맞게 값 불러옴
+    if (this.props.type === "design" || this.props.type === null || this.props.type === "null") {
+      this.props.GetDesignInGroupRequest(this.props.id, this.props.sort).then(()=>{
+        this.setState({
+          designData: this.props.DesignInGroup
+        });
+      });
+    } else if (this.props.type === "group") {
+      this.props.GetGroupInGroupRequest(this.props.id, this.props.sort).then(()=>{
+        this.setState({
+          groupData: this.props.GroupInGroup
+        });
+      });
+    }
   }
 
   onActiveMoreBtn = (e) => {
@@ -167,13 +200,52 @@ class GroupDetail extends Component {
     }
   }
 
-  typeChange = (e) => {
-    console.log(e.target);
+  typeChange = (e, {value}) => {
+    let sort = this.props.sort;
+    if (value === "design") {
+      this.props.GetDesignInGroupRequest(this.props.id, sort).then(()=>{
+        this.setState({
+          designData: this.props.DesignInGroup,
+          type: value
+        });
+      });
+    } else if (value === "group") {
+      this.props.GetGroupInGroupRequest(this.props.id, sort).then(()=>{
+        this.setState({
+          groupData: this.props.GroupInGroup,
+          type: value
+        });
+      });
+    }
+    let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
+    this.props.history.replace(`/${url}/${value}/${sort}`);
+  }
 
+  sortChange = (e, {value}) => {
+    let type = this.props.type;
+    if (type === "design" || type === "null") {
+      this.props.GetDesignInGroupRequest(this.props.id, value).then(()=>{
+        this.setState({
+          designData: this.props.DesignInGroup,
+          sort: value
+        });
+      });
+    } else if (type === "group") {
+      this.props.GetGroupInGroupRequest(this.props.id, value).then(()=>{
+        this.setState({
+          groupData: this.props.GroupInGroup,
+          sort: value
+        });
+      });
+    }
+    let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
+    this.props.history.replace(`/${url}/${type}/${value}`);
   }
 
   render(){
     let groupDetail = this.props.GroupDetail;
+    let designList = this.state.designData;
+    let groupList = this.state.groupData;
     let count;
     if (groupDetail.count != null) {
       count = groupDetail.count;
@@ -198,7 +270,7 @@ class GroupDetail extends Component {
                   <Cate>
                     <span className="owner">
                       <Icon name="user" size="tiny"></Icon>
-                      {groupDetail.user_id}
+                      {groupDetail.userName}
                     </span>
                     <span className="member">
                       <Icon name="group" size="tiny"></Icon>
@@ -242,14 +314,20 @@ class GroupDetail extends Component {
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row>
                   <Grid.Column computer={13} tablet={12} mobile={10} className="typeSelect">
-                    <Select placeholder="디자인" options={type} onContextMenu={this.typeChange}/>
+                    {this.props.type === "design" || this.props.type === null || this.props.type === "null" ?
+                      <h3>디자인 총 {designList.length}건</h3>
+                      :
+                      <h3>그룹 총 {groupList.length}건</h3>
+                    }
+                    <Dropdown selection placeholder="디자인" options={type} onChange={this.typeChange} value={this.state.type}/>
                   </Grid.Column>
-                  <Sorting computer={3} tablet={4} mobile={6}/>
+                  <Sorting computer={3} tablet={4} mobile={6} handleChange={this.sortChange} value={this.state.sort}/>
                 </Grid.Row>
               </MenuContainer>
-              {this.state.type === "design" ? 
-              <ContentList data={groupDetail.designList} type="design"/>
-              : <div>그룹 리스트</div>}
+              {this.props.type === "design" || this.props.type === null || this.props.type === "null" ? 
+              <ContentList data={designList} type="design"/>
+              : <ContentList data={groupList} type="group"/>
+              }
             </TabContainer>
           </Wrapper>
         }

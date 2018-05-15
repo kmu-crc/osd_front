@@ -176,11 +176,11 @@ class DesignDetail extends Component {
                 <Cate>
                   <span className="cate">{designDetail.categoryName.name}</span>
                   <span className="owner">
-                    <Icon name="user" size="tiny"></Icon>
+                    <Icon name="user" size="mini"></Icon>
                     {designDetail.userName}
                   </span>
                   <span className="member">
-                    <Icon name="group" size="tiny"></Icon>
+                    <Icon name="group" size="mini"></Icon>
                     {count.member_count}명
                   </span>
                 </Cate>
@@ -189,17 +189,17 @@ class DesignDetail extends Component {
               <Grid.Column computer={8} tablet={10} mobile={10}>
                 <SubInfo>
                 <span className="text">
-                  <Icon name="unhide" color="grey" size="tiny"></Icon>
+                  <Icon name="unhide" color="grey" size="mini"></Icon>
                   조회수
                 </span>
                 <span className="number">{count.total_view_count}</span>
                 <span className="text">
-                  <Icon name="heart" color="grey" size="tiny"></Icon>
+                  <Icon name="heart" color="grey" size="mini"></Icon>
                   좋아요
                 </span>
                 <span className="number">{count.like_count}</span>
                 <span className="text">
-                  <Icon name="window restore" color="grey" size="tiny"></Icon>
+                  <Icon name="window restore" color="grey" size="mini"></Icon>
                   파생
                 </span>
                 <span className="number">{designDetail.children_count["count(*)"]}</span>

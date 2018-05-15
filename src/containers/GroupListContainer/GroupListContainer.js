@@ -12,7 +12,7 @@ class GroupListContainer extends Component {
   render() {
     return(
       <div>
-        <GroupList GroupList={this.props.GroupList}/>
+        <GroupList userValid={this.props.valid} userInfo={this.props.userInfo} GroupList={this.props.GroupList}/>
       </div>
     );
   }
@@ -20,7 +20,9 @@ class GroupListContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    GroupList: state.GroupList.status.GroupList
+    GroupList: state.GroupList.status.GroupList,
+    valid: state.Authentication.status.valid,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

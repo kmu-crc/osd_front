@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "../../source/eximg.jpeg";
 import { Row } from "../Grid/index";
+import { Grid, Icon } from "semantic-ui-react";
 
 // css styling
 
@@ -59,7 +60,7 @@ const Count = styled.div`
   font-weight: 400;
   font-size: 12px;
   & div {
-    float: left;
+    float: right;
     width: 40px;
   }
 `;
@@ -67,6 +68,7 @@ const Count = styled.div`
 class Design extends Component {
   render(){
     let design = this.props.design;
+    let user = this.props.user;
     return(
       <NavLink to={"/designDetail/"+design.uid}>
         <Designli>
@@ -75,14 +77,20 @@ class Design extends Component {
             <div className="title">{design.title}</div>
             <div className="userName">{design.userName.nick_name}</div>
             <div className="cate">{design.categoryName.name}</div>
-            {design.count != null &&
             <Count>
-              <div>{design.count.like_count}</div>
-              <div>{design.count.member_count}</div>
-              <div>{design.count.card_count}</div>
-              <Row/>
+              <div>
+                <Icon name="unhide" color="grey" size="mini"></Icon>
+                {design.total_view_count? design.total_view_count : 0}
+              </div>
+              <div>
+                <Icon name="heart" color="grey" size="mini"></Icon>
+                {design.like_count? design.like_count : 0}
+              </div>
+              <div>
+                <Icon name="window restore" color="grey" size="mini"></Icon>
+                {design.card_count? design.card_count : 0}
+              </div>
             </Count>
-            }
           </TextPart>
         </Designli>
       </NavLink>

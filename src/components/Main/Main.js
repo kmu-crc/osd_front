@@ -98,13 +98,6 @@ const BestContainer = styled(Grid)`
   }
 `;
 
-const Search = styled(Grid)`
-  & .ui.selection.dropdown {
-    min-width: 100px;
-  }
-`;
-
-
 const HowToUse = styled(Grid)`
 & button {
   border: 1px solid #f00;
@@ -115,16 +108,14 @@ const HowToUse = styled(Grid)`
 }
 `;
 
-const options = [
-  { key: "전체", text: "전체", value: "전체" },
-  { key: "디자인", text: "디자인", value: "디자인" },
-  { key: "그룹", text: "그룹", value: "그룹" },
-  { key: "디자이너", text: "디자이너", value: "디자이너" }
-];
-
 
 class Main extends Component {
+  askLogin = () => {
+    alert("로그인을 해주세요");
+  }
+
   render(){
+    let valid = this.props.userValid;
     return(
       <div>
         <ImgWrapper>
@@ -192,18 +183,12 @@ class Main extends Component {
                 <Link to="/group"><div className="best topGroup">추천 그룹</div></Link>
               </Grid.Column>
               <Grid.Column>
-                <div className="best myInfo">나의 정보</div>
+                {valid? <div className="best myInfo">나의 정보</div> 
+                : 
+                <Link to="/signin"><div className="best myInfo" onClick={this.askLogin}>나의 정보</div></Link>}
               </Grid.Column>
             </Grid.Row>
           </BestContainer>
-          {/* <Search container={true} textAlign="center">
-            <h3>원하는 내용을 검색해보세요</h3>
-            <Input type="text" placeholder="Search..." action>
-              <input />
-              <Select compact options={options} defaultValue="전체" />
-              <Button type="submit">Search</Button>
-            </Input>
-          </Search> */}
           <HowToUse container={true} textAlign="center">
             <h3>오픈디자인 서비스에 대해 더 궁금하신가요?</h3>
             <button>홍보 영상 보러가기</button>
