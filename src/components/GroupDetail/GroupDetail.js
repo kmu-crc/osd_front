@@ -272,10 +272,6 @@ class GroupDetail extends Component {
                       <Icon name="user" size="tiny"></Icon>
                       {groupDetail.userName}
                     </span>
-                    <span className="member">
-                      <Icon name="group" size="tiny"></Icon>
-                      {count.member}명
-                    </span>
                   </Cate>
                   <div className="explanation">{groupDetail.explanation}</div>
                 </Grid.Column>

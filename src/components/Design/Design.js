@@ -75,7 +75,7 @@ class Design extends Component {
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
             <div className="title">{design.title}</div>
-            <div className="userName">{design.userName.nick_name}</div>
+            <div className="userName">{design.userName}</div>
             <div className="cate">{design.categoryName.name}</div>
             <Count>
               <div>
@@ -85,10 +85,6 @@ class Design extends Component {
               <div>
                 <Icon name="heart" color="grey" size="mini"></Icon>
                 {design.like_count? design.like_count : 0}
-              </div>
-              <div>
-                <Icon name="window restore" color="grey" size="mini"></Icon>
-                {design.card_count? design.card_count : 0}
               </div>
             </Count>
           </TextPart>

@@ -123,7 +123,6 @@ class Group extends Component {
             <div className="title">{group.title}</div>
             <div className="owner">
               <span>그룹장: {group.userName}</span>
-              <span>멤버수 : {group.member? group.member : 0}</span>
             </div>
             <div className="clear"></div>
             <SubWrap>
