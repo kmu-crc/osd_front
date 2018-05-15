@@ -100,7 +100,7 @@ class Header extends Component {
               <li><NavLink to="/design">디자인</NavLink></li>
               <li><NavLink to="/group">그룹</NavLink></li>
               <li><NavLink to="/designer">디자이너</NavLink></li>
-              <li><Button className="red"><NavLink to="/createdesign">디자인 등록</NavLink></Button></li>
+              <li><NavLink to="/createdesign"><Button className="red">디자인 등록</Button></NavLink></li>
             </Nav>
           </Grid.Column>
           <Grid.Column width={3} textAlign="right">
@@ -111,34 +111,6 @@ class Header extends Component {
           </Grid.Column>
         </HeaderGrid>
       </Head>
-      // <Head>
-      //   <NavContainer container={true}>
-      //     <NavRow>
-      //       <NavColumns xs={2} sm={4} width={4}>
-      //         <NavLink to="/">
-      //           <Logo src={logo} />
-      //         </NavLink>
-      //       </NavColumns>
-      //       <NavColumns xs={8} sm={5} width={4}>
-      //         <Nav>
-      //           <li><NavLink to="/design">디자인</NavLink></li>
-      //           <li><NavLink to="/group">그룹</NavLink></li>
-      //           <li><NavLink to="/designer">디자이너</NavLink></li>
-      //           <li><Button className="red"><NavLink to="/createdesign">디자인 등록</NavLink></Button></li>
-      //         </Nav>
-      //       </NavColumns>
-      //       <Columns xs={2} sm={3} width={4}>
-      //         <NavUserInterface>
-      //           {this.props.valid
-      //             ? <LoginNav />
-      //             : <LogOutNav />
-      //           }
-      //         </NavUserInterface>
-
-      //       </Columns>
-      //     </NavRow>
-      //   </NavContainer>
-      // </Head>
     );
   }
 }
