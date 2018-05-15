@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { InputField } from "../commons/FormField";
 import ValidateForm from "../commons/ValidateForm";
-import { Form, Button, Icon } from 'semantic-ui-react';
+import { Form, Button, Icon } from "semantic-ui-react";
+import FormDataToJson from "../../modules/FormDataToJson"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 class SignInForm extends Component {
-  handleFormSubmit = (formData) => {
+  handleFormSubmit = (data) => {
+    // ValidateForm은 FormData를 반환한다 때문에 json형태로 api에 전달하려면 FormData를 일반 객체형태로 변환해주어야 한다.
+    let formData = FormDataToJson(data);
     this.props.SignInRequest(formData).then(data => {
       if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
         alert("opendesign회원이 아닙니다.");
