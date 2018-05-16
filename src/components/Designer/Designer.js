@@ -34,17 +34,19 @@ const ImgPart = styled.div`
 `;
 
 const TextPart = styled.div`
-  & .title, & .userName {
+  & .date, & .userName {
     height: 36px;
     line-height: 1.35;
     padding: 10px 0;
     margin: 0 10px;
   }
-  & .title {
-    font-weight: bold;
+  & .date {
+    font-weight: 400;
+    color: dimgrey;
   }
   & .userName {
     border-bottom: 1px solid #f2f2f2;
+    font-weight: bold;
   }
   & .cate {
     color: dimgray;
@@ -54,13 +56,16 @@ const TextPart = styled.div`
 `;
 
 const Count = styled.div`
-  float: right;
   color: dimgray;
   font-weight: 400;
   font-size: 12px;
   & div {
     float: right;
     width: 40px;
+  }
+  & div.clear {
+    clear: both;
+    float: none;
   }
 `;
 
@@ -73,9 +78,14 @@ class designer extends Component {
         <Designerli>
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
+            <div className="date">2018-04-01 부터 활동</div>
             <div className="userName">{designer.nick_name}</div>
             <div className="cate">{designer.categoryName.name}</div>
             <Count>
+              <div>
+                <Icon name="signup" color="grey" size="mini"></Icon>
+                {designer.total_design? designer.total_design : 0}
+              </div>
               <div>
                 <Icon name="unhide" color="grey" size="mini"></Icon>
                 {designer.total_view? designer.total_view : 0}
@@ -84,10 +94,7 @@ class designer extends Component {
                 <Icon name="heart" color="grey" size="mini"></Icon>
                 {designer.total_like? designer.total_like : 0}
               </div>
-              <div>
-                <Icon name="heart" color="grey" size="mini"></Icon>
-                {designer.total_design? designer.total_design : 0}
-              </div>
+              <div className="clear"></div>
             </Count>
           </TextPart>
         </Designerli>
