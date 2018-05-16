@@ -80,7 +80,7 @@ class designer extends Component {
           <TextPart>
             <div className="date">2018-04-01 부터 활동</div>
             <div className="userName">{designer.nick_name}</div>
-            <div className="cate">{designer.categoryName.name}</div>
+            <div className="cate">{designer.categoryName}</div>
             <Count>
               <div>
                 <Icon name="signup" color="grey" size="mini"></Icon>

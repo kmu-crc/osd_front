@@ -13,6 +13,7 @@ import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
 import MainPage from "pages/MainPage/MainPage";
 import TestPage from "pages/TestPage";
+import MyDetailPage from "pages/MyDetailPage";
 
 class App extends Component {
   render() {
@@ -32,6 +33,7 @@ class App extends Component {
           <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>
+          <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/test" component={TestPage} />
         </Switch>
       </BrowserRouter>
