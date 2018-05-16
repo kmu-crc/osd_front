@@ -7,7 +7,8 @@ const initialState = {
   },
   status: {
     MyDetail: [],
-    MyDesign: []
+    MyDesign: [],
+    MyGroup: []
   }
 };
 
@@ -26,6 +27,12 @@ export default function MyDetail(state, action) {
       return update(state, {
         status: {
           MyDesign: { $set: action.MyDesign }
+        }
+      });
+    case types.GET_MY_GROUP:
+      return update(state, {
+        status: {
+          MyGroup: { $set: action.MyGroup }
         }
       });
     default:

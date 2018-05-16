@@ -59,3 +59,33 @@ export function GetMyDesignList(data) {
     MyDesign : data
   }
 };
+
+export function GetMyGroupListRequest(token, type, sort) {
+  return (dispatch) => {
+    return fetch("http://localhost:8080/users/myPage/"+type+"/"+sort, {
+      headers: { 
+        "Content-Type": "application/json", 
+        "x-access-token": token 
+      },
+      method: "get"
+    }).then(response => {
+      return response.json();
+      }).then((data) => {
+        console.log("my group list data >>", data);
+        if (!data) {
+          console.log("no data");
+          data = [];
+        }
+        dispatch(GetMyGroupList(data));
+      }).catch((error) => {
+        console.log("err", error);
+      });
+  }
+};
+
+export function GetMyGroupList(data) {
+  return {
+    type: types.GET_MY_GROUP,
+    MyGroup : data
+  }
+};
