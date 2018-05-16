@@ -1,34 +1,47 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Designer from "../Designer";
+import { Grid } from "semantic-ui-react";
+import Category from "../commons/Category";
 import Sorting from "../commons/Sorting";
+import ContentList from "../commons/ContentList";
 
 // css styling
 
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
-  padding: 20px 30px;
+  padding: 1rem 3rem 5rem;
+  min-width: 660px;
+  & ul {
+    margin-top: 30px;
+  }
 `;
+
+const MenuContainer = styled(Grid)`
+  font-size: 13px;
+  & .sorting {
+    text-align: right;
+  }
+  & .ui.default.dropdown:not(.button)>.text, 
+  & .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
+`;
+
 
 class DesignerList extends Component {
   render(){
     let list = this.props.DesignerList;
     return(
-      <div>
-        {list != null && list.length > 0 ?
-          <Wrapper>
-            <ul>
-              {list.map(designer =>
-                <Designer key={designer.uid} designer={designer}/>
-              )}
-              <div className="clear"></div>
-            </ul>
-          </Wrapper>
-        :
-        <p>등록된 디자이너가 없습니다.</p>
-        }
-      </div>
+      <Wrapper>
+        <MenuContainer devided="vertically" padded={true} columns={2}>
+          <Grid.Row stretched={false}>
+            <Category computer={8} tablet={10} mobile={12}/>
+            <Sorting computer={8} tablet={6} mobile={4}/>
+          </Grid.Row>
+        </MenuContainer>
+        <ContentList data={list} type="designer"/>
+      </Wrapper>
     );
   }
 }

@@ -55,13 +55,16 @@ const TextPart = styled.div`
 `;
 
 const Count = styled.div`
-  float: right;
   color: dimgray;
   font-weight: 400;
   font-size: 12px;
   & div {
     float: right;
     width: 40px;
+  }
+  & div.clear {
+    clear: both;
+    float: none;
   }
 `;
 
@@ -86,6 +89,7 @@ class Design extends Component {
                 <Icon name="heart" color="grey" size="mini"></Icon>
                 {design.like_count? design.like_count : 0}
               </div>
+              <div className="clear"></div>
             </Count>
           </TextPart>
         </Designli>
