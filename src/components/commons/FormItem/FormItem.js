@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Validates from "../../../modules/Validates";
+import { Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 
 const checkValidate = async (value, validates) => {
@@ -35,26 +36,31 @@ const checkValidate = async (value, validates) => {
 
 const CheckBoxLabel = styled.label`
   position: relative;
-  padding-left: 1.5rem;
+  padding-left: 2rem;
   box-sizing: border-box;
   &::before{
     position: absolute;
-    width: 1rem;
-    height: 1rem;
+    width: 1.4rem;
+    height: 1.4rem;
     display: block;
     content: "";
-    top: 0;
+    top: -0.2rem;
     left: 0;
     border: 1px solid #181818;
     border-radius: 3px;
   }
   &.checked::after{
-    font-family: "Checkbox";
+    font-family: "Icons";
     display: block;
     position: absolute;
-    left: 0;
+    font-size: 12px;
+    left: 4px;
     top: -2px;
   }
+`
+
+const FormDropBox = styled(Dropdown)`
+  width: 100%;
 `
 
 export class FormInput extends Component {
@@ -158,6 +164,53 @@ export class FormTextArea extends Component {
   }
 }
 
+export class FormSelect extends Component {
+  state = {
+    status: null,
+    message: null,
+    value: "",
+  }
+  componentWillMount() {
+    if (this.props.value) {
+      this.setState({ value: this.props.value });
+    }
+    if (!this.props.validates) {
+      this.setState({ status: "SUCCESS" });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // 이전에 전달받은 options와 다르다면 새롭게 options를 render하고 그중 제일 첫번째 요소를 선택한다.
+    if (JSON.stringify(prevProps.options) !== JSON.stringify(this.props.options)) {
+      this.setState({ value: this.props.options[0].value });
+      if (this.props.getValue) this.props.getValue(this.props.options[0].value);
+    }
+  }
+
+  onChangeValue = (event, {name, value}) => {
+    this.setState({ value });
+    checkValidate(value, this.props.validates).then( data => {
+      if (this.props.getValue) this.props.getValue(value);
+      this.setState(data);
+    })
+  }
+
+  render() {
+    const { name, options } = this.props;
+    return (
+      <div>
+        <select style={{ display: "none" }} status={this.state.status} value={this.state.value} name={name} >
+          {options ? options.map(data => {
+            return <option key={data.text} value={data.value}>{data.text}</option>
+          }) : null}
+        </select>
+        <FormDropBox selection options={options} onChange={this.onChangeValue} value={this.state.value}/>
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </div>
+    );
+  }
+}
+
 export class FormFile extends Component {
   state = {
     status: null,
@@ -190,6 +243,7 @@ export class FormFile extends Component {
       this.setState(data);
     });
     if(this.props.onChange) this.props.onChange(target);
+    if(this.props.freeView) this.props.freeView(value);
   }
 
   render() {

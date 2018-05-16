@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import ClientTemplate from "../../templates/ClientTemplate";
-import SignUpContainer from "../../containers/SignUpContainer";
+import ClientTemplate from "templates/ClientTemplate";
+import SignUpContainer from "containers/Registration/SignUpContainer";
 
 const SignUpContent = styled.div`
   width: 100%;

@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import DesignListPage, { DesignDetailPage } from "./pages/DesignPage";
-import GroupListPage, { GroupDetailPage } from "./pages/GroupPage";
-import DesignerListPage, { DesignerDetailPage } from "./pages/DesignerPage";
-import CreateDesignPage from "./pages/CreateDesignPage";
-import CreateGroupPage from "./pages/CreateGroupPage";
-import ModifyGroupPage from "./pages/ModifyGroupPage";
-import InserUserDetailPage from "./pages/InserUserDetailPage"
-import SignUpPage from "./pages/SignUpPage";
-import SignInPage from "./pages/SignInPage";
-import RequiresAuth from "./containers/RequiresAuth";
-import MainPage from "./pages/MainPage/MainPage";
-import TestPage from "./pages/TestPage";
+import "App.css";
+import DesignListPage, { DesignDetailPage } from "pages/DesignPage";
+import GroupListPage, { GroupDetailPage } from "pages/GroupPage";
+import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
+import CreateDesignPage from "pages/CreateDesignPage";
+import CreateGroupPage from "pages/CreateGroupPage";
+import ModifyGroupPage from "pages/ModifyGroupPage";
+import InserUserDetailPage from "pages/InserUserDetailPage"
+import SignUpPage from "pages/SignUpPage";
+import SignInPage from "pages/SignInPage";
+import RequiresAuth from "containers/Commons/RequiresAuth";
+import MainPage from "pages/MainPage/MainPage";
+import TestPage from "pages/TestPage";
 
 class App extends Component {
   render() {

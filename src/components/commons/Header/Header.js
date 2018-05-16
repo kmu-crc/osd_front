@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import logo from "../../../source/logo.png";
-import { SetSession } from "../../../modules/Sessions";
-import { Row, Columns } from "../../Grid";
-import { Grid, Container } from 'semantic-ui-react'
+import logo from "source/logo.png";
+import { SetSession } from "modules/Sessions";
+import { Grid } from 'semantic-ui-react'
 
 // css styling
 const Head = styled.header`
@@ -23,14 +22,6 @@ const Logo = styled.img`
   position: absolute;
   top: 0;
   left: 2rem;
-`
-
-const NavColumns = Columns.extend`
-  height: 100%;
-`
-
-const NavRow = Row.extend`
-  height: 100%;
 `
 
 const Button = styled.button`

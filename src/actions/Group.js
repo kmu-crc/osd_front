@@ -1,10 +1,10 @@
-import * as types from './ActionTypes';
+import * as types from 'actions/ActionTypes';
 
 export function GetGroupListRequest(sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupList", { 
-      headers: { 'Content-Type': 'application/json' }, 
-      method: "get" 
+    return fetch("http://localhost:8080/group/groupList", {
+      headers: { 'Content-Type': 'application/json' },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -29,9 +29,9 @@ export function GetGroupList(data) {
 
 export function GetGroupDetailRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupDetail/"+id, { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/group/groupDetail/"+id, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -57,9 +57,9 @@ export function GetGroupDetail(data) {
 // 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupDetail/"+id+"/design/"+sort, { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/group/groupDetail/"+id+"/design/"+sort, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -85,9 +85,9 @@ export function GetDesignInGroup(data) {
 // 그룹 안에 속한 그룹 리스트 가져오기
 export function GetGroupInGroupRequest(id, sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupDetail/"+id+"/group/"+sort, { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/group/groupDetail/"+id+"/group/"+sort, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -113,10 +113,10 @@ export function GetGroupInGroup(data) {
 export function CreateNewGroupRequest(data) {
   return (dispatch) => {
     dispatch(CreateNewGroup());
-    return fetch("http://localhost:8080/group/createGroup", { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "POST", 
-      body: JSON.stringify(data) 
+    return fetch("http://localhost:8080/group/createGroup", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
     }).then((response) => {
       return response.json();
     }).catch((error) => {

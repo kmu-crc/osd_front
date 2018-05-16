@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ClientTemplate from "../../templates/ClientTemplate";
-import UserDetailFormContainer from "../../containers/UserDetailFormContainer";
+import ClientTemplate from "templates/ClientTemplate";
+import UserDetailFormContainer from "containers/Registration/UserDetailFormContainer";
 import styled from "styled-components";
 
 const PageContent = styled.div`

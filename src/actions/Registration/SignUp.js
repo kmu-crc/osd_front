@@ -1,5 +1,5 @@
-import * as types from "../ActionTypes";
-import { SetSession } from "../../modules/Sessions";
+import * as types from "actions/ActionTypes";
+import { SetSession } from "modules/Sessions";
 
 export function SignUpRequest(data) {
   return (dispatch) => {

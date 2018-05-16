@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
-import ValidateForm from "../commons/ValidateForm";
-import { FormCheckBox, FormInput, FormTextArea, FormFile } from "../commons/FormItem";
-import FileUploader from "../commons/FileUploader";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormCheckBox, FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
+import { FormField } from "components/Commons/FormField";
+import FileUploader from "components/Commons/FileUploader";
 
 const FormBox = styled.div`
   width: 600px;
@@ -43,6 +44,7 @@ class TestForm extends Component {
           <FormTextArea name="textarea" placeholder="id를 입력해주세요."/>
           <FileUploader name="designs" placeholder="디자인을 등록해 주세요." onChange={this.addImages} validates={["required"]}/>
           <FormFile name="thumbnail" placeholder="file" validates={["required"]}/>
+          <FormField name="test" placeholder="테스트입니다." type="text" label="test" RenderComponent={FormInput}/>
           <button type="submit">전송</button>
         </ValidateForm>
       </FormBox>

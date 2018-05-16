@@ -1,4 +1,4 @@
-import * as types from "../ActionTypes";
+import * as types from "actions/ActionTypes";
 
 export function SignOutRequest() {
   return (dispatch) => {

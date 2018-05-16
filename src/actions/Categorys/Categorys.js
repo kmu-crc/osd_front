@@ -1,4 +1,4 @@
-import * as types from "../ActionTypes";
+import * as types from "actions/ActionTypes";
 
 export function GetCategoryLevel1Request() {
   return (dispatch) => {
@@ -33,17 +33,17 @@ export function GetCategoryLevel1Success(category) {
       category: category
     }
   };
-  
+
 export function GetCategoryLevel1Failure() {
   return {
     type: types.GET_CATEGORY_LEVEL1_FAILURE
   }
 };
-  
+
 export function GetCategoryLevel2Request(id) {
     return (dispatch) => {
       dispatch(GetCategoryLevel2());
-  
+
       return fetch(`http://localhost:8080/categorys/getCategoryLevel2/${id}`, { method: "GET" })
         .then(function (res) {
           console.log("res", res);
@@ -59,20 +59,20 @@ export function GetCategoryLevel2Request(id) {
         })
     }
   };
-  
+
   export function GetCategoryLevel2() {
     return {
       type: types.GET_CATEGORY_LEVEL2
     }
   };
-  
+
   export function GetCategoryLevel2Success(category) {
       return {
         type: types.GET_CATEGORY_LEVEL2_SUCCESS,
         category: category
       }
     };
-    
+
   export function GetCategoryLevel2Failure() {
     return {
       type: types.GET_CATEGORY_LEVEL2_FAILURE

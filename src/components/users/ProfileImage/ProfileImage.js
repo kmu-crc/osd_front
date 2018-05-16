@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
-import { FileField } from "../../commons/FormField";
+import { FormFile } from "components/Commons/FormItem";
 
 const ProfileWrap = styled.div`
   width: 100%;
@@ -34,7 +34,7 @@ class ProfileImage extends Component {
     return(
       <ProfileWrap>
         {$imagePreview}
-        <FileField type="file" name="thumbnail" placeholder="프로필을 등록해주세요." label="프로필 이미지" freeView={this.onChangeImgUrl}/>
+        <FormFile name="thumbnail" placeholder="프로필을 등록해주세요." label="프로필 이미지" freeView={this.onChangeImgUrl}/>
       </ProfileWrap>
     );
   }

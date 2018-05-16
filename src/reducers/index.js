@@ -1,16 +1,10 @@
 import Authentication from "./Authentication";
-import DesignList from "./DesignList";
-import DesignDetail from "./DesignDetail";
-import DesignDetailView from "./DesignDetailView";
-import DesignDetailStep from "./DesignDetailStep";
-import DesignDetailStepCard from "./DesignDetailStepCard";
-import DesignDetailIssue from "./DesignDetailIssue";
-import GroupList from "./GroupList";
-import GroupDetail from "./GroupDetail";
-import DesignerList from "./DesignerList";
-import { SignIn, SignUp } from "./Registration";
-import { UserInfo } from "./Users";
-import { Categorys } from "./Categorys";
+import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignDetailIssue } from "reducers/Designs";
+import { DesignerList } from "reducers/Designers";
+import { GroupList, GroupDetail } from "reducers/Groups";
+import { SignIn, SignUp } from "reducers/Registration";
+import { UserInfo } from "reducers/Users";
+import { Categorys } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
 
 import { combineReducers } from "redux";

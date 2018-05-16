@@ -1,10 +1,10 @@
-import * as types from "./ActionTypes";
+import * as types from "actions/ActionTypes";
 
 export function GetDesignerListRequest(sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerList", { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/designer/designerList", {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -14,7 +14,7 @@ export function GetDesignerListRequest(sort) {
           return;
         } else {
           dispatch(GetDesignerList(data));
-        }   
+        }
       }).catch((error) => {
         console.log("err", error);
       })
@@ -30,9 +30,9 @@ export function GetDesignerList(data) {
 
 export function GetDesignerDetailRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerDetail/"+id, { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/designer/designerDetail/"+id, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {

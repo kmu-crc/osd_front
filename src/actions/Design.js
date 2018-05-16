@@ -1,4 +1,4 @@
-import * as types from "./ActionTypes";
+import * as types from "actions/ActionTypes";
 
 export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
   return (dispatch) => {
@@ -58,9 +58,9 @@ export function GetDesignDetail(data) {
 
 export function GetDesignDetailViewRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/view", { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/design/designDetail/"+id+"/view", {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -85,9 +85,9 @@ export function GetDesignDetailView(data) {
 
 export function GetDesignDetailStepRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/step", { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/design/designDetail/"+id+"/step", {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -113,9 +113,9 @@ export function GetDesignDetailStep(data) {
 
 export function GetDesignDetailStepCardRequest(id, card_id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/cardDetail/"+card_id, { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/design/designDetail/"+id+"/cardDetail/"+card_id, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
@@ -141,9 +141,9 @@ export function GetDesignDetailStepCard(data) {
 
 export function GetDesignDetailIssueRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/issue", { 
-      headers: { "Content-Type": "application/json" }, 
-      method: "get" 
+    return fetch("http://localhost:8080/design/designDetail/"+id+"/issue", {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ClientTemplate from "../../templates/ClientTemplate";
-import CreateGroup from "../../components/CreateGroup";
+import ClientTemplate from "templates/ClientTemplate";
+import CreateGroup from "components/Groups/CreateGroup";
 
 class CreateGroupPage extends Component {
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ClientTemplate from "../../templates/ClientTemplate";
-import CreateDesign from "../../components/CreateDesign";
+import ClientTemplate from "templates/ClientTemplate";
+import CreateDesign from "components/Designs/CreateDesign";
 
 class CreateDesignPage extends Component {
   render() {

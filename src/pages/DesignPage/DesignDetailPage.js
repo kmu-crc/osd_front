@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ClientTemplate from "../../templates/ClientTemplate";
-import DesignDetailContainer from "../../containers/DesignDetailContainer";
+import ClientTemplate from "templates/ClientTemplate";
+import DesignDetailContainer from "containers/Designs/DesignDetailContainer";
 
 export class DesignDetailPage extends Component {
   render() {
