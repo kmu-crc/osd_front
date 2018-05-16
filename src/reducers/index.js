@@ -12,6 +12,7 @@ import { SignIn, SignUp } from "./Registration";
 import { UserInfo } from "./Users";
 import { Categorys } from "./Categorys";
 import { reducer as formReducer } from 'redux-form';
+import MyDetail from "./MyDetail";
 
 import { combineReducers } from "redux";
 
@@ -30,5 +31,6 @@ export default combineReducers({
     SignUp,
     UserInfo,
     Categorys,
-    form: formReducer
+    form: formReducer,
+    MyDetail
 });

@@ -174,7 +174,7 @@ class DesignDetail extends Component {
                 </h3>
                 <Row/>
                 <Cate>
-                  <span className="cate">{designDetail.categoryName.name}</span>
+                  <span className="cate">{designDetail.categoryName}</span>
                   <span className="owner">
                     <Icon name="user" size="mini"></Icon>
                     {designDetail.userName}

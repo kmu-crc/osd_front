@@ -79,7 +79,7 @@ class Design extends Component {
           <TextPart>
             <div className="title">{design.title}</div>
             <div className="userName">{design.userName}</div>
-            <div className="cate">{design.categoryName.name}</div>
+            <div className="cate">{design.categoryName}</div>
             <Count>
               <div>
                 <Icon name="unhide" color="grey" size="mini"></Icon>
