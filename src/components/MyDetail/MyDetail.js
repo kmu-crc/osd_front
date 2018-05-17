@@ -34,6 +34,7 @@ class MyDetail extends Component {
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token);
     this.props.GetMyDesignListRequest(this.props.token, "design", null);
+    this.props.GetMyGroupListRequest(this.props.token, "group", null);
   }
   render(){
     let MyInfo = this.props.MyDetail;
