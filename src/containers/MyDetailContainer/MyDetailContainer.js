@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyDetailRequest, GetMyDesignListRequest, GetMyGroupListRequest } from "../../actions/MyDetail";
+import { GetMyDetailRequest, GetMyDesignListRequest, GetMyGroupListRequest, GetMyLikeListRequest } from "../../actions/MyDetail";
 import MyDetail from "../../components/MyDetail";
 
 class MyDetailContainer extends Component {
@@ -18,7 +18,8 @@ const mapStateToProps = (state) => {
   return {
     MyDetail: state.MyDetail.status.MyDetail,
     MyDesign: state.MyDetail.status.MyDesign,
-    MyGroup: state.MyDetail.status.MyGroup
+    MyGroup: state.MyDetail.status.MyGroup,
+    MyLike: state.MyDetail.status.MyLike
   };
 };
 
@@ -32,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetMyGroupListRequest: (token, type, sort) => {
       return dispatch(GetMyGroupListRequest(token, type, sort));
+    },
+    GetMyLikeListRequest: (token, type, sort) => {
+      return dispatch(GetMyLikeListRequest(token, type, sort));
     }
   };
 };

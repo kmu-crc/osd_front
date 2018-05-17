@@ -8,7 +8,8 @@ const initialState = {
   status: {
     MyDetail: [],
     MyDesign: [],
-    MyGroup: []
+    MyGroup: [],
+    MyLike: []
   }
 };
 
@@ -33,6 +34,12 @@ export default function MyDetail(state, action) {
       return update(state, {
         status: {
           MyGroup: { $set: action.MyGroup }
+        }
+      });
+    case types.GET_MY_LIKE:
+      return update(state, {
+        status: {
+          MyLike: { $set: action.MyLike }
         }
       });
     default:

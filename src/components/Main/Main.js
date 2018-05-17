@@ -110,12 +110,7 @@ const HowToUse = styled(Grid)`
 
 
 class Main extends Component {
-  askLogin = () => {
-    alert("로그인을 해주세요");
-  }
-
   render(){
-    let valid = this.props.userValid;
     return(
       <div>
         <ImgWrapper>
@@ -183,9 +178,7 @@ class Main extends Component {
                 <Link to="/group"><div className="best topGroup">추천 그룹</div></Link>
               </Grid.Column>
               <Grid.Column>
-                {valid? <div className="best myInfo">나의 정보</div>
-                :
-                <Link to="/signin"><div className="best myInfo" onClick={this.askLogin}>나의 정보</div></Link>}
+                <Link to="/myPage"><div className="best myInfo">나의 정보</div></Link>
               </Grid.Column>
             </Grid.Row>
           </BestContainer>

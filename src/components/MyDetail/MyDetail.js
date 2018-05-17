@@ -35,6 +35,7 @@ class MyDetail extends Component {
     this.props.GetMyDetailRequest(this.props.token);
     this.props.GetMyDesignListRequest(this.props.token, "design", null);
     this.props.GetMyGroupListRequest(this.props.token, "group", null);
+    this.props.GetMyLikeListRequest(this.props.token, "designer", null);
   }
   render(){
     let MyInfo = this.props.MyDetail;
