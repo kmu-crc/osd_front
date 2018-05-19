@@ -27,6 +27,31 @@ Validates.NotSpecialCharacters = value => {
   });
 };
 
+Validates.onlyImages = value => {
+  return new Promise((resolve, reject) => {
+    if(!value) resolve(undefined);
+    let data = undefined;
+    if(value.type === "image/jpeg" || value.type === "image/png" || value.type === "image/gif" || value.type === "image/bmp" || value.type === "image/webp") {
+      data = undefined;
+    } else {
+      data = "이미지만 업로드 가능합니다.";
+    }
+    resolve(data);
+  });
+}
+
+Validates.ThumbnailSize = value => {
+  return new Promise((resolve, reject) => {
+    if(!value) resolve(undefined);
+    let data = undefined;
+    if(value.size < 10000001) {
+      data = undefined;
+    } else {
+      data = "파일 용량이 너무 큽니다.";
+    }
+    resolve(data);
+  });
+}
 
 Validates.checkEmail = (value) => {
   return fetch("http://localhost:8080/users/checkEmail", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ email: value }) })
