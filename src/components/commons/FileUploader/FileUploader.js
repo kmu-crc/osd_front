@@ -28,6 +28,10 @@ const DeleteBtn = styled.button`
   color: white;
   margin-left: 5px;
 `
+const FilesWrap = styled.div`
+  margin-top: 1rem;
+`
+
 class FileUploader extends Component {
   state = {
     files: [],
@@ -39,47 +43,44 @@ class FileUploader extends Component {
     this.returnData();
   }
   deleteImages = (index) => {
-    let target = this.state.target;
-    console.log();
     let newArray = [...this.state.files];
     newArray.splice(index, 1);
     this.setState({
       files: newArray
     });
     this.returnData();
-    if(newArray.length === 0) { this.setState({display: false}) };
-    setTimeout(()=> {
-      this.setState({display: true});
+    if (newArray.length === 0) { this.setState({ display: false }) };
+    setTimeout(() => {
+      this.setState({ display: true });
     }, 100);
   }
   returnData = () => {
-    setTimeout( () => {
-      this.props.onChange(this.state.files);
+    setTimeout(() => {
+      if (this.props.onChange) this.props.onChange(this.state.files);
     }, 100);
   }
   render() {
-    const { name, label, placeholder, validates } = this.props;
+    const { name, placeholder, validates, id } = this.props;
     return (
       <div>
-        <UploaderButton htmlFor="uploader">
-          <Icon name="image" />{placeholder}
-        </UploaderButton>
         {
-          this.state.display 
-          ? <FormFile id="uploader" type="file" style={{ display: "none" }} name={`${name}[]`} onChange={this.addImages} validates={validates} />
-          : null
+          this.state.display
+            ? <FormFile id={id} type="file" fileUploader={true} style={{ display: "none" }} placeholder={placeholder} name={`${name}[]`} onChange={this.addImages} validates={validates} />
+            : null
         }
-        {this.state.files.map((data, index) => {
-          console.log(data);
-          return (<ImagesItem key={index}>
-            {data.name}
-            <span>
-              <DeleteBtn type="button" onClick={() => this.deleteImages(index)}>
-                <Icon name="remove" />
-              </DeleteBtn>
-            </span>
-          </ImagesItem>)
-        })}
+        <FilesWrap>
+          {this.state.files.map((data, index) => {
+            console.log(data);
+            return (<ImagesItem key={index}>
+              {data.name}
+              <span>
+                <DeleteBtn type="button" onClick={() => this.deleteImages(index)}>
+                  <Icon name="remove" />
+                </DeleteBtn>
+              </span>
+            </ImagesItem>)
+          })}
+        </FilesWrap>
       </div>
     );
   }
