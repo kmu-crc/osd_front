@@ -7,7 +7,6 @@ class ValidateForm extends Component {
   handelSubmit = (event) => {
     event.preventDefault();
     const target = event.target;
-    console.log(target);
     const formData = new FormData(target);
     for (let data of Array.from(target.elements)) {
       if (data.name) {
@@ -16,6 +15,11 @@ class ValidateForm extends Component {
           data.focus();
           break;
         } else {
+          if(data.type === "checkbox"){
+            data.value === "on" ? formData.set(data.name, 1) : formData.set(data.name, 0);
+          } else if (data.type === "file") {
+            data.files[0] == null && formData.delete(data.name);
+          }
           this.setState({ submit: true });
         }
       }
