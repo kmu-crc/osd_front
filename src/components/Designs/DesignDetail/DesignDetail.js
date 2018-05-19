@@ -172,7 +172,7 @@ class DesignDetail extends Component {
                   <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
                 </h3>
                 <Cate>
-                  <span className="cate">{designDetail.categoryName.name}</span>
+                  <span className="cate">{designDetail.categoryName}</span>
                   <span className="owner">
                     <Icon name="user" size="mini"></Icon>
                     {designDetail.userName}

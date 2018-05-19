@@ -20,7 +20,7 @@ class GroupDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignerDetail: state.DesignerDetail.status.DesignerDetail
+    DesignerDetail: state.DesignerList.status.DesignerDetail
   };
 };
 
