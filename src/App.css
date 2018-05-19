@@ -33,8 +33,12 @@ body {
 .dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
   display: flex!important;
 }
-.field{
-  margin-bottom: 2rem;
+.ui.form .fields, .ui.form .field{
+  margin-bottom: 3rem;
+}
+
+.ui.form .field>label {
+  margin: 0 0 0.8rem 0;
 }
 
 label.checked::after{
