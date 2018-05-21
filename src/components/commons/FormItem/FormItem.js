@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Validates from "../../../modules/Validates";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 const checkValidate = async (value, validates) => {
@@ -44,7 +44,7 @@ const CheckBoxLabel = styled.label`
     height: 1.4rem;
     display: block;
     content: "";
-    top: -0.2rem;
+    top: -0.1rem;
     left: 0;
     border: 1px solid #181818;
     border-radius: 3px;
@@ -55,12 +55,50 @@ const CheckBoxLabel = styled.label`
     position: absolute;
     font-size: 12px;
     left: 4px;
-    top: -2px;
+    top: -1px;
   }
 `
 
-const FormDropBox = styled(Dropdown)`
+const RadioLabel = styled.label`
+position: relative;
+  padding-left: 2rem;
+  box-sizing: border-box;
+  &::before{
+    position: absolute;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: block;
+    content: "";
+    top: -0.2rem;
+    left: 0;
+    border: 1px solid #181818;
+    border-radius: 50%;
+  }
+  &.checked::after{
+    display: block;
+    position: absolute;
+    background-color: #000;
+    content: "";
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    left: 0;
+    top: -0.2rem;
+    -webkit-transform: scale(.46666667);
+    transform: scale(.46666667);
+  }
+`
+
+const FormDropBox = styled(Dropdown) `
   width: 100%;
+`
+
+const UploaderButton = styled.label`
+  display: block;
+  width: 100%;
+  border: 2px dashed #292A2B;
+  border-radius: 3px;
+  padding: 20px;
 `
 
 export class FormInput extends Component {
@@ -81,7 +119,7 @@ export class FormInput extends Component {
   onChangeValue = (event) => {
     const target = event.target;
     this.setState({ value: target.value });
-    checkValidate(target.value, this.props.validates).then( data => {
+    checkValidate(target.value, this.props.validates).then(data => {
       this.setState(data);
     })
   }
@@ -92,6 +130,31 @@ export class FormInput extends Component {
       <div>
         <input status={this.state.status} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </div>
+    );
+  }
+}
+
+export class FormRadio extends Component {
+  state = {
+    status: null,
+    message: null
+  }
+  componentWillMount() {
+    if (!this.props.validates) {
+      this.setState({ status: "SUCCESS" });
+    }
+  }
+  onChangeRadio = async () => {
+    if(this.props.onChange) this.props.onChange(this.props.value);
+  }
+
+  render() {
+    const { name, placeholder, currentValue, value } = this.props;
+    return (
+      <div>
+        <RadioLabel className={value === currentValue ? "checked" : null} htmlFor={name} onClick={this.onChangeRadio}>{placeholder}</RadioLabel>
+        <input status={this.state.status} id={name} type="radio" style={{ display: "none" }} name={name} value={value} placeholder={placeholder} readOnly checked={value === currentValue} />
       </div>
     );
   }
@@ -113,7 +176,7 @@ export class FormCheckBox extends Component {
   }
   onChangeCheckBox = async () => {
     await this.setState({ checked: !this.state.checked });
-    checkValidate(this.state.checked, this.props.validates).then( data => {
+    checkValidate(this.state.checked, this.props.validates).then(data => {
       this.setState(data);
     })
   }
@@ -148,13 +211,13 @@ export class FormTextArea extends Component {
   onChangeValue = (event) => {
     const target = event.target;
     this.setState({ value: target.value });
-    checkValidate(target.value, this.props.validates).then( data => {
+    checkValidate(target.value, this.props.validates).then(data => {
       this.setState(data);
     })
   }
 
   render() {
-    const { type, name, placeholder } = this.props;
+    const { name, placeholder } = this.props;
     return (
       <div>
         <textarea status={this.state.status} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}></textarea>
@@ -168,11 +231,13 @@ export class FormSelect extends Component {
   state = {
     status: null,
     message: null,
-    value: "",
+    value: "SUCCESS",
   }
   componentWillMount() {
     if (this.props.value) {
       this.setState({ value: this.props.value });
+    } else if( this.props.options.length > 0 ) {
+      this.setState({ value: this.props.options[0].value });
     }
     if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
@@ -182,14 +247,19 @@ export class FormSelect extends Component {
   componentDidUpdate(prevProps) {
     // 이전에 전달받은 options와 다르다면 새롭게 options를 render하고 그중 제일 첫번째 요소를 선택한다.
     if (JSON.stringify(prevProps.options) !== JSON.stringify(this.props.options)) {
-      this.setState({ value: this.props.options[0].value });
-      if (this.props.getValue) this.props.getValue(this.props.options[0].value);
+      this.newOptions();
     }
   }
 
-  onChangeValue = (event, {name, value}) => {
+  newOptions = async () => {
+    await this.setState({ value: this.props.options[0].value });
+    if (this.props.getValue) this.props.getValue(this.props.options[0].value);
+    this.onChangeValue(null, {value: this.state.value});
+  }
+
+  onChangeValue = (event, { value }) => {
     this.setState({ value });
-    checkValidate(value, this.props.validates).then( data => {
+    checkValidate(value, this.props.validates).then(data => {
       if (this.props.getValue) this.props.getValue(value);
       this.setState(data);
     })
@@ -199,12 +269,12 @@ export class FormSelect extends Component {
     const { name, options } = this.props;
     return (
       <div>
-        <select style={{ display: "none" }} status={this.state.status} value={this.state.value} name={name} >
+        <select style={{ display: "none" }} readOnly status={this.state.status} value={this.state.value} name={name} >
           {options ? options.map(data => {
             return <option key={data.text} value={data.value}>{data.text}</option>
           }) : null}
         </select>
-        <FormDropBox selection options={options} onChange={this.onChangeValue} value={this.state.value}/>
+        <FormDropBox selection options={options} onChange={this.onChangeValue} value={this.state.value} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
@@ -218,15 +288,11 @@ export class FormFile extends Component {
     value: "",
   }
   componentWillMount() {
-    console.log("file");
-    if (this.props.value) {
-      this.setState({ value: this.props.value });
-    }
     if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
     }
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({
       status: null,
       message: null,
@@ -234,23 +300,35 @@ export class FormFile extends Component {
     });
   }
 
-  onChangeValue = (event) => {
+  onChangeValue = async (event) => {
     const target = event.target;
     let value = target.files[0];
+    if (target.files == null) value = null;
 
-    this.setState({ value });
-    checkValidate(value, this.props.validates).then( data => {
+    await checkValidate(value, this.props.validates).then(data => {
       this.setState(data);
     });
-    if(this.props.onChange) this.props.onChange(target);
-    if(this.props.freeView) this.props.freeView(value);
+    if(this.state.status !== "SUCCESS") return;
+    this.setState({ value });
+    if (this.props.onChange) this.props.onChange(target);
+    if (this.props.freeView) this.props.freeView(value);
   }
 
   render() {
-    const { name, placeholder, id, style } = this.props;
+    const { name, placeholder, id } = this.props;
     return (
       <div>
-        <input style={style} status={this.state.status} id={id} type="file" name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <UploaderButton htmlFor={id || name}>
+          {
+            !this.state.value
+            ? <span><Icon name="image" />{placeholder}</span>
+            : this.props.fileUploader
+            ? <span><Icon name="image" />{placeholder}</span>
+            : <span>{this.state.value.name}</span>
+
+          }
+        </UploaderButton>
+        <input style={{display: "none"}} status={this.state.status} id={id || name} type="file" name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );

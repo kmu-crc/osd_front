@@ -10,7 +10,7 @@ export function InsertUserDetailRequest(data, token) {
       })
       .then(function (res) {
         console.log("insert detail", res);
-        return dispatch(InsertUserDetail());
+        return dispatch(InsertUserDetailSuccess());
       }).catch((error) => {
         console.log("insert detail err", error);
         return dispatch(InsertUserDetailFailure());

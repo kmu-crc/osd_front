@@ -50,6 +50,11 @@ export const INSERT_USER_DETAIL = "INSERT_USER_DETAIL";
 export const INSERT_USER_DETAIL_SUCCESS = "INSERT_USER_DETAIL_SUCCESS";
 export const INSERT_USER_DETAIL_FAILURE = "INSERT_USER_DETAIL_FAILURE";
 
+////////////////////////////////////////////////////////////////////////////
+// design
+////////////////////////////////////////////////////////////////////////////
+
+
 // design List
 export const GET_DESIGN_LIST = "GET_DESIGN_LIST";
 export const GET_DESIGN_DETAIL = "GET_DESIGN_DETAIL";
@@ -57,6 +62,15 @@ export const GET_DESIGN_DETAIL_VIEW = "GET_DESIGN_DETAIL_VIEW";
 export const GET_DESIGN_DETAIL_STEP = "GET_DESIGN_DETAIL_STEP";
 export const GET_DESIGN_DETAIL_STEP_CARD = "GET_DESIGN_DETAIL_STEP_CARD";
 export const GET_DESIGN_DETAIL_ISSUE = "GET_DESIGN_DETAIL_ISSUE";
+
+// create design
+export const CREATE_DESIGN = "CREATE_DESIGN";
+export const CREATE_DESIGN_SUCCESS = "CREATE_DESIGN_SUCCESS";
+export const CREATE_DESIGN_FAILURE = "CREATE_DESIGN_FAILURE";
+
+////////////////////////////////////////////////////////////////////////////
+// group
+////////////////////////////////////////////////////////////////////////////
 
 // group List
 export const GET_GROUP_LIST = "GET_GROUP_LIST";
@@ -66,9 +80,18 @@ export const GET_GROUP_IN_GROUP = "GET_GROUP_IN_GROUP";
 export const CREATE_NEW_GROUP = "CREATE_NEW_GROUP";
 export const CREATE_GROUP_FAILURE = "CREATE_GROUP_FAILURE";
 
+////////////////////////////////////////////////////////////////////////////
+// designer
+////////////////////////////////////////////////////////////////////////////
+
 // designer List
 export const GET_DESIGNER_LIST = "GET_DESIGNER_LIST";
 export const GET_DESIGNER_DETAIL = "GET_DESIGNER_DETAIL";
+
+
+////////////////////////////////////////////////////////////////////////////
+// commons
+////////////////////////////////////////////////////////////////////////////
 
 // get cagetgory level1
 export const GET_CATEGORY_LEVEL1 = "GET_CATEGORY_LEVEL1";
