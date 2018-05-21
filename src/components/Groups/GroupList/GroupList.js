@@ -54,7 +54,7 @@ class GroupList extends Component {
             <Sorting/>
           </Grid.Row>
         </MenuContainer>
-        <ContentList data={list} user={this.props.userInfo} type="group"/>
+        <ContentList data={list} user={this.props.userInfo} type="group" columns={6}/>
       </Wrapper>
     );
   }

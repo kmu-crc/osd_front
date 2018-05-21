@@ -12,7 +12,8 @@ class Sorting extends Component {
       <Grid.Column className="sorting" 
                    computer={this.props.computer? this.props.computer : null} 
                    tablet={this.props.tablet? this.props.tablet : null} 
-                   mobile={this.props.mobile? this.props.mobile : null}>
+                   mobile={this.props.mobile? this.props.mobile : null}
+                   textAlign={this.props.textAlign? this.props.textAlign : "right"}>
         <Dropdown selection placeholder="최신순" options={sorting} onChange={this.props.handleChange} value={this.props.value}/>
       </Grid.Column>
     )
