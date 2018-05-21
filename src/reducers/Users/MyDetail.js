@@ -1,4 +1,4 @@
-import * as types from "../actions/ActionTypes";
+import * as types from "../../actions/ActionTypes";
 import update from "react-addons-update";
 
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
   }
 };
 
-export default function MyDetail(state, action) {
+export function MyDetail(state, action) {
   if (typeof state === "undefined")
     state = initialState;
 

@@ -3,10 +3,9 @@ import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDet
 import { DesignerList } from "reducers/Designers";
 import { GroupList, GroupDetail } from "reducers/Groups";
 import { SignIn, SignUp } from "reducers/Registration";
-import { UserInfo } from "reducers/Users";
+import { UserInfo, MyDetail } from "reducers/Users";
 import { Categorys } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
-import MyDetail from "./MyDetail";
 
 import { combineReducers } from "redux";
 
