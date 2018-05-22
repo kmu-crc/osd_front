@@ -156,7 +156,7 @@ class DesignDetail extends Component {
       count = designDetail.count;
     } else {
       count = {
-        total_view_count: 0,
+        view_count: 0,
         member_count: 0,
         like_count: 0
       };

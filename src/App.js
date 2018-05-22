@@ -33,6 +33,7 @@ class App extends Component {
           <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>
+          <Route path="/myPage/:type?" component={RequiresAuth(MyDetailPage)}/> 
           <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/test" component={TestPage} />
         </Switch>

@@ -141,8 +141,6 @@ const ContentBox = styled.div`
 class DesignerDetail extends Component {
   state = {
     id: this.props.id,
-    activeMoreBtn: false,
-    activeIssue: false
   };
 
   componentWillMount() {
@@ -201,15 +199,15 @@ class DesignerDetail extends Component {
                   </ProfileSection>
                   <CountSection>
                     <div className="list">
+                      <Icon name="signup" color="grey" size="tiny"></Icon> 등록한 디자인
+                      <span>{count.total_design}</span>
+                    </div>
+                    <div className="list">
                       <Icon name="heart" color="grey" size="tiny"></Icon> 좋아요
                       <span>{count.total_like}</span>
                     </div>
                     <div className="list">
-                      <Icon name="signup" color="grey" size="tiny"></Icon> 디자인
-                      <span>{count.total_design}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="user" color="grey" size="tiny"></Icon> 그룹장
+                      <Icon name="user" color="grey" size="tiny"></Icon> 조회수
                       <span>{count.total_view}</span>
                     </div>
                   </CountSection>

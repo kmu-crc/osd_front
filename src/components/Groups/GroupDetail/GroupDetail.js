@@ -209,20 +209,20 @@ class GroupDetail extends Component {
                   </ProfileSection>
                   <CountSection>
                     <div className="list">
-                      <Icon name="heart" color="grey" size="tiny"></Icon> 좋아요
-                      <span>{count.like}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="signup" color="grey" size="tiny"></Icon> 디자인
+                      <Icon name="signup" color="grey" size="tiny"></Icon> 디자인 수
                       <span>{count.design}</span>
                     </div>
                     <div className="list">
-                      <Icon name="window restore" color="grey" size="tiny"></Icon> 그룹
+                      <Icon name="window restore" color="grey" size="tiny"></Icon> 그룹 수
                       <span>{count.group}</span>
                     </div>
                     <div className="list">
                       <Icon name="user" color="grey" size="tiny"></Icon> 그룹장
                       <span>{groupDetail.userName}</span>
+                    </div>
+                    <div className="list">
+                      <Icon name="heart" color="grey" size="tiny"></Icon> 좋아요
+                      <span>{count.like}</span>
                     </div>
                   </CountSection>
                   <InfoSection>
