@@ -27,6 +27,14 @@ const Wrapper = styled(Grid)`
   &.ui.grid > .row > .column {
     padding: 0;
   }
+  & .edit {
+    height: 30px;
+    margin-bottom: 5px;
+  }
+  & .edit button {
+    padding: 7px 14px;
+    border-radius: 3px;
+  }
 `;
 
 const HeadContainer = styled(Grid.Column)`
@@ -57,10 +65,13 @@ const ProfileSection = styled.div`
     padding: 10px 0;
   }
   & .issueContainer {
-    height: 40px;
+    min-height: 30px;
+    line-height: 30px;
+    font-weight: bold;
   }
   & .btnContainer {
     height: 60px;
+    line-height: 60px;
     text-align: center;
     & button {
       margin-left: 10px;
@@ -72,12 +83,13 @@ const ProfileSection = styled.div`
 const CountSection = styled.div`
   padding: 1rem 2rem;
   & .list {
-    height: 20px;
+    height: 24px;
     width: 100%;
     font-size: 13px;
   }
   & .list span {
     float: right;
+    font-size: 18px;
   }
 `; 
 
@@ -141,7 +153,6 @@ class GroupDetail extends Component {
 
   typeChange = (e) => {
     const target = document.getElementsByClassName("onSelected")[0];
-    console.log(target);
     target.setAttribute("class", "");
     e.target.setAttribute("class", "onSelected");
     let url = "/groupDetail/"+this.props.id+"/"+e.target.id+"/"+this.props.sort;
@@ -173,18 +184,24 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <Container>
             <Wrapper padded={false} columns={2}>
+              <Grid.Row className="edit">
+              { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
+                <button>그룹 정보 수정</button> 
+                : <div></div>
+              }
+              </Grid.Row>
               <Grid.Row>
                 <HeadContainer width={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>이미지</div>
+                      <div>{groupDetail.thumbnailUrl? groupDetail.thumbnailUrl : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
                     </div>
-                    <h4 className="issueContainer">
+                    <div className="issueContainer">
                       {groupDetail.issue == null? "공지가 없습니다" : groupDetail.issue.title}
-                    </h4>
+                    </div>
                     <div className="btnContainer">
                       <button className="red">좋아요</button>
                       <button className="red">지난 공지</button>

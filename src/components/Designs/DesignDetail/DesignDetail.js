@@ -190,7 +190,7 @@ class DesignDetail extends Component {
                   <Icon name="unhide" color="grey" size="mini"></Icon>
                   조회수
                 </span>
-                <span className="number">{count.total_view_count}</span>
+                <span className="number">{count.view_count}</span>
                 <span className="text">
                   <Icon name="heart" color="grey" size="mini"></Icon>
                   좋아요

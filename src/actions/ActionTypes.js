@@ -87,6 +87,8 @@ export const CREATE_GROUP_FAILURE = "CREATE_GROUP_FAILURE";
 // designer List
 export const GET_DESIGNER_LIST = "GET_DESIGNER_LIST";
 export const GET_DESIGNER_DETAIL = "GET_DESIGNER_DETAIL";
+export const GET_DESIGN_IN_DESIGNER = "GET_DESIGN_IN_DESIGNER";
+export const GET_LIKE_IN_DESIGNER = "GET_LIKE_IN_DESIGNER";
 
 
 ////////////////////////////////////////////////////////////////////////////

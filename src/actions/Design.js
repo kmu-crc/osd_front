@@ -11,10 +11,9 @@ export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
         console.log("design data >>", data);
         if (!data) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignList(data));
-        }
+          data = [];
+        } 
+        dispatch(GetDesignList(data));
       }).catch((error) => {
         console.log("err", error);
       })
@@ -39,10 +38,9 @@ export function GetDesignDetailRequest(id) {
         console.log("design Detail data >>", data);
         if (!data) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignDetail(data));
-        }
+          data = [];
+        } 
+        dispatch(GetDesignDetail(data));
       }).catch((error) => {
         console.log("err", error);
       })

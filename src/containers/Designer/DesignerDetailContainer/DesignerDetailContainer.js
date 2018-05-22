@@ -5,14 +5,10 @@ import DesignerDetail from "components/Designers/DesignerDetail";
 
 class GroupDetailContainer extends Component {
 
-  componentDidMount(){
-    this.props.GetDesignerDetailRequest(this.props.id);
-  }
-
   render() {
     return(
       <div>
-        <DesignerDetail DesignerDetail={this.props.DesignerDetail}/>
+        <DesignerDetail {...this.props}/>
       </div>
     );
   }
@@ -20,7 +16,8 @@ class GroupDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignerDetail: state.DesignerList.status.DesignerDetail
+    DesignerDetail: state.DesignerDetail.status.DesignerDetail,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

@@ -15,7 +15,8 @@ class GroupDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    GroupDetail: state.GroupDetail.status.GroupDetail
+    GroupDetail: state.GroupDetail.status.GroupDetail,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
