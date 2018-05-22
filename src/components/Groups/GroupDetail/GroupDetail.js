@@ -157,6 +157,7 @@ class GroupDetail extends Component {
         group: 0
       };
     }
+
     return(
       <div>
         {groupDetail.length !== 0 &&
@@ -171,7 +172,9 @@ class GroupDetail extends Component {
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
                     </div>
-                    <h4 className="issueContainer">공지섹션</h4>
+                    <h4 className="issueContainer">
+                      {groupDetail.issue == null? "공지가 없습니다" : groupDetail.issue.title}
+                    </h4>
                     <div className="btnContainer">
                       <button className="red">좋아요</button>
                       <button className="red">지난 공지</button>
