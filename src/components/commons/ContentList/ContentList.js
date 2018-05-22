@@ -22,7 +22,7 @@ class ContentList extends Component {
         {data.map(content =>
           <Grid.Column key={content.uid}>
           { type === "design"? <Design design={content} user={this.props.user}/>
-          : type === "group"? <Group group={content} user={this.props.user}/>
+          : type === "group"? <Group group={content} user={this.props.user} rerender={this.props.rerender}/>
           : <Designer designer={content} user={this.props.user}/> }
           </Grid.Column>
         )}

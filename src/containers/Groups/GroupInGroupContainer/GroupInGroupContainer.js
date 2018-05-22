@@ -20,7 +20,7 @@ class GroupInGroupContainer extends Component {
   render() {
     return(
       <div>
-        <ContentList data={this.props.GroupInGroup} columns={4} type="group"/>
+        <ContentList data={this.props.GroupInGroup} columns={4} type="group" rerender="true"/>
       </div>
     );
   }

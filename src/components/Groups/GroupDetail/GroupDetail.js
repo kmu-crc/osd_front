@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Route } from "react-router-dom";
+import { NavLink, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
@@ -90,9 +90,12 @@ const InfoSection = styled.div`
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
-  &..columns {
+  & .columns {
     padding: 0 20px;
   } 
+  & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
+    color: inherit;
+  }
 `;
 
 const Head = styled(Grid)`
@@ -104,16 +107,16 @@ const Head = styled(Grid)`
   & ul {
     line-height: 38px;
   }
-  & .li {
+  & li {
     float: left;
     width: 100px;
     text-align: center;
     cursor: pointer;
   }
-  & .li:hover {
+  & li:hover {
     font-weight: 500;
   }
-  & .li.active {
+  & li.onSelected {
     color: red;
     position: relative;
   }
@@ -132,16 +135,23 @@ class GroupDetail extends Component {
     activeIssue: false
   };
 
-  // 렌더링 직전에 한번 도는 코드
   componentWillMount() {
-    //그룹에 대한 기본 정보 불러오기
-    this.props.GetGroupDetailRequest(this.props.id);
+    this.props.GetGroupDetailRequest(this.props.id); // 그룹에 대한 디테일 정보
+  }
+
+  typeChange = (e) => {
+    const target = document.getElementsByClassName("onSelected")[0];
+    console.log(target);
+    target.setAttribute("class", "");
+    e.target.setAttribute("class", "onSelected");
+    let url = "/groupDetail/"+this.props.id+"/"+e.target.id+"/"+this.props.sort;
+    this.props.history.replace(url);
   }
 
   sortChange = (e, {value}) => {
     let type = this.props.type;
-    let url = (this.props.history.location.pathname).split("/")[1]+"/"+(this.props.history.location.pathname).split("/")[2];
-    this.props.history.replace(`/${url}/${type}/${value}`);
+    let url = "/groupDetail/"+this.props.id;
+    this.props.history.replace(`${url}/${type}/${value}`);
   }
 
   render(){
@@ -207,8 +217,8 @@ class GroupDetail extends Component {
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <NavLink to={"/groupDetail/"+this.props.id+"/design/"+this.props.sort} className="li" activeClassName="active">디자인</NavLink>
-                        <NavLink to={"/groupDetail/"+this.props.id+"/group/"+this.props.sort} className="li" activeClassName="active">그룹</NavLink>
+                        <li id="design" className="onSelected" onClick={this.typeChange}>디자인</li>
+                        <li id="group" onClick={this.typeChange}>그룹</li>
                         <div className="clear"></div>
                       </Grid.Column>
                       <Sorting computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>
