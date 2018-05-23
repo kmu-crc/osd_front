@@ -152,9 +152,6 @@ class GroupDetail extends Component {
   }
 
   typeChange = (e) => {
-    const target = document.getElementsByClassName("onSelected")[0];
-    target.setAttribute("class", "");
-    e.target.setAttribute("class", "onSelected");
     let url = "/groupDetail/"+this.props.id+"/"+e.target.id+"/"+this.props.sort;
     this.props.history.replace(url);
   }
@@ -234,8 +231,12 @@ class GroupDetail extends Component {
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <li id="design" className="onSelected" onClick={this.typeChange}>디자인</li>
-                        <li id="group" onClick={this.typeChange}>그룹</li>
+                        <li id="design" 
+                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
+                            onClick={this.typeChange}>디자인</li>
+                        <li id="group" 
+                            className={this.props.type === "group"? "onSelected" : ""}
+                            onClick={this.typeChange}>그룹</li>
                         <div className="clear"></div>
                       </Grid.Column>
                       <Sorting computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>

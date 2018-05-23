@@ -134,14 +134,11 @@ const ContentBox = styled.div`
 class MyDetail extends Component {
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token);
-    //this.props.GetMyDesignRequest(this.props.token);
+    this.props.GetMyDesignListRequest(this.props.token);
   }
 
   typeChange = (e) => {
-    const target = document.getElementsByClassName("onSelected")[0];
-    target.setAttribute("class", "");
-    e.target.setAttribute("class", "onSelected");
-    let url = "/myPage/"+e.target.id;
+    let url = "/myPage"+e.target.id;
     this.props.history.replace(url, {token: this.props.token});
   }
 
@@ -207,10 +204,18 @@ class MyDetail extends Component {
                   <Head devided="vertically" padded={true}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <li id="design" className="onSelected" onClick={this.typeChange}>내 디자인</li>
-                        <li id="group" onClick={this.typeChange}>내 그룹</li>
-                        <li id="likeDesign" onClick={this.typeChange}>좋아요한 디자인</li>
-                        <li id="likeDesigner" onClick={this.typeChange}>좋아요한 디자이너</li>
+                        <li id="/design" 
+                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""} 
+                            onClick={this.typeChange}>내 디자인</li>
+                        <li id="/group" 
+                            className={this.props.type === "group"? "onSelected" : ""} 
+                            onClick={this.typeChange}>내 그룹</li>
+                        <li id="/likeDesign" 
+                            className={this.props.type === "likeDesign"? "onSelected" : ""} 
+                            onClick={this.typeChange}>좋아요한 디자인</li>
+                        <li id="/likeDesigner" 
+                            className={this.props.type === "likeDesigner"? "onSelected" : ""} 
+                            onClick={this.typeChange}>좋아요한 디자이너</li>
                         <div className="clear"></div>
                       </Grid.Column>
                     </Grid.Row>

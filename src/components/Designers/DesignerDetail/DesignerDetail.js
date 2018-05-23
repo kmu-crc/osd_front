@@ -148,9 +148,6 @@ class DesignerDetail extends Component {
   }
 
   typeChange = (e) => {
-    const target = document.getElementsByClassName("onSelected")[0];
-    target.setAttribute("class", "");
-    e.target.setAttribute("class", "onSelected");
     let url = "/designerDetail/"+this.props.id+"/"+e.target.id;
     this.props.history.replace(url);
   }
@@ -220,8 +217,12 @@ class DesignerDetail extends Component {
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <li id="design" className="onSelected" onClick={this.typeChange}>디자인</li>
-                        <li id="like" onClick={this.typeChange}>좋아요한 디자인</li>
+                        <li id="design"
+                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
+                            onClick={this.typeChange}>디자인</li>
+                        <li id="like" 
+                            className={this.props.type === "like"? "onSelected" : ""}
+                            onClick={this.typeChange}>좋아요한 디자인</li>
                         <div className="clear"></div>
                       </Grid.Column>
                     </Grid.Row>
