@@ -87,6 +87,8 @@ export const CREATE_GROUP_FAILURE = "CREATE_GROUP_FAILURE";
 // designer List
 export const GET_DESIGNER_LIST = "GET_DESIGNER_LIST";
 export const GET_DESIGNER_DETAIL = "GET_DESIGNER_DETAIL";
+export const GET_DESIGN_IN_DESIGNER = "GET_DESIGN_IN_DESIGNER";
+export const GET_LIKE_IN_DESIGNER = "GET_LIKE_IN_DESIGNER";
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -107,6 +109,6 @@ export const GET_CATEGORY_LEVEL2_FAILURE = "GET_CATEGORY_LEVEL2_FAILURE";
 export const GET_MY_DETAIL = "GET_MY_DETAIL";
 export const GET_MY_DESIGN = "GET_MY_DESIGN";
 export const GET_MY_GROUP = "GET_MY_GROUP";
-export const GET_MY_LIKE = "GET_MY_LIKE";
-// export const GET_MY_LIKE_GROUP = "GET_MY_LIKE_GROUP";
-// export const GET_MY_LIKE_DESIGNER = "GET_MY_LIKE_DESIGNER";
+export const GET_MY_LIKE_DESIGN = "GET_MY_LIKE_DESIGN";
+export const GET_MY_LIKE_GROUP = "GET_MY_LIKE_GROUP";
+export const GET_MY_LIKE_DESIGNER = "GET_MY_LIKE_DESIGNER";

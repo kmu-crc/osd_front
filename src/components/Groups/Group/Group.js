@@ -74,14 +74,18 @@ const ButtonWrap = styled.div`
 
 class Group extends Component {
   refresh = (e) => {
-    Component.forceUpdate();
+    if (this.props.rerender) {
+      Component.forceUpdate();
+    } else {
+      return;
+    }
   }
 
   render(){
     let group = this.props.group;
     let user = this.props.user;
     return(
-      <NavLink to={"/groupDetail/"+group.uid}>
+      <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>

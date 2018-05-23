@@ -16,13 +16,13 @@ class ContentList extends Component {
     let data = this.props.data;
     const type = this.props.type;
     return(
-      <ListContainer padded={true} columns={6} as="ul">
+      <ListContainer devided="vertically" padded={true} columns={this.props.columns} as="ul">
       {data != null && data.length > 0 ?
-        <Grid.Row stretched={false}>
+        <Grid.Row>
         {data.map(content =>
           <Grid.Column key={content.uid}>
           { type === "design"? <Design design={content} user={this.props.user}/>
-          : type === "group"? <Group group={content} user={this.props.user}/>
+          : type === "group"? <Group group={content} user={this.props.user} rerender={this.props.rerender}/>
           : <Designer designer={content} user={this.props.user}/> }
           </Grid.Column>
         )}

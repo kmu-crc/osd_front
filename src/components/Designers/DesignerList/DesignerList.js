@@ -40,7 +40,7 @@ class DesignerList extends Component {
             <Sorting computer={8} tablet={6} mobile={4}/>
           </Grid.Row>
         </MenuContainer>
-        <ContentList data={list} type="designer"/>
+        <ContentList data={list} type="designer" columns={6}/>
       </Wrapper>
     );
   }

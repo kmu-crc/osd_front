@@ -1,4 +1,4 @@
-import * as types from "../actions/ActionTypes";
+import * as types from "../../actions/ActionTypes";
 import update from "react-addons-update";
 
 const initialState = {
@@ -9,11 +9,12 @@ const initialState = {
     MyDetail: [],
     MyDesign: [],
     MyGroup: [],
-    MyLike: []
+    MyLikeDesign: [],
+    MyLikeDesigner: []
   }
 };
 
-export default function MyDetail(state, action) {
+export function MyDetail(state, action) {
   if (typeof state === "undefined")
     state = initialState;
 
@@ -36,10 +37,16 @@ export default function MyDetail(state, action) {
           MyGroup: { $set: action.MyGroup }
         }
       });
-    case types.GET_MY_LIKE:
+    case types.GET_MY_LIKE_DESIGN:
       return update(state, {
         status: {
-          MyLike: { $set: action.MyLike }
+          MyLikeDesign: { $set: action.MyLikeDesign }
+        }
+      });
+    case types.GET_MY_LIKE_DESIGNER:
+      return update(state, {
+        status: {
+          MyLikeDesigner: { $set: action.MyLikeDesigner }
         }
       });
     default:
