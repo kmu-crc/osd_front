@@ -10,7 +10,7 @@ import ContentList from "components/Commons/ContentList";
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
-  padding: 1rem 3rem 5rem;
+  padding: 1rem 8rem 5rem;
   min-width: 660px;
   & ul {
     margin-top: 30px;
@@ -26,10 +26,27 @@ const MenuContainer = styled(Grid)`
   & .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
+  &.ui.grid > .row {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
 `;
 
 
 class DesignList extends Component {
+  state = {
+    page: 0
+  }
+
+  componentWillMount(){
+    this.props.GetDesignListRequest(null, null, null, this.state.page);
+  }
+
+  sortChange = (e, {value}) => {
+    //let url = "/designList";
+    //this.props.history.replace(`${url}/${value}`);
+  }
+
   render(){
     let list = this.props.DesignList;
     return(
@@ -37,10 +54,10 @@ class DesignList extends Component {
         <MenuContainer devided="vertically" padded={true} columns={2}>
           <Grid.Row stretched={false}>
             <Category computer={8} tablet={10} mobile={12}/>
-            <Sorting computer={8} tablet={6} mobile={4}/>
+            <Sorting computer={8} tablet={6} mobile={4} handleChange={this.sortChange}/>
           </Grid.Row>
         </MenuContainer>
-        <ContentList data={list} user={this.props.userInfo} type="design" columns={6}/>
+        <ContentList data={list} user={this.props.userInfo} type="design" columns={5}/>
       </Wrapper>
     );
   }

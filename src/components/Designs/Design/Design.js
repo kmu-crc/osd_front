@@ -8,7 +8,7 @@ import { Icon } from "semantic-ui-react";
 
 const Designli = styled.li`
   width: 100%;
-  margin: 0 auto 20px;
+  margin: 0 auto 40px;
   height: 270px;
   font-size: 13px;
   border-radius: 6px 6px 3px 3px;

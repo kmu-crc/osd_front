@@ -1,9 +1,12 @@
 import * as types from "actions/ActionTypes";
 
-export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
+export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2, page) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designList", {
-      headers: { "Content-Type": "application/json" },
+    return fetch("http://localhost:8080/design/designList/"+sort, {
+      headers: { 
+        "Content-Type": "application/json",
+        "PageNumber": page 
+      },
       method: "get"
     }).then((response) => {
         return response.json();
