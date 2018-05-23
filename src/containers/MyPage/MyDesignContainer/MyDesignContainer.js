@@ -4,10 +4,6 @@ import { GetMyDesignListRequest } from "actions/MyDetail";
 import ContentList from "components/Commons/ContentList";
 
 class MyDesignContainer extends Component {
-  componentWillMount() {
-    //this.props.GetMyDesignListRequest(this.props.location.state.token);
-  }
-
   render() {
     return(
       <div>
