@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ClientTemplate from 'templates/ClientTemplate';
-import DesignerListContainer from 'containers/Designs/DesignerListContainer';
+import DesignerListContainer from 'containers/Designer/DesignerListContainer';
 
 class DesignerListPage extends Component {
   render() {
