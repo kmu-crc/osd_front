@@ -3,9 +3,7 @@ import * as types from "actions/ActionTypes";
 export function GetDesignListRequest(page, sort, cate1, cate2) {
   return (dispatch) => {
     return fetch("http://localhost:8080/design/designList/"+page+"/"+sort+"/"+cate1+"/"+cate2, {
-      headers: { 
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
         return response.json();
@@ -24,8 +22,8 @@ export function GetDesignListRequest(page, sort, cate1, cate2) {
 
 export function GetDesignList(data) {
   return {
-      type: types.GET_DESIGN_LIST,
-      DesignList : data
+    type: types.GET_DESIGN_LIST,
+    DesignList : data
   }
 };
 

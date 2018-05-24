@@ -16,6 +16,7 @@ class DesignListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignList: state.DesignList.status.DesignList,
+    DesignListAdded: state.DesignList.status.DesignListAdded,
     userInfo: state.Authentication.status.userInfo
   };
 };

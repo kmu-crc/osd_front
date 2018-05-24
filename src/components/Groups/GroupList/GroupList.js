@@ -42,6 +42,7 @@ class GroupList extends Component {
   render(){
     let userValid = this.props.userValid;
     let list = this.props.GroupList;
+    console.log(this.props.GroupList);
     return(
       <Wrapper>
         <MenuContainer devided="vertically" padded={true} columns={2}>

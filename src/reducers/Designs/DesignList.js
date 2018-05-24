@@ -7,6 +7,7 @@ const initialState = {
   },
   status: {
     DesignList: [],
+    DesignListAdded: []
   }
 };
 
@@ -18,7 +19,8 @@ export function DesignList(state, action) {
     case types.GET_DESIGN_LIST:
       return update(state, {
         status: {
-          DesignList: { $set: action.DesignList }
+          DesignList: { $set: action.DesignList },
+          DesignListAdded: { $push: [action.DesignList] }
         }
       });
     default:
