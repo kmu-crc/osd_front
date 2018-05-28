@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Loader } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import Category from "components/Commons/Category";
 import Sorting from "components/Commons/Sorting";
-import ScrollListContainer from "containers/Commons/ScrollList";
+import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
 
 // css styling
 
@@ -86,7 +86,7 @@ class DesignList extends Component {
             <Sorting computer={8} tablet={6} mobile={4} handleChange={this.sortChange} />
           </Grid.Row>
         </MenuContainer>
-      {this.state.rendering && <ScrollListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
+      {this.state.rendering && <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
       </Wrapper>
     );
   }

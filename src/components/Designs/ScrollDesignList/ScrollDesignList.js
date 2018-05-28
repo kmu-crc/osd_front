@@ -10,7 +10,7 @@ const ListContainer = styled(Grid)`
   margin-top: 30px;
 `;
 
-class ScrollList extends Component {
+class ScrollDesignList extends Component {
   state = {
     hasMore: true,
     loading: false
@@ -46,4 +46,4 @@ class ScrollList extends Component {
   }
 }
 
-export default ScrollList;
+export default ScrollDesignList;
