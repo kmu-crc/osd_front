@@ -181,7 +181,7 @@ class DesignerDetail extends Component {
                 <HeadContainer width={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{designerDetail.thumbnailUrl? designerDetail.thumbnailUrl : "등록된 이미지 없음"}</div>
+                      <div>{designerDetail.thumbnailUrl? designerDetail.thumbnailUrl.s_img : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{designerDetail.nick_name}</h3>

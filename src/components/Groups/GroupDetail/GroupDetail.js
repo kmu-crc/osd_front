@@ -191,7 +191,7 @@ class GroupDetail extends Component {
                 <HeadContainer width={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{groupDetail.thumbnailUrl? groupDetail.thumbnailUrl : "등록된 이미지 없음"}</div>
+                      <div>{groupDetail.thumbnailUrl? groupDetail.thumbnailUrl.s_img : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
