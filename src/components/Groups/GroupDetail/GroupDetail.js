@@ -201,7 +201,7 @@ class GroupDetail extends Component {
                     </div>
                     <div className="btnContainer">
                       <button className="red">좋아요</button>
-                      <button className="red">지난 공지</button>
+                      <button className="red">가입신청</button>
                     </div>
                   </ProfileSection>
                   <CountSection>
