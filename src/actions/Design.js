@@ -31,14 +31,7 @@ export function GetDesignList(data) {
   }
 };
 
-export function GetDesignListClear(){
-  return async (dispatch) => {
-    return dispatch(DesignListClear());
-  }
-};
-
 export function DesignListClear(data) {
-  console.log("액션 함수에 있는 clear 함수가 돌고 있음");
   return {
     type: types.DESIGN_LIST_CLEAR,
     DesignList: data,

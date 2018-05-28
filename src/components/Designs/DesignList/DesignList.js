@@ -44,23 +44,6 @@ class DesignList extends Component {
   state = {
     rendering: true
   }
-  // state = {
-  //   hasMore: true,
-  //   loading: false,
-  //   currentPage: 0
-  // };
-
-  //componentWillMount(){
-  //this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2);
-  //}
-
-  // shouldComponentUpdate(nextProps) {
-  //   if (JSON.stringify(nextProps.DesignList) === JSON.stringify(this.props.DesignList)) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
 
   changeState = () => {
     this.setState({
@@ -91,22 +74,8 @@ class DesignList extends Component {
     this.changeState();
   }
 
-  // getLoadData = (page) => {
-  //   console.log(page);
-  //   this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2)
-  //     .then(() => {
-  //       this.setState({
-  //         hasMore: this.props.DesignList.length === 0 ? false : true
-  //       });
-  //     });
-  // }
-
   render() {
     console.log("렌더링됨");
-    // let item = [];
-    // this.props.DesignListAdded.length !== 0 && this.props.DesignListAdded.map((list, i) =>
-    //   item.push(<ContentList key={i} data={list} user={this.props.userInfo} type="design" columns={5} />)
-    // );
     const {sort, cate1, cate2} = this.props;
 
     return (

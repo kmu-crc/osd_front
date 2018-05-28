@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignListRequest, GetDesignListClear } from "actions/Design";
+import { GetDesignListRequest } from "actions/Design";
 import DesignList from "components/Designs/DesignList";
 
 class DesignListContainer extends Component {
@@ -25,9 +25,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
       GetDesignListRequest: (sort, categoryLevel1, categoryLevel2, page) => {
         return dispatch(GetDesignListRequest(sort, categoryLevel1, categoryLevel2, page))
-      },
-      GetDesignListClear: () => {
-        return dispatch(GetDesignListClear())
       }
   };
 };

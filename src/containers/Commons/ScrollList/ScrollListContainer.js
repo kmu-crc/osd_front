@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignListRequest, GetDesignListClear } from "actions/Design";
+import { GetDesignListRequest } from "actions/Design";
 import ScrollList from "components/Commons/ScrollList";
 
 class ScrollListContainer extends Component {
