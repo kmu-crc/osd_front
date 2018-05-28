@@ -1,10 +1,11 @@
 import * as types from "actions/ActionTypes";
+import host from "config";
 
 export const CreateDesignRequest = (data, token) => {
   return (dispatch) => {
     dispatch(CreateDesign());
 
-    return fetch("http://localhost:8080/design/createDesign", { headers: { "x-access-token": token }, method: "POST", body: data })
+    return fetch(`${host}/design/createDesign`, { headers: { "x-access-token": token }, method: "POST", body: data })
       .then(function (res) {
         return res.json();
       })

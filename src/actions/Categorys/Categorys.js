@@ -1,10 +1,11 @@
 import * as types from "actions/ActionTypes";
+import host from "config";
 
 export function GetCategoryLevel1Request() {
   return (dispatch) => {
     dispatch(GetCategoryLevel1());
 
-    return fetch("http://localhost:8080/categorys/getCategoryLevel1", { method: "GET" })
+    return fetch(`${host}/categorys/getCategoryLevel1`, { method: "GET" })
       .then(function (res) {
         console.log("res", res);
         return res.json();
@@ -44,7 +45,7 @@ export function GetCategoryLevel2Request(id) {
     return (dispatch) => {
       dispatch(GetCategoryLevel2());
 
-      return fetch(`http://localhost:8080/categorys/getCategoryLevel2/${id}`, { method: "GET" })
+      return fetch(`${host}/categorys/getCategoryLevel2/${id}`, { method: "GET" })
         .then(function (res) {
           console.log("res", res);
           return res.json();

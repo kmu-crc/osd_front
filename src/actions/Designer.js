@@ -1,8 +1,9 @@
 import * as types from "actions/ActionTypes";
+import host from "config";
 
 export function GetDesignerListRequest(page, sort, cate1, cate2) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerList/"+page+"/"+sort+"/"+cate1+"/"+cate2, {
+    return fetch(`${host}/designer/designerList/`+page+"/"+sort+"/"+cate1+"/"+cate2, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -41,7 +42,7 @@ export function DesignerListClear(data) {
 
 export function GetDesignerDetailRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerDetail/"+id, {
+    return fetch(`${host}/designer/designerDetail/`+id, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -69,7 +70,7 @@ export function GetDesignerDetail(data) {
 // 디자이너의 디자인 리스트 가져오기
 export function GetDesignInDesignerRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerDetail/"+id+"/design", {
+    return fetch(`${host}/designer/designerDetail/`+id+"/design", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -97,7 +98,7 @@ export function GetDesignInDesigner(data) {
 // 디자이너가 좋아요 한 디자인 가져오기
 export function GetLikeInDesignerRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerDetail/"+id+"/like", {
+    return fetch(`${host}/designer/designerDetail/`+id+"/like", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

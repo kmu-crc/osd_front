@@ -4,6 +4,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormCheckBox, FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import FileUploader from "components/Commons/FileUploader";
+import host from "config";
 
 const FormBox = styled.div`
   width: 600px;
@@ -21,7 +22,7 @@ class TestForm extends Component {
     this.state.images.map( item => {
       data.append("designs[]", item, item.name);
     });
-    fetch("http://localhost:8080/users/test", {  method: "POST", body: data })
+    fetch(`${host}/users/test`, {  method: "POST", body: data })
       .then(function (res) {
         return res.json();
       })

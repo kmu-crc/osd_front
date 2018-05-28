@@ -1,8 +1,9 @@
 import * as types from 'actions/ActionTypes';
+import host from "config";
 
 export function GetGroupListRequest(page, sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupList/"+page+"/"+sort, {
+    return fetch(`${host}/group/groupList/`+page+"/"+sort, {
       headers: { 'Content-Type': 'application/json' },
       method: "get"
     }).then((response) => {
@@ -41,7 +42,7 @@ export function GroupListClear(data) {
 
 export function GetGroupDetailRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupDetail/"+id, {
+    return fetch(`${host}/group/groupDetail/`+id, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -69,7 +70,7 @@ export function GetGroupDetail(data) {
 // 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupDetail/"+id+"/design/"+sort, {
+    return fetch(`${host}/group/groupDetail/`+id+"/design/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -97,7 +98,7 @@ export function GetDesignInGroup(data) {
 // 그룹 안에 속한 그룹 리스트 가져오기
 export function GetGroupInGroupRequest(id, sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupDetail/"+id+"/group/"+sort, {
+    return fetch(`${host}/group/groupDetail/`+id+"/group/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -125,7 +126,7 @@ export function GetGroupInGroup(data) {
 export function CreateNewGroupRequest(data) {
   return (dispatch) => {
     dispatch(CreateNewGroup());
-    return fetch("http://localhost:8080/group/createGroup", {
+    return fetch(`${host}/group/createGroup`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(data)

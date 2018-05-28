@@ -1,12 +1,13 @@
 import * as types from "./ActionTypes";
+import host from "config";
 
 // 내 기본 정보 불러오기
 export function GetMyDetailRequest(token) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/users/myPage", {
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-access-token": token 
+    return fetch(`${host}/users/myPage`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
       },
       method: "get"
     }).then(response => {
@@ -34,10 +35,10 @@ export function GetMyDetail(data) {
 // 내 디자인 리스트 불러오기
 export function GetMyDesignListRequest(token) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/users/myPage/design", {
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-access-token": token 
+    return fetch(`${host}/users/myPage/design`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
       },
       method: "get"
     }).then(response => {
@@ -65,10 +66,10 @@ export function GetMyDesignList(data) {
 // 내 그룹 리스트 불러오기
 export function GetMyGroupListRequest(token) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/users/myPage/group", {
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-access-token": token 
+    return fetch(`${host}/users/myPage/group`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
       },
       method: "get"
     }).then(response => {
@@ -96,10 +97,10 @@ export function GetMyGroupList(data) {
 // 내 좋아요 디자인 불러오기
 export function GetMyLikeDesignRequest(token) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/users/myPage/likeDesign", {
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-access-token": token 
+    return fetch(`${host}/users/myPage/likeDesign`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
       },
       method: "get"
     }).then(response => {
@@ -127,10 +128,10 @@ export function GetMyLikeDesign(data) {
 // 내 좋아요 디자이너 불러오기
 export function GetMyLikeDesignerRequest(token) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/users/myPage/likeDesigner", {
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-access-token": token 
+    return fetch(`${host}/users/myPage/likeDesigner`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
       },
       method: "get"
     }).then(response => {

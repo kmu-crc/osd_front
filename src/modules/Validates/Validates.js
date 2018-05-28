@@ -1,3 +1,4 @@
+import host from "config";
 const Validates = {};
 
 Validates.required = value => {
@@ -54,7 +55,7 @@ Validates.ThumbnailSize = value => {
 }
 
 Validates.checkEmail = (value) => {
-  return fetch("http://localhost:8080/users/checkEmail", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ email: value }) })
+  return fetch(`${host}/users/checkEmail`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ email: value }) })
         .then(res => res.json())
         .then(res => {
           if(!value) return Promise.resolve(undefined);
@@ -65,7 +66,7 @@ Validates.checkEmail = (value) => {
 };
 
 Validates.checkNickName = (value) => {
-  return fetch("http://localhost:8080/users/checkNickName", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ nick_name: value }) })
+  return fetch(`${host}/users/checkNickName`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ nick_name: value }) })
         .then(res => res.json())
         .then(res => {
           if(!value) return Promise.resolve(undefined);
@@ -76,7 +77,7 @@ Validates.checkNickName = (value) => {
 };
 
 Validates.checkFBUser = (value) => {
-  return fetch("http://localhost:8080/users/checkFBUser", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ FB_user_id: value }) })
+  return fetch(`${host}/users/checkFBUser`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ FB_user_id: value }) })
         .then(res => res.json())
         .then(res => {
           if(!value) return Promise.resolve(undefined);

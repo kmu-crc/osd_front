@@ -1,10 +1,11 @@
 import * as types from "../ActionTypes";
+import host from "config";
 
 export function InsertUserDetailRequest(data, token) {
   return (dispatch) => {
     dispatch(InsertUserDetail());
 
-    return fetch("http://localhost:8080/users/insertDetail", { headers: { "x-access-token": token }, method: "POST", body: data })
+    return fetch(`${host}/users/insertDetail`, { headers: { "x-access-token": token }, method: "POST", body: data })
       .then(function (res) {
         return res.json();
       })

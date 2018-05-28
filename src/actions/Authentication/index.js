@@ -1,9 +1,10 @@
 import * as types from "actions/ActionTypes";
+import host from "config";
 
 export function CheckTokenRequest(token) {
   return (dispatch) => {
     dispatch(CkeckToken());
-    return fetch("http://localhost:8080/users/check", { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
+    return fetch(`${host}/users/check`, { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
       .then(res => res.json())
       .then(res => {
         if (res.success) {
@@ -39,7 +40,7 @@ export function CkeckTokenFailure() {
 export function CheckEmailRequest(email) {
   return (dispatch) => {
     dispatch(CheckEmail());
-    return fetch("http://localhost:8080/users/checkEmail", { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(email) })
+    return fetch(`${host}/users/checkEmail`, { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(email) })
       .then(res => res.json())
       .then(res => {
         if (res.success) {
@@ -77,7 +78,7 @@ export function CheckEmailFailure(err) {
 export function CheckNickNameRequest(NickName) {
   return (dispatch) => {
     dispatch(CheckNickName());
-    return fetch("http://localhost:8080/users/checkNickName", { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(NickName) })
+    return fetch(`${host}/users/checkNickName`, { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(NickName) })
       .then(res => res.json())
       .then(res => {
         if (res.success) {
@@ -115,7 +116,7 @@ export function CheckNickNameFailure(err) {
 export function CheckFBUserRequest(FB_user_id) {
   return (dispatch) => {
     dispatch(CheckFBUser());
-    return fetch("http://localhost:8080/users/checkFBUser", { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(FB_user_id) })
+    return fetch(`${host}/users/checkFBUser`, { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(FB_user_id) })
       .then(res => res.json())
       .then(res => {
         if (res.success) {

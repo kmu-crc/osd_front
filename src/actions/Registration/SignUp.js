@@ -1,11 +1,12 @@
 import * as types from "actions/ActionTypes";
 import { SetSession } from "modules/Sessions";
+import host from "config";
 
 export function SignUpRequest(data) {
   return (dispatch) => {
     dispatch(SignUp());
 
-    return fetch("http://localhost:8080/users/signUp", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+    return fetch(`${host}/users/signUp`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
         return res.json();
       })
@@ -42,7 +43,7 @@ export function FBSignUpRequest(data) {
   return (dispatch) => {
     dispatch(FBSignUp());
 
-    return fetch("http://localhost:8080/users/FBSignUp", { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+    return fetch(`${host}/users/FBSignUp`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
         return res.json();
       })

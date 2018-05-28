@@ -1,8 +1,9 @@
 import * as types from "actions/ActionTypes";
+import host from "config";
 
 export function GetDesignListRequest(page, sort, cate1, cate2) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designList/"+page+"/"+sort+"/"+cate1+"/"+cate2, {
+    return fetch(`${host}/design/designList/`+page+"/"+sort+"/"+cate1+"/"+cate2, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -41,7 +42,7 @@ export function DesignListClear(data) {
 
 export function GetDesignDetailRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id, {
+    return fetch(`${host}/design/designDetail/`+id, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -51,7 +52,7 @@ export function GetDesignDetailRequest(id) {
         if (!data) {
           console.log("no data");
           data = [];
-        } 
+        }
         dispatch(GetDesignDetail(data));
       }).catch((error) => {
         console.log("err", error);
@@ -68,7 +69,7 @@ export function GetDesignDetail(data) {
 
 export function GetDesignDetailViewRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/view", {
+    return fetch(`${host}/design/designDetail/`+id+"/view", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -95,7 +96,7 @@ export function GetDesignDetailView(data) {
 
 export function GetDesignDetailStepRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/step", {
+    return fetch(`${host}/design/designDetail/`+id+"/step", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -123,7 +124,7 @@ export function GetDesignDetailStep(data) {
 
 export function GetDesignDetailStepCardRequest(id, card_id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/cardDetail/"+card_id, {
+    return fetch(`${host}/design/designDetail/`+id+"/cardDetail/"+card_id, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -151,7 +152,7 @@ export function GetDesignDetailStepCard(data) {
 
 export function GetDesignDetailIssueRequest(id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/issue", {
+    return fetch(`${host}/design/designDetail/`+id+"/issue", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
