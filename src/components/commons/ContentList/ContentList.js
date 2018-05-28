@@ -28,7 +28,7 @@ class ContentList extends Component {
         )}
       </Grid.Row>
       :
-      <Grid.Row>등록된 컨텐츠가 없습니다.</Grid.Row>
+      null
       }
       </ListContainer>
     );

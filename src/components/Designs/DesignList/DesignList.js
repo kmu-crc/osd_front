@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Loader, Dimmer } from "semantic-ui-react";
+import { Grid, Loader } from "semantic-ui-react";
 import Category from "components/Commons/Category";
 import Sorting from "components/Commons/Sorting";
-import ContentList from "components/Commons/ContentList";
-import InfiniteScroll from 'react-infinite-scroller';
+import ScrollListContainer from "containers/Commons/ScrollList";
 
 // css styling
 
@@ -26,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MenuContainer = styled(Grid)`
+const MenuContainer = styled(Grid) `
   font-size: 13px;
   & .sorting {
     text-align: right;
@@ -43,65 +42,82 @@ const MenuContainer = styled(Grid)`
 
 class DesignList extends Component {
   state = {
-    hasMore: true,
-    loading: false,
-  };
+    rendering: true
+  }
+  // state = {
+  //   hasMore: true,
+  //   loading: false,
+  //   currentPage: 0
+  // };
 
-  shouldComponentUpdate(nextProps){
-    if (JSON.stringify(nextProps.DesignList) === JSON.stringify(this.props.DesignList)) {
-      return false;
-    } else {
-      console.log("et");
-      return true;
-    }
+  //componentWillMount(){
+  //this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2);
+  //}
+
+  // shouldComponentUpdate(nextProps) {
+  //   if (JSON.stringify(nextProps.DesignList) === JSON.stringify(this.props.DesignList)) {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
+
+  changeState = () => {
+    this.setState({
+      rendering: false
+    });
+    setTimeout(()=>{
+      this.setState({
+        rendering: true
+      });
+    }, 200);
   }
 
-  sortChange = (e, {value}) => {
+  sortChange = (e, { value }) => {
     this.props.history.replace(`/design/${value}/${this.props.cate1}/${this.props.cate2}`);
-    //this.props.GetDesignListRequest(0, value, this.props.cate1, this.props.cate2);
+    this.props.GetDesignListRequest(0, value, this.props.cate1, this.props.cate2);
+    this.changeState();
   }
 
-  cate1Change = (e, {value}) => {
+  cate1Change = (e, { value }) => {
     this.props.history.replace(`/design/${this.props.sort}/${value}/${null}`);
     this.props.GetDesignListRequest(0, this.props.sort, value, null);
+    this.changeState();
   }
 
-  cate2Change = (e, {value}) => {
+  cate2Change = (e, { value }) => {
     this.props.history.replace(`/design/${this.props.sort}/${this.props.cate1}/${value}`);
     this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, value);
+    this.changeState();
   }
 
-  getLoadData = (page) => {
-      this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2)
-      .then(() => {
-        this.setState({
-          hasMore: this.props.DesignList.length === 0? false : true
-        });
-      });
-  }
+  // getLoadData = (page) => {
+  //   console.log(page);
+  //   this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2)
+  //     .then(() => {
+  //       this.setState({
+  //         hasMore: this.props.DesignList.length === 0 ? false : true
+  //       });
+  //     });
+  // }
 
-  render(){
+  render() {
     console.log("렌더링됨");
-    let listAll = this.props.DesignListAdded;
-    console.log(listAll);
-    let item = [];
-    listAll.length !== 0 && listAll.map((list, i)=> 
-      item.push(<ContentList key={i} data={list} user={this.props.userInfo} type="design" columns={5}/>)
-    );
+    // let item = [];
+    // this.props.DesignListAdded.length !== 0 && this.props.DesignListAdded.map((list, i) =>
+    //   item.push(<ContentList key={i} data={list} user={this.props.userInfo} type="design" columns={5} />)
+    // );
+    const {sort, cate1, cate2} = this.props;
 
-    return(
+    return (
       <Wrapper>
         <MenuContainer devided="vertically" padded={true} columns={2}>
           <Grid.Row stretched={false}>
-            <Category computer={8} tablet={10} mobile={12} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
-            <Sorting computer={8} tablet={6} mobile={4} handleChange={this.sortChange}/>
+            <Category computer={8} tablet={10} mobile={12} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
+            <Sorting computer={8} tablet={6} mobile={4} handleChange={this.sortChange} />
           </Grid.Row>
         </MenuContainer>
-        <InfiniteScroll threshold={700} pageStart={-1} loadMore={this.getLoadData} 
-                        hasMore={this.state.hasMore}
-                        loader={ <Loader active={this.state.loading? true : false} inline="centered" size="huge" key={0}/> }>
-          {item}
-        </InfiniteScroll>
+      {this.state.rendering && <ScrollListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
       </Wrapper>
     );
   }
