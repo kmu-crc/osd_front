@@ -9,13 +9,13 @@ export function GetGroupListRequest(page, sort) {
         return response.json();
       }).then((data) => {
         console.log("group data >>", data);
-        if (page === 0) {
-          dispatch(GroupListClear(data));
-          return;
-        }
         if (!data) {
           console.log("no data");
           data = [];
+        }
+        if (page === 0) {
+          dispatch(GroupListClear(data));
+          return;
         }
         dispatch(GetGroupList(data));
       }).catch((error) => {

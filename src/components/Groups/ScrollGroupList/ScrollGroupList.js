@@ -32,7 +32,7 @@ class ScrollGroupList extends Component {
                       loader={<Loader active={this.state.loading ? true : false} inline="centered" size="huge" key={0}/>}>
         <ListContainer devided="vertically" padded={true} columns={5} as="ul">
           <Grid.Row>
-            {this.props.GroupListAdded != null ?
+            {this.props.GroupListAdded.length > 0 ?
               this.props.GroupListAdded.map((content, i) => (
                 <Grid.Column key={content.uid}><Group group={content}/></Grid.Column>
               ))
