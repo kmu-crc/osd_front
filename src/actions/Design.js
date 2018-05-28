@@ -1,8 +1,8 @@
 import * as types from "actions/ActionTypes";
 
-export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
+export function GetDesignListRequest(page, sort, cate1, cate2) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designList", {
+    return fetch("http://localhost:8080/design/designList/"+page+"/"+sort+"/"+cate1+"/"+cate2, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -12,7 +12,11 @@ export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
         if (!data) {
           console.log("no data");
           data = [];
-        } 
+        }
+        if (page === 0) {
+          dispatch(DesignListClear(data));
+          return;
+        }
         dispatch(GetDesignList(data));
       }).catch((error) => {
         console.log("err", error);
@@ -22,10 +26,18 @@ export function GetDesignListRequest(sort, categoryLevel1, categoryLevel2) {
 
 export function GetDesignList(data) {
   return {
-      type: types.GET_DESIGN_LIST,
-      DesignList : data
+    type: types.GET_DESIGN_LIST,
+    DesignList : data
   }
 };
+
+export function DesignListClear(data) {
+  return {
+    type: types.DESIGN_LIST_CLEAR,
+    DesignList: data,
+    DesignListAdded: []
+  }
+}
 
 export function GetDesignDetailRequest(id) {
   return (dispatch) => {

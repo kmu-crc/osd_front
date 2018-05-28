@@ -23,13 +23,13 @@ class App extends Component {
           <Route exact path="/" component={MainPage}/>
           <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)}/>
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
-          <Route path="/design" component={DesignListPage}/>
+          <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage}/>
           <Route path="/createGroup" component={CreateGroupPage}/>
           <Route path="/modifyGroup" component={ModifyGroupPage}/>
           <Route path="/groupDetail/:id/:type?/:sorting?" component={GroupDetailPage}/>
-          <Route path="/group" component={GroupListPage}/>
+          <Route path="/group/:sorting?" component={GroupListPage}/>
           <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage}/>
-          <Route path="/designer" component={DesignerListPage}/>
+          <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage}/>
           <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>

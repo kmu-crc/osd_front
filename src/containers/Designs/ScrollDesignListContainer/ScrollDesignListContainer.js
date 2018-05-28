@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
-import DesignList from "components/Designs/DesignList";
+import ScrollDesignList from "components/Designs/ScrollDesignList";
 
-class DesignListContainer extends Component {
+class ScrollDesignListContainer extends Component {
   render() {
     return(
       <div>
-        <DesignList {...this.props}/>
+        <ScrollDesignList {...this.props}/>
       </div>
     );
   }
@@ -16,8 +16,7 @@ class DesignListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignList: state.DesignList.status.DesignList,
-    DesignListAdded: state.DesignList.status.DesignListAdded,
-    userInfo: state.Authentication.status.userInfo
+    DesignListAdded: state.DesignList.status.DesignListAdded
   };
 };
 
@@ -29,4 +28,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesignListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollDesignListContainer);

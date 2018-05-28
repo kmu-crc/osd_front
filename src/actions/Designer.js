@@ -1,8 +1,8 @@
 import * as types from "actions/ActionTypes";
 
-export function GetDesignerListRequest(sort) {
+export function GetDesignerListRequest(page, sort, cate1, cate2) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/designer/designerList", {
+    return fetch("http://localhost:8080/designer/designerList/"+page+"/"+sort+"/"+cate1+"/"+cate2, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -12,6 +12,10 @@ export function GetDesignerListRequest(sort) {
         if (!data) {
           console.log("no data");
           data = [];
+        }
+        if (page === 0) {
+          dispatch(DesignerListClear(data));
+          return;
         }
         dispatch(GetDesignerList(data));
       }).catch((error) => {
@@ -24,6 +28,14 @@ export function GetDesignerList(data) {
   return {
       type: types.GET_DESIGNER_LIST,
       DesignerList : data
+  }
+};
+
+export function DesignerListClear(data) {
+  return {
+    type: types.DESIGNER_LIST_CLEAR,
+    DesignerList: data,
+    DesignerListAdded: []
   }
 };
 

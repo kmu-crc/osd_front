@@ -72,7 +72,7 @@ const Count = styled.div`
 class designer extends Component {
   render(){
     let designer = this.props.designer;
-    let user = this.props.user;
+
     return(
       <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>

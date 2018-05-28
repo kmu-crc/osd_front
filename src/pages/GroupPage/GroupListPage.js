@@ -6,7 +6,8 @@ class GroupListPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <GroupListContainer/>
+        <GroupListContainer sort={this.props.match.params.sorting? this.props.match.params.sorting : null}
+                            history={this.props.history}/>
      </ClientTemplate>
     );
   }

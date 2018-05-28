@@ -4,15 +4,10 @@ import { GetGroupListRequest } from "actions/Group";
 import GroupList from "components/Groups/GroupList";
 
 class GroupListContainer extends Component {
-
-  componentWillMount(){
-    this.props.GetGroupListRequest(null);
-  }
-
   render() {
     return(
       <div>
-        <GroupList userValid={this.props.valid} userInfo={this.props.userInfo} GroupList={this.props.GroupList}/>
+        <GroupList {...this.props}/>
       </div>
     );
   }
@@ -21,6 +16,7 @@ class GroupListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     GroupList: state.GroupList.status.GroupList,
+    GroupListAdded: state.GroupList.status.GroupListAdded,
     valid: state.Authentication.status.valid,
     userInfo: state.Authentication.status.userInfo
   };

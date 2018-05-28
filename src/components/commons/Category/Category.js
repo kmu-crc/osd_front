@@ -1,13 +1,22 @@
 import React, { Component } from "react";
-import { Grid, Select } from "semantic-ui-react";
+import { Grid, Dropdown } from "semantic-ui-react";
 
 const categoryLevel1 = [
-  { key: "fashion", value: "fashion", text: "패션" },
-  { key: "product", value: "product", text: "제품" },
-  { key: "comm", value: "comm", text: "커뮤니케이션" },
-  { key: "place", value: "place", text: "공간" },
-  { key: "enter", value: "enter", text: "엔터테인먼트" },
-  { key: "new", value: "new", text: "새분야" },
+  { key: "fashion", value: "1", text: "패션" },
+  { key: "product", value: "2", text: "제품" },
+  { key: "comm", value: "3", text: "커뮤니케이션" },
+  { key: "place", value: "4", text: "공간" },
+  { key: "enter", value: "5", text: "엔터테인먼트" },
+  { key: "new", value: "6", text: "새분야" },
+];
+
+const categoryLevel2 = [
+  { key: "fashion", value: "1", text: "패션" },
+  { key: "product", value: "2", text: "제품" },
+  { key: "comm", value: "3", text: "커뮤니케이션" },
+  { key: "place", value: "4", text: "공간" },
+  { key: "enter", value: "5", text: "엔터테인먼트" },
+  { key: "new", value: "6", text: "새분야" },
 ];
 
 class Category extends Component {
@@ -17,8 +26,8 @@ class Category extends Component {
                    computer={this.props.computer? this.props.computer : null} 
                    tablet={this.props.tablet? this.props.tablet : null} 
                    mobile={this.props.mobile? this.props.mobile : null}>
-        <Select placeholder="1차 카테고리" options={categoryLevel1} />
-        <Select placeholder="2차 카테고리" options={categoryLevel1} />
+        <Dropdown selection placeholder="1차 카테고리" options={categoryLevel1} onChange={this.props.handleCate1}/>
+        <Dropdown selection placeholder="2차 카테고리" options={categoryLevel2} onChange={this.props.handleCate2} />
       </Grid.Column>
     )
   }

@@ -6,7 +6,8 @@ const initialState = {
     status: "INIT"
   },
   status: {
-    DesignerList: []
+    DesignerList: [],
+    DesignerListAdded: []
   }
 };
 
@@ -18,7 +19,15 @@ export function DesignerList(state, action) {
     case types.GET_DESIGNER_LIST:
       return update(state, {
         status: {
-          DesignerList: { $set: action.DesignerList }
+          DesignerList: { $set: action.DesignerList },
+          DesignerListAdded: { $push: action.DesignerList }
+        }
+      });
+    case types.DESIGNER_LIST_CLEAR:
+      return update(state, {
+        status: {
+          DesignerList: { $set: action.DesignerList },
+          DesignerListAdded: { $set: action.DesignerList }
         }
       });
     default:
