@@ -60,7 +60,7 @@ class GroupList extends Component {
   }
 
   render(){
-    let userValid = this.props.userValid;
+    let userValid = this.props.valid;
     const { sort } = this.props;
     return(
       <Wrapper>
