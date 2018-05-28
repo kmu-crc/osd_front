@@ -1,14 +1,18 @@
 import * as types from 'actions/ActionTypes';
 
-export function GetGroupListRequest(sort) {
+export function GetGroupListRequest(page, sort) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/group/groupList", {
+    return fetch("http://localhost:8080/group/groupList/"+page+"/"+sort, {
       headers: { 'Content-Type': 'application/json' },
       method: "get"
     }).then((response) => {
         return response.json();
       }).then((data) => {
         console.log("group data >>", data);
+        if (page === 0) {
+          dispatch(GroupListClear(data));
+          return;
+        }
         if (!data) {
           console.log("no data");
           data = [];
@@ -26,6 +30,14 @@ export function GetGroupList(data) {
       GroupList : data
   }
 };
+
+export function GroupListClear(data) {
+  return {
+    type: types.GROUP_LIST_CLEAR,
+    GroupList: data,
+    GroupListAdded: []
+  }
+}
 
 export function GetGroupDetailRequest(id) {
   return (dispatch) => {

@@ -9,14 +9,14 @@ export function GetDesignListRequest(page, sort, cate1, cate2) {
         return response.json();
       }).then((data) => {
         console.log("design data >>", data);
+        if (!data) {
+          console.log("no data");
+          data = [];
+        }
         if (page === 0) {
           dispatch(DesignListClear(data));
           return;
         }
-        if (!data) {
-          console.log("no data");
-          data = [];
-        } 
         dispatch(GetDesignList(data));
       }).catch((error) => {
         console.log("err", error);

@@ -25,10 +25,10 @@ export function DesignList(state, action) {
       });
     case types.DESIGN_LIST_CLEAR:
       return update(state, {
-         status: {
-           DesignList: { $set: action.DesignList },
-           DesignListAdded: { $set: action.DesignList }
-         }
+        status: {
+          DesignList: { $set: action.DesignList },
+          DesignListAdded: { $set: action.DesignList }
+        }
        });
     default:
       return state;

@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-// import { Container, Columns, Row } from "../Grid/index";
 import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
-import ContentList from "components/Commons/ContentList";
+import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
 
 // css styling
 
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
-  padding: 1rem 3rem 5rem;
+  padding: 1rem 8rem 5rem;
   min-width: 660px;
 `;
 
@@ -39,10 +38,30 @@ const MenuContainer = styled(Grid)`
 
 
 class GroupList extends Component {
+  state = {
+    rendering: true
+  }
+
+  changeState = () => {
+    this.setState({
+      rendering: false
+    });
+    setTimeout(()=>{
+      this.setState({
+        rendering: true
+      });
+    }, 200);
+  }
+
+  sortChange = (e, { value }) => {
+    this.props.history.replace(`/group/${value}`);
+    this.props.GetGroupListRequest(0, value);
+    this.changeState();
+  }
+
   render(){
     let userValid = this.props.userValid;
-    let list = this.props.GroupList;
-    console.log(this.props.GroupList);
+    const { sort } = this.props;
     return(
       <Wrapper>
         <MenuContainer devided="vertically" padded={true} columns={2}>
@@ -52,10 +71,10 @@ class GroupList extends Component {
               <button disabled>새 그룹 추가 +</button>
               }
             </Grid.Column>
-            <Sorting/>
+            <Sorting handleChange={this.sortChange}/>
           </Grid.Row>
         </MenuContainer>
-        <ContentList data={list} user={this.props.userInfo} type="group" columns={6}/>
+        {this.state.rendering && <ScrollGroupListContainer sort={sort}/>}
       </Wrapper>
     );
   }

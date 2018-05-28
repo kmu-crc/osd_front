@@ -7,6 +7,7 @@ const initialState = {
   },
   status: {
     GroupList: [],
+    GroupListAdded: []
   }
 };
 
@@ -18,9 +19,17 @@ export function GroupList(state, action) {
     case types.GET_GROUP_LIST:
       return update(state, {
         status: {
-          GroupList: { $set: action.GroupList }
+          GroupList: { $set: action.GroupList },
+          GroupListAdded: { $push: action.GroupList }
         }
       });
+      case types.GROUP_LIST_CLEAR:
+        return update(state, {
+          status: {
+            GroupList: { $set: action.GroupList },
+            GroupListAdded: { $set: action.GroupList }
+          }
+        })
     default:
       return state;
   }

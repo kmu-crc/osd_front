@@ -4,15 +4,10 @@ import { GetDesignerListRequest } from "actions/Designer";
 import DesignerList from "components/Designers/DesignerList";
 
 class DesignerListContainer extends Component {
-
-  componentWillMount(){
-    this.props.GetDesignerListRequest(null);
-  }
-
   render() {
     return(
       <div>
-        <DesignerList DesignerList={this.props.DesignerList}/>
+        <DesignerList {...this.props}/>
       </div>
     );
   }
@@ -20,14 +15,16 @@ class DesignerListContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignerList: state.DesignerList.status.DesignerList
+    DesignerList: state.DesignerList.status.DesignerList,
+    DesignerListAdded: state.DesignerList.status.DesignerListAdded,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignerListRequest: (sort) => {
-        return dispatch(GetDesignerListRequest(sort))
+      GetDesignerListRequest: (page, sort) => {
+        return dispatch(GetDesignerListRequest(page, sort))
       }
   };
 };
