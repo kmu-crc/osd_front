@@ -13,14 +13,15 @@ const ListContainer = styled(Grid)`
 class ScrollDesignList extends Component {
   state = {
     hasMore: true,
-    loading: false
+    loading: true
   };
 
   getLoadData = page => {
     this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2)
     .then(() => {
       this.setState({
-        hasMore: this.props.DesignList === null || this.props.DesignList.length === 0 ? false : true
+        hasMore: this.props.DesignList === null || this.props.DesignList.length === 0 ? false : true,
+        loading: false
       });
     });
   };

@@ -19,6 +19,7 @@ export function GetDesignListRequest(page, sort, cate1, cate2) {
         }
         dispatch(GetDesignList(data));
       }).catch((error) => {
+        dispatch(DesignListFail());
         console.log("err", error);
       })
   }
@@ -35,6 +36,14 @@ export function DesignListClear(data) {
   return {
     type: types.DESIGN_LIST_CLEAR,
     DesignList: data,
+    DesignListAdded: []
+  }
+}
+
+export function DesignListFail() {
+  return {
+    type: types.DESIGN_LIST_FAIL,
+    DesignList: [],
     DesignListAdded: []
   }
 }

@@ -19,6 +19,7 @@ export function GetGroupListRequest(page, sort) {
         }
         dispatch(GetGroupList(data));
       }).catch((error) => {
+        dispatch(GroupListFail());
         console.log("err", error);
       });
   }
@@ -35,6 +36,14 @@ export function GroupListClear(data) {
   return {
     type: types.GROUP_LIST_CLEAR,
     GroupList: data,
+    GroupListAdded: []
+  }
+}
+
+export function GroupListFail() {
+  return {
+    type: types.GROUP_LIST_FAIL,
+    GroupList: [],
     GroupListAdded: []
   }
 }
