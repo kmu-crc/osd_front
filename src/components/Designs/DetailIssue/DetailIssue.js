@@ -1,37 +1,25 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Grid, Icon } from "semantic-ui-react";
 
 // css styling
-const IssueWrapper = styled.div`
+const IssueWrapper = styled(Grid)`
   min-width: 660px;
   position: relative;
-  padding: 20px 0;
-  background-color: #FAFBFC;
+  background-color: #fff;
+  &.ui.grid {
+    padding: 10px 20px 40px;
+  }
   & > .noData {
     font-size: 14px;
     text-align: center;
   }
 `;
 
-const SearchWrapper = styled.div`
-  float: none;
-  margin: auto;
-  & input {
-    width: 20%;
-    float: left;
-    height: 30px;
-  }
-  & button {
-    float: left;
-    height: 30px;
-    background-color: #e6ebf1;
-    border: none;
-  }
-  & button.red {
-    float: right;
-    background-color: dimgray;
-    font-size: 13px;
+const SearchWrapper = styled(Grid.Row)`
+  & .ui.icon.input {
+    width: 90%;
   }
 `;
 
@@ -95,15 +83,21 @@ class DetailIssue extends Component {
       <div>
         {issue.length !== 0?
           <IssueWrapper>
-            <SearchWrapper width={10}>
-              <input placeholder="검색어를 입력해 주세요"/>
-              <button>SEARCH</button>
-              <button className="red"><Link to="">글쓰기</Link></button>
+            <SearchWrapper columns={2}>
+              <Grid.Column>
+                <div className="ui icon input">
+                  <input type="text" value="" tabIndex="0" className="prompt" autoComplete="off" />
+                  <i aria-hidden="true" className="search icon"></i>
+                </div>
+              </Grid.Column>
+              <Grid.Column textAlign="right">
+                <button className="ui button"><Link to="">글쓰기</Link></button>
+              </Grid.Column>
             </SearchWrapper>
             <ListWrapper>
               <ul>
                 {issue.map(list =>
-                <List xs={12} sm={12} md={12} width={10} key={list.uid}>
+                <List key={list.uid}>
                   <li>
                     <div className="order">{list.uid}</div>
                     <div className="title">

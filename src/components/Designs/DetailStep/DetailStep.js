@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Card from "components/Designs/Card";
 import { SortablePane, Pane } from "react-sortable-pane";
+import { Grid } from "semantic-ui-react";
 
 // css styling
 
