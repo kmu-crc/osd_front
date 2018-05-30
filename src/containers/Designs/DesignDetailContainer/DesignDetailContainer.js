@@ -16,6 +16,8 @@ class DesignDetailContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignDetail: state.DesignDetail.status.DesignDetail,
+    valid: state.Authentication.status.valid,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

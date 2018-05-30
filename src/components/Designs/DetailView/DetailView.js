@@ -144,6 +144,7 @@ const GoStepBtn = styled.button`
 
 
 class DetailView extends Component {
+  
   componentDidMount() {
     this.props.GetDesignDetailViewRequest(this.props.id);
   }
@@ -153,7 +154,7 @@ class DetailView extends Component {
     let len = Object.keys(view).length;
     return(
       <div>
-        {len !== 0 &&
+        {len !== 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
             <ImageWrapper>
@@ -185,6 +186,10 @@ class DetailView extends Component {
               </Form>
             </Comment>
           </ViewWrapper>
+        :
+        <ViewWrapper>
+          <p>내용이 없습니다.</p>
+        </ViewWrapper>
         }
         <GoStepBtn onClick={this.props.goStep}>프로젝트형으로 변경</GoStepBtn>
       </div>
