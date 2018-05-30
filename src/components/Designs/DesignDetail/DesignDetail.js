@@ -24,10 +24,9 @@ const HeadContainer = styled(Grid)`
   & button.ui.button {
     font-size: 13px;
     font-weight: 400;
-    // padding: .5rem .8rem .5rem;
   }
   & .title {
-    font-size: 24px;
+    font-size: 1.8rem;
     font-weight: bold;
   }
   & .explanation {
