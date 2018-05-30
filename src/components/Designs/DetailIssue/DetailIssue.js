@@ -116,7 +116,7 @@ class DetailIssue extends Component {
     return(
       <div>
         {this.state.showPostPage?
-        <CreateIssue handleClick={this.hidePostPage}/>
+        <CreateIssue handleClick={this.hidePostPage} goBack={this.hidePostPage}/>
         :
         this.state.showDetailPage?
         <DetailIssueDetail data={this.props.IssueDetail} handleClick={this.hideDetailPage}/>
