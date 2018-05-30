@@ -81,8 +81,8 @@ class DetailStep extends Component {
     <BoardContainer>
       {step.length !== 0 &&
         <div>
-          {step.map(board =>
-            <Board>
+          {step.map((board, i)  =>
+            <Board key={i}>
               <div className="boardList">
                 <h4 className="boardTitle" id={board.uid}>
                   {this.state.isEdit == board.uid? <input value={this.state.titleValue} onChange={this.onEdit}/>

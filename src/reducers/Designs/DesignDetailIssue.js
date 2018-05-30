@@ -7,6 +7,7 @@ const initialState = {
   },
   status: {
     DesignDetailIssue: [],
+    IssueDetail: []
   }
 };
 
@@ -19,6 +20,12 @@ export function DesignDetailIssue(state, action) {
       return update(state, {
         status: {
           DesignDetailIssue: { $set: action.DesignDetailIssue }
+        }
+      });
+    case types.GET_DESIGN_DETAIL_ISSUE_DETAIL:
+      return update(state, {
+        status: {
+          IssueDetail: { $set: action.IssueDetail }
         }
       });
     default:

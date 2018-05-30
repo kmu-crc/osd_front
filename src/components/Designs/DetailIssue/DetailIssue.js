@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Grid, Icon } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
+import CreateIssue from "./CreateIssue.js";
+import DetailIssueDetail from "./DetailIssueDetail.js";
 
 // css styling
 const IssueWrapper = styled(Grid)`
@@ -77,11 +79,49 @@ const List = styled.div`
 `;
 
 class DetailIssue extends Component {
+  state = {
+    showPostPage: false,
+    showDetailPage: false
+  }
+
+  showPostPage = (e) => {
+    this.setState({
+      showPostPage: true
+    });
+  }
+
+  hidePostPage = (e) => {
+    this.setState({
+      showPostPage: false
+    });
+  }
+
+  loadIssueDetail = (id) => {
+    this.props.GetDesignDetailIssueDetailRequest(this.props.id, id)
+    .then(()=>{
+      this.setState({
+        showDetailPage: true
+      });
+    });
+  }
+
+  hideDetailPage = (e) => {
+    this.setState({
+      showDetailPage: false
+    });
+  }
+
   render(){
     let issue = this.props.DesignDetailIssue;
     return(
       <div>
-        {issue.length !== 0?
+        {this.state.showPostPage?
+        <CreateIssue handleClick={this.hidePostPage}/>
+        :
+        this.state.showDetailPage?
+        <DetailIssueDetail data={this.props.IssueDetail} handleClick={this.hideDetailPage}/>
+        :
+        issue.length !== 0?
           <IssueWrapper>
             <SearchWrapper columns={2}>
               <Grid.Column>
@@ -91,26 +131,26 @@ class DetailIssue extends Component {
                 </div>
               </Grid.Column>
               <Grid.Column textAlign="right">
-                <button className="ui button"><Link to="">글쓰기</Link></button>
+                <button className="ui button" onClick={this.showPostPage}>글쓰기</button>
               </Grid.Column>
             </SearchWrapper>
             <ListWrapper>
               <ul>
-                {issue.map(list =>
-                <List key={list.uid}>
-                  <li>
-                    <div className="order">{list.uid}</div>
-                    <div className="title">
-                    {list.title}
-                    {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
-                    </div>
-                    <div className="user">kwonjong</div>
-                    <div className="date">{list.create_time.split("T")[0]}</div>
-                    <div className="cmtCount">{list.commentCount["count(*)"]}</div>
-                  </li>
-                </List>
-                )}
-              </ul>
+              {issue.map(list =>
+              <List key={list.uid} onClick={()=>this.loadIssueDetail(list.uid)}>
+                <li>
+                  <div className="order">{list.uid}</div>
+                  <div className="title">
+                  {list.title}
+                  {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
+                  </div>
+                  <div className="user">{list.userName}</div>
+                  <div className="date">{list.create_time.split("T")[0]}</div>
+                  <div className="cmtCount">{list.commentCount["count(*)"]}</div>
+                </li>
+              </List>
+              )}
+            </ul>
             </ListWrapper>
           </IssueWrapper>
           :
