@@ -66,8 +66,8 @@ class CreateIssue extends Component {
               <Form.Checkbox className="checkDone"></Form.Checkbox>
               <label>완료</label>
               <Form.Field>
-                <button type="submit" class="ui button" onClick={this.props.handleClick}>등록</button>
-                <button type="submit" class="ui button" onClick={this.props.goBack}>목록</button>
+                <button type="submit" className="ui button" onClick={this.props.handleClick}>등록</button>
+                <button type="submit" className="ui button" onClick={this.props.goBack}>목록</button>
               </Form.Field>
             </CreateForm>
           </Grid.Column>
