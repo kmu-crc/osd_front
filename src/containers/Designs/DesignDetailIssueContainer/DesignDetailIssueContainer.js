@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignDetailIssueRequest } from "actions/Design";
+import { GetDesignDetailIssueRequest, GetDesignDetailIssueDetailRequest } from "actions/Design";
 import DetailIssue from "components/Designs/DetailIssue";
 
 class DesignDetailIssueContainer extends Component {
@@ -12,7 +12,7 @@ class DesignDetailIssueContainer extends Component {
   render() {
     return (
       <div>
-        <DetailIssue DesignDetailIssue={this.props.DesignDetailIssue} />
+        <DetailIssue {...this.props} />
       </div>
     );
   }
@@ -20,7 +20,8 @@ class DesignDetailIssueContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignDetailIssue: state.DesignDetailIssue.status.DesignDetailIssue
+    DesignDetailIssue: state.DesignDetailIssue.status.DesignDetailIssue,
+    IssueDetail: state.DesignDetailIssue.status.IssueDetail
   };
 };
 
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailIssueRequest: (id) => {
       return dispatch(GetDesignDetailIssueRequest(id))
+    },
+    GetDesignDetailIssueDetailRequest: (id, issue_id) => {
+      return dispatch(GetDesignDetailIssueDetailRequest(id, issue_id))
     }
   };
 };

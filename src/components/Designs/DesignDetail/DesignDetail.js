@@ -21,21 +21,19 @@ const HeadContainer = styled(Grid)`
   min-height: 100px;
   font-size: 13px;
   border-bottom: 1px solid #e6ebf1;
-  & button.btnIssue {
-    margin-left: 10px;
-    width: 80px;
-    height: 24px;
-    margin-top: 6px;
-    background: transparent;
-    border-radius: 3px;
+  & button.ui.button {
     font-size: 13px;
+    font-weight: 400;
   }
   & .title {
-    font-size: 24px;
+    font-size: 1.8rem;
     font-weight: bold;
   }
   & .explanation {
     margin-top: 20px;
+  }
+  & .issueBtn {
+    margin-left: 10px;
   }
 `;
 
@@ -52,46 +50,28 @@ const Cate = styled.div`
 `;
 
 const SubInfo = styled.div`
-  border: 1px solid rgba(27,31,35,0.35);
   float: right;
-  border-radius: 3px;
-  & span {
-    color: dimgray;
+  margin-right: 5px;
+  & .ui.basic.label {
     font-weight: 400;
-    float: left;
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
+    font-size: 13px;
+    color: rgba(0,0,0,.6);
   }
-  & span.text {
-    border-right: 1px solid rgba(27,31,35,0.35);
-    background-color: #e6ebf1;
-    background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-    width: 70px;
-    font-weight: bold;
+  & .ui.basic.button:hover, 
+    .ui.basic.buttons .button:hover {
+      background-color: transparent;
   }
-  & span.number {
-    border-right: 1px solid rgba(27,31,35,0.35);
-    width: 40px;
-  }
-  & span.more {
-    width: 80px;
-    background-color: #e6ebf1;
-    background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
-    cursor: pointer;
-    font-weight: bold;
-    position: relative;
-  }
-  & span.more:hover {
-    background-image: linear-gradient(-180deg, #eff3f6 0%, #eff3f6 100%);
-  }
+`;
+
+const MoreBtn = styled.button`
+  position: relative;
+  float: right;
 `;
 
 const BtnModal = styled.ul`
   position: absolute;
   top: 35px;
-  left: 0;
+  right: 0px;
   text-align: left;
   width: 140px;
   border: 1px solid rgba(27,31,35,0.15);
@@ -99,15 +79,15 @@ const BtnModal = styled.ul`
   border-radius: 3px;
   font-weight: normal;
   background-color: #fff;
+  color: rgba(0,0,0,.87);
   z-index: 2;
   & li {
     padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
   }
   & li:hover {
     background-image: linear-gradient(-180deg, #eff3f6 0%, #eff3f6 100%);
-  }
-  & li.activeStep {
-    color: #EB3324;
   }
 `;
 
@@ -151,6 +131,7 @@ class DesignDetail extends Component {
 
   render(){
     let designDetail = this.props.DesignDetail;
+    let user = this.props.userInfo;
     let count;
     if (designDetail.count != null) {
       count = designDetail.count;
@@ -169,7 +150,7 @@ class DesignDetail extends Component {
             <Grid.Row columns={2}>
               <Grid.Column computer={8} tablet={6} mobile={6}>
                 <h3 className="title">{designDetail.title}
-                  <button className="btnIssue" onClick={this.onActiveIssue}>★ 공지보기</button>
+                  <button className="ui button issueBtn" onClick={this.onActiveIssue}>★ 공지보기</button>
                 </h3>
                 <Cate>
                   <span className="cate">{designDetail.categoryName}</span>
@@ -185,33 +166,40 @@ class DesignDetail extends Component {
                 <div className="explanation">{designDetail.explanation}</div>
               </Grid.Column>
               <Grid.Column computer={8} tablet={10} mobile={10}>
-                <SubInfo>
-                <span className="text">
-                  <Icon name="unhide" color="grey" size="mini"></Icon>
-                  조회수
-                </span>
-                <span className="number">{count.view_count}</span>
-                <span className="text">
-                  <Icon name="heart" color="grey" size="mini"></Icon>
-                  좋아요
-                </span>
-                <span className="number">{count.like_count}</span>
-                <span className="text">
-                  <Icon name="window restore" color="grey" size="mini"></Icon>
-                  파생
-                </span>
-                <span className="number">{designDetail.children_count["count(*)"]}</span>
-                <span className="more" onClick={this.onActiveMoreBtn}>더보기 +
+                <MoreBtn className="ui teal button more" onClick={this.onActiveMoreBtn}>
+                  더보기 +
                   {this.state.activeMoreBtn === true &&
                     <BtnModal>
                       <li>파생디자인 생성</li>
-                      <li>원본디자인 보기</li>
-                      <li>수정</li>
-                      <li>삭제</li>
+                      <li className={designDetail.parent_design != null? "able" : "disable"}>원본디자인 보기</li>
+                      {user.uid === designDetail.user_id && <li>수정</li> }
+                      {user.uid === designDetail.user_id && <li>삭제</li> }
                     </BtnModal>
-                  }
-                </span>
-              </SubInfo>
+                    }
+                </MoreBtn>
+                <SubInfo>
+                  <div className="ui right labeled button">
+                    <button className="ui basic button" tabIndex="0">
+                      <Icon name="unhide" size="mini"></Icon>
+                      조회수
+                    </button>
+                    <div className="ui left pointing basic label">{count.view_count}</div>
+                  </div>
+                  <div className="ui right labeled button">
+                    <button className="ui basic button" tabIndex="0">
+                      <Icon name="heart" size="mini"></Icon>
+                      좋아요
+                    </button>
+                    <div className="ui left pointing basic label">{count.like_count}</div>
+                  </div>
+                  <div className="ui right labeled button">
+                    <button className="ui basic button" tabIndex="0">
+                      <i aria-hidden="true" className="fork icon"></i>
+                      파생
+                    </button>
+                    <div className="ui left pointing basic label">{designDetail.children_count["count(*)"]}</div>
+                  </div>
+                  </SubInfo>
               </Grid.Column>
             </Grid.Row>
           </HeadContainer>

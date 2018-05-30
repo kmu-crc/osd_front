@@ -20,6 +20,7 @@ export function GetDesignerListRequest(page, sort, cate1, cate2) {
         }
         dispatch(GetDesignerList(data));
       }).catch((error) => {
+        dispatch(DesignerListFail());
         console.log("err", error);
       })
   }
@@ -36,6 +37,14 @@ export function DesignerListClear(data) {
   return {
     type: types.DESIGNER_LIST_CLEAR,
     DesignerList: data,
+    DesignerListAdded: []
+  }
+};
+
+export function DesignerListFail() {
+  return {
+    type: types.DESIGNER_LIST_FAIL,
+    DesignerList: [],
     DesignerListAdded: []
   }
 };

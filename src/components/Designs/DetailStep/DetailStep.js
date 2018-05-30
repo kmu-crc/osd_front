@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Card from "components/Designs/Card";
 import { SortablePane, Pane } from "react-sortable-pane";
+import { Grid } from "semantic-ui-react";
 
 // css styling
 
@@ -80,8 +81,8 @@ class DetailStep extends Component {
     <BoardContainer>
       {step.length !== 0 &&
         <div>
-          {step.map(board =>
-            <Board>
+          {step.map((board, i)  =>
+            <Board key={i}>
               <div className="boardList">
                 <h4 className="boardTitle" id={board.uid}>
                   {this.state.isEdit == board.uid? <input value={this.state.titleValue} onChange={this.onEdit}/>

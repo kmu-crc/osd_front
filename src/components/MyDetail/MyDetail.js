@@ -158,7 +158,7 @@ class MyDetail extends Component {
 
     return(
       <div>
-        {MyInfo.length !== 0 &&
+        {MyInfo !== null &&
           <Container>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">

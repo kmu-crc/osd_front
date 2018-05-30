@@ -20,6 +20,7 @@ export function GetDesignListRequest(page, sort, cate1, cate2) {
         }
         dispatch(GetDesignList(data));
       }).catch((error) => {
+        dispatch(DesignListFail());
         console.log("err", error);
       })
   }
@@ -36,6 +37,14 @@ export function DesignListClear(data) {
   return {
     type: types.DESIGN_LIST_CLEAR,
     DesignList: data,
+    DesignListAdded: []
+  }
+}
+
+export function DesignListFail() {
+  return {
+    type: types.DESIGN_LIST_FAIL,
+    DesignList: [],
     DesignListAdded: []
   }
 }
@@ -161,10 +170,9 @@ export function GetDesignDetailIssueRequest(id) {
         console.log("design Detail Issue data >>", data);
         if (!data || data.length === 0) {
           console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignDetailIssue(data));
+          data = [];
         }
+        dispatch(GetDesignDetailIssue(data));
       }).catch((error) => {
         console.log("err", error);
       })
@@ -175,5 +183,32 @@ export function GetDesignDetailIssue(data) {
   return {
     type: types.GET_DESIGN_DETAIL_ISSUE,
     DesignDetailIssue : data
+  }
+};
+
+export function GetDesignDetailIssueDetailRequest(id, issue_id) {
+  return (dispatch) => {
+    return fetch("http://localhost:8080/design/designDetail/"+id+"/issueDetail/"+issue_id, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("design Issue Detail data >>", data);
+        if (!data || data.length === 0) {
+          console.log("no data");
+          data = [];
+        }
+        dispatch(GetDesignDetailIssueDetail(data));
+      }).catch((error) => {
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetDesignDetailIssueDetail(data) {
+  return {
+    type: types.GET_DESIGN_DETAIL_ISSUE_DETAIL,
+    IssueDetail: data
   }
 };
