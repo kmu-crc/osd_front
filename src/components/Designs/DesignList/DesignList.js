@@ -10,7 +10,8 @@ import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContai
 const Wrapper = styled.div`
   background-color: #f9f9f9;
   width: 100%;
-  padding: 1rem 8rem 5rem;
+  padding-top: 8rem;
+  padding-bottom: 5rem;
   min-width: 660px;
   & ul {
     margin-top: 30px;
@@ -49,7 +50,7 @@ class DesignList extends Component {
     this.setState({
       rendering: false
     });
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         rendering: true
       });
@@ -75,18 +76,17 @@ class DesignList extends Component {
   }
 
   render() {
-    console.log("렌더링됨");
-    const {sort, cate1, cate2} = this.props;
+    const { sort, cate1, cate2 } = this.props;
 
     return (
       <Wrapper>
-        <MenuContainer devided="vertically" padded={true} columns={2}>
-          <Grid.Row stretched={false}>
-            <Category computer={8} tablet={10} mobile={12} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
-            <Sorting computer={8} tablet={6} mobile={4} handleChange={this.sortChange} />
-          </Grid.Row>
-        </MenuContainer>
-      {this.state.rendering && <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
+          <MenuContainer devided="vertically" padded={true} centered={true}>
+            <Grid.Row>
+              <Category widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
+              <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} />
+            </Grid.Row>
+          </MenuContainer>
+          {this.state.rendering && <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} />}
       </Wrapper>
     );
   }
