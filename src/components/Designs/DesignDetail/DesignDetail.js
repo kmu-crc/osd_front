@@ -20,7 +20,6 @@ const Wrapper = styled.div`
 const HeadContainer = styled(Grid)`
   min-height: 100px;
   font-size: 13px;
-  border-bottom: 1px solid #e6ebf1;
   & button.ui.button {
     font-size: 13px;
     font-weight: 400;

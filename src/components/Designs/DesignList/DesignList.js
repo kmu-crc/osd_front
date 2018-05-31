@@ -75,9 +75,7 @@ class DesignList extends Component {
   }
 
   render() {
-    console.log("렌더링됨");
     const {sort, cate1, cate2} = this.props;
-
     return (
       <Wrapper>
         <MenuContainer devided="vertically" padded={true} columns={2}>

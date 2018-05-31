@@ -13,7 +13,7 @@ const ListContainer = styled(Grid)`
 class ScrollDesignList extends Component {
   state = {
     hasMore: true,
-    loading: true
+    loading: false
   };
 
   getLoadData = page => {
@@ -22,6 +22,10 @@ class ScrollDesignList extends Component {
       this.setState({
         hasMore: this.props.DesignList === null || this.props.DesignList.length === 0 ? false : true,
         loading: false
+      });
+    }).catch(()=>{
+      this.setState({
+        hasMoar: false
       });
     });
   };

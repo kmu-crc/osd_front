@@ -10,15 +10,15 @@ const CardModal = styled.div`
   background-color: #fff;
   border: 2px solid #000;
   z-index: 2;
-  @media only screen and (max-width: 768px){
-    margin-left: -46%;
-  }
-  @media only screen and (min-width: 960px){
-    margin-left: -42%;
-  }
-  @media only screen and (min-width: 1200px){
-    margin-left: -42%;
-  }
+  // @media only screen and (max-width: 768px){
+  //   margin-left: -46%;
+  // }
+  // @media only screen and (min-width: 960px){
+  //   margin-left: -42%;
+  // }
+  // @media only screen and (min-width: 1200px){
+  //   margin-left: -42%;
+  // }
 `;
 
 class DetailCard extends Component {
