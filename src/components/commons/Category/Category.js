@@ -20,13 +20,15 @@ const categoryLevel2 = [
 ];
 
 class Category extends Component {
-  render(){
-    return(
+  render() {
+    return (
       <Grid.Column className="category"
-                   computer={this.props.computer? this.props.computer : null} 
-                   tablet={this.props.tablet? this.props.tablet : null} 
-                   mobile={this.props.mobile? this.props.mobile : null}>
-        <Dropdown selection placeholder="1차 카테고리" options={categoryLevel1} onChange={this.props.handleCate1}/>
+        widescreen={this.props.widescreen ? this.props.widescreen : null}
+        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
+        computer={this.props.computer ? this.props.computer : null}
+        tablet={this.props.tablet ? this.props.tablet : null}
+        mobile={this.props.mobile ? this.props.mobile : null}>
+        <Dropdown selection placeholder="1차 카테고리" options={categoryLevel1} onChange={this.props.handleCate1} />
         <Dropdown selection placeholder="2차 카테고리" options={categoryLevel2} onChange={this.props.handleCate2} />
       </Grid.Column>
     )
