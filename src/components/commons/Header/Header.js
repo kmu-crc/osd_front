@@ -64,7 +64,7 @@ class Header extends Component {
     const LoginNav = () => {
       return (
         <NavUserInterface>
-          <li><NavLink to="/signin">{this.props.userInfo.nickName}</NavLink></li>
+          <li><a href="/mypage">{this.props.userInfo.nickName}</a></li>
           <li><button onClick={this.handleSignOut}>SignOut</button></li>
         </NavUserInterface>
       )
@@ -73,8 +73,8 @@ class Header extends Component {
     const LogOutNav = () => {
       return (
         <NavUserInterface>
-          <li><NavLink to="/signin">SignIn</NavLink></li>
-          <li><NavLink to="/signup">SignUp</NavLink></li>
+          <li><a href="/signin">SignIn</a></li>
+          <li><a href="/signup">SignUp</a></li>
         </NavUserInterface>
       )
     }
@@ -88,10 +88,10 @@ class Header extends Component {
           </Grid.Column>
           <Grid.Column width={10}>
             <Nav>
-              <li><NavLink to="/design">디자인</NavLink></li>
-              <li><NavLink to="/group">그룹</NavLink></li>
-              <li><NavLink to="/designer">디자이너</NavLink></li>
-              <li><NavLink to="/createdesign"><Button className="red">디자인 등록</Button></NavLink></li>
+              <li><a href="/design">디자인</a></li>
+              <li><a href="/group">그룹</a></li>
+              <li><a href="/designer">디자이너</a></li>
+              <li><a href="/createdesign"><Button className="red">디자인 등록</Button></a></li>
             </Nav>
           </Grid.Column>
           <Grid.Column width={3} textAlign="right">

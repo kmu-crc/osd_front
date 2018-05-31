@@ -54,7 +54,6 @@ export const INSERT_USER_DETAIL_FAILURE = "INSERT_USER_DETAIL_FAILURE";
 // design
 ////////////////////////////////////////////////////////////////////////////
 
-
 // design List
 export const GET_DESIGN_LIST = "GET_DESIGN_LIST";
 export const DESIGN_LIST_CLEAR = "DESIGN_LIST_CLEAR";
@@ -119,3 +118,12 @@ export const GET_MY_GROUP = "GET_MY_GROUP";
 export const GET_MY_LIKE_DESIGN = "GET_MY_LIKE_DESIGN";
 export const GET_MY_LIKE_GROUP = "GET_MY_LIKE_GROUP";
 export const GET_MY_LIKE_DESIGNER = "GET_MY_LIKE_DESIGNER";
+
+////////////////////////////////////////////////////////////////////////////
+// search
+////////////////////////////////////////////////////////////////////////////
+
+// cearch member
+export const GET_SEARCH_MEMVER = "GET_SEARCH_MEMBER";
+export const GET_SEARCH_MEMBER_SUCCESS = "GET_SEARCH_MEMBER_SUCCESS";
+export const GET_SEARCH_MEMBER_FAILURE = "GET_SEARCH_MEMBER_FAILURE";

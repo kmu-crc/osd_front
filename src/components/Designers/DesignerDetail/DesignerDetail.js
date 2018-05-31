@@ -76,7 +76,7 @@ const ProfileSection = styled.div`
       margin-right: 10px;
     }
   }
-`; 
+`;
 
 const CountSection = styled.div`
   padding: 1rem 2rem;
@@ -89,20 +89,20 @@ const CountSection = styled.div`
     float: right;
     font-size: 18px;
   }
-`; 
+`;
 
 const InfoSection = styled.div`
   padding: 1rem;
   & .explanation {
     font-size: 13px;
   }
-`; 
+`;
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
   & .columns {
     padding: 0 20px;
-  } 
+  }
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
@@ -172,8 +172,8 @@ class DesignerDetail extends Component {
           <Container>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
-              { (this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid))? 
-                <button>내 정보 수정</button> 
+              { (this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid))?
+                <button>내 정보 수정</button>
                 : <div></div>
               }
               </Grid.Row>
@@ -181,7 +181,7 @@ class DesignerDetail extends Component {
                 <HeadContainer width={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{designerDetail.thumbnailUrl? designerDetail.thumbnailUrl.s_img : "등록된 이미지 없음"}</div>
+                      <div>{designerDetail.thumbnailUrl? <img src={designerDetail.thumbnailUrl.s_img} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{designerDetail.nick_name}</h3>
@@ -220,7 +220,7 @@ class DesignerDetail extends Component {
                         <li id="design"
                             className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
                             onClick={this.typeChange}>디자인</li>
-                        <li id="like" 
+                        <li id="like"
                             className={this.props.type === "like"? "onSelected" : ""}
                             onClick={this.typeChange}>좋아요한 디자인</li>
                         <div className="clear"></div>
@@ -228,7 +228,7 @@ class DesignerDetail extends Component {
                     </Grid.Row>
                   </Head>
                   <ContentBox>
-                    <Route path="/designerDetail/:id/:type?" 
+                    <Route path="/designerDetail/:id/:type?"
                            component={this.props.type === "like"? LikeInDesignerContainer : DesignInDesignerContainer}/>
                   </ContentBox>
                 </TabContainer>

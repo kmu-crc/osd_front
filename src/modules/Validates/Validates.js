@@ -54,6 +54,21 @@ Validates.ThumbnailSize = value => {
   });
 }
 
+Validates.MinLength2 = value => {
+  return new Promise((resolve, reject) => {
+    if(!value) resolve(undefined);
+    let data = undefined;
+    console.log(value.length > 2);
+    if(value.length > 2) {
+      data = undefined;
+    } else {
+      console.log("??");
+      data = "2자 이상 입력해 주세요.";
+    }
+    resolve(data);
+  });
+}
+
 Validates.checkEmail = (value) => {
   return fetch(`${host}/users/checkEmail`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({ email: value }) })
         .then(res => res.json())

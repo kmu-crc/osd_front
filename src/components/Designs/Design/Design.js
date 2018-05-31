@@ -86,11 +86,11 @@ class Design extends Component {
           </TextPart>
           <Count>
             <div>
-              <Icon name="unhide" color="white" size="mini"></Icon>
+              <Icon name="unhide" size="mini"></Icon>
               {design.total_view_count ? design.total_view_count : 0}
             </div>
             <div>
-              <Icon name="heart" color="white" size="mini"></Icon>
+              <Icon name="heart" size="mini"></Icon>
               {design.like_count ? design.like_count : 0}
             </div>
           </Count>
