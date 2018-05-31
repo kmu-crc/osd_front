@@ -120,6 +120,7 @@ export class FormInput extends Component {
     const target = event.target;
     this.setState({ value: target.value });
     checkValidate(target.value, this.props.validates).then(data => {
+      if(this.props.getValue && data.status === "SUCCESS") this.props.getValue(target.value);
       this.setState(data);
     })
   }
@@ -254,11 +255,11 @@ export class FormSelect extends Component {
   newOptions = async () => {
     await this.setState({ value: this.props.options[0].value });
     if (this.props.getValue) this.props.getValue(this.props.options[0].value);
-    this.onChangeValue(null, {value: this.state.value});
+    await this.onChangeValue(null, {value: this.state.value});
   }
 
-  onChangeValue = (event, { value }) => {
-    this.setState({ value });
+  onChangeValue = async (event, { value }) => {
+    await this.setState({ value });
     checkValidate(value, this.props.validates).then(data => {
       if (this.props.getValue) this.props.getValue(value);
       this.setState(data);
