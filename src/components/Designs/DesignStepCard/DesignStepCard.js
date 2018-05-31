@@ -24,10 +24,6 @@ const CardContainer = styled.div`
   }
 `;
 
-const ModalBtn = styled.button`
-  // opacity: 0;
-`;
-
 class DesignStepCard extends Component {
   state = {
     isModal: false

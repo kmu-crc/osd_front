@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "containers/Designs/DesignDetailIssueContainer";
-import { Grid, Icon } from "semantic-ui-react";
+import { Grid, Icon, Modal } from "semantic-ui-react";
 
 // css styling
 
@@ -67,23 +67,22 @@ const MoreBtn = styled.button`
   float: right;
 `;
 
-const BtnModal = styled.ul`
-  position: absolute;
-  top: 35px;
-  right: 0px;
-  text-align: left;
-  width: 140px;
-  border: 1px solid rgba(27,31,35,0.15);
-  box-shadow: 0 3px 12px rgba(27,31,35,0.15);
-  border-radius: 3px;
-  font-weight: normal;
-  background-color: #fff;
-  color: rgba(0,0,0,.87);
-  z-index: 2;
+const ModalContent = styled(Modal)`
+  &.ui.modal.btnModal {
+    position: absolute;
+    top: 145px;
+    right: 5px;
+    text-align: left;
+    width: 140px;
+  }
+  &.ui.modal > .content {
+    padding: 0;
+  }
   & li {
     padding: 0 10px;
     height: 30px;
     line-height: 30px;
+    cursor: pointer;
   }
   & li:hover {
     background-image: linear-gradient(-180deg, #eff3f6 0%, #eff3f6 100%);
@@ -141,6 +140,21 @@ class DesignDetail extends Component {
         like_count: 0
       };
     }
+    const ButtonModal = () => {
+      return(
+        <ModalContent className="btnModal" 
+               open={this.state.activeMoreBtn} onClose={this.onActiveMoreBtn} 
+               dimmer={false}
+               closeOnDocumentClick={true}>
+          <Modal.Content as="ul">
+            <li>파생디자인 생성</li>
+            <li className={designDetail.parent_design != null? "able" : "disable"}>원본디자인 보기</li>
+            {user.uid === designDetail.user_id && <li>수정</li> }
+            {user.uid === designDetail.user_id && <li>삭제</li> }
+          </Modal.Content>
+        </ModalContent>
+      );
+    }
     return(
       <div>
       {designDetail.length !== 0 &&
@@ -167,14 +181,7 @@ class DesignDetail extends Component {
               <Grid.Column computer={8} tablet={10} mobile={10}>
                 <MoreBtn className="ui teal button more" onClick={this.onActiveMoreBtn}>
                   더보기 +
-                  {this.state.activeMoreBtn === true &&
-                    <BtnModal>
-                      <li>파생디자인 생성</li>
-                      <li className={designDetail.parent_design != null? "able" : "disable"}>원본디자인 보기</li>
-                      {user.uid === designDetail.user_id && <li>수정</li> }
-                      {user.uid === designDetail.user_id && <li>삭제</li> }
-                    </BtnModal>
-                    }
+                  <ButtonModal/>
                 </MoreBtn>
                 <SubInfo>
                   <div className="ui right labeled button">
