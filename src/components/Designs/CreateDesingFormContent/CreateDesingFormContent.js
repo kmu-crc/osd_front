@@ -5,6 +5,7 @@ import { FormCheckBox, FormInput, FormTextArea, FormFile, FormRadio } from "comp
 import { FormField } from "components/Commons/FormField";
 import CheckBoxFieldContainer from "containers/Commons/CheckBoxFieldContainer";
 import FileUploader from "components/Commons/FileUploader";
+import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ const FormHeader = styled(Header) `
 `
 class CreateDesingFormContent extends Component {
   state = {
-    currentValue: "0"
+    currentValue: "1"
   }
   onChangeRadio = (value) => {
     this.setState({ currentValue: value });
@@ -69,6 +70,9 @@ class CreateDesingFormContent extends Component {
                 <FormField name="thumbnail" placeholder="섬네일 이미지를 등록하세요." label="섬네일" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
               </Form.Group>
               <CheckBoxFieldContainer />
+              <Form.Group widths="equal">
+                <FormField label="맴버추가" RenderComponent={SearchMemberContainer} validates={["MinLength2"]} onChangeMembers={this.props.onChangeMembers}/>
+              </Form.Group>
               <div className="field">
                 <label>템프릿</label>
                 <Form.Group>
