@@ -44,3 +44,29 @@ body {
 label.checked::after{
   content: "\f00c";
 }
+
+@media only screen and (max-width: 1399px) and (min-width: 1200px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 20%!important;
+  }
+}
+
+@media only screen and (max-width: 1699px) and (min-width: 1400px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 16.66666%!important;
+  }
+}
+@media only screen and (max-width: 1919px) and (min-width: 1700px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 14.2857142857%!important;
+  }
+}
