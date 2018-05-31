@@ -29,24 +29,29 @@ const ModalBtn = styled.button`
 `;
 
 class DesignStepCard extends Component {
+  state = {
+    isModal: false
+  }
+
+  toggleModal = () => {
+    this.setState({
+      isModal: !this.state.isModal
+    });
+  }
   render(){
     let card = this.props.cardDetail;
     const ShowModalPage = () => {
       return(
-        <Modal trigger={<ModalBtn id="modalBtn">Show Modal</ModalBtn>}>
-          <Modal.Header>디자인 카드</Modal.Header>
+        <Modal open={this.state.isModal}
+               closeOnDimmerClick={true} onClose={this.toggleModal}>
           <Modal.Content>
-            <DesignDetailStepCardContainer/>
+            <DesignDetailStepCardContainer {...this.props}/>
           </Modal.Content>
         </Modal>
       );
     }
     return(
-      <div onClick={()=>{
-        document.getElementById("modalBtn").addEventListener("click", ()=>{
-          console.log("modal");
-        });
-      }}>
+      <div onClick={this.toggleModal}>
         <CardContainer>
           {card.length !== 0 &&
             <div>
