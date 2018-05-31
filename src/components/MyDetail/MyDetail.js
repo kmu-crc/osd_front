@@ -69,7 +69,7 @@ const ProfileSection = styled.div`
     min-height: 20px;
     text-align: center;
   }
-`; 
+`;
 
 const CountSection = styled.div`
   padding: 1rem 2rem;
@@ -82,20 +82,20 @@ const CountSection = styled.div`
     float: right;
     font-size: 18px;
   }
-`; 
+`;
 
 const InfoSection = styled.div`
   padding: 1rem;
   & .explanation {
     font-size: 13px;
   }
-`; 
+`;
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
   & .columns {
     padding: 0 20px;
-  } 
+  }
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
@@ -162,13 +162,13 @@ class MyDetail extends Component {
           <Container>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
-                <button>내 정보 수정</button> 
+                <button>내 정보 수정</button>
               </Grid.Row>
               <Grid.Row>
                 <HeadContainer width={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{MyInfo.thumbnailUrl? MyInfo.thumbnailUrl : "등록된 이미지 없음"}</div>
+                      <div>{MyInfo.thumbnailUrl? <img src={MyInfo.thumbnailUrl} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{MyInfo.nick_name}</h3>
@@ -204,26 +204,26 @@ class MyDetail extends Component {
                   <Head devided="vertically" padded={true}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <li id="/design" 
-                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""} 
+                        <li id="/design"
+                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
                             onClick={this.typeChange}>내 디자인</li>
-                        <li id="/group" 
-                            className={this.props.type === "group"? "onSelected" : ""} 
+                        <li id="/group"
+                            className={this.props.type === "group"? "onSelected" : ""}
                             onClick={this.typeChange}>내 그룹</li>
-                        <li id="/likeDesign" 
-                            className={this.props.type === "likeDesign"? "onSelected" : ""} 
+                        <li id="/likeDesign"
+                            className={this.props.type === "likeDesign"? "onSelected" : ""}
                             onClick={this.typeChange}>좋아요한 디자인</li>
-                        <li id="/likeDesigner" 
-                            className={this.props.type === "likeDesigner"? "onSelected" : ""} 
+                        <li id="/likeDesigner"
+                            className={this.props.type === "likeDesigner"? "onSelected" : ""}
                             onClick={this.typeChange}>좋아요한 디자이너</li>
                         <div className="clear"></div>
                       </Grid.Column>
                     </Grid.Row>
                   </Head>
                   <ContentBox>
-                    <Route path="/myPage/:type?" 
+                    <Route path="/myPage/:type?"
                            component={this.props.type === "likeDesigner"? MyLikeDesignerContainer
-                                      : this.props.type === "likeDesign"? MyLikeDesignContainer 
+                                      : this.props.type === "likeDesign"? MyLikeDesignContainer
                                       : this.props.type === "group"? MyGroupContainer
                                       : MyDesignContainer}/>
                   </ContentBox>
