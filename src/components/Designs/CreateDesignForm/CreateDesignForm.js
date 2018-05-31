@@ -6,7 +6,8 @@ import CreateDesingFormContent from "components/Designs/CreateDesingFormContent"
 class CreateDesignForm extends Component {
   state = {
     designs: [],
-    sources: []
+    sources: [],
+    members: []
   }
   // state가 업데이트되면 component가 리렌더링 되면서 하위에 fileUploader component를 리렌더링한다.
   // 이때 업로드 파일 목록들이 초기화되기때문에 업로드된 파일의 정보를 저장할 수 없는 문제가 방생한다.
@@ -22,6 +23,7 @@ class CreateDesignForm extends Component {
   onSubmitForm = (data) => {
     data.delete("design_file[]");
     data.delete("source_file[]");
+    data.delete("search");
     if(this.state.designs !== []){
       this.state.designs.map( item => {
         data.append("design_file[]", item, item.name);
@@ -31,6 +33,10 @@ class CreateDesignForm extends Component {
       this.state.sources.map( item => {
         data.append("source_file[]", item, item.name);
       });
+    }
+
+    if(this.state.members !== []){
+      data.append("members", JSON.stringify(this.state.members));
     }
 
     for (const [key, value]  of data.entries()) {
@@ -50,11 +56,22 @@ class CreateDesignForm extends Component {
   onChangeSource = (data) => {
     this.setState({sources: data})
   }
+  onChangeMembers = (data) => {
+    console.log(data);
+    this.setState({members: data})
+  }
   render() {
     const {GetCategoryLevel1Request, GetCategoryLevel2Request, category1, category2} = this.props;
     return (
       <ValidateForm onSubmit={this.onSubmitForm}>
-        <CreateDesingFormContent GetCategoryLevel1Request={GetCategoryLevel1Request} GetCategoryLevel2Request={GetCategoryLevel2Request} category1={category1} category2={category2} onChangeDesing={this.onChangeDesing} onChangeSource={this.onChangeSource}/>
+        <CreateDesingFormContent
+          GetCategoryLevel1Request={GetCategoryLevel1Request}
+          GetCategoryLevel2Request={GetCategoryLevel2Request}
+          category1={category1}
+          category2={category2}
+          onChangeDesing={this.onChangeDesing}
+          onChangeSource={this.onChangeSource}
+          onChangeMembers={this.onChangeMembers}/>
         <Button type="submit">등록</Button>
       </ValidateForm>
     );
