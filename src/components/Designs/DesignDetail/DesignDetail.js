@@ -4,6 +4,7 @@ import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContai
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "containers/Designs/DesignDetailIssueContainer";
 import { Grid, Icon, Modal } from "semantic-ui-react";
+import { Link, Route } from "react-router-dom";
 
 // css styling
 
@@ -121,13 +122,14 @@ class DesignDetail extends Component {
   }
 
   onActiveIssue = (e) => {
+    const target = e.target;
     this.setState({
       activeIssue: !(this.state.activeIssue)
     });
     if (this.state.activeIssue === true) {
-      e.target.innerHTML = "★ 공지보기";
+      target.textContent = "★ 공지보기";
     } else if (this.state.activeIssue === false) {
-      e.target.innerHTML = "★ 공지닫기";
+      target.textContent = "★ 공지닫기";
     }
   }
 
@@ -167,7 +169,10 @@ class DesignDetail extends Component {
             <Grid.Row columns={2}>
               <Grid.Column computer={8} tablet={6} mobile={6}>
                 <h3 className="title">{designDetail.title}
-                  <button className="ui button issueBtn" onClick={this.onActiveIssue}>★ 공지보기</button>
+                  <Link to={this.state.activeIssue === false? this.props.match.url+"/issue" : this.props.match.url} 
+                        onClick={this.onActiveIssue}>
+                    <button className="ui button issueBtn">★ 공지보기</button>
+                  </Link>
                 </h3>
                 <Cate>
                   <span className="cate">{designDetail.categoryName}</span>
@@ -214,9 +219,10 @@ class DesignDetail extends Component {
             </Grid.Row>
           </HeadContainer>
           <TabContainer>
-            {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
-            : designDetail.is_project == 1? <DesignDetailStepContainer id={this.props.id}/>
-            : <DesignDetailViewContainer goStep={this.onActiveStep} id={this.props.id}/>}
+            <Route exact path={this.props.match.url}
+                   component={designDetail.is_project == 1? DesignDetailStepContainer 
+                                                          : DesignDetailViewContainer} />
+            <Route exact path={this.props.match.url+"/issue"} component={DesignDetailIssueContainer} />
           </TabContainer>
         </Wrapper>
       }

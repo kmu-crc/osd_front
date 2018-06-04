@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import CreateIssue from "./CreateIssue.js";
 import DetailIssueDetail from "./DetailIssueDetail.js";
@@ -79,49 +79,44 @@ const List = styled.div`
 `;
 
 class DetailIssue extends Component {
-  state = {
-    showPostPage: false,
-    showDetailPage: false
-  }
+  //state = {
+    // showPostPage: false,
+    // showDetailPage: false
+  //}
 
-  showPostPage = (e) => {
-    this.setState({
-      showPostPage: true
-    });
-  }
+  // showPostPage = (e) => {
+  //   this.setState({
+  //     showPostPage: true
+  //   });
+  // }
 
-  hidePostPage = (e) => {
-    this.setState({
-      showPostPage: false
-    });
-  }
+  // hidePostPage = (e) => {
+  //   this.setState({
+  //     showPostPage: false
+  //   });
+  // }
 
-  loadIssueDetail = (id) => {
-    this.props.GetDesignDetailIssueDetailRequest(this.props.id, id)
-    .then(()=>{
-      this.setState({
-        showDetailPage: true
-      });
-    });
-  }
+  // loadIssueDetail = (id) => {
+  //   this.props.GetDesignDetailIssueDetailRequest(this.props.id, id)
+  //   .then(()=>{
+  //     this.setState({
+  //       showDetailPage: true
+  //     });
+  //   });
+  // }
 
-  hideDetailPage = (e) => {
-    this.setState({
-      showDetailPage: false
-    });
-  }
+  // hideDetailPage = (e) => {
+  //   this.setState({
+  //     showDetailPage: false
+  //   });
+  // }
 
   render(){
     let issue = this.props.DesignDetailIssue;
-    return(
-      <div>
-        {this.state.showPostPage?
-        <CreateIssue handleClick={this.hidePostPage} goBack={this.hidePostPage}/>
-        :
-        this.state.showDetailPage?
-        <DetailIssueDetail data={this.props.IssueDetail} handleClick={this.hideDetailPage}/>
-        :
-        issue.length !== 0?
+    const IssueList = () => {
+      return (
+        <div>
+          {issue.length !== 0?
           <IssueWrapper>
             <SearchWrapper columns={2}>
               <Grid.Column>
@@ -131,13 +126,13 @@ class DetailIssue extends Component {
                 </div>
               </Grid.Column>
               <Grid.Column textAlign="right">
-                <button className="ui button" onClick={this.showPostPage}>글쓰기</button>
+                <button className="ui button" >글쓰기</button>
               </Grid.Column>
             </SearchWrapper>
             <ListWrapper>
               <ul>
               {issue.map(list =>
-              <List key={list.uid} onClick={()=>this.loadIssueDetail(list.uid)}>
+              <List key={list.uid}>
                 <li>
                   <div className="order">{list.uid}</div>
                   <div className="title">
@@ -160,7 +155,24 @@ class DetailIssue extends Component {
             </div>
           </IssueWrapper>
         }
-      </div>
+        </div>
+      );
+    }
+    return(
+      // <div>
+         /* {this.state.showPostPage?
+        <CreateIssue handleClick={this.hidePostPage} goBack={this.hidePostPage}/>
+        :
+        this.state.showDetailPage?
+        <DetailIssueDetail data={this.props.IssueDetail} handleClick={this.hideDetailPage}/>
+        : */
+        /* 
+      </div> */
+      <Switch>
+        <Route path={this.props.match.url} component={IssueList}/>
+        <Route path={this.props.match.url+"/createIssue"} component={CreateIssue}/>
+        <Route path={this.props.match.url+"/detailIssue"} component={DetailIssueDetail}/>
+      </Switch>
     );
   }
 }
