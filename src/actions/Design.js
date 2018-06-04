@@ -76,6 +76,19 @@ export function GetDesignDetail(data) {
   }
 };
 
+export function DesignDetailResetRequest() {
+  return (dispatch) => {
+    dispatch(DesignDetailReset());
+  }
+};
+
+export function DesignDetailReset() {
+  return {
+    type: types.DESIGN_DETAIL_RESET,
+    DesignDetail: []
+  }
+};
+
 export function GetDesignDetailViewRequest(id) {
   return (dispatch) => {
     return fetch(`${host}/design/designDetail/`+id+"/view", {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignDetailRequest } from "actions/Design";
+import { GetDesignDetailRequest, DesignDetailResetRequest } from "actions/Design";
 import DesignDetail from "components/Designs/DesignDetail";
 
 class DesignDetailContainer extends Component {
@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailRequest: (id) => {
       return dispatch(GetDesignDetailRequest(id))
+    },
+    DesignDetailResetRequest: () => {
+      return dispatch(DesignDetailResetRequest())
     }
   };
 };

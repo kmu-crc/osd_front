@@ -105,6 +105,10 @@ class DesignDetail extends Component {
     this.props.GetDesignDetailRequest(this.props.id);
   }
 
+  componentWillUnmount() {
+    this.props.DesignDetailResetRequest();
+  }
+
   onActiveMoreBtn = (e) => {
     this.setState({
       activeMoreBtn: !(this.state.activeMoreBtn)
