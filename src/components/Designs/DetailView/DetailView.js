@@ -1,24 +1,17 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import eximg from "source/eximg.jpeg";
+import { Grid, Comment } from "semantic-ui-react";
+
 
 // css styling
 
 const ViewWrapper = styled.div`
-  padding: 20px 40px 50px;
-  font-size: 16px;
+  width: 100%;
   & .date {
     color: #a4a4a4;
     font-weight: 400;
     font-size: 14px;
-    margin-top: 10px;
-    margin-bottom: 10px;
     text-align: right;
-  }
-  & .content {
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
   }
   & h4 {
     font-size: 16px;
@@ -28,109 +21,17 @@ const ViewWrapper = styled.div`
     font-size: 16px;
     padding-top: 30px;
   }
-  & > .noData .red {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  & > .upload .gokBiS {
-    font-size: 14px;
-    box-shadow: none;
-  }
-  & > .upload button{
-    position: absolute;
-    left: 50%;
-    margin-left: -35px;
-  }
 `;
 
-const ImageWrapper = styled.div`
-  border: 1px solid #999;
-  width: 90%;
-  margin: auto;
-  margin-bottom: 10px;
+const CommentContainer = styled(Comment)`
+  max-width: 100%;
+  width: 100%;
   text-align: center;
-  & img {
-    width: 100%;
-    height: auto;
+  & .reply.form .field {
+    margin-bottom: 1rem;
   }
-`;
-
-const Source = styled.div`
-  height: 100%;
-`;
-
-const Comment = styled.div`
-  height: 100%;
-  & ul {
-    padding: 0 30px;
-  }
-  & li {
-    padding: 15px 60px 15px 0;
-    min-height: 60px;
-  }
-  & .cmtPic {
-    width: 40px;
-    height: 40px;
-    background-color: #999;
-    border-radius: 50% 50%;
-    float: left;
-    margin-right: 30px;
-  }
-`;
-
-const CommentBox = styled.div`
-  display: inline-block;
-  min-width: 200px;
-  max-width: 80%;
-  border: 1px solid #d1d5da;
-  border-radius: 3px;
-  & .cmtInfo {
-    padding: 10px 15px;
-    background-color: #f6f8fa;
-  }
-  & .cmtUser {
-    min-width: 200px;
-    float: left;
-    margin-right: 10px;
-  }
-  & .cmtDate {
-    font-size: 14px;
-    color: #a4a4a4;
-  }
-  & .cmtText {
-    min-height: 60px;
-    color: dimgray;
-    font-size: 15px;
-    border-top: 1px solid #d1d5da;
-    padding: 10px 15px;
-  }
-`;
-
-const Form = styled.form`
-  margin-top: 20px;
-  padding: 0 30px;
-  position: relative;
-  & label {
-    display: block;
-    width: 70px;
-    float: left;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-  }
-  & textarea {
-    margin-right: 25px;
-    width: 80%;
-    min-width: 200px;
-    height: 60px;
-    border-radius: 3px;
-    border: 1px solid #a4a4a4;
-  }
-  & button {
-    position: absolute;
-    top: 50%;
-    margin-top: -16px;
-    background-color: #a4a4a4;
+  & .reply.form > .button {
+    float: right;
   }
 `;
 
@@ -153,38 +54,46 @@ class DetailView extends Component {
     let view = this.props.DesignDetailView;
     let len = Object.keys(view).length;
     return(
-      <div>
+      <Grid>
         {len !== 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
-            <ImageWrapper>
-              <img src={eximg} alt=""/>
-            </ImageWrapper>
-            <Source width={12}>
+            <div className="imageInfo">
+              <img src={view.imageinfo? view.imageinfo.link : null} alt=""/>
+            </div>
+            <div className="sourceInfo">
               <h4>첨부파일</h4>
-            </Source>
-            <Comment width={12}>
-              <h4>댓글</h4>
-              <ul>
-                {view.commentInfo.map(cmt =>
-                  <li key={cmt.uid}>
-                    <div className="cmtPic"></div>
-                    <CommentBox>
-                      <div className="cmtInfo">
-                        <div className="cmtUser">user id</div>
-                        <span className="cmtDate">commented on {(cmt.update_time).split("T")[0]}</span>
-                      </div>
-                      <div className="cmtText">{cmt.comment}</div>
-                    </CommentBox>
-                  </li>
-                )}
-              </ul>
-              <Form>
-                <label>댓글</label>
-                <textarea></textarea>
-                <button className="red">등록</button>
-              </Form>
-            </Comment>
+              <div>{view.sourceInfo? view.sourceInfo.link : null}</div>
+            </div>
+            <CommentContainer>
+              {view.commentInfo != null?
+              view.commentInfo.map(comm=>(
+                <div className="comment" key={comm.uid}>
+                  <div className="avatar">
+                    <img src="" alt="profile" />
+                  </div>
+                  <div className="content">
+                    <a className="author">{comm.user_id}</a>
+                    <div className="metadata">
+                      <div>{comm.create_time.split("T")[0]}}</div>
+                    </div>
+                    <div className="text">{comm.comment}</div>
+                  </div>
+                </div>
+                ))
+              :
+              <p>등록된 코멘트가 없습니다.</p>
+              }
+              <form className="ui reply form">
+                <div className="field">
+                  <textarea rows="3"></textarea>
+                </div>
+                <button className="ui icon primary left labeled button">
+                  <i aria-hidden="true" className="edit icon"></i>
+                  댓글쓰기
+                </button>
+              </form>
+            </CommentContainer>
           </ViewWrapper>
         :
         <ViewWrapper>
@@ -192,7 +101,7 @@ class DetailView extends Component {
         </ViewWrapper>
         }
         <GoStepBtn onClick={this.props.goStep}>프로젝트형으로 변경</GoStepBtn>
-      </div>
+      </Grid>
     );
   }
 }
