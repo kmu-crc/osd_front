@@ -52,7 +52,7 @@ const GoStepBtn = styled.button`
 
 
 class DetailView extends Component {
-  
+
   componentDidMount() {
     this.props.GetDesignDetailViewRequest(this.props.id);
   }
@@ -60,22 +60,23 @@ class DetailView extends Component {
   render(){
     let view = this.props.DesignDetailView;
     let len = Object.keys(view).length;
+    console.log("len", len)
     return(
       <Grid>
-        {len !== 0 ?
+        {len > 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
             {view.imageInfo &&
               <div className="imageInfo">
-                {view.imageInfo.map(img => 
+                {view.imageInfo.map(img =>
                   <img key={img.uid} src={img.link} alt={img.name} />
                 )}
               </div>
             }
-            {view.sourceInfo && 
+            {view.sourceInfo &&
               <div className="sourceInfo">
                 <h4>첨부파일</h4>
-                {view.sourceInfo.map(src => 
+                {view.sourceInfo.map(src =>
                   <div key={src.uid}>{src.name}</div>
                 )}
               </div>
