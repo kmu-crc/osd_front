@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Comment } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import eximg from "source/topDesign.png";
 
 // css styling
 
@@ -14,18 +16,36 @@ const IssueWrapper = styled(Grid)`
   & .ui.fluid.container {
     margin-bottom: 30px;
     padding: 1rem;
+    border: 1px solid #e9e9e9;
+  }
+  & .userInfo {
+    padding: .5rem;
+    border-bottom: 1px solid #e9e9e9;
+    color: rgba(0,0,0,.4);
+    font-weight: 500;
+  }
+  & .userInfo .userName {
+    margin-right: 20px;
   }
 `;
 
-const CommentContainer = styled(Comment)`
-  max-width: 100%;
+const TextArea = styled.div`
+  padding: 15px 10px;
+`;
+
+const CommentContainer = styled.div`
   width: 100%;
-  text-align: center;
   & .reply.form .field {
     margin-bottom: 1rem;
   }
+  &.ui.comments .reply.form textarea {
+    height: 4em;
+  }
   & .reply.form > .button {
     float: right;
+  }
+  &.ui.comments {
+    max-width: 100%;
   }
 `;
 
@@ -36,19 +56,25 @@ class DetailIssueDetail extends Component {
       <IssueWrapper>
         <div className="ui fluid container">
           <h2 className="ui header">{data.title}</h2>
-          <p>{data.content}</p>
+          <div className="userInfo">
+            <span className="userName">작성자 : {data.userName}</span>
+            <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
+          </div>
+          <TextArea>
+            <p>{data.content}</p>
+          </TextArea>
         </div>
-        <CommentContainer>
+        <CommentContainer className="ui comments">
           {data.comment != null?
           data.comment.map(comm=>(
             <div className="comment" key={comm.uid}>
               <div className="avatar">
-                <img src="" alt="profile" />
+                <img src={eximg} alt="profile" />
               </div>
               <div className="content">
-                <a className="author">{comm.user_id}</a>
+                <a className="author">{comm.nick_name}</a>
                 <div className="metadata">
-                  <div>{comm.create_time.split("T")[0]}}</div>
+                  <div>{comm.create_time.split("T")[0]}</div>
                 </div>
                 <div className="text">{comm.comment}</div>
               </div>
@@ -67,8 +93,7 @@ class DetailIssueDetail extends Component {
             </button>
           </form>
         </CommentContainer>
-        <div>
-        <button className="ui button" onClick={this.props.handleClick}>목록</button></div>
+          {/* <button className="ui button">목록</button> */}
       </IssueWrapper>
     );
   }
