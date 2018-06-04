@@ -5,6 +5,7 @@ import DetailIssueDetail from "components/Designs/DetailIssue/DetailIssueDetail.
 
 class DetailIssueDetailContainer extends Component {
   componentDidMount() {
+    console.log(this.props.location.state.id);
     this.props.GetDesignDetailIssueDetailRequest(this.props.location.state.id, this.props.location.state.issue_id);
   }
 

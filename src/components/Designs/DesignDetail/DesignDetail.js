@@ -95,8 +95,7 @@ const TabContainer = styled.div`
 
 class DesignDetail extends Component {
   state = {
-    activeMoreBtn: false,
-    activeIssue: false
+    activeMoreBtn: false
   };
 
   componentDidMount() {
@@ -120,13 +119,10 @@ class DesignDetail extends Component {
 
   onActiveIssue = (e) => {
     const target = e.target;
-    this.setState({
-      activeIssue: !(this.state.activeIssue)
-    });
-    if (this.state.activeIssue === true) {
-      target.textContent = "★ 공지보기";
-    } else if (this.state.activeIssue === false) {
+    if (this.props.location.pathname.indexOf("/issue") === -1) {
       target.textContent = "★ 공지닫기";
+    } else {
+      target.textContent = "★ 공지보기";
     }
   }
 
@@ -167,12 +163,17 @@ class DesignDetail extends Component {
                 <Grid.Row columns={2}>
                   <Grid.Column computer={8} tablet={6} mobile={6}>
                     <h3 className="title">{designDetail.title}
-                      <Link to={ {pathname: this.state.activeIssue === false 
-                                            ? this.props.match.url + "/issue" 
+                      <Link to={ {pathname: this.props.location.pathname.indexOf("/issue") === -1 
+                                            ? this.props.match.url + "/issue"
                                             : this.props.match.url,
                                   state: {id: this.props.id} } }
                             onClick={this.onActiveIssue}>
-                        <button className="ui button issueBtn">★ 공지보기</button>
+                        <button className="ui button issueBtn">
+                          {this.props.location.pathname.indexOf("/issue") === -1
+                          ? "★ 공지보기"
+                          : "★ 공지닫기"
+                          }
+                        </button>
                       </Link>
                     </h3>
                     <Cate>
@@ -220,7 +221,7 @@ class DesignDetail extends Component {
                 </Grid.Row>
               </HeadContainer>
               <TabContainer>
-                <Route exact path={this.props.match.url}
+                <Route exact path={"/designDetail/:id"}
                        component={designDetail.is_project == 1 ? DesignDetailStepContainer
                                                                : DesignDetailViewContainer} />
                 <Route path={this.props.match.url + "/issue"} component={DesignDetailIssueContainer} />
