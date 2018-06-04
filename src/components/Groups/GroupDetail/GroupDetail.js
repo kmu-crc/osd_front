@@ -147,7 +147,7 @@ class GroupDetail extends Component {
     activeIssue: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id); // 그룹에 대한 디테일 정보
   }
 
