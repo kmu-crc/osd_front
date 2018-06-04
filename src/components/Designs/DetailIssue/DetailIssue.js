@@ -79,22 +79,6 @@ const List = styled.div`
 `;
 
 class DetailIssue extends Component {
-  //state = {
-    // showPostPage: false,
-    // showDetailPage: false
-  //}
-
-  // showPostPage = (e) => {
-  //   this.setState({
-  //     showPostPage: true
-  //   });
-  // }
-
-  // hidePostPage = (e) => {
-  //   this.setState({
-  //     showPostPage: false
-  //   });
-  // }
 
   // loadIssueDetail = (id) => {
   //   this.props.GetDesignDetailIssueDetailRequest(this.props.id, id)
@@ -105,11 +89,6 @@ class DetailIssue extends Component {
   //   });
   // }
 
-  // hideDetailPage = (e) => {
-  //   this.setState({
-  //     showDetailPage: false
-  //   });
-  // }
 
   render(){
     let issue = this.props.DesignDetailIssue;
@@ -126,24 +105,28 @@ class DetailIssue extends Component {
                 </div>
               </Grid.Column>
               <Grid.Column textAlign="right">
-                <button className="ui button" >글쓰기</button>
+                <Link to={this.props.match.url+"/createIssue"}>
+                  <button className="ui button">글쓰기</button>
+                </Link>
               </Grid.Column>
             </SearchWrapper>
             <ListWrapper>
               <ul>
               {issue.map(list =>
-              <List key={list.uid}>
-                <li>
-                  <div className="order">{list.uid}</div>
-                  <div className="title">
-                  {list.title}
-                  {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
-                  </div>
-                  <div className="user">{list.userName}</div>
-                  <div className="date">{list.create_time.split("T")[0]}</div>
-                  <div className="cmtCount">{list.commentCount["count(*)"]}</div>
-                </li>
-              </List>
+              <Link key={list.uid} to={this.props.match.url+"/detailIssue"}>
+                <List>
+                  <li>
+                    <div className="order">{list.uid}</div>
+                    <div className="title">
+                    {list.title}
+                    {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
+                    </div>
+                    <div className="user">{list.userName}</div>
+                    <div className="date">{list.create_time.split("T")[0]}</div>
+                    <div className="cmtCount">{list.commentCount["count(*)"]}</div>
+                  </li>
+                </List>
+              </Link>
               )}
             </ul>
             </ListWrapper>
