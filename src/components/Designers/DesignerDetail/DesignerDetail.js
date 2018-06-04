@@ -75,12 +75,9 @@ const ProfileSection = styled.div`
     color: #EB3324;
   }
   & .btnContainer {
-    height: 60px;
     text-align: center;
-    line-height: 60px;
     & button {
-      margin-left: 10px;
-      margin-right: 10px;
+      margin: .5rem 1rem;
     }
   }
 `;
