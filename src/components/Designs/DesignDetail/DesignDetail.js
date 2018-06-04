@@ -167,8 +167,11 @@ class DesignDetail extends Component {
                 <Grid.Row columns={2}>
                   <Grid.Column computer={8} tablet={6} mobile={6}>
                     <h3 className="title">{designDetail.title}
-                      <Link to={this.state.activeIssue === false ? this.props.match.url + "/issue" : this.props.match.url}
-                        onClick={this.onActiveIssue}>
+                      <Link to={ {pathname: this.state.activeIssue === false 
+                                            ? this.props.match.url + "/issue" 
+                                            : this.props.match.url,
+                                  state: {id: this.props.id} } }
+                            onClick={this.onActiveIssue}>
                         <button className="ui button issueBtn">★ 공지보기</button>
                       </Link>
                     </h3>
@@ -218,9 +221,9 @@ class DesignDetail extends Component {
               </HeadContainer>
               <TabContainer>
                 <Route exact path={this.props.match.url}
-                  component={designDetail.is_project == 1 ? DesignDetailStepContainer
-                    : DesignDetailViewContainer} />
-                <Route exact path={this.props.match.url + "/issue"} component={DesignDetailIssueContainer} />
+                       component={designDetail.is_project == 1 ? DesignDetailStepContainer
+                                                               : DesignDetailViewContainer} />
+                <Route path={this.props.match.url + "/issue"} component={DesignDetailIssueContainer} />
               </TabContainer>
             </Wrapper>
           </ContentBox>

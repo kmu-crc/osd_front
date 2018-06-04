@@ -31,7 +31,7 @@ const CommentContainer = styled(Comment)`
 
 class DetailIssueDetail extends Component {
   render(){
-    let data = this.props.data;
+    let data = this.props.IssueDetail;
     return(
       <IssueWrapper>
         <div className="ui fluid container">
@@ -39,8 +39,8 @@ class DetailIssueDetail extends Component {
           <p>{data.content}</p>
         </div>
         <CommentContainer>
-          {this.props.data.comment != null?
-          this.props.data.comment.map(comm=>(
+          {data.comment != null?
+          data.comment.map(comm=>(
             <div className="comment" key={comm.uid}>
               <div className="avatar">
                 <img src="" alt="profile" />

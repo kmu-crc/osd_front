@@ -47,6 +47,7 @@ const CreateForm = styled(Form)`
 
 class CreateIssue extends Component {
   render(){
+    const id = this.props.location.state.id;
     return(
       <IssueWrapper>
         <Grid.Row columns={2}>
@@ -67,7 +68,6 @@ class CreateIssue extends Component {
               <label>완료</label>
               <Form.Field>
                 <button type="submit" className="ui button" onClick={this.props.handleClick}>등록</button>
-                <button type="submit" className="ui button" onClick={this.props.goBack}>목록</button>
               </Form.Field>
             </CreateForm>
           </Grid.Column>
