@@ -1,4 +1,4 @@
-import * as types from "./ActionTypes";
+import * as types from "actions/ActionTypes";
 import host from "config";
 
 // 내 기본 정보 불러오기
