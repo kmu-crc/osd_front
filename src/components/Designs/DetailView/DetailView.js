@@ -21,6 +21,13 @@ const ViewWrapper = styled.div`
     font-size: 16px;
     padding-top: 30px;
   }
+  & .imageInfo {
+    width: 100%;
+    overflow: hidden;
+  }
+  & .imageInfo img {
+    width: 100%;
+  }
 `;
 
 const CommentContainer = styled(Comment)`
@@ -59,13 +66,21 @@ class DetailView extends Component {
         {len > 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
-            <div className="imageInfo">
-              <img src={view.imageInfo? view.imageInfo.link : null} alt=""/>
-            </div>
-            <div className="sourceInfo">
-              <h4>첨부파일</h4>
-              <div>{view.sourceInfo? view.sourceInfo.link : null}</div>
-            </div>
+            {view.imageInfo &&
+              <div className="imageInfo">
+                {view.imageInfo.map(img =>
+                  <img key={img.uid} src={img.link} alt={img.name} />
+                )}
+              </div>
+            }
+            {view.sourceInfo &&
+              <div className="sourceInfo">
+                <h4>첨부파일</h4>
+                {view.sourceInfo.map(src =>
+                  <div key={src.uid}>{src.name}</div>
+                )}
+              </div>
+            }
             <CommentContainer>
               {view.commentInfo != null?
               view.commentInfo.map(comm=>(

@@ -21,6 +21,12 @@ export function DesignDetail(state, action) {
           DesignDetail: { $set: action.DesignDetail }
         }
       });
+    case types.DESIGN_DETAIL_RESET:
+      return update(state, {
+        status: {
+          DesignDetail: { $set: action.DesignDetail }
+        }
+      });
     default:
       return state;
   }
