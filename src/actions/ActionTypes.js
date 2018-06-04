@@ -71,6 +71,11 @@ export const CREATE_DESIGN = "CREATE_DESIGN";
 export const CREATE_DESIGN_SUCCESS = "CREATE_DESIGN_SUCCESS";
 export const CREATE_DESIGN_FAILURE = "CREATE_DESIGN_FAILURE";
 
+// create board
+export const CREATE_BOARD = "CREATE_BOARD";
+export const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS";
+export const CREATE_BOARD_FAILURE = "CREATE_BOARD_FAILURE";
+
 ////////////////////////////////////////////////////////////////////////////
 // group
 ////////////////////////////////////////////////////////////////////////////
