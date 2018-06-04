@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetDesignInDesignerRequest } from "actions/Designer";
-import ContentList from "components/Commons/ContentList";
+import ScrollList from "components/Commons/ScrollList";
+import Design from "components/Designs/Design";
 
 class DesignInDesignerContainer extends Component {
-  componentWillMount() {
-    this.props.GetDesignInDesignerRequest(this.props.match.params.id);
+  // componentWillMount() {
+  //   this.props.GetDesignInDesignerRequest(this.props.match.params.id);
+  // }
+
+  getList = (page) => {
+    return this.props.GetDesignInDesignerRequest(this.props.match.params.id, page);
   }
 
   render() {
     return(
       <div>
-        <ContentList data={this.props.DesignInDesigner} columns={4} type="design"/>
+        <ScrollList getListRequest={this.getList} ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={4}/>
       </div>
     );
   }
@@ -19,14 +24,15 @@ class DesignInDesignerContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignInDesigner: state.DesignerDetail.status.DesignInDesigner
+    dataList: state.DesignerDetail.status.DesignInDesigner,
+    dataListAdded: state.DesignerDetail.status.DesignInDesignerAdded
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignInDesignerRequest: (id) => {
-        return dispatch(GetDesignInDesignerRequest(id))
+    GetDesignInDesignerRequest: (id, page) => {
+        return dispatch(GetDesignInDesignerRequest(id, page))
       }
   };
 };

@@ -9,7 +9,6 @@ import ContentBox from "components/Commons/ContentBox";
 // css styling
 
 const Wrapper = styled.div`
-  background-color: #f9f9f9;
   width: 100%;
   padding-bottom: 5rem;
   & ul {

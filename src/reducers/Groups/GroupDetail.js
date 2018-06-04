@@ -8,7 +8,9 @@ const initialState = {
   status: {
     GroupDetail: [],
     DesignInGroup: [],
-    GroupInGroup: []
+    GroupInGroup: [],
+    DesignInGroupAdded: [],
+    GroupInGroupAdded: []
   }
 };
 
@@ -26,15 +28,31 @@ export function GroupDetail(state, action) {
     case types.GET_DESIGN_IN_GROUP:
       return update(state, {
         status: {
-          DesignInGroup: { $set: action.DesignInGroup }
+          DesignInGroup: { $set: action.DesignInGroup },
+          DesignInGroupAdded: { $push: action.DesignInGroup }
+        }
+      });
+    case types.GET_DESIGN_IN_GROUP_CLEAR:
+      return update(state, {
+        status: {
+          DesignInGroup: { $set: action.DesignInGroup },
+          DesignInGroupAdded: { $set: action.DesignInGroup }
         }
       });
     case types.GET_GROUP_IN_GROUP:
       return update(state, {
         status: {
-          GroupInGroup: { $set: action.GroupInGroup }
+          GroupInGroup: { $set: action.GroupInGroup },
+          GroupInGroupAdded: { $push: action.GroupInGroup }
         }
       });
+    case types.GET_GROUP_IN_GROUP_CLEAR:
+      return update(state, {
+        status: {
+          GroupInGroup: { $set: action.GroupInGroup },
+          GroupInGroupAdded: { $set: action.GroupInGroup }
+        }
+      })
     default:
       return state;
   }

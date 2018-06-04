@@ -8,18 +8,15 @@ import { Icon } from "semantic-ui-react";
 
 const Groupli = styled.li`
   width: 100%;
-  margin: 0 auto 20px;
-  height: 270px;
+  margin: 0 auto 2rem;
   font-size: 13px;
-  border-radius: 6px 6px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  overflow: hidden;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;
   & a {
     cursor: pointer;
     display: block;
-  }
-  &:hover {
-    border-bottom: 0.5px solid dimgray;
   }
 `;
 
@@ -34,31 +31,38 @@ const ImgPart = styled.div`
 `;
 
 const TextPart = styled.div`
+  padding: 10px 10px;
   & .title, & .owner {
-    height: 36px;
     line-height: 1.35;
-    padding: 10px 0;
-    margin: 0 10px;
   }
   & .title {
     font-weight: bold;
+    line-height: 20px;
+    height: 40px;
+    margin: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
   }
   & .owner {
-    border-bottom: 1px solid #f2f2f2;
   }
 `;
 
 const Count = styled.div`
-  color: dimgray;
+  background-color: #000;
+  padding: 5px 10px;
+  color: white;
   font-weight: 400;
   font-size: 12px;
   & div {
-    float: right;
+    float: left;
     width: 40px;
   }
-  & div.clear {
+  &::after{
+    display: block;
+    content: "";
     clear: both;
-    float: none;
   }
 `;
 
@@ -82,7 +86,7 @@ class Group extends Component {
   }
 
   render(){
-    let group = this.props.group;
+    let group = this.props.data;
     let user = this.props.user;
     return(
       <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
@@ -92,27 +96,26 @@ class Group extends Component {
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
             <div className="cate">
-              <ButtonWrap>
+              {/* <ButtonWrap>
                 <button className="red">가입신청</button>
                 { (user != null && user.uid === group.user_id ) && <button className="red">관리</button> }
-              </ButtonWrap>
+              </ButtonWrap> */}
             </div>
-            <Count>
-              <div>
-                <Icon name="window restore" color="grey" size="mini"></Icon>
-                {group.design? group.design : 0}
-              </div>
-              <div>
-                <Icon name="signup" color="grey" size="mini"></Icon>
-                {group.design? group.design : 0}
-              </div>
-              <div>
-                <Icon name="heart" color="grey" size="mini"></Icon>
-                {group.like? group.like : 0}
-              </div>
-              <div className="clear"></div>
-            </Count>
           </TextPart>
+          <Count>
+            <div>
+              <Icon name="window restore" size="mini"></Icon>
+              {group.design? group.design : 0}
+            </div>
+            <div>
+              <Icon name="signup" size="mini"></Icon>
+              {group.design? group.design : 0}
+            </div>
+            <div>
+              <Icon name="heart" size="mini"></Icon>
+              {group.like? group.like : 0}
+            </div>
+          </Count>
         </Groupli>
       </NavLink>
     );
