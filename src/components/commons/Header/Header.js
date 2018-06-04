@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import logo from "source/logo.png";
 import { SetSession } from "modules/Sessions";
-import { Grid } from 'semantic-ui-react'
+import { Grid, Icon } from 'semantic-ui-react'
 
 // css styling
 const Head = styled.header`
@@ -17,11 +17,14 @@ const HeaderGrid = styled(Grid) `
   height: 100%;
 `
 
-const Logo = styled.img`
+const Logo = styled.a`
   height: 50px;
   position: absolute;
+  display:block;
   top: 0;
-  left: 2rem;
+  img{
+    height: 100%;
+  }
 `
 
 const Button = styled.button`
@@ -37,17 +40,21 @@ const Nav = styled.ul`
   justify-content: space-between;
   align-items: center;
 `
-const NavUserInterface = styled.ul`
-  color: white;
-  width: 100%;
+const NavUserInterface = styled.div`
   height: 100%;
   color: white;
   display: flex;
   align-items: center;
-  justify-content: right;
-  li{
-    text-align: right;
+  justify-content: flex-end;
+  &::after{
+    display: block;
+    content: "";
+    clear: both;
   }
+`
+const NavItem = styled.div`
+  text-align: right;
+  margin-left: 20px;
 `
 
 class Header extends Component {
@@ -64,8 +71,8 @@ class Header extends Component {
     const LoginNav = () => {
       return (
         <NavUserInterface>
-          <li><a href="/mypage">{this.props.userInfo.nickName}</a></li>
-          <li><button onClick={this.handleSignOut}>SignOut</button></li>
+          <NavItem><a href="/mypage">{this.props.userInfo.nickName}</a></NavItem>
+          <NavItem><button onClick={this.handleSignOut}>SignOut</button></NavItem>
         </NavUserInterface>
       )
     }
@@ -73,8 +80,8 @@ class Header extends Component {
     const LogOutNav = () => {
       return (
         <NavUserInterface>
-          <li><a href="/signin">SignIn</a></li>
-          <li><a href="/signup">SignUp</a></li>
+          <NavItem><a href="/signin">SignIn</a></NavItem>
+          <NavItem><a href="/signup">SignUp</a></NavItem>
         </NavUserInterface>
       )
     }
@@ -82,9 +89,9 @@ class Header extends Component {
       <Head>
         <HeaderGrid padded={true}>
           <Grid.Column width={3}>
-            <NavLink to="/">
-              <Logo src={logo} />
-            </NavLink>
+            <Logo href="/">
+              <img src={logo} alt="logo" />
+            </Logo>
           </Grid.Column>
           <Grid.Column width={10}>
             <Nav>
@@ -94,11 +101,14 @@ class Header extends Component {
               <li><a href="/createdesign"><Button className="red">디자인 등록</Button></a></li>
             </Nav>
           </Grid.Column>
-          <Grid.Column width={3} textAlign="right">
-            {this.props.valid
-              ? <LoginNav />
-              : <LogOutNav />
-            }
+          <Grid.Column width={3}>
+            <NavUserInterface>
+              <NavItem><a href="/"><Icon name="search" /></a></NavItem>
+              {this.props.valid
+                ? <LoginNav />
+                : <LogOutNav />
+              }
+            </NavUserInterface>
           </Grid.Column>
         </HeaderGrid>
       </Head>
