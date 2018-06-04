@@ -4,6 +4,7 @@ import { Grid } from "semantic-ui-react";
 import Category from "components/Commons/Category";
 import Sorting from "components/Commons/Sorting";
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
+import ContentBox from "components/Commons/ContentBox";
 
 // css styling
 
@@ -12,16 +13,14 @@ const Wrapper = styled.div`
   width: 100%;
   padding-top: 8rem;
   padding-bottom: 5rem;
-  min-width: 660px;
   & ul {
     margin-top: 30px;
   }
   // 로딩 인디케이터
   & .ui.centered.inline.loader.active, .ui.centered.inline.loader.visible {
-    margin-left: -29px;
-    margin-top: -29px;
     left: 50%;
     top: 50%;
+    transform: translate(-50%, -50%);
     position: absolute;
   }
 `;
@@ -78,7 +77,8 @@ class DesignList extends Component {
   render() {
     const { sort, cate1, cate2 } = this.props;
     return (
-      <Wrapper>
+      <ContentBox>
+        <Wrapper>
           <MenuContainer devided="vertically" padded={true} centered={true}>
             <Grid.Row>
               <Category widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
@@ -86,7 +86,8 @@ class DesignList extends Component {
             </Grid.Row>
           </MenuContainer>
           {this.state.rendering && <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} />}
-      </Wrapper>
+        </Wrapper>
+      </ContentBox>
     );
   }
 }

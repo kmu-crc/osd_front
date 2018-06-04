@@ -4,20 +4,17 @@ import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContai
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
 import DesignDetailIssueContainer from "containers/Designs/DesignDetailIssueContainer";
 import { Grid, Icon, Modal } from "semantic-ui-react";
+import ContentBox from "components/Commons/ContentBox";
 
 // css styling
 
 const Wrapper = styled.div`
-  min-width: 660px;
+  box-sizing: border-box;
   padding: 20px 0;
   position: relative;
-  & .ui.grid {
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
 `;
 
-const HeadContainer = styled(Grid)`
+const HeadContainer = styled(Grid) `
   min-height: 100px;
   font-size: 13px;
   & button.ui.button {
@@ -56,7 +53,7 @@ const SubInfo = styled.div`
     font-size: 13px;
     color: rgba(0,0,0,.6);
   }
-  & .ui.basic.button:hover, 
+  & .ui.basic.button:hover,
     .ui.basic.buttons .button:hover {
       background-color: transparent;
   }
@@ -67,7 +64,7 @@ const MoreBtn = styled.button`
   float: right;
 `;
 
-const ModalContent = styled(Modal)`
+const ModalContent = styled(Modal) `
   &.ui.modal.btnModal {
     position: absolute;
     top: 145px;
@@ -121,13 +118,13 @@ class DesignDetail extends Component {
       activeIssue: !(this.state.activeIssue)
     });
     if (this.state.activeIssue === true) {
-      e.target.innerHTML = "★ 공지보기";
+      e.target.textContent = "★ 공지보기";
     } else if (this.state.activeIssue === false) {
-      e.target.innerHTML = "★ 공지닫기";
+      e.target.textContent = "★ 공지닫기";
     }
   }
 
-  render(){
+  render() {
     let designDetail = this.props.DesignDetail;
     let user = this.props.userInfo;
     let count;
@@ -141,81 +138,83 @@ class DesignDetail extends Component {
       };
     }
     const ButtonModal = () => {
-      return(
-        <ModalContent className="btnModal" 
-               open={this.state.activeMoreBtn} onClose={this.onActiveMoreBtn} 
-               dimmer={false}
-               closeOnDocumentClick={true}>
+      return (
+        <ModalContent className="btnModal"
+          open={this.state.activeMoreBtn} onClose={this.onActiveMoreBtn}
+          dimmer={false}
+          closeOnDocumentClick={true}>
           <Modal.Content as="ul">
             <li>파생디자인 생성</li>
-            <li className={designDetail.parent_design != null? "able" : "disable"}>원본디자인 보기</li>
-            {user && user.uid === designDetail.user_id && <li>수정</li> }
-            {user && user.uid === designDetail.user_id && <li>삭제</li> }
+            <li className={designDetail.parent_design != null ? "able" : "disable"}>원본디자인 보기</li>
+            {user && user.uid === designDetail.user_id && <li>수정</li>}
+            {user && user.uid === designDetail.user_id && <li>삭제</li>}
           </Modal.Content>
         </ModalContent>
       );
     }
-    return(
+    return (
       <div>
-      {designDetail.length !== 0 &&
-        <Wrapper>
-          <HeadContainer divided="vertically" padded={true}>
-            <Grid.Row columns={2}>
-              <Grid.Column computer={8} tablet={6} mobile={6}>
-                <h3 className="title">{designDetail.title}
-                  <button className="ui button issueBtn" onClick={this.onActiveIssue}>★ 공지보기</button>
-                </h3>
-                <Cate>
-                  <span className="cate">{designDetail.categoryName}</span>
-                  <span className="owner">
-                    <Icon name="user" size="mini"></Icon>
-                    {designDetail.userName}
+        {designDetail.length !== 0 &&
+          <ContentBox>
+            <Wrapper>
+              <HeadContainer divided="vertically" padded={true}>
+                <Grid.Row columns={2}>
+                  <Grid.Column computer={8} tablet={6} mobile={6}>
+                    <h3 className="title">{designDetail.title}
+                      <button className="ui button issueBtn" onClick={this.onActiveIssue}>★ 공지보기</button>
+                    </h3>
+                    <Cate>
+                      <span className="cate">{designDetail.categoryName}</span>
+                      <span className="owner">
+                        <Icon name="user" size="mini"></Icon>
+                        {designDetail.userName}
+                      </span>
+                      <span className="member">
+                        <Icon name="group" size="mini"></Icon>
+                        {count.member_count}명
                   </span>
-                  <span className="member">
-                    <Icon name="group" size="mini"></Icon>
-                    {count.member_count}명
-                  </span>
-                </Cate>
-                <div className="explanation">{designDetail.explanation}</div>
-              </Grid.Column>
-              <Grid.Column computer={8} tablet={10} mobile={10}>
-                <MoreBtn className="ui teal button more" onClick={this.onActiveMoreBtn}>
-                  더보기 +
-                  <ButtonModal/>
-                </MoreBtn>
-                <SubInfo>
-                  <div className="ui right labeled button">
-                    <button className="ui basic button" tabIndex="0">
-                      <Icon name="unhide" size="mini"></Icon>
-                      조회수
+                    </Cate>
+                    <div className="explanation">{designDetail.explanation}</div>
+                  </Grid.Column>
+                  <Grid.Column computer={8} tablet={10} mobile={10}>
+                    <MoreBtn className="ui teal button more" onClick={this.onActiveMoreBtn}>
+                      더보기 +
+                  <ButtonModal />
+                    </MoreBtn>
+                    <SubInfo>
+                      <div className="ui right labeled button">
+                        <button className="ui basic button" tabIndex="0">
+                          <Icon name="unhide" size="mini"></Icon>
+                          조회수
                     </button>
-                    <div className="ui left pointing basic label">{count.view_count}</div>
-                  </div>
-                  <div className="ui right labeled button">
-                    <button className="ui basic button" tabIndex="0">
-                      <Icon name="heart" size="mini"></Icon>
-                      좋아요
+                        <div className="ui left pointing basic label">{count.view_count}</div>
+                      </div>
+                      <div className="ui right labeled button">
+                        <button className="ui basic button" tabIndex="0">
+                          <Icon name="heart" size="mini"></Icon>
+                          좋아요
                     </button>
-                    <div className="ui left pointing basic label">{count.like_count}</div>
-                  </div>
-                  <div className="ui right labeled button">
-                    <button className="ui basic button" tabIndex="0">
-                      <i aria-hidden="true" className="fork icon"></i>
-                      파생
+                        <div className="ui left pointing basic label">{count.like_count}</div>
+                      </div>
+                      <div className="ui right labeled button">
+                        <button className="ui basic button" tabIndex="0">
+                          <i aria-hidden="true" className="fork icon"></i>
+                          파생
                     </button>
-                    <div className="ui left pointing basic label">{designDetail.children_count["count(*)"]}</div>
-                  </div>
-                  </SubInfo>
-              </Grid.Column>
-            </Grid.Row>
-          </HeadContainer>
-          <TabContainer>
-            {this.state.activeIssue === true? <DesignDetailIssueContainer id={this.props.id} />
-            : designDetail.is_project == 1? <DesignDetailStepContainer id={this.props.id}/>
-            : <DesignDetailViewContainer goStep={this.onActiveStep} id={this.props.id}/>}
-          </TabContainer>
-        </Wrapper>
-      }
+                        <div className="ui left pointing basic label">{designDetail.children_count["count(*)"]}</div>
+                      </div>
+                    </SubInfo>
+                  </Grid.Column>
+                </Grid.Row>
+              </HeadContainer>
+              <TabContainer>
+                {this.state.activeIssue === true ? <DesignDetailIssueContainer id={this.props.id} />
+                  : designDetail.is_project == 1 ? <DesignDetailStepContainer id={this.props.id} />
+                    : <DesignDetailViewContainer goStep={this.onActiveStep} id={this.props.id} />}
+              </TabContainer>
+            </Wrapper>
+          </ContentBox>
+        }
       </div>
     );
   }
