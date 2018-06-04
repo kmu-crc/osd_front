@@ -1,27 +1,22 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Card from "components/Designs/Card";
+import DesignStepCard from "components/Designs/DesignStepCard";
 import { SortablePane, Pane } from "react-sortable-pane";
 import { Grid } from "semantic-ui-react";
 
 // css styling
 
-const BoardContainer = styled.div`
-  height: 100%;
+const Container = styled(Grid)`
   min-width: 660px;
-  padding-top: 10px;
-  padding-bottom: 30px;
-  & .changeBtn {
-    position: absolute;
-    top: 0;
-    right: 20px;
-    padding: 7px 18px;
-    border: 1px solid #a4a4a4;
+  & .ul {
+    width: 100%;
   }
 `;
 
-const Board = styled.div`
+const Board = styled.li`
   padding: 3px;
+  width: 200px;
+  float: left;
   & .boardList {
     background-color: #DBDADA;
     border-radius: 3px;
@@ -29,18 +24,16 @@ const Board = styled.div`
     width: 100%;
     padding: 8px;
     height: 300px;
-  }
-  & h4 {
-    margin: 0;
-    margin-bottom: 10px;
-    font-weight: normal;
-    font-size: 15px;
-  }
-  & h4.boardTitle > input {
+    }
+  & .boardList .boardTitle {
     height: 30px;
     width: 100%;
     font-size: 13px;
     border-radius: 3px;
+  }
+  & .pane div.eyWoOB {
+    margin-top: 0;
+    margin-bottom: 5px;
   }
 `;
 
@@ -78,45 +71,47 @@ class DetailStep extends Component {
   render(){
     let step = this.props.DesignDetailStep;
     return(
-    <BoardContainer>
-      {step.length !== 0 &&
-        <div>
-          {step.map((board, i)  =>
+      <Container>
+        <ul>
+          {step.length !== 0 && step.map((board, i) =>
             <Board key={i}>
               <div className="boardList">
-                <h4 className="boardTitle" id={board.uid}>
-                  {this.state.isEdit == board.uid? <input value={this.state.titleValue} onChange={this.onEdit}/>
-                  : <div id={board.uid} onClick={this.activeEdit}>{board.title}</div>}
-                </h4>
-                  <div>
-                    <SortablePane direction="vertical" margin={5} onResizeStop>
-                    {board.cardData.map(card =>
-                      (board.cardData).length > 1?
-                        <Pane className="pane" id={card.order} key={card.order}
-                              width="100%" height={80} maxHeight={120}
-                              isResizable={{x: false, y: false, xy: false}}>
-                          <Card cardDetail={card} designId={board.design_id}/>
-                        </Pane>
-                        :
-                        <Card key={card.order} cardDetail={card} designId={board.design_id}/>
-                    )}
-                    </SortablePane>
-                  </div>
+                {this.state.isEdit == board.uid? 
+                  <input className="boardTitle" value={this.state.titleValue} onChange={this.onEdit}/>
+                  : <h4 id={board.uid} onClick={this.activeEdit}>
+                      {board.title}
+                    </h4>
+                }
+                <div>
+                  <SortablePane direction="vertical" margin={5}>
+                  {board.cardData.length > 0 && board.cardData.map(card =>
+                    board.cardData.length > 1? 
+                    <Pane key={card.uid} id={card.uid}
+                          className="pane" width="100%" height={80} maxHeight={120}
+                          onResizable={{ x: false, y: false, xy: false }}>
+                      <DesignStepCard cardDetail={card} designId={board.design_id}/>
+                    </Pane>
+                    :
+                    <DesignStepCard key={card.uid} cardDetail={card} designId={board.design_id}/>
+                  )}
+                  </SortablePane>
+                </div>
               </div>
             </Board>
-          )}
-        </div>
-      }
-      <Board>
-        <div className="boardList">
-          <h4 className="boardTitle" id="new">
-            {this.state.isEdit === "new"? <input value={this.state.titleValue} onChange={this.onEdit}/>
-            : <div id="new" onClick={this.activeEdit}>새 주제 추가 +</div>}
-          </h4>
-          <EmptyCard>새 카드 추가 +</EmptyCard>
-        </div>
-      </Board>
-    </BoardContainer>
+            )}
+            <Board>
+              <div className="boardList">
+                {this.state.isEdit === "new"? 
+                  <input value={this.state.titleValue} onChange={this.onEdit}/>
+                  : <h4 id="new" onClick={this.activeEdit}>
+                      새 주제 추가 +
+                    </h4>
+                }
+                <EmptyCard>새 카드 추가 +</EmptyCard>
+              </div>
+            </Board>
+        </ul>
+      </Container>
     );
   }
 }

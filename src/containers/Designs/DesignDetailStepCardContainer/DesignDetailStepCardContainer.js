@@ -6,7 +6,7 @@ import DetailCard from "components/Designs/DetailCard";
 class DesignDetailStepCardContainer extends Component {
 
   componentDidMount() {
-    this.props.GetDesignDetailStepCardRequest(this.props.id, this.props.card_id);
+    this.props.GetDesignDetailStepCardRequest(this.props.designId, this.props.cardDetail.uid);
   }
 
   render() {

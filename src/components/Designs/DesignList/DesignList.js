@@ -77,7 +77,6 @@ class DesignList extends Component {
 
   render() {
     const { sort, cate1, cate2 } = this.props;
-
     return (
       <Wrapper>
           <MenuContainer devided="vertically" padded={true} centered={true}>
