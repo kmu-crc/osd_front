@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyDesignListRequest } from "actions/MyDetail";
+import { GetMyDesignListRequest } from "actions/Users/MyDetail";
 import ContentList from "components/Commons/ContentList";
 
 class MyDesignContainer extends Component {

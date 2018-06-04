@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyGroupListRequest } from "actions/MyDetail";
+import { GetMyGroupListRequest } from "actions/Users/MyDetail";
 import ContentList from "components/Commons/ContentList";
 
 class MyGroupContainer extends Component {

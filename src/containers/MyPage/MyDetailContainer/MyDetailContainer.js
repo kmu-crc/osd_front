@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyDetailRequest, GetMyDesignListRequest } from "actions/MyDetail";
-import MyDetail from "components/MyDetail";
+import { GetMyDetailRequest, GetMyDesignListRequest } from "actions/Users/MyDetail";
+import MyDetail from "components/Users/MyDetail";
 
 class MyDetailContainer extends Component {
 

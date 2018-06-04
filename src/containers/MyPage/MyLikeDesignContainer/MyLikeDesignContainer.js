@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyLikeDesignRequest } from "actions/MyDetail";
+import { GetMyLikeDesignRequest } from "actions/Users/MyDetail";
 import ContentList from "components/Commons/ContentList";
 
 class MyLikeDesignContainer extends Component {
