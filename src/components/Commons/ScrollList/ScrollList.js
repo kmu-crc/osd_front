@@ -38,7 +38,7 @@ class ScrollList extends Component {
           <Grid.Row>
             {this.props.dataListAdded.length > 0 ?
               this.props.dataListAdded.map((content, i) => (
-                <Grid.Column key={content.uid}><ListComponent data={content} rerender={this.props.rerender}/></Grid.Column>
+                <Grid.Column key={content.uid}><ListComponent data={content}/></Grid.Column>
               ))
               :
               <p>해당 컨텐츠가 없습니다</p>
