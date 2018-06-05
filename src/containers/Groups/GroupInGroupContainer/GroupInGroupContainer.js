@@ -25,7 +25,11 @@ class GroupInGroupContainer extends Component {
   render() {
     return(
       <div>
-        <ScrollList rerender={true} getListRequest={this.getList} ListComponent={Group} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={4}/>
+        <ScrollList rerender={true} 
+                    getListRequest={this.getList} 
+                    ListComponent={Group} 
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
+                    mobile={16} tablet={6} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom"/>
       </div>
     );
   }

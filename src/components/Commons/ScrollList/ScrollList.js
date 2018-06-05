@@ -34,11 +34,16 @@ class ScrollList extends Component {
       <InfiniteScroll threshold={100} pageStart={-1}
                       loadMore={this.getLoadData} hasMore={this.state.hasMore}
                       loader={<Loader active={this.state.loading ? true : false} inline="centered" size="huge" key={0}/>}>
-        <ListContainer devided="vertically" padded={true} columns={this.props.columns} as="ul">
+        <ListContainer devided="vertically" padded={true} as="ul">
           <Grid.Row>
             {this.props.dataListAdded.length > 0 ?
               this.props.dataListAdded.map((content, i) => (
-                <Grid.Column key={content.uid}><ListComponent data={content} rerender={this.props.rerender}/></Grid.Column>
+                <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer} 
+                             largeScreen={this.props.largeScreen} widescreen={this.props.widescreen} 
+                             className={this.props.customClass}
+                             key={content.uid}>
+                  <ListComponent data={content} rerender={this.props.rerender}/>
+                </Grid.Column>
               ))
               :
               <p>해당 컨텐츠가 없습니다</p>

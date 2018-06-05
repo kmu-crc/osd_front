@@ -16,7 +16,10 @@ class LikeInDesignerContainer extends Component {
   render() {
     return(
       <div>
-        <ScrollList getListRequest={this.getList} ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={4}/>
+        <ScrollList getListRequest={this.getList} 
+                    ListComponent={Design} 
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
+                    mobile={8} tablet={6} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom"/>
       </div>
     );
   }

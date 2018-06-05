@@ -77,7 +77,7 @@ class DesignList extends Component {
     return (
       <ContentBox>
         <Wrapper>
-          <MenuContainer devided="vertically" padded={true} centered={true}>
+          <MenuContainer devided="vertically" padded={true}>
             <Grid.Row>
               <Category widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
               <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} />
