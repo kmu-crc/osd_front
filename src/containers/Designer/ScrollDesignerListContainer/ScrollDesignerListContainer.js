@@ -13,7 +13,7 @@ class ScrollDesignerListContainer extends Component {
   render() {
     return(
       <div>
-        <ScrollList getListRequest={this.getList} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={5}/>
+        <ScrollList getListRequest={this.getList} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={6}/>
       </div>
     );
   }
