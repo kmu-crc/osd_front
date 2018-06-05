@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetGroupInGroupRequest } from "actions/Group";
-import ContentList from "components/Commons/ContentList";
+import ScrollList from "components/Commons/ScrollList";
+import Group from "components/Groups/Group";
 
 class GroupInGroupContainer extends Component {
-  componentWillMount() {
-    this.props.GetGroupInGroupRequest(this.props.match.params.id, this.props.match.params.sort);
-  }
+  // componentWillMount() {
+  //   this.props.GetGroupInGroupRequest(this.props.match.params.id, this.props.match.params.sort);
+  // }
 
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetGroupInGroupRequest(this.props.match.params.id, nextProps.match.params.sort);
+      this.props.GetGroupInGroupRequest(this.props.match.params.id, 0, nextProps.match.params.sort);
       return true;
     } else {
       return false;
     }
   }
 
+  getList = (page) => {
+    return this.props.GetGroupInGroupRequest(this.props.match.params.id, page, this.props.match.params.sort);
+  }
+
   render() {
     return(
       <div>
-        <ContentList data={this.props.GroupInGroup} columns={4} type="group" rerender="true"/>
+        <ScrollList getListRequest={this.getList} ListComponent={Group} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={4}/>
       </div>
     );
   }
@@ -28,14 +33,15 @@ class GroupInGroupContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    GroupInGroup: state.GroupDetail.status.GroupInGroup
+    dataList: state.GroupDetail.status.GroupInGroup,
+    dataListAdded: state.GroupDetail.status.GroupInGroupAdded
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetGroupInGroupRequest: (id, sort) => {
-        return dispatch(GetGroupInGroupRequest(id, sort))
+      GetGroupInGroupRequest: (id, page, sort) => {
+        return dispatch(GetGroupInGroupRequest(id, page, sort))
       }
   };
 };

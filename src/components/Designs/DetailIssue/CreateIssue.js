@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
 import styled from "styled-components";
-import { Grid, Header } from "semantic-ui-react";
+import { Grid, Header, Radio } from "semantic-ui-react";
 
 // css styling
 const IssueWrapper = styled(Grid)`
@@ -38,15 +38,20 @@ const CreateForm = styled(Form)`
   &.ui.form .field {
     margin-bottom: 20px;
   }
-  & .field.checkDone {
-    display: inline;
-    float: left;
-    margin-right: 10px;
+  & .checkDone {
+    height: 50px;
+  }
+  & .checkDone .checkbox {
+    margin: 0 10px;
+  }
+  & .checkDone > span {
+    font-size: 12px;
   }
 `;
 
 class CreateIssue extends Component {
   render(){
+    const id = this.props.location.state.id;
     return(
       <IssueWrapper>
         <Grid.Row columns={2}>
@@ -63,11 +68,15 @@ class CreateIssue extends Component {
                 <label>내용</label>
                 <Form.TextArea placeholder="내용을 입력해주세요." />
               </Form.Field>
-              <Form.Checkbox className="checkDone"></Form.Checkbox>
-              <label>완료</label>
+              {/* <Form.Checkbox className="checkDone"></Form.Checkbox>
+              <label>완료</label> */}
+              <div className="checkDone">
+                <span>진행중</span>
+                <Radio toggle />
+                <span>완료</span>
+              </div>
               <Form.Field>
                 <button type="submit" className="ui button" onClick={this.props.handleClick}>등록</button>
-                <button type="submit" className="ui button" onClick={this.props.goBack}>목록</button>
               </Form.Field>
             </CreateForm>
           </Grid.Column>

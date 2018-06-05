@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { NavLink, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import DesignInDesignerContainer from "containers/Designer/DesignInDesignerContainer";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer";
+import eximg from "source/topDesigner.jpeg";
+
 
 // css styling
 
@@ -56,6 +58,10 @@ const ProfileSection = styled.div`
     border: 1px solid rgba(0,0,0,0.25);
     overflow: hidden;
   }
+  & .imgContainer > div img {
+    width: auto;
+    height: 100%;
+  }
   & .title {
     min-height: 40px;
     font-weight: bold;
@@ -66,14 +72,12 @@ const ProfileSection = styled.div`
   & .category {
     min-height: 20px;
     text-align: center;
+    color: #EB3324;
   }
   & .btnContainer {
-    height: 60px;
     text-align: center;
-    line-height: 60px;
     & button {
-      margin-left: 10px;
-      margin-right: 10px;
+      margin: .5rem 1rem;
     }
   }
 `;
@@ -133,8 +137,28 @@ const Head = styled(Grid)`
 `;
 
 const ContentBox = styled.div`
-  width: 100%;
-  padding: 0 3rem;
+  margin: 0 auto;
+  @media only screen and (max-width: 767px) and (min-width: 320px){
+    width: 470px;
+  }
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    width: 546px;
+  }
+  @media only screen and (min-width: 992px){
+    width: 705px;
+  }
+  @media only screen and (max-width: 1399px) and (min-width: 1200px){
+    width: 855px;
+  }
+  @media only screen and (max-width: 1699px) and (min-width: 1400px){
+    width: 996px;
+  }
+  @media only screen and (max-width: 1919px) and (min-width: 1700px){
+    width: 1210px;
+  }
+  @media only screen and (min-width: 1920px){
+    width: 1368px;
+  }
 `;
 
 
@@ -181,7 +205,8 @@ class DesignerDetail extends Component {
                 <HeadContainer width={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{designerDetail.thumbnailUrl? <img src={designerDetail.thumbnailUrl.s_img} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div>
+                      {/* <div>{designerDetail.thumbnailUrl? <img src={designerDetail.thumbnailUrl.s_img} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div> */}
+                      <div><img src={eximg}/></div>
                     </div>
                     <div className="title">
                       <h3>{designerDetail.nick_name}</h3>

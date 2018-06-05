@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link, Route, Switch } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import CreateIssue from "./CreateIssue.js";
-import DetailIssueDetail from "./DetailIssueDetail.js";
+import DetailIssueDetailContainer from "containers/Designs/DetailIssueDetailContainer";
 
 // css styling
 const IssueWrapper = styled(Grid)`
@@ -79,38 +79,6 @@ const List = styled.div`
 `;
 
 class DetailIssue extends Component {
-  //state = {
-    // showPostPage: false,
-    // showDetailPage: false
-  //}
-
-  // showPostPage = (e) => {
-  //   this.setState({
-  //     showPostPage: true
-  //   });
-  // }
-
-  // hidePostPage = (e) => {
-  //   this.setState({
-  //     showPostPage: false
-  //   });
-  // }
-
-  // loadIssueDetail = (id) => {
-  //   this.props.GetDesignDetailIssueDetailRequest(this.props.id, id)
-  //   .then(()=>{
-  //     this.setState({
-  //       showDetailPage: true
-  //     });
-  //   });
-  // }
-
-  // hideDetailPage = (e) => {
-  //   this.setState({
-  //     showDetailPage: false
-  //   });
-  // }
-
   render(){
     let issue = this.props.DesignDetailIssue;
     const IssueList = () => {
@@ -126,24 +94,30 @@ class DetailIssue extends Component {
                 </div>
               </Grid.Column>
               <Grid.Column textAlign="right">
-                <button className="ui button" >글쓰기</button>
+                <Link to={ {pathname: this.props.match.url+"/createIssue",
+                            state: {id: this.props.id}} }>
+                  <button className="ui button">글쓰기</button>
+                </Link>
               </Grid.Column>
             </SearchWrapper>
             <ListWrapper>
               <ul>
               {issue.map(list =>
-              <List key={list.uid}>
-                <li>
-                  <div className="order">{list.uid}</div>
-                  <div className="title">
-                  {list.title}
-                  {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
-                  </div>
-                  <div className="user">{list.userName}</div>
-                  <div className="date">{list.create_time.split("T")[0]}</div>
-                  <div className="cmtCount">{list.commentCount["count(*)"]}</div>
-                </li>
-              </List>
+              <Link key={list.uid} to={ {pathname: this.props.match.url+"/detailIssue/"+list.uid,
+                                         state: { id: this.props.id, issue_id: list.uid }} }>
+                <List>
+                  <li>
+                    <div className="order">{list.uid}</div>
+                    <div className="title">
+                    {list.title}
+                    {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
+                    </div>
+                    <div className="user">{list.userName}</div>
+                    <div className="date">{list.create_time.split("T")[0]}</div>
+                    <div className="cmtCount">{list.commentCount["count(*)"]}</div>
+                  </li>
+                </List>
+              </Link>
               )}
             </ul>
             </ListWrapper>
@@ -159,20 +133,11 @@ class DetailIssue extends Component {
       );
     }
     return(
-      // <div>
-         /* {this.state.showPostPage?
-        <CreateIssue handleClick={this.hidePostPage} goBack={this.hidePostPage}/>
-        :
-        this.state.showDetailPage?
-        <DetailIssueDetail data={this.props.IssueDetail} handleClick={this.hideDetailPage}/>
-        : */
-        /* 
-      </div> */
-      <Switch>
-        <Route path={this.props.match.url} component={IssueList}/>
-        <Route path={this.props.match.url+"/createIssue"} component={CreateIssue}/>
-        <Route path={this.props.match.url+"/detailIssue"} component={DetailIssueDetail}/>
-      </Switch>
+      <div>
+        <Route exact path={this.props.match.url} component={IssueList}/>
+        <Route exact path={this.props.match.url+"/createIssue"} component={CreateIssue}/>
+        <Route exact path={this.props.match.url+"/detailIssue/:issue_id"} component={DetailIssueDetailContainer}/>
+      </div>
     );
   }
 }

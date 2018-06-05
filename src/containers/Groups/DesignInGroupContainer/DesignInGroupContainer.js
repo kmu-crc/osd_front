@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetDesignInGroupRequest } from "actions/Group";
-import ContentList from "components/Commons/ContentList";
+import ScrollList from "components/Commons/ScrollList";
+import Design from "components/Designs/Design";
 
 class DesignInGroupContainer extends Component {
-  componentWillMount() {
-    this.props.GetDesignInGroupRequest(this.props.match.params.id, this.props.match.params.sort);
-  }
+  // componentWillMount() {
+  //   this.props.GetDesignInGroupRequest(page, this.props.match.params.id, this.props.match.params.sort);
+  // }
 
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetDesignInGroupRequest(this.props.match.params.id, nextProps.match.params.sort);
+      this.props.GetDesignInGroupRequest(this.props.match.params.id, 0, nextProps.match.params.sort);
       return true;
     } else {
       return false;
     }
   }
 
+  getList = (page) => {
+    return this.props.GetDesignInGroupRequest(this.props.match.params.id, page, this.props.match.params.sort);
+  }
+
   render() {
     return(
       <div>
-        <ContentList data={this.props.DesignInGroup} columns={4} type="design"/>
+        <ScrollList getListRequest={this.getList} ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={4}/>
       </div>
     );
   }
@@ -28,14 +33,15 @@ class DesignInGroupContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignInGroup: state.GroupDetail.status.DesignInGroup
+    dataList: state.GroupDetail.status.DesignInGroup,
+    dataListAdded: state.GroupDetail.status.DesignInGroupAdded
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignInGroupRequest: (id, sort) => {
-        return dispatch(GetDesignInGroupRequest(id, sort))
+      GetDesignInGroupRequest: (id, page, sort) => {
+        return dispatch(GetDesignInGroupRequest(id, page, sort))
       }
   };
 };

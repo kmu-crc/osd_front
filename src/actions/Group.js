@@ -28,8 +28,8 @@ export function GetGroupListRequest(page, sort) {
 
 export function GetGroupList(data) {
   return {
-      type: types.GET_GROUP_LIST,
-      GroupList : data
+    type: types.GET_GROUP_LIST,
+    GroupList : data
   }
 };
 
@@ -77,9 +77,9 @@ export function GetGroupDetail(data) {
 };
 
 // 그룹 안에 속한 디자인 리스트 가져오기
-export function GetDesignInGroupRequest(id, sort) {
+export function GetDesignInGroupRequest(id, page, sort) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/`+id+"/design/"+sort, {
+    return fetch(`${host}/group/groupDetail/`+id+"/design/"+page+"/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -89,6 +89,10 @@ export function GetDesignInGroupRequest(id, sort) {
         if (!data) {
           console.log("no data");
           data = [];
+        }
+        if (page === 0) {
+          dispatch(DesignInGroupClear(data));
+          return;
         }
         dispatch(GetDesignInGroup(data));
       }).catch((error) => {
@@ -104,10 +108,18 @@ export function GetDesignInGroup(data) {
   }
 };
 
+export function DesignInGroupClear(data) {
+  return {
+    type: types.GET_DESIGN_IN_GROUP_CLEAR,
+    DesignInGroup: data,
+    DesignInGroupAdded: []
+  }
+};
+
 // 그룹 안에 속한 그룹 리스트 가져오기
-export function GetGroupInGroupRequest(id, sort) {
+export function GetGroupInGroupRequest(id, page, sort) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/`+id+"/group/"+sort, {
+    return fetch(`${host}/group/groupDetail/`+id+"/group/"+page+"/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -117,6 +129,10 @@ export function GetGroupInGroupRequest(id, sort) {
         if (!data) {
           console.log("no data");
           data = [];
+        }
+        if (page === 0) {
+          dispatch(GroupInGroupClear(data));
+          return;
         }
         dispatch(GetGroupInGroup(data));
       }).catch((error) => {
@@ -129,6 +145,14 @@ export function GetGroupInGroup(data) {
   return {
     type: types.GET_GROUP_IN_GROUP,
     GroupInGroup : data
+  }
+};
+
+export function GroupInGroupClear(data) {
+  return {
+    type: types.GET_GROUP_IN_GROUP_CLEAR,
+    GroupInGroup: data,
+    GroupInGroupAdded: []
   }
 };
 

@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignerListRequest } from "actions/Designer";
-import ScrollDesignerList from "components/Designers/ScrollDesignerList";
+// import ScrollDesignerList from "components/Designers/ScrollDesignerList";
+import ScrollList from "components/Commons/ScrollList";
+import Designer from "components/Designers/Designer";
 
 class ScrollDesignerListContainer extends Component {
+  getList = (page) => {
+    return this.props.GetDesignerListRequest(page, this.props.sort, this.props.cate1, this.props.cate2);
+  }
+
   render() {
     return(
       <div>
-        <ScrollDesignerList {...this.props}/>
+        <ScrollList getListRequest={this.getList} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} columns={5}/>
       </div>
     );
   }
@@ -15,8 +21,8 @@ class ScrollDesignerListContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignerList: state.DesignerList.status.DesignerList,
-    DesignerListAdded: state.DesignerList.status.DesignerListAdded
+    dataList: state.DesignerList.status.DesignerList,
+    dataListAdded: state.DesignerList.status.DesignerListAdded
   };
 };
 
