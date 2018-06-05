@@ -120,9 +120,9 @@ class DesignDetail extends Component {
   onActiveIssue = (e) => {
     const target = e.target;
     if (this.props.location.pathname.indexOf("/issue") === -1) {
-      target.textContent = "★ 공지닫기";
+      target.textContent = "★ 이슈닫기";
     } else {
-      target.textContent = "★ 공지보기";
+      target.textContent = "★ 이슈보기";
     }
   }
 
@@ -170,8 +170,8 @@ class DesignDetail extends Component {
                             onClick={this.onActiveIssue}>
                         <button className="ui button issueBtn">
                           {this.props.location.pathname.indexOf("/issue") === -1
-                          ? "★ 공지보기"
-                          : "★ 공지닫기"
+                          ? "★ 이슈보기"
+                          : "★ 이슈닫기"
                           }
                         </button>
                       </Link>

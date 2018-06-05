@@ -24,7 +24,7 @@ const IssueWrapper = styled(Grid)`
     color: rgba(0,0,0,.4);
     font-weight: 500;
   }
-  & .userInfo .userName {
+  & .userInfo > span {
     margin-right: 20px;
   }
 `;
@@ -59,6 +59,7 @@ class DetailIssueDetail extends Component {
           <div className="userInfo">
             <span className="userName">작성자 : {data.userName}</span>
             <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
+            <span className="status">상태 : {data.is_complete === 0? "진행중" : "완료"}</span>
           </div>
           <TextArea>
             <p>{data.content}</p>
