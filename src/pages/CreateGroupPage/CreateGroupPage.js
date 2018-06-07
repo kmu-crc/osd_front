@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import ClientTemplate from "templates/ClientTemplate";
-import CreateGroup from "components/Groups/CreateGroup";
+import CreateGroupContainer from "containers/Groups/CreateGroupContainer";
 
 class CreateGroupPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <CreateGroup />
+        <CreateGroupContainer />
      </ClientTemplate>
     );
   }

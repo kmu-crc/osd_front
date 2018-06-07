@@ -1,92 +1,61 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Container, Header, Grid, Form } from "semantic-ui-react";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
+import { FormField } from "components/Commons/FormField";
 
 // css styling
 
-const Wrapper = styled.div`
+const FromFieldCard = styled.div`
   width: 100%;
-  min-width: 660px;
-  min-height: 600px;
-  padding: 20px 30px 80px;
-  background-color: #f9f9f9;
+  background-color: white;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+  padding: 40px;
+  margin-bottom: 30px;
 `;
 
-const Header = styled.h2`
-  font-weight: 400;
-  padding-left: 50px;
-  color: #D7382C;
-`;
-
-const Container = styled.form`
-  width: 80%;
-  margin: auto;
-  padding: 20px 0;
+const FormHeader = styled(Header) `
   position: relative;
-  & .red {
+  padding-right: 2.5rem !important;
+  &::after{
     position: absolute;
-    bottom: -60px;
-    left: 50%;
-    margin-left: -44px;
-  }
-`;
-
-const List = styled.div`
-  width: 100%;
-  height: 60px;
-  &:nth-of-type(2) {
-    height: 110px;
-  }
-  & label {
-    font-size: 18px;
     display: block;
-    line-height: 60px;
-    text-align: left;
-    float: left;
-    width: 130px;
-  }
-  & input {
-    height: 30px;
-    width: 70%;
-    margin-top: 10px;
-    float: left;
-  }
-  & .text {
-    height: 80px;
-  }
-  & .file {
-    width: 40%;
-  }
-  & button {
-    padding: 3px 8px;
-    font-size: 18px;
-    background-color: #e9e9e9;
-    color: #343434;
-    margin-top: 10px;
-    margin-left: 10px;
+    right: 2rem;
+    content: "";
+    height: 20px;
+    border-right: 3px solid #191919;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 
 class CreateGroup extends Component {
   render(){
     return(
-      <Wrapper>
-        <Header>새 그룹 등록</Header>
-        <Container>
-          <List>
-            <label>그룹 이름</label>
-            <input name="title" placeholder="그룹 이름을 입력해주세요(최대 16자)"/>
-          </List>
-          <List>
-            <label>그룹 설명</label>
-            <input name="explanation" className="text" placeholder="그룹 설명을 입력해주세요"/>
-          </List>
-          <List>
-            <label>썸네일 업로드</label>
-            <input type="file" className="file"/>
-          </List>
-          <button className="red">그룹 등록</button>
-        </Container>
-      </Wrapper>
+      <Container>
+        <Header as="h1">새 그룹 등록</Header>
+          <ValidateForm onSubmit={this.onSubmitForm}>
+            <FromFieldCard>
+              <Grid>
+                <Grid.Column width={4}>
+                  <FormHeader as="h2">그룹 정보 입력</FormHeader>
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <Form.Group widths="equal">
+                    <FormField name="title" label="그룹 이름" type="text" placeholder="그룹의 이름을 입력해주세요." validates={["required"]} RenderComponent={FormInput} />
+                  </Form.Group>
+                  <Form.Group widths="equal">
+                    <FormField name="explanation" label="그룹 설명" placeholder="그룹 설명을 입력해주세요." RenderComponent={FormTextArea} />
+                  </Form.Group>
+                  <Form.Group widths="equal">
+                    <FormField name="thumbnail" label="썸네일 등록" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
+                  </Form.Group>
+                </Grid.Column>
+              </Grid>
+            </FromFieldCard>
+          </ValidateForm>
+      </Container>
     );
   }
 }

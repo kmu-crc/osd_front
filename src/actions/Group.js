@@ -201,3 +201,69 @@ export function CreateGroupFailure() {
     type: types.CREATE_GROUP_FAILURE
   }
 };
+
+// 그룹에 가입 신청중인 디자인 가져오기
+export function GetWaitingDesignRequest(id) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/waitingDesign`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("waiting design list is >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetWaitingDesign(data));
+    }).catch((error) => {
+      dispatch(GetWaitingDataFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetWaitingDesign(data) {
+  return {
+    type: types.GET_WAITING_DESIGN,
+    waitingDesign: data
+  }
+};
+
+// 그룹에 가입 신청중인 그룹 가져오기
+export function GetWaitingGroupRequest(id) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/waitingGroup`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("waiting group list is >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetWaitingGroup(data));
+    }).catch((error) => {
+      dispatch(GetWaitingDataFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetWaitingGroup(data) {
+  return {
+    type: types.GET_WAITING_GROUP,
+    waitingGroup: data
+  }
+};
+
+export function GetWaitingDataFail() {
+  return {
+    type: types.GET_WAITING_DATA_FAIL,
+    waitingDesign: [],
+    waitingGroup: []
+  }
+};
