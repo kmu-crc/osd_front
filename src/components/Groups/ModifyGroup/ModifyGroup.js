@@ -6,7 +6,6 @@ import ModifyJoinListContainer from "containers/Groups/ModifyJoinListContainer";
 
 // css styling
 
-
 class ModifyGroup extends Component {
   render(){
     return(

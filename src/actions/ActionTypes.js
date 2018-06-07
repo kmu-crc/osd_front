@@ -88,6 +88,9 @@ export const GET_GROUP_IN_GROUP_CLEAR = "GET_GROUP_IN_GROUP_CLEAR";
 export const GROUP_IN_GROUP_FAIL = "GROUP_IN_GROUP_FAIL";
 export const CREATE_NEW_GROUP = "CREATE_NEW_GROUP";
 export const CREATE_GROUP_FAILURE = "CREATE_GROUP_FAILURE";
+export const GET_WAITING_DESIGN = "GET_WAITING_DESIGN";
+export const GET_WAITING_GROUP = "GET_WATING_GROUP";
+export const GET_WAITING_DATA_FAIL = "GET_WAITING_DATA_FAIL";
 
 ////////////////////////////////////////////////////////////////////////////
 // designer
@@ -141,7 +144,7 @@ export const MY_LIKE_DESIGNER_FAIL = "MY_LIKE_DESIGNER_FAIL";
 // search
 ////////////////////////////////////////////////////////////////////////////
 
-// cearch member
+// search member
 export const GET_SEARCH_MEMVER = "GET_SEARCH_MEMBER";
 export const GET_SEARCH_MEMBER_SUCCESS = "GET_SEARCH_MEMBER_SUCCESS";
 export const GET_SEARCH_MEMBER_FAILURE = "GET_SEARCH_MEMBER_FAILURE";

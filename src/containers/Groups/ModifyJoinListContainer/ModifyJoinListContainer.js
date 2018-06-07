@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { GetGroupDetailRequest } from "actions/Group";
-// import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
+ import { GetWaitingDesignRequest, GetWaitingGroupRequest } from "actions/Group";
+ import ModifyJoinList from "components/Groups/ModifyJoinList";
 
 class ModifyJoinListContainer extends Component {
   render() {
     return(
       <div>
-        
+        <ModifyJoinList {...this.props}/>
       </div>
     );
   }
@@ -15,14 +15,19 @@ class ModifyJoinListContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    // GroupDetail: state.GroupDetail.status.GroupDetail,
-    // userInfo: state.Authentication.status.userInfo
+    waitingDesign: state.GroupWaitingList.status.waitingDesign,
+    waitingGroup: state.GroupWaitingList.status.waitingGroup
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    GetWaitingDesignRequest : (id) => {
+      return dispatch(GetWaitingDesignRequest(id))
+    },
+    GetWaitingGroupRequest : (id) => {
+      return dispatch(GetWaitingGroupRequest(id))
+    }
   };
 };
 
