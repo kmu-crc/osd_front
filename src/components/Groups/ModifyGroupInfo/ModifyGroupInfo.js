@@ -44,7 +44,7 @@ class ModifyGroupInfo extends Component {
             </Grid.Column>
             <Grid.Column width={12}>
               <Form.Group widths="equal">
-                <FormField name="title" label="그룹 제목" type="text" validates={["required"]} RenderComponent={FormInput} />
+                <FormField name="title" label="그룹 이름" type="text" validates={["required"]} RenderComponent={FormInput} />
               </Form.Group>
               <Form.Group widths="equal">
                 <FormField name="explanation" label="그룹 설명" RenderComponent={FormTextArea} />
