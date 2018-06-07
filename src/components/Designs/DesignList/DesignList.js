@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
-import Category from "components/Commons/Category";
 import Sorting from "components/Commons/Sorting";
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
 import ContentBox from "components/Commons/ContentBox";
+import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
 
 // css styling
 
@@ -79,7 +79,7 @@ class DesignList extends Component {
         <Wrapper>
           <MenuContainer devided="vertically" padded={true}>
             <Grid.Row>
-              <Category widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
+              <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
               <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} />
             </Grid.Row>
           </MenuContainer>
