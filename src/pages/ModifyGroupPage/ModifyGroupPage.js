@@ -6,7 +6,7 @@ class ModifyGroupPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <ModifyGroup />
+        <ModifyGroup id={this.props.match.params.id}/>
      </ClientTemplate>
     );
   }

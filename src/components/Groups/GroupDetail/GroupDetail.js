@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
@@ -205,7 +205,9 @@ class GroupDetail extends Component {
             <Wrapper padded={false} columns={2}>
               <Grid.Row>
               { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
-                <button className="edit">그룹 정보 수정</button> 
+                <Link to={`/groupDetail/${groupDetail.uid}/modify`}>
+                  <button className="edit">그룹 정보 수정</button>
+                </Link>
                 : <div></div>
               }
               </Grid.Row>

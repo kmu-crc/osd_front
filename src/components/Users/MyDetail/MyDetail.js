@@ -178,8 +178,7 @@ class MyDetail extends Component {
 
     const ContainerPage = () => {
       return(
-        <MyDesignContainer token={this.props.token}>
-        </MyDesignContainer>
+        <MyDesignContainer token={this.props.token}></MyDesignContainer>
       );
     }
 
