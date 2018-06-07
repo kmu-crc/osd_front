@@ -39,6 +39,13 @@ export function DesignerDetail(state, action) {
           DesignInDesignerAdded: { $set: action.DesignInDesigner }
         }
       });
+    case types.DESIGN_IN_DESIGNER_FAIL:
+      return update(state, {
+        status: {
+          DesignInDesigner: { $set: action.DesignInDesigner },
+          DesignInDesignerAdded: { $set: action.DesignInDesignerAdded }
+        }
+      });
     case types.GET_LIKE_IN_DESIGNER:
       return update(state, {
         status: {
@@ -51,6 +58,13 @@ export function DesignerDetail(state, action) {
         status: {
           LikeInDesigner: { $set: action.LikeInDesigner },
           LikeInDesignerAdded: { $set: action.LikeInDesigner }
+        }
+      });
+    case types.LIKE_IN_DESIGNER_FAIL:
+      return update(state, {
+        status: {
+          LikeInDesigner: { $set: action.LikeInDesigner },
+          LikeInDesignerAdded: { $set: action.LikeInDesignerAdded }
         }
       });
     default:

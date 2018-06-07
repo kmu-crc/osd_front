@@ -29,7 +29,14 @@ export function GroupList(state, action) {
             GroupList: { $set: action.GroupList },
             GroupListAdded: { $set: action.GroupList }
           }
-        })
+        });
+      case types.GROUP_LIST_FAIL:
+        return update(state, {
+          status: {
+            GroupList: { $set: action.GroupList },
+            GroupListAdded: { $set: action.GroupListAdded }
+          }
+        });
     default:
       return state;
   }

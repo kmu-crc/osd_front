@@ -16,8 +16,7 @@ class MyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyDetail: state.MyDetail.status.MyDetail,
-    MyDesign: state.MyDetail.status.MyDesign
+    MyDetail: state.MyDetail.status.MyDetail
   };
 };
 
@@ -26,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
     GetMyDetailRequest: (token) => {
       return dispatch(GetMyDetailRequest(token));
     },
-    GetMyDesignListRequest: (token) => {
-      return dispatch(GetMyDesignListRequest(token));
+    GetMyDesignListRequest: (token, page) => {
+      return dispatch(GetMyDesignListRequest(token, page));
     }
   };
 };

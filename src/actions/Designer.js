@@ -96,6 +96,7 @@ export function GetDesignInDesignerRequest(id, page) {
         }
         dispatch(GetDesignInDesigner(data));
       }).catch((error) => {
+        dispatch(DesignInDesignerFail());
         console.log("err", error);
       })
   }
@@ -112,6 +113,14 @@ export function DesignInDesignerClear(data) {
   return {
     type: types.GET_DESIGN_IN_DESIGNER_CLEAR,
     DesignInDesigner: data,
+    DesignInDesignerAdded: []
+  }
+};
+
+export function DesignInDesignerFail() {
+  return {
+    type: types.DESIGN_IN_DESIGNER_FAIL,
+    DesignInDesigner: [],
     DesignInDesignerAdded: []
   }
 };
@@ -136,6 +145,7 @@ export function GetLikeInDesignerRequest(id, page) {
         }
         dispatch(GetLikeInDesigner(data));
       }).catch((error) => {
+        dispatch(LikeInDesignerFail());
         console.log("err", error);
       })
   }
@@ -152,6 +162,14 @@ export function LikeInDesignerClear(data) {
   return {
     type: types.GET_LIKE_IN_DESIGNER_CLEAR,
     LikeInDesigner: data,
+    LikeInDesignerAdded: []
+  }
+};
+
+export function LikeInDesignerFail() {
+  return {
+    type: types.LIKE_IN_DESIGNER_FAIL,
+    LikeInDesigner: [],
     LikeInDesignerAdded: []
   }
 };

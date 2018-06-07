@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyDesignListRequest } from "actions/Users/MyDetail";
-import ContentList from "components/Commons/ContentList";
+import ScrollList from "components/Commons/ScrollList";
+import Design from "components/Designs/Design";
 
 class MyDesignContainer extends Component {
+
+  getList = (page) => {
+    return this.props.GetMyDesignListRequest(this.props.token, page);
+  }
+
   render() {
     return(
       <div>
-        <ContentList data={this.props.MyDesign} columns={4} type="design"/>
+        <ScrollList getListRequest={this.getList} 
+                    ListComponent={Design} 
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
+                    mobile={8} tablet={8} computer={5} largeScreen={4} widescreen={4} customClass="largeCustom"/>
       </div>
     );
   }
@@ -15,14 +24,15 @@ class MyDesignContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyDesign: state.MyDetail.status.MyDesign
+    dataList: state.MyDetail.status.MyDesign,
+    dataListAdded: state.MyDetail.status.MyDesignAdded
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetMyDesignListRequest: (token) => {
-      return dispatch(GetMyDesignListRequest(token));
+    GetMyDesignListRequest: (token, page) => {
+      return dispatch(GetMyDesignListRequest(token, page));
     }
   };
 };

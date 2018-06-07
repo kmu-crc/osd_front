@@ -96,6 +96,7 @@ export function GetDesignInGroupRequest(id, page, sort) {
         }
         dispatch(GetDesignInGroup(data));
       }).catch((error) => {
+        dispatch(DesignInGroupFail());
         console.log("err", error);
       });
   }
@@ -112,6 +113,14 @@ export function DesignInGroupClear(data) {
   return {
     type: types.GET_DESIGN_IN_GROUP_CLEAR,
     DesignInGroup: data,
+    DesignInGroupAdded: []
+  }
+};
+
+export function DesignInGroupFail() {
+  return {
+    type: types.DESIGN_IN_GROUP_FAIL,
+    DesignInGroup: [],
     DesignInGroupAdded: []
   }
 };
@@ -136,6 +145,7 @@ export function GetGroupInGroupRequest(id, page, sort) {
         }
         dispatch(GetGroupInGroup(data));
       }).catch((error) => {
+        dispatch(GroupInGroupFail());
         console.log("err", error);
       });
   }
@@ -152,6 +162,14 @@ export function GroupInGroupClear(data) {
   return {
     type: types.GET_GROUP_IN_GROUP_CLEAR,
     GroupInGroup: data,
+    GroupInGroupAdded: []
+  }
+};
+
+export function GroupInGroupFail() {
+  return {
+    type: types.GROUP_IN_GROUP_FAIL,
+    GroupInGroup: [],
     GroupInGroupAdded: []
   }
 };

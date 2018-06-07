@@ -39,6 +39,13 @@ export function GroupDetail(state, action) {
           DesignInGroupAdded: { $set: action.DesignInGroup }
         }
       });
+    case types.DESIGN_IN_GROUP_FAIL:
+      return update(state, {
+        status: {
+          DesignInGroup: { $set: action.DesignInGroup },
+          DesignInGroupAdded: { $set: action.DesignInGroupAdded }
+        }
+      });
     case types.GET_GROUP_IN_GROUP:
       return update(state, {
         status: {
@@ -52,7 +59,14 @@ export function GroupDetail(state, action) {
           GroupInGroup: { $set: action.GroupInGroup },
           GroupInGroupAdded: { $set: action.GroupInGroup }
         }
-      })
+      });
+    case types.GROUP_IN_GROUP_FAIL:
+      return update(state, {
+        status: {
+          GroupInGroup: { $set: action.GroupInGroup },
+          GroupInGroupAdded: { $set: action.GroupInGroupAdded }
+        }
+      });
     default:
       return state;
   }

@@ -4,20 +4,16 @@ import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import DesignInDesignerContainer from "containers/Designer/DesignInDesignerContainer";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer";
-import eximg from "source/topDesigner.jpeg";
-
 
 // css styling
 
 const Container = styled.div`
   width: 95%;
   margin: auto;
-  min-width: 660px;
 `;
 
 const Wrapper = styled(Grid)`
   width: 100%;
-  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   &.ui.grid {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -35,6 +31,9 @@ const Wrapper = styled(Grid)`
   & .edit button {
     padding: 7px 14px;
     border-radius: 3px;
+  }
+  & .contentRow {
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   }
 `;
 
@@ -142,7 +141,7 @@ const ContentBox = styled.div`
     width: 470px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 546px;
+    width: 450px;
   }
   @media only screen and (min-width: 992px){
     width: 705px;
@@ -151,7 +150,7 @@ const ContentBox = styled.div`
     width: 855px;
   }
   @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 996px;
+    width: 900px;
   }
   @media only screen and (max-width: 1919px) and (min-width: 1700px){
     width: 1210px;
@@ -201,12 +200,11 @@ class DesignerDetail extends Component {
                 : <div></div>
               }
               </Grid.Row>
-              <Grid.Row>
-                <HeadContainer width={4}>
+              <Grid.Row className="contentRow">
+                <HeadContainer mobile={16} tablet={4} computer={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      {/* <div>{designerDetail.thumbnailUrl? <img src={designerDetail.thumbnailUrl.s_img} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div> */}
-                      <div><img src={eximg}/></div>
+                      <div>{designerDetail.thumbnailUrl? <img src={designerDetail.thumbnailUrl.s_img} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{designerDetail.nick_name}</h3>
@@ -238,16 +236,16 @@ class DesignerDetail extends Component {
                     <p className="explanation">{designerDetail.explanation}</p>
                   </InfoSection>
                 </HeadContainer>
-                <TabContainer width={12}>
+                <TabContainer mobile={16} tablet={12} computer={12}>
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
                         <li id="design"
                             className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
-                            onClick={this.typeChange}>디자인</li>
+                            onClick={this.typeChange}>등록 디자인</li>
                         <li id="like"
                             className={this.props.type === "like"? "onSelected" : ""}
-                            onClick={this.typeChange}>좋아요한 디자인</li>
+                            onClick={this.typeChange}>관심 디자인</li>
                         <div className="clear"></div>
                       </Grid.Column>
                     </Grid.Row>

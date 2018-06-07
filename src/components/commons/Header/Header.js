@@ -71,7 +71,7 @@ class Header extends Component {
     const LoginNav = () => {
       return (
         <NavUserInterface>
-          <NavItem><a href="/mypage">{this.props.userInfo.nickName}</a></NavItem>
+          <NavItem><a href="/myPage">{this.props.userInfo.nickName}</a></NavItem>
           <NavItem><button onClick={this.handleSignOut}>SignOut</button></NavItem>
         </NavUserInterface>
       )

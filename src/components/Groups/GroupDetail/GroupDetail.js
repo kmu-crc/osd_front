@@ -5,19 +5,16 @@ import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
 import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
-import eximg from "source/topGroup.jpeg";
 
 // css styling
 
 const Container = styled.div`
   width: 95%;
   margin: auto;
-  min-width: 660px;
 `;
 
 const Wrapper = styled(Grid)`
   width: 100%;
-  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   &.ui.grid {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -32,9 +29,12 @@ const Wrapper = styled(Grid)`
     height: 30px;
     margin-bottom: 5px;
   }
-  & .edit button {
+  & button.edit {
     padding: 7px 14px;
     border-radius: 3px;
+  }
+  & .contentRow {
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   }
 `;
 
@@ -142,7 +142,7 @@ const ContentBox = styled.div`
     width: 470px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 546px;
+    width: 450px;
   }
   @media only screen and (min-width: 992px){
     width: 705px;
@@ -151,7 +151,7 @@ const ContentBox = styled.div`
     width: 855px;
   }
   @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 996px;
+    width: 900px;
   }
   @media only screen and (max-width: 1919px) and (min-width: 1700px){
     width: 1210px;
@@ -203,18 +203,17 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <Container>
             <Wrapper padded={false} columns={2}>
-              <Grid.Row className="edit">
+              <Grid.Row>
               { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
-                <button>그룹 정보 수정</button> 
+                <button className="edit">그룹 정보 수정</button> 
                 : <div></div>
               }
               </Grid.Row>
-              <Grid.Row>
-                <HeadContainer width={4}>
+              <Grid.Row className="contentRow">
+                <HeadContainer mobile={16} tablet={4} computer={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      {/* <div><img src={groupDetail.thumbnailUrl? groupDetail.thumbnailUrl.s_img : "등록된 이미지 없음"}</div> */}
-                      <div><img src={eximg}/></div>
+                      <div>{groupDetail.thumbnailUrl? <img src= {groupDetail.thumbnailUrl.s_img} alt="그룹 이미지"/> : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
@@ -250,7 +249,7 @@ class GroupDetail extends Component {
                     <p className="explanation">{groupDetail.explanation}</p>
                   </InfoSection>
                 </HeadContainer>
-                <TabContainer width={12}>
+                <TabContainer mobile={16} tablet={12} computer={12}>
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">

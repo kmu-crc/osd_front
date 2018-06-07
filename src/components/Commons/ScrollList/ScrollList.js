@@ -22,6 +22,7 @@ class ScrollList extends Component {
         hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true
       });
     }).catch((err)=>{
+      console.log(err);
       this.setState({
         hasMore: false
       });

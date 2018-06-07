@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyLikeDesignRequest } from "actions/Users/MyDetail";
-import ContentList from "components/Commons/ContentList";
+import ScrollList from "components/Commons/ScrollList";
+import Design from "components/Designs/Design";
 
 class MyLikeDesignContainer extends Component {
-  componentWillMount() {
-    this.props.GetMyLikeDesignRequest(this.props.location.state.token);
+
+  getList = (page) => {
+    return this.props.GetMyLikeDesignRequest(this.props.location.state.token, page);
   }
 
   render() {
     return(
       <div>
-        <ContentList data={this.props.MyLikeDesign} columns={4} type="design"/>
+        <ScrollList getListRequest={this.getList} 
+                    ListComponent={Design} 
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
+                    mobile={8} tablet={8} computer={5} largeScreen={4} widescreen={4} customClass="largeCustom"/>
       </div>
     );
   }
@@ -19,14 +24,15 @@ class MyLikeDesignContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyLikeDesign: state.MyDetail.status.MyLikeDesign
+    dataList: state.MyDetail.status.MyLikeDesign,
+    dataListAdded: state.MyDetail.status.MyLikeDesignAdded
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetMyLikeDesignRequest: (token) => {
-      return dispatch(GetMyLikeDesignRequest(token));
+    GetMyLikeDesignRequest: (token, page) => {
+      return dispatch(GetMyLikeDesignRequest(token, page));
     }
   };
 };
