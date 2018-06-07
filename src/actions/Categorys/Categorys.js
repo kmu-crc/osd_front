@@ -14,7 +14,8 @@ export function GetCategoryLevel1Request() {
         console.log("cateogry1", res);
         let category = res.category.map( data => {
           return { text: data.name, value: data.uid };
-        })
+        });
+        category.unshift( {text: "전체", value: 0} );
         return dispatch(GetCategoryLevel1Success(category));
       }).catch((error) => {
         return dispatch(GetCategoryLevel1Failure());
@@ -53,8 +54,9 @@ export function GetCategoryLevel2Request(id) {
         .then(function (res) {
           let category = res.category.map( data => {
             return { text: data.name, value: data.uid };
-          })
-            return dispatch(GetCategoryLevel2Success(category));
+          });
+          category.unshift( {text: "전체", value: 0} );
+          return dispatch(GetCategoryLevel2Success(category));
         }).catch((error) => {
           return dispatch(GetCategoryLevel2Failure());
         })

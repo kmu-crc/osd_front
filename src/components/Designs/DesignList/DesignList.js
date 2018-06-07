@@ -60,13 +60,13 @@ class DesignList extends Component {
     this.changeState();
   }
 
-  cate1Change = (e, { value }) => {
+  cate1Change = (value) => {
     this.props.history.replace(`/design/${this.props.sort}/${value}/${null}`);
     this.props.GetDesignListRequest(0, this.props.sort, value, null);
     this.changeState();
   }
 
-  cate2Change = (e, { value }) => {
+  cate2Change = (value) => {
     this.props.history.replace(`/design/${this.props.sort}/${this.props.cate1}/${value}`);
     this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, value);
     this.changeState();
