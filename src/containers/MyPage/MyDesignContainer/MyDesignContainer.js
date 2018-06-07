@@ -5,8 +5,8 @@ import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 
 class MyDesignContainer extends Component {
-
   getList = (page) => {
+    console.log("get list");
     return this.props.GetMyDesignListRequest(this.props.token, page);
   }
 

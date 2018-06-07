@@ -54,6 +54,10 @@ class DesignList extends Component {
     }, 200);
   }
 
+  shouldComponentUpdate(){
+    return false;
+  }
+
   sortChange = (e, { value }) => {
     this.props.history.replace(`/design/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.props.GetDesignListRequest(0, value, this.props.cate1, this.props.cate2);

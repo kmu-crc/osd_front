@@ -15,11 +15,19 @@ class Category extends Component {
   componentWillMount() {
     this.props.GetCategoryLevel1Request();
   };
+  
   onChangeCategory1 = (value) => {
+    if (value === 0) {
+      value = null;
+    }
     this.props.GetCategoryLevel2Request(value);
     this.props.handleCate1(value);
   }
+
   onChangeCategory2 = (value) => {
+    if (value === 0) {
+      value = null;
+    }
     this.props.handleCate2(value);
   };
 

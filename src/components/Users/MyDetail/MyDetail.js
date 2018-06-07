@@ -164,6 +164,7 @@ class MyDetail extends Component {
 
   render(){
     let MyInfo = this.props.MyDetail;
+    console.log(MyInfo);
     let count;
     if (MyInfo.count != null) {
       count = MyInfo.count;
@@ -177,6 +178,8 @@ class MyDetail extends Component {
     }
 
     const ContainerPage = () => {
+      console.log(this.props.MyDetail);
+      console.log("work");
       return(
         <MyDesignContainer token={this.props.token}></MyDesignContainer>
       );
