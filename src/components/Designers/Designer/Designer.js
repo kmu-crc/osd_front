@@ -82,7 +82,7 @@ class designer extends Component {
         <Designerli>
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
-            <div className="cate">{designer.categoryName}</div>
+            <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
             <div className="userName">{designer.nick_name}</div>
             <div className="date">2018-04-01 부터 활동</div>
           </TextPart>
