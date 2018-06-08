@@ -217,7 +217,7 @@ class DesignDetail extends Component {
                 </Grid.Row>
               </HeadContainer>
               <TabContainer>
-                <Route exact path={this.props.match.url}
+                <Route exact path="/designDetail/:id"
                   component={designDetail.is_project == 1 ? DesignDetailStepContainer
                     : DesignDetailViewContainer} />
                 <Route exact path={this.props.match.url + "/issue"} component={DesignDetailIssueContainer} />
