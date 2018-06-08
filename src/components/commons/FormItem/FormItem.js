@@ -121,6 +121,7 @@ export class FormInput extends Component {
     this.setState({ value: target.value });
     checkValidate(target.value, this.props.validates).then(data => {
       if(this.props.getValue && data.status === "SUCCESS") this.props.getValue(target.value);
+      if(this.props.onBlur && data.status === "SUCCESS") this.props.onBlur();
       this.setState(data);
     })
   }
@@ -129,7 +130,7 @@ export class FormInput extends Component {
     const { type, name, placeholder } = this.props;
     return (
       <div>
-        <input status={this.state.status} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <input status={this.state.status} {...this.props} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
@@ -155,7 +156,7 @@ export class FormRadio extends Component {
     return (
       <div>
         <RadioLabel className={value === currentValue ? "checked" : null} htmlFor={name} onClick={this.onChangeRadio}>{placeholder}</RadioLabel>
-        <input status={this.state.status} id={name} type="radio" style={{ display: "none" }} name={name} value={value} placeholder={placeholder} readOnly checked={value === currentValue} />
+        <input status={this.state.status} {...this.props} id={name} type="radio" style={{ display: "none" }} name={name} value={value} placeholder={placeholder} readOnly checked={value === currentValue} />
       </div>
     );
   }
@@ -187,7 +188,7 @@ export class FormCheckBox extends Component {
     return (
       <div>
         <CheckBoxLabel className={this.state.checked ? "checked" : null} htmlFor={name}>{placeholder}</CheckBoxLabel>
-        <input status={this.state.status} id={name} type="checkbox" style={{ display: "none" }} name={name} placeholder={placeholder} checked={this.state.checked} onChange={this.onChangeCheckBox} />
+        <input status={this.state.status} {...this.props} id={name} type="checkbox" style={{ display: "none" }} name={name} placeholder={placeholder} checked={this.state.checked} onChange={this.onChangeCheckBox} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
@@ -221,7 +222,7 @@ export class FormTextArea extends Component {
     const { name, placeholder } = this.props;
     return (
       <div>
-        <textarea status={this.state.status} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}></textarea>
+        <textarea status={this.state.status} name={name} {...this.props} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}></textarea>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
@@ -270,7 +271,7 @@ export class FormSelect extends Component {
     const { name, options } = this.props;
     return (
       <div>
-        <select style={{ display: "none" }} readOnly status={this.state.status} value={this.state.value} name={name} >
+        <select style={{ display: "none" }} {...this.props} readOnly status={this.state.status} value={this.state.value} name={name} >
           {options ? options.map(data => {
             return <option key={data.text} value={data.value}>{data.text}</option>
           }) : null}
@@ -329,7 +330,7 @@ export class FormFile extends Component {
 
           }
         </UploaderButton>
-        <input style={{display: "none"}} status={this.state.status} id={id || name} type="file" name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <input style={{display: "none"}} {...this.props} status={this.state.status} id={id || name} type="file" name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
