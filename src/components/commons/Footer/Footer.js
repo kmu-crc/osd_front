@@ -7,6 +7,7 @@ import { Grid } from "semantic-ui-react";
 
 const Foot = styled.footer`
   background-color: #191919;
+  position: fixed;
   bottom: 0px;
   width: 100%;
   color: #fff;
