@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignDetailStepRequest } from "actions/Design";
+import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 import DetailStep from "components/Designs/DetailStep";
 
 class DesignDetailStepContainer extends Component {
-
-  componentDidMount() {
-    this.props.GetDesignDetailStepRequest(this.props.id);
-  }
-
   render() {
     return (
       <div>
-        <DetailStep DesignDetailStep={this.props.DesignDetailStep} />
+        <DetailStep {...this.props} />
       </div>
     );
   }
@@ -26,8 +22,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignDetailStepRequest: (id) => {
-      return dispatch(GetDesignDetailStepRequest(id))
+    GetDesignBoardRequest: (id) => {
+      return dispatch(GetDesignBoardRequest(id))
     }
   };
 };
