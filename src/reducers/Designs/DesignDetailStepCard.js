@@ -6,7 +6,7 @@ const initialState = {
     status: "INIT"
   },
   status: {
-    DesignDetailStepCard: [],
+    DesignDetailStepCard: {},
   }
 };
 
@@ -15,12 +15,30 @@ export function DesignDetailStepCard(state, action) {
     state = initialState;
 
   switch (action.type) {
-    case types.GET_DESIGN_DETAIL_STEP_CARD:
+    case types.GET_CARD_DETAIL:
       return update(state, {
-        status: {
-          DesignDetailStepCard: { $set: action.DesignDetailStepCard }
+        DesignDetailStepCard: {
+          $set: "WATING"
         }
-      });
+      })
+    case types.GET_CARD_DETAIL_SUCCESS:
+      return update(state, {
+        DesignDetailStepCard: {
+          $set: "SUCCESS"
+        },
+        status: {
+          DesignDetailStepCard: { $set: action.detail }
+        }
+      })
+    case types.GET_CARD_DETAIL_FAILURE:
+      return update(state, {
+        DesignDetailStepCard: {
+          $set: "FAILURE"
+        },
+        status: {
+          DesignDetailStepCard: { $set: {} }
+        }
+      })
     default:
       return state;
   }
