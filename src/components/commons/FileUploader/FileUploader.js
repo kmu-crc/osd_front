@@ -65,7 +65,7 @@ class FileUploader extends Component {
       <div>
         {
           this.state.display
-            ? <FormFile id={id} type="file" fileUploader={true} style={{ display: "none" }} placeholder={placeholder} name={`${name}[]`} onChange={this.addImages} validates={validates} />
+            ? <FormFile id={id} type="file" style={{ display: "none" }} placeholder={placeholder} name={`${name}[]`} onChange={this.addImages} validates={validates} />
             : null
         }
         <FilesWrap>
