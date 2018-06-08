@@ -33,6 +33,10 @@ body {
 .dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
   display: flex!important;
 }
+
+.ui.modal.transition.visible.active{
+  margin: 1rem auto!important
+}
 .ui.form .fields, .ui.form .field{
   margin-bottom: 3rem;
 }
@@ -43,6 +47,10 @@ body {
 
 label.checked::after{
   content: "\f00c";
+}
+
+.ui.form textarea:not([rows]){
+  height: initial;
 }
 
 @media only screen and (max-width: 1399px) and (min-width: 1200px){
