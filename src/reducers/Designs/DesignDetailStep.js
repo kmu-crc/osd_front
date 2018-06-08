@@ -15,12 +15,30 @@ export function DesignDetailStep(state, action) {
     state = initialState;
 
   switch (action.type) {
-    case types.GET_DESIGN_DETAIL_STEP:
+    case types.GET_BOARD:
       return update(state, {
-        status: {
-          DesignDetailStep: { $set: action.DesignDetailStep }
+        DesignDetailStep: {
+          $set: "WATING"
         }
-      });
+      })
+    case types.GET_BOARD_SUCCESS:
+      return update(state, {
+        DesignDetailStep: {
+          $set: "SUCCESS"
+        },
+        status: {
+          DesignDetailStep: { $set: action.list }
+        }
+      })
+    case types.GET_BOARD_FAILURE:
+      return update(state, {
+        DesignDetailStep: {
+          $set: "FAILURE"
+        },
+        status: {
+          DesignDetailStep: { $set: [] }
+        }
+      })
     default:
       return state;
   }
