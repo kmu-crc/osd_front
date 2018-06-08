@@ -76,6 +76,48 @@ export const CREATE_BOARD = "CREATE_BOARD";
 export const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS";
 export const CREATE_BOARD_FAILURE = "CREATE_BOARD_FAILURE";
 
+// Get Board
+export const GET_BOARD = "GET_BOARD";
+export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
+export const GET_BOARD_FAILURE = "GET_BOARD_FAILURE";
+
+// create card
+export const CREATE_CARD = "CREATE_CARD";
+export const CREATE_CARD_SUCCESS = "CREATE_CARD_SUCCESS";
+export const CREATE_CARD_FAILURE = "CREATE_CARD_FAILURE";
+
+// Get card
+export const GET_CARD = "GET_CARD";
+export const GET_CARD_SUCCESS = "GET_CARD_SUCCESS";
+export const GET_CARD_FAILURE = "GET_CARD_FAILURE";
+
+// Get card detail
+export const GET_CARD_DETAIL = "GET_CARD_DETAIL";
+export const GET_CARD_DETAIL_SUCCESS = "GET_CARD_DETAIL_SUCCESS";
+export const GET_CARD_DETAIL_FAILURE = "GET_CARD_DETAIL_FAILURE";
+
+// update card title
+export const UPDATE_CARD_TITLE = "UPDATE_CARD_TITLE";
+export const UPDATE_CARD_TITLE_SUCCESS = "UPDATE_CARD_TITLE_SUCCESS";
+export const UPDATE_CARD_TITLE_FAILURE = "UPDATE_CARD_TITLE_FAILURE";
+
+// update card content
+export const UPDATE_CARD_CONTENT = "UPDATE_CARD_CONTENT";
+export const UPDATE_CARD_CONTENT_SUCCESS = "UPDATE_CARD_CONTENT_SUCCESS";
+export const UPDATE_CARD_CONTENT_FAILURE = "UPDATE_CARD_CONTENT_FAILURE";
+
+// update card images
+export const UPDATE_CARD_IMAGES = "UPDATE_CARD_IMAGES";
+export const UPDATE_CARD_IMAGES_SUCCESS = "UPDATE_CARD_IMAGES_SUCCESS";
+export const UPDATE_CARD_IMAGES_FAILURE = "UPDATE_CARD_IMAGES_FAILURE";
+
+// update card sources
+export const UPDATE_CARD_SOURCES = "UPDATE_CARD_SOURCES";
+export const UPDATE_CARD_SOURCES_SUCCESS = "UPDATE_CARD_SOURCES_SUCCESS";
+export const UPDATE_CARD_SOURCES_FAILURE = "UPDATE_CARD_SOURCES_FAILURE";
+
+
+
 ////////////////////////////////////////////////////////////////////////////
 // group
 ////////////////////////////////////////////////////////////////////////////
