@@ -12,9 +12,10 @@ export function GetCategoryLevel1Request() {
       })
       .then(function (res) {
         console.log("cateogry1", res);
-        let category = res.category.map( data => {
+        let category = res.category.map(data => {
           return { text: data.name, value: data.uid };
         })
+        category.unshift({ text: "전체", value: 0 });
         return dispatch(GetCategoryLevel1Success(category));
       }).catch((error) => {
         return dispatch(GetCategoryLevel1Failure());
@@ -29,11 +30,11 @@ export function GetCategoryLevel1() {
 };
 
 export function GetCategoryLevel1Success(category) {
-    return {
-      type: types.GET_CATEGORY_LEVEL1_SUCCESS,
-      category: category
-    }
-  };
+  return {
+    type: types.GET_CATEGORY_LEVEL1_SUCCESS,
+    category: category
+  }
+};
 
 export function GetCategoryLevel1Failure() {
   return {
@@ -42,40 +43,41 @@ export function GetCategoryLevel1Failure() {
 };
 
 export function GetCategoryLevel2Request(id) {
-    return (dispatch) => {
-      dispatch(GetCategoryLevel2());
+  return (dispatch) => {
+    dispatch(GetCategoryLevel2());
 
-      return fetch(`${host}/categorys/getCategoryLevel2/${id}`, { method: "GET" })
-        .then(function (res) {
-          console.log("res", res);
-          return res.json();
-        })
-        .then(function (res) {
-          let category = res.category.map( data => {
-            return { text: data.name, value: data.uid };
-          })
-            return dispatch(GetCategoryLevel2Success(category));
-        }).catch((error) => {
-          return dispatch(GetCategoryLevel2Failure());
-        })
-    }
-  };
+    return fetch(`${host}/categorys/getCategoryLevel2/${id}`, { method: "GET" })
+      .then(function (res) {
+        console.log("res", res);
+        return res.json();
+      })
+      .then(function (res) {
+        let category = res.category.map(data => {
+          return { text: data.name, value: data.uid };
+        });
+        category.unshift({ text: "전체", value: 0 });
+        return dispatch(GetCategoryLevel2Success(category));
+      }).catch((error) => {
+        return dispatch(GetCategoryLevel2Failure());
+      })
+  }
+};
 
-  export function GetCategoryLevel2() {
-    return {
-      type: types.GET_CATEGORY_LEVEL2
-    }
-  };
+export function GetCategoryLevel2() {
+  return {
+    type: types.GET_CATEGORY_LEVEL2
+  }
+};
 
-  export function GetCategoryLevel2Success(category) {
-      return {
-        type: types.GET_CATEGORY_LEVEL2_SUCCESS,
-        category: category
-      }
-    };
+export function GetCategoryLevel2Success(category) {
+  return {
+    type: types.GET_CATEGORY_LEVEL2_SUCCESS,
+    category: category
+  }
+};
 
-  export function GetCategoryLevel2Failure() {
-    return {
-      type: types.GET_CATEGORY_LEVEL2_FAILURE
-    }
-  };
+export function GetCategoryLevel2Failure() {
+  return {
+    type: types.GET_CATEGORY_LEVEL2_FAILURE
+  }
+};
