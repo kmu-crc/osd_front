@@ -32,7 +32,7 @@ const ImgPart = styled.div`
 
 const TextPart = styled.div`
   padding: 10px 10px;
-  & .title, & .userName {
+  & .userName {
     line-height: 1.35;
   }
   & .title {
@@ -73,7 +73,7 @@ const Count = styled.div`
 
 class Design extends Component {
   render() {
-    let design = this.props.design;
+    let design = this.props.data;
     let user = this.props.user;
     return (
       <NavLink to={"/designDetail/" + design.uid}>

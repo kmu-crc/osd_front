@@ -8,7 +8,9 @@ const initialState = {
   status: {
     DesignerDetail: [],
     DesignInDesigner: [],
-    LikeInDesigner: []
+    DesignInDesignerAdded: [],
+    LikeInDesigner: [],
+    LikeInDesignerAdded: []
   }
 };
 
@@ -26,13 +28,43 @@ export function DesignerDetail(state, action) {
     case types.GET_DESIGN_IN_DESIGNER:
       return update(state, {
         status: {
-          DesignInDesigner: { $set: action.DesignInDesigner }
+          DesignInDesigner: { $set: action.DesignInDesigner },
+          DesignInDesignerAdded: { $push: action.DesignInDesigner }
+        }
+      });
+    case types.GET_DESIGN_IN_DESIGNER_CLEAR:
+      return update(state, {
+        status: {
+          DesignInDesigner: { $set: action.DesignInDesigner },
+          DesignInDesignerAdded: { $set: action.DesignInDesigner }
+        }
+      });
+    case types.DESIGN_IN_DESIGNER_FAIL:
+      return update(state, {
+        status: {
+          DesignInDesigner: { $set: action.DesignInDesigner },
+          DesignInDesignerAdded: { $set: action.DesignInDesignerAdded }
         }
       });
     case types.GET_LIKE_IN_DESIGNER:
       return update(state, {
         status: {
-          LikeInDesigner: { $set: action.LikeInDesigner }
+          LikeInDesigner: { $set: action.LikeInDesigner },
+          LikeInDesignerAdded: { $push: action.LikeInDesigner }
+        }
+      });
+    case types.GET_LIKE_IN_DESIGNER_CLEAR:
+      return update(state, {
+        status: {
+          LikeInDesigner: { $set: action.LikeInDesigner },
+          LikeInDesignerAdded: { $set: action.LikeInDesigner }
+        }
+      });
+    case types.LIKE_IN_DESIGNER_FAIL:
+      return update(state, {
+        status: {
+          LikeInDesigner: { $set: action.LikeInDesigner },
+          LikeInDesignerAdded: { $set: action.LikeInDesignerAdded }
         }
       });
     default:

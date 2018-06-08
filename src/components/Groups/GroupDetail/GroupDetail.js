@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Route, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
@@ -11,12 +11,10 @@ import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
 const Container = styled.div`
   width: 95%;
   margin: auto;
-  min-width: 660px;
 `;
 
 const Wrapper = styled(Grid)`
   width: 100%;
-  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   &.ui.grid {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -31,9 +29,12 @@ const Wrapper = styled(Grid)`
     height: 30px;
     margin-bottom: 5px;
   }
-  & .edit button {
+  & button.edit {
     padding: 7px 14px;
     border-radius: 3px;
+  }
+  & .contentRow {
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   }
 `;
 
@@ -57,6 +58,10 @@ const ProfileSection = styled.div`
     border: 1px solid rgba(0,0,0,0.25);
     overflow: hidden;
   }
+  & .imgContainer > div img {
+    width: auto;
+    height: 100%
+  }
   & .title {
     min-height: 80px;
     font-weight: bold;
@@ -70,12 +75,9 @@ const ProfileSection = styled.div`
     font-weight: bold;
   }
   & .btnContainer {
-    height: 60px;
-    line-height: 60px;
     text-align: center;
     & button {
-      margin-left: 10px;
-      margin-right: 10px;
+      margin: .5rem 1rem;
     }
   }
 `; 
@@ -135,8 +137,28 @@ const Head = styled(Grid)`
 `;
 
 const ContentBox = styled.div`
-  width: 100%;
-  padding: 0 3rem;
+  margin: 0 auto;
+  @media only screen and (max-width: 767px) and (min-width: 320px){
+    width: 470px;
+  }
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    width: 450px;
+  }
+  @media only screen and (min-width: 992px){
+    width: 705px;
+  }
+  @media only screen and (max-width: 1399px) and (min-width: 1200px){
+    width: 855px;
+  }
+  @media only screen and (max-width: 1699px) and (min-width: 1400px){
+    width: 900px;
+  }
+  @media only screen and (max-width: 1919px) and (min-width: 1700px){
+    width: 1210px;
+  }
+  @media only screen and (min-width: 1920px){
+    width: 1368px;
+  }
 `;
 
 
@@ -181,17 +203,19 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <Container>
             <Wrapper padded={false} columns={2}>
-              <Grid.Row className="edit">
+              <Grid.Row>
               { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
-                <button>그룹 정보 수정</button> 
+                <Link to={`/groupDetail/${groupDetail.uid}/modify`}>
+                  <button className="edit">그룹 정보 수정</button>
+                </Link>
                 : <div></div>
               }
               </Grid.Row>
-              <Grid.Row>
-                <HeadContainer width={4}>
+              <Grid.Row className="contentRow">
+                <HeadContainer mobile={16} tablet={4} computer={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{groupDetail.thumbnailUrl? groupDetail.thumbnailUrl.s_img : "등록된 이미지 없음"}</div>
+                      <div>{groupDetail.thumbnailUrl? <img src= {groupDetail.thumbnailUrl.s_img} alt="그룹 이미지"/> : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
@@ -227,12 +251,12 @@ class GroupDetail extends Component {
                     <p className="explanation">{groupDetail.explanation}</p>
                   </InfoSection>
                 </HeadContainer>
-                <TabContainer width={12}>
+                <TabContainer mobile={16} tablet={12} computer={12}>
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
                         <li id="design" 
-                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
+                            className={this.props.type === "design" || this.props.type === null || this.props.type === "null" ? "onSelected" : ""}
                             onClick={this.typeChange}>디자인</li>
                         <li id="group" 
                             className={this.props.type === "group"? "onSelected" : ""}

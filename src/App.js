@@ -25,7 +25,7 @@ class App extends Component {
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage}/>
           <Route path="/createGroup" component={CreateGroupPage}/>
-          <Route path="/modifyGroup" component={ModifyGroupPage}/>
+          <Route path="/groupDetail/:id/modify" component={ModifyGroupPage}/>
           <Route path="/groupDetail/:id/:type?/:sorting?" component={GroupDetailPage}/>
           <Route path="/group/:sorting?" component={GroupListPage}/>
           <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage}/>

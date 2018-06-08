@@ -77,9 +77,9 @@ export function GetDesignerDetail(data) {
 };
 
 // 디자이너의 디자인 리스트 가져오기
-export function GetDesignInDesignerRequest(id) {
+export function GetDesignInDesignerRequest(id, page) {
   return (dispatch) => {
-    return fetch(`${host}/designer/designerDetail/`+id+"/design", {
+    return fetch(`${host}/designer/designerDetail/`+id+"/design/"+page, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -90,8 +90,13 @@ export function GetDesignInDesignerRequest(id) {
           console.log("no data");
           data = [];
         }
+        if (page === 0) {
+          dispatch(DesignInDesignerClear(data));
+          return;
+        }
         dispatch(GetDesignInDesigner(data));
       }).catch((error) => {
+        dispatch(DesignInDesignerFail());
         console.log("err", error);
       })
   }
@@ -104,10 +109,26 @@ export function GetDesignInDesigner(data) {
   }
 };
 
+export function DesignInDesignerClear(data) {
+  return {
+    type: types.GET_DESIGN_IN_DESIGNER_CLEAR,
+    DesignInDesigner: data,
+    DesignInDesignerAdded: []
+  }
+};
+
+export function DesignInDesignerFail() {
+  return {
+    type: types.DESIGN_IN_DESIGNER_FAIL,
+    DesignInDesigner: [],
+    DesignInDesignerAdded: []
+  }
+};
+
 // 디자이너가 좋아요 한 디자인 가져오기
-export function GetLikeInDesignerRequest(id) {
+export function GetLikeInDesignerRequest(id, page) {
   return (dispatch) => {
-    return fetch(`${host}/designer/designerDetail/`+id+"/like", {
+    return fetch(`${host}/designer/designerDetail/`+id+"/like/"+page, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -118,8 +139,13 @@ export function GetLikeInDesignerRequest(id) {
           console.log("no data");
           data = [];
         }
+        if (page === 0) {
+          dispatch(LikeInDesignerClear(data));
+          return;
+        }
         dispatch(GetLikeInDesigner(data));
       }).catch((error) => {
+        dispatch(LikeInDesignerFail());
         console.log("err", error);
       })
   }
@@ -129,5 +155,21 @@ export function GetLikeInDesigner(data) {
   return {
     type: types.GET_LIKE_IN_DESIGNER,
     LikeInDesigner : data
+  }
+};
+
+export function LikeInDesignerClear(data) {
+  return {
+    type: types.GET_LIKE_IN_DESIGNER_CLEAR,
+    LikeInDesigner: data,
+    LikeInDesignerAdded: []
+  }
+};
+
+export function LikeInDesignerFail() {
+  return {
+    type: types.LIKE_IN_DESIGNER_FAIL,
+    LikeInDesigner: [],
+    LikeInDesignerAdded: []
   }
 };

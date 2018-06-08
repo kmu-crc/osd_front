@@ -3,7 +3,7 @@ import host from "config";
 
 export function GetDesignListRequest(page, sort, cate1, cate2) {
   return (dispatch) => {
-    return fetch(`${host}/design/designList/`+page+"/"+sort+"/"+cate1+"/"+cate2, {
+    return fetch(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

@@ -30,6 +30,13 @@ export function DesignerList(state, action) {
           DesignerListAdded: { $set: action.DesignerList }
         }
       });
+    case types.DESIGNER_LIST_FAIL:
+      return update(state, {
+        status: {
+          DesignerList: { $set: action.DesignerList },
+          DesignerListAdded: { $set: action.DesignerListAdded }
+        }
+      });
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import Authentication from "./Authentication";
 import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignDetailIssue } from "reducers/Designs";
 import { DesignerList, DesignerDetail } from "reducers/Designers";
-import { GroupList, GroupDetail } from "reducers/Groups";
+import { GroupList, GroupDetail, GroupWaitingList } from "reducers/Groups";
 import { SignIn, SignUp } from "reducers/Registration";
 import { UserInfo, MyDetail } from "reducers/Users";
 import { Categorys } from "reducers/Categorys";
@@ -20,6 +20,7 @@ export default combineReducers({
     DesignDetailIssue,
     GroupList,
     GroupDetail,
+    GroupWaitingList,
     DesignerList,
     DesignerDetail,
     SignIn,

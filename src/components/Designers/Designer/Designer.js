@@ -8,18 +8,15 @@ import eximg from "source/eximg.jpeg";
 
 const Designerli = styled.li`
   width: 100%;
-  margin: 0 auto 20px;
-  height: 270px;
+  margin: 0 auto 2rem;
   font-size: 13px;
-  border-radius: 6px 6px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  overflow: hidden;
   box-shadow: 0 1px 2px rgba(25,25,25,0.2);
   background-color: #fff;
   & a {
     cursor: pointer;
     display: block;
-  }
-  &:hover {
-    border-bottom: 0.5px solid dimgray;
   }
 `;
 
@@ -34,69 +31,75 @@ const ImgPart = styled.div`
 `;
 
 const TextPart = styled.div`
+  padding: 10px 10px;
   & .date, & .userName {
-    height: 36px;
     line-height: 1.35;
-    padding: 10px 0;
-    margin: 0 10px;
   }
   & .date {
     font-weight: 400;
     color: dimgrey;
   }
   & .userName {
-    border-bottom: 1px solid #f2f2f2;
+    margin: 10px 0;
     font-weight: bold;
+    line-height: 20px;
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
   }
   & .cate {
-    color: dimgray;
-    padding: 10px 0 5px 10px;
+    color: #EB3324;
     font-weight: 300;
+    font-size: 12px;
   }
 `;
 
 const Count = styled.div`
-  color: dimgray;
+  background-color: #000;
+  padding: 5px 10px;
+  color: white;
   font-weight: 400;
   font-size: 12px;
   & div {
-    float: right;
+    float: left;
     width: 40px;
   }
-  & div.clear {
+  &::after{
+    display: block;
+    content: "";
     clear: both;
-    float: none;
-  }
+}
 `;
 
 class designer extends Component {
   render(){
-    let designer = this.props.designer;
+    let designer = this.props.data;
 
     return(
       <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>
           <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
-            <div className="date">2018-04-01 부터 활동</div>
-            <div className="userName">{designer.nick_name}</div>
             <div className="cate">{designer.categoryName}</div>
-            <Count>
-              <div>
-                <Icon name="signup" color="grey" size="mini"></Icon>
-                {designer.total_design? designer.total_design : 0}
-              </div>
-              <div>
-                <Icon name="unhide" color="grey" size="mini"></Icon>
-                {designer.total_view? designer.total_view : 0}
-              </div>
-              <div>
-                <Icon name="heart" color="grey" size="mini"></Icon>
-                {designer.total_like? designer.total_like : 0}
-              </div>
-              <div className="clear"></div>
-            </Count>
+            <div className="userName">{designer.nick_name}</div>
+            <div className="date">2018-04-01 부터 활동</div>
           </TextPart>
+          <Count>
+            <div>
+              <Icon name="signup" size="mini"></Icon>
+              {designer.total_design? designer.total_design : 0}
+            </div>
+            <div>
+              <Icon name="unhide" size="mini"></Icon>
+              {designer.total_view? designer.total_view : 0}
+            </div>
+            <div>
+              <Icon name="heart" size="mini"></Icon>
+              {designer.total_like? designer.total_like : 0}
+            </div>
+          </Count>
         </Designerli>
       </NavLink>
     );

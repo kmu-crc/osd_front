@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyGroupListRequest } from "actions/Users/MyDetail";
-import ContentList from "components/Commons/ContentList";
+import ScrollList from "components/Commons/ScrollList";
+import Group from "components/Groups/Group";
 
 class MyGroupContainer extends Component {
-  componentWillMount() {
-    this.props.GetMyGroupListRequest(this.props.location.state.token);
+
+  getList = (page) => {
+    return this.props.GetMyGroupListRequest(this.props.location.state.token, page);
   }
 
   render() {
     return(
       <div>
-        <ContentList data={this.props.MyGroup} columns={4} type="group"/>
+        <ScrollList getListRequest={this.getList} 
+                    ListComponent={Group} 
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
+                    mobile={8} tablet={8} computer={5} largeScreen={4} widescreen={4} customClass="largeCustom"/>
       </div>
     );
   }
@@ -19,14 +24,15 @@ class MyGroupContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyGroup: state.MyDetail.status.MyGroup
+    dataList: state.MyDetail.status.MyGroup,
+    dataListAdded: state.MyDetail.status.MyGroupAdded
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetMyGroupListRequest: (token) => {
-      return dispatch(GetMyGroupListRequest(token));
+    GetMyGroupListRequest: (token, page) => {
+      return dispatch(GetMyGroupListRequest(token, page));
     }
   };
 };
