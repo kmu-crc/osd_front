@@ -6,7 +6,8 @@ export class DesignDetailPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <DesignDetailContainer id={this.props.match.params.id}/>
+        <DesignDetailContainer id={this.props.match.params.id}
+                               token={this.props.token}/>
      </ClientTemplate>
     );
   }
