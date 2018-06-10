@@ -95,7 +95,8 @@ const TabContainer = styled.div`
 
 class DesignDetail extends Component {
   state = {
-    activeMoreBtn: false
+    activeMoreBtn: false,
+    isMember: false
   };
 
   componentDidMount() {
@@ -126,9 +127,23 @@ class DesignDetail extends Component {
     }
   }
 
+  // 로그인한 유저가 디자인 멤버인지 판단하는 함수
+  // ifIsMember = (member) => {
+  //   const user = this.props.userInfo;
+  //   if (user && user.uid === member.user_id) {
+  //     console.log("true");
+  //     this.setState({
+  //       isMember: true
+  //     });
+  //   } else {
+  //     console.log("false");
+  //   }
+  // }
+
   render() {
     let designDetail = this.props.DesignDetail;
     let user = this.props.userInfo;
+    
     let count;
     if (designDetail.count != null) {
       count = designDetail.count;
@@ -164,9 +179,12 @@ class DesignDetail extends Component {
                   <Grid.Column computer={8} tablet={6} mobile={6}>
                     <h3 className="title">{designDetail.title}
                       <Link to={ {pathname: this.props.location.pathname.indexOf("/issue") === -1 
-                                            ? this.props.match.url + "/issue"
-                                            : this.props.match.url,
-                                  state: {id: this.props.id} } }
+                                            ? "/designDetail/"+this.props.id+"/issue"
+                                            : "/designDetail/"+this.props.id,
+                                  state: { user: this.props.userInfo
+                                           
+                                         } 
+                                } }
                             onClick={this.onActiveIssue}>
                         <button className="ui button issueBtn">
                           {this.props.location.pathname.indexOf("/issue") === -1
@@ -224,7 +242,7 @@ class DesignDetail extends Component {
                 <Route exact path={"/designDetail/:id"}
                        component={designDetail.is_project == 1 ? DesignDetailStepContainer
                                                                : DesignDetailViewContainer} />
-                <Route path={this.props.match.url + "/issue"} component={DesignDetailIssueContainer} />
+                <Route path={"/designDetail/:id/issue"} component={DesignDetailIssueContainer} />
               </TabContainer>
             </Wrapper>
           </ContentBox>
