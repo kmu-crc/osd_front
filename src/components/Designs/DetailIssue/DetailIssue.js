@@ -11,9 +11,9 @@ const IssueWrapper = styled(Grid)`
   position: relative;
   background-color: #fff;
   &.ui.grid {
-    padding: 10px 20px 40px;
+    padding: 1rem;
   }
-  & > .noData {
+  & .noData {
     font-size: 14px;
     text-align: center;
   }
@@ -81,13 +81,13 @@ const List = styled.div`
 class DetailIssue extends Component {
   render(){
     let issue = this.props.DesignDetailIssue;
+    let user = this.props.location.state.user;
     const IssueList = () => {
       return (
         <div>
-          {issue.length !== 0?
           <IssueWrapper>
             <SearchWrapper columns={2}>
-              <Grid.Column>
+              <Grid.Column>              
                 <div className="ui icon input">
                   <input type="text" value="" tabIndex="0" className="prompt" autoComplete="off" />
                   <i aria-hidden="true" className="search icon"></i>
@@ -101,34 +101,33 @@ class DetailIssue extends Component {
               </Grid.Column>
             </SearchWrapper>
             <ListWrapper>
+            {issue.length !== 0?
               <ul>
-              {issue.map(list =>
-              <Link key={list.uid} to={ {pathname: this.props.match.url+"/detailIssue/"+list.uid,
-                                         state: { id: this.props.id, issue_id: list.uid }} }>
-                <List>
-                  <li>
-                    <div className="order">{list.uid}</div>
-                    <div className="title">
-                    {list.title}
-                    {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
-                    </div>
-                    <div className="user">{list.userName}</div>
-                    <div className="date">{list.create_time.split("T")[0]}</div>
-                    <div className="cmtCount">{list.commentCount["count(*)"]}</div>
-                  </li>
-                </List>
-              </Link>
-              )}
-            </ul>
+                {issue.map(list =>
+                <Link key={list.uid} to={ {pathname: this.props.match.url+"/detailIssue/"+list.uid,
+                                          state: { id: this.props.match.params.id, issue_id: list.uid }} }>
+                  <List>
+                    <li>
+                      <div className="order">{list.uid}</div>
+                      <div className="title">
+                      {list.title}
+                      {list.is_complete === 0? <span className="flag ing">진행중</span> : <span className="flag done">완료</span>}
+                      </div>
+                      <div className="user">{list.userName}</div>
+                      <div className="date">{list.create_time.split("T")[0]}</div>
+                      <div className="cmtCount">{list.commentCount["count(*)"]}</div>
+                    </li>
+                  </List>
+                </Link>
+                )}
+              </ul>
+              :
+              <div className="noData">
+                  <p>등록된 이슈가 없습니다.</p>
+              </div>
+              }
             </ListWrapper>
           </IssueWrapper>
-          :
-          <IssueWrapper>
-            <div className="noData">
-                <p>등록된 이슈가 없습니다.</p>
-            </div>
-          </IssueWrapper>
-        }
         </div>
       );
     }

@@ -6,13 +6,13 @@ import DetailIssue from "components/Designs/DetailIssue";
 class DesignDetailIssueContainer extends Component {
 
   componentDidMount() {
-    this.props.GetDesignDetailIssueRequest(this.props.location.state.id);
+    this.props.GetDesignDetailIssueRequest(this.props.match.params.id);
   }
 
   render() {
     return (
       <div>
-        <DetailIssue id={this.props.location.state.id} {...this.props} />
+        <DetailIssue {...this.props} />
       </div>
     );
   }

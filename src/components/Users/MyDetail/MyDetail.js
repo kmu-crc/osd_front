@@ -177,9 +177,15 @@ class MyDetail extends Component {
     }
 
     const ContainerPage = () => {
-      return(
-        <MyDesignContainer token={this.props.token}></MyDesignContainer>
-      );
+      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
+        return(
+          <MyDesignContainer token={this.props.token}></MyDesignContainer>
+        );
+      } else {
+        return (
+          <div></div>
+        );
+      }
     }
 
     return(

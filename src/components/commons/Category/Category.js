@@ -1,36 +1,47 @@
 import React, { Component } from "react";
-import { Grid, Dropdown } from "semantic-ui-react";
+import styled from "styled-components";
+import { Grid } from "semantic-ui-react";
+import { FormSelect } from "components/Commons/FormItem";
 
-const categoryLevel1 = [
-  { key: "fashion", value: "1", text: "패션" },
-  { key: "product", value: "2", text: "제품" },
-  { key: "comm", value: "3", text: "커뮤니케이션" },
-  { key: "place", value: "4", text: "공간" },
-  { key: "enter", value: "5", text: "엔터테인먼트" },
-  { key: "new", value: "6", text: "새분야" },
-];
-
-const categoryLevel2 = [
-  { key: "fashion", value: "1", text: "패션" },
-  { key: "product", value: "2", text: "제품" },
-  { key: "comm", value: "3", text: "커뮤니케이션" },
-  { key: "place", value: "4", text: "공간" },
-  { key: "enter", value: "5", text: "엔터테인먼트" },
-  { key: "new", value: "6", text: "새분야" },
-];
+// category width
+const CategoryColumn = styled(Grid.Column)`
+  &  .selection.dropdown {
+    width: 14em;
+    float: left;
+  }
+`;
 
 class Category extends Component {
+  componentWillMount() {
+    this.props.GetCategoryLevel1Request();
+  };
+  
+  onChangeCategory1 = (value) => {
+    if (value === 0) {
+      value = null;
+    }
+    this.props.GetCategoryLevel2Request(value);
+    this.props.handleCate1(value);
+  }
+
+  onChangeCategory2 = (value) => {
+    if (value === 0) {
+      value = null;
+    }
+    this.props.handleCate2(value);
+  };
+
   render() {
     return (
-      <Grid.Column className="category"
-        widescreen={this.props.widescreen ? this.props.widescreen : null}
-        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
-        computer={this.props.computer ? this.props.computer : null}
-        tablet={this.props.tablet ? this.props.tablet : null}
-        mobile={this.props.mobile ? this.props.mobile : null}>
-        <Dropdown selection placeholder="1차 카테고리" options={categoryLevel1} onChange={this.props.handleCate1} />
-        <Dropdown selection placeholder="2차 카테고리" options={categoryLevel2} onChange={this.props.handleCate2} />
-      </Grid.Column>
+      <CategoryColumn className="category"
+                      widescreen={this.props.widescreen ? this.props.widescreen : null}
+                      largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
+                      computer={this.props.computer ? this.props.computer : null}
+                      tablet={this.props.tablet ? this.props.tablet : null}
+                      mobile={this.props.mobile ? this.props.mobile : null}>
+        <FormSelect selection placeholder="1차 카테고리" getValue={this.onChangeCategory1} options={this.props.category1}/>
+        <FormSelect selection placeholder="2차 카테고리" getValue={this.onChangeCategory2} options={this.props.category2}/>
+      </CategoryColumn>
     )
   }
 }

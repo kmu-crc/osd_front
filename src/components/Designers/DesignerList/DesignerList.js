@@ -5,6 +5,7 @@ import Category from "components/Commons/Category";
 import Sorting from "components/Commons/Sorting";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import ContentBox from "components/Commons/ContentBox";
+import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
 
 // css styling
 
@@ -49,19 +50,23 @@ class DesignerList extends Component {
     }, 200);
   }
 
+  shouldComponentUpdate(){
+    return false;
+  }
+
   sortChange = (e, { value }) => {
     this.props.history.replace(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.props.GetDesignerListRequest(0, value, this.props.cate1, this.props.cate2);
     this.changeState();
   }
 
-  cate1Change = (e, { value }) => {
+  cate1Change = (value) => {
     this.props.history.replace(`/designer/${this.props.sort}/${value}/${null}`);
     this.props.GetDesignerListRequest(0, this.props.sort, value, null);
     this.changeState();
   }
 
-  cate2Change = (e, { value }) => {
+  cate2Change = (value) => {
     this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
     this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, value);
     this.changeState();
@@ -74,8 +79,8 @@ class DesignerList extends Component {
         <Wrapper>
           <MenuContainer devided="vertically" padded={true} columns={2}>
             <Grid.Row stretched={false}>
-              <Category computer={8} tablet={10} mobile={12} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
-              <Sorting computer={8} tablet={6} mobile={4} handleChange={this.sortChange} />
+              <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
+              <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} />
             </Grid.Row>
           </MenuContainer>
           {this.state.rendering && <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2}/>}

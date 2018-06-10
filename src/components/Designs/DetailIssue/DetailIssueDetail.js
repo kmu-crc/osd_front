@@ -11,7 +11,7 @@ const IssueWrapper = styled(Grid)`
   position: relative;
   background-color: #fff;
   &.ui.grid {
-    padding: 10px 20px 40px;
+    padding: 1rem;
   }
   & .ui.fluid.container {
     margin-bottom: 30px;

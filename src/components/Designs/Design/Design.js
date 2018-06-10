@@ -80,7 +80,7 @@ class Design extends Component {
         <Designli>
           <ImgPart><img src={eximg} alt="썸네일이미지" /></ImgPart>
           <TextPart>
-            <div className="cate">{design.categoryName}</div>
+            <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
             <div className="title">{design.title}</div>
             <div className="userName">{design.userName}</div>
           </TextPart>
