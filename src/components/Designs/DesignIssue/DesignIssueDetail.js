@@ -14,7 +14,6 @@ const IssueWrapper = styled(Grid)`
     padding: 1rem;
   }
   & .ui.fluid.container {
-    margin-bottom: 30px;
     padding: 1rem;
     border: 1px solid #e9e9e9;
   }

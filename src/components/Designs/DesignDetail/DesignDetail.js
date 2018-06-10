@@ -92,9 +92,11 @@ const TabContainer = styled.div`
 `;
 
 const IssueContainer = styled.div`
-  min-height: 80px;
+  min-height: 60px;
   & .mainIssue {
     font-weight: bold;
+    float: left;
+    margin-right: 20px;
   }
   & .button {
     font-size: 12px;
@@ -211,10 +213,11 @@ class DesignDetail extends Component {
                 </Grid.Row>
               </HeadContainer>
               <TabContainer>
-                {designDetail.mainIssue !== null && this.props.location.pathname.indexOf("/issue") === -1 &&
+                {designDetail.mainIssue !== null && this.props.location.pathname.indexOf("issue") === -1 &&
                 <IssueContainer>
-                  <Link to={`/designDetail/${this.props.id}/issue/${designDetail.mainIssue.uid}`}>
-                    <p className="mainIssue">{designDetail.mainIssue.title}</p>
+                  <Link to={`/designDetail/${this.props.id}/issue/${designDetail.mainIssue.uid}`}
+                        className="mainIssue" >
+                    <p>{designDetail.mainIssue.title}</p>
                   </Link>
                   <Link to={`/designDetail/${this.props.id}/issue`}>
                     <button className="ui basic button">이슈 목록</button>  
@@ -227,7 +230,7 @@ class DesignDetail extends Component {
                                   : DesignDetailViewContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
                        component={DesignIssue} />
-                <Route exact path={"/designDetail/:id/createIssue"} 
+                <Route exact path={"/designDetail/:id/createissue"} 
                        component={CreateIssue} />
               </TabContainer>
             </Wrapper>
