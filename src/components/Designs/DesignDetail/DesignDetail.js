@@ -95,12 +95,11 @@ const TabContainer = styled.div`
 
 class DesignDetail extends Component {
   state = {
-    activeMoreBtn: false,
-    isMember: false
+    activeMoreBtn: false
   };
 
   componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id);
+    this.props.GetDesignDetailRequest(this.props.id, this.props.token);
   }
 
   componentWillUnmount() {
@@ -126,19 +125,6 @@ class DesignDetail extends Component {
       target.textContent = "★ 이슈보기";
     }
   }
-
-  // 로그인한 유저가 디자인 멤버인지 판단하는 함수
-  // ifIsMember = (member) => {
-  //   const user = this.props.userInfo;
-  //   if (user && user.uid === member.user_id) {
-  //     console.log("true");
-  //     this.setState({
-  //       isMember: true
-  //     });
-  //   } else {
-  //     console.log("false");
-  //   }
-  // }
 
   render() {
     let designDetail = this.props.DesignDetail;

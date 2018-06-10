@@ -39,8 +39,8 @@ class Category extends Component {
                       computer={this.props.computer ? this.props.computer : null}
                       tablet={this.props.tablet ? this.props.tablet : null}
                       mobile={this.props.mobile ? this.props.mobile : null}>
-        <FormSelect selection placeholder="1차 카테고리" getValue={this.onChangeCategory1} options={this.props.category1}/>
-        <FormSelect selection placeholder="2차 카테고리" getValue={this.onChangeCategory2} options={this.props.category2}/>
+        <FormSelect placeholder="1차 카테고리" getValue={this.onChangeCategory1} options={this.props.category1}/>
+        <FormSelect placeholder="2차 카테고리" getValue={this.onChangeCategory2} options={this.props.category2}/>
       </CategoryColumn>
     )
   }
