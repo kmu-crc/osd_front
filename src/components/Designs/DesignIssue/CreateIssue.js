@@ -51,7 +51,7 @@ const CreateForm = styled(Form)`
 
 class CreateIssue extends Component {
   render(){
-    const id = this.props.location.state.id;
+    const id = this.props.match.params.id;
     return(
       <IssueWrapper>
         <Grid.Row columns={2}>
@@ -68,8 +68,6 @@ class CreateIssue extends Component {
                 <label>내용</label>
                 <Form.TextArea placeholder="내용을 입력해주세요." />
               </Form.Field>
-              {/* <Form.Checkbox className="checkDone"></Form.Checkbox>
-              <label>완료</label> */}
               <div className="checkDone">
                 <span>진행중</span>
                 <Radio toggle />

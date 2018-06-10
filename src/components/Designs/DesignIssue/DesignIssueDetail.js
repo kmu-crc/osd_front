@@ -49,7 +49,7 @@ const CommentContainer = styled.div`
   }
 `;
 
-class DetailIssueDetail extends Component {
+class DesignIssueDetail extends Component {
   render(){
     let data = this.props.IssueDetail;
     return(
@@ -100,4 +100,4 @@ class DetailIssueDetail extends Component {
   }
 } 
 
-export default DetailIssueDetail;
+export default DesignIssueDetail;

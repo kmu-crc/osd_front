@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
-import DesignDetailIssueContainer from "containers/Designs/DesignDetailIssueContainer";
+import DesignIssue from "components/Designs/DesignIssue/DesignIssue";
+import CreateIssue from "components/Designs/DesignIssue/CreateIssue";
 import { Grid, Icon, Modal } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Link, Route } from "react-router-dom";
@@ -27,10 +28,8 @@ const HeadContainer = styled(Grid) `
     font-weight: bold;
   }
   & .explanation {
-    margin-top: 20px;
-  }
-  & .issueBtn {
-    margin-left: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 `;
 
@@ -92,6 +91,16 @@ const TabContainer = styled.div`
   position: relative;
 `;
 
+const IssueContainer = styled.div`
+  min-height: 80px;
+  & .mainIssue {
+    font-weight: bold;
+  }
+  & .button {
+    font-size: 12px;
+  }
+`;
+
 
 class DesignDetail extends Component {
   state = {
@@ -115,15 +124,6 @@ class DesignDetail extends Component {
   onActiveStep = () => {
     alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
     // 확인 누르면 api 요청 보내서 is_project = 1로 바꿔야 함!
-  }
-
-  onActiveIssue = (e) => {
-    const target = e.target;
-    if (this.props.location.pathname.indexOf("/issue") === -1) {
-      target.textContent = "★ 이슈닫기";
-    } else {
-      target.textContent = "★ 이슈보기";
-    }
   }
 
   render() {
@@ -163,22 +163,12 @@ class DesignDetail extends Component {
               <HeadContainer divided="vertically" padded={true}>
                 <Grid.Row columns={2}>
                   <Grid.Column computer={8} tablet={6} mobile={6}>
-                    <h3 className="title">{designDetail.title}
-                      <Link to={ {pathname: this.props.location.pathname.indexOf("/issue") === -1
-                                            ? this.props.match.url + "/issue"
-                                            : this.props.match.url,
-                                  state: {id: this.props.id} } }
-                            onClick={this.onActiveIssue}>
-                        <button className="ui button issueBtn">
-                          {this.props.location.pathname.indexOf("/issue") === -1
-                          ? "★ 이슈보기"
-                          : "★ 이슈닫기"
-                          }
-                        </button>
-                      </Link>
-                    </h3>
+                    <h3 className="title">{designDetail.title}</h3>
+                    <div className="explanation">{designDetail.explanation}</div>
                     <Cate>
-                      <span className="cate">{designDetail.categoryName}</span>
+                      <span className="cate">
+                        {designDetail.categoryName? designDetail.categoryName : "전체"}
+                      </span>
                       <span className="owner">
                         <Icon name="user" size="mini"></Icon>
                         {designDetail.userName}
@@ -186,9 +176,8 @@ class DesignDetail extends Component {
                       <span className="member">
                         <Icon name="group" size="mini"></Icon>
                         {count.member_count}명
-                  </span>
+                      </span>
                     </Cate>
-                    <div className="explanation">{designDetail.explanation}</div>
                   </Grid.Column>
                   <Grid.Column computer={8} tablet={10} mobile={10}>
                     <MoreBtn className="ui teal button more" onClick={this.onActiveMoreBtn}>
@@ -222,10 +211,24 @@ class DesignDetail extends Component {
                 </Grid.Row>
               </HeadContainer>
               <TabContainer>
+                {designDetail.mainIssue !== null && this.props.location.pathname.indexOf("/issue") === -1 &&
+                <IssueContainer>
+                  <Link to={`/designDetail/${this.props.id}/issue/${designDetail.mainIssue.uid}`}>
+                    <p className="mainIssue">{designDetail.mainIssue.title}</p>
+                  </Link>
+                  <Link to={`/designDetail/${this.props.id}/issue`}>
+                    <button className="ui basic button">이슈 목록</button>  
+                  </Link>
+                </IssueContainer>
+                }
                 <Route exact path={"/designDetail/:id"}
-                       component={designDetail.is_project == 1 ? DesignDetailStepContainer
-                                                               : DesignDetailViewContainer} />
-                <Route path={"/designDetail/:id/issue"} component={DesignDetailIssueContainer} />
+                       component={designDetail.is_project == 1 
+                                  ? DesignDetailStepContainer
+                                  : DesignDetailViewContainer} />
+                <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
+                       component={DesignIssue} />
+                <Route exact path={"/designDetail/:id/createIssue"} 
+                       component={CreateIssue} />
               </TabContainer>
             </Wrapper>
           </ContentBox>

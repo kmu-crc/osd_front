@@ -178,7 +178,7 @@ export function GetDesignDetailStepCard(data) {
   }
 };
 
-export function GetDesignDetailIssueRequest(id) {
+export function GetDesignIssueListRequest(id) {
   return (dispatch) => {
     return fetch(`${host}/design/designDetail/`+id+"/issue", {
       headers: { "Content-Type": "application/json" },
@@ -191,21 +191,21 @@ export function GetDesignDetailIssueRequest(id) {
           console.log("no data");
           data = [];
         }
-        dispatch(GetDesignDetailIssue(data));
+        dispatch(GetDesignIssueList(data));
       }).catch((error) => {
         console.log("err", error);
       })
   }
 };
 
-export function GetDesignDetailIssue(data) {
+export function GetDesignIssueList(data) {
   return {
-    type: types.GET_DESIGN_DETAIL_ISSUE,
-    DesignDetailIssue : data
+    type: types.GET_DESIGN_ISSUE_LIST,
+    DesignIssueList : data
   }
 };
 
-export function GetDesignDetailIssueDetailRequest(id, issue_id) {
+export function GetDesignIssueDetailRequest(id, issue_id) {
   return (dispatch) => {
     return fetch("http://localhost:8080/design/designDetail/"+id+"/issueDetail/"+issue_id, {
       headers: { "Content-Type": "application/json" },
@@ -218,16 +218,16 @@ export function GetDesignDetailIssueDetailRequest(id, issue_id) {
           console.log("no data");
           data = [];
         }
-        dispatch(GetDesignDetailIssueDetail(data));
+        dispatch(GetDesignIssueDetail(data));
       }).catch((error) => {
         console.log("err", error);
       })
   }
 };
 
-export function GetDesignDetailIssueDetail(data) {
+export function GetDesignIssueDetail(data) {
   return {
-    type: types.GET_DESIGN_DETAIL_ISSUE_DETAIL,
+    type: types.GET_DESIGN_ISSUE_DETAIL,
     IssueDetail: data
   }
 };
