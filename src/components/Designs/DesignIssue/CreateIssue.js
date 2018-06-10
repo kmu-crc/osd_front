@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-import { Form } from "semantic-ui-react";
 import styled from "styled-components";
-import { Grid, Header, Radio } from "semantic-ui-react";
+import { Grid, Header, Radio, Form } from "semantic-ui-react";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormInput, FormTextArea } from "components/Commons/FormItem";
+import { FormField } from "components/Commons/FormField";
 
 // css styling
-const IssueWrapper = styled(Grid)`
-  min-width: 660px;
-  position: relative;
-  background-color: #fff;
-  &.ui.grid {
-    padding: 10px 20px 40px;
-  }
-  & h2.ui.header {
-    font-size: 1.4rem;
-  }
+const FromFieldCard = styled.div`
+  width: 100%;
+  background-color: white;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+  padding: 40px;
+  margin-bottom: 30px;
 `;
 
 const FormHeader = styled(Header)`
@@ -31,43 +29,24 @@ const FormHeader = styled(Header)`
   }
 `;
 
-const CreateForm = styled(Form)`
-  &.ui.form {
-    padding: 0 40px 0 20px;
-  }
-  &.ui.form .field {
-    margin-bottom: 20px;
-  }
-  & .checkDone {
-    height: 50px;
-  }
-  & .checkDone .checkbox {
-    margin: 0 10px;
-  }
-  & .checkDone > span {
-    font-size: 12px;
-  }
-`;
-
 class CreateIssue extends Component {
   render(){
     const id = this.props.match.params.id;
     return(
-      <IssueWrapper>
-        <Grid.Row columns={2}>
-          <Grid.Column width={4}>
-            <FormHeader as="h2">새로운 이슈 등록</FormHeader>
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <CreateForm as="form">
-              <Form.Field>
-                <label>제목</label>
-                <Form.Input placeholder="제목을 입력해주세요." />
-              </Form.Field>
-              <Form.Field>
-                <label>내용</label>
-                <Form.TextArea placeholder="내용을 입력해주세요." />
-              </Form.Field>
+      <ValidateForm onSubmit={this.onSubmitForm}>
+        <FromFieldCard>
+          <Grid>
+          <Grid.Row columns={2}>
+            <Grid.Column width={4}>
+              <FormHeader as="h2">새로운 이슈 등록</FormHeader>
+            </Grid.Column>
+            <Grid.Column width={12}>
+              <Form.Group widths="equal">
+                <FormField name="title" label="이슈 제목" type="text" placeholder="제목을 입력해주세요." validates={["required"]} RenderComponent={FormInput} />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <FormField name="explanation" label="내용" placeholder="내용을 입력해주세요." RenderComponent={FormTextArea} />
+              </Form.Group>
               <div className="checkDone">
                 <span>진행중</span>
                 <Radio toggle />
@@ -76,12 +55,12 @@ class CreateIssue extends Component {
               <Form.Field>
                 <button type="submit" className="ui button" onClick={this.props.handleClick}>등록</button>
               </Form.Field>
-            </CreateForm>
-          </Grid.Column>
-        </Grid.Row>
-      </IssueWrapper>
+            </Grid.Column>
+          </Grid.Row></Grid>
+        </FromFieldCard>
+      </ValidateForm>
     );
   }
-} 
+}
 
 export default CreateIssue;

@@ -93,7 +93,7 @@ class DesignIssueDetail extends Component {
             </button>
           </form>
         </CommentContainer>
-          {/* <button className="ui button">목록</button> */}
+        <Link to={`/designDetail/${this.props.match.params.id}/issue`}><button className="ui button">목록</button></Link>
       </IssueWrapper>
     );
   }
