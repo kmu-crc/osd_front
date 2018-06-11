@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
-import eximg from "source/eximg.jpeg";
+import eximg from "source/designIs.png";
 
 // css styling
 
@@ -80,7 +80,7 @@ class designer extends Component {
     return(
       <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>
-          <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
+          <ImgPart><img src={designer.thumbnailUrl ? designer.thumbnailUrl.m_img : eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
             <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
             <div className="userName">{designer.nick_name}</div>

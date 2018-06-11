@@ -215,7 +215,7 @@ class GroupDetail extends Component {
                 <HeadContainer mobile={16} tablet={4} computer={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{groupDetail.thumbnailUrl? <img src= {groupDetail.thumbnailUrl.s_img} alt="그룹 이미지"/> : "등록된 이미지 없음"}</div>
+                      <div>{groupDetail.img? <img src= {groupDetail.img.m_img} alt="그룹 이미지"/> : "등록된 이미지 없음"}</div>
                     </div>
                     <div className="title">
                       <h3>{groupDetail.title}</h3>

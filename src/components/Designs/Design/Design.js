@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import eximg from "source/eximg.jpeg";
 import { Icon } from "semantic-ui-react";
+import eximg from "source/topDesign.png";
 
 // css styling
 
@@ -78,7 +78,9 @@ class Design extends Component {
     return (
       <NavLink to={"/designDetail/" + design.uid}>
         <Designli>
-          <ImgPart><img src={eximg} alt="썸네일이미지" /></ImgPart>
+          <ImgPart>
+            <img src={design.thumbnailUrl ? design.thumbnailUrl.m_img : eximg} alt="썸네일이미지" />
+          </ImgPart>
           <TextPart>
             <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
             <div className="title">{design.title}</div>

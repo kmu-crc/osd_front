@@ -93,7 +93,7 @@ class Group extends Component {
     return(
       <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>
-          <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
+          <ImgPart><img src={group.thumbnailUrl ? group.thumbnailUrl.m_img : eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>

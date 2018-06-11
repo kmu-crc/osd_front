@@ -5,9 +5,9 @@ import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 
 class DesignInGroupContainer extends Component {
-  // componentWillMount() {
-  //   this.props.GetDesignInGroupRequest(page, this.props.match.params.id, this.props.match.params.sort);
-  // }
+  componentWillMount() {
+    this.props.GetDesignInGroupRequest(this.props.match.params.id, 0, this.props.match.params.sort);
+  }
 
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {

@@ -59,7 +59,12 @@ class DesignList extends Component {
   //   return false;
   // }
 
+  componentWillUnmount(){
+    console.log("ya");
+  }
+
   cate1Change = (value) => {
+    console.log("카테고리");
     this.props.history.replace(`/design/${this.props.sort}/${value}`);
     this.setState({
       cateSetting: true
