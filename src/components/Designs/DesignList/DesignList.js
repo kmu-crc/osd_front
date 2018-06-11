@@ -59,13 +59,6 @@ class DesignList extends Component {
   //   return false;
   // }
 
-  sortChange = (e, { value }) => {
-    this.props.history.replace(`/design/${value}/${this.props.cate1}/${this.props.cate2}`);
-    //console.log("DesignList에 있는 sortChange에서 리퀘스트 보냄");
-    //this.props.GetDesignListRequest(0, value, this.props.cate1, this.props.cate2);
-    this.changeState();
-  }
-
   cate1Change = (value) => {
     this.props.history.replace(`/design/${this.props.sort}/${value}`);
     this.setState({
@@ -78,6 +71,11 @@ class DesignList extends Component {
     this.changeState();
   }
 
+  sortChange = (e, { value }) => {
+    this.props.history.replace(`/design/${value}/${this.props.cate1}/${this.props.cate2}`);
+    this.changeState();
+  }
+
   render() {
     const { sort, cate1, cate2 } = this.props;
     return (
@@ -86,7 +84,7 @@ class DesignList extends Component {
           <MenuContainer devided="vertically" padded={true}>
             <Grid.Row>
               <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
-              <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} />
+              <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort}/>
             </Grid.Row>
           </MenuContainer>
           {this.state.rendering && this.state.categorySetting && sort && cate1 && cate2 &&

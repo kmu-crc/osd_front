@@ -17,7 +17,12 @@ class Sorting extends Component {
                    tablet={this.props.tablet ? this.props.tablet : null}
                    mobile={this.props.mobile ? this.props.mobile : null}
                    textAlign={this.props.textAlign ? this.props.textAlign : "right"}>
-        <Dropdown selection placeholder="업데이트일" options={sorting} onChange={this.props.handleChange} />
+        <Dropdown selection placeholder={this.props.placeholder && this.props.placeholder === "create" ? "등록일"
+                                        : this.props.placeholder && this.props.placeholder === "like" ? "좋아요"
+                                        : "업데이트일"
+                                        }
+                            options={sorting} 
+                            onChange={this.props.handleChange} />
       </Grid.Column>
     )
   }

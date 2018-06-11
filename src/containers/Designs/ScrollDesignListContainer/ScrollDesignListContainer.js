@@ -9,10 +9,12 @@ class ScrollDesignListContainer extends Component {
   componentWillMount(){
     console.log("componentWillMount");
     this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2);
+    // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
 
   getList = (page) => {
     return this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2);
+    // ScrollList에서는 그 다음 페이지부터 불러옴
   }
 
   render() {
