@@ -32,6 +32,7 @@ class Category extends Component {
   };
 
   render() {
+    // console.log(this.props.match.params);
     return (
       <CategoryColumn className="category"
                       widescreen={this.props.widescreen ? this.props.widescreen : null}

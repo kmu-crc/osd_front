@@ -50,9 +50,9 @@ class DesignerList extends Component {
     }, 200);
   }
 
-  shouldComponentUpdate(){
-    return false;
-  }
+  // shouldComponentUpdate(){
+  //   return false;
+  // }
 
   sortChange = (e, { value }) => {
     this.props.history.replace(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
@@ -61,6 +61,7 @@ class DesignerList extends Component {
   }
 
   cate1Change = (value) => {
+    console.log(value);
     this.props.history.replace(`/designer/${this.props.sort}/${value}/${null}`);
     this.props.GetDesignerListRequest(0, this.props.sort, value, null);
     this.changeState();

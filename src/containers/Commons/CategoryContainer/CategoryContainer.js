@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import Category from "components/Commons/Category";
+import { withRouter } from "react-router"; 
 
 class CategoryContainer extends Component {
   render() {
@@ -28,4 +29,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryContainer));
