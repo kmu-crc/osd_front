@@ -57,9 +57,9 @@ class GroupList extends Component {
     }, 200);
   }
 
-  shouldComponentUpdate(){
-    return false;
-  }
+  // shouldComponentUpdate(){
+  //   return false;
+  // }
 
   sortChange = (e, { value }) => {
     this.props.history.replace(`/group/${value}`);

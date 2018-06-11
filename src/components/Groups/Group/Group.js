@@ -45,7 +45,9 @@ const TextPart = styled.div`
     text-overflow: ellipsis;
     white-space: normal;
   }
-  & .owner {
+  & .cate {
+    font-weight: 400;
+    color: dimgrey;
   }
 `;
 
@@ -96,10 +98,7 @@ class Group extends Component {
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
             <div className="cate">
-              {/* <ButtonWrap>
-                <button className="red">가입신청</button>
-                { (user != null && user.uid === group.user_id ) && <button className="red">관리</button> }
-              </ButtonWrap> */}
+              최근 업데이트 {group.child_update_time.split("T")[0]}
             </div>
           </TextPart>
           <Count>
