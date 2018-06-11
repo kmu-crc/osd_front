@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
-
+import { Link } from "react-router-dom";
 
 // css styling
 
@@ -17,7 +17,7 @@ const Foot = styled.footer`
   }
   & .copyright {
   }
-  & .list > li {
+  & .list > a {
     float: left;
     margin-right: 3rem;
     font-size: 11px;
@@ -34,10 +34,10 @@ class Footer extends Component {
           <Grid.Row>
             <Grid.Column className="copyright">Copyright @ 2018 Open Design Inc.</Grid.Column>
             <Grid.Column as="ul" className="list">
-              <li>사이트 소개</li>
-              <li>이용약관</li>
-              <li>개인정보보호정책</li>
-              <li>Contact Us</li>
+              <Link to="/footer/info">사이트 소개</Link>
+              <Link to="/footer/term">이용약관</Link>
+              <Link to="/footer/privacy">개인정보보호정책</Link>
+              {/* <Link>Contact Us</Link> */}
             </Grid.Column>
           </Grid.Row>
         </Grid>
