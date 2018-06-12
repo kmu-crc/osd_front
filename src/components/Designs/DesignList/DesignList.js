@@ -14,13 +14,6 @@ const Wrapper = styled.div`
   & ul {
     margin-top: 30px;
   }
-  // 로딩 인디케이터
-  & .ui.centered.inline.loader.active, .ui.centered.inline.loader.visible {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-  }
 `;
 
 const MenuContainer = styled(Grid) `
