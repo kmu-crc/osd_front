@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetDesignInGroupRequest } from "actions/Group";
+import { GetDesignInGroupRequest, DeleteDesignInGroupRequest } from "actions/Group";
 import ContentList from "components/Commons/ContentList";
 
 class EditDesignListContainer extends Component {
@@ -18,6 +18,7 @@ class EditDesignListContainer extends Component {
   }
 
   setOut = (id) => {
+    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id);
     console.log(id);
   }
 
@@ -38,6 +39,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
       GetDesignInGroupRequest: (id, page, sort) => {
         return dispatch(GetDesignInGroupRequest(id, page, sort))
+      },
+      DeleteDesignInGroupRequest : (id, designId) => {
+        return dispatch(DeleteDesignInGroupRequest(id, designId))
       }
   };
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetWaitingDesignRequest } from "actions/Group";
+import { GetWaitingDesignRequest, DeleteDesignInGroupRequest } from "actions/Group";
 import ContentList from "components/Commons/ContentList";
 
 class WaitingDesignContainer extends Component {
@@ -19,11 +19,16 @@ class WaitingDesignContainer extends Component {
 
   setOut = (id) => {
     console.log(id);
+    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id);
+  }
+
+  setAccept = (id) => {
+    console.log(id);
   }
 
   render() {
     return(
-      <ContentList data={this.props.waitingDesign} type="design" handleClick={this.setOut}/>
+      <ContentList data={this.props.waitingDesign} type="design" handleClick={this.setOut} handleAccept={this.setAccept}/>
     );
   }
 }
@@ -38,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetWaitingDesignRequest : (id, sort) => {
       return dispatch(GetWaitingDesignRequest(id, sort))
+    },
+    DeleteDesignInGroupRequest : (id, designId) => {
+      return dispatch(DeleteDesignInGroupRequest(id, designId))
     }
   };
 };

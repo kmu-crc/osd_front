@@ -11,6 +11,12 @@ const OutBtn = styled.button`
   right: 10px;
 `;
 
+const AcceptBtn = styled.button`
+  position: absolute;
+  top: 0;
+  right: 80px;
+`;
+
 class ContentList extends Component {
   render(){
     let data = this.props.data;
@@ -23,6 +29,10 @@ class ContentList extends Component {
                     key={data.uid}>
           {type === "design" ? <Design data={data} rerender={this.props.rerender}/>
                              : <Group data={data} rerender={this.props.rerender}/>
+          }
+          
+          {this.props.handleAccept &&
+          <AcceptBtn className="ui button black" onClick={()=>this.props.handleAccept(data.uid)}>가입승인</AcceptBtn>
           }
           <OutBtn className="ui button black" onClick={()=>this.props.handleClick(data.uid)}>삭제</OutBtn>
         </Grid.Column>
