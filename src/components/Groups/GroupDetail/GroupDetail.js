@@ -5,6 +5,7 @@ import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
 import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
+import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 
 // css styling
 
@@ -80,7 +81,7 @@ const ProfileSection = styled.div`
       margin: .5rem 1rem;
     }
   }
-`; 
+`;
 
 const CountSection = styled.div`
   padding: 1rem 2rem;
@@ -93,20 +94,20 @@ const CountSection = styled.div`
     float: right;
     font-size: 18px;
   }
-`; 
+`;
 
 const InfoSection = styled.div`
   padding: 1rem;
   & .explanation {
     font-size: 13px;
   }
-`; 
+`;
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
   & .columns {
     padding: 0 20px;
-  } 
+  }
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
@@ -204,7 +205,7 @@ class GroupDetail extends Component {
           <Container>
             <Wrapper padded={false} columns={2}>
               <Grid.Row>
-              { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
+              { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))?
                 <Link to={`/groupDetail/${groupDetail.uid}/modify`}>
                   <button className="edit">그룹 정보 수정</button>
                 </Link>
@@ -225,7 +226,7 @@ class GroupDetail extends Component {
                     </div>
                     <div className="btnContainer">
                       <button className="red">좋아요</button>
-                      <button className="red">가입신청</button>
+                      <JoinGroupContainer />
                     </div>
                   </ProfileSection>
                   <CountSection>
@@ -255,10 +256,10 @@ class GroupDetail extends Component {
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <li id="design" 
+                        <li id="design"
                             className={this.props.type === "design" || this.props.type === null || this.props.type === "null" ? "onSelected" : ""}
                             onClick={this.typeChange}>디자인</li>
-                        <li id="group" 
+                        <li id="group"
                             className={this.props.type === "group"? "onSelected" : ""}
                             onClick={this.typeChange}>그룹</li>
                         <div className="clear"></div>
@@ -267,7 +268,7 @@ class GroupDetail extends Component {
                     </Grid.Row>
                   </Head>
                   <ContentBox>
-                    <Route path="/groupDetail/:id/:type?/:sort?" 
+                    <Route path="/groupDetail/:id/:type?/:sort?"
                            component={this.props.type === "group"? GroupInGroupContainer : DesignInGroupContainer}/>
                   </ContentBox>
                 </TabContainer>
