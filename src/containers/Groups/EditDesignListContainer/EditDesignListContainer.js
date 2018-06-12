@@ -8,9 +8,22 @@ class EditDesignListContainer extends Component {
     this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
+      this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  setOut = (id) => {
+    console.log(id);
+  }
+
   render() {
     return(
-      <ContentList data={this.props.EditDesignList} type="design"/>
+      <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut}/>
     );
   }
 }

@@ -33,8 +33,7 @@ const MenuContainer = styled(Grid) `
 
 class DesignList extends Component {
   state = {
-    rendering: true,
-    cateSetting: false
+    rendering: true
   }
 
   changeState = () => {
@@ -48,10 +47,6 @@ class DesignList extends Component {
     }, 200);
   } // state 값 업데이트를 통해 컴포넌트 새로 렌더링함
 
-  // shouldComponentUpdate(){
-  //   return false;
-  // }
-
   componentWillUnmount(){
     console.log("ya");
   }
@@ -59,9 +54,6 @@ class DesignList extends Component {
   cate1Change = (value) => {
     console.log("카테고리");
     this.props.history.replace(`/design/${this.props.sort}/${value}`);
-    this.setState({
-      cateSetting: true
-    }); // 카테고리 값이 다 넘어오기 전에 한번 렌더링되면서 getData 불러오는 걸 막기 위해서 -> 카테고리1 불러왔는지 여부 저장
   }
 
   cate2Change = (value) => {
@@ -85,7 +77,7 @@ class DesignList extends Component {
               <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort}/>
             </Grid.Row>
           </MenuContainer>
-          {this.state.rendering && this.state.cateSetting && sort && cate1 && cate2 &&
+          {this.state.rendering && sort && cate1 && cate2 &&
           <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} />}
         </Wrapper>
       </ContentBox>

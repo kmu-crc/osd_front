@@ -30,7 +30,7 @@ const Head = styled(Grid)`
   }
   & li {
     float: left;
-    width: 100px;
+    padding: 0 1.4rem;
     text-align: center;
     cursor: pointer;
   }
@@ -90,7 +90,7 @@ class ModifyJoinList extends Component {
       <TabContainer mobile={16} tablet={12} computer={12}>
         <Head devided="vertically" padded={true} columns={2}>
           <Grid.Row>
-            <Grid.Column as="ul">
+            <Grid.Column as="ul" widescreen={10} largeScreen={10} computer={10} tablet={10} mobile={10}>
               <li id="design" 
                   className={this.props.type === "design" || this.props.type === null || this.props.type === "null" ? "onSelected" : ""}
                   onClick={this.typeChange}>가입한 디자인</li>
@@ -105,7 +105,7 @@ class ModifyJoinList extends Component {
                   onClick={this.typeChange}>가입 신청한 그룹</li>
               <div className="clear"></div>
             </Grid.Column>
-            <Sorting computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>
+            <Sorting widescreen={6} largeScreen={6} computer={6} tablet={6} mobile={6} handleChange={this.sortChange}/>
           </Grid.Row>
         </Head>
         <ContentBox>
