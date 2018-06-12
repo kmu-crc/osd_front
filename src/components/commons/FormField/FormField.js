@@ -104,10 +104,12 @@ export class OverlapField extends Component {
 export class FormField extends Component {
   render(){
     const {label, RenderComponent} = this.props;
+    const newProps = {...this.props};
+    delete newProps.RenderComponent;
     return (
       <Form.Field>
         <label>{label}</label>
-        <RenderComponent {...this.props}/>
+        <RenderComponent {...newProps}/>
       </Form.Field>
     );
   }
