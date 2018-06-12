@@ -5,6 +5,7 @@ import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
 import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
+import ModifyJoinList from "components/Groups/ModifyJoinList";
 
 // css styling
 
@@ -164,9 +165,8 @@ const ContentBox = styled.div`
 
 class GroupDetail extends Component {
   state = {
-    id: this.props.id,
-    activeMoreBtn: false,
-    activeIssue: false
+    // id: this.props.id,
+    editMode: false
   };
 
   componentDidMount() {
@@ -182,6 +182,12 @@ class GroupDetail extends Component {
     let type = this.props.type;
     let url = "/groupDetail/"+this.props.id;
     this.props.history.replace(`${url}/${type}/${value}`);
+  }
+
+  setEditMode = () => {
+    this.setState({
+      editMode: !this.state.editMode
+    });
   }
 
   render(){
@@ -203,14 +209,15 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <Container>
             <Wrapper padded={false} columns={2}>
+            { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
               <Grid.Row>
-              { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
                 <Link to={`/groupDetail/${groupDetail.uid}/modify`}>
-                  <button className="edit">그룹 정보 수정</button>
+                  <button className="edit">정보 수정</button>
                 </Link>
-                : <div></div>
-              }
+                <button className="edit" onClick={this.setEditMode}>{this.state.editMode? "확인" : "가입 관리"}</button>
               </Grid.Row>
+              : <div></div>
+              }
               <Grid.Row className="contentRow">
                 <HeadContainer mobile={16} tablet={4} computer={4}>
                   <ProfileSection>
@@ -251,6 +258,9 @@ class GroupDetail extends Component {
                     <p className="explanation">{groupDetail.explanation}</p>
                   </InfoSection>
                 </HeadContainer>
+                {this.state.editMode? 
+                <ModifyJoinList {...this.props}/>
+                :
                 <TabContainer mobile={16} tablet={12} computer={12}>
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
@@ -271,6 +281,7 @@ class GroupDetail extends Component {
                            component={this.props.type === "group"? GroupInGroupContainer : DesignInGroupContainer}/>
                   </ContentBox>
                 </TabContainer>
+                }
               </Grid.Row>
             </Wrapper>
           </Container>
