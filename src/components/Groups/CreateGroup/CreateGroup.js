@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Container, Header, Grid, Form } from "semantic-ui-react";
+import { Container, Header, Grid, Form, Button } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
@@ -31,6 +31,13 @@ const FormHeader = styled(Header) `
 `;
 
 class CreateGroup extends Component {
+  onSubmitForm = (data) => {
+    console.log(data);
+    this.props.GetDesignInGroupRequest(data, this.props.token).then(data => {
+      console.log("GetDesignInGroupRequest", data);
+      this.props.history.push(`/groupDetail/${data.id}/group/null`)
+    })
+  }
   render(){
     return(
       <Container>
@@ -49,11 +56,12 @@ class CreateGroup extends Component {
                     <FormField name="explanation" label="그룹 설명" placeholder="그룹 설명을 입력해주세요." RenderComponent={FormTextArea} />
                   </Form.Group>
                   <Form.Group widths="equal">
-                    <FormField name="thumbnail" label="썸네일 등록" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
+                    <FormField name="thumbnail" label="썸네일 등록" placeholder="섬네일을 등록해주세요." RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
                   </Form.Group>
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
+            <Button type="submit">생성</Button>
           </ValidateForm>
       </Container>
     );

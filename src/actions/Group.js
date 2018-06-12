@@ -174,15 +174,18 @@ export function GroupInGroupFail() {
   }
 };
 
-export function CreateNewGroupRequest(data) {
+export function CreateNewGroupRequest(data, token) {
   return (dispatch) => {
     dispatch(CreateNewGroup());
     return fetch(`${host}/group/createGroup`, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'x-access-token': token },
       method: "POST",
-      body: JSON.stringify(data)
+      body: data
     }).then((response) => {
       return response.json();
+    })
+    .then((res) => {
+      return dispatch(CreateNewGroupSuccess(res.id));
     }).catch((error) => {
       dispatch(CreateGroupFailure());
       console.log(error);
@@ -193,6 +196,13 @@ export function CreateNewGroupRequest(data) {
 export function CreateNewGroup() {
   return {
     type: types.CREATE_NEW_GROUP
+  }
+};
+
+export function CreateNewGroupSuccess(id) {
+  return {
+    type: types.CREATE_NEW_GROUP_SUCCESS,
+    id
   }
 };
 
@@ -266,4 +276,179 @@ export function GetWaitingDataFail() {
     waitingDesign: [],
     waitingGroup: []
   }
+};
+
+
+export function JoinGroupRequest(data, token, id) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/DesignJoinGroup`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "post",
+      body: JSON.stringify(data)
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("waiting group list is >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(JoinGroupSuccess(data));
+    }).catch((error) => {
+      dispatch(JoinGroupFailure());
+      console.log("err", error);
+    });
+  }
+};
+
+export function JoinGroup() {
+  return {
+    type: types.JOIN_GROUP
+  };
+};
+
+export function JoinGroupSuccess() {
+  return {
+    type: types.JOIN_GROUP_SUCCESS
+  };
+};
+
+export function JoinGroupFailure() {
+  return {
+    type: types.JOIN_GROUP_FAILURE
+  };
+};
+
+export function GetMyDesignListRequest(token, id) {
+  return (dispatch) => {
+    dispatch(GetMyDesignList());
+
+    return fetch(`${host}/group/${id}/join/myDesignList`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("GetMyDesignListRequest >>", data);
+      if (!data.list) {
+        console.log("no data");
+        data = [];
+      }
+      data.list = data.list.map(item => {
+        return { key: item.uid, text: item.title, value: item.uid };
+      })
+      dispatch(GetMyDesignListSuccess(data));
+    }).catch((error) => {
+      dispatch(GetMyDesignListFailure(error));
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetMyDesignList() {
+  return {
+    type: types.GET_MY_DESIGN_LIST
+  };
+};
+
+export function GetMyDesignListSuccess(data) {
+  return {
+    type: types.GET_MY_DESIGN_LIST_SUCCESS,
+    success: data.success,
+    list: data.list
+  };
+};
+
+export function GetMyDesignListFailure(data) {
+  return {
+    type: types.GET_MY_DESIGN_LIST_FAILURE,
+    success: data.success
+  };
+};
+
+export function GroupJoinGroupRequest(data, token, id) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/GroupJoinGroup`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "post",
+      body: JSON.stringify(data)
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("waiting group list is >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetWaitingGroup(data));
+    }).catch((error) => {
+      dispatch(GetWaitingDataFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function GroupJoinGroup() {
+  return {
+    type: types.GROUP_JOIN_GROUP
+  };
+};
+
+export function GroupJoinGroupSuccess() {
+  return {
+    type: types.GROUP_JOIN_GROUP_SUCCESS
+  };
+};
+
+export function GroupJoinGroupFailure() {
+  return {
+    type: types.GROUP_JOIN_GROUP_FAILURE
+  };
+};
+
+export function GetMyGroupListRequest(token, id) {
+  return (dispatch) => {
+    dispatch(GetMyDesignList());
+
+    return fetch(`${host}/group/${id}/join/myGroupList`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("GetMyGroupListRequest >>", data);
+      if (!data.list) {
+        console.log("no data");
+        data = [];
+      }
+      data.list = data.list.map(item => {
+        return { key: item.uid, text: item.title, value: item.uid };
+      })
+      dispatch(GetMyGroupListSuccess(data));
+    }).catch((error) => {
+      dispatch(GetMyGroupListFailure(error));
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetMyGroupList() {
+  return {
+    type: types.GET_MY_GROUP_LIST
+  };
+};
+
+export function GetMyGroupListSuccess(data) {
+  return {
+    type: types.GET_MY_GROUP_LIST_SUCCESS,
+    success: data.success,
+    list: data.list
+  };
+};
+
+export function GetMyGroupListFailure(data) {
+  return {
+    type: types.GET_MY_GROUP_LIST_FAILURE,
+    success: data.success
+  };
 };
