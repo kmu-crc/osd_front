@@ -5,9 +5,9 @@ import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 
 class LikeInDesignerContainer extends Component {
-  // componentWillMount() {
-  //   this.props.GetLikeInDesignerRequest(this.props.match.params.id);
-  // }
+  componentWillMount() {
+    this.props.GetLikeInDesignerRequest(this.props.match.params.id, 0);
+  }
 
   getList = (page) => {
     return this.props.GetLikeInDesignerRequest(this.props.match.params.id, page);

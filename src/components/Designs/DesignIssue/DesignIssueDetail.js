@@ -11,10 +11,9 @@ const IssueWrapper = styled(Grid)`
   position: relative;
   background-color: #fff;
   &.ui.grid {
-    padding: 10px 20px 40px;
+    padding: 1rem;
   }
   & .ui.fluid.container {
-    margin-bottom: 30px;
     padding: 1rem;
     border: 1px solid #e9e9e9;
   }
@@ -49,7 +48,7 @@ const CommentContainer = styled.div`
   }
 `;
 
-class DetailIssueDetail extends Component {
+class DesignIssueDetail extends Component {
   render(){
     let data = this.props.IssueDetail;
     return(
@@ -94,10 +93,10 @@ class DetailIssueDetail extends Component {
             </button>
           </form>
         </CommentContainer>
-          {/* <button className="ui button">목록</button> */}
+        <Link to={`/designDetail/${this.props.match.params.id}/issue`}><button className="ui button">목록</button></Link>
       </IssueWrapper>
     );
   }
 } 
 
-export default DetailIssueDetail;
+export default DesignIssueDetail;

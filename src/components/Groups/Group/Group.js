@@ -45,7 +45,9 @@ const TextPart = styled.div`
     text-overflow: ellipsis;
     white-space: normal;
   }
-  & .owner {
+  & .cate {
+    font-weight: 400;
+    color: dimgrey;
   }
 `;
 
@@ -91,15 +93,12 @@ class Group extends Component {
     return(
       <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>
-          <ImgPart><img src={eximg} alt="썸네일이미지"/></ImgPart>
+          <ImgPart><img src={group.thumbnailUrl ? group.thumbnailUrl.m_img : eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
             <div className="cate">
-              {/* <ButtonWrap>
-                <button className="red">가입신청</button>
-                { (user != null && user.uid === group.user_id ) && <button className="red">관리</button> }
-              </ButtonWrap> */}
+              최근 업데이트 {group.child_update_time.split("T")[0]}
             </div>
           </TextPart>
           <Count>

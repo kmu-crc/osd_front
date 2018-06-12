@@ -57,9 +57,12 @@ class GroupList extends Component {
     }, 200);
   }
 
+  // shouldComponentUpdate(){
+  //   return false;
+  // }
+
   sortChange = (e, { value }) => {
     this.props.history.replace(`/group/${value}`);
-    this.props.GetGroupListRequest(0, value);
     this.changeState();
   }
 
@@ -74,7 +77,7 @@ class GroupList extends Component {
               <Grid.Column className="addGroup">
                 <Link to="/createGroup"><button>새 그룹 추가 +</button></Link>
               </Grid.Column>
-              <Sorting handleChange={this.sortChange}/>
+              <Sorting handleChange={this.sortChange} placeholder={sort}/>
             </Grid.Row>
           </MenuContainer>
           {this.state.rendering && <ScrollGroupListContainer sort={sort}/>}

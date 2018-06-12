@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-import CreateIssue from "./CreateIssue.js";
-import DetailIssueDetailContainer from "containers/Designs/DetailIssueDetailContainer";
 
 // css styling
 const IssueWrapper = styled(Grid)`
@@ -11,9 +9,9 @@ const IssueWrapper = styled(Grid)`
   position: relative;
   background-color: #fff;
   &.ui.grid {
-    padding: 10px 20px 40px;
+    padding: 1rem;
   }
-  & > .noData {
+  & .noData {
     font-size: 14px;
     text-align: center;
   }
@@ -78,33 +76,30 @@ const List = styled.div`
   }
 `;
 
-class DetailIssue extends Component {
+class DesignIssueList extends Component {
   render(){
-    let issue = this.props.DesignDetailIssue;
-    const IssueList = () => {
-      return (
-        <div>
-          {issue.length !== 0?
-          <IssueWrapper>
-            <SearchWrapper columns={2}>
-              <Grid.Column>
-                <div className="ui icon input">
-                  <input type="text" value="" tabIndex="0" className="prompt" autoComplete="off" />
-                  <i aria-hidden="true" className="search icon"></i>
-                </div>
-              </Grid.Column>
-              <Grid.Column textAlign="right">
-                <Link to={ {pathname: this.props.match.url+"/createIssue",
-                            state: {id: this.props.id}} }>
-                  <button className="ui button">글쓰기</button>
-                </Link>
-              </Grid.Column>
-            </SearchWrapper>
-            <ListWrapper>
-              <ul>
+    const issue = this.props.DesignIssueList;
+    return (
+      <div>
+        <IssueWrapper>
+          <SearchWrapper columns={2}>
+            <Grid.Column>              
+              <div className="ui icon input">
+                <input type="text" value="" tabIndex="0" className="prompt" autoComplete="off" />
+                <i aria-hidden="true" className="search icon"></i>
+              </div>
+            </Grid.Column>
+            <Grid.Column textAlign="right">
+              <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
+                <button className="ui button">글쓰기</button>
+              </Link>
+            </Grid.Column>
+          </SearchWrapper>
+          <ListWrapper>
+            {issue.length !== 0?
+            <ul>
               {issue.map(list =>
-              <Link key={list.uid} to={ {pathname: this.props.match.url+"/detailIssue/"+list.uid,
-                                         state: { id: this.props.id, issue_id: list.uid }} }>
+              <Link key={list.uid} to={`/designDetail/${this.props.match.params.id}/issue/${list.uid}`}>
                 <List>
                   <li>
                     <div className="order">{list.uid}</div>
@@ -120,26 +115,16 @@ class DetailIssue extends Component {
               </Link>
               )}
             </ul>
-            </ListWrapper>
-          </IssueWrapper>
-          :
-          <IssueWrapper>
+            :
             <div className="noData">
                 <p>등록된 이슈가 없습니다.</p>
             </div>
-          </IssueWrapper>
-        }
-        </div>
-      );
-    }
-    return(
-      <div>
-        <Route exact path={this.props.match.url} component={IssueList}/>
-        <Route exact path={this.props.match.url+"/createIssue"} component={CreateIssue}/>
-        <Route exact path={this.props.match.url+"/detailIssue/:issue_id"} component={DetailIssueDetailContainer}/>
+            }
+          </ListWrapper>
+        </IssueWrapper>
       </div>
     );
   }
 }
 
-export default DetailIssue;
+export default DesignIssueList;
