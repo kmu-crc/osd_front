@@ -116,12 +116,14 @@ export class FormInput extends Component {
     }
   }
 
+
+
   onChangeValue = (event) => {
     const target = event.target;
     this.setState({ value: target.value });
     checkValidate(target.value, this.props.validates).then(data => {
       if(this.props.getValue && data.status === "SUCCESS") this.props.getValue(target.value);
-      if(this.props.onBlur && data.status === "SUCCESS") this.props.onBlur();
+      // if(this.props.onBlur && data.status === "SUCCESS") this.props.onBlur();
       this.setState(data);
     })
   }
@@ -277,6 +279,58 @@ export class FormSelect extends Component {
           }) : null}
         </select>
         <FormDropBox selection options={options} onChange={this.onChangeValue} value={this.state.value} />
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </div>
+    );
+  }
+}
+
+export class FormMultiSelect extends Component {
+  state = {
+    status: null,
+    message: null,
+    value: "SUCCESS",
+  }
+  componentWillMount() {
+    if (this.props.value) {
+      this.setState({ value: this.props.value });
+    } else if( this.props.options.length > 0 ) {
+      this.setState({ value: this.props.options[0].value });
+    }
+    if (!this.props.validates) {
+      this.setState({ status: "SUCCESS" });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // 이전에 전달받은 options와 다르다면 새롭게 options를 render하고 그중 제일 첫번째 요소를 선택한다.
+    if (JSON.stringify(prevProps.options) !== JSON.stringify(this.props.options)) {
+      this.newOptions();
+    }
+  }
+
+  newOptions = async () => {
+    await this.setState({ value: this.props.options[0].value });
+    if (this.props.getValue) this.props.getValue(this.props.options[0].value);
+    await this.onChangeValue(null, {value: this.state.value});
+  }
+
+  onChangeValue = async (event, { value }) => {
+    console.log(value);
+    await this.setState({ value });
+    checkValidate(value, this.props.validates).then(data => {
+      console.log("222", value);
+      if (this.props.getValue) this.props.getValue(value);
+      this.setState(data);
+    })
+  }
+
+  render() {
+    const { name, options } = this.props;
+    return (
+      <div>
+        <input type="text" {...this.props} name={this.props.name} {...this.props} status={this.state.status} value={this.state.value} style={{ display: "none" }}/>
+        <FormDropBox selection multiple options={options} onChange={this.onChangeValue} value={this.state.value} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
