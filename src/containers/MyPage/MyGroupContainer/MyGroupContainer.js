@@ -5,6 +5,9 @@ import ScrollList from "components/Commons/ScrollList";
 import Group from "components/Groups/Group";
 
 class MyGroupContainer extends Component {
+  componentWillMount(){
+    this.props.GetMyGroupListRequest(this.props.location.state.token, 0);
+  }
 
   getList = (page) => {
     return this.props.GetMyGroupListRequest(this.props.location.state.token, page);

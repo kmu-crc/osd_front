@@ -5,6 +5,9 @@ import ScrollList from "components/Commons/ScrollList";
 import Designer from "components/Designers/Designer";
 
 class MyLikeDesignerContainer extends Component {
+  componentWillMount(){
+    this.props.GetMyLikeDesignerRequest(this.props.location.state.token, 0);
+  }
 
   getList = (page) => {
     return this.props.GetMyLikeDesignerRequest(this.props.location.state.token, page);

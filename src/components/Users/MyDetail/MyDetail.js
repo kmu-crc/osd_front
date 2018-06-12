@@ -179,11 +179,11 @@ class MyDetail extends Component {
     const ContainerPage = () => {
       if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
         return(
-          <MyDesignContainer token={this.props.token}></MyDesignContainer>
+          <div></div>
         );
       } else {
         return (
-          <div></div>
+          <MyDesignContainer token={this.props.token}></MyDesignContainer>
         );
       }
     }
