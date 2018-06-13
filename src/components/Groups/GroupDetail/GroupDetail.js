@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
-import Sorting from "components/Commons/Sorting";
-import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
-import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
+import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer";
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import ModifyJoinList from "components/Groups/ModifyJoinList";
+import CurrentJoinList from "components/Groups/CurrentJoinList/CurrentJoinList";
 
 // css styling
 
@@ -104,85 +102,28 @@ const InfoSection = styled.div`
   }
 `;
 
-const TabContainer = styled(Grid.Column)`
-  background-color: white;
-  & .columns {
-    padding: 0 20px;
-  }
-  & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
-    color: inherit;
-  }
-`;
-
-const Head = styled(Grid)`
-  border-bottom: 1px solid rgba(0,0,0,0.25);
-  &.ui.grid > .row {
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
-  }
-  & ul {
-    line-height: 38px;
-  }
-  & li {
-    float: left;
-    width: 100px;
-    text-align: center;
-    cursor: pointer;
-  }
-  & li:hover {
-    font-weight: 500;
-  }
-  & li.onSelected {
-    color: red;
-    position: relative;
-  }
-`;
-
-const ContentBox = styled.div`
-  margin: 0 auto;
-  @media only screen and (max-width: 767px) and (min-width: 320px){
-    width: 470px;
-  }
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 450px;
-  }
-  @media only screen and (min-width: 992px){
-    width: 705px;
-  }
-  @media only screen and (max-width: 1399px) and (min-width: 1200px){
-    width: 855px;
-  }
-  @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 900px;
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1700px){
-    width: 1210px;
-  }
-  @media only screen and (min-width: 1920px){
-    width: 1368px;
-  }
-`;
-
 
 class GroupDetail extends Component {
   state = {
-    // id: this.props.id,
+    editGroupInfoMode: false,
     editMode: false
   };
 
-  componentDidMount() {
-    this.props.GetGroupDetailRequest(this.props.id); // 그룹에 대한 디테일 정보
-  }
-
-  typeChange = (e) => {
-    let url = "/groupDetail/"+this.props.id+"/"+e.target.id+"/"+this.props.sort;
+  componentWillMount() {
+    const url = `/groupDetail/${this.props.id}`;
     this.props.history.replace(url);
+    // 어떤 페이지를 마지막으로 새로고침 했더라도 새로고침 후에는 기본 설정으로 돌아감
   }
 
-  sortChange = (e, {value}) => {
-    let type = this.props.type;
-    let url = "/groupDetail/"+this.props.id;
-    this.props.history.replace(`${url}/${type}/${value}`);
+  componentDidMount() {
+    this.props.GetGroupDetailRequest(this.props.id); 
+    // 그룹에 대한 디테일 정보
+  }
+
+  setEditGroupInfoMode = () => {
+    this.setState({
+      editGroupInfoMode: !this.state.editGroupInfoMode
+    });
   }
 
   setEditMode = () => {
@@ -212,13 +153,19 @@ class GroupDetail extends Component {
             <Wrapper padded={false} columns={2}>
             { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
               <Grid.Row>
-                <Link to={`/groupDetail/${groupDetail.uid}/modify`}>
-                  <button className="edit">정보 수정</button>
-                </Link>
-                <button className="edit" onClick={this.setEditMode}>{this.state.editMode? "확인" : "가입 관리"}</button>
+                <button className="edit" onClick={this.setEditGroupInfoMode}>
+                  {this.state.editGroupInfoMode? "확인" : "정보 수정"}
+                </button>
+                <button className="edit" onClick={this.setEditMode}>
+                  {this.state.editMode? "확인" : "가입 관리"}
+                </button>
               </Grid.Row>
-              : <div></div>
-              }
+            : <div></div>
+            }
+              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
+            {this.state.editGroupInfoMode 
+            ? <ModifyGroupInfoContainer/> 
+            : 
               <Grid.Row className="contentRow">
                 <HeadContainer mobile={16} tablet={4} computer={4}>
                   <ProfileSection>
@@ -259,31 +206,14 @@ class GroupDetail extends Component {
                     <p className="explanation">{groupDetail.explanation}</p>
                   </InfoSection>
                 </HeadContainer>
-                {this.state.editMode? 
-                <ModifyJoinList {...this.props}/>
-                :
-                <TabContainer mobile={16} tablet={12} computer={12}>
-                  <Head devided="vertically" padded={true} columns={2}>
-                    <Grid.Row>
-                      <Grid.Column as="ul">
-                        <li id="design"
-                            className={this.props.type === "design" || this.props.type === null || this.props.type === "null" ? "onSelected" : ""}
-                            onClick={this.typeChange}>디자인</li>
-                        <li id="group"
-                            className={this.props.type === "group"? "onSelected" : ""}
-                            onClick={this.typeChange}>그룹</li>
-                        <div className="clear"></div>
-                      </Grid.Column>
-                      <Sorting computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>
-                    </Grid.Row>
-                  </Head>
-                  <ContentBox>
-                    <Route path="/groupDetail/:id/:type?/:sort?"
-                           component={this.props.type === "group"? GroupInGroupContainer : DesignInGroupContainer}/>
-                  </ContentBox>
-                </TabContainer>
+
+                {/* ------------------------ 우측 카드 렌더링 섹션 -------------------------- */}
+                {this.state.editMode
+                ? <ModifyJoinList {...this.props}/>
+                : <CurrentJoinList {...this.props}/>
                 }
               </Grid.Row>
+            }   
             </Wrapper>
           </Container>
         }

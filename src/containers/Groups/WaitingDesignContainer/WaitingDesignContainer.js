@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetWaitingDesignRequest, DeleteDesignInGroupRequest } from "actions/Group";
+import { GetWaitingDesignRequest, DeleteDesignInGroupRequest, UpdateDesignInGroupRequest } from "actions/Group";
 import ContentList from "components/Commons/ContentList";
 
 class WaitingDesignContainer extends Component {
@@ -18,12 +18,21 @@ class WaitingDesignContainer extends Component {
   }
 
   setOut = (id) => {
-    console.log(id);
-    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id);
+    alert("디자인을 삭제하시겠습니까?");
+    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   setAccept = (id) => {
-    console.log(id);
+    alert("가입을 승인하시겠습니까?");
+    this.props.UpdateDesignInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
@@ -46,6 +55,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     DeleteDesignInGroupRequest : (id, designId) => {
       return dispatch(DeleteDesignInGroupRequest(id, designId))
+    },
+    UpdateDesignInGroupRequest : (id, designId) => {
+      return dispatch(UpdateDesignInGroupRequest(id, designId))
     }
   };
 };

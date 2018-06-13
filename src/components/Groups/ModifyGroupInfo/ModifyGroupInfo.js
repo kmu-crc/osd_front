@@ -7,6 +7,14 @@ import { FormField } from "components/Commons/FormField";
 import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
 
 // css styling
+
+const Wrapper = styled.div`
+  width: 100%;
+  & .ui.form {
+    width: 100%;
+  }
+`;
+
 const FromFieldCard = styled.div`
   width: 100%;
   background-color: white;
@@ -31,34 +39,41 @@ const FormHeader = styled(Header) `
 `;
 
 class ModifyGroupInfo extends Component {
-  componentDidMount(){
-    // 그룹 정보 수정 페이지를 새로고침 했을 때도 그룹 정보가 떠야 하나?
+  state = {
+    title: this.props.GroupDetail.title,
+    explanation: this.props.GroupDetail.explanation
   }
   render(){
     return(
-      <ValidateForm onSubmit={this.onSubmitForm}>
-        <FromFieldCard>
-          <Grid>
-            <Grid.Column width={4}>
-              <FormHeader as="h2">정보 수정</FormHeader>
-            </Grid.Column>
-            <Grid.Column width={12}>
-              <Form.Group widths="equal">
-                <FormField name="title" label="그룹 이름" type="text" validates={["required"]} RenderComponent={FormInput} />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <FormField name="explanation" label="그룹 설명" RenderComponent={FormTextArea} />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <FormField label="그룹장 변경" RenderComponent={SearchMemberContainer} validates={["MinLength2"]} onChangeMembers={this.props.onChangeMembers}/>
-              </Form.Group>
-            </Grid.Column>
-          </Grid>
-        </FromFieldCard>
-      </ValidateForm>
+      <Wrapper>
+        <ValidateForm onSubmit={this.onSubmitForm}>
+          <FromFieldCard>
+            <Grid>
+              <Grid.Column width={4}>
+                <FormHeader as="h2">정보 수정</FormHeader>
+              </Grid.Column>
+              <Grid.Column width={12}>
+                <Form.Group widths="equal">
+                  <FormField name="title" label="그룹 이름" type="text" validates={["required"]} 
+                             value={this.state.title} 
+                             RenderComponent={FormInput} />
+                </Form.Group>
+                <Form.Group widths="equal">
+                  <FormField name="explanation" label="그룹 설명" 
+                             value={this.state.explanation}
+                             RenderComponent={FormTextArea} />
+                </Form.Group>
+                <Form.Group widths="equal">
+                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
+                </Form.Group>
+                <Form.Group widths="equal">
+                  <FormField label="그룹장 변경" RenderComponent={SearchMemberContainer} validates={["MinLength2"]} onChangeMembers={this.props.onChangeMembers}/>
+                </Form.Group>
+              </Grid.Column>
+            </Grid>
+          </FromFieldCard>
+        </ValidateForm>
+      </Wrapper>
     );
   }
 }
