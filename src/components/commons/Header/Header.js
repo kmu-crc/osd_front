@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 import logo from "source/logo.png";
 import { SetSession } from "modules/Sessions";
-import { Grid, Icon } from 'semantic-ui-react'
+import { Grid, Icon } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 
 // css styling
 const Head = styled.header`
@@ -26,11 +26,6 @@ const Logo = styled.a`
     height: 100%;
   }
 `
-
-const Button = styled.button`
-  color: white;
-`
-
 const Nav = styled.ul`
   width: 400px;
   margin: 0 auto;
@@ -98,7 +93,7 @@ class Header extends Component {
               <li><a href="/design">디자인</a></li>
               <li><a href="/group">그룹</a></li>
               <li><a href="/designer">디자이너</a></li>
-              <li><a href="/createdesign"><Button className="red">디자인 등록</Button></a></li>
+              <li><a href="/createdesign"><Button size="small" round={true}>디자인 등록</Button></a></li>
             </Nav>
           </Grid.Column>
           <Grid.Column width={3}>
