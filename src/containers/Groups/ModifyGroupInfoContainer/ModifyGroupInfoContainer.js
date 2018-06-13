@@ -6,9 +6,7 @@ import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
 class ModifyGroupInfoContainer extends Component {
   render() {
     return(
-      <div>
-        <ModifyGroupInfo {...this.props}/>
-      </div>
+      <ModifyGroupInfo {...this.props}/>
     );
   }
 }

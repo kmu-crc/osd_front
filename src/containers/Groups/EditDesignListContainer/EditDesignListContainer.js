@@ -18,8 +18,12 @@ class EditDesignListContainer extends Component {
   }
 
   setOut = (id) => {
-    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id);
-    console.log(id);
+    alert("디자인을 삭제하시겠습니까?");
+    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {

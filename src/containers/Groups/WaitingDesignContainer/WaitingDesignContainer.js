@@ -18,8 +18,12 @@ class WaitingDesignContainer extends Component {
   }
 
   setOut = (id) => {
-    console.log(id);
-    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id);
+    alert("디자인을 삭제하시겠습니까?");
+    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   setAccept = (id) => {

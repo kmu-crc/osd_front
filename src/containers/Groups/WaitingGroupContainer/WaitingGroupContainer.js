@@ -18,8 +18,12 @@ class WaitingGroupContainer extends Component {
   }
 
   setOut = (id) => {
-    console.log(id);
-    this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id);
+    alert("그룹을 삭제하시겠습니까?");
+    this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort))
+    .catch(err=>{
+      console.log(err);
+    });
   }
 
   setAccept = (id) => {
