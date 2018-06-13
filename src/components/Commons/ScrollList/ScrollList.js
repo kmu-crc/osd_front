@@ -72,7 +72,7 @@ class ScrollList extends Component {
             </ListContainer>
           </InfiniteScroll>
           : 
-          <Loading/>
+          <p>등록된 글이 없습니다</p>
           }
         </ScrollContainer>
     );

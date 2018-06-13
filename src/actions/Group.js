@@ -278,7 +278,7 @@ export function GetWaitingDataFail() {
   }
 };
 
-
+// 그룹 가입신청
 export function JoinGroupRequest(data, token, id) {
   return (dispatch) => {
     return fetch(`${host}/group/groupDetail/${id}/DesignJoinGroup`, {
@@ -296,7 +296,6 @@ export function JoinGroupRequest(data, token, id) {
       dispatch(JoinGroupSuccess(data));
     }).catch((error) => {
       dispatch(JoinGroupFailure());
-      console.log("err", error);
     });
   }
 };
@@ -452,3 +451,64 @@ export function GetMyGroupListFailure(data) {
     success: data.success
   };
 };
+
+// 그룹에 가입한 & 신청한 디자인 삭제하기
+export function DeleteDesignInGroupRequest(id, designid) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/deleteDesign/${designid}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "delete"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("result >>", data);
+      dispatch(DeleteDesignInGroupSuccess());
+    }).catch((error) => {
+      dispatch(DeleteDesignInGroupFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function DeleteDesignInGroupSuccess(){
+  return {
+    type: types.DELETE_DESIGN_IN_GROUP_SUCCESS
+  }
+};
+
+export function DeleteDesignInGroupFail(){
+  return {
+    type: types.DELETE_DESIGN_IN_GROUP_FAIL
+  }
+};
+
+// 그룹에 가입한 & 신청한 그룹 삭제하기
+export function DeleteGroupInGroupRequest(id, groupid) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/deleteGroup/${groupid}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "delete"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("result >>", data);
+      dispatch(DeleteGroupInGroupSuccess());
+    }).catch((error) => {
+      dispatch(DeleteGroupInGroupFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function DeleteGroupInGroupSuccess(){
+  return {
+    type: types.DELETE_GROUP_IN_GROUP_SUCCESS
+  }
+};
+
+export function DeleteGroupInGroupFail(){
+  return {
+    type: types.DELETE_GROUP_IN_GROUP_FAIL
+  }
+};
+

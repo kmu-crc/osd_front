@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
-import styled from "styled-components";
 import Design from "components/Designs/Design";
 import Group from "components/Groups/Group";
-import Designer from "components/Designers/Designer";
+import styled from 'styled-components';
 
 // css styling
+const OutBtn = styled.button`
+  position: absolute;
+  top: 0;
+  right: 10px;
+`;
 
-const ListContainer = styled(Grid)`
-  margin-top: 30px;
+const AcceptBtn = styled.button`
+  position: absolute;
+  top: 0;
+  right: 80px;
 `;
 
 class ContentList extends Component {
@@ -16,21 +22,25 @@ class ContentList extends Component {
     let data = this.props.data;
     const type = this.props.type;
     return(
-      <ListContainer devided="vertically" padded={true} columns={this.props.columns} as="ul">
-      {data != null && data.length > 0 ?
-        <Grid.Row>
-        {data.map(content =>
-          <Grid.Column key={content.uid}>
-          { type === "design"? <Design data={content} user={this.props.user}/>
-          : type === "group"? <Group data={content} user={this.props.user} rerender={this.props.rerender}/>
-          : <Designer data={content} user={this.props.user}/> }
-          </Grid.Column>
-        )}
-      </Grid.Row>
+      <Grid.Row>
+      {data.length > 0 ? data.map(data => (
+        <Grid.Column mobile={8} tablet={8} computer={5} largeScreen={4} widescreen={4}
+                    className="largeCustom"
+                    key={data.uid}>
+          {type === "design" ? <Design data={data} rerender={this.props.rerender}/>
+                             : <Group data={data} rerender={this.props.rerender}/>
+          }
+          
+          {this.props.handleAccept &&
+          <AcceptBtn className="ui button black" onClick={()=>this.props.handleAccept(data.uid)}>가입승인</AcceptBtn>
+          }
+          <OutBtn className="ui button black" onClick={()=>this.props.handleClick(data.uid)}>삭제</OutBtn>
+        </Grid.Column>
+      ))
       :
-      null
+      <p>컨텐츠가 없습니다.</p>
       }
-      </ListContainer>
+    </Grid.Row>
     );
   }
 }
