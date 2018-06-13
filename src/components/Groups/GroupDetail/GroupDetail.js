@@ -5,11 +5,8 @@ import { Grid, Icon } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
 import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
-<<<<<<< HEAD
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
-=======
 import ModifyJoinList from "components/Groups/ModifyJoinList";
->>>>>>> feature/group_manage
 
 // css styling
 
