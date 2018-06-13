@@ -482,6 +482,36 @@ export function DeleteDesignInGroupFail(){
   }
 };
 
+// 그룹에 신청한 디자인 가입 승인하기
+export function UpdateDesignInGroupRequest(id, designid) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/acceptDesign/${designid}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("result >>", data);
+      dispatch(UpdateDesignInGroupSuccess());
+    }).catch((error) => {
+      dispatch(UpdateDesignInGroupFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function UpdateDesignInGroupSuccess(){
+  return {
+    type: types.UPDATE_DESIGN_IN_GROUP_SUCCESS
+  }
+};
+
+export function UpdateDesignInGroupFail(){
+  return {
+    type: types.UPDATE_DESIGN_IN_GROUP_FAIL
+  }
+};
+
 // 그룹에 가입한 & 신청한 그룹 삭제하기
 export function DeleteGroupInGroupRequest(id, groupid) {
   return (dispatch) => {
@@ -509,6 +539,36 @@ export function DeleteGroupInGroupSuccess(){
 export function DeleteGroupInGroupFail(){
   return {
     type: types.DELETE_GROUP_IN_GROUP_FAIL
+  }
+};
+
+// 그룹에 신청한 그룹 가입 승인하기
+export function UpdateGroupInGroupRequest(id, groupid) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/acceptGroup/${groupid}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("result >>", data);
+      dispatch(UpdateGroupInGroupSuccess());
+    }).catch((error) => {
+      dispatch(UpdateGroupInGroupFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function UpdateGroupInGroupSuccess(){
+  return {
+    type: types.UPDATE_GROUP_IN_GROUP_SUCCESS
+  }
+};
+
+export function UpdateGroupInGroupFail(){
+  return {
+    type: types.UPDATE_GROUP_IN_GROUP_FAIL
   }
 };
 

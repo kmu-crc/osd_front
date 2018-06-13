@@ -18,8 +18,12 @@ class EditGroupListContainer extends Component {
   }
 
   setOut = (id) => {
-    console.log(id);
-    this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id);
+    alert("그룹을 삭제하시겠습니까?");
+    this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetGroupInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .catch(err=>{
+      console.log(err);
+    });
   }
   
   render() {
