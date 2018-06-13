@@ -162,6 +162,7 @@ class DesignDetail extends Component {
         {designDetail.length !== 0 &&
           <ContentBox>
             <Wrapper>
+              {/* --------------- 상단 디자인에 대한 정보 및 카운트 정보 ---------------  */}
               <HeadContainer divided="vertically" padded={true}>
                 <Grid.Row columns={2}>
                   <Grid.Column computer={8} tablet={6} mobile={6}>
@@ -212,22 +213,42 @@ class DesignDetail extends Component {
                   </Grid.Column>
                 </Grid.Row>
               </HeadContainer>
+              {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
               <TabContainer>
-                {designDetail.mainIssue !== null && this.props.location.pathname.indexOf("issue") === -1 &&
-                <IssueContainer>
-                  <Link to={`/designDetail/${this.props.id}/issue/${designDetail.mainIssue.uid}`}
-                        className="mainIssue" >
-                    <p>{designDetail.mainIssue.title}</p>
-                  </Link>
-                  <Link to={`/designDetail/${this.props.id}/issue`}>
-                    <button className="ui basic button">이슈 목록</button>  
-                  </Link>
-                </IssueContainer>
+                {this.props.location.pathname.indexOf("issue") === -1 &&
+                  ( 
+                    designDetail.mainIssue === null ?
+                      designDetail.is_team === 1 &&
+                        <IssueContainer>
+                          <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
+                                       state: designDetail.is_team? "true" : "false" } 
+                                   } className="mainIssue">
+                            <p>등록된 이슈가 없습니다.</p>
+                          </Link>
+                          <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
+                                       state: designDetail.is_team? "true" : "false" }
+                                   }>
+                            <button className="ui basic button">목록보기</button>  
+                          </Link>
+                        </IssueContainer>
+                    :
+                    <IssueContainer>
+                      <Link to={ { pathname: `/designDetail/${this.props.id}/issue/${designDetail.mainIssue.uid}`,
+                                  state: designDetail.is_team? "true" : "false" }
+                               } className="mainIssue" >
+                        <p>{designDetail.mainIssue.title}</p>
+                      </Link>
+                      <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
+                                   state: designDetail.is_team? "true" : "false" } 
+                               }>
+                        <button className="ui basic button">목록보기</button>  
+                      </Link>
+                    </IssueContainer>
+                  )
                 }
                 <Route exact path={"/designDetail/:id"}
-                       component={designDetail.is_project == 1 
-                                  ? DesignDetailStepContainer
-                                  : DesignDetailViewContainer} />
+                       component={designDetail.is_project == 1 ? DesignDetailStepContainer
+                                                               : DesignDetailViewContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
                        component={DesignIssue} />
                 <Route exact path={"/designDetail/:id/createissue"} 

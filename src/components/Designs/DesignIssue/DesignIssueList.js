@@ -79,6 +79,7 @@ const List = styled.div`
 class DesignIssueList extends Component {
   render(){
     const issue = this.props.DesignIssueList;
+    const member = this.props.location.state;
     return (
       <div>
         <IssueWrapper>
@@ -90,9 +91,11 @@ class DesignIssueList extends Component {
               </div>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
-                <button className="ui button">글쓰기</button>
-              </Link>
+              {member === "true" &&
+                <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
+                  <button className="ui button">글쓰기</button>
+                </Link>
+              }
             </Grid.Column>
           </SearchWrapper>
           <ListWrapper>

@@ -18,7 +18,8 @@ const mapStateToProps = (state) => {
   return {
     DesignDetail: state.DesignDetail.status.DesignDetail,
     valid: state.Authentication.status.valid,
-    userInfo: state.Authentication.status.userInfo
+    userInfo: state.Authentication.status.userInfo,
+    token: state.Authentication.status.token
   };
 };
 
