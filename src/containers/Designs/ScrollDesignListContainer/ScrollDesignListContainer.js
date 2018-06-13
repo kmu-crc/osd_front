@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
 import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
-// import { withRouter } from "react-router"; 
+// import { withRouter } from "react-router";
 
 class ScrollDesignListContainer extends Component {
   componentWillMount(){
@@ -19,9 +19,9 @@ class ScrollDesignListContainer extends Component {
 
   render() {
     return(
-      <ScrollList getListRequest={this.getList} 
-                  ListComponent={Design} 
-                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
+      <ScrollList getListRequest={this.getList}
+                  ListComponent={Design}
+                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                   mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
     );
   }
