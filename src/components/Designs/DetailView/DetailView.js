@@ -53,8 +53,8 @@ const GoStepBtn = styled.button`
 
 class DetailView extends Component {
 
-  componentDidMount() {
-    this.props.GetDesignDetailViewRequest(this.props.id);
+  componentWillMount() {
+    this.props.GetDesignDetailViewRequest(this.props.match.params.id);
   }
 
   render(){
