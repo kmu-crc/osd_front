@@ -10,7 +10,7 @@ class WaitingDesignContainer extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetWaitingDesignRequest(this.props.match.params.id, null, this.props.match.params.sort);
+      this.props.GetWaitingDesignRequest(this.props.match.params.id, nextProps.match.params.sort);
       return true;
     } else {
       return false;
@@ -20,7 +20,7 @@ class WaitingDesignContainer extends Component {
   setOut = (id) => {
     alert("디자인을 삭제하시겠습니까?");
     this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
-    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, this.props.match.params.sort))
     .catch(err => {
       console.log(err);
     });
@@ -29,7 +29,7 @@ class WaitingDesignContainer extends Component {
   setAccept = (id) => {
     alert("가입을 승인하시겠습니까?");
     this.props.UpdateDesignInGroupRequest(this.props.match.params.id, id)
-    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, null, this.props.match.params.sort))
+    .then(this.props.GetWaitingDesignRequest(this.props.match.params.id, this.props.match.params.sort))
     .catch(err => {
       console.log(err);
     });

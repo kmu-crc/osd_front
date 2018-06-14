@@ -10,7 +10,7 @@ class WaitingGroupContainer extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetWaitingGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+      this.props.GetWaitingGroupRequest(this.props.match.params.id, nextProps.match.params.sort);
       return true;
     } else {
       return false;

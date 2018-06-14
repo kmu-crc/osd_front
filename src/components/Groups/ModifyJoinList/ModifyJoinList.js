@@ -105,7 +105,8 @@ class ModifyJoinList extends Component {
                   onClick={this.typeChange}>가입 신청한 그룹</li>
               <div className="clear"></div>
             </Grid.Column>
-            <Sorting widescreen={6} largeScreen={6} computer={6} tablet={6} mobile={6} handleChange={this.sortChange}/>
+            <Sorting widescreen={6} largeScreen={6} computer={6} tablet={6} mobile={6} 
+                     handleChange={this.sortChange}/>
           </Grid.Row>
         </Head>
         <ContentBox>

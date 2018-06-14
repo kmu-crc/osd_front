@@ -213,9 +213,10 @@ export function CreateGroupFailure() {
 };
 
 // 그룹에 가입 신청중인 디자인 가져오기
-export function GetWaitingDesignRequest(id) {
+export function GetWaitingDesignRequest(id, sort) {
+  console.log(sort);
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/${id}/waitingDesign`, {
+    return fetch(`${host}/group/groupDetail/${id}/waitingDesign/${sort}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -242,9 +243,9 @@ export function GetWaitingDesign(data) {
 };
 
 // 그룹에 가입 신청중인 그룹 가져오기
-export function GetWaitingGroupRequest(id) {
+export function GetWaitingGroupRequest(id, sort) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/${id}/waitingGroup`, {
+    return fetch(`${host}/group/groupDetail/${id}/waitingGroup/${sort}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

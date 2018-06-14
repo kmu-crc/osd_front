@@ -10,7 +10,7 @@ class EditDesignListContainer extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+      this.props.GetDesignInGroupRequest(this.props.match.params.id, null, nextProps.match.params.sort);
       return true;
     } else {
       return false;
