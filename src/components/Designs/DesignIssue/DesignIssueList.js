@@ -7,7 +7,6 @@ import { Grid } from "semantic-ui-react";
 const IssueWrapper = styled(Grid)`
   min-width: 660px;
   position: relative;
-  background-color: #fff;
   &.ui.grid {
     padding: 1rem;
   }
