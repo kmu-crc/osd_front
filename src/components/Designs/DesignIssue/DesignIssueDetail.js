@@ -9,7 +9,6 @@ import eximg from "source/topDesign.png";
 const IssueWrapper = styled(Grid)`
   min-width: 660px;
   position: relative;
-  background-color: #fff;
   &.ui.grid {
     padding: 1rem;
   }
@@ -93,7 +92,9 @@ class DesignIssueDetail extends Component {
             </button>
           </form>
         </CommentContainer>
-        <Link to={`/designDetail/${this.props.match.params.id}/issue`}><button className="ui button">목록</button></Link>
+        <Link to={`/designDetail/${this.props.match.params.id}/issue`}>
+          <button className="ui button">목록</button>
+        </Link>
       </IssueWrapper>
     );
   }
