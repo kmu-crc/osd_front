@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Grid, Header, Form } from "semantic-ui-react";
+import { Grid, Header, Form, Button } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
@@ -41,7 +41,13 @@ const FormHeader = styled(Header) `
 class ModifyGroupInfo extends Component {
   state = {
     title: this.props.GroupDetail.title,
-    explanation: this.props.GroupDetail.explanation
+    explanation: this.props.GroupDetail.explanation,
+  }
+
+  onSubmitForm = (data) => {
+    console.log("work");
+    console.log(data);
+    this.props.UpdateGroupRequest(this.props.GroupDetail.uid, data, this.props.token);
   }
   render(){
     return(
@@ -67,11 +73,12 @@ class ModifyGroupInfo extends Component {
                   <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
                 </Form.Group>
                 <Form.Group widths="equal">
-                  <FormField label="그룹장 변경" RenderComponent={SearchMemberContainer} validates={["MinLength2"]} onChangeMembers={this.props.onChangeMembers}/>
+                  <FormField label="그룹장 변경" RenderComponent={SearchMemberContainer} onChangeMembers={this.props.onChangeMembers}/>
                 </Form.Group>
               </Grid.Column>
             </Grid>
           </FromFieldCard>
+          <Button type="submit">확인</Button>
         </ValidateForm>
       </Wrapper>
     );

@@ -79,6 +79,7 @@ export function GetGroupDetail(data) {
 // 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, page, sort) {
   return (dispatch) => {
+    console.log("work");
     return fetch(`${host}/group/groupDetail/`+id+"/design/"+page+"/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
@@ -171,111 +172,6 @@ export function GroupInGroupFail() {
     type: types.GROUP_IN_GROUP_FAIL,
     GroupInGroup: [],
     GroupInGroupAdded: []
-  }
-};
-
-export function CreateNewGroupRequest(data, token) {
-  return (dispatch) => {
-    dispatch(CreateNewGroup());
-    return fetch(`${host}/group/createGroup`, {
-      headers: { 'x-access-token': token },
-      method: "POST",
-      body: data
-    }).then((response) => {
-      return response.json();
-    })
-    .then((res) => {
-      return dispatch(CreateNewGroupSuccess(res.id));
-    }).catch((error) => {
-      dispatch(CreateGroupFailure());
-      console.log(error);
-    })
-  }
-};
-
-export function CreateNewGroup() {
-  return {
-    type: types.CREATE_NEW_GROUP
-  }
-};
-
-export function CreateNewGroupSuccess(id) {
-  return {
-    type: types.CREATE_NEW_GROUP_SUCCESS,
-    id
-  }
-};
-
-export function CreateGroupFailure() {
-  return {
-    type: types.CREATE_GROUP_FAILURE
-  }
-};
-
-// 그룹에 가입 신청중인 디자인 가져오기
-export function GetWaitingDesignRequest(id, sort) {
-  console.log(sort);
-  return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/${id}/waitingDesign/${sort}`, {
-      headers: { "Content-Type": "application/json" },
-      method: "get"
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      console.log("waiting design list is >>", data);
-      if (!data) {
-        console.log("no data");
-        data = [];
-      }
-      dispatch(GetWaitingDesign(data));
-    }).catch((error) => {
-      dispatch(GetWaitingDataFail());
-      console.log("err", error);
-    });
-  }
-};
-
-export function GetWaitingDesign(data) {
-  return {
-    type: types.GET_WAITING_DESIGN,
-    waitingDesign: data
-  }
-};
-
-// 그룹에 가입 신청중인 그룹 가져오기
-export function GetWaitingGroupRequest(id, sort) {
-  return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/${id}/waitingGroup/${sort}`, {
-      headers: { "Content-Type": "application/json" },
-      method: "get"
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      console.log("waiting group list is >>", data);
-      if (!data) {
-        console.log("no data");
-        data = [];
-      }
-      dispatch(GetWaitingGroup(data));
-    }).catch((error) => {
-      dispatch(GetWaitingDataFail());
-      console.log("err", error);
-    });
-  }
-};
-
-export function GetWaitingGroup(data) {
-  return {
-    type: types.GET_WAITING_GROUP,
-    waitingGroup: data
-  }
-};
-
-export function GetWaitingDataFail() {
-  return {
-    type: types.GET_WAITING_DATA_FAIL,
-    waitingDesign: [],
-    waitingGroup: []
   }
 };
 
@@ -453,6 +349,73 @@ export function GetMyGroupListFailure(data) {
   };
 };
 
+// 그룹에 가입 신청중인 디자인 가져오기
+export function GetWaitingDesignRequest(id, sort) {
+  console.log(sort);
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/waitingDesign/${sort}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("waiting design list is >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetWaitingDesign(data));
+    }).catch((error) => {
+      dispatch(GetWaitingDataFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetWaitingDesign(data) {
+  return {
+    type: types.GET_WAITING_DESIGN,
+    waitingDesign: data
+  }
+};
+
+// 그룹에 가입 신청중인 그룹 가져오기
+export function GetWaitingGroupRequest(id, sort) {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupDetail/${id}/waitingGroup/${sort}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("waiting group list is >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetWaitingGroup(data));
+    }).catch((error) => {
+      dispatch(GetWaitingDataFail());
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetWaitingGroup(data) {
+  return {
+    type: types.GET_WAITING_GROUP,
+    waitingGroup: data
+  }
+};
+
+export function GetWaitingDataFail() {
+  return {
+    type: types.GET_WAITING_DATA_FAIL,
+    waitingDesign: [],
+    waitingGroup: []
+  }
+};
+
 // 그룹에 가입한 & 신청한 디자인 삭제하기
 export function DeleteDesignInGroupRequest(id, designid) {
   return (dispatch) => {
@@ -573,3 +536,80 @@ export function UpdateGroupInGroupFail(){
   }
 };
 
+// 새 그룹 생성하기
+export function CreateNewGroupRequest(data, token) {
+  return (dispatch) => {
+    dispatch(CreateNewGroup());
+    return fetch(`${host}/group/createGroup`, {
+      headers: { 'x-access-token': token },
+      method: "POST",
+      body: data
+    }).then((response) => {
+      return response.json();
+    })
+    .then((res) => {
+      return dispatch(CreateNewGroupSuccess(res.id));
+    }).catch((error) => {
+      dispatch(CreateGroupFailure());
+      console.log(error);
+    })
+  }
+};
+
+export function CreateNewGroup() {
+  return {
+    type: types.CREATE_NEW_GROUP
+  }
+};
+
+export function CreateNewGroupSuccess(id) {
+  return {
+    type: types.CREATE_NEW_GROUP_SUCCESS,
+    id
+  }
+};
+
+export function CreateGroupFailure() {
+  return {
+    type: types.CREATE_GROUP_FAILURE
+  }
+};
+
+// 그룹 정보 수정하기
+export function UpdateGroupRequest(id, data, token) {
+  return (dispatch) => {
+    dispatch(UpdateGroup());
+    return fetch(`${host}/group/${id}/updateGroup`, {
+      headers: { 'x-access-token': token },
+      method: "POST",
+      body: data
+    }).then((response) => {
+      return response.json();
+    })
+    .then((res) => {
+      return dispatch(UpdateGroupSuccess(res.id));
+    }).catch((error) => {
+      dispatch(UpdateGroupFailure());
+      console.log(error);
+    })
+  }
+};
+
+export function UpdateGroup() {
+  return {
+    type: types.UPDATE_GROUP
+  }
+};
+
+export function UpdateGroupSuccess(id) {
+  return {
+    type: types.UPDATE_GROUP_SUCCESS,
+    id
+  }
+};
+
+export function UpdateGroupFailure() {
+  return {
+    type: types.UPDATE_GROUP_FAILURE
+  }
+};
