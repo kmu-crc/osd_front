@@ -584,9 +584,12 @@ export function UpdateGroupRequest(id, data, token) {
       body: data
     }).then((response) => {
       return response.json();
-    })
-    .then((res) => {
-      return dispatch(UpdateGroupSuccess(res.id));
+    }).then((res) => {
+      if (res.success === true) {
+        return dispatch(UpdateGroupSuccess());
+      } else {
+        return dispatch(UpdateGroupFailure());
+      }
     }).catch((error) => {
       dispatch(UpdateGroupFailure());
       console.log(error);
@@ -600,10 +603,9 @@ export function UpdateGroup() {
   }
 };
 
-export function UpdateGroupSuccess(id) {
+export function UpdateGroupSuccess() {
   return {
-    type: types.UPDATE_GROUP_SUCCESS,
-    id
+    type: types.UPDATE_GROUP_SUCCESS
   }
 };
 

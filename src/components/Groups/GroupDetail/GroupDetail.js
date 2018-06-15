@@ -36,6 +36,9 @@ const Wrapper = styled(Grid)`
   & .contentRow {
     box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   }
+  & .btnContainer {
+    height: 35px;
+  }
 `;
 
 const HeadContainer = styled(Grid.Column)`
@@ -132,6 +135,10 @@ class GroupDetail extends Component {
     });
   }
 
+  handleEdit = () => {
+    return this.setEditMode();
+  }
+
   render(){
     let groupDetail = this.props.GroupDetail;
     let count;
@@ -151,20 +158,24 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <Container>
             <Wrapper padded={false} columns={2}>
-            { (this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id))? 
+            { this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) && 
               <Grid.Row>
-                <button className="edit" onClick={this.setEditGroupInfoMode}>
-                  {this.state.editGroupInfoMode? "확인" : "정보 수정"}
-                </button>
-                <button className="edit" onClick={this.setEditMode}>
-                  {this.state.editMode? "확인" : "가입 관리"}
-                </button>
+                { !this.state.editGroupInfoMode && !this.state.editMode 
+                ? <div className="btnContainer">
+                    <button className="edit" onClick={this.setEditGroupInfoMode}>
+                      정보 수정
+                    </button>
+                    <button className="edit" onClick={this.setEditMode}>
+                      가입 관리
+                    </button>
+                  </div>
+                : <div className="btnContainer"></div>
+                }
               </Grid.Row>
-            : <div></div>
             }
               {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
             {this.state.editGroupInfoMode 
-            ? <ModifyGroupInfoContainer/> 
+            ? <ModifyGroupInfoContainer updateComponent={this.handleEdit} {...this.props}/> 
             : 
               <Grid.Row className="contentRow">
                 <HeadContainer mobile={16} tablet={4} computer={4}>
