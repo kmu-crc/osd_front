@@ -70,7 +70,7 @@ class ModifyGroupInfo extends Component {
                              RenderComponent={FormTextArea} />
                 </Form.Group>
                 <Form.Group widths="equal">
-                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
+                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["ThumbnailSize"]} />
                 </Form.Group>
                 <Form.Group widths="equal">
                   <FormField label="그룹장 변경" RenderComponent={SearchMemberContainer} onChangeMembers={this.props.onChangeMembers}/>

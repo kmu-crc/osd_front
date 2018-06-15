@@ -79,7 +79,6 @@ export function GetGroupDetail(data) {
 // 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, page, sort) {
   return (dispatch) => {
-    console.log("work");
     return fetch(`${host}/group/groupDetail/`+id+"/design/"+page+"/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"

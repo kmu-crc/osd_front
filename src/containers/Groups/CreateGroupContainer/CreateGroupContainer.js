@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignInGroupRequest: (data, token) => {
+    CreateNewGroupRequest: (data, token) => {
         return dispatch(CreateNewGroupRequest(data, token))
       }
   };
