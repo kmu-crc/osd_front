@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { UpdateGroupRequest } from "actions/Group";
+import { DeleteGroupRequest, UpdateGroupRequest } from "actions/Group";
 import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
 
 class ModifyGroupInfoContainer extends Component {
@@ -19,6 +19,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    DeleteGroupRequest: (id, token) => {
+      return dispatch(DeleteGroupRequest(id, token))
+    },
     UpdateGroupRequest: (id, data, token) => {
       return dispatch(UpdateGroupRequest(id, data, token))
     }

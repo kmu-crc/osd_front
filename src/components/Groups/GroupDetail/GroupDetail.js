@@ -160,7 +160,7 @@ class GroupDetail extends Component {
             <Wrapper padded={false} columns={2}>
             { this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) && 
               <Grid.Row>
-                { !this.state.editGroupInfoMode && !this.state.editMode 
+                { !this.state.editGroupInfoMode 
                 ? <div className="btnContainer">
                     <button className="edit" onClick={this.setEditGroupInfoMode}>
                       정보 수정

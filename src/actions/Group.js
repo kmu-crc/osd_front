@@ -614,3 +614,44 @@ export function UpdateGroupFailure() {
     type: types.UPDATE_GROUP_FAILURE
   }
 };
+
+// 그룹 삭제하기
+export function DeleteGroupRequest(id, token) {
+  return (dispatch) => {
+    dispatch(DeleteGroup());
+    return fetch(`${host}/group/${id}/deleteGroup`, {
+      headers: { 'x-access-token': token },
+      method: "DELETE"
+    }).then((response) => {
+      return response.json();
+    }).then((res) => {
+      if (res.success === true) {
+        return dispatch(DeleteGroupSuccess());
+      } else {
+        return dispatch(DeleteGroupFailure());
+      }
+    }).catch((error) => {
+      dispatch(DeleteGroupFailure());
+      console.log(error);
+    })
+  }
+};
+
+export function DeleteGroup() {
+  return {
+    type: types.DELETE_GROUP
+  }
+};
+
+export function DeleteGroupSuccess() {
+  return {
+    type: types.DELETE_GROUP_SUCCESS
+  }
+};
+
+export function DeleteGroupFailure() {
+  return {
+    type: types.DELETE_GROUP_FAILURE
+  }
+};
+

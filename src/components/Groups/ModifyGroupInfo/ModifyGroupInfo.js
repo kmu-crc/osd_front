@@ -61,6 +61,10 @@ class ModifyGroupInfo extends Component {
     Component.forceUpdate();
   }
 
+  deleteGroup = () => {
+    this.props.DeleteGroupRequest(this.props.id, this.props.token);
+  }
+
   render(){
     return(
       <Wrapper>
@@ -90,6 +94,9 @@ class ModifyGroupInfo extends Component {
                              RenderComponent={SearchMemberContainer} 
                              onChangeMembers={this.props.onChangeMembers}/>
                 </Form.Group> */}
+                <div>
+                  <Button onClick={this.deleteGroup}>그룹 삭제</Button>
+                </div>
               </Grid.Column>
             </Grid>
           </FromFieldCard>
