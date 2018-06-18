@@ -135,10 +135,6 @@ class GroupDetail extends Component {
     });
   }
 
-  handleEdit = () => {
-    return this.setEditMode();
-  }
-
   render(){
     let groupDetail = this.props.GroupDetail;
     let count;
@@ -175,7 +171,7 @@ class GroupDetail extends Component {
             }
               {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
             {this.state.editGroupInfoMode 
-            ? <ModifyGroupInfoContainer updateComponent={this.handleEdit} {...this.props}/> 
+            ? <ModifyGroupInfoContainer {...this.props}/> 
             : 
               <Grid.Row className="contentRow">
                 <HeadContainer mobile={16} tablet={4} computer={4}>

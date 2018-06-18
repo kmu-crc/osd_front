@@ -54,15 +54,11 @@ class ModifyGroupInfo extends Component {
   onSubmitForm = (data) => {
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
     .then(data => console.log(data))
-    .then(this.props.updateComponent);
-  }
-
-  refresh = (e) => {
-    Component.forceUpdate();
   }
 
   deleteGroup = () => {
-    this.props.DeleteGroupRequest(this.props.id, this.props.token);
+    this.props.DeleteGroupRequest(this.props.id, this.props.token)
+    .then(data => console.log(data));
   }
 
   render(){
@@ -95,7 +91,7 @@ class ModifyGroupInfo extends Component {
                              onChangeMembers={this.props.onChangeMembers}/>
                 </Form.Group> */}
                 <div>
-                  <Button onClick={this.deleteGroup}>그룹 삭제</Button>
+                  <Button type="button" onClick={this.deleteGroup}>그룹 삭제</Button>
                 </div>
               </Grid.Column>
             </Grid>
