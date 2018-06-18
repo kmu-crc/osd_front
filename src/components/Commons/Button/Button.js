@@ -5,7 +5,6 @@ import { Icon } from "semantic-ui-react";
 
 const Btn = styled.button`
   color: white;
-  ${props => console.log("??", props)}
   padding: 0.75em 2em;
   font-size: ${props => props.size === "small"
                 ? "12px"
@@ -27,7 +26,7 @@ class Button extends Component {
     delete newProps.name;
     delete newProps.icon;
     delete newProps.children;
-    console.log(newProps);
+    // console.log(newProps);
 
     return(
       <Btn size={this.props.size} round={this.props.round}>

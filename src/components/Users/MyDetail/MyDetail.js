@@ -6,14 +6,9 @@ import MyDesignContainer from "containers/MyPage/MyDesignContainer";
 import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
+import ContentBox from "components/Commons/ContentBox";
 
 // css styling
-
-const Container = styled.div`
-  width: 95%;
-  margin: auto;
-`;
-
 const Wrapper = styled(Grid)`
   width: 100%;
   &.ui.grid {
@@ -35,17 +30,18 @@ const Wrapper = styled(Grid)`
     border-radius: 3px;
   }
   & .contentRow {
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+    border-radius: 3px;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.1);
   }
 `;
 
 const HeadContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 0 5px rgba(0,0,0,0.25);
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); */
 `;
 
 const ProfileSection = styled.div`
-  border-bottom: 1px solid rgba(0,0,0,0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding: 1rem;
   & .imgContainer {
     width: 100%;
@@ -56,7 +52,7 @@ const ProfileSection = styled.div`
     height: 140px;
     margin: auto;
     border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     overflow: hidden;
   }
   & .title {
@@ -94,16 +90,18 @@ const InfoSection = styled.div`
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
+  border-radius: 0 3px 3px 0;
   & .columns {
     padding: 0 20px;
   }
-  & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
+  & .ui.default.dropdown:not(.button) > .text,
+  .ui.dropdown:not(.button) > .default.text {
     color: inherit;
   }
 `;
 
 const Head = styled(Grid)`
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   &.ui.grid > .row {
     padding-bottom: 0.5rem;
     padding-top: 0.5rem;
@@ -126,43 +124,33 @@ const Head = styled(Grid)`
   }
 `;
 
-const ContentBox = styled.div`
+const MyContentBox = styled.div`
   margin: 0 auto;
-  @media only screen and (max-width: 767px) and (min-width: 320px){
+  @media only screen and (max-width: 767px) and (min-width: 320px) {
     width: 470px;
   }
-  @media only screen and (max-width: 991px) and (min-width: 768px){
+  @media only screen and (max-width: 991px) and (min-width: 768px) {
     width: 450px;
   }
-  @media only screen and (min-width: 992px){
-    width: 705px;
+  @media only screen and (min-width: 992px) {
+    width: 450px;
   }
-  @media only screen and (max-width: 1399px) and (min-width: 1200px){
-    width: 855px;
-  }
-  @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 900px;
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1700px){
-    width: 1210px;
-  }
-  @media only screen and (min-width: 1920px){
-    width: 1368px;
+  @media only screen and (min-width: 1200px){
+    width: 650px
   }
 `;
-
 
 class MyDetail extends Component {
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token);
   }
 
-  typeChange = (e) => {
-    let url = "/myPage"+e.target.id;
-    this.props.history.replace(url, {token: this.props.token});
-  }
+  typeChange = e => {
+    let url = "/myPage" + e.target.id;
+    this.props.history.replace(url, { token: this.props.token });
+  };
 
-  render(){
+  render() {
     let MyInfo = this.props.MyDetail;
     let count;
     if (MyInfo.count != null) {
@@ -178,52 +166,55 @@ class MyDetail extends Component {
 
     const ContainerPage = () => {
       if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
-        return(
-          <div></div>
-        );
+        return <div />;
       } else {
-        return (
-          <MyDesignContainer token={this.props.token}></MyDesignContainer>
-        );
+        return <MyDesignContainer token={this.props.token} />;
       }
-    }
+    };
 
-    return(
+    return (
       <div>
-        {MyInfo !== null &&
-          <Container>
+        {MyInfo !== null && (
+          <ContentBox>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
                 <button>내 정보 수정</button>
               </Grid.Row>
               <Grid.Row className="contentRow">
-                <HeadContainer mobile={16} tablet={4} computer={4}>
+                <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{MyInfo.thumbnailUrl? <img src={MyInfo.thumbnailUrl} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div>
+                      <div>
+                        {MyInfo.thumbnailUrl ? (
+                          <img src={MyInfo.thumbnailUrl} alt="프로필 이미지" />
+                        ) : (
+                          "등록된 이미지 없음"
+                        )}
+                      </div>
                     </div>
                     <div className="title">
                       <h3>{MyInfo.nick_name}</h3>
                     </div>
-                    <div className="category">
-                      {MyInfo.categoryName}
-                    </div>
+                    <div className="category">{MyInfo.categoryName}</div>
                   </ProfileSection>
                   <CountSection>
                     <div className="list">
-                      <Icon name="signup" color="grey" size="tiny"></Icon> 등록한 디자인
+                      <Icon name="signup" color="grey" size="tiny" /> 등록한
+                      디자인
                       <span>{count.total_design}</span>
                     </div>
                     <div className="list">
-                      <Icon name="window restore" color="grey" size="tiny"></Icon> 등록한 그룹
+                      <Icon name="window restore" color="grey" size="tiny" />{" "}
+                      등록한 그룹
                       <span>{count.total_group}</span>
                     </div>
                     <div className="list">
-                      <Icon name="user" color="grey" size="tiny"></Icon> 내 조회수
+                      <Icon name="user" color="grey" size="tiny" /> 내 조회수
                       <span>{count.total_view}</span>
                     </div>
                     <div className="list">
-                      <Icon name="heart" color="grey" size="tiny"></Icon> 내가 받은 좋아요
+                      <Icon name="heart" color="grey" size="tiny" /> 내가 받은
+                      좋아요
                       <span>{count.total_like}</span>
                     </div>
                   </CountSection>
@@ -232,38 +223,74 @@ class MyDetail extends Component {
                     <p className="explanation">{MyInfo.explanation}</p>
                   </InfoSection>
                 </HeadContainer>
-                <TabContainer mobile={16} tablet={12} computer={12}>
-                  <Head devided="vertically" padded={true}>
+                <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                  <Head padded={true}>
                     <Grid.Row>
                       <Grid.Column as="ul">
-                        <li id="/design"
-                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
-                            onClick={this.typeChange}>내 디자인</li>
-                        <li id="/group"
-                            className={this.props.type === "group"? "onSelected" : ""}
-                            onClick={this.typeChange}>내 그룹</li>
-                        <li id="/likeDesign"
-                            className={this.props.type === "likeDesign"? "onSelected" : ""}
-                            onClick={this.typeChange}>관심 디자인</li>
-                        <li id="/likeDesigner"
-                            className={this.props.type === "likeDesigner"? "onSelected" : ""}
-                            onClick={this.typeChange}>관심 디자이너</li>
-                        <div className="clear"></div>
+                        <li
+                          id="/design"
+                          className={
+                            this.props.type === "design" ||
+                            this.props.type === null
+                              ? "onSelected"
+                              : ""
+                          }
+                          onClick={this.typeChange}
+                        >
+                          내 디자인
+                        </li>
+                        <li
+                          id="/group"
+                          className={
+                            this.props.type === "group" ? "onSelected" : ""
+                          }
+                          onClick={this.typeChange}
+                        >
+                          내 그룹
+                        </li>
+                        <li
+                          id="/likeDesign"
+                          className={
+                            this.props.type === "likeDesign" ? "onSelected" : ""
+                          }
+                          onClick={this.typeChange}
+                        >
+                          관심 디자인
+                        </li>
+                        <li
+                          id="/likeDesigner"
+                          className={
+                            this.props.type === "likeDesigner"
+                              ? "onSelected"
+                              : ""
+                          }
+                          onClick={this.typeChange}
+                        >
+                          관심 디자이너
+                        </li>
+                        <div className="clear" />
                       </Grid.Column>
                     </Grid.Row>
                   </Head>
-                  <ContentBox>
-                    <Route path="/myPage/:type?"
-                           component={this.props.type === "likeDesigner"? MyLikeDesignerContainer
-                                      : this.props.type === "likeDesign"? MyLikeDesignContainer
-                                      : this.props.type === "group"? MyGroupContainer
-                                      : ContainerPage}/>
-                  </ContentBox>
+                  <MyContentBox>
+                    <Route
+                      path="/myPage/:type?"
+                      component={
+                        this.props.type === "likeDesigner"
+                          ? MyLikeDesignerContainer
+                          : this.props.type === "likeDesign"
+                            ? MyLikeDesignContainer
+                            : this.props.type === "group"
+                              ? MyGroupContainer
+                              : ContainerPage
+                      }
+                    />
+                  </MyContentBox>
                 </TabContainer>
               </Grid.Row>
             </Wrapper>
-          </Container>
-        }
+          </ContentBox>
+        )}
       </div>
     );
   }

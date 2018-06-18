@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "App.css";
 import DesignListPage, { DesignDetailPage } from "pages/DesignPage";
 import GroupListPage, { GroupDetailPage } from "pages/GroupPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
@@ -34,7 +33,7 @@ class App extends Component {
           <Route path="/signup" component={SignUpPage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>
-          <Route path="/myPage/:type?" component={RequiresAuth(MyDetailPage)}/> 
+          <Route path="/myPage/:type?" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/test" component={TestPage} />
           <Route path="/footer/:page" component={FooterPage}/>

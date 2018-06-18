@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
 import Validates from "modules/Validates";
+import styled from "styled-components";
+import StyleGuide from "StyleGuide";
+
+const Field = styled(Form.Field)`
+  label {
+    /* font-size: ${StyleGuide.font.size.paragraph} !important; */
+  }
+`
 
 // 두개의 input의 내용이 같은지 검증할때 사용하는 component
 export class OverlapField extends Component {
@@ -107,10 +115,10 @@ export class FormField extends Component {
     const newProps = {...this.props};
     delete newProps.RenderComponent;
     return (
-      <Form.Field>
+      <Field>
         <label>{label}</label>
         <RenderComponent {...newProps}/>
-      </Form.Field>
+      </Field>
     );
   }
 }

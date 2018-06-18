@@ -5,7 +5,7 @@ import { FormSelect } from "components/Commons/FormItem";
 
 // category width
 const CategoryColumn = styled(Grid.Column)`
-  &  .selection.dropdown {
+  & .selection.dropdown {
     width: 14em;
     float: left;
   }
@@ -14,17 +14,17 @@ const CategoryColumn = styled(Grid.Column)`
 class Category extends Component {
   componentWillMount() {
     this.props.GetCategoryLevel1Request();
-  };
-  
-  onChangeCategory1 = (value) => {
+  }
+
+  onChangeCategory1 = value => {
     if (value === 0) {
       value = null;
     }
     this.props.GetCategoryLevel2Request(value);
     this.props.handleCate1(value);
-  }
+  };
 
-  onChangeCategory2 = (value) => {
+  onChangeCategory2 = value => {
     if (value === 0) {
       value = null;
     }
@@ -34,16 +34,32 @@ class Category extends Component {
   render() {
     // console.log(this.props.match.params);
     return (
-      <CategoryColumn className="category"
-                      widescreen={this.props.widescreen ? this.props.widescreen : null}
-                      largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
-                      computer={this.props.computer ? this.props.computer : null}
-                      tablet={this.props.tablet ? this.props.tablet : null}
-                      mobile={this.props.mobile ? this.props.mobile : null}>
-        <FormSelect placeholder="1차 카테고리" getValue={this.onChangeCategory1} options={this.props.category1}/>
-        <FormSelect placeholder="2차 카테고리" getValue={this.onChangeCategory2} options={this.props.category2}/>
+      <CategoryColumn
+        className="category"
+        widescreen={this.props.widescreen ? this.props.widescreen : null}
+        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
+        computer={this.props.computer ? this.props.computer : null}
+        tablet={this.props.tablet ? this.props.tablet : null}
+        mobile={this.props.mobile ? this.props.mobile : null}
+      >
+        <Grid>
+          <Grid.Column mobile={8} tablet={5} computer={4}>
+            <FormSelect
+              placeholder="1차 카테고리"
+              getValue={this.onChangeCategory1}
+              options={this.props.category1}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={8} tablet={5} computer={4}>
+            <FormSelect
+              placeholder="2차 카테고리"
+              getValue={this.onChangeCategory2}
+              options={this.props.category2}
+            />
+          </Grid.Column>
+        </Grid>
       </CategoryColumn>
-    )
+    );
   }
 }
 

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Form, Button, Icon, Modal, Input } from "semantic-ui-react";
+import { Form, Button, Icon, Modal } from "semantic-ui-react";
 import { OverlapField, FormField } from "components/Commons/FormField";
 import { FormInput } from "components/Commons/FormItem";
-import FormDataToJson from "modules/FormDataToJson"
+import FormDataToJson from "modules/FormDataToJson";
 import ValidateForm from "components/Commons/ValidateForm";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
@@ -16,15 +16,15 @@ class SignUpForm extends Component {
     open: false,
     isOnlyEmail: false,
     error: null
-  }
+  };
 
   closeConfigShow = (closeOnEscape, closeOnRootNodeClick) => () => {
-    this.setState({ closeOnEscape, closeOnRootNodeClick, open: true })
-  }
+    this.setState({ closeOnEscape, closeOnRootNodeClick, open: true });
+  };
 
-  close = () => this.setState({ open: false })
+  close = () => this.setState({ open: false });
 
-  handleSubmit = (data) => {
+  handleSubmit = data => {
     let formData = FormDataToJson(data);
     // password2는 회원가입에 직접적으로 필요한 속성이 아니기 때문에 전송시 삭제합니다.
     delete formData.password2;
@@ -32,9 +32,9 @@ class SignUpForm extends Component {
       if (res.type === "AUTH_SIGNUP_SUCCESS") {
         this.props.history.push("/design");
       }
-    })
-  }
-  handleSignUpFB = (response) => {
+    });
+  };
+  handleSignUpFB = response => {
     this.setState({
       SignUpData: {
         email: response.email,
@@ -42,21 +42,24 @@ class SignUpForm extends Component {
         nick_name: response.name
       }
     });
-    this.props.CheckFBUserRequest({FB_user_id: response.userID}).then( data => {
-      if(data.checkFBUser){
-        if (response.email == null || !response.email) {
-          return this.setState({ open: true })
+    this.props
+      .CheckFBUserRequest({ FB_user_id: response.userID })
+      .then(data => {
+        if (data.checkFBUser) {
+          if (response.email == null || !response.email) {
+            return this.setState({ open: true });
+          } else {
+            this.handleSubmitFB(response);
+          }
         } else {
-          this.handleSubmitFB();
+          alert(data.error);
         }
-      } else {
-        alert(data.error);
-      }
-
-    })
-  }
-  handleSubmitFB = (data) => {
-    console.log(data);
+      });
+  };
+  handleSubmitFB = data => {
+    if(data.constructor && data.constructor.name === "FormData"){
+      data = FormDataToJson(data);
+    }
     this.setState({
       open: false,
       SignUpData: {
@@ -68,29 +71,54 @@ class SignUpForm extends Component {
       if (data.type === "AUTH_FBSIGNUP_SUCCESS") {
         this.props.history.push("/design");
       }
-    })
-  }
+    });
+  };
 
   render() {
-    const { open, closeOnEscape, closeOnRootNodeClick } = this.state
+    const { open, closeOnEscape, closeOnRootNodeClick } = this.state;
     return (
       <div>
         <ValidateForm onSubmit={this.handleSubmit}>
-            <FormField name="email" type="text"
-            placeholder="E-Mail" label="email" validates={["required", "email", "checkEmail"]} RenderComponent={FormInput}/>
-            <FormField name="nick_name" type="text"
-            placeholder="닉네임을 입력해주세요" label="닉네임" validates={["required", "NotSpecialCharacters", "checkNickName"]} RenderComponent={FormInput}/>
-          <OverlapField name="password" type="password"
-            placeholder="Password" label="password" validates={["required"]} />
+          <FormField
+            name="email"
+            type="text"
+            placeholder="E-Mail"
+            label="email"
+            validates={["required", "email", "checkEmail"]}
+            RenderComponent={FormInput}
+          />
+          <FormField
+            name="nick_name"
+            type="text"
+            placeholder="닉네임을 입력해주세요"
+            label="닉네임"
+            validates={["required", "NotSpecialCharacters", "checkNickName"]}
+            RenderComponent={FormInput}
+          />
+          <OverlapField
+            name="password"
+            type="password"
+            placeholder="Password"
+            label="password"
+            validates={["required"]}
+          />
           <Form.Group>
-            <Form.Field control={Button} type="submit">회원가입</Form.Field>
+            <Form.Field control={Button} type="submit">
+              회원가입
+            </Form.Field>
             <FacebookLogin
               appId="1846803492017708"
               autoLoad={false}
               fields="name,email"
               callback={this.handleSignUpFB}
               render={renderProps => (
-                <Button onClick={renderProps.onClick} type="button" color="facebook"><Icon disabled name='facebook f' />FaceBook 회원가입</Button>
+                <Button
+                  onClick={renderProps.onClick}
+                  type="button"
+                  color="facebook"
+                >
+                  <Icon disabled name="facebook f" />FaceBook 회원가입
+                </Button>
               )}
             />
           </Form.Group>
@@ -101,19 +129,32 @@ class SignUpForm extends Component {
           closeOnRootNodeClick={closeOnRootNodeClick}
           onClose={this.close}
         >
-          <ValidateForm onSubmit={this.handleSubmitFB}>
-            <Modal.Header>
-              Delete Your Account
-          </Modal.Header>
+            <Modal.Header>Delete Your Account</Modal.Header>
             <Modal.Content>
-            <FormField name="email" type="text"
-                placeholder="E-Mail" label="email" validates={["required", "email", "checkEmail"]} RenderComponent={FormInput}/>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button type="button" negative content='닫기' onClick={this.close} />
-              <Button type="submit" positive labelPosition="right" icon='checkmark' content="등록" />
-            </Modal.Actions>
+            <ValidateForm onSubmit={this.handleSubmitFB}>
+              <FormField
+                name="email"
+                type="text"
+                placeholder="E-Mail"
+                label="email"
+                validates={["required", "email", "checkEmail"]}
+                RenderComponent={FormInput}
+              />
+              <Button
+                type="button"
+                negative
+                content="닫기"
+                onClick={this.close}
+              />
+              <Button
+                type="submit"
+                positive
+                labelPosition="right"
+                icon="checkmark"
+                content="등록"
+              />
           </ValidateForm>
+            </Modal.Content>
         </Modal>
       </div>
     );

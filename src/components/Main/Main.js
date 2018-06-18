@@ -180,6 +180,7 @@ const SliderContent = styled.div`
   transform: translateY(-50%);
   z-index: 2;
   h1 {
+    color: ${StyleGuide.color.geyScale.scale0};
     font-size: ${StyleGuide.font.size.heading1};
     margin-bottom: 1rem;
   }

@@ -17,6 +17,14 @@ const Wrapper = styled.div`
   }
 `;
 
+const Content = styled(ContentBox)`
+@media only screen and (max-width: 991px) and (min-width: 768px){
+  & .ui.grid>.row{
+    margin-left: 6.25% !important;
+  }
+  }
+`;
+
 const MenuContainer = styled(Grid) `
   font-size: 13px;
   & .sorting {
@@ -62,6 +70,7 @@ const Title = styled.div`
   z-index: 2;
   transform: translateY(-50%);
   h1{
+    color: ${StyleGuide.color.geyScale.scale0};
     font-size: ${StyleGuide.font.size.heading1};
     font-weight: bold;
   }
@@ -71,7 +80,7 @@ const MenuWrap = styled.div`
   background-color: white;
   margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
 `
 
 class DesignList extends Component {
@@ -120,7 +129,7 @@ class DesignList extends Component {
           </Title>
         </ImgWrapper>
         <MenuWrap>
-          <ContentBox>
+          <Content>
             <Wrapper>
               <MenuContainer devided="vertically" padded={true}>
                 <Grid.Row>
@@ -129,14 +138,14 @@ class DesignList extends Component {
                 </Grid.Row>
               </MenuContainer>
             </Wrapper>
-          </ContentBox>
+          </Content>
         </MenuWrap>
-        <ContentBox>
+        <Content>
           <Wrapper>
             {this.state.rendering && sort && cate1 && cate2 &&
               <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} />}
           </Wrapper>
-        </ContentBox>
+        </Content>
       </div>
     );
   }
