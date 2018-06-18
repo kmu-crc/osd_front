@@ -228,7 +228,7 @@ class DesignDetail extends Component {
                           <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
                                        state: designDetail.is_team? "true" : "false" }
                                    }>
-                            <button className="ui basic button">목록보기</button>  
+                            + 더보기
                           </Link>
                         </IssueContainer>
                     :
@@ -241,7 +241,7 @@ class DesignDetail extends Component {
                       <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
                                    state: designDetail.is_team? "true" : "false" } 
                                }>
-                        <button className="ui basic button">목록보기</button>  
+                        + 더보기 
                       </Link>
                     </IssueContainer>
                   )
