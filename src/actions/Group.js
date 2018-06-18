@@ -79,7 +79,6 @@ export function GetGroupDetail(data) {
 // 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, page, sort) {
   return (dispatch) => {
-    console.log("work");
     return fetch(`${host}/group/groupDetail/`+id+"/design/"+page+"/"+sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
@@ -585,9 +584,12 @@ export function UpdateGroupRequest(id, data, token) {
       body: data
     }).then((response) => {
       return response.json();
-    })
-    .then((res) => {
-      return dispatch(UpdateGroupSuccess(res.id));
+    }).then((res) => {
+      if (res.success === true) {
+        return dispatch(UpdateGroupSuccess());
+      } else {
+        return dispatch(UpdateGroupFailure());
+      }
     }).catch((error) => {
       dispatch(UpdateGroupFailure());
       console.log(error);
@@ -601,10 +603,9 @@ export function UpdateGroup() {
   }
 };
 
-export function UpdateGroupSuccess(id) {
+export function UpdateGroupSuccess() {
   return {
-    type: types.UPDATE_GROUP_SUCCESS,
-    id
+    type: types.UPDATE_GROUP_SUCCESS
   }
 };
 
@@ -613,3 +614,44 @@ export function UpdateGroupFailure() {
     type: types.UPDATE_GROUP_FAILURE
   }
 };
+
+// 그룹 삭제하기
+export function DeleteGroupRequest(id, token) {
+  return (dispatch) => {
+    dispatch(DeleteGroup());
+    return fetch(`${host}/group/${id}/deleteGroup`, {
+      headers: { 'x-access-token': token },
+      method: "DELETE"
+    }).then((response) => {
+      return response.json();
+    }).then((res) => {
+      if (res.success === true) {
+        return dispatch(DeleteGroupSuccess());
+      } else {
+        return dispatch(DeleteGroupFailure());
+      }
+    }).catch((error) => {
+      dispatch(DeleteGroupFailure());
+      console.log(error);
+    })
+  }
+};
+
+export function DeleteGroup() {
+  return {
+    type: types.DELETE_GROUP
+  }
+};
+
+export function DeleteGroupSuccess() {
+  return {
+    type: types.DELETE_GROUP_SUCCESS
+  }
+};
+
+export function DeleteGroupFailure() {
+  return {
+    type: types.DELETE_GROUP_FAILURE
+  }
+};
+

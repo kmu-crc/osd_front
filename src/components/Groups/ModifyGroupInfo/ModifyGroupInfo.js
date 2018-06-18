@@ -4,14 +4,20 @@ import { Grid, Header, Form, Button } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
-import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
+//import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
 
 // css styling
 
 const Wrapper = styled.div`
   width: 100%;
+  padding: 0!important;
   & .ui.form {
     width: 100%;
+  }
+  & .submitBtn {
+    position: absolute;
+    top: -40px;
+    left: 0;
   }
 `;
 
@@ -42,13 +48,23 @@ class ModifyGroupInfo extends Component {
   state = {
     title: this.props.GroupDetail.title,
     explanation: this.props.GroupDetail.explanation,
+    user_id: this.props.GroupDetail.user_id
   }
 
   onSubmitForm = (data) => {
-    console.log("work");
-    console.log(data);
-    this.props.UpdateGroupRequest(this.props.GroupDetail.uid, data, this.props.token);
+    this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
+    .then(data => console.log(data))
+    .then(this.props.updateComponent);
   }
+
+  refresh = (e) => {
+    Component.forceUpdate();
+  }
+
+  deleteGroup = () => {
+    this.props.DeleteGroupRequest(this.props.id, this.props.token);
+  }
+
   render(){
     return(
       <Wrapper>
@@ -70,15 +86,21 @@ class ModifyGroupInfo extends Component {
                              RenderComponent={FormTextArea} />
                 </Form.Group>
                 <Form.Group widths="equal">
-                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
+                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["ThumbnailSize"]} />
                 </Form.Group>
-                <Form.Group widths="equal">
-                  <FormField label="그룹장 변경" RenderComponent={SearchMemberContainer} onChangeMembers={this.props.onChangeMembers}/>
-                </Form.Group>
+                {/* <Form.Group widths="equal">
+                  <FormField name="user_id" label="그룹장 변경" 
+                             value={this.state.user_id}
+                             RenderComponent={SearchMemberContainer} 
+                             onChangeMembers={this.props.onChangeMembers}/>
+                </Form.Group> */}
+                <div>
+                  <Button onClick={this.deleteGroup}>그룹 삭제</Button>
+                </div>
               </Grid.Column>
             </Grid>
           </FromFieldCard>
-          <Button type="submit">확인</Button>
+          <Button className="submitBtn" type="submit">확인</Button>
         </ValidateForm>
       </Wrapper>
     );
