@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
- import { GetWaitingGroupRequest, DeleteGroupInGroupRequest } from "actions/Group";
+ import { GetWaitingGroupRequest, DeleteGroupInGroupRequest, UpdateGroupInGroupRequest } from "actions/Group";
  import ContentList from "components/Commons/ContentList";
 
 class WaitingGroupContainer extends Component {
@@ -27,7 +27,12 @@ class WaitingGroupContainer extends Component {
   }
 
   setAccept = (id) => {
-    console.log(id);
+    alert("가입을 승인하시겠습니까?");
+    this.props.UpdateGroupInGroupRequest(this.props.match.params.id, id)
+    .then(this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort))
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
@@ -50,6 +55,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     DeleteGroupInGroupRequest: (id, groupId) => {
       return dispatch(DeleteGroupInGroupRequest(id, groupId))
+    },
+    UpdateGroupInGroupRequest: (id, groupId) => {
+      return dispatch(UpdateGroupInGroupRequest(id, groupId))
     }
   };
 };
