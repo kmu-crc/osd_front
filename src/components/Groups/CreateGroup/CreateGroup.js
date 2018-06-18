@@ -35,8 +35,9 @@ class CreateGroup extends Component {
     console.log(data);
     this.props.GetDesignInGroupRequest(data, this.props.token).then(data => {
       console.log("GetDesignInGroupRequest", data);
-      this.props.history.push(`/groupDetail/${data.id}/group/null`)
-    })
+      // this.props.history.push(`/groupDetail/${data.id}/group/null`)
+      this.props.history.push(`/groupDetail/${data.id}`);
+    });
   }
   render(){
     return(
