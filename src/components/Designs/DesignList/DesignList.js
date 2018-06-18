@@ -74,14 +74,14 @@ const Title = styled.div`
     font-size: ${StyleGuide.font.size.heading1};
     font-weight: bold;
   }
-`
+`;
 
 const MenuWrap = styled.div`
   background-color: white;
   margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
   box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
-`
+`;
 
 class DesignList extends Component {
   state = {
@@ -99,12 +99,7 @@ class DesignList extends Component {
     }, 200);
   } // state 값 업데이트를 통해 컴포넌트 새로 렌더링함
 
-  componentWillUnmount() {
-    console.log("ya");
-  }
-
   cate1Change = (value) => {
-    console.log("카테고리");
     this.props.history.replace(`/design/${this.props.sort}/${value}`);
   }
 

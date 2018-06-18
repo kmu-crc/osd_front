@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import eximg from "source/designIs.png";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
@@ -12,7 +13,7 @@ const Designerli = styled.li`
   font-size: 13px;
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(25,25,25,0.2);
+  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   background-color: #fff;
   & a {
     cursor: pointer;
@@ -57,7 +58,7 @@ const TextPart = styled.div`
 `;
 
 const Count = styled.div`
-  background-color: #000;
+  background-color: ${StyleGuide.color.geyScale.scale9};
   padding: 5px 10px;
   color: white;
   font-weight: 400;

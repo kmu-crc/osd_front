@@ -1,20 +1,27 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
-import Category from "components/Commons/Category";
 import Sorting from "components/Commons/Sorting";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
+import mainSlide from "source/mainSlide.jpg";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
 const Wrapper = styled.div`
   width: 100%;
-  padding-bottom: 5rem;
-  min-width: 660px;
   & ul {
     margin-top: 30px;
+  }
+`;
+
+const Content = styled(ContentBox)`
+@media only screen and (max-width: 991px) and (min-width: 768px){
+  & .ui.grid>.row{
+    margin-left: 6.25% !important;
+  }
   }
 `;
 
@@ -33,11 +40,53 @@ const MenuContainer = styled(Grid)`
   }
 `;
 
+const ImgWrapper = styled.div`
+  background-image: url(${mainSlide});
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  position: relative;
+  &::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+`;
+
+const Title = styled.div`
+  width: 100%;
+  color: white;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  transform: translateY(-50%);
+  h1{
+    color: ${StyleGuide.color.geyScale.scale0};
+    font-size: ${StyleGuide.font.size.heading1};
+    font-weight: bold;
+  }
+`;
+
+const MenuWrap = styled.div`
+  background-color: white;
+  margin-bottom: 30px;
+  border-top: 1px solid rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
+`;
+
 
 class DesignerList extends Component {
   state = {
-    rendering: true,
-    cateSetting: false
+    rendering: true
   }
 
   changeState = () => {
@@ -51,15 +100,8 @@ class DesignerList extends Component {
     }, 200);
   }
 
-  // shouldComponentUpdate(){
-  //   return false;
-  // }
-
   cate1Change = (value) => {
     this.props.history.replace(`/designer/${this.props.sort}/${value}`);
-    this.setState({
-      cateSetting: true
-    }); // 카테고리 값이 다 넘어오기 전에 한번 렌더링되면서 getData 불러오는 걸 막기 위해서 -> 카테고리1 불러왔는지 여부 저장
   }
 
   cate2Change = (value) => {
@@ -75,18 +117,32 @@ class DesignerList extends Component {
   render(){
     const {sort, cate1, cate2} = this.props;
     return(
-      <ContentBox>
-        <Wrapper>
-          <MenuContainer devided="vertically" padded={true} columns={2}>
-            <Grid.Row stretched={false}>
-              <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
-              <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort}/>
-            </Grid.Row>
-          </MenuContainer>
-          {this.state.rendering && this.state.cateSetting && sort && cate1 && cate2 && 
-          <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
-        </Wrapper>
-      </ContentBox>
+      <div>
+        <ImgWrapper>
+          <Title>
+            <h1>디자이너</h1>
+            <p>오픈디자인은 다양한 분야에서 활동하는 디자이너들의 디자인 공유를 지향합니다.</p>
+          </Title>
+        </ImgWrapper>
+        <MenuWrap>
+          <Content>
+            <Wrapper>
+              <MenuContainer devided="vertically" padded={true} columns={2}>
+                <Grid.Row stretched={false}>
+                  <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
+                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort}/>
+                </Grid.Row>
+              </MenuContainer>
+            </Wrapper>
+          </Content>
+        </MenuWrap>
+        <Content>
+          <Wrapper>
+            {this.state.rendering && sort && cate1 && cate2 && 
+            <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
+          </Wrapper>
+        </Content>
+      </div>
     );
   }
 }

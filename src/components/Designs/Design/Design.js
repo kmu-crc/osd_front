@@ -46,8 +46,6 @@ const TextPart = styled.div`
     text-overflow: ellipsis;
     white-space: normal;
   }
-  & .userName {
-  }
   & .cate {
     color: #EB3324;
     font-weight: 300;
@@ -75,7 +73,7 @@ const Count = styled.div`
 class Design extends Component {
   render() {
     let design = this.props.data;
-    let user = this.props.user;
+    
     return (
       <NavLink to={"/designDetail/" + design.uid}>
         <Designli>

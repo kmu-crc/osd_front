@@ -5,13 +5,24 @@ import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
 import ContentBox from "components/Commons/ContentBox";
+import mainSlide from "source/mainSlide.jpg";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
 const Wrapper = styled.div`
   width: 100%;
-  padding-bottom: 5rem;
-  min-width: 660px;
+  & ul {
+    margin-top: 30px;
+  }
+`;
+
+const Content = styled(ContentBox)`
+@media only screen and (max-width: 991px) and (min-width: 768px){
+  & .ui.grid>.row{
+    margin-left: 6.25% !important;
+  }
+  }
 `;
 
 const MenuContainer = styled(Grid)`
@@ -40,6 +51,49 @@ const MenuContainer = styled(Grid)`
   }
 `;
 
+const Title = styled.div`
+  width: 100%;
+  color: white;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  transform: translateY(-50%);
+  h1{
+    color: ${StyleGuide.color.geyScale.scale0};
+    font-size: ${StyleGuide.font.size.heading1};
+    font-weight: bold;
+  }
+`;
+
+const ImgWrapper = styled.div`
+  background-image: url(${mainSlide});
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  position: relative;
+  &::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+`;
+
+const MenuWrap = styled.div`
+  background-color: white;
+  margin-bottom: 30px;
+  border-top: 1px solid rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
+`;
+
 
 class GroupList extends Component {
   state = {
@@ -57,32 +111,41 @@ class GroupList extends Component {
     }, 200);
   }
 
-  // shouldComponentUpdate(){
-  //   return false;
-  // }
-
   sortChange = (e, { value }) => {
     this.props.history.replace(`/group/${value}`);
     this.changeState();
   }
 
   render(){
-    let userValid = this.props.valid;
     const { sort } = this.props;
     return(
-      <ContentBox>
-        <Wrapper>
-          <MenuContainer devided="vertically" padded={true} columns={2}>
-            <Grid.Row stretched={false}>
-              <Grid.Column className="addGroup">
-                <Link to="/createGroup"><button>새 그룹 추가 +</button></Link>
-              </Grid.Column>
-              <Sorting handleChange={this.sortChange} placeholder={sort}/>
-            </Grid.Row>
-          </MenuContainer>
-          {this.state.rendering && <ScrollGroupListContainer sort={sort}/>}
-        </Wrapper>
-      </ContentBox>
+      <div>
+        <ImgWrapper>
+          <Title>
+            <h1>그룹</h1>
+            <p>여러 디자인들을 하나의 그룹으로 묶어 관리할 수 있습니다.</p>
+          </Title>
+        </ImgWrapper>
+        <MenuWrap>
+          <Content>
+            <Wrapper>
+              <MenuContainer devided="vertically" padded={true} columns={2}>
+                <Grid.Row stretched={false}>
+                  <Grid.Column className="addGroup">
+                    <Link to="/createGroup"><button>새 그룹 추가 +</button></Link>
+                  </Grid.Column>
+                  <Sorting handleChange={this.sortChange} placeholder={sort}/>
+                </Grid.Row>
+              </MenuContainer>
+            </Wrapper>
+          </Content>
+        </MenuWrap>
+        <Content>
+          <Wrapper>
+            {this.state.rendering && <ScrollGroupListContainer sort={sort}/>}
+          </Wrapper>
+        </Content>
+      </div>
     );
   }
 }
