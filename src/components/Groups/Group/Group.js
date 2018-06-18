@@ -4,6 +4,7 @@ import styled from "styled-components";
 import eximg from "source/eximg.jpeg";
 import { Icon } from "semantic-ui-react";
 import StyleGuide from "StyleGuide";
+import DateFormat from "modules/DateFormat";
 
 // css styling
 
@@ -90,7 +91,7 @@ class Group extends Component {
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
             <div className="cate">
-              최근 업데이트 {group.child_update_time.split("T")[0]}
+              최근 업데이트 {DateFormat(group.child_update_time)}
             </div>
           </TextPart>
           <Count>
