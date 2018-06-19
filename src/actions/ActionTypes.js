@@ -116,6 +116,15 @@ export const UPDATE_CARD_SOURCES = "UPDATE_CARD_SOURCES";
 export const UPDATE_CARD_SOURCES_SUCCESS = "UPDATE_CARD_SOURCES_SUCCESS";
 export const UPDATE_CARD_SOURCES_FAILURE = "UPDATE_CARD_SOURCES_FAILURE";
 
+// create issue
+export const CREATE_ISSUE = "CREATE_ISSUE";
+export const CREATE_ISSUE_SUCCESS = "CREATE_ISSUE_SUCCESS";
+export const CREATE_ISSUE_FAILURE = "CREATE_ISSUE_FAILURE";
+
+// update issue
+export const UPDATE_ISSUE = "UPDATE_ISSUE";
+export const UPDATE_ISSUE_SUCCESS = "UPDATE_ISSUE_SUCCESS";
+export const UPDATE_ISSUE_FAILURE = "UPDATE_ISSUE_FAILURE";
 
 
 ////////////////////////////////////////////////////////////////////////////

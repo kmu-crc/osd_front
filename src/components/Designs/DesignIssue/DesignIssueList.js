@@ -90,11 +90,11 @@ class DesignIssueList extends Component {
               </div>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              {member === "true" &&
+              {/* {member === "true" && */}
                 <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
                   <button className="ui button">글쓰기</button>
                 </Link>
-              }
+              {/* } */}
             </Grid.Column>
           </SearchWrapper>
           <ListWrapper>
