@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid } from "semantic-ui-react";
+import { Grid, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import eximg from "source/topDesign.png";
 
@@ -48,6 +48,13 @@ const CommentContainer = styled.div`
 `;
 
 class DesignIssueDetail extends Component {
+  deleteIssue = () => {
+    this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
+    .then(data => {
+      this.props.history.push(`/designDetail/${this.props.match.params.id}/issue`);
+    });
+  }
+
   render(){
     let data = this.props.IssueDetail;
     return(
@@ -59,6 +66,14 @@ class DesignIssueDetail extends Component {
             <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
             <span className="status">상태 : {data.is_complete === 0? "진행중" : "완료"}</span>
           </div>
+          {this.props.userInfo.uid === data.user_id &&
+            <div>
+              <Link to={`/designDetail/${this.props.match.params.id}/issue/${this.props.match.params.issue_id}/modify`}>
+                <Button>수정</Button>
+              </Link>
+              <Button onClick={this.deleteIssue}>삭제</Button>
+            </div>
+          }
           <TextArea>
             <p>{data.content}</p>
           </TextArea>

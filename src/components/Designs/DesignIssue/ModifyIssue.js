@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Header, Radio, Form, Button } from "semantic-ui-react";
+import { Grid, Header, Form, Button } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea, FormRadio } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
@@ -30,11 +30,7 @@ const FormHeader = styled(Header)`
   }
 `;
 
-class CreateIssue extends Component {
-  state = {
-    complete: false
-  }
-
+class ModifyIssue extends Component {
   setComplete = () => {
     this.setState({
       complete: !this.state.complete
@@ -42,25 +38,28 @@ class CreateIssue extends Component {
   }
   
   onSubmitForm = (data) => {
-    this.props.CreateDesignIssueRequest(FormDataToJson(data), this.props.match.params.id, this.props.token)
+    this.props.UpdateDesignIssueRequest(FormDataToJson(data), this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
     .then(data => {
       this.props.history.push(`/designDetail/${this.props.match.params.id}/issue`);
     });
   }
 
   render(){
-    const id = this.props.match.params.id;
+    const data = this.props.IssueDetail;
+    console.log(data);
     return(
       <ValidateForm onSubmit={this.onSubmitForm}>
         <FromFieldCard>
           <Grid>
           <Grid.Row columns={2}>
             <Grid.Column width={4}>
-              <FormHeader as="h2">새로운 이슈 등록</FormHeader>
+              <FormHeader as="h2">이슈 수정</FormHeader>
             </Grid.Column>
             <Grid.Column width={12}>
-              <FormField name="title" label="이슈 제목" type="text" placeholder="제목을 입력해주세요." validates={["required"]} RenderComponent={FormInput} />
-              <FormField name="content" label="내용" placeholder="내용을 입력해주세요." validates={["required"]} RenderComponent={FormTextArea} />
+              <FormField name="title" label="이슈 제목" type="text" 
+                         validates={["required"]} RenderComponent={FormInput} />
+              <FormField name="content" label="내용"
+                         validates={["required"]} RenderComponent={FormTextArea} />
               {/* <FormField name="is_complete" label="완료" RenderComponent={FormRadio} value={this.state.complete} onChange={this.setComplete}/> */}
               <Button type="submit" onClick={this.props.handleClick}>등록</Button>
             </Grid.Column>
@@ -71,4 +70,4 @@ class CreateIssue extends Component {
   }
 }
 
-export default CreateIssue;
+export default ModifyIssue;

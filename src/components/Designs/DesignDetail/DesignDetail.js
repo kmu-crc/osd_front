@@ -8,6 +8,7 @@ import { Grid, Icon, Modal } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Link, Route } from "react-router-dom";
 import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
+import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
 
 // css styling
 
@@ -254,6 +255,8 @@ class DesignDetail extends Component {
                        component={DesignIssue} />
                 <Route exact path={"/designDetail/:id/createissue"} 
                        component={CreateDesignIssueContainer} />
+                <Route exact path={"/designDetail/:id/issue/:issue_id/modify"}
+                       component={ModifyIssueDetailContainer} />
               </TabContainer>
             </Wrapper>
           </ContentBox>

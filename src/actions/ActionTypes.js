@@ -126,6 +126,11 @@ export const UPDATE_ISSUE = "UPDATE_ISSUE";
 export const UPDATE_ISSUE_SUCCESS = "UPDATE_ISSUE_SUCCESS";
 export const UPDATE_ISSUE_FAILURE = "UPDATE_ISSUE_FAILURE";
 
+// delete issue
+export const DELETE_ISSUE = "DELETE_ISSUE";
+export const DELETE_ISSUE_SUCCESS = "DELETE_ISSUE_SUCCESS";
+export const DELETE_ISSUE_FAILURE = "DELETE_ISSUE_FAILURE";
+
 
 ////////////////////////////////////////////////////////////////////////////
 // group
