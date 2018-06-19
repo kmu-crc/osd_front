@@ -7,8 +7,14 @@ import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
 import ContentBox from "components/Commons/ContentBox";
+import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/ModifyMyDetailContainer";
 
 // css styling
+const Container = styled.div`
+  width: 95%;
+  margin: auto;
+`;
+
 const Wrapper = styled(Grid)`
   width: 100%;
   &.ui.grid {
@@ -141,6 +147,10 @@ const MyContentBox = styled.div`
 `;
 
 class MyDetail extends Component {
+  state = {
+    editMode: false
+  }
+
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token);
   }
@@ -149,6 +159,12 @@ class MyDetail extends Component {
     let url = "/myPage" + e.target.id;
     this.props.history.replace(url, { token: this.props.token });
   };
+
+  setEditMyDetail = () => {
+    this.setState({
+      editMode: !this.state.editMode
+    });
+  }
 
   render() {
     let MyInfo = this.props.MyDetail;
@@ -175,121 +191,101 @@ class MyDetail extends Component {
     return (
       <div>
         {MyInfo !== null && (
-          <ContentBox>
+          <Container>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
-                <button>내 정보 수정</button>
+                <button onClick={this.setEditMyDetail}>내 정보 수정</button>
               </Grid.Row>
-              <Grid.Row className="contentRow">
-                <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
-                  <ProfileSection>
-                    <div className="imgContainer">
-                      <div>
-                        {MyInfo.thumbnailUrl ? (
-                          <img src={MyInfo.thumbnailUrl} alt="프로필 이미지" />
-                        ) : (
-                          "등록된 이미지 없음"
-                        )}
+              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
+              {this.state.editMode
+              ? <ModifyMyDetailContainer {...this.props}/>
+              :
+                <Grid.Row className="contentRow">
+                  <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
+                    <ProfileSection>
+                      <div className="imgContainer">
+                        <div>
+                          {MyInfo.thumbnailUrl ? (
+                            <img src={MyInfo.thumbnailUrl} alt="프로필 이미지" />
+                          ) : (
+                            "등록된 이미지 없음"
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="title">
-                      <h3>{MyInfo.nick_name}</h3>
-                    </div>
-                    <div className="category">{MyInfo.categoryName}</div>
-                  </ProfileSection>
-                  <CountSection>
-                    <div className="list">
-                      <Icon name="signup" color="grey" size="tiny" /> 등록한
-                      디자인
-                      <span>{count.total_design}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="window restore" color="grey" size="tiny" />{" "}
-                      등록한 그룹
-                      <span>{count.total_group}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="user" color="grey" size="tiny" /> 내 조회수
-                      <span>{count.total_view}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="heart" color="grey" size="tiny" /> 내가 받은
-                      좋아요
-                      <span>{count.total_like}</span>
-                    </div>
-                  </CountSection>
-                  <InfoSection>
-                    <h4>소개</h4>
-                    <p className="explanation">{MyInfo.explanation}</p>
-                  </InfoSection>
-                </HeadContainer>
-                <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
-                  <Head padded={true}>
-                    <Grid.Row>
-                      <Grid.Column as="ul">
-                        <li
-                          id="/design"
-                          className={
-                            this.props.type === "design" ||
-                            this.props.type === null
-                              ? "onSelected"
-                              : ""
-                          }
-                          onClick={this.typeChange}
-                        >
-                          내 디자인
-                        </li>
-                        <li
-                          id="/group"
-                          className={
-                            this.props.type === "group" ? "onSelected" : ""
-                          }
-                          onClick={this.typeChange}
-                        >
-                          내 그룹
-                        </li>
-                        <li
-                          id="/likeDesign"
-                          className={
-                            this.props.type === "likeDesign" ? "onSelected" : ""
-                          }
-                          onClick={this.typeChange}
-                        >
-                          관심 디자인
-                        </li>
-                        <li
-                          id="/likeDesigner"
-                          className={
-                            this.props.type === "likeDesigner"
-                              ? "onSelected"
-                              : ""
-                          }
-                          onClick={this.typeChange}
-                        >
-                          관심 디자이너
-                        </li>
-                        <div className="clear" />
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Head>
-                  <MyContentBox>
-                    <Route
-                      path="/myPage/:type?"
-                      component={
-                        this.props.type === "likeDesigner"
-                          ? MyLikeDesignerContainer
-                          : this.props.type === "likeDesign"
-                            ? MyLikeDesignContainer
-                            : this.props.type === "group"
-                              ? MyGroupContainer
-                              : ContainerPage
-                      }
-                    />
-                  </MyContentBox>
-                </TabContainer>
-              </Grid.Row>
+                      <div className="title">
+                        <h3>{MyInfo.nick_name}</h3>
+                      </div>
+                      <div className="category">{MyInfo.categoryName}</div>
+                    </ProfileSection>
+                    <CountSection>
+                      <div className="list">
+                        <Icon name="signup" color="grey" size="tiny"/> 
+                        등록한 디자인
+                        <span>{count.total_design}</span>
+                      </div>
+                      <div className="list">
+                        <Icon name="window restore" color="grey" size="tiny"/>
+                        등록한 그룹
+                        <span>{count.total_group}</span>
+                      </div>
+                      <div className="list">
+                        <Icon name="user" color="grey" size="tiny"/> 
+                        내 조회수
+                        <span>{count.total_view}</span>
+                      </div>
+                      <div className="list">
+                        <Icon name="heart" color="grey" size="tiny"/>
+                        내가 받은 좋아요
+                        <span>{count.total_like}</span>
+                      </div>
+                    </CountSection>
+                    <InfoSection>
+                      <h4>소개</h4>
+                      <p className="explanation">{MyInfo.explanation}</p>
+                    </InfoSection>
+                  </HeadContainer>
+                  {/* ------------------------ 우측 카드 렌더링 섹션 -------------------------- */}
+                  <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                    <Head padded={true}>
+                      <Grid.Row>
+                        <Grid.Column as="ul">
+                          <li id="/design" 
+                              className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
+                              onClick={this.typeChange}>
+                            내 디자인
+                          </li>
+                          <li id="/group" 
+                              className={this.props.type === "group" ? "onSelected" : ""}
+                              onClick={this.typeChange}>
+                            내 그룹
+                          </li>
+                          <li id="/likeDesign"
+                              className={this.props.type === "likeDesign" ? "onSelected" : ""}
+                              onClick={this.typeChange}>
+                            관심 디자인
+                          </li>
+                          <li id="/likeDesigner"
+                              className={this.props.type === "likeDesigner" ? "onSelected" : ""}
+                              onClick={this.typeChange}>
+                            관심 디자이너
+                          </li>
+                          <div className="clear" />
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Head>
+                    <MyContentBox>
+                      <Route path="/myPage/:type?"
+                            component={this.props.type === "likeDesigner" ? MyLikeDesignerContainer
+                                        : this.props.type === "likeDesign" ? MyLikeDesignContainer
+                                        : this.props.type === "group" ? MyGroupContainer
+                                        : ContainerPage}
+                      />
+                    </MyContentBox>
+                  </TabContainer>
+                </Grid.Row>
+              }
             </Wrapper>
-          </ContentBox>
+          </Container>
         )}
       </div>
     );
