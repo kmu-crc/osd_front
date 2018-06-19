@@ -53,12 +53,16 @@ class ModifyGroupInfo extends Component {
 
   onSubmitForm = (data) => {
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
-    .then(data => console.log(data))
+    .then(data => {
+      this.props.history.push("/group");
+    });
   }
 
   deleteGroup = () => {
     this.props.DeleteGroupRequest(this.props.id, this.props.token)
-    .then(data => console.log(data));
+    .then(data => {
+      this.props.history.push("/group");
+    });
   }
 
   render(){
