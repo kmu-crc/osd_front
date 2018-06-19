@@ -81,7 +81,49 @@ export const UpdateIssueSuccess = (res) => {
 export const UpdateIssueFailure = (error) => {
   return {
     type: types.UPDATE_ISSUE_FAILURE,
-    success: error.success,
+    success: error.success
+  };
+};
+
+export const UpdateIssueStatusRequest = (data, design_id, issue_id, token) => {
+  return (dispatch) => {
+    dispatch(UpdateIssueStatus());
+    console.log("request", data);
+    return fetch(`${host}/design/designDetail/${design_id}/updateIssueStatus/${issue_id}`, { 
+      headers: {
+        "x-access-token": token, 
+        "Content-Type": "application/json" 
+      }, 
+      method: "POST", 
+      body: JSON.stringify(data) 
+    }).then(function (res) {
+        return res.json();
+    }).then(function (res) {
+      return dispatch(UpdateIssueStausSuccess(res));
+    }).catch((error) => {
+      console.log("update issue err", error);
+      return dispatch(UpdateIssueStatusFailure(error));
+    });
+  };
+};
+
+export const UpdateIssueStatus = () => {
+  return {
+    type: types.UPDATE_ISSUE_STATUS
+  };
+};
+
+export const UpdateIssueStausSuccess = (res) => {
+  return {
+    type: types.UPDATE_ISSUE_STATUS_SUCCESS,
+    success: res.success
+  };
+};
+
+export const UpdateIssueStatusFailure = (error) => {
+  return {
+    type: types.UPDATE_ISSUE_STATUS_FAILURE,
+    success: error.success
   };
 };
 

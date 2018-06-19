@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Header, Form, Button } from "semantic-ui-react";
+import { Grid, Header, Form, Button, Radio } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
-import { FormInput, FormTextArea, FormRadio } from "components/Commons/FormItem";
+import { FormInput, FormTextArea} from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import FormDataToJson from "modules/FormDataToJson";
 
@@ -31,6 +31,20 @@ const FormHeader = styled(Header)`
 `;
 
 class ModifyIssue extends Component {
+  state = {
+    title: this.props.IssueDetail.title,
+    content: this.props.IssueDetail.content
+  }
+
+  componentDidUpdate(nextProps) {
+    if (JSON.stringify(this.props.IssueDetail) !== JSON.stringify(nextProps.IssueDetail)) {
+      this.setState({
+        title: this.props.IssueDetail.title,
+        content: this.props.IssueDetail.content
+      });
+    }
+  }
+
   setComplete = () => {
     this.setState({
       complete: !this.state.complete
@@ -46,24 +60,24 @@ class ModifyIssue extends Component {
 
   render(){
     const data = this.props.IssueDetail;
-    console.log(data);
+
     return(
       <ValidateForm onSubmit={this.onSubmitForm}>
         <FromFieldCard>
           <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column width={4}>
-              <FormHeader as="h2">이슈 수정</FormHeader>
-            </Grid.Column>
-            <Grid.Column width={12}>
-              <FormField name="title" label="이슈 제목" type="text" 
-                         validates={["required"]} RenderComponent={FormInput} />
-              <FormField name="content" label="내용"
-                         validates={["required"]} RenderComponent={FormTextArea} />
-              {/* <FormField name="is_complete" label="완료" RenderComponent={FormRadio} value={this.state.complete} onChange={this.setComplete}/> */}
-              <Button type="submit" onClick={this.props.handleClick}>등록</Button>
-            </Grid.Column>
-          </Grid.Row></Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column width={4}>
+                <FormHeader as="h2">이슈 수정</FormHeader>
+              </Grid.Column>
+              <Grid.Column width={12}>
+                <FormField name="title" label="이슈 제목" type="text" value={this.state.title}
+                          validates={["required"]} RenderComponent={FormInput} />
+                <FormField name="content" label="내용" value={this.state.content}
+                          validates={["required"]} RenderComponent={FormTextArea} />
+                <Button type="submit" onClick={this.props.handleClick}>등록</Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </FromFieldCard>
       </ValidateForm>
     );

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignIssueDetailRequest } from "actions/Design";
 import DesignIssueDetail from "components/Designs/DesignIssue/DesignIssueDetail.js";
-import { DeleteDesignIssueRequest } from "actions/Designs/DesignIssue";
+import { DeleteDesignIssueRequest, UpdateIssueStatusRequest } from "actions/Designs/DesignIssue";
 
 class DesignIssueDetailContainer extends Component {
   componentDidMount() {
@@ -11,9 +11,7 @@ class DesignIssueDetailContainer extends Component {
 
   render() {
     return (
-      <div>
-        <DesignIssueDetail {...this.props} />
-      </div>
+      <DesignIssueDetail {...this.props} />
     );
   }
 }
@@ -33,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     DeleteDesignIssueRequest: (design_id, issue_id, token) => {
       return dispatch(DeleteDesignIssueRequest(design_id, issue_id, token))
+    },
+    UpdateIssueStatusRequest: (data, design_id, issue_id, token) => {
+      return dispatch(UpdateIssueStatusRequest(data, design_id, issue_id, token))
     }
   };
 };

@@ -11,9 +11,7 @@ class ModifyIssueDetailContainer extends Component {
   
   render() {
     return (
-      <div>
-        <ModifyIssue {...this.props} />
-      </div>
+      <ModifyIssue {...this.props} />
     );
   }
 }
