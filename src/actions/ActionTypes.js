@@ -81,6 +81,11 @@ export const CREATE_BOARD = "CREATE_BOARD";
 export const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS";
 export const CREATE_BOARD_FAILURE = "CREATE_BOARD_FAILURE";
 
+// update board
+export const UPDATE_BOARD = "UPDATE_BOARD";
+export const UPDATE_BOARD_SUCCESS = "UPDATE_BOARD_SUCCESS";
+export const UPDATE_BOARD_FAILURE = "UPDATE_BOARD_FAILURE";
+
 // Get Board
 export const GET_BOARD = "GET_BOARD";
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
@@ -187,7 +192,7 @@ export const GET_MY_GROUP_LIST = "GET_MY_GROUP_LIST";
 export const GET_MY_GROUP_LIST_SUCCESS = "GET_MY_GROUP_LIST_SUCCESS";
 export const GET_MY_GROUP_LIST_FAILURE = "GET_MY_GROUP_LIST_FAILURE";
 
-// group join 
+// group join
 export const JOIN_GROUP = "JOIN_GROUP";
 export const JOIN_GROUP_SUCCESS = "JOIN_GROUP_SUCCESS";
 export const JOIN_GROUP_FAILURE = "JOIN_GROUP_FAILURE";
@@ -263,3 +268,10 @@ export const MY_LIKE_DESIGNER_FAIL = "MY_LIKE_DESIGNER_FAIL";
 export const GET_SEARCH_MEMVER = "GET_SEARCH_MEMBER";
 export const GET_SEARCH_MEMBER_SUCCESS = "GET_SEARCH_MEMBER_SUCCESS";
 export const GET_SEARCH_MEMBER_FAILURE = "GET_SEARCH_MEMBER_FAILURE";
+
+
+////////////////////////////////////////////////////////////////////////////
+// openDesign
+////////////////////////////////////////////////////////////////////////////
+
+export const SET_ACTIVE = "SET_ACTIVE";
