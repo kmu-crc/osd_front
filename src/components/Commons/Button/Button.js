@@ -4,19 +4,45 @@ import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
 
 const Btn = styled.button`
-  color: white;
   padding: 0.75em 2em;
+  ${props => props.fluid && "width: 100%"};
   font-size: ${props => props.size === "small"
                 ? "12px"
                 : props.size === "large"
                 ? "26px"
-                : "14px" }
-  background-color: ${props => props.color ? props.color.basic : StyleGuide.color.main.basic };
-  border-radius: ${props => props.round ? "2em" : "0" };
-  border: 1px solid ${props => props.color ? props.color.basic : StyleGuide.color.main.basic };
+                : "14px" };
+  border-radius: ${props => props.round ? "2em" : "5px" };
+  color: white;
+  background-color: ${props => props.color === "Danger"
+                      ? StyleGuide.color.sub.purple.basic
+                      : props.color === "Primary"
+                      ? StyleGuide.color.sub.blue.basic
+                      : props.color === "Solid"
+                      ? StyleGuide.color.main.basic
+                      : StyleGuide.color.geyScale.scale5 };
+  border: 1px solid ${props => props.color === "Danger"
+                      ? StyleGuide.color.sub.purple.basic
+                      : props.color === "Primary"
+                      ? StyleGuide.color.sub.blue.basic
+                      : props.color === "Solid"
+                      ? StyleGuide.color.main.basic
+                      : StyleGuide.color.geyScale.scale5 };
+
   &:hover{
-    background-color: ${props => props.color ? props.color.dark : StyleGuide.color.main.dark };
-    border: 1px solid ${props => props.color ? props.color.dark : StyleGuide.color.main.dark };
+    background-color: ${props => props.color === "Danger"
+                      ? StyleGuide.color.sub.purple.dark
+                      : props.color === "Primary"
+                      ? StyleGuide.color.sub.blue.dark
+                      : props.color === "Solid"
+                      ? StyleGuide.color.main.dark
+                      : StyleGuide.color.geyScale.scale7 };
+    border: 1px solid ${props => props.color === "Danger"
+                      ? StyleGuide.color.sub.purple.dark
+                      : props.color === "Primary"
+                      ? StyleGuide.color.sub.blue.dark
+                      : props.color === "Solid"
+                      ? StyleGuide.color.main.dark
+                      : StyleGuide.color.geyScale.scale7 };
   }
 `
 
@@ -29,7 +55,7 @@ class Button extends Component {
     // console.log(newProps);
 
     return(
-      <Btn size={this.props.size} round={this.props.round}>
+      <Btn {...newProps} size={this.props.size} round={this.props.round}>
         {this.props.icon && <Icon name={this.props.icon}/>}
         {this.props.children}
       </Btn>
