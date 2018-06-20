@@ -4,12 +4,13 @@ import { GetMyDetailRequest, GetMyDesignListRequest } from "actions/Users/MyDeta
 import MyDetail from "components/Users/MyDetail";
 
 class MyDetailContainer extends Component {
+  componentWillMount() {
+    this.props.GetMyDetailRequest(this.props.token);
+  }
 
   render() {
     return(
-      <div>
-        <MyDetail {...this.props}/>
-      </div>
+      <MyDetail {...this.props}/>
     );
   }
 }

@@ -100,7 +100,7 @@ class ModifyGroupInfo extends Component {
               </Grid.Column>
             </Grid>
           </FromFieldCard>
-          <Button className="submitBtn" type="submit">확인</Button>
+          <Button className="submitBtn" type="submit">수정</Button>
         </ValidateForm>
       </Wrapper>
     );
