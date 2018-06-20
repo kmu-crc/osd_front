@@ -12,7 +12,7 @@ const Head = styled.header`
   width: 100%;
   height: 60px;
   position: relative;
-  z-index: 2;
+  z-index: 100;
   color: ${StyleGuide.color.geyScale.scale0};
   background-color: ${StyleGuide.color.geyScale.scale9};
   a {
@@ -189,12 +189,19 @@ class Header extends Component {
     console.log(this.props);
   };
   onActive = e => {
-    this.props.onActive(e);
+    const event = e;
+    event.stopPropagation();
+    let target = event.currentTarget;
+    let active = this.props.isActive;
+    if (active === "INIT" || active !== "MENU") {
+      active = "MENU";
+    } else if (active === "MENU") {
+      active = "INIT";
+    }
+    console.log("onactive", active);
+    this.props.SetActive(active, target);
   };
 
-  closeActive = e => {
-    this.props.onClose(e);
-  };
   render() {
     const LoginNav = () => {
       return (
@@ -202,21 +209,22 @@ class Header extends Component {
           <UserItem>
             <UserBtn
               onClick={this.onActive}
-              className={`subMenu ${this.props.active && "active"}`}
+              className={`openMenu ${this.props.active === "MENU" && "active"}`}
             >
               <div
                 className="userIcon"
                 style={{
-                  backgroundImage: `url(${
-                    this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img
-                  }), url(${logo})`
+                  backgroundImage: `url(${this.props.userInfo.thumbnail &&
+                    this.props.userInfo.thumbnail.s_img}), url(${logo})`
                 }}
                 onError={this.noneImage}
               />
               {this.props.userInfo.nickName}
             </UserBtn>
             <UserMenuDimm
-              style={{ display: `${this.props.active ? "block" : "none"}` }}
+              style={{
+                display: `${this.props.active === "MENU" ? "block" : "none"}`
+              }}
             >
               <Content>
                 <UserMenu>
@@ -253,43 +261,6 @@ class Header extends Component {
     return (
       <Head>
         <Content>
-          {/* <HeaderGrid padded={true}>
-            <Grid.Column width={3}>
-              <Logo href="/">
-                <img src={logo} alt="logo" />
-              </Logo>
-            </Grid.Column>
-            <Grid.Column width={9}>
-              <Nav>
-                <li>
-                  <a href="/design">디자인</a>
-                </li>
-                <li>
-                  <a href="/group">그룹</a>
-                </li>
-                <li>
-                  <a href="/designer">디자이너</a>
-                </li>
-                <li>
-                  <a href="/createdesign">
-                    <Button size="small" round={true}>
-                      디자인 등록
-                    </Button>
-                  </a>
-                </li>
-              </Nav>
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <NavUserInterface>
-                <NavItem>
-                  <a href="/">
-                    <Icon name="search" />
-                  </a>
-                </NavItem>
-                {this.props.valid ? <LoginNav /> : <LogOutNav />}
-              </NavUserInterface>
-            </Grid.Column>
-          </HeaderGrid> */}
           <MainMenu>
             <Logo href="/">
               <img src={logo} alt="logo" />
@@ -305,7 +276,7 @@ class Header extends Component {
             </MenuItem>
             <MenuItem>
               <a href="/createdesign">
-                <Button size="small" round={true}>
+                <Button size="small" round={true} color="Solid">
                   디자인 등록
                 </Button>
               </a>

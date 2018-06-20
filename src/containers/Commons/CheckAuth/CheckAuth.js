@@ -4,7 +4,8 @@ import { withRouter } from "react-router-dom";
 import { CheckTokenRequest } from "actions/Authentication";
 import { SignOutRequest } from "actions/Registration";
 import { SetSession, GetSession } from "modules/Sessions";
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader } from "semantic-ui-react";
+import { SetActive } from "actions/OpenDesign";
 
 export default function CheckAuth(Components) {
   class AuthenticatedComponent extends Component {
@@ -60,7 +61,8 @@ export default function CheckAuth(Components) {
     return {
       token: state.Authentication.status.token,
       valid: state.Authentication.status.valid,
-      userInfo: state.Authentication.status.userInfo
+      userInfo: state.Authentication.status.userInfo,
+      isActive: state.OpenDesign.isActive
     };
   };
   const mapDispatchToProps = (dispatch) => {
@@ -70,6 +72,9 @@ export default function CheckAuth(Components) {
       },
       SignOutRequest: () => {
         return dispatch(SignOutRequest());
+      },
+      SetActive: (active) => {
+        return dispatch(SetActive(active))
       }
     };
   };
