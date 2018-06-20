@@ -14,7 +14,8 @@ class DesignBoardCardContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    detail: state.DesignDetailStepCard.status.DesignDetailStepCard
+    detail: state.DesignDetailStepCard.status.DesignDetailStepCard,
+    isTeam: state.DesignDetail.status.DesignDetail.is_team
   };
 };
 

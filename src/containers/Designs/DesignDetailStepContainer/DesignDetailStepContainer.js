@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignDetailStepRequest } from "actions/Design";
 import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 import DetailStep from "components/Designs/DetailStep";
 
@@ -16,7 +15,8 @@ class DesignDetailStepContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignDetailStep: state.DesignDetailStep.status.DesignDetailStep
+    DesignDetailStep: state.DesignDetailStep.status.DesignDetailStep,
+    isTeam: state.DesignDetail.status.DesignDetail.is_team
   };
 };
 
