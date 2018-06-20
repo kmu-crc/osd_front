@@ -50,6 +50,11 @@ export const INSERT_USER_DETAIL = "INSERT_USER_DETAIL";
 export const INSERT_USER_DETAIL_SUCCESS = "INSERT_USER_DETAIL_SUCCESS";
 export const INSERT_USER_DETAIL_FAILURE = "INSERT_USER_DETAIL_FAILURE";
 
+// update userDetail
+export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL";
+export const UPDATE_USER_DETAIL_SUCCESS = "UPDATE_USER_DETAIL_SUCCESS";
+export const UPDATE_USER_DETAIL_FAILURE = "UPDATE_USER_DETAIL_FAILURE";
+
 ////////////////////////////////////////////////////////////////////////////
 // design
 ////////////////////////////////////////////////////////////////////////////

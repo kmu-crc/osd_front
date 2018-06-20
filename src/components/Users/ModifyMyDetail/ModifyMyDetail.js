@@ -28,6 +28,12 @@ const FromFieldCard = styled.div`
   box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   padding: 40px;
   margin-bottom: 30px;
+  & .profileImg {
+    margin-bottom: 3rem;
+  }
+  & .two.fields {
+    margin-top: 3rem;
+  }
 `;
 
 const FormHeader = styled(Header) `
@@ -59,6 +65,16 @@ class ModifyMyDetail extends Component {
     this.props.GetCategoryLevel2Request(value);
   };
 
+  handleSubmit = (data) => {
+    this.props.UpdateUserDetailRequest(data, this.props.token)
+    .then(res=> {
+      if (res.success === true) {
+        alert("정보가 수정되었습니다.");
+        this.props.history.push("");
+      }
+    });
+  }
+
   render() {
     return (
       <Wrapper>
@@ -69,18 +85,20 @@ class ModifyMyDetail extends Component {
                 <FormHeader as="h2">내 정보 수정</FormHeader>
               </Grid.Column>
               <Grid.Column width={12}>
-                <ProfileImage />
+                <div className="profileImg">
+                  <ProfileImage />
+                </div>
                 <FormField
                   name="nick_name"
                   type="text"
-                  label="닉네임"
+                  label="닉네임 변경"
                   value={this.state.nickName}
                   validates={["required", "NotSpecialCharacters", "checkNickName"]}
                   RenderComponent={FormInput}
                 />
                 <FormField
                   name="about_me"
-                  label="자기소개"
+                  label="자기소개 변경"
                   value={this.state.aboutMe}
                   RenderComponent={FormTextArea}
                 />
@@ -88,7 +106,7 @@ class ModifyMyDetail extends Component {
                   name="password"
                   type="password"
                   placeholder="Password"
-                  label="password"
+                  label="password 변경"
                   validates={["required"]}
                 />
                 <Form.Group widths={2}>
@@ -114,6 +132,7 @@ class ModifyMyDetail extends Component {
                   name="is_designer"
                   placeholder="디자이너로 활동하시겠습니까?"
                   label="디자이너 활동 여부"
+                  checked={this.props.MyDetail.is_designer}
                   RenderComponent={FormCheckBox}
                 />
               </Grid.Column>

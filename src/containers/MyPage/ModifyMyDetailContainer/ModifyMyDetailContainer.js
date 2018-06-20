@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
+import { UpdateUserDetailRequest } from "actions/Users/UserInfo";
 import ModifyMyDetail from "components/Users/ModifyMyDetail";
 
 class ModifyMyDetailContainer extends Component {
-
   render() {
     return(
       <ModifyMyDetail {...this.props}/>
@@ -27,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetCategoryLevel2Request: (id) => {
       return dispatch(GetCategoryLevel2Request(id));
+    },
+    UpdateUserDetailRequest: (data, token) => {
+      return dispatch(UpdateUserDetailRequest(data, token));
     }
   };
 };

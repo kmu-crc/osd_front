@@ -15,12 +15,10 @@ class MyLikeDesignerContainer extends Component {
 
   render() {
     return(
-      <div>
-        <ScrollList getListRequest={this.getList}
-                    ListComponent={Designer}
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={8} tablet={8} computer={5} largeScreen={5} customClass="largeCustom"/>
-      </div>
+      <ScrollList getListRequest={this.getList}
+                  ListComponent={Designer}
+                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+                  mobile={8} tablet={8} computer={8} largeScreen={5} customClass="largeCustom"/>
     );
   }
 }

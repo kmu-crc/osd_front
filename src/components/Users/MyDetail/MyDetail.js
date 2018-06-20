@@ -152,6 +152,7 @@ class MyDetail extends Component {
   }
 
   componentWillMount() {
+    console.log("work");
     this.props.GetMyDetailRequest(this.props.token);
   }
 
@@ -205,8 +206,8 @@ class MyDetail extends Component {
                     <ProfileSection>
                       <div className="imgContainer">
                         <div>
-                          {MyInfo.thumbnailUrl ? (
-                            <img src={MyInfo.thumbnailUrl} alt="프로필 이미지" />
+                          {MyInfo.profileImg ? (
+                            <img src={MyInfo.profileImg.m_img} alt="프로필 이미지" />
                           ) : (
                             "등록된 이미지 없음"
                           )}
@@ -241,7 +242,7 @@ class MyDetail extends Component {
                     </CountSection>
                     <InfoSection>
                       <h4>소개</h4>
-                      <p className="explanation">{MyInfo.explanation}</p>
+                      <p className="explanation">{MyInfo.about_me}</p>
                     </InfoSection>
                   </HeadContainer>
                   {/* ------------------------ 우측 카드 렌더링 섹션 -------------------------- */}
