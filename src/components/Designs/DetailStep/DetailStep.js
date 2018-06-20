@@ -8,7 +8,7 @@ import CreateDesignBoardContainer from "containers/Designs/CreateDesignBoardCont
 
 // css styling
 
-const Container = styled(Grid) `
+const Container = styled(Grid)`
   min-width: 660px;
   & .ul {
     width: 100%;
@@ -34,28 +34,40 @@ const EmptyCard = styled.div`
 
 const BoardWrap = styled.ul`
   list-style: none;
-`
+`;
 
 class DetailStep extends Component {
   state = {
     activeBoard: 0
-  }
-  componentDidMount(){
+  };
+  componentDidMount() {
     this.props.GetDesignBoardRequest(this.props.match.params.id);
   }
-  changeBoard = (id) => {
+  changeBoard = id => {
     this.setState({ activeBoard: id });
-  }
+  };
   render() {
     let step = this.props.DesignDetailStep;
     return (
       <Container>
         <Board>
           <BoardWrap style={{ width: step.length * 264 + 250 }}>
-            {step.length > 0 && step.map((board, i) =>
-              <DesignBoardContainer designId={this.props.match.params.id} key={i} board={board} activeBoard={this.stateBoard} changeBoard={this.changeBoard} />
-            )}
-            <CreateDesignBoardContainer designId={this.props.match.params.id} order={step.length} />
+            {step.length > 0 &&
+              step.map((board, i) => (
+                <DesignBoardContainer
+                  designId={this.props.match.params.id}
+                  key={i}
+                  board={board}
+                  activeBoard={this.stateBoard}
+                  changeBoard={this.changeBoard}
+                />
+              ))}
+            {this.props.isTeam > 0 ? (
+              <CreateDesignBoardContainer
+                designId={this.props.match.params.id}
+                order={step.length}
+              />
+            ) : null}
           </BoardWrap>
         </Board>
       </Container>
