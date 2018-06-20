@@ -76,3 +76,40 @@ export const GetBoardFailure = (error) => {
     success: error.success,
   };
 };
+
+export const UpdateDesignBoardRequest = (id, token, data) => {
+  return (dispatch) => {
+    dispatch(UpdateBoard());
+    return fetch(`${host}/design//designDetail/updateBoard/${id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(data) })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        console.log(res);
+        return dispatch(UpdateBoardSuccess(res));
+      }).catch((error) => {
+        console.log("UpdateDesignBoardRequest err", error);
+        return dispatch(UpdateBoardFailure(error));
+      });
+  };
+};
+
+export const UpdateBoard = () => {
+  return {
+    type: types.UPDATE_BOARD
+  };
+};
+
+export const UpdateBoardSuccess = (res) => {
+  return {
+    type: types.UPDATE_BOARD_SUCCESS,
+    success: res.success
+  };
+};
+
+export const UpdateBoardFailure = (error) => {
+  return {
+    type: types.UPDATE_BOARD_FAILURE,
+    success: error.success,
+  };
+};
