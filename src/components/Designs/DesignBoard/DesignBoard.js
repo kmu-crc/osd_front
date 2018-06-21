@@ -115,6 +115,11 @@ class DesignBoard extends Component {
   ModifyComplete = () => {
     this.setState({active: false});
   }
+  onDelete = () => {
+    this.props.DeleteDesignBoardRequest(this.props.board.uid, this.props.token).then(() => {
+      this.props.GetDesignBoardRequest(this.props.board.design_id);
+    });
+  }
   render() {
     const { board, changeBoard, activeBoard, designId, list } = this.props;
     console.log(list);
@@ -139,7 +144,7 @@ class DesignBoard extends Component {
                   <button onClick={this.onModify}>수정</button>
                 </MenuItem>
                 <MenuItem>
-                  <button>삭제</button>
+                  <button onClick={this.onDelete}>삭제</button>
                 </MenuItem>
               </Menu>
             </div>

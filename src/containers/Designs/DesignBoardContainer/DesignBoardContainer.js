@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { GetDesignCardRequest } from "actions/Designs/DesignCard";
-import { UpdateDesignBoardRequest, GetDesignBoardRequest } from "actions/Designs/DesignBoard";
+import { UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest } from "actions/Designs/DesignBoard";
 import DesignBoard from "components/Designs/DesignBoard";
 import { SetActive } from "actions/OpenDesign";
 
@@ -32,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
+    },
+    DeleteDesignBoardRequest: (id, token) => {
+      return dispatch(DeleteDesignBoardRequest(id, token))
     },
     SetActive: (active) => {
       return dispatch(SetActive(active))
