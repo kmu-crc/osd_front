@@ -185,12 +185,12 @@ class GroupDetail extends Component {
               <Grid.Row>
                 { !this.state.editGroupInfoMode 
                 ? <div className="btnContainer">
-                    <button className="edit" onClick={this.setEditGroupInfoMode}>
+                    <Button className="edit" onClick={this.setEditGroupInfoMode}>
                       정보 수정
-                    </button>
-                    <button className="edit" onClick={this.setEditMode}>
+                    </Button>
+                    <Button className="edit" onClick={this.setEditMode}>
                       가입 관리
-                    </button>
+                    </Button>
                   </div>
                 : <div className="btnContainer"></div>
                 }
