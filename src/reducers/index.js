@@ -1,5 +1,5 @@
 import Authentication from "./Authentication";
-import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignIssueList } from "reducers/Designs";
+import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignIssueList, DesignLike } from "reducers/Designs";
 import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList } from "reducers/Groups";
 import { SignIn, SignUp } from "reducers/Registration";
@@ -19,6 +19,7 @@ export default combineReducers({
     DesignDetailStep,
     DesignDetailStepCard,
     DesignIssueList,
+    DesignLike,
     CreateGroup,
     GroupLike,
     GroupList,

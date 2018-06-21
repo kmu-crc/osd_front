@@ -151,6 +151,19 @@ export const DELETE_ISSUE = "DELETE_ISSUE";
 export const DELETE_ISSUE_SUCCESS = "DELETE_ISSUE_SUCCESS";
 export const DELETE_ISSUE_FAILURE = "DELETE_ISSUE_FAILURE";
 
+// design like (디자인 전체에 대한 좋아요)
+export const GET_LIKE_DESIGN = "GET_LIKE_DESIGN";
+export const GET_LIKE_DESIGN_SUCCESS = "GET_LIKE_DESIGN_SUCCESS";
+export const GET_LIKE_DESIGN_FAILURE = "GET_LIKE_DESIGN_FAILURE";
+export const LIKE_DESIGN = "LIKE_DESIGN";
+export const LIKE_DESIGN_SUCCESS = "LIKE_DESIGN_SUCCESS";
+export const LIKE_DESIGN_FAILURE = "LIKE_DESIGN_FAILURE";
+export const UNLIKE_DESIGN = "UNLIKE_DESIGN";
+export const UNLIKE_DESIGN_SUCCESS = "UNLIKE_DESIGN_SUCCESS";
+export const UNLIKE_DESIGN_FAILURE = "UNLIKE_DESIGN_FAILURE";
+
+// design card like (디자인 개별 카드에 대한 좋아요)
+
 
 ////////////////////////////////////////////////////////////////////////////
 // group
