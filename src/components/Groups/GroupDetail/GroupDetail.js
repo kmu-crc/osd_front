@@ -140,6 +140,10 @@ class GroupDetail extends Component {
   }
 
   updateLike = () => {
+    if (!this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    }
     if (this.props.like === true) {
       this.props.UnlikeGroupRequest(this.props.id, this.props.token)
       .then(data => {
@@ -209,9 +213,9 @@ class GroupDetail extends Component {
                       {groupDetail.issue == null? "공지가 없습니다" : groupDetail.issue.title}
                     </div>
                     <div className="btnContainer">
-                      {this.props.like === false 
-                      ? <Button className="red" onClick={this.updateLike}>좋아요</Button>
-                      : <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
+                      {this.props.like === true 
+                      ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
+                      : <Button className="red" onClick={this.updateLike}>좋아요</Button>
                       }
                       <JoinGroupContainer />
                     </div>
