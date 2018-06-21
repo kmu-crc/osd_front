@@ -95,14 +95,14 @@ class DesignIssueDetail extends Component {
             <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
             <span className="status">
               상태 : { data.is_complete === 0? "진행중" : "완료" }
-              {this.props.userInfo.uid === data.user_id &&
+              {this.props.userInfo && (this.props.userInfo.uid === data.user_id) &&
                 <Button onClick={this.updateIssueStatus}>
                   {data.is_complete === 0? "완료하기" : "진행중으로 변경"}
                 </Button>
               }
             </span>
           </div>
-          {this.props.userInfo.uid === data.user_id &&
+          {this.props.userInfo && (this.props.userInfo.uid === data.user_id) &&
             <BtnWrapper>
               <Link to={`/designDetail/${this.props.match.params.id}/issue/${this.props.match.params.issue_id}/modify`}>
                 <Button>수정</Button>
