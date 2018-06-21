@@ -80,7 +80,7 @@ export const GetBoardFailure = (error) => {
 export const UpdateDesignBoardRequest = (id, token, data) => {
   return (dispatch) => {
     dispatch(UpdateBoard());
-    return fetch(`${host}/design//designDetail/updateBoard/${id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(data) })
+    return fetch(`${host}/design/designDetail/updateBoard/${id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
         return res.json();
       })
@@ -110,6 +110,43 @@ export const UpdateBoardSuccess = (res) => {
 export const UpdateBoardFailure = (error) => {
   return {
     type: types.UPDATE_BOARD_FAILURE,
+    success: error.success,
+  };
+};
+
+export const DeleteDesignBoardRequest = (id, token) => {
+  return (dispatch) => {
+    dispatch(DeleteBoard());
+    return fetch(`${host}/design/designDetail/deleteBoard/${id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "DELETE" })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        console.log(res);
+        return dispatch(DeleteBoardSuccess(res));
+      }).catch((error) => {
+        console.log("DeleteDesignBoardRequest err", error);
+        return dispatch(DeleteBoardFailure(error));
+      });
+  };
+};
+
+export const DeleteBoard = () => {
+  return {
+    type: types.DELETE_BOARD
+  };
+};
+
+export const DeleteBoardSuccess = (res) => {
+  return {
+    type: types.DELETE_BOARD_SUCCESS,
+    success: res.success
+  };
+};
+
+export const DeleteBoardFailure = (error) => {
+  return {
+    type: types.DELETE_BOARD_FAILURE,
     success: error.success,
   };
 };
