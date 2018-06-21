@@ -233,7 +233,7 @@ class DesignerDetail extends Component {
                   </CountSection>
                   <InfoSection>
                     <h4>소개</h4>
-                    <p className="explanation">{designerDetail.explanation}</p>
+                    <p className="explanation">{designerDetail.about_me}</p>
                   </InfoSection>
                 </HeadContainer>
                 <TabContainer mobile={16} tablet={12} computer={12}>
