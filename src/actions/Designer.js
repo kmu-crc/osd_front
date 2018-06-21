@@ -173,3 +173,128 @@ export function LikeInDesignerFail() {
     LikeInDesignerAdded: []
   }
 };
+
+// 로그인 했을때 내 좋아요 정보 가져오기
+export function GetLikeDesignerRequest(id, token) {
+  return (dispatch) => {
+    dispatch(GetLikeDesigner());
+    return fetch(`${host}/Designer/getLike/${id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("Designer like >>", data);
+      if (!data) {
+        console.log("no like info");
+        data = false;
+      }
+      dispatch(GetLikeDesignerSuccess(data.like));
+    }).catch((error) => {
+      console.log("err", error);
+      GetLikeDesignerFailure(false);
+    });
+  }
+}
+
+export function GetLikeDesigner(data) {
+  return {
+    type: types.GET_LIKE_DESIGNER
+  }
+};
+
+export function GetLikeDesignerSuccess(data) {
+  return {
+    type: types.GET_LIKE_DESIGNER_SUCCESS,
+    like: data
+  }
+};
+
+export function GetLikeDesignerFailure(data) {
+  return {
+    type: types.GET_LIKE_DESIGNER_FAILURE,
+    like: data
+  }
+};
+
+// 디자이너 좋아요 하기
+export function LikeDesignerRequest(id, token) {
+  return (dispatch) => {
+    dispatch(LikeDesigner());
+    return fetch(`${host}/Designer/like/${id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("like >>>", data);
+      if (!data) {
+        console.log("no data");
+      }
+      dispatch(LikeDesignerSuccess());
+      return data;
+    }).catch((error) => {
+      console.log("err", error);
+      LikeDesignerFailure(error);
+    });
+  }
+}
+
+export function LikeDesigner() {
+  return {
+    type: types.LIKE_DESIGNER
+  }
+};
+
+export function LikeDesignerSuccess() {
+  return {
+    type: types.LIKE_DESIGNER_SUCCESS
+  }
+};
+
+export function LikeDesignerFailure() {
+  return {
+    type: types.LIKE_DESIGNER_FAILURE
+  }
+};
+
+// 디자이너 좋아요 취소하기
+export function UnlikeDesignerRequest(id, token) {
+  return (dispatch) => {
+    dispatch(UnlikeDesigner());
+    return fetch(`${host}/Designer/unlike/${id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("unlike >>>", data);
+      if (!data) {
+        console.log("no data");
+      }
+      dispatch(UnlikeDesignerSuccess(data));
+      return data;
+    }).catch((error) => {
+      console.log("err", error);
+      UnlikeDesignerFailure(error);
+    });
+  }
+}
+
+export function UnlikeDesigner() {
+  return {
+    type: types.UNLIKE_DESIGNER
+  }
+};
+
+export function UnlikeDesignerSuccess() {
+  return {
+    type: types.UNLIKE_DESIGNER_SUCCESS
+  }
+};
+
+export function UnlikeDesignerFailure() {
+  return {
+    type: types.UNLIKE_DESIGNER_FAILURE
+  }
+};

@@ -5,6 +5,7 @@ import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import ModifyJoinList from "components/Groups/ModifyJoinList";
 import CurrentJoinList from "components/Groups/CurrentJoinList/CurrentJoinList";
+import Button from "components/Commons/Button";
 
 // css styling
 
@@ -119,8 +120,10 @@ class GroupDetail extends Component {
   }
 
   componentDidMount() {
-    this.props.GetGroupDetailRequest(this.props.id); 
-    // 그룹에 대한 디테일 정보
+    this.props.GetGroupDetailRequest(this.props.id); // 그룹에 대한 디테일 정보
+    if (this.props.token) {
+      this.props.GetLikeGroupRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
+    }
   }
 
   setEditGroupInfoMode = () => {
@@ -133,6 +136,29 @@ class GroupDetail extends Component {
     this.setState({
       editMode: !this.state.editMode
     });
+  }
+
+  updateLike = () => {
+    if (!this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    }
+    if (this.props.like === true) {
+      this.props.UnlikeGroupRequest(this.props.id, this.props.token)
+      .then(data => {
+        console.log(data);
+        if (data.success === true) {
+          this.props.GetLikeGroupRequest(this.props.id, this.props.token);
+        }
+      });
+    } else {
+      this.props.LikeGroupRequest(this.props.id, this.props.token)
+      .then(data => {
+        if (data.success === true) {
+          this.props.GetLikeGroupRequest(this.props.id, this.props.token);
+        } 
+      });
+    }
   }
 
   render(){
@@ -158,12 +184,12 @@ class GroupDetail extends Component {
               <Grid.Row>
                 { !this.state.editGroupInfoMode 
                 ? <div className="btnContainer">
-                    <button className="edit" onClick={this.setEditGroupInfoMode}>
+                    <Button className="edit" onClick={this.setEditGroupInfoMode}>
                       정보 수정
-                    </button>
-                    <button className="edit" onClick={this.setEditMode}>
+                    </Button>
+                    <Button className="edit" onClick={this.setEditMode}>
                       가입 관리
-                    </button>
+                    </Button>
                   </div>
                 : <div className="btnContainer"></div>
                 }
@@ -186,7 +212,10 @@ class GroupDetail extends Component {
                       {groupDetail.issue == null? "공지가 없습니다" : groupDetail.issue.title}
                     </div>
                     <div className="btnContainer">
-                      <button className="red">좋아요</button>
+                      {this.props.like === true 
+                      ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
+                      : <Button className="red" onClick={this.updateLike}>좋아요</Button>
+                      }
                       <JoinGroupContainer />
                     </div>
                   </ProfileSection>

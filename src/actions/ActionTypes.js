@@ -151,6 +151,19 @@ export const DELETE_ISSUE = "DELETE_ISSUE";
 export const DELETE_ISSUE_SUCCESS = "DELETE_ISSUE_SUCCESS";
 export const DELETE_ISSUE_FAILURE = "DELETE_ISSUE_FAILURE";
 
+// design like (디자인 전체에 대한 좋아요)
+export const GET_LIKE_DESIGN = "GET_LIKE_DESIGN";
+export const GET_LIKE_DESIGN_SUCCESS = "GET_LIKE_DESIGN_SUCCESS";
+export const GET_LIKE_DESIGN_FAILURE = "GET_LIKE_DESIGN_FAILURE";
+export const LIKE_DESIGN = "LIKE_DESIGN";
+export const LIKE_DESIGN_SUCCESS = "LIKE_DESIGN_SUCCESS";
+export const LIKE_DESIGN_FAILURE = "LIKE_DESIGN_FAILURE";
+export const UNLIKE_DESIGN = "UNLIKE_DESIGN";
+export const UNLIKE_DESIGN_SUCCESS = "UNLIKE_DESIGN_SUCCESS";
+export const UNLIKE_DESIGN_FAILURE = "UNLIKE_DESIGN_FAILURE";
+
+// design card like (디자인 개별 카드에 대한 좋아요)
+
 
 ////////////////////////////////////////////////////////////////////////////
 // group
@@ -216,6 +229,17 @@ export const DELETE_DESIGN_IN_GROUP_FAIL = "DELETE_DESIGN_IN_GROUP_FAIL";
 export const DELETE_GROUP_IN_GROUP_SUCCESS = "DELETE_GROUP_IN_GROUP_SUCCESS";
 export const DELETE_GROUP_IN_GROUP_FAIL = "DELETE_GROUP_IN_GROUP_FAIL";
 
+// group like
+export const GET_LIKE_GROUP = "GET_LIKE_GROUP";
+export const GET_LIKE_GROUP_SUCCESS = "GET_LIKE_GROUP_SUCCESS";
+export const GET_LIKE_GROUP_FAILURE = "GET_LIKE_GROUP_FAILURE";
+export const LIKE_GROUP = "LIKE_GROUP";
+export const LIKE_GROUP_SUCCESS = "LIKE_GROUP_SUCCESS";
+export const LIKE_GROUP_FAILURE = "LIKE_GROUP_FAILURE";
+export const UNLIKE_GROUP = "UNLIKE_GROUP";
+export const UNLIKE_GROUP_SUCCESS = "UNLIKE_GROUP_SUCCESS";
+export const UNLIKE_GROUP_FAILURE = "UNLIKE_GROUP_FAILURE";
+
 
 ////////////////////////////////////////////////////////////////////////////
 // designer
@@ -232,6 +256,17 @@ export const DESIGN_IN_DESIGNER_FAIL = "DESIGN_IN_DESIGNER_FAIL";
 export const GET_LIKE_IN_DESIGNER = "GET_LIKE_IN_DESIGNER";
 export const GET_LIKE_IN_DESIGNER_CLEAR = "GET_LIKE_IN_DESIGNER_CLEAR";
 export const LIKE_IN_DESIGNER_FAIL = "LIKE_IN_DESIGNER_FAIL";
+
+// designer like
+export const GET_LIKE_DESIGNER = "GET_LIKE_DESIGNER";
+export const GET_LIKE_DESIGNER_SUCCESS = "GET_LIKE_DESIGNER_SUCCESS";
+export const GET_LIKE_DESIGNER_FAILURE = "GET_LIKE_DESIGNER_FAILURE";
+export const LIKE_DESIGNER = "LIKE_DESIGNER";
+export const LIKE_DESIGNER_SUCCESS = "LIKE_DESIGNER_SUCCESS";
+export const LIKE_DESIGNER_FAILURE = "LIKE_DESIGNER_FAILURE";
+export const UNLIKE_DESIGNER = "UNLIKE_DESIGNER";
+export const UNLIKE_DESIGNER_SUCCESS = "UNLIKE_DESIGNER_SUCCESS";
+export const UNLIKE_DESIGNER_FAILURE = "UNLIKE_DESIGNER_FAILURE";
 
 
 ////////////////////////////////////////////////////////////////////////////

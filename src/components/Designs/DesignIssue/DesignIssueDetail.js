@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Button } from "semantic-ui-react";
-// import Button from "components/Commons/Button";
+import { Grid } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import { FormCheckBox } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import { Link } from "react-router-dom";
@@ -62,10 +62,6 @@ const CommentContainer = styled.div`
 `;
 
 class DesignIssueDetail extends Component {
-  state = {
-    changeMode: false
-  }
-
   deleteIssue = () => {
     this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
     .then(data => {
@@ -73,23 +69,17 @@ class DesignIssueDetail extends Component {
     });
   }
 
-  setChangeMode = () => {
-    this.setState({
-      changeMode: true
-    });
-  }
-
   updateIssueStatus = () => {
-    const target = document.getElementById("is_complete");
-    this.props.UpdateIssueStatusRequest({status: target.checked}, this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
-    .then(res=>{
-      if (res.success === true) {
-        this.props.GetDesignIssueDetailRequest(this.props.match.params.id, this.props.match.params.issue_id)
-        .then(()=>{
-          this.setState({
-            changeMode: false
-          });
-        });
+    let nextStatus; 
+    if (this.props.IssueDetail.is_complete === 1) {
+      nextStatus = { status: 0 }
+    } else {
+      nextStatus = { status: 1}
+    }
+    this.props.UpdateIssueStatusRequest(nextStatus, this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
+    .then(data => {
+      if (data.success === true) {
+        this.props.GetDesignIssueDetailRequest(this.props.match.params.id, this.props.match.params.issue_id);
       }
     });
   }
@@ -104,19 +94,11 @@ class DesignIssueDetail extends Component {
             <span className="userName">작성자 : {data.userName}</span>
             <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
             <span className="status">
-              상태 : 
-              {this.props.userInfo.uid === data.user_id 
-              ?
-                this.state.changeMode 
-                ? <div>
-                    <FormField name="is_complete" label="완료하기" checked={data.is_complete} onChange={this.updateIssueStatus} RenderComponent={FormCheckBox}/>
-                    <Button onClick={this.updateIssueStatus}>확인</Button>
-                  </div>
-                : <div>
-                    {data.is_complete === 0? "진행중" : "완료"}
-                    <Button onClick={this.setChangeMode}>수정</Button>
-                  </div>
-              : data.is_complete === 0? "진행중" : "완료"
+              상태 : { data.is_complete === 0? "진행중" : "완료" }
+              {this.props.userInfo.uid === data.user_id &&
+                <Button onClick={this.updateIssueStatus}>
+                  {data.is_complete === 0? "완료하기" : "진행중으로 변경"}
+                </Button>
               }
             </span>
           </div>
