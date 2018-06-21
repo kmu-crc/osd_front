@@ -216,6 +216,17 @@ export const DELETE_DESIGN_IN_GROUP_FAIL = "DELETE_DESIGN_IN_GROUP_FAIL";
 export const DELETE_GROUP_IN_GROUP_SUCCESS = "DELETE_GROUP_IN_GROUP_SUCCESS";
 export const DELETE_GROUP_IN_GROUP_FAIL = "DELETE_GROUP_IN_GROUP_FAIL";
 
+// group like
+export const GET_LIKE_GROUP = "GET_LIKE_GROUP";
+export const GET_LIKE_GROUP_SUCCESS = "GET_LIKE_GROUP_SUCCESS";
+export const GET_LIKE_GROUP_FAILURE = "GET_LIKE_GROUP_FAILURE";
+export const LIKE_GROUP = "LIKE_GROUP";
+export const LIKE_GROUP_SUCCESS = "LIKE_GROUP_SUCCESS";
+export const LIKE_GROUP_FAILURE = "LIKE_GROUP_FAILURE";
+export const UNLIKE_GROUP = "UNLIKE_GROUP";
+export const UNLIKE_GROUP_SUCCESS = "UNLIKE_GROUP_SUCCESS";
+export const UNLIKE_GROUP_FAILURE = "UNLIKE_GROUP_FAILURE";
+
 
 ////////////////////////////////////////////////////////////////////////////
 // designer

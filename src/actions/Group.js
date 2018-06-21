@@ -51,7 +51,7 @@ export function GroupListFail() {
 
 export function GetGroupDetailRequest(id) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/`+id, {
+    return fetch(`${host}/group/groupDetail/${id}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -73,6 +73,48 @@ export function GetGroupDetail(data) {
   return {
     type: types.GET_GROUP_DETAIL,
     GroupDetail : data
+  }
+};
+
+export function GetLikeGroupRequest(id, token) {
+  return (dispatch) => {
+    dispatch(GetLikeGroup());
+    return fetch(`${host}/group/getLike/${id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("group like >>", data);
+      if (!data) {
+        console.log("no like info");
+        data = false;
+      }
+      dispatch(GetLikeGroupSuccess(data.like));
+    }).catch((error) => {
+      console.log("err", error);
+      GetLikeGroupFailure(false);
+    });
+  }
+}
+
+export function GetLikeGroup(data) {
+  return {
+    type: types.GET_LIKE_GROUP
+  }
+};
+
+export function GetLikeGroupSuccess(data) {
+  return {
+    type: types.GET_LIKE_GROUP_SUCCESS,
+    like: data
+  }
+};
+
+export function GetLikeGroupFailure(data) {
+  return {
+    type: types.GET_LIKE_GROUP_FAILURE,
+    like: data
   }
 };
 
@@ -655,3 +697,84 @@ export function DeleteGroupFailure() {
   }
 };
 
+// 그룹 좋아요 하기
+export function LikeGroupRequest(id, token) {
+  return (dispatch) => {
+    dispatch(LikeGroup());
+    return fetch(`${host}/group/like/${id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("like >>>", data);
+      if (!data) {
+        console.log("no data");
+      }
+      dispatch(LikeGroupSuccess());
+      return data;
+    }).catch((error) => {
+      console.log("err", error);
+      LikeGroupFailure(error);
+    });
+  }
+}
+
+export function LikeGroup() {
+  return {
+    type: types.LIKE_GROUP
+  }
+};
+
+export function LikeGroupSuccess() {
+  return {
+    type: types.LIKE_GROUP_SUCCESS
+  }
+};
+
+export function LikeGroupFailure() {
+  return {
+    type: types.LIKE_GROUP_FAILURE
+  }
+};
+
+// 그룹 좋아요 취소하기
+export function UnlikeGroupRequest(id, token) {
+  return (dispatch) => {
+    dispatch(UnlikeGroup());
+    return fetch(`${host}/group/unlike/${id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("unlike >>>", data);
+      if (!data) {
+        console.log("no data");
+      }
+      dispatch(UnlikeGroupSuccess(data));
+      return data;
+    }).catch((error) => {
+      console.log("err", error);
+      UnlikeGroupFailure(error);
+    });
+  }
+}
+
+export function UnlikeGroup() {
+  return {
+    type: types.UNLIKE_GROUP
+  }
+};
+
+export function UnlikeGroupSuccess() {
+  return {
+    type: types.UNLIKE_GROUP_SUCCESS
+  }
+};
+
+export function UnlikeGroupFailure() {
+  return {
+    type: types.UNLIKE_GROUP_FAILURE
+  }
+};
