@@ -81,7 +81,7 @@ class designer extends Component {
     return(
       <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>
-          <ImgPart><img src={designer.thumbnailUrl ? designer.thumbnailUrl.m_img : eximg} alt="썸네일이미지"/></ImgPart>
+          <ImgPart><img src={designer.imgURL ? designer.imgURL.m_img : eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
             <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
             <div className="userName">{designer.nick_name}</div>
