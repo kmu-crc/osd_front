@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import DesignInDesignerContainer from "containers/Designer/DesignInDesignerContainer";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer";
+import Button from "components/Commons/Button";
 
 // css styling
 
@@ -162,17 +163,38 @@ const ContentBox = styled.div`
 
 
 class DesignerDetail extends Component {
-  state = {
-    id: this.props.id,
-  };
-
   componentWillMount() {
-    this.props.GetDesignerDetailRequest(this.props.id);
+    this.props.GetDesignerDetailRequest(this.props.id); // 디자이너 디테일 정보
+    if (this.props.token) {
+      this.props.GetLikeDesignerRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
+    }
   }
 
   typeChange = (e) => {
     let url = "/designerDetail/"+this.props.id+"/"+e.target.id;
     this.props.history.replace(url);
+  }
+
+  updateLike = () => {
+    if (!this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    }
+    if (this.props.like === true) {
+      this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
+      .then(data => {
+        if (data.success === true) {
+          this.props.GetLikeDesignerRequest(this.props.id, this.props.token);
+        }
+      });
+    } else {
+      this.props.LikeDesignerRequest(this.props.id, this.props.token)
+      .then(data => {
+        if (data.success === true) {
+          this.props.GetLikeDesignerRequest(this.props.id, this.props.token);
+        } 
+      });
+    }
   }
 
   render(){
@@ -196,7 +218,7 @@ class DesignerDetail extends Component {
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
               { (this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid))?
-                <button>내 정보 수정</button>
+                <Link to="/myPage"><Button>내 정보 수정</Button></Link>
                 : <div></div>
               }
               </Grid.Row>
@@ -213,8 +235,10 @@ class DesignerDetail extends Component {
                       {designerDetail.categoryName}
                     </div>
                     <div className="btnContainer">
-                      <button className="red">좋아요</button>
-                      <button className="red">메시지보내기</button>
+                      {this.props.like === true 
+                      ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
+                      : <Button className="red" onClick={this.updateLike}>좋아요</Button>
+                      }
                     </div>
                   </ProfileSection>
                   <CountSection>

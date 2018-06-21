@@ -120,7 +120,6 @@ class GroupDetail extends Component {
   }
 
   componentDidMount() {
-    console.log("work");
     this.props.GetGroupDetailRequest(this.props.id); // 그룹에 대한 디테일 정보
     if (this.props.token) {
       this.props.GetLikeGroupRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보

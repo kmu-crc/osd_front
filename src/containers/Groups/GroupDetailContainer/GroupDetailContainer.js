@@ -6,9 +6,7 @@ import GroupDetail from "components/Groups/GroupDetail";
 class GroupDetailContainer extends Component {
   render() {
     return(
-      <div>
-        <GroupDetail {...this.props}/>
-      </div>
+      <GroupDetail {...this.props}/>
     );
   }
 }
