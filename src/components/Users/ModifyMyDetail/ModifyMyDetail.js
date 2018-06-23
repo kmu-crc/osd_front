@@ -66,6 +66,8 @@ class ModifyMyDetail extends Component {
   };
 
   handleSubmit = (data) => {
+    console.log(data);
+    //data.password = data.password.toString();
     this.props.UpdateUserDetailRequest(data, this.props.token)
     .then(res=> {
       if (res.success === true) {

@@ -4,3 +4,4 @@ export * from "./DesignDetailStep";
 export * from "./DesignDetailStepCard";
 export * from "./DesignDetailView";
 export * from "./DesignList";
+export * from "./DesignLike";

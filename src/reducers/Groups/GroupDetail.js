@@ -7,10 +7,15 @@ const initialState = {
   },
   status: {
     GroupDetail: [],
+    Count: { 
+      like: 0,
+      design: 0, 
+      group: 0 
+    },
     DesignInGroup: [],
     GroupInGroup: [],
     DesignInGroupAdded: [],
-    GroupInGroupAdded: []
+    GroupInGroupAdded: [],
   }
 };
 
@@ -23,6 +28,12 @@ export function GroupDetail(state, action) {
       return update(state, {
         status: {
           GroupDetail: { $set: action.GroupDetail }
+        }
+      });
+    case types.GET_GROUP_COUNT:
+      return update(state, {
+        status: {
+          Count: { $set: action.Count }
         }
       });
     case types.GET_DESIGN_IN_GROUP:
