@@ -14,8 +14,15 @@ import MainPage from "pages/MainPage/MainPage";
 import TestPage from "pages/TestPage";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
+import { connect } from "react-redux";
+import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 
 class App extends Component {
+  componentDidMount(){
+    this.props.GetCategoryLevel1Request().then(() => {
+      this.props.GetCategoryLevel2Request(null);
+    })
+  }
   render() {
     return (
       <BrowserRouter>
@@ -43,4 +50,15 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    GetCategoryLevel1Request: () => {
+      return dispatch(GetCategoryLevel1Request());
+    },
+    GetCategoryLevel2Request: (id) => {
+      return dispatch(GetCategoryLevel2Request(id));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
