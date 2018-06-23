@@ -126,6 +126,31 @@ export function GetDesignCount(data) {
   }
 };
 
+export function UpdateDesignViewRequest(id) {
+  return (dispatch) => {
+    return fetch(`${host}/design/updateViewCount/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("increase view count >>", data);
+      if (!data) {
+        console.log("no data");
+      }
+      dispatch(UpdateDesignView());
+    }).catch((error) => {
+      console.log("err", error);
+    })
+  }
+}
+
+export function UpdateDesignView() {
+  return {
+    type: types.UPDATE_DESIGN_VIEW
+  }
+};
+
 export function GetDesignDetailViewRequest(id) {
   return (dispatch) => {
     return fetch(`${host}/design/designDetail/${id}/view`, {

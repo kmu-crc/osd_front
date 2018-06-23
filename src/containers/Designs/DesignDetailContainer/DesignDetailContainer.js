@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { GetDesignDetailRequest, DesignDetailResetRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
+import { GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
 import DesignDetail from "components/Designs/DesignDetail";
 
 class DesignDetailContainer extends Component {
@@ -42,6 +42,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetDesignCountRequest: (id) => {
       return dispatch(GetDesignCountRequest(id))
+    },
+    UpdateDesignViewRequest: (id) => {
+      return dispatch(UpdateDesignViewRequest(id))
     }
   };
 };
