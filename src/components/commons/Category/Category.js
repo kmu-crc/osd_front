@@ -12,19 +12,15 @@ const CategoryColumn = styled(Grid.Column)`
 `;
 
 class Category extends Component {
-  componentWillMount() {
-    this.props.GetCategoryLevel1Request();
-  }
-
-  onChangeCategory1 = value => {
+  onChangeCategory1 = async value => {
     if (value === 0) {
       value = null;
     }
-    this.props.GetCategoryLevel2Request(value);
-    this.props.handleCate1(value);
+    await this.props.GetCategoryLevel2Request(value);
+    await this.props.handleCate1(value, true);
   };
 
-  onChangeCategory2 = value => {
+  onChangeCategory2 = async value => {
     if (value === 0) {
       value = null;
     }
@@ -46,6 +42,7 @@ class Category extends Component {
           <Grid.Column mobile={8} tablet={5} computer={4}>
             <FormSelect
               placeholder="1차 카테고리"
+              value={this.props.cate1 === "null" ? null : this.props.cate1}
               getValue={this.onChangeCategory1}
               options={this.props.category1}
             />
@@ -53,6 +50,7 @@ class Category extends Component {
           <Grid.Column mobile={8} tablet={5} computer={4}>
             <FormSelect
               placeholder="2차 카테고리"
+              value={this.props.cate2 === "null" ? null : this.props.cate2}
               getValue={this.onChangeCategory2}
               options={this.props.category2}
             />
