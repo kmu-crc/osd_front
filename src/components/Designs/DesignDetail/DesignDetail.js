@@ -113,10 +113,13 @@ class DesignDetail extends Component {
   };
 
   componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id, this.props.token);
+    this.props.GetDesignDetailRequest(this.props.id, this.props.token); // 디자인에 대한 정보
+    this.props.UpdateDesignViewRequest(this.props.id)
+    .then(this.props.GetDesignCountRequest(this.props.id)); // 디자인 조회수 업데이트 후 카운트 정보 가져옴
     if (this.props.token) {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
-    }
+    } // 로그인 한 경우 좋아요 했는지 여부 가져오기
+    
   }
 
   componentWillUnmount() {
@@ -143,33 +146,27 @@ class DesignDetail extends Component {
       this.props.UnlikeDesignRequest(this.props.id, this.props.token)
       .then(data => {
         if (data.success === true) {
-          this.props.GetLikeDesignRequest(this.props.id, this.props.token);
+          this.props.GetLikeDesignRequest(this.props.id, this.props.token)
+          .then(this.props.GetDesignCountRequest(this.props.id))
         }
       });
     } else {
       this.props.LikeDesignRequest(this.props.id, this.props.token)
       .then(data => {
         if (data.success === true) {
-          this.props.GetLikeDesignRequest(this.props.id, this.props.token);
+          this.props.GetLikeDesignRequest(this.props.id, this.props.token)
+          .then(this.props.GetDesignCountRequest(this.props.id))
         } 
       });
     }
+    
   }
 
   render() {
-    let designDetail = this.props.DesignDetail;
-    let user = this.props.userInfo;
-    
-    let count;
-    if (designDetail.count != null) {
-      count = designDetail.count;
-    } else {
-      count = {
-        view_count: 0,
-        member_count: 0,
-        like_count: 0
-      };
-    }
+    const designDetail = this.props.DesignDetail;
+    const user = this.props.userInfo;
+    const count = this.props.Count;
+
     const ButtonModal = () => {
       return (
         <ModalContent className="btnModal"

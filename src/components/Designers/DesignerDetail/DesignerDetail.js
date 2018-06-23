@@ -165,6 +165,7 @@ const ContentBox = styled.div`
 class DesignerDetail extends Component {
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id); // 디자이너 디테일 정보
+    this.props.GetDesignerCountRequest(this.props.id); // 디자이너 count 정보
     if (this.props.token) {
       this.props.GetLikeDesignerRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
     }
@@ -184,32 +185,24 @@ class DesignerDetail extends Component {
       this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
       .then(data => {
         if (data.success === true) {
-          this.props.GetLikeDesignerRequest(this.props.id, this.props.token);
+          this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+          .then(this.props.GetDesignerCountRequest(this.props.id))
         }
       });
     } else {
       this.props.LikeDesignerRequest(this.props.id, this.props.token)
       .then(data => {
         if (data.success === true) {
-          this.props.GetLikeDesignerRequest(this.props.id, this.props.token);
+          this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+          .then(this.props.GetDesignerCountRequest(this.props.id))
         } 
       });
     }
   }
 
   render(){
-    let designerDetail = this.props.DesignerDetail;
-    let count;
-    if (designerDetail.count != null) {
-      count = designerDetail.count;
-    } else {
-      count = {
-        total_like: 0,
-        total_design: 0,
-        total_group: 0,
-        total_view: 0
-      };
-    }
+    const designerDetail = this.props.DesignerDetail;
+    const count = this.props.Count;
 
     return(
       <div>
