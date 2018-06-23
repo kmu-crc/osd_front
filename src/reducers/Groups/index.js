@@ -4,3 +4,4 @@ export * from "./GroupLike";
 export * from  "./GroupList";
 export * from "./GroupWaitingList";
 export * from "./MyList";
+export * from "./DeleteGroup";
