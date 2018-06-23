@@ -76,6 +76,38 @@ export function GetDesignerDetail(data) {
   }
 };
 
+export function GetDesignerCountRequest(id) {
+  return (dispatch) => {
+    return fetch(`${host}/designer/getCount/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("designer count >>", data);
+      if (!data) {
+        console.log("no data");
+        data = { 
+          total_like: 0, 
+          total_design: 0, 
+          total_group: 0,
+          total_view: 0
+        };
+      }
+      dispatch(GetDesignerCount(data));
+    }).catch((err) => {
+      console.log("err", err);
+    })
+  }
+};
+
+export function GetDesignerCount(data) {
+  return {
+    type: types.GET_DESIGNER_COUNT,
+    Count: data
+  }
+};
+
 // 디자이너의 디자인 리스트 가져오기
 export function GetDesignInDesignerRequest(id, page) {
   return (dispatch) => {

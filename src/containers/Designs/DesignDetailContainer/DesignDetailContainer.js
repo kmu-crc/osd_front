@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { GetDesignDetailRequest, DesignDetailResetRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
+import { GetDesignDetailRequest, DesignDetailResetRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
 import DesignDetail from "components/Designs/DesignDetail";
 
 class DesignDetailContainer extends Component {
@@ -18,7 +18,8 @@ const mapStateToProps = (state) => {
     valid: state.Authentication.status.valid,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
-    like: state.DesignLike.status.like
+    like: state.DesignLike.status.like,
+    Count: state.DesignDetail.status.Count
   };
 };
 
@@ -38,6 +39,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UnlikeDesignRequest: (id, token) => {
       return dispatch(UnlikeDesignRequest(id, token))
+    },
+    GetDesignCountRequest: (id) => {
+      return dispatch(GetDesignCountRequest(id))
     }
   };
 };

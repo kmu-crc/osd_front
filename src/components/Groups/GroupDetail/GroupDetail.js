@@ -121,6 +121,7 @@ class GroupDetail extends Component {
 
   componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id); // 그룹에 대한 디테일 정보
+    this.props.GetGroupCountRequest(this.props.id); // 그룹 count 정보
     if (this.props.token) {
       this.props.GetLikeGroupRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
     }
@@ -146,34 +147,25 @@ class GroupDetail extends Component {
     if (this.props.like === true) {
       this.props.UnlikeGroupRequest(this.props.id, this.props.token)
       .then(data => {
-        console.log(data);
         if (data.success === true) {
-          this.props.GetLikeGroupRequest(this.props.id, this.props.token);
+          this.props.GetLikeGroupRequest(this.props.id, this.props.token)
+          .then(this.props.GetGroupCountRequest(this.props.id))
         }
       });
     } else {
       this.props.LikeGroupRequest(this.props.id, this.props.token)
       .then(data => {
         if (data.success === true) {
-          this.props.GetLikeGroupRequest(this.props.id, this.props.token);
+          this.props.GetLikeGroupRequest(this.props.id, this.props.token)
+          .then(this.props.GetGroupCountRequest(this.props.id))
         } 
       });
     }
   }
 
   render(){
-    let groupDetail = this.props.GroupDetail;
-    let count;
-    if (groupDetail.count != null) {
-      count = groupDetail.count;
-    } else {
-      count = {
-        member: 0,
-        like: 0,
-        design: 0,
-        group: 0
-      };
-    }
+    const groupDetail = this.props.GroupDetail;
+    const count = this.props.Count;
 
     return(
       <div>

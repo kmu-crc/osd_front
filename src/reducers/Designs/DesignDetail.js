@@ -7,6 +7,12 @@ const initialState = {
   },
   status: {
     DesignDetail: [],
+    Count: { 
+      like_count: 0, 
+      member_count: 0, 
+      card_count: 0, 
+      view_count: 0 
+    }
   }
 };
 
@@ -25,6 +31,12 @@ export function DesignDetail(state, action) {
       return update(state, {
         status: {
           DesignDetail: { $set: action.DesignDetail }
+        }
+      });
+    case types.GET_DESIGN_COUNT:
+      return update(state, {
+        status: {
+          Count: { $set: action.Count }
         }
       });
     default:

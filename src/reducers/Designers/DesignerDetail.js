@@ -7,6 +7,12 @@ const initialState = {
   },
   status: {
     DesignerDetail: [],
+    Count: { 
+      total_like: 0, 
+      total_design: 0, 
+      total_group: 0,
+      total_view: 0
+    },
     DesignInDesigner: [],
     DesignInDesignerAdded: [],
     LikeInDesigner: [],
@@ -23,6 +29,12 @@ export function DesignerDetail(state, action) {
       return update(state, {
         status: {
           DesignerDetail: { $set: action.DesignerDetail }
+        }
+      });
+    case types.GET_DESIGNER_COUNT:
+      return update(state, {
+        status: {
+          Count: { $set: action.Count }
         }
       });
     case types.GET_DESIGN_IN_DESIGNER:

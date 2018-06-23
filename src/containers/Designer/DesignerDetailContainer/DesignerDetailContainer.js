@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignerDetailRequest, GetLikeDesignerRequest, LikeDesignerRequest, UnlikeDesignerRequest } from "actions/Designer";
+import { GetDesignerDetailRequest, GetDesignerCountRequest, GetLikeDesignerRequest, LikeDesignerRequest, UnlikeDesignerRequest } from "actions/Designer";
 import DesignerDetail from "components/Designers/DesignerDetail";
 
 class GroupDetailContainer extends Component {
@@ -16,7 +16,8 @@ const mapStateToProps = (state) => {
     DesignerDetail: state.DesignerDetail.status.DesignerDetail,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
-    like: state.DesignerLike.status.like
+    like: state.DesignerLike.status.like,
+    Count: state.DesignerDetail.status.Count
   };
 };
 
@@ -33,6 +34,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       UnlikeDesignerRequest: (id, token) => {
         return dispatch(UnlikeDesignerRequest(id, token))
+      },
+      GetDesignerCountRequest: (id) => {
+        return dispatch(GetDesignerCountRequest(id))
       }
   };
 };

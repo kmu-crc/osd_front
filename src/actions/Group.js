@@ -76,6 +76,36 @@ export function GetGroupDetail(data) {
   }
 };
 
+export function GetGroupCountRequest(id) {
+  return (dispatch) => {
+    return fetch(`${host}/group/getCount/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("group count >>", data);
+      if (!data) {
+        console.log("no data");
+        data = { 
+          like: 0, 
+          design: 0, 
+          group: 0 };
+      }
+      dispatch(GetGroupCount(data));
+    }).catch((err) => {
+      console.log("err", err);
+    })
+  }
+};
+
+export function GetGroupCount(data) {
+  return {
+    type: types.GET_GROUP_COUNT,
+    Count: data
+  }
+};
+
 export function GetLikeGroupRequest(id, token) {
   return (dispatch) => {
     dispatch(GetLikeGroup());

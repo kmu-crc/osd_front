@@ -95,9 +95,40 @@ export function DesignDetailReset() {
   }
 };
 
+export function GetDesignCountRequest(id) {
+  return (dispatch) => {
+    return fetch(`${host}/design/getCount/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("design count >>", data);
+      if (!data) {
+        console.log("no data");
+        data = { 
+          like_count: 0, 
+          member_count: 0, 
+          card_count: 0, 
+          view_count: 0 };
+      }
+      dispatch(GetDesignCount(data));
+    }).catch((err) => {
+      console.log("err", err);
+    })
+  }
+};
+
+export function GetDesignCount(data) {
+  return {
+    type: types.GET_DESIGN_COUNT,
+    Count: data
+  }
+};
+
 export function GetDesignDetailViewRequest(id) {
   return (dispatch) => {
-    return fetch(`${host}/design/designDetail/`+id+"/view", {
+    return fetch(`${host}/design/designDetail/${id}/view`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
