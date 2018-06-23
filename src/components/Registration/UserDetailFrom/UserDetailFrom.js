@@ -45,7 +45,6 @@ class UserDetailFrom extends Component {
                 getValue={this.onChangeCategory1}
                 options={this.props.category1}
                 label="카테고리"
-                validates={["required"]}
                 RenderComponent={FormSelect}
               />
               <FormField
@@ -53,7 +52,6 @@ class UserDetailFrom extends Component {
                 selection={true}
                 options={this.props.category2}
                 label="카테고리2"
-                validates={["required"]}
                 RenderComponent={FormSelect}
               />
             </Form.Group>
