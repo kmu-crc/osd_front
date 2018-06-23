@@ -88,19 +88,18 @@ class DesignList extends Component {
     rendering: true
   }
 
-  changeState = () => {
-    this.setState({
+  changeState = async () => {
+    await this.setState({
       rendering: false
     });
-    setTimeout(() => {
-      this.setState({
-        rendering: true
-      });
-    }, 200);
+    await this.setState({
+      rendering: true
+    });
   } // state 값 업데이트를 통해 컴포넌트 새로 렌더링함
 
-  cate1Change = (value) => {
-    this.props.history.replace(`/design/${this.props.sort}/${value}`);
+  cate1Change = (value, value2) => {
+    this.props.history.replace(`/design/${this.props.sort}/${value}/${value2 ? null : this.props.cate2}`);
+    this.changeState();
   }
 
   cate2Change = (value) => {
@@ -128,7 +127,7 @@ class DesignList extends Component {
             <Wrapper>
               <MenuContainer devided="vertically" padded={true}>
                 <Grid.Row>
-                  <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} />
+                  <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2} />
                   <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort} />
                 </Grid.Row>
               </MenuContainer>
@@ -137,7 +136,7 @@ class DesignList extends Component {
         </MenuWrap>
         <Content>
           <Wrapper>
-            {this.state.rendering && sort && cate1 && cate2 &&
+            {this.state.rendering &&
               <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} />}
           </Wrapper>
         </Content>
