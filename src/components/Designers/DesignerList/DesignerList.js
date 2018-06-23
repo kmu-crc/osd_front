@@ -100,8 +100,9 @@ class DesignerList extends Component {
     }, 200);
   }
 
-  cate1Change = (value) => {
-    this.props.history.replace(`/designer/${this.props.sort}/${value}`);
+  cate1Change = (value, value2) => {
+    this.props.history.replace(`/designer/${this.props.sort}/${value}/${value2 ? null : this.props.cate2}`);
+    this.changeState();
   }
 
   cate2Change = (value) => {
@@ -129,7 +130,7 @@ class DesignerList extends Component {
             <Wrapper>
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
-                  <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change}/>
+                  <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2}/>
                   <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort}/>
                 </Grid.Row>
               </MenuContainer>
@@ -138,7 +139,7 @@ class DesignerList extends Component {
         </MenuWrap>
         <Content>
           <Wrapper>
-            {this.state.rendering && sort && cate1 && cate2 && 
+            {this.state.rendering &&
             <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2}/>}
           </Wrapper>
         </Content>
