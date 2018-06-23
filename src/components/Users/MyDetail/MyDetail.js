@@ -190,7 +190,7 @@ class MyDetail extends Component {
     };
 
     return (
-      <div>
+      <ContentBox>
         {MyInfo !== null && (
           <Container>
             <Wrapper padded={false} columns={2}>
@@ -220,7 +220,7 @@ class MyDetail extends Component {
                     </ProfileSection>
                     <CountSection>
                       <div className="list">
-                        <Icon name="signup" color="grey" size="tiny"/> 
+                        <Icon name="signup" color="grey" size="tiny"/>
                         등록한 디자인
                         <span>{count.total_design}</span>
                       </div>
@@ -230,7 +230,7 @@ class MyDetail extends Component {
                         <span>{count.total_group}</span>
                       </div>
                       <div className="list">
-                        <Icon name="user" color="grey" size="tiny"/> 
+                        <Icon name="user" color="grey" size="tiny"/>
                         내 조회수
                         <span>{count.total_view}</span>
                       </div>
@@ -250,12 +250,12 @@ class MyDetail extends Component {
                     <Head padded={true}>
                       <Grid.Row>
                         <Grid.Column as="ul">
-                          <li id="/design" 
+                          <li id="/design"
                               className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
                               onClick={this.typeChange}>
                             내 디자인
                           </li>
-                          <li id="/group" 
+                          <li id="/group"
                               className={this.props.type === "group" ? "onSelected" : ""}
                               onClick={this.typeChange}>
                             내 그룹
@@ -288,7 +288,7 @@ class MyDetail extends Component {
             </Wrapper>
           </Container>
         )}
-      </div>
+      </ContentBox>
     );
   }
 }
