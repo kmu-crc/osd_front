@@ -253,35 +253,55 @@ export class FormSelect extends Component {
     status: "SUCCESS",
     message: null,
     value: "",
+    render: false
   }
   componentWillMount() {
-    if (this.props.value) {
-      this.setState({ value: this.props.value });
-    } else if( this.props.options.length > 0 ) {
-      this.setState({ value: this.props.options[0].value });
-    }
+    this.setValue();
+  }
+
+  setValue = async () => {
+    // 전달받은 value가 Number의 형태를 하고 있지만 type이 string일 경우 검사하여
+    // Number로 바꿔주는 로직
+    let value = this.props.value;
     if (!this.props.validates) {
-      this.setState({ status: "SUCCESS" });
+      if(!isNaN(parseInt(value))){
+        value = parseInt(value);
+      }
+      // FormDropBox component의 defaultValue는 처음 render되었을때만 동작하기 때문에
+      // 중간에 전달되는 value가 바뀌어도 defaultValue는 동작하지 않는다.
+      // 때문에 state에 render 항목을 만들 props가 변경될 때 마다 FormDropBox를 비활성화 했다
+      // 다시 활성화 시키는 방법으로 defaultValue 를 정상적으로 동작하게 만들었다.
+      await this.setState({render: false});
+      if (this.props.options.length > 0 && value) {
+        await this.setState({value: value, status: "SUCCESS"});
+      }
+      if (this.props.options.length > 0 && value == null) {
+        await this.setState({value: this.props.options[0].value, status: "SUCCESS"});
+      }
+    } else {
+      if (this.props.options.length > 0 && value) {
+        await this.setState({value: value});
+      }
+      if (this.props.options.length > 0 && value == null) {
+        await this.setState({value: this.props.options[0].value});
+      }
     }
+    await this.setState({render: true});
   }
 
   componentDidUpdate(prevProps) {
     // 이전에 전달받은 options와 다르다면 새롭게 options를 render하고 그중 제일 첫번째 요소를 선택한다.
-    if (JSON.stringify(prevProps.options) !== JSON.stringify(this.props.options)) {
-      this.newOptions();
+    if (JSON.stringify(prevProps.options) !== JSON.stringify(this.props.options) || JSON.stringify(prevProps.value) !== JSON.stringify(this.props.value)) {
+      this.setValue();
     }
   }
 
-  newOptions = async () => {
-    await this.setState({ value: this.props.options[0].value });
-    if (this.props.getValue) this.props.getValue(this.props.options[0].value);
-    await this.onChangeValue(null, {value: this.state.value});
-  }
-
   onChangeValue = async (event, { value }) => {
-    await this.setState({ value });
+    await this.setState({render: false});
     checkValidate(value, this.props.validates).then(data => {
       if (this.props.getValue) this.props.getValue(value);
+      data.value = value;
+      data.render = true;
       this.setState(data);
     })
   }
@@ -299,7 +319,7 @@ export class FormSelect extends Component {
             return <option key={data.text} value={data.value}>{data.text}</option>
           }) : null}
         </select>
-        <FormDropBox selection={selection} options={options} onChange={this.onChangeValue} value={this.state.value} />
+        { this.state.render ? <FormDropBox selection={selection} options={options} onChange={this.onChangeValue} defaultValue={this.state.value} /> : null}
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
