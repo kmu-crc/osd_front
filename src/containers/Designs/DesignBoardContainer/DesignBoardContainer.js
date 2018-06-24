@@ -33,8 +33,8 @@ const mapDispatchToProps = (dispatch) => {
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
     },
-    DeleteDesignBoardRequest: (id, token) => {
-      return dispatch(DeleteDesignBoardRequest(id, token))
+    DeleteDesignBoardRequest: (id, board_id, token) => {
+      return dispatch(DeleteDesignBoardRequest(id, board_id, token))
     },
     SetActive: (active) => {
       return dispatch(SetActive(active))

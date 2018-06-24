@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Modal, Button } from "semantic-ui-react";
+import { Modal, Button, Icon } from "semantic-ui-react";
 import {
   CardTitleUpdate,
   CardContentUpdate,
@@ -13,12 +13,31 @@ const BoardCard = styled.li`
   background-color: white;
   border-radius: 3px;
   margin-bottom: 5px;
+  position: relative;
   cursor: pointer;
+  span{
+    display: inline-block;
+    width: 80%;
+  }
 `;
 
 const CustomModal = styled(Modal)`
   padding: 30px;
 `;
+
+const DeleteBtn = styled.button`
+  position: absolute;
+  right: 0;
+  background-color: transparent;
+  border: 0;
+  padding: 7px;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  i.icon{
+    margin:0;
+  }
+`
 
 class DesignBoardCard extends Component {
   state = {
@@ -31,14 +50,12 @@ class DesignBoardCard extends Component {
   onClose = () => {
     this.setState({ open: false, active: "INIT" });
   };
-  changeActive = value => {
-    setTimeout(() => {
-      this.props
+  changeActive = async value => {
+    this.props
         .GetCardDetailRequest(this.props.card.uid)
         .then(this.setState({ active: value }));
-    }, 100);
   };
-  openModalHandler = () => {
+  openModalHandler = async (e) => {
     this.props
       .GetCardDetailRequest(this.props.card.uid)
       .then(this.setState({ open: true }));
@@ -46,13 +63,20 @@ class DesignBoardCard extends Component {
   handleSubmit = data => {
     console.log(data);
   };
+  onDelete = (e) => {
+    e.stopPropagation();
+    this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
+      .then(() => {
+        this.props.GetDesignBoardRequest(this.props.match.params.id);
+      })
+  }
   render() {
     const { card, detail } = this.props;
     const { open } = this.state;
     console.log("detail", detail);
     return (
       <div>
-        <BoardCard onClick={this.openModalHandler}>{card.title}</BoardCard>
+        <BoardCard onClick={this.openModalHandler}><span>{card.title}</span>{this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><Icon name="trash alternate"/></DeleteBtn>}</BoardCard>
         <CustomModal
           open={open}
           closeOnEscape={false}
