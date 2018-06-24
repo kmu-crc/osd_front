@@ -114,10 +114,10 @@ export const UpdateBoardFailure = (error) => {
   };
 };
 
-export const DeleteDesignBoardRequest = (id, token) => {
+export const DeleteDesignBoardRequest = (id, board_id, token) => {
   return (dispatch) => {
     dispatch(DeleteBoard());
-    return fetch(`${host}/design/designDetail/deleteBoard/${id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "DELETE" })
+    return fetch(`${host}/design/designDetail/${id}/deleteBoard/${board_id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "DELETE" })
       .then(function (res) {
         return res.json();
       })
