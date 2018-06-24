@@ -59,6 +59,7 @@ class ModifyGroupInfo extends Component {
   }
 
   deleteGroup = () => {
+    alert("그룹을 삭제하시겠습니까?");
     this.props.DeleteGroupRequest(this.props.id, this.props.token)
     .then(data => {
       this.props.history.push("/group");
@@ -88,12 +89,6 @@ class ModifyGroupInfo extends Component {
                 <Form.Group widths="equal">
                   <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["ThumbnailSize"]} />
                 </Form.Group>
-                {/* <Form.Group widths="equal">
-                  <FormField name="user_id" label="그룹장 변경" 
-                             value={this.state.user_id}
-                             RenderComponent={SearchMemberContainer} 
-                             onChangeMembers={this.props.onChangeMembers}/>
-                </Form.Group> */}
                 <div>
                   <Button type="button" onClick={this.deleteGroup}>그룹 삭제</Button>
                 </div>

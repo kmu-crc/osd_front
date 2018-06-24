@@ -58,7 +58,6 @@ class ModifyMyDetail extends Component {
   }
 
   componentWillMount() {
-    console.log("work");
     this.props.GetMyDetailRequest(this.props.token)
     this.props.GetCategoryLevel1Request();
   }
@@ -78,7 +77,6 @@ class ModifyMyDetail extends Component {
   }
 
   render() {
-    console.log(this.state.nickName);
     return (
       <Wrapper>
         <ValidateForm onSubmit={this.handleSubmit} enctype="multipart/form-data">
