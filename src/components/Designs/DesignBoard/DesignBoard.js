@@ -116,7 +116,7 @@ class DesignBoard extends Component {
     this.setState({active: false});
   }
   onDelete = () => {
-    this.props.DeleteDesignBoardRequest(this.props.board.uid, this.props.token).then(() => {
+    this.props.DeleteDesignBoardRequest(this.props.board.design_id, this.props.board.uid, this.props.token).then(() => {
       this.props.GetDesignBoardRequest(this.props.board.design_id);
     });
   }
@@ -163,6 +163,7 @@ class DesignBoard extends Component {
               boardId={board.uid}
               changeBoard={changeBoard}
               activeBoard={activeBoard}
+              lastOrder={board.cards.length}
             />
           ) : null}
         </CardList>
