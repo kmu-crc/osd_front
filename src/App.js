@@ -14,6 +14,7 @@ import MainPage from "pages/MainPage/MainPage";
 import TestPage from "pages/TestPage";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
+import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 
@@ -42,6 +43,7 @@ class App extends Component {
           <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)}/>
           <Route path="/myPage/:type?" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
+          <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)}/>
           <Route path="/test" component={TestPage} />
           <Route path="/footer/:page" component={FooterPage}/>
         </Switch>

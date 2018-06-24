@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Modal, Button } from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import styled from "styled-components";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";

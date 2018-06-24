@@ -211,7 +211,7 @@ class DesignerDetail extends Component {
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
               { (this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid))?
-                <Link to="/myPage"><Button>내 정보 수정</Button></Link>
+                <Link to="/myModify"><Button>내 정보 수정</Button></Link>
                 : <div></div>
               }
               </Grid.Row>

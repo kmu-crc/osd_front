@@ -383,7 +383,7 @@ export class FormMultiSelect extends Component {
 
 export class FormFile extends Component {
   state = {
-    status: "SUCCESS",
+    status: null,
     message: null,
     value: null,
   }

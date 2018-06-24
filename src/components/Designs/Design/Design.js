@@ -88,7 +88,7 @@ class Design extends Component {
           <Count>
             <div>
               <Icon name="unhide" size="mini"></Icon>
-              {design.total_view_count ? design.total_view_count : 0}
+              {design.view_count ? design.view_count : 0}
             </div>
             <div>
               <Icon name="heart" size="mini"></Icon>
