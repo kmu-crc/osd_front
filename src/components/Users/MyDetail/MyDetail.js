@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import MyDesignContainer from "containers/MyPage/MyDesignContainer";
@@ -7,7 +7,6 @@ import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
 import ContentBox from "components/Commons/ContentBox";
-import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/ModifyMyDetailContainer";
 
 // css styling
 const Container = styled.div`
@@ -147,12 +146,7 @@ const MyContentBox = styled.div`
 `;
 
 class MyDetail extends Component {
-  state = {
-    editMode: false
-  }
-
   componentWillMount() {
-    console.log("work");
     this.props.GetMyDetailRequest(this.props.token);
   }
 
@@ -160,12 +154,6 @@ class MyDetail extends Component {
     let url = "/myPage" + e.target.id;
     this.props.history.replace(url, { token: this.props.token });
   };
-
-  setEditMyDetail = () => {
-    this.setState({
-      editMode: !this.state.editMode
-    });
-  }
 
   render() {
     let MyInfo = this.props.MyDetail;
@@ -195,12 +183,11 @@ class MyDetail extends Component {
           <Container>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
-                <button onClick={this.setEditMyDetail}>내 정보 수정</button>
+                <Link to="/myModify">
+                  <button>내 정보 수정</button>
+                </Link>
               </Grid.Row>
-              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
-              {this.state.editMode
-              ? <ModifyMyDetailContainer {...this.props}/>
-              :
+              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}              
                 <Grid.Row className="contentRow">
                   <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                     <ProfileSection>
