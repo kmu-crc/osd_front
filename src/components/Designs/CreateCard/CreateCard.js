@@ -28,15 +28,14 @@ class CreateCard extends Component {
   state = {
     active: false
   }
-  formActive = () => {
-    this.setState({ active: true } );
-    setTimeout(() => {
-      this.form._reactInternalFiber.child.child.stateNode.title.focus()
-    }, 100);
+  formActive = async () => {
+    await this.setState({ active: true } );
+    this.form._reactInternalFiber.child.child.stateNode.title.focus();
   }
+
   handleSubmit = (data) => {
     let formData = FormDataToJson(data);
-    formData.order = 0;
+    formData.order = this.props.lastOrder;
     this.props.CreateDesignCardRequest(formData, this.props.designId, this.props.boardId, this.props.token).then(
       this.props.GetDesignBoardRequest(this.props.designId)
     );
