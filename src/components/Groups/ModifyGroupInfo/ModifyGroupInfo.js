@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Grid, Header, Form, Button } from "semantic-ui-react";
+import { Grid, Header, Form } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
