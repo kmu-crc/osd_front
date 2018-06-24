@@ -97,7 +97,7 @@ class Group extends Component {
           <Count>
             <div>
               <Icon name="window restore" size="mini"></Icon>
-              {group.design? group.design : 0}
+              {group.group? group.group : 0}
             </div>
             <div>
               <Icon name="signup" size="mini"></Icon>

@@ -58,6 +58,7 @@ class ModifyMyDetail extends Component {
   }
 
   componentWillMount() {
+    this.props.GetMyDetailRequest(this.props.token)
     this.props.GetCategoryLevel1Request();
   }
 
@@ -66,13 +67,11 @@ class ModifyMyDetail extends Component {
   };
 
   handleSubmit = (data) => {
-    console.log(data);
-    //data.password = data.password.toString();
     this.props.UpdateUserDetailRequest(data, this.props.token)
     .then(res=> {
       if (res.success === true) {
         alert("정보가 수정되었습니다.");
-        this.props.history.push("");
+        this.props.history.push("/myPage");
       }
     });
   }
