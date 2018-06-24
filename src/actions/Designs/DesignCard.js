@@ -270,3 +270,40 @@ export const UpdateCardSourcesFailure = (error) => {
     success: error.success,
   };
 };
+
+export const DeleteDesignCardRequest = (board_id, card_id, token) => {
+  return (dispatch) => {
+    dispatch(DeleteCard());
+    return fetch(`${host}/design/designDetail/deleteCard/${board_id}/${card_id}`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "DELETE" })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        console.log(res);
+        return dispatch(DeleteCardSuccess(res));
+      }).catch((error) => {
+        console.log("DeleteDesignCardRequest err", error);
+        return dispatch(DeleteCardFailure(error));
+      });
+  };
+};
+
+export const DeleteCard = () => {
+  return {
+    type: types.DELETE_CARD
+  };
+};
+
+export const DeleteCardSuccess = (res) => {
+  return {
+    type: types.DELETE_CARD_SUCCESS,
+    success: res.success
+  };
+};
+
+export const DeleteCardFailure = (error) => {
+  return {
+    type: types.DELETE_CARD_FAILURE,
+    success: error.success,
+  };
+};

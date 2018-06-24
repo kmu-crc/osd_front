@@ -154,7 +154,7 @@ class DesignBoard extends Component {
           {board.cards.length > 0 &&
             board.cards.map((item, index) => {
               return (
-                <DesignBoardCardContainer key={`card${index}`} card={item} />
+                <DesignBoardCardContainer key={`card${index}`} card={item} boardId={board.uid} />
               );
             })}
           {this.props.isTeam > 0 ? (
