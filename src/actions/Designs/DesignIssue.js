@@ -166,3 +166,87 @@ export const DeleteIssueFailure = (error) => {
     success: error.success,
   };
 };
+
+// 디자인 이슈 댓글 생성
+export const CreateIssueCommentRequest = (data, design_id, issue_id, token) => {
+  return (dispatch) => {
+    dispatch(CreateIssueComment());
+    console.log("request", data);
+    return fetch(`${host}/design/designDetail/${design_id}/issue/${issue_id}/createComment`, { 
+      headers: {
+        "x-access-token": token, 
+        "Content-Type": "application/json" 
+      }, 
+      method: "POST", 
+      body: JSON.stringify(data)
+    }).then(function (res) {
+        return res.json();
+    }).then(function (res) {
+      return dispatch(CreateIssueCommentSuccess(res));
+    }).catch((error) => {
+      console.log("insert issue err", error);
+      return dispatch(CreateIssueCommentFailure(error));
+    });
+  };
+};
+
+export const CreateIssueComment = () => {
+  return {
+    type: types.CREATE_ISSUE_COMMENT
+  };
+};
+
+export const CreateIssueCommentSuccess = (res) => {
+  return {
+    type: types.CREATE_ISSUE_COMMENT_SUCCESS,
+    success: res.success
+  };
+};
+
+export const CreateIssueCommentFailure = (error) => {
+  return {
+    type: types.CREATE_ISSUE_COMMENT_FAILURE,
+    success: error.success
+  };
+};
+
+// 디자인 이슈 댓글 삭제
+export const DeleteIssueCommentRequest = (design_id, issue_id, comment_id, token) => {
+  return (dispatch) => {
+    dispatch(DeleteIssueComment());
+    return fetch(`${host}/design/designDetail/${design_id}/issue/${issue_id}/deleteComment/${comment_id}`, { 
+      headers: {
+        "x-access-token": token, 
+        "Content-Type": "application/json" 
+      }, 
+      method: "DELETE"
+    }).then(function (res) {
+        return res.json();
+    }).then(function (res) {
+      return dispatch(DeleteIssueCommentSuccess(res));
+    }).catch((error) => {
+      console.log("insert issue err", error);
+      return dispatch(DeleteIssueCommentFailure(error));
+    });
+  };
+};
+
+export const DeleteIssueComment = () => {
+  return {
+    type: types.DELETE_ISSUE_COMMENT
+  };
+};
+
+export const DeleteIssueCommentSuccess = (res) => {
+  return {
+    type: types.DELETE_ISSUE_COMMENT_SUCCESS,
+    success: res.success
+  };
+};
+
+export const DeleteIssueCommentFailure = (error) => {
+  return {
+    type: types.DELETE_ISSUE_COMMENT_FAILURE,
+    success: error.success
+  };
+};
