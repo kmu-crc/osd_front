@@ -159,7 +159,12 @@ class DesignDetail extends Component {
         } 
       });
     }
-    
+  }
+
+  deleteDesign = () => {
+    alert("디자인을 삭제하시겠습니까?");
+    this.props.DeleteDesignRequest(this.props.id, this.props.token)
+    .then(this.props.history.push("/design"));
   }
 
   render() {
@@ -177,7 +182,7 @@ class DesignDetail extends Component {
             <li>파생디자인 생성</li>
             <li className={designDetail.parent_design != null ? "able" : "disable"}>원본디자인 보기</li>
             {user && user.uid === designDetail.user_id && <li>수정</li>}
-            {user && user.uid === designDetail.user_id && <li>삭제</li>}
+            {user && user.uid === designDetail.user_id && <li onClick={this.deleteDesign}>삭제</li>}
           </Modal.Content>
         </ModalContent>
       );

@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import { FormCheckBox } from "components/Commons/FormItem";
+import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
+import { FormTextArea } from "components/Commons/FormItem";
 import { Link } from "react-router-dom";
+import FormDataToJson from "modules/FormDataToJson";
 import eximg from "source/topDesign.png";
 
 // css styling
@@ -84,6 +86,24 @@ class DesignIssueDetail extends Component {
     });
   }
 
+  onSubmitForm = (data) => {
+    this.props.CreateIssueCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
+    .then(res => {
+      if (res.success === true) {
+        this.props.GetDesignIssueDetailRequest(this.props.match.params.id, this.props.match.params.issue_id);
+      }
+    });
+  }
+
+  deleteComment = (id) => {
+    this.props.DeleteIssueCommentRequest(this.props.match.params.id, this.props.match.params.issue_id, id, this.props.token)
+    .then(res => {
+      if (res.success === true) {
+        this.props.GetDesignIssueDetailRequest(this.props.match.params.id, this.props.match.params.issue_id);
+      }
+    });
+  }
+
   render(){
     let data = this.props.IssueDetail;
     return(
@@ -116,32 +136,31 @@ class DesignIssueDetail extends Component {
         </div>
         <CommentContainer className="ui comments">
           {data.comment != null?
-          data.comment.map(comm=>(
-            <div className="comment" key={comm.uid}>
-              <div className="avatar">
-                <img src={eximg} alt="profile" />
-              </div>
-              <div className="content">
-                <a className="author">{comm.nick_name}</a>
-                <div className="metadata">
-                  <div>{comm.create_time.split("T")[0]}</div>
+            data.comment.map(comm=>(
+              <div className="comment" key={comm.uid}>
+                <div className="avatar">
+                  <img src={comm.s_img? comm.s_img : eximg} alt="profile" />
                 </div>
-                <div className="text">{comm.comment}</div>
+                <div className="content">
+                  <a className="author">{comm.nick_name}</a>
+                  <div className="metadata">
+                    <div>{comm.create_time.split("T")[0]}</div>
+                  </div>
+                  <div className="text">{comm.comment}</div>
+                </div>
+                <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
               </div>
-            </div>
             ))
           :
-          <p>등록된 코멘트가 없습니다.</p>
+            <p>등록된 코멘트가 없습니다.</p>
           }
-          <form className="ui reply form">
-            <div className="field">
-              <textarea rows="3"></textarea>
-            </div>
-            <button className="ui icon primary left labeled button">
+          <ValidateForm onSubmit={this.onSubmitForm} className="ui reply form">
+            <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
+            <Button type="submit" className="ui icon primary left labeled button">
               <i aria-hidden="true" className="edit icon"></i>
               댓글쓰기
-            </button>
-          </form>
+            </Button>
+          </ValidateForm>
         </CommentContainer>
         <Link to={`/designDetail/${this.props.match.params.id}/issue`}>
           <button className="ui button">목록</button>
