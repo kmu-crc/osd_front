@@ -12,7 +12,7 @@ const initialState = {
     status: "INIT"
   },
   status: {
-    comment: []
+    Comment: []
   }
 };
 
@@ -25,15 +25,15 @@ export function DesignCardComment(state, action) {
       return update(state, {
         CreateCardComment: {
           status: { $set: "WATTING" }
-        },
-        status: {
-          comment: { $set: action.Comment }
         }
       });
     case types.GET_CARD_COMMENT_SUCCESS:
       return update(state, {
         CreateCardComment: {
           status: { $set: "SUCCESS"}
+        },
+        status: {
+          Comment: { $set: action.Comment }
         }
       });
     case types.GET_CARD_COMMENT_FAILURE:

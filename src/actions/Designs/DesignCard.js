@@ -310,6 +310,7 @@ export const DeleteCardFailure = (error) => {
 
 // 카드 댓글 가져오기
 export const GetCardCommentRequest = (design_id, card_id) => {
+  console.log("work");
   return (dispatch) => {
     dispatch(GetCardComment());
     return fetch(`${host}/design/designDetail/${design_id}/getCardComment/${card_id}`, { 
@@ -319,8 +320,8 @@ export const GetCardCommentRequest = (design_id, card_id) => {
       method: "GET"
     }).then(function (res) {
         return res.json();
-    }).then(data => {
-      return dispatch(GetCardCommentSuccess(data));
+    }).then(res => {
+      return dispatch(GetCardCommentSuccess(res.data));
     }).catch((error) => {
       console.log("get card comment err", error);
       return dispatch(GetCardCommentFailure(error));
@@ -347,12 +348,12 @@ export const GetCardCommentFailure = (error) => {
   };
 };
 
-// 디자인 이슈 댓글 생성
-export const CreateIssueCommentRequest = (data, design_id, issue_id, token) => {
+// 카드 댓글 생성
+export const CreateCardCommentRequest = (data, design_id, card_id, token) => {
   return (dispatch) => {
-    dispatch(CreateIssueComment());
+    dispatch(CreateCardComment());
     console.log("request", data);
-    return fetch(`${host}/design/designDetail/${design_id}/issue/${issue_id}/createComment`, { 
+    return fetch(`${host}/design/designDetail/${design_id}/createCardComment/${card_id}`, { 
       headers: {
         "x-access-token": token, 
         "Content-Type": "application/json" 
@@ -362,39 +363,38 @@ export const CreateIssueCommentRequest = (data, design_id, issue_id, token) => {
     }).then(function (res) {
         return res.json();
     }).then(function (res) {
-      return dispatch(CreateIssueCommentSuccess(res));
+      return dispatch(CreateCardCommentSuccess(res));
     }).catch((error) => {
       console.log("insert issue err", error);
-      return dispatch(CreateIssueCommentFailure(error));
+      return dispatch(CreateCardCommentFailure(error));
     });
   };
 };
 
-export const CreateIssueComment = () => {
+export const CreateCardComment = () => {
   return {
-    type: types.CREATE_ISSUE_COMMENT
+    type: types.CREATE_CARD_COMMENT
   };
 };
 
-export const CreateIssueCommentSuccess = (res) => {
+export const CreateCardCommentSuccess = (res) => {
   return {
-    type: types.CREATE_ISSUE_COMMENT_SUCCESS,
-    success: res.success
+    type: types.CREATE_CARD_COMMENT_SUCCESS,
+    data: res
   };
 };
 
-export const CreateIssueCommentFailure = (error) => {
+export const CreateCardCommentFailure = (error) => {
   return {
-    type: types.CREATE_ISSUE_COMMENT_FAILURE,
-    success: error.success
+    type: types.CREATE_CARD_COMMENT_FAILURE
   };
 };
 
-// 디자인 이슈 댓글 삭제
-export const DeleteIssueCommentRequest = (design_id, issue_id, comment_id, token) => {
+// 카드 댓글 삭제
+export const DeleteCardCommentRequest = (design_id, card_id, comment_id, token) => {
   return (dispatch) => {
-    dispatch(DeleteIssueComment());
-    return fetch(`${host}/design/designDetail/${design_id}/issue/${issue_id}/deleteComment/${comment_id}`, { 
+    dispatch(DeleteCardComment());
+    return fetch(`${host}/design/designDetail/${design_id}/deleteCardComment/${card_id}/${comment_id}`, { 
       headers: {
         "x-access-token": token, 
         "Content-Type": "application/json" 
@@ -403,30 +403,29 @@ export const DeleteIssueCommentRequest = (design_id, issue_id, comment_id, token
     }).then(function (res) {
         return res.json();
     }).then(function (res) {
-      return dispatch(DeleteIssueCommentSuccess(res));
+      return dispatch(DeleteCardCommentSuccess(res));
     }).catch((error) => {
       console.log("insert issue err", error);
-      return dispatch(DeleteIssueCommentFailure(error));
+      return dispatch(DeleteCardCommentFailure(error));
     });
   };
 };
 
-export const DeleteIssueComment = () => {
+export const DeleteCardComment = () => {
   return {
-    type: types.DELETE_ISSUE_COMMENT
+    type: types.DELETE_CARD_COMMENT
   };
 };
 
-export const DeleteIssueCommentSuccess = (res) => {
+export const DeleteCardCommentSuccess = (res) => {
   return {
-    type: types.DELETE_ISSUE_COMMENT_SUCCESS,
-    success: res.success
+    type: types.DELETE_CARD_COMMENT_SUCCESS,
+    data: res
   };
 };
 
-export const DeleteIssueCommentFailure = (error) => {
+export const DeleteCardCommentFailure = (error) => {
   return {
-    type: types.DELETE_ISSUE_COMMENT_FAILURE,
-    success: error.success
+    type: types.DELETE_CARD_COMMENT_FAILURE
   };
 };

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
 import DesignIssue from "components/Designs/DesignIssue/DesignIssue";
-// import CreateIssue from "components/Designs/DesignIssue/CreateIssue";
 import { Grid, Icon, Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";

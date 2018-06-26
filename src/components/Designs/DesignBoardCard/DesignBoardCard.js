@@ -7,6 +7,11 @@ import {
   CardImageUpdate,
   CardSourcUpdate
 } from "components/Designs/DesignBoardCard";
+import eximg from "source/topDesign.png";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormField } from "components/Commons/FormField";
+import { FormTextArea } from "components/Commons/FormItem";
+import FormDataToJson from "modules/FormDataToJson";
 
 const BoardCard = styled.li`
   padding: 10px;
@@ -37,32 +42,52 @@ const DeleteBtn = styled.button`
   i.icon{
     margin:0;
   }
-`
+`;
+
+const CommentContainer = styled.div`
+  width: 100%;
+  &.ui.comments {
+    max-width: 100%;
+  }
+  & .ui.form .field {
+    margin-bottom: 1rem;
+  }
+  & .ui.form textarea:not([rows]) {
+    min-height: 3rem;
+  }
+`;
 
 class DesignBoardCard extends Component {
   state = {
     open: false,
     active: "INIT"
   };
+
   componentDidMount() {
     console.log(this.props.card);
   }
+
   onClose = () => {
     this.setState({ open: false, active: "INIT" });
   };
+
   changeActive = async value => {
     this.props
         .GetCardDetailRequest(this.props.card.uid)
         .then(this.setState({ active: value }));
   };
+
   openModalHandler = async (e) => {
     this.props
       .GetCardDetailRequest(this.props.card.uid)
+      .then(this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid))
       .then(this.setState({ open: true }));
   };
+
   handleSubmit = data => {
     console.log(data);
   };
+
   onDelete = (e) => {
     e.stopPropagation();
     this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
@@ -70,13 +95,38 @@ class DesignBoardCard extends Component {
         this.props.GetDesignBoardRequest(this.props.match.params.id);
       })
   }
+
+  onSubmitCmtForm = (data) => {
+    this.props.CreateCardCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.card.uid, this.props.token)
+    .then(res => {
+      console.log(res.data.success);
+      if (res.data.success === true) {
+        console.log("성공");
+        this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid);
+      }
+    });
+  }
+
+  deleteComment = (id) => {
+    this.props.DeleteCardCommentRequest(this.props.match.params.id, this.props.card.uid, id, this.props.token)
+    .then(res => {
+      if (res.data.success === true) {
+        this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid);
+      }
+    });
+  }
+
   render() {
     const { card, detail } = this.props;
+    const comment = this.props.Comment;
     const { open } = this.state;
     console.log("detail", detail);
     return (
       <div>
-        <BoardCard onClick={this.openModalHandler}><span>{card.title}</span>{this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><Icon name="trash alternate"/></DeleteBtn>}</BoardCard>
+        <BoardCard onClick={this.openModalHandler}>
+          <span>{card.title}</span>
+          {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><Icon name="trash alternate"/></DeleteBtn>}
+        </BoardCard>
         <CustomModal
           open={open}
           closeOnEscape={false}
@@ -120,6 +170,35 @@ class DesignBoardCard extends Component {
               changeActive={this.changeActive}
               isTeam={this.props.isTeam}
             />
+            {/* --------------------- 댓글 섹션 ---------------------- */}
+            <CommentContainer className="ui comments">
+              {comment != null?
+                comment.map(comm=>(
+                  <div className="comment" key={comm.uid}>
+                    <div className="avatar">
+                      <img src={comm.s_img? comm.s_img : eximg} alt="profile" />
+                    </div>
+                    <div className="content">
+                      <a className="author">{comm.nick_name}</a>
+                      <div className="metadata">
+                        <div>{comm.create_time.split("T")[0]}</div>
+                      </div>
+                      <div className="text">{comm.comment}</div>
+                    </div>
+                    <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                  </div>
+                ))
+              :
+                <p>등록된 코멘트가 없습니다.</p>
+              }
+              <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
+                <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
+                <Button type="submit" className="ui icon primary left labeled button">
+                  <i aria-hidden="true" className="edit icon"></i>
+                  댓글쓰기
+                </Button>
+              </ValidateForm>
+            </CommentContainer>
             <Button type="button" onClick={this.onClose}>
               Close
             </Button>
