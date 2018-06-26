@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest } from "actions/Group";
+import { GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest, CreateGroupIssueRequest, DeleteGroupIssueRequest } from "actions/Group";
 import GroupDetail from "components/Groups/GroupDetail";
 
 class GroupDetailContainer extends Component {
@@ -37,6 +37,12 @@ const mapDispatchToProps = (dispatch) => {
       },
       GetGroupCountRequest: (id) => {
         return dispatch(GetGroupCountRequest(id))
+      },
+      CreateGroupIssueRequest: (data, id, token) => {
+        return dispatch(CreateGroupIssueRequest(data, id, token))
+      },
+      DeleteGroupIssueRequest: (id, issue_id, token) => {
+        return dispatch(DeleteGroupIssueRequest(id, issue_id, token))
       }
   };
 };

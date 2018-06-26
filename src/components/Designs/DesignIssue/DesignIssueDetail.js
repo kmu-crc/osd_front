@@ -64,6 +64,10 @@ const CommentContainer = styled.div`
 `;
 
 class DesignIssueDetail extends Component {
+  state = {
+    render: true
+  }
+
   deleteIssue = () => {
     this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
     .then(data => {
@@ -86,12 +90,18 @@ class DesignIssueDetail extends Component {
     });
   }
 
-  onSubmitForm = (data) => {
+  onSubmitForm = async (data) => {
     this.props.CreateIssueCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
-    .then(res => {
+    .then(async res => {
       if (res.success === true) {
         this.props.GetDesignIssueDetailRequest(this.props.match.params.id, this.props.match.params.issue_id);
       }
+      await this.setState({
+        render: false
+      });
+      this.setState({
+        render: true
+      });
     });
   }
 
@@ -106,6 +116,18 @@ class DesignIssueDetail extends Component {
 
   render(){
     let data = this.props.IssueDetail;
+    const CommentForm = () => {
+      return (
+        <ValidateForm ref={ref => this.commandForm = ref} onSubmit={this.onSubmitForm} className="ui reply form">
+          <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
+          <Button type="submit" className="ui icon primary left labeled button">
+            <i aria-hidden="true" className="edit icon"></i>
+            댓글쓰기
+          </Button>
+        </ValidateForm>
+      );
+    }
+    
     return(
       <IssueWrapper>
         <div className="ui fluid container">
@@ -154,13 +176,7 @@ class DesignIssueDetail extends Component {
           :
             <p>등록된 코멘트가 없습니다.</p>
           }
-          <ValidateForm onSubmit={this.onSubmitForm} className="ui reply form">
-            <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
-            <Button type="submit" className="ui icon primary left labeled button">
-              <i aria-hidden="true" className="edit icon"></i>
-              댓글쓰기
-            </Button>
-          </ValidateForm>
+          {this.state.render? <CommentForm/> : null}
         </CommentContainer>
         <Link to={`/designDetail/${this.props.match.params.id}/issue`}>
           <button className="ui button">목록</button>

@@ -18,7 +18,7 @@ export function GetMyDetailRequest(token) {
           console.log("no data");
           data = [];
         }
-        dispatch(GetMyDetail(data));
+        return dispatch(GetMyDetail(data));
       }).catch((error) => {
         console.log("err", error);
       });

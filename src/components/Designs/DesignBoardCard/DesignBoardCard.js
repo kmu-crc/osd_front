@@ -60,7 +60,8 @@ const CommentContainer = styled.div`
 class DesignBoardCard extends Component {
   state = {
     open: false,
-    active: "INIT"
+    active: "INIT",
+    render: true
   };
 
   componentDidMount() {
@@ -96,14 +97,18 @@ class DesignBoardCard extends Component {
       })
   }
 
-  onSubmitCmtForm = (data) => {
+  onSubmitCmtForm = async (data) => {
     this.props.CreateCardCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.card.uid, this.props.token)
-    .then(res => {
-      console.log(res.data.success);
+    .then(async res => {
       if (res.data.success === true) {
-        console.log("성공");
         this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid);
       }
+      await this.setState({
+        render: false
+      });
+      this.setState({
+        render: true
+      });
     });
   }
 
@@ -121,6 +126,19 @@ class DesignBoardCard extends Component {
     const comment = this.props.Comment;
     const { open } = this.state;
     console.log("detail", detail);
+
+    const CommentForm = () => {
+      return (
+        <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
+          <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
+          <Button type="submit" className="ui icon primary left labeled button">
+            <i aria-hidden="true" className="edit icon"></i>
+            댓글쓰기
+          </Button>
+        </ValidateForm>
+      );
+    }
+
     return (
       <div>
         <BoardCard onClick={this.openModalHandler}>
@@ -191,13 +209,7 @@ class DesignBoardCard extends Component {
               :
                 <p>등록된 코멘트가 없습니다.</p>
               }
-              <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
-                <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
-                <Button type="submit" className="ui icon primary left labeled button">
-                  <i aria-hidden="true" className="edit icon"></i>
-                  댓글쓰기
-                </Button>
-              </ValidateForm>
+              {this.state.render? <CommentForm/> : null}
             </CommentContainer>
             <Button type="button" onClick={this.onClose}>
               Close
