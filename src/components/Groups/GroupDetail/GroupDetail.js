@@ -211,7 +211,7 @@ class GroupDetail extends Component {
     const EditIssue = () => {
       return(
         <ValidateForm onSubmit={this.onSubmitForm}>
-          <FormInput name="title"/>
+          <FormInput name="title" validates={["required"]}/>
           <Button type="submit">추가</Button>
           <Button onClick={this.setEditIssue}>취소</Button>
         </ValidateForm>
