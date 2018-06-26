@@ -52,6 +52,10 @@ export function SearchIssueRequest (id, keyword) {
         return res.json();
       }).then(res => {
         console.log(res);
+        if (!res || res.length === 0) {
+          console.log("no data");
+          res = [];
+        }
         return dispatch(SearchIssueSuccess(res));
       }).catch((error) => {
         return dispatch(SearchIssueFailure());
