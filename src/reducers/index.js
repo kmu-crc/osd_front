@@ -6,7 +6,7 @@ import { SignIn, SignUp } from "reducers/Registration";
 import { UserInfo, MyDetail } from "reducers/Users";
 import { Categorys } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
-import { Search } from "reducers/Commons";
+import { Search, SearchIssue } from "reducers/Commons";
 import OpenDesign from "reducers/OpenDesign";
 
 import { combineReducers } from "redux";
@@ -41,5 +41,6 @@ export default combineReducers({
     form: formReducer,
     MyDetail,
     Search,
+    SearchIssue,
     OpenDesign
 });

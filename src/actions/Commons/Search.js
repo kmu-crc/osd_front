@@ -1,6 +1,7 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+// 멤버 검색
 export function SearchMemberRequest (data, token) {
   return (dispatch) => {
     dispatch(SearchMember());
@@ -34,5 +35,45 @@ export function SearchMemberSuccess (members) {
 export function SearchMemberFailure () {
   return {
     type: types.GET_SEARCH_MEMBER_FAILURE
+  }
+}
+
+// 디자인 이슈 검색
+export function SearchIssueRequest (id, keyword) {
+  return (dispatch) => {
+    dispatch(SearchIssue());
+    if (!keyword) {
+      keyword = "null";
+    }
+    return fetch(`${host}/search/${id}/designIssue/${keyword}`, { 
+      headers: { "Content-Type": "application/json" }, 
+      method: "GET"
+    }).then(res => {
+        return res.json();
+      }).then(res => {
+        console.log(res);
+        return dispatch(SearchIssueSuccess(res));
+      }).catch((error) => {
+        return dispatch(SearchIssueFailure());
+      })
+  }
+}
+
+export function SearchIssue () {
+  return {
+    type: types.GET_SEARCH_ISSUE
+  }
+}
+
+export function SearchIssueSuccess (issue) {
+  return {
+    type: types.GET_SEARCH_ISSUE_SUCCESS,
+    issue
+  }
+}
+
+export function SearchIssueFailure () {
+  return {
+    type: types.GET_SEARCH_ISSUE_FAILURE
   }
 }
