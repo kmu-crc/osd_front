@@ -7,3 +7,4 @@ export * from "./DesignList";
 export * from "./DesignLike";
 export * from "./DeleteDesign";
 export * from "./DesignIssueComment";
+export * from "./DesignCardComment";
