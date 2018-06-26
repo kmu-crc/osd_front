@@ -307,3 +307,125 @@ export const DeleteCardFailure = (error) => {
     success: error.success,
   };
 };
+
+// 카드 댓글 가져오기
+export const GetCardCommentRequest = (design_id, card_id) => {
+  console.log("work");
+  return (dispatch) => {
+    dispatch(GetCardComment());
+    return fetch(`${host}/design/designDetail/${design_id}/getCardComment/${card_id}`, { 
+      headers: {
+        "Content-Type": "application/json" 
+      }, 
+      method: "GET"
+    }).then(function (res) {
+        return res.json();
+    }).then(res => {
+      return dispatch(GetCardCommentSuccess(res.data));
+    }).catch((error) => {
+      console.log("get card comment err", error);
+      return dispatch(GetCardCommentFailure(error));
+    });
+  };
+};
+
+export const GetCardComment = () => {
+  return {
+    type: types.GET_CARD_COMMENT
+  };
+};
+
+export const GetCardCommentSuccess = (data) => {
+  return {
+    type: types.GET_CARD_COMMENT_SUCCESS,
+    Comment: data
+  };
+};
+
+export const GetCardCommentFailure = (error) => {
+  return {
+    type: types.GET_CARD_COMMENT_FAILURE
+  };
+};
+
+// 카드 댓글 생성
+export const CreateCardCommentRequest = (data, design_id, card_id, token) => {
+  return (dispatch) => {
+    dispatch(CreateCardComment());
+    console.log("request", data);
+    return fetch(`${host}/design/designDetail/${design_id}/createCardComment/${card_id}`, { 
+      headers: {
+        "x-access-token": token, 
+        "Content-Type": "application/json" 
+      }, 
+      method: "POST", 
+      body: JSON.stringify(data)
+    }).then(function (res) {
+        return res.json();
+    }).then(function (res) {
+      return dispatch(CreateCardCommentSuccess(res));
+    }).catch((error) => {
+      console.log("insert issue err", error);
+      return dispatch(CreateCardCommentFailure(error));
+    });
+  };
+};
+
+export const CreateCardComment = () => {
+  return {
+    type: types.CREATE_CARD_COMMENT
+  };
+};
+
+export const CreateCardCommentSuccess = (res) => {
+  return {
+    type: types.CREATE_CARD_COMMENT_SUCCESS,
+    data: res
+  };
+};
+
+export const CreateCardCommentFailure = (error) => {
+  return {
+    type: types.CREATE_CARD_COMMENT_FAILURE
+  };
+};
+
+// 카드 댓글 삭제
+export const DeleteCardCommentRequest = (design_id, card_id, comment_id, token) => {
+  return (dispatch) => {
+    dispatch(DeleteCardComment());
+    return fetch(`${host}/design/designDetail/${design_id}/deleteCardComment/${card_id}/${comment_id}`, { 
+      headers: {
+        "x-access-token": token, 
+        "Content-Type": "application/json" 
+      }, 
+      method: "DELETE"
+    }).then(function (res) {
+        return res.json();
+    }).then(function (res) {
+      return dispatch(DeleteCardCommentSuccess(res));
+    }).catch((error) => {
+      console.log("insert issue err", error);
+      return dispatch(DeleteCardCommentFailure(error));
+    });
+  };
+};
+
+export const DeleteCardComment = () => {
+  return {
+    type: types.DELETE_CARD_COMMENT
+  };
+};
+
+export const DeleteCardCommentSuccess = (res) => {
+  return {
+    type: types.DELETE_CARD_COMMENT_SUCCESS,
+    data: res
+  };
+};
+
+export const DeleteCardCommentFailure = (error) => {
+  return {
+    type: types.DELETE_CARD_COMMENT_FAILURE
+  };
+};

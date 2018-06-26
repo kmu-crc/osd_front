@@ -2,52 +2,52 @@ import * as types from "actions/ActionTypes";
 import update from "react-addons-update";
 
 const initialState = {
-  CreateIssueComment: {
+  CreateIssue: {
     status: "INIT"
   },
-  DeleteIssueComment: {
+  DeleteIssue: {
     status: "INIT"
   }
 };
 
-export function DesignIssueComment(state, action) {
+export function GroupIssue(state, action) {
   if (typeof state === "undefined")
     state = initialState;
 
   switch (action.type) {
-    case types.CREATE_ISSUE_COMMENT:
+    case types.CREATE_GROUP_ISSUE:
       return update(state, {
-        CreateIssueComment: {
+        CreateIssue: {
           status: { $set: "WATTING" }
         }
       });
-    case types.CREATE_ISSUE_COMMENT_SUCCESS:
+    case types.CREATE_GROUP_ISSUE_SUCCESS:
       return update(state, {
-        CreateIssueComment: {
+        CreateIssue: {
+          status: { $set: "SUCCESS" }
+        }
+      });
+    case types.CREATE_GROUP_ISSUE_FAILURE:
+      return update(state, {
+        CreateIssue: {
+          status: { $set: "FAILURE" }
+        }
+      });
+    case types.DELETE_GROUP_ISSUE:
+      return update(state, {
+        DeleteIssue: {
+          status: { $set: "WATING"}
+        }
+      });
+    case types.DELETE_GROUP_ISSUE_SUCCESS:
+      return update(state, {
+        DeleteIssue: {
           status: { $set: "SUCCESS"}
         }
       });
-    case types.CREATE_ISSUE_COMMENT_FAILURE:
+    case types.DELETE_GROUP_ISSUE_FAILURE:
       return update(state, {
-        CreateIssueComment: {
-          status: { $set: "FAILURE"}
-        }
-      });
-    case types.DELETE_ISSUE_COMMENT:
-      return update(state, {
-        DeleteIssueComment: {
-          status: { $set: "WATTING" }
-        }
-      });
-    case types.DELETE_ISSUE_COMMENT_SUCCESS:
-      return update(state, {
-        DeleteIssueComment: {
-          status: { $set: "SUCCESS"}
-        }
-      });
-    case types.DELETE_ISSUE_COMMENT_FAILURE:
-      return update(state, {
-        DeleteIssueComment: {
+        DeleteIssue: {
           status: { $set: "FAILURE"}
         }
       });

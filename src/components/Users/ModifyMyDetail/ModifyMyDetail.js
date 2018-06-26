@@ -59,11 +59,13 @@ class ModifyMyDetail extends Component {
 
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token)
-    this.props.GetCategoryLevel1Request();
+    .then(data => {
+      this.props.GetCategoryLevel2Request(data.MyDetail.category_level1);
+    });
   }
 
-  onChangeCategory1 = value => {
-    this.props.GetCategoryLevel2Request(value);
+  onChangeCategory1 = async value => {
+    await this.props.GetCategoryLevel2Request(value);
   };
 
   handleSubmit = (data) => {
@@ -117,7 +119,7 @@ class ModifyMyDetail extends Component {
                     getValue={this.onChangeCategory1}
                     options={this.props.category1}
                     label="카테고리"
-                    validates={["required"]}
+                    value={this.props.MyDetail.category_level1}
                     RenderComponent={FormSelect}
                   />
                   <FormField
@@ -125,7 +127,7 @@ class ModifyMyDetail extends Component {
                     selection={true}
                     options={this.props.category2}
                     label="카테고리2"
-                    validates={["required"]}
+                    value={this.props.MyDetail.category_level2}
                     RenderComponent={FormSelect}
                   />
                 </Form.Group>

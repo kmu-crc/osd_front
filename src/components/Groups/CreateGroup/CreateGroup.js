@@ -99,7 +99,6 @@ const FormHeader = styled(Header) `
 
 class CreateGroup extends Component {
   onSubmitForm = (data) => {
-    console.log(data);
     this.props.CreateNewGroupRequest(data, this.props.token).then(data => {
       console.log("CreateNewGroupRequest", data);
       this.props.history.push(`/groupDetail/${data.id}`);
