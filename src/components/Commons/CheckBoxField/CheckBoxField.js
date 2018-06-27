@@ -16,7 +16,6 @@ class CheckBoxField extends Component {
           getValue={this.onChangeCategory1}
           options={this.props.category1}
           label="카테고리"
-          value={this.props.DesignDetail.category_level1}
           RenderComponent={FormSelect}
         />
         <FormField
