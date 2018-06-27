@@ -1,9 +1,9 @@
 import * as types from 'actions/ActionTypes';
 import host from "config";
 
-export function GetGroupListRequest(page, sort) {
+export function GetGroupListRequest(page, sort, keyword) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupList/`+page+"/"+sort, {
+    return fetch(`${host}/group/groupList/${page}/${sort}/${keyword}`, {
       headers: { 'Content-Type': 'application/json' },
       method: "get"
     }).then((response) => {

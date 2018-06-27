@@ -17,6 +17,7 @@ import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
+import SearchPage from "pages/SearchPage";
 
 class App extends Component {
   componentDidMount(){
@@ -46,6 +47,7 @@ class App extends Component {
           <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)}/>
           <Route path="/test" component={TestPage} />
           <Route path="/footer/:page" component={FooterPage}/>
+          <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
         </Switch>
       </BrowserRouter>
     );

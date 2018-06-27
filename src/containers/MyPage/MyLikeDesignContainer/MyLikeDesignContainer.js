@@ -18,7 +18,7 @@ class MyLikeDesignContainer extends Component {
       <ScrollList getListRequest={this.getList} 
                   ListComponent={Design} 
                   dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
-                  mobile={8} tablet={8} computer={8} largeScreen={5} customClass="largeCustom"/>
+                  mobile={8} tablet={8} computer={5} largeScreen={4} widescreen={4} customClass="largeCustom"/>
     );
   }
 }

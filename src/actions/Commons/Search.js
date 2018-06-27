@@ -15,28 +15,28 @@ export function SearchMemberRequest (data, token) {
         return dispatch(SearchMemberSuccess(res.members));
       }).catch((error) => {
         return dispatch(SearchMemberFailure());
-      })
-  }
-}
+      });
+  };
+};
 
 export function SearchMember () {
   return {
     type: types.GET_SEARCH_MEMVER
-  }
-}
+  };
+};
 
 export function SearchMemberSuccess (members) {
   return {
     type: types.GET_SEARCH_MEMBER_SUCCESS,
     members
-  }
-}
+  };
+};
 
 export function SearchMemberFailure () {
   return {
     type: types.GET_SEARCH_MEMBER_FAILURE
-  }
-}
+  };
+};
 
 // 디자인 이슈 검색
 export function SearchIssueRequest (id, keyword) {
@@ -59,25 +59,25 @@ export function SearchIssueRequest (id, keyword) {
         return dispatch(SearchIssueSuccess(res));
       }).catch((error) => {
         return dispatch(SearchIssueFailure());
-      })
-  }
-}
+      });
+  };
+};
 
 export function SearchIssue () {
   return {
     type: types.GET_SEARCH_ISSUE
-  }
-}
+  };
+};
 
 export function SearchIssueSuccess (issue) {
   return {
     type: types.GET_SEARCH_ISSUE_SUCCESS,
     issue
-  }
-}
+  };
+};
 
 export function SearchIssueFailure () {
   return {
     type: types.GET_SEARCH_ISSUE_FAILURE
-  }
-}
+  };
+};

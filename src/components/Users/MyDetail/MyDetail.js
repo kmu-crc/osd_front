@@ -6,7 +6,7 @@ import MyDesignContainer from "containers/MyPage/MyDesignContainer";
 import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
-import ContentBox from "components/Commons/ContentBox";
+// import ContentBox from "components/Commons/ContentBox";
 
 // css styling
 const Container = styled.div`
@@ -35,14 +35,13 @@ const Wrapper = styled(Grid)`
     border-radius: 3px;
   }
   & .contentRow {
-    border-radius: 3px;
-    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   }
 `;
 
 const HeadContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0, 0, 0, 0.15);
-  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); */
+  border-right: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(0,0,0,0.25);
 `;
 
 const ProfileSection = styled.div`
@@ -129,19 +128,28 @@ const Head = styled(Grid)`
   }
 `;
 
-const MyContentBox = styled.div`
+const ContentBox = styled.div`
   margin: 0 auto;
-  @media only screen and (max-width: 767px) and (min-width: 320px) {
+  @media only screen and (max-width: 767px) and (min-width: 320px){
     width: 470px;
   }
-  @media only screen and (max-width: 991px) and (min-width: 768px) {
+  @media only screen and (max-width: 991px) and (min-width: 768px){
     width: 450px;
   }
-  @media only screen and (min-width: 992px) {
-    width: 450px;
+  @media only screen and (min-width: 992px){
+    width: 705px;
   }
-  @media only screen and (min-width: 1200px){
-    width: 650px
+  @media only screen and (max-width: 1399px) and (min-width: 1200px){
+    width: 855px;
+  }
+  @media only screen and (max-width: 1699px) and (min-width: 1400px){
+    width: 900px;
+  }
+  @media only screen and (max-width: 1919px) and (min-width: 1700px){
+    width: 1210px;
+  }
+  @media only screen and (min-width: 1920px){
+    width: 1368px;
   }
 `;
 
@@ -178,7 +186,7 @@ class MyDetail extends Component {
     };
 
     return (
-      <ContentBox>
+      <div>
         {MyInfo !== null && (
           <Container>
             <Wrapper padded={false} columns={2}>
@@ -261,21 +269,21 @@ class MyDetail extends Component {
                         </Grid.Column>
                       </Grid.Row>
                     </Head>
-                    <MyContentBox>
+                    <ContentBox>
                       <Route path="/myPage/:type?"
                             component={this.props.type === "likeDesigner" ? MyLikeDesignerContainer
                                         : this.props.type === "likeDesign" ? MyLikeDesignContainer
                                         : this.props.type === "group" ? MyGroupContainer
                                         : ContainerPage}
                       />
-                    </MyContentBox>
+                    </ContentBox>
                   </TabContainer>
                 </Grid.Row>
               }
             </Wrapper>
           </Container>
         )}
-      </ContentBox>
+      </div>
     );
   }
 }

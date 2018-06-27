@@ -1,9 +1,10 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export function GetDesignerListRequest(page, sort, cate1, cate2) {
+export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
   return (dispatch) => {
-    return fetch(`${host}/designer/designerList/`+page+"/"+sort+"/"+cate1+"/"+cate2, {
+    console.log(keyword);
+    return fetch(`${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
