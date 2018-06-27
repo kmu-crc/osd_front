@@ -201,8 +201,10 @@ export const UNLIKE_DESIGN_FAILURE = "UNLIKE_DESIGN_FAILURE";
 // design view update
 export const UPDATE_DESIGN_VIEW = "UPDATE_DESIGN_VIEW";
 
-// design card like (디자인 개별 카드에 대한 좋아요)
-
+// change to project
+export const CHANGE_TO_PROJECT = "CHANGE_TO_PROJECT";
+export const CHANGE_TO_PROJECT_SUCCESS = "CHANGE_TO_PROJECT_SUCCESS";
+export const CHANGE_TO_PROJECT_FAILURE = "CHANGE_TO_PROJECT_FAILURE";
 
 ////////////////////////////////////////////////////////////////////////////
 // group

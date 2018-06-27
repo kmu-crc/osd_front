@@ -25,7 +25,8 @@ const mapStateToProps = state => {
     token: state.Authentication.status.token,
     detail: state.DesignDetailStepCard.status.DesignDetailStepCard,
     isTeam: state.DesignDetail.status.DesignDetail.is_team,
-    Comment: state.DesignCardComment.status.Comment
+    Comment: state.DesignCardComment.status.Comment,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

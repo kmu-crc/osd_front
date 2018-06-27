@@ -98,6 +98,10 @@ class DesignBoardCard extends Component {
   }
 
   onSubmitCmtForm = async (data) => {
+    if (!this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    }
     this.props.CreateCardCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.card.uid, this.props.token)
     .then(async res => {
       if (res.data.success === true) {
@@ -203,7 +207,9 @@ class DesignBoardCard extends Component {
                       </div>
                       <div className="text">{comm.comment}</div>
                     </div>
+                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
                     <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                    }
                   </div>
                 ))
               :

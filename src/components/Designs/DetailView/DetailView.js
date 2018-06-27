@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Comment } from "semantic-ui-react";
-
+import Button from "components/Commons/Button";
 
 // css styling
 
@@ -42,25 +42,32 @@ const CommentContainer = styled(Comment)`
   }
 `;
 
-const GoStepBtn = styled.button`
+const GoStepBtn = styled(Button)`
   position: absolute;
   top: -30px;
   right: 2rem;
-  padding: 5px 10px;
-  border-radius: 3px;
 `;
 
 
 class DetailView extends Component {
-
   componentWillMount() {
     this.props.GetDesignDetailViewRequest(this.props.match.params.id);
+  }
+
+  onActiveStep = () => {
+    alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
+    this.props.ChangeToProjectRequest(this.props.match.params.id, this.props.token)
+    .then(data => {
+      if (data.success === true) {
+        this.props.history.go(`/designDetail/${this.props.match.params.id}`);
+      }
+    });
   }
 
   render(){
     let view = this.props.DesignDetailView;
     let len = Object.keys(view).length;
-    console.log("len", len)
+
     return(
       <Grid>
         {len > 0 ?
@@ -116,7 +123,7 @@ class DetailView extends Component {
           <p>내용이 없습니다.</p>
         </ViewWrapper>
         }
-        <GoStepBtn onClick={this.props.goStep}>프로젝트형으로 변경</GoStepBtn>
+        <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
       </Grid>
     );
   }

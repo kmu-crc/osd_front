@@ -7,6 +7,7 @@ import { Grid, Icon, Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import { Link, Route } from "react-router-dom";
+import RequiresAuth from "containers/Commons/RequiresAuth";
 import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
 import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
 
@@ -118,7 +119,6 @@ class DesignDetail extends Component {
     if (this.props.token) {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
     } // 로그인 한 경우 좋아요 했는지 여부 가져오기
-    
   }
 
   componentWillUnmount() {
@@ -129,11 +129,6 @@ class DesignDetail extends Component {
     this.setState({
       activeMoreBtn: !(this.state.activeMoreBtn)
     });
-  }
-
-  onActiveStep = () => {
-    alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
-    // 확인 누르면 api 요청 보내서 is_project = 1로 바꿔야 함!
   }
 
   updateLike = () => {
@@ -287,9 +282,9 @@ class DesignDetail extends Component {
                 <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
                        component={DesignIssue} />
                 <Route exact path={"/designDetail/:id/createissue"} 
-                       component={CreateDesignIssueContainer} />
+                       component={RequiresAuth(CreateDesignIssueContainer)} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id/modify"}
-                       component={ModifyIssueDetailContainer} />
+                       component={RequiresAuth(ModifyIssueDetailContainer)} />
               </TabContainer>
             </Wrapper>
           </ContentBox>

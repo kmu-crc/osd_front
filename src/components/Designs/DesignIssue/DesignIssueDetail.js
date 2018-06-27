@@ -91,6 +91,10 @@ class DesignIssueDetail extends Component {
   }
 
   onSubmitForm = async (data) => {
+    if (!this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    }
     this.props.CreateIssueCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
     .then(async res => {
       if (res.success === true) {
@@ -116,6 +120,8 @@ class DesignIssueDetail extends Component {
 
   render(){
     let data = this.props.IssueDetail;
+    const user = this.props.userInfo;
+
     const CommentForm = () => {
       return (
         <ValidateForm ref={ref => this.commandForm = ref} onSubmit={this.onSubmitForm} className="ui reply form">
@@ -137,14 +143,14 @@ class DesignIssueDetail extends Component {
             <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
             <span className="status">
               상태 : { data.is_complete === 0? "진행중" : "완료" }
-              {this.props.userInfo && (this.props.userInfo.uid === data.user_id) &&
+              {user && user.uid === data.user_id &&
                 <Button onClick={this.updateIssueStatus}>
                   {data.is_complete === 0? "완료하기" : "진행중으로 변경"}
                 </Button>
               }
             </span>
           </div>
-          {this.props.userInfo && (this.props.userInfo.uid === data.user_id) &&
+          {user && user.uid === data.user_id &&
             <BtnWrapper>
               <Link to={`/designDetail/${this.props.match.params.id}/issue/${this.props.match.params.issue_id}/modify`}>
                 <Button>수정</Button>
@@ -170,7 +176,9 @@ class DesignIssueDetail extends Component {
                   </div>
                   <div className="text">{comm.comment}</div>
                 </div>
+                {user && user.uid === comm.user_id &&
                 <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                }
               </div>
             ))
           :

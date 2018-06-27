@@ -207,6 +207,7 @@ class GroupDetail extends Component {
   render(){
     const groupDetail = this.props.GroupDetail;
     const count = this.props.Count;
+    const user = this.props.userInfo;
 
     const EditIssue = () => {
       return(
@@ -267,7 +268,7 @@ class GroupDetail extends Component {
                     {this.state.editIssue 
                     ? <EditIssue/>
                     : <ul>
-                        <Button onClick={this.setEditIssue}>추가</Button>
+                        {user && user.uid === groupDetail.user_id && <Button onClick={this.setEditIssue}>추가</Button>}
                         {groupDetail.issue !== null &&
                           groupDetail.issue.map(issue => (
                             <li key={issue.uid}>
@@ -275,7 +276,9 @@ class GroupDetail extends Component {
                                 {issue.title}
                                 <span className="issueDate">{DateFormat(issue.create_time)}</span>
                               </div>
+                              {user && user.uid === groupDetail.user_id &&
                               <button onClick={() => this.deleteIssue(issue.uid)}>삭제</button>
+                              }
                             </li>
                           ))
                         }

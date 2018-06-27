@@ -8,3 +8,4 @@ export * from "./DesignLike";
 export * from "./DeleteDesign";
 export * from "./DesignIssueComment";
 export * from "./DesignCardComment";
+export * from "./ChangeToProject";
