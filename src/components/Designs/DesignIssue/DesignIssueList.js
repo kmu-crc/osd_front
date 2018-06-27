@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Grid } from "semantic-ui-react";
+import { Grid, Search } from "semantic-ui-react";
+import Button from "components/Commons/Button";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormInput } from "components/Commons/FormItem";
+import FormDataToJson from "modules/FormDataToJson";
 
 // css styling
 const IssueWrapper = styled(Grid)`
@@ -18,7 +22,19 @@ const IssueWrapper = styled(Grid)`
 
 const SearchWrapper = styled(Grid.Row)`
   & .ui.icon.input {
-    width: 90%;
+    width: 100%;
+  }
+  & .searchBtn {
+    background: transparent;
+    border: none;
+    position: absolute;
+    height: 100%;
+    width: 38px;
+    top: 0;
+    right: 20px;
+  }
+  & .ui.search .search.icon {
+    display: none;
   }
 `;
 
@@ -76,25 +92,49 @@ const List = styled.div`
 `;
 
 class DesignIssueList extends Component {
+  state = {
+    keyword: "",
+    searchMode: false
+  }
+
+  getSearchValue = (e) => {
+    const value = e.target.value;
+    this.setState({
+      keyword: value
+    });
+  }
+
+  onSearchSubmit = async (data) => {
+    this.props.SearchIssueRequest(this.props.match.params.id, this.state.keyword)
+    .then(() => {
+      this.setState({
+        searchMode: true
+      });
+    });
+  }
+
   render(){
-    const issue = this.props.DesignIssueList;
-    const member = this.props.location.state;
+    let issue = this.state.searchMode? this.props.SearchIssue : this.props.DesignIssueList;
     return (
       <div>
         <IssueWrapper>
           <SearchWrapper columns={2}>
             <Grid.Column>              
-              <div className="ui icon input">
-                <input type="text" value="" tabIndex="0" className="prompt" autoComplete="off" />
+              {/* <ValidateForm onSubmit={this.onSearch}>
+                <FormInput name="keyword" className="ui search"/>
+                <button type="submit" className="searchBtn">
+                  <i aria-hidden="true" className="search icon"></i>
+                </button>
+              </ValidateForm> */}
+              <Search showNoResults={false} onSearchChange={this.getSearchValue}/>
+              <button onClick={this.onSearchSubmit} className="searchBtn">
                 <i aria-hidden="true" className="search icon"></i>
-              </div>
+              </button>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              {/* {member === "true" && */}
-                <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
-                  <button className="ui button">글쓰기</button>
-                </Link>
-              {/* } */}
+              <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
+                <button className="ui button">글쓰기</button>
+              </Link>
             </Grid.Column>
           </SearchWrapper>
           <ListWrapper>

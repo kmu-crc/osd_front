@@ -6,11 +6,11 @@ import Group from "components/Groups/Group";
 
 class ScrollGroupListContainer extends Component {
   componentWillMount(){
-    this.props.GetGroupListRequest(0, this.props.sort);
+    this.props.GetGroupListRequest(0, this.props.sort, this.props.keyword);
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
   getList = (page) => {
-    return this.props.GetGroupListRequest(page, this.props.sort);
+    return this.props.GetGroupListRequest(page, this.props.sort, this.props.keyword);
     // ScrollList에서는 그 다음 페이지부터 불러옴
   }
 
@@ -35,8 +35,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetGroupListRequest: (page, sort) => {
-        return dispatch(GetGroupListRequest(page, sort))
+      GetGroupListRequest: (page, sort, keyword) => {
+        return dispatch(GetGroupListRequest(page, sort, keyword))
       }
   };
 };

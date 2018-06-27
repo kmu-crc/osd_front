@@ -358,6 +358,11 @@ export const GET_SEARCH_MEMVER = "GET_SEARCH_MEMBER";
 export const GET_SEARCH_MEMBER_SUCCESS = "GET_SEARCH_MEMBER_SUCCESS";
 export const GET_SEARCH_MEMBER_FAILURE = "GET_SEARCH_MEMBER_FAILURE";
 
+// search issue
+export const GET_SEARCH_ISSUE = "GET_SEARCH_ISSUE";
+export const GET_SEARCH_ISSUE_SUCCESS = "GET_SEARCH_ISSUE_SUCCESS";
+export const GET_SEARCH_ISSUE_FAILURE = "GET_SEARCH_ISSUE_FAILURE";
+
 
 ////////////////////////////////////////////////////////////////////////////
 // openDesign

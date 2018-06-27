@@ -26,8 +26,8 @@ class Sorting extends Component {
             this.props.placeholder && this.props.placeholder === "create"
               ? "등록일"
               : this.props.placeholder && this.props.placeholder === "like"
-                ? "좋아요"
-                : "최근 업데이트"
+              ? "좋아요"
+              : "최근 업데이트"
           }
           options={sorting}
           onChange={this.props.handleChange}
