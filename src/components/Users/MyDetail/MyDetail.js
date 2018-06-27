@@ -279,7 +279,6 @@ class MyDetail extends Component {
                     </ContentBox>
                   </TabContainer>
                 </Grid.Row>
-              }
             </Wrapper>
           </Container>
         )}
