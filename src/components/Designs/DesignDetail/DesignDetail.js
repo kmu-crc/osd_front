@@ -175,7 +175,9 @@ class DesignDetail extends Component {
           <Modal.Content as="ul">
             <li>파생디자인 생성</li>
             <li className={designDetail.parent_design != null ? "able" : "disable"}>원본디자인 보기</li>
-            {user && user.uid === designDetail.user_id && <li>수정</li>}
+            {user && user.uid === designDetail.user_id && 
+            <Link to={`/designModify/${this.props.id}`}><li>수정</li></Link>
+            }
             {user && user.uid === designDetail.user_id && <li onClick={this.deleteDesign}>삭제</li>}
           </Modal.Content>
         </ModalContent>
