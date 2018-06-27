@@ -115,6 +115,12 @@ class SearchList extends Component {
     });
   }
 
+  submitEnter = (e) => {
+    if (e.keyCode === 13) {
+      this.onSearchSubmit(this.state.keyword);
+    }
+  }
+
   onSearchSubmit = (data) => {
     if (this.state.keyword === null || this.state.keyword === "") {
       alert("키워드를 입력해주세요");
@@ -138,7 +144,7 @@ class SearchList extends Component {
       <div>
         <ImgWrapper>
           <Title>
-            <input placeholder="검색어를 입력하세요" onChange={this.getSearchValue}/>
+            <input placeholder="검색어를 입력하세요" onChange={this.getSearchValue} onKeyDown={this.submitEnter}/>
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>
             </button>
