@@ -121,8 +121,8 @@ class CreateDesingFormContent extends Component {
               <Form.Group widths="equal">
                 <FormField
                   name="thumbnail"
-                  placeholder="섬네일 이미지를 등록하세요."
-                  label="섬네일"
+                  placeholder="썸네일 이미지를 등록하세요."
+                  label="썸네일"
                   RenderComponent={FormFile}
                   validates={["required", "ThumbnailSize"]}
                 />
@@ -137,7 +137,7 @@ class CreateDesingFormContent extends Component {
                 />
               </Form.Group>
               <div className="field">
-                <label>템프릿</label>
+                <label>템플릿</label>
                 <Form.Group>
                   <FormField
                     name="is_project"

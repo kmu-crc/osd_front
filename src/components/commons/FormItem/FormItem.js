@@ -179,6 +179,7 @@ export class FormCheckBox extends Component {
     checked: true
   }
   componentWillMount() {
+
     if (this.props.checked) {
       this.setState({ checked: this.props.checked });
     } else if (this.props.checked === 0) {
