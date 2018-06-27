@@ -30,8 +30,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignListRequest: (sort, categoryLevel1, categoryLevel2, page) => {
-        return dispatch(GetDesignListRequest(sort, categoryLevel1, categoryLevel2, page))
+      GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2) => {
+        return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2))
       },
       GetCategoryLevel2Request: (id) => {
         return dispatch(GetCategoryLevel2Request(id));
