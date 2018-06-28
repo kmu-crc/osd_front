@@ -284,7 +284,7 @@ class Header extends Component {
           </MainMenu>
           <SubMenu>
             <SubMenuItem>
-              <a href="/">
+              <a href="/search">
                 <Icon name="search" />
               </a>
             </SubMenuItem>

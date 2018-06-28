@@ -8,7 +8,10 @@ import {
   GetCardDetailRequest,
   UpdateCardImagesRequest,
   UpdateCardSourcesRequest,
-  DeleteDesignCardRequest
+  DeleteDesignCardRequest,
+  GetCardCommentRequest,
+  CreateCardCommentRequest,
+  DeleteCardCommentRequest
 } from "actions/Designs/DesignCard";
 import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 
@@ -21,7 +24,9 @@ const mapStateToProps = state => {
   return {
     token: state.Authentication.status.token,
     detail: state.DesignDetailStepCard.status.DesignDetailStepCard,
-    isTeam: state.DesignDetail.status.DesignDetail.is_team
+    isTeam: state.DesignDetail.status.DesignDetail.is_team,
+    Comment: state.DesignCardComment.status.Comment,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
@@ -47,6 +52,15 @@ const mapDispatchToProps = dispatch => {
     },
     GetCardDetailRequest: id => {
       return dispatch(GetCardDetailRequest(id));
+    },
+    GetCardCommentRequest: (design_id, card_id) => {
+      return dispatch(GetCardCommentRequest(design_id, card_id));
+    },
+    CreateCardCommentRequest: (data, design_id, card_id, token) => {
+      return dispatch(CreateCardCommentRequest(data, design_id, card_id, token));
+    },
+    DeleteCardCommentRequest: (design_id, card_id, comment_id, token) => {
+      return dispatch(DeleteCardCommentRequest(design_id, card_id, comment_id, token));
     }
   };
 };

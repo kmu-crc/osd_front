@@ -3,6 +3,7 @@ import { Form } from "semantic-ui-react";
 import { FormField } from "components/Commons/FormField";
 import { FormSelect } from "components/Commons/FormItem";
 class CheckBoxField extends Component {
+  
   onChangeCategory1 = value => {
     this.props.GetCategoryLevel2Request(value);
   };

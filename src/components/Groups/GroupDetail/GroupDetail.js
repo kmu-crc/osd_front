@@ -6,6 +6,10 @@ import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import ModifyJoinList from "components/Groups/ModifyJoinList";
 import CurrentJoinList from "components/Groups/CurrentJoinList/CurrentJoinList";
 import Button from "components/Commons/Button";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormInput } from "components/Commons/FormItem";
+import FormDataToJson from "modules/FormDataToJson";
+import DateFormat from "modules/DateFormat";
 
 // css styling
 
@@ -73,11 +77,6 @@ const ProfileSection = styled.div`
     text-align: center;
     padding: 10px 0;
   }
-  & .issueContainer {
-    min-height: 30px;
-    line-height: 30px;
-    font-weight: bold;
-  }
   & .btnContainer {
     text-align: center;
     & button {
@@ -106,11 +105,26 @@ const InfoSection = styled.div`
   }
 `;
 
+const IssueContainer = styled.div`
+  min-height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  & ul .issueTitle {
+    float: left;
+    width: 80%;
+  }
+  & ul .issueDate {
+    font-size: 12px;
+    margin: 0 5px;
+  }
+`;
+
 
 class GroupDetail extends Component {
   state = {
     editGroupInfoMode: false,
-    editMode: false
+    editMode: false,
+    editIssue: false
   };
 
   componentWillMount() {
@@ -163,9 +177,47 @@ class GroupDetail extends Component {
     }
   }
 
+  setEditIssue = () => {
+    this.setState({
+      editIssue: !this.state.editIssue
+    });
+  }
+
+  onSubmitForm = (data) => {
+    this.props.CreateGroupIssueRequest(FormDataToJson(data), this.props.id, this.props.token)
+    .then(res => {
+      if (res.data.success === true) {
+        this.props.GetGroupDetailRequest(this.props.id);
+        this.setState({
+          editIssue: false
+        });
+      }
+    });
+  }
+
+  deleteIssue = (id) => {
+    this.props.DeleteGroupIssueRequest(this.props.id, id, this.props.token)
+    .then(res => {
+      if (res.data.success === true) {
+        this.props.GetGroupDetailRequest(this.props.id);
+      }
+    });
+  }
+
   render(){
     const groupDetail = this.props.GroupDetail;
     const count = this.props.Count;
+    const user = this.props.userInfo;
+
+    const EditIssue = () => {
+      return(
+        <ValidateForm onSubmit={this.onSubmitForm}>
+          <FormInput name="title" validates={["required"]}/>
+          <Button type="submit">추가</Button>
+          <Button onClick={this.setEditIssue}>취소</Button>
+        </ValidateForm>
+      );
+    }
 
     return(
       <div>
@@ -200,9 +252,10 @@ class GroupDetail extends Component {
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
                     </div>
-                    <div className="issueContainer">
-                      {groupDetail.issue == null? "공지가 없습니다" : groupDetail.issue.title}
-                    </div>
+                    <InfoSection>
+                      <h4>소개</h4>
+                      <p className="explanation">{groupDetail.explanation}</p>
+                    </InfoSection>
                     <div className="btnContainer">
                       {this.props.like === true 
                       ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
@@ -211,6 +264,27 @@ class GroupDetail extends Component {
                       <JoinGroupContainer />
                     </div>
                   </ProfileSection>
+                  <IssueContainer>
+                    {this.state.editIssue 
+                    ? <EditIssue/>
+                    : <ul>
+                        {user && user.uid === groupDetail.user_id && <Button onClick={this.setEditIssue}>추가</Button>}
+                        {groupDetail.issue !== null &&
+                          groupDetail.issue.map(issue => (
+                            <li key={issue.uid}>
+                              <div className="issueTitle">
+                                {issue.title}
+                                <span className="issueDate">{DateFormat(issue.create_time)}</span>
+                              </div>
+                              {user && user.uid === groupDetail.user_id &&
+                              <button onClick={() => this.deleteIssue(issue.uid)}>삭제</button>
+                              }
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    }
+                  </IssueContainer>
                   <CountSection>
                     <div className="list">
                       <Icon name="signup" color="grey" size="tiny"></Icon> 디자인 수
@@ -229,10 +303,6 @@ class GroupDetail extends Component {
                       <span>{count.like}</span>
                     </div>
                   </CountSection>
-                  <InfoSection>
-                    <h4>소개</h4>
-                    <p className="explanation">{groupDetail.explanation}</p>
-                  </InfoSection>
                 </HeadContainer>
 
                 {/* ------------------------ 우측 카드 렌더링 섹션 -------------------------- */}

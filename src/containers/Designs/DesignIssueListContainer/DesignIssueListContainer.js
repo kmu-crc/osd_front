@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignIssueListRequest } from "actions/Design";
 import DesignIssueList from "components/Designs/DesignIssue/DesignIssueList";
+import { SearchIssueRequest } from "actions/Commons/Search";
 
 class DesignIssueListContainer extends Component {
 
@@ -11,16 +12,15 @@ class DesignIssueListContainer extends Component {
 
   render() {
     return (
-      <div>
-        <DesignIssueList {...this.props} />
-      </div>
+      <DesignIssueList {...this.props} />
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignIssueList: state.DesignIssueList.status.DesignIssueList
+    DesignIssueList: state.DesignIssueList.status.DesignIssueList,
+    SearchIssue: state.SearchIssue.status.SearchIssue
   };
 };
 
@@ -28,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignIssueListRequest: (id) => {
       return dispatch(GetDesignIssueListRequest(id))
+    },
+    SearchIssueRequest: (id, keyword) => {
+      return dispatch(SearchIssueRequest(id, keyword))
     }
   };
 };

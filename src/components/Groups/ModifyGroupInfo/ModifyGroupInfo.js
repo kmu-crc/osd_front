@@ -88,7 +88,7 @@ class ModifyGroupInfo extends Component {
                              RenderComponent={FormTextArea} />
                 </Form.Group>
                 <Form.Group widths="equal">
-                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile} validates={["ThumbnailSize"]} />
+                  <FormField name="thumbnail" label="썸네일 수정" RenderComponent={FormFile}  />
                 </Form.Group>
                 <div>
                   <Button type="button" onClick={this.deleteGroup}>그룹 삭제</Button>

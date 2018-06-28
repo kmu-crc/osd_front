@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignIssueDetailRequest } from "actions/Design";
 import DesignIssueDetail from "components/Designs/DesignIssue/DesignIssueDetail.js";
-import { DeleteDesignIssueRequest, UpdateIssueStatusRequest } from "actions/Designs/DesignIssue";
+import { DeleteDesignIssueRequest, UpdateIssueStatusRequest, CreateIssueCommentRequest, DeleteIssueCommentRequest } from "actions/Designs/DesignIssue";
 
 class DesignIssueDetailContainer extends Component {
   componentDidMount() {
@@ -34,6 +34,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateIssueStatusRequest: (data, design_id, issue_id, token) => {
       return dispatch(UpdateIssueStatusRequest(data, design_id, issue_id, token))
+    },
+    CreateIssueCommentRequest: (data, design_id, issue_id, token) => {
+      return dispatch(CreateIssueCommentRequest(data, design_id, issue_id, token))
+    },
+    DeleteIssueCommentRequest: (design_id, issue_id, comment_id, token) => {
+      return dispatch(DeleteIssueCommentRequest(design_id, issue_id, comment_id, token))
     }
   };
 };

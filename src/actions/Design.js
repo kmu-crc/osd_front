@@ -1,9 +1,9 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export function GetDesignListRequest(page, sort, cate1, cate2) {
+export function GetDesignListRequest(page, sort, cate1, cate2, keyword) {
   return (dispatch) => {
-    return fetch(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}`, {
+    return fetch(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -413,3 +413,44 @@ export function UnlikeDesignFailure() {
   }
 };
 
+// 블로그형 디자인 -> 프로젝트형으로 변경
+export function ChangeToProjectRequest(id, token) {
+  return (dispatch) => {
+    dispatch(ChangeToProject());
+    return fetch(`${host}/Design/changeToProject/${id}`, {
+      headers: { 
+        "Content-Type": "application/json", 
+        "x-access-token": token 
+      },
+      method: "post"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("change request >>>", data);
+      dispatch(ChangeToProjectSuccess(data));
+      return data;
+    }).catch((error) => {
+      console.log("err", error);
+      ChangeToProjectFailure(error);
+    });
+  }
+}
+
+export function ChangeToProject() {
+  return {
+    type: types.CHANGE_TO_PROJECT
+  }
+};
+
+export function ChangeToProjectSuccess(data) {
+  return {
+    type: types.CHANGE_TO_PROJECT_SUCCESS,
+    data: data
+  }
+};
+
+export function ChangeToProjectFailure() {
+  return {
+    type: types.CHANGE_TO_PROJECT_FAILURE
+  }
+};

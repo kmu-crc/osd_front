@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
+import { DeleteDesignRequest } from "actions/Designs/DeleteDesign";
 import DesignDetail from "components/Designs/DesignDetail";
 
 class DesignDetailContainer extends Component {
@@ -45,6 +46,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateDesignViewRequest: (id) => {
       return dispatch(UpdateDesignViewRequest(id))
+    },
+    DeleteDesignRequest: (id, token) => {
+      return dispatch(DeleteDesignRequest(id, token))
     }
   };
 };

@@ -1,9 +1,9 @@
 import * as types from 'actions/ActionTypes';
 import host from "config";
 
-export function GetGroupListRequest(page, sort) {
+export function GetGroupListRequest(page, sort, keyword) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupList/`+page+"/"+sort, {
+    return fetch(`${host}/group/groupList/${page}/${sort}/${keyword}`, {
       headers: { 'Content-Type': 'application/json' },
       method: "get"
     }).then((response) => {
@@ -651,9 +651,9 @@ export function UpdateGroupRequest(id, data, token) {
   return (dispatch) => {
     dispatch(UpdateGroup());
     return fetch(`${host}/group/${id}/updateGroup`, {
-      headers: { 'x-access-token': token },
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
       method: "POST",
-      body: data
+      body: JSON.stringify(data)
     }).then((response) => {
       return response.json();
     }).then((res) => {
@@ -732,7 +732,7 @@ export function LikeGroupRequest(id, token) {
   return (dispatch) => {
     dispatch(LikeGroup());
     return fetch(`${host}/group/like/${id}`, {
-      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      headers: { "Content-Type": "application/json", "x-access-token": token },
       method: "post"
     }).then((response) => {
       return response.json();
@@ -773,7 +773,7 @@ export function UnlikeGroupRequest(id, token) {
   return (dispatch) => {
     dispatch(UnlikeGroup());
     return fetch(`${host}/group/unlike/${id}`, {
-      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      headers: { "Content-Type": "application/json", "x-access-token": token },
       method: "post"
     }).then((response) => {
       return response.json();
@@ -806,5 +806,83 @@ export function UnlikeGroupSuccess() {
 export function UnlikeGroupFailure() {
   return {
     type: types.UNLIKE_GROUP_FAILURE
+  }
+};
+
+// 그룹에 대한 이슈 등록하기
+export function CreateGroupIssueRequest(data, id, token) {
+  console.log(data);
+  return (dispatch) => {
+    dispatch(createGroupIssue());
+    return fetch(`${host}/group/groupDetail/${id}/createIssue`, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then((response) => {
+      return response.json();
+    }).then((res) => {
+      console.log("create Issue >>>", res);
+      return dispatch(createGroupIssueSuccess(res));
+    }).catch((error) => {
+      console.log("err", error);
+      createGroupIssueFailure(error);
+    });
+  }
+}
+
+export function createGroupIssue() {
+  return {
+    type: types.CREATE_GROUP_ISSUE
+  }
+};
+
+export function createGroupIssueSuccess(data) {
+  return {
+    type: types.CREATE_GROUP_ISSUE_SUCCESS,
+    data: data
+  }
+};
+
+export function createGroupIssueFailure(err) {
+  return {
+    type: types.CREATE_GROUP_ISSUE_FAILURE
+  }
+};
+
+// 그룹에 대한 이슈 삭제하기
+export function DeleteGroupIssueRequest(id, issue_id, token) {
+  return (dispatch) => {
+    dispatch(deleteGroupIssue());
+    return fetch(`${host}/group/groupDetail/${id}/deleteIssue/${issue_id}`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "delete"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("delete Issue >>>", data);
+      return dispatch(deleteGroupIssueSuccess(data));
+    }).catch((error) => {
+      console.log("err", error);
+      deleteGroupIssueFailure(error);
+    });
+  }
+}
+
+export function deleteGroupIssue() {
+  return {
+    type: types.DELETE_GROUP_ISSUE
+  }
+};
+
+export function deleteGroupIssueSuccess(data) {
+  return {
+    type: types.DELETE_GROUP_ISSUE_SUCCESS,
+    data: data
+  }
+};
+
+export function deleteGroupIssueFailure(err) {
+  return {
+    type: types.DELETE_GROUP_ISSUE_FAILURE
   }
 };
