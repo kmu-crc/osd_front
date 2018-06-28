@@ -56,9 +56,13 @@ const SubInfo = styled.div`
     font-size: 13px;
     color: rgba(0,0,0,.6);
   }
+  & .ui.button {
+    cursor: initial;
+  }
   & .ui.basic.button:hover,
     .ui.basic.buttons .button:hover {
-      background-color: transparent;
+      background-color: transparent !important;
+      box-shadow: 0 0 0 1px rgba(34,36,38,.15) inset;
   }
 `;
 
@@ -70,8 +74,8 @@ const MoreBtn = styled.button`
 const ModalContent = styled(Modal) `
   &.ui.modal.btnModal {
     position: absolute;
-    top: 145px;
-    right: 5px;
+    top: 100px;
+    right: 7vw;
     text-align: left;
     width: 140px;
   }
@@ -223,14 +227,14 @@ class DesignDetail extends Component {
                       </div>
                       <div className="ui right labeled button">
                       {this.props.like === true 
-                      ? <Button className="ui basic button" onClick={this.updateLike}>
+                      ? <button className="ui basic button" onClick={this.updateLike}>
                         <Icon name="heart" size="mini"></Icon>
                         좋아요 취소
-                        </Button>
-                      : <Button className="ui basic button" onClick={this.updateLike}>
+                        </button>
+                      : <button className="ui basic button" onClick={this.updateLike}>
                         <Icon name="heart" size="mini"></Icon>
                         좋아요
-                        </Button>
+                        </button>
                       }
                         <div className="ui left pointing basic label">{count.like_count}</div>
                       </div>

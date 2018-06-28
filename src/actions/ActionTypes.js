@@ -376,3 +376,12 @@ export const GET_TOP_DESIGN_LIST_SUCCESS = "GET_TOP_DESIGN_LIST_SUCCESS";
 export const GET_TOP_DESIGN_LIST_FAILURE = "GET_TOP_DESIGN_LIST_FAILURE";
 export const GET_TOP_DESIGNER_LIST_SUCCESS = "GET_TOP_DESIGNER_LIST_SUCCESS";
 export const GET_TOP_DESIGNER_LIST_FAILURE = "GET_TOP_DESIGNER_LIST_FAILURE";
+
+
+////////////////////////////////////////////////////////////////////////////
+// message
+////////////////////////////////////////////////////////////////////////////
+
+export const GET_MY_MSG_LIST = "GET_MY_MSG_LIST";
+export const GET_MY_MSG_LIST_SUCCESS = "GET_MY_MSG_LIST_SUCCESS";
+export const GET_MY_MSG_LIST_FAILURE = "GET_MY_MSG_LIST_FAILURE";

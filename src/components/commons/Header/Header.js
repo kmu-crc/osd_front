@@ -234,6 +234,11 @@ class Header extends Component {
                     </a>
                   </UserMenuItem>
                   <UserMenuItem>
+                    <a href="/message">
+                      <Icon name="envelope" />메시지함
+                    </a>
+                  </UserMenuItem>
+                  <UserMenuItem>
                     <LogOutBtn onClick={this.handleSignOut}>
                       <Icon name="log out" />logout
                     </LogOutBtn>
