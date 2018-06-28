@@ -64,6 +64,7 @@ const Menu = styled.ul`
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: 3px;
+  z-index: 100;
 `;
 
 const MenuItem = styled.li`
@@ -110,28 +111,45 @@ class DesignBoard extends Component {
   };
 
   onModify = () => {
-    this.setState({active: true});
-  }
+    this.setState({ active: true });
+  };
   ModifyComplete = () => {
-    this.setState({active: false});
-  }
+    this.setState({ active: false });
+  };
   onDelete = () => {
-    this.props.DeleteDesignBoardRequest(this.props.board.design_id, this.props.board.uid, this.props.token).then(() => {
-      this.props.GetDesignBoardRequest(this.props.board.design_id);
-    });
-  }
+    this.props
+      .DeleteDesignBoardRequest(
+        this.props.board.design_id,
+        this.props.board.uid,
+        this.props.token
+      )
+      .then(() => {
+        this.props.GetDesignBoardRequest(this.props.board.design_id);
+      });
+  };
   render() {
     const { board, changeBoard, activeBoard, designId, list } = this.props;
     console.log(list);
     return (
       <Board>
         <Title>
-          {this.state.active ? <BoardUpdate board={board} getBoard={this.props.GetDesignBoardRequest} onUpdate={this.props.UpdateDesignBoardRequest} token={this.props.token} value={board.title} ModifyComplete={this.ModifyComplete}/> : (
+          {this.state.active && this.props.isTeam ? (
+            <BoardUpdate
+              board={board}
+              getBoard={this.props.GetDesignBoardRequest}
+              onUpdate={this.props.UpdateDesignBoardRequest}
+              token={this.props.token}
+              value={board.title}
+              ModifyComplete={this.ModifyComplete}
+            />
+          ) : (
             <div>
               <span onClick={this.onModify}>{board.title}</span>
-              <MenuIcon className="openMenu" onClick={this.onActive}>
-                <Icon name="ellipsis vertical" />
-              </MenuIcon>
+              {this.props.isTeam > 0 ? (
+                <MenuIcon className="openMenu" onClick={this.onActive}>
+                  <Icon name="ellipsis vertical" />
+                </MenuIcon>
+              ) : null}
               <Menu
                 style={{
                   display:
@@ -154,7 +172,11 @@ class DesignBoard extends Component {
           {board.cards.length > 0 &&
             board.cards.map((item, index) => {
               return (
-                <DesignBoardCardContainer key={`card${index}`} card={item} boardId={board.uid} />
+                <DesignBoardCardContainer
+                  key={`card${index}`}
+                  card={item}
+                  boardId={board.uid}
+                />
               );
             })}
           {this.props.isTeam > 0 ? (
