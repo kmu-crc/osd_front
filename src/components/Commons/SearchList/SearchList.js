@@ -64,13 +64,19 @@ const Title = styled.div`
     text-align: left;
     vertical-align: middle;
     background-color: transparent;
-    color: ${StyleGuide.color.gey.basic};
+    color: ${StyleGuide.color.geyScale.scale7};
+    padding: 10px;
+    padding-left: 20px;
+    &::placeholder {
+      color: ${StyleGuide.color.geyScale.scale3};
+    }
   }
   & .searchBtn {
     background: transparent;
     border: none;
     position: absolute;
-    top: 5px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   & .searchBtn .icon {
     font-size: ${StyleGuide.font.size.heading2};

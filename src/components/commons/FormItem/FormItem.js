@@ -420,6 +420,7 @@ export class FormFile extends Component {
     let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
+    delete newProps.freeView;
     return (
       <div>
         <UploaderButton htmlFor={id || name}>
