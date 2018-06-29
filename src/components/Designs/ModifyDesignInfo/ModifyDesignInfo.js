@@ -6,26 +6,35 @@ import {
   FormInput,
   FormTextArea,
   FormFile,
-  FormRadio
+  FormSelect
 } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
-import CheckBoxFieldContainer from "containers/Commons/CheckBoxFieldContainer";
 import FileUploader from "components/Commons/FileUploader";
+import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
 import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
 import StyleGuide from "StyleGuide";
 
-const FromFieldCard = styled.div`
-  width: 100%;
-  background-color: white;
-  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+// const FromFieldCard = styled.div`
+//   width: 100%;
+//   background-color: white;
+//   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+//   padding: 70px;
+//   margin-bottom: 30px;
+//   border-radius: 3px;
+//   @media only screen and (min-width: 1200px) {
+//     padding: 70px 100px 0 100px;
+//   }
+// `;
+
+const InfoWrapper = styled.div`
   padding: 70px;
   margin-bottom: 30px;
-  border-radius: 3px;
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
   }
 `;
+
 const FormHeader = styled(Header)`
   position: relative;
   padding-right: 2.5rem !important;
@@ -57,17 +66,66 @@ const FormHeader = styled(Header)`
   }
 `;
 class ModifyDesignInfo extends Component {
+  state = {
+    members: []
+  }
+
+  componentWillMount() {
+    this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
+    .then(data => {
+      this.props.GetCategoryLevel2Request(data.DesignDetail.category_level1);
+    });
+  }
+
+  onChangeCategory1 = async value => {
+    await this.props.GetCategoryLevel2Request(value);
+  };
+
+  onChangeMembers = (data) => {
+    this.setState({
+      members: data
+    });
+  }
+
+  returnToMemberFormat = (arr) => {
+    let list = [];
+    if (arr !== null) {
+      arr.map(user => {
+        const userInfo = {
+          uid: user.user_id,
+          nick_name: user.nick_name
+        }
+        list.push(userInfo);
+      });
+    }
+    console.log(list);
+    return list;
+  }
+
+  onSubmitForm = (data) => {
+    data.delete("search");
+    if(this.state.members !== []){
+      data.append("members", JSON.stringify(this.state.members));
+    }
+    this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
+    .then(data => {
+      if (data.res.success === true) {
+        alert("정보가 수정되었습니다.");
+        this.props.history.push(`/designDetail/${this.props.DesignDetail.uid}`);
+      }
+    });
+  }
+
   render() {
     const currentDesign = this.props.DesignDetail;
-    console.log(currentDesign);
     
     return (
-      <div>
+      <InfoWrapper>
         {currentDesign.length === 0 ?
         <div></div>
         :
-        <ValidateForm onSubmit={this.onSubmitForm}>
-          <FromFieldCard>
+        <ValidateForm onSubmit={this.onSubmitForm} enctype="multipart/form-data">
+          <div>
             <Grid>
               <Grid.Column mobile={16} computer={4}>
                 <FormHeader as="h2">디자인 정보</FormHeader>
@@ -96,25 +154,45 @@ class ModifyDesignInfo extends Component {
                 <Form.Group widths="equal">
                   <FormField
                     name="thumbnail"
-                    placeholder="썸네일 이미지를 등록하세요."
+                    placeholder="썸네일을 변경하려면 클릭하세요"
                     label="썸네일"
                     RenderComponent={FormFile}
-                    validates={["required", "ThumbnailSize"]}
+                    // validates={["ThumbnailSize"]}
                   />
                 </Form.Group>
-                <CheckBoxFieldContainer {...this.props}/>
+                {/* <CheckBoxFieldContainer {...this.props}/> */}
+                <Form.Group widths={2}>
+                    <FormField
+                      name="category_level1"
+                      selection={true}
+                      getValue={this.onChangeCategory1}
+                      options={this.props.category1}
+                      label="카테고리"
+                      value={currentDesign.category_level1}
+                      RenderComponent={FormSelect}
+                    />
+                    <FormField
+                      name="category_level2"
+                      selection={true}
+                      options={this.props.category2}
+                      label="카테고리2"
+                      value={currentDesign.category_level2}
+                      RenderComponent={FormSelect}
+                    />
+                  </Form.Group>
                 <Form.Group widths="equal">
                   <FormField
                     label="멤버추가"
                     RenderComponent={SearchMemberContainer}
                     validates={["MinLength2"]}
-                    onChangeMembers={this.props.onChangeMembers}
+                    onChangeMembers={this.onChangeMembers}
+                    originalMember={this.returnToMemberFormat(currentDesign.member)}
                   />
                 </Form.Group>
               </Grid.Column>
             </Grid>
-          </FromFieldCard>
-          <FromFieldCard>
+          </div>
+          <div>
             <Grid>
               <Grid.Column mobile={16} computer={4}>
                 <FormHeader as="h2">라이센스</FormHeader>
@@ -152,10 +230,11 @@ class ModifyDesignInfo extends Component {
                 </Form.Group>
               </Grid.Column>
             </Grid>
-          </FromFieldCard>
+            <Button type="submit">수정</Button>
+          </div>
         </ValidateForm>
         }
-        </div>
+        </InfoWrapper>
     );
   }
 }

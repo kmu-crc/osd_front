@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import ModifyDesignForm from "components/Designs/ModifyDesignForm";
+import ModifyDesignFile from "components/Designs/ModifyDesignFile";
 import { GetDesignDetailRequest } from "actions/Design";
 
-class ModifyDesignFormContainer extends Component {
+class ModifyDesignFileContainer extends Component {
   componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id, this.props.token);
+    this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token);
   }
 
   render() {
     return(
-      <ModifyDesignForm {...this.props}/>
+      <ModifyDesignFile {...this.props}/>
     );
   }
 }
@@ -26,8 +26,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailRequest: (id, token) => {
       return dispatch(GetDesignDetailRequest(id, token))
-    }
+    },
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyDesignFormContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyDesignFileContainer));

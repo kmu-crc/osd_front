@@ -68,7 +68,7 @@ export function GetDesignDetailRequest(id, token) {
           console.log("no data");
           data = [];
         }
-        dispatch(GetDesignDetail(data));
+        return dispatch(GetDesignDetail(data));
       }).catch((error) => {
         console.log("err", error);
       })
@@ -126,6 +126,7 @@ export function GetDesignCount(data) {
   }
 };
 
+// 디자인 조회수 업데이트
 export function UpdateDesignViewRequest(id) {
   return (dispatch) => {
     return fetch(`${host}/design/updateViewCount/${id}`, {

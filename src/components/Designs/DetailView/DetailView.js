@@ -72,7 +72,7 @@ class DetailView extends Component {
       <Grid>
         {len > 0 ?
           <ViewWrapper>
-            <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
+            <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
             {view.imageInfo &&
               <div className="imageInfo">
                 {view.imageInfo.map(img =>

@@ -56,7 +56,7 @@ class ModifyDesign extends Component {
           <Title><h1>디자인 수정</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <ModifyDesignFormContainer id={this.props.id}/>
+          <ModifyDesignFormContainer history={this.props.history} id={this.props.id}/>
         </Wrapper>
       </div>
     );

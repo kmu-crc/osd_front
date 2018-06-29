@@ -6,7 +6,7 @@ class ModifyDesignPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <ModifyDesign id={this.props.match.params.id}/>
+        <ModifyDesign id={this.props.match.params.id} history={this.props.match.params.history}/>
      </ClientTemplate>
     );
   }
