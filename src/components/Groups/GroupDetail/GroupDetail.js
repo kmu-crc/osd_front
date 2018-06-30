@@ -106,16 +106,38 @@ const InfoSection = styled.div`
 `;
 
 const IssueContainer = styled.div`
-  min-height: 30px;
-  line-height: 30px;
-  font-weight: bold;
+  padding: 1rem 2rem;
+  & .addIssue {
+    background-color: transparent;
+    border: 0;
+    padding: 7px;
+  }
   & ul .issueTitle {
-    float: left;
     width: 80%;
+    font-weight: bold;
   }
   & ul .issueDate {
     font-size: 12px;
     margin: 0 5px;
+    font-weight: lighter;
+  }
+  & ul li {
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    & .deleteIssue {
+      background-color: transparent;
+      border: 0;
+      padding: 7px;
+    }
+  }
+  & .ui.form {
+    margin-bottom: 10px;
+    & input {
+      height: 30px;
+    }
   }
 `;
 
@@ -212,7 +234,7 @@ class GroupDetail extends Component {
     const EditIssue = () => {
       return(
         <ValidateForm onSubmit={this.onSubmitForm}>
-          <FormInput name="title" validates={["required"]}/>
+          <FormInput name="title" className="issueInput" validates={["required"]}/>
           <Button type="submit">추가</Button>
           <Button onClick={this.setEditIssue}>취소</Button>
         </ValidateForm>
@@ -265,10 +287,15 @@ class GroupDetail extends Component {
                     </div>
                   </ProfileSection>
                   <IssueContainer>
-                    {this.state.editIssue 
-                    ? <EditIssue/>
-                    : <ul>
-                        {user && user.uid === groupDetail.user_id && <Button onClick={this.setEditIssue}>추가</Button>}
+                    <h4>
+                      공지
+                      {/* {user && user.uid === groupDetail.user_id &&  */}
+                      <button className="addIssue" onClick={this.setEditIssue}><Icon name="plus" color="black"/></button>
+                      {/* } */}
+                    </h4>
+                    {this.state.editIssue && <EditIssue/>}
+                    <div>
+                      <ul>
                         {groupDetail.issue !== null &&
                           groupDetail.issue.map(issue => (
                             <li key={issue.uid}>
@@ -276,14 +303,16 @@ class GroupDetail extends Component {
                                 {issue.title}
                                 <span className="issueDate">{DateFormat(issue.create_time)}</span>
                               </div>
-                              {user && user.uid === groupDetail.user_id &&
-                              <button onClick={() => this.deleteIssue(issue.uid)}>삭제</button>
-                              }
+                              {/* {user && user.uid === groupDetail.user_id && */}
+                              <button className="deleteIssue" onClick={() => this.deleteIssue(issue.uid)}>
+                                <i aria-hidden="true" className="trash alternate icon"></i>
+                              </button>
+                              {/* } */}
                             </li>
                           ))
                         }
                       </ul>
-                    }
+                    </div>
                   </IssueContainer>
                   <CountSection>
                     <div className="list">

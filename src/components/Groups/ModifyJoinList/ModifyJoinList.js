@@ -45,6 +45,7 @@ const Head = styled(Grid)`
 
 const ContentBox = styled.div`
   margin: 0 auto;
+  padding: 20px 0;
   @media only screen and (max-width: 767px) and (min-width: 320px){
     width: 470px;
   }
