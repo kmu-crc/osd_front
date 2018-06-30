@@ -15,11 +15,6 @@ const Wrapper = styled.div`
   & .ui.form {
     width: 100%;
   }
-  & .submitBtn {
-    position: absolute;
-    top: -40px;
-    left: 0;
-  }
 `;
 
 const FromFieldCard = styled.div`

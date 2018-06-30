@@ -25,6 +25,9 @@ const ViewWrapper = styled.div`
     width: 100%;
     overflow: hidden;
   }
+  & .sourceInfo {
+    margin: 2rem 1rem;
+  }
   & .imageInfo img {
     width: 100%;
   }
@@ -33,6 +36,7 @@ const ViewWrapper = styled.div`
 const CommentContainer = styled(Comment)`
   max-width: 100%;
   width: 100%;
+  margin-top: 3rem;
   text-align: center;
   & .reply.form .field {
     margin-bottom: 1rem;
@@ -123,7 +127,9 @@ class DetailView extends Component {
           <p>내용이 없습니다.</p>
         </ViewWrapper>
         }
-        <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
+        {this.props.token && this.props.userInfo.uid === view.user_id && 
+          <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
+        }
       </Grid>
     );
   }

@@ -30,19 +30,14 @@ const Wrapper = styled(Grid)`
   &.ui.grid > .row > .column {
     padding: 0;
   }
-  & .edit {
-    height: 30px;
-    margin-bottom: 5px;
-  }
   & button.edit {
-    padding: 7px 14px;
-    border-radius: 3px;
+    margin-right: 5px;
   }
   & .contentRow {
     box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
   }
   & .btnContainer {
-    height: 35px;
+    margin: 5px 0;
   }
 `;
 
