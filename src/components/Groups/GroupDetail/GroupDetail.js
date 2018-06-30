@@ -289,9 +289,9 @@ class GroupDetail extends Component {
                   <IssueContainer>
                     <h4>
                       공지
-                      {/* {user && user.uid === groupDetail.user_id &&  */}
+                      {user && user.uid === groupDetail.user_id && 
                       <button className="addIssue" onClick={this.setEditIssue}><Icon name="plus" color="black"/></button>
-                      {/* } */}
+                      }
                     </h4>
                     {this.state.editIssue && <EditIssue/>}
                     <div>
@@ -303,11 +303,11 @@ class GroupDetail extends Component {
                                 {issue.title}
                                 <span className="issueDate">{DateFormat(issue.create_time)}</span>
                               </div>
-                              {/* {user && user.uid === groupDetail.user_id && */}
+                              {user && user.uid === groupDetail.user_id &&
                               <button className="deleteIssue" onClick={() => this.deleteIssue(issue.uid)}>
                                 <i aria-hidden="true" className="trash alternate icon"></i>
                               </button>
-                              {/* } */}
+                              }
                             </li>
                           ))
                         }

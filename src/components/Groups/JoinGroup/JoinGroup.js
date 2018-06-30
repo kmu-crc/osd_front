@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import styled from "styled-components";
+import StyleGuide from "StyleGuide";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 
@@ -9,13 +10,13 @@ const ModalContent = styled.div`
   padding: 20px;
 `
 
-const ModalBtn = styled.button`
-  padding: 7px 18px;
-  border-radius: 30px;
-  background-color: #EB3324;
+const ModalBtn = styled(Button)`
+  background-color: ${StyleGuide.color.main.basic};
   border: none;
-  color: #fff;
-  font-size: 14px;
+  &:hover {
+    background-color: ${StyleGuide.color.main.dark};
+    border: none;
+  }
 `
 
 const JoinGroupWrap = styled.div`
