@@ -77,17 +77,17 @@ class DetailView extends Component {
         {len > 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
-            {view.imageInfo &&
+            {view.images &&
               <div className="imageInfo">
-                {view.imageInfo.map(img =>
+                {view.images.map(img =>
                   <img key={img.uid} src={img.link} alt={img.name} />
                 )}
               </div>
             }
-            {view.sourceInfo &&
+            {view.sources &&
               <div className="sourceInfo">
                 <h4>첨부파일</h4>
-                {view.sourceInfo.map(src =>
+                {view.sources.map(src =>
                   <div key={src.uid}>{src.name}</div>
                 )}
               </div>

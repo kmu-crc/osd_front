@@ -62,6 +62,7 @@ const DeleteBtn = styled.button`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    color: #fff;
   }
 `;
 const ModalImg = styled.img`
@@ -151,13 +152,13 @@ export class CardImageUpdate extends Component {
               {ViewImg &&
                 ViewImg.map((item, index) => {
                   return (
-                    <DeleteImgItem>
+                    <DeleteImgItem key={index}>
                       <ItemImg
                         style={{ backgroundImage: `url("${item.link}")` }}
                       />
                       <ItemText>{item.name}</ItemText>
                       <DeleteBtn onClick={() => this.onDelete(index)}>
-                        <Icon color="white" name="close" />
+                        <Icon name="close" />
                       </DeleteBtn>
                     </DeleteImgItem>
                   );
