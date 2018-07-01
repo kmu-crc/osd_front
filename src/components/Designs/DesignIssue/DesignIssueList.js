@@ -132,9 +132,11 @@ class DesignIssueList extends Component {
               </button>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
-                <button className="ui button">글쓰기</button>
-              </Link>
+              {this.props.token &&
+                <Link to={`/designDetail/${this.props.match.params.id}/createissue`}>
+                  <button className="ui button">글쓰기</button>
+                </Link>
+              }
             </Grid.Column>
           </SearchWrapper>
           <ListWrapper>

@@ -295,9 +295,9 @@ class DesignDetail extends Component {
                 <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
                        component={DesignIssue} />
                 <Route exact path={"/designDetail/:id/createissue"} 
-                       component={RequiresAuth(CreateDesignIssueContainer)} />
+                       component={CreateDesignIssueContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id/modify"}
-                       component={RequiresAuth(ModifyIssueDetailContainer)} />
+                       component={ModifyIssueDetailContainer} />
               </TabContainer>
             </Wrapper>
           </ContentBox>

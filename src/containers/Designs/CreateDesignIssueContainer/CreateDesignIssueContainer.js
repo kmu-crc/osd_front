@@ -5,6 +5,7 @@ import CreateIssue from "components/Designs/DesignIssue/CreateIssue.js";
 
 class DesignIssueDetailContainer extends Component {
   render() {
+    console.log("w");
     return (
       <div>
         <CreateIssue {...this.props} />

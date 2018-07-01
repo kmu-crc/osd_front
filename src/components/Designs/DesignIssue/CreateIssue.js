@@ -31,16 +31,6 @@ const FormHeader = styled(Header)`
 `;
 
 class CreateIssue extends Component {
-  state = {
-    complete: false
-  }
-
-  setComplete = () => {
-    this.setState({
-      complete: !this.state.complete
-    });
-  }
-  
   onSubmitForm = (data) => {
     this.props.CreateDesignIssueRequest(FormDataToJson(data), this.props.match.params.id, this.props.token)
     .then(data => {

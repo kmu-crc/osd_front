@@ -20,7 +20,8 @@ class DesignIssueListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignIssueList: state.DesignIssueList.status.DesignIssueList,
-    SearchIssue: state.SearchIssue.status.SearchIssue
+    SearchIssue: state.SearchIssue.status.SearchIssue,
+    token: state.Authentication.status.token
   };
 };
 
