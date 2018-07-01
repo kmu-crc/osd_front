@@ -63,9 +63,6 @@ const CommentContainer = styled.div`
   & .ui.form textarea:not([rows]) {
     min-height: 2rem;
   }
-  & .reply.form > .button {
-    font-size: ${StyleGuide.font.size.small};
-  }
   &.ui.comments {
     max-width: 100%;
   }

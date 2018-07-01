@@ -165,7 +165,7 @@ export function GetDesignDetailViewRequest(id) {
           console.log("no data");
           data = [];
         }
-        dispatch(GetDesignDetailView(data));
+        return dispatch(GetDesignDetailView(data));
       }).catch((error) => {
         console.log("err", error);
       })

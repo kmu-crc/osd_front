@@ -53,7 +53,7 @@ const CommentContainer = styled.div`
     margin-bottom: 1rem;
   }
   & .ui.form textarea:not([rows]) {
-    min-height: 3rem;
+    min-height: 2rem;
   }
 `;
 

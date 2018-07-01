@@ -53,7 +53,12 @@ class JoinGroup extends Component {
   }
 
   handleModal = () => {
-    this.setState({ open: true });
+    if (this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    } else {
+      this.setState({ open: true });
+    }
   }
 
   handleCloseModal = () => {

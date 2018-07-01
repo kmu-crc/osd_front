@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Comment } from "semantic-ui-react";
 import Button from "components/Commons/Button";
+import eximg from "source/topDesign.png";
+import ValidateForm from "components/Commons/ValidateForm";
+import { FormField } from "components/Commons/FormField";
+import { FormTextArea } from "components/Commons/FormItem";
+import FormDataToJson from "modules/FormDataToJson";
 
 // css styling
 
@@ -34,16 +39,20 @@ const ViewWrapper = styled.div`
   }
 `;
 
-const CommentContainer = styled(Comment)`
-  max-width: 100%;
-  width: 100%;
-  margin-top: 3rem;
-  text-align: center;
-  & .reply.form .field {
+const CommentContainer = styled.div`
+  &.ui.comments {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 3rem;
+  }
+  & p {
+    text-align: center;
+  }
+  & .ui.form .field {
     margin-bottom: 1rem;
   }
-  & .reply.form > .button {
-    float: right;
+  & .ui.form textarea:not([rows]) {
+    min-height: 2rem;
   }
 `;
 
@@ -55,8 +64,17 @@ const GoStepBtn = styled(Button)`
 
 
 class DetailView extends Component {
-  componentWillMount() {
-    this.props.GetDesignDetailViewRequest(this.props.match.params.id);
+  state = {
+    render: true
+  }
+
+  async componentDidMount() {
+    this.props.GetDesignDetailViewRequest(this.props.match.params.id)
+    .then(data => {
+      if (data.DesignDetailView !== null) {
+        this.props.GetCardCommentRequest(this.props.match.params.id, data.DesignDetailView.uid)
+      }
+    });
   }
 
   onActiveStep = () => {
@@ -69,9 +87,51 @@ class DetailView extends Component {
     });
   }
 
+  onSubmitCmtForm = async (data) => {
+    if (!this.props.token) {
+      alert("로그인을 해주세요.");
+      return;
+    }
+    this.props.CreateCardCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.DesignDetailView.uid, this.props.token)
+    .then(async res => {
+      if (res.data.success === true) {
+        this.props.GetCardCommentRequest(this.props.match.params.id, this.props.DesignDetailView.uid);
+      }
+      await this.setState({
+        render: false
+      });
+      this.setState({
+        render: true
+      });
+    });
+  }
+
+  deleteComment = (id) => {
+    this.props.DeleteCardCommentRequest(this.props.match.params.id, this.props.DesignDetailView.uid, id, this.props.token)
+    .then(res => {
+      if (res.data.success === true) {
+        this.props.GetCardCommentRequest(this.props.match.params.id, this.props.DesignDetailView.uid);
+      }
+    });
+  }
+
+
   render(){
     let view = this.props.DesignDetailView;
     let len = Object.keys(view).length;
+    const comment = this.props.Comment;
+
+    const CommentForm = () => {
+      return (
+        <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
+          <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
+          <Button type="submit" className="ui icon primary left labeled button">
+            <i aria-hidden="true" className="edit icon"></i>
+            댓글쓰기
+          </Button>
+        </ValidateForm>
+      );
+    }
 
     return(
       <Grid>
@@ -93,34 +153,29 @@ class DetailView extends Component {
                 )}
               </div>
             }
-            <CommentContainer>
-              {view.commentInfo != null?
-              view.commentInfo.map(comm=>(
+            <CommentContainer className="ui comments">
+              {comment != null?
+              comment.map(comm=>(
                 <div className="comment" key={comm.uid}>
                   <div className="avatar">
-                    <img src="" alt="profile" />
+                    <img src={comm.s_img? comm.s_img : eximg} alt="profile" />
                   </div>
                   <div className="content">
-                    <a className="author">{comm.user_id}</a>
+                    <a className="author">{comm.nick_name}</a>
                     <div className="metadata">
                       <div>{comm.create_time.split("T")[0]}}</div>
                     </div>
                     <div className="text">{comm.comment}</div>
                   </div>
+                  {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
+                  <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                  }
                 </div>
                 ))
               :
               <p>등록된 코멘트가 없습니다.</p>
               }
-              <form className="ui reply form">
-                <div className="field">
-                  <textarea rows="3"></textarea>
-                </div>
-                <button className="ui icon primary left labeled button">
-                  <i aria-hidden="true" className="edit icon"></i>
-                  댓글쓰기
-                </button>
-              </form>
+              {this.state.render? <CommentForm/> : null}
             </CommentContainer>
           </ViewWrapper>
         :
