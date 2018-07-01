@@ -154,7 +154,7 @@ class DetailView extends Component {
               </div>
             }
             <CommentContainer className="ui comments">
-              {comment != null?
+              {comment.length > 0?
               comment.map(comm=>(
                 <div className="comment" key={comm.uid}>
                   <div className="avatar">
