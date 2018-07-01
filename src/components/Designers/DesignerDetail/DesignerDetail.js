@@ -234,7 +234,7 @@ class DesignerDetail extends Component {
                       ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
                       : <Button className="red" onClick={this.updateLike}>좋아요</Button>
                       }
-                      <Link to="/message"><Button>메시지보내기</Button></Link>
+                      {/* <Link to="/message"><Button>메시지보내기</Button></Link> */}
                     </div>
                   </ProfileSection>
                   <CountSection>

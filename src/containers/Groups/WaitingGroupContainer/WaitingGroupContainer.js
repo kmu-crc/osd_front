@@ -8,29 +8,35 @@ class WaitingGroupContainer extends Component {
     this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetWaitingGroupRequest(this.props.match.params.id, nextProps.match.params.sort);
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
+  //     console.log("here");
+  //     this.props.GetWaitingGroupRequest(this.props.match.params.id, nextProps.match.params.sort);
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   setOut = (id) => {
-    alert("그룹을 삭제하시겠습니까?");
+   
     this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id)
-    .then(this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort))
-    .catch(err=>{
+    .then(res => {
+      if (res.data.success === true) {
+        this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort)
+      }
+    }).catch(err=>{
       console.log(err);
     });
   }
 
   setAccept = (id) => {
-    alert("가입을 승인하시겠습니까?");
     this.props.UpdateGroupInGroupRequest(this.props.match.params.id, id)
-    .then(this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort))
-    .catch(err => {
+    .then(res => {
+      if (res.data.success === true) {
+        this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort)
+      }
+    }).then((data) => {console.log(data)}).catch(err => {
       console.log(err);
     });
   }

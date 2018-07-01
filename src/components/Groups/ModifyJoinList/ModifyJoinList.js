@@ -85,6 +85,10 @@ const ListContainer = styled(Grid)`
 `;
 
 class ModifyJoinList extends Component {
+  componentWillUnmount() {
+    this.props.DesignInGroupClear([]);
+  }
+
   typeChange = (e) => {
     const type = e.target.id;
     const url = `/groupDetail/${this.props.id}/${type}/${this.props.sort}`;

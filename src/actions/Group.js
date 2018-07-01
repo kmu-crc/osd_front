@@ -452,6 +452,7 @@ export function GetWaitingDesign(data) {
 
 // 그룹에 가입 신청중인 그룹 가져오기
 export function GetWaitingGroupRequest(id, sort) {
+  console.log("hw");
   return (dispatch) => {
     return fetch(`${host}/group/groupDetail/${id}/waitingGroup/${sort}`, {
       headers: { "Content-Type": "application/json" },
@@ -497,7 +498,7 @@ export function DeleteDesignInGroupRequest(id, designid) {
       return response.json();
     }).then((data) => {
       console.log("result >>", data);
-      dispatch(DeleteDesignInGroupSuccess());
+      return dispatch(DeleteDesignInGroupSuccess(data));
     }).catch((error) => {
       dispatch(DeleteDesignInGroupFail());
       console.log("err", error);
@@ -505,9 +506,10 @@ export function DeleteDesignInGroupRequest(id, designid) {
   }
 };
 
-export function DeleteDesignInGroupSuccess(){
+export function DeleteDesignInGroupSuccess(data){
   return {
-    type: types.DELETE_DESIGN_IN_GROUP_SUCCESS
+    type: types.DELETE_DESIGN_IN_GROUP_SUCCESS,
+    data
   }
 };
 
@@ -527,7 +529,7 @@ export function UpdateDesignInGroupRequest(id, designid) {
       return response.json();
     }).then((data) => {
       console.log("result >>", data);
-      dispatch(UpdateDesignInGroupSuccess());
+      return dispatch(UpdateDesignInGroupSuccess(data));
     }).catch((error) => {
       dispatch(UpdateDesignInGroupFail());
       console.log("err", error);
@@ -535,9 +537,10 @@ export function UpdateDesignInGroupRequest(id, designid) {
   }
 };
 
-export function UpdateDesignInGroupSuccess(){
+export function UpdateDesignInGroupSuccess(data){
   return {
-    type: types.UPDATE_DESIGN_IN_GROUP_SUCCESS
+    type: types.UPDATE_DESIGN_IN_GROUP_SUCCESS,
+    data
   }
 };
 
@@ -557,7 +560,7 @@ export function DeleteGroupInGroupRequest(id, groupid) {
       return response.json();
     }).then((data) => {
       console.log("result >>", data);
-      dispatch(DeleteGroupInGroupSuccess());
+      return dispatch(DeleteGroupInGroupSuccess(data));
     }).catch((error) => {
       dispatch(DeleteGroupInGroupFail());
       console.log("err", error);
@@ -565,9 +568,10 @@ export function DeleteGroupInGroupRequest(id, groupid) {
   }
 };
 
-export function DeleteGroupInGroupSuccess(){
+export function DeleteGroupInGroupSuccess(data){
   return {
-    type: types.DELETE_GROUP_IN_GROUP_SUCCESS
+    type: types.DELETE_GROUP_IN_GROUP_SUCCESS,
+    data
   }
 };
 
@@ -587,7 +591,7 @@ export function UpdateGroupInGroupRequest(id, groupid) {
       return response.json();
     }).then((data) => {
       console.log("result >>", data);
-      dispatch(UpdateGroupInGroupSuccess());
+      return dispatch(UpdateGroupInGroupSuccess(data));
     }).catch((error) => {
       dispatch(UpdateGroupInGroupFail());
       console.log("err", error);
@@ -595,9 +599,10 @@ export function UpdateGroupInGroupRequest(id, groupid) {
   }
 };
 
-export function UpdateGroupInGroupSuccess(){
+export function UpdateGroupInGroupSuccess(data){
   return {
-    type: types.UPDATE_GROUP_IN_GROUP_SUCCESS
+    type: types.UPDATE_GROUP_IN_GROUP_SUCCESS,
+    data
   }
 };
 
