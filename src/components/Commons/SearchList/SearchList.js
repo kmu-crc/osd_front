@@ -103,6 +103,10 @@ class SearchList extends Component {
     keyword: ""
   }
 
+  componentDidMount() {
+    document.getElementById("searchInput").focus();
+  }
+  
   changeState = () => { // 리렌더링을 위한 state값 변경
     this.setState({
       rendering: false
@@ -150,7 +154,7 @@ class SearchList extends Component {
       <div>
         <ImgWrapper>
           <Title>
-            <input placeholder="검색어를 입력하세요" onChange={this.getSearchValue} onKeyDown={this.submitEnter}/>
+            <input id="searchInput" placeholder="검색어를 입력하세요" onChange={this.getSearchValue} onKeyDown={this.submitEnter}/>
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>
             </button>

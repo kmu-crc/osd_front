@@ -10,12 +10,13 @@ import { Link, Route } from "react-router-dom";
 import RequiresAuth from "containers/Commons/RequiresAuth";
 import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
 import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
 const Wrapper = styled.div`
   box-sizing: border-box;
-  padding: 20px 0;
+  padding: 20px 0 60px;
   position: relative;
 `;
 
@@ -59,10 +60,16 @@ const SubInfo = styled.div`
   & .ui.button {
     cursor: initial;
   }
+  & .like .ui.button {
+    cursor: pointer;
+  }
   & .ui.basic.button:hover,
     .ui.basic.buttons .button:hover {
       background-color: transparent !important;
       box-shadow: 0 0 0 1px rgba(34,36,38,.15) inset;
+  }
+  & .like .ui.basic.button:hover {
+    background-color: ${StyleGuide.color.gey.light} !important;
   }
 `;
 
@@ -213,7 +220,7 @@ class DesignDetail extends Component {
                     </Cate>
                   </Grid.Column>
                   <Grid.Column computer={8} tablet={10} mobile={10}>
-                    <MoreBtn className="ui teal button more" onClick={this.onActiveMoreBtn}>
+                    <MoreBtn className="ui grey button more" onClick={this.onActiveMoreBtn}>
                       더보기 +
                   <ButtonModal />
                     </MoreBtn>
@@ -225,7 +232,7 @@ class DesignDetail extends Component {
                     </button>
                         <div className="ui left pointing basic label">{count.view_count}</div>
                       </div>
-                      <div className="ui right labeled button">
+                      <div className="ui right labeled button like">
                       {this.props.like === true 
                       ? <button className="ui basic button" onClick={this.updateLike}>
                         <Icon name="heart" size="mini"></Icon>

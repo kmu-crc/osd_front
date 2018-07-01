@@ -62,6 +62,10 @@ class ModifyDesignInfo extends Component {
     this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
     .then(data => {
       this.props.GetCategoryLevel2Request(data.DesignDetail.category_level1);
+    }).then(() => {
+      this.setState({
+        members: this.returnToMemberFormat(this.props.DesignDetail.member)
+      });
     });
   }
 
@@ -70,9 +74,19 @@ class ModifyDesignInfo extends Component {
   };
 
   onChangeMembers = (data) => {
-    this.setState({
-      members: data
-    });
+    if (data.length === 0) {
+      const userInfo = [{
+        uid: this.props.DesignDetail.user_id,
+        nick_name: this.props.DesignDetail.userName
+      }];
+      this.setState({
+        members: userInfo
+      });
+    } else {
+      this.setState({
+        members: data
+      });
+    }
   }
 
   returnToMemberFormat = (arr) => {

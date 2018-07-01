@@ -64,6 +64,7 @@ const Menu = styled.ul`
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: 3px;
+  z-index: 1;
 `;
 
 const MenuItem = styled.li`
@@ -110,7 +111,11 @@ class DesignBoard extends Component {
   };
 
   onModify = () => {
-    this.setState({active: true});
+    if (this.props.isTeam !== 1) {
+      return;
+    } else {
+      this.setState({active: true});
+    }
   }
   ModifyComplete = () => {
     this.setState({active: false});
@@ -129,9 +134,11 @@ class DesignBoard extends Component {
           {this.state.active ? <BoardUpdate board={board} getBoard={this.props.GetDesignBoardRequest} onUpdate={this.props.UpdateDesignBoardRequest} token={this.props.token} value={board.title} ModifyComplete={this.ModifyComplete}/> : (
             <div>
               <span onClick={this.onModify}>{board.title}</span>
+              {this.props.isTeam === 1 &&
               <MenuIcon className="openMenu" onClick={this.onActive}>
                 <Icon name="ellipsis vertical" />
               </MenuIcon>
+              }
               <Menu
                 style={{
                   display:

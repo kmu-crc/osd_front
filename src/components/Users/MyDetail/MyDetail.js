@@ -2,17 +2,14 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import MyDesignContainer from "containers/MyPage/MyDesignContainer";
 import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
-// import ContentBox from "components/Commons/ContentBox";
+import ContentBox from "components/Commons/ContentBox";
 
 // css styling
-const Container = styled.div`
-  width: 95%;
-  margin: auto;
-`;
 
 const Wrapper = styled(Grid)`
   width: 100%;
@@ -27,12 +24,7 @@ const Wrapper = styled(Grid)`
     padding: 0;
   }
   & .edit {
-    height: 30px;
     margin-bottom: 5px;
-  }
-  & .edit button {
-    padding: 7px 14px;
-    border-radius: 3px;
   }
   & .contentRow {
     box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
@@ -42,6 +34,7 @@ const Wrapper = styled(Grid)`
 const HeadContainer = styled(Grid.Column)`
   border-right: 1px solid rgba(0,0,0,0.15);
   box-shadow: 0 0 5px rgba(0,0,0,0.25);
+  margin-botto: 5px;
 `;
 
 const ProfileSection = styled.div`
@@ -69,6 +62,7 @@ const ProfileSection = styled.div`
   & .category {
     min-height: 20px;
     text-align: center;
+    color: #EB3324;
   }
 `;
 
@@ -128,29 +122,37 @@ const Head = styled(Grid)`
   }
 `;
 
-const ContentBox = styled.div`
+const MiniContentBox = styled.div`
   margin: 0 auto;
   padding: 20px 0;
-  @media only screen and (max-width: 767px) and (min-width: 320px){
-    width: 470px;
+  @media only screen and (max-width: 500px) and (min-width: 320px){
+    width: 100%;
+  }
+  @media only screen and (max-width: 767px) and (min-width: 501px){
+    width: 400px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 450px;
+    width: 700px;
+  }
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    .ui.grid > .row{
+      margin-left: 6.25% !important;
+    }
   }
   @media only screen and (min-width: 992px){
-    width: 705px;
+    width: 420px;
   }
   @media only screen and (max-width: 1399px) and (min-width: 1200px){
-    width: 855px;
+    width: 825px;
   }
   @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 900px;
+    width: 825px;
   }
   @media only screen and (max-width: 1919px) and (min-width: 1700px){
-    width: 1210px;
+    width: 825px;
   }
   @media only screen and (min-width: 1920px){
-    width: 1368px;
+    width: 825px;
   }
 `;
 
@@ -189,11 +191,11 @@ class MyDetail extends Component {
     return (
       <div>
         {MyInfo !== null && (
-          <Container>
+          <ContentBox>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
                 <Link to="/myModify">
-                  <button>내 정보 수정</button>
+                  <Button>내 정보 수정</Button>
                 </Link>
               </Grid.Row>
               {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}              
@@ -212,7 +214,7 @@ class MyDetail extends Component {
                       <div className="title">
                         <h3>{MyInfo.nick_name}</h3>
                       </div>
-                      <div className="category">{MyInfo.categoryName}</div>
+                      <div className="category">{MyInfo.categoryName? MyInfo.categoryName : "전체"}</div>
                     </ProfileSection>
                     <CountSection>
                       <div className="list">
@@ -270,18 +272,18 @@ class MyDetail extends Component {
                         </Grid.Column>
                       </Grid.Row>
                     </Head>
-                    <ContentBox>
+                    <MiniContentBox>
                       <Route path="/myPage/:type?"
                             component={this.props.type === "likeDesigner" ? MyLikeDesignerContainer
                                         : this.props.type === "likeDesign" ? MyLikeDesignContainer
                                         : this.props.type === "group" ? MyGroupContainer
                                         : ContainerPage}
                       />
-                    </ContentBox>
+                    </MiniContentBox>
                   </TabContainer>
                 </Grid.Row>
             </Wrapper>
-          </Container>
+          </ContentBox>
         )}
       </div>
     );

@@ -12,6 +12,7 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   width: 100%;
+  margin-bottom: 30px;
   & ul {
     margin-top: 30px;
   }

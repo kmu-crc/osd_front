@@ -10,19 +10,16 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import DateFormat from "modules/DateFormat";
+import ContentBox from "components/Commons/ContentBox";
+import StyleGuide from "StyleGuide";
 
 // css styling
-
-const Container = styled.div`
-  width: 95%;
-  margin: auto;
-`;
 
 const Wrapper = styled(Grid)`
   width: 100%;
   &.ui.grid {
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     margin-left: 0rem;
     margin-right: 0rem;
   }
@@ -73,10 +70,8 @@ const ProfileSection = styled.div`
     padding: 10px 0;
   }
   & .btnContainer {
-    text-align: center;
-    & button {
-      margin: .5rem 1rem;
-    }
+    display: flex;
+    justify-content: space-around;
   }
 `;
 
@@ -108,24 +103,24 @@ const IssueContainer = styled.div`
     padding: 7px;
   }
   & ul .issueTitle {
-    width: 80%;
     font-weight: bold;
   }
   & ul .issueDate {
     font-size: 12px;
     margin: 0 5px;
     font-weight: lighter;
+    color: ${StyleGuide.color.geyScale.scale5};
   }
   & ul li {
-    height: 30px;
-    line-height: 30px;
-    display: flex;
+    margin: 10px 0;
+    border-bottom: 1px solid #e9e9e9;
     position: relative;
-    justify-content: space-between;
     & .deleteIssue {
       background-color: transparent;
       border: 0;
-      padding: 7px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
   }
   & .ui.form {
@@ -239,7 +234,7 @@ class GroupDetail extends Component {
     return(
       <div>
         {groupDetail.length !== 0 &&
-          <Container>
+          <ContentBox>
             <Wrapper padded={false} columns={2}>
             { this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) && 
               <Grid.Row>
@@ -261,7 +256,7 @@ class GroupDetail extends Component {
             ? <ModifyGroupInfoContainer {...this.props}/> 
             : 
               <Grid.Row className="contentRow">
-                <HeadContainer mobile={16} tablet={4} computer={4}>
+                <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
                     <div className="imgContainer">
                       <div>{groupDetail.img? <img src= {groupDetail.img.m_img} alt="그룹 이미지"/> : "등록된 이미지 없음"}</div>
@@ -294,9 +289,8 @@ class GroupDetail extends Component {
                         {groupDetail.issue !== null &&
                           groupDetail.issue.map(issue => (
                             <li key={issue.uid}>
-                              <div className="issueTitle">
-                                {issue.title}
-                                <span className="issueDate">{DateFormat(issue.create_time)}</span>
+                              <div className="issueTitle">{issue.title}
+                                <div className="issueDate">{DateFormat(issue.create_time)}</div>
                               </div>
                               {user && user.uid === groupDetail.user_id &&
                               <button className="deleteIssue" onClick={() => this.deleteIssue(issue.uid)}>
@@ -337,7 +331,7 @@ class GroupDetail extends Component {
               </Grid.Row>
             }   
             </Wrapper>
-          </Container>
+          </ContentBox>
         }
       </div>
     );
