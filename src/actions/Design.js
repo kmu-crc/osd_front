@@ -55,7 +55,7 @@ export function GetDesignDetailRequest(id, token) {
       token = "";
     }
     return fetch(`${host}/design/designDetail/`+id, {
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "x-access-token": token
      },
@@ -106,10 +106,10 @@ export function GetDesignCountRequest(id) {
       console.log("design count >>", data);
       if (!data) {
         console.log("no data");
-        data = { 
-          like_count: 0, 
-          member_count: 0, 
-          card_count: 0, 
+        data = {
+          like_count: 0,
+          member_count: 0,
+          card_count: 0,
           view_count: 0 };
       }
       dispatch(GetDesignCount(data));
@@ -264,7 +264,7 @@ export function GetDesignIssueList(data) {
 
 export function GetDesignIssueDetailRequest(id, issue_id) {
   return (dispatch) => {
-    return fetch("http://localhost:8080/design/designDetail/"+id+"/issueDetail/"+issue_id, {
+    return fetch(`${host}/design/designDetail/${id}/issueDetail/${issue_id}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -419,9 +419,9 @@ export function ChangeToProjectRequest(id, token) {
   return (dispatch) => {
     dispatch(ChangeToProject());
     return fetch(`${host}/Design/changeToProject/${id}`, {
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-access-token": token 
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
       },
       method: "post"
     }).then((response) => {
