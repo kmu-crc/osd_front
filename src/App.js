@@ -6,7 +6,7 @@ import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import CreateDesignPage from "pages/CreateDesignPage";
 import ModifyDesignPage from "pages/ModifyDesignPage";
 import CreateGroupPage from "pages/CreateGroupPage";
-import ModifyGroupPage from "pages/ModifyGroupPage";
+// import ModifyGroupPage from "pages/ModifyGroupPage";
 import InserUserDetailPage from "pages/InserUserDetailPage"
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
@@ -19,6 +19,7 @@ import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
+import MessagePage from "pages/MessagePage";
 
 class App extends Component {
   componentDidMount(){
@@ -50,6 +51,7 @@ class App extends Component {
           <Route path="/test" component={TestPage} />
           <Route path="/footer/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
+          <Route path="/message" component={RequiresAuth(MessagePage)}/>
         </Switch>
       </BrowserRouter>
     );

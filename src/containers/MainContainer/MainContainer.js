@@ -10,7 +10,7 @@ class MainContainer extends Component {
   }
   render() {
     return(
-      <Main/>
+      <Main {...this.props}/>
     );
   }
 }

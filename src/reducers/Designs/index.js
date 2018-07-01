@@ -9,3 +9,4 @@ export * from "./DeleteDesign";
 export * from "./DesignIssueComment";
 export * from "./DesignCardComment";
 export * from "./ChangeToProject";
+export * from "./UpdateDesign";

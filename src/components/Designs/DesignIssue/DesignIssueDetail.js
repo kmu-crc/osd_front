@@ -8,6 +8,7 @@ import { FormTextArea } from "components/Commons/FormItem";
 import { Link } from "react-router-dom";
 import FormDataToJson from "modules/FormDataToJson";
 import eximg from "source/topDesign.png";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
@@ -30,17 +31,21 @@ const IssueWrapper = styled(Grid)`
   & .userInfo > span {
     margin-right: 20px;
   }
-  & .userInfo > span.status div {
-    display: inline;
+  & .userInfo > span.status button {
     margin-left: 5px;
-  }
-  & .userInfo > span.status div label {
-    margin-right: 5px;
+    font-size: ${StyleGuide.font.size.small};
   }
 `;
 
 const BtnWrapper = styled.div`
   text-align: right;
+  position: absolute;
+  top: 30px;
+  right: 2rem;
+  & button {
+    margin-right: 3px;
+    font-size: ${StyleGuide.font.size.small};
+  }
 `;
 
 const TextArea = styled.div`
@@ -49,14 +54,17 @@ const TextArea = styled.div`
 
 const CommentContainer = styled.div`
   width: 100%;
-  & .reply.form .field {
+  & button {
+    font-size: ${StyleGuide.font.size.small};
+  }
+  & .ui.form .field {
     margin-bottom: 1rem;
   }
-  &.ui.comments .reply.form textarea {
-    height: 4em;
+  & .ui.form textarea:not([rows]) {
+    min-height: 2rem;
   }
   & .reply.form > .button {
-    float: right;
+    font-size: ${StyleGuide.font.size.small};
   }
   &.ui.comments {
     max-width: 100%;

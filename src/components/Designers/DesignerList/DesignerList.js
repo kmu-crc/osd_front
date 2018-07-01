@@ -5,13 +5,14 @@ import Sorting from "components/Commons/Sorting";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-import mainSlide from "source/mainSlide.jpg";
+import designer_bg from "source/designer_bg.jpg";
 import StyleGuide from "StyleGuide";
 
 // css styling
 
 const Wrapper = styled.div`
   width: 100%;
+  margin-bottom: 30px;
   & ul {
     margin-top: 30px;
   }
@@ -41,7 +42,7 @@ const MenuContainer = styled(Grid)`
 `;
 
 const ImgWrapper = styled.div`
-  background-image: url(${mainSlide});
+  background-image: url(${designer_bg});
   background-position: center;
   background-size: cover;
   width: 100%;
@@ -55,7 +56,7 @@ const ImgWrapper = styled.div`
     content: "";
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
   }
 `;

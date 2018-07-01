@@ -25,6 +25,9 @@ const Head = styled(Grid)`
     padding-bottom: 0.5rem;
     padding-top: 0.5rem;
   }
+  &.ui.grid > .row > .column.sorting {
+    line-height: 2.5;
+  }
   & ul {
     line-height: 38px;
   }
@@ -43,28 +46,37 @@ const Head = styled(Grid)`
   }
 `;
 
-const ContentBox = styled.div`
+const MiniContentBox = styled.div`
   margin: 0 auto;
-  @media only screen and (max-width: 767px) and (min-width: 320px){
-    width: 470px;
+  padding: 20px 0;
+  @media only screen and (max-width: 500px) and (min-width: 320px){
+    width: 100%;
+  }
+  @media only screen and (max-width: 767px) and (min-width: 501px){
+    width: 400px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 450px;
+    width: 700px;
+  }
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    .ui.grid > .row{
+      margin-left: 6.25% !important;
+    }
   }
   @media only screen and (min-width: 992px){
-    width: 705px;
+    width: 420px;
   }
   @media only screen and (max-width: 1399px) and (min-width: 1200px){
-    width: 855px;
+    width: 825px;
   }
   @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 900px;
+    width: 825px;
   }
   @media only screen and (max-width: 1919px) and (min-width: 1700px){
-    width: 1210px;
+    width: 825px;
   }
   @media only screen and (min-width: 1920px){
-    width: 1368px;
+    width: 825px;
   }
 `;
 
@@ -87,16 +99,16 @@ class ModifyJoinList extends Component {
 
   render(){
     return(
-      <TabContainer mobile={16} tablet={12} computer={12}>
+      <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
         <Head devided="vertically" padded={true} columns={2}>
           <Grid.Row>
-            <Grid.Column as="ul" widescreen={10} largeScreen={10} computer={10} tablet={10} mobile={10}>
+            <Grid.Column as="ul" widescreen={11} largeScreen={11} computer={12} tablet={10} mobile={10}>
               <li id="design" 
                   className={this.props.type === "design" || this.props.type === null || this.props.type === "null" ? "onSelected" : ""}
-                  onClick={this.typeChange}>가입한 디자인</li>
+                  onClick={this.typeChange}>가입 디자인</li>
               <li id="group" 
                   className={this.props.type === "group"? "onSelected" : ""}
-                  onClick={this.typeChange}>가입한 그룹</li>
+                  onClick={this.typeChange}>가입 그룹</li>
               <li id="waitingDesign" 
                   className={this.props.type === "waitingDesign"? "onSelected" : ""}
                   onClick={this.typeChange}>가입 신청한 디자인</li>
@@ -105,11 +117,11 @@ class ModifyJoinList extends Component {
                   onClick={this.typeChange}>가입 신청한 그룹</li>
               <div className="clear"></div>
             </Grid.Column>
-            <Sorting widescreen={6} largeScreen={6} computer={6} tablet={6} mobile={6} 
+            <Sorting widescreen={5} largeScreen={5} computer={4} tablet={6} mobile={6} 
                      handleChange={this.sortChange}/>
           </Grid.Row>
         </Head>
-        <ContentBox>
+        <MiniContentBox>
           <ListContainer devided="vertically" padded={true} as="ul">
             <Route path="/groupDetail/:id/:type?/:sort?" 
                    component={this.props.type === "waitingGroup" ? WaitingGroupContainer
@@ -119,7 +131,7 @@ class ModifyJoinList extends Component {
                               }
             />
         </ListContainer>
-        </ContentBox>
+        </MiniContentBox>
       </TabContainer>
     );
   }

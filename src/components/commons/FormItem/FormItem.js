@@ -384,15 +384,11 @@ export class FormMultiSelect extends Component {
 
 export class FormFile extends Component {
   state = {
-    status: null,
+    status: "SUCCESS",
     message: null,
     value: null,
   }
-  componentWillMount() {
-    if (!this.props.validates) {
-      this.setState({ status: "SUCCESS" });
-    }
-  }
+
   componentWillUnmount() {
     this.setState({
       status: null,
@@ -420,6 +416,7 @@ export class FormFile extends Component {
     let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
+    delete newProps.freeView;
     return (
       <div>
         <UploaderButton htmlFor={id || name}>

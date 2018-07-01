@@ -5,13 +5,14 @@ import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
 import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
+import group_bg from "source/group_bg.jpg";
 import StyleGuide from "StyleGuide";
 
 // css styling
 
 const Wrapper = styled.div`
   width: 100%;
+  margin-bottom: 30px;
   & ul {
     margin-top: 30px;
   }
@@ -68,8 +69,8 @@ const Title = styled.div`
 `;
 
 const ImgWrapper = styled.div`
-  background-image: url(${mainSlide});
-  background-position: center;
+  background-image: url(${group_bg});
+  background-position: center 15%;
   background-size: cover;
   width: 100%;
   height: 250px;
@@ -82,7 +83,7 @@ const ImgWrapper = styled.div`
     content: "";
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
   }
 `;

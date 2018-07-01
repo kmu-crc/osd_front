@@ -16,7 +16,8 @@ class DesignDetailViewContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignDetailView: state.DesignDetailView.status.DesignDetailView,
-    token: state.Authentication.status.token
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

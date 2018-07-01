@@ -54,6 +54,14 @@ class SearchMember extends Component {
     open: false
   }
 
+  componentDidMount() {
+    if (this.props.originalMember) {
+      this.setState({
+        member: this.props.originalMember
+      });
+    }
+  }
+
   getValue = (value) => {
     console.log("get", value);
     this.setState({open: true});

@@ -7,6 +7,7 @@ import Button from "components/Commons/Button";
 
 const ViewWrapper = styled.div`
   width: 100%;
+  padding-top: 30px;
   & .date {
     color: #a4a4a4;
     font-weight: 400;
@@ -25,6 +26,9 @@ const ViewWrapper = styled.div`
     width: 100%;
     overflow: hidden;
   }
+  & .sourceInfo {
+    margin: 2rem 1rem;
+  }
   & .imageInfo img {
     width: 100%;
   }
@@ -33,6 +37,7 @@ const ViewWrapper = styled.div`
 const CommentContainer = styled(Comment)`
   max-width: 100%;
   width: 100%;
+  margin-top: 3rem;
   text-align: center;
   & .reply.form .field {
     margin-bottom: 1rem;
@@ -72,18 +77,18 @@ class DetailView extends Component {
       <Grid>
         {len > 0 ?
           <ViewWrapper>
-            <div className="date">최근 업데이트 {(view.create_time).split("T")[0]}</div>
-            {view.imageInfo &&
+            <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
+            {view.images &&
               <div className="imageInfo">
-                {view.imageInfo.map(img =>
+                {view.images.map(img =>
                   <img key={img.uid} src={img.link} alt={img.name} />
                 )}
               </div>
             }
-            {view.sourceInfo &&
+            {view.sources &&
               <div className="sourceInfo">
                 <h4>첨부파일</h4>
-                {view.sourceInfo.map(src =>
+                {view.sources.map(src =>
                   <div key={src.uid}>{src.name}</div>
                 )}
               </div>
@@ -123,7 +128,9 @@ class DetailView extends Component {
           <p>내용이 없습니다.</p>
         </ViewWrapper>
         }
-        <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
+        {this.props.token && this.props.userInfo.uid === view.user_id && 
+          <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
+        }
       </Grid>
     );
   }

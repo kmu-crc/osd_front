@@ -39,6 +39,9 @@ class FileUploader extends Component {
     display: true
   }
   addImages = (target) => {
+    if (!target.files[0]) {
+      return;
+    }
     this.setState({ files: [...this.state.files, target.files[0]], target });
     this.returnData();
   }

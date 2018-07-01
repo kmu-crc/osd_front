@@ -6,6 +6,9 @@ import FileUploader from "components/Commons/FileUploader";
 
 const CardSourc = styled.div`
   margin-bottom: 2rem;
+  & a {
+    margin-right: 10px;
+  }
 `;
 const DeleteImg = styled.div`
   width: 100%;
@@ -61,6 +64,7 @@ const DeleteBtn = styled.button`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    color: #fff;
   }
 `;
 const TitleWrap = styled.div`
@@ -148,10 +152,10 @@ export class CardSourcUpdate extends Component {
               {this.state.sourcesLink &&
                 this.state.sourcesLink.map((item, index) => {
                   return (
-                    <DeleteImgItem>
+                    <DeleteImgItem key={index}>
                       <a href={item.link}>{item.name}</a>
                       <DeleteBtn onClick={() => this.onDelete(index)}>
-                        <Icon color="white" name="close" />
+                        <Icon name="close" />
                       </DeleteBtn>
                     </DeleteImgItem>
                   );

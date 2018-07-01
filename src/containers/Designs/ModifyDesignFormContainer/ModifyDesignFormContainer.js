@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import ModifyDesignFormContent from "components/Designs/ModifyDesignFormContent";
+import ModifyDesignForm from "components/Designs/ModifyDesignForm";
 import { GetDesignDetailRequest } from "actions/Design";
 
 class ModifyDesignFormContainer extends Component {
@@ -10,9 +10,8 @@ class ModifyDesignFormContainer extends Component {
   }
 
   render() {
-    console.log("render");
     return(
-      <ModifyDesignFormContent {...this.props}/>
+      <ModifyDesignForm {...this.props}/>
     );
   }
 }
@@ -27,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailRequest: (id, token) => {
       return dispatch(GetDesignDetailRequest(id, token))
-    },
+    }
   };
 };
 

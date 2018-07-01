@@ -147,7 +147,7 @@ class DesignBoardCard extends Component {
       <div>
         <BoardCard onClick={this.openModalHandler}>
           <span>{card.title}</span>
-          {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><Icon name="trash alternate"/></DeleteBtn>}
+          {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><i aria-hidden="true" className="trash alternate icon"></i></DeleteBtn>}
         </BoardCard>
         <CustomModal
           open={open}

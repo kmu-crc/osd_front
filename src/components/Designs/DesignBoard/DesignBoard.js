@@ -111,8 +111,13 @@ class DesignBoard extends Component {
   };
 
   onModify = () => {
-    this.setState({ active: true });
-  };
+    if (this.props.isTeam !== 1) {
+      return;
+    } else {
+      this.setState({active: true});
+    }
+  }
+
   ModifyComplete = () => {
     this.setState({ active: false });
   };
@@ -149,7 +154,8 @@ class DesignBoard extends Component {
                 <MenuIcon className="openMenu" onClick={this.onActive}>
                   <Icon name="ellipsis vertical" />
                 </MenuIcon>
-              ) : null}
+              ) : null
+              }
               <Menu
                 style={{
                   display:
