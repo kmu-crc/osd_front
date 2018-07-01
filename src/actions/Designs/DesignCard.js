@@ -311,6 +311,7 @@ export const DeleteCardFailure = (error) => {
 // 카드 댓글 가져오기
 export const GetCardCommentRequest = (design_id, card_id) => {
   console.log("work");
+  console.log(card_id);
   return (dispatch) => {
     dispatch(GetCardComment());
     return fetch(`${host}/design/designDetail/${design_id}/getCardComment/${card_id}`, { 

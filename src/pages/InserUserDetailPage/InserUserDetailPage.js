@@ -26,7 +26,7 @@ class InserUserDetailPage extends Component {
       <ClientTemplate>
         <PageContent>
           <FormCard>
-            <UserDetailFormContainer/>
+            <UserDetailFormContainer history={this.props.history}/>
           </FormCard>
         </PageContent>
       </ClientTemplate>

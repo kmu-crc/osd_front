@@ -16,6 +16,7 @@ class UserDetailFrom extends Component {
   onSubmitHandler = data => {
     this.props.InsertUserDetailRequest(data, this.props.token).then(data => {
       console.log(data);
+      this.props.history.push("/");
     });
   };
   onChangeCategory1 = value => {

@@ -273,7 +273,7 @@ class GroupDetail extends Component {
                       ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
                       : <Button className="red" onClick={this.updateLike}>좋아요</Button>
                       }
-                      <JoinGroupContainer />
+                      <JoinGroupContainer/>
                     </div>
                   </ProfileSection>
                   <IssueContainer>
