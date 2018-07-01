@@ -6,6 +6,9 @@ import FileUploader from "components/Commons/FileUploader";
 
 const CardSourc = styled.div`
   margin-bottom: 2rem;
+  & a {
+    margin-right: 10px;
+  }
 `;
 const DeleteImg = styled.div`
   width: 100%;

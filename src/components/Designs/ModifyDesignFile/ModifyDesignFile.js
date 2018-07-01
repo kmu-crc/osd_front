@@ -7,7 +7,7 @@ const InfoWrapper = styled.div`
   padding: 70px;
   margin-bottom: 30px;
   @media only screen and (min-width: 1200px) {
-    padding: 70px 100px 0 100px;
+    padding: 70px 100px;
   }
 `;
 
@@ -22,11 +22,10 @@ class ModifyDesignFile extends Component {
   }
 
   changeActive = async value => {
-    this.props.GetDesignDetailViewRequest(this.props.match.params.id)
-      .then(this.setState({ 
-        active: value 
-      })
-    );
+    this.setState({ 
+      active: value 
+    });
+    this.props.GetDesignDetailViewRequest(this.props.match.params.id);
   };
 
   render() {

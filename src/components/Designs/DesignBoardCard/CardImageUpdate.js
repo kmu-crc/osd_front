@@ -105,6 +105,7 @@ export class CardImageUpdate extends Component {
     this.props.changeActive("INIT");
   };
   handleSubmit = data => {
+    console.log(data);
     data.delete("design_file[]");
     if (this.state.designs !== []) {
       this.state.designs.map(item => {

@@ -7,6 +7,7 @@ import Button from "components/Commons/Button";
 
 const ViewWrapper = styled.div`
   width: 100%;
+  padding-top: 30px;
   & .date {
     color: #a4a4a4;
     font-weight: 400;
