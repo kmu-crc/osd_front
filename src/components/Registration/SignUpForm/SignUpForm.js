@@ -1,10 +1,21 @@
 import React, { Component } from "react";
-import { Form, Button, Icon, Modal } from "semantic-ui-react";
+import { Form, Icon, Modal } from "semantic-ui-react";
 import { OverlapField, FormField } from "components/Commons/FormField";
 import { FormInput } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import ValidateForm from "components/Commons/ValidateForm";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+
+import styled from "styled-components";
+import Button from "components/Commons/Button";
+
+const SignUpBtn = styled(Button)`
+  margin-bottom: 30px;
+`;
+
+const ButtonBox = styled.div`
+  margin-top: 30px;
+`;
 
 class SignUpForm extends Component {
   state = {
@@ -57,7 +68,7 @@ class SignUpForm extends Component {
       });
   };
   handleSubmitFB = data => {
-    if(data.constructor && data.constructor.name === "FormData"){
+    if (data.constructor && data.constructor.name === "FormData") {
       data = FormDataToJson(data);
     }
     this.setState({
@@ -102,10 +113,10 @@ class SignUpForm extends Component {
             label="password"
             validates={["required"]}
           />
-          <Form.Group>
-            <Form.Field control={Button} type="submit">
+          <ButtonBox>
+            <SignUpBtn type="submit" round={true} fluid={true}>
               회원가입
-            </Form.Field>
+            </SignUpBtn>
             <FacebookLogin
               appId="1846803492017708"
               autoLoad={false}
@@ -116,12 +127,15 @@ class SignUpForm extends Component {
                   onClick={renderProps.onClick}
                   type="button"
                   color="facebook"
+                  icon="facebook f"
+                  round={true}
+                  fluid={true}
                 >
-                  <Icon disabled name="facebook f" />FaceBook 회원가입
+                  FaceBook 회원가입
                 </Button>
               )}
             />
-          </Form.Group>
+          </ButtonBox>
         </ValidateForm>
         <Modal
           open={open}
@@ -129,8 +143,8 @@ class SignUpForm extends Component {
           closeOnRootNodeClick={closeOnRootNodeClick}
           onClose={this.close}
         >
-            <Modal.Header>Delete Your Account</Modal.Header>
-            <Modal.Content>
+          <Modal.Header>Delete Your Account</Modal.Header>
+          <Modal.Content>
             <ValidateForm onSubmit={this.handleSubmitFB}>
               <FormField
                 name="email"
@@ -153,8 +167,8 @@ class SignUpForm extends Component {
                 icon="checkmark"
                 content="등록"
               />
-          </ValidateForm>
-            </Modal.Content>
+            </ValidateForm>
+          </Modal.Content>
         </Modal>
       </div>
     );

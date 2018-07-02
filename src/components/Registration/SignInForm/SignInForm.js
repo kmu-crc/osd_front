@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { FormField } from "components/Commons/FormField";
 import { FormInput } from "components/Commons/FormItem";
 import ValidateForm from "components/Commons/ValidateForm";
-import { Form, Button, Icon } from "semantic-ui-react";
+import styled from "styled-components";
 import FormDataToJson from "modules/FormDataToJson"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import Button from "components/Commons/Button";
+
+const LoginBtn = styled(Button)`
+  margin-bottom: 30px;
+`
 
 class SignInForm extends Component {
   handleFormSubmit = (data) => {
@@ -41,17 +46,15 @@ class SignInForm extends Component {
           placeholder="E-Mail" label="email" validates={["required", "email"]} RenderComponent={FormInput} />
           <FormField name="password" type="password"
           placeholder="Password" label="password" validates={["required"]} RenderComponent={FormInput} />
-        <Form.Group>
-          <Form.Field control={Button} type="submit">로그인</Form.Field>
+        <LoginBtn type="submit" round={true} fluid={true}>로그인</LoginBtn>
           <FacebookLogin
             appId="1846803492017708"
             autoLoad={false}
             callback={this.onClickFBSignInbtn}
             render={renderProps => (
-              <Button onClick={renderProps.onClick} type="button" color="facebook"><Icon disabled name='facebook f' />FaceBook 로그인</Button>
+              <Button onClick={renderProps.onClick} type="button" color="facebook" icon="facebook f" round={true} fluid={true}>FaceBook 로그인</Button>
             )}
           />
-        </Form.Group>
       </ValidateForm>
     );
   }
