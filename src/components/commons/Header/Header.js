@@ -233,11 +233,11 @@ class Header extends Component {
                       <Icon name="user" />마이페이지
                     </a>
                   </UserMenuItem>
-                  {/* <UserMenuItem>
+                  <UserMenuItem>
                     <a href="/message">
                       <Icon name="envelope" />메시지함
                     </a>
-                  </UserMenuItem> */}
+                  </UserMenuItem>
                   <UserMenuItem>
                     <LogOutBtn onClick={this.handleSignOut}>
                       <Icon name="log out" />logout

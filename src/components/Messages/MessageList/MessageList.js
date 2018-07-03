@@ -57,16 +57,23 @@ const ContentContainer = styled(Grid.Column)`
 
 class MessageList extends Component {
   state = {
-    member: null
+    msgId: -1,
+    toUser: null
   }
 
   componentDidMount() {
-    //this.props.GetMyMsgListRequest(this.props.token);
+    this.props.GetMyMsgListRequest(this.props.token);
   }
 
   onChangeMembers = (data) => {
     this.setState({
-      member: data
+      toUser: data
+    });
+  }
+
+  setMsgId = (id) => {
+    this.setState({
+      msgId: id
     });
   }
 
@@ -85,19 +92,23 @@ class MessageList extends Component {
                   onChangeMembers={this.onChangeMembers}
                 />
                 <div className="heading">내 메시지함</div>
-                {msgList.length > 0 ? 
-                  msgList.map(msg => (
-                    <li key={msg.uid}>
-
+                {msgList.length > 0 ?
+                  <ul>
+                  {msgList.map(msg => (
+                    <li key={msg.uid} onClick={() => this.setMsgId(msg.uid)}>
+                      <div>{msg.from_user_name}</div>
+                      <div>{msg.to_user_name}</div>
                     </li>
                   ))
+                  }
+                  </ul>
                 :
                 <div>메시지없음</div>
                 }
               </ListContainer>
               <ContentContainer>
-                <MessageDetailContainer/>
-                <SendingMsgContainer/>
+                <MessageDetailContainer {...this.props} id={this.state.msgId}/>
+                <SendingMsgContainer toUser={this.state.toUser? this.state.toUser[0].uid : null}/>
               </ContentContainer>
             </Grid.Row>
           </Wrapper>
