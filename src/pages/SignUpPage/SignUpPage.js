@@ -17,14 +17,14 @@ const SignUpContent = styled.div`
   background-image: url(${open_bg});
   background-size: cover;
   background-position: center;
-  &::before{
+  &::before {
     display: block;
     content: "";
-    width:100%;
+    width: 100%;
     height: 100%;
     position: absolute;
-    z-index:1;
-    background-color: rgba(0,0,0,0.7);
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -35,18 +35,18 @@ const SignUpCard = styled.div`
 `;
 
 const InsertDetail = styled.div`
-position: relative;
-z-index: 2;
+  position: relative;
+  z-index: 2;
   width: 400px;
   padding: 30px 20px;
-  background-color: rgba(255,255,255,0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
-`
+`;
 
 const FromFilde = styled.div`
   width: 100%;
   margin-bottom: 20px;
-`
+`;
 
 class SignUpPage extends Component {
   render() {
