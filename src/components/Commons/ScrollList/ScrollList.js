@@ -12,6 +12,9 @@ const ScrollContainer = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
   }
+  & p {
+    text-align: center;
+  }
 `;
 
 const ListContainer = styled(Grid)`

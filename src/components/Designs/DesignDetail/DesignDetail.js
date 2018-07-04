@@ -167,9 +167,13 @@ class DesignDetail extends Component {
   }
 
   deleteDesign = () => {
-    alert("디자인을 삭제하시겠습니까?");
-    this.props.DeleteDesignRequest(this.props.id, this.props.token)
-    .then(this.props.history.push("/design"));
+    const confirm = window.confirm("디자인을 삭제하시겠습니까?");
+    if (confirm) {
+      this.props.DeleteDesignRequest(this.props.id, this.props.token)
+      .then(this.props.history.push("/design"));
+    } else {
+      return;
+    }
   }
 
   render() {

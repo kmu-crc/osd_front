@@ -3,9 +3,9 @@ import { Grid, Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 
 const sorting = [
-  { key: "update", value: "update", text: "최근 업데이트" },
-  { key: "create", value: "create", text: "등록일" },
-  { key: "like", value: "like", text: "좋아요" }
+  { key: "update", value: "update", text: "업데이트순" },
+  { key: "create", value: "create", text: "등록일순" },
+  { key: "like", value: "like", text: "좋아요순" }
 ];
 
 
@@ -24,10 +24,10 @@ class Sorting extends Component {
         <Dropdown
           placeholder={
             this.props.placeholder && this.props.placeholder === "create"
-              ? "등록일"
+              ? "등록일순"
               : this.props.placeholder && this.props.placeholder === "like"
-              ? "좋아요"
-              : "최근 업데이트"
+              ? "좋아요순"
+              : "업데이트순"
           }
           options={sorting}
           onChange={this.props.handleChange}
