@@ -162,7 +162,6 @@ class ModifyDesignInfo extends Component {
                     // validates={["ThumbnailSize"]}
                   />
                 </Form.Group>
-                {/* <CheckBoxFieldContainer {...this.props}/> */}
                 <Form.Group widths={2}>
                     <FormField
                       name="category_level1"

@@ -133,75 +133,79 @@ class ModifyMyDetail extends Component {
   }
 
   render() {
+    const myInfo = this.props.MyDetail;
+
     return (
       <div>
        <ImgWrapper>
           <Title><h1>내 정보 수정</h1></Title>
         </ImgWrapper>
-        <Wrapper>
-          <ValidateForm onSubmit={this.handleSubmit} enctype="multipart/form-data">
-            <FromFieldCard>
-              <Grid>
-                <Grid.Column width={4}>
-                  <FormHeader as="h2">내 정보 수정</FormHeader>
-                </Grid.Column>
-                <Grid.Column width={12}>
-                  <div className="profileImg">
-                    <ProfileImage />
-                  </div>
-                  <FormField
-                    name="nick_name"
-                    type="text"
-                    label="닉네임 변경"
-                    value={this.props.MyDetail.nick_name}
-                    validates={["required", "NotSpecialCharacters", "checkNickName"]}
-                    RenderComponent={FormInput}
-                  />
-                  <FormField
-                    name="about_me"
-                    label="자기소개 변경"
-                    value={this.props.MyDetail.about_me}
-                    RenderComponent={FormTextArea}
-                  />
-                  <OverlapField
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    label="password 변경"
-                    validates={["required"]}
-                  />
-                  <Form.Group widths={2}>
+        {myInfo.length !== 0 &&
+          <Wrapper>
+            <ValidateForm onSubmit={this.handleSubmit} enctype="multipart/form-data">
+              <FromFieldCard>
+                <Grid>
+                  <Grid.Column width={4}>
+                    <FormHeader as="h2">내 정보 수정</FormHeader>
+                  </Grid.Column>
+                  <Grid.Column width={12}>
+                    <div className="profileImg">
+                      <ProfileImage />
+                    </div>
                     <FormField
-                      name="category_level1"
-                      selection={true}
-                      getValue={this.onChangeCategory1}
-                      options={this.props.category1}
-                      label="카테고리"
-                      value={this.props.MyDetail.category_level1}
-                      RenderComponent={FormSelect}
+                      name="nick_name"
+                      type="text"
+                      label="닉네임 변경"
+                      value={myInfo.nick_name}
+                      validates={["required", "NotSpecialCharacters", "checkNickName"]}
+                      RenderComponent={FormInput}
                     />
                     <FormField
-                      name="category_level2"
-                      selection={true}
-                      options={this.props.category2}
-                      label="카테고리2"
-                      value={this.props.MyDetail.category_level2}
-                      RenderComponent={FormSelect}
+                      name="about_me"
+                      label="자기소개 변경"
+                      value={myInfo.about_me}
+                      RenderComponent={FormTextArea}
                     />
-                  </Form.Group>
-                  <FormField
-                    name="is_designer"
-                    placeholder="디자이너로 활동하시겠습니까?"
-                    label="디자이너 활동 여부"
-                    checked={this.props.MyDetail.is_designer}
-                    RenderComponent={FormCheckBox}
-                  />
-                </Grid.Column>
-              </Grid>
-            </FromFieldCard>
-            <Button type="submit">수정</Button>
-          </ValidateForm>
-        </Wrapper>
+                    <OverlapField
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      label="password 변경"
+                      validates={["required"]}
+                    />
+                    <Form.Group widths={2}>
+                      <FormField
+                        name="category_level1"
+                        selection={true}
+                        getValue={this.onChangeCategory1}
+                        options={this.props.category1}
+                        label="카테고리"
+                        value={myInfo.category_level1}
+                        RenderComponent={FormSelect}
+                      />
+                      <FormField
+                        name="category_level2"
+                        selection={true}
+                        options={this.props.category2}
+                        label="카테고리2"
+                        value={myInfo.category_level2}
+                        RenderComponent={FormSelect}
+                      />
+                    </Form.Group>
+                    <FormField
+                      name="is_designer"
+                      placeholder="디자이너로 활동하시겠습니까?"
+                      label="디자이너 활동 여부"
+                      checked={myInfo.is_designer === 1? "1" : "0"}
+                      RenderComponent={FormCheckBox}
+                    />
+                  </Grid.Column>
+                </Grid>
+              </FromFieldCard>
+              <Button type="submit">수정</Button>
+            </ValidateForm>
+          </Wrapper>
+        }
       </div>
     );
   }
