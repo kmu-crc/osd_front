@@ -1,7 +1,6 @@
 let host = null;
-const build = true;
-if(build) {
-  host = "http://ec2-13-124-212-254.ap-northeast-2.compute.amazonaws.com";
+if(process.env.REACT_APP_BUILD === "true") {
+  host = process.env.REACT_APP_API_URL;
 } else {
   host = "http://localhost:8080";
 }

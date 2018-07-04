@@ -179,18 +179,19 @@ export class FormCheckBox extends Component {
     checked: true
   }
   componentWillMount() {
-
     if (this.props.checked) {
       this.setState({ checked: this.props.checked });
-    } else if (this.props.checked === 0) {
-      this.setState({checked: false})
-    }
-    if (!this.props.validates) {
-      this.setState({ status: "SUCCESS" });
+    } else if (this.props.checked === "0" || this.props.checked == null) {
+      this.setState({checked: "0"});
     }
   }
   onChangeCheckBox = async () => {
-    await this.setState({ checked: !this.state.checked });
+    if(this.state.checked === "1") {
+      await this.setState({ checked: "0" });
+    } else {
+      await this.setState({ checked: "1" });
+    }
+    console.log(this.state.checked);
     checkValidate(this.state.checked, this.props.validates).then(data => {
       this.setState(data);
     })
@@ -202,10 +203,11 @@ export class FormCheckBox extends Component {
     delete newProps.getValue;
     delete newProps.currentValue;
     delete newProps.onChange;
+    delete newProps.checked;
     return (
       <div>
-        <CheckBoxLabel className={this.state.checked ? "checked" : null} htmlFor={name}>{placeholder}</CheckBoxLabel>
-        <input status={this.state.status} {...newProps} id={name} type="checkbox" style={{ display: "none" }} name={name} placeholder={placeholder} checked={this.state.checked} onChange={this.onChangeCheckBox} />
+        <CheckBoxLabel className={this.state.checked === "1" ? "checked" : null} htmlFor={name}>{placeholder}</CheckBoxLabel>
+        <input status={this.state.status} {...newProps} id={name} type="checkbox" style={{ display: "none" }} name={name} placeholder={placeholder} value={this.state.checked} onChange={this.onChangeCheckBox} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
