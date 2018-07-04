@@ -1,26 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageDetail from "components/Messages/MessageDetail";
+import { GetMyMsgDetailRequest, GetMyMessageDetailClear } from "actions/Message";
 
 class MessageDetailContainer extends Component {
   render() {
     return(
-      <MessageDetail {...this.props}/>
+      <div>
+        {this.props.id === -1 ?
+        <p>메시지 내용이 없습니다.</p>
+        :
+        <MessageDetail {...this.props}/>
+        }
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-
+    token: state.Authentication.status.token,
+    MessageDetail: state.MessageDetail.status.MsgDetail,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // GetCategoryLevel2Request: (id) => {
-    //   return dispatch(GetCategoryLevel2Request(id));
-    // }
+    GetMyMsgDetailRequest: (token, id) => {
+      return dispatch(GetMyMsgDetailRequest(token, id));
+    },
+    GetMyMessageDetailClear: () => {
+      return dispatch(GetMyMessageDetailClear());
+    }
   };
 };
 
