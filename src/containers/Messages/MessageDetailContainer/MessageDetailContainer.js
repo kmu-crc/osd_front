@@ -20,7 +20,8 @@ class MessageDetailContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    MessageDetail: state.MessageDetail.status.MsgDetail
+    MessageDetail: state.MessageDetail.status.MsgDetail,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 

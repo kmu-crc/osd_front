@@ -109,7 +109,7 @@ export function SendMessageRequest(token, data, id) {
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("message detail data >>", data);
+        console.log("message sending >>", data);
         if (!data) {
           console.log("no detail message");
           data = [];
@@ -131,7 +131,7 @@ export function SendMessage() {
 export function SendMessageSuccess(data) {
   return {
     type: types.SEND_MESSAGE_SUCCESS,
-    data: data
+    data
   };
 };
 

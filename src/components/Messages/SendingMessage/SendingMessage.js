@@ -10,23 +10,40 @@ import FormDataToJson from "modules/FormDataToJson";
 // css styling
 
 class SendingMessage extends Component {
+  state = {
+    render: true
+  }
+
   onSubmitForm = async (data) => {
     if (this.props.toUser === null) {
       alert("받는 사람을 지정해주세요.");
       return;
     }
-    this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.props.toUser);
+    this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.props.toUser)
+    .then(async data => {
+      if (data.success === true) {
+
+      }
+      await this.setState({
+        render: false
+      });
+      this.setState({
+        render: true
+      });
+    })
   }
 
   render(){
     return(
       <div>
+        {this.state.render &&
         <ValidateForm onSubmit={this.onSubmitForm} className="ui reply form">
           <FormField name="message" validates={["required"]} RenderComponent={FormTextArea} />
           <Button type="submit">
             보내기
           </Button>
         </ValidateForm>
+        }
       </div>
     );
   }
