@@ -4,7 +4,7 @@ import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue } from "reducers/Groups";
 import { SignIn, SignUp } from "reducers/Registration";
 import { UserInfo, MyDetail } from "reducers/Users";
-import { MessageList } from "reducers/Messages";
+import { MessageList, MessageDetail } from "reducers/Messages";
 import { Categorys } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
 import { Search, SearchIssue, TopList } from "reducers/Commons";
@@ -47,5 +47,6 @@ export default combineReducers({
     SearchIssue,
     TopList,
     OpenDesign,
-    MessageList
+    MessageList,
+    MessageDetail
 });
