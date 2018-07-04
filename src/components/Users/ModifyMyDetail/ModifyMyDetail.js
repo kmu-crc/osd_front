@@ -111,11 +111,6 @@ const FormHeader = styled(Header) `
 `;
 
 class ModifyMyDetail extends Component {
-  state = {
-    nickName: this.props.MyDetail.nick_name,
-    aboutMe: this.props.MyDetail.about_me
-  }
-
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token)
     .then(data => {
@@ -158,14 +153,14 @@ class ModifyMyDetail extends Component {
                     name="nick_name"
                     type="text"
                     label="닉네임 변경"
-                    value={this.state.nickName}
+                    value={this.props.MyDetail.nick_name}
                     validates={["required", "NotSpecialCharacters", "checkNickName"]}
                     RenderComponent={FormInput}
                   />
                   <FormField
                     name="about_me"
                     label="자기소개 변경"
-                    value={this.state.aboutMe}
+                    value={this.props.MyDetail.about_me}
                     RenderComponent={FormTextArea}
                   />
                   <OverlapField

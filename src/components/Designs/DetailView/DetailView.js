@@ -78,13 +78,17 @@ class DetailView extends Component {
   }
 
   onActiveStep = () => {
-    alert("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
-    this.props.ChangeToProjectRequest(this.props.match.params.id, this.props.token)
-    .then(data => {
-      if (data.success === true) {
-        this.props.history.go(`/designDetail/${this.props.match.params.id}`);
-      }
-    });
+    const confirm = window.confirm("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
+    if (confirm) {
+      this.props.ChangeToProjectRequest(this.props.match.params.id, this.props.token)
+      .then(data => {
+        if (data.success === true) {
+          this.props.history.go(`/designDetail/${this.props.match.params.id}`);
+        }
+      });
+    } else {
+      return;
+    }
   }
 
   onSubmitCmtForm = async (data) => {
@@ -149,7 +153,7 @@ class DetailView extends Component {
               <div className="sourceInfo">
                 <h4>첨부파일</h4>
                 {view.sources.map(src =>
-                  <div key={src.uid}>{src.name}</div>
+                  <a key={src.uid} href={src.link}>{src.name}</a>
                 )}
               </div>
             }

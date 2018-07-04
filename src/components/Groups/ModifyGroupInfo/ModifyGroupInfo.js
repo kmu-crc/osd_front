@@ -55,17 +55,21 @@ class ModifyGroupInfo extends Component {
   }
 
   deleteGroup = () => {
-    alert("그룹을 삭제하시겠습니까?");
-    this.props.DeleteGroupRequest(this.props.id, this.props.token)
-    .then(data => {
-      this.props.history.push("/group");
-    });
+    const confirm = window.confirm("그룹을 삭제하시겠습니까?");
+    if (confirm) {
+      this.props.DeleteGroupRequest(this.props.id, this.props.token)
+      .then(data => {
+        this.props.history.push("/group");
+      });
+    } else {
+      return;
+    }
   }
 
   render(){
     return(
       <Wrapper>
-        <ValidateForm onSubmit={this.onSubmitForm}>
+        <ValidateForm onSubmit={this.onSubmitForm} enctype="multipart/form-data">
           <FromFieldCard>
             <Grid>
               <Grid.Column width={4}>
