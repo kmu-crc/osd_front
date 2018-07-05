@@ -16,14 +16,14 @@ const Btn = styled.button`
   background-color: ${props => props.color === "Danger"
                       ? StyleGuide.color.sub.purple.basic
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.blue.basic
+                      ? StyleGuide.color.sub.bule.basic
                       : props.color === "Solid"
                       ? StyleGuide.color.main.basic
                       : StyleGuide.color.geyScale.scale5 };
   border: 1px solid ${props => props.color === "Danger"
                       ? StyleGuide.color.sub.purple.basic
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.blue.basic
+                      ? StyleGuide.color.sub.bule.basic
                       : props.color === "Solid"
                       ? StyleGuide.color.main.basic
                       : StyleGuide.color.geyScale.scale5 };
@@ -32,14 +32,14 @@ const Btn = styled.button`
     background-color: ${props => props.color === "Danger"
                       ? StyleGuide.color.sub.purple.dark
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.blue.dark
+                      ? StyleGuide.color.sub.bule.dark
                       : props.color === "Solid"
                       ? StyleGuide.color.main.dark
                       : StyleGuide.color.geyScale.scale7 };
     border: 1px solid ${props => props.color === "Danger"
                       ? StyleGuide.color.sub.purple.dark
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.blue.dark
+                      ? StyleGuide.color.sub.bule.dark
                       : props.color === "Solid"
                       ? StyleGuide.color.main.dark
                       : StyleGuide.color.geyScale.scale7 };

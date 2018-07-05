@@ -12,6 +12,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
+import StyleGuide from "StyleGuide";
 
 const BoardCard = styled.li`
   padding: 10px;
@@ -45,9 +46,25 @@ const DeleteBtn = styled.button`
 `;
 
 const CommentContainer = styled.div`
-  width: 100%;
+  color: ${StyleGuide.color.geyScale.scale7};
   &.ui.comments {
     max-width: 100%;
+    width: 100%;
+    & .delBtn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  & h4 {
+    font-size: ${StyleGuide.font.size.heading4};
+  }
+  & .ui.button {
+    font-size: ${StyleGuide.font.size.small};
+  }
+  & p {
+    text-align: center;
+    font-size: ${StyleGuide.font.size.small};
   }
   & .ui.form .field {
     margin-bottom: 1rem;
@@ -194,7 +211,8 @@ class DesignBoardCard extends Component {
             />
             {/* --------------------- 댓글 섹션 ---------------------- */}
             <CommentContainer className="ui comments">
-              {comment != null?
+              <h4>댓글</h4>
+              {comment.length > 0?
                 comment.map(comm=>(
                   <div className="comment" key={comm.uid}>
                     <div className="avatar">
@@ -208,7 +226,7 @@ class DesignBoardCard extends Component {
                       <div className="text">{comm.comment}</div>
                     </div>
                     {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
-                    <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                    <Button size="small" className="delBtn" onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
                     }
                   </div>
                 ))

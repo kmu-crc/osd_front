@@ -7,7 +7,6 @@ import { Grid, Icon, Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import { Link, Route } from "react-router-dom";
-import RequiresAuth from "containers/Commons/RequiresAuth";
 import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
 import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
 import StyleGuide from "StyleGuide";
@@ -22,13 +21,13 @@ const Wrapper = styled.div`
 
 const HeadContainer = styled(Grid) `
   min-height: 100px;
-  font-size: 13px;
+  font-size: ${StyleGuide.font.size.paragraph};
   & button.ui.button {
-    font-size: 13px;
+    font-size: ${StyleGuide.font.size.paragraph};
     font-weight: 400;
   }
   & .title {
-    font-size: 1.8rem;
+    font-size: ${StyleGuide.font.size.heading3};
     font-weight: bold;
   }
   & .explanation {
@@ -38,13 +37,13 @@ const HeadContainer = styled(Grid) `
 `;
 
 const Cate = styled.div`
-  font-size: 13px;
+  font-size: ${StyleGuide.font.size.paragraph};
   & span {
     margin-right: 15px;
     max-width: 33%;
   }
   & .cate {
-    color: #EB3324;
+    color: ${StyleGuide.color.main.basic};
     margin-right: 30px;
   }
 `;
@@ -54,8 +53,8 @@ const SubInfo = styled.div`
   margin-right: 5px;
   & .ui.basic.label {
     font-weight: 400;
-    font-size: 13px;
-    color: rgba(0,0,0,.6);
+    font-size: ${StyleGuide.font.size.paragraph};
+    color: ${StyleGuide.color.geyScale.scale7};
   }
   & .ui.button {
     cursor: initial;
@@ -103,18 +102,7 @@ const ModalContent = styled(Modal) `
 const TabContainer = styled.div`
   min-height: 300px;
   position: relative;
-`;
-
-const IssueContainer = styled.div`
-  min-height: 60px;
-  & .mainIssue {
-    font-weight: bold;
-    float: left;
-    margin-right: 20px;
-  }
-  & .button {
-    font-size: 12px;
-  }
+  margin-top: 20px;
 `;
 
 
@@ -221,6 +209,10 @@ class DesignDetail extends Component {
                         <Icon name="group" size="mini"></Icon>
                         {count.member_count}명
                       </span>
+                      <Link to={`/designDetail/${this.props.id}/issue`}>
+                        <Icon name="bell" size="small"></Icon> 
+                        이슈보기
+                      </Link>
                     </Cate>
                   </Grid.Column>
                   <Grid.Column computer={8} tablet={10} mobile={10}>
@@ -262,37 +254,6 @@ class DesignDetail extends Component {
               </HeadContainer>
               {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
               <TabContainer>
-                {this.props.location.pathname.indexOf("issue") === -1 &&
-                  ( 
-                    designDetail.mainIssue === null ?
-                      designDetail.is_team === 1 &&
-                        <IssueContainer>
-                          <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
-                                       state: designDetail.is_team? "true" : "false" } 
-                                   } className="mainIssue">
-                            <p>[이슈] 등록된 이슈가 없습니다.</p>
-                          </Link>
-                          <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
-                                       state: designDetail.is_team? "true" : "false" }
-                                   }>
-                            + 더보기
-                          </Link>
-                        </IssueContainer>
-                    :
-                    <IssueContainer>
-                      <Link to={ { pathname: `/designDetail/${this.props.id}/issue/${designDetail.mainIssue.uid}`,
-                                  state: designDetail.is_team? "true" : "false" }
-                               } className="mainIssue" >
-                        <p>[이슈] {designDetail.mainIssue.title}</p>
-                      </Link>
-                      <Link to={ { pathname: `/designDetail/${this.props.id}/issue`,
-                                   state: designDetail.is_team? "true" : "false" } 
-                               }>
-                        + 더보기 
-                      </Link>
-                    </IssueContainer>
-                  )
-                }
                 <Route exact path={"/designDetail/:id"}
                        component={designDetail.is_project == 1 ? DesignDetailStepContainer
                                                                : DesignDetailViewContainer} />

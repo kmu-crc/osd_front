@@ -7,24 +7,25 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
 const ViewWrapper = styled.div`
   width: 100%;
   padding-top: 30px;
+  font-size: ${StyleGuide.font.size.paragraph};
   & .date {
     color: #a4a4a4;
     font-weight: 400;
-    font-size: 14px;
     text-align: right;
+    margin-bottom: 10px;
   }
   & h4 {
-    font-size: 16px;
+    font-size: ${StyleGuide.font.size.heading4};
   }
   & > .noData {
     text-align: center;
-    font-size: 16px;
     padding-top: 30px;
   }
   & .imageInfo {
@@ -32,7 +33,7 @@ const ViewWrapper = styled.div`
     overflow: hidden;
   }
   & .sourceInfo {
-    margin: 2rem 1rem;
+    margin: 3rem 0;
   }
   & .imageInfo img {
     width: 100%;
@@ -40,13 +41,25 @@ const ViewWrapper = styled.div`
 `;
 
 const CommentContainer = styled.div`
+  color: ${StyleGuide.color.geyScale.scale7};
   &.ui.comments {
     max-width: 100%;
     width: 100%;
     margin-top: 3rem;
+    & .delBtn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
   & p {
     text-align: center;
+    font-size: ${StyleGuide.font.size.small};
+  }
+  & .ui.button {
+    &:hover {
+      border: 0;
+    }
   }
   & .ui.form .field {
     margin-bottom: 1rem;
@@ -158,6 +171,7 @@ class DetailView extends Component {
               </div>
             }
             <CommentContainer className="ui comments">
+              <h4>댓글</h4>
               {comment.length > 0?
               comment.map(comm=>(
                 <div className="comment" key={comm.uid}>
@@ -167,12 +181,12 @@ class DetailView extends Component {
                   <div className="content">
                     <a className="author">{comm.nick_name}</a>
                     <div className="metadata">
-                      <div>{comm.create_time.split("T")[0]}}</div>
+                      <div>{comm.create_time.split("T")[0]}</div>
                     </div>
                     <div className="text">{comm.comment}</div>
                   </div>
                   {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
-                  <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                  <Button size="small" className="delBtn" onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
                   }
                 </div>
                 ))
