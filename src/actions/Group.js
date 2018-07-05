@@ -662,11 +662,7 @@ export function UpdateGroupRequest(id, data, token) {
     }).then((response) => {
       return response.json();
     }).then((res) => {
-      if (res.success === true) {
-        return dispatch(UpdateGroupSuccess());
-      } else {
-        return dispatch(UpdateGroupFailure());
-      }
+      return dispatch(UpdateGroupSuccess(res));
     }).catch((error) => {
       dispatch(UpdateGroupFailure());
       console.log(error);
@@ -680,9 +676,10 @@ export function UpdateGroup() {
   }
 };
 
-export function UpdateGroupSuccess() {
+export function UpdateGroupSuccess(data) {
   return {
-    type: types.UPDATE_GROUP_SUCCESS
+    type: types.UPDATE_GROUP_SUCCESS,
+    data
   }
 };
 

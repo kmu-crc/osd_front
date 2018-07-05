@@ -114,6 +114,8 @@ class ModifyDesignInfo extends Component {
       if (data.res.success === true) {
         alert("정보가 수정되었습니다.");
         this.props.history.push(`/designDetail/${this.props.DesignDetail.uid}`);
+      } else {
+        alert("다시 시도해주세요");
       }
     });
   }
@@ -204,28 +206,28 @@ class ModifyDesignInfo extends Component {
                     name="is_commercial"
                     label="상업적 이용"
                     placeholder="허가"
-                    checked={currentDesign.is_commercial === 1 ? true : 0}
+                    checked={currentDesign.is_commercial === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
                   />
                   <FormField
                     name="is_display_creater"
                     label="원작자 표시"
                     placeholder="필수"
-                    checked={currentDesign.is_display_creater === 1 ? true : 0}
+                    checked={currentDesign.is_display_creater === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
                   />
                   <FormField
                     name="is_modify"
                     label="수정 가능"
                     placeholder="허가"
-                    checked={currentDesign.is_modify === 1 ? true : 0}
+                    checked={currentDesign.is_modify === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
                   />
                   <FormField
                     name="is_public"
                     label="디자인 공개 여부"
                     placeholder="공개"
-                    checked={currentDesign.is_public === 1 ? true : 0}
+                    checked={currentDesign.is_public === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
                   />
                 </Form.Group>

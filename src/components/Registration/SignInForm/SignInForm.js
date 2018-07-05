@@ -7,9 +7,18 @@ import FormDataToJson from "modules/FormDataToJson"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import Button from "components/Commons/Button";
 
+const BtnWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  & a:hover {
+    color: #fff;
+  }
+`;
+
 const LoginBtn = styled(Button)`
   margin-bottom: 30px;
-`
+  width: 48%;
+`;
 
 class SignInForm extends Component {
   handleFormSubmit = (data) => {
@@ -46,7 +55,10 @@ class SignInForm extends Component {
           placeholder="E-Mail" label="email" validates={["required", "email"]} RenderComponent={FormInput} />
           <FormField name="password" type="password"
           placeholder="Password" label="password" validates={["required"]} RenderComponent={FormInput} />
-        <LoginBtn type="submit" round={true} fluid={true}>로그인</LoginBtn>
+        <BtnWrap>
+          <LoginBtn type="submit" round={true}>로그인</LoginBtn>
+          <LoginBtn round={true}><a href="/signup">회원가입</a></LoginBtn>
+        </BtnWrap>
           <FacebookLogin
             appId="1846803492017708"
             autoLoad={false}
