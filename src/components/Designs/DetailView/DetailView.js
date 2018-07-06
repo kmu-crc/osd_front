@@ -11,14 +11,17 @@ import StyleGuide from "StyleGuide";
 
 // css styling
 
-const ViewWrapper = styled.div`
-  width: 100%;
-  padding-top: 30px;
-  font-size: ${StyleGuide.font.size.paragraph};
+const ViewWrapper = styled(Grid)`
+  &.ui.grid {
+    margin: 0;
+    padding-bottom: 60px;
+    width: 100%;
+    padding-top: 30px;
+    font-size: ${StyleGuide.font.size.paragraph};
+  }
   & .date {
     color: #a4a4a4;
     font-weight: 400;
-    text-align: right;
     margin-bottom: 10px;
   }
   & h4 {
@@ -45,7 +48,6 @@ const CommentContainer = styled.div`
   &.ui.comments {
     max-width: 100%;
     width: 100%;
-    margin-top: 3rem;
     & .delBtn {
       position: absolute;
       top: 0;
@@ -57,8 +59,10 @@ const CommentContainer = styled.div`
     font-size: ${StyleGuide.font.size.small};
   }
   & .ui.button {
+    background: ${StyleGuide.color.sub.bule.basic};
     &:hover {
       border: 0;
+      background: ${StyleGuide.color.sub.bule.dark};
     }
   }
   & .ui.form .field {
@@ -151,7 +155,7 @@ class DetailView extends Component {
     }
 
     return(
-      <Grid>
+      <div>
         {len > 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
@@ -204,7 +208,7 @@ class DetailView extends Component {
         {this.props.token && this.props.userInfo.uid === view.user_id && 
           <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
         }
-      </Grid>
+      </div>
     );
   }
 }

@@ -15,16 +15,37 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   box-sizing: border-box;
-  padding: 20px 0 60px;
   position: relative;
+  & .VDNBH {
+    position: relative;
+  }
 `;
 
-const HeadContainer = styled(Grid) `
-  min-height: 100px;
-  font-size: ${StyleGuide.font.size.paragraph};
+const HeaderBackground = styled.div`
+  width: 100%;
+  background-color: ${StyleGuide.color.geyScale.scale1};
+  border-bottom: 1px solid ${StyleGuide.color.geyScale.scale3};
+`
+
+const HeadContainer = styled(Grid)`
+  &.ui.grid {
+    margin: 0;
+    padding: 1rem 0 3rem;
+    min-height: 100px;
+    font-size: ${StyleGuide.font.size.paragraph};
+  }
+  &.ui.grid > .row > .column {
+    padding: 0;
+  }
   & button.ui.button {
     font-size: ${StyleGuide.font.size.paragraph};
     font-weight: 400;
+    color: #fff;
+    background: ${StyleGuide.color.sub.bule.light};
+    &:hover {
+      border: 0;
+      background: ${StyleGuide.color.sub.bule.basic};
+    }
   }
   & .title {
     font-size: ${StyleGuide.font.size.heading3};
@@ -72,7 +93,7 @@ const SubInfo = styled.div`
   }
 `;
 
-const MoreBtn = styled.button`
+const MoreBtn = styled(Button)`
   position: relative;
   float: right;
 `;
@@ -80,7 +101,7 @@ const MoreBtn = styled.button`
 const ModalContent = styled(Modal) `
   &.ui.modal.btnModal {
     position: absolute;
-    top: 100px;
+    top: 105px;
     right: 7vw;
     text-align: left;
     width: 140px;
@@ -90,12 +111,32 @@ const ModalContent = styled(Modal) `
   }
   & li {
     padding: 0 10px;
-    height: 30px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
     cursor: pointer;
   }
   & li:hover {
     background-image: linear-gradient(-180deg, #eff3f6 0%, #eff3f6 100%);
+  }
+`;
+
+const TabMenu = styled.ul`
+  position: absolute;
+  display: flex;
+  top: -60px;
+  color: ${StyleGuide.color.geyScale.scale7};
+  & li {
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+  & li.active {
+    background-color: #F8FAFB;
+    border: 1px solid ${StyleGuide.color.geyScale.scale3};
+    border-bottom: 0;
+    border-top: 2px solid ${StyleGuide.color.geyScale.scale3};
+    font-weight: bold;
   }
 `;
 
@@ -189,83 +230,95 @@ class DesignDetail extends Component {
     return (
       <div>
         {designDetail.length !== 0 &&
-          <ContentBox>
-            <Wrapper>
-              {/* --------------- 상단 디자인에 대한 정보 및 카운트 정보 ---------------  */}
-              <HeadContainer divided="vertically" padded={true}>
-                <Grid.Row columns={2}>
-                  <Grid.Column computer={8} tablet={6} mobile={6}>
-                    <h3 className="title">{designDetail.title}</h3>
-                    <div className="explanation">{designDetail.explanation}</div>
-                    <Cate>
-                      <span className="cate">
-                        {designDetail.categoryName? designDetail.categoryName : "전체"}
-                      </span>
-                      <span className="owner">
-                        <Icon name="user" size="mini"></Icon>
-                        {designDetail.userName}
-                      </span>
-                      <span className="member">
-                        <Icon name="group" size="mini"></Icon>
-                        {count.member_count}명
-                      </span>
-                      <Link to={`/designDetail/${this.props.id}/issue`}>
-                        <Icon name="bell" size="small"></Icon> 
-                        이슈보기
-                      </Link>
-                    </Cate>
-                  </Grid.Column>
-                  <Grid.Column computer={8} tablet={10} mobile={10}>
-                    <MoreBtn className="ui grey button more" onClick={this.onActiveMoreBtn}>
-                      더보기 +
-                  <ButtonModal />
-                    </MoreBtn>
-                    <SubInfo>
-                      <div className="ui right labeled button">
-                        <button className="ui basic button" tabIndex="0">
-                          <Icon name="unhide" size="mini"></Icon>
-                          조회수
-                    </button>
-                        <div className="ui left pointing basic label">{count.view_count}</div>
-                      </div>
-                      <div className="ui right labeled button like">
-                      {this.props.like === true 
-                      ? <button className="ui basic button" onClick={this.updateLike}>
-                        <Icon name="heart" size="mini"></Icon>
-                        좋아요 취소
-                        </button>
-                      : <button className="ui basic button" onClick={this.updateLike}>
-                        <Icon name="heart" size="mini"></Icon>
-                        좋아요
-                        </button>
-                      }
-                        <div className="ui left pointing basic label">{count.like_count}</div>
-                      </div>
-                      <div className="ui right labeled button">
-                        <button className="ui basic button" tabIndex="0">
-                          <i aria-hidden="true" className="fork icon"></i>
-                          파생
-                    </button>
-                        <div className="ui left pointing basic label">{designDetail.children_count["count(*)"]}</div>
-                      </div>
-                    </SubInfo>
-                  </Grid.Column>
-                </Grid.Row>
-              </HeadContainer>
-              {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
+          <Wrapper>
+            {/* --------------- 상단 디자인에 대한 정보 및 카운트 정보 ---------------  */}
+            <HeaderBackground>
+              <ContentBox>
+                <HeadContainer divided="vertically" padded={true}>
+                  <Grid.Row columns={2}>
+                    <Grid.Column computer={8} tablet={6} mobile={6}>
+                      <h3 className="title">{designDetail.title}</h3>
+                      <div className="explanation">{designDetail.explanation}</div>
+                      <Cate>
+                        <span className="cate">
+                          {designDetail.categoryName? designDetail.categoryName : "전체"}
+                        </span>
+                        <span className="owner">
+                          <Icon name="user" size="mini"></Icon>
+                          {designDetail.userName}
+                        </span>
+                        <span className="member">
+                          <Icon name="group" size="mini"></Icon>
+                          {count.member_count}명
+                        </span>
+                      </Cate>
+                    </Grid.Column>
+                    <Grid.Column computer={8} tablet={10} mobile={10}>
+                      <MoreBtn color="Primary" className="ui button more" onClick={this.onActiveMoreBtn}>
+                        더보기 +
+                      <ButtonModal />
+                      </MoreBtn>
+                      <SubInfo>
+                        <div className="ui right labeled button">
+                          <button className="ui basic button" tabIndex="0">
+                            <Icon name="unhide" size="mini"></Icon>
+                            조회수
+                      </button>
+                          <div className="ui left pointing basic label">{count.view_count}</div>
+                        </div>
+                        <div className="ui right labeled button like">
+                        {this.props.like === true 
+                        ? <button className="ui basic button" onClick={this.updateLike}>
+                          <Icon name="heart" size="mini"></Icon>
+                          좋아요 취소
+                          </button>
+                        : <button className="ui basic button" onClick={this.updateLike}>
+                          <Icon name="heart" size="mini"></Icon>
+                          좋아요
+                          </button>
+                        }
+                          <div className="ui left pointing basic label">{count.like_count}</div>
+                        </div>
+                        <div className="ui right labeled button">
+                          <button className="ui basic button" tabIndex="0">
+                            <i aria-hidden="true" className="fork icon"></i>
+                            파생
+                      </button>
+                          <div className="ui left pointing basic label">{designDetail.children_count["count(*)"]}</div>
+                        </div>
+                      </SubInfo>
+                    </Grid.Column>
+                  </Grid.Row>
+                </HeadContainer>
+              </ContentBox>
+            </HeaderBackground>
+            {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
+            <ContentBox>
+              <TabMenu>
+                <Link to={`/designDetail/${this.props.id}`}>
+                  <li className={this.props.history.location.pathname.indexOf("issue") === -1 ? "active" : ""}>
+                  컨텐츠
+                  </li>
+                </Link>
+                <Link to={`/designDetail/${this.props.id}/issue`}>
+                  <li className={this.props.history.location.pathname.indexOf("issue") !== -1 ? "active" : ""}>
+                  이슈
+                  </li>
+                </Link>
+              </TabMenu>
               <TabContainer>
                 <Route exact path={"/designDetail/:id"}
-                       component={designDetail.is_project == 1 ? DesignDetailStepContainer
-                                                               : DesignDetailViewContainer} />
+                        component={designDetail.is_project == 1 ? DesignDetailStepContainer
+                                                                : DesignDetailViewContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
-                       component={DesignIssue} />
+                        component={DesignIssue} />
                 <Route exact path={"/designDetail/:id/createissue"} 
-                       component={CreateDesignIssueContainer} />
+                        component={CreateDesignIssueContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id/modify"}
-                       component={ModifyIssueDetailContainer} />
+                        component={ModifyIssueDetailContainer} />
               </TabContainer>
-            </Wrapper>
-          </ContentBox>
+            </ContentBox>
+          </Wrapper>
         }
       </div>
     );

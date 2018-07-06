@@ -39,12 +39,6 @@ const IssueWrapper = styled(Grid)`
     padding: 1.5rem 1rem;
     color: ${StyleGuide.color.geyScale.scale7};
   }
-  & .btnGoBack {
-    width: 100%;
-    & > a {
-      float: right;
-    }
-  }
 `;
 
 const BtnWrapper = styled.div`
@@ -72,8 +66,10 @@ const CommentContainer = styled.div`
   }
   & .ui.button {
     font-size: ${StyleGuide.font.size.small};
+    background: ${StyleGuide.color.sub.bule.basic};
     &:hover {
       border: 0;
+      background: ${StyleGuide.color.sub.bule.dark};
     }
   }
   & .ui.form .field {
@@ -216,11 +212,6 @@ class DesignIssueDetail extends Component {
           }
           {this.state.render? <CommentForm/> : null}
         </CommentContainer>
-        <div className="btnGoBack">
-          <Link to={`/designDetail/${this.props.match.params.id}/issue`}>
-            <Button>목록으로</Button>
-          </Link>
-        </div>
       </IssueWrapper>
     );
   }

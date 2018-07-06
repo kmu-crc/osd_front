@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Modal, Button, Icon } from "semantic-ui-react";
+import { Modal, Icon } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import {
   CardTitleUpdate,
   CardContentUpdate,
@@ -59,8 +60,12 @@ const CommentContainer = styled.div`
   & h4 {
     font-size: ${StyleGuide.font.size.heading4};
   }
-  & .ui.button {
-    font-size: ${StyleGuide.font.size.small};
+  & .ui.button.primary {
+    background: ${StyleGuide.color.sub.bule.basic};
+    &:hover {
+      border: 0;
+      background: ${StyleGuide.color.sub.bule.dark};
+    }
   }
   & p {
     text-align: center;
