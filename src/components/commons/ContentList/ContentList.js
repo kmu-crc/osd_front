@@ -17,6 +17,11 @@ const AcceptBtn = styled.button`
   right: 80px;
 `;
 
+const Nodata = styled.p`
+  text-align: center;
+  width: 100%;
+`;
+
 class ContentList extends Component {
   render(){
     let data = this.props.data;
@@ -38,7 +43,7 @@ class ContentList extends Component {
         </Grid.Column>
       ))
       :
-      <p>컨텐츠가 없습니다.</p>
+      <Nodata>해당 컨텐츠가 없습니다.</Nodata>
       }
     </Grid.Row>
     );

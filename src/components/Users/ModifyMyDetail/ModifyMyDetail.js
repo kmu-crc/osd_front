@@ -127,7 +127,9 @@ class ModifyMyDetail extends Component {
     .then(res=> {
       if (res.success === true) {
         alert("정보가 수정되었습니다.");
-        this.props.history.push("/myPage");
+        this.props.history.push("/");
+      } else {
+        alert("다시 시도해주세요");
       }
     });
   }

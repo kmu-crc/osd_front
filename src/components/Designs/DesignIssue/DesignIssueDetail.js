@@ -13,58 +13,70 @@ import StyleGuide from "StyleGuide";
 // css styling
 
 const IssueWrapper = styled(Grid)`
-  min-width: 660px;
-  position: relative;
-  &.ui.grid {
-    padding: 1rem;
+  font-size: ${StyleGuide.font.size.paragraph};
+  &.ui.grid > .row {
+    padding-bottom: 0;
   }
-  & .ui.fluid.container {
-    padding: 1rem;
-    border: 1px solid #e9e9e9;
+  & .detailRow {
+    border-bottom: 1px solid ${StyleGuide.color.geyScale.scale2};
+    & h2 {
+      color: ${StyleGuide.color.geyScale.scale7};
+      font-size: ${StyleGuide.font.size.heading4};
+    }
+    & .userInfo {
+      padding: .5rem;
+      color: ${StyleGuide.color.geyScale.scale5};
+      text-align: right;
+      & > span {
+        margin-right: 20px;
+      }
+      & > span.status button {
+        margin-left: 5px;
+      }
+    }
   }
-  & .userInfo {
-    padding: .5rem;
-    border-bottom: 1px solid #e9e9e9;
-    color: rgba(0,0,0,.4);
-    font-weight: 500;
-  }
-  & .userInfo > span {
-    margin-right: 20px;
-  }
-  & .userInfo > span.status button {
-    margin-left: 5px;
-    font-size: ${StyleGuide.font.size.small};
+  &.ui.grid .row.textArea {
+    padding: 1.5rem 1rem;
+    color: ${StyleGuide.color.geyScale.scale7};
   }
 `;
 
 const BtnWrapper = styled.div`
-  text-align: right;
-  position: absolute;
-  top: 30px;
-  right: 2rem;
   & button {
-    margin-right: 3px;
-    font-size: ${StyleGuide.font.size.small};
+    margin-right: 5px;
+    margin-bottom: 5px;
   }
 `;
 
-const TextArea = styled.div`
-  padding: 15px 10px;
-`;
-
 const CommentContainer = styled.div`
-  width: 100%;
-  & button {
+  color: ${StyleGuide.color.geyScale.scale7};
+  &.ui.comments {
+    max-width: 100%;
+    margin: 3rem 0;
+    width: 100%;
+    & .delBtn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  & > p {
+    text-align: center;
     font-size: ${StyleGuide.font.size.small};
+  }
+  & .ui.button {
+    font-size: ${StyleGuide.font.size.small};
+    background: ${StyleGuide.color.sub.bule.basic};
+    &:hover {
+      border: 0;
+      background: ${StyleGuide.color.sub.bule.dark};
+    }
   }
   & .ui.form .field {
     margin-bottom: 1rem;
   }
   & .ui.form textarea:not([rows]) {
     min-height: 2rem;
-  }
-  &.ui.comments {
-    max-width: 100%;
   }
 `;
 
@@ -74,10 +86,15 @@ class DesignIssueDetail extends Component {
   }
 
   deleteIssue = () => {
-    this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
-    .then(data => {
-      this.props.history.push(`/designDetail/${this.props.match.params.id}/issue`);
-    });
+    const confirm = window.confirm("이 이슈를 삭제하시겠습니까?");
+    if (confirm) {
+      this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
+      .then(data => {
+        this.props.history.push(`/designDetail/${this.props.match.params.id}/issue`);
+      });
+    } else {
+      return;
+    }
   }
 
   updateIssueStatus = () => {
@@ -141,32 +158,36 @@ class DesignIssueDetail extends Component {
     
     return(
       <IssueWrapper>
-        <div className="ui fluid container">
-          <h2 className="ui header">{data.title}</h2>
-          <div className="userInfo">
-            <span className="userName">작성자 : {data.userName}</span>
-            <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
-            <span className="status">
-              상태 : { data.is_complete === 0? "진행중" : "완료" }
-              {user && user.uid === data.user_id &&
-                <Button onClick={this.updateIssueStatus}>
-                  {data.is_complete === 0? "완료하기" : "진행중으로 변경"}
-                </Button>
-              }
-            </span>
-          </div>
+        <Grid.Row columns={2} className="detailRow">
+          <Grid.Column width={8}>
+            <h2>{data.title}</h2>
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <div className="userInfo">
+              <span className="userName">작성자 : {data.userName}</span>
+              <span className="createDate">업로드 : {data.create_time && data.create_time.split("T")[0]}</span>
+              <span className="status">
+                상태 : { data.is_complete === 0? "진행중" : "완료" }
+                {user && user.uid === data.user_id &&
+                  <Button size="small" color="Primary" onClick={this.updateIssueStatus}>
+                    {data.is_complete === 0? "완료하기" : "진행중으로 변경"}
+                  </Button>
+                }
+              </span>
+            </div>
+          </Grid.Column>
           {user && user.uid === data.user_id &&
             <BtnWrapper>
               <Link to={`/designDetail/${this.props.match.params.id}/issue/${this.props.match.params.issue_id}/modify`}>
-                <Button>수정</Button>
+                <Button size="small">수정</Button>
               </Link>
-              <Button onClick={this.deleteIssue}>삭제</Button>
+              <Button size="small" onClick={this.deleteIssue}>삭제</Button>
             </BtnWrapper>
           }
-          <TextArea>
-            <p>{data.content}</p>
-          </TextArea>
-        </div>
+        </Grid.Row>
+        <Grid.Row className="textArea">
+          <p>{data.content}</p>
+        </Grid.Row>
         <CommentContainer className="ui comments">
           {data.comment != null?
             data.comment.map(comm=>(
@@ -182,7 +203,7 @@ class DesignIssueDetail extends Component {
                   <div className="text">{comm.comment}</div>
                 </div>
                 {user && user.uid === comm.user_id &&
-                <Button onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                <Button size="small" className="delBtn" onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
                 }
               </div>
             ))
@@ -191,9 +212,6 @@ class DesignIssueDetail extends Component {
           }
           {this.state.render? <CommentForm/> : null}
         </CommentContainer>
-        <Link to={`/designDetail/${this.props.match.params.id}/issue`}>
-          <button className="ui button">목록</button>
-        </Link>
       </IssueWrapper>
     );
   }

@@ -270,8 +270,8 @@ class GroupDetail extends Component {
                     </InfoSection>
                     <div className="btnContainer">
                       {this.props.like === true 
-                      ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
-                      : <Button className="red" onClick={this.updateLike}>좋아요</Button>
+                      ? <Button onClick={this.updateLike}>좋아요 취소</Button>
+                      : <Button onClick={this.updateLike}>좋아요</Button>
                       }
                       <JoinGroupContainer/>
                     </div>

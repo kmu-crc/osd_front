@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Header, Radio, Form, Button } from "semantic-ui-react";
+import { Grid, Header, Icon } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
-import { FormInput, FormTextArea, FormRadio } from "components/Commons/FormItem";
+import { FormInput, FormTextArea } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import FormDataToJson from "modules/FormDataToJson";
+import StyleGuide from "StyleGuide";
+import { Link } from "react-router-dom";
 
 // css styling
+
 const FromFieldCard = styled.div`
+  margin-top: 20px; 
   width: 100%;
-  background-color: white;
-  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+  background-color: #fff;
+  box-shadow: 0px 1px 2px 2px rgba(0,0,0,0.1);
+  border-radius: 3px;
   padding: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 `;
 
 const FormHeader = styled(Header)`
@@ -39,7 +45,6 @@ class CreateIssue extends Component {
   }
 
   render(){
-    const id = this.props.match.params.id;
     return(
       <ValidateForm onSubmit={this.onSubmitForm}>
         <FromFieldCard>
@@ -51,7 +56,6 @@ class CreateIssue extends Component {
             <Grid.Column width={12}>
               <FormField name="title" label="이슈 제목" type="text" placeholder="제목을 입력해주세요." validates={["required"]} RenderComponent={FormInput} />
               <FormField name="content" label="내용" placeholder="내용을 입력해주세요." validates={["required"]} RenderComponent={FormTextArea} />
-              {/* <FormField name="is_complete" label="완료" RenderComponent={FormRadio} value={this.state.complete} onChange={this.setComplete}/> */}
               <Button type="submit" onClick={this.props.handleClick}>등록</Button>
             </Grid.Column>
           </Grid.Row></Grid>

@@ -49,8 +49,13 @@ class ModifyGroupInfo extends Component {
 
   onSubmitForm = (data) => {
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
-    .then(data => {
-      this.props.history.push("/group");
+    .then(res => {
+      if (res.data.success === true) {
+        alert("정보가 수정되었습니다.");
+        this.props.history.push("/group");
+      } else {
+        alert("다시 시도해주세요");
+      }
     });
   }
 
