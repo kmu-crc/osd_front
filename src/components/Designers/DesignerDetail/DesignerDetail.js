@@ -71,6 +71,10 @@ const ProfileSection = styled.div`
   & .btnContainer {
     display: flex;
     justify-content: space-around;
+    margin: 30px 0 20px;
+    & button {
+      padding: 0.75em 1.5em;
+    }
   }
 `;
 
@@ -234,7 +238,7 @@ class DesignerDetail extends Component {
                       ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
                       : <Button className="red" onClick={this.updateLike}>좋아요</Button>
                       }
-                      {/* <Link to="/message"><Button>메시지보내기</Button></Link> */}
+                      <Link to="/message"><Button color="Solid">메시지보내기</Button></Link>
                     </div>
                   </ProfileSection>
                   <CountSection>
