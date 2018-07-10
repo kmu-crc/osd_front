@@ -255,10 +255,10 @@ class Header extends Component {
       return (
         <UserInterface>
           <UserItem>
-            <a href="/signin">SignIn</a>
+            <a href="/signin">로그인</a>
           </UserItem>
           <UserItem>
-            <a href="/signup">SignUp</a>
+            <a href="/signup">회원가입</a>
           </UserItem>
         </UserInterface>
       );
