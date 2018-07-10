@@ -5,7 +5,7 @@ import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
-//import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
+import Loading from "components/Commons/Loading";
 
 // css styling
 
@@ -44,10 +44,15 @@ class ModifyGroupInfo extends Component {
   state = {
     title: this.props.GroupDetail.title,
     explanation: this.props.GroupDetail.explanation,
-    user_id: this.props.GroupDetail.user_id
+    user_id: this.props.GroupDetail.user_id,
+    loading: false
   }
 
-  onSubmitForm = (data) => {
+  onSubmitForm = async (data) => {
+    await this.setState({
+      loading: true
+    });
+
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
     .then(res => {
       if (res.data.success === true) {
@@ -55,6 +60,9 @@ class ModifyGroupInfo extends Component {
         this.props.history.push("/group");
       } else {
         alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
       }
     });
   }
@@ -102,6 +110,7 @@ class ModifyGroupInfo extends Component {
           </FromFieldCard>
           <Button className="submitBtn" type="submit">수정</Button>
         </ValidateForm>
+        {this.state.loading && <Loading/>}
       </Wrapper>
     );
   }

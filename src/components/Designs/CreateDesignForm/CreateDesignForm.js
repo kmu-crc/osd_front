@@ -21,6 +21,7 @@ class CreateDesignForm extends Component {
     }
   }
   onSubmitForm = (data) => {
+    this.props.setLoader();
     data.delete("design_file[]");
     data.delete("source_file[]");
     data.delete("search");

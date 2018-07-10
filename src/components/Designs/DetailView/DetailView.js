@@ -8,6 +8,7 @@ import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
+import Loading from "components/Commons/Loading";
 
 // css styling
 
@@ -26,10 +27,6 @@ const ViewWrapper = styled(Grid)`
   }
   & h4 {
     font-size: ${StyleGuide.font.size.heading4};
-  }
-  & > .noData {
-    text-align: center;
-    padding-top: 30px;
   }
   & .imageInfo {
     width: 100%;
@@ -75,8 +72,8 @@ const CommentContainer = styled.div`
 
 const GoStepBtn = styled(Button)`
   position: absolute;
-  top: -30px;
-  right: 2rem;
+  top: -65px;
+  right: 0;
 `;
 
 
@@ -95,7 +92,7 @@ class DetailView extends Component {
   }
 
   onActiveStep = () => {
-    const confirm = window.confirm("스텝 기능을 사용하시겠습니까? 템플릿을 변경한 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
+    const confirm = window.confirm("프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)");
     if (confirm) {
       this.props.ChangeToProjectRequest(this.props.match.params.id, this.props.token)
       .then(data => {
@@ -202,7 +199,7 @@ class DetailView extends Component {
           </ViewWrapper>
         :
         <ViewWrapper>
-          <p>내용이 없습니다.</p>
+          <Loading/>
         </ViewWrapper>
         }
         {this.props.token && this.props.userInfo.uid === view.user_id && 
