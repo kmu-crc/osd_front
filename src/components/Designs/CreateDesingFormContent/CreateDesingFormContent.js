@@ -24,6 +24,9 @@ const FromFieldCard = styled.div`
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
   }
+  & .field[name="is_public"] {
+    display: none;
+  }
 `;
 const FormHeader = styled(Header)`
   position: relative;
@@ -55,6 +58,7 @@ const FormHeader = styled(Header)`
     }
   }
 `;
+
 class CreateDesingFormContent extends Component {
   state = {
     currentValue: "1"
@@ -172,24 +176,28 @@ class CreateDesingFormContent extends Component {
                   name="is_commercial"
                   label="상업적 이용"
                   placeholder="허가"
+                  checked="1"
                   RenderComponent={FormCheckBox}
                 />
                 <FormField
                   name="is_display_creater"
                   label="원작자 표시"
                   placeholder="필수"
+                  checked="1"
                   RenderComponent={FormCheckBox}
                 />
                 <FormField
                   name="is_modify"
                   label="수정 가능"
                   placeholder="허가"
+                  checked="1"
                   RenderComponent={FormCheckBox}
                 />
                 <FormField
                   name="is_public"
                   label="디자인 공개 여부"
                   placeholder="공개"
+                  checked="1"
                   RenderComponent={FormCheckBox}
                 />
               </Form.Group>

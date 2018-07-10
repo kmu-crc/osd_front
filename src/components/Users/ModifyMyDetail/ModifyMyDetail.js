@@ -9,6 +9,7 @@ import ContentBox from "components/Commons/ContentBox";
 import ValidateForm from "components/Commons/ValidateForm";
 import ProfileImage from "components/Users/ProfileImage";
 import mainSlide from "source/mainSlide.jpg";
+import Loading from "components/Commons/Loading";
 
 // css styling
 
@@ -111,6 +112,10 @@ const FormHeader = styled(Header) `
 `;
 
 class ModifyMyDetail extends Component {
+  state = {
+    loading: false
+  }
+
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token)
     .then(data => {
@@ -122,7 +127,11 @@ class ModifyMyDetail extends Component {
     await this.props.GetCategoryLevel2Request(value);
   };
 
-  handleSubmit = (data) => {
+  handleSubmit = async (data) => {
+    await this.setState({
+      loading: true
+    });
+
     this.props.UpdateUserDetailRequest(data, this.props.token)
     .then(res=> {
       if (res.success === true) {
@@ -130,6 +139,9 @@ class ModifyMyDetail extends Component {
         this.props.history.push("/");
       } else {
         alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
       }
     });
   }
@@ -208,6 +220,7 @@ class ModifyMyDetail extends Component {
             </ValidateForm>
           </Wrapper>
         }
+        {this.state.loading && <Loading/>}
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CreateDesignFormContainer from "containers/Designs/CreateDesignFormContainer";
+import Loading from "components/Commons/Loading";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
@@ -49,6 +50,15 @@ const Wrapper = styled(ContentBox)`
 `
 
 class CreateDesign extends Component {
+  state = {
+    loading: false
+  }
+
+  setLoader = () => {
+    this.setState({
+      loading: true
+    });
+  }
   render() {
     return (
       <div>
@@ -56,8 +66,9 @@ class CreateDesign extends Component {
           <Title><h1>디자인 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <CreateDesignFormContainer />
+          <CreateDesignFormContainer setLoader={this.setLoader}/>
         </Wrapper>
+        {this.state.loading && <Loading/>}
       </div>
     );
   }

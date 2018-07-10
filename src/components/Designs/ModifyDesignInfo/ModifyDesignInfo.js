@@ -13,6 +13,7 @@ import FileUploader from "components/Commons/FileUploader";
 import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
 import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
+import Loading from "components/Commons/Loading";
 import StyleGuide from "StyleGuide";
 
 const InfoWrapper = styled.div`
@@ -55,7 +56,8 @@ const FormHeader = styled(Header)`
 `;
 class ModifyDesignInfo extends Component {
   state = {
-    members: []
+    members: [],
+    loading: false
   }
 
   componentWillMount() {
@@ -104,7 +106,11 @@ class ModifyDesignInfo extends Component {
     return list;
   }
 
-  onSubmitForm = (data) => {
+  onSubmitForm = async (data) => {
+    await this.setState({
+      loading: true
+    });
+
     data.delete("search");
     if(this.state.members !== []){
       data.append("members", JSON.stringify(this.state.members));
@@ -116,6 +122,9 @@ class ModifyDesignInfo extends Component {
         this.props.history.push(`/designDetail/${this.props.DesignDetail.uid}`);
       } else {
         alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
       }
     });
   }
@@ -237,6 +246,7 @@ class ModifyDesignInfo extends Component {
           </div>
         </ValidateForm>
         }
+        {this.state.loading && <Loading/>}
         </InfoWrapper>
     );
   }

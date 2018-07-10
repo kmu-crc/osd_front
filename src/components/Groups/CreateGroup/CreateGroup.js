@@ -8,6 +8,7 @@ import { FormField } from "components/Commons/FormField";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import Loading from "components/Commons/Loading";
 
 // css styling
 
@@ -98,9 +99,16 @@ const FormHeader = styled(Header) `
 `;
 
 class CreateGroup extends Component {
-  onSubmitForm = (data) => {
+  state = {
+    loading: false
+  }
+
+  onSubmitForm = async (data) => {
+    await this.setState({
+      loading: true
+    });
+
     this.props.CreateNewGroupRequest(data, this.props.token).then(data => {
-      console.log("CreateNewGroupRequest", data);
       this.props.history.push(`/groupDetail/${data.id}`);
     });
   }
@@ -127,6 +135,7 @@ class CreateGroup extends Component {
             <Button type="submit">등록</Button>
           </ValidateForm>
         </Wrapper>
+        {this.state.loading && <Loading/>}
       </div>
     );
   }
