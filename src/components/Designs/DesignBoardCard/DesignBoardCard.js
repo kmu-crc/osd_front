@@ -22,14 +22,34 @@ const BoardCard = styled.li`
   margin-bottom: 5px;
   position: relative;
   cursor: pointer;
-  span{
+  & .cardTitle{
     display: inline-block;
     width: 80%;
+    font-size: ${StyleGuide.font.size.paragraph};
+    color: ${StyleGuide.color.geyScale.scale8};
+    margin-bottom: 5px;
+  }
+  & .cardInfo {
+    font-size: ${StyleGuide.font.size.small};
+    color: ${StyleGuide.color.geyScale.scale5};
+    & .cardCmt {
+      margin-left: 20px;
+    }
   }
 `;
 
 const CustomModal = styled(Modal)`
   padding: 30px;
+  &.ui.modal > .content {
+    padding-top: 4rem;
+  }
+  & .icon.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: ${StyleGuide.color.geyScale.scale9};
+    cursor: pointer;
+  }
 `;
 
 const DeleteBtn = styled.button`
@@ -113,10 +133,15 @@ class DesignBoardCard extends Component {
 
   onDelete = (e) => {
     e.stopPropagation();
-    this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
+    const confirm = window.confirm("카드를 삭제하시겠습니까?");
+    if (confirm) {
+      this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
       .then(() => {
         this.props.GetDesignBoardRequest(this.props.match.params.id);
-      })
+      });
+    } else {
+      return;
+    }
   }
 
   onSubmitCmtForm = async (data) => {
@@ -168,7 +193,14 @@ class DesignBoardCard extends Component {
     return (
       <div>
         <BoardCard onClick={this.openModalHandler}>
-          <span>{card.title}</span>
+          <div className="cardTitle">{card.title}</div>
+          <div className="cardInfo">
+            {card.nick_name}
+            <span className="cardCmt">
+              <Icon name="comment outline"/>
+              {card.comment_count? card.comment_count : 0}
+            </span>
+          </div>
           {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><i aria-hidden="true" className="trash alternate icon"></i></DeleteBtn>}
         </BoardCard>
         <CustomModal
@@ -178,6 +210,7 @@ class DesignBoardCard extends Component {
           onClose={this.close}
         >
           <Modal.Content>
+            <Icon name="close" size="big" onClick={this.onClose}></Icon>
             <CardTitleUpdate
               uid={detail.uid}
               title={detail.title}
@@ -241,7 +274,7 @@ class DesignBoardCard extends Component {
               {this.state.render? <CommentForm/> : null}
             </CommentContainer>
             <Button type="button" onClick={this.onClose}>
-              Close
+              닫기
             </Button>
           </Modal.Content>
         </CustomModal>
