@@ -32,6 +32,7 @@ const BoardCard = styled.li`
   & .cardInfo {
     font-size: ${StyleGuide.font.size.small};
     color: ${StyleGuide.color.geyScale.scale5};
+    width: 80%;
     & .cardCmt {
       margin-left: 20px;
     }
@@ -112,6 +113,7 @@ class DesignBoardCard extends Component {
 
   onClose = () => {
     this.setState({ open: false, active: "INIT" });
+    this.props.GetDesignBoardRequest(this.props.match.params.id);
   };
 
   changeActive = async value => {

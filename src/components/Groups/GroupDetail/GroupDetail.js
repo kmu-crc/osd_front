@@ -280,7 +280,7 @@ class GroupDetail extends Component {
                     <h4>
                       공지
                       {user && user.uid === groupDetail.user_id && 
-                      <button className="addIssue" onClick={this.setEditIssue}><Icon name="plus" color="black"/></button>
+                      <button className="addIssue" onClick={this.setEditIssue}><Icon name="plus" color="black" size="small"/></button>
                       }
                     </h4>
                     {this.state.editIssue && <EditIssue/>}

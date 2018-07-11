@@ -37,7 +37,7 @@ const ImgWrapper = styled.div`
   }
 `;
 
-const TextWrapper = styled(ContentBox) `
+const TextWrapper = styled.div `
   padding-bottom: 50px;
 `;
 
@@ -93,11 +93,11 @@ const Wrapper = styled.div`
   margin: 4rem 0;
 `;
 
-const ListContainer = styled(Grid)`
-  &.ui.grid > .row {
-    color: ${StyleGuide.color.geyScale.scale7};
-    font-size: ${StyleGuide.font.size.heading3};
-  }
+const Head = styled.div`
+  color: ${StyleGuide.color.geyScale.scale7};
+  font-size: ${StyleGuide.font.size.heading3};
+  text-align: center;
+  margin-bottom: 1rem;
 `;
 
 
@@ -117,10 +117,8 @@ class Main extends Component {
         <TextWrapper>
           <Content>
             <Wrapper>
-              <ListContainer textAlign="center" padded={true} as="ul">
-                <Grid.Row>인기 디자인 추천</Grid.Row>
-                <ScrollTopDesignContainer/>
-              </ListContainer>
+              <Head>인기 디자인 추천</Head>
+              <ScrollTopDesignContainer/>
             </Wrapper>
           </Content>
             <HowToUse textAlign="center">

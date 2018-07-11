@@ -15,6 +15,10 @@ export function GetTopDesignListRequest(page) {
           console.log("no data");
           data = [];
         }
+        if (page === 0) {
+          dispatch(GetTopDesignListClear(data));
+          return;
+        }
         dispatch(GetTopDesignListSuccess(data));
       }).catch((error) => {
         dispatch(GetTopDesignListFailure());
@@ -37,6 +41,14 @@ export function GetTopDesignListFailure() {
     TopListAdded : []
   };
 };
+
+export function GetTopDesignListClear(data) {
+  return {
+    type: types.GET_TOP_DESIGN_LIST_CLEAR,
+    TopList: data,
+    TopListAdded: []
+  }
+}
 
 // 탑 디자이너 가져오기
 export function GetTopDesignerListRequest() {

@@ -23,7 +23,7 @@ export function TopList(state, action) {
     case types.GET_TOP_DESIGN_LIST_SUCCESS:
       return update(state, {
         TopList: {
-          $set: "SUCCESS"
+          status: { $set: "SUCCESS" }
         },
         status: {
           DesignList: { $set: action.TopList },
@@ -33,7 +33,17 @@ export function TopList(state, action) {
     case types.GET_TOP_DESIGN_LIST_FAILURE:
       return update(state, {
         TopList: {
-          $set: "FAILURE"
+          status : { $set: "FAILURE" }
+        },
+        status: {
+          DesignList: { $set: action.TopList },
+          DesignListAdded: { $set: action.TopList }
+        }
+      });
+    case types.GET_TOP_DESIGN_LIST_CLEAR:
+      return update(state, {
+        TopList: {
+          status : { $set: "SUCCESS" }
         },
         status: {
           DesignList: { $set: action.TopList },
@@ -43,7 +53,7 @@ export function TopList(state, action) {
     case types.GET_TOP_DESIGNER_LIST_SUCCESS:
       return update(state, {
         TopDesignerList: {
-          $set: "SUCCESS"
+          status : { $set: "SUCCESS" }
         },
         status: {
           DesignerList: { $set: action.TopDesignerList }
@@ -52,7 +62,7 @@ export function TopList(state, action) {
     case types.GET_TOP_DESIGNER_LIST_FAILURE:
       return update(state, {
         TopDesignerList: {
-          $set: "FAILURE"
+          status : { $set: "FAILURE" }
         },
         status: {
           DesignerList: { $set: action.TopDesignerList }
