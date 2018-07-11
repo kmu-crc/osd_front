@@ -10,6 +10,7 @@ const initialState = {
   },
   status: {
     DesignList: [],
+    DesignListAdded: [],
     DesignerList: []
   }
 };
@@ -25,7 +26,8 @@ export function TopList(state, action) {
           $set: "SUCCESS"
         },
         status: {
-          DesignList: { $set: action.TopList }
+          DesignList: { $set: action.TopList },
+          DesignListAdded: { $push: action.TopList }
         }
       });
     case types.GET_TOP_DESIGN_LIST_FAILURE:
@@ -34,7 +36,8 @@ export function TopList(state, action) {
           $set: "FAILURE"
         },
         status: {
-          DesignList: { $set: action.TopList }
+          DesignList: { $set: action.TopList },
+          DesignListAdded: { $set: action.TopList }
         }
       });
     case types.GET_TOP_DESIGNER_LIST_SUCCESS:

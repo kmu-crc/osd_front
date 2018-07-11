@@ -6,6 +6,7 @@ import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Design from "components/Designs/Design";
 import Designer from "components/Designers/Designer";
+import ScrollTopDesignContainer from "containers/Commons/ScrollTopDesignContainer";
 
 import open_bg from "source/open_bg.jpg";
 import easy_bg from "source/easy_bg.jpg";
@@ -96,7 +97,6 @@ const ListContainer = styled(Grid)`
   &.ui.grid > .row {
     color: ${StyleGuide.color.geyScale.scale7};
     font-size: ${StyleGuide.font.size.heading3};
-    margin: 1rem 0;
   }
 `;
 
@@ -109,11 +109,7 @@ class Main extends Component {
           <SliderBox>
             <Slider>
               <SliderContent>
-                <h1>
-                  디자인이 쉬워진다.<br />
-                  오픈디자인
-                </h1>
-                <p>오픈디자인과 함께라면 디자인이 쉬워집니다. <br />다른 디자이너의 디자인을 참고하여 나만의 디자인을 만들어 보세요.</p>
+                <h1>오픈디자인</h1>
               </SliderContent>
             </Slider>
           </SliderBox>
@@ -123,31 +119,7 @@ class Main extends Component {
             <Wrapper>
               <ListContainer textAlign="center" padded={true} as="ul">
                 <Grid.Row>인기 디자인 추천</Grid.Row>
-                <Grid.Row>
-                  {this.props.DesignList.length > 0 &&
-                    this.props.DesignList.map(design => (
-                      <Grid.Column key={design.uid}
-                                  mobile={16} tablet={5} computer={4} 
-                                  largeScreen={2} widescreen={2} className="largeCustom">
-                        <Design data={design}/>
-                      </Grid.Column>
-                    ))
-                  }
-                </Grid.Row>
-              </ListContainer>
-              <ListContainer textAlign="center" padded={true} as="ul">
-                <Grid.Row>인기 디자이너 추천</Grid.Row>
-                <Grid.Row>
-                  {this.props.DesignerList.length > 0 &&
-                    this.props.DesignerList.map(designer => (
-                      <Grid.Column key={designer.uid}
-                                  mobile={16} tablet={5} computer={4} 
-                                  largeScreen={2} widescreen={2} className="largeCustom">
-                        <Designer data={designer}/>
-                      </Grid.Column>
-                    ))
-                  }
-                </Grid.Row>
+                <ScrollTopDesignContainer/>
               </ListContainer>
             </Wrapper>
           </Content>

@@ -2,9 +2,9 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 // 탑 디자인 가져오기
-export function GetTopDesignListRequest() {
+export function GetTopDesignListRequest(page) {
   return (dispatch) => {
-    return fetch(`${host}/design/TopList`, {
+    return fetch(`${host}/design/TopList/${page}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -33,7 +33,8 @@ export function GetTopDesignListSuccess(data) {
 export function GetTopDesignListFailure() {
   return {
     type: types.GET_TOP_DESIGN_LIST_FAILURE,
-    TopList : []
+    TopList : [],
+    TopListAdded : []
   };
 };
 
