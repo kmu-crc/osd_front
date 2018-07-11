@@ -2,9 +2,9 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 // 탑 디자인 가져오기
-export function GetTopDesignListRequest() {
+export function GetTopDesignListRequest(page) {
   return (dispatch) => {
-    return fetch(`${host}/design/TopList`, {
+    return fetch(`${host}/design/TopList/${page}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -14,6 +14,10 @@ export function GetTopDesignListRequest() {
         if (!data) {
           console.log("no data");
           data = [];
+        }
+        if (page === 0) {
+          dispatch(GetTopDesignListClear(data));
+          return;
         }
         dispatch(GetTopDesignListSuccess(data));
       }).catch((error) => {
@@ -33,9 +37,18 @@ export function GetTopDesignListSuccess(data) {
 export function GetTopDesignListFailure() {
   return {
     type: types.GET_TOP_DESIGN_LIST_FAILURE,
-    TopList : []
+    TopList : [],
+    TopListAdded : []
   };
 };
+
+export function GetTopDesignListClear(data) {
+  return {
+    type: types.GET_TOP_DESIGN_LIST_CLEAR,
+    TopList: data,
+    TopListAdded: []
+  }
+}
 
 // 탑 디자이너 가져오기
 export function GetTopDesignerListRequest() {

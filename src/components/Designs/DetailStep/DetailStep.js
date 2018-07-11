@@ -24,7 +24,7 @@ const Board = styled.div`
 
 const BoardMask = styled.div`
   width: 100%;
-  height: 100%;
+  // height: 100%;
 `;
 
 const BoardWrap = styled.ul`
