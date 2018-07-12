@@ -56,7 +56,7 @@ class CreateDesign extends Component {
 
   setLoader = () => {
     this.setState({
-      loading: true
+      loading: !this.state.loading
     });
   }
   render() {

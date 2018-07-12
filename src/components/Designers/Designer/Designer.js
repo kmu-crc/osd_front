@@ -34,27 +34,25 @@ const ImgPart = styled.div`
 
 const TextPart = styled.div`
   padding: 10px 10px;
-  & .date, & .userName {
-    line-height: 1.35;
-  }
+  font-size: ${StyleGuide.font.size.paragraph};
   & .date {
-    font-weight: 400;
-    color: dimgrey;
+    color: ${StyleGuide.color.geyScale.scale6};
+    font-size: ${StyleGuide.font.size.small};
+    line-height: 1.35;
+    padding: 1px 0;
   }
   & .userName {
-    margin: 10px 0;
     font-weight: bold;
     line-height: 20px;
     height: 40px;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
   }
   & .cate {
-    color: #EB3324;
+    color: ${StyleGuide.color.main.basic};
     font-weight: 300;
-    font-size: 12px;
+    margin: 5px 0;
   }
 `;
 
@@ -84,9 +82,9 @@ class designer extends Component {
         <Designerli>
           <ImgPart><img src={designer.imgURL ? designer.imgURL.m_img : eximg} alt="썸네일이미지"/></ImgPart>
           <TextPart>
-            <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
             <div className="userName">{designer.nick_name}</div>
-            <div className="date">2018-04-01 부터 활동</div>
+            <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
+            <div className="date">{designer.create_time? designer.create_time.split("T")[0]+"부터 활동" : ""}</div>
           </TextPart>
           <Count>
             <div>

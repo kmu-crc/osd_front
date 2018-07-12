@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
-// import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-// import mainSlide from "source/mainSlide.jpg";
 import StyleGuide from "StyleGuide";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
@@ -15,6 +13,7 @@ import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListC
 
 const Wrapper = styled.div`
   width: 100%;
+  margin-bottom: 50px;
   & ul {
     margin-top: 30px;
   }

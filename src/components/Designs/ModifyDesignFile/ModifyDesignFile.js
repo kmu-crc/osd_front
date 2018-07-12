@@ -4,10 +4,15 @@ import { Header, Grid, Form } from "semantic-ui-react";
 import { CardImageUpdate, CardSourcUpdate } from "components/Designs/DesignBoardCard";
 
 const InfoWrapper = styled.div`
+  background-color: white;
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  border-top-left-radius: 0;
+  width: 100%;
   padding: 70px;
   margin-bottom: 30px;
   @media only screen and (min-width: 1200px) {
-    padding: 70px 100px;
+    padding: 70px 100px 70px 100px;
   }
 `;
 

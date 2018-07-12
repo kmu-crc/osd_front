@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
+import Button from "components/Commons/Button";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import group_bg from "source/group_bg.jpg";

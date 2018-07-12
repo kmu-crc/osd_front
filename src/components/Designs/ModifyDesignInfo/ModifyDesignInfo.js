@@ -17,10 +17,17 @@ import Loading from "components/Commons/Loading";
 import StyleGuide from "StyleGuide";
 
 const InfoWrapper = styled.div`
-  padding: 70px;
-  margin-bottom: 30px;
-  @media only screen and (min-width: 1200px) {
-    padding: 70px 100px 0 100px;
+  & .formWrap {
+    background-color: white;
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    border-top-left-radius: 0;
+    width: 100%;
+    padding: 70px;
+    margin-bottom: 30px;
+    @media only screen and (min-width: 1200px) {
+      padding: 70px 100px 0 100px;
+    }
   }
 `;
 
@@ -138,7 +145,7 @@ class ModifyDesignInfo extends Component {
         <div></div>
         :
         <ValidateForm onSubmit={this.onSubmitForm} enctype="multipart/form-data">
-          <div>
+          <div className="formWrap">
             <Grid>
               <Grid.Column mobile={16} computer={4}>
                 <FormHeader as="h2">디자인 정보</FormHeader>
@@ -204,7 +211,7 @@ class ModifyDesignInfo extends Component {
               </Grid.Column>
             </Grid>
           </div>
-          <div>
+          <div className="formWrap">
             <Grid>
               <Grid.Column mobile={16} computer={4}>
                 <FormHeader as="h2">라이센스</FormHeader>
@@ -232,18 +239,18 @@ class ModifyDesignInfo extends Component {
                     checked={currentDesign.is_modify === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
                   />
-                  <FormField
+                  {/* <FormField
                     name="is_public"
                     label="디자인 공개 여부"
                     placeholder="공개"
                     checked={currentDesign.is_public === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
-                  />
+                  /> */}
                 </Form.Group>
               </Grid.Column>
             </Grid>
-            <Button type="submit">수정</Button>
           </div>
+          <Button type="submit">수정</Button>
         </ValidateForm>
         }
         {this.state.loading && <Loading/>}

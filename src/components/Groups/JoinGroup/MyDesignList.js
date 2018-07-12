@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { FormMultiSelect } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import ValidateForm from "components/Commons/ValidateForm";
-import { Button } from "semantic-ui-react";
+import Button from "components/Commons/Button";
+import styled from "styled-components";
+
+const Btn = styled(Button)`
+  margin-right: 5px;
+`;
 
 class MyDesignList extends Component {
   state = {
@@ -32,8 +37,8 @@ class MyDesignList extends Component {
     return(
       <ValidateForm onSubmit={this.handleSubmit}>
         <FormField name="join_design" label="내 디자인 리스트" options={this.props.designList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-        <Button type="submit">등록</Button>
-        <Button type="button" onClick={this.props.handleCloseModal}>닫기</Button>
+        <Btn type="submit">등록</Btn>
+        <Btn type="button" onClick={this.props.handleCloseModal}>닫기</Btn>
       </ValidateForm>
     );
   }

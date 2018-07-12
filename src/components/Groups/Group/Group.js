@@ -34,22 +34,27 @@ const ImgPart = styled.div`
 
 const TextPart = styled.div`
   padding: 10px 10px;
-  & .title, & .owner {
+  font-size: ${StyleGuide.font.size.paragraph};
+  & .owner {
     line-height: 1.35;
+    margin: 5px 0;
+    color: ${StyleGuide.color.geyScale.scale6};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   & .title {
     font-weight: bold;
     line-height: 20px;
     height: 40px;
-    margin: 10px 0;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
+    color: ${StyleGuide.color.geyScale.scale7};
   }
   & .cate {
-    font-weight: 400;
-    color: dimgrey;
+    color: ${StyleGuide.color.geyScale.scale6};
+    font-size: ${StyleGuide.font.size.small};
   }
 `;
 

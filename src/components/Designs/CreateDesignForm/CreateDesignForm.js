@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
 import CreateDesingFormContent from "components/Designs/CreateDesingFormContent";
 
@@ -48,7 +48,10 @@ class CreateDesignForm extends Component {
       if(res.success){
         this.props.history.push(`/designDetail/${res.design_id}`)
       }
-      console.log(res);
+      else {
+        alert("다시 시도해주세요");
+        this.props.setLoader();
+      }
     })
   }
   onChangeDesing = (data) => {

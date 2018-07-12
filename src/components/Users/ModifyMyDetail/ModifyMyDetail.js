@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Grid, Form, Button, Header } from "semantic-ui-react";
+import { Grid, Form, Header } from "semantic-ui-react";
 import { OverlapField, FormField } from "components/Commons/FormField";
 import { FormInput, FormCheckBox, FormTextArea, FormSelect } from "components/Commons/FormItem";
 // import FormDataToJson from "modules/FormDataToJson";
@@ -10,6 +10,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import ProfileImage from "components/Users/ProfileImage";
 import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
+import Button from "components/Commons/Button";
 
 // css styling
 
@@ -50,16 +51,6 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled(ContentBox)`
-  // width: 100%;
-  // padding: 0!important;
-  // & .ui.form {
-  //   width: 100%;
-  // }
-  // & .submitBtn {
-  //   position: absolute;
-  //   top: -40px;
-  //   left: 0;
-  // }
   margin-top: -70px;
   margin-bottom: 100px;
   position: relative;
@@ -69,7 +60,7 @@ const Wrapper = styled(ContentBox)`
 const FromFieldCard = styled.div`
   width: 100%;
   background-color: white;
-  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
   padding: 40px;
   margin-bottom: 30px;
   & .profileImg {
