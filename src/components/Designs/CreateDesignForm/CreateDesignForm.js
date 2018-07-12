@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";
 import CreateDesingFormContent from "components/Designs/CreateDesingFormContent";
 

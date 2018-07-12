@@ -34,23 +34,28 @@ const ImgPart = styled.div`
 
 const TextPart = styled.div`
   padding: 10px 10px;
-  & .userName {
-    line-height: 1.35;
-  }
+  font-size: ${StyleGuide.font.size.paragraph};
   & .title {
     font-weight: bold;
     line-height: 20px;
     height: 40px;
-    margin: 10px 0;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: ${StyleGuide.color.geyScale.scale7};
+  }
+  & .userName {
+    line-height: 1.35;
+    margin: 5px 0;
+    color: ${StyleGuide.color.geyScale.scale6};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
   }
   & .cate {
-    color: #EB3324;
+    color: ${StyleGuide.color.main.basic};
     font-weight: 300;
-    font-size: 12px;
+    font-size: ${StyleGuide.font.size.small};
   }
 `;
 
@@ -82,9 +87,9 @@ class Design extends Component {
             <img src={design.thumbnailUrl ? design.thumbnailUrl.m_img : eximg} alt="썸네일이미지" />
           </ImgPart>
           <TextPart>
-            <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
             <div className="title">{design.title}</div>
             <div className="userName">{design.userName}</div>
+            <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
           </TextPart>
           <Count>
             <div>
