@@ -48,7 +48,10 @@ class CreateDesignForm extends Component {
       if(res.success){
         this.props.history.push(`/designDetail/${res.design_id}`)
       }
-      console.log(res);
+      else {
+        alert("다시 시도해주세요");
+        this.props.setLoader();
+      }
     })
   }
   onChangeDesing = (data) => {

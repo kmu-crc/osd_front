@@ -13,8 +13,8 @@ import StyleGuide from "StyleGuide";
 const Wrapper = styled(Grid)`
   width: 100%;
   &.ui.grid {
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
     margin-left: 0rem;
     margin-right: 0rem;
   }
@@ -26,15 +26,13 @@ const Wrapper = styled(Grid)`
     margin-bottom: 5px;
   }
   & .contentRow {
-    border-radius: 3px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
   }
 `;
 
 const HeadContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0,0,0,0.15);
   box-shadow: 0 0 5px rgba(0,0,0,0.25);
-  margin-botto: 5px;
+  background-color: ${StyleGuide.color.geyScale.scale1};
 `;
 
 const ProfileSection = styled.div`
@@ -71,9 +69,16 @@ const ProfileSection = styled.div`
   & .btnContainer {
     display: flex;
     justify-content: space-around;
-    margin: 30px 0 20px;
+    margin: 5px 0;
     & button {
-      padding: 0.75em 1.5em;
+      padding: 0.75em 1.6em;
+    }
+    & .likeBtn {
+      background: ${StyleGuide.color.sub.bule.light};
+      &:hover {
+        border: 0;
+        background: ${StyleGuide.color.sub.bule.basic};
+      }
     }
   }
 `;
@@ -100,7 +105,9 @@ const InfoSection = styled.div`
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
-  border-radius: 0 3px 3px 0;
+  border-right: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(0,0,0,0.25);
+
   & .columns {
     padding: 0 20px;
   }
@@ -120,7 +127,7 @@ const Head = styled(Grid)`
   }
   & li {
     float: left;
-    width: 100px;
+    width: 120px;
     text-align: center;
     cursor: pointer;
   }
@@ -233,10 +240,14 @@ class DesignerDetail extends Component {
                     <div className="category">
                       {designerDetail.categoryName? designerDetail.categoryName : "전체"}
                     </div>
+                    <InfoSection>
+                      <h4>소개</h4>
+                      <p className="explanation">{designerDetail.about_me}</p>
+                    </InfoSection>
                     <div className="btnContainer">
                       {this.props.like === true 
-                      ? <Button className="red" onClick={this.updateLike}>좋아요 취소</Button>
-                      : <Button className="red" onClick={this.updateLike}>좋아요</Button>
+                      ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
+                      : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
                       }
                       <Link to="/message"><Button color="Solid">메시지보내기</Button></Link>
                     </div>
@@ -255,10 +266,6 @@ class DesignerDetail extends Component {
                       <span>{count.total_view}</span>
                     </div>
                   </CountSection>
-                  <InfoSection>
-                    <h4>소개</h4>
-                    <p className="explanation">{designerDetail.about_me}</p>
-                  </InfoSection>
                 </HeadContainer>
                 <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
                   <Head devided="vertically" padded={true} columns={2}>

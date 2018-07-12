@@ -6,7 +6,7 @@ import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import CreateDesignPage from "pages/CreateDesignPage";
 import ModifyDesignPage from "pages/ModifyDesignPage";
 import CreateGroupPage from "pages/CreateGroupPage";
-// import ModifyGroupPage from "pages/ModifyGroupPage";
+import ModifyGroupPage from "pages/ModifyGroupPage";
 import InserUserDetailPage from "pages/InserUserDetailPage"
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
@@ -37,7 +37,7 @@ class App extends Component {
           <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage}/>
           <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)}/>
           <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)}/>
-          {/* <Route path="/groupDetail/:id/modify" component={ModifyGroupPage}/> */}
+          <Route path="/groupDetail/:id/modify" component={RequiresAuth(ModifyGroupPage)}/>
           <Route path="/groupDetail/:id/:type?/:sorting?" component={GroupDetailPage}/>
           <Route path="/group/:sorting?" component={GroupListPage}/>
           <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage}/>

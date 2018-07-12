@@ -11,12 +11,6 @@ const ModalContent = styled.div`
 `
 
 const ModalBtn = styled(Button)`
-  background-color: ${StyleGuide.color.main.basic};
-  border: none;
-  &:hover {
-    background-color: ${StyleGuide.color.main.dark};
-    border: none;
-  }
 `
 
 const JoinGroupWrap = styled.div`
@@ -72,7 +66,7 @@ class JoinGroup extends Component {
     const { open, active } = this.state;
     return (
       <JoinGroupWrap>
-        <ModalBtn onClick={this.handleModal}>가입 신청</ModalBtn>
+        <ModalBtn color="Solid" onClick={this.handleModal}>가입 신청</ModalBtn>
         <Modal open={open}
           closeOnEscape={false}
           closeOnRootNodeClick={false}

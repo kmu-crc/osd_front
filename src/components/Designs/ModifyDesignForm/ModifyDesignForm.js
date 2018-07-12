@@ -7,18 +7,14 @@ import StyleGuide from "StyleGuide";
 
 const FromFieldCard = styled.div`
   width: 100%;
-  background-color: white;
-  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  // @media only screen and (min-width: 1200px) {
-  //   padding: 70px 100px 0 100px;
-  // }
 `;
 
 const TabWrapper = styled.div`
-  padding: 2rem 0rem;
-  border-bottom: 1px solid rgba(0,0,0,0.15);
-  margin: 0 3rem;
+  padding: 1rem 0rem;
+  background-color: rgba(255,255,255,0.8);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  display: inline-block;
   & ul {
     width: 300px;
     display: flex;
@@ -27,9 +23,11 @@ const TabWrapper = styled.div`
     color: ${StyleGuide.color.geyScale.scale9};
     & li {
       text-align: center;
+      
     }
     & li.active {
       color: ${StyleGuide.color.main.basic};
+      font-weight: 600;
       &::after {
         content: "";
         display: block;

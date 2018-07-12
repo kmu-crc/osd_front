@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Grid, Form, Button, Header } from "semantic-ui-react";
+import { Grid, Form, Header } from "semantic-ui-react";
 import { OverlapField, FormField } from "components/Commons/FormField";
 import { FormInput, FormCheckBox, FormTextArea, FormSelect } from "components/Commons/FormItem";
 // import FormDataToJson from "modules/FormDataToJson";
@@ -10,6 +10,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import ProfileImage from "components/Users/ProfileImage";
 import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
+import Button from "components/Commons/Button";
 
 // css styling
 

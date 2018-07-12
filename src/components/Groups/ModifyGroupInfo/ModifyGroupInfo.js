@@ -42,8 +42,6 @@ const FormHeader = styled(Header) `
 
 class ModifyGroupInfo extends Component {
   state = {
-    title: this.props.GroupDetail.title,
-    explanation: this.props.GroupDetail.explanation,
     user_id: this.props.GroupDetail.user_id,
     loading: false
   }
@@ -57,7 +55,7 @@ class ModifyGroupInfo extends Component {
     .then(res => {
       if (res.data.success === true) {
         alert("정보가 수정되었습니다.");
-        this.props.history.push("/group");
+        this.props.history.push(`/groupDetail/${this.props.id}`);
       } else {
         alert("다시 시도해주세요");
         this.setState({
@@ -91,12 +89,12 @@ class ModifyGroupInfo extends Component {
               <Grid.Column width={12}>
                 <Form.Group widths="equal">
                   <FormField name="title" label="그룹 이름" type="text" validates={["required"]} 
-                             value={this.state.title} 
+                             value={this.props.GroupDetail.title} 
                              RenderComponent={FormInput} />
                 </Form.Group>
                 <Form.Group widths="equal">
                   <FormField name="explanation" label="그룹 설명" 
-                             value={this.state.explanation}
+                             value={this.props.GroupDetail.explanation}
                              RenderComponent={FormTextArea} />
                 </Form.Group>
                 <Form.Group widths="equal">

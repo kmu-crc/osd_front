@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DeleteGroupRequest, UpdateGroupRequest } from "actions/Group";
+import { GetGroupDetailRequest, DeleteGroupRequest, UpdateGroupRequest } from "actions/Group";
 import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
 
 class ModifyGroupInfoContainer extends Component {
+  componentDidMount(){
+    this.props.GetGroupDetailRequest(this.props.id, this.props.token);
+  }
+  
   render() {
     return(
       <ModifyGroupInfo {...this.props}/>
@@ -13,12 +17,16 @@ class ModifyGroupInfoContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.Authentication.status.token
+    token: state.Authentication.status.token,
+    GroupDetail: state.GroupDetail.status.GroupDetail,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    GetGroupDetailRequest: (id) => {
+      return dispatch(GetGroupDetailRequest(id))
+    },
     DeleteGroupRequest: (id, token) => {
       return dispatch(DeleteGroupRequest(id, token))
     },

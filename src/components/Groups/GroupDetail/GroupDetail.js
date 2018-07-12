@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
-import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer";
+import { Link } from "react-router-dom";
+// import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer";
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import ModifyJoinList from "components/Groups/ModifyJoinList";
 import CurrentJoinList from "components/Groups/CurrentJoinList/CurrentJoinList";
@@ -18,8 +19,8 @@ import StyleGuide from "StyleGuide";
 const Wrapper = styled(Grid)`
   width: 100%;
   &.ui.grid {
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
     margin-left: 0rem;
     margin-right: 0rem;
   }
@@ -31,7 +32,7 @@ const Wrapper = styled(Grid)`
     margin-right: 5px;
   }
   & .contentRow {
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
   }
   & .btnContainer {
     margin: 5px 0;
@@ -39,7 +40,7 @@ const Wrapper = styled(Grid)`
 `;
 
 const HeadContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0,0,0,0.15);
+  background-color: ${StyleGuide.color.geyScale.scale1};
   box-shadow: 0 0 5px rgba(0,0,0,0.25);
 `;
 
@@ -69,9 +70,16 @@ const ProfileSection = styled.div`
     text-align: center;
     padding: 10px 0;
   }
-  & .btnContainer {
+  & .likeBtnContainer {
     display: flex;
     justify-content: space-around;
+    & .likeBtn {
+      background: ${StyleGuide.color.sub.bule.light};
+      &:hover {
+        border: 0;
+        background: ${StyleGuide.color.sub.bule.basic};
+      }
+    }
   }
 `;
 
@@ -134,7 +142,6 @@ const IssueContainer = styled.div`
 
 class GroupDetail extends Component {
   state = {
-    editGroupInfoMode: false,
     editMode: false,
     editIssue: false
   };
@@ -151,12 +158,6 @@ class GroupDetail extends Component {
     if (this.props.token) {
       this.props.GetLikeGroupRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
     }
-  }
-
-  setEditGroupInfoMode = () => {
-    this.setState({
-      editGroupInfoMode: !this.state.editGroupInfoMode
-    });
   }
 
   setEditMode = () => {
@@ -236,25 +237,21 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <ContentBox>
             <Wrapper padded={false} columns={2}>
-            { this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) && 
+            {this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) && 
               <Grid.Row>
-                { !this.state.editGroupInfoMode 
-                ? <div className="btnContainer">
-                    <Button className="edit" onClick={this.setEditGroupInfoMode}>
-                      정보 수정
+                <div className="btnContainer">
+                  <Link to={`/groupDetail/${this.props.id}/modify`}>
+                    <Button className="edit">
+                      수정
                     </Button>
-                    <Button className="edit" onClick={this.setEditMode}>
-                      가입 관리
-                    </Button>
-                  </div>
-                : <div className="btnContainer"></div>
-                }
+                  </Link>
+                  <Button className="edit" color={this.state.editMode? "Solid" : null} onClick={this.setEditMode}>
+                    {this.state.editMode? "확인" : "가입 관리"}
+                  </Button>
+                </div>
               </Grid.Row>
             }
-              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
-            {this.state.editGroupInfoMode 
-            ? <ModifyGroupInfoContainer {...this.props}/> 
-            : 
+            {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
               <Grid.Row className="contentRow">
                 <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
@@ -268,10 +265,10 @@ class GroupDetail extends Component {
                       <h4>소개</h4>
                       <p className="explanation">{groupDetail.explanation}</p>
                     </InfoSection>
-                    <div className="btnContainer">
+                    <div className="likeBtnContainer">
                       {this.props.like === true 
-                      ? <Button onClick={this.updateLike}>좋아요 취소</Button>
-                      : <Button onClick={this.updateLike}>좋아요</Button>
+                      ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
+                      : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
                       }
                       <JoinGroupContainer/>
                     </div>
@@ -328,8 +325,7 @@ class GroupDetail extends Component {
                 ? <ModifyJoinList {...this.props}/>
                 : <CurrentJoinList {...this.props}/>
                 }
-              </Grid.Row>
-            }   
+              </Grid.Row> 
             </Wrapper>
           </ContentBox>
         }

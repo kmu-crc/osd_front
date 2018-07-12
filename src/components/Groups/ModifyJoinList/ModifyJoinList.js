@@ -11,6 +11,8 @@ import EditDesignListContainer from "containers/Groups/EditDesignListContainer";
 // css styling
 const TabContainer = styled(Grid.Column)`
   background-color: white;
+  border-right: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(0,0,0,0.25);
   & .columns {
     padding: 0 20px;
   } 
