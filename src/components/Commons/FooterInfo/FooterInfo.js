@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Header, Grid } from "semantic-ui-react";
+import ContentBox from "components/Commons/ContentBox";
+import StyleGuide from "StyleGuide";
 
 const FromFieldCard = styled.div`
+  margin-top: 2rem;
+  margin-bottom: 5rem;
   width: 100%;
   background-color: white;
-  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
   padding: 40px;
-  margin-bottom: 30px;
+  & .para {
+    font-size: ${StyleGuide.font.size.paragraph};
+    color: ${StyleGuide.color.geyScale.scale7};
+  }
 `;
 
 const FormHeader = styled(Header) `
@@ -26,7 +33,7 @@ const FormHeader = styled(Header) `
 `;
 
 const Ul = styled.ul`
-  margin: 15px 0;
+  margin: 20px 0;
   & li {
     font-weight: 600;
     height: 24px;
@@ -36,15 +43,14 @@ const Ul = styled.ul`
 class FooterInfo extends Component {
   render() {
     return(
-      <Container>
-        <Header as='h1'>오픈디자인 소개</Header>
+      <ContentBox>
         <FromFieldCard>
           <Grid>
             <Grid.Column width={4}>
               <FormHeader as="h2">쉬운 디자인, <br></br>함께하는 디자인</FormHeader>
             </Grid.Column>
             <Grid.Column width={12}>
-              <div>
+              <div className="para">
                 <p>
                   디자인은 인간의 창의성을 담는 그릇입니다. 창의력이 핵심 경쟁력이 될 미래는 디자인 중심 사회가 될 것입니다.<br></br>
                   세계 각국은 디자인의 중요성을 깨달아 디자인에 대한 투자를 늘리고 있지만 아직 대부분의 사람들에게 디자인은 어려운 분야입니다.<br></br>
@@ -84,7 +90,7 @@ class FooterInfo extends Component {
             </Grid.Column>
           </Grid>
         </FromFieldCard>
-      </Container>
+      </ContentBox>
     );
   }
 }

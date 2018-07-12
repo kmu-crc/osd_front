@@ -193,13 +193,13 @@ class CreateDesingFormContent extends Component {
                   checked="1"
                   RenderComponent={FormCheckBox}
                 />
-                <FormField
+                {/* <FormField
                   name="is_public"
                   label="디자인 공개 여부"
                   placeholder="공개"
                   checked="1"
                   RenderComponent={FormCheckBox}
-                />
+                /> */}
               </Form.Group>
             </Grid.Column>
           </Grid>

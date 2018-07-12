@@ -239,13 +239,13 @@ class ModifyDesignInfo extends Component {
                     checked={currentDesign.is_modify === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
                   />
-                  <FormField
+                  {/* <FormField
                     name="is_public"
                     label="디자인 공개 여부"
                     placeholder="공개"
                     checked={currentDesign.is_public === 1 ? "1" : "0"}
                     RenderComponent={FormCheckBox}
-                  />
+                  /> */}
                 </Form.Group>
               </Grid.Column>
             </Grid>
