@@ -50,35 +50,32 @@ const Head = styled(Grid)`
 
 const MiniContentBox = styled.div`
   margin: 0 auto;
-  padding: 20px 0;
-  @media only screen and (max-width: 500px) and (min-width: 320px){
-    width: 100%;
-  }
-  @media only screen and (max-width: 767px) and (min-width: 501px){
-    width: 400px;
+  padding-top: 20px;
+  @media only screen and (max-width: 767px) and (min-width: 320px){
+    padding: 0 20px;
+    width: 320px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 700px;
+    width: 450px;
+  }
+  @media only screen and (min-width: 992px){
+    width: 440px;
+  }
+  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+    width: 760px;
+  }
+  @media only screen and (min-width: 1920px){
+    width: 1100px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
     .ui.grid > .row{
       margin-left: 6.25% !important;
     }
   }
-  @media only screen and (min-width: 992px){
-    width: 420px;
-  }
-  @media only screen and (max-width: 1399px) and (min-width: 1200px){
-    width: 825px;
-  }
-  @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 825px;
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1700px){
-    width: 825px;
-  }
-  @media only screen and (min-width: 1920px){
-    width: 825px;
+  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+    .ui.grid > .row{
+      margin-left: 6.25% !important;
+    }
   }
 `;
 

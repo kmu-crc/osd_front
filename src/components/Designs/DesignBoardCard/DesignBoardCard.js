@@ -90,7 +90,6 @@ const CommentContainer = styled.div`
   }
   & p {
     text-align: center;
-    font-size: ${StyleGuide.font.size.small};
   }
   & .ui.form .field {
     margin-bottom: 1rem;
