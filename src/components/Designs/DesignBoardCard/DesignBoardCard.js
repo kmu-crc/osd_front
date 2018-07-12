@@ -41,9 +41,6 @@ const BoardCard = styled.li`
 
 const CustomModal = styled(Modal)`
   padding: 30px;
-  &.ui.modal > .content {
-    padding-top: 4rem;
-  }
   & .icon.close {
     position: absolute;
     top: 10px;

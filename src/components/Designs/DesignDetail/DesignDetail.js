@@ -52,8 +52,8 @@ const HeadContainer = styled(Grid)`
     font-weight: bold;
   }
   & .explanation {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -123,7 +123,7 @@ const ModalContent = styled(Modal) `
 const TabMenu = styled.ul`
   position: absolute;
   display: flex;
-  top: -60px;
+  bottom: -1px;
   color: ${StyleGuide.color.geyScale.scale7};
   & li {
     width: 80px;
@@ -136,7 +136,7 @@ const TabMenu = styled.ul`
     border: 1px solid ${StyleGuide.color.geyScale.scale3};
     border-bottom: 0;
     border-top: 2px solid ${StyleGuide.color.geyScale.scale3};
-    font-weight: bold;
+    color: ${StyleGuide.color.sub.bule.dark};
   }
 `;
 
@@ -244,11 +244,11 @@ class DesignDetail extends Component {
                           {designDetail.categoryName? designDetail.categoryName : "전체"}
                         </span>
                         <span className="owner">
-                          <Icon name="user" size="mini"></Icon>
+                          <Icon name="user"></Icon>
                           {designDetail.userName}
                         </span>
                         <span className="member">
-                          <Icon name="group" size="mini"></Icon>
+                          <Icon name="group"></Icon>
                           {count.member_count}명
                         </span>
                       </Cate>
@@ -261,7 +261,7 @@ class DesignDetail extends Component {
                       <SubInfo>
                         <div className="ui right labeled button">
                           <button className="ui basic button" tabIndex="0">
-                            <Icon name="unhide" size="mini"></Icon>
+                            <Icon name="unhide"></Icon>
                             조회수
                       </button>
                           <div className="ui left pointing basic label">{count.view_count}</div>
@@ -269,11 +269,11 @@ class DesignDetail extends Component {
                         <div className="ui right labeled button like">
                         {this.props.like === true 
                         ? <button className="ui basic button" onClick={this.updateLike}>
-                          <Icon name="heart" size="mini"></Icon>
+                          <Icon name="heart"></Icon>
                           좋아요 취소
                           </button>
                         : <button className="ui basic button" onClick={this.updateLike}>
-                          <Icon name="heart" size="mini"></Icon>
+                          <Icon name="heart"></Icon>
                           좋아요
                           </button>
                         }
@@ -290,22 +290,22 @@ class DesignDetail extends Component {
                     </Grid.Column>
                   </Grid.Row>
                 </HeadContainer>
+                <TabMenu>
+                  <Link to={`/designDetail/${this.props.id}`}>
+                    <li className={this.props.history.location.pathname.indexOf("issue") === -1 ? "active" : ""}>
+                    컨텐츠
+                    </li>
+                  </Link>
+                  <Link to={`/designDetail/${this.props.id}/issue`}>
+                    <li className={this.props.history.location.pathname.indexOf("issue") !== -1 ? "active" : ""}>
+                    이슈
+                    </li>
+                  </Link>
+                </TabMenu>
               </ContentBox>
             </HeaderBackground>
             {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
             <ContentBox>
-              <TabMenu>
-                <Link to={`/designDetail/${this.props.id}`}>
-                  <li className={this.props.history.location.pathname.indexOf("issue") === -1 ? "active" : ""}>
-                  컨텐츠
-                  </li>
-                </Link>
-                <Link to={`/designDetail/${this.props.id}/issue`}>
-                  <li className={this.props.history.location.pathname.indexOf("issue") !== -1 ? "active" : ""}>
-                  이슈
-                  </li>
-                </Link>
-              </TabMenu>
               <TabContainer>
                 <Route exact path={"/designDetail/:id"}
                         component={designDetail.is_project == 1 ? DesignDetailStepContainer
