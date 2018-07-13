@@ -20,7 +20,7 @@ const ImgWrapper = styled.div`
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 400px;
+  height: 300px;
   position: relative;
   &::after{
     position: absolute;
