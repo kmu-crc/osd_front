@@ -41,9 +41,6 @@ const BoardCard = styled.li`
 
 const CustomModal = styled(Modal)`
   padding: 30px;
-  &.ui.modal > .content {
-    padding-top: 4rem;
-  }
   & .icon.close {
     position: absolute;
     top: 10px;
@@ -90,7 +87,6 @@ const CommentContainer = styled.div`
   }
   & p {
     text-align: center;
-    font-size: ${StyleGuide.font.size.small};
   }
   & .ui.form .field {
     margin-bottom: 1rem;

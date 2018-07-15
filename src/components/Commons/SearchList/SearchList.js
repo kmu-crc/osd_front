@@ -28,7 +28,7 @@ const Content = styled(ContentBox)`
 `;
 
 const MenuContainer = styled(Grid)`
-  font-size: 13px;
+  font-size: 1.2rem;
   & .sorting {
     text-align: right;
   }

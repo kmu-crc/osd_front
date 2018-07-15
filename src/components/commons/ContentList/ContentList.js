@@ -29,7 +29,7 @@ class ContentList extends Component {
     return(
       <Grid.Row>
       {data.length > 0 ? data.map(data => (
-        <Grid.Column mobile={8} tablet={5} computer={8} largeScreen={4} widescreen={4}
+        <Grid.Column mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2}
                     className="largeCustom"
                     key={data.uid}>
           {type === "design" ? <Design data={data} rerender={this.props.rerender}/>

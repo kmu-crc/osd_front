@@ -257,7 +257,7 @@ class MessageList extends Component {
         <Container>
           <Wrapper padded={false} columns={2}>
             <Grid.Row>
-              <ListContainer>
+              <ListContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
                 <SearchMember>
                   <div className="heading">멤버 검색</div>
                   <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue}/>
@@ -284,7 +284,7 @@ class MessageList extends Component {
                 <div>메시지없음</div>
                 }
               </ListContainer>
-              <ContentContainer>
+              <ContentContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
                 <DetailWrapper>
                   {this.state.selectName &&
                     <div className="head">{this.state.selectName}님과의 대화</div>

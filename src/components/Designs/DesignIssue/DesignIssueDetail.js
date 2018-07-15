@@ -62,7 +62,6 @@ const CommentContainer = styled.div`
   }
   & > p {
     text-align: center;
-    font-size: ${StyleGuide.font.size.small};
   }
   & .ui.button {
     font-size: ${StyleGuide.font.size.small};

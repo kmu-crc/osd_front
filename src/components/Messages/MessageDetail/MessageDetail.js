@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 // css styling
+const  MsgContent = styled.div`
+  // & .comment.my {
+  //   float: right;
+  // }
+`;
 
 class MessageDetail extends Component {
   componentDidMount(){
@@ -14,12 +19,13 @@ class MessageDetail extends Component {
 
   render(){
     const list = this.props.MessageDetail;
-    const myId = this.props.userInfo;
+    const myId = this.props.userInfo.uid;
 
     return(
+      <MsgContent>
         <div className="ui comments">
           {list.map(item => (
-            <div className="comment" key={item.uid}>
+            <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
               <div className="avatar">
                 <img src={item.s_img? item.s_img : null} alt="profile" />
               </div>
@@ -33,6 +39,7 @@ class MessageDetail extends Component {
             </div>
           ))}
         </div>
+      </MsgContent>
     );
   }
 }

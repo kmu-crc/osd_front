@@ -27,7 +27,7 @@ const Content = styled(ContentBox)`
 `;
 
 const MenuContainer = styled(Grid) `
-  font-size: 13px;
+  font-size: 1.2rem;
   & .sorting {
     text-align: right;
   }
@@ -46,7 +46,7 @@ const ImgWrapper = styled.div`
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 250px;
+  height: 200px;
   position: relative;
   &::after{
     position: absolute;
