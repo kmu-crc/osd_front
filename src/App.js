@@ -13,6 +13,7 @@ import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
 import MainPage from "pages/MainPage/MainPage";
 import TestPage from "pages/TestPage";
+import TestPage2 from "pages/TestPage2";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
@@ -49,6 +50,7 @@ class App extends Component {
           <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)}/>
           <Route path="/test" component={TestPage} />
+          <Route path="/test2" component={TestPage2} />
           <Route path="/footer/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message" component={RequiresAuth(MessagePage)}/>
