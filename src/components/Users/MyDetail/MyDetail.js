@@ -125,7 +125,8 @@ const Head = styled(Grid)`
 
 const MiniContentBox = styled.div`
   margin: 0 auto;
-  padding-top: 20px;
+  padding: 20px 0;
+
   @media only screen and (max-width: 767px) and (min-width: 320px){
     padding: 0 20px;
     width: 320px;
