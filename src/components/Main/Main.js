@@ -20,7 +20,7 @@ const ImgWrapper = styled.div`
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 300px;
+  height: 250px;
   position: relative;
   &::after{
     position: absolute;
@@ -77,6 +77,7 @@ const SliderContent = styled.div`
   }
   p{
     line-height: 1.4;
+    font-size: 1.3rem;
   }
 `;
 
@@ -110,6 +111,7 @@ class Main extends Component {
             <Slider>
               <SliderContent>
                 <h1>오픈디자인</h1>
+                <p>쉬운 디자인, 함께 하는 디자인</p>
               </SliderContent>
             </Slider>
           </SliderBox>

@@ -18,7 +18,7 @@ class MyDesignContainer extends Component {
       <ScrollList getListRequest={this.getList}
                   ListComponent={Design}
                   dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                  mobile={8} tablet={5} computer={8} largeScreen={4} widescreen={4} customClass="largeCustom"/>
+                  mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
     );
   }
 }

@@ -74,6 +74,7 @@ const ProfileSection = styled.div`
     display: flex;
     justify-content: space-around;
     & .likeBtn {
+      border: 0;
       background: ${StyleGuide.color.sub.bule.light};
       &:hover {
         border: 0;
@@ -185,7 +186,7 @@ class GroupDetail extends Component {
         if (data.success === true) {
           this.props.GetLikeGroupRequest(this.props.id, this.props.token)
           .then(this.props.GetGroupCountRequest(this.props.id))
-        } 
+        }
       });
     }
   }
@@ -237,7 +238,7 @@ class GroupDetail extends Component {
         {groupDetail.length !== 0 &&
           <ContentBox>
             <Wrapper padded={false} columns={2}>
-            {this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) && 
+            {this.props.userInfo && (this.props.userInfo.uid === groupDetail.user_id) &&
               <Grid.Row>
                 <div className="btnContainer">
                   <Link to={`/groupDetail/${this.props.id}/modify`}>
@@ -266,7 +267,7 @@ class GroupDetail extends Component {
                       <p className="explanation">{groupDetail.explanation}</p>
                     </InfoSection>
                     <div className="likeBtnContainer">
-                      {this.props.like === true 
+                      {this.props.like === true
                       ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
                       : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
                       }
@@ -276,7 +277,7 @@ class GroupDetail extends Component {
                   <IssueContainer>
                     <h4>
                       공지
-                      {user && user.uid === groupDetail.user_id && 
+                      {user && user.uid === groupDetail.user_id &&
                       <button className="addIssue" onClick={this.setEditIssue}><Icon name="plus" color="black" size="small"/></button>
                       }
                     </h4>
@@ -325,7 +326,7 @@ class GroupDetail extends Component {
                 ? <ModifyJoinList {...this.props}/>
                 : <CurrentJoinList {...this.props}/>
                 }
-              </Grid.Row> 
+              </Grid.Row>
             </Wrapper>
           </ContentBox>
         }

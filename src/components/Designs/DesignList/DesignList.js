@@ -72,7 +72,7 @@ const Title = styled.div`
   transform: translateY(-50%);
   h1{
     color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading1};
+    font-size: 2.5rem;
     font-weight: bold;
   }
 `;
@@ -120,7 +120,9 @@ class DesignList extends Component {
         <ImgWrapper>
           <Title>
             <h1>디자인</h1>
-            <p>오픈디자인은 여러 디자이너들의 작품을 쉽게 공유하고 참고 할 수 있습니다.</p>
+            <p>여러 디자이너들의 작품을 쉽게 공유하고 참고할 수 있습니다.</p>
+            {/* <p>오픈디자인에서는 누구나 다양한 형태의 디자인을 공유할 수 있습니다.<br></br>
+              여러 디자이너들의 작품을 참고하여 새로운 나만의 디자인을 만들어 보세요!</p> */}
           </Title>
         </ImgWrapper>
         <MenuWrap>

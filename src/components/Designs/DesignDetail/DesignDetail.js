@@ -190,7 +190,7 @@ class DesignDetail extends Component {
         if (data.success === true) {
           this.props.GetLikeDesignRequest(this.props.id, this.props.token)
           .then(this.props.GetDesignCountRequest(this.props.id))
-        } 
+        }
       });
     }
   }
@@ -219,7 +219,7 @@ class DesignDetail extends Component {
           <Modal.Content as="ul">
             <li>파생디자인 생성</li>
             <li className={designDetail.parent_design != null ? "able" : "disable"}>원본디자인 보기</li>
-            {user && user.uid === designDetail.user_id && 
+            {user && user.uid === designDetail.user_id &&
             <Link to={`/designModify/${this.props.id}`}><li>수정</li></Link>
             }
             {user && user.uid === designDetail.user_id && <li onClick={this.deleteDesign}>삭제</li>}
@@ -267,9 +267,9 @@ class DesignDetail extends Component {
                           <div className="ui left pointing basic label">{count.view_count}</div>
                         </div>
                         <div className="ui right labeled button like">
-                        {this.props.like === true 
+                        {this.props.like === true
                         ? <button className="ui basic button" onClick={this.updateLike}>
-                          <Icon name="heart"></Icon>
+                          <Icon name="heart" color="red"></Icon>
                           좋아요 취소
                           </button>
                         : <button className="ui basic button" onClick={this.updateLike}>
@@ -310,9 +310,9 @@ class DesignDetail extends Component {
                 <Route exact path={"/designDetail/:id"}
                         component={designDetail.is_project == 1 ? DesignDetailStepContainer
                                                                 : DesignDetailViewContainer} />
-                <Route exact path={"/designDetail/:id/issue/:issue_id?"} 
+                <Route exact path={"/designDetail/:id/issue/:issue_id?"}
                         component={DesignIssue} />
-                <Route exact path={"/designDetail/:id/createissue"} 
+                <Route exact path={"/designDetail/:id/createissue"}
                         component={CreateDesignIssueContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id/modify"}
                         component={ModifyIssueDetailContainer} />

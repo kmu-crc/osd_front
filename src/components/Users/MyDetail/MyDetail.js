@@ -8,14 +8,15 @@ import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
 import ContentBox from "components/Commons/ContentBox";
+import StyleGuide from "StyleGuide";
 
 // css styling
 
 const Wrapper = styled(Grid)`
   width: 100%;
   &.ui.grid {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
     margin-left: 0rem;
     margin-right: 0rem;
   }
@@ -27,14 +28,13 @@ const Wrapper = styled(Grid)`
     margin-bottom: 5px;
   }
   & .contentRow {
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
   }
 `;
 
 const HeadContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0,0,0,0.15);
+  background-color: ${StyleGuide.color.geyScale.scale1};
   box-shadow: 0 0 5px rgba(0,0,0,0.25);
-  margin-botto: 5px;
 `;
 
 const ProfileSection = styled.div`
@@ -88,7 +88,8 @@ const InfoSection = styled.div`
 
 const TabContainer = styled(Grid.Column)`
   background-color: white;
-  border-radius: 0 3px 3px 0;
+  border-right: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(0,0,0,0.25);
   & .columns {
     padding: 0 20px;
   }
@@ -124,35 +125,32 @@ const Head = styled(Grid)`
 
 const MiniContentBox = styled.div`
   margin: 0 auto;
-  padding: 20px 0;
-  @media only screen and (max-width: 500px) and (min-width: 320px){
-    width: 100%;
-  }
-  @media only screen and (max-width: 767px) and (min-width: 501px){
-    width: 400px;
+  padding-top: 20px;
+  @media only screen and (max-width: 767px) and (min-width: 320px){
+    padding: 0 20px;
+    width: 320px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 700px;
+    width: 450px;
+  }
+  @media only screen and (min-width: 992px){
+    width: 440px;
+  }
+  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+    width: 760px;
+  }
+  @media only screen and (min-width: 1920px){
+    width: 1100px;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
     .ui.grid > .row{
       margin-left: 6.25% !important;
     }
   }
-  @media only screen and (min-width: 992px){
-    width: 420px;
-  }
-  @media only screen and (max-width: 1399px) and (min-width: 1200px){
-    width: 825px;
-  }
-  @media only screen and (max-width: 1699px) and (min-width: 1400px){
-    width: 825px;
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1700px){
-    width: 825px;
-  }
-  @media only screen and (min-width: 1920px){
-    width: 825px;
+  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+    .ui.grid > .row{
+      margin-left: 6.25% !important;
+    }
   }
 `;
 
@@ -198,7 +196,7 @@ class MyDetail extends Component {
                   <Button>내 정보 수정</Button>
                 </Link>
               </Grid.Row>
-              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}              
+              {/* ------------------------ 좌측 프로필 섹션 -------------------------- */}
                 <Grid.Row className="contentRow">
                   <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                     <ProfileSection>
