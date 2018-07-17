@@ -15,10 +15,10 @@ class MyGroupContainer extends Component {
 
   render() {
     return(
-      <ScrollList getListRequest={this.getList} 
-                  ListComponent={Group} 
-                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
-                  mobile={8} tablet={5} computer={8} largeScreen={4} widescreen={4} customClass="largeCustom"/>
+      <ScrollList getListRequest={this.getList}
+                  ListComponent={Group}
+                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+                  mobile={8} tablet={5} computer={8} largeScreen={5} widescreen={5} customClass="largeCustom"/>
     );
   }
 }
