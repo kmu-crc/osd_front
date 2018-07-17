@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { FormField } from "components/Commons/FormField";
 import { FormInput } from "components/Commons/FormItem";
 import ValidateForm from "components/Commons/ValidateForm";
@@ -10,13 +11,19 @@ import Button from "components/Commons/Button";
 const BtnWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
   & a:hover {
     color: #fff;
+  }
+  & > a {
+    width: 48%;
+    & > button {
+      width: 100%;
+    }
   }
 `;
 
 const LoginBtn = styled(Button)`
-  margin-bottom: 30px;
   width: 48%;
 `;
 
@@ -57,7 +64,7 @@ class SignInForm extends Component {
           placeholder="Password" label="password" validates={["required"]} RenderComponent={FormInput} />
         <BtnWrap>
           <LoginBtn type="submit" round={true}>로그인</LoginBtn>
-          <LoginBtn round={true}><a href="/signup">회원가입</a></LoginBtn>
+          <Link to="/signup"><LoginBtn round={true}>회원가입</LoginBtn></Link>
         </BtnWrap>
           <FacebookLogin
             appId="1846803492017708"
