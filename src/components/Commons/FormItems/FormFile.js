@@ -10,44 +10,12 @@ const InputWrap = styled.div`
 `
 
 const Message = styled.div`
+  bottom: -1.5rem;
   display: block;
   position: absolute;
   color: ${StyleGuide.color.main.basic};
   left: 0;
-  bottom: -1.5rem;
 `
-
-const Input = styled.input`
-  margin: 0;
-  outline: 0;
-  -webkit-appearance: none;
-  line-height: 1.21428571em;
-  padding: 0.67857143em 1em;
-  font-size: 1em;
-  background: #fff;
-  border: 1px solid ${StyleGuide.color.geyScale.scale2};
-  color: ${StyleGuide.color.geyScale.scale7};
-  border-radius: 0.28571429rem;
-  box-shadow: 0 0 0 0 transparent inset;
-  transition: color 0.1s ease, border-color 0.1s ease;
-  &::placeholder {
-    color: ${StyleGuide.color.geyScale.scale5};
-  }
-  &:focus {
-    &::placeholder {
-      color: ${StyleGuide.color.geyScale.scale7};
-    }
-    border-color: #85b7d9;
-    box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
-  }
-  &.error {
-    border: 1px solid ${StyleGuide.color.main.basic};
-    color: ${StyleGuide.color.main.basic};
-    &::placeholder {
-      color: ${StyleGuide.color.main.basic};
-    }
-  }
-`;
 
 export class FormFile extends Component {
   state = {
@@ -72,8 +40,11 @@ export class FormFile extends Component {
     const event = { ...e };
     const target = event.currentTarget;
     await this.setState({ value: target.files, target });
-    FormControl(this.state)
-    this.returnData();
+    FormControl(this.state).then(data => {
+      this.returnData();
+    }).catch(err => {
+      console.log("formFile", err);
+    });
   };
 
   returnData = async (e) => {
@@ -86,7 +57,7 @@ export class FormFile extends Component {
       <InputWrap>
         <input
           type="file"
-          name={name && name}
+          name={name && `${name}[]`}
           placeholder={placeholder && placeholder}
           style={style && style}
           id={id ? id : name}

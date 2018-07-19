@@ -69,7 +69,7 @@ const SubMenuItem = styled.div`
 `;
 
 const Logo = styled.a`
-  height: 50px;
+  height: 60px;
   position: absolute;
   display: block;
   top: 0;

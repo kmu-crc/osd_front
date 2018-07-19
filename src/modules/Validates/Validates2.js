@@ -14,7 +14,7 @@ Validates.NotRequired = function(data) {
 };
 // 필수항목 체크 내용이 비어있는지를 검사한다.
 Validates.Required = function(data, target) {
-  console.log("1");
+  console.log("1", data);
   return new Promise(function(resolve, reject) {
     console.log("2");
     if (
@@ -183,6 +183,7 @@ Validates.OnlyImages = (data, target) => {
       resolve(true);
     } else {
       for (let item of data) {
+        console.log("OnlyImages", item);
         if (
           item.type === "image/jpeg" ||
           item.type === "image/png" ||

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import { FormFile } from "./FormFile";
+import { Icon } from "semantic-ui-react";
 import ThumbnailDefault from "source/thumbnail.png";
 import { FormControl } from "modules/FormControl";
 
@@ -13,13 +14,26 @@ const InputWrap = styled.div`
 
 const ThumbnailImg = styled.label`
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
   background-position: center;
   background-size: cover;
   background-image: url(${ThumbnailDefault});
   cursor: pointer;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
 `;
+
+const UploaderButton = styled.label`
+  display: block;
+  width: 200px;
+  background-color: ${StyleGuide.color.sub.bule.basic};
+  color: white;
+  border-radius: 3px;
+  padding: 0.7em 2em;
+  text-align: center;
+`;
+
 
 export class FormThumbnail extends Component {
   state = {
@@ -65,6 +79,10 @@ export class FormThumbnail extends Component {
           imageUrl: ""
         })
       }
+    } else {
+      await this.setState({
+        imageUrl: ""
+      })
     }
     await this.setState({ ...data });
     this.returnData();
@@ -86,6 +104,7 @@ export class FormThumbnail extends Component {
               : null
           }
         />
+        <UploaderButton htmlFor={id ? id : name}><Icon name="file alternate"/>{placeholder}</UploaderButton>
         <FormFile
           name={name}
           id={id ? id : name}

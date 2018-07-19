@@ -20,6 +20,7 @@ const CheckBoxLabel = styled.label`
   position: relative;
   padding-left: 2rem;
   box-sizing: border-box;
+  cursor: pointer;
   &::before{
     position: absolute;
     width: 1.4rem;

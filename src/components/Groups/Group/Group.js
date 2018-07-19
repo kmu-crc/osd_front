@@ -26,6 +26,8 @@ const ImgPart = styled.div`
   width: 100%;
   height: 140px;
   overflow: hidden;
+  background-size: cover;
+  background-position: center;
   & img {
     width: 100%;
     height: 100%;
@@ -91,7 +93,7 @@ class Group extends Component {
     return(
       <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>
-          <ImgPart><img src={group.thumbnailUrl ? group.thumbnailUrl.m_img : eximg} alt="썸네일이미지"/></ImgPart>
+          <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="title">{group.title}</div>
             <div className="owner">{group.userName}</div>
