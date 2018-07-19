@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Container, Header, Grid, Form } from "semantic-ui-react";
+import { Header, Grid } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import ValidateForm from "components/Commons/ValidateForm";
-import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
-import { FormField } from "components/Commons/FormField";
+// import ValidateForm from "components/Commons/ValidateForm";
+// import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
+// import { FormField } from "components/Commons/FormField";
+import { FormInput, FormThumbnail } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
+import FormDataToJson from "modules/FormDataToJson";
 
 // css styling
 
@@ -99,19 +102,41 @@ const FormHeader = styled(Header) `
 `;
 
 class CreateGroup extends Component {
-  state = {
-    loading: false
-  }
+  // state = {
+  //   loading: false
+  // }
 
-  onSubmitForm = async (data) => {
-    await this.setState({
-      loading: true
-    });
+  onChangeValue = async data => {
+    let obj = {};
+    if(data.target){
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+    console.log(this.state);
+  };
 
-    this.props.CreateNewGroupRequest(data, this.props.token).then(data => {
+  liveCheck = (target) => {
+    FormControl(this.state[target]);
+  };
+
+  onSubmit = async e => {
+    // await this.setState({
+    //   loading: true
+    // });
+
+
+    e.preventDefault();
+    ValidationGroup(this.state, false).then(data => {
+      console.log("성공", data);
+      console.log(FormDataToJson(data));
+      this.props.CreateNewGroupRequest(data, this.props.token);
+    }).then(data => {
       this.props.history.push(`/groupDetail/${data.id}`);
+    }).catch(e => {
+      console.log("실패");
     });
-  }
+  };
+
   render(){
     return(
       <div>
@@ -119,23 +144,42 @@ class CreateGroup extends Component {
           <Title><h1>새 그룹 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <ValidateForm onSubmit={this.onSubmitForm}>
+          <form onSubmit={this.onSubmit}>
             <FromFieldCard>
               <Grid>
                 <Grid.Column mobile={16} computer={4}>
                   <FormHeader as="h2">그룹 정보</FormHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={12}>
-                    <FormField name="title" label="그룹 이름" type="text" placeholder="그룹의 이름을 입력해주세요." validates={["required"]} RenderComponent={FormInput} />
-                    <FormField name="explanation" label="그룹 설명" placeholder="그룹 설명을 입력해주세요." RenderComponent={FormTextArea} />
-                    <FormField name="thumbnail" label="썸네일 등록" placeholder="썸네일을 등록해주세요." RenderComponent={FormFile} validates={["required", "ThumbnailSize"]} />
+                  <FormInput
+                    name="title"
+                    label="그룹 이름"
+                    placeholder="그룹의 이름을 입력해주세요."
+                    getValue={this.onChangeValue}
+                    validates={["Required"]}
+                    onBlur={()=>{this.liveCheck("title")}}
+                  />
+                  <FormInput
+                    name="explanation"
+                    label="그룹 설명"
+                    placeholder="그룹 설명을 입력해주세요."
+                    getValue={this.onChangeValue}
+                  />
+                  <FormThumbnail
+                    name="thumbnail"
+                    label="썸네일 등록"
+                    placeholder="썸네일을 등록해주세요."
+                    getValue={this.onChangeValue}
+                    onChange={()=>{this.liveCheck("thumbnail")}}
+                    validates={["Required", "OnlyImages", "MaxFileSize(10000)"]}
+                  />
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
             <Button type="submit">등록</Button>
-          </ValidateForm>
+          </form>
         </Wrapper>
-        {this.state.loading && <Loading/>}
+        {/* {this.state.loading && <Loading/>} */}
       </div>
     );
   }

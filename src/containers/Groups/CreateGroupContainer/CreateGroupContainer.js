@@ -7,9 +7,7 @@ import { CreateNewGroupRequest } from "actions/Group";
 class CreateGroupContainer extends Component {
   render() {
     return(
-      <div>
-        <CreateGroup {...this.props}/>
-      </div>
+      <CreateGroup {...this.props}/>
     );
   }
 }
