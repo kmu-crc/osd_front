@@ -30,7 +30,7 @@ const HeaderBackground = styled.div`
 const HeadContainer = styled(Grid)`
   &.ui.grid {
     margin: 0;
-    padding: 1rem 0 3rem;
+    padding: 1rem 0;
     min-height: 100px;
     font-size: ${StyleGuide.font.size.paragraph};
   }
@@ -290,7 +290,7 @@ class DesignDetail extends Component {
                     </Grid.Column>
                   </Grid.Row>
                 </HeadContainer>
-                <TabMenu>
+                {/* <TabMenu>
                   <Link to={`/designDetail/${this.props.id}`}>
                     <li className={this.props.history.location.pathname.indexOf("issue") === -1 ? "active" : ""}>
                     컨텐츠
@@ -301,7 +301,7 @@ class DesignDetail extends Component {
                     이슈
                     </li>
                   </Link>
-                </TabMenu>
+                </TabMenu> */}
               </ContentBox>
             </HeaderBackground>
             {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}

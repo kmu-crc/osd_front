@@ -36,8 +36,8 @@ const MenuContainer = styled(Grid) `
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
   }
 `;
 
@@ -117,14 +117,12 @@ class DesignList extends Component {
     const { sort, cate1, cate2 } = this.props;
     return (
       <div>
-        <ImgWrapper>
+        {/* <ImgWrapper>
           <Title>
             <h1>디자인</h1>
             <p>여러 디자이너들의 작품을 쉽게 공유하고 참고할 수 있습니다.</p>
-            {/* <p>오픈디자인에서는 누구나 다양한 형태의 디자인을 공유할 수 있습니다.<br></br>
-              여러 디자이너들의 작품을 참고하여 새로운 나만의 디자인을 만들어 보세요!</p> */}
           </Title>
-        </ImgWrapper>
+        </ImgWrapper> */}
         <MenuWrap>
           <Content>
             <Wrapper>

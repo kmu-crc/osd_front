@@ -31,7 +31,7 @@ const BoardCard = styled.li`
   }
   & .cardInfo {
     font-size: ${StyleGuide.font.size.small};
-    color: ${StyleGuide.color.geyScale.scale5};
+    color: ${StyleGuide.color.geyScale.scale8};
     width: 80%;
     & .cardCmt {
       margin-left: 20px;

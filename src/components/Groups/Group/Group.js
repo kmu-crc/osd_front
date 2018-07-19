@@ -87,7 +87,7 @@ class Group extends Component {
 
   render(){
     let group = this.props.data;
-    
+
     return(
       <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>

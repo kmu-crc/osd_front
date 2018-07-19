@@ -48,8 +48,8 @@ const MenuContainer = styled(Grid)`
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
   }
 `;
 
@@ -122,12 +122,12 @@ class GroupList extends Component {
     const { sort } = this.props;
     return(
       <div>
-        <ImgWrapper>
+        {/* <ImgWrapper>
           <Title>
             <h1>그룹</h1>
             <p>여러 디자인들을 하나의 그룹으로 묶어 관리할 수 있습니다.</p>
           </Title>
-        </ImgWrapper>
+        </ImgWrapper> */}
         <MenuWrap>
           <Content>
             <Wrapper>

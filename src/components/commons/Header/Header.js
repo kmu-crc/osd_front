@@ -42,6 +42,9 @@ const MenuItem = styled.li`
   a {
     line-height: 60px;
   }
+  a.active {
+    color: ${StyleGuide.color.main.basic};
+  }
 `;
 
 const SubMenu = styled.div`
@@ -180,6 +183,7 @@ class Header extends Component {
     profile: false,
     active: false
   };
+
   handleSignOut = () => {
     this.props.SignOutRequest();
     SetSession("opendesign_token", null).then(data => {
@@ -188,6 +192,7 @@ class Header extends Component {
     });
     console.log(this.props);
   };
+
   onActive = e => {
     const event = e;
     event.stopPropagation();
@@ -271,13 +276,25 @@ class Header extends Component {
               <img src={logo} alt="logo" />
             </Logo>
             <MenuItem>
-              <a href="/design">디자인</a>
+              <a href="/design"
+                 className={this.props.location.pathname === "/design" || this.props.match.path.indexOf("/designDetail") !== -1
+                 ? "active" : ""}>
+              디자인
+              </a>
             </MenuItem>
             <MenuItem>
-              <a href="/group">그룹</a>
+              <a href="/group"
+                 className={this.props.location.pathname === "/group" || this.props.match.path.indexOf("/groupDetail") !== -1
+                 ? "active" : ""}>
+              그룹
+              </a>
             </MenuItem>
             <MenuItem>
-              <a href="/designer">디자이너</a>
+              <a href="/designer"
+                 className={this.props.location.pathname === "/designer" || this.props.match.path.indexOf("/designerDetail") !== -1
+                 ? "active" : ""}>
+              디자이너
+              </a>
             </MenuItem>
             <MenuItem>
               <a href="/createdesign">
