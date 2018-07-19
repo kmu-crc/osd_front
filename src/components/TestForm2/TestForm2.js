@@ -6,7 +6,8 @@ import {
   FormCheckBox,
   FormSelect,
   FormFile,
-  FormThumbnail
+  FormThumbnail,
+  MultiUpload
 } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 
@@ -43,9 +44,10 @@ class TestForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    ValidationGroup(this.state, true)
+    ValidationGroup(this.state)
       .then(data => {
         console.log("성공", data);
+        fetch("http://localhost:8080/design/createDesign", { headers: { "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjI4LCJlbWFpbCI6ImtqaDAxMDIzMjFAbmF2ZXIuY29tIiwibmlja05hbWUiOiJrd29uIiwiaXNBZG1pbiI6MCwiaXNEZXRhaWwiOnRydWUsImlhdCI6MTUzMTgwMjUzOSwiZXhwIjoxNTMyNDA3MzM5LCJpc3MiOiJvcGVuZGVzaWduLmNvbSIsInN1YiI6InVzZXJJbmZvIn0.hZmAWRX4SZLDg3-74xeNeDm7ss87c1kn8KOHxcARWIA"}, method: "POST", body: data })
       })
       .catch(e => {
         console.log("실패");
@@ -96,17 +98,22 @@ class TestForm extends Component {
             getValue={this.onChangeValue}
             value="1"
           />
-          <FormFile
+          {/* <FormFile
             name="thumbnail"
             placeholder="이미지를 선택해주세요."
             getValue={this.onChangeValue}
-          />
+          /> */}
           <FormThumbnail
-            name="images"
-            placeholder="이미지를 등록해주세요."
+            name="thumbnail"
+            placeholder="썸네일 등록"
             getValue={this.onChangeValue}
-            onChange={()=>{this.liveCheck("images")}}
-            validates={["Required", "OnlyImages", "MaxFileSize(1000)"]}
+            validates={["Required", "OnlyImages", "MaxFileSize(100000)"]}
+          />
+          <MultiUpload
+            name="design_file"
+            placeholder="파일을 선택해주세요."
+            getValue={this.onChangeValue}
+            validates={["Required", "MaxFileSize(100000)"]}
           />
           <button type="submit">전송</button>
         </form>

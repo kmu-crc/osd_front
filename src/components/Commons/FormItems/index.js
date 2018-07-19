@@ -4,3 +4,4 @@ export * from "./FormCheckBox";
 export * from "./FormSelect";
 export * from "./FormFile";
 export * from "./FormThumbnail";
+export * from "./MultiUpload";

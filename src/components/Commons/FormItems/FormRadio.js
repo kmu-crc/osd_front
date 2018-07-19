@@ -21,6 +21,7 @@ position: relative;
   padding-left: 2rem;
   box-sizing: border-box;
   line-height: 1.4rem;
+  cursor: pointer;
   &::before{
     box-sizing: border-box;
     position: absolute;

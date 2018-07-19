@@ -26,6 +26,8 @@ const ImgPart = styled.div`
   width: 100%;
   height: 140px;
   overflow: hidden;
+  background-position: center;
+  background-size: cover;
   & img {
     width: 100%;
     height: 100%;
@@ -80,7 +82,8 @@ class designer extends Component {
     return(
       <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>
-          <ImgPart><img src={designer.imgURL ? designer.imgURL.m_img : eximg} alt="썸네일이미지"/></ImgPart>
+
+          <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="userName">{designer.nick_name}</div>
             <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>

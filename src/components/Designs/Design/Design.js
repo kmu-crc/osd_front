@@ -26,6 +26,8 @@ const ImgPart = styled.div`
   width: 100%;
   height: 140px;
   overflow: hidden;
+  background-position: center;
+  background-size: cover;
   & img {
     width: 100%;
     height: 100%;
@@ -79,13 +81,11 @@ const Count = styled.div`
 class Design extends Component {
   render() {
     let design = this.props.data;
-    
+
     return (
       <NavLink to={"/designDetail/" + design.uid}>
         <Designli>
-          <ImgPart>
-            <img src={design.thumbnailUrl ? design.thumbnailUrl.m_img : eximg} alt="썸네일이미지" />
-          </ImgPart>
+          <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="title">{design.title}</div>
             <div className="userName">{design.userName}</div>

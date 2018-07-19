@@ -17,7 +17,16 @@ export const ValidationGroup = async (list, isJSON) => {
       Promise.all(qListArray).then(async res => {
           let formData = new FormData();
           for (let key in list) {
-            await formData.append(key, list[key].value);
+            if(key.indexOf("[") > -1){
+              if(list[key].value.length > 0) {
+                console.log("key", key);
+                await Array.from(list[key].value).map(async item => {
+                  await formData.append(key, item, item.name);
+                });
+              }
+            } else {
+              await formData.append(key, list[key].value);
+            }
           }
 
           if(isJSON){
@@ -25,6 +34,7 @@ export const ValidationGroup = async (list, isJSON) => {
           }
           resolve(formData);
       }).catch(err => {
+        console.log(err);
         err.target.focus();
         reject(err);
       })
