@@ -11,7 +11,6 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
-import FormDataToJson from "modules/FormDataToJson";
 
 // css styling
 
@@ -101,6 +100,16 @@ const FormHeader = styled(Header) `
   }
 `;
 
+const Label = styled.div`
+  margin: 0 0 0.8rem 0;
+  display: block;
+  color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
+`;
+
+
 class CreateGroup extends Component {
   // state = {
   //   loading: false
@@ -124,16 +133,15 @@ class CreateGroup extends Component {
     //   loading: true
     // });
 
-
     e.preventDefault();
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
-      console.log(FormDataToJson(data));
-      this.props.CreateNewGroupRequest(data, this.props.token);
-    }).then(data => {
-      this.props.history.push(`/groupDetail/${data.id}`);
+      this.props.CreateNewGroupRequest(data, this.props.token)
+      .then(res => {
+        this.props.history.push(`/groupDetail/${res.id}`);
+      });
     }).catch(e => {
-      console.log("실패");
+      console.log("실패", e);
     });
   };
 
@@ -151,23 +159,23 @@ class CreateGroup extends Component {
                   <FormHeader as="h2">그룹 정보</FormHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={12}>
+                  <Label>그룹 이름</Label>
                   <FormInput
                     name="title"
-                    label="그룹 이름"
                     placeholder="그룹의 이름을 입력해주세요."
                     getValue={this.onChangeValue}
                     validates={["Required"]}
                     onBlur={()=>{this.liveCheck("title")}}
                   />
+                  <Label>그룹 설명</Label>
                   <FormInput
                     name="explanation"
-                    label="그룹 설명"
                     placeholder="그룹 설명을 입력해주세요."
                     getValue={this.onChangeValue}
                   />
+                  <Label>썸네일 등록</Label>
                   <FormThumbnail
                     name="thumbnail"
-                    label="썸네일 등록"
                     placeholder="썸네일을 등록해주세요."
                     getValue={this.onChangeValue}
                     onChange={()=>{this.liveCheck("thumbnail")}}

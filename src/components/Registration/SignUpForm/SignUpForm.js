@@ -5,7 +5,6 @@ import { FormInput } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import ValidateForm from "components/Commons/ValidateForm";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
 import styled from "styled-components";
 import Button from "components/Commons/Button";
 

@@ -16,7 +16,6 @@ Validates.NotRequired = function(data) {
 Validates.Required = function(data, target) {
   console.log("1", data);
   return new Promise(function(resolve, reject) {
-    console.log("2");
     if (
       data === "" ||
       data === undefined ||

@@ -104,7 +104,7 @@ export class FormThumbnail extends Component {
               : null
           }
         />
-        <UploaderButton htmlFor={id ? id : name}><Icon name="file alternate"/>{placeholder}</UploaderButton>
+        <UploaderButton htmlFor={id ? id : name}><i className="file alternate icon"/>{placeholder}</UploaderButton>
         <FormFile
           name={name}
           id={id ? id : name}
