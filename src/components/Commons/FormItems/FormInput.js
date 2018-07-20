@@ -60,6 +60,9 @@ export class FormInput extends Component {
     if(this.props.validates){
       this.setState({ validates: this.props.validates });
     }
+    if(this.props.value){
+      this.setState({ value: this.props.value });
+    }
     this.init();
   }
 

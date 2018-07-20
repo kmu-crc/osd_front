@@ -134,7 +134,7 @@ class ModifyGroupInfo extends Component {
                   <FormInput
                     value={this.props.GroupDetail.title}
                     name="title"
-                    placeholder={this.props.GroupDetail.title}
+                    placeholder="그룹 이름을 입력해주세요"
                     getValue={this.onChangeValue}
                     validates={["Required"]}
                     onBlur={()=>{this.liveCheck("title")}}
@@ -156,7 +156,7 @@ class ModifyGroupInfo extends Component {
                     placeholder="썸네일을 등록해주세요."
                     getValue={this.onChangeValue}
                     onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["Required", "OnlyImages", "MaxFileSize(10000)"]}
+                    validates={["OnlyImages", "MaxFileSize(10000)"]}
                   />
                 </Form.Group>
               </Grid.Column>

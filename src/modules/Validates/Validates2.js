@@ -181,6 +181,9 @@ Validates.OnlyImages = (data, target) => {
     if (Validates.NotRequired(data)) {
       resolve(true);
     } else {
+      if (data.length === 0) {
+        resolve(true);
+      }
       for (let item of data) {
         console.log("OnlyImages", item);
         if (
@@ -205,6 +208,9 @@ Validates.MaxFileSize = (data, target, size) => {
     if (Validates.NotRequired(data)) {
       resolve(true);
     } else {
+      if (data.length === 0) {
+        resolve(true);
+      }
       for(let item of data) {
         if (item.size < Number(size)) {
           await resolve(true);
