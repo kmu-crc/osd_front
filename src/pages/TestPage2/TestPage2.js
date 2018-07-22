@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ClientTemplate from "templates/ClientTemplate";
-import TestForm from "components/TestForm2";
+import TestContainer from "containers/TestContainer";
 class TestPage extends Component {
   render() {
     return (
       <ClientTemplate>
-        <TestForm />
+        <TestContainer />
       </ClientTemplate>
     );
   }
