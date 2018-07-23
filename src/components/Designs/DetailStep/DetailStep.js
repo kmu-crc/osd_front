@@ -91,7 +91,7 @@ class DetailStep extends Component {
     return true;
   }
   componentDidMount() {
-    this.props.GetDesignBoardRequest(this.props.match.params.id);
+    this.props.GetDesignBoardRequest(this.props.id);
     this.setState({
       boardWidth: this.props.DesignDetailStep.length * 264 + 250
     });
@@ -176,7 +176,7 @@ class DetailStep extends Component {
               {step.length > 0 &&
                 step.map((board, i) => (
                   <DesignBoardContainer
-                    designId={this.props.match.params.id}
+                    designId={this.props.id}
                     key={i}
                     board={board}
                     activeBoard={this.stateBoard}
@@ -185,7 +185,7 @@ class DetailStep extends Component {
                 ))}
               {this.props.isTeam > 0 ? (
                 <CreateDesignBoardContainer
-                  designId={this.props.match.params.id}
+                  designId={this.props.id}
                   order={step.length}
                 />
               ) : null}

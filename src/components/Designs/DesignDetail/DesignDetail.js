@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
-import DesignIssue from "components/Designs/DesignIssue/DesignIssue";
+// import DesignIssue from "components/Designs/DesignIssue/DesignIssue";
 import { Grid, Icon, Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import { Link, Route } from "react-router-dom";
-import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
-import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
+// import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
+// import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
 import StyleGuide from "StyleGuide";
 
 // css styling
@@ -307,15 +307,19 @@ class DesignDetail extends Component {
             {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
             <ContentBox>
               <TabContainer>
-                <Route exact path={"/designDetail/:id"}
-                        component={designDetail.is_project == 1 ? DesignDetailStepContainer
-                                                                : DesignDetailViewContainer} />
-                <Route exact path={"/designDetail/:id/issue/:issue_id?"}
-                        component={DesignIssue} />
-                <Route exact path={"/designDetail/:id/createissue"}
+                {/* <Route exact path={"/designDetail/:id"}
+                       component={designDetail.is_project == 1 ? DesignDetailStepContainer
+                                                                : DesignDetailViewContainer} /> */}
+                {/* <Route exact path={"/designDetail/:id/issue/:issue_id?"}
+                        component={DesignIssue} /> */}
+                {/* <Route exact path={"/designDetail/:id/createissue"}
                         component={CreateDesignIssueContainer} />
                 <Route exact path={"/designDetail/:id/issue/:issue_id/modify"}
-                        component={ModifyIssueDetailContainer} />
+                        component={ModifyIssueDetailContainer} /> */}
+                {designDetail.is_project == 1
+                ? <DesignDetailStepContainer id={this.props.id}/>
+                : <DesignDetailViewContainer id={this.props.id}/>
+                }
               </TabContainer>
             </ContentBox>
           </Wrapper>

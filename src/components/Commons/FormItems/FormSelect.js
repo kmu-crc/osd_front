@@ -80,6 +80,7 @@ export class FormSelect extends Component {
   };
   returnData = async e => {
     if (this.props.getValue) await this.props.getValue(this.state);
+    if (this.props.onChange) await this.props.onChange();
     if (e && this.props.onBlur) await this.props.onBlur();
   };
   render() {

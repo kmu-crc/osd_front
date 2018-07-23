@@ -7,9 +7,7 @@ import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentReque
 class DesignDetailViewContainer extends Component {
   render() {
     return (
-      <div>
-        <DetailView {...this.props}/>
-      </div>
+      <DetailView {...this.props}/>
     );
   }
 }
@@ -19,7 +17,8 @@ const mapStateToProps = (state) => {
     DesignDetailView: state.DesignDetailView.status.DesignDetailView,
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
-    Comment: state.DesignCardComment.status.Comment
+    Comment: state.DesignCardComment.status.Comment,
+    isTeam: state.DesignDetail.status.DesignDetail.is_team
   };
 };
 

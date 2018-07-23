@@ -53,6 +53,9 @@ export class FormCheckBox extends Component {
     if(this.props.validates){
       this.setState({ validates: this.props.validates });
     }
+    if(this.props.value){
+      this.setState({ value: this.props.value });
+    }
     this.init();
   }
 
@@ -81,13 +84,12 @@ export class FormCheckBox extends Component {
           onBlur={this.returnData}
           >{placeholder}</CheckBoxLabel>
         <input
-          type="radio"
+          type="checkbox"
           id={id ? id+value : name+value}
           name={name && name}
           style={{display: "none"}}
           defaultValue={value && value}
           ref={ref => (this.input = ref)}
-          checked={this.state.checked}
           />
         <Message></Message>
       </InputWrap>

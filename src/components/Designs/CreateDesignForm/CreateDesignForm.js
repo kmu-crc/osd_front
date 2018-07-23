@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import Button from "components/Commons/Button";
-// import ValidateForm from "components/Commons/ValidateForm";
 import styled from "styled-components";
 import { Header, Grid, Form } from "semantic-ui-react";
-// import CreateDesingFormContent from "components/Designs/CreateDesingFormContent";
-import { FormInput, FormThumbnail, FormCheckBox } from "components/Commons/FormItems";
+import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
-import CheckBoxFieldContainer from "containers/Commons/CheckBoxFieldContainer";
 import StyleGuide from "StyleGuide";
 
 const FromFieldCard = styled.div`
@@ -19,22 +16,19 @@ const FromFieldCard = styled.div`
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
   }
-  & .two.fields {
-    display: flex;
-    flex-direction: row;
-    & .field {
-      padding-left: .5em;
-      padding-right: .5em;
-      width: 50%;
-    }
-    & .field label {
-      margin: 0 0 0.8rem 0;
-      display: block;
-      color: rgba(0,0,0,.87);
-      font-size: .92857143em;
-      font-weight: 700;
-      text-transform: none;
-    }
+  & .sc-LKuAh.cEhByC {
+    padding-right: .5em;
+    width: 50%;
+    float: left;
+
+  }
+  & .field label {
+    margin: 0 0 0.8rem 0;
+    display: block;
+    color: rgba(0,0,0,.87);
+    font-size: .92857143em;
+    font-weight: 700;
+    text-transform: none;
   }
 `;
 const FormHeader = styled(Header)`
@@ -93,8 +87,9 @@ class CreateDesignForm extends Component {
   };
 
   onSubmit = async e => {
-
     e.preventDefault();
+    let newData = {...this.state};
+    newData.member.value = JSON.stringify(newData.member.value);
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
@@ -111,6 +106,10 @@ class CreateDesignForm extends Component {
       console.log("실패", e);
     });
   };
+
+  getMember = data => {
+    this.props.SearchMemberRequest({key: data}, this.props.token);
+  }
 
   render() {
     return (
@@ -143,13 +142,37 @@ class CreateDesignForm extends Component {
                 <Label>썸네일 등록</Label>
                 <FormThumbnail
                   name="thumbnail"
-                  placeholder="썸네일을 등록해주세요."
+                  placeholder="썸네일 등록"
                   getValue={this.onChangeValue}
                   onChange={()=>{this.liveCheck("thumbnail")}}
-                  validates={["Required", "OnlyImages", "MaxFileSize(10000)"]}
+                  validates={["Required", "OnlyImages", "MaxFileSize(100000)"]}
                 />
               </Form.Group>
-              <CheckBoxFieldContainer />
+              <Form.Group widths="equal">
+                <Label>카테고리</Label>
+                <FormSelect
+                  selection={true}
+                  options={this.props.cate1}
+                  name="category_level1"
+                  getValue={this.onChangeValue}
+                  onChange={()=>this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
+                />
+                <FormSelect
+                  selection={true}
+                  options={this.props.cate2}
+                  name="category_level2"
+                  getValue={this.onChangeValue}
+                />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Label>멤버추가</Label>
+                <AsyncInput
+                  name="member"
+                  getValue={this.onChangeValue}
+                  asyncFn={this.getMember}
+                  list={this.props.members}
+                />
+              </Form.Group>
             </Grid.Column>
           </Grid>
         </FromFieldCard>
@@ -164,19 +187,19 @@ class CreateDesignForm extends Component {
                   name="is_commercial"
                   placeholder="상업적 이용"
                   getValue={this.onChangeValue}
-                  validates={["Checked"]}
+                  value={true}
                 />
                 <FormCheckBox
                   name="is_display_creater"
                   placeholder="원작자 표시"
                   getValue={this.onChangeValue}
-                  validates={["Checked"]}
+                  value={true}
                 />
                 <FormCheckBox
                   name="is_modify"
                   placeholder="수정 가능"
                   getValue={this.onChangeValue}
-                  validates={["Checked"]}
+                  value={true}
                 />
               </Form.Group>
             </Grid.Column>
