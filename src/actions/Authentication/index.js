@@ -1,4 +1,5 @@
 import * as types from "actions/ActionTypes";
+import { SetSession } from "modules/Sessions";
 import host from "config";
 
 export function CheckTokenRequest(token) {
@@ -10,10 +11,14 @@ export function CheckTokenRequest(token) {
         if (res.success) {
           return dispatch(CkeckTokenSuccess(res.info, token));
         } else {
+          SetSession("opendesign_token", null);
           return dispatch(CkeckTokenFailure());
         }
       })
-      .catch(err => dispatch(CkeckTokenFailure()));
+      .catch(err => {
+        SetSession("opendesign_token", null);
+        dispatch(CkeckTokenFailure());
+      });
   };
 };
 

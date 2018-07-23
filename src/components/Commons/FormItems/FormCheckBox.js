@@ -81,13 +81,12 @@ export class FormCheckBox extends Component {
           onBlur={this.returnData}
           >{placeholder}</CheckBoxLabel>
         <input
-          type="radio"
+          type="checkbox"
           id={id ? id+value : name+value}
           name={name && name}
           style={{display: "none"}}
           defaultValue={value && value}
           ref={ref => (this.input = ref)}
-          checked={this.state.checked}
           />
         <Message></Message>
       </InputWrap>
