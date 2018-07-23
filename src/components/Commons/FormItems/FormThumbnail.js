@@ -32,6 +32,7 @@ const UploaderButton = styled.label`
   border-radius: 3px;
   padding: 0.7em 2em;
   text-align: center;
+  cursor: pointer;
 `;
 
 

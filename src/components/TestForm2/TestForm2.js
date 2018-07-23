@@ -7,7 +7,8 @@ import {
   FormSelect,
   FormFile,
   FormThumbnail,
-  MultiUpload
+  MultiUpload,
+  AsyncInput
 } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 
@@ -24,11 +25,6 @@ class TestForm extends Component {
     }
   };
 
-  addImages = images => {
-    console.log("images", images);
-    this.setState({ images });
-  };
-
   onChangeValue = async data => {
     let obj = {};
     if(data.target){
@@ -41,6 +37,10 @@ class TestForm extends Component {
   liveCheck = (target) => {
     FormControl(this.state[target]);
   };
+
+  getMember = data => {
+    this.props.SearchMemberRequest({key: data}, this.props.token);
+  }
 
   onSubmit = e => {
     e.preventDefault();
@@ -115,6 +115,12 @@ class TestForm extends Component {
             getValue={this.onChangeValue}
             validates={["Required", "MaxFileSize(100000)"]}
           />
+          <AsyncInput
+            name="member"
+            getValue={this.onChangeValue}
+            asyncFn={this.getMember}
+            list={this.props.members}
+            />
           <button type="submit">전송</button>
         </form>
       </FormBox>

@@ -14,7 +14,7 @@ class ClientTemplate extends Component {
 
   render() {
     return (
-      <div style={{ position: "relative" }} onClick={this.onClose}>
+      <div style={{ position: "relative" , paddingBottom: "5rem"}} onClick={this.onClose}>
         <HeaderContainer active={this.props.isActive} />
         {this.props.children}
         <Footer />

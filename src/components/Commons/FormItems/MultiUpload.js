@@ -49,6 +49,7 @@ const UploaderButton = styled.label`
   border: 2px dashed #292a2b;
   border-radius: 3px;
   padding: 20px;
+  cursor: pointer;
 `;
 
 const DeleteBtn = styled.button`
@@ -103,8 +104,6 @@ export class MultiUpload extends Component {
   onChangeValue = async data => {
     let newValue = [...this.state.value];
     let newUrls = [...this.state.urls];
-    let imageUrl = "";
-    console.log("newValue", newValue, data.value[0]);
     if (data.value[0]) {
       if (
         data.value[0].type === "image/jpeg" ||

@@ -79,7 +79,14 @@ export class FormInput extends Component {
   };
 
   returnData = async (e) => {
-    if(this.props.getValue) await this.props.getValue(this.state);
+    let event = null;
+    if(e && this.props.prevent) {
+      if(e.key === "Enter"){
+        e.preventDefault();
+      }
+      event = {...e};
+    }
+    if(this.props.getValue) await this.props.getValue(this.state, event);
     if(e && this.props.onBlur) await this.props.onBlur();
   }
   render() {
@@ -89,7 +96,6 @@ export class FormInput extends Component {
         <Input
           type={type ? type : "text"}
           name={name && name}
-          defaultValue={value && value}
           placeholder={placeholder && placeholder}
           style={style && style}
           id={id ? id : name}
@@ -98,6 +104,7 @@ export class FormInput extends Component {
           ref={ref => (this.input = ref)}
           className=""
           onBlur={this.returnData}
+          onKeyPress={this.returnData}
         />
         <Message></Message>
       </InputWrap>
