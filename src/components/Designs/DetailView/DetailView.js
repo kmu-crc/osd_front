@@ -157,7 +157,11 @@ class DetailView extends Component {
       <div>
         {len > 0 ?
           <div>
-            {file === true ?
+            {file === false && this.props.isTeam === 1 ?
+            <ViewWrapper>
+              <CreateDesignViewContainer card_id={this.props.DesignDetailView.uid}/>
+            </ViewWrapper>
+            :
             <ViewWrapper>
               <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
               {view.images &&
@@ -200,15 +204,6 @@ class DetailView extends Component {
                 }
                 {this.state.render? <CommentForm/> : null}
               </CommentContainer>
-            </ViewWrapper>
-            :
-            this.props.isTeam === 1 ?
-            <ViewWrapper>
-              <CreateDesignViewContainer card_id={this.props.DesignDetailView.uid}/>
-            </ViewWrapper>
-            :
-            <ViewWrapper>
-              <p>등록된 글이 없습니다</p>
             </ViewWrapper>
             }
           </div>

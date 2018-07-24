@@ -5,6 +5,7 @@ import Button from "components/Commons/Button";
 import { MultiUpload } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
+import { CardImageUpdate, CardSourcUpdate } from "components/Designs/DesignBoardCard";
 
 // css styling
 
@@ -48,67 +49,91 @@ const Label = styled.div`
 `;
 
 class CreateDesignView extends Component {
+  state = {
+    loading: false,
+    open: false,
+    active: "INIT"
+  }
+
   componentDidMount(){
     console.log(this.props.card_id);
   }
 
-  onChangeValue = async data => {
-    let obj = {};
-    if(data.target){
-      obj[data.target.name] = data;
-    }
-    await this.setState(obj);
-    console.log(this.state);
-  };
-
-  onSubmit = async e => {
-    e.preventDefault();
-
-    ValidationGroup(this.state, false).then(data => {
-      console.log("성공", data);
-      this.props.UpdateCardImagesRequest(data, this.props.token, this.props.card_id)
-      .then(res => {
-        if (res.success) {
-          this.props.history.push(`/designDetail/${res.design_id}`)
-        } else {
-          alert("다시 시도해주세요");
-        }
-      });
-    }).catch(e => {
-      console.log("실패", e);
+  changeActive = async value => {
+    this.setState({
+      active: value
     });
+    //this.props.GetDesignDetailViewRequest(this.props.match.params.id);
   };
+
+  // onChangeValue = async data => {
+  //   let obj = {};
+  //   if(data.target){
+  //     obj[data.target.name] = data;
+  //   }
+  //   await this.setState(obj);
+  // };
+
+  // onSubmit = async e => {
+  //   await this.setState({
+  //     loading: true
+  //   });
+
+  //   e.preventDefault();
+  //   ValidationGroup(this.state, false).then(data => {
+  //     console.log("성공", data);
+  //     this.props.UpdateCardImagesRequest(data, this.props.token, this.props.card_id)
+  //     .then(res => {
+  //       if (res.success) {
+  //         console.log("e");
+  //         this.props.history.replace(`/designDetail/${this.props.match.params.id}`);
+  //       } else {
+  //         alert("다시 시도해주세요");
+  //       }
+  //       this.setState({
+  //         loading: false
+  //       });
+  //     });
+  //   }).catch(e => {
+  //     console.log("실패", e);
+  //   });
+  // };
+
+  // onRefresh = (e) => {
+  //   Component.forceUpdate();
+  // }
 
   render(){
     return(
       <FormWrapper>
-        <form onSubmit={this.onSubmit}>
           <FromFieldCard>
             <Grid>
               <Grid.Column mobile={16} computer={16}>
                 <Form.Group widths="equal">
-                  <Label>이미지 추가</Label>
-                  <MultiUpload
-                    name="design_file"
-                    placeholder="파일을 선택해주세요."
-                    getValue={this.onChangeValue}
-                    validates={["OnlyImages", "MaxFileSize(100000)"]}
+                  <CardImageUpdate
+                    uid={this.props.card_id}
+                    token={this.props.token}
+                    // images={view.images}
+                    request={this.props.UpdateCardImagesRequest}
+                    active={this.state.active}
+                    changeActive={this.changeActive}
+                    isTeam={1}
                   />
                 </Form.Group>
                 <Form.Group widths="equal">
-                  <Label>파일 추가</Label>
-                  <MultiUpload
-                    name="source_file"
-                    placeholder="파일을 선택해주세요."
-                    getValue={this.onChangeValue}
-                    validates={["MaxFileSize(100000)"]}
+                  <CardSourcUpdate
+                    uid={this.props.card_id}
+                    token={this.props.token}
+                    // sourcesLink={view.sources}
+                    request={this.props.UpdateCardSourcesRequest}
+                    active={this.state.active}
+                    changeActive={this.changeActive}
+                    isTeam={1}
                   />
                 </Form.Group>
               </Grid.Column>
             </Grid>
           </FromFieldCard>
-          <Button type="submit">등록</Button>
-        </form>
       </FormWrapper>
     );
   }

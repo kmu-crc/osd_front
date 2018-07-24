@@ -16,11 +16,10 @@ const FromFieldCard = styled.div`
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
   }
-  & .sc-LKuAh.cEhByC {
+  & .sc-bRBYWo.jEOQoo {
     padding-right: .5em;
     width: 50%;
     float: left;
-
   }
   & .field label {
     margin: 0 0 0.8rem 0;
@@ -79,7 +78,6 @@ class CreateDesignForm extends Component {
       obj[data.target.name] = data;
     }
     await this.setState(obj);
-    console.log(this.state);
   };
 
   liveCheck = (target) => {
@@ -90,13 +88,13 @@ class CreateDesignForm extends Component {
     e.preventDefault();
     let newData = {...this.state};
     newData.member.value = JSON.stringify(newData.member.value);
-    ValidationGroup(this.state, false).then(data => {
+    ValidationGroup(newData, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
       this.props.CreateDesignRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
-          this.props.history.push(`/designDetail/${res.design_id}`)
+          this.props.history.push(`/designDetail/${res.design_id}`);
         } else {
           alert("다시 시도해주세요");
           this.props.setLoader();
@@ -145,7 +143,7 @@ class CreateDesignForm extends Component {
                   placeholder="썸네일 등록"
                   getValue={this.onChangeValue}
                   onChange={()=>{this.liveCheck("thumbnail")}}
-                  validates={["Required", "OnlyImages", "MaxFileSize(100000)"]}
+                  validates={["Required", "OnlyImages", "MaxFileSize(1000000)"]}
                 />
               </Form.Group>
               <Form.Group widths="equal">

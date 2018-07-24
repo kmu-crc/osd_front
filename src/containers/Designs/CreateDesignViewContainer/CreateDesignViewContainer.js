@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import CreateDesignView from "components/Designs/CreateDesignView";
-import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
-import { GetDesignCardRequest, UpdateCardImagesRequest, UpdateCardSourcesRequest } from "actions/Designs/DesignCard";
+import { UpdateCardImagesRequest, UpdateCardSourcesRequest } from "actions/Designs/DesignCard";
 
 class CreateDesignViewContainer extends Component {
   render() {

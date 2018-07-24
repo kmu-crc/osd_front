@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import FileUploader from "components/Commons/FileUploader";
+import { MultiUpload } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl";
 
 const CardImage = styled.div`
   margin-bottom: 2rem;
@@ -95,32 +97,36 @@ export class CardImageUpdate extends Component {
   state = {
     open: "INIT",
     deleteImages: [],
-    designs: [],
-    images: []
+    images: [],
+    design_file:{
+
+    }
   };
+
   componentDidMount() {
     this.setState({ images: this.props.images });
   }
+
   onClose = () => {
     this.props.changeActive("INIT");
   };
-  handleSubmit = data => {
-    console.log(data);
-    data.delete("design_file[]");
-    if (this.state.designs !== []) {
-      this.state.designs.map(item => {
-        data.append("design_file[]", item, item.name);
-      });
-    }
-    if (this.state.deleteImages !== []) {
-      data.append("deleteImages", JSON.stringify(this.state.deleteImages));
-    }
-    console.log(data);
-    this.props.request(data, this.props.token, this.props.uid).then(() => {
-      this.props.changeActive("INIT");
-      this.setState({ deleteImages: [], images: [] });
-    });
-  };
+  // handleSubmit = data => {
+  //   console.log(data);
+  //   data.delete("design_file[]");
+  //   if (this.state.designs !== []) {
+  //     this.state.designs.map(item => {
+  //       data.append("design_file[]", item, item.name);
+  //     });
+  //   }
+  //   if (this.state.deleteImages !== []) {
+  //     data.append("deleteImages", JSON.stringify(this.state.deleteImages));
+  //   }
+  //   console.log(data);
+  //   this.props.request(data, this.props.token, this.props.uid).then(() => {
+  //     this.props.changeActive("INIT");
+  //     this.setState({ deleteImages: [], images: [] });
+  //   });
+  // };
 
   onDelete = async index => {
     let NewArray = [...this.state.images];
@@ -139,9 +145,37 @@ export class CardImageUpdate extends Component {
     this.props.changeActive("Images");
   };
 
-  onChangeDesing = data => {
-    this.setState({ designs: data });
+  // onChangeDesing = data => {
+  //   this.setState({ designs: data });
+  // };
+
+  onChangeValue = async data => {
+    let obj = {};
+    if(data.target){
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
   };
+
+  onSubmit = async e => {
+    e.preventDefault();
+    ValidationGroup(this.state.fileData, false).then(data => {
+      console.log("성공", data);
+      this.props.request(data, this.props.token, this.props.uid)
+      .then(res => {
+        if (res.success) {
+          console.log(res);
+        } else {
+          alert("다시 시도해주세요");
+        }
+        this.props.changeActive("INIT");
+        this.setState({ deleteImages: [], images: [] });
+      });
+    }).catch(e => {
+      console.log("실패", e);
+    });
+  };
+
   render() {
     let ViewImg = this.state.images ? this.state.images : this.props.images;
     return (
@@ -166,19 +200,18 @@ export class CardImageUpdate extends Component {
                 })}
             </DeleteImg>
             <h3>이미지 추가</h3>
-            <ValidateForm onSubmit={this.handleSubmit}>
-              <FileUploader
+            <form onSubmit={this.onSubmit}>
+              <MultiUpload
                 name="design_file"
-                label="디자인 파일"
-                placeholder="디자인 이미지를 등록해 주세요."
-                validates={["onlyImages"]}
-                onChange={this.onChangeDesing}
+                placeholder="파일을 선택해주세요."
+                getValue={this.onChangeValue}
+                validates={["OnlyImages", "MaxFileSize(100000)"]}
               />
               <Button type="submit">저장</Button>
               <Button type="button" onClick={this.onClose}>
                 닫기
               </Button>
-            </ValidateForm>
+            </form>
           </div>
         ) : (
           <div>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import FileUploader from "components/Commons/FileUploader";
+import { MultiUpload } from "components/Commons/FormItems";
 
 const CardSourc = styled.div`
   margin-bottom: 2rem;
@@ -96,12 +97,15 @@ export class CardSourcUpdate extends Component {
     sources: [],
     sourcesLink: []
   };
+
   componentWillMount() {
     this.setState({ open: this.props.active });
   }
+
   onClose = () => {
-    this.setState({ open: false });
+    this.props.changeActive("INIT");
   };
+
   handleSubmit = data => {
     data.delete("source_file[]");
     if (this.state.sources !== []) {
@@ -142,6 +146,7 @@ export class CardSourcUpdate extends Component {
   onChangeSource = data => {
     this.setState({ sources: data });
   };
+
   render() {
     return (
       <CardSourc>
@@ -162,21 +167,20 @@ export class CardSourcUpdate extends Component {
                 })}
             </DeleteImg>
             <h3>소스 추가</h3>
-            <ValidateForm onSubmit={this.handleSubmit}>
-              <FileUploader
+            <form onSubmit={this.handleSubmit}>
+              <MultiUpload
                 name="source_file"
-                label="소스 파일"
-                placeholder="작업 소스파일을 등록해 주세요."
-                onChange={this.onChangeSource}
+                placeholder="파일을 선택해주세요."
+                getValue={this.onChangeValue}
+                validates={["MaxFileSize(100000)"]}
               />
               <Button type="submit">저장</Button>
               <Button
                 type="button"
-                onClick={() => this.props.changeActive("INIT")}
-              >
+                onClick={() => this.props.changeActive("INIT")}>
                 닫기
               </Button>
-            </ValidateForm>
+            </form>
           </div>
         ) : (
           <div>

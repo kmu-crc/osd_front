@@ -1,6 +1,7 @@
 import Validates from "modules/Validates/Validates2";
 
 export const FormControl = async obj => {
+  if(!obj.hasOwnProperty("value")) return Promise.resolve(true);
   console.log("4", obj);
   // 검사받을 하나의 validation
   // console.log("검사받을 인풋의 arg : ", list);
