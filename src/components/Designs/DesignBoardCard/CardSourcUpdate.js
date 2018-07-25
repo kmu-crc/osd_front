@@ -4,8 +4,9 @@ import { Button, Icon } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import FileUploader from "components/Commons/FileUploader";
 import { MultiUpload } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl";
 
-const CardSourc = styled.div`
+const CardSource = styled.div`
   margin-bottom: 2rem;
   & a {
     margin-right: 10px;
@@ -90,7 +91,7 @@ const NoneData = styled.div`
   background-color: #f7f7f7;
 `;
 
-export class CardSourcUpdate extends Component {
+export class CardSourceUpdate extends Component {
   state = {
     open: "INIT",
     deleteSources: [],
@@ -106,20 +107,46 @@ export class CardSourcUpdate extends Component {
     this.props.changeActive("INIT");
   };
 
-  handleSubmit = data => {
-    data.delete("source_file[]");
-    if (this.state.sources !== []) {
-      this.state.sources.map(item => {
-        data.append("source_file[]", item, item.name);
+  // handleSubmit = data => {
+  //   data.delete("source_file[]");
+  //   if (this.state.sources !== []) {
+  //     this.state.sources.map(item => {
+  //       data.append("source_file[]", item, item.name);
+  //     });
+  //   }
+  //   if (this.state.deleteImages !== []) {
+  //     data.append("deleteSources", JSON.stringify(this.state.deleteSources));
+  //   }
+  //   console.log(data);
+  //   this.props.request(data, this.props.token, this.props.uid).then(() => {
+  //     this.props.changeActive("INIT");
+  //     this.setState({ deleteSources: [], sources: [] });
+  //   });
+  // };
+
+  onChangeValue = async data => {
+    let obj = {};
+    if(data.target){
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+  };
+
+  onSubmit = async e => {
+    e.preventDefault();
+    ValidationGroup(this.state, false).then(data => {
+      console.log("성공", data);
+      this.props.request(data, this.props.token, this.props.uid)
+      .then(res => {
+        if (res.success) {
+          this.props.changeActive("INIT");
+          this.setState({ deleteSources: [], sources: [] });
+        } else {
+          alert("다시 시도해주세요");
+        }
       });
-    }
-    if (this.state.deleteImages !== []) {
-      data.append("deleteSources", JSON.stringify(this.state.deleteSources));
-    }
-    console.log(data);
-    this.props.request(data, this.props.token, this.props.uid).then(() => {
-      this.props.changeActive("INIT");
-      this.setState({ deleteSources: [], sources: [] });
+    }).catch(e => {
+      console.log("실패", e);
     });
   };
 
@@ -139,17 +166,19 @@ export class CardSourcUpdate extends Component {
   };
 
   onActive = () => {
-    this.setState({ sourcesLink: this.props.sourcesLink });
+    this.setState({
+      sourcesLink: this.props.sourcesLink
+    });
     this.props.changeActive("Sources");
   };
 
-  onChangeSource = data => {
-    this.setState({ sources: data });
-  };
+  // onChangeSource = data => {
+  //   this.setState({ sources: data });
+  // };
 
   render() {
     return (
-      <CardSourc>
+      <CardSource>
         {this.props.active === "Sources" && this.props.isTeam > 0 ? (
           <div>
             <h3>소스 수정/삭제</h3>
@@ -167,7 +196,7 @@ export class CardSourcUpdate extends Component {
                 })}
             </DeleteImg>
             <h3>소스 추가</h3>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.onSubmit}>
               <MultiUpload
                 name="source_file"
                 placeholder="파일을 선택해주세요."
@@ -205,7 +234,7 @@ export class CardSourcUpdate extends Component {
             )}
           </div>
         )}
-      </CardSourc>
+      </CardSource>
     );
   }
 }

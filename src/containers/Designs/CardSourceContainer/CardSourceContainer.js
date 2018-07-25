@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import CreateDesignView from "components/Designs/CreateDesignView";
+import CardSource from "components/Designs/CardSource";
 import { UpdateCardImagesRequest, UpdateCardSourcesRequest } from "actions/Designs/DesignCard";
 
-class CreateDesignViewContainer extends Component {
+class CardSourceContainer extends Component {
   render() {
     return(
-      <CreateDesignView {...this.props}/>
+      <CardSource {...this.props}/>
     );
   }
 }
@@ -28,4 +28,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateDesignViewContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CardSourceContainer));

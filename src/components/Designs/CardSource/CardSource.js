@@ -39,16 +39,7 @@ const FromFieldCard = styled.div`
   }
 `;
 
-const Label = styled.div`
-  margin: 0 0 0.8rem 0;
-  display: block;
-  color: rgba(0,0,0,.87);
-  font-size: .92857143em;
-  font-weight: 700;
-  text-transform: none;
-`;
-
-class CreateDesignView extends Component {
+class CardSource extends Component {
   state = {
     loading: false,
     open: false,
@@ -66,43 +57,6 @@ class CreateDesignView extends Component {
     //this.props.GetDesignDetailViewRequest(this.props.match.params.id);
   };
 
-  // onChangeValue = async data => {
-  //   let obj = {};
-  //   if(data.target){
-  //     obj[data.target.name] = data;
-  //   }
-  //   await this.setState(obj);
-  // };
-
-  // onSubmit = async e => {
-  //   await this.setState({
-  //     loading: true
-  //   });
-
-  //   e.preventDefault();
-  //   ValidationGroup(this.state, false).then(data => {
-  //     console.log("성공", data);
-  //     this.props.UpdateCardImagesRequest(data, this.props.token, this.props.card_id)
-  //     .then(res => {
-  //       if (res.success) {
-  //         console.log("e");
-  //         this.props.history.replace(`/designDetail/${this.props.match.params.id}`);
-  //       } else {
-  //         alert("다시 시도해주세요");
-  //       }
-  //       this.setState({
-  //         loading: false
-  //       });
-  //     });
-  //   }).catch(e => {
-  //     console.log("실패", e);
-  //   });
-  // };
-
-  // onRefresh = (e) => {
-  //   Component.forceUpdate();
-  // }
-
   render(){
     return(
       <FormWrapper>
@@ -113,7 +67,7 @@ class CreateDesignView extends Component {
                   <CardImageUpdate
                     uid={this.props.card_id}
                     token={this.props.token}
-                    // images={view.images}
+                    images={view.images}
                     request={this.props.UpdateCardImagesRequest}
                     active={this.state.active}
                     changeActive={this.changeActive}
@@ -124,7 +78,7 @@ class CreateDesignView extends Component {
                   <CardSourcUpdate
                     uid={this.props.card_id}
                     token={this.props.token}
-                    // sourcesLink={view.sources}
+                    sourcesLink={view.sources}
                     request={this.props.UpdateCardSourcesRequest}
                     active={this.state.active}
                     changeActive={this.changeActive}
@@ -139,4 +93,4 @@ class CreateDesignView extends Component {
   }
 }
 
-export default CreateDesignView;
+export default CardSource;

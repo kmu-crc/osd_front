@@ -9,7 +9,8 @@ import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
-import CreateDesignViewContainer from "containers/Designs/CreateDesignViewContainer";
+import CardSourceContainer from "containers/Designs/CardSourceContainer";
+import { CardImageUpdate, CardSourcUpdate } from "components/Designs/DesignBoardCard";
 
 // css styling
 
@@ -156,57 +157,35 @@ class DetailView extends Component {
     return(
       <div>
         {len > 0 ?
-          <div>
-            {file === false && this.props.isTeam === 1 ?
-            <ViewWrapper>
-              <CreateDesignViewContainer card_id={this.props.DesignDetailView.uid}/>
-            </ViewWrapper>
-            :
-            <ViewWrapper>
-              <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
-              {view.images &&
-                <div className="imageInfo">
-                  {view.images.map(img =>
-                    <img key={img.uid} src={img.link} alt={img.name} />
-                  )}
-                </div>
-              }
-              {view.sources &&
-                <div className="sourceInfo">
-                  <h4>첨부파일</h4>
-                  {view.sources.map(src =>
-                    <a key={src.uid} href={src.link}>{src.name}</a>
-                  )}
-                </div>
-              }
-              <CommentContainer className="ui comments">
-                <h4>댓글</h4>
-                {comment.length > 0?
-                comment.map(comm=>(
-                  <div className="comment" key={comm.uid}>
-                    <div className="avatar">
-                      <img src={comm.s_img? comm.s_img : eximg} alt="profile" />
-                    </div>
-                    <div className="content">
-                      <a className="author">{comm.nick_name}</a>
-                      <div className="metadata">
-                        <div>{comm.create_time.split("T")[0]}</div>
-                      </div>
-                      <div className="text">{comm.comment}</div>
-                    </div>
-                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
-                    <Button size="small" className="delBtn" onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
-                    }
+          <ViewWrapper>
+            <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
+            <CardSourceContainer/>
+            <CommentContainer className="ui comments">
+              <h4>댓글</h4>
+              {comment.length > 0?
+              comment.map(comm=>(
+                <div className="comment" key={comm.uid}>
+                  <div className="avatar">
+                    <img src={comm.s_img? comm.s_img : eximg} alt="profile" />
                   </div>
-                  ))
-                :
-                <p>등록된 코멘트가 없습니다.</p>
-                }
-                {this.state.render? <CommentForm/> : null}
-              </CommentContainer>
-            </ViewWrapper>
-            }
-          </div>
+                  <div className="content">
+                    <a className="author">{comm.nick_name}</a>
+                    <div className="metadata">
+                      <div>{comm.create_time.split("T")[0]}</div>
+                    </div>
+                    <div className="text">{comm.comment}</div>
+                  </div>
+                  {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
+                  <Button size="small" className="delBtn" onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
+                  }
+                </div>
+                ))
+              :
+              <p>등록된 코멘트가 없습니다.</p>
+              }
+              {this.state.render? <CommentForm/> : null}
+            </CommentContainer>
+          </ViewWrapper>
         :
         <Loading/>
         }
