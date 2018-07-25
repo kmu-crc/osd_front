@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
-import ValidateForm from "components/Commons/ValidateForm";
-import FileUploader from "components/Commons/FileUploader";
 import { MultiUpload } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 
