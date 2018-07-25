@@ -67,7 +67,7 @@ class CardSource extends Component {
                   <CardImageUpdate
                     uid={this.props.card_id}
                     token={this.props.token}
-                    images={view.images}
+                    //images={view.images}
                     request={this.props.UpdateCardImagesRequest}
                     active={this.state.active}
                     changeActive={this.changeActive}
@@ -78,7 +78,7 @@ class CardSource extends Component {
                   <CardSourcUpdate
                     uid={this.props.card_id}
                     token={this.props.token}
-                    sourcesLink={view.sources}
+                    //sourcesLink={view.sources}
                     request={this.props.UpdateCardSourcesRequest}
                     active={this.state.active}
                     changeActive={this.changeActive}

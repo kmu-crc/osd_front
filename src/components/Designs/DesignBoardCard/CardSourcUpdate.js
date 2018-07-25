@@ -91,7 +91,7 @@ const NoneData = styled.div`
   background-color: #f7f7f7;
 `;
 
-export class CardSourceUpdate extends Component {
+export class CardSourcUpdate extends Component {
   state = {
     open: "INIT",
     deleteSources: [],
