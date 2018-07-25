@@ -58,6 +58,7 @@ class CardSource extends Component {
   };
 
   render(){
+    const view = this.props.view;
     return(
       <FormWrapper>
           <FromFieldCard>
@@ -65,9 +66,9 @@ class CardSource extends Component {
               <Grid.Column mobile={16} computer={16}>
                 <Form.Group widths="equal">
                   <CardImageUpdate
-                    uid={this.props.card_id}
+                    uid={view.uid}
                     token={this.props.token}
-                    //images={view.images}
+                    images={view.images}
                     request={this.props.UpdateCardImagesRequest}
                     active={this.state.active}
                     changeActive={this.changeActive}
@@ -76,9 +77,9 @@ class CardSource extends Component {
                 </Form.Group>
                 <Form.Group widths="equal">
                   <CardSourcUpdate
-                    uid={this.props.card_id}
+                    uid={view.uid}
                     token={this.props.token}
-                    //sourcesLink={view.sources}
+                    sourcesLink={view.sources}
                     request={this.props.UpdateCardSourcesRequest}
                     active={this.state.active}
                     changeActive={this.changeActive}

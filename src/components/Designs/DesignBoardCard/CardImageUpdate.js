@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
 import ValidateForm from "components/Commons/ValidateForm";
 import FileUploader from "components/Commons/FileUploader";
-import { MultiUpload } from "components/Commons/FormItems";
+import { MultiUpload, DeleteItems } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
+import Loading from "components/Commons/Loading";
 
 const CardImage = styled.div`
   margin-bottom: 2rem;
@@ -96,58 +97,35 @@ const NoneData = styled.div`
 export class CardImageUpdate extends Component {
   state = {
     open: "INIT",
-    deleteImages: [],
     images: [],
-    design_file:{
-
-    }
+    loading: false,
+    test: null
   };
 
   componentDidMount() {
-    this.setState({ images: this.props.images });
+    this.props.images && this.setState({ images: this.props.images });
+  }
+
+  shouldComponentUpdate(nextProps){
+    if(JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)){
+      if(nextProps.status === "SUCCESS"){
+        // this.setState({ deleteImages: [], images: [] });
+        this.props.GetDesignDetailViewRequest(this.props.match.params.id);
+      } else if(nextProps.status === "FAILUR"){
+        alert("업데이트에 실패하였습니다.");
+      }
+    }
+    return true;
   }
 
   onClose = () => {
     this.props.changeActive("INIT");
   };
-  // handleSubmit = data => {
-  //   console.log(data);
-  //   data.delete("design_file[]");
-  //   if (this.state.designs !== []) {
-  //     this.state.designs.map(item => {
-  //       data.append("design_file[]", item, item.name);
-  //     });
-  //   }
-  //   if (this.state.deleteImages !== []) {
-  //     data.append("deleteImages", JSON.stringify(this.state.deleteImages));
-  //   }
-  //   console.log(data);
-  //   this.props.request(data, this.props.token, this.props.uid).then(() => {
-  //     this.props.changeActive("INIT");
-  //     this.setState({ deleteImages: [], images: [] });
-  //   });
-  // };
-
-  onDelete = async index => {
-    let NewArray = [...this.state.images];
-    NewArray.splice(index, 1);
-    this.setState({
-      deleteImages: [...this.state.deleteImages, this.state.images[index]],
-      images: NewArray
-    });
-    setTimeout(() => {
-      console.log(this.state);
-    }, 100);
-  };
 
   onActive = () => {
-    this.setState({ images: this.props.images });
+    this.props.images && this.setState({ images: this.props.images });
     this.props.changeActive("Images");
   };
-
-  // onChangeDesing = data => {
-  //   this.setState({ designs: data });
-  // };
 
   onChangeValue = async data => {
     let obj = {};
@@ -159,17 +137,21 @@ export class CardImageUpdate extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    ValidationGroup(this.state.fileData, false).then(data => {
+    await this.setState({
+      loading: true
+    });
+
+    let newData = {...this.state};
+    console.log(newData.deleteImages);
+    newData.deleteImages.value = JSON.stringify(newData.deleteImages.value);
+    ValidationGroup(newData, false).then(data => {
       console.log("성공", data);
       this.props.request(data, this.props.token, this.props.uid)
       .then(res => {
-        if (res.success) {
-          console.log(res);
-        } else {
-          alert("다시 시도해주세요");
-        }
         this.props.changeActive("INIT");
-        this.setState({ deleteImages: [], images: [] });
+        this.setState({
+          loading: false
+        });
       });
     }).catch(e => {
       console.log("실패", e);
@@ -183,22 +165,12 @@ export class CardImageUpdate extends Component {
         {this.props.active === "Images" && this.props.isTeam > 0 ? (
           <div>
             <h3>이미지 수정/삭제</h3>
-            <DeleteImg>
-              {ViewImg &&
-                ViewImg.map((item, index) => {
-                  return (
-                    <DeleteImgItem key={index}>
-                      <ItemImg
-                        style={{ backgroundImage: `url("${item.link}")` }}
-                      />
-                      <ItemText>{item.name}</ItemText>
-                      <DeleteBtn onClick={() => this.onDelete(index)}>
-                        <Icon name="close" />
-                      </DeleteBtn>
-                    </DeleteImgItem>
-                  );
-                })}
-            </DeleteImg>
+            <DeleteItems
+              ViewImg={ViewImg}
+              name="deleteImages"
+              placeholder="파일을 선택해주세요."
+              getValue={this.onChangeValue}
+            />
             <h3>이미지 추가</h3>
             <form onSubmit={this.onSubmit}>
               <MultiUpload
@@ -238,6 +210,7 @@ export class CardImageUpdate extends Component {
             )}
           </div>
         )}
+        {this.state.loading && <Loading/>}
       </CardImage>
     );
   }

@@ -104,6 +104,7 @@ export class MultiUpload extends Component {
   onChangeValue = async data => {
     let newValue = [...this.state.value];
     let newUrls = [...this.state.urls];
+    console.log(data.value[0]);
     if (data.value[0]) {
       if (
         data.value[0].type === "image/jpeg" ||
@@ -112,7 +113,6 @@ export class MultiUpload extends Component {
         data.value[0].type === "image/bmp" ||
         data.value[0].type === "image/webp"
       ) {
-        console.log("22");
         let reader = new FileReader();
         reader.onloadend = async () => {
           console.log("result", reader.result);
@@ -122,7 +122,6 @@ export class MultiUpload extends Component {
         };
         reader.readAsDataURL(data.value[0]);
       } else {
-        console.log("33");
         // imageUrl = fileImg;
         newUrls.push(fileImg);
       }

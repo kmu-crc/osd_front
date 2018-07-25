@@ -16,7 +16,8 @@ export const ValidationGroup = async (list, isJSON) => {
       Promise.all(qListArray).then(async res => {
           let formData = new FormData();
           for (let key in list) {
-            if(!list[key].hasOwnProperty("value")) continue;
+            console.log("list[key]", list[key]);
+            if(!list[key] || !list[key].hasOwnProperty("value")) continue;
             if(key.indexOf("[") > -1){
               if(list[key].value.length > 0) {
                 console.log("key", key);

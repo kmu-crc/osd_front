@@ -139,7 +139,6 @@ class DetailView extends Component {
   render(){
     const view = this.props.DesignDetailView;
     const len = Object.keys(view).length;
-    const file = view.is_images === 1 || view.is_source === 1;
     const comment = this.props.Comment;
 
     const CommentForm = () => {
@@ -159,7 +158,7 @@ class DetailView extends Component {
         {len > 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
-            <CardSourceContainer/>
+            <CardSourceContainer view={view}/>
             <CommentContainer className="ui comments">
               <h4>댓글</h4>
               {comment.length > 0?
