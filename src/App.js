@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
+import TestPage3 from "pages/TestPage3";
 
 class App extends Component {
   componentDidMount(){
@@ -54,6 +55,7 @@ class App extends Component {
           <Route path="/footer/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message" component={RequiresAuth(MessagePage)}/>
+          <Route path="/cardTest" component={TestPage3}/>
         </Switch>
       </BrowserRouter>
     );

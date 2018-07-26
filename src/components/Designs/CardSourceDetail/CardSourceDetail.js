@@ -1,5 +1,17 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { Controller } from "./Controller";
+import Button from "components/Commons/Button";
+
+const CardSrcWrap = styled.div`
+  width: 70%;
+  height: 600px;
+  background-color: #fff;
+  margin: auto;
+  & form {
+    margin: 20px 0;
+  }
+`;
 
 class CardSourceDetail extends Component {
   state = {
@@ -9,33 +21,33 @@ class CardSourceDetail extends Component {
     deleteContent: [],
     editContent: [],
   };
+
   render() {
     const { edit, content } = this.state;
     return (
-      <div>
-        {edit ? (
-          <form>
-            {content.length > 0 ? (
-              content.map((item, index) => {
+      <CardSrcWrap>
+        <button onClick={()=>this.setState({edit: !this.state.edit})}>컨텐츠 수정</button>
+        {edit
+        ? <form>
+            {content.length > 0
+            ? content.map((item, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <Controller type="INIT" />
                     <Controller type={item.type} content={item.content} />
                   </div>
                 );
               })
-            ) : (
-              <Controller type="INIT" />
-            )}
+            : <Controller type="INIT" />
+            }
           </form>
-        ) : content.length > 0 ? (
-          content.map(item => {
-            return <div>{item.uid}</div>;
+        : content.length > 0
+        ? content.map((item, index) => {
+            return <div key={index}>{item.uid}{item.content}</div>;
           })
-        ) : (
-          <div>없음</div>
-        )}
-      </div>
+        : <div>컨텐츠 없음</div>
+        }
+      </CardSrcWrap>
     );
   }
 }
