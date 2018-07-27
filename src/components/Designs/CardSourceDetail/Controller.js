@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
 import TextController from "./TextController.js";
+import EmbController from "./EmbController";
 
 // css styling
 const ControllerWrap = styled.div`
@@ -99,7 +100,7 @@ export class Controller extends Component {
           </div>
         ) : controller === "EMBED" ? (
           <div className="embWrap">
-            <textarea style={{border: 0, width: "100%"}}/>
+            <EmbController/>
             <button type="button" onClick={()=>this.setController("INIT")}>취소</button>
           </div>
         ) : null}
