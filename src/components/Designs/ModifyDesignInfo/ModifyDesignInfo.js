@@ -92,6 +92,7 @@ class ModifyDesignInfo extends Component {
   componentWillMount() {
     this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
     .then(data => {
+      console.log(data);
       this.props.GetCategoryLevel2Request(data.DesignDetail.category_level1);
     });
   }
@@ -108,27 +109,6 @@ class ModifyDesignInfo extends Component {
     await this.setState(obj);
   };
 
-  // onChangeCategory1 = async value => {
-  //   console.log("value", value);
-  //   await this.props.GetCategoryLevel2Request(value);
-  // };
-
-  // onChangeMembers = (data) => {
-  //   if (data.length === 0) {
-  //     const userInfo = [{
-  //       uid: this.props.DesignDetail.user_id,
-  //       nick_name: this.props.DesignDetail.userName
-  //     }];
-  //     this.setState({
-  //       members: userInfo
-  //     });
-  //   } else {
-  //     this.setState({
-  //       members: data
-  //     });
-  //   }
-  // }
-
   returnToMemberFormat = (arr) => {
     let list = [];
     if (arr !== null) {
@@ -140,32 +120,33 @@ class ModifyDesignInfo extends Component {
         list.push(userInfo);
       });
     }
-    console.log(list);
     return list;
   }
 
-  // onSubmitForm = async (data) => {
-  //   await this.setState({
-  //     loading: true
-  //   });
+  getMember = data => {
+    this.props.SearchMemberRequest({key: data}, this.props.token);
+  }
 
-  //   data.delete("search");
-  //   if(this.state.members !== []){
-  //     data.append("members", JSON.stringify(this.state.members));
-  //   }
-  //   this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
-  //   .then(data => {
-  //     if (data.res.success === true) {
-  //       alert("정보가 수정되었습니다.");
-  //       this.props.history.push(`/designDetail/${this.props.DesignDetail.uid}`);
-  //     } else {
-  //       alert("다시 시도해주세요");
-  //       this.setState({
-  //         loading: false
-  //       });
-  //     }
-  //   });
-  // }
+  onSubmit = async e => {
+    e.preventDefault();
+    let newData = {...this.state};
+    newData.member.value = JSON.stringify(newData.member.value);
+    ValidationGroup(newData, false).then(data => {
+      console.log("성공", data);
+      this.props.setLoader();
+      this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
+      .then(data => {
+        if (data.res.success) {
+          this.props.history.push(`/designDetail/${data.res.design_id}`);
+        } else {
+          alert("다시 시도해주세요");
+          this.props.setLoader();
+        }
+      });
+    }).catch(e => {
+      console.log("실패", e);
+    });
+  };
 
   render() {
     const currentDesign = this.props.DesignDetail;
@@ -207,7 +188,7 @@ class ModifyDesignInfo extends Component {
                     placeholder="썸네일 등록"
                     getValue={this.onChangeValue}
                     onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["Required", "OnlyImages", "MaxFileSize(1000000)"]}
+                    validates={["OnlyImages", "MaxFileSize(1000000)"]}
                   />
                 </Form.Group>
                 <Form.Group widths="equal">
@@ -218,14 +199,14 @@ class ModifyDesignInfo extends Component {
                     name="category_level1"
                     getValue={this.onChangeValue}
                     onChange={()=>this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
-                    currentValue={currentDesign.category_level1}
+                    value={currentDesign.category_level1}
                   />
                   <FormSelect
                     selection={true}
                     options={this.props.category2}
                     name="category_level2"
                     getValue={this.onChangeValue}
-                    currentValue={currentDesign.category_level1}
+                    value={currentDesign.category_level2}
                   />
                 </Form.Group>
                 <Form.Group widths="equal">
