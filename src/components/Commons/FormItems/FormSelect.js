@@ -59,12 +59,12 @@ export class FormSelect extends Component {
     // 때문에 state에 render 항목을 만들 props가 변경될 때 마다 FormDropBox를 비활성화 했다
     // 다시 활성화 시키는 방법으로 defaultValue 를 정상적으로 동작하게 만들었다.
     await this.setState({ render: false });
-    // if (this.props.options.length > 0 && value) {
-    //   await this.setState({ value: value });
-    // }
-    // if (this.props.options.length > 0 && value == null) {
-    //   await this.setState({ value: this.props.options[0].value });
-    // }
+    if (this.props.options.length > 0 && value) {
+      await this.setState({ value: value });
+    }
+    if (this.props.options.length > 0 && value == null) {
+      await this.setState({ value: this.props.options[0].value });
+    }
     await this.setState({ render: true });
   };
 
