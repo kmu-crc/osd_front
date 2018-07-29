@@ -6,13 +6,14 @@ import TextController from "./TextController.js";
 import FileController from "./FileController";
 import { FormFile } from "components/Commons/FormItems";
 import FileIcon from "components/Commons/FileIcon";
+import EmbController from "./EmbController";
 
 // css styling
 const ControllerWrap = styled.div`
   padding: 20px 0;
   position: relative;
   border: 2px dashed white;
-  img{
+  img {
     width: 100%;
   }
   &:hover {
@@ -65,7 +66,8 @@ export class Controller extends Component {
   };
 
   async componentDidMount() {
-    if (this.props.type) await this.setState({ type: this.props.type, order: this.props.order });
+    if (this.props.type)
+      await this.setState({ type: this.props.type, order: this.props.order });
   }
 
   setController = async type => {
@@ -77,18 +79,18 @@ export class Controller extends Component {
 
   InitClick = async () => {
     await this.setState({ click: true });
-  }
+  };
 
   onChangeValue = async data => {
     console.log("onChange", data);
     await this.setState(data);
     this.returnDate();
-  }
+  };
 
-  returnDate = async (e) => {
+  returnDate = async e => {
     if (this.props.getValue) await this.props.getValue(this.state);
     if (e && this.props.onBlur) await this.props.onBlur();
-  }
+  };
 
   render() {
     const { type } = this.state;
@@ -116,15 +118,26 @@ export class Controller extends Component {
           </div>
         ) : type === "FILE" ? (
           <div className="fileWrap">
-            <FileController item={item} setController={this.setController} initClick={this.state.click} name="source" getValue={this.onChangeValue}/>
+            <FileController
+              item={item}
+              setController={this.setController}
+              initClick={this.state.click}
+              name="source"
+              getValue={this.onChangeValue}
+            />
           </div>
         ) : type === "TEXT" ? (
           <div className="textWrap">
-            <TextController item={item} name={name} setController={this.setController} initClick={this.state.click} />
+            <TextController
+              item={item}
+              name={name}
+              setController={this.setController}
+              initClick={this.state.click}
+            />
           </div>
         ) : type === "EMBED" ? (
           <div className="embWrap">
-            <textarea style={{ border: 0, width: "100%" }} />
+            <EmbController />
             <button type="button" onClick={() => this.setController("INIT")}>
               취소
             </button>
