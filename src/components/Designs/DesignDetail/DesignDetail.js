@@ -93,6 +93,15 @@ const SubInfo = styled.div`
   }
 `;
 
+const EditBtn = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  & button {
+    margin-right: 5px;
+  }
+`;
+
 const MoreBtn = styled(Button)`
   position: relative;
   float: right;
@@ -219,10 +228,6 @@ class DesignDetail extends Component {
           <Modal.Content as="ul">
             <li>파생디자인 생성</li>
             <li className={designDetail.parent_design != null ? "able" : "disable"}>원본디자인 보기</li>
-            {user && user.uid === designDetail.user_id &&
-            <Link to={`/designModify/${this.props.id}`}><li>수정</li></Link>
-            }
-            {user && user.uid === designDetail.user_id && <li onClick={this.deleteDesign}>삭제</li>}
           </Modal.Content>
         </ModalContent>
       );
@@ -263,7 +268,7 @@ class DesignDetail extends Component {
                           <button className="ui basic button" tabIndex="0">
                             <Icon name="unhide"></Icon>
                             조회수
-                      </button>
+                          </button>
                           <div className="ui left pointing basic label">{count.view_count}</div>
                         </div>
                         <div className="ui right labeled button like">
@@ -283,10 +288,16 @@ class DesignDetail extends Component {
                           <button className="ui basic button" tabIndex="0">
                             <i aria-hidden="true" className="fork icon"></i>
                             파생
-                      </button>
+                          </button>
                           <div className="ui left pointing basic label">{designDetail.children_count["count(*)"]}</div>
                         </div>
                       </SubInfo>
+                      {user && user.uid === designDetail.user_id &&
+                      <EditBtn>
+                        <Link to={`/designModify/${this.props.id}`}><Button size="small">수정</Button></Link>
+                        <Button onClick={this.deleteDesign} size="small" color="Solid">삭제</Button>
+                      </EditBtn>
+                      }
                     </Grid.Column>
                   </Grid.Row>
                 </HeadContainer>

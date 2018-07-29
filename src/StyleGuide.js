@@ -59,8 +59,8 @@ const StyleGuide = {
   },
   gridContent: {
     mobile: 320,
-    tablet: "700px",
-    computer: "850px",
+    tablet: "550px",
+    computer: "940px",
     largeScreen: "1100px",
     wideScreen: "1800px",
   }

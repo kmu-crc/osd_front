@@ -130,6 +130,7 @@ const Head = styled(Grid)`
     width: 120px;
     text-align: center;
     cursor: pointer;
+    font-weight: normal;
   }
   & li:hover {
     font-weight: 500;
@@ -137,6 +138,7 @@ const Head = styled(Grid)`
   & li.onSelected {
     color: red;
     position: relative;
+    font-weight: bold;
   }
 `;
 
@@ -205,7 +207,7 @@ class DesignerDetail extends Component {
         if (data.success === true) {
           this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
           .then(this.props.GetDesignerCountRequest(this.props.id))
-        } 
+        }
       });
     }
   }
@@ -242,7 +244,7 @@ class DesignerDetail extends Component {
                       <p className="explanation">{designerDetail.about_me}</p>
                     </InfoSection>
                     <div className="btnContainer">
-                      {this.props.like === true 
+                      {this.props.like === true
                       ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
                       : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
                       }
