@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import { Grid, Form, Header } from "semantic-ui-react";
-import { OverlapField, FormField } from "components/Commons/FormField";
-import { FormInput, FormCheckBox, FormTextArea, FormSelect } from "components/Commons/FormItem";
+// import { OverlapField, FormField } from "components/Commons/FormField";
+// import { FormInput, FormCheckBox, FormTextArea, FormSelect } from "components/Commons/FormItem";
 // import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
-import ValidateForm from "components/Commons/ValidateForm";
-import ProfileImage from "components/Users/ProfileImage";
+// import ValidateForm from "components/Commons/ValidateForm";
+// import ProfileImage from "components/Users/ProfileImage";
 import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
 import Button from "components/Commons/Button";
+import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl";
 
 // css styling
 
@@ -19,7 +21,7 @@ const ImgWrapper = styled.div`
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 300px;
+  height: 200px;
   position: relative;
   &::after {
     position: absolute;
@@ -45,7 +47,7 @@ const Title = styled.div`
   transform: translateY(-50%);
   h1 {
     color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading1};
+    font-size: ${StyleGuide.font.size.heading2};
     font-weight: bold;
   }
 `;
@@ -102,6 +104,15 @@ const FormHeader = styled(Header) `
   }
 `;
 
+const Label = styled.div`
+  margin: 0 0 0.8rem 0;
+  display: block;
+  color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
+`;
+
 class ModifyMyDetail extends Component {
   state = {
     loading: false
@@ -114,28 +125,80 @@ class ModifyMyDetail extends Component {
     });
   }
 
-  onChangeCategory1 = async value => {
-    await this.props.GetCategoryLevel2Request(value);
+  // onChangeCategory1 = async value => {
+  //   await this.props.GetCategoryLevel2Request(value);
+  // };
+
+  // handleSubmit = async (data) => {
+  //   await this.setState({
+  //     loading: true
+  //   });
+
+  //   this.props.UpdateUserDetailRequest(data, this.props.token)
+  //   .then(res=> {
+  //     if (res.success === true) {
+  //       alert("정보가 수정되었습니다.");
+  //       this.props.history.push("/");
+  //     } else {
+  //       alert("다시 시도해주세요");
+  //       this.setState({
+  //         loading: false
+  //       });
+  //     }
+  //   });
+  // }
+
+  onChangeValue = async data => {
+    let obj = {};
+    if(data.target){
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+    console.log(this.state);
   };
 
-  handleSubmit = async (data) => {
+  liveCheck = (target) => {
+    FormControl(this.state[target]);
+  };
+
+  samePwCheck = () => {
+    FormControl({
+      value: [this.state.password.value, this.state.password2.value],
+      target: this.state.password2.target,
+      validates: this.state.password2.validates
+    });
+  }
+
+  onSubmit = async e => {
     await this.setState({
       loading: true
     });
 
-    this.props.UpdateUserDetailRequest(data, this.props.token)
-    .then(res=> {
-      if (res.success === true) {
-        alert("정보가 수정되었습니다.");
-        this.props.history.push("/");
-      } else {
-        alert("다시 시도해주세요");
-        this.setState({
-          loading: false
-        });
-      }
+    e.preventDefault();
+    let formData = this.state;
+    delete formData.password2;
+    ValidationGroup(formData, false).then(data => {
+      console.log("성공", data);
+      this.props.UpdateUserDetailRequest(data, this.props.token)
+      .then(res => {
+        if (res.success) {
+          alert("정보가 수정되었습니다.");
+          this.props.history.push(`/`);
+        } else {
+          alert("다시 시도해주세요");
+          this.setState({
+            loading: false
+          });
+        }
+      });
+    }).catch(e => {
+      console.log("실패", e);
+      alert("다시 시도해주세요");
+      this.setState({
+        loading: false
+      });
     });
-  }
+  };
 
   render() {
     const myInfo = this.props.MyDetail;
@@ -147,68 +210,84 @@ class ModifyMyDetail extends Component {
         </ImgWrapper>
         {myInfo.length !== 0 &&
           <Wrapper>
-            <ValidateForm onSubmit={this.handleSubmit} enctype="multipart/form-data">
+            <form onSubmit={this.onSubmit} encType="multipart/form-data">
               <FromFieldCard>
-                <Grid>
+                <Grid padded={false}>
                   <Grid.Column width={4}>
-                    <FormHeader as="h2">내 정보 수정</FormHeader>
+                    <Label>썸네일 등록</Label>
+                    <FormThumbnail
+                      name="thumbnail"
+                      placeholder="썸네일 등록"
+                      getValue={this.onChangeValue}
+                      onChange={()=>{this.liveCheck("thumbnail")}}
+                      validates={["OnlyImages", "MaxFileSize(10000000)"]}
+                      image={myInfo.profileImg}
+                    />
                   </Grid.Column>
                   <Grid.Column width={12}>
-                    <div className="profileImg">
-                      <ProfileImage />
-                    </div>
-                    <FormField
+                    <Label>닉네임 변경</Label>
+                    <FormInput
                       name="nick_name"
-                      type="text"
-                      label="닉네임 변경"
                       value={myInfo.nick_name}
+                      getValue={this.onChangeValue}
                       validates={["required", "NotSpecialCharacters", "checkNickName"]}
-                      RenderComponent={FormInput}
+                      onBlur={()=>{this.liveCheck("nick_name")}}
                     />
-                    <FormField
+                    <Label>자기소개 변경</Label>
+                    <FormInput
                       name="about_me"
-                      label="자기소개 변경"
                       value={myInfo.about_me}
-                      RenderComponent={FormTextArea}
+                      placeholder="자기소개를 입력해주세요."
+                      getValue={this.onChangeValue}
                     />
-                    <OverlapField
+                    <Label>비밀번호 변경</Label>
+                    <FormInput
                       name="password"
                       type="password"
-                      placeholder="Password"
-                      label="password 변경"
-                      validates={["required"]}
+                      placeholder="비밀번호를 입력해주세요."
+                      getValue={this.onChangeValue}
+                      validates={["Required", "NotBlank"]}
+                      onBlur={()=>{this.liveCheck("password")}}
+                    />
+                    <Label>비밀번호 확인</Label>
+                    <FormInput
+                      name="password2"
+                      type="password"
+                      placeholder="비밀번호를 다시 한번 입력해주세요."
+                      getValue={this.onChangeValue}
+                      validates={["SamePassword"]}
+                      onBlur={this.samePwCheck}
                     />
                     <Form.Group widths={2}>
-                      <FormField
-                        name="category_level1"
+                      <Label>카테고리</Label>
+                      <FormSelect
                         selection={true}
-                        getValue={this.onChangeCategory1}
                         options={this.props.category1}
-                        label="카테고리"
+                        name="category_level1"
                         value={myInfo.category_level1}
-                        RenderComponent={FormSelect}
+                        getValue={this.onChangeValue}
+                        onChange={()=>this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
                       />
-                      <FormField
-                        name="category_level2"
+                      <FormSelect
                         selection={true}
                         options={this.props.category2}
-                        label="카테고리2"
+                        name="category_level2"
                         value={myInfo.category_level2}
-                        RenderComponent={FormSelect}
+                        getValue={this.onChangeValue}
                       />
                     </Form.Group>
-                    <FormField
+                    <Label>디자이너 활동 여부</Label>
+                    <FormCheckBox
                       name="is_designer"
                       placeholder="디자이너로 활동하시겠습니까?"
-                      label="디자이너 활동 여부"
-                      checked={myInfo.is_designer === 1? "1" : "0"}
-                      RenderComponent={FormCheckBox}
+                      getValue={this.onChangeValue}
+                      value={myInfo.is_designer}
                     />
                   </Grid.Column>
                 </Grid>
               </FromFieldCard>
-              <Button type="submit">수정</Button>
-            </ValidateForm>
+              <Button type="button" onClick={this.onSubmit}>수정</Button>
+            </form>
           </Wrapper>
         }
         {this.state.loading && <Loading/>}
