@@ -93,33 +93,48 @@ class TextController extends Component {
 
   getBold = e => {
     document.execCommand('Bold');
+    this.onCursorOut();
   };
 
   getItalic = () => {
     document.execCommand('Italic');
+    this.onCursorOut();
   };
 
   getUnderline = () => {
     document.execCommand('Underline');
+    this.onCursorOut();
   };
 
   getJustifyleft = () => {
     document.execCommand('justifyleft');
+    this.onCursorOut();
   };
 
   getJustifycenter = () => {
     document.execCommand('justifycenter');
+    this.onCursorOut();
   };
 
   getJustifyright = () => {
     document.execCommand('justifyright');
+    this.onCursorOut();
   };
 
   componentDidMount(){
-    if (this.props.value) {
-      document.getElementById("valContainer").innerHTML = this.props.value;
+    if (this.props.item) {
+      this.setState(this.props.item);
+      this.edit.innerHTML = this.props.item.content;
     }
-    if (this.props.initClick) this.edit.focus();
+    if (this.props.item.initClick) this.edit.focus();
+  }
+
+  shouldComponentUpdate(nextProps){
+    if(JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)){
+      this.edit.innerHTML = nextProps.item.content;
+      if (nextProps.item.initClick) this.edit.focus();
+    }
+    return true
   }
 
   // onChangeSize = size => {
@@ -214,16 +229,24 @@ class TextController extends Component {
     let newSelected = window.getSelection();
     let range = window.getSelection().getRangeAt(0);
     newSelected.removeRange(range);
+    this.edit.blur();
   }
 
   onSave = async () => {
-    const newValue = document.getElementById('valContainer').innerHTML;
-    if (this.props.name.indexOf("add") > -1 && this.edit.textContent === "") {
-      console.log(">?");
-      this.props.setController("INIT");
-    }
-    //this.props.getValue(this.state.value);
+    setTimeout(async () => {
+      if (!this.edit.textContent) {
+        if(this.props.deleteItem) this.props.deleteItem();
+      } else {
+        console.log("드디어 세이브", this.state);
+        await this.setState({content: this.edit.innerHTML});
+        this.returnData();
+      }
+    }, 300);
   };
+
+  returnData = async () => {
+    if(this.props.getValue) this.props.getValue(this.state);
+  }
 
   render() {
     return (
@@ -306,7 +329,7 @@ class TextController extends Component {
           <div
             ref={ref => (this.edit = ref)}
             contentEditable="true"
-            id="valContainer"
+            id={`valContainer${this.props.item.order}`}
             className="valContainer"
             onBlur={this.onSave}
           />

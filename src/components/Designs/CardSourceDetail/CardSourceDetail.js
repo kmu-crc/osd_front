@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Controller } from "./Controller";
 import Button from "components/Commons/Button";
+import AddController from "./AddController";
+import ContentForm from "./ContentForm";
 
 const CardSrcWrap = styled.div`
   width: 70%;
-  height: 600px;
   background-color: #fff;
   margin: auto;
   & form {
@@ -22,48 +23,55 @@ const ViewContent = styled.div`
 class CardSourceDetail extends Component {
   state = {
     edit: true,
-    content: [
-      {
-        uid: 1,
-        content: "<h1>하이하이</h1><p>dsfadsfasdfsadf</p>",
-        order: 0,
-        type: "TEXT",
-        data_type: "TEXT",
-        extension: "TEXT"
-      },
-      {
-        uid: 2,
-        content:
-          "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/images/1530458646369.jpg",
-        type: "FILE",
-        order: 1,
-        data_type: "image/jpg",
-        extension: "jpg"
-      },
-      {
-        uid: 3,
-        content:
-          "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/images/1530458646369.jpg",
-        type: "FILE",
-        order: 2,
-        data_type: "application/vnd.amazon.ebook",
-        extension: "azw"
-      }
-    ],
-    newContent: [],
-    deleteContent: [],
-    editContent: []
+    content: [],
+    deleteContent: []
   };
 
   onChangValue = async data => {
-    console.log("detail",data);
-    if(data.content){
-      let copyContent = [...this.state.content];
-      console.log("copyContent", copyContent);
-      copyContent.splice(data.order, 0, data);
-      await this.setState({content: copyContent});
-      console.log("detail", this.state.content);
+    let copyContent = [...this.state.content];
+    delete data.initClick;
+    await copyContent.splice(data.order, 1, data);
+
+    await this.setState({ content: copyContent });
+  };
+
+  onAddValue = async data => {
+    let copyContent = [...this.state.content];
+    let copyData = { ...data };
+    copyData.initClick = true;
+    await copyContent.splice(copyData.order, 0, copyData);
+
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        item.order = await index;
+        if (item.order !== copyData.order) delete item.initClick;
+        return item;
+      })
+    );
+    console.log("copyContent", copyContent);
+    await this.setState({ content: copyContent });
+  };
+
+  deleteItem = async index => {
+    let copyContent = [...this.state.content];
+    let copyDelete = [...this.state.deleteContent];
+    if(copyContent[index].uid){
+      copyDelete.push(copyContent[index]);
     }
+    await copyContent.splice(index, 1);
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        item.order = await index;
+        return item;
+      })
+    );
+    await this.setState({ content: copyContent, deleteContent: copyDelete });
+  };
+
+  onSubmit = async (e) => {
+    e.preventDefault();
+    let formData = await ContentForm(this.state);
+    console.log(formData);
   }
 
   render() {
@@ -74,30 +82,45 @@ class CardSourceDetail extends Component {
           컨텐츠 수정
         </button>
         {edit ? (
-          <form>
+          <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (
-              content.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <Controller
-                      type="INIT"
-                      order={index}
-                      name={`add${index}`}
-                      getValue={this.onChangValue}
-                    />
-                    <Controller
-                      type={item.type}
-                      item={item}
-                      order={index}
-                      name={`content${index}`}
-                      getValue={this.onChangValue}
-                    />
-                  </div>
-                );
-              })
+              <div>
+                {content.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <AddController
+                        type="INIT"
+                        order={index}
+                        name={`add${index}`}
+                        getValue={this.onAddValue}
+                      />
+                      <Controller
+                        type={item.type}
+                        item={item}
+                        order={index}
+                        deleteItem={this.deleteItem}
+                        name={`content${index}`}
+                        getValue={this.onChangValue}
+                      />
+                    </div>
+                  );
+                })}
+                <AddController
+                  type="INIT"
+                  order={content.length}
+                  name="addBasic"
+                  getValue={this.onAddValue}
+                />
+              </div>
             ) : (
-              <Controller type="INIT" order={0} name="addBasic" />
+              <AddController
+                type="INIT"
+                order={0}
+                name="addBasic"
+                getValue={this.onAddValue}
+              />
             )}
+            <Button type="submit" round={true}>저장</Button>
           </form>
         ) : content.length > 0 ? (
           <ViewContent>

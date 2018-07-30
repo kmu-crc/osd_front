@@ -10,13 +10,12 @@ import EmbController from "./EmbController";
 
 // css styling
 const ControllerWrap = styled.div`
-  padding: 20px 0;
   position: relative;
   border: 2px dashed white;
-  img {
-    width: 100%;
-  }
   &:hover {
+    .editBtn{
+      display: block;
+    }
     border: 2px dashed ${StyleGuide.color.geyScale.scale6};
     & .initWrap {
       & > ul {
@@ -29,34 +28,63 @@ const ControllerWrap = styled.div`
   }
 `;
 
-const ControllerMenu = styled.ul`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 3px;
-  overflow: hidden;
+const EditBtn = styled.button`
   display: none;
-  justify-content: center;
-  align-items: space-between;
-  color: #fff;
-  & li {
-    width: 120px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-    background-color: ${StyleGuide.color.geyScale.scale7};
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: ${StyleGuide.color.sub.bule.basic};
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon{
+    margin: 0;
   }
-  & li:hover {
-    background-color: ${StyleGuide.color.geyScale.scale8};
+  &:focus .subMenu{
+    display: block;
   }
-`;
+`
 
-const Init = styled.span`
-  padding-left: 20px;
-  color: ${StyleGuide.color.geyScale.scale4};
-`;
+const SubMenu = styled.ul`
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  outline: 0;
+  transform: translate(-20px ,140%);
+  background-color: ${StyleGuide.color.geyScale.scale7};
+  width: 9rem;
+  border-radius: 3px;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  &::before{
+    display: block;
+    content: "";
+    top: -5px;
+    left: 25px;
+    position: absolute;
+    transform: rotate(135deg);
+    border-top: 7.5px solid transparent;
+    border-right: 7.5px solid transparent;
+    border-left: 7.5px solid ${StyleGuide.color.geyScale.scale7};
+    border-bottom: 7.5px solid ${StyleGuide.color.geyScale.scale7};
+    border-radius: 3px;
+  }
+  li{
+    line-height: 30px;
+    color: ${StyleGuide.color.geyScale.scale0};
+    text-align: center;
+  }
+`
 
 export class Controller extends Component {
   state = {
@@ -70,22 +98,20 @@ export class Controller extends Component {
       await this.setState({ type: this.props.type, order: this.props.order });
   }
 
-  setController = async type => {
-    await this.setState({
-      type: type,
-      click: false
-    });
-  };
-
   InitClick = async () => {
     await this.setState({ click: true });
   };
 
   onChangeValue = async data => {
-    console.log("onChange", data);
+    let newObj = { ...data };
+    console.log("newObj", newObj);
     await this.setState(data);
     this.returnDate();
   };
+
+  deleteItem = async => {
+    if(this.props.deleteItem) this.props.deleteItem(this.props.item.order);
+  }
 
   returnDate = async e => {
     if (this.props.getValue) await this.props.getValue(this.state);
@@ -97,52 +123,34 @@ export class Controller extends Component {
     const { item, name } = this.props;
     return (
       <ControllerWrap>
-        {type === "INIT" ? (
-          <div className="initWrap" onClick={this.InitClick}>
-            <Init>추가 +</Init>
-            <ControllerMenu>
-              <li onClick={() => this.setController("FILE")}>
-                <Icon name="upload" size="mini" />
-                FILE
-              </li>
-              <li onClick={() => this.setController("TEXT")}>
-                <i className="text height mini icon" />
-                TEXT
-              </li>
-              <li onClick={() => this.setController("EMBED")}>
-                <i className="angle left icon" />
-                <i className="angle right icon" />
-                EMBED
-              </li>
-            </ControllerMenu>
-          </div>
-        ) : type === "FILE" ? (
-          <div className="fileWrap">
+        <div className="contentWrap">
+          {item.type === "FILE" ? (
             <FileController
               item={item}
               setController={this.setController}
               initClick={this.state.click}
               name="source"
               getValue={this.onChangeValue}
+              deleteItem={this.deleteItem}
             />
-          </div>
-        ) : type === "TEXT" ? (
-          <div className="textWrap">
+          ) : item.type === "TEXT" ? (
             <TextController
               item={item}
               name={name}
-              setController={this.setController}
+              getValue={this.onChangeValue}
               initClick={this.state.click}
+              deleteItem={this.deleteItem}
             />
-          </div>
-        ) : type === "EMBED" ? (
-          <div className="embWrap">
+          ) : item.type === "EMBED" ? (
             <EmbController />
-            <button type="button" onClick={() => this.setController("INIT")}>
-              취소
-            </button>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
+        <EditBtn type="button" className="editBtn">
+          <Icon name="pencil alternate"/>
+          <SubMenu className="subMenu">
+            <li onClick={this.deleteItem}>삭제</li>
+          </SubMenu>
+        </EditBtn>
       </ControllerWrap>
     );
   }
