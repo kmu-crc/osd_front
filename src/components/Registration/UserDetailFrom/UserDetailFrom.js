@@ -1,71 +1,109 @@
 import React, { Component } from "react";
 import { Form, Grid } from "semantic-ui-react";
-import {
-  FormCheckBox,
-  FormTextArea,
-  FormSelect
-} from "components/Commons/FormItem";
-import { FormField } from "components/Commons/FormField";
-import ValidateForm from "components/Commons/ValidateForm";
+//import {
+//   FormCheckBox,
+//   FormTextArea,
+//   FormSelect
+// } from "components/Commons/FormItem";
+//import { FormField } from "components/Commons/FormField";
+//import ValidateForm from "components/Commons/ValidateForm";
+import styled from "styled-components";
+import Button from "components/Commons/Button";
 import ProfileImage from "components/Users/ProfileImage";
+import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl";
+
+const Label = styled.div`
+  margin: 0 0 0.8rem 0;
+  display: block;
+  color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
+`;
 
 class UserDetailFrom extends Component {
-  componentWillMount() {
-    this.props.GetCategoryLevel1Request();
-  }
-  onSubmitHandler = data => {
-    this.props.InsertUserDetailRequest(data, this.props.token).then(data => {
-      console.log(data);
-      this.props.history.push("/");
-    });
+
+  onChangeValue = async data => {
+    let obj = {};
+    if(data.target){
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+    console.log(this.state);
   };
-  onChangeCategory1 = value => {
-    this.props.GetCategoryLevel2Request(value);
+
+  liveCheck = (target) => {
+    FormControl(this.state[target]);
   };
+
+  onSubmit = async e => {
+    console.log(this.state);
+    // e.preventDefault();
+    // ValidationGroup(this.state, false).then(data => {
+    //   console.log("성공", data);
+    //   this.props.InsertUserDetailRequest(data, this.props.token)
+    //   .then(res => {
+    //     if (res.success) {
+    //       this.props.history.push(`/`);
+    //     } else {
+    //       alert("다시 시도해주세요");
+    //     }
+    //   });
+    // }).catch(e => {
+    //   console.log("실패", e);
+    // });
+  };
+
   render() {
     return (
-      <ValidateForm
-        onSubmit={this.onSubmitHandler}
-        enctype="multipart/form-data"
-      >
+      <form onSubmit={this.onSubmit} encType="multipart/form-data">
         <Grid padded={false}>
           <Grid.Column width={4}>
-            <ProfileImage />
+            {/* <ProfileImage /> */}
+            <Label>썸네일 등록</Label>
+            <FormThumbnail
+              name="thumbnail"
+              placeholder="썸네일 등록"
+              getValue={this.onChangeValue}
+              onChange={()=>{this.liveCheck("thumbnail")}}
+              validates={["Required", "OnlyImages", "MaxFileSize(1000000)"]}
+            />
           </Grid.Column>
           <Grid.Column width={12}>
-            <FormField
+            <Label>자기소개</Label>
+            <FormInput
               name="about_me"
-              placeholder="자기소개를 적어주세요."
-              label="자기소개"
-              RenderComponent={FormTextArea}
+              placeholder="자기소개를 입력해주세요."
+              getValue={this.onChangeValue}
             />
             <Form.Group widths={2}>
-              <FormField
-                name="category_level1"
+              <Label>카테고리</Label>
+              <FormSelect
                 selection={true}
-                getValue={this.onChangeCategory1}
                 options={this.props.category1}
-                label="카테고리"
-                RenderComponent={FormSelect}
+                name="category_level1"
+                getValue={this.onChangeValue}
+                onChange={()=>this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
               />
-              <FormField
-                name="category_level2"
+              <FormSelect
                 selection={true}
                 options={this.props.category2}
-                label="카테고리2"
-                RenderComponent={FormSelect}
+                name="category_level2"
+                getValue={this.onChangeValue}
               />
             </Form.Group>
-            <FormField
+            <Label>디자이너 활동 여부</Label>
+            <FormCheckBox
               name="is_designer"
               placeholder="디자이너로 활동하시겠습니까?"
-              label="디자이너 활동 여부"
-              RenderComponent={FormCheckBox}
+              getValue={this.onChangeValue}
+              value={true}
             />
-            <button type="submit">등록</button>
+            <Button type="button" onClick={this.onSubmit}>등록</Button>
           </Grid.Column>
         </Grid>
-      </ValidateForm>
+      </form>
     );
   }
 }

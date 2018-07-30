@@ -86,7 +86,7 @@ const MenuWrap = styled.div`
   background-color: white;
   margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
+  box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
 `;
 
 class DesignList extends Component {

@@ -14,8 +14,7 @@ const Head = styled.header`
   position: relative;
   z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
-  background-color: ${StyleGuide.color.geyScale.scale0};
-  border-bottom: 0.5px solid ${StyleGuide.color.geyScale.scale2};
+  background-color: #fff;
   a {
     font-weight: normal;
     &:hover {
@@ -150,6 +149,7 @@ const UserMenu = styled.ul`
   width: 150px;
   background-color: ${StyleGuide.color.geyScale.scale0};
   border: 1px solid ${StyleGuide.color.geyScale.scale2};
+  box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
 `;
 
 const UserMenuItem = styled.li`
