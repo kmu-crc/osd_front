@@ -5,9 +5,18 @@ import { FormSelect } from "components/Commons/FormItem";
 
 // category width
 const CategoryColumn = styled(Grid.Column)`
+  @media only screen and (max-width: 1200px) {
+    display: block;
+  }
+  @media only screen and (min-width: 1200px) {
+    display: none;
+  }
   & .selection.dropdown {
     width: 14em;
     float: left;
+  }
+  & .grid.ui {
+    margin: 0;
   }
 `;
 

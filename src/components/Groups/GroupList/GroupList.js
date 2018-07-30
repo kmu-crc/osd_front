@@ -33,7 +33,6 @@ const Content = styled(ContentBox)`
 `;
 
 const MenuContainer = styled(Grid)`
-  font-size: 1.2rem;
   & .sorting {
     text-align: right;
   }
@@ -53,8 +52,8 @@ const MenuContainer = styled(Grid)`
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 1.4rem;
-    padding-bottom: 1.4rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
   }
 `;
 
