@@ -250,7 +250,7 @@ class DesignDetail extends Component {
                         </span>
                         <span className="owner">
                           <Icon name="user"></Icon>
-                          {designDetail.userName}
+                          <Link to={`/designerDetail/${designDetail.user_id}`}>{designDetail.userName}</Link>
                         </span>
                         <span className="member">
                           <Icon name="group"></Icon>

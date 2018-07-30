@@ -146,15 +146,14 @@ class ModifyMyDetail extends Component {
   }
 
   onSubmit = async e => {
-    await this.setState({
-      loading: true
-    });
-
     e.preventDefault();
     let formData = this.state;
     delete formData.password2;
-    ValidationGroup(formData, false).then(data => {
+    ValidationGroup(formData, false).then(async data => {
       console.log("성공", data);
+      await this.setState({
+        loading: true
+      });
       this.props.UpdateUserDetailRequest(data, this.props.token)
       .then(res => {
         if (res.success) {

@@ -120,6 +120,11 @@ const IssueContainer = styled.div`
     font-weight: lighter;
     color: ${StyleGuide.color.geyScale.scale5};
   }
+  & button {
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 0.5rem 1rem;
+  }
   & ul li {
     margin: 10px 0;
     border-bottom: 1px solid #e9e9e9;
@@ -227,8 +232,8 @@ class GroupDetail extends Component {
       return(
         <ValidateForm onSubmit={this.onSubmitForm}>
           <FormInput name="title" className="issueInput" validates={["required"]}/>
-          <Button type="submit">추가</Button>
-          <Button onClick={this.setEditIssue}>취소</Button>
+          <Button type="submit" size="small">추가</Button>
+          <Button onClick={this.setEditIssue} size="small">취소</Button>
         </ValidateForm>
       );
     }
@@ -312,7 +317,9 @@ class GroupDetail extends Component {
                     </div>
                     <div className="list">
                       <Icon name="user" color="grey" size="tiny"></Icon> 그룹장
-                      <span>{groupDetail.userName}</span>
+                      <span><Link to={`/designerDetail/${groupDetail.user_id}`}>
+                        {groupDetail.userName}
+                      </Link></span>
                     </div>
                     <div className="list">
                       <Icon name="heart" color="grey" size="tiny"></Icon> 좋아요
