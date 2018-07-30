@@ -15,8 +15,14 @@ const CateColumn = styled(Grid.Column)`
     & li {
       cursor: pointer;
       float: left;
+      position: relative;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
       &:hover {
         color: ${StyleGuide.color.main.basic};
+        &:hover ul.subCateUl {
+          display: block;
+        }
       }
     }
     & li.active {
@@ -30,8 +36,23 @@ const CateColumn = styled(Grid.Column)`
     }
   }
   & ul.cateUl.subCateUl {
-    padding-top: 30px;
-    color: ${StyleGuide.color.geyScale.scale5};
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 40px;
+    left: 0;
+    border: 1px solid ${StyleGuide.color.geyScale.scale4};
+    box-shadow: 0 1px 1px ${StyleGuide.color.geyScale.scale2};
+    background-color: ${StyleGuide.color.geyScale.scale0};
+    color: ${StyleGuide.color.geyScale.scale6};
+    font-weight: normal;
+    &:hover {
+      display: block;
+    }
+    & li {
+      width: 120px;
+      padding: .7rem 1rem;
+    }
   }
 `;
 
@@ -44,17 +65,8 @@ const SubCateItem = styled.li`
 `;
 
 class Category2 extends Component {
-  state = {
-    cate1: null,
-    cate2: null
-  }
-
   componentDidMount(){
-    if (this.props.cate1) {
-      this.setState({
-        cate1: this.props.cate1
-      });
-    }
+    this.props.GetCategoryLevel2AllRequest(this.props.category1);
   }
 
   onChangeCategory1 = async value => {
@@ -64,36 +76,26 @@ class Category2 extends Component {
     await this.props.handleCate1(value);
   }
 
-  loadCategory2 = async value => {
-    await this.setState({
-      cate1: value === 0? null : value
-    });
-    this.props.GetCategoryLevel2Request(value)
-    .then(res=>{
-      this.setState({
-        cate2: res.category
-      });
-    });
-  }
-
   onChangeCategory2 = async value => {
     if (value === 0) {
       value = null;
     }
-    await this.props.handleCate1(this.state.cate1);
+    await this.props.handleCate1(this.props.cate1);
     this.props.handleCate2(value);
   };
 
   render(){
-    const Cate2List = (cate2) => {
-      const list = cate2.cate2;
+    const Cate2List = (i) => {
+      const n = i.parentNum;
+      let list = this.props.category2All;
+      list = list[n];
       return (
           <ul className="cateUl subCateUl">
             {list && list.length !== 0 && list.map((subcate, i) => (
               <SubCateItem key={i}
                            className={subcate.value == this.props.cate2 ||
-                                      (subcate.value === 0 && this.state.cate2 === null) ||
-                                      (subcate.value === 0 && this.state.cate2 === "null")
+                                      (subcate.value === 0 && this.props.cate2 === null) ||
+                                      (subcate.value === 0 && this.props.cate2 === "null")
                                       ? "active" : ""}
                            onClick={() => this.onChangeCategory2(subcate.value)}>
               {subcate.text}
@@ -112,16 +114,18 @@ class Category2 extends Component {
         <ul className="cateUl">
           {this.props.category1.map((cate, i) => (
             <CateItem key={i}
-                      className={cate.value == this.state.cate1 ||
-                                (cate.value === 0 && this.state.cate1 === null) ||
-                                (cate.value === 0 && this.state.cate1 === "null")
+                      className={cate.value == this.props.cate1 ||
+                                (cate.value === 0 && this.props.cate1 === null) ||
+                                (cate.value === 0 && this.props.cate1 === "null")
                                 ? "active" : ""}
-                      onClick={() => this.onChangeCategory1(cate.value)}
-                      onMouseOver={() => this.loadCategory2(cate.value)}>
+                      onClick={() => this.onChangeCategory1(cate.value)}>
               {cate.text}
+              {this.props.category2All.length === this.props.category1.length - 1 &&
+              <Cate2List parentNum={(i-1)}/>
+              }
             </CateItem>
           ))}
-          <Cate2List cate2={this.state.cate2}/>
+
         </ul>
       </CateColumn>
     );

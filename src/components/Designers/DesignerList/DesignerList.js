@@ -40,8 +40,8 @@ const MenuContainer = styled(Grid)`
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
   }
 `;
 
