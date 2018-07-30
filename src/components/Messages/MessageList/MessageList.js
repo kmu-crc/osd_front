@@ -30,20 +30,18 @@ const Wrapper = styled(Grid)`
     margin-left: 0rem;
     margin-right: 0rem;
   }
+  &.ui.grid > .row > .column {
+    padding: 1.5rem;
+  }
 `;
 
 const ListContainer = styled(Grid.Column)`
   border-right: 1px solid rgba(0,0,0,0.15);
   box-shadow: 0 0 5px rgba(0,0,0,0.25);
-  padding: 1rem;
   & .heading {
     font-size: ${StyleGuide.font.size.heading4};
     color: ${StyleGuide.color.gey.dark};
     margin-bottom: 20px;
-  }
-  & .listContainer {
-    padding: 1rem;
-    border: ${StyleGuide.color.gey.basic};
   }
   & label {
     font-size: ${StyleGuide.font.size.heading4};
@@ -112,6 +110,13 @@ const SendingMsg = styled.div`
 
 const SearchMember = styled.div`
   margin-bottom: 30px;
+  & input {
+    border: 1px solid ${StyleGuide.color.geyScale.scale3};
+    background-color: ${StyleGuide.color.geyScale.scale1};
+    padding: 0 1rem;
+    width: 100%;
+    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
+  }
 `;
 
 const MemberList = styled.ul`
@@ -289,7 +294,7 @@ class MessageList extends Component {
                   {this.state.selectName &&
                     <div className="head">{this.state.selectName}님과의 대화</div>
                   }
-                  {this.state.render && 
+                  {this.state.render &&
                     <MessageDetailContainer id={this.state.msgId}/>
                   }
                 </DetailWrapper>

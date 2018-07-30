@@ -7,6 +7,8 @@ import { Dropdown } from "semantic-ui-react";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
+  width: 50%;
+  float: left;
 `;
 
 const Message = styled.div`

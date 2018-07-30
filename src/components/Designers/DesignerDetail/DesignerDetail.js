@@ -7,6 +7,7 @@ import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
+import eximg from "source/designIs.png";
 
 // css styling
 
@@ -231,7 +232,10 @@ class DesignerDetail extends Component {
                 <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{designerDetail.thumbnailUrl? <img src={designerDetail.thumbnailUrl.s_img} alt="프로필 이미지"/> : "등록된 이미지 없음"}</div>
+                      <div style={designerDetail.thumbnailUrl
+                         ? {backgroundImage: `url(${designerDetail.thumbnailUrl.m_img})`}
+                         : {backgroundImage: `url(${eximg})`}}>
+                      </div>
                     </div>
                     <div className="title">
                       <h3>{designerDetail.nick_name}</h3>

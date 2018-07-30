@@ -41,9 +41,9 @@ const CateColumn = styled(Grid.Column)`
     z-index: 2;
     top: 40px;
     left: 0;
-    border: 1px solid ${StyleGuide.color.geyScale.scale4};
-    box-shadow: 0 1px 1px ${StyleGuide.color.geyScale.scale2};
     background-color: ${StyleGuide.color.geyScale.scale0};
+    border: 1px solid ${StyleGuide.color.geyScale.scale2};
+    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
     color: ${StyleGuide.color.geyScale.scale6};
     font-weight: normal;
     &:hover {
@@ -52,6 +52,9 @@ const CateColumn = styled(Grid.Column)`
     & li {
       width: 120px;
       padding: .7rem 1rem;
+      &:hover {
+        background-color: ${StyleGuide.color.geyScale.scale2};
+      }
     }
   }
 `;
@@ -93,9 +96,7 @@ class Category2 extends Component {
           <ul className="cateUl subCateUl">
             {list && list.length !== 0 && list.map((subcate, i) => (
               <SubCateItem key={i}
-                           className={subcate.value == this.props.cate2 ||
-                                      (subcate.value === 0 && this.props.cate2 === null) ||
-                                      (subcate.value === 0 && this.props.cate2 === "null")
+                           className={subcate.value == this.props.cate2
                                       ? "active" : ""}
                            onClick={() => this.onChangeCategory2(subcate.value)}>
               {subcate.text}

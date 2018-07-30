@@ -73,6 +73,10 @@ const Label = styled.div`
 `;
 
 class ModifyGroupInfo extends Component {
+  state = {
+    loading: false
+  }
+
   onChangeValue = async data => {
     let obj = {};
     if(data.target){
@@ -86,13 +90,12 @@ class ModifyGroupInfo extends Component {
   };
 
   onSubmit = async e => {
-    // await this.setState({
-    //   loading: true
-    // });
-
     e.preventDefault();
-    ValidationGroup(this.state, false).then(data => {
+    ValidationGroup(this.state, false).then(async data => {
       console.log("성공", data);
+      await this.setState({
+        loading: true
+      });
       this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
       .then(res => {
         if (res.data.success === true) {
@@ -100,10 +103,16 @@ class ModifyGroupInfo extends Component {
           this.props.history.push(`/groupDetail/${this.props.id}`);
         } else {
           alert("다시 시도해주세요");
+          this.setState({
+            loading: false
+          });
         }
       });
     }).catch(e => {
       console.log("실패", e);
+      this.setState({
+        loading: false
+      });
     });
   };
 
@@ -153,10 +162,11 @@ class ModifyGroupInfo extends Component {
                   <Label>썸네일 수정</Label>
                   <FormThumbnail
                     name="thumbnail"
-                    placeholder="썸네일을 등록해주세요."
+                    placeholder="썸네일 수정"
                     getValue={this.onChangeValue}
+                    image={this.props.GroupDetail.img && this.props.GroupDetail.img.m_img}
                     onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["OnlyImages", "MaxFileSize(10000)"]}
+                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
                   />
                 </Form.Group>
               </Grid.Column>
@@ -165,7 +175,7 @@ class ModifyGroupInfo extends Component {
           <Button className="submitBtn" type="submit">수정</Button>
           <Button type="button" color="Solid" onClick={this.deleteGroup}>그룹 삭제</Button>
         </form>
-        {/* {this.state.loading && <Loading/>} */}
+        {this.state.loading && <Loading/>}
       </Wrapper>
     );
   }

@@ -111,9 +111,9 @@ const Label = styled.div`
 
 
 class CreateGroup extends Component {
-  // state = {
-  //   loading: false
-  // }
+  state = {
+    loading: false
+  }
 
   onChangeValue = async data => {
     let obj = {};
@@ -129,19 +129,21 @@ class CreateGroup extends Component {
   };
 
   onSubmit = async e => {
-    // await this.setState({
-    //   loading: true
-    // });
-
     e.preventDefault();
-    ValidationGroup(this.state, false).then(data => {
+    ValidationGroup(this.state, false).then(async data => {
       console.log("성공", data);
+      await this.setState({
+        loading: true
+      });
       this.props.CreateNewGroupRequest(data, this.props.token)
       .then(res => {
         this.props.history.push(`/groupDetail/${res.id}`);
       });
     }).catch(e => {
       console.log("실패", e);
+      this.setState({
+        loading: false
+      });
     });
   };
 
@@ -176,10 +178,10 @@ class CreateGroup extends Component {
                   <Label>썸네일 등록</Label>
                   <FormThumbnail
                     name="thumbnail"
-                    placeholder="썸네일을 등록해주세요."
+                    placeholder="썸네일 등록"
                     getValue={this.onChangeValue}
                     onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["Required", "OnlyImages", "MaxFileSize(10000)"]}
+                    validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                   />
                 </Grid.Column>
               </Grid>
@@ -187,7 +189,7 @@ class CreateGroup extends Component {
             <Button type="submit">등록</Button>
           </form>
         </Wrapper>
-        {/* {this.state.loading && <Loading/>} */}
+        {this.state.loading && <Loading/>}
       </div>
     );
   }

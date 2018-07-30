@@ -5,6 +5,7 @@ import { Header, Grid, Form } from "semantic-ui-react";
 import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
+import copyObject from "modules/CopyObject/CopyObject";
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -15,11 +16,6 @@ const FromFieldCard = styled.div`
   border-radius: 3px;
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
-  }
-  & .sc-bRBYWo.jEOQoo {
-    padding-right: .5em;
-    width: 50%;
-    float: left;
   }
   & .field label {
     margin: 0 0 0.8rem 0;
@@ -86,9 +82,8 @@ class CreateDesignForm extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    let newData = {...this.state};
-    newData.member.value = JSON.stringify(newData.member.value);
-    ValidationGroup(newData, false).then(data => {
+    this.state.member.value = JSON.stringify(this.state.member.value);
+    ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
       this.props.CreateDesignRequest(data, this.props.token)
@@ -102,6 +97,7 @@ class CreateDesignForm extends Component {
       });
     }).catch(e => {
       console.log("실패", e);
+      this.state.member.value = JSON.parse(this.state.member.value);
     });
   };
 
@@ -143,7 +139,7 @@ class CreateDesignForm extends Component {
                   placeholder="썸네일 등록"
                   getValue={this.onChangeValue}
                   onChange={()=>{this.liveCheck("thumbnail")}}
-                  validates={["Required", "OnlyImages", "MaxFileSize(1000000)"]}
+                  validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                 />
               </Form.Group>
               <Form.Group widths="equal">

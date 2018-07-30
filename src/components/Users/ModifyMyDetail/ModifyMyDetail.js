@@ -125,36 +125,12 @@ class ModifyMyDetail extends Component {
     });
   }
 
-  // onChangeCategory1 = async value => {
-  //   await this.props.GetCategoryLevel2Request(value);
-  // };
-
-  // handleSubmit = async (data) => {
-  //   await this.setState({
-  //     loading: true
-  //   });
-
-  //   this.props.UpdateUserDetailRequest(data, this.props.token)
-  //   .then(res=> {
-  //     if (res.success === true) {
-  //       alert("정보가 수정되었습니다.");
-  //       this.props.history.push("/");
-  //     } else {
-  //       alert("다시 시도해주세요");
-  //       this.setState({
-  //         loading: false
-  //       });
-  //     }
-  //   });
-  // }
-
   onChangeValue = async data => {
     let obj = {};
     if(data.target){
       obj[data.target.name] = data;
     }
     await this.setState(obj);
-    console.log(this.state);
   };
 
   liveCheck = (target) => {
@@ -170,15 +146,14 @@ class ModifyMyDetail extends Component {
   }
 
   onSubmit = async e => {
-    await this.setState({
-      loading: true
-    });
-
     e.preventDefault();
     let formData = this.state;
     delete formData.password2;
-    ValidationGroup(formData, false).then(data => {
+    ValidationGroup(formData, false).then(async data => {
       console.log("성공", data);
+      await this.setState({
+        loading: true
+      });
       this.props.UpdateUserDetailRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
@@ -214,14 +189,14 @@ class ModifyMyDetail extends Component {
               <FromFieldCard>
                 <Grid padded={false}>
                   <Grid.Column width={4}>
-                    <Label>썸네일 등록</Label>
+                    <Label>썸네일 변경</Label>
                     <FormThumbnail
                       name="thumbnail"
-                      placeholder="썸네일 등록"
+                      placeholder="썸네일 변경"
                       getValue={this.onChangeValue}
                       onChange={()=>{this.liveCheck("thumbnail")}}
                       validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                      image={myInfo.profileImg}
+                      image={myInfo.profileImg && myInfo.profileImg.m_img}
                     />
                   </Grid.Column>
                   <Grid.Column width={12}>

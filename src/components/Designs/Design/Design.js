@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import eximg from "source/topDesign.png";
@@ -89,7 +89,9 @@ class Design extends Component {
           <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="title">{design.title}</div>
-            <div className="userName">{design.userName}</div>
+            <div className="userName">
+              <Link to={`/designerDetail/${design.user_id}`}>{design.userName}</Link>
+            </div>
             <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
           </TextPart>
           <Count>
