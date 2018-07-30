@@ -11,10 +11,12 @@ import StyleGuide from "StyleGuide";
 const Head = styled.header`
   width: 100%;
   height: 60px;
-  position: relative;
+  top: 0;
+  position: fixed;
   z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
   background-color: #fff;
+  box-shadow: 0 1px 1px 1px #E1E4E6;
   a {
     font-weight: normal;
     &:hover {
