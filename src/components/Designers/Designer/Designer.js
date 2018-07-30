@@ -44,6 +44,7 @@ const TextPart = styled.div`
     padding: 1px 0;
   }
   & .userName {
+    font-size: ${StyleGuide.font.size.heading4};
     font-weight: bold;
     line-height: 20px;
     height: 40px;

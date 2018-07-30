@@ -75,17 +75,6 @@ class CardSource extends Component {
                     isTeam={1}
                   />
                 </Form.Group>
-                <Form.Group widths="equal">
-                  <CardSourcUpdate
-                    uid={view.uid}
-                    token={this.props.token}
-                    sourcesLink={view.sources}
-                    request={this.props.UpdateCardSourcesRequest}
-                    active={this.state.active}
-                    changeActive={this.changeActive}
-                    isTeam={1}
-                  />
-                </Form.Group>
               </Grid.Column>
             </Grid>
           </FromFieldCard>

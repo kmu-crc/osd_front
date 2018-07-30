@@ -30,7 +30,7 @@ const ImgWrapper = styled.div`
     content: "";
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
   }
   &.esay, &.together{
     background-position: center 20%;
@@ -39,18 +39,6 @@ const ImgWrapper = styled.div`
 
 const TextWrapper = styled.div `
   padding-bottom: 50px;
-`;
-
-const HowToUse = styled(Grid) `
-& button {
-  display: block;
-  border: 1px solid #f00;
-  background-color: #fff;
-  padding: 7px 18px;
-  color: #f00;
-  border-radius: 3px;
-}
-margin-bottom: 50px !important;
 `;
 
 const SliderBox = styled(ContentBox) `
@@ -123,12 +111,6 @@ class Main extends Component {
               <ScrollTopDesignContainer/>
             </Wrapper>
           </Content>
-            <HowToUse textAlign="center">
-              <Grid.Row>
-                <h3>오픈디자인 서비스에 대해 더 궁금하신가요?</h3>
-              </Grid.Row>
-              <button>홍보 영상 보러가기</button>
-            </HowToUse>
         </TextWrapper>
       </div>
     );

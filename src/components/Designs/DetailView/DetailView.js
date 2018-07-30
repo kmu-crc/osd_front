@@ -74,8 +74,8 @@ const CommentContainer = styled.div`
 
 const GoStepBtn = styled(Button)`
   position: absolute;
-  top: -65px;
-  right: 0;
+  top: 0px;
+  right: 1rem;
 `;
 
 
@@ -189,7 +189,7 @@ class DetailView extends Component {
         <Loading/>
         }
         {this.props.token && this.props.userInfo.uid === view.user_id &&
-          <GoStepBtn onClick={this.onActiveStep}>프로젝트형으로 변경</GoStepBtn>
+          <GoStepBtn onClick={this.onActiveStep} color="Primary">보드 추가</GoStepBtn>
         }
       </div>
     );

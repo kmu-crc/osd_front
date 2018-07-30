@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import Category from "components/Commons/Category";
-import { withRouter } from "react-router"; 
+import Category2 from "components/Commons/Category2";
+import { withRouter } from "react-router";
 
 class CategoryContainer extends Component {
   render() {
     return(
-      <Category {...this.props}/>
+      <div style={{width: "50%"}}>
+       <Category2 {...this.props}/>
+       <Category {...this.props}/>
+      </div>
     );
   }
 }

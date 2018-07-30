@@ -164,20 +164,19 @@ export class CardImageUpdate extends Component {
       <CardImage>
         {this.props.active === "Images" && this.props.isTeam > 0 ? (
           <div>
-            <h3>이미지 수정/삭제</h3>
+            <h3>컨텐츠 등록</h3>
             <DeleteItems
               ViewImg={ViewImg}
               name="deleteImages"
               placeholder="파일을 선택해주세요."
               getValue={this.onChangeValue}
             />
-            <h3>이미지 추가</h3>
             <form onSubmit={this.onSubmit}>
               <MultiUpload
                 name="design_file"
                 placeholder="파일을 선택해주세요."
                 getValue={this.onChangeValue}
-                validates={["OnlyImages", "MaxFileSize(100000)"]}
+                validates={["MaxFileSize(100000)"]}
               />
               <Button type="submit">저장</Button>
               <Button type="button" onClick={this.onClose}>
@@ -188,7 +187,7 @@ export class CardImageUpdate extends Component {
         ) : (
           <div>
             <TitleWrap>
-              <h3>이미지</h3>
+              <h3>컨텐츠 등록</h3>
               {this.props.isTeam > 0 && (
                 <EditBtn onClick={this.onActive}>
                   <Icon name="edit" />수정하기

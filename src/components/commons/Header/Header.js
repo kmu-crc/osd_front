@@ -13,8 +13,8 @@ const Head = styled.header`
   height: 60px;
   position: relative;
   z-index: 100;
-  color: ${StyleGuide.color.geyScale.scale0};
-  background-color: ${StyleGuide.color.geyScale.scale9};
+  color: ${StyleGuide.color.geyScale.scale9};
+  background-color: #fff;
   a {
     font-weight: normal;
     &:hover {
@@ -74,9 +74,11 @@ const Logo = styled.a`
   display: block;
   top: 0;
   left: 0;
-  img {
-    height: 100%;
-  }
+  width: 60px;
+  background-image: url(${logo});
+  background-position: 50%;
+  background-size: contain;
+  background-position-y: top;
 `;
 
 const UserInterface = styled.div`
@@ -96,7 +98,7 @@ const UserItem = styled.div`
 `;
 
 const UserBtn = styled.button`
-  color: ${StyleGuide.color.geyScale.scale0};
+  color: ${StyleGuide.color.geyScale.scale9};
   text-align: right;
   vertical-align: top;
   margin-left: 20px;
@@ -123,7 +125,7 @@ const UserBtn = styled.button`
     border-radius: 50%;
   }
   &.active {
-    background-color: ${StyleGuide.color.geyScale.scale7};
+    background-color: ${StyleGuide.color.geyScale.scale3};
   }
 `;
 
@@ -145,18 +147,20 @@ const UserMenu = styled.ul`
   right: 0;
   z-index: 1000;
   width: 150px;
-  background-color: ${StyleGuide.color.geyScale.scale9};
+  background-color: ${StyleGuide.color.geyScale.scale0};
+  border: 1px solid ${StyleGuide.color.geyScale.scale2};
+  box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
 `;
 
 const UserMenuItem = styled.li`
   text-align: center;
   width: 100%;
   height: 50px;
-  border-bottom: 1px solid ${StyleGuide.color.geyScale.scale7};
+  border-bottom: 1px solid ${StyleGuide.color.geyScale.scale2};
   box-sizing: border-box;
   line-height: 50px;
   &:hover {
-    background-color: ${StyleGuide.color.geyScale.scale7};
+    background-color: ${StyleGuide.color.geyScale.scale2};
   }
   a {
     line-height: 50px;
@@ -164,7 +168,7 @@ const UserMenuItem = styled.li`
     width: 100%;
     height: 100%;
     &:hover {
-      color: ${StyleGuide.color.geyScale.scale0};
+      color: ${StyleGuide.color.geyScale.scale9};
     }
   }
 `;
@@ -175,7 +179,7 @@ const LogOutBtn = styled.button`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  color: ${StyleGuide.color.geyScale.scale0};
+  color: ${StyleGuide.color.geyScale.scale9};
 `;
 
 class Header extends Component {
@@ -273,26 +277,31 @@ class Header extends Component {
         <Content>
           <MainMenu>
             <Logo href="/">
-              <img src={logo} alt="logo" />
+
             </Logo>
             <MenuItem>
               <a href="/design"
-                 className={this.props.location.pathname === "/design" || this.props.match.path.indexOf("/designDetail") !== -1
-                 ? "active" : ""}>
+                 className={this.props.location.pathname === "/design"
+                            || this.props.location.pathname.indexOf("/design/") !== -1
+                            || this.props.match.path.indexOf("/designDetail") !== -1
+                            ? "active" : ""}>
               디자인
               </a>
             </MenuItem>
             <MenuItem>
               <a href="/group"
-                 className={this.props.location.pathname === "/group" || this.props.match.path.indexOf("/groupDetail") !== -1
-                 ? "active" : ""}>
+                 className={this.props.location.pathname === "/group"
+                            || this.props.match.path.indexOf("/groupDetail") !== -1
+                            ? "active" : ""}>
               그룹
               </a>
             </MenuItem>
             <MenuItem>
               <a href="/designer"
-                 className={this.props.location.pathname === "/designer" || this.props.match.path.indexOf("/designerDetail") !== -1
-                 ? "active" : ""}>
+                 className={this.props.location.pathname === "/designer"
+                            || this.props.location.pathname.indexOf("/designer/") !== -1
+                            || this.props.match.path.indexOf("/designerDetail") !== -1
+                            ? "active" : ""}>
               디자이너
               </a>
             </MenuItem>

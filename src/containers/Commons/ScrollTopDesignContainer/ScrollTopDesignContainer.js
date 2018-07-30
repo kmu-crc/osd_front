@@ -17,13 +17,13 @@ class ScrollTopDesignContainer extends Component {
   render() {
     return(
       <div>
-        {this.props.status === "INIT" ? 
+        {this.props.status === "INIT" ?
         <Loading/>
         :
         <ScrollList getListRequest={this.getList}
         ListComponent={Design}
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-        mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
+        mobile={16} tablet={8} computer={5} largeScreen={4} widescreen={4} customClass="largeCustom"/>
         }
       </div>
     );

@@ -67,7 +67,7 @@ label.checked::after{
   .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
   .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
   .ui.grid>[class*="two wide large screen"].column.largeCustom {
-      width: 20%!important;
+      /* width: 20%!important; */
   }
 }
 
@@ -84,6 +84,6 @@ label.checked::after{
   .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
   .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
   .ui.grid>[class*="two wide large screen"].column.largeCustom {
-      width: 20%!important;
+      /* width: 20%!important; */
   }
 }

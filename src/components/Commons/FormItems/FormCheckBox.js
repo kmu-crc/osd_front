@@ -56,6 +56,9 @@ export class FormCheckBox extends Component {
     if(this.props.value){
       this.setState({ value: this.props.value });
     }
+    if(this.props.value === 0){
+      this.setState({ value: false });
+    }
     this.init();
   }
 
