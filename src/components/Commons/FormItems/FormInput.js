@@ -86,7 +86,6 @@ export class FormInput extends Component {
       }
     }
     event = {...e};
-    console.log(event);
     if(this.props.getValue) await this.props.getValue(this.state, event);
     if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
   }

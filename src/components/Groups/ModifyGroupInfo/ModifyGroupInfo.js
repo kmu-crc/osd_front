@@ -153,10 +153,11 @@ class ModifyGroupInfo extends Component {
                   <Label>썸네일 수정</Label>
                   <FormThumbnail
                     name="thumbnail"
-                    placeholder="썸네일을 등록해주세요."
+                    placeholder="썸네일 수정"
                     getValue={this.onChangeValue}
+                    image={this.props.GroupDetail.img && this.props.GroupDetail.img.m_img}
                     onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["OnlyImages", "MaxFileSize(10000)"]}
+                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
                   />
                 </Form.Group>
               </Grid.Column>

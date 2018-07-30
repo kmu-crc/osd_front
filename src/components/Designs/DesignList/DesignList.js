@@ -35,6 +35,7 @@ const MenuContainer = styled(Grid) `
   font-size: 1rem;
   & .sorting {
     text-align: right;
+    line-height: 50px;
   }
   & .ui.default.dropdown:not(.button)>.text,
   & .ui.dropdown:not(.button)>.default.text {

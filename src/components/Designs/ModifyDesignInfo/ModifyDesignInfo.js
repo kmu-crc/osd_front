@@ -17,11 +17,6 @@ const FromFieldCard = styled.div`
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
   }
-  & .sc-bRBYWo.jEOQoo {
-    padding-right: .5em;
-    width: 50%;
-    float: left;
-  }
   & .field label {
     margin: 0 0 0.8rem 0;
     display: block;
@@ -129,9 +124,8 @@ class ModifyDesignInfo extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    let newData = {...this.state};
-    newData.member.value = JSON.stringify(newData.member.value);
-    ValidationGroup(newData, false).then(data => {
+    this.state.member.value = JSON.stringify(this.state.member.value);
+    ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
       this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
@@ -145,6 +139,7 @@ class ModifyDesignInfo extends Component {
       });
     }).catch(e => {
       console.log("실패", e);
+      this.state.member.value = JSON.parse(this.state.member.value);
     });
   };
 
@@ -182,13 +177,14 @@ class ModifyDesignInfo extends Component {
                   />
                 </Form.Group>
                 <Form.Group widths="equal">
-                  <Label>썸네일 등록</Label>
+                  <Label>썸네일 수정</Label>
                   <FormThumbnail
                     name="thumbnail"
-                    placeholder="썸네일 등록"
+                    placeholder="썸네일 수정"
                     getValue={this.onChangeValue}
                     onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["OnlyImages", "MaxFileSize(1000000)"]}
+                    image={currentDesign.img && currentDesign.img.m_img}
+                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
                   />
                 </Form.Group>
                 <Form.Group widths="equal">

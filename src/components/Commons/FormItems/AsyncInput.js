@@ -320,7 +320,7 @@ export class AsyncInput extends Component {
           />
         </SearchBox>
         <AddList>
-          {this.state.value.length > 0 &&
+          {(this.state.value.constructor.name === "Array" && this.state.value.length > 0) &&
             this.state.value.map((item, index) => {
               return (
                 <AddItem key={`additem${index}`}>

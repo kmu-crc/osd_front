@@ -20,7 +20,6 @@ class Sorting extends Component {
         tablet={this.props.tablet ? this.props.tablet : null}
         mobile={this.props.mobile ? this.props.mobile : null}
         textAlign={this.props.textAlign ? this.props.textAlign : "right"}
-        style={{lineHeight: "50px"}}
       >
         <Dropdown
           placeholder={
