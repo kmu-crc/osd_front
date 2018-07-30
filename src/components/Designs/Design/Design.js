@@ -45,6 +45,7 @@ const TextPart = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     color: ${StyleGuide.color.geyScale.scale7};
+    font-size: ${StyleGuide.font.size.heading4};
   }
   & .userName {
     line-height: 1.35;

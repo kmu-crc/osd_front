@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Form, Icon, Modal } from "semantic-ui-react";
 import { OverlapField, FormField } from "components/Commons/FormField";
-import { FormInput } from "components/Commons/FormItem";
+// import { FormInput } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import ValidateForm from "components/Commons/ValidateForm";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import styled from "styled-components";
 import Button from "components/Commons/Button";
+import { FormInput } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl";
 
 const SignUpBtn = styled(Button)`
   margin-bottom: 30px;
@@ -14,6 +16,15 @@ const SignUpBtn = styled(Button)`
 
 const ButtonBox = styled.div`
   margin-top: 30px;
+`;
+
+const Label = styled.div`
+  margin: 0 0 0.8rem 0;
+  display: block;
+  color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
 `;
 
 class SignUpForm extends Component {
@@ -24,7 +35,7 @@ class SignUpForm extends Component {
       nick_name: null
     },
     open: false,
-    isOnlyEmail: false,
+    //isOnlyEmail: false,
     error: null
   };
 
@@ -34,16 +45,16 @@ class SignUpForm extends Component {
 
   close = () => this.setState({ open: false });
 
-  handleSubmit = data => {
-    let formData = FormDataToJson(data);
-    // password2는 회원가입에 직접적으로 필요한 속성이 아니기 때문에 전송시 삭제합니다.
-    delete formData.password2;
-    this.props.SignUpRequest(formData).then(res => {
-      if (res.type === "AUTH_SIGNUP_SUCCESS") {
-        this.props.history.push("/design");
-      }
-    });
-  };
+  // handleSubmit = data => {
+  //   let formData = FormDataToJson(data);
+  //   // password2는 회원가입에 직접적으로 필요한 속성이 아니기 때문에 전송시 삭제합니다.
+  //   delete formData.password2;
+  //   this.props.SignUpRequest(formData).then(res => {
+  //     if (res.type === "AUTH_SIGNUP_SUCCESS") {
+  //       this.props.history.push("/design");
+  //     }
+  //   });
+  // };
   handleSignUpFB = response => {
     this.setState({
       SignUpData: {
@@ -66,6 +77,7 @@ class SignUpForm extends Component {
         }
       });
   };
+
   handleSubmitFB = data => {
     if (data.constructor && data.constructor.name === "FormData") {
       data = FormDataToJson(data);
@@ -84,34 +96,91 @@ class SignUpForm extends Component {
     });
   };
 
+  onChangeValue = async data => {
+    let obj = {};
+    if(data.target){
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+    console.log(this.state);
+  };
+
+  liveCheck = (target) => {
+    FormControl(this.state[target]);
+  };
+
+  onSubmit = async e => {
+    e.preventDefault();
+    let formData = this.state;
+    delete formData.password2;
+    ValidationGroup(formData, true).then(data => {
+      console.log("성공", data);
+      this.props.SignUpRequest(data).then(res => {
+        if (res.type === "AUTH_SIGNUP_SUCCESS") {
+          this.props.history.push("/design");
+        } else {
+          alert("다시 시도해주세요");
+        }
+      });
+    }).catch(e => {
+      console.log("실패", e);
+    });
+  };
+
   render() {
     const { open, closeOnEscape, closeOnRootNodeClick } = this.state;
     return (
       <div>
-        <ValidateForm onSubmit={this.handleSubmit}>
-          <FormField
+        <form onSubmit={this.onSubmit}>
+          <Label>Email</Label>
+          <FormInput
             name="email"
-            type="text"
-            placeholder="E-Mail"
-            label="email"
-            validates={["required", "email", "checkEmail"]}
-            RenderComponent={FormInput}
+            placeholder="email을 입력해주세요."
+            getValue={this.onChangeValue}
+            validates={["Required", "IsEmail", "CheckEmail"]}
+            onBlur={()=>{this.liveCheck("email")}}
           />
-          <FormField
+          <Label>닉네임</Label>
+          <FormInput
+            name="nick_name"
+            placeholder="닉네임을 입력해주세요."
+            getValue={this.onChangeValue}
+            validates={["Required", "NotSpecialCharacters", "CheckNickName"]}
+            onBlur={()=>{this.liveCheck("nick_name")}}
+          />
+          <Label>Password</Label>
+          <FormInput
+            name="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요."
+            getValue={this.onChangeValue}
+            validates={["Required", "NotBlank"]}
+            onBlur={()=>{this.liveCheck("password")}}
+          />
+          <Label>Password 확인</Label>
+          <FormInput
+            name="password2"
+            type="password"
+            placeholder="비밀번호를 다시한번 입력해주세요."
+            getValue={this.onChangeValue}
+            validates={["Required", "NotBlank", "SamePassword"]}
+            onBlur={()=>{this.liveCheck("password")}}
+          />
+          {/* <FormField
             name="nick_name"
             type="text"
             placeholder="닉네임을 입력해주세요"
             label="닉네임"
             validates={["required", "NotSpecialCharacters", "checkNickName"]}
             RenderComponent={FormInput}
-          />
-          <OverlapField
+          /> */}
+          {/* <OverlapField
             name="password"
             type="password"
             placeholder="Password"
             label="password"
             validates={["required"]}
-          />
+          /> */}
           <ButtonBox>
             <SignUpBtn type="submit" round={true} fluid={true}>
               회원가입
@@ -135,7 +204,7 @@ class SignUpForm extends Component {
               )}
             />
           </ButtonBox>
-        </ValidateForm>
+        </form>
         <Modal
           open={open}
           closeOnEscape={closeOnEscape}

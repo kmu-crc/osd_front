@@ -13,7 +13,7 @@ const TabContainer = styled(Grid.Column)`
   box-shadow: 0 0 5px rgba(0,0,0,0.25);
   & .columns {
     padding: 0 20px;
-  } 
+  }
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
@@ -36,6 +36,7 @@ const Head = styled(Grid)`
     width: 120px;
     text-align: center;
     cursor: pointer;
+    font-weight: normal;
   }
   & li:hover {
     font-weight: 500;
@@ -43,6 +44,7 @@ const Head = styled(Grid)`
   & li.onSelected {
     color: red;
     position: relative;
+    font-weight: bold;
   }
 `;
 
@@ -102,10 +104,10 @@ class CurrentJoinList extends Component {
             <Grid.Column as="ul">
               <li id="design"
                   className={this.props.type === "design" || this.props.type === null || this.props.type === "null" ? "onSelected" : ""}
-                  onClick={this.typeChange}>디자인</li>
+                  onClick={this.typeChange}>가입한 디자인</li>
               <li id="group"
                   className={this.props.type === "group"? "onSelected" : ""}
-                  onClick={this.typeChange}>그룹</li>
+                  onClick={this.typeChange}>가입한 그룹</li>
               <div className="clear"></div>
             </Grid.Column>
             <Sorting computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>

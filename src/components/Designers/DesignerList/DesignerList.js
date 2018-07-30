@@ -19,15 +19,19 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled(ContentBox)`
-@media only screen and (max-width: 991px) and (min-width: 768px){
-  & .ui.grid>.row{
-    margin-left: 6.25% !important;
-  }
-  }
+// @media only screen and (max-width: 991px) and (min-width: 768px){
+//   & .ui.grid>.row{
+//     margin-left: 6.25% !important;
+//   }
+//   }
+  @media only screen and (max-width: 1200px) and (min-width: 992px){
+    & .ui.grid>.row{
+      margin-left: 6.25% !important;
+    }
+    }
 `;
 
 const MenuContainer = styled(Grid)`
-  font-size: 1.2rem;
   & .sorting {
     text-align: right;
   }
@@ -36,8 +40,8 @@ const MenuContainer = styled(Grid)`
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 1.4rem;
-    padding-bottom: 1.4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 `;
 
@@ -81,7 +85,7 @@ const MenuWrap = styled.div`
   background-color: white;
   margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
+  box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
 `;
 
 
@@ -102,7 +106,7 @@ class DesignerList extends Component {
   }
 
   cate1Change = (value, value2) => {
-    this.props.history.replace(`/designer/${this.props.sort}/${value}/${value2 ? null : this.props.cate2}`);
+    this.props.history.replace(`/designer/${this.props.sort}/${value}/null`);
     this.changeState();
   }
 
@@ -131,8 +135,22 @@ class DesignerList extends Component {
             <Wrapper>
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
-                  <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2}/>
-                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={5} mobile={4} handleChange={this.sortChange} placeholder={sort}/>
+                  <CategoryContainer widescreen={8}
+                                     largeScreen={8}
+                                     computer={8}
+                                     tablet={10}
+                                     mobile={11}
+                                     handleCate1={this.cate1Change}
+                                     handleCate2={this.cate2Change}
+                                     cate1={this.props.cate1}
+                                     cate2={this.props.cate2}/>
+                  <Sorting widescreen={8}
+                           largeScreen={8}
+                           computer={8}
+                           tablet={5}
+                           mobile={4}
+                           handleChange={this.sortChange}
+                           placeholder={sort}/>
                 </Grid.Row>
               </MenuContainer>
             </Wrapper>
