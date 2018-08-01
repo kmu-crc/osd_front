@@ -7,12 +7,14 @@ const ControllerWrap = styled.div`
   padding: 20px 0;
   margin: 15px 0;
   position: relative;
-  border: 2px dashed white;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  text-align: center;
   img {
     width: 100%;
   }
   &:hover {
-    border: 2px dashed ${StyleGuide.color.geyScale.scale6};
+    border: 1px dashed ${StyleGuide.color.geyScale.scale6};
     & .initWrap {
       & > ul {
         display: flex;

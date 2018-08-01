@@ -26,6 +26,11 @@ const ControllerWrap = styled.div`
       }
     }
   }
+  &::after {
+      display: block;
+      content: "";
+      clear: both;
+    }
 `;
 
 const EditBtn = styled.button`

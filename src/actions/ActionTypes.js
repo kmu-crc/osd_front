@@ -214,6 +214,17 @@ export const CHANGE_TO_PROJECT = "CHANGE_TO_PROJECT";
 export const CHANGE_TO_PROJECT_SUCCESS = "CHANGE_TO_PROJECT_SUCCESS";
 export const CHANGE_TO_PROJECT_FAILURE = "CHANGE_TO_PROJECT_FAILURE";
 
+
+// design source update
+export const UPDATE_DESIGN_SOURCE = "UPDATE_DESIGN_SOURCE";
+export const UPDATE_DESIGN_SOURCE_SUCCESS = "UPDATE_DESIGN_SOURCE_SUCCESS";
+export const UPDATE_DESIGN_SOURCE_FAILURE = "UPDATE_DESIGN_SOURCE_FAILURE";
+
+// design source get
+export const GET_DESIGN_SOURCE = "GET_DESIGN_SOURCE";
+export const GET_DESIGN_SOURCE_SUCCESS = "GET_DESIGN_SOURCE_SUCCESS";
+export const GET_DESIGN_SOURCE_FAILURE = "GET_DESIGN_SOURCE_FAILURE";
+
 ////////////////////////////////////////////////////////////////////////////
 // group
 ////////////////////////////////////////////////////////////////////////////

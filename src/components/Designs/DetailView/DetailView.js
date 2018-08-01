@@ -10,7 +10,6 @@ import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
 import CardSourceContainer from "containers/Designs/CardSourceContainer";
-import { CardImageUpdate, CardSourcUpdate } from "components/Designs/DesignBoardCard";
 
 // css styling
 

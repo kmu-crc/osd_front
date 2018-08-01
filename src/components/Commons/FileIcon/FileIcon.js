@@ -4,13 +4,15 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 
 const FileWrap = styled.div`
-  display: block;
+  display: inline-block;
   box-sizing: border-box;
   border-radius: 3px;
   background-color: #e9e9e1;
   width: 50px;
   height: 70px;
+  margin-right: 1rem;
   position: relative;
+  float: left;
   &::before {
     display: block;
     content: "";
