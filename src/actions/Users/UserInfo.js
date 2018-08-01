@@ -11,7 +11,7 @@ export function InsertUserDetailRequest(data, token) {
       })
       .then(function (res) {
         console.log("insert detail", res);
-        return dispatch(InsertUserDetailSuccess());
+        return dispatch(InsertUserDetailSuccess(res));
       }).catch((error) => {
         console.log("insert detail err", error);
         return dispatch(InsertUserDetailFailure());
@@ -25,9 +25,10 @@ export function InsertUserDetail() {
     }
   };
 
-  export function InsertUserDetailSuccess() {
+  export function InsertUserDetailSuccess(res) {
     return {
-      type: types.INSERT_USER_DETAIL_SUCCESS
+      type: types.INSERT_USER_DETAIL_SUCCESS,
+      res
     }
   };
 
@@ -40,12 +41,12 @@ export function InsertUserDetail() {
   export function UpdateUserDetailRequest(data, token) {
     return (dispatch) => {
       dispatch(UpdateUserDetail());
-      return fetch(`${host}/users/modifyDetail`, { 
-        headers: { 
-          "x-access-token": token 
-        }, 
-        method: "POST", 
-        body: data 
+      return fetch(`${host}/users/modifyDetail`, {
+        headers: {
+          "x-access-token": token
+        },
+        method: "POST",
+        body: data
       }).then(function (res) {
           return res.json();
         }).then(function (res) {
@@ -60,20 +61,20 @@ export function InsertUserDetail() {
         })
     }
   };
-  
+
   export function UpdateUserDetail() {
       return {
         type: types.UPDATE_USER_DETAIL
       }
     };
-  
+
     export function UpdateUserDetailSuccess() {
       return {
         type: types.UPDATE_USER_DETAIL_SUCCESS,
         success: true
       }
     };
-  
+
     export function UpdateUserDetailFailure() {
       return {
         type: types.UPDATE_USER_DETAIL_FAILURE,

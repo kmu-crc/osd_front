@@ -35,6 +35,10 @@ const Content = styled(ContentBox)`
 const MenuContainer = styled(Grid)`
   & .sorting {
     text-align: right;
+    line-height: 50px;
+  }
+  & .addGroup {
+    line-height: 50px;
   }
   & .addGroup button{
     padding: 5px 18px;
@@ -52,8 +56,8 @@ const MenuContainer = styled(Grid)`
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 1.2rem;
-    padding-bottom: 1.2rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
   }
 `;
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import eximg from "source/eximg.jpeg";
 import { Icon } from "semantic-ui-react";
@@ -97,7 +97,9 @@ class Group extends Component {
           <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="title">{group.title}</div>
-            <div className="owner">{group.userName}</div>
+            <div className="owner">
+              <Link to={`/designerDetail/${group.user_id}`}>{group.userName}</Link>
+            </div>
             <div className="cate">
               최근 업데이트 {DateFormat(group.child_update_time)}
             </div>

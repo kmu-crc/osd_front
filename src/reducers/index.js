@@ -5,7 +5,7 @@ import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyLis
 import { SignIn, SignUp } from "reducers/Registration";
 import { UserInfo, MyDetail } from "reducers/Users";
 import { MessageList, MessageDetail } from "reducers/Messages";
-import { Categorys } from "reducers/Categorys";
+import { Categorys, CategoryAll } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
 import { Search, SearchIssue, TopList } from "reducers/Commons";
 import OpenDesign from "reducers/OpenDesign";
@@ -42,6 +42,7 @@ export default combineReducers({
     SignUp,
     UserInfo,
     Categorys,
+    CategoryAll,
     form: formReducer,
     MyDetail,
     Search,

@@ -250,7 +250,7 @@ class DesignDetail extends Component {
                         </span>
                         <span className="owner">
                           <Icon name="user"></Icon>
-                          {designDetail.userName}
+                          <Link to={`/designerDetail/${designDetail.user_id}`}>{designDetail.userName}</Link>
                         </span>
                         <span className="member">
                           <Icon name="group"></Icon>
@@ -329,7 +329,7 @@ class DesignDetail extends Component {
                         component={ModifyIssueDetailContainer} /> */}
                 {designDetail.is_project == 1
                 ? <DesignDetailStepContainer id={this.props.id}/>
-                : <DesignDetailViewContainer id={this.props.id}/>
+                : <DesignDetailViewContainer id={this.props.id} history={this.props.history}/>
                 }
               </TabContainer>
             </ContentBox>

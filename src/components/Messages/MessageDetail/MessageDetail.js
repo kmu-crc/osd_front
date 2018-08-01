@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 // css styling
-const  MsgContent = styled.div`
-  // & .comment.my {
-  //   float: right;
-  // }
+const MsgContent = styled.div`
+  & .ui.comments .comment {
+    padding: .3rem 0;
+  }
+  & .ui.comments .comment .avatar {
+    width: 38px;
+    height: 38px;
+  }
 `;
 
 class MessageDetail extends Component {

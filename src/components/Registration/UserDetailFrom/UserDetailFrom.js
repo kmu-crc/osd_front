@@ -39,20 +39,20 @@ class UserDetailFrom extends Component {
 
   onSubmit = async e => {
     console.log(this.state);
-    // e.preventDefault();
-    // ValidationGroup(this.state, false).then(data => {
-    //   console.log("성공", data);
-    //   this.props.InsertUserDetailRequest(data, this.props.token)
-    //   .then(res => {
-    //     if (res.success) {
-    //       this.props.history.push(`/`);
-    //     } else {
-    //       alert("다시 시도해주세요");
-    //     }
-    //   });
-    // }).catch(e => {
-    //   console.log("실패", e);
-    // });
+    e.preventDefault();
+    ValidationGroup(this.state, false).then(data => {
+      console.log("성공", data);
+      this.props.InsertUserDetailRequest(data, this.props.token)
+      .then(data => {
+        if (data.res.success) {
+          this.props.history.push(`/`);
+        } else {
+          alert("다시 시도해주세요");
+        }
+      });
+    }).catch(e => {
+      console.log("실패", e);
+    });
   };
 
   render() {
@@ -60,14 +60,13 @@ class UserDetailFrom extends Component {
       <form onSubmit={this.onSubmit} encType="multipart/form-data">
         <Grid padded={false}>
           <Grid.Column width={4}>
-            {/* <ProfileImage /> */}
             <Label>썸네일 등록</Label>
             <FormThumbnail
               name="thumbnail"
               placeholder="썸네일 등록"
               getValue={this.onChangeValue}
               onChange={()=>{this.liveCheck("thumbnail")}}
-              validates={["Required", "OnlyImages", "MaxFileSize(1000000)"]}
+              validates={["OnlyImages", "MaxFileSize(10000000)"]}
             />
           </Grid.Column>
           <Grid.Column width={12}>

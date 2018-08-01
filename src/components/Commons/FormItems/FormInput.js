@@ -84,10 +84,10 @@ export class FormInput extends Component {
       if(e.key === "Enter"){
         e.preventDefault();
       }
-      event = {...e};
     }
+    event = {...e};
     if(this.props.getValue) await this.props.getValue(this.state, event);
-    if(e && this.props.onBlur) await this.props.onBlur();
+    if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
   }
   render() {
     const { type, name, value, placeholder, style, id } = this.props;

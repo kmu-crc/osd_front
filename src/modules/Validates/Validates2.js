@@ -150,6 +150,7 @@ Validates.IsPhone = function(data, target) {
 };
 
 Validates.SamePassword = function(data, target) {
+  console.log(data);
   return new Promise(function(resolve, reject) {
     if (data[0] === data[1]) {
       resolve(true);

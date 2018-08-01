@@ -10,7 +10,7 @@ const ImgWrapper = styled.div`
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 300px;
+  height: 200px;
   position: relative;
   &::after {
     position: absolute;
@@ -36,7 +36,7 @@ const Title = styled.div`
   transform: translateY(-50%);
   h1 {
     color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading1};
+    font-size: ${StyleGuide.font.size.heading2};
     font-weight: bold;
   }
 `;

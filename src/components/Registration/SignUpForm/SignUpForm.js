@@ -45,16 +45,6 @@ class SignUpForm extends Component {
 
   close = () => this.setState({ open: false });
 
-  // handleSubmit = data => {
-  //   let formData = FormDataToJson(data);
-  //   // password2는 회원가입에 직접적으로 필요한 속성이 아니기 때문에 전송시 삭제합니다.
-  //   delete formData.password2;
-  //   this.props.SignUpRequest(formData).then(res => {
-  //     if (res.type === "AUTH_SIGNUP_SUCCESS") {
-  //       this.props.history.push("/design");
-  //     }
-  //   });
-  // };
   handleSignUpFB = response => {
     this.setState({
       SignUpData: {
@@ -109,6 +99,14 @@ class SignUpForm extends Component {
     FormControl(this.state[target]);
   };
 
+  samePwCheck = () => {
+    FormControl({
+      value: [this.state.password.value, this.state.password2.value],
+      target: this.state.password2.target,
+      validates: this.state.password2.validates
+    });
+  }
+
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
@@ -161,26 +159,11 @@ class SignUpForm extends Component {
           <FormInput
             name="password2"
             type="password"
-            placeholder="비밀번호를 다시한번 입력해주세요."
+            placeholder="비밀번호를 다시 한번 입력해주세요."
             getValue={this.onChangeValue}
-            validates={["Required", "NotBlank", "SamePassword"]}
-            onBlur={()=>{this.liveCheck("password")}}
+            validates={["SamePassword"]}
+            onBlur={this.samePwCheck}
           />
-          {/* <FormField
-            name="nick_name"
-            type="text"
-            placeholder="닉네임을 입력해주세요"
-            label="닉네임"
-            validates={["required", "NotSpecialCharacters", "checkNickName"]}
-            RenderComponent={FormInput}
-          /> */}
-          {/* <OverlapField
-            name="password"
-            type="password"
-            placeholder="Password"
-            label="password"
-            validates={["required"]}
-          /> */}
           <ButtonBox>
             <SignUpBtn type="submit" round={true} fluid={true}>
               회원가입

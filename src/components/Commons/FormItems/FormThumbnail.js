@@ -49,6 +49,7 @@ export class FormThumbnail extends Component {
       this.setState({ validates: this.props.validates });
     }
     if (this.props.image) {
+      console.log(this.props.image);
       this.setState({imageUrl: this.props.image})
     }
     this.init();
@@ -81,9 +82,13 @@ export class FormThumbnail extends Component {
         })
       }
     } else {
+      let image = "";
+      if (this.props.image) {
+        image = this.props.image;
+      }
       await this.setState({
-        imageUrl: ""
-      })
+        imageUrl: image
+      });
     }
     await this.setState({ ...data });
     this.returnData();

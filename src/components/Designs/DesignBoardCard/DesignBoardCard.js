@@ -236,7 +236,7 @@ class DesignBoardCard extends Component {
               changeActive={this.changeActive}
               isTeam={this.props.isTeam}
             />
-            <CardSourcUpdate
+            {/* <CardSourcUpdate
               uid={detail.uid}
               token={this.props.token}
               sourcesLink={detail.sources}
@@ -244,7 +244,7 @@ class DesignBoardCard extends Component {
               active={this.state.active}
               changeActive={this.changeActive}
               isTeam={this.props.isTeam}
-            />
+            /> */}
             {/* --------------------- 댓글 섹션 ---------------------- */}
             <CommentContainer className="ui comments">
               <h4>댓글</h4>

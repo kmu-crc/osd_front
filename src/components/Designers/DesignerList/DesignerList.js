@@ -34,14 +34,15 @@ const Content = styled(ContentBox)`
 const MenuContainer = styled(Grid)`
   & .sorting {
     text-align: right;
+    line-height: 50px;
   }
   & .ui.default.dropdown:not(.button)>.text,
   & .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
   &.ui.grid > .row {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
   }
 `;
 
