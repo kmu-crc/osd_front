@@ -9,15 +9,27 @@ const FileWrap = styled.div`
   width: 100%;
   text-align: center;
   box-sizing: border-box;
-  img{
+  img {
     max-width: 100%;
     vertical-align: top;
   }
-`
+  .iconWrap {
+    padding: 10px 20px;
+    &::after {
+      display: block;
+      content: "";
+      clear: both;
+    }
+    .LinkFileName {
+      line-height: 70px;
+      font-size: 20px;
+    }
+  }
+`;
 
 const UploadBtn = styled(Button)`
   margin: 10px 0;
-`
+`;
 
 const File = styled.div`
   width: 1px;
@@ -45,9 +57,9 @@ class FileController extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    let newProp = {...this.props.item};
+    let newProp = { ...this.props.item };
     delete newProp.target;
-    let copyProps = {...nextProps.item};
+    let copyProps = { ...nextProps.item };
     delete copyProps.target;
     if (JSON.stringify(newProp) !== JSON.stringify(copyProps)) {
       console.log(this.props.item, "2");
@@ -58,13 +70,13 @@ class FileController extends Component {
         type: "",
         ...nextProps.item
       };
-      if(!copyProps.uid){
+      if (!copyProps.uid) {
         obj.uid = null;
         obj.fileUrl = "";
       }
       this.setInit(obj);
       console.log("nextProps", nextProps);
-      if(nextProps.item.initClick) this.state.target.click();
+      if (nextProps.item.initClick) this.state.target.click();
     }
     return true;
   }
@@ -117,14 +129,16 @@ class FileController extends Component {
           fileUrl: fileUrl,
           is_image: true,
           file_type: type,
-          extension: extension
+          extension: extension,
+          file_name: data.value[0].name
         });
       } else {
         await this.setState({
           fileUrl: fileUrl,
           is_image: false,
           file_type: type,
-          extension: extension
+          extension: extension,
+          file_name: data.value[0].name
         });
       }
     } else {
@@ -132,7 +146,8 @@ class FileController extends Component {
         fileUrl: "",
         is_image: false,
         file_type: "",
-        extension: ""
+        extension: "",
+        file_name: null
       });
     }
     await this.setState({ ...data });
@@ -144,7 +159,7 @@ class FileController extends Component {
 
   onClickFile = () => {
     this.state.target.click();
-  }
+  };
 
   returnData = async e => {
     if (this.props.getValue) await this.props.getValue(this.state);
@@ -155,17 +170,35 @@ class FileController extends Component {
     const contentImg = this.props.item.content
       ? this.props.item.content
       : this.props.item.fileUrl;
-      console.log(contentImg);
+    console.log(contentImg);
     return (
       <FileWrap>
-        {(this.props.item.content || this.props.item.fileUrl) && this.state.is_image ? (
+        {(this.props.item.content || this.props.item.fileUrl) &&
+        this.state.is_image ? (
           <img src={contentImg} alt="이미지" />
-        ) : (this.props.item.content || this.props.item.extension) && !this.state.is_image ? (
-          <FileIcon
-            type={this.props.item.file_type}
-            extension={this.props.item.extension}
-          />
-        ) : !this.props.item.content && <UploadBtn onClick={this.onClickFile} type="button" size="small" color="Primary" icon="upload" round={true}>업로드</UploadBtn>}
+        ) : (this.props.item.content || this.props.item.extension) &&
+        !this.state.is_image ? (
+          <div className="iconWrap">
+            <FileIcon
+              type={this.props.item.file_type}
+              extension={this.props.item.extension}
+            />
+            <span className="LinkFileName">{this.props.item.file_name}</span>
+          </div>
+        ) : (
+          !this.props.item.content && (
+            <UploadBtn
+              onClick={this.onClickFile}
+              type="button"
+              size="small"
+              color="Primary"
+              icon="upload"
+              round={true}
+            >
+              업로드
+            </UploadBtn>
+          )
+        )}
         <File>
           <FormFile name="source" getValue={this.onChangeValue} />
         </File>

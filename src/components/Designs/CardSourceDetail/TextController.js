@@ -229,11 +229,15 @@ class TextController extends Component {
     let newSelected = window.getSelection();
     let range = window.getSelection().getRangeAt(0);
     newSelected.removeRange(range);
+    this.onSave();
     this.edit.blur();
   }
 
-  onSave = async () => {
-    setTimeout(async () => {
+  onSave = async (e) => {
+    console.log(e.type)
+    if(e.type === "keypress"){
+      await this.setState({content: this.edit.innerHTML});
+    } else {
       if (!this.edit.textContent) {
         if(this.props.deleteItem) this.props.deleteItem();
       } else {
@@ -241,7 +245,7 @@ class TextController extends Component {
         await this.setState({content: this.edit.innerHTML});
         this.returnData();
       }
-    }, 300);
+    }
   };
 
   returnData = async () => {
@@ -332,6 +336,7 @@ class TextController extends Component {
             id={`valContainer${this.props.item.order}`}
             className="valContainer"
             onBlur={this.onSave}
+            onKeyPress={this.onSave}
           />
         </TextSection>
       </TextEditWrap>

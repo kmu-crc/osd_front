@@ -5,7 +5,11 @@ import Button from "components/Commons/Button";
 import { MultiUpload } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
-import { CardImageUpdate, CardSourcUpdate } from "components/Designs/DesignBoardCard";
+import {
+  CardImageUpdate,
+  CardSourcUpdate
+} from "components/Designs/DesignBoardCard";
+import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 
 // css styling
 
@@ -20,20 +24,19 @@ const FromFieldCard = styled.div`
   padding: 70px;
   margin-bottom: 30px;
   border-radius: 3px;
-  @media only screen and (min-width: 1200px) {
+  /* @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
-  }
+  } */
   & .sc-LKuAh.cEhByC {
-    padding-right: .5em;
+    padding-right: 0.5em;
     width: 50%;
     float: left;
-
   }
   & .field label {
     margin: 0 0 0.8rem 0;
     display: block;
-    color: rgba(0,0,0,.87);
-    font-size: .92857143em;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 0.92857143em;
     font-weight: 700;
     text-transform: none;
   }
@@ -44,9 +47,9 @@ class CardSource extends Component {
     loading: false,
     open: false,
     active: "INIT"
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     console.log(this.props.card_id);
   }
 
@@ -57,27 +60,22 @@ class CardSource extends Component {
     //this.props.GetDesignDetailViewRequest(this.props.match.params.id);
   };
 
-  render(){
+  render() {
     const view = this.props.view;
-    return(
+    return (
       <FormWrapper>
-          <FromFieldCard>
-            <Grid>
-              <Grid.Column mobile={16} computer={16}>
-                <Form.Group widths="equal">
-                  <CardImageUpdate
-                    uid={view.uid}
-                    token={this.props.token}
-                    images={view.images}
-                    request={this.props.UpdateCardImagesRequest}
-                    active={this.state.active}
-                    changeActive={this.changeActive}
-                    isTeam={1}
-                  />
-                </Form.Group>
-              </Grid.Column>
-            </Grid>
-          </FromFieldCard>
+        <FromFieldCard>
+          <Grid>
+            <Grid.Column mobile={16} computer={16}>
+              <Form.Group widths="equal">
+                <CardSourceDetailContainer
+                  uid={view.uid}
+                  isTeam={view.isTeam}
+                />
+              </Form.Group>
+            </Grid.Column>
+          </Grid>
+        </FromFieldCard>
       </FormWrapper>
     );
   }
