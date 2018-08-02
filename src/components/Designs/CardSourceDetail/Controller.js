@@ -151,7 +151,7 @@ export class Controller extends Component {
           ) : null}
         </div>
         <EditBtn type="button" className="editBtn">
-          <Icon name="pencil alternate"/>
+          <i className="pencil alternate icon"/>
           <SubMenu className="subMenu">
             <li onClick={this.deleteItem}>삭제</li>
           </SubMenu>

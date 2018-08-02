@@ -24,8 +24,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignDetailViewRequest: (id) => {
-      return dispatch(GetDesignDetailViewRequest(id))
+    GetDesignDetailViewRequest: (id, token) => {
+      return dispatch(GetDesignDetailViewRequest(id, token))
     },
     ChangeToProjectRequest: (id, token) => {
       return dispatch(ChangeToProjectRequest(id, token))

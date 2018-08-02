@@ -152,11 +152,17 @@ export function UpdateDesignView() {
   }
 };
 
-export function GetDesignDetailViewRequest(id) {
+export function GetDesignDetailViewRequest(id, token) {
   return (dispatch) => {
+    if (token == null) {
+      token = "";
+    }
     return fetch(`${host}/design/designDetail/${id}/view`, {
-      headers: { "Content-Type": "application/json" },
-      method: "get"
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method: "get",
     }).then((response) => {
         return response.json();
       }).then((data) => {
