@@ -54,10 +54,10 @@ const CommentContainer = styled.div`
   }
   & p {
     text-align: center;
-    font-size: ${StyleGuide.font.size.small};
   }
   & .ui.button {
     background: ${StyleGuide.color.sub.bule.basic};
+    font-size: 12px;
     &:hover {
       border: 0;
       background: ${StyleGuide.color.sub.bule.dark};

@@ -1,32 +1,10 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import StyleGuide from 'StyleGuide';
-import {Icon} from 'semantic-ui-react';
 
 const TextEditWrap = styled.div`
   width: 100%;
   border: 1px solid ${StyleGuide.color.geyScale.scale1};
-  & .red {
-    color: ${StyleGuide.color.main.basic};
-  }
-  & .blue {
-    color: ${StyleGuide.color.sub.bule.basic};
-  }
-  & .green {
-    color: green;
-  }
-  & .lightGrey {
-    color: ${StyleGuide.color.geyScale.scale2};
-  }
-  & .basicGrey {
-    color: ${StyleGuide.color.geyScale.scale5};
-  }
-  & .darkGrey {
-    color: ${StyleGuide.color.geyScale.scale8};
-  }
-  & .black {
-    color: #000;
-  }
 `;
 
 const NaviMenu = styled.div`
@@ -88,7 +66,8 @@ const TextSection = styled.div`
 
 class TextController extends Component {
   state = {
-    value: this.props.value
+    value: this.props.value,
+    openMenu: false
   };
 
   getBold = e => {
@@ -137,40 +116,15 @@ class TextController extends Component {
     return true;
   }
 
-  // onChangeSize = size => {
-  //   let node = window.document.createElement(size);
-  //   const selected = window.getSelection().getRangeAt(0);
-  //   const text = selected.toString();
-  //   const parent = selected.startContainer.parentNode;
-  //   console.log(selected.startContainer.parentNode);
-  //   if (parent.textContent === text) {
-  //     if (!parent.classList.contains('valContainer')) {
-  //       node.textContent = text;
-  //       parent.remove();
-  //       selected.insertNode(node);
-  //     } else {
-  //       node.innerHTML = selected;
-  //       selected.deleteContents();
-  //       selected.insertNode(node);
-  //     }
-  //   } else {
-  //     node.innerHTML = selected;
-  //     selected.deleteContents();
-  //     selected.insertNode(node);
-  //   }
-  //   let newSelected = window.getSelection();
-  //   let range = window.getSelection().getRangeAt(0);
-  //   newSelected.removeRange(range);
-  // };
-
   isSelection = () => {
     // console.log(Boolean(window.getSelection));
     // console.log(Boolean(window.getSelection().rangeCount > 0));
     // console.log(Boolean(window.getSelection().getRangeAt(0)));
     // console.log(Boolean(window.getSelection().getRangeAt(0).toString() !== ""));
-    if (window.getSelection() && window.getSelection().rangeCount > 0
-      && window.getSelection().getRangeAt(0)
-      && window.getSelection().getRangeAt(0).toString() !== "") {
+    if (window.getSelection()
+        && window.getSelection().rangeCount > 0
+        && window.getSelection().getRangeAt(0)
+        && window.getSelection().getRangeAt(0).toString() !== "") {
         return true;
       } else {
         return false;
@@ -219,21 +173,21 @@ class TextController extends Component {
       if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
         let node = window.document.createElement("font");
         node.innerHTML = selected;
-        node.setAttribute("class", color);
+        node.style.color = color;
         selected.deleteContents();
         selected.insertNode(node);
       } else { //두번째줄 이상일 경우
         if (parentEl.textContent === text) {
           if (parentEl.firstElementChild && parentEl.firstElementChild.nodeName == "FONT") {
-            parentEl.setAttribute("class", color);
+            parentEl.style.color = color;
             parentEl.innerHTML = selected;
           } else {
-            parentEl.setAttribute("class", color);
+            parentEl.style.color = color;
           }
         } else {
           let node = window.document.createElement("font");
           node.innerHTML = selected;
-          node.setAttribute("class", color);
+          node.style.color = color;
           selected.deleteContents();
           selected.insertNode(node);
         }
@@ -257,14 +211,16 @@ class TextController extends Component {
     if (e && e.type === "keypress") {
       await this.setState({ content: this.edit.innerHTML });
     } else if (e && e.type === "blur") {
-      if (
-        e &&
+      if (e &&
         (e.relatedTarget &&
           this.textWrap._reactInternalFiber.child.stateNode.contains(
             e.relatedTarget
           ))
       ) {
       } else {
+        this.setState({
+          openMenu: false
+        });
         if (!this.edit.textContent) {
           if (this.props.deleteItem) this.props.deleteItem();
         } else {
@@ -283,55 +239,31 @@ class TextController extends Component {
   render() {
     return (
       <TextEditWrap tabindex="0" onBlur={this.onSave} ref={ref => (this.textWrap = ref)}>
-        <NaviMenu>
-          <input type="button" value="BOLD" style={{fontWeight: "bold"}} onClick={this.getBold} />
-          <input type="button" value="ITALIC" style={{fontStyle: "italic"}} onClick={this.getItalic} />
-          <input type="button" value="UNDERLINE" style={{textDecoration: "underline"}} onClick={this.getUnderline} />
-          <input type="button" value="12px" onClick={()=>this.onChangeSize("12px")} />
-          <input type="button" value="14px" onClick={()=>this.onChangeSize("14px")} />
-          <input type="button" value="18px" onClick={()=>this.onChangeSize("18px")} />
-          <input type="button" value="26px" onClick={()=>this.onChangeSize("26px")} />
-          <input type="button" value="LEFT" onClick={this.getJustifyleft} />
-          <input type="button" value="CENTER" onClick={this.getJustifycenter} />
-          <input type="button" value="RIGHT" onClick={this.getJustifyright} />
-        </NaviMenu>
-        <ColorMenu>
-          <input
-            type="button"
-            className="red"
-            onClick={() => this.onChangeColor('red')}
-          />
-          <input
-            type="button"
-            className="green"
-            onClick={() => this.onChangeColor('green')}
-          />
-          <input
-            type="button"
-            className="blue"
-            onClick={() => this.onChangeColor('blue')}
-          />
-          <input
-            type="button"
-            className="lightGrey"
-            onClick={() => this.onChangeColor('lightGrey')}
-          />
-          <input
-            type="button"
-            className="basicGrey"
-            onClick={() => this.onChangeColor('basicGrey')}
-          />
-          <input
-            type="button"
-            className="darkGrey"
-            onClick={() => this.onChangeColor('darkGrey')}
-          />
-          <input
-            type="button"
-            className="black"
-            onClick={() => this.onChangeColor('black')}
-          />
-        </ColorMenu>
+        {this.state.openMenu &&
+          <div>
+            <NaviMenu>
+              <input type="button" value="BOLD" style={{fontWeight: "bold"}} onClick={this.getBold} />
+              <input type="button" value="ITALIC" style={{fontStyle: "italic"}} onClick={this.getItalic} />
+              <input type="button" value="UNDERLINE" style={{textDecoration: "underline"}} onClick={this.getUnderline} />
+              <input type="button" value="12px" onClick={()=>this.onChangeSize("12px")} />
+              <input type="button" value="14px" onClick={()=>this.onChangeSize("14px")} />
+              <input type="button" value="18px" onClick={()=>this.onChangeSize("18px")} />
+              <input type="button" value="26px" onClick={()=>this.onChangeSize("26px")} />
+              <input type="button" value="LEFT" onClick={this.getJustifyleft} />
+              <input type="button" value="CENTER" onClick={this.getJustifycenter} />
+              <input type="button" value="RIGHT" onClick={this.getJustifyright} />
+            </NaviMenu>
+            <ColorMenu>
+              <input type="button" className="red" onClick={() => this.onChangeColor('#E72327')}/>
+              <input type="button" className="green" onClick={() => this.onChangeColor('#008000')}/>
+              <input type="button" className="blue" onClick={() => this.onChangeColor('#10669A')}/>
+              <input type="button" className="lightGrey" onClick={() => this.onChangeColor('#EAEEEF')}/>
+              <input type="button" className="basicGrey" onClick={() => this.onChangeColor('#A9AFB3')}/>
+              <input type="button" className="darkGrey" onClick={() => this.onChangeColor('#363A3C')}/>
+              <input type="button" className="black" onClick={() => this.onChangeColor('#000')}/>
+            </ColorMenu>
+          </div>
+        }
         <TextSection>
           <div
             ref={ref => (this.edit = ref)}
@@ -340,6 +272,7 @@ class TextController extends Component {
             className="valContainer"
             onBlur={this.onSave}
             onKeyPress={this.onSave}
+            onFocus={()=>this.setState({openMenu: true})}
           />
         </TextSection>
       </TextEditWrap>
