@@ -254,15 +254,24 @@ class TextController extends Component {
   }
 
   onSave = async (e) => {
-    if((e && e.type === "keydown")){
-      await this.setState({content: this.edit.innerHTML});
-    } else {
-      if (!this.edit.textContent) {
-        if(this.props.deleteItem) this.props.deleteItem();
+    if (e && e.type === "keypress") {
+      await this.setState({ content: this.edit.innerHTML });
+    } else if (e && e.type === "blur") {
+      if (
+        e &&
+        (e.relatedTarget &&
+          this.textWrap._reactInternalFiber.child.stateNode.contains(
+            e.relatedTarget
+          ))
+      ) {
       } else {
-        console.log("드디어 세이브", this.state);
-        await this.setState({content: this.edit.innerHTML});
-        this.returnData();
+        if (!this.edit.textContent) {
+          if (this.props.deleteItem) this.props.deleteItem();
+        } else {
+          console.log("드디어 세이브", this.state);
+          await this.setState({ content: this.edit.innerHTML });
+          this.returnData();
+        }
       }
     }
   };
@@ -273,7 +282,7 @@ class TextController extends Component {
 
   render() {
     return (
-      <TextEditWrap>
+      <TextEditWrap tabindex="0" onBlur={this.onSave} ref={ref => (this.textWrap = ref)}>
         <NaviMenu>
           <input type="button" value="BOLD" style={{fontWeight: "bold"}} onClick={this.getBold} />
           <input type="button" value="ITALIC" style={{fontStyle: "italic"}} onClick={this.getItalic} />
@@ -330,7 +339,7 @@ class TextController extends Component {
             id={`valContainer${this.props.item.order}`}
             className="valContainer"
             onBlur={this.onSave}
-            onKeyDown={this.onSave}
+            onKeyPress={this.onSave}
           />
         </TextSection>
       </TextEditWrap>
