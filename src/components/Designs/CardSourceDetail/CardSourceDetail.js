@@ -13,6 +13,9 @@ const CardSrcWrap = styled.div`
   & form {
     margin: 20px 0;
   }
+  & .noData {
+    text-align: center;
+  }
 `;
 
 const ViewContent = styled.div`
@@ -144,9 +147,11 @@ class CardSourceDetail extends Component {
     const { edit, content } = this.state;
     return (
       <CardSrcWrap>
-        <button onClick={() => this.setState({ edit: !this.state.edit })}>
+        {this.props.isTeam === 1 &&
+        <Button onClick={() => this.setState({ edit: !this.state.edit })}>
           컨텐츠 수정
-        </button>
+        </Button>
+        }
         {edit ? (
           <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (
@@ -212,7 +217,7 @@ class CardSourceDetail extends Component {
             })}
           </ViewContent>
         ) : (
-          <div>컨텐츠 없음</div>
+          <div className="noData">등록된 컨텐츠가 없습니다.</div>
         )}
         {this.state.loading && <Loading/>}
       </CardSrcWrap>

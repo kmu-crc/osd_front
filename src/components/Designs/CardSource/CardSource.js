@@ -70,7 +70,7 @@ class CardSource extends Component {
               <Form.Group widths="equal">
                 <CardSourceDetailContainer
                   uid={view.uid}
-                  isTeam={view.isTeam}
+                  isTeam={view.is_team}
                 />
               </Form.Group>
             </Grid.Column>

@@ -69,7 +69,15 @@ const SubCateItem = styled.li`
 
 class Category2 extends Component {
   componentDidMount(){
+    console.log(this.props.category1);
     this.props.GetCategoryLevel2AllRequest(this.props.category1);
+  }
+
+  shouldComponentUpdate(nextProps){
+    if(JSON.stringify(this.props.category1) !== JSON.stringify(nextProps.category1)){
+      this.props.GetCategoryLevel2AllRequest(nextProps.category1);
+    }
+    return true;
   }
 
   onChangeCategory1 = async value => {

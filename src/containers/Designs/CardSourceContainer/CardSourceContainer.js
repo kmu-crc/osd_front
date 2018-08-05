@@ -22,8 +22,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignDetailViewRequest:(id) => {
-      return dispatch(GetDesignDetailViewRequest(id))
+    GetDesignDetailViewRequest:(id, token) => {
+      return dispatch(GetDesignDetailViewRequest(id, token))
     },
     UpdateCardImagesRequest: (data, token, id) => {
       return dispatch(UpdateCardImagesRequest(data, token, id));

@@ -84,7 +84,7 @@ class DetailView extends Component {
   }
 
   async componentDidMount() {
-    this.props.GetDesignDetailViewRequest(this.props.id)
+    this.props.GetDesignDetailViewRequest(this.props.id, this.props.token)
     .then(data => {
       if (data.DesignDetailView !== null) {
         this.props.GetCardCommentRequest(this.props.id, data.DesignDetailView.uid)
@@ -188,7 +188,7 @@ class DetailView extends Component {
         <Loading/>
         }
         {this.props.token && this.props.userInfo.uid === view.user_id &&
-          <GoStepBtn onClick={this.onActiveStep} color="Primary">보드 추가</GoStepBtn>
+          <GoStepBtn onClick={this.onActiveStep} color="Primary">단계 추가</GoStepBtn>
         }
       </div>
     );

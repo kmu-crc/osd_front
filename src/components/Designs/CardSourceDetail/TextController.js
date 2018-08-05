@@ -77,8 +77,8 @@ const ColorMenu = styled.div`
 `;
 
 const TextSection = styled.div`
-  & #valContainer {
-    min-height: 100px;
+  & .valContainer {
+    min-height: 40px;
     max-height: 300px;
     line-height: 1.4;
     padding: 0.5rem;
@@ -163,71 +163,86 @@ class TextController extends Component {
   //   newSelected.removeRange(range);
   // };
 
-  onChangeSize = size => {
-    if (!window.getSelection || window.getSelection().rangeCount === 0) {
-      return;
-    }
-    const selected = window.getSelection().getRangeAt(0);
-    const parentEl = window.getSelection().focusNode.parentElement;
-    const text = selected.toString();
-
-    if (parentEl.classList.contains("valContainer")) {
-      let node = window.document.createElement("font");
-      node.innerHTML = selected;
-      node.style.fontSize = size;
-      selected.deleteContents();
-      selected.insertNode(node);
-    } else {
-      if (parentEl.textContent === text) {
-        parentEl.style.fontSize = size;
+  isSelection = () => {
+    // console.log(Boolean(window.getSelection));
+    // console.log(Boolean(window.getSelection().rangeCount > 0));
+    // console.log(Boolean(window.getSelection().getRangeAt(0)));
+    // console.log(Boolean(window.getSelection().getRangeAt(0).toString() !== ""));
+    if (window.getSelection() && window.getSelection().rangeCount > 0
+      && window.getSelection().getRangeAt(0)
+      && window.getSelection().getRangeAt(0).toString() !== "") {
+        return true;
       } else {
+        return false;
+      }
+  }
+
+  onChangeSize = (size) => {
+    let res = this.isSelection();
+    if (res) {
+      const selected = window.getSelection().getRangeAt(0);
+      const parentEl = window.getSelection().focusNode.parentElement;
+      const text = selected.toString();
+
+      if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
         let node = window.document.createElement("font");
         node.innerHTML = selected;
         node.style.fontSize = size;
         selected.deleteContents();
         selected.insertNode(node);
+      } else { //두번째줄 이상일 경우
+        if (parentEl.textContent === text) {
+          parentEl.style.fontSize = size;
+        } else {
+          let node = window.document.createElement("font");
+          node.innerHTML = selected;
+          node.style.fontSize = size;
+          selected.deleteContents();
+          selected.insertNode(node);
+        }
       }
+      this.onCursorOut();
+    } else {
+      console.log("noSelection");
+      return;
     }
-    this.onCursorOut();
   };
 
   onChangeColor = color => {
-    if (!window.getSelection || window.getSelection().rangeCount === 0) {
-      return;
-    }
-    const selection = window.getSelection();
-    const parentEl = selection.focusNode.parentElement;
-    const selected = window.getSelection().getRangeAt(0);
-    const text = selected.toString();
+    let res = this.isSelection();
+    if (res) {
+      const selection = window.getSelection();
+      const parentEl = selection.focusNode.parentElement;
+      const selected = window.getSelection().getRangeAt(0);
+      const text = selected.toString();
 
-    if (parentEl.classList.contains("valContainer")) {
-      //맨 첫줄일 경우
-      let node = window.document.createElement("font");
-      node.innerHTML = selected;
-      node.setAttribute("class", color);
-      selected.deleteContents();
-      selected.insertNode(node);
-    } else {
-      //두번째줄 이상일 경우
-      if (parentEl.textContent === text) {
-        if (
-          parentEl.firstElementChild &&
-          parentEl.firstElementChild.nodeName == "FONT"
-        ) {
-          parentEl.setAttribute("class", color);
-          parentEl.innerHTML = selected;
-        } else {
-          parentEl.setAttribute("class", color);
-        }
-      } else {
+      if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
         let node = window.document.createElement("font");
         node.innerHTML = selected;
         node.setAttribute("class", color);
         selected.deleteContents();
         selected.insertNode(node);
+      } else { //두번째줄 이상일 경우
+        if (parentEl.textContent === text) {
+          if (parentEl.firstElementChild && parentEl.firstElementChild.nodeName == "FONT") {
+            parentEl.setAttribute("class", color);
+            parentEl.innerHTML = selected;
+          } else {
+            parentEl.setAttribute("class", color);
+          }
+        } else {
+          let node = window.document.createElement("font");
+          node.innerHTML = selected;
+          node.setAttribute("class", color);
+          selected.deleteContents();
+          selected.insertNode(node);
+        }
       }
+      this.onCursorOut();
+    } else {
+      console.log("noSelection");
+      return;
     }
-    this.onCursorOut();
   };
 
   onCursorOut = () => {
@@ -273,69 +288,13 @@ class TextController extends Component {
         ref={ref => (this.textWrap = ref)}
       >
         <NaviMenu>
-          <input
-            type="button"
-            value="BOLD"
-            style={{ fontWeight: "bold" }}
-            onClick={this.getBold}
-          />
-          <input
-            type="button"
-            value="ITALIC"
-            style={{ fontStyle: "italic" }}
-            onClick={this.getItalic}
-          />
-          <input
-            type="button"
-            value="UNDERLINE"
-            style={{ textDecoration: "underline" }}
-            onClick={this.getUnderline}
-          />
-          {/* <input
-            type="button"
-            value="h1"
-            onClick={() => this.onChangeSize('H1')}
-          />
-          <input
-            type="button"
-            value="h2"
-            onClick={() => this.onChangeSize('H2')}
-          />
-          <input
-            type="button"
-            value="h3"
-            onClick={() => this.onChangeSize('H3')}
-          />
-          <input
-            type="button"
-            value="h4"
-            onClick={() => this.onChangeSize('H4')}
-          />
-          <input
-            type="button"
-            value="p"
-            onClick={() => this.onChangeSize('p')}
-          /> */}
-          <input
-            type="button"
-            value="12px"
-            onClick={() => this.onChangeSize("12px")}
-          />
-          <input
-            type="button"
-            value="14px"
-            onClick={() => this.onChangeSize("14px")}
-          />
-          <input
-            type="button"
-            value="18px"
-            onClick={() => this.onChangeSize("18px")}
-          />
-          <input
-            type="button"
-            value="26px"
-            onClick={() => this.onChangeSize("26px")}
-          />
+          <input type="button" value="BOLD" style={{fontWeight: "bold"}} onClick={this.getBold} />
+          <input type="button" value="ITALIC" style={{fontStyle: "italic"}} onClick={this.getItalic} />
+          <input type="button" value="UNDERLINE" style={{textDecoration: "underline"}} onClick={this.getUnderline} />
+          <input type="button" value="12px" onClick={()=>this.onChangeSize("12px")} />
+          <input type="button" value="14px" onClick={()=>this.onChangeSize("14px")} />
+          <input type="button" value="18px" onClick={()=>this.onChangeSize("18px")} />
+          <input type="button" value="26px" onClick={()=>this.onChangeSize("26px")} />
           <input type="button" value="LEFT" onClick={this.getJustifyleft} />
           <input type="button" value="CENTER" onClick={this.getJustifycenter} />
           <input type="button" value="RIGHT" onClick={this.getJustifyright} />
@@ -383,6 +342,7 @@ class TextController extends Component {
             contentEditable="true"
             id={`valContainer${this.props.item.order}`}
             className="valContainer"
+            onBlur={this.onSave}
             onKeyPress={this.onSave}
           />
         </TextSection>
