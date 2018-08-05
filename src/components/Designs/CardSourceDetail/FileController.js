@@ -62,7 +62,6 @@ class FileController extends Component {
     let copyProps = { ...nextProps.item };
     delete copyProps.target;
     if (JSON.stringify(newProp) !== JSON.stringify(copyProps)) {
-      console.log(this.props.item, "2");
       let obj = {
         fileUrl: null,
         is_image: false,
@@ -75,7 +74,6 @@ class FileController extends Component {
         obj.fileUrl = "";
       }
       this.setInit(obj);
-      console.log("nextProps", nextProps);
       if (nextProps.item.initClick) this.state.target.click();
     }
     return true;
@@ -122,7 +120,6 @@ class FileController extends Component {
       let extension = await data.value[0].name.split(".");
       extension = await extension[extension.length - 1];
 
-      console.log(data.value[0].type, type, extension, data.value[0], "33");
       const fileUrl = await this.readUploadedFileAsText(data.value[0]);
       if (type === "image") {
         await this.setState({
@@ -152,7 +149,6 @@ class FileController extends Component {
     }
     await this.setState({ ...data });
     if (data.value.length > 0) {
-      console.log("return", this.state);
       this.returnData();
     }
   };
@@ -170,7 +166,6 @@ class FileController extends Component {
     const contentImg = this.props.item.content
       ? this.props.item.content
       : this.props.item.fileUrl;
-    console.log(contentImg);
     return (
       <FileWrap>
         {(this.props.item.content || this.props.item.fileUrl) &&

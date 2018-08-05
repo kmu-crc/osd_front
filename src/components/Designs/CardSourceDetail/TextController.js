@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import styled from 'styled-components';
-import StyleGuide from 'StyleGuide';
-import {Icon} from 'semantic-ui-react';
+import React, { Component } from "react";
+import styled from "styled-components";
+import StyleGuide from "StyleGuide";
+import { Icon } from "semantic-ui-react";
 
 const TextEditWrap = styled.div`
   width: 100%;
@@ -44,7 +44,7 @@ const NaviMenu = styled.div`
 `;
 
 const ColorMenu = styled.div`
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   & > input {
     margin-right: 0.3rem;
     border: 0;
@@ -81,47 +81,47 @@ const TextSection = styled.div`
     min-height: 100px;
     max-height: 300px;
     line-height: 1.4;
-    padding: .5rem;
+    padding: 0.5rem;
     overflow-y: scroll;
   }
 `;
 
 class TextController extends Component {
   state = {
-    value: this.props.value,
+    value: this.props.value
   };
 
   getBold = e => {
-    document.execCommand('Bold');
+    document.execCommand("Bold");
     this.onCursorOut();
   };
 
   getItalic = () => {
-    document.execCommand('Italic');
+    document.execCommand("Italic");
     this.onCursorOut();
   };
 
   getUnderline = () => {
-    document.execCommand('Underline');
+    document.execCommand("Underline");
     this.onCursorOut();
   };
 
   getJustifyleft = () => {
-    document.execCommand('justifyleft');
+    document.execCommand("justifyleft");
     this.onCursorOut();
   };
 
   getJustifycenter = () => {
-    document.execCommand('justifycenter');
+    document.execCommand("justifycenter");
     this.onCursorOut();
   };
 
   getJustifyright = () => {
-    document.execCommand('justifyright');
+    document.execCommand("justifyright");
     this.onCursorOut();
   };
 
-  componentDidMount(){
+  componentDidMount() {
     if (this.props.item) {
       this.setState(this.props.item);
       this.edit.innerHTML = this.props.item.content;
@@ -129,12 +129,12 @@ class TextController extends Component {
     if (this.props.item.initClick) this.edit.focus();
   }
 
-  shouldComponentUpdate(nextProps){
-    if(JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)){
+  shouldComponentUpdate(nextProps) {
+    if (JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)) {
       this.edit.innerHTML = nextProps.item.content;
       if (nextProps.item.initClick) this.edit.focus();
     }
-    return true
+    return true;
   }
 
   // onChangeSize = size => {
@@ -163,7 +163,7 @@ class TextController extends Component {
   //   newSelected.removeRange(range);
   // };
 
-  onChangeSize = (size) => {
+  onChangeSize = size => {
     if (!window.getSelection || window.getSelection().rangeCount === 0) {
       return;
     }
@@ -171,7 +171,7 @@ class TextController extends Component {
     const parentEl = window.getSelection().focusNode.parentElement;
     const text = selected.toString();
 
-    if (parentEl.classList.contains('valContainer')) {
+    if (parentEl.classList.contains("valContainer")) {
       let node = window.document.createElement("font");
       node.innerHTML = selected;
       node.style.fontSize = size;
@@ -200,15 +200,20 @@ class TextController extends Component {
     const selected = window.getSelection().getRangeAt(0);
     const text = selected.toString();
 
-    if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
+    if (parentEl.classList.contains("valContainer")) {
+      //맨 첫줄일 경우
       let node = window.document.createElement("font");
       node.innerHTML = selected;
       node.setAttribute("class", color);
       selected.deleteContents();
       selected.insertNode(node);
-    } else { //두번째줄 이상일 경우
+    } else {
+      //두번째줄 이상일 경우
       if (parentEl.textContent === text) {
-        if (parentEl.firstElementChild && parentEl.firstElementChild.nodeName == "FONT") {
+        if (
+          parentEl.firstElementChild &&
+          parentEl.firstElementChild.nodeName == "FONT"
+        ) {
           parentEl.setAttribute("class", color);
           parentEl.innerHTML = selected;
         } else {
@@ -231,34 +236,61 @@ class TextController extends Component {
     newSelected.removeRange(range);
     this.onSave();
     this.edit.blur();
-  }
+  };
 
-  onSave = async (e) => {
-    console.log(e.type)
-    if(e.type === "keypress"){
-      await this.setState({content: this.edit.innerHTML});
-    } else {
-      if (!this.edit.textContent) {
-        if(this.props.deleteItem) this.props.deleteItem();
+  onSave = async e => {
+    if (e && e.type === "keypress") {
+      await this.setState({ content: this.edit.innerHTML });
+    } else if (e && e.type === "blur") {
+      if (
+        e &&
+        (e.relatedTarget &&
+          this.textWrap._reactInternalFiber.child.stateNode.contains(
+            e.relatedTarget
+          ))
+      ) {
       } else {
-        console.log("드디어 세이브", this.state);
-        await this.setState({content: this.edit.innerHTML});
-        this.returnData();
+        if (!this.edit.textContent) {
+          if (this.props.deleteItem) this.props.deleteItem();
+        } else {
+          console.log("드디어 세이브", this.state);
+          await this.setState({ content: this.edit.innerHTML });
+          this.returnData();
+        }
       }
     }
   };
 
   returnData = async () => {
-    if(this.props.getValue) this.props.getValue(this.state);
-  }
+    if (this.props.getValue) this.props.getValue(this.state);
+  };
 
   render() {
     return (
-      <TextEditWrap>
+      <TextEditWrap
+        tabindex="0"
+        onBlur={this.onSave}
+        ref={ref => (this.textWrap = ref)}
+      >
         <NaviMenu>
-          <input type="button" value="BOLD" style={{fontWeight: "bold"}} onClick={this.getBold} />
-          <input type="button" value="ITALIC" style={{fontStyle: "italic"}} onClick={this.getItalic} />
-          <input type="button" value="UNDERLINE" style={{textDecoration: "underline"}} onClick={this.getUnderline} />
+          <input
+            type="button"
+            value="BOLD"
+            style={{ fontWeight: "bold" }}
+            onClick={this.getBold}
+          />
+          <input
+            type="button"
+            value="ITALIC"
+            style={{ fontStyle: "italic" }}
+            onClick={this.getItalic}
+          />
+          <input
+            type="button"
+            value="UNDERLINE"
+            style={{ textDecoration: "underline" }}
+            onClick={this.getUnderline}
+          />
           {/* <input
             type="button"
             value="h1"
@@ -284,10 +316,26 @@ class TextController extends Component {
             value="p"
             onClick={() => this.onChangeSize('p')}
           /> */}
-          <input type="button" value="12px" onClick={()=>this.onChangeSize("12px")} />
-          <input type="button" value="14px" onClick={()=>this.onChangeSize("14px")} />
-          <input type="button" value="18px" onClick={()=>this.onChangeSize("18px")} />
-          <input type="button" value="26px" onClick={()=>this.onChangeSize("26px")} />
+          <input
+            type="button"
+            value="12px"
+            onClick={() => this.onChangeSize("12px")}
+          />
+          <input
+            type="button"
+            value="14px"
+            onClick={() => this.onChangeSize("14px")}
+          />
+          <input
+            type="button"
+            value="18px"
+            onClick={() => this.onChangeSize("18px")}
+          />
+          <input
+            type="button"
+            value="26px"
+            onClick={() => this.onChangeSize("26px")}
+          />
           <input type="button" value="LEFT" onClick={this.getJustifyleft} />
           <input type="button" value="CENTER" onClick={this.getJustifycenter} />
           <input type="button" value="RIGHT" onClick={this.getJustifyright} />
@@ -296,37 +344,37 @@ class TextController extends Component {
           <input
             type="button"
             className="red"
-            onClick={() => this.onChangeColor('red')}
+            onClick={() => this.onChangeColor("red")}
           />
           <input
             type="button"
             className="green"
-            onClick={() => this.onChangeColor('green')}
+            onClick={() => this.onChangeColor("green")}
           />
           <input
             type="button"
             className="blue"
-            onClick={() => this.onChangeColor('blue')}
+            onClick={() => this.onChangeColor("blue")}
           />
           <input
             type="button"
             className="lightGrey"
-            onClick={() => this.onChangeColor('lightGrey')}
+            onClick={() => this.onChangeColor("lightGrey")}
           />
           <input
             type="button"
             className="basicGrey"
-            onClick={() => this.onChangeColor('basicGrey')}
+            onClick={() => this.onChangeColor("basicGrey")}
           />
           <input
             type="button"
             className="darkGrey"
-            onClick={() => this.onChangeColor('darkGrey')}
+            onClick={() => this.onChangeColor("darkGrey")}
           />
           <input
             type="button"
             className="black"
-            onClick={() => this.onChangeColor('black')}
+            onClick={() => this.onChangeColor("black")}
           />
         </ColorMenu>
         <TextSection>
@@ -335,7 +383,6 @@ class TextController extends Component {
             contentEditable="true"
             id={`valContainer${this.props.item.order}`}
             className="valContainer"
-            onBlur={this.onSave}
             onKeyPress={this.onSave}
           />
         </TextSection>
