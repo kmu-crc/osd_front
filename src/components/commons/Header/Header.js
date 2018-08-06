@@ -67,6 +67,7 @@ const SubMenuItem = styled.div`
   float: left;
   position: relative;
   & > input {
+    display: block;
     border: 1px solid #e9e9e9;
     border-radius: 2em;
     padding: 0.5em 1em;
@@ -74,6 +75,9 @@ const SubMenuItem = styled.div`
     top: 50%;
     right: 2vw;
     transform: translateY(-50%);
+    @media only screen and (max-width: 1200px) {
+      display: none;
+    }
   }
   & a {
     line-height: 60px;
