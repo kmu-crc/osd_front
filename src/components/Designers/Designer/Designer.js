@@ -47,8 +47,8 @@ const TextPart = styled.div`
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
-    height: 40px;
-    white-space: normal;
+    height: 20px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }

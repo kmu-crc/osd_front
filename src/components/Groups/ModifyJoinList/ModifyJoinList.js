@@ -54,34 +54,29 @@ const MiniContentBox = styled.div`
   @media only screen and (max-width: 767px) and (min-width: 320px){
     padding: 0 20px;
     width: 320px;
-    background-color: yellow;
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){
     width: 450px;
-    background-color: orange;
   }
   @media only screen and (min-width: 992px){
     width: 440px;
-    background-color: lightblue;
   }
   @media only screen and (max-width: 1919px) and (min-width: 1200px){
     width: 760px;
-    background-color: pink;
   }
   @media only screen and (min-width: 1920px){
     width: 1100px;
-    background-color: pink;
   }
-  // @media only screen and (max-width: 991px) and (min-width: 768px){
-  //   .ui.grid > .row{
-  //     margin-left: 6.25% !important;
-  //   }
-  // }
-  // @media only screen and (max-width: 1919px) and (min-width: 1200px){
-  //   .ui.grid > .row{
-  //     margin-left: 6.25% !important;
-  //   }
-  // }
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    .ui.grid > .row{
+      margin-left: 6.25% !important;
+    }
+  }
+  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+    .ui.grid > .row{
+      margin-left: 6.25% !important;
+    }
+  }
 `;
 
 const ListContainer = styled(Grid)`

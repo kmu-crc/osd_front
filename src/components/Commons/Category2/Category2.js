@@ -69,7 +69,6 @@ const SubCateItem = styled.li`
 
 class Category2 extends Component {
   componentDidMount(){
-    console.log(this.props.category1);
     this.props.GetCategoryLevel2AllRequest(this.props.category1);
   }
 
