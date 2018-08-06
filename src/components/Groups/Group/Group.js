@@ -16,10 +16,6 @@ const Groupli = styled.li`
   overflow: hidden;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   background-color: #fff;
-  & a {
-    cursor: pointer;
-    display: block;
-  }
 `;
 
 const ImgPart = styled.div`
