@@ -19,15 +19,10 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled(ContentBox)`
-// @media only screen and (max-width: 991px) and (min-width: 768px){
-//   & .ui.grid>.row{
-//     margin-left: 6.25% !important;
-//   }
-//   }
-@media only screen and (max-width: 1200px) and (min-width: 992px){
-  & .ui.grid>.row{
-    margin-left: 6.25% !important;
-  }
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    & .ui.grid>.row{
+      margin-left: 6.25% !important;
+    }
   }
 `;
 

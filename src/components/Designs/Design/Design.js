@@ -40,12 +40,12 @@ const TextPart = styled.div`
   & .title {
     font-weight: bold;
     line-height: 20px;
-    height: 40px;
-    white-space: normal;
+    height: 20px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: ${StyleGuide.color.geyScale.scale7};
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: 16px;
   }
   & .userName {
     line-height: 1.35;

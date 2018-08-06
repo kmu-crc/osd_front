@@ -46,11 +46,11 @@ const TextPart = styled.div`
     text-overflow: ellipsis;
   }
   & .title {
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: 16px;
     font-weight: bold;
     line-height: 20px;
-    height: 40px;
-    white-space: normal;
+    height: 20px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: ${StyleGuide.color.geyScale.scale7};
