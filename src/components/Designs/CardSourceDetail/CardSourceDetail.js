@@ -13,12 +13,10 @@ const CardSrcWrap = styled.div`
   & form {
     margin: 20px 0;
   }
-  & .noData {
-    text-align: center;
-  }
 `;
 
 const ViewContent = styled.div`
+  position: relative;
   .imgContent{
     img{
       max-width: 100%;
@@ -42,6 +40,19 @@ const ViewContent = styled.div`
   .textWrap{
     margin-bottom: 2rem;
   }
+  & .goEdit {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &:hover .goEdit {
+    display: block;
+  }
+`;
+
+const Nodata = styled.div`
+  text-align: center;
 `;
 
 class CardSourceDetail extends Component {
@@ -147,11 +158,6 @@ class CardSourceDetail extends Component {
     const { edit, content } = this.state;
     return (
       <CardSrcWrap>
-        {this.props.isTeam === 1 &&
-        <Button onClick={() => this.setState({ edit: !this.state.edit })}>
-          컨텐츠 수정
-        </Button>
-        }
         {edit ? (
           <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (
@@ -191,15 +197,21 @@ class CardSourceDetail extends Component {
                 getValue={this.onAddValue}
               />
             )}
-            <Button type="submit" round={true}>
+            <Button type="submit" size="small">
               저장
             </Button>
           </form>
         ) : content.length > 0 ? (
           <ViewContent>
+            {this.props.isTeam === 1 &&
+              <Button round={true} size="small" className="goEdit"
+                      onClick={() => this.setState({ edit: !this.state.edit })}>
+                컨텐츠 수정
+              </Button>
+            }
             {content.map((item, index) => {
               return item.type === "FILE" && item.data_type === "image" ? (
-                <div className="imgContent">
+                <div className="imgContent" key={index}>
                   <img key={index} src={item.content} alt="이미지" />
                 </div>
               ) : item.type === "FILE" && item.data_type !== "image" ? (
@@ -217,7 +229,15 @@ class CardSourceDetail extends Component {
             })}
           </ViewContent>
         ) : (
-          <div className="noData">등록된 컨텐츠가 없습니다.</div>
+          <Nodata>
+            {this.props.isTeam === 1 ?
+            <Button round={true} color="Primary" size="small" onClick={() => this.setState({ edit: !this.state.edit })}>
+              업로드
+            </Button>
+            :
+            <div>등록된 컨텐츠가 없습니다.</div>
+            }
+          </Nodata>
         )}
         {this.state.loading && <Loading/>}
       </CardSrcWrap>
