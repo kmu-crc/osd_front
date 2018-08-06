@@ -294,7 +294,7 @@ class DesignDetail extends Component {
                       {user && user.uid === designDetail.user_id &&
                       <EditBtn>
                         <Link to={`/designModify/${this.props.id}`}><Button size="small">수정</Button></Link>
-                        <Button onClick={this.deleteDesign} size="small" color="Danger">삭제</Button>
+                        <Button onClick={this.deleteDesign} size="small" color="Solid">삭제</Button>
                       </EditBtn>
                       }
                     </Grid.Column>

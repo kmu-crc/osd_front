@@ -79,10 +79,10 @@ class AddController extends Component {
               <Icon name="font"/>
               TEXT
             </li>
-            <li onClick={() => this.addContent("EMBED")}>
+            {/* <li onClick={() => this.addContent("EMBED")}>
               <Icon name="code" />
               EMBED
-            </li>
+            </li> */}
           </ControllerMenu>
         </div>
       </ControllerWrap>

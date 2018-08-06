@@ -75,8 +75,8 @@ const GoStepBtn = styled(Button)`
   position: absolute;
   top: 0px;
   right: 1rem;
-  background-color: #57BBBA;
-  border: 1px solid #57BBBA;
+  // background-color: #57BBBA;
+  // border: 1px solid #57BBBA;
 `;
 
 
