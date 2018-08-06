@@ -14,6 +14,7 @@ import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
+import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 
 const BoardCard = styled.li`
   padding: 10px;
@@ -48,6 +49,9 @@ const CustomModal = styled(Modal)`
     color: ${StyleGuide.color.geyScale.scale9};
     cursor: pointer;
   }
+  & .ui.form textarea:not([rows]) {
+    min-height: 2rem;
+  }
 `;
 
 const DeleteBtn = styled.button`
@@ -69,6 +73,7 @@ const CommentContainer = styled.div`
   &.ui.comments {
     max-width: 100%;
     width: 100%;
+    margin-bottom: 2.5rem;
     & .delBtn {
       position: absolute;
       top: 0;
@@ -80,6 +85,7 @@ const CommentContainer = styled.div`
   }
   & .ui.button.primary {
     background: ${StyleGuide.color.sub.bule.basic};
+    font-size: 12px;
     &:hover {
       border: 0;
       background: ${StyleGuide.color.sub.bule.dark};
@@ -90,9 +96,6 @@ const CommentContainer = styled.div`
   }
   & .ui.form .field {
     margin-bottom: 1rem;
-  }
-  & .ui.form textarea:not([rows]) {
-    min-height: 2rem;
   }
 `;
 
@@ -180,7 +183,7 @@ class DesignBoardCard extends Component {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
           <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
-          <Button type="submit" className="ui icon primary left labeled button">
+          <Button type="submit" size="small" className="ui icon primary left labeled button">
             <i aria-hidden="true" className="edit icon"></i>
             댓글쓰기
           </Button>
@@ -227,24 +230,11 @@ class DesignBoardCard extends Component {
               request={this.props.UpdateCardContentRequest}
               isTeam={this.props.isTeam}
             />
-            <CardImageUpdate
-              uid={detail.uid}
-              token={this.props.token}
-              images={detail.images}
-              request={this.props.UpdateCardImagesRequest}
-              active={this.state.active}
-              changeActive={this.changeActive}
+            <h3>컨텐츠</h3>
+            <CardSourceDetailContainer
+              uid={card.uid}
               isTeam={this.props.isTeam}
             />
-            {/* <CardSourcUpdate
-              uid={detail.uid}
-              token={this.props.token}
-              sourcesLink={detail.sources}
-              request={this.props.UpdateCardSourcesRequest}
-              active={this.state.active}
-              changeActive={this.changeActive}
-              isTeam={this.props.isTeam}
-            /> */}
             {/* --------------------- 댓글 섹션 ---------------------- */}
             <CommentContainer className="ui comments">
               <h4>댓글</h4>

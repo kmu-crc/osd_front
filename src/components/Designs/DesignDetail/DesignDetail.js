@@ -37,15 +37,6 @@ const HeadContainer = styled(Grid)`
   &.ui.grid > .row > .column {
     padding: 0;
   }
-  & button.ui.button {
-    font-size: ${StyleGuide.font.size.paragraph};
-    font-weight: 400;
-    color: #fff;
-    background: ${StyleGuide.color.sub.bule.light};
-    &:hover {
-      border: 0;
-      background: ${StyleGuide.color.sub.bule.basic};
-    }
   }
   & .title {
     font-size: ${StyleGuide.font.size.heading3};
@@ -78,18 +69,12 @@ const SubInfo = styled.div`
     color: ${StyleGuide.color.geyScale.scale7};
   }
   & .ui.button {
-    cursor: initial;
-  }
-  & .like .ui.button {
     cursor: pointer;
   }
   & .ui.basic.button:hover,
     .ui.basic.buttons .button:hover {
       background-color: transparent !important;
       box-shadow: 0 0 0 1px rgba(34,36,38,.15) inset;
-  }
-  & .like .ui.basic.button:hover {
-    background-color: ${StyleGuide.color.gey.light} !important;
   }
 `;
 
@@ -103,8 +88,22 @@ const EditBtn = styled.div`
 `;
 
 const MoreBtn = styled(Button)`
-  position: relative;
-  float: right;
+  &.button.ui {
+    font-size: 16px;
+    height: 34px;
+    margin-top: 1px;
+    line-height: 0.5;
+    width: 36px;
+    padding: 0;
+    background-color: #A9AFB3;
+    color: #fff;
+    position: relative;
+    float: right;
+    &:hover {
+      border: none;
+      background-color: ${StyleGuide.color.geyScale.scale7};
+    }
+  }
 `;
 
 const ModalContent = styled(Modal) `
@@ -260,7 +259,7 @@ class DesignDetail extends Component {
                     </Grid.Column>
                     <Grid.Column computer={8} tablet={10} mobile={10}>
                       <MoreBtn color="Primary" className="ui button more" onClick={this.onActiveMoreBtn}>
-                        더보기 +
+                        +
                       <ButtonModal />
                       </MoreBtn>
                       <SubInfo>

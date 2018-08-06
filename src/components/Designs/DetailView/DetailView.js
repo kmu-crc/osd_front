@@ -54,10 +54,10 @@ const CommentContainer = styled.div`
   }
   & p {
     text-align: center;
-    font-size: ${StyleGuide.font.size.small};
   }
   & .ui.button {
     background: ${StyleGuide.color.sub.bule.basic};
+    font-size: 12px;
     &:hover {
       border: 0;
       background: ${StyleGuide.color.sub.bule.dark};
@@ -75,6 +75,8 @@ const GoStepBtn = styled(Button)`
   position: absolute;
   top: 0px;
   right: 1rem;
+  // background-color: #57BBBA;
+  // border: 1px solid #57BBBA;
 `;
 
 
@@ -188,7 +190,7 @@ class DetailView extends Component {
         <Loading/>
         }
         {this.props.token && this.props.userInfo.uid === view.user_id &&
-          <GoStepBtn onClick={this.onActiveStep} color="Primary">단계 추가</GoStepBtn>
+          <GoStepBtn onClick={this.onActiveStep} size="small">단계 추가</GoStepBtn>
         }
       </div>
     );
