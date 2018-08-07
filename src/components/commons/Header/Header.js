@@ -16,7 +16,6 @@ const Head = styled.header`
   z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
   background-color: #fff;
-  box-shadow: 0 1px 1px 1px #E1E4E6;
   a {
     font-weight: normal;
     &:hover {
@@ -35,7 +34,8 @@ const MainMenu = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
+  margin: 0;
+  margin-left: 100px;
   list-style: none;
 `;
 
@@ -65,7 +65,21 @@ const SubMenu = styled.div`
 
 const SubMenuItem = styled.div`
   float: left;
-  a {
+  position: relative;
+  & > input {
+    display: block;
+    border: 1px solid #e9e9e9;
+    border-radius: 2em;
+    padding: 0.5em 1em;
+    position: absolute;
+    top: 50%;
+    right: 2vw;
+    transform: translateY(-50%);
+    @media only screen and (max-width: 1200px) {
+      display: none;
+    }
+  }
+  & a {
     line-height: 60px;
   }
 `;
@@ -78,9 +92,8 @@ const Logo = styled.a`
   left: 0;
   width: 60px;
   background-image: url(${logo});
-  background-position: 50%;
-  background-size: contain;
-  background-position-y: top;
+  background-position: 50% 500%;
+  background-size: 70px;
 `;
 
 const UserInterface = styled.div`
@@ -187,7 +200,8 @@ const LogOutBtn = styled.button`
 class Header extends Component {
   state = {
     profile: false,
-    active: false
+    active: false,
+    keyword: null
   };
 
   handleSignOut = () => {
@@ -212,6 +226,13 @@ class Header extends Component {
     console.log("onactive", active);
     this.props.SetActive(active, target);
   };
+
+  saveKeyWord = (e) => {
+    const word = e.target.value;
+    this.setState({
+      keyword: word
+    });
+  }
 
   render() {
     const LoginNav = () => {
@@ -317,7 +338,8 @@ class Header extends Component {
           </MainMenu>
           <SubMenu>
             <SubMenuItem>
-              <a href="/search">
+              <input onChange={this.saveKeyWord}/>
+              <a href={`/search/null/null/${this.state.keyword}`}>
                 <Icon name="search" />
               </a>
             </SubMenuItem>
