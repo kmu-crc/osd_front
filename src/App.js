@@ -18,16 +18,17 @@ import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import { connect } from "react-redux";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
+import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
 import TestPage3 from "pages/TestPage3";
 
 class App extends Component {
   componentDidMount(){
-    this.props.GetCategoryLevel1Request().then(() => {
-      this.props.GetCategoryLevel2Request(null);
-    })
+    // this.props.GetCategoryLevel1Request().then(() => {
+    //   this.props.GetCategoryLevel2Request(null);
+    // })
+    this.props.GetCategoryAllRequest();
   }
   render() {
     return (
@@ -69,6 +70,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetCategoryLevel2Request: (id) => {
       return dispatch(GetCategoryLevel2Request(id));
+    },
+    GetCategoryAllRequest: () => {
+      return dispatch(GetCategoryAllRequest());
     }
   };
 };
