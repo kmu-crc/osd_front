@@ -7,7 +7,7 @@ import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
-import eximg from "source/designIs.png";
+import profile from "source/thumbnail.png";
 
 // css styling
 
@@ -234,7 +234,7 @@ class DesignerDetail extends Component {
                     <div className="imgContainer">
                       <div style={designerDetail.thumbnailUrl
                          ? {backgroundImage: `url(${designerDetail.thumbnailUrl.m_img})`}
-                         : {backgroundImage: `url(${eximg})`}}>
+                         : {backgroundImage: `url(${profile})`}}>
                       </div>
                     </div>
                     <div className="title">

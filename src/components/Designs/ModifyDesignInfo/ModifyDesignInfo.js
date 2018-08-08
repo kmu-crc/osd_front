@@ -227,7 +227,7 @@ class ModifyDesignInfo extends Component {
                 <Form.Group widths={4}>
                   <FormCheckBox
                     name="is_commercial"
-                    placeholder="상업적 이용"
+                    placeholder="상업적 이용 가능"
                     getValue={this.onChangeValue}
                     value={currentDesign.is_commercial}
                   />

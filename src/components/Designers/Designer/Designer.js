@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
-import eximg from "source/designIs.png";
+import profile from "source/thumbnail.png";
 import StyleGuide from "StyleGuide";
 
 // css styling
@@ -73,14 +73,17 @@ const Count = styled.div`
 `;
 
 class designer extends Component {
+  goDetail = (id) => {
+    this.props.history.push(`/designerDetail/${id}`)
+  }
+
   render(){
     let designer = this.props.data;
 
     return(
-      <NavLink to={"/designerDetail/"+designer.uid}>
+      <div onClick={()=>this.goDetail(designer.uid)} style={{display: "inline"}}>
         <Designerli>
-
-          <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
+          <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${profile})`}}/>
           <TextPart>
             <div className="userName">{designer.nick_name}</div>
             <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
@@ -101,7 +104,7 @@ class designer extends Component {
             </div>
           </Count>
         </Designerli>
-      </NavLink>
+      </div>
     );
   }
 }

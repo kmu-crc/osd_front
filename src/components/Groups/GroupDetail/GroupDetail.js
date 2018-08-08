@@ -7,6 +7,7 @@ import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import ModifyJoinList from "components/Groups/ModifyJoinList";
 import CurrentJoinList from "components/Groups/CurrentJoinList/CurrentJoinList";
 import Button from "components/Commons/Button";
+import eximg from "source/myPage.jpeg";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
@@ -262,7 +263,9 @@ class GroupDetail extends Component {
                 <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div>{groupDetail.img? <img src= {groupDetail.img.m_img} alt="그룹 이미지"/> : "등록된 이미지 없음"}</div>
+                      <div style={groupDetail.thumbnailUrl
+                         ? {backgroundImage: `url(${groupDetail.thumbnailUrl.m_img})`}
+                         : {backgroundImage: `url(${eximg})`}}></div>
                     </div>
                     <div className="title">
                       <h3>{groupDetail.title}</h3>
@@ -316,7 +319,7 @@ class GroupDetail extends Component {
                       <span>{count.group}</span>
                     </div>
                     <div className="list">
-                      <Icon name="user" color="grey" size="tiny"></Icon> 그룹장
+                      <Icon name="user" color="grey" size="tiny"></Icon> 개설자
                       <span><Link to={`/designerDetail/${groupDetail.user_id}`}>
                         {groupDetail.userName}
                       </Link></span>

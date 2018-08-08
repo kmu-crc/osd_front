@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 // css styling
 const ScrollContainer = styled.div`
-  & .ui.centered.inline.loader.active.loading, 
+  & .ui.centered.inline.loader.active.loading,
   & .ui.centered.inline.loader.visible.loading {
     position: fixed;
     left: 50%;
@@ -44,14 +44,7 @@ class ScrollList extends Component {
 
   render() {
     const ListComponent = this.props.ListComponent;
-    const Loading = () => {
-      return(
-        <div>
-          <Loader className="loading" active={true} inline="centered" size="huge"/>
-        </div>
-      );
-    }
- 
+
     return (
       <ScrollContainer>
         {this.props.dataListAdded.length > 0 ?
@@ -63,18 +56,18 @@ class ScrollList extends Component {
             <ListContainer devided="vertically" padded={true} as="ul">
               <Grid.Row>
                   {this.props.dataListAdded.map((content) => (
-                    <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer} 
-                                largeScreen={this.props.largeScreen} widescreen={this.props.widescreen} 
+                    <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer}
+                                largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
                                 className={this.props.customClass}
                                 key={content.uid}>
-                      <ListComponent data={content} rerender={this.props.rerender}/>
+                      <ListComponent data={content} rerender={this.props.rerender} history={this.props.history}/>
                     </Grid.Column>
                   ))
                 }
               </Grid.Row>
             </ListContainer>
           </InfiniteScroll>
-          : 
+          :
           <p>등록된 글이 없습니다</p>
           }
         </ScrollContainer>

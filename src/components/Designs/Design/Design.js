@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
-import eximg from "source/topDesign.png";
+import eximg from "source/myPage.jpeg";
 import StyleGuide from "StyleGuide";
 
 // css styling
@@ -76,11 +76,15 @@ const Count = styled.div`
 `;
 
 class Design extends Component {
+  goDetail = (id) => {
+    this.props.history.push(`/designDetail/${id}`)
+  }
+
   render() {
     let design = this.props.data;
 
     return (
-      <NavLink to={"/designDetail/" + design.uid}>
+      <div onClick={()=>this.goDetail(design.uid)} style={{display: "inline"}}>
         <Designli>
           <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
@@ -101,7 +105,7 @@ class Design extends Component {
             </div>
           </Count>
         </Designli>
-      </NavLink>
+      </div>
     );
   }
 }
