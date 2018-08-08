@@ -134,6 +134,7 @@ class ModifyMyDetail extends Component {
   };
 
   liveCheck = (target) => {
+    console.log(target);
     FormControl(this.state[target]);
   };
 
@@ -205,7 +206,7 @@ class ModifyMyDetail extends Component {
                       name="nick_name"
                       value={myInfo.nick_name}
                       getValue={this.onChangeValue}
-                      validates={["required", "NotSpecialCharacters", "checkNickName"]}
+                      validates={["required", "NotSpecialCharacters", "CheckNickName"]}
                       onBlur={()=>{this.liveCheck("nick_name")}}
                     />
                     <Label>자기소개 변경</Label>
