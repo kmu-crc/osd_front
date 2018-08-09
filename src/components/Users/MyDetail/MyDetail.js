@@ -186,7 +186,7 @@ class MyDetail extends Component {
       if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
         return <div />;
       } else {
-        return <MyDesignContainer token={this.props.token} />;
+        return <MyDesignContainer token={this.props.token} history={this.props.history}/>;
       }
     };
 

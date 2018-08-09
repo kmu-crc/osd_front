@@ -328,6 +328,7 @@ class TextController extends Component {
   };
 
   returnData = async () => {
+    console.log(this.state);
     if(this.props.getValue) this.props.getValue(this.state);
   }
 
@@ -352,7 +353,6 @@ class TextController extends Component {
         this.setState({
           openSize: false
         });
-
       }
     }
   }
@@ -364,7 +364,6 @@ class TextController extends Component {
         this.setState({
           openColor: false
         });
-
       }
     }
   }
