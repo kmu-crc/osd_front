@@ -32,10 +32,10 @@ class ContentList extends Component {
         <Grid.Column mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2}
                     className="largeCustom"
                     key={data.uid}>
-          {type === "design" ? <Design data={data} rerender={this.props.rerender}/>
-                             : <Group data={data} rerender={this.props.rerender}/>
+          {type === "design" ? <Design data={data} rerender={this.props.rerender} history={this.props.history}/>
+                             : <Group data={data} rerender={this.props.rerender} history={this.props.history}/>
           }
-          
+
           {this.props.handleAccept &&
           <AcceptBtn className="ui button black" onClick={()=>this.props.handleAccept(data.uid)}>가입승인</AcceptBtn>
           }

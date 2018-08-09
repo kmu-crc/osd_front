@@ -8,18 +8,7 @@ class WaitingGroupContainer extends Component {
     this.props.GetWaitingGroupRequest(this.props.match.params.id, this.props.match.params.sort);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-  //     console.log("here");
-  //     this.props.GetWaitingGroupRequest(this.props.match.params.id, nextProps.match.params.sort);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   setOut = (id) => {
-   
     this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id)
     .then(res => {
       if (res.data.success === true) {
@@ -43,7 +32,8 @@ class WaitingGroupContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.waitingGroup} type="group" handleClick={this.setOut} handleAccept={this.setAccept}/>
+      <ContentList data={this.props.waitingGroup} type="group" history={this.props.history}
+                   handleClick={this.setOut} handleAccept={this.setAccept}/>
     );
   }
 }

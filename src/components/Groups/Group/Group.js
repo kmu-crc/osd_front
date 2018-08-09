@@ -93,7 +93,7 @@ class Group extends Component {
     let group = this.props.data;
 
     return(
-      <div onClick={()=>this.goDetail(group.uid)} style={{display: "inline"}}>
+      <div onClick={()=>this.goDetail(group.uid)} style={{display: "inline", cursor: "pointer"}}>
         <Groupli>
           <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>

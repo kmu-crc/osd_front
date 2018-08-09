@@ -50,10 +50,8 @@ const ProfileSection = styled.div`
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,0.25);
     overflow: hidden;
-  }
-  & .imgContainer > div img {
-    width: auto;
-    height: 100%;
+    background-position: 50%;
+    background-size: contain;
   }
   & .title {
     min-height: 40px;

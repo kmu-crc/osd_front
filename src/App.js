@@ -25,9 +25,9 @@ import TestPage3 from "pages/TestPage3";
 
 class App extends Component {
   componentDidMount(){
-    // this.props.GetCategoryLevel1Request().then(() => {
-    //   this.props.GetCategoryLevel2Request(null);
-    // })
+    this.props.GetCategoryLevel1Request().then(() => {
+      this.props.GetCategoryLevel2Request(null);
+    });
     this.props.GetCategoryAllRequest();
   }
   render() {

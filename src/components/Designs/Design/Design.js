@@ -84,7 +84,7 @@ class Design extends Component {
     let design = this.props.data;
 
     return (
-      <div onClick={()=>this.goDetail(design.uid)} style={{display: "inline"}}>
+      <div onClick={()=>this.goDetail(design.uid)} style={{display: "inline", cursor: "pointer"}}>
         <Designli>
           <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>

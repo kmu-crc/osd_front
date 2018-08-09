@@ -81,7 +81,7 @@ class designer extends Component {
     let designer = this.props.data;
 
     return(
-      <div onClick={()=>this.goDetail(designer.uid)} style={{display: "inline"}}>
+      <div onClick={()=>this.goDetail(designer.uid)} style={{display: "inline", cursor: "pointer"}}>
         <Designerli>
           <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${profile})`}}/>
           <TextPart>
