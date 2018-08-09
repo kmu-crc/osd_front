@@ -21,12 +21,30 @@ const CategoryColumn = styled(Grid.Column)`
 `;
 
 class Category extends Component {
+  state = {
+    activeCate2: this.props.category2[0]
+  }
+
+  componentDidMount(){
+    if (this.props.cate1 && this.props.cate1 !== "null") {
+      this.setState({
+        activeCate2: this.props.category2[this.props.cate1]
+      });
+    }
+  }
+
   onChangeCategory1 = async value => {
     if (value === 0) {
       value = null;
+      this.setState({
+        activeCate2: this.props.category2[0]
+      });
+    } else {
+      await this.setState({
+        activeCate2: this.props.category2[value]
+      });
     }
-    await this.props.GetCategoryLevel2Request(value);
-    await this.props.handleCate1(value, true);
+    this.props.handleCate1(value, true);
   };
 
   onChangeCategory2 = async value => {
@@ -37,7 +55,6 @@ class Category extends Component {
   };
 
   render() {
-    // console.log(this.props.match.params);
     return (
       <CategoryColumn
         className="category"
@@ -61,7 +78,7 @@ class Category extends Component {
               placeholder="2차 카테고리"
               value={this.props.cate2 === "null" ? null : this.props.cate2}
               getValue={this.onChangeCategory2}
-              options={this.props.category2}
+              options={this.state.activeCate2}
             />
           </Grid.Column>
         </Grid>

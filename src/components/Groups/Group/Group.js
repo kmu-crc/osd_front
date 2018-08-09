@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import eximg from "source/eximg.jpeg";
+import eximg from "source/myPage.jpeg";
 import { Icon } from "semantic-ui-react";
 import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
@@ -76,6 +76,11 @@ const Count = styled.div`
 
 
 class Group extends Component {
+  goDetail = (id) => {
+    this.props.history.push(`/groupDetail/${id}`)
+    this.refresh();
+  }
+
   refresh = (e) => {
     if (this.props.rerender) {
       Component.forceUpdate();
@@ -88,7 +93,7 @@ class Group extends Component {
     let group = this.props.data;
 
     return(
-      <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
+      <div onClick={()=>this.goDetail(group.uid)} style={{display: "inline", cursor: "pointer"}}>
         <Groupli>
           <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
@@ -115,7 +120,7 @@ class Group extends Component {
             </div>
           </Count>
         </Groupli>
-      </NavLink>
+      </div>
     );
   }
 }

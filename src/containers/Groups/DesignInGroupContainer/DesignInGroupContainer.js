@@ -9,15 +9,6 @@ class DesignInGroupContainer extends Component {
     this.props.GetDesignInGroupRequest(this.props.match.params.id, 0, this.props.match.params.sort);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      this.props.GetDesignInGroupRequest(this.props.match.params.id, 0, nextProps.match.params.sort);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   getList = (page) => {
     return this.props.GetDesignInGroupRequest(this.props.match.params.id, page, this.props.match.params.sort);
   }
@@ -25,10 +16,11 @@ class DesignInGroupContainer extends Component {
   render() {
     return(
       <div>
-        <ScrollList getListRequest={this.getList} 
-                    ListComponent={Design} 
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} 
-                    mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
+        <ScrollList getListRequest={this.getList}
+                    ListComponent={Design}
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+                    mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"
+                    history={this.props.history}/>
       </div>
     );
   }

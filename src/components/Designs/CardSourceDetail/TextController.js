@@ -198,10 +198,6 @@ class TextController extends Component {
   }
 
   isSelection = () => {
-    // console.log(Boolean(window.getSelection));
-    // console.log(Boolean(window.getSelection().rangeCount > 0));
-    // console.log(Boolean(window.getSelection().getRangeAt(0)));
-    // console.log(Boolean(window.getSelection().getRangeAt(0).toString() !== ""));
     if (window.getSelection()
         && window.getSelection().rangeCount > 0
         && window.getSelection().getRangeAt(0)
@@ -212,7 +208,7 @@ class TextController extends Component {
       }
   }
 
-  onChangeSize = (size) => {
+  onChangeSize = async (size) => {
     console.log("work");
     let res = this.isSelection();
     if (res) {
@@ -237,7 +233,11 @@ class TextController extends Component {
           selected.insertNode(node);
         }
       }
-      this.onCursorOut();
+      await this.setState({
+        content: this.edit.innerHTML
+      });
+      await this.onCursorOut();
+      this.returnData();
     } else {
       console.log("noSelection");
     }
@@ -246,7 +246,7 @@ class TextController extends Component {
     });
   };
 
-  onChangeColor = color => {
+  onChangeColor = async color => {
     let res = this.isSelection();
     if (res) {
       const selection = window.getSelection();
@@ -276,7 +276,11 @@ class TextController extends Component {
           selected.insertNode(node);
         }
       }
-      this.onCursorOut();
+      await this.setState({
+        content: this.edit.innerHTML
+      });
+      await this.onCursorOut();
+      this.returnData();
     } else {
       console.log("noSelection");
     }
@@ -324,8 +328,9 @@ class TextController extends Component {
   };
 
   returnData = async () => {
-    if (this.props.getValue) this.props.getValue(this.state);
-  };
+    console.log(this.state);
+    if(this.props.getValue) this.props.getValue(this.state);
+  }
 
   setOpenSize = () => {
     this.setState({
@@ -341,10 +346,9 @@ class TextController extends Component {
     });
   }
 
-  onBlurSize = (e) => {
+  onBlurSize = async (e) => {
     if (e && e.type === "blur") {
       if (e.relatedTarget && this.menuWrap.childNodes[1].contains(e.relatedTarget)) {
-        return;
       } else {
         this.setState({
           openSize: false
@@ -353,10 +357,9 @@ class TextController extends Component {
     }
   }
 
-  onBlurColor = (e) => {
+  onBlurColor = async (e) => {
     if (e && e.type === "blur") {
       if (e.relatedTarget && this.menuColWrap.childNodes[1].contains(e.relatedTarget)) {
-        return;
       } else {
         this.setState({
           openColor: false

@@ -8,15 +8,6 @@ class EditGroupListContainer extends Component {
     this.props.GetGroupInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-  //     this.props.GetGroupInGroupRequest(this.props.match.params.id, null, nextProps.match.params.sort);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   setOut = (id) => {
     this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id)
     .then(res => {
@@ -27,10 +18,10 @@ class EditGroupListContainer extends Component {
       console.log(err);
     });
   }
-  
+
   render() {
     return(
-      <ContentList data={this.props.EditGroupList} type="group" handleClick={this.setOut}/>
+      <ContentList data={this.props.EditGroupList} type="group" handleClick={this.setOut} history={this.props.history}/>
     );
   }
 }

@@ -12,6 +12,7 @@ import Button from "components/Commons/Button";
 import ProfileImage from "components/Users/ProfileImage";
 import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
+import Loading from "components/Commons/Loading";
 
 const Label = styled.div`
   margin: 0 0 0.8rem 0;
@@ -23,6 +24,9 @@ const Label = styled.div`
 `;
 
 class UserDetailFrom extends Component {
+  state = {
+    loading: false
+  }
 
   onChangeValue = async data => {
     let obj = {};
@@ -40,18 +44,27 @@ class UserDetailFrom extends Component {
   onSubmit = async e => {
     console.log(this.state);
     e.preventDefault();
-    ValidationGroup(this.state, false).then(data => {
+    ValidationGroup(this.state, false).then(async data => {
       console.log("성공", data);
+      await this.setState({
+        loading: true
+      });
       this.props.InsertUserDetailRequest(data, this.props.token)
       .then(data => {
         if (data.res.success) {
           this.props.history.push(`/`);
         } else {
           alert("다시 시도해주세요");
+          this.setState({
+            loading: false
+          });
         }
       });
     }).catch(e => {
       console.log("실패", e);
+      this.setState({
+        loading: false
+      });
     });
   };
 
@@ -102,6 +115,7 @@ class UserDetailFrom extends Component {
             <Button type="button" onClick={this.onSubmit}>등록</Button>
           </Grid.Column>
         </Grid>
+        {this.state.loading && <Loading/>}
       </form>
     );
   }

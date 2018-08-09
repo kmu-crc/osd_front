@@ -6,8 +6,8 @@ const initialState = {
     status: "INIT"
   },
   status: {
-    level2: [],
-    level2List: []
+    category1: [],
+    category2: []
   }
 };
 
@@ -16,23 +16,23 @@ export function CategoryAll(state, action) {
     state = initialState;
 
   switch (action.type) {
-    case types.GET_CATEGORY_LEVEL2_ALL:
+    case types.GET_CATEGORY_ALL:
       return update(state, {
         category: {
           status: { $set: "WAITING" }
         }
       });
-    case types.GET_CATEGORY_LEVEL2_ALL_SUCCESS:
+    case types.GET_CATEGORY_ALL_SUCCESS:
       return update(state, {
         category: {
           status: { $set: "SUCCESS" }
         },
         status: {
-          level2: { $set: action.level2 },
-          level2List: { $push: [action.level2] }
+          category1: { $set: action.category1 },
+          category2: { $set: action.category2 }
         }
       });
-    case types.GET_CATEGORY_LEVEL2_ALL_FAILURE:
+    case types.GET_CATEGORY_ALL_FAILURE:
       return update(state, {
         category: {
           status: { $set: "FAILURE" }

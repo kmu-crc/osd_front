@@ -68,17 +68,6 @@ const SubCateItem = styled.li`
 `;
 
 class Category2 extends Component {
-  componentDidMount(){
-    this.props.GetCategoryLevel2AllRequest(this.props.category1);
-  }
-
-  shouldComponentUpdate(nextProps){
-    if(JSON.stringify(this.props.category1) !== JSON.stringify(nextProps.category1)){
-      this.props.GetCategoryLevel2AllRequest(nextProps.category1);
-    }
-    return true;
-  }
-
   onChangeCategory1 = async value => {
     if (value === 0) {
       value = null;
@@ -97,8 +86,7 @@ class Category2 extends Component {
   render(){
     const Cate2List = (i) => {
       const n = i.parentNum;
-      let list = this.props.category2All;
-      list = list[n];
+      const list = this.props.category2[n];
       return (
           <ul className="cateUl subCateUl">
             {list && list.length !== 0 && list.map((subcate, i) => (
@@ -128,9 +116,7 @@ class Category2 extends Component {
                                 ? "active" : ""}
                       onClick={() => this.onChangeCategory1(cate.value)}>
               {cate.text}
-              {this.props.category2All.length === this.props.category1.length - 1 &&
-              <Cate2List parentNum={(i-1)}/>
-              }
+              <Cate2List parentNum={i}/>
             </CateItem>
           ))}
 

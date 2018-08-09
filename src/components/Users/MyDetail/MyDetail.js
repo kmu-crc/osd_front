@@ -9,6 +9,7 @@ import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
+import profile from "source/thumbnail.png";
 
 // css styling
 
@@ -51,6 +52,8 @@ const ProfileSection = styled.div`
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.25);
     overflow: hidden;
+    background-position: 50%;
+    background-size: contain;
   }
   & .title {
     min-height: 40px;
@@ -183,7 +186,7 @@ class MyDetail extends Component {
       if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
         return <div />;
       } else {
-        return <MyDesignContainer token={this.props.token} />;
+        return <MyDesignContainer token={this.props.token} history={this.props.history}/>;
       }
     };
 
@@ -202,12 +205,9 @@ class MyDetail extends Component {
                   <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                     <ProfileSection>
                       <div className="imgContainer">
-                        <div>
-                          {MyInfo.profileImg ? (
-                            <img src={MyInfo.profileImg.m_img} alt="프로필 이미지" />
-                          ) : (
-                            "등록된 이미지 없음"
-                          )}
+                        <div style={MyInfo.profileImg
+                         ? {backgroundImage: `url(${MyInfo.profileImg.m_img})`}
+                         : {backgroundImage: `url(${profile})`}}>
                         </div>
                       </div>
                       <div className="title">

@@ -8,15 +8,6 @@ class EditDesignListContainer extends Component {
     this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-  //     this.props.GetDesignInGroupRequest(this.props.match.params.id, null, nextProps.match.params.sort);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   setOut = (id) => {
     this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
     .then(res => {
@@ -30,7 +21,7 @@ class EditDesignListContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut}/>
+      <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut} history={this.props.history}/>
     );
   }
 }

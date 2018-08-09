@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignDetailViewRequest, ChangeToProjectRequest } from "actions/Design";
+import { GetDesignDetailViewRequest, ChangeToProjectRequest, DesignDetailViewResetRequest } from "actions/Design";
 import DetailView from "components/Designs/DetailView";
 import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "actions/Designs/DesignCard";
 
@@ -38,6 +38,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     DeleteCardCommentRequest: (design_id, card_id, comment_id, token) => {
       return dispatch(DeleteCardCommentRequest(design_id, card_id, comment_id, token));
+    },
+    DesignDetailViewResetRequest: () => {
+      return dispatch(DesignDetailViewResetRequest());
     }
   };
 };

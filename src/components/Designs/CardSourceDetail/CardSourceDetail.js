@@ -91,6 +91,7 @@ class CardSourceDetail extends Component {
   }
 
   onChangValue = async data => {
+    console.log(data, "1");
     let copyContent = [...this.state.content];
     delete data.initClick;
     await copyContent.splice(data.order, 1, data);
@@ -99,6 +100,7 @@ class CardSourceDetail extends Component {
   };
 
   onAddValue = async data => {
+    console.log(data, "2");
     let copyContent = [...this.state.content];
     let copyData = { ...data };
     copyData.initClick = true;
@@ -132,6 +134,7 @@ class CardSourceDetail extends Component {
   };
 
   onSubmit = async e => {
+    await this.setState({loading: true});
     e.preventDefault();
     let copyContent = [...this.state.content];
     copyContent = await Promise.all(
@@ -146,7 +149,7 @@ class CardSourceDetail extends Component {
     await setTimeout(() => {
 
     }, 500);
-    await this.setState({loading: true});
+
     this.props.UpdateDesignSourceRequest(
       formData,
       this.props.uid,
@@ -197,7 +200,7 @@ class CardSourceDetail extends Component {
                 getValue={this.onAddValue}
               />
             )}
-            <Button type="submit" size="small">
+            <Button type="button" onClick={this.onSubmit} size="small">
               저장
             </Button>
           </form>

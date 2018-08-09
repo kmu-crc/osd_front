@@ -21,6 +21,12 @@ export function DesignDetailView(state, action) {
           DesignDetailView: { $set: action.DesignDetailView }
         }
       });
+    case types.DESIGN_DETAIL_VIEW_RESET:
+      return update(state, {
+        status: {
+          DesignDetailView: { $set: action.DesignDetailView }
+        }
+      });
     default:
       return state;
   }

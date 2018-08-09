@@ -49,10 +49,6 @@ class CardSource extends Component {
     active: "INIT"
   };
 
-  componentDidMount() {
-    console.log(this.props.card_id);
-  }
-
   changeActive = async value => {
     this.setState({
       active: value

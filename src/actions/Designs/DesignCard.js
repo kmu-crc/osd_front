@@ -359,8 +359,6 @@ export const DeleteCardFailure = error => {
 
 // 카드 댓글 가져오기
 export const GetCardCommentRequest = (design_id, card_id) => {
-  console.log("work");
-  console.log(card_id);
   return dispatch => {
     dispatch(GetCardComment());
     return fetch(
@@ -584,5 +582,18 @@ export const GetDesignSourceSuccess = res => {
 export const GetDesignSourceFailure = error => {
   return {
     type: types.GET_DESIGN_SOURCE_FAILURE
+  };
+};
+
+export function DesignSourceResetRequest() {
+  return (dispatch) => {
+    dispatch(DesignSourceReset());
+  }
+};
+
+export function DesignSourceReset() {
+  return {
+    type: types.DESIGN_SOURCE_RESET,
+    data: []
   };
 };

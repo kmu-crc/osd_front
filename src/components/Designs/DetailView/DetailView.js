@@ -85,13 +85,17 @@ class DetailView extends Component {
     render: true
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.GetDesignDetailViewRequest(this.props.id, this.props.token)
     .then(data => {
       if (data.DesignDetailView !== null) {
         this.props.GetCardCommentRequest(this.props.id, data.DesignDetailView.uid)
       }
     });
+  }
+
+  componentWillUnmount(){
+    this.props.DesignDetailViewResetRequest();
   }
 
   onActiveStep = () => {
@@ -159,7 +163,7 @@ class DetailView extends Component {
         {len > 0 ?
           <ViewWrapper>
             <div className="date">최근 업데이트 {(view.update_time).split("T")[0]}</div>
-            <CardSourceContainer view={view}/>
+            <CardSourceContainer view={this.props.DesignDetailView}/>
             <CommentContainer className="ui comments">
               <h4>댓글</h4>
               {comment.length > 0?

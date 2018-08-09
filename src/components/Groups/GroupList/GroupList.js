@@ -147,7 +147,7 @@ class GroupList extends Component {
         </MenuWrap>
         <Content>
           <Wrapper>
-            {this.state.rendering && <ScrollGroupListContainer sort={sort}/>}
+            {this.state.rendering && <ScrollGroupListContainer sort={sort} history={this.props.history}/>}
           </Wrapper>
         </Content>
       </div>

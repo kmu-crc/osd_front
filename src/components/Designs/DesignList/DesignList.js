@@ -154,7 +154,7 @@ class DesignList extends Component {
         <Content>
           <Wrapper>
             {this.state.rendering &&
-              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} />}
+              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>}
           </Wrapper>
         </Content>
       </div>
