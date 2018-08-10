@@ -108,7 +108,7 @@ class Main extends Component {
           <Content>
             <Wrapper>
               <Head>인기 디자인 추천</Head>
-              <ScrollTopDesignContainer/>
+              <ScrollTopDesignContainer history={this.props.history}/>
             </Wrapper>
           </Content>
         </TextWrapper>

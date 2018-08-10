@@ -6,7 +6,7 @@ class MainPage extends Component {
   render() {
     return(
       <ClientTemplate>
-        <MainContainer />
+        <MainContainer history={this.props.history}/>
       </ClientTemplate>
     );
   }
