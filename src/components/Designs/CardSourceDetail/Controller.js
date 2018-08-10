@@ -13,7 +13,7 @@ const ControllerWrap = styled.div`
   position: relative;
   border: 2px dashed white;
   &:hover {
-    .editBtn{
+    .editBtn {
       display: block;
     }
     border: 2px dashed ${StyleGuide.color.geyScale.scale6};
@@ -27,10 +27,10 @@ const ControllerWrap = styled.div`
     }
   }
   &::after {
-      display: block;
-      content: "";
-      clear: both;
-    }
+    display: block;
+    content: "";
+    clear: both;
+  }
 `;
 
 const EditBtn = styled.button`
@@ -52,13 +52,13 @@ const EditBtn = styled.button`
   text-align: center;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   outline: 0;
-  i.icon{
+  i.icon {
     margin: 0;
   }
-  &:focus .subMenu{
+  &:focus .subMenu {
     display: block;
   }
-`
+`;
 
 const SubMenu = styled.ul`
   display: none;
@@ -66,12 +66,12 @@ const SubMenu = styled.ul`
   bottom: 0;
   left: 0;
   outline: 0;
-  transform: translate(-20px ,140%);
+  transform: translate(-20px, 140%);
   background-color: ${StyleGuide.color.geyScale.scale7};
   width: 9rem;
   border-radius: 3px;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  &::before{
+  &::before {
     display: block;
     content: "";
     top: -5px;
@@ -84,12 +84,12 @@ const SubMenu = styled.ul`
     border-bottom: 7.5px solid ${StyleGuide.color.geyScale.scale7};
     border-radius: 3px;
   }
-  li{
+  li {
     line-height: 30px;
     color: ${StyleGuide.color.geyScale.scale0};
     text-align: center;
   }
-`
+`;
 
 export class Controller extends Component {
   state = {
@@ -115,8 +115,8 @@ export class Controller extends Component {
   };
 
   deleteItem = async => {
-    if(this.props.deleteItem) this.props.deleteItem(this.props.item.order);
-  }
+    if (this.props.deleteItem) this.props.deleteItem(this.props.item.order);
+  };
 
   returnDate = async e => {
     if (this.props.getValue) await this.props.getValue(this.state);
@@ -124,38 +124,37 @@ export class Controller extends Component {
   };
 
   render() {
-    const { type } = this.state;
     const { item, name } = this.props;
     return (
       <ControllerWrap>
         <div className="contentWrap">
-          {item.type === "FILE" ? (
-            <FileController
-              item={item}
-              setController={this.setController}
-              initClick={this.state.click}
-              name="source"
-              getValue={this.onChangeValue}
-              deleteItem={this.deleteItem}
-            />
-          ) : item.type === "TEXT" ? (
-            <TextController
-              item={item}
-              name={name}
-              getValue={this.onChangeValue}
-              initClick={this.state.click}
-              deleteItem={this.deleteItem}
-            />
-          ) : item.type === "EMBED" ? (
-            <EmbController />
-          ) : null}
-        </div>
-        <EditBtn type="button" className="editBtn">
-          <i className="pencil alternate icon"/>
-          <SubMenu className="subMenu">
-            <li onClick={this.deleteItem}>삭제</li>
-          </SubMenu>
-        </EditBtn>
+            {item.type === "FILE" ? (
+              <FileController
+                item={item}
+                setController={this.setController}
+                initClick={this.state.click}
+                name="source"
+                getValue={this.onChangeValue}
+                deleteItem={this.deleteItem}
+              />
+            ) : item.type === "TEXT" ? (
+              <TextController
+                item={item}
+                name={name}
+                getValue={this.onChangeValue}
+                initClick={this.state.click}
+                deleteItem={this.deleteItem}
+              />
+            ) : item.type === "EMBED" ? (
+              <EmbController />
+            ) : null}
+          </div>
+          <EditBtn type="button" className="editBtn">
+            <i className="pencil alternate icon" />
+            <SubMenu className="subMenu">
+              <li onClick={this.deleteItem}>삭제</li>
+            </SubMenu>
+          </EditBtn>
       </ControllerWrap>
     );
   }

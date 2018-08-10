@@ -192,6 +192,7 @@ class TextController extends Component {
   shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)) {
       this.edit.innerHTML = nextProps.item.content;
+      if(!nextProps.item.uid) this.setState({uid: null});
       if (nextProps.item.initClick) this.edit.focus();
     }
     return true;
