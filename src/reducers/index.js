@@ -2,7 +2,7 @@ import Authentication from "./Authentication";
 import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignCardComment, DesignIssueList, DesignIssueComment, DesignLike, DeleteDesign, ChangeToProject, UpdateDesign, DesignSourceDetail } from "reducers/Designs";
 import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue } from "reducers/Groups";
-import { SignIn, SignUp } from "reducers/Registration";
+import { SignIn, SignUp, FindPw } from "reducers/Registration";
 import { UserInfo, MyDetail } from "reducers/Users";
 import { MessageList, MessageDetail } from "reducers/Messages";
 import { Categorys, CategoryAll } from "reducers/Categorys";
@@ -40,6 +40,7 @@ export default combineReducers({
     DesignerDetail,
     SignIn,
     SignUp,
+    FindPw,
     UserInfo,
     Categorys,
     CategoryAll,

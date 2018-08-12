@@ -17,6 +17,7 @@ import TestPage2 from "pages/TestPage2";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
+import ResetPwPage from "pages/ResetPwPage";
 import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
@@ -57,6 +58,7 @@ class App extends Component {
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message" component={RequiresAuth(MessagePage)}/>
           <Route path="/cardTest" component={TestPage3}/>
+          <Route path="/resetPw" component={ResetPwPage}/>
         </Switch>
       </BrowserRouter>
     );

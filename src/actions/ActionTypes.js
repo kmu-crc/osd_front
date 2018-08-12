@@ -55,6 +55,13 @@ export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL";
 export const UPDATE_USER_DETAIL_SUCCESS = "UPDATE_USER_DETAIL_SUCCESS";
 export const UPDATE_USER_DETAIL_FAILURE = "UPDATE_USER_DETAIL_FAILURE";
 
+
+// FIND_PW
+
+export const FIND_PW = "FIND_PW";
+export const FIND_PW_SUCCESS = "FIND_PW_SUCCESS";
+export const FIND_PW_FAILURE = "FIND_PW_FAILURE";
+
 ////////////////////////////////////////////////////////////////////////////
 // design
 ////////////////////////////////////////////////////////////////////////////
