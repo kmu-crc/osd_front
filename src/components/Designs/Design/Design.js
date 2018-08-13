@@ -59,9 +59,10 @@ const TextPart = styled.div`
 `;
 
 const Count = styled.div`
-  background-color: ${StyleGuide.color.geyScale.scale9};
+  background-color: #fff;
   padding: 5px 10px;
-  color: white;
+  color: ${StyleGuide.color.geyScale.scale6};
+  border-top: 1px solid ${StyleGuide.color.geyScale.scale1};
   font-weight: 400;
   font-size: 12px;
   & div {
