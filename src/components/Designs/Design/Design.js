@@ -90,7 +90,12 @@ class Design extends Component {
           <TextPart>
             <div className="title">{design.title}</div>
             <div className="userName">
-              <Link to={`/designerDetail/${design.user_id}`}>{design.userName}</Link>
+              {design.is_project === 1
+              ?
+              <Link to={`/designerDetail/${design.user_id}`}>{design.userName}님의 프로젝트</Link>
+              :
+              <Link to={`/designerDetail/${design.user_id}`}>{design.userName}님의 작품</Link>
+              }
             </div>
             <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
           </TextPart>
