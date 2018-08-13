@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import { Grid, Form, Header } from "semantic-ui-react";
-// import { OverlapField, FormField } from "components/Commons/FormField";
-// import { FormInput, FormCheckBox, FormTextArea, FormSelect } from "components/Commons/FormItem";
-// import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
-// import ValidateForm from "components/Commons/ValidateForm";
-// import ProfileImage from "components/Users/ProfileImage";
 import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
 import Button from "components/Commons/Button";
@@ -73,37 +68,6 @@ const FromFieldCard = styled.div`
   }
 `;
 
-const FormHeader = styled(Header) `
-  position: relative;
-  padding-right: 2.5rem !important;
-  @media only screen and (max-width: 991px) {
-    padding-bottom: 2rem !important;
-  }
-  &::after {
-    position: absolute;
-    display: inline-block;
-    content: "";
-    height: 20px;
-    width: 100%;
-    border-bottom: 3px solid ${StyleGuide.color.geyScale.scale5};
-    bottom: 10px;
-    left: 0;
-
-    @media only screen and (min-width: 992px) {
-      width: 1px;
-      display: block;
-      position: absolute;
-      right: 2rem;
-      top: 50%;
-      left: initial;
-      bottom: initial;
-      transform: translateY(-50%);
-      border-bottom: 0;
-      border-right: 3px solid #191919;
-    }
-  }
-`;
-
 const Label = styled.div`
   margin: 0 0 0.8rem 0;
   display: block;
@@ -131,10 +95,17 @@ class ModifyMyDetail extends Component {
       obj[data.target.name] = data;
     }
     await this.setState(obj);
+
+    if (data && data.target && data.target.name === "nick_name") {
+      if (data.value === this.props.MyDetail.nick_name) {
+        data.validates = ["required", "NotSpecialCharacters"];
+      } else {
+        data.validates = ["required", "NotSpecialCharacters", "CheckNickName"];
+      }
+    }
   };
 
   liveCheck = (target) => {
-    console.log(target);
     FormControl(this.state[target]);
   };
 
@@ -206,7 +177,7 @@ class ModifyMyDetail extends Component {
                       name="nick_name"
                       value={myInfo.nick_name}
                       getValue={this.onChangeValue}
-                      validates={["required", "NotSpecialCharacters", "CheckNickName"]}
+                      validates={["required", "NotSpecialCharacters"]}
                       onBlur={()=>{this.liveCheck("nick_name")}}
                     />
                     <Label>자기소개 변경</Label>

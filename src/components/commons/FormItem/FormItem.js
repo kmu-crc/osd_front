@@ -268,7 +268,6 @@ export class FormSelect extends Component {
     let value = this.props.value;
     if (!this.props.validates) {
       if(!isNaN(parseInt(value))){
-        console.log("work");
         value = parseInt(value);
       }
       // FormDropBox component의 defaultValue는 처음 render되었을때만 동작하기 때문에
