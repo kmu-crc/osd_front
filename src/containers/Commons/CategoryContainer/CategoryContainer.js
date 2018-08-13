@@ -17,7 +17,6 @@ class CategoryContainer extends Component {
           </div>
         }
       </div>
-
     );
   }
 }
