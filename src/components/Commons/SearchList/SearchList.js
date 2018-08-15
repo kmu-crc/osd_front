@@ -185,10 +185,10 @@ class SearchList extends Component {
           {this.state.rendering &&
           <Wrapper>
             {this.props.type === "designer"
-            ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} history={this.props.history}/>
+            ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword}/>
             : this.props.type === "group"
-            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} history={this.props.history}/>
-            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} history={this.props.history}/>
+            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword}/>
+            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword}/>
             }
           </Wrapper>
           }

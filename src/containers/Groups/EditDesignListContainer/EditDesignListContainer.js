@@ -21,7 +21,7 @@ class EditDesignListContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut} history={this.props.history}/>
+      <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut}/>
     );
   }
 }

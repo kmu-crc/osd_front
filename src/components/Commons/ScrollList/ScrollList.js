@@ -60,7 +60,7 @@ class ScrollList extends Component {
                                 largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
                                 className={this.props.customClass}
                                 key={content.uid}>
-                      <ListComponent data={content} rerender={this.props.rerender} history={this.props.history}/>
+                      <ListComponent data={content} rerender={this.props.rerender}/>
                     </Grid.Column>
                   ))
                 }

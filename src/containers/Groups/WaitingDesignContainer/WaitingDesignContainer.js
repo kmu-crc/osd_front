@@ -32,7 +32,7 @@ class WaitingDesignContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.waitingDesign} type="design" history={this.props.history}
+      <ContentList data={this.props.waitingDesign} type="design"
                    handleClick={this.setOut} handleAccept={this.setAccept}/>
     );
   }
