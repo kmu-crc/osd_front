@@ -107,7 +107,7 @@ class SignInForm extends Component {
         />
         <div>
           <Link to="/resetPw">
-            <FindPwBtn>비밀번호 찾기</FindPwBtn>
+            <FindPwBtn type="button">비밀번호 찾기</FindPwBtn>
           </Link>
         </div>
         <BtnWrap>
