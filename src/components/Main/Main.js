@@ -107,7 +107,7 @@ class Main extends Component {
         <TextWrapper>
           <Content>
             <Wrapper>
-              <Head>인기 디자인 추천</Head>
+              <Head>추천 디자인</Head>
               <ScrollTopDesignContainer/>
             </Wrapper>
           </Content>

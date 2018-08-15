@@ -51,7 +51,7 @@ const ProfileSection = styled.div`
     border: 1px solid rgba(0,0,0,0.25);
     overflow: hidden;
     background-position: 50%;
-    background-size: contain;
+    background-size: cover;
   }
   & .title {
     min-height: 40px;
@@ -214,6 +214,7 @@ class DesignerDetail extends Component {
   render(){
     const designerDetail = this.props.DesignerDetail;
     const count = this.props.Count;
+    console.log(designerDetail);
 
     return(
       <div>
