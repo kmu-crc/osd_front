@@ -52,6 +52,28 @@ const SlideWrap = styled.div`
       border-right: 8px solid #fff;
     }
   }
+  & .carousel .control-dots {
+    position: absolute;
+    bottom: 0;
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+    & li {
+      box-shadow: 1px 1px 2px rgba(0,0,0,.9);
+      background: #fff;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0 8px;
+      transition: opacity .25s ease-in;
+      opacity: .3;
+    }
+    & .dot.selected, & .dot:hover{
+      opacity: 1;
+    }
+  }
 `;
 
 const Slide = styled.div`
