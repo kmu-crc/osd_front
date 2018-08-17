@@ -35,7 +35,7 @@ class MyGroupList extends Component {
   render() {
     return(
       <ValidateForm onSubmit={this.handleSubmit}>
-        <FormField name="join_group" label="내 그룹 리스트" selection={true} options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
+        <FormField name="join_group" label="내 그룹 리스트" options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
         <Btn type="submit">등록</Btn>
         <Btn type="button" onClick={this.props.handleCloseModal}>닫기</Btn>
       </ValidateForm>
