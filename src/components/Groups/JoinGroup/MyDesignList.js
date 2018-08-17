@@ -13,12 +13,11 @@ class MyDesignList extends Component {
   state = {
     joinList: []
   }
+
   componentWillMount(){
-    console.log(this.props);
-    this.props.GetMyDesignListRequest(this.props.token, this.props.match.params.id).then(data => {
-      console.log(data);
-    })
+    this.props.GetMyDesignListRequest(this.props.token, this.props.match.params.id);
   }
+
   handleSubmit = (data) => {
     console.log("multiSelect", this.state.joinList);
     this.props.JoinGroupRequest({"join_design": this.state.joinList}, this.props.token, this.props.match.params.id)
@@ -28,8 +27,6 @@ class MyDesignList extends Component {
   }
 
   getValue = (data) => {
-    console.log("multiSelect1", this.state.joinList);
-
     this.setState({joinList: data});
   }
 
