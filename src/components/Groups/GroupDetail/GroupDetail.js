@@ -59,10 +59,7 @@ const ProfileSection = styled.div`
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,0.25);
     overflow: hidden;
-  }
-  & .imgContainer > div img {
-    width: auto;
-    height: 100%
+    background-size: cover;
   }
   & .title {
     min-height: 80px;
@@ -263,8 +260,8 @@ class GroupDetail extends Component {
                 <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
                     <div className="imgContainer">
-                      <div style={groupDetail.thumbnailUrl
-                         ? {backgroundImage: `url(${groupDetail.thumbnailUrl.m_img})`}
+                      <div style={groupDetail.img
+                         ? {backgroundImage: `url(${groupDetail.img.m_img})`}
                          : {backgroundImage: `url(${eximg})`}}></div>
                     </div>
                     <div className="title">

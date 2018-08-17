@@ -32,7 +32,7 @@ class WaitingGroupContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.waitingGroup} type="group" history={this.props.history}
+      <ContentList data={this.props.waitingGroup} type="group"
                    handleClick={this.setOut} handleAccept={this.setAccept}/>
     );
   }

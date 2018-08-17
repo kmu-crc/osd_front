@@ -12,9 +12,8 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   width: 100%;
-  margin-bottom: 30px;
-  & ul {
-    margin-top: 30px;
+  &.listWrap {
+    padding-top: 80px;
   }
 `;
 
@@ -80,9 +79,13 @@ const Title = styled.div`
 
 const MenuWrap = styled.div`
   background-color: white;
-  margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
   box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 3;
 `;
 
 class DesignList extends Component {
@@ -152,7 +155,7 @@ class DesignList extends Component {
           </Content>
         </MenuWrap>
         <Content>
-          <Wrapper>
+          <Wrapper className="listWrap">
             {this.state.rendering &&
               <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>}
           </Wrapper>

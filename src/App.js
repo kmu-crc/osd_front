@@ -23,6 +23,7 @@ import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllReque
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
 import TestPage3 from "pages/TestPage3";
+import SlideTestPage from "pages/SlideTestPage/SlideTestPage";
 
 class App extends Component {
   componentDidMount(){
@@ -59,6 +60,7 @@ class App extends Component {
           <Route path="/message" component={RequiresAuth(MessagePage)}/>
           <Route path="/cardTest" component={TestPage3}/>
           <Route path="/resetPw" component={ResetPwPage}/>
+          <Route path="/slideTest" component={SlideTestPage}/>
         </Switch>
       </BrowserRouter>
     );

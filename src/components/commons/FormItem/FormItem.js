@@ -354,9 +354,11 @@ export class FormMultiSelect extends Component {
   }
 
   newOptions = async () => {
-    await this.setState({ value: this.props.options[0].value });
-    if (this.props.getValue) this.props.getValue(this.props.options[0].value);
-    await this.onChangeValue(null, {value: this.state.value});
+    if (this.props.options && this.props.options.length > 0) {
+      await this.setState({ value: this.props.options[0].value });
+      if (this.props.getValue) this.props.getValue(this.props.options[0].value);
+      await this.onChangeValue(null, {value: this.state.value});
+    }
   }
 
   onChangeValue = async (event, { value }) => {

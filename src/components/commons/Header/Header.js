@@ -228,10 +228,24 @@ class Header extends Component {
   };
 
   saveKeyWord = (e) => {
-    const word = e.target.value;
-    this.setState({
-      keyword: word
-    });
+    const target = e.target;
+    const word = target.value;
+    let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
+    if (!word.match(regExp)) {
+      alert("특수문자는 사용할 수 없습니다.");
+      target.value = "";
+      return;
+    } else {
+      this.setState({
+        keyword: word
+      });
+    }
+  }
+
+  submitEnter = (e) => {
+    if (e.keyCode === 13) {
+      document.getElementById("searchLink").click();
+    }
   }
 
   render() {
@@ -299,13 +313,10 @@ class Header extends Component {
       <Head>
         <Content>
           <MainMenu>
-            <Logo href="/">
-
-            </Logo>
+            <Logo href="/"></Logo>
             <MenuItem>
               <a href="/design"
                  className={this.props.location.pathname === "/design"
-                            || this.props.location.pathname.indexOf("/design/") !== -1
                             || this.props.match.path.indexOf("/designDetail") !== -1
                             ? "active" : ""}>
               디자인
@@ -322,7 +333,6 @@ class Header extends Component {
             <MenuItem>
               <a href="/designer"
                  className={this.props.location.pathname === "/designer"
-                            || this.props.location.pathname.indexOf("/designer/") !== -1
                             || this.props.match.path.indexOf("/designerDetail") !== -1
                             ? "active" : ""}>
               디자이너
@@ -338,8 +348,8 @@ class Header extends Component {
           </MainMenu>
           <SubMenu>
             <SubMenuItem>
-              <input onChange={this.saveKeyWord}/>
-              <a href={`/search/null/null/${this.state.keyword}`}>
+              <input onChange={this.saveKeyWord} onKeyDown={this.submitEnter}/>
+              <a href={`/search/null/null/${this.state.keyword}`} id="searchLink">
                 <Icon name="search" />
               </a>
             </SubMenuItem>

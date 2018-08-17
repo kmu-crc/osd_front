@@ -77,27 +77,19 @@ const Count = styled.div`
 `;
 
 class Design extends Component {
-  goDetail = (id) => {
-    this.props.history.push(`/designDetail/${id}`)
-  }
-
   render() {
     let design = this.props.data;
 
     return (
-      <div onClick={()=>this.goDetail(design.uid)} style={{display: "inline", cursor: "pointer"}}>
+      <NavLink to={"/designDetail/"+design.uid}>
         <Designli>
           <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="title">{design.title}</div>
-            <div className="userName">
               {design.is_project === 1
-              ?
-              <Link to={`/designerDetail/${design.user_id}`}>{design.userName}님의 프로젝트</Link>
-              :
-              <Link to={`/designerDetail/${design.user_id}`}>{design.userName}님의 작품</Link>
+              ? <div className="userName">{design.userName}님의 프로젝트</div>
+              : <div className="userName">{design.userName}님의 작품</div>
               }
-            </div>
             <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
           </TextPart>
           <Count>
@@ -111,7 +103,7 @@ class Design extends Component {
             </div>
           </Count>
         </Designli>
-      </div>
+      </NavLink>
     );
   }
 }

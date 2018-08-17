@@ -77,11 +77,6 @@ const Count = styled.div`
 
 
 class Group extends Component {
-  goDetail = (id) => {
-    this.props.history.push(`/groupDetail/${id}`)
-    this.refresh();
-  }
-
   refresh = (e) => {
     if (this.props.rerender) {
       Component.forceUpdate();
@@ -94,13 +89,13 @@ class Group extends Component {
     let group = this.props.data;
 
     return(
-      <div onClick={()=>this.goDetail(group.uid)} style={{display: "inline", cursor: "pointer"}}>
+      <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
         <Groupli>
           <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
             <div className="title">{group.title}</div>
             <div className="owner">
-              <Link to={`/designerDetail/${group.user_id}`}>{group.userName}</Link>
+              {group.userName}님의 그룹
             </div>
             <div className="cate">
               최근 업데이트 {DateFormat(group.child_update_time)}
@@ -121,7 +116,7 @@ class Group extends Component {
             </div>
           </Count>
         </Groupli>
-      </div>
+      </NavLink>
     );
   }
 }
