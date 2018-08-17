@@ -77,6 +77,9 @@ const Title = styled.div`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    &:focus {
+      outline: 0;
+    }
   }
   & .searchBtn .icon {
     font-size: ${StyleGuide.font.size.heading2};
@@ -106,6 +109,9 @@ class SearchList extends Component {
   async componentDidMount() {
     if (this.props.keyword && this.props.keyword !== "null") {
       document.getElementById("searchInput").value = await this.props.keyword;
+      this.setState({
+        keyword: this.props.keyword
+      });
     }
     document.getElementById("searchInput").focus();
   }
