@@ -89,6 +89,7 @@ const MenuItem = styled.li`
 
 const CardList = styled.ul`
   padding: 10px;
+  padding-bottom: 5px;
   background-color: #dbdada;
   border-radius: 0 0 3px 3px;
 `;
