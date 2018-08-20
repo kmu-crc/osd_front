@@ -17,15 +17,23 @@ import StyleGuide from "StyleGuide";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 
 const BoardCard = styled.li`
-  padding: 10px;
   background-color: white;
   border-radius: 3px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   position: relative;
   cursor: pointer;
-  & .cardTitle{
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  img {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+  }
+  .content {
+    padding: 10px;
+  }
+  & .cardTitle {
     display: inline-block;
-    width: 80%;
+    width: 100%;
     font-size: ${StyleGuide.font.size.paragraph};
     color: ${StyleGuide.color.geyScale.scale8};
     margin-bottom: 5px;
@@ -33,7 +41,7 @@ const BoardCard = styled.li`
   & .cardInfo {
     font-size: ${StyleGuide.font.size.small};
     color: ${StyleGuide.color.geyScale.scale8};
-    width: 80%;
+    width: 100%;
     & .cardCmt {
       margin-left: 20px;
     }
@@ -41,7 +49,7 @@ const BoardCard = styled.li`
 `;
 
 const CustomModal = styled(Modal)`
-  padding: 30px;
+  padding: 20px;
   & .icon.close {
     position: absolute;
     top: 10px;
@@ -63,8 +71,8 @@ const DeleteBtn = styled.button`
   top: 50%;
   right: 5px;
   transform: translateY(-50%);
-  i.icon{
-    margin:0;
+  i.icon {
+    margin: 0;
   }
 `;
 
@@ -117,14 +125,19 @@ class DesignBoardCard extends Component {
 
   changeActive = async value => {
     this.props
-        .GetCardDetailRequest(this.props.card.uid)
-        .then(this.setState({ active: value }));
+      .GetCardDetailRequest(this.props.card.uid)
+      .then(this.setState({ active: value }));
   };
 
-  openModalHandler = async (e) => {
+  openModalHandler = async e => {
     this.props
       .GetCardDetailRequest(this.props.card.uid)
-      .then(this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid))
+      .then(
+        this.props.GetCardCommentRequest(
+          this.props.match.params.id,
+          this.props.card.uid
+        )
+      )
       .then(this.setState({ open: true }));
   };
 
@@ -132,46 +145,69 @@ class DesignBoardCard extends Component {
     console.log(data);
   };
 
-  onDelete = (e) => {
+  onDelete = e => {
     e.stopPropagation();
     const confirm = window.confirm("카드를 삭제하시겠습니까?");
     if (confirm) {
-      this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
-      .then(() => {
-        this.props.GetDesignBoardRequest(this.props.match.params.id);
-      });
+      this.props
+        .DeleteDesignCardRequest(
+          this.props.boardId,
+          this.props.card.uid,
+          this.props.token
+        )
+        .then(() => {
+          this.props.GetDesignBoardRequest(this.props.match.params.id);
+        });
     } else {
       return;
     }
-  }
+  };
 
-  onSubmitCmtForm = async (data) => {
+  onSubmitCmtForm = async data => {
     if (!this.props.token) {
       alert("로그인을 해주세요.");
       return;
     }
-    this.props.CreateCardCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.card.uid, this.props.token)
-    .then(async res => {
-      if (res.data.success === true) {
-        this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid);
-      }
-      await this.setState({
-        render: false
+    this.props
+      .CreateCardCommentRequest(
+        FormDataToJson(data),
+        this.props.match.params.id,
+        this.props.card.uid,
+        this.props.token
+      )
+      .then(async res => {
+        if (res.data.success === true) {
+          this.props.GetCardCommentRequest(
+            this.props.match.params.id,
+            this.props.card.uid
+          );
+        }
+        await this.setState({
+          render: false
+        });
+        this.setState({
+          render: true
+        });
       });
-      this.setState({
-        render: true
-      });
-    });
-  }
+  };
 
-  deleteComment = (id) => {
-    this.props.DeleteCardCommentRequest(this.props.match.params.id, this.props.card.uid, id, this.props.token)
-    .then(res => {
-      if (res.data.success === true) {
-        this.props.GetCardCommentRequest(this.props.match.params.id, this.props.card.uid);
-      }
-    });
-  }
+  deleteComment = id => {
+    this.props
+      .DeleteCardCommentRequest(
+        this.props.match.params.id,
+        this.props.card.uid,
+        id,
+        this.props.token
+      )
+      .then(res => {
+        if (res.data.success === true) {
+          this.props.GetCardCommentRequest(
+            this.props.match.params.id,
+            this.props.card.uid
+          );
+        }
+      });
+  };
 
   render() {
     const { card, detail } = this.props;
@@ -182,36 +218,50 @@ class DesignBoardCard extends Component {
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
-          <FormField name="comment" validates={["required"]} RenderComponent={FormTextArea} />
-          <Button type="submit" size="small" className="ui icon primary left labeled button">
-            <i aria-hidden="true" className="edit icon"></i>
+          <FormField
+            name="comment"
+            validates={["required"]}
+            RenderComponent={FormTextArea}
+          />
+          <Button
+            type="submit"
+            size="small"
+            className="ui icon primary left labeled button"
+          >
+            <i aria-hidden="true" className="edit icon" />
             댓글쓰기
           </Button>
         </ValidateForm>
       );
-    }
+    };
 
     return (
       <div>
         <BoardCard onClick={this.openModalHandler}>
-          <div className="cardTitle">{card.title}</div>
-          <div className="cardInfo">
-            {card.nick_name}
-            <span className="cardCmt">
-              <Icon name="comment outline"/>
-              {card.comment_count? card.comment_count : 0}
-            </span>
+          {card.first_img ? (
+            <img src={card.first_img.m_img} alt="thumbnail" />
+          ) : null}
+          <div className="content">
+            <div className="cardTitle">{card.title}</div>
+            <div className="cardInfo">
+              {card.nick_name}
+              <span className="cardCmt">
+                <Icon name="comment outline" />
+                {card.comment_count ? card.comment_count : 0}
+              </span>
+            </div>
           </div>
-          {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><i aria-hidden="true" className="trash alternate icon"></i></DeleteBtn>}
+
+          {/* {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><i aria-hidden="true" className="trash alternate icon"></i></DeleteBtn>} */}
         </BoardCard>
         <CustomModal
           open={open}
-          closeOnEscape={false}
-          closeOnRootNodeClick={false}
+          closeOnDimmerClick={true}
           onClose={this.close}
+          dimmer={true}
         >
           <Modal.Content>
-            <Icon name="close" size="big" onClick={this.onClose}></Icon>
+            <Icon name="close" size="big" onClick={this.onClose} />
             <CardTitleUpdate
               uid={detail.uid}
               title={detail.title}
@@ -238,11 +288,14 @@ class DesignBoardCard extends Component {
             {/* --------------------- 댓글 섹션 ---------------------- */}
             <CommentContainer className="ui comments">
               <h4>댓글</h4>
-              {comment.length > 0?
-                comment.map(comm=>(
+              {comment.length > 0 ? (
+                comment.map(comm => (
                   <div className="comment" key={comm.uid}>
                     <div className="avatar">
-                      <img src={comm.s_img? comm.s_img : eximg} alt="profile" />
+                      <img
+                        src={comm.s_img ? comm.s_img : eximg}
+                        alt="profile"
+                      />
                     </div>
                     <div className="content">
                       <a className="author">{comm.nick_name}</a>
@@ -251,15 +304,22 @@ class DesignBoardCard extends Component {
                       </div>
                       <div className="text">{comm.comment}</div>
                     </div>
-                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id &&
-                    <Button size="small" className="delBtn" onClick={()=>this.deleteComment(comm.uid)}>삭제</Button>
-                    }
+                    {this.props.userInfo &&
+                      this.props.userInfo.uid === comm.user_id && (
+                        <Button
+                          size="small"
+                          className="delBtn"
+                          onClick={() => this.deleteComment(comm.uid)}
+                        >
+                          삭제
+                        </Button>
+                      )}
                   </div>
                 ))
-              :
+              ) : (
                 <p>등록된 코멘트가 없습니다.</p>
-              }
-              {this.state.render? <CommentForm/> : null}
+              )}
+              {this.state.render ? <CommentForm /> : null}
             </CommentContainer>
             <Button type="button" onClick={this.onClose}>
               닫기
