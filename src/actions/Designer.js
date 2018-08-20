@@ -50,6 +50,42 @@ export function DesignerListFail() {
   }
 };
 
+export function GetDesignerTotalCountRequest(cate1, cate2) {
+  return (dispatch) => {
+    return fetch(`${host}/designer/designerCount/${cate1}/${cate2}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (!data) {
+          console.log("no data");
+          data = 0;
+        } else {
+          data = data["count(*)"];
+        }
+        dispatch(GetDesignerTotalCount(data));
+      }).catch((error) => {
+        dispatch(DesignerTotalCountFail());
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetDesignerTotalCount(data) {
+  return {
+    type: types.GET_DESIGNER_TOTAL_COUNT,
+    Count : data
+  }
+};
+
+export function DesignerTotalCountFail() {
+  return {
+    type: types.GET_DESIGNER_TOTAL_COUNT_FAIL,
+    Count: 0
+  }
+}
+
 export function GetDesignerDetailRequest(id) {
   return (dispatch) => {
     return fetch(`${host}/designer/designerDetail/`+id, {
@@ -88,9 +124,9 @@ export function GetDesignerCountRequest(id) {
       console.log("designer count >>", data);
       if (!data) {
         console.log("no data");
-        data = { 
-          total_like: 0, 
-          total_design: 0, 
+        data = {
+          total_like: 0,
+          total_design: 0,
           total_group: 0,
           total_view: 0
         };

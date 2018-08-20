@@ -317,6 +317,7 @@ class Header extends Component {
             <MenuItem>
               <a href="/design"
                  className={this.props.location.pathname === "/design"
+                            || this.props.match.path.indexOf("com/design/") !== -1
                             || this.props.match.path.indexOf("/designDetail") !== -1
                             ? "active" : ""}>
               디자인
@@ -333,6 +334,7 @@ class Header extends Component {
             <MenuItem>
               <a href="/designer"
                  className={this.props.location.pathname === "/designer"
+                            || this.props.match.path.indexOf("com/designer/") !== -1
                             || this.props.match.path.indexOf("/designerDetail") !== -1
                             ? "active" : ""}>
               디자이너

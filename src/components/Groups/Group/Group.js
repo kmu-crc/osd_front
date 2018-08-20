@@ -66,7 +66,7 @@ const Count = styled.div`
   font-size: 12px;
   & div {
     float: left;
-    width: 40px;
+    padding-right: 10px;
   }
   &::after{
     display: block;

@@ -75,12 +75,13 @@ class Category2 extends Component {
     await this.props.handleCate1(value);
   }
 
-  onChangeCategory2 = async value => {
+  onChangeCategory2 = async (e, cate1, value) => {
+    e.stopPropagation();
     if (value === 0) {
       value = null;
     }
-    await this.props.handleCate1(this.props.cate1);
-    this.props.handleCate2(value);
+    //await this.props.handleCate1(this.props.cate1);
+    this.props.handleCate2(cate1, value);
   };
 
   render(){
@@ -90,12 +91,13 @@ class Category2 extends Component {
       return (
           <ul className="cateUl subCateUl">
             {list && list.length !== 0 && list.map((subcate, i) => (
-              <SubCateItem key={i}
-                           className={subcate.value == this.props.cate2
-                                      ? "active" : ""}
-                           onClick={() => this.onChangeCategory2(subcate.value)}>
-              {subcate.text}
-              </SubCateItem>
+              subcate.value !== 0 &&
+                <SubCateItem key={i}
+                             className={subcate.value == this.props.cate2
+                                        ? "active" : ""}
+                             onClick={(e) => this.onChangeCategory2(e, subcate.parent, subcate.value)}>
+                  {subcate.text}
+                </SubCateItem>
             ))}
           </ul>
       )
@@ -109,15 +111,16 @@ class Category2 extends Component {
                   mobile={this.props.mobile ? this.props.mobile : null}>
         <ul className="cateUl">
           {this.props.category1.map((cate, i) => (
-            <CateItem key={i}
-                      className={cate.value == this.props.cate1 ||
-                                (cate.value === 0 && this.props.cate1 === null) ||
-                                (cate.value === 0 && this.props.cate1 === "null")
-                                ? "active" : ""}
-                      onClick={() => this.onChangeCategory1(cate.value)}>
-              {cate.text}
-              <Cate2List parentNum={i}/>
-            </CateItem>
+            cate.value !== 0 &&
+              <CateItem key={i}
+                        className={cate.value == this.props.cate1 ||
+                                  (cate.value === 0 && this.props.cate1 === null) ||
+                                  (cate.value === 0 && this.props.cate1 === "null")
+                                  ? "active" : ""}
+                        onClick={() => this.onChangeCategory1(cate.value)}>
+                {cate.text}
+                <Cate2List parentNum={i}/>
+              </CateItem>
           ))}
 
         </ul>

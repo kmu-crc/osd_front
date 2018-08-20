@@ -12,9 +12,6 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   width: 100%;
-  &.listWrap {
-    padding-top: 80px;
-  }
 `;
 
 const Content = styled(ContentBox)`
@@ -87,30 +84,44 @@ const MenuWrap = styled.div`
   z-index: 3;
 `;
 
+const Head = styled.div`
+  padding-top: 80px;
+  padding-bottom: 2rem;
+  font-size: ${StyleGuide.font.size.paragraph};
+`;
+
 
 class DesignerList extends Component {
   state = {
     rendering: true
   }
 
-  changeState = () => {
-    this.setState({
-      rendering: false
-    });
-    setTimeout(()=>{
-      this.setState({
-        rendering: true
-      });
-    }, 200);
+  componentDidMount(){
+    this.props.GetDesignerTotalCountRequest(this.props.cate1, this.props.cate2);
   }
 
-  cate1Change = (value, value2) => {
+  changeState = async () => {
+    await this.setState({
+      rendering: false
+    });
+    await this.setState({
+      rendering: true
+    });
+  }
+
+  cate1Change = (value) => {
     this.props.history.replace(`/designer/${this.props.sort}/${value}/null`);
+    this.props.GetDesignerTotalCountRequest(value, null);
     this.changeState();
   }
 
-  cate2Change = (value) => {
-    this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
+  cate2Change = (cate1, value) => {
+    if (cate1 && this.props.cate1 !== cate1) {
+      this.props.history.replace(`/designer/${this.props.sort}/${cate1}/${value}`);
+    } else {
+      this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
+    }
+    this.props.GetDesignerTotalCountRequest(this.props.cate1, value);
     this.changeState();
   }
 
@@ -121,14 +132,37 @@ class DesignerList extends Component {
 
   render(){
     const {sort, cate1, cate2} = this.props;
+    const Header = () => {
+      const cate1List = this.props.category1;
+      const cate2List = this.props.category2;
+
+      if (cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0) {
+        const cate1Name = this.props.cate1 && this.props.cate1 !== "null"
+                          ? cate1List[this.props.cate1]
+                          : null;
+        const n = parseInt(this.props.cate1, 10);
+        const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
+                          ? cate2List[n].filter(sub => sub.value == this.props.cate2)
+                          : null;
+        return (
+          <Head>
+            <span>전체 </span>
+            {this.props.cate1 && this.props.cate1 !== "null" &&
+              <span> > {cate1Name.text} </span>
+            }
+            {this.props.cate2 && this.props.cate2 !== "null" &&
+              <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
+            }
+            <span> ({this.props.Count}건)</span>
+          </Head>
+        );
+      } else {
+        return null;
+      }
+    };
+
     return(
       <div>
-        {/* <ImgWrapper>
-          <Title>
-            <h1>디자이너</h1>
-            <p>오픈디자인은 다양한 분야에서 활동하는 디자이너들의 디자인 공유를 지향합니다.</p>
-          </Title>
-        </ImgWrapper> */}
         <MenuWrap>
           <Content>
             <Wrapper>
@@ -156,6 +190,7 @@ class DesignerList extends Component {
           </Content>
         </MenuWrap>
         <Content>
+          <Header/>
           <Wrapper className="listWrap">
             {this.state.rendering &&
             <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>}

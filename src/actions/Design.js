@@ -49,6 +49,42 @@ export function DesignListFail() {
   }
 }
 
+export function GetDesignTotalCountRequest(cate1, cate2) {
+  return (dispatch) => {
+    return fetch(`${host}/design/designCount/${cate1}/${cate2}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (!data) {
+          console.log("no data");
+          data = 0;
+        } else {
+          data = data["count(*)"];
+        }
+        dispatch(GetDesignTotalCount(data));
+      }).catch((error) => {
+        dispatch(DesignTotalCountFail());
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetDesignTotalCount(data) {
+  return {
+    type: types.GET_DESIGN_TOTAL_COUNT,
+    Count : data
+  }
+};
+
+export function DesignTotalCountFail() {
+  return {
+    type: types.GET_DESIGN_TOTAL_COUNT_FAIL,
+    Count: 0
+  }
+}
+
 export function GetDesignDetailRequest(id, token) {
   return (dispatch) => {
     if (token == null) {

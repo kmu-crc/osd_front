@@ -12,9 +12,6 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   width: 100%;
-  &.listWrap {
-    padding-top: 80px;
-  }
 `;
 
 const Content = styled(ContentBox)`
@@ -41,42 +38,6 @@ const MenuContainer = styled(Grid) `
   }
 `;
 
-const ImgWrapper = styled.div`
-  background-image: url(${design_bg});
-  background-position: center;
-  background-size: cover;
-  width: 100%;
-  height: 200px;
-  position: relative;
-  &::after{
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-  }
-`;
-
-const Title = styled.div`
-  width: 100%;
-  color: white;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
-  h1{
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: 2.5rem;
-    font-weight: bold;
-  }
-`;
-
 const MenuWrap = styled.div`
   background-color: white;
   border-top: 1px solid rgba(0,0,0,0.2);
@@ -88,9 +49,19 @@ const MenuWrap = styled.div`
   z-index: 3;
 `;
 
+const Head = styled.div`
+  padding-top: 80px;
+  padding-bottom: 2rem;
+  font-size: ${StyleGuide.font.size.paragraph};
+`;
+
 class DesignList extends Component {
   state = {
     rendering: true
+  }
+
+  componentDidMount(){
+    this.props.GetDesignTotalCountRequest(this.props.cate1, this.props.cate2);
   }
 
   changeState = async () => {
@@ -102,13 +73,19 @@ class DesignList extends Component {
     });
   } // state 값 업데이트를 통해 컴포넌트 새로 렌더링함
 
-  cate1Change = (value, value2) => {
+  cate1Change = (value) => {
     this.props.history.replace(`/design/${this.props.sort}/${value}/null`);
+    this.props.GetDesignTotalCountRequest(value, null);
     this.changeState();
   }
 
-  cate2Change = (value) => {
-    this.props.history.replace(`/design/${this.props.sort}/${this.props.cate1}/${value}`);
+  cate2Change = (cate1, value) => {
+    if (cate1 && this.props.cate1 !== cate1) {
+      this.props.history.replace(`/design/${this.props.sort}/${cate1}/${value}`);
+    } else {
+      this.props.history.replace(`/design/${this.props.sort}/${this.props.cate1}/${value}`);
+    }
+    this.props.GetDesignTotalCountRequest(this.props.cate1, value);
     this.changeState();
   }
 
@@ -119,14 +96,36 @@ class DesignList extends Component {
 
   render() {
     const { sort, cate1, cate2 } = this.props;
+    const Header = () => {
+      const cate1List = this.props.category1;
+      const cate2List = this.props.category2;
+
+      if (cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0) {
+        const cate1Name = this.props.cate1 && this.props.cate1 !== "null"
+                          ? cate1List[this.props.cate1]
+                          : null;
+        const n = parseInt(this.props.cate1, 10);
+        const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
+                          ? cate2List[n].filter(sub => sub.value == this.props.cate2)
+                          : null;
+        return (
+          <Head>
+            <span>전체 </span>
+            {this.props.cate1 && this.props.cate1 !== "null" &&
+              <span> > {cate1Name.text} </span>
+            }
+            {this.props.cate2 && this.props.cate2 !== "null" &&
+              <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
+            }
+            <span> ({this.props.Count}건)</span>
+          </Head>
+        );
+      } else {
+        return null;
+      }
+    };
     return (
       <div>
-        {/* <ImgWrapper>
-          <Title>
-            <h1>디자인</h1>
-            <p>여러 디자이너들의 작품을 쉽게 공유하고 참고할 수 있습니다.</p>
-          </Title>
-        </ImgWrapper> */}
         <MenuWrap>
           <Content>
             <Wrapper>
@@ -155,9 +154,11 @@ class DesignList extends Component {
           </Content>
         </MenuWrap>
         <Content>
+          <Header/>
           <Wrapper className="listWrap">
             {this.state.rendering &&
-              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>}
+              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>
+            }
           </Wrapper>
         </Content>
       </div>
