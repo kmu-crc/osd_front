@@ -57,7 +57,7 @@ class Category extends Component {
     if (value === 0) {
       value = null;
     }
-    this.props.handleCate2(value);
+    this.props.handleCate2(this.props.cate1, value);
   };
 
   render() {

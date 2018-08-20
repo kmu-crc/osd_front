@@ -53,7 +53,7 @@ const ProfileSection = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.25);
     overflow: hidden;
     background-position: 50%;
-    background-size: contain;
+    background-size: cover;
   }
   & .title {
     min-height: 40px;
@@ -186,7 +186,7 @@ class MyDetail extends Component {
       if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
         return <div />;
       } else {
-        return <MyDesignContainer token={this.props.token} history={this.props.history}/>;
+        return <MyDesignContainer token={this.props.token}/>;
       }
     };
 

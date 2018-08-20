@@ -49,6 +49,42 @@ export function GroupListFail() {
   }
 }
 
+export function GetGroupTotalCountRequest() {
+  return (dispatch) => {
+    return fetch(`${host}/group/groupCount`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (!data) {
+          console.log("no data");
+          data = 0;
+        } else {
+          data = data["count(*)"];
+        }
+        dispatch(GetGroupTotalCount(data));
+      }).catch((error) => {
+        dispatch(GroupTotalCountFail());
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetGroupTotalCount(data) {
+  return {
+    type: types.GET_GROUP_TOTAL_COUNT,
+    Count : data
+  }
+};
+
+export function GroupTotalCountFail() {
+  return {
+    type: types.GET_GROUP_TOTAL_COUNT_FAIL,
+    Count: 0
+  }
+}
+
 export function GetGroupDetailRequest(id) {
   return (dispatch) => {
     return fetch(`${host}/group/groupDetail/${id}`, {
@@ -87,9 +123,9 @@ export function GetGroupCountRequest(id) {
       console.log("group count >>", data);
       if (!data) {
         console.log("no data");
-        data = { 
-          like: 0, 
-          design: 0, 
+        data = {
+          like: 0,
+          design: 0,
           group: 0 };
       }
       dispatch(GetGroupCount(data));

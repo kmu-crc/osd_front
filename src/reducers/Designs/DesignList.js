@@ -7,7 +7,8 @@ const initialState = {
   },
   status: {
     DesignList: [],
-    DesignListAdded: []
+    DesignListAdded: [],
+    Count: 0
   }
 };
 
@@ -37,6 +38,18 @@ export function DesignList(state, action) {
           DesignListAdded: { $set: action.DesignListAdded }
         }
        });
+    case types.GET_DESIGN_TOTAL_COUNT:
+       return update(state, {
+         status: {
+           Count: { $set: action.Count }
+         }
+       });
+    case types.GET_DESIGN_TOTAL_COUNT_FAIL:
+      return update(state, {
+        status: {
+          Count: { $set: action.Count }
+        }
+      });
     default:
       return state;
   }

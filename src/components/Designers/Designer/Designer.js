@@ -64,7 +64,7 @@ const Count = styled.div`
   font-size: 12px;
   & div {
     float: left;
-    width: 40px;
+    padding-right: 10px;
   }
   &::after{
     display: block;
@@ -74,15 +74,11 @@ const Count = styled.div`
 `;
 
 class designer extends Component {
-  goDetail = (id) => {
-    this.props.history.push(`/designerDetail/${id}`)
-  }
-
   render(){
     let designer = this.props.data;
 
     return(
-      <div onClick={()=>this.goDetail(designer.uid)} style={{display: "inline", cursor: "pointer"}}>
+      <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>
           <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${profile})`}}/>
           <TextPart>
@@ -105,7 +101,7 @@ class designer extends Component {
             </div>
           </Count>
         </Designerli>
-      </div>
+      </NavLink>
     );
   }
 }

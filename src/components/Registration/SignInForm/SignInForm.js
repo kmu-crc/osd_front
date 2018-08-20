@@ -10,11 +10,21 @@ import { FormInput } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 
 const BtnWrap = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
 `;
 
 const LoginBtn = styled(Button)`
   margin-bottom: 1rem;
+`;
+
+const Subinfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  color: rgba(0, 0, 0, 0.87);
+  & .signUpBtn {
+    text-decoration: underline;
+  }
 `;
 
 const FindPwBtn = styled.button`
@@ -105,11 +115,14 @@ class SignInForm extends Component {
             this.liveCheck("password");
           }}
         />
-        <div>
+        <Subinfo>
           <Link to="/resetPw">
             <FindPwBtn type="button">비밀번호 찾기</FindPwBtn>
           </Link>
-        </div>
+          <Link to="/signup" className="signUpBtn">
+            회원가입
+          </Link>
+        </Subinfo>
         <BtnWrap>
           <LoginBtn type="submit" round={true} fluid={true}>
             로그인
@@ -132,11 +145,6 @@ class SignInForm extends Component {
             )}
           />
         </BtnWrap>
-        <Link to="/signup">
-          <LoginBtn round={true} fluid={true}>
-            회원가입
-          </LoginBtn>
-        </Link>
       </form>
     );
   }

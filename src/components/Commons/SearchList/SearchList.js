@@ -77,6 +77,9 @@ const Title = styled.div`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    &:focus {
+      outline: 0;
+    }
   }
   & .searchBtn .icon {
     font-size: ${StyleGuide.font.size.heading2};
@@ -103,26 +106,38 @@ class SearchList extends Component {
     keyword: ""
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    if (this.props.keyword && this.props.keyword !== "null") {
+      document.getElementById("searchInput").value = await this.props.keyword;
+      this.setState({
+        keyword: this.props.keyword
+      });
+    }
     document.getElementById("searchInput").focus();
   }
 
-  changeState = () => { // 리렌더링을 위한 state값 변경
-    this.setState({
+  changeState = async () => { // 리렌더링을 위한 state값 변경
+    await this.setState({
       rendering: false
     });
-    setTimeout(()=>{
-      this.setState({
-        rendering: true
-      });
-    }, 200);
+    await this.setState({
+      rendering: true
+    });
   }
 
   getSearchValue = (e) => {
-    const value = e.target.value;
-    this.setState({
-      keyword: value
-    });
+    const target = e.target;
+    const value = target.value;
+    let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
+    if (!value.match(regExp)) {
+      alert("특수문자는 사용할 수 없습니다.");
+      target.value = "";
+      return;
+    } else {
+      this.setState({
+        keyword: value
+      });
+    }
   }
 
   submitEnter = (e) => {
@@ -154,7 +169,11 @@ class SearchList extends Component {
       <div>
         <ImgWrapper>
           <Title>
-            <input id="searchInput" placeholder="검색어를 입력하세요" onChange={this.getSearchValue} onKeyDown={this.submitEnter}/>
+            <input id="searchInput"
+                   placeholder="검색어를 입력하세요"
+                   onChange={this.getSearchValue}
+                   onKeyDown={this.submitEnter}
+                   />
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>
             </button>
@@ -185,10 +204,10 @@ class SearchList extends Component {
           {this.state.rendering &&
           <Wrapper>
             {this.props.type === "designer"
-            ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} history={this.props.history}/>
+            ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword}/>
             : this.props.type === "group"
-            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} history={this.props.history}/>
-            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} history={this.props.history}/>
+            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword}/>
+            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword}/>
             }
           </Wrapper>
           }

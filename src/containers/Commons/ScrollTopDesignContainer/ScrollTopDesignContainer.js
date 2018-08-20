@@ -21,10 +21,9 @@ class ScrollTopDesignContainer extends Component {
         <Loading/>
         :
         <ScrollList getListRequest={this.getList}
-        ListComponent={Design}
-        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-        mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"
-        history={this.props.history}/>
+                    ListComponent={Design}
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+                    mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
         }
       </div>
     );

@@ -13,10 +13,6 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   width: 100%;
-  margin-bottom: 30px;
-  & ul {
-    margin-top: 30px;
-  }
 `;
 
 const Content = styled(ContentBox)`
@@ -94,26 +90,37 @@ const ImgWrapper = styled.div`
 
 const MenuWrap = styled.div`
   background-color: white;
-  margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
   box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 3;
 `;
 
+const Head = styled.div`
+  padding-top: 80px;
+  padding-bottom: 2rem;
+  font-size: ${StyleGuide.font.size.paragraph};
+`;
 
 class GroupList extends Component {
   state = {
     rendering: true
   }
 
-  changeState = () => {
-    this.setState({
+  componentDidMount(){
+    this.props.GetGroupTotalCountRequest();
+  }
+
+  changeState = async () => {
+    await this.setState({
       rendering: false
     });
-    setTimeout(()=>{
-      this.setState({
-        rendering: true
-      });
-    }, 200);
+    await this.setState({
+      rendering: true
+    });
   }
 
   sortChange = (e, { value }) => {
@@ -123,14 +130,16 @@ class GroupList extends Component {
 
   render(){
     const { sort } = this.props;
+    const Header = () => {
+      return (
+        <Head>
+          <span>전체 ({this.props.Count}건)</span>
+        </Head>
+      );
+    };
+
     return(
       <div>
-        {/* <ImgWrapper>
-          <Title>
-            <h1>그룹</h1>
-            <p>여러 디자인들을 하나의 그룹으로 묶어 관리할 수 있습니다.</p>
-          </Title>
-        </ImgWrapper> */}
         <MenuWrap>
           <Content>
             <Wrapper>
@@ -146,7 +155,8 @@ class GroupList extends Component {
           </Content>
         </MenuWrap>
         <Content>
-          <Wrapper>
+          <Header/>
+          <Wrapper className="listWrap">
             {this.state.rendering && <ScrollGroupListContainer sort={sort} history={this.props.history}/>}
           </Wrapper>
         </Content>

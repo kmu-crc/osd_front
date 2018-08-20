@@ -7,7 +7,8 @@ const initialState = {
   },
   status: {
     GroupList: [],
-    GroupListAdded: []
+    GroupListAdded: [],
+    Count: 0
   }
 };
 
@@ -35,6 +36,18 @@ export function GroupList(state, action) {
           status: {
             GroupList: { $set: action.GroupList },
             GroupListAdded: { $set: action.GroupListAdded }
+          }
+        });
+      case types.GET_GROUP_TOTAL_COUNT:
+        return update(state, {
+          status: {
+            Count: { $set: action.Count }
+          }
+        });
+      case types.GET_GROUP_TOTAL_COUNT_FAIL:
+        return update(state, {
+          status: {
+            Count: { $set: action.Count }
           }
         });
     default:

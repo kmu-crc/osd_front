@@ -87,10 +87,8 @@ export function GetCategoryAllRequest() {
     dispatch(GetCategoryAll());
     return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
     .then((res) => {
-      console.log("res", res);
       return res.json();
     }).then(function (res) {
-      console.log(res);
       let category1 = res.data.category1.map(data => {
         return { text: data.name, value: data.uid };
       });
@@ -98,7 +96,7 @@ export function GetCategoryAllRequest() {
       let category2 = [];
       res.data.category2.map(data => {
         let arr = data.map(item => {
-          return { text: item.name, value: item.uid };
+          return { text: item.name, value: item.uid, parent: item.parents_id };
         });
         arr.unshift({ text: "전체", value: 0 });
       category2.push(arr);

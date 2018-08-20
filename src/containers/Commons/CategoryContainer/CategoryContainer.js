@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import Category from "components/Commons/Category";
 import Category2 from "components/Commons/Category2";
 import { withRouter } from "react-router";
