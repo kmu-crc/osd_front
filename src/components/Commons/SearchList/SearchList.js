@@ -116,15 +116,13 @@ class SearchList extends Component {
     document.getElementById("searchInput").focus();
   }
 
-  changeState = () => { // 리렌더링을 위한 state값 변경
-    this.setState({
+  changeState = async () => { // 리렌더링을 위한 state값 변경
+    await this.setState({
       rendering: false
     });
-    setTimeout(()=>{
-      this.setState({
-        rendering: true
-      });
-    }, 200);
+    await this.setState({
+      rendering: true
+    });
   }
 
   getSearchValue = (e) => {
