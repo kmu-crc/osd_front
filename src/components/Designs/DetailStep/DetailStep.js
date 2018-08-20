@@ -24,7 +24,6 @@ const Board = styled.div`
 
 const BoardMask = styled.div`
   width: 100%;
-  // height: 100%;
   padding-bottom: 50px;
 `;
 
@@ -73,28 +72,53 @@ class DetailStep extends Component {
       JSON.stringify(this.props.DesignDetailStep) !==
       JSON.stringify(nextProps.DesignDetailStep)
     ) {
-      if (
-        this.boardMask._reactInternalFiber.child.stateNode >
-        nextProps.DesignDetailStep.length * 264 + 250
-      ) {
-        this.setState({
-          boardWidth: nextProps.DesignDetailStep.length * 264 + 250
-        });
+      console.log("this.boardMask._reactInternalFiber.child.stateNode", this.boardMask._reactInternalFiber.child.stateNode.scrollLeft)
+      if(this.props.isTeam){
+        if (
+          this.boardMask._reactInternalFiber.child.stateNode >
+          nextProps.DesignDetailStep.length * 264 + 250
+        ) {
+          this.setState({
+            boardWidth: nextProps.DesignDetailStep.length * 264 + 250
+          });
+        } else {
+          this.setState({
+            boardWidth: nextProps.DesignDetailStep.length * 264 + 250,
+            right: true,
+            scroll: true
+          });
+        }
       } else {
-        this.setState({
-          boardWidth: nextProps.DesignDetailStep.length * 264 + 250,
-          right: true,
-          scroll: true
-        });
+        if (
+          this.boardMask._reactInternalFiber.child.stateNode >
+          nextProps.DesignDetailStep.length * 264
+        ) {
+          this.setState({
+            boardWidth: nextProps.DesignDetailStep.length * 264
+          });
+        } else {
+          this.setState({
+            boardWidth: nextProps.DesignDetailStep.length * 264,
+            right: true,
+            scroll: true
+          });
+        }
       }
+
     }
     return true;
   }
   componentDidMount() {
     this.props.GetDesignBoardRequest(this.props.id);
-    this.setState({
-      boardWidth: this.props.DesignDetailStep.length * 264 + 250
-    });
+    if(this.props.isTeam){
+      this.setState({
+        boardWidth: this.props.DesignDetailStep.length * 264 + 250
+      });
+    } else {
+      this.setState({
+        boardWidth: this.props.DesignDetailStep.length * 264
+      });
+    }
   }
   changeBoard = id => {
     this.setState({ activeBoard: id });
