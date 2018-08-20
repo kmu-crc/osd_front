@@ -482,7 +482,9 @@ class DesignDetail extends Component {
               <button>수정</button>
             </Link>
           </li>
-          <li>
+          <li style={{
+              display: designDetail.is_team ? "block" : "none"
+            }}>
             <button onClick={this.deleteDesign}>
               삭제
             </button>
