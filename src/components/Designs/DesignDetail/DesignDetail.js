@@ -474,7 +474,9 @@ class DesignDetail extends Component {
     const SubMenuCompo = () => {
       return (
         <SideMenu>
-          <li>
+          <li style={{
+              display: designDetail.is_team ? "block" : "none"
+            }}>
             <Link
               to={`/designModify/${this.props.id}`}
               onClick={this.onCloseMoreBtn}
