@@ -4,12 +4,12 @@ const StyleGuide = {
     notoSerif: "'Noto Serif', serif",
     lineHeight: 1.4,
     size: {
-      heading1: "45px",
-      heading2: "36px",
-      heading3: "26px",
-      heading4: "18px",
-      paragraph: "14px",
-      small: "12px"
+      heading1: "3.2rem",
+      heading2: "2.6rem",
+      heading3: "1.9rem",
+      heading4: "1.3rem",
+      paragraph: "1rem",
+      small: "0.86rem"
     }
   },
   color: {

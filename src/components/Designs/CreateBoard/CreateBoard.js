@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import ValidateForm from "components/Commons/ValidateForm";
-import { FormInput } from "components/Commons/FormItem";
 import { Button, Icon } from "semantic-ui-react";
-import FormDataToJson from "modules/FormDataToJson";
+import { FormInput } from "components/Commons/FormItems";
+import { ValidationGroup } from "modules/FormControl";
 
 const Board = styled.li`
   padding: 5px;
@@ -35,7 +34,7 @@ const Title = styled.div`
 
 const ButtonWrap = styled.div`
   margin-top: 1rem;
-`
+`;
 
 const CloseBtn = styled(Button)`
   background-color: transparent !important;
@@ -44,51 +43,81 @@ const CloseBtn = styled(Button)`
   margin-left: 10px !important;
 `;
 
+const FInput = styled.div`
+  & > div {
+    margin-bottom: 1.5rem;
+  }
+`;
+
 class CreateBoard extends Component {
   state = {
     active: false
   };
+
+  onChangeValue = async data => {
+    let obj = {};
+    if (data.target) {
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+    console.log(this.state);
+  };
+
   formActive = async () => {
     await this.setState({ active: true });
-    this.form._reactInternalFiber.child.child.stateNode.title.focus();
+    setTimeout(() => {
+      this.state.title.target.focus();
+    }, 100);
   };
-  handleSubmit = data => {
-    let formData = FormDataToJson(data);
-    formData.order = this.props.order;
-    console.log(formData);
-    this.props
-      .CreateDesignBoardRequest(formData, this.props.designId, this.props.token)
+
+  handleSubmit = async e => {
+    e.preventDefault();
+    let data = { ...this.state };
+    console.log("??????", data);
+    data.title.order = this.props.order;
+    await ValidationGroup(data, true)
       .then(data => {
-        this.props.GetDesignBoardRequest(this.props.designId);
-      });
-    this.setState({ active: false });
+        this.props
+          .CreateDesignBoardRequest(data, this.props.designId, this.props.token)
+          .then(data => {
+            this.props.GetDesignBoardRequest(this.props.designId);
+          });
+        this.setState({ active: false });
+      })
+      .catch(console.log("실패"));
   };
-  handelClose = () => {
-    this.setState({ active: false });
+  handelClose = (e) => {
+    if(e.type === "blur" && !this.form.contains(
+      e.relatedTarget
+    )){
+      this.setState({ active: false });
+    } else if(e.type === "click") {
+      this.setState({ active: false });
+    }
   };
   render() {
     return (
       <Board>
         {this.state.active ? (
-          <ValidateForm
-            onSubmit={this.handleSubmit}
-            ref={ref => (this.form = ref)}
-          >
-            <FormInput
-              name="title"
-              type="text"
-              placeholder="새 보드 추가"
-              onBlur={() => this.setState({ active: false })}
-            />
+          <form onSubmit={this.handleSubmit} ref={ref => (this.form = ref)} tabIndex="1" onBlur={this.handelClose}>
+            <FInput>
+              <FormInput
+                name="title"
+                placeholder="새 단계 추가"
+                getValue={this.onChangeValue}
+                validates={["Required"]}
+              />
+            </FInput>
+
             <ButtonWrap>
-              <Button>생성</Button>
+              <Button type="submit">생성</Button>
               <CloseBtn type="button" onClick={this.handelClose}>
                 <Icon name="close" />
               </CloseBtn>
             </ButtonWrap>
-          </ValidateForm>
+          </form>
         ) : (
-          <Title onClick={this.formActive}>새 보드 추가 +</Title>
+          <Title onClick={this.formActive}>새 단계 추가 +</Title>
         )}
       </Board>
     );

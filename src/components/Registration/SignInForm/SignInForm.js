@@ -117,7 +117,7 @@ class SignInForm extends Component {
         />
         <Subinfo>
           <Link to="/resetPw">
-            <FindPwBtn>비밀번호를 잊으셨나요?</FindPwBtn>
+            <FindPwBtn type="button">비밀번호 찾기</FindPwBtn>
           </Link>
           <Link to="/signup" className="signUpBtn">
             회원가입
