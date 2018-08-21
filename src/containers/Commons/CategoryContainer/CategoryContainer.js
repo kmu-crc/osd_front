@@ -3,19 +3,21 @@ import { connect } from "react-redux";
 import Category from "components/Commons/Category";
 import Category2 from "components/Commons/Category2";
 import { withRouter } from "react-router";
+import { Grid } from "semantic-ui-react";
 
 class CategoryContainer extends Component {
 
   render() {
     return(
-      <div style={{width: "50%"}}>
+      <Grid.Column tablet={10} computer={8} widescreen={12}
+      largeScreen={12}>
         {this.props.category1.length > 0 && this.props.category2.length > 0 &&
-          <div style={{width: "100%"}}>
+          <div>
             <Category2 {...this.props}/>
             <Category {...this.props}/>
           </div>
         }
-      </div>
+      </Grid.Column>
     );
   }
 }

@@ -168,17 +168,17 @@ class DesignerList extends Component {
             <Wrapper>
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
-                  <CategoryContainer widescreen={8}
-                                     largeScreen={10}
-                                     computer={8}
-                                     tablet={10}
-                                     mobile={11}
-                                     handleCate1={this.cate1Change}
-                                     handleCate2={this.cate2Change}
-                                     cate1={this.props.cate1}
-                                     cate2={this.props.cate2}/>
-                  <Sorting widescreen={8}
-                           largeScreen={6}
+                <CategoryContainer widescreen={12}
+                                    largeScreen={12}
+                                    computer={8}
+                                    tablet={10}
+                                    mobile={11}
+                                    handleCate1={this.cate1Change}
+                                    handleCate2={this.cate2Change}
+                                    cate1={this.props.cate1}
+                                    cate2={this.props.cate2}/>
+                  <Sorting widescreen={4}
+                           largeScreen={4}
                            computer={8}
                            tablet={5}
                            mobile={4}
