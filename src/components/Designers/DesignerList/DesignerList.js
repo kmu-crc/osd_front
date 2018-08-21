@@ -169,7 +169,7 @@ class DesignerList extends Component {
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
                   <CategoryContainer widescreen={8}
-                                     largeScreen={8}
+                                     largeScreen={10}
                                      computer={8}
                                      tablet={10}
                                      mobile={11}
@@ -178,7 +178,7 @@ class DesignerList extends Component {
                                      cate1={this.props.cate1}
                                      cate2={this.props.cate2}/>
                   <Sorting widescreen={8}
-                           largeScreen={8}
+                           largeScreen={6}
                            computer={8}
                            tablet={5}
                            mobile={4}

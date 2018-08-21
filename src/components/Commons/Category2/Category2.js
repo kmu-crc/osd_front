@@ -60,7 +60,7 @@ const CateColumn = styled(Grid.Column)`
 `;
 
 const CateItem = styled.li`
-  padding-right: 2rem;
+  padding-right: 20px;
 `;
 
 const SubCateItem = styled.li`
