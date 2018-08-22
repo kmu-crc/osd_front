@@ -5,14 +5,14 @@ import ContentList from "components/Commons/ContentList";
 
 class WaitingDesignContainer extends Component {
   componentWillMount(){
-    this.props.GetWaitingDesignRequest(this.props.match.params.id, this.props.match.params.sort);
+    this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
   }
 
   setOut = (id) => {
-    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
+    this.props.DeleteDesignInGroupRequest(this.props.id, id)
     .then(res => {
       if (res.data.success === true) {
-        this.props.GetWaitingDesignRequest(this.props.match.params.id, this.props.match.params.sort)
+        this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
       }
     }).catch(err => {
       console.log(err);
@@ -20,10 +20,10 @@ class WaitingDesignContainer extends Component {
   }
 
   setAccept = (id) => {
-    this.props.UpdateDesignInGroupRequest(this.props.match.params.id, id)
+    this.props.UpdateDesignInGroupRequest(this.props.id, id)
     .then(res => {
       if (res.data.success === true) {
-        this.props.GetWaitingDesignRequest(this.props.match.params.id, this.props.match.params.sort)
+        this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
       }
     }).catch(err => {
       console.log(err);

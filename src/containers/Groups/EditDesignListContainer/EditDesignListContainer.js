@@ -5,14 +5,14 @@ import ContentList from "components/Commons/ContentList";
 
 class EditDesignListContainer extends Component {
   componentWillMount(){
-    this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+    this.props.GetDesignInGroupRequest(this.props.id, null, null);
   }
 
   setOut = (id) => {
-    this.props.DeleteDesignInGroupRequest(this.props.match.params.id, id)
+    this.props.DeleteDesignInGroupRequest(this.props.id, id)
     .then(res => {
       if (res.data.success === true) {
-        this.props.GetDesignInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+        this.props.GetDesignInGroupRequest(this.props.id, null, null);
       }
     }).catch(err => {
       console.log(err);

@@ -5,14 +5,14 @@ import ContentList from "components/Commons/ContentList";
 
 class EditGroupListContainer extends Component {
   componentWillMount(){
-    this.props.GetGroupInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+    this.props.GetGroupInGroupRequest(this.props.id, null, null);
   }
 
   setOut = (id) => {
-    this.props.DeleteGroupInGroupRequest(this.props.match.params.id, id)
+    this.props.DeleteGroupInGroupRequest(this.props.id, id)
     .then(res => {
       if (res.data.success === true) {
-        this.props.GetGroupInGroupRequest(this.props.match.params.id, null, this.props.match.params.sort);
+        this.props.GetGroupInGroupRequest(this.props.id, null, null);
       }
     }).catch(err=>{
       console.log(err);
