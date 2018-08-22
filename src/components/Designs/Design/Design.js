@@ -23,11 +23,8 @@ const ImgPart = styled.div`
   height: 140px;
   overflow: hidden;
   background-position: center;
-  background-size: cover;
-  & img {
-    width: 100%;
-    height: 100%;
-  }
+  background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 const TextPart = styled.div`
