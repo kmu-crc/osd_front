@@ -27,9 +27,10 @@ class ContentList extends Component {
     let data = this.props.data;
     const type = this.props.type;
     return(
+      <Grid>
       <Grid.Row>
       {data.length > 0 ? data.map(data => (
-        <Grid.Column mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2}
+        <Grid.Column mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2}
                     className="largeCustom"
                     key={data.uid}>
           {type === "design" ? <Design data={data} rerender={this.props.rerender} history={this.props.history}/>
@@ -46,6 +47,7 @@ class ContentList extends Component {
       <Nodata>해당 컨텐츠가 없습니다.</Nodata>
       }
     </Grid.Row>
+    </Grid>
     );
   }
 }

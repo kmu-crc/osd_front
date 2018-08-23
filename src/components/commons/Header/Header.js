@@ -16,6 +16,7 @@ const Head = styled.header`
   z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
   background-color: #fff;
+  box-shadow: 0 1px 1px 1px #E1E4E6;
   a {
     font-weight: normal;
     &:hover {

@@ -7,10 +7,10 @@ const initialState = {
   },
   status: {
     GroupDetail: [],
-    Count: { 
+    Count: {
       like: 0,
-      design: 0, 
-      group: 0 
+      design: 0,
+      group: 0
     },
     DesignInGroup: [],
     GroupInGroup: [],

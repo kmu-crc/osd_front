@@ -6,18 +6,18 @@ import Group from "components/Groups/Group";
 
 class GroupInGroupContainer extends Component {
   componentWillMount() {
-    this.props.GetGroupInGroupRequest(this.props.match.params.id, 0, this.props.match.params.sort);
+    this.props.GetGroupInGroupRequest(this.props.id, 0, this.props.sort);
   }
 
   shouldComponentUpdate(nextProps){
-    if (JSON.stringify(this.props.match.params.sort) !== JSON.stringify(nextProps.match.params.sort)) {
-      this.props.GetGroupInGroupRequest(this.props.match.params.id, 0, nextProps.match.params.sort);
+    if (JSON.stringify(this.props.sort) !== JSON.stringify(nextProps.sort)) {
+      this.props.GetGroupInGroupRequest(this.props.id, 0, nextProps.sort);
     }
     return true;
   }
 
   getList = (page) => {
-    return this.props.GetGroupInGroupRequest(this.props.match.params.id, page, this.props.match.params.sort);
+    return this.props.GetGroupInGroupRequest(this.props.id, page, this.props.sort);
   }
 
   render() {
@@ -27,7 +27,7 @@ class GroupInGroupContainer extends Component {
                     getListRequest={this.getList}
                     ListComponent={Group}
                     dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
+                    mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
       </div>
     );
   }
