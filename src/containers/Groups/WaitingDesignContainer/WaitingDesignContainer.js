@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetWaitingDesignRequest, DeleteDesignInGroupRequest, UpdateDesignInGroupRequest } from "actions/Group";
+import { GetWaitingDesignRequest, DeleteDesignInGroupRequest, UpdateDesignInGroupRequest, GetDesignInGroupRequest } from "actions/Group";
 import ContentList from "components/Commons/ContentList";
 
 class WaitingDesignContainer extends Component {
   componentWillMount(){
-    this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
+    this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
+    .then(res => {
+      if (res.waitingDesign) {
+        const num = res.waitingDesign.length;
+        this.props.getCount(num);
+      } else {
+        this.props.getCount(0);
+      }
+    });
   }
 
   setOut = (id) => {
@@ -13,6 +21,14 @@ class WaitingDesignContainer extends Component {
     .then(res => {
       if (res.data.success === true) {
         this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
+        .then(res => {
+          if (res.waitingDesign) {
+            const num = res.waitingDesign.length;
+            this.props.getCount(num);
+          } else {
+            this.props.getCount(0);
+          }
+        });
       }
     }).catch(err => {
       console.log(err);
@@ -24,6 +40,15 @@ class WaitingDesignContainer extends Component {
     .then(res => {
       if (res.data.success === true) {
         this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
+        .then(res => {
+          if (res.waitingDesign) {
+            const num = res.waitingDesign.length;
+            this.props.getCount(num);
+          } else {
+            this.props.getCount(0);
+          }
+        })
+        .then(this.props.GetDesignInGroupRequest(this.props.id, null, null));
       }
     }).catch(err => {
       console.log(err);
@@ -54,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateDesignInGroupRequest : (id, designId) => {
       return dispatch(UpdateDesignInGroupRequest(id, designId))
+    },
+    GetDesignInGroupRequest: (id, page, sort) => {
+      return dispatch(GetDesignInGroupRequest(id, page, sort))
     }
   };
 };

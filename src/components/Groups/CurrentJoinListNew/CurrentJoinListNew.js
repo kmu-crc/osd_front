@@ -5,6 +5,7 @@ import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
 import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
+import StyleGuide from 'StyleGuide';
 
 // css styling
 const TabContainer = styled.div`
@@ -29,18 +30,25 @@ const GroupBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
     padding-bottom: 1rem;
+    font-size: ${StyleGuide.font.size.heading4};
   }
 `;
 
 const DesignBox = styled.div`
   & .boxTitle {
     padding-bottom: 1rem;
+    font-size: ${StyleGuide.font.size.heading4};
   }
 `;
 
 class CurrentJoinListNew extends Component {
+  componentDidMount() {
+    this.props.GetGroupCountRequest(this.props.id);
+  }
+
   componentWillUnmount() {
     this.props.DesignInGroupClear([]);
+    this.props.GroupInGroupClear([]);
   }
 
   sortChange = (e, {value}) => {
@@ -58,11 +66,11 @@ class CurrentJoinListNew extends Component {
           </Grid.Row>
         </Head>
         <GroupBox>
-          <div className="boxTitle">그룹 {this.props.Count.group}건</div>
+          <div className="boxTitle">그룹 ({this.props.Count.group}건)</div>
           <GroupInGroupContainer id={this.props.id} sort={this.props.sort}/>
         </GroupBox>
         <DesignBox>
-          <div className="boxTitle">디자인 {this.props.Count.design}건</div>
+          <div className="boxTitle">디자인 ({this.props.Count.design}건)</div>
           <DesignInGroupContainer id={this.props.id} sort={this.props.sort}/>
         </DesignBox>
       </TabContainer>

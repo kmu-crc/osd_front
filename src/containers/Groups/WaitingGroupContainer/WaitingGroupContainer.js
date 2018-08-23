@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
- import { GetWaitingGroupRequest, DeleteGroupInGroupRequest, UpdateGroupInGroupRequest } from "actions/Group";
+ import { GetWaitingGroupRequest, DeleteGroupInGroupRequest, UpdateGroupInGroupRequest, GetGroupInGroupRequest } from "actions/Group";
  import ContentList from "components/Commons/ContentList";
 
 class WaitingGroupContainer extends Component {
   componentWillMount(){
-    this.props.GetWaitingGroupRequest(this.props.id, null);
+    this.props.GetWaitingGroupRequest(this.props.id, null)
+    .then(res => {
+      if (res.waitingGroup) {
+        const num = res.waitingGroup.length;
+        this.props.getCount(num);
+      } else {
+        this.props.getCount(0);
+      }
+    });
   }
 
   setOut = (id) => {
@@ -13,6 +21,14 @@ class WaitingGroupContainer extends Component {
     .then(res => {
       if (res.data.success === true) {
         this.props.GetWaitingGroupRequest(this.props.id, null)
+        .then(res => {
+          if (res.waitingGroup) {
+            const num = res.waitingGroup.length;
+            this.props.getCount(num);
+          } else {
+            this.props.getCount(0);
+          }
+        });
       }
     }).catch(err=>{
       console.log(err);
@@ -24,6 +40,15 @@ class WaitingGroupContainer extends Component {
     .then(res => {
       if (res.data.success === true) {
         this.props.GetWaitingGroupRequest(this.props.id, null)
+        .then(res => {
+          if (res.waitingGroup) {
+            const num = res.waitingGroup.length;
+            this.props.getCount(num);
+          } else {
+            this.props.getCount(0);
+          }
+        })
+        .then(this.props.GetGroupInGroupRequest(this.props.id, null, null));
       }
     }).then((data) => {console.log(data)}).catch(err => {
       console.log(err);
@@ -54,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateGroupInGroupRequest: (id, groupId) => {
       return dispatch(UpdateGroupInGroupRequest(id, groupId))
+    },
+    GetGroupInGroupRequest: (id, page, sort) => {
+      return dispatch(GetGroupInGroupRequest(id, page, sort))
     }
   };
 };

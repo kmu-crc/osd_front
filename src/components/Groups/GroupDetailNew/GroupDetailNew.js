@@ -16,6 +16,7 @@ import PxtoRem from "modules/PxtoRem";
 
 const Wrapper = styled.div`
   width: 100%;
+  padding-bottom: 30px;
 `;
 
 const InfoContainer = styled(Grid)`
@@ -29,8 +30,13 @@ const InfoContainer = styled(Grid)`
     padding: 1rem 0;
   }
   & .title {
-    font-size: ${StyleGuide.font.size.heading4};
-    padding: 1rem 0 !important;
+    font-size: ${StyleGuide.font.size.heading3};
+    padding: 1rem 1rem 0 0 !important;
+    & span {
+      line-height: 1.2;
+      cursor: pointer;
+      margin-right: 5px;
+    }
   }
   & .explanation {
     margin-bottom: 1rem;
@@ -207,7 +213,8 @@ class GroupDetailNew extends Component {
             {/* ------------------------ 상단 프로필 섹션 -------------------------- */}
             <InfoContainer>
               <Grid.Row className="title">
-                <span>{groupDetail.title}</span>
+                <span><a href={`/groupDetail/${groupDetail.parentId}`}>{groupDetail.parentName && groupDetail.parentName + " > "}</a></span>
+                <span><a href={`/groupDetail/${groupDetail.uid}`}>{groupDetail.title}</a></span>
                 {user && (user.uid === groupDetail.user_id) &&
                   <SideMenuBtn tabIndex="1"
                                onBlur={this.onCloseMoreBtn}
@@ -217,7 +224,7 @@ class GroupDetailNew extends Component {
                     </button>
                     {this.state.activeMoreBtn? <SubMenuCompo /> : null}
                   </SideMenuBtn>
-                  }
+                }
               </Grid.Row>
               <Grid.Row columns={2}>
                 <Grid.Column width={9}>
@@ -226,19 +233,23 @@ class GroupDetailNew extends Component {
                   <div className="owner">그룹장 : {groupDetail.userName}</div>
                 </Grid.Column>
                 <Grid.Column className="btnWrap" width={7}>
-
-                  <BtnContainer>
+                {this.state.editMode
+                ? <BtnContainer>
+                    <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>확인</Button>
+                  </BtnContainer>
+                : <BtnContainer>
                     {this.props.like === true
                     ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소 ({this.props.Count.like})</Button>
                     : <Button className="likeBtn" onClick={this.updateLike}>좋아요 ({this.props.Count.like})</Button>
                     }
-                    {user && (user.uid === groupDetail.user_id)
-                    ? <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>
-                        {this.state.editMode? "확인" : "관리"}
+                    <JoinGroupContainer/>
+                    {user && (user.uid === groupDetail.user_id) &&
+                    <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>
+                        가입 관리
                       </Button>
-                    : <JoinGroupContainer/>
                     }
                   </BtnContainer>
+                }
                 </Grid.Column>
               </Grid.Row>
             </InfoContainer>

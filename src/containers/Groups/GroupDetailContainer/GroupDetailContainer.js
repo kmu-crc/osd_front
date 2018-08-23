@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DesignInGroupClear, GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest, CreateGroupIssueRequest, DeleteGroupIssueRequest } from "actions/Group";
+import { DesignInGroupClear, GroupInGroupClear, GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest, CreateGroupIssueRequest, DeleteGroupIssueRequest } from "actions/Group";
 // import GroupDetail from "components/Groups/GroupDetail";
 import GroupDetailNew from "components/Groups/GroupDetailNew";
 
@@ -47,6 +47,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       DesignInGroupClear: (data) => {
         return dispatch(DesignInGroupClear(data))
+      },
+      GroupInGroupClear: (data) => {
+        return dispatch(GroupInGroupClear(data))
       }
   };
 };
