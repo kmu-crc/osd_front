@@ -5,9 +5,10 @@ import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContai
 import { Grid, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
+import UserImg from "source/thumbnail.png";
 
 // css styling
 
@@ -42,7 +43,6 @@ const HeadContainer = styled(Grid)`
     margin-bottom: 2rem;
   }
 `;
-
 
 const TabContainer = styled.div`
   min-height: 300px;
@@ -133,8 +133,8 @@ const DesignInfoCard = styled.div`
     box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: ${PxtoRem(10)};
     padding: ${PxtoRem(15)} ${PxtoRem(15)};
-  };
-  &::after{
+  }
+  &::after {
     display: block;
     content: "";
     clear: both;
@@ -313,7 +313,7 @@ const CounterItem = styled.div`
   &:last-child {
     margin-right: 0;
   }
-  &.likeBtn{
+  &.likeBtn {
     cursor: pointer;
   }
   .title {
@@ -331,11 +331,11 @@ const InfoItem = styled.div`
   float: left;
   width: 33.3333%;
   margin-bottom: ${PxtoRem(20)};
-  h3{
+  h3 {
     padding-left: 1rem;
     margin-bottom: ${PxtoRem(5)};
     position: relative;
-    &::before{
+    &::before {
       display: block;
       content: "";
       position: absolute;
@@ -351,9 +351,92 @@ const InfoItem = styled.div`
   }
 `;
 
+const Members = styled.div`
+  cursor: pointer;
+  position: relative;
+  outline: 0;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
+
+const MemberItem = styled.div`
+  width: ${PxtoRem(35)};
+  height: ${PxtoRem(35)};
+  border-radius: ${PxtoRem(17.5)};
+  border: 1px solid #fff;
+  margin-left: ${PxtoRem(-5)};
+  float: left;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-color: ${StyleGuide.color.geyScale.scale5};
+  overflow: hidden;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  i.icon {
+    text-align: center;
+    width: 100%;
+    font-size: ${PxtoRem(20)};
+    line-height: ${PxtoRem(35)};
+    margin: 0 auto;
+    color: ${StyleGuide.color.geyScale.scale9};
+    &::before {
+      margin: 0;
+    }
+  }
+  &:first-child {
+    margin-left: 0;
+  }
+`;
+
+const Memberlist = styled.div`
+  width: ${PxtoRem(170)};
+  max-height: ${PxtoRem(300)};
+  overflow-y: scroll;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  transform: translateY(110%);
+  display: none;
+  &.active {
+    display: block;
+  }
+`;
+
+const MemberlistItem = styled.div`
+  width: 100%;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: ${StyleGuide.color.geyScale.scale4};
+  }
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  .nickName {
+    display: inline-block;
+    margin-left: 0.5rem;
+    line-height: ${PxtoRem(35)};
+    width: ${PxtoRem(80)};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
 class DesignDetail extends Component {
   state = {
-    activeMoreBtn: false
+    activeMoreBtn: false,
+    memberActive: false
   };
 
   componentDidMount() {
@@ -435,6 +518,18 @@ class DesignDetail extends Component {
     }
   };
 
+  openMemberList = async e => {
+    this.setState({ memberActive: !this.state.memberActive });
+  };
+
+  memberOut = e => {
+    if(e.type === "blur" && !this.members._reactInternalFiber.child.stateNode.contains(
+      e.relatedTarget
+    )){
+      this.setState({ memberActive: false });
+    }
+  }
+
   render() {
     const designDetail = this.props.DesignDetail;
     const count = this.props.Count;
@@ -471,9 +566,11 @@ class DesignDetail extends Component {
     const SubMenuCompo = () => {
       return (
         <SideMenu>
-          <li style={{
+          <li
+            style={{
               display: designDetail.is_team ? "block" : "none"
-            }}>
+            }}
+          >
             <Link
               to={`/designModify/${this.props.id}`}
               onClick={this.onCloseMoreBtn}
@@ -481,12 +578,12 @@ class DesignDetail extends Component {
               <button>수정</button>
             </Link>
           </li>
-          <li style={{
+          <li
+            style={{
               display: designDetail.is_team ? "block" : "none"
-            }}>
-            <button onClick={this.deleteDesign}>
-              삭제
-            </button>
+            }}
+          >
+            <button onClick={this.deleteDesign}>삭제</button>
           </li>
           <li>
             <button onClick={this.onCloseMoreBtn}>파생디자인 생성</button>
@@ -580,7 +677,7 @@ class DesignDetail extends Component {
                         <DesignInfoCard>
                           <InfoItem>
                             <h3>작성자</h3>
-                            <p>{designDetail.userName}</p>
+                            <p><Link to={`/designerDetail/${designDetail.user_id}`}>{designDetail.userName}</Link></p>
                           </InfoItem>
                           <InfoItem>
                             <h3>카테고리</h3>
@@ -592,7 +689,56 @@ class DesignDetail extends Component {
                           </InfoItem>
                           <InfoItem>
                             <h3>맴버</h3>
-                            <p>{count.member_count}명</p>
+                            <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
+                              {designDetail.member.map((item, index) => {
+                                if (index > 3) {
+                                  return;
+                                } else {
+                                  return (
+                                    <MemberItem
+                                      style={{
+                                        backgroundImage: item.thumbnail
+                                          ? `url(${item.thumbnail.s_img})`
+                                          : `url(${UserImg})`,
+                                        zIndex: 5 - index
+                                      }}
+                                    />
+                                  );
+                                }
+                              })}
+                              {/* {designDetail.member.length > 5 && (
+                                <MemberItem>
+                                  <Icon name="plus" />
+                                </MemberItem>
+                              )} */}
+                              <MemberItem>
+                                  <Icon name="plus" />
+                                </MemberItem>
+                              <Memberlist
+                                className={
+                                  this.state.memberActive ? "active" : null
+                                }
+                              >
+                                {designDetail.member.map(item => {
+                                  return (
+                                    <Link to={`/designerDetail/${item.user_id}`}>
+                                      <MemberlistItem>
+                                        <MemberItem
+                                          style={{
+                                            backgroundImage: item.thumbnail
+                                              ? `url(${item.thumbnail.s_img})`
+                                              : `url(${UserImg})`
+                                          }}
+                                        />{" "}
+                                        <span className="nickName">
+                                          {item.nick_name}
+                                        </span>
+                                      </MemberlistItem>
+                                    </Link>
+                                  );
+                                })}
+                              </Memberlist>
+                            </Members>
                           </InfoItem>
                         </DesignInfoCard>
                         <HeadContainer padded={true}>
