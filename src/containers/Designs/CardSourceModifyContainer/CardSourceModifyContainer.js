@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest} from "actions/Designs/DesignCard";
-import CardSourceDetail from "components/Designs/CardSourceDetail";
+import {GetDesignSourceRequest, DesignSourceResetRequest, UpdateCardSourceRequest} from "actions/Designs/DesignCard";
+import DesignCardModify from "components/Designs/DesignCardModify";
 
-class CardSourceDetailContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-
-  }
-
+class CardSourceModifyContainer extends Component {
   render() {
     return(
-      <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest}/>
+      <DesignCardModify {...this.props} />
     );
   }
 }
@@ -32,13 +25,13 @@ const mapDispatchToProps = (dispatch) => {
     GetDesignSourceRequest: (id) => {
       return dispatch(GetDesignSourceRequest(id));
     },
-    UpdateDesignSourceRequest: (data, card_id, token) => {
-      return dispatch(UpdateDesignSourceRequest(data, card_id, token));
-    },
     DesignSourceResetRequest: () => {
       return dispatch(DesignSourceResetRequest());
+    },
+    UpdateCardSourceRequest: (data, id, token) => {
+      return dispatch(UpdateCardSourceRequest(data, id, token))
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardSourceDetailContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CardSourceModifyContainer);
