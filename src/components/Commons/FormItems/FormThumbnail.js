@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import { FormFile } from "./FormFile";
-import { Icon } from "semantic-ui-react";
 import ThumbnailDefault from "source/thumbnail.png";
-import { FormControl } from "modules/FormControl";
 
 const InputWrap = styled.div`
   position: relative;
@@ -119,7 +117,7 @@ export class FormThumbnail extends Component {
           getValue={this.onChangeValue}
           hidden={true}
           validates={validates}
-          onlyImage={false}
+          onlyImage={true}
         />
       </InputWrap>
     );
