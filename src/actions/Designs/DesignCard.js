@@ -527,6 +527,32 @@ export const UpdateDesignSourceRequest = (data, card_id, token) => {
   };
 };
 
+// design source update
+export const UpdateCardSourceRequest = (data, card_id, token) => {
+  return dispatch => {
+    dispatch(UpdateDesignSource());
+    console.log("request", data);
+    return fetch(`${host}/design/designDetail/updateCardAllData/${card_id}`, {
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(res) {
+        return dispatch(UpdateDesignSourceSuccess(res));
+      })
+      .catch(error => {
+        console.log("insert issue err", error);
+        return dispatch(UpdateDesignSourceFailure(error));
+      });
+  };
+};
+
 export const UpdateDesignSource = () => {
   return {
     type: types.UPDATE_DESIGN_SOURCE
@@ -597,3 +623,4 @@ export function DesignSourceReset() {
     data: []
   };
 };
+
