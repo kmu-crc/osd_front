@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Form } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import { MultiUpload } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import StyleGuide from "StyleGuide";
 import {
   CardImageUpdate,
   CardSourcUpdate
@@ -67,6 +64,9 @@ class CardSource extends Component {
                 <CardSourceDetailContainer
                   uid={view.uid}
                   isTeam={view.is_team}
+                  edit={this.props.edit}
+                  closeEdit={this.props.closeEdit}
+                  openEdit={this.props.openEdit}
                 />
               </Form.Group>
             </Grid.Column>
