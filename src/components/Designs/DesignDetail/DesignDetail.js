@@ -2,13 +2,10 @@ import React, { Component } from "react";
 import styled, { css } from "styled-components";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
-// import DesignIssue from "components/Designs/DesignIssue/DesignIssue";
-import { Grid, Icon, Modal } from "semantic-ui-react";
+import { Grid, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import { Link, Route } from "react-router-dom";
-// import CreateDesignIssueContainer from "containers/Designs/CreateDesignIssueContainer";
-// import ModifyIssueDetailContainer from "containers/Designs/ModifyIssueDetailContainer";
 import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
 
@@ -179,7 +176,8 @@ const ThumbnailImg = styled.div`
   height: ${PxtoRem(250)};
   box-sizing: border-box;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-color: gray;
   border-radius: 3px;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -439,7 +437,6 @@ class DesignDetail extends Component {
 
   render() {
     const designDetail = this.props.DesignDetail;
-    const user = this.props.userInfo;
     const count = this.props.Count;
 
     const CountBox = () => {
