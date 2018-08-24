@@ -67,17 +67,19 @@ class CardSourceDetail extends Component {
     this.props.GetDesignSourceRequest(this.props.uid);
   }
 
-  shouldComponentUpdate(nextProps) {
+  async shouldComponentUpdate(nextProps) {
     if (
       JSON.stringify(this.props.editStatus) !==
       JSON.stringify(nextProps.editStatus)
     ) {
       if (nextProps.editStatus === "SUCCESS") {
-        this.setState({ edit: false });
+        await this.setState({ edit: false });
         this.props.GetDesignSourceRequest(this.props.uid);
-        this.setState({loading: false});
+        await this.setState({loading: false});
+        this.props.closeEdit();
       } else if(nextProps.editStatus === "FAILURE") {
-        this.setState({loading: false});
+        await this.setState({loading: false});
+        this.props.closeEdit();
       }
     }
     if (
@@ -134,8 +136,8 @@ class CardSourceDetail extends Component {
   };
 
   onSubmit = async e => {
-    await this.setState({loading: true});
     e.preventDefault();
+    await this.setState({loading: true});
     let copyContent = [...this.state.content];
     copyContent = await Promise.all(
       copyContent.map(async (item, index) => {
@@ -150,18 +152,18 @@ class CardSourceDetail extends Component {
 
     }, 500);
 
-    this.props.UpdateDesignSourceRequest(
+    this.props.upDateRequest(
       formData,
       this.props.uid,
       this.props.token
-    );
+    )
   };
 
   render() {
     const { edit, content } = this.state;
     return (
       <CardSrcWrap>
-        {edit ? (
+        {this.props.edit ? (
           <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (
               <div>
@@ -206,12 +208,12 @@ class CardSourceDetail extends Component {
           </form>
         ) : content.length > 0 ? (
           <ViewContent>
-            {this.props.isTeam === 1 &&
+            {/* {this.props.isTeam === 1 &&
               <Button round={true} size="small" className="goEdit"
                       onClick={() => this.setState({ edit: !this.state.edit })}>
                 컨텐츠 수정
               </Button>
-            }
+            } */}
             {content.map((item, index) => {
               return item.type === "FILE" && item.data_type === "image" ? (
                 <div className="imgContent" key={index}>
@@ -234,7 +236,7 @@ class CardSourceDetail extends Component {
         ) : (
           <Nodata>
             {this.props.isTeam === 1 ?
-            <Button round={true} color="Primary" size="small" onClick={() => this.setState({ edit: !this.state.edit })}>
+            <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>
               업로드
             </Button>
             :
