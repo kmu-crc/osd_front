@@ -35,7 +35,7 @@ class MyDesignList extends Component {
       <ValidateForm onSubmit={this.handleSubmit}>
         <FormField name="join_design" label="내 디자인 리스트" options={this.props.designList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
         <Btn type="submit">등록</Btn>
-        <Btn type="button" onClick={this.props.handleCloseModal}>닫기</Btn>
+        <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
       </ValidateForm>
     );
   }

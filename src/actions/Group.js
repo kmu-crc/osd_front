@@ -202,9 +202,9 @@ export function GetDesignInGroupRequest(id, page, sort) {
           dispatch(DesignInGroupClear(data));
           return;
         }
-        dispatch(GetDesignInGroup(data));
+        return dispatch(GetDesignInGroup(data));
       }).catch((error) => {
-        dispatch(DesignInGroupFail());
+        return dispatch(DesignInGroupFail());
         console.log("err", error);
       });
   }
@@ -251,9 +251,9 @@ export function GetGroupInGroupRequest(id, page, sort) {
           dispatch(GroupInGroupClear(data));
           return;
         }
-        dispatch(GetGroupInGroup(data));
+        return dispatch(GetGroupInGroup(data));
       }).catch((error) => {
-        dispatch(GroupInGroupFail());
+        return dispatch(GroupInGroupFail());
         console.log("err", error);
       });
   }
@@ -471,9 +471,9 @@ export function GetWaitingDesignRequest(id, sort) {
         console.log("no data");
         data = [];
       }
-      dispatch(GetWaitingDesign(data));
+      return dispatch(GetWaitingDesign(data));
     }).catch((error) => {
-      dispatch(GetWaitingDataFail());
+      return dispatch(GetWaitingDataFail());
       console.log("err", error);
     });
   }
@@ -501,9 +501,9 @@ export function GetWaitingGroupRequest(id, sort) {
         console.log("no data");
         data = [];
       }
-      dispatch(GetWaitingGroup(data));
+      return dispatch(GetWaitingGroup(data));
     }).catch((error) => {
-      dispatch(GetWaitingDataFail());
+      return dispatch(GetWaitingDataFail());
       console.log("err", error);
     });
   }

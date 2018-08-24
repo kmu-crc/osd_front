@@ -71,7 +71,7 @@ class Category extends Component {
         mobile={this.props.mobile ? this.props.mobile : null}
       >
         <Grid>
-          <Grid.Column mobile={8} tablet={5} computer={4}>
+          <Grid.Column mobile={8} tablet={5} computer={8}>
             <FormSelect
               placeholder="1차 카테고리"
               value={this.props.cate1 === "null" ? null : this.props.cate1}
@@ -79,7 +79,7 @@ class Category extends Component {
               options={this.props.category1}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} tablet={5} computer={4}>
+          <Grid.Column mobile={8} tablet={5} computer={8}>
           {this.state.render &&
             <FormSelect
               placeholder="2차 카테고리"

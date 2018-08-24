@@ -68,9 +68,9 @@ class JoinGroup extends Component {
       <JoinGroupWrap>
         <ModalBtn color="Solid" onClick={this.handleModal}>가입 신청</ModalBtn>
         <Modal open={open}
-          closeOnEscape={false}
-          closeOnRootNodeClick={false}
-          onClose={this.handleCloseModal}>
+               closeOnEscape={true}
+               closeOnDimmerClick={true}
+               onClose={this.handleCloseModal}>
           <Modal.Content>
             <ModalContent>
               <Title>그룹 가입신청</Title>
