@@ -8,6 +8,7 @@ import {
   CardImageUpdate,
   CardSourcUpdate
 } from "components/Designs/DesignBoardCard";
+import DesignCardModify from "components/Designs/DesignCardModify";
 import eximg from "source/topDesign.png";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
@@ -15,6 +16,7 @@ import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
+import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -26,7 +28,7 @@ const BoardCard = styled.li`
   img {
     width: 100%;
     border-radius: 3px 3px 0 0;
-    border-bottom: 1px solid rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
   .content {
     padding: 10px;
@@ -111,15 +113,25 @@ class DesignBoardCard extends Component {
   state = {
     open: false,
     active: "INIT",
-    render: true
+    render: true,
+    closeOnDimmerClick: true,
+    edit: false
   };
 
   componentDidMount() {
     console.log(this.props.card);
   }
+  shouldComponentUpdate(nextProps) {
+    if (this.props.card.uid === nextProps.detail.uid) {
+      return true;
+    } else {
+      return false;
+    }
+    return false;
+  }
 
   onClose = () => {
-    this.setState({ open: false, active: "INIT" });
+    this.setState({ open: false, active: "INIT", edit: false });
     this.props.GetDesignBoardRequest(this.props.match.params.id);
   };
 
@@ -209,12 +221,17 @@ class DesignBoardCard extends Component {
       });
   };
 
+  onChangeEditMode = () => {
+    this.setState({ edit: true });
+  };
+  onCloseEditMode = () => {
+    this.setState({ edit: false });
+  };
+
   render() {
     const { card, detail } = this.props;
     const comment = this.props.Comment;
-    const { open } = this.state;
-    console.log("detail", detail);
-
+    const { open, closeOnDimmerClick } = this.state;
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
@@ -254,78 +271,89 @@ class DesignBoardCard extends Component {
 
           {/* {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><i aria-hidden="true" className="trash alternate icon"></i></DeleteBtn>} */}
         </BoardCard>
-        <CustomModal
-          open={open}
-          closeOnDimmerClick={true}
-          onClose={this.close}
-          dimmer={true}
-        >
-          <Modal.Content>
-            <Icon name="close" size="big" onClick={this.onClose} />
-            <CardTitleUpdate
-              uid={detail.uid}
-              title={detail.title}
-              active={this.state.active}
-              changeActive={this.changeActive}
-              token={this.props.token}
-              request={this.props.UpdateCardTitleRequest}
-              isTeam={this.props.isTeam}
-            />
-            <CardContentUpdate
-              uid={detail.uid}
-              content={detail.content}
-              active={this.state.active}
-              changeActive={this.changeActive}
-              token={this.props.token}
-              request={this.props.UpdateCardContentRequest}
-              isTeam={this.props.isTeam}
-            />
-            <h3>컨텐츠</h3>
-            <CardSourceDetailContainer
-              uid={card.uid}
-              isTeam={this.props.isTeam}
-            />
-            {/* --------------------- 댓글 섹션 ---------------------- */}
-            <CommentContainer className="ui comments">
-              <h4>댓글</h4>
-              {comment.length > 0 ? (
-                comment.map(comm => (
-                  <div className="comment" key={comm.uid}>
-                    <div className="avatar">
-                      <img
-                        src={comm.s_img ? comm.s_img : eximg}
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="content">
-                      <a className="author">{comm.nick_name}</a>
-                      <div className="metadata">
-                        <div>{comm.create_time.split("T")[0]}</div>
-                      </div>
-                      <div className="text">{comm.comment}</div>
-                    </div>
-                    {this.props.userInfo &&
-                      this.props.userInfo.uid === comm.user_id && (
-                        <Button
-                          size="small"
-                          className="delBtn"
-                          onClick={() => this.deleteComment(comm.uid)}
-                        >
-                          삭제
-                        </Button>
-                      )}
-                  </div>
-                ))
+        {this.props.card.uid === this.props.detail.uid ? (
+          <CustomModal
+            open={open}
+            closeOnDimmerClick={closeOnDimmerClick}
+            dimmer={true}
+            onClose={this.onClose}
+          >
+            <Modal.Content>
+              <Icon name="close" size="big" onClick={this.onClose} />
+              {this.state.edit ? (
+                <div>
+                  <CardSourceModifyContainer
+                    uid={card.uid}
+                    isTeam={this.props.isTeam}
+                    detail={detail}
+                    card={card}
+                    onClose={this.close}
+                    closeEdit={this.onCloseEditMode}
+                    openEdit={this.onChangeEditMode}
+                  />
+                </div>
               ) : (
-                <p>등록된 코멘트가 없습니다.</p>
+                <div>
+                  {this.props.isTeam && !this.state.edit ? (
+                    <Button
+                      type="button"
+                      size="small"
+                      onClick={this.onChangeEditMode}
+                    >
+                      수정
+                    </Button>
+                  ) : null}
+                  <h2>{detail.title}</h2>
+                  <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
+                  <CardSourceDetailContainer
+                    uid={card.uid}
+                    isTeam={this.props.isTeam}
+                    edit={this.state.edit}
+                    closeEdit={this.onCloseEditMode}
+                    openEdit={this.onChangeEditMode}
+                  />
+                </div>
               )}
-              {this.state.render ? <CommentForm /> : null}
-            </CommentContainer>
-            <Button type="button" onClick={this.onClose}>
-              닫기
-            </Button>
-          </Modal.Content>
-        </CustomModal>
+
+              {/* --------------------- 댓글 섹션 ---------------------- */}
+              <CommentContainer className="ui comments">
+                <h4>댓글</h4>
+                {comment.length > 0 ? (
+                  comment.map(comm => (
+                    <div className="comment" key={comm.uid}>
+                      <div className="avatar">
+                        <img
+                          src={comm.s_img ? comm.s_img : eximg}
+                          alt="profile"
+                        />
+                      </div>
+                      <div className="content">
+                        <a className="author">{comm.nick_name}</a>
+                        <div className="metadata">
+                          <div>{comm.create_time.split("T")[0]}</div>
+                        </div>
+                        <div className="text">{comm.comment}</div>
+                      </div>
+                      {this.props.userInfo &&
+                        this.props.userInfo.uid === comm.user_id && (
+                          <Button
+                            size="small"
+                            className="delBtn"
+                            onClick={() => this.deleteComment(comm.uid)}
+                          >
+                            삭제
+                          </Button>
+                        )}
+                    </div>
+                  ))
+                ) : (
+                  <p>등록된 코멘트가 없습니다.</p>
+                )}
+                {this.state.render ? <CommentForm /> : null}
+              </CommentContainer>
+            </Modal.Content>
+          </CustomModal>
+        ) : null}
       </div>
     );
   }
