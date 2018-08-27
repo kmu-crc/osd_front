@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled from 'styled-components';
 import {
   FormInput,
   FormTextArea,
@@ -6,6 +7,15 @@ import {
 } from "components/Commons/FormItems";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
 import { ValidationGroup } from "modules/FormControl";
+
+const Label = styled.div`
+  margin: 0 0 0.8rem 0;
+  display: block;
+  color: rgba(0,0,0,.87);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: none;
+`;
 
 class DesignCardModify extends Component {
   onChangeValue = async data => {
@@ -57,21 +67,21 @@ class DesignCardModify extends Component {
     console.log("detail", this.props.detail);
     return (
       <div>
-        <label>썸네일</label>
+        <Label>썸네일</Label>
         <FormThumbnail
           name="thumbnail"
           getValue={this.onChangeValue}
           image={this.props.card.first_img && this.props.card.first_img.m_img}
           placeholder="썸네일 등록"
         />
-        <label>제목</label>
+        <Label>제목</Label>
         <FormInput
           name="title"
           value={this.props.detail.title}
           getValue={this.onChangeValue}
           validates={["Required", "MaxLength(20)"]}
         />
-        <label>설명</label>
+        <Label>설명</Label>
         <FormTextArea
           name="content"
           getValue={this.onChangeValue}
