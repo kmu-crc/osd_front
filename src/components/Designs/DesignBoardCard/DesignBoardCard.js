@@ -127,7 +127,6 @@ class DesignBoardCard extends Component {
     } else {
       return false;
     }
-    return false;
   }
 
   onClose = () => {

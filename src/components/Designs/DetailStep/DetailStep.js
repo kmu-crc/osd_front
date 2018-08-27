@@ -4,6 +4,8 @@ import StyleGuide from "StyleGuide";
 import { Grid, Icon } from "semantic-ui-react";
 import DesignBoardContainer from "containers/Designs/DesignBoardContainer";
 import CreateDesignBoardContainer from "containers/Designs/CreateDesignBoardContainer";
+import ContentBox from "components/Commons/ContentBox";
+import PxtoRem from "modules/PxtoRem";
 
 // css styling
 
@@ -15,7 +17,8 @@ const Container = styled(Grid)`
 
 const Board = styled.div`
   width: 100%;
-  height: 65vh;
+  height: 80vh;
+  margin-bottom: ${PxtoRem(50)};
   position: relative;
   box-sizing: border-box;
   padding-left: 0 !important;
@@ -24,10 +27,13 @@ const Board = styled.div`
 
 const BoardMask = styled.div`
   width: 100%;
+  height: 100%;
+  overflow: hidden;
   padding-bottom: 50px;
 `;
 
 const BoardWrap = styled.ul`
+  height: 100%;
   list-style: none;
 `;
 
@@ -67,40 +73,65 @@ class DetailStep extends Component {
     right: false,
     scroll: false
   };
-  shouldComponentUpdate(nextProps) {
+  async shouldComponentUpdate(nextProps) {
     if (
       JSON.stringify(this.props.DesignDetailStep) !==
       JSON.stringify(nextProps.DesignDetailStep)
     ) {
-      console.log("this.boardMask._reactInternalFiber.child.stateNode", this.boardMask._reactInternalFiber.child.stateNode.scrollLeft)
-      if(this.props.isTeam){
-        if (
-          this.boardMask._reactInternalFiber.child.stateNode >
-          nextProps.DesignDetailStep.length * 264 + 250
-        ) {
-          this.setState({
-            boardWidth: nextProps.DesignDetailStep.length * 264 + 250
+      let width = parseInt(
+        window.getComputedStyle(
+          this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
+            .child.stateNode
+        ).width
+      );
+      console.log("width", width)
+      await this.setState({
+        right: false
+      });
+      if(nextProps.isTeam) {
+        await this.setState({
+          boardWidth: nextProps.DesignDetailStep.length * 264 + 250
+        });
+        if (width === 1100 && nextProps.DesignDetailStep.length > 3) {
+          await this.setState({
+            right: true
+          });
+        } else if ((width === 850 || width > 700) && nextProps.DesignDetailStep.length > 2) {
+          await this.setState({
+            right: true
+          });
+        } else if (width < 700 && nextProps.DesignDetailStep.length > 1) {
+          await this.setState({
+            right: true
           });
         } else {
-          this.setState({
-            boardWidth: nextProps.DesignDetailStep.length * 264 + 250,
-            right: true,
-            scroll: true
+          await this.setState({
+            right: false
           });
         }
       } else {
-        if (
-          this.boardMask._reactInternalFiber.child.stateNode >
-          nextProps.DesignDetailStep.length * 264
-        ) {
-          this.setState({
-            boardWidth: nextProps.DesignDetailStep.length * 264
+        await this.setState({
+          boardWidth: nextProps.DesignDetailStep.length * 264
+        });
+        if (width === 1100 && nextProps.DesignDetailStep.length > 4) {
+          await this.setState({
+            right: true
+          });
+        } else if (width === 800 && nextProps.DesignDetailStep.length > 3) {
+          await this.setState({
+            right: true
+          });
+        } else if (width === 700 && nextProps.DesignDetailStep.length > 2) {
+          await this.setState({
+            right: true
+          });
+        } else if (width < 700 && nextProps.DesignDetailStep.length > 1) {
+          await this.setState({
+            right: true
           });
         } else {
-          this.setState({
-            boardWidth: nextProps.DesignDetailStep.length * 264,
-            right: true,
-            scroll: true
+          await this.setState({
+            right: false
           });
         }
       }
@@ -108,16 +139,63 @@ class DetailStep extends Component {
     }
     return true;
   }
-  componentDidMount() {
+  async componentDidMount() {
+    let width = parseInt(
+      window.getComputedStyle(
+        this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
+          .child.stateNode
+      ).width
+    );
+    await this.setState({
+      right: false
+    });
     this.props.GetDesignBoardRequest(this.props.id);
-    if(this.props.isTeam){
-      this.setState({
+    if (this.props.isTeam) {
+      await this.setState({
         boardWidth: this.props.DesignDetailStep.length * 264 + 250
       });
+      if (width === 1100 && this.props.DesignDetailStep.length > 3) {
+        await this.setState({
+          right: true
+        });
+      } else if (width > 699 && this.props.DesignDetailStep.length > 2) {
+        await this.setState({
+          right: true
+        });
+      } else if (this.props.DesignDetailStep.length > 1) {
+        await this.setState({
+          right: true
+        });
+      } else {
+        await this.setState({
+          right: false
+        });
+      }
     } else {
-      this.setState({
+      await this.setState({
         boardWidth: this.props.DesignDetailStep.length * 264
       });
+      if (width === 1100 && this.props.DesignDetailStep.length > 4) {
+        await this.setState({
+          right: true
+        });
+      } else if (width === 800 && this.props.DesignDetailStep.length > 3) {
+        await this.setState({
+          right: true
+        });
+      } else if (width === 700 && this.props.DesignDetailStep.length > 2) {
+        await this.setState({
+          right: true
+        });
+      } else if (this.props.DesignDetailStep.length > 1) {
+        await this.setState({
+          right: true
+        });
+      } else {
+        await this.setState({
+          right: false
+        });
+      }
     }
   }
   changeBoard = id => {
@@ -136,30 +214,24 @@ class DetailStep extends Component {
       if (scroll > 0) {
         this.setState({ left: true });
       } else {
-        this.setState({ left: false, right: true});
+        this.setState({ left: false, right: true });
       }
     } else {
+      console.log(this.state.boardWidth, scroll)
       if (
-        this.boardMask._reactInternalFiber.child.stateNode.scrollLeft === scroll
+        this.state.boardWidth - parseInt(
+          window.getComputedStyle(
+            this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
+              .child.stateNode
+          ).width
+        ) <= scroll
       ) {
-        this.setState({ right: true });
+        this.setState({ right: false, left: true });
       } else {
-        if (scroll < 0) {
-          this.setState({ left:true, right: true });
-        }
-        this.setState({ right: false, left:true, });
+        this.setState({ right: true, left: true });
       }
     }
   };
-
-  scrollEvent = () => {
-    const scroll = this.boardMask._reactInternalFiber.child.stateNode.scrollLeft;
-    if(scroll === 0){
-      this.setState({ left: false, right: true });
-    } else {
-      this.setState({ left: true, right: true });
-    }
-  }
 
   leftButton = () => {
     this.listPosition(true);
@@ -170,53 +242,57 @@ class DetailStep extends Component {
   render() {
     let step = this.props.DesignDetailStep;
     return (
-      <Container padded={true}>
-        <Board>
-          <BtnBox>
-            <BoardController
-              className="left"
-              style={{ display: this.state.left ? "block" : "none" }}
-              onClick={this.leftButton}
+      <ContentBox ref={ref => (this.ContentBox = ref)}>
+        <Container padded={true}>
+          <Board>
+            <BtnBox>
+              <BoardController
+                className="left"
+                style={{ display: this.state.left ? "block" : "none" }}
+                onClick={this.leftButton}
+              >
+                <Icon name="angle left" />
+              </BoardController>
+              <BoardController
+                className="right"
+                style={{ display: this.state.right ? "block" : "none" }}
+                onClick={this.rightButton}
+              >
+                <Icon name="angle right" />
+              </BoardController>
+            </BtnBox>
+            <BoardMask
+              onScroll={this.scrollEvent}
+              style={{
+                overflowX: `${this.state.scroll ? "scroll" : "hidden"}`
+              }}
+              ref={ref => (this.boardMask = ref)}
             >
-              <Icon name="angle left" />
-            </BoardController>
-            <BoardController
-              className="right"
-              style={{ display: this.state.right ? "block" : "none" }}
-              onClick={this.rightButton}
-            >
-              <Icon name="angle right" />
-            </BoardController>
-          </BtnBox>
-          <BoardMask
-            onScroll={this.scrollEvent}
-            style={{ overflowX: `${this.state.scroll ? "scroll" : "hidden"}` }}
-            ref={ref => (this.boardMask = ref)}
-          >
-            <BoardWrap
-              ref={ref => (this.boardList = ref)}
-              style={{ width: `${this.state.boardWidth}px` }}
-            >
-              {step.length > 0 &&
-                step.map((board, i) => (
-                  <DesignBoardContainer
+              <BoardWrap
+                ref={ref => (this.boardList = ref)}
+                style={{ width: `${this.state.boardWidth}px` }}
+              >
+                {step.length > 0 &&
+                  step.map((board, i) => (
+                    <DesignBoardContainer
+                      designId={this.props.id}
+                      key={i}
+                      board={board}
+                      activeBoard={this.stateBoard}
+                      changeBoard={this.changeBoard}
+                    />
+                  ))}
+                {this.props.isTeam > 0 ? (
+                  <CreateDesignBoardContainer
                     designId={this.props.id}
-                    key={i}
-                    board={board}
-                    activeBoard={this.stateBoard}
-                    changeBoard={this.changeBoard}
+                    order={step.length}
                   />
-                ))}
-              {this.props.isTeam > 0 ? (
-                <CreateDesignBoardContainer
-                  designId={this.props.id}
-                  order={step.length}
-                />
-              ) : null}
-            </BoardWrap>
-          </BoardMask>
-        </Board>
-      </Container>
+                ) : null}
+              </BoardWrap>
+            </BoardMask>
+          </Board>
+        </Container>
+      </ContentBox>
     );
   }
 }

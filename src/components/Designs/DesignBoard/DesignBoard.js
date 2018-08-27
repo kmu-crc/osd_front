@@ -8,12 +8,14 @@ import StyleGuide from "StyleGuide";
 
 const Board = styled.li`
   width: 250px;
+  height: 100%;
+  overflow: hidden;
   float: left;
   box-sizing: border-box;
-  background-color: ${StyleGuide.color.sub.bule.basic};
+  background-color: transparent;
   border-radius: 3px;
   margin-right: 1rem;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+
 `;
 
 const Title = styled.div`
@@ -21,7 +23,9 @@ const Title = styled.div`
   font-weight: 600;
   padding: 0.3em 10px;
   position: relative;
+  background-color: ${StyleGuide.color.sub.bule.basic};
   color: ${StyleGuide.color.geyScale.scale0};
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   span {
     display: inline-block;
@@ -88,7 +92,10 @@ const MenuItem = styled.li`
 `;
 
 const CardList = styled.ul`
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   padding: 10px;
+  max-height: 90%;
+  overflow-y: scroll;
   padding-bottom: 5px;
   background-color: #dbdada;
   border-radius: 0 0 3px 3px;
@@ -98,6 +105,7 @@ class DesignBoard extends Component {
   state = {
     active: false
   };
+
   onActive = e => {
     const event = e;
     event.stopPropagation();
