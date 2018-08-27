@@ -44,7 +44,7 @@ class ScrollList extends Component {
 
   render() {
     const ListComponent = this.props.ListComponent;
-    const type = ListComponent.name;
+    const type = this.props.type;
 
     return (
       <ScrollContainer>
