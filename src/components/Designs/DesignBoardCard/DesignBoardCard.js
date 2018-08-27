@@ -122,11 +122,7 @@ class DesignBoardCard extends Component {
     console.log(this.props.card);
   }
   shouldComponentUpdate(nextProps) {
-    if (this.props.card.uid === nextProps.detail.uid) {
-      return true;
-    } else {
-      return false;
-    }
+    return true;
   }
 
   onClose = () => {

@@ -72,11 +72,11 @@ class CreateBoard extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    let data = { ...this.state };
-    console.log("??????", data);
-    data.title.order = this.props.order;
-    await ValidationGroup(data, true)
+
+    await ValidationGroup(this.state, true)
       .then(data => {
+        data.order = this.props.order;
+        console.log(data, "????");
         this.props
           .CreateDesignBoardRequest(data, this.props.designId, this.props.token)
           .then(data => {

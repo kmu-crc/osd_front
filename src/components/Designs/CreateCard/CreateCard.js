@@ -51,10 +51,9 @@ class CreateCard extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let data = { ...this.state };
-    data.title.order = this.props.lastOrder;
-    ValidationGroup(data, true)
+    ValidationGroup(this.state, true)
       .then(data => {
+        data.order = this.props.lastOrder;
         this.props
           .CreateDesignCardRequest(
             data,
@@ -65,7 +64,7 @@ class CreateCard extends Component {
           .then(this.props.GetDesignBoardRequest(this.props.designId));
         this.setState({ active: false });
       })
-      .catch(console.log("실패"));
+      .catch(err => console.log("실패", err));
   };
 
   handelClose = (e) => {

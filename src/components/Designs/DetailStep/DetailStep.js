@@ -212,7 +212,7 @@ class DetailStep extends Component {
 
     if (value) {
       if (scroll > 0) {
-        this.setState({ left: true });
+        this.setState({ left: true, right: true });
       } else {
         this.setState({ left: false, right: true });
       }
