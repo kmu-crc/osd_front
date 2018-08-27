@@ -16,6 +16,13 @@ class EditGroupListContainer extends Component {
     });
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (JSON.stringify(this.props.EditGroupList) !== JSON.stringify(nextProps.EditGroupList)) {
+      this.props.getCount(nextProps.EditGroupList.length);
+    }
+    return true;
+  }
+
   setOut = (id) => {
     this.props.DeleteGroupInGroupRequest(this.props.id, id)
     .then(res => {

@@ -44,7 +44,9 @@ class ContentList extends Component {
         </Grid.Column>
       ))
       :
-      <Nodata>해당 컨텐츠가 없습니다.</Nodata>
+      <Nodata>
+      {type === "design" ? "해당 작품이 없습니다" : "해당 그룹이 없습니다"}
+      </Nodata>
       }
     </Grid.Row>
     </Grid>
