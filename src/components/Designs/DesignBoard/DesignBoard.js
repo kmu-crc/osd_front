@@ -116,6 +116,7 @@ class DesignBoard extends Component {
         render: true
       });
     }
+    return true;
   }
 
   onActive = e => {
