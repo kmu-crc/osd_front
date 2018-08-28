@@ -235,7 +235,7 @@ class CardSourceDetail extends Component {
                 getValue={this.onAddValue}
               />
             )}
-            <Button type="button" onClick={this.onSubmit} size="small">
+            <Button type="button" onClick={this.onSubmit} fluid={true}>
               저장
             </Button>
           </form>
