@@ -223,11 +223,11 @@ class DesignBoardCard extends Component {
   onCloseEditMode = () => {
     this.setState({ edit: false });
   };
-  setSourceInit = (num) => {
+  setSourceInit = num => {
     this.setState({
-      setSource : num
+      setSource: num
     });
-  }
+  };
 
   render() {
     const { card, detail } = this.props;
@@ -293,6 +293,9 @@ class DesignBoardCard extends Component {
                     openEdit={this.onChangeEditMode}
                     setSourceInit={this.setSourceInit}
                   />
+                  <Button type="button" color="Solid" fluid={true} onClick={this.onDelete}>
+                      삭제
+                    </Button>
                 </div>
               ) : (
                 <div>
