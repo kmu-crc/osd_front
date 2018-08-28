@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { CreateDesignCardRequest, GetDesignCardRequest } from "actions/Designs/DesignCard";
+import { CreateDesignCardRequest } from "actions/Designs/DesignCard";
 import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 import CreateCard from "components/Designs/CreateCard";
 
@@ -25,9 +25,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
-    },
-    GetDesignCardRequest: (id, board_id) => {
-      return dispatch(GetDesignCardRequest(id, board_id));
     }
   };
 };

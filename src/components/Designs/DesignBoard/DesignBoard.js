@@ -103,8 +103,20 @@ const CardList = styled.ul`
 
 class DesignBoard extends Component {
   state = {
-    active: false
+    active: false,
+    render: true
   };
+
+  async shouldComponentUpdate(nextProps){
+    if (JSON.stringify(this.props.board) !== JSON.stringify(nextProps.board)) {
+      await this.setState({
+        render: false
+      });
+      this.setState({
+        render: true
+      });
+    }
+  }
 
   onActive = e => {
     const event = e;
@@ -183,7 +195,8 @@ class DesignBoard extends Component {
             </div>
           )}
         </Title>
-        <CardList>
+        {this.state.render &&
+          <CardList>
           {board.cards.length > 0 &&
             board.cards.map((item, index) => {
               return (
@@ -204,6 +217,7 @@ class DesignBoard extends Component {
             />
           ) : null}
         </CardList>
+        }
       </Board>
     );
   }

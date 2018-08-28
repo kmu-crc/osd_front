@@ -61,10 +61,7 @@ class CreateCard extends Component {
             this.props.boardId,
             this.props.token
           )
-          .then(this.props.GetDesignBoardRequest(this.props.designId))
-          .then(res => res.length > 0 && res.map(board => (
-            this.props.GetDesignCardRequest(board.design_id, board.uid)
-          )));
+          .then(this.props.GetDesignBoardRequest(this.props.designId));
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));
