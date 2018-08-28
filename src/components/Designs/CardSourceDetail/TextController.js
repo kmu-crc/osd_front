@@ -190,6 +190,7 @@ class TextController extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    delete nextProps.item.target;
     if (JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)) {
       this.edit.innerHTML = nextProps.item.content;
       if(!nextProps.item.uid) this.setState({uid: null});

@@ -104,7 +104,15 @@ class CardSourceDetail extends Component {
     console.log(data, "1");
     let copyContent = [...this.state.content];
     delete data.initClick;
+    delete data.target;
     await copyContent.splice(data.order, 1, data);
+
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        delete item.initClick;
+        return item;
+      })
+    );
 
     await this.setState({ content: copyContent });
   };
@@ -129,6 +137,7 @@ class CardSourceDetail extends Component {
     newContent = await Promise.all(
       newContent.map(async (item, index) => {
         item.order = await index;
+        delete item.target;
         if (item.order !== copyData.order) delete item.initClick;
         return item;
       })
@@ -145,6 +154,8 @@ class CardSourceDetail extends Component {
     await copyContent.splice(index, 1);
     copyContent = await Promise.all(
       copyContent.map(async (item, index) => {
+        delete item.initClick;
+        delete item.target;
         item.order = await index;
         return item;
       })
