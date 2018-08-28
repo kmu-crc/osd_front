@@ -50,17 +50,20 @@ class FileController extends Component {
     type: ""
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    console.log("componentDidMount");
     if (this.props.item) {
-      this.setInit({ ...this.props.item });
+      await this.setInit({ ...this.props.item });
+      if (this.props.item.initClick) this.state.target.click();
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  async shouldComponentUpdate(nextProps) {
     let newProp = { ...this.props.item };
     delete newProp.target;
     let copyProps = { ...nextProps.item };
     delete copyProps.target;
+    console.log("newProp", newProp, "copyProps", copyProps);
     if (JSON.stringify(newProp) !== JSON.stringify(copyProps)) {
       let obj = {
         fileUrl: null,
@@ -73,13 +76,17 @@ class FileController extends Component {
         obj.uid = null;
         obj.fileUrl = "";
       }
-      this.setInit(obj);
-      if (nextProps.item.initClick) this.state.target.click();
+      await this.setInit(obj);
+    } else if (nextProps.item.fileUrl == null || nextProps.item.content === "") {
+      if(this.state.target) {
+        if (nextProps.item.initClick) this.state.target.click();
+      }
     }
     return true;
   }
 
   setInit = async item => {
+    console.log("item", item)
     await this.setState({
       ...item
     });
