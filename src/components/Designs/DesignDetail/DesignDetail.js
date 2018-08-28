@@ -381,6 +381,7 @@ const MemberItem = styled.div`
     font-size: ${PxtoRem(20)};
     line-height: ${PxtoRem(35)};
     margin: 0 auto;
+    font-weight: bold
     color: ${StyleGuide.color.geyScale.scale9};
     &::before {
       margin: 0;
@@ -712,7 +713,8 @@ class DesignDetail extends Component {
                                 </MemberItem>
                               )} */}
                               <MemberItem>
-                                  <Icon name="plus" />
+                                  {/* <Icon name="plus" /> */}
+                                  <i className="icon">{this.props.Count.member_count}</i>{this.props.Count.member_count}
                                 </MemberItem>
                               <Memberlist
                                 className={
