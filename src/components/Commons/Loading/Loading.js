@@ -5,6 +5,9 @@ import styled from "styled-components";
 const DimmerContainer = styled.div`
   & .ui.loader {
     position: fixed;
+    &::after {
+      border-color: #000 transparent transparent !important;
+    }
   }
 `;
 

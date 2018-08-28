@@ -16,6 +16,13 @@ class EditDesignListContainer extends Component {
     });
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (JSON.stringify(this.props.EditDesignList) !== JSON.stringify(nextProps.EditDesignList)) {
+      this.props.getCount(nextProps.EditDesignList.length);
+    }
+    return true;
+  }
+
   setOut = (id) => {
     this.props.DeleteDesignInGroupRequest(this.props.id, id)
     .then(res => {

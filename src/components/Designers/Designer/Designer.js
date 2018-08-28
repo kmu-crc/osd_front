@@ -73,7 +73,7 @@ const Count = styled.div`
 }
 `;
 
-class designer extends Component {
+class Designer extends Component {
   render(){
     let designer = this.props.data;
 
@@ -106,4 +106,4 @@ class designer extends Component {
   }
 }
 
-export default designer;
+export default Designer;

@@ -19,6 +19,7 @@ class ScrollGroupListContainer extends Component {
       <div>
         <ScrollList getListRequest={this.getList}
                     ListComponent={Group}
+                    type="Group"
                     dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                     mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
       </div>

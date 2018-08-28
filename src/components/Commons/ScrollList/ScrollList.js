@@ -44,6 +44,7 @@ class ScrollList extends Component {
 
   render() {
     const ListComponent = this.props.ListComponent;
+    const type = this.props.type;
 
     return (
       <ScrollContainer>
@@ -68,7 +69,12 @@ class ScrollList extends Component {
             </ListContainer>
           </InfiniteScroll>
           :
-          <p>등록된 글이 없습니다</p>
+          <p>
+            {type === "Designer" ? "등록된 디자이너가 없습니다"
+            : type === "Group" ? "등록된 그룹이 없습니다"
+            : "등록된 작품이 없습니다"
+            }
+          </p>
           }
         </ScrollContainer>
     );
