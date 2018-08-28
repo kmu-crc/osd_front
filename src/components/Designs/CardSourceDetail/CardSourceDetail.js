@@ -102,21 +102,30 @@ class CardSourceDetail extends Component {
   };
 
   onAddValue = async data => {
-    console.log(data, "2");
     let copyContent = [...this.state.content];
     let copyData = { ...data };
     copyData.initClick = true;
+    for (let item of copyContent) {
+      if((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")){
+        await copyContent.splice(item.order, 1, null);
+      }
+    }
     await copyContent.splice(copyData.order, 0, copyData);
 
-    copyContent = await Promise.all(
-      copyContent.map(async (item, index) => {
+    let newContent = [];
+    copyContent = copyContent.map((item, index) => {
+      if(item != null){
+        newContent.push(item);
+      }
+    })
+    newContent = await Promise.all(
+      newContent.map(async (item, index) => {
         item.order = await index;
         if (item.order !== copyData.order) delete item.initClick;
         return item;
       })
     );
-    console.log("copyContent", copyContent);
-    await this.setState({ content: copyContent });
+    await this.setState({ content: newContent });
   };
 
   deleteItem = async index => {
@@ -137,17 +146,22 @@ class CardSourceDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    await this.setState({loading: true});
     let copyContent = [...this.state.content];
+    for (let item of copyContent) {
+      if((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")){
+        await copyContent.splice(item.order, 1);
+      }
+    }
     copyContent = await Promise.all(
       copyContent.map(async (item, index) => {
+        delete item.initClick;
         item.order = await index;
         return item;
       })
     );
-    await this.setState({content: copyContent})
+    await this.setState({content: copyContent});
     let formData = await ContentForm(this.state);
-    console.log(formData);
+    await this.setState({loading: true});
     await setTimeout(() => {
 
     }, 500);
