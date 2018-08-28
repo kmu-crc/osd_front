@@ -583,11 +583,11 @@ export const GetDesignSourceRequest = id => {
         return res.json();
       })
       .then(function(res) {
-        dispatch(GetDesignSourceSuccess(res));
+        return dispatch(GetDesignSourceSuccess(res));
       })
       .catch(error => {
         console.log("insert issue err", error);
-        dispatch(GetDesignSourceFailure(error));
+        return dispatch(GetDesignSourceFailure(error));
       });
   };
 };

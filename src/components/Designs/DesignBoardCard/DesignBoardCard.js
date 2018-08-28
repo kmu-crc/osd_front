@@ -115,7 +115,8 @@ class DesignBoardCard extends Component {
     active: "INIT",
     render: true,
     closeOnDimmerClick: true,
-    edit: false
+    edit: false,
+    setSource: 0
   };
 
   componentDidMount() {
@@ -222,6 +223,11 @@ class DesignBoardCard extends Component {
   onCloseEditMode = () => {
     this.setState({ edit: false });
   };
+  setSourceInit = (num) => {
+    this.setState({
+      setSource : num
+    });
+  }
 
   render() {
     const { card, detail } = this.props;
@@ -285,6 +291,7 @@ class DesignBoardCard extends Component {
                     onClose={this.close}
                     closeEdit={this.onCloseEditMode}
                     openEdit={this.onChangeEditMode}
+                    setSourceInit={this.setSourceInit}
                   />
                 </div>
               ) : (
@@ -306,6 +313,7 @@ class DesignBoardCard extends Component {
                     edit={this.state.edit}
                     closeEdit={this.onCloseEditMode}
                     openEdit={this.onChangeEditMode}
+                    setSourceInit={this.setSourceInit}
                   />
                 </div>
               )}
