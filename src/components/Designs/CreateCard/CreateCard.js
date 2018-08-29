@@ -55,13 +55,14 @@ class CreateCard extends Component {
       .then(data => {
         data.order = this.props.lastOrder;
         this.props
-          .CreateDesignCardRequest(
-            data,
-            this.props.designId,
-            this.props.boardId,
-            this.props.token
-          )
-          .then(this.props.GetDesignBoardRequest(this.props.designId));
+          .CreateDesignCardRequest(data, this.props.designId, this.props.boardId, this.props.token)
+          .then(res => {
+            if (res.success === true) {
+              this.props.GetDesignBoardRequest(this.props.designId);
+            } else {
+              this.props.GetDesignBoardRequest(this.props.designId);
+            }
+          });
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));

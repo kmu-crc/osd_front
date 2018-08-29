@@ -103,21 +103,8 @@ const CardList = styled.ul`
 
 class DesignBoard extends Component {
   state = {
-    active: false,
-    render: true
+    active: false
   };
-
-  async shouldComponentUpdate(nextProps){
-    if (JSON.stringify(this.props.board) !== JSON.stringify(nextProps.board)) {
-      await this.setState({
-        render: false
-      });
-      this.setState({
-        render: true
-      });
-    }
-    return true;
-  }
 
   onActive = e => {
     const event = e;
@@ -196,29 +183,27 @@ class DesignBoard extends Component {
             </div>
           )}
         </Title>
-        {this.state.render &&
-          <CardList>
-          {board.cards.length > 0 &&
-            board.cards.map((item, index) => {
-              return (
-                <DesignBoardCardContainer
-                  key={`card${index}`}
-                  card={item}
-                  boardId={board.uid}
-                />
-              );
-            })}
-          {this.props.isTeam > 0 ? (
-            <CreateDesignCardContainer
-              designId={designId}
-              boardId={board.uid}
-              changeBoard={changeBoard}
-              activeBoard={activeBoard}
-              lastOrder={board.cards.length}
-            />
-          ) : null}
-        </CardList>
-        }
+        <CardList>
+        {board.cards.length > 0 &&
+          board.cards.map((item, index) => {
+            return (
+              <DesignBoardCardContainer
+                key={`card${index}`}
+                card={item}
+                boardId={board.uid}
+              />
+            );
+          })}
+        {this.props.isTeam > 0 ? (
+          <CreateDesignCardContainer
+            designId={designId}
+            boardId={board.uid}
+            changeBoard={changeBoard}
+            activeBoard={activeBoard}
+            lastOrder={board.cards.length}
+          />
+        ) : null}
+      </CardList>
       </Board>
     );
   }
