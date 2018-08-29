@@ -184,26 +184,26 @@ class DesignBoard extends Component {
           )}
         </Title>
         <CardList>
-          {board.cards.length > 0 &&
-            board.cards.map((item, index) => {
-              return (
-                <DesignBoardCardContainer
-                  key={`card${index}`}
-                  card={item}
-                  boardId={board.uid}
-                />
-              );
-            })}
-          {this.props.isTeam > 0 ? (
-            <CreateDesignCardContainer
-              designId={designId}
-              boardId={board.uid}
-              changeBoard={changeBoard}
-              activeBoard={activeBoard}
-              lastOrder={board.cards.length}
-            />
-          ) : null}
-        </CardList>
+        {board.cards.length > 0 &&
+          board.cards.map((item, index) => {
+            return (
+              <DesignBoardCardContainer
+                key={`card${index}`}
+                card={item}
+                boardId={board.uid}
+              />
+            );
+          })}
+        {this.props.isTeam > 0 ? (
+          <CreateDesignCardContainer
+            designId={designId}
+            boardId={board.uid}
+            changeBoard={changeBoard}
+            activeBoard={activeBoard}
+            lastOrder={board.cards.length}
+          />
+        ) : null}
+      </CardList>
       </Board>
     );
   }

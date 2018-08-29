@@ -34,7 +34,6 @@ const InfoContainer = styled(Grid)`
     padding: 1rem 1rem 0 0 !important;
     & span {
       line-height: 1.2;
-      cursor: pointer;
       margin-right: 5px;
     }
   }
@@ -214,7 +213,7 @@ class GroupDetailNew extends Component {
             <InfoContainer>
               <Grid.Row className="title">
                 <span><a href={`/groupDetail/${groupDetail.parentId}`}>{groupDetail.parentName && groupDetail.parentName + " > "}</a></span>
-                <span><a href={`/groupDetail/${groupDetail.uid}`}>{groupDetail.title}</a></span>
+                <span>{groupDetail.title}</span>
                 {user && (user.uid === groupDetail.user_id) &&
                   <SideMenuBtn tabIndex="1"
                                onBlur={this.onCloseMoreBtn}
@@ -230,7 +229,7 @@ class GroupDetailNew extends Component {
                 <Grid.Column width={9}>
                   <div className="explanation">{groupDetail.explanation}</div>
                   <div className="date">최근 업데이트 : {groupDetail.update_time.split("T")[0]}</div>
-                  <div className="owner">그룹장 : {groupDetail.userName}</div>
+                  <div className="owner">개설자 : {groupDetail.userName}</div>
                 </Grid.Column>
                 <Grid.Column className="btnWrap" width={7}>
                 {this.state.editMode
