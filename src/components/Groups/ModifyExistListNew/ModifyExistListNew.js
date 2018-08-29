@@ -50,12 +50,12 @@ class ModifyExistListNew extends Component {
   }
 
   getCountGroup = (count) => {
-    const html = "등록된 그룹 (" + count + "건)";
+    const html = "등록된 그룹 (" + count + ")";
     document.getElementById("existGroup").innerHTML = html;
   }
 
   getCountDesign = (count) => {
-    const html = "등록된 디자인 (" + count + "건)";
+    const html = "등록된 디자인 (" + count + ")";
     document.getElementById("existDesign").innerHTML = html;
   }
 

@@ -49,12 +49,12 @@ class ModifyJoinListNew extends Component {
   }
 
   getCountGroup = (count) => {
-    const html = "가입 신청중인 그룹 (" + count + "건)";
+    const html = "가입 신청중인 그룹 (" + count + ")";
     document.getElementById("joinGroup").innerHTML = html;
   }
 
   getCountDesign = (count) => {
-    const html = "가입 신청중인 디자인 (" + count + "건)";
+    const html = "가입 신청중인 디자인 (" + count + ")";
     document.getElementById("joinDesign").innerHTML = html;
   }
 

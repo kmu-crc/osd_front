@@ -133,7 +133,7 @@ class GroupList extends Component {
     const Header = () => {
       return (
         <Head>
-          <span>그룹 ({this.props.Count}건)</span>
+          <span>그룹 ({this.props.Count})</span>
         </Head>
       );
     };

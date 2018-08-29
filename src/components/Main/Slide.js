@@ -113,8 +113,8 @@ export default class MainSlide extends Component {
                   stopOnHover={false}
                   showIndicators={true}
                   axis="horizontal"
-                  transitionTime={600}
-                  interval={3000}
+                  transitionTime={1000}
+                  interval={10000}
                   width="100%"
                   infiniteLoop={true}
                   showThumbs={false}>

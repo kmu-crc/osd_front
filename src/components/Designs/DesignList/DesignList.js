@@ -117,7 +117,7 @@ class DesignList extends Component {
             {this.props.cate2 && this.props.cate2 !== "null" &&
               <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
             }
-            <span> ({this.props.Count}건)</span>
+            <span> ({this.props.Count})</span>
           </Head>
         );
       } else {
