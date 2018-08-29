@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Button, Icon } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import { FormInput } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 
 const Title = styled.div`
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 600;
   padding: 0.67857143em 1em;
   cursor: pointer;
@@ -13,14 +13,9 @@ const Title = styled.div`
 `;
 
 const ButtonWrap = styled.div`
+  font-size: 1rem;
+  width: 100%;
   margin-top: 1rem;
-`;
-
-const CloseBtn = styled(Button)`
-  background-color: transparent !important;
-  border: 0 !important;
-  padding: 10px !important;
-  margin-left: 10px !important;
 `;
 
 const FInput = styled.div`
@@ -92,10 +87,10 @@ class CreateCard extends Component {
             </FInput>
 
             <ButtonWrap>
-              <Button type="submit">생성</Button>
-              <CloseBtn type="button" onClick={this.handelClose}>
-                <Icon name="close" />
-              </CloseBtn>
+              <Button color="Primary" type="submit" size="small">생성</Button>
+              <Button color="Primary" type="button" size="small" onClick={this.handelClose}>
+                취소
+              </Button>
             </ButtonWrap>
           </form>
         ) : (

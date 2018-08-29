@@ -1,19 +1,11 @@
 import React, { Component } from "react";
-import ValidateForm from "components/Commons/ValidateForm";
-import { Icon } from "semantic-ui-react";
-import { FormInput } from "components/Commons/FormItem";
 import Button from "components/Commons/Button";
-import FormDataToJson from "modules/FormDataToJson";
+import { FormInput } from "components/Commons/FormItems";
+import { ValidationGroup } from "modules/FormControl";
 import styled from "styled-components";
 
 const Update = styled.div`
   padding: 10px 0;
-  button {
-    margin: 0 !important;
-    margin-left: 1% !important;
-    line-height: 1.21428571em !important;
-    padding: 0.67857143em 1em !important;
-  }
   &::after {
     content: "";
     display: block;
@@ -22,48 +14,87 @@ const Update = styled.div`
 `;
 
 const ButtonWrap = styled.div`
+  width: 100%;
+  font-size: 1rem;
   margin-top: 1rem;
 `;
 
-const CloseBtn = styled(Button)`
-  background-color: transparent !important;
-  border: 0 !important;
-  padding: 10px !important;
-  margin-left: 10px !important;
+const FInput = styled.div`
+  & > div {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 class BoardUpdate extends Component {
-  onSubmit = data => {
-    let formData = FormDataToJson(data);
-    this.props
-      .onUpdate(this.props.board.uid, this.props.token, formData)
-      .then(() => {
-        this.props.getBoard(this.props.board.design_id);
-        this.props.ModifyComplete();
-      });
+  componentDidMount() {
+    setTimeout(() => {
+      this.state.title.target.focus();
+    }, 100);
+  }
+  onSubmit = e => {
+    e.preventDefault();
+
+    ValidationGroup(this.state, true)
+      .then(data => {
+        data.order = this.props.lastOrder;
+        this.props
+          .onUpdate(this.props.board.uid, this.props.token, data)
+          .then(() => {
+            this.props.getBoard(this.props.board.design_id);
+            this.props.ModifyComplete();
+          });
+        this.setState({ active: false });
+      })
+      .catch(err => console.log("실패", err));
   };
 
-  handelClose = () => {
+  onChangeValue = async data => {
+    let obj = {};
+    if (data.target) {
+      obj[data.target.name] = data;
+    }
+    await this.setState(obj);
+    console.log(this.state);
+  };
+
+  handelClose = e => {
+    console.log("blur");
+    if (e.type === "blur" && !this.form.contains(e.relatedTarget)) {
+      this.props.ModifyComplete();
+    }
+  };
+
+  handelCloseBtn = () => {
     this.props.ModifyComplete();
   };
 
   render() {
     return (
       <Update>
-        <ValidateForm onSubmit={this.onSubmit}>
-          <FormInput
-            name="title"
-            type="text"
-            value={this.props.value}
-            placeholder="새 보드 추가"
-          />
+        <form
+          onSubmit={this.onSubmit}
+          onFocus={this.onActive}
+          ref={ref => (this.form = ref)}
+          tabIndex="1"
+          onBlur={this.handelClose}
+        >
+          <FInput>
+            <FormInput
+              name="title"
+              type="text"
+              value={this.props.value}
+              placeholder="새 보드 추가"
+              getValue={this.onChangeValue}
+              validates={["Required"]}
+            />
+          </FInput>
           <ButtonWrap>
-            <Button type="submit">수정</Button>
-            <CloseBtn type="button" onClick={this.handelClose}>
-              <Icon name="close" />
-            </CloseBtn>
+            <Button type="submit" size="small">수정</Button>
+            <Button type="button" size="small" onClick={this.handelCloseBtn}>
+              취소
+            </Button>
           </ButtonWrap>
-        </ValidateForm>
+        </form>
       </Update>
     );
   }

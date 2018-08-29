@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Button, Icon } from "semantic-ui-react";
+import Button from "components/Commons/Button";
 import { FormInput } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 
@@ -11,13 +11,6 @@ const Board = styled.li`
   box-sizing: border-box;
   background-color: #dbdada;
   border-radius: 3px;
-  button {
-    margin: 0 !important;
-    margin-left: 1% !important;
-    line-height: 1.21428571em !important;
-    padding: 0.67857143em 1em !important;
-    border: 1px solid #e0e1e2 !important;
-  }
   &::after {
     content: "";
     display: block;
@@ -26,13 +19,15 @@ const Board = styled.li`
 `;
 
 const Title = styled.div`
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 600;
   padding: 0.67857143em 1em;
   cursor: pointer;
 `;
 
 const ButtonWrap = styled.div`
+  width: 100%;
+  font-size: 1rem;
   margin-top: 1rem;
 `;
 
@@ -110,10 +105,10 @@ class CreateBoard extends Component {
             </FInput>
 
             <ButtonWrap>
-              <Button type="submit">생성</Button>
-              <CloseBtn type="button" onClick={this.handelClose}>
-                <Icon name="close" />
-              </CloseBtn>
+              <Button color="Primary" type="submit" size="small">생성</Button>
+              <Button color="Primary" type="button" size="small" onClick={this.handelClose}>
+                취소
+              </Button>
             </ButtonWrap>
           </form>
         ) : (
