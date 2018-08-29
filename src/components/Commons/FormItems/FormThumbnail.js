@@ -62,9 +62,9 @@ export class FormThumbnail extends Component {
       if (
         data.value[0].type === "image/jpeg" ||
         data.value[0].type === "image/png" ||
-        data.value[0].type === "image/gif" ||
-        data.value[0].type === "image/bmp" ||
-        data.value[0].type === "image/webp"
+        data.value[0].type === "image/gif"
+        // data.value[0].type === "image/bmp" ||
+        // data.value[0].type === "image/webp"
       ) {
         let reader = new FileReader();
         reader.onloadend = async () => {

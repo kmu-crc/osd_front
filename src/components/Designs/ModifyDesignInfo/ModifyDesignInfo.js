@@ -130,10 +130,11 @@ class ModifyDesignInfo extends Component {
       this.props.setLoader();
       this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
       .then(data => {
-        if (data.res.success) {
+        if (data.res && data.res.success) {
           this.props.history.push(`/designDetail/${data.res.design_id}`);
         } else {
           alert("다시 시도해주세요");
+          this.state.member.value = JSON.parse(this.state.member.value);
           this.props.setLoader();
         }
       });

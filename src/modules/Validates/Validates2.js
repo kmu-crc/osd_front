@@ -190,13 +190,13 @@ Validates.OnlyImages = (data, target) => {
         if (
           item.type === "image/jpeg" ||
           item.type === "image/png" ||
-          item.type === "image/gif" ||
-          item.type === "image/bmp" ||
-          item.type === "image/webp"
+          item.type === "image/gif"
+          // item.type === "image/bmp" ||
+          // item.type === "image/webp"
         ) {
           await resolve(true);
         } else {
-          message = "이미지만 업로드할 수 있습니다.";
+          message = "해당 확장자는 업로드할 수 없습니다";
           await reject({ message, target });
         }
       }
