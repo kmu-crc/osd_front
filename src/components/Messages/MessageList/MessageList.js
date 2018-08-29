@@ -241,7 +241,7 @@ class MessageList extends Component {
     }
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)
     .then(async res => {
-      if (res.data.success === true) {
+      if (res.data && res.data.success === true) {
         await this.props.GetMyMsgListRequest(this.props.token)
         await this.setState({
           msgId: res.data.groupId,

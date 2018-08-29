@@ -98,7 +98,7 @@ class ModifyGroupInfo extends Component {
       });
       this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
       .then(res => {
-        if (res.data.success === true) {
+        if (res.data && res.data.success === true) {
           alert("정보가 수정되었습니다.");
           this.props.history.push(`/groupDetail/${this.props.id}`);
         } else {
