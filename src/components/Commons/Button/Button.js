@@ -13,6 +13,7 @@ const Btn = styled.button`
                 : "14px" };
   border-radius: ${props => props.round ? "2em" : "5px" };
   color: white;
+  margin-right: 0.5rem;
   background-color: ${props => props.color === "Danger"
                       ? StyleGuide.color.sub.purple.basic
                       : props.color === "Primary"
