@@ -163,7 +163,8 @@ class DesignBoardCard extends Component {
           this.props.card.uid,
           this.props.token
         )
-        .then(() => {
+        .then(async () => {
+          await this.setState({edit: false});
           this.props.GetDesignBoardRequest(this.props.match.params.id);
         });
     } else {
