@@ -64,6 +64,9 @@ const BtnContainer = styled.div`
   & button {
     margin-left: .3rem;
   }
+  & i {
+    margin: 0;
+  }
 `;
 
 const SideMenuBtn = styled.div`
@@ -238,8 +241,16 @@ class GroupDetailNew extends Component {
                   </BtnContainer>
                 : <BtnContainer>
                     {this.props.like === true
-                    ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소 ({this.props.Count.like})</Button>
-                    : <Button className="likeBtn" onClick={this.updateLike}>좋아요 ({this.props.Count.like})</Button>
+                    ? <Button color="Primary" onClick={this.updateLike}>
+                        좋아요
+                        <Icon name="heart" color="red" />
+                        {/* ({this.props.Count.like}) */}
+                      </Button>
+                    : <Button className="likeBtn" onClick={this.updateLike}>
+                        좋아요
+                        <Icon name="heart outline" />
+                        {/* ({this.props.Count.like}) */}
+                      </Button>
                     }
                     <JoinGroupContainer/>
                     {user && (user.uid === groupDetail.user_id) &&

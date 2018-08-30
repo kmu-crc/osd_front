@@ -44,7 +44,7 @@ class EditGroupListContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.EditGroupList} type="group" handleClick={this.setOut}/>
+      <ContentList data={this.props.EditGroupList} rerender={true} type="group" handleClick={this.setOut}/>
     );
   }
 }

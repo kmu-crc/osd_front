@@ -57,7 +57,7 @@ class WaitingGroupContainer extends Component {
 
   render() {
     return(
-      <ContentList data={this.props.waitingGroup} type="group"
+      <ContentList data={this.props.waitingGroup} type="group" rerender={true}
                    handleClick={this.setOut} handleAccept={this.setAccept}/>
     );
   }

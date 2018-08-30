@@ -273,8 +273,14 @@ class GroupDetail extends Component {
                     </InfoSection>
                     <div className="likeBtnContainer">
                       {this.props.like === true
-                      ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
-                      : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
+                      ? <Button color="Primary" onClick={this.updateLike}>
+                          좋아요
+                          <Icon name="heart" color="red" />
+                        </Button>
+                      : <Button className="likeBtn" onClick={this.updateLike}>
+                          좋아요
+                          <Icon name="heart outline" />
+                        </Button>
                       }
                       <JoinGroupContainer/>
                     </div>

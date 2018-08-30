@@ -85,8 +85,8 @@ class Design extends Component {
           <TextPart>
             <div className="title">{design.title}</div>
               {design.is_project === 1
-              ? <div className="userName">{design.userName}님의 프로젝트</div>
-              : <div className="userName">{design.userName}님의 작품</div>
+              ? <div className="userName">{design.nick_name}님의 프로젝트</div>
+              : <div className="userName">{design.nick_name}님의 작품</div>
               }
             <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
           </TextPart>
