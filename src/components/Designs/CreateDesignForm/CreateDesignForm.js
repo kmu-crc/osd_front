@@ -92,6 +92,7 @@ class CreateDesignForm extends Component {
           this.props.history.push(`/designDetail/${res.design_id}`);
         } else {
           alert("다시 시도해주세요");
+          this.state.member.value = JSON.parse(this.state.member.value);
           this.props.setLoader();
         }
       });

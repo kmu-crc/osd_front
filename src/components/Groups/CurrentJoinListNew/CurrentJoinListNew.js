@@ -66,11 +66,11 @@ class CurrentJoinListNew extends Component {
           </Grid.Row>
         </Head>
         <GroupBox>
-          <div className="boxTitle">그룹 ({this.props.Count.group}건)</div>
+          <div className="boxTitle">그룹 ({this.props.Count.group})</div>
           <GroupInGroupContainer id={this.props.id} sort={this.props.sort}/>
         </GroupBox>
         <DesignBox>
-          <div className="boxTitle">디자인 ({this.props.Count.design}건)</div>
+          <div className="boxTitle">디자인 ({this.props.Count.design})</div>
           <DesignInGroupContainer id={this.props.id} sort={this.props.sort}/>
         </DesignBox>
       </TabContainer>

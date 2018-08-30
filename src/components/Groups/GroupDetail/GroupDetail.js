@@ -203,7 +203,7 @@ class GroupDetail extends Component {
   onSubmitForm = (data) => {
     this.props.CreateGroupIssueRequest(FormDataToJson(data), this.props.id, this.props.token)
     .then(res => {
-      if (res.data.success === true) {
+      if (res.data && res.data.success === true) {
         this.props.GetGroupDetailRequest(this.props.id);
         this.setState({
           editIssue: false
@@ -215,7 +215,7 @@ class GroupDetail extends Component {
   deleteIssue = (id) => {
     this.props.DeleteGroupIssueRequest(this.props.id, id, this.props.token)
     .then(res => {
-      if (res.data.success === true) {
+      if (res.data && res.data.success === true) {
         this.props.GetGroupDetailRequest(this.props.id);
       }
     });

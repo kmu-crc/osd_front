@@ -185,7 +185,7 @@ class DesignBoardCard extends Component {
         this.props.token
       )
       .then(async res => {
-        if (res.data.success === true) {
+        if (res.data && res.data.success === true) {
           this.props.GetCardCommentRequest(
             this.props.match.params.id,
             this.props.card.uid
@@ -209,7 +209,7 @@ class DesignBoardCard extends Component {
         this.props.token
       )
       .then(res => {
-        if (res.data.success === true) {
+        if (res.data && res.data.success === true) {
           this.props.GetCardCommentRequest(
             this.props.match.params.id,
             this.props.card.uid

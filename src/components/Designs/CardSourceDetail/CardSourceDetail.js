@@ -13,6 +13,10 @@ const CardSrcWrap = styled.div`
   & form {
     margin: 20px 0;
   }
+  & .ui.loader {
+    top: auto;
+    bottom: 70vh;
+  }
 `;
 
 const ViewContent = styled.div`

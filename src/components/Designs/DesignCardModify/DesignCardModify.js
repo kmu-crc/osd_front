@@ -73,6 +73,7 @@ class DesignCardModify extends Component {
           getValue={this.onChangeValue}
           image={this.props.card.first_img && this.props.card.first_img.m_img}
           placeholder="썸네일 등록"
+          validates={["OnlyImages", "MaxFileSize(10000000)"]}
         />
         <Label>제목</Label>
         <FormInput

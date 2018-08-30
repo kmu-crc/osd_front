@@ -51,7 +51,7 @@ class UserDetailFrom extends Component {
       });
       this.props.InsertUserDetailRequest(data, this.props.token)
       .then(data => {
-        if (data.res.success) {
+        if (data.res && data.res.success) {
           this.props.history.push(`/`);
         } else {
           alert("다시 시도해주세요");
