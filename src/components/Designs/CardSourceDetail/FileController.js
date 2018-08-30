@@ -47,14 +47,20 @@ class FileController extends Component {
     fileUrl: null,
     is_image: false,
     extension: "",
-    type: ""
+    type: "",
+    value: [],
+    target: null,
+    validates: []
   };
 
   async componentDidMount() {
     console.log("componentDidMount");
     if (this.props.item) {
       await this.setInit({ ...this.props.item });
-      if (this.props.item.initClick) this.state.target.click();
+      if (this.props.item.initClick) {
+        console.log("1");
+        this.state.target.click();
+      }
     }
   }
 
@@ -63,7 +69,6 @@ class FileController extends Component {
     delete newProp.target;
     let copyProps = { ...nextProps.item };
     delete copyProps.target;
-    console.log("newProp", newProp, "copyProps", copyProps);
     if (JSON.stringify(newProp) !== JSON.stringify(copyProps)) {
       let obj = {
         fileUrl: null,
@@ -77,18 +82,27 @@ class FileController extends Component {
         obj.fileUrl = "";
       }
       await this.setInit(obj);
-    } else if (nextProps.item.fileUrl == null || nextProps.item.content === "") {
-      if(this.state.target) {
-        if (nextProps.item.initClick) this.state.target.click();
+    } else if (
+      nextProps.item.fileUrl == null ||
+      nextProps.item.content === ""
+    ) {
+      if (this.state.target) {
+        setTimeout(() => {
+          if (nextProps.item.initClick) {
+            console.log("2", nextProps.item);
+            this.state.target.click();
+          }
+        }, 100);
       }
     }
     return true;
   }
 
   setInit = async item => {
-    console.log("item", item)
+    console.log("item2", item);
     await this.setState({
-      ...item
+      ...item,
+      target: this.input
     });
     if (!item.content) return;
     if (item.data_type.split("/")[0] === "image") {
@@ -120,21 +134,23 @@ class FileController extends Component {
     });
   };
 
-  onChangeValue = async data => {
-    if (data.value[0]) {
+  onChangeValue = async () => {
+    console.log("onChangeValue", this.input.files);
+    let data = this.input.files;
+    if (data[0]) {
       let type = null;
-      if (data.value[0].type) type = await data.value[0].type.split("/")[0];
-      let extension = await data.value[0].name.split(".");
+      if (data[0].type) type = await data[0].type.split("/")[0];
+      let extension = await data[0].name.split(".");
       extension = await extension[extension.length - 1];
 
-      const fileUrl = await this.readUploadedFileAsText(data.value[0]);
+      const fileUrl = await this.readUploadedFileAsText(data[0]);
       if (type === "image") {
         await this.setState({
           fileUrl: fileUrl,
           is_image: true,
           file_type: type,
           extension: extension,
-          file_name: data.value[0].name
+          file_name: data[0].name
         });
       } else {
         await this.setState({
@@ -142,7 +158,7 @@ class FileController extends Component {
           is_image: false,
           file_type: type,
           extension: extension,
-          file_name: data.value[0].name
+          file_name: data[0].name
         });
       }
     } else {
@@ -155,7 +171,7 @@ class FileController extends Component {
       });
     }
     await this.setState({ ...data });
-    if (data.value.length > 0) {
+    if (data.length > 0) {
       this.returnData();
     }
   };
@@ -187,22 +203,15 @@ class FileController extends Component {
             />
             <span className="LinkFileName">{this.props.item.file_name}</span>
           </div>
-        ) : (
-          !this.props.item.content && (
-            <UploadBtn
-              onClick={this.onClickFile}
-              type="button"
-              size="small"
-              color="Primary"
-              icon="upload"
-              round={true}
-            >
-              업로드
-            </UploadBtn>
-          )
-        )}
+        ) : null}
         <File>
-          <FormFile name="source" getValue={this.onChangeValue} />
+          <input
+            type="file"
+            name="source"
+            onChange={this.onChangeValue}
+            ref={ref => (this.input = ref)}
+            style={{ display: "none" }}
+          />
         </File>
       </FileWrap>
     );
