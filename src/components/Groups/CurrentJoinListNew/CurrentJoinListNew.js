@@ -13,6 +13,9 @@ const TabContainer = styled.div`
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
+  & > p {
+    text-align: center;
+  }
 `;
 
 const Head = styled(Grid)`
@@ -23,21 +26,6 @@ const Head = styled(Grid)`
   }
   &.ui.grid > .row > .column.sorting {
     line-height: 2.5;
-  }
-`;
-
-const GroupBox = styled.div`
-  margin-bottom: 1rem;
-  & .boxTitle {
-    padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
-  }
-`;
-
-const DesignBox = styled.div`
-  & .boxTitle {
-    padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
   }
 `;
 
@@ -65,14 +53,11 @@ class CurrentJoinListNew extends Component {
             <Sorting largescreen={8} computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>
           </Grid.Row>
         </Head>
-        <GroupBox>
-          <div className="boxTitle">그룹 ({this.props.Count.group})</div>
-          <GroupInGroupContainer id={this.props.id} sort={this.props.sort}/>
-        </GroupBox>
-        <DesignBox>
-          <div className="boxTitle">디자인 ({this.props.Count.design})</div>
-          <DesignInGroupContainer id={this.props.id} sort={this.props.sort}/>
-        </DesignBox>
+        {this.props.Count.design === 0 && this.props.Count.group === 0 &&
+        <p>가입된 컨텐츠가 없습니다.</p>
+        }
+        <GroupInGroupContainer id={this.props.id} sort={this.props.sort} count={this.props.Count.group}/>
+        <DesignInGroupContainer id={this.props.id} sort={this.props.sort} count={this.props.Count.design}/>
       </TabContainer>
     );
   }

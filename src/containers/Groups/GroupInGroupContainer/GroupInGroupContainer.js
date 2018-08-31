@@ -3,6 +3,16 @@ import { connect } from 'react-redux';
 import { GetGroupInGroupRequest } from "actions/Group";
 import ScrollList from "components/Commons/ScrollList";
 import Group from "components/Groups/Group";
+import styled from 'styled-components';
+import StyleGuide from 'StyleGuide';
+
+const GroupBox = styled.div`
+  margin-bottom: 1rem;
+  & .boxTitle {
+    padding-bottom: 1rem;
+    font-size: ${StyleGuide.font.size.heading4};
+  }
+`;
 
 class GroupInGroupContainer extends Component {
   componentWillMount() {
@@ -23,12 +33,18 @@ class GroupInGroupContainer extends Component {
   render() {
     return(
       <div>
-        <ScrollList rerender={true}
-                    getListRequest={this.getList}
-                    ListComponent={Group}
-                    type="Group"
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
+        {this.props.dataListAdded && this.props.dataListAdded.length === 0
+        ? <div></div>
+        : <GroupBox>
+            <div className="boxTitle">그룹 ({this.props.count})</div>
+            <ScrollList rerender={true}
+                        getListRequest={this.getList}
+                        ListComponent={Group}
+                        type="Group"
+                        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+                        mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
+          </GroupBox>
+        }
       </div>
     );
   }
