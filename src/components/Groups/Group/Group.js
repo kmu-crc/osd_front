@@ -96,7 +96,7 @@ class Group extends Component {
           <TextPart>
             <div className="title">{group.title}</div>
             <div className="owner">
-              {group.nick_name}님의 그룹
+              {group.userName}님의 그룹
             </div>
             <div className="cate">
               최근 업데이트 {DateFormat(group.child_update_time)}

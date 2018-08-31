@@ -23,21 +23,6 @@ const Head = styled(Grid)`
   }
 `;
 
-const GroupBox = styled.div`
-  margin-bottom: 1rem;
-  & .boxTitle {
-    padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
-  }
-`;
-
-const DesignBox = styled.div`
-  & .boxTitle {
-    padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
-  }
-`;
-
 class ModifyExistListNew extends Component {
   componentWillUnmount() {
     this.props.DesignInGroupClear([]);
@@ -49,27 +34,11 @@ class ModifyExistListNew extends Component {
     this.props.history.replace(`${url}/${value}`);
   }
 
-  getCountGroup = (count) => {
-    const html = "등록된 그룹 (" + count + ")";
-    document.getElementById("existGroup").innerHTML = html;
-  }
-
-  getCountDesign = (count) => {
-    const html = "등록된 디자인 (" + count + ")";
-    document.getElementById("existDesign").innerHTML = html;
-  }
-
   render(){
     return(
       <TabContainer>
-        <GroupBox>
-          <div className="boxTitle" id="existGroup">등록된 그룹</div>
-          <EditGroupListContainer id={this.props.id} sort={this.props.sort} getCount={this.getCountGroup}/>
-        </GroupBox>
-        <DesignBox>
-          <div className="boxTitle" id="existDesign">등록된 디자인</div>
-          <EditDesignListContainer id={this.props.id} sort={this.props.sort} getCount={this.getCountDesign}/>
-        </DesignBox>
+        <EditGroupListContainer id={this.props.id} sort={this.props.sort}/>
+        <EditDesignListContainer id={this.props.id} sort={this.props.sort}/>
       </TabContainer>
     );
   }
