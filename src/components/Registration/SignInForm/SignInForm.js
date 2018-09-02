@@ -86,7 +86,7 @@ class SignInForm extends Component {
       if (data.type === "AUTH_FBSIGNIN_IS_NOT_MEMBER") {
         alert("opendesign회원이 아닙니다.");
       } else {
-        this.props.history.push("/design");
+        this.props.history.push("/");
       }
     });
   };
