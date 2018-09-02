@@ -23,21 +23,6 @@ const Head = styled(Grid)`
   }
 `;
 
-const GroupBox = styled.div`
-  margin-bottom: 1rem;
-  & .boxTitle {
-    padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
-  }
-`;
-
-const DesignBox = styled.div`
-  & .boxTitle {
-    padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
-  }
-`;
-
 class ModifyJoinListNew extends Component {
   componentWillUnmount() {
     this.props.DesignInGroupClear([]);
@@ -48,27 +33,11 @@ class ModifyJoinListNew extends Component {
     this.props.history.replace(`${url}/${value}`);
   }
 
-  getCountGroup = (count) => {
-    const html = "가입 신청중인 그룹 (" + count + ")";
-    document.getElementById("joinGroup").innerHTML = html;
-  }
-
-  getCountDesign = (count) => {
-    const html = "가입 신청중인 디자인 (" + count + ")";
-    document.getElementById("joinDesign").innerHTML = html;
-  }
-
   render(){
     return(
       <TabContainer>
-        <GroupBox>
-          <div className="boxTitle" id="joinGroup">가입 신청중인 그룹</div>
-          <WaitingGroupContainer id={this.props.id} sort={this.props.sort} getCount={this.getCountGroup}/>
-        </GroupBox>
-        <DesignBox>
-          <div className="boxTitle" id="joinDesign">가입 신청중인 디자인</div>
-          <WaitingDesignContainer id={this.props.id} sort={this.props.sort} getCount={this.getCountDesign}/>
-        </DesignBox>
+        <WaitingGroupContainer id={this.props.id} sort={this.props.sort}/>
+        <WaitingDesignContainer id={this.props.id} sort={this.props.sort}/>
       </TabContainer>
     );
   }
