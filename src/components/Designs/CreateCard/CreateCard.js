@@ -94,7 +94,7 @@ class CreateCard extends Component {
             </ButtonWrap>
           </form>
         ) : (
-          <Title onClick={this.formActive}>컨텐츠 추가하기 +</Title>
+          <Title onClick={this.formActive}>컨텐츠 추가 +</Title>
         )}
       </div>
     );
