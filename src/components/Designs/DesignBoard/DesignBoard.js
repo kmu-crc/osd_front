@@ -131,7 +131,9 @@ class DesignBoard extends Component {
     this.setState({ active: false });
   };
   onDelete = () => {
-    this.props
+    const confirm = window.confirm("스탭을 삭제하시겠습니까?");
+    if(confirm) {
+      this.props
       .DeleteDesignBoardRequest(
         this.props.board.design_id,
         this.props.board.uid,
@@ -140,6 +142,7 @@ class DesignBoard extends Component {
       .then(() => {
         this.props.GetDesignBoardRequest(this.props.board.design_id);
       });
+    }
   };
   render() {
     const { board, changeBoard, activeBoard, designId, list } = this.props;
