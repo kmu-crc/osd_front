@@ -112,7 +112,7 @@ class CreateBoard extends Component {
             </ButtonWrap>
           </form>
         ) : (
-          <Title onClick={this.formActive}>새 단계 추가 +</Title>
+          <Title onClick={this.formActive}>단계 추가 +</Title>
         )}
       </Board>
     );
