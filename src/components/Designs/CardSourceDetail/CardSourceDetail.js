@@ -239,8 +239,11 @@ class CardSourceDetail extends Component {
                 getValue={this.onAddValue}
               />
             )}
-            <Button type="button" onClick={this.onSubmit} fluid={true}>
+            <Button type="button" onClick={this.onSubmit}>
               저장
+            </Button>
+            <Button type="button" onClick={this.props.closeEdit}>
+              취소
             </Button>
           </form>
         ) : content.length > 0 ? (
@@ -272,13 +275,14 @@ class CardSourceDetail extends Component {
           </ViewContent>
         ) : (
           <Nodata>
-            {this.props.isTeam === 1 ?
+            {/* {this.props.isTeam === 1 ?
             <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>
               업로드
             </Button>
             :
             <div>등록된 컨텐츠가 없습니다.</div>
-            }
+            } */}
+            <div>등록된 컨텐츠가 없습니다.</div>
           </Nodata>
         )}
         {this.state.loading && <Loading/>}
