@@ -14,6 +14,14 @@ const ControllerWrap = styled.div`
   img {
     width: 100%;
   }
+  /* & .initWrap {
+      & > ul {
+        display: flex;
+      }
+      & > span {
+        color: ${StyleGuide.color.geyScale.scale6};
+      }
+    } */
   &:hover {
     border: 1px dashed ${StyleGuide.color.geyScale.scale6};
     & .initWrap {
