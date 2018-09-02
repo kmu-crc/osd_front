@@ -8,7 +8,6 @@ import {
   CardImageUpdate,
   CardSourcUpdate
 } from "components/Designs/DesignBoardCard";
-import DesignCardModify from "components/Designs/DesignCardModify";
 import eximg from "source/topDesign.png";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
@@ -155,7 +154,7 @@ class DesignBoardCard extends Component {
 
   onDelete = e => {
     e.stopPropagation();
-    const confirm = window.confirm("카드를 삭제하시겠습니까?");
+    const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
     if (confirm) {
       this.props
         .DeleteDesignCardRequest(
@@ -164,7 +163,7 @@ class DesignBoardCard extends Component {
           this.props.token
         )
         .then(async () => {
-          await this.setState({edit: false});
+          await this.setState({ edit: false });
           this.props.GetDesignBoardRequest(this.props.match.params.id);
         });
     } else {
@@ -294,20 +293,27 @@ class DesignBoardCard extends Component {
                     openEdit={this.onChangeEditMode}
                     setSourceInit={this.setSourceInit}
                   />
-                  <Button type="button" color="Solid" fluid={true} onClick={this.onDelete}>
-                      삭제
-                    </Button>
                 </div>
               ) : (
                 <div>
                   {this.props.isTeam && !this.state.edit ? (
-                    <Button
-                      type="button"
-                      size="small"
-                      onClick={this.onChangeEditMode}
-                    >
-                      수정
-                    </Button>
+                    <div>
+                      <Button
+                        type="button"
+                        size="small"
+                        onClick={this.onChangeEditMode}
+                      >
+                        수정
+                      </Button>
+                      <Button
+                        type="button"
+                        color="Solid"
+                        size="small"
+                        onClick={this.onDelete}
+                      >
+                        삭제
+                      </Button>
+                    </div>
                   ) : null}
                   <h2>{detail.title}</h2>
                   <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
