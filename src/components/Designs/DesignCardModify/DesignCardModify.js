@@ -18,6 +18,20 @@ const Label = styled.div`
 `;
 
 class DesignCardModify extends Component {
+  shouldComponentUpdate(nextProps, nextState){
+    if(this.state == null) return true;
+    if(this.state.title){
+      if(this.state.title.value !== nextState.title.value){
+        return false;
+      }
+    }
+    if(this.state.content){
+      if(this.state.content.value !== nextState.content.value){
+        return false;
+      }
+    }
+    return true;
+  }
   onChangeValue = async data => {
     let obj = {};
     if (data.target) {
