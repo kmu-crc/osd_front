@@ -89,7 +89,7 @@ class AddController extends Component {
 
   returnData = async (data) => {
     if(data){
-      await this.setState({type: null, order:this.props.order, content: ""})
+      await this.setState({type: null, order:this.props.order, content: "", initClick: false})
       this.props.getValue(data);
     } else {
       if(this.props.getValue) this.props.getValue(this.state);

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import FileIcon from "components/Commons/FileIcon";
 import Button from "components/Commons/Button";
+import { FormControl } from "modules/FormControl";
 
 const FileWrap = styled.div`
   width: 100%;
@@ -50,7 +51,7 @@ class FileController extends Component {
     type: "",
     value: [],
     target: null,
-    validates: []
+    validates: ["MaxFileSize(99999999)"]
   };
 
   async componentDidMount() {
@@ -134,8 +135,9 @@ class FileController extends Component {
     });
   };
 
-  onChangeValue = async () => {
+  onChangeValue = async (e) => {
     console.log("onChangeValue", this.input.files);
+    const event = {...e};
     let data = this.input.files;
     if (data[0]) {
       let type = null;
@@ -172,7 +174,16 @@ class FileController extends Component {
     }
     await this.setState({ ...data });
     if (data.length > 0) {
-      this.returnData();
+      const target = event.currentTarget;
+      await this.setState({ value: target.files, target });
+      FormControl(this.state)
+        .then(data => {
+          this.returnData();
+        })
+        .catch(err => {
+          console.log("formFile", err);
+          alert(err.message);
+        });
     }
   };
 
@@ -212,6 +223,7 @@ class FileController extends Component {
             ref={ref => (this.input = ref)}
             style={{ display: "none" }}
           />
+          <span></span>
         </File>
       </FileWrap>
     );

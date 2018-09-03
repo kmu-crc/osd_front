@@ -142,6 +142,7 @@ class CardSourceDetail extends Component {
       newContent.map(async (item, index) => {
         item.order = await index;
         delete item.target;
+        if (item.type === "FILE") delete item.initClick;
         if (item.order !== copyData.order) delete item.initClick;
         return item;
       })
