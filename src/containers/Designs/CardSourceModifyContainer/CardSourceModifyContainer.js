@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {GetDesignSourceRequest, DesignSourceResetRequest, UpdateCardSourceRequest} from "actions/Designs/DesignCard";
+import {GetDesignSourceRequest, DesignSourceResetRequest, UpdateCardSourceRequest, GetCardDetailRequest} from "actions/Designs/DesignCard";
 import DesignCardModify from "components/Designs/DesignCardModify";
 
 class CardSourceModifyContainer extends Component {
@@ -14,6 +14,7 @@ class CardSourceModifyContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
+    detail: state.DesignDetailStepCard.status.DesignDetailStepCard,
     content: state.DesignSourceDetail.status.content,
     status: state.DesignSourceDetail.DesignSourceDetail.status,
     editStatus: state.DesignSourceDetail.DesignSourceEdit.status
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateCardSourceRequest: (data, id, token) => {
       return dispatch(UpdateCardSourceRequest(data, id, token))
+    },
+    GetCardDetailRequest: id => {
+      return dispatch(GetCardDetailRequest(id));
     }
   };
 };

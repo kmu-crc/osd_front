@@ -72,7 +72,11 @@ class DesignCardModify extends Component {
             delete res["thumbnail[]"];
           }
           res.data = data;
-          this.props.UpdateCardSourceRequest(res, id, token).then(resolve("aa")).catch(err => reject(err));
+          this.props.UpdateCardSourceRequest(res, id, token)
+          .then(() => {
+            this.props.GetCardDetailRequest(id);
+            resolve("aa");
+          }).catch(err => reject(err));
         })
         .catch(err => reject(err));
     });
