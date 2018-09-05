@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetGroupDetailRequest, DeleteGroupRequest, UpdateGroupRequest } from "actions/Group";
+import { GetGroupDetailRequest, UpdateGroupRequest } from "actions/Group";
 import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
 
 class ModifyGroupInfoContainer extends Component {
   componentDidMount(){
     this.props.GetGroupDetailRequest(this.props.id, this.props.token);
   }
-  
+
   render() {
     return(
       <ModifyGroupInfo {...this.props}/>
@@ -26,9 +26,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetGroupDetailRequest: (id) => {
       return dispatch(GetGroupDetailRequest(id))
-    },
-    DeleteGroupRequest: (id, token) => {
-      return dispatch(DeleteGroupRequest(id, token))
     },
     UpdateGroupRequest: (id, data, token) => {
       return dispatch(UpdateGroupRequest(id, data, token))

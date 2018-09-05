@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 import { Grid, Header, Form } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import { FormInput, FormThumbnail } from "components/Commons/FormItems";
@@ -116,18 +117,6 @@ class ModifyGroupInfo extends Component {
     });
   };
 
-  deleteGroup = () => {
-    const confirm = window.confirm("그룹을 삭제하시겠습니까?");
-    if (confirm) {
-      this.props.DeleteGroupRequest(this.props.id, this.props.token)
-      .then(data => {
-        this.props.history.push("/group");
-      });
-    } else {
-      return;
-    }
-  }
-
   render(){
     return(
       <Wrapper>
@@ -173,7 +162,9 @@ class ModifyGroupInfo extends Component {
             </Grid>
           </FromFieldCard>
           <Button className="submitBtn" type="submit">수정</Button>
-          <Button type="button" color="Solid" onClick={this.deleteGroup}>그룹 삭제</Button>
+          <Link to={`/groupDetail/${this.props.id}`}>
+            <Button type="button">취소</Button>
+          </Link>
         </form>
         {this.state.loading && <Loading/>}
       </Wrapper>
