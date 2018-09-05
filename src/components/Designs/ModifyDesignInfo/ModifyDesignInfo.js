@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Header, Grid, Form } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
-import Loading from "components/Commons/Loading";
 import StyleGuide from "StyleGuide";
 
 const FromFieldCard = styled.div`
@@ -124,7 +124,7 @@ class ModifyDesignInfo extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    this.state.member.value = JSON.stringify(this.state.member.value);
+    //this.state.member.value = JSON.stringify(this.state.member.value);
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
@@ -134,13 +134,13 @@ class ModifyDesignInfo extends Component {
           this.props.history.push(`/designDetail/${data.res.design_id}`);
         } else {
           alert("다시 시도해주세요");
-          this.state.member.value = JSON.parse(this.state.member.value);
+          //this.state.member.value = JSON.parse(this.state.member.value);
           this.props.setLoader();
         }
       });
     }).catch(e => {
       console.log("실패", e);
-      this.state.member.value = JSON.parse(this.state.member.value);
+      //this.state.member.value = JSON.parse(this.state.member.value);
     });
   };
 
@@ -206,7 +206,7 @@ class ModifyDesignInfo extends Component {
                     value={currentDesign.category_level2}
                   />
                 </Form.Group>
-                <Form.Group widths="equal">
+                {/* <Form.Group widths="equal">
                   <Label>멤버추가</Label>
                   <AsyncInput
                     name="member"
@@ -215,7 +215,7 @@ class ModifyDesignInfo extends Component {
                     list={this.props.members}
                     value={this.returnToMemberFormat(currentDesign.member)}
                   />
-                </Form.Group>
+                </Form.Group> */}
               </Grid.Column>
             </Grid>
           </FromFieldCard>
@@ -249,6 +249,9 @@ class ModifyDesignInfo extends Component {
             </Grid>
           </FromFieldCard>
           <Button type="submit">수정</Button>
+          <Link to={`/designDetail/${this.props.DesignDetail.uid}`}>
+            <Button type="button">취소</Button>
+          </Link>
         </form>
         }
         </InfoWrapper>

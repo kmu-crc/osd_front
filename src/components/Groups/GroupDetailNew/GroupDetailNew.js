@@ -191,6 +191,18 @@ class GroupDetailNew extends Component {
     }
   };
 
+  deleteGroup = () => {
+    const confirm = window.confirm("그룹을 삭제하시겠습니까?");
+    if (confirm) {
+      this.props.DeleteGroupRequest(this.props.id, this.props.token)
+      .then(data => {
+        this.props.history.push("/group");
+      });
+    } else {
+      return;
+    }
+  }
+
   render(){
     const groupDetail = this.props.GroupDetail;
     const user = this.props.userInfo;
@@ -202,6 +214,9 @@ class GroupDetailNew extends Component {
             <Link to={`/groupDetail/${this.props.id}/modify`}>
               <button>수정</button>
             </Link>
+          </li>
+          <li>
+            <button onClick={this.deleteGroup}>삭제</button>
           </li>
         </SideMenu>
       );
@@ -215,6 +230,7 @@ class GroupDetailNew extends Component {
             {/* ------------------------ 상단 프로필 섹션 -------------------------- */}
             <InfoContainer>
               <Grid.Row className="title">
+                <span><a href={`/group`}>그룹 > </a></span>
                 <span><a href={`/groupDetail/${groupDetail.parentId}`}>{groupDetail.parentName && groupDetail.parentName + " > "}</a></span>
                 <span>{groupDetail.title}</span>
                 {user && (user.uid === groupDetail.user_id) &&
