@@ -230,6 +230,7 @@ class GroupDetailNew extends Component {
             {/* ------------------------ 상단 프로필 섹션 -------------------------- */}
             <InfoContainer>
               <Grid.Row className="title">
+                <span><a href={`/group`}>그룹 > </a></span>
                 <span><a href={`/groupDetail/${groupDetail.parentId}`}>{groupDetail.parentName && groupDetail.parentName + " > "}</a></span>
                 <span>{groupDetail.title}</span>
                 {user && (user.uid === groupDetail.user_id) &&
