@@ -68,12 +68,7 @@ class CardSourceDetail extends Component {
   };
 
   componentDidMount() {
-    this.props.GetDesignSourceRequest(this.props.uid)
-    .then((res) => {
-     if (res.data && res.data.length !== 0){
-       this.props.setSourceInit(res.data.length);
-     }
-    });
+    this.props.GetDesignSourceRequest(this.props.uid);
   }
 
   async shouldComponentUpdate(nextProps) {
@@ -97,9 +92,6 @@ class CardSourceDetail extends Component {
       if (nextProps.status === "SUCCESS") {
         this.setState({ content: nextProps.content });
       }
-    }
-    if (JSON.stringify(this.props.content) !== JSON.stringify(nextProps.content)) {
-      this.props.setSourceInit(nextProps.content.length);
     }
     return true;
   }

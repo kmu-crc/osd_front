@@ -89,8 +89,7 @@ const BtnWrap = styled.div`
 class DetailView extends Component {
   state = {
     render: true,
-    edit: false,
-    setSource: 0
+    edit: false
   };
 
   componentDidMount() {
@@ -179,11 +178,6 @@ class DetailView extends Component {
   onCloseEditMode = () => {
     this.setState({ edit: false });
   };
-  setSourceInit = (num) => {
-    this.setState({
-      setSource : num
-    });
-  }
 
   render() {
     const view = this.props.DesignDetailView;
@@ -209,7 +203,7 @@ class DetailView extends Component {
     return (
       <div>
         <BtnWrap>
-          {this.props.isTeam && this.state.setSource !== 0 && !this.state.edit ? (
+          {this.props.isTeam && !this.state.edit ? (
             <Button type="button" size="small" onClick={this.onChangeEditMode}>
               컨텐츠 수정
             </Button>
@@ -232,7 +226,6 @@ class DetailView extends Component {
               edit={this.state.edit}
               closeEdit={this.onCloseEditMode}
               openEdit={this.onChangeEditMode}
-              setSourceInit={this.setSourceInit}
             />
             <CommentContainer className="ui comments">
               <h4>댓글</h4>
