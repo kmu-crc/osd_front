@@ -8,6 +8,7 @@ import styled from "styled-components";
 
 const Btn = styled(Button)`
   margin-right: 5px;
+  margin-top: 1rem;
 `;
 
 class MyGroupList extends Component {
@@ -20,10 +21,15 @@ class MyGroupList extends Component {
   }
 
   handleSubmit = (data) => {
-    this.props.GroupJoinGroupRequest({"join_group": this.state.joinList}, this.props.token, this.props.match.params.id)
-    .then(data => {
-      this.props.handleCloseModal();
-    });
+    const list = this.state.joinList;
+    if (list.length > 0) {
+      this.props.GroupJoinGroupRequest({"join_group": this.state.joinList}, this.props.token, this.props.match.params.id)
+      .then(data => {
+        this.props.handleCloseModal();
+      });
+    } else {
+      return;
+    }
   }
 
   getValue = data => {
@@ -36,7 +42,7 @@ class MyGroupList extends Component {
     return(
       <ValidateForm onSubmit={this.handleSubmit}>
         <FormField name="join_group" label="내 그룹 리스트" options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-        <Btn type="submit">등록</Btn>
+        <Btn type="submit">가입 신청</Btn>
         <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
       </ValidateForm>
     );

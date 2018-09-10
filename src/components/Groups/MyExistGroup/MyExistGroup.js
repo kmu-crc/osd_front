@@ -10,40 +10,43 @@ const Btn = styled(Button)`
   margin-top: 1rem;
 `;
 
-class MyDesignList extends Component {
+class MyExistGroup extends Component {
   state = {
-    joinList: []
+    existList: []
   }
 
   componentWillMount(){
-    this.props.GetMyDesignListRequest(this.props.token, this.props.match.params.id);
+    this.props.GetMyExistGroupListRequest(this.props.token, this.props.id);
   }
 
-  handleSubmit = (data) => {
-    const list = this.state.joinList;
+  handleSubmit = async (data) => {
+    const list = this.state.existList;
     if (list.length > 0) {
-      this.props.JoinGroupRequest({"join_design": this.state.joinList}, this.props.token, this.props.match.params.id)
-      .then(data => {
-        this.props.handleCloseModal();
+      list.map(async (id, i) => {
+        await this.props.DeleteGroupInGroupRequest(this.props.id, id)
+        .catch(err => {
+          console.log(err);
+        });
       });
+      this.props.handleCloseModal();
     } else {
       return;
     }
   }
 
   getValue = (data) => {
-    this.setState({joinList: data});
+    this.setState({existList: data});
   }
 
   render() {
     return(
       <ValidateForm onSubmit={this.handleSubmit}>
-        <FormField name="join_design" label="내 디자인 리스트" options={this.props.designList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-        <Btn type="submit">가입 신청</Btn>
+        <FormField name="exist_group" label="가입된 / 신청 중인 내 그룹" options={this.props.MyGroupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
+        <Btn type="submit">가입 취소</Btn>
         <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
       </ValidateForm>
     );
   }
 }
 
-export default MyDesignList;
+export default MyExistGroup;

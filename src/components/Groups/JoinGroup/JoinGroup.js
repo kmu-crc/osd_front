@@ -7,7 +7,7 @@ import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 
 const ModalContent = styled.div`
-  padding: 20px;
+  padding: 30px;
 `
 
 const ModalBtn = styled(Button)`
@@ -23,7 +23,7 @@ const Title = styled.h2`
 
 const JoinTab = styled.div`
   border-bottom: 1px solid rgba(0,0,0,0.1);
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   &::after{
     display: block;
     content: "";
@@ -32,7 +32,7 @@ const JoinTab = styled.div`
 `
 
 const TabItem = styled.button`
-  padding: 7px 18px;
+  padding: 1rem 2.5rem;
   border: 0;
   background-color: transparent;
   &.active{
@@ -73,7 +73,7 @@ class JoinGroup extends Component {
                onClose={this.handleCloseModal}>
           <Modal.Content>
             <ModalContent>
-              <Title>그룹 가입신청</Title>
+              <Title>그룹 가입 신청</Title>
               <JoinTab>
                 <TabItem className={active === "design" && "active"} onClick={() => this.handleChangeTab("design")} >디자인</TabItem>
                 <TabItem className={active === "group" && "active"} onClick={() => this.handleChangeTab("group")} >그룹</TabItem>
