@@ -24,6 +24,12 @@ class MyExistGroup extends Component {
     if (list.length > 0) {
       list.map(async (id, i) => {
         await this.props.DeleteGroupInGroupRequest(this.props.id, id)
+        .then(res => {
+          if (res.data && res.data.success === true) {
+            this.props.GetGroupCountRequest(this.props.id)
+            .then(this.props.GetGroupInGroupRequest(this.props.id, 0, null));
+          }
+        })
         .catch(err => {
           console.log(err);
         });

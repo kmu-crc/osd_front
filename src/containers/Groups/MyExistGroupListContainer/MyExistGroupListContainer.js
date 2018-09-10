@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MyExistGroup from "components/Groups/MyExistGroup";
-import { DeleteGroupInGroupRequest, GetMyExistGroupListRequest } from "actions/Group";
+import { DeleteGroupInGroupRequest, GetMyExistGroupListRequest, GetGroupInGroupRequest, GetGroupCountRequest } from "actions/Group";
 
 class MyExistGroupListContainer extends Component {
   render(){
@@ -25,6 +25,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetMyExistGroupListRequest: (token, id) => {
       return dispatch(GetMyExistGroupListRequest(token, id))
+    },
+    GetGroupInGroupRequest: (id, page, sort) => {
+      return dispatch(GetGroupInGroupRequest(id, page, sort))
+    },
+    GetGroupCountRequest: (id) => {
+      return dispatch(GetGroupCountRequest(id))
     }
   };
 };

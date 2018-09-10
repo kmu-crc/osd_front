@@ -24,11 +24,19 @@ class MyExistDesign extends Component {
     if (list.length > 0) {
       list.map(async (id, i) => {
         await this.props.DeleteDesignInGroupRequest(this.props.id, id)
+        .then(res => {
+          if (res.data && res.data.success === true) {
+            this.props.GetGroupCountRequest(this.props.id)
+            .then(this.props.GetDesignInGroupRequest(this.props.id, 0, null));
+          }
+        })
         .catch(err => {
           console.log(err);
         });
       });
       this.props.handleCloseModal();
+
+
     } else {
       return;
     }

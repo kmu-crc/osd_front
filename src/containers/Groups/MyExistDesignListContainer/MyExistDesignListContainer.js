@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DeleteDesignInGroupRequest, GetMyExistDesignListRequest } from "actions/Group";
+import { DeleteDesignInGroupRequest, GetMyExistDesignListRequest, GetDesignInGroupRequest, GetGroupCountRequest } from "actions/Group";
 import MyExistDesign from "components/Groups/MyExistDesign";
 
 class MyExistDesignListContainer extends Component {
@@ -25,6 +25,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetMyExistDesignListRequest: (token, id) => {
       return dispatch(GetMyExistDesignListRequest(token, id))
+    },
+    GetDesignInGroupRequest: (id, page, sort) => {
+      return dispatch(GetDesignInGroupRequest(id, page, sort))
+    },
+    GetGroupCountRequest: (id) => {
+      return dispatch(GetGroupCountRequest(id))
     }
   };
 };
