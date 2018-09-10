@@ -247,7 +247,7 @@ class GroupDetailNew extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={9}>
                   <div className="explanation">{groupDetail.explanation}</div>
-                  <div className="date">최근 업데이트 : {groupDetail.update_time.split("T")[0]}</div>
+                  <div className="date">최근 업데이트 : {groupDetail.child_update_time.split("T")[0]}</div>
                   <div className="owner">개설자 : {groupDetail.userName}</div>
                 </Grid.Column>
                 <Grid.Column className="btnWrap" width={7}>
