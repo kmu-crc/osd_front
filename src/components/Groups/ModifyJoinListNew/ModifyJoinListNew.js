@@ -10,7 +10,7 @@ import StyleGuide from 'StyleGuide';
 // css styling
 const TabContainer = styled.div`
   width: 100%;
-  padding-top: 2rem;
+  padding-top: 3rem;
 `;
 
 const Head = styled(Grid)`
