@@ -924,3 +924,97 @@ export function deleteGroupIssueFailure(err) {
     type: types.DELETE_GROUP_ISSUE_FAILURE
   }
 };
+
+// 해당 그룹에 가입되어 있는 & 가입 신청한 내 디자인 리스트 가져오기
+export function GetMyExistDesignListRequest(token, id) {
+  return (dispatch) => {
+    dispatch(GetExistDesignList());
+    return fetch(`${host}/group/${id}/join/myExistDesignList`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("GetMyDesignListRequest >>", data);
+      if (!data.list) {
+        console.log("no data");
+        data = [];
+      }
+      data.list = data.list.map(item => {
+        return { key: item.uid, text: item.title, value: item.uid };
+      })
+      dispatch(GetMyExistDesignListSuccess(data));
+    }).catch((error) => {
+      dispatch(GetExistDesignListFailure(error));
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetExistDesignList() {
+  return {
+    type: types.GET_MY_EXIST_DESIGN_LIST
+  };
+};
+
+export function GetMyExistDesignListSuccess(data) {
+  return {
+    type: types.GET_MY_EXIST_DESIGN_LIST_SUCCESS,
+    success: data.success,
+    list: data.list
+  };
+};
+
+export function GetExistDesignListFailure(data) {
+  return {
+    type: types.GET_MY_EXIST_DESIGN_LIST_FAILURE,
+    success: data.success
+  };
+};
+
+// 해당 그룹에 가입되어 있는 & 가입 신청한 내 그룹 리스트 가져오기
+export function GetMyExistGroupListRequest(token, id) {
+  return (dispatch) => {
+    dispatch(GetExistGroupList());
+    return fetch(`${host}/group/${id}/join/myExistGroupList`, {
+      headers: { "Content-Type": "application/json", 'x-access-token': token },
+      method: "get"
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log("GetMyGroupListRequest >>", data);
+      if (!data.list) {
+        console.log("no data");
+        data = [];
+      }
+      data.list = data.list.map(item => {
+        return { key: item.uid, text: item.title, value: item.uid };
+      })
+      dispatch(GetMyExistGroupListSuccess(data));
+    }).catch((error) => {
+      dispatch(GetExistGroupListFailure(error));
+      console.log("err", error);
+    });
+  }
+};
+
+export function GetExistGroupList() {
+  return {
+    type: types.GET_MY_EXIST_GROUP_LIST
+  };
+};
+
+export function GetMyExistGroupListSuccess(data) {
+  return {
+    type: types.GET_MY_EXIST_GROUP_LIST_SUCCESS,
+    success: data.success,
+    list: data.list
+  };
+};
+
+export function GetExistGroupListFailure(data) {
+  return {
+    type: types.GET_MY_EXIST_GROUP_LIST_FAILURE,
+    success: data.success
+  };
+};

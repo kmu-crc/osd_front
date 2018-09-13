@@ -689,7 +689,7 @@ class DesignDetail extends Component {
                             </p>
                           </InfoItem>
                           <InfoItem>
-                            <h3>맴버</h3>
+                            <h3>멤버</h3>
                             <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
                               {designDetail.member.map((item, index) => {
                                 if (index > 3) {

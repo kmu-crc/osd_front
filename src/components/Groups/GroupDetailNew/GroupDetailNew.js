@@ -11,6 +11,7 @@ import eximg from "source/myPage.jpeg";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
+import ModifyStatusContainer from "containers/Groups/ModifyStatusContainer";
 
 // css styling
 
@@ -247,7 +248,7 @@ class GroupDetailNew extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={9}>
                   <div className="explanation">{groupDetail.explanation}</div>
-                  <div className="date">최근 업데이트 : {groupDetail.update_time.split("T")[0]}</div>
+                  <div className="date">최근 업데이트 : {groupDetail.child_update_time.split("T")[0]}</div>
                   <div className="owner">개설자 : {groupDetail.userName}</div>
                 </Grid.Column>
                 <Grid.Column className="btnWrap" width={7}>
@@ -269,10 +270,11 @@ class GroupDetailNew extends Component {
                       </Button>
                     }
                     <JoinGroupContainer/>
-                    {user && (user.uid === groupDetail.user_id) &&
-                    <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>
+                    {user && (user.uid === groupDetail.user_id)
+                    ? <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>
                         가입 관리
                       </Button>
+                    : <ModifyStatusContainer id={this.props.id}/>
                     }
                   </BtnContainer>
                 }
@@ -281,7 +283,8 @@ class GroupDetailNew extends Component {
             </InfoContainer>
             {/* ------------------------ 하단 카드 렌더링 섹션 -------------------------- */}
             {this.state.editMode
-            ? <div>
+            ? user && (user.uid === groupDetail.user_id) &&
+              <div>
                 <ModifyJoinListNew {...this.props}/>
                 <ModifyExistListNew {...this.props}/>
               </div>

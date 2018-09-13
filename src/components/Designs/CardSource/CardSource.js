@@ -67,7 +67,6 @@ class CardSource extends Component {
                   edit={this.props.edit}
                   closeEdit={this.props.closeEdit}
                   openEdit={this.props.openEdit}
-                  setSourceInit={this.props.setSourceInit}
                 />
               </Form.Group>
             </Grid.Column>

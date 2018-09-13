@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 import FileController from "./FileController";
 
 const ControllerWrap = styled.div`
-  padding: 20px 0;
+  padding: 8px 0;
   margin: 15px 0;
   position: relative;
   border-top: 1px solid rgba(0,0,0,0.1);
@@ -57,10 +57,10 @@ const ControllerMenu = styled.ul`
     line-height: 40px;
     text-align: center;
     cursor: pointer;
-    background-color: ${StyleGuide.color.geyScale.scale7};
+    background-color: ${StyleGuide.color.geyScale.scale5};
   }
   & li:hover {
-    background-color: ${StyleGuide.color.geyScale.scale8};
+    background-color: ${StyleGuide.color.geyScale.scale6};
   }
 `;
 
@@ -99,7 +99,7 @@ class AddController extends Component {
     return (
       <ControllerWrap>
         <div className="initWrap">
-          <Init>추가 +</Init>
+          <Init></Init>
           <ControllerMenu>
             <li onClick={() => this.addContent("FILE")}>
               <Icon name="upload"/>

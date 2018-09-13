@@ -10,6 +10,7 @@ import StyleGuide from 'StyleGuide';
 // css styling
 const TabContainer = styled.div`
   width: 100%;
+  padding-top: 3rem;
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
@@ -19,13 +20,14 @@ const TabContainer = styled.div`
 `;
 
 const Head = styled(Grid)`
+  position: relative;
   &.ui.grid > .row {
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
+    padding-bottom: 0;
+    padding-top: 0;
     margin: 0;
-  }
-  &.ui.grid > .row > .column.sorting {
-    line-height: 2.5;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 `;
 
@@ -49,8 +51,8 @@ class CurrentJoinListNew extends Component {
       <TabContainer>
         <Head devided="vertically" padded={true}>
           <Grid.Row>
-            <Grid.Column largescreen={8} computer={8} tablet={8} mobile={8}></Grid.Column>
-            <Sorting largescreen={8} computer={8} tablet={8} mobile={8} handleChange={this.sortChange}/>
+            {/* <Grid.Column largescreen={8} computer={8} tablet={8} mobile={8}></Grid.Column> */}
+            <Sorting largescreen={16} computer={16} tablet={16} mobile={16} handleChange={this.sortChange}/>
           </Grid.Row>
         </Head>
         {this.props.Count.design === 0 && this.props.Count.group === 0 &&
