@@ -5,8 +5,8 @@ import { Icon } from "semantic-ui-react";
 import FileController from "./FileController";
 
 const ControllerWrap = styled.div`
-  padding: 8px 0;
-  margin: 15px 0;
+  padding: 15px 0;
+  margin: 20px 0;
   position: relative;
   // border-top: 1px solid rgba(0,0,0,0.1);
   // border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -25,7 +25,7 @@ const ControllerWrap = styled.div`
       }
     }
   &:hover {
-    // border: 1px dashed ${StyleGuide.color.geyScale.scale6};
+    border: 1px dashed ${StyleGuide.color.geyScale.scale5};
     & .initWrap {
       & > ul {
         display: flex;
@@ -54,14 +54,13 @@ const ControllerMenu = styled.ul`
   align-items: space-between;
   color: #fff;
   & li {
-    width: 120px;
+    width: 100px;
     height: 40px;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
-    background-color: ${StyleGuide.color.geyScale.scale2};
+    background-color: ${StyleGuide.color.geyScale.scale1};
     color: ${StyleGuide.color.geyScale.scale5};
-    margin: 0 0.4rem;
   }
   & li:hover {
     color: ${StyleGuide.color.geyScale.scale7};
