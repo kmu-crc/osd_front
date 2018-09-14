@@ -55,9 +55,9 @@ class App extends Component {
           <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)}/>
           <Route path="/test" component={TestPage} />
           <Route path="/test2" component={TestPage2} />
-          <Route path="/Term" component={FooterPage}/>
-          <Route path="/Privacy" component={FooterPage}/>
-          <Route path="/Info" component={FooterPage}/>
+          <Route path="/Term/:page" component={FooterPage}/>
+          <Route path="/Privacy/:page" component={FooterPage}/>
+          <Route path="/Info/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message" component={RequiresAuth(MessagePage)}/>
           <Route path="/cardTest" component={TestPage3}/>
