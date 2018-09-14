@@ -193,6 +193,7 @@ class CardSourceDetail extends Component {
     const { edit, content } = this.state;
     return (
       <CardSrcWrap>
+
         {this.props.edit ? (
           <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (

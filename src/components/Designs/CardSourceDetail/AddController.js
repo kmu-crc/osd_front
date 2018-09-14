@@ -8,22 +8,24 @@ const ControllerWrap = styled.div`
   padding: 8px 0;
   margin: 15px 0;
   position: relative;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  // border-top: 1px solid rgba(0,0,0,0.1);
+  // border-bottom: 1px solid rgba(0,0,0,0.1);
   text-align: center;
   img {
     width: 100%;
   }
-  /* & .initWrap {
+  // border: 1px dashed ${StyleGuide.color.geyScale.scale6};
+    & .initWrap {
       & > ul {
         display: flex;
+        // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
       }
       & > span {
         color: ${StyleGuide.color.geyScale.scale6};
       }
-    } */
+    }
   &:hover {
-    border: 1px dashed ${StyleGuide.color.geyScale.scale6};
+    // border: 1px dashed ${StyleGuide.color.geyScale.scale6};
     & .initWrap {
       & > ul {
         display: flex;
@@ -57,10 +59,12 @@ const ControllerMenu = styled.ul`
     line-height: 40px;
     text-align: center;
     cursor: pointer;
-    background-color: ${StyleGuide.color.geyScale.scale5};
+    background-color: ${StyleGuide.color.geyScale.scale2};
+    color: ${StyleGuide.color.geyScale.scale5};
+    margin: 0 0.4rem;
   }
   & li:hover {
-    background-color: ${StyleGuide.color.geyScale.scale6};
+    color: ${StyleGuide.color.geyScale.scale7};
   }
 `;
 
