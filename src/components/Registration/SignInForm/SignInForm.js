@@ -128,7 +128,7 @@ class SignInForm extends Component {
             로그인
           </LoginBtn>
           <FacebookLogin
-            appId="1846803492017708"
+            appId="799483036860094"
             autoLoad={false}
             callback={this.onClickFBSignInbtn}
             render={renderProps => (

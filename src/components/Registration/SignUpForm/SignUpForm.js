@@ -169,7 +169,7 @@ class SignUpForm extends Component {
               회원가입
             </SignUpBtn>
             <FacebookLogin
-              appId="1846803492017708"
+              appId="799483036860094"
               autoLoad={false}
               fields="name,email"
               callback={this.handleSignUpFB}
