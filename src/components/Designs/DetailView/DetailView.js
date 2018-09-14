@@ -131,6 +131,10 @@ class DetailView extends Component {
       alert("로그인을 해주세요.");
       return;
     }
+    if (FormDataToJson(data) && FormDataToJson(data).content === ""){
+      alert("내용을 입력해 주세요.");
+      return;
+    }
     this.props
       .CreateCardCommentRequest(
         FormDataToJson(data),
@@ -189,7 +193,6 @@ class DetailView extends Component {
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
           <FormField
             name="comment"
-            validates={["required"]}
             RenderComponent={FormTextArea}
           />
           <Button type="submit" className="ui icon primary left labeled button">

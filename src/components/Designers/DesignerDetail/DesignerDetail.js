@@ -275,7 +275,7 @@ class DesignerDetail extends Component {
                       <Grid.Column as="ul">
                         <li id="design"
                             className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
-                            onClick={this.typeChange}>등록 디자인</li>
+                            onClick={this.typeChange}>참여 디자인</li>
                         <li id="like"
                             className={this.props.type === "like"? "onSelected" : ""}
                             onClick={this.typeChange}>관심 디자인</li>

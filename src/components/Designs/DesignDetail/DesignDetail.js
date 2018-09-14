@@ -688,6 +688,7 @@ class DesignDetail extends Component {
                                 } else {
                                   return (
                                     <MemberItem
+                                      key={index}
                                       style={{
                                         backgroundImage: item.thumbnail
                                           ? `url(${item.thumbnail.s_img})`
@@ -712,9 +713,9 @@ class DesignDetail extends Component {
                                   this.state.memberActive ? "active" : null
                                 }
                               >
-                                {designDetail.member.map(item => {
+                                {designDetail.member.map((item, i) => {
                                   return (
-                                    <Link to={`/designerDetail/${item.user_id}`}>
+                                    <Link to={`/designerDetail/${item.user_id}`} key={i}>
                                       <MemberlistItem>
                                         <MemberItem
                                           style={{
