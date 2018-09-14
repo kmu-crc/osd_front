@@ -36,8 +36,8 @@ class Footer extends Component {
             <Grid.Column className="copyright">Copyright @ 2018 Open Design Inc.</Grid.Column>
             <Grid.Column as="ul" className="list">
               <Link to="/Info/info">사이트 소개</Link>
-              <Link to="Term/term">이용약관</Link>
-              <Link to="Privacy/privacy">개인정보보호정책</Link>
+              <Link to="/Term/term">이용약관</Link>
+              <Link to="/Privacy/privacy">개인정보보호정책</Link>
               {/* <Link>Contact Us</Link> */}
             </Grid.Column>
           </Grid.Row>
