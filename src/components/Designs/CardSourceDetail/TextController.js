@@ -218,7 +218,7 @@ class TextController extends Component {
     if (res) {
       const selected = window.getSelection().getRangeAt(0);
       const parentEl = selected.commonAncestorContainer; //긁은 부분을 포함한 최상위 노드
-      let childList = parentEl.childNodes; // [nodeList]
+      let childList = parentEl.childNodes;
       const text = selected.toString();
 
       if (childList && childList.length === 0) { // 긁은 부분이 텍스트만 있을때
@@ -253,15 +253,31 @@ class TextController extends Component {
               element.style.fontSize = size;
             });
         } else { // 일부 텍스트만 드래그했을 때
-          let start = selected.startContainer;
-          let end = selected.endContainer;
-          let newNode = window.document.createElement("span");
-          newNode.innerHTML = text;
-          selected.deleteContents();
-          selected.insertNode(newNode);
+          childList.forEach(item => {
+            if (window.getSelection().containsNode(item, true)) {
+              if (item.nodeName === "#text") {
+                let newNode = window.document.createElement("span");
+                newNode.innerHTML = item.textContent;
+                newNode.style.fontSize = size;
+                parentEl.replaceChild(newNode, item);
+              } else {
+                item.style.fontSize = size;
+              }
+            }
+          });
         }
       }
+      await this.setState({
+        content: this.edit.innerHTML
+      });
+        // await this.onCursorOut();
+      this.returnData();
+    } else {
+      console.log("noSelection");
     }
+    this.setState({
+      openColor: false
+    });
   };
 
   // 컬러 변경
@@ -305,55 +321,31 @@ class TextController extends Component {
               element.style.color = color;
             });
         } else { // 일부 텍스트만 드래그했을 때
-          let start = selected.startContainer;
-          let end = selected.endContainer;
-          let newNode = window.document.createElement("span");
-          newNode.innerHTML = text;
-          selected.deleteContents();
-          selected.insertNode(newNode);
+          childList.forEach(item => {
+            if (window.getSelection().containsNode(item, true)) {
+              if (item.nodeName === "#text") {
+                let newNode = window.document.createElement("span");
+                newNode.innerHTML = item.textContent;
+                newNode.style.color = color;
+                parentEl.replaceChild(newNode, item);
+              } else {
+                item.style.color = color;
+              }
+            }
+          });
         }
       }
+      await this.setState({
+        content: this.edit.innerHTML
+      });
+        // await this.onCursorOut();
+      this.returnData();
+    } else {
+      console.log("noSelection");
     }
-    // let res = this.isSelection();
-    // if (res) {
-    //   const selection = window.getSelection();
-    //   const parentEl = selection.focusNode.parentElement;
-    //   const selected = window.getSelection().getRangeAt(0);
-    //   const text = selected.toString();
-
-    //   if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
-    //     let node = window.document.createElement("font");
-    //     node.innerHTML = selected;
-    //     node.style.color = color;
-    //     selected.deleteContents();
-    //     selected.insertNode(node);
-    //   } else { //두번째줄 이상일 경우
-    //     if (parentEl.textContent === text) {
-    //       if (parentEl.firstElementChild && parentEl.firstElementChild.nodeName == "FONT") {
-    //         parentEl.style.color = color;
-    //         parentEl.innerHTML = selected;
-    //       } else {
-    //         parentEl.style.color = color;
-    //       }
-    //     } else {
-    //       let node = window.document.createElement("font");
-    //       node.innerHTML = selected;
-    //       node.style.color = color;
-    //       selected.deleteContents();
-    //       selected.insertNode(node);
-    //     }
-    //   }
-    //   await this.setState({
-    //     content: this.edit.innerHTML
-    //   });
-    //   // await this.onCursorOut();
-    //   this.returnData();
-    // } else {
-    //   console.log("noSelection");
-    // }
-    // this.setState({
-    //   openColor: false
-    // });
+    this.setState({
+      openColor: false
+    });
   };
 
   // onCursorOut = () => {
