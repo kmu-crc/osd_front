@@ -50,6 +50,7 @@ const CommentContainer = styled.div`
       position: absolute;
       top: 0;
       right: 0;
+      cursor: pointer;
     }
   }
   & p {
@@ -250,13 +251,12 @@ class DetailView extends Component {
                     </div>
                     {this.props.userInfo &&
                       this.props.userInfo.uid === comm.user_id && (
-                        <Button
+                        <i
                           size="small"
-                          className="delBtn"
+                          className="delBtn trash alternate outline icon"
                           onClick={() => this.deleteComment(comm.uid)}
                         >
-                          삭제
-                        </Button>
+                        </i>
                       )}
                   </div>
                 ))

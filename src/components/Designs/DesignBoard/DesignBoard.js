@@ -132,7 +132,7 @@ class DesignBoard extends Component {
   };
   onDelete = () => {
     if (this.props.board.cards && this.props.board.cards.length > 0) {
-      alert("컨텐츠가 있는 보드는 삭제할 수 없습니다.");
+      alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.");
       return;
     }
     const confirm = window.confirm("단계를 삭제하시겠습니까?");
