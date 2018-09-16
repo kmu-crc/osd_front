@@ -140,7 +140,7 @@ const ColorMenu = styled.div`
 
 const TextSection = styled.div`
   & .valContainer {
-    min-height: 40px;
+    min-height: 60px;
     max-height: 300px;
     line-height: 1.4;
     padding: 0.5rem;
@@ -150,7 +150,6 @@ const TextSection = styled.div`
 
 class TextController extends Component {
   state = {
-    value: this.props.value,
     openMenu: false,
     openColor: false,
     openSize: false,
@@ -181,6 +180,7 @@ class TextController extends Component {
     document.execCommand('justifyright');
   };
 
+  // 컴포넌트가 초기 렌더링 되었을 때, 기존 값이 있으면 text 섹션에 기존 내용 넣어줌
   componentDidMount() {
     if (this.props.item) {
       this.setState(this.props.item);
@@ -189,6 +189,7 @@ class TextController extends Component {
     if (this.props.item.initClick) this.edit.focus();
   }
 
+  // returnData로 상위 컴포넌트로 값 전달 -> props가 새로 넘어오면 값 새로고침
   shouldComponentUpdate(nextProps) {
     delete nextProps.item.target;
     if (JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)) {
@@ -199,6 +200,7 @@ class TextController extends Component {
     return true;
   }
 
+  // 드래그 한 부분이 있는지 검증
   isSelection = () => {
     if (window.getSelection()
         && window.getSelection().rangeCount > 0
@@ -210,118 +212,183 @@ class TextController extends Component {
       }
   }
 
+  // 사이즈 변경
   onChangeSize = async (size) => {
-    console.log("work");
     let res = this.isSelection();
     if (res) {
       const selected = window.getSelection().getRangeAt(0);
-      const parentEl = window.getSelection().focusNode.parentElement;
+      const parentEl = selected.commonAncestorContainer; //긁은 부분을 포함한 최상위 노드
+      let childList = parentEl.childNodes; // [nodeList]
       const text = selected.toString();
 
-      if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
-        let node = window.document.createElement("font");
-        node.innerHTML = selected;
-        node.style.fontSize = size;
-        selected.deleteContents();
-        selected.insertNode(node);
-      } else { //두번째줄 이상일 경우
-        if (parentEl.textContent === text) {
-          parentEl.style.fontSize = size;
-        } else {
-          let node = window.document.createElement("font");
-          node.innerHTML = selected;
-          node.style.fontSize = size;
+      if (childList && childList.length === 0) { // 긁은 부분이 텍스트만 있을때
+        const p = window.getSelection().focusNode.parentElement;
+        if (p.classList.contains("valContainer")){ // 맨 앞이 최상위 태그이면 새로운 태그 추가
+          let newNode = window.document.createElement("span");
+          newNode.innerHTML = text;
+          newNode.style.fontSize = size;
           selected.deleteContents();
-          selected.insertNode(node);
+          selected.insertNode(newNode);
+        } else { // 앞에 태그로 묶여 있으면 스타일 적용
+          if (p.textContent === text) {
+            p.style.fontSize = size;
+          } else {
+            let newNode = window.document.createElement("span");
+            newNode.innerHTML = text;
+            newNode.style.fontSize = size;
+            selected.deleteContents();
+            selected.insertNode(newNode);
+          }
+        }
+      } else { // 긁은 부분에 텍스트와 태그가 같이 있을 때
+        if (parentEl.textContent === text){ // 전체 텍스트를 다 드래그
+            childList.forEach(element => {
+              if (element.nodeName === "#text") {
+                let newNode = window.document.createElement("span");
+                newNode.innerHTML = element.textContent;
+                parentEl.replaceChild(newNode, element);
+              }
+            });
+            childList.forEach(element => {
+              element.style.fontSize = size;
+            });
+        } else { // 일부 텍스트만 드래그했을 때
+          let start = selected.startContainer;
+          let end = selected.endContainer;
+          let newNode = window.document.createElement("span");
+          newNode.innerHTML = text;
+          selected.deleteContents();
+          selected.insertNode(newNode);
         }
       }
-      await this.setState({
-        content: this.edit.innerHTML
-      });
-      await this.onCursorOut();
-      this.returnData();
-    } else {
-      console.log("noSelection");
     }
-    this.setState({
-      openSize: false
-    });
   };
 
+  // 컬러 변경
   onChangeColor = async color => {
     let res = this.isSelection();
     if (res) {
-      const selection = window.getSelection();
-      const parentEl = selection.focusNode.parentElement;
       const selected = window.getSelection().getRangeAt(0);
+      const parentEl = selected.commonAncestorContainer; //긁은 부분을 포함한 최상위 노드
+      let childList = parentEl.childNodes; // [nodeList]
       const text = selected.toString();
 
-      if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
-        let node = window.document.createElement("font");
-        node.innerHTML = selected;
-        node.style.color = color;
-        selected.deleteContents();
-        selected.insertNode(node);
-      } else { //두번째줄 이상일 경우
-        if (parentEl.textContent === text) {
-          if (parentEl.firstElementChild && parentEl.firstElementChild.nodeName == "FONT") {
-            parentEl.style.color = color;
-            parentEl.innerHTML = selected;
-          } else {
-            parentEl.style.color = color;
-          }
-        } else {
-          let node = window.document.createElement("font");
-          node.innerHTML = selected;
-          node.style.color = color;
+      if (childList && childList.length === 0) { // 긁은 부분이 텍스트만 있을때
+        const p = window.getSelection().focusNode.parentElement;
+        if (p.classList.contains("valContainer")){ // 맨 앞이 최상위 태그이면 새로운 태그 추가
+          let newNode = window.document.createElement("span");
+          newNode.innerHTML = text;
+          newNode.style.color = color;
           selected.deleteContents();
-          selected.insertNode(node);
+          selected.insertNode(newNode);
+        } else { // 앞에 태그로 묶여 있으면 스타일 적용
+          if (p.textContent === text) {
+            p.style.color = color;
+          } else {
+            let newNode = window.document.createElement("span");
+            newNode.innerHTML = text;
+            newNode.style.color = color;
+            selected.deleteContents();
+            selected.insertNode(newNode);
+          }
+        }
+      } else { // 긁은 부분에 텍스트와 태그가 같이 있을 때
+        if (parentEl.textContent === text){ // 전체 텍스트를 다 드래그
+            childList.forEach(element => {
+              if (element.nodeName === "#text") {
+                let newNode = window.document.createElement("span");
+                newNode.innerHTML = element.textContent;
+                parentEl.replaceChild(newNode, element);
+              }
+            });
+            childList.forEach(element => {
+              element.style.color = color;
+            });
+        } else { // 일부 텍스트만 드래그했을 때
+          let start = selected.startContainer;
+          let end = selected.endContainer;
+          let newNode = window.document.createElement("span");
+          newNode.innerHTML = text;
+          selected.deleteContents();
+          selected.insertNode(newNode);
         }
       }
+    }
+    // let res = this.isSelection();
+    // if (res) {
+    //   const selection = window.getSelection();
+    //   const parentEl = selection.focusNode.parentElement;
+    //   const selected = window.getSelection().getRangeAt(0);
+    //   const text = selected.toString();
+
+    //   if (parentEl.classList.contains('valContainer')) { //맨 첫줄일 경우
+    //     let node = window.document.createElement("font");
+    //     node.innerHTML = selected;
+    //     node.style.color = color;
+    //     selected.deleteContents();
+    //     selected.insertNode(node);
+    //   } else { //두번째줄 이상일 경우
+    //     if (parentEl.textContent === text) {
+    //       if (parentEl.firstElementChild && parentEl.firstElementChild.nodeName == "FONT") {
+    //         parentEl.style.color = color;
+    //         parentEl.innerHTML = selected;
+    //       } else {
+    //         parentEl.style.color = color;
+    //       }
+    //     } else {
+    //       let node = window.document.createElement("font");
+    //       node.innerHTML = selected;
+    //       node.style.color = color;
+    //       selected.deleteContents();
+    //       selected.insertNode(node);
+    //     }
+    //   }
+    //   await this.setState({
+    //     content: this.edit.innerHTML
+    //   });
+    //   // await this.onCursorOut();
+    //   this.returnData();
+    // } else {
+    //   console.log("noSelection");
+    // }
+    // this.setState({
+    //   openColor: false
+    // });
+  };
+
+  // onCursorOut = () => {
+  //   let res = this.isSelection();
+  //   if (res) {
+  //   let newSelected = window.getSelection();
+  //   let range = window.getSelection().getRangeAt(0);
+  //   newSelected.removeRange(range);
+  //   this.onSave();
+  //   this.edit.blur();
+  //   } else {
+  //     return;
+  //   }
+  // }
+
+  // 현재 입력되어 있는 데이터 저장
+  onSave = async (e) => {
+    if (e && e.type === "keydown") { // 키보드 입력했을 경우
       await this.setState({
         content: this.edit.innerHTML
       });
-      await this.onCursorOut();
-      this.returnData();
-    } else {
-      console.log("noSelection");
-    }
-    this.setState({
-      openColor: false
-    });
-  };
-
-  onCursorOut = () => {
-    let res = this.isSelection();
-    if (res) {
-    let newSelected = window.getSelection();
-    let range = window.getSelection().getRangeAt(0);
-    newSelected.removeRange(range);
-    this.onSave();
-    this.edit.blur();
-    } else {
-      return;
-    }
-  }
-
-  onSave = async (e) => {
-    if (e && e.type === "keydown") {
-      await this.setState({ content: this.edit.innerHTML });
-    } else if (e && e.type === "blur") {
-      if (e &&
+    } else if (e && e.type === "blur") { // 포커스가 빠졌을 경우
+      if (e && // 다른 클릭 이벤트 실행시 && 사이즈||컬러 창을 열었을 경우
         (e.relatedTarget &&
           this.textWrap._reactInternalFiber.child.stateNode.contains(
             e.relatedTarget
           ))
       ) {
-      } else {
-        this.setState({
-          openMenu: false
-        });
+      } else { // 텍스트 에디터에서 포커스가 빠져나간 경우
+          this.setState({
+            openMenu: false
+          });
         if (!this.edit.textContent) {
           if (this.props.deleteItem) this.props.deleteItem();
         } else {
-          console.log("드디어 세이브", this.state);
           await this.setState({ content: this.edit.innerHTML });
           this.returnData();
         }
@@ -329,11 +396,12 @@ class TextController extends Component {
     }
   };
 
+  // 상위 컴포넌트로 데이터 넘겨주기
   returnData = async () => {
-    console.log(this.state);
     if(this.props.getValue) this.props.getValue(this.state);
   }
 
+  // 사이즈 설정 모달창 열기/닫기
   setOpenSize = () => {
     this.setState({
       openSize: !this.state.openSize,
@@ -341,6 +409,7 @@ class TextController extends Component {
     });
   }
 
+  // 컬러 설정 모달창 열기/닫기
   setOpenColor = () => {
     this.setState({
       openSize: false,
