@@ -270,13 +270,12 @@ class TextController extends Component {
       await this.setState({
         content: this.edit.innerHTML
       });
-        // await this.onCursorOut();
       this.returnData();
     } else {
       console.log("noSelection");
     }
     this.setState({
-      openColor: false
+      openSize: false
     });
   };
 
@@ -411,24 +410,26 @@ class TextController extends Component {
 
   onBlurSize = async (e) => {
     if (e && e.type === "blur") {
-      if (e.relatedTarget && this.menuWrap.childNodes[1].contains(e.relatedTarget)) {
+      if (e.relatedTarget && this.menuWrap.contains(e.relatedTarget)) {
       } else {
         this.setState({
           openSize: false
         });
       }
     }
+    this.returnData();
   }
 
   onBlurColor = async (e) => {
     if (e && e.type === "blur") {
-      if (e.relatedTarget && this.menuColWrap.childNodes[1].contains(e.relatedTarget)) {
+      if (e.relatedTarget && this.menuColWrap.contains(e.relatedTarget)) {
       } else {
         this.setState({
           openColor: false
         });
       }
     }
+    this.returnData();
   }
 
   render() {
