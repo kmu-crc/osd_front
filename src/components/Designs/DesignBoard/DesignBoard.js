@@ -131,7 +131,7 @@ class DesignBoard extends Component {
     this.setState({ active: false });
   };
   onDelete = () => {
-    const confirm = window.confirm("스탭을 삭제하시겠습니까?");
+    const confirm = window.confirm("단계를 삭제하시겠습니까?");
     if(confirm) {
       this.props
       .DeleteDesignBoardRequest(
