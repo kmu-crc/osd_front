@@ -415,9 +415,9 @@ class TextController extends Component {
         this.setState({
           openSize: false
         });
+        this.returnData();
       }
     }
-    this.returnData();
   }
 
   onBlurColor = async (e) => {
@@ -427,9 +427,9 @@ class TextController extends Component {
         this.setState({
           openColor: false
         });
+        this.returnData();
       }
     }
-    this.returnData();
   }
 
   render() {
