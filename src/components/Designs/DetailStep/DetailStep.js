@@ -55,10 +55,10 @@ const BoardController = styled.button`
   line-height: 50px;
   font-size: 20px;
   &.left {
-    left: -30px;
+    left: -60px;
   }
   &.right {
-    right: -30px;
+    right: -60px;
   }
   i.icon {
     margin: 0 !important;
