@@ -71,6 +71,9 @@ const ProfileSection = styled.div`
   & .likeBtnContainer {
     display: flex;
     justify-content: space-around;
+    & button:focus {
+      outline: 0;
+    }
     & .likeBtn {
       border: 0;
       background: ${StyleGuide.color.sub.bule.light};

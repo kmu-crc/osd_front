@@ -71,6 +71,10 @@ const ProfileSection = styled.div`
     margin: 5px 0;
     & button {
       padding: 0.75em 1.6em;
+      border: 0;
+      &:focus {
+        outline: 0;
+      }
     }
     & .likeBtn {
       background: ${StyleGuide.color.sub.bule.light};

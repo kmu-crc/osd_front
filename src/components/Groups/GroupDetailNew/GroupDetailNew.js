@@ -64,6 +64,9 @@ const BtnContainer = styled.div`
   }
   & button {
     margin-left: .3rem;
+    &:focus {
+      outline: 0;
+    }
   }
   & i {
     margin: 0;
