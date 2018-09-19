@@ -7,12 +7,14 @@ const initialState = {
   },
   status: {
     DesignerDetail: [],
-    Count: { 
-      total_like: 0, 
-      total_design: 0, 
+    Count: {
+      total_like: 0,
+      total_design: 0,
       total_group: 0,
       total_view: 0
     },
+    MyDesignInDesigner: [],
+    MyDesignInDesignerAdded: [],
     DesignInDesigner: [],
     DesignInDesignerAdded: [],
     LikeInDesigner: [],
@@ -77,6 +79,27 @@ export function DesignerDetail(state, action) {
         status: {
           LikeInDesigner: { $set: action.LikeInDesigner },
           LikeInDesignerAdded: { $set: action.LikeInDesignerAdded }
+        }
+      });
+    case types.GET_MY_DESIGN_IN_DESIGNER:
+      return update(state, {
+        status: {
+          MyDesignInDesigner: { $set: action.MyDesignInDesigner },
+          MyDesignInDesignerAdded: { $push: action.MyDesignInDesigner }
+        }
+      });
+    case types.GET_MY_DESIGN_IN_DESIGNER_CLEAR:
+      return update(state, {
+        status: {
+          MyDesignInDesigner: { $set: action.MyDesignInDesigner },
+          MyDesignInDesignerAdded: { $set: action.MyDesignInDesigner }
+        }
+      });
+    case types.MY_DESIGN_IN_DESIGNER_FAIL:
+      return update(state, {
+        status: {
+          MyDesignInDesigner: { $set: action.MyDesignInDesigner },
+          MyDesignInDesignerAdded: { $set: action.MyDesignInDesignerAdded }
         }
       });
     default:

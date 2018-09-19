@@ -146,6 +146,55 @@ export function GetDesignerCount(data) {
 };
 
 // 디자이너의 디자인 리스트 가져오기
+export function GetMyDesignInDesignerRequest(id, page) {
+  return (dispatch) => {
+    return fetch(`${host}/designer/designerDetail/`+id+"/myDesign/"+page, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("designer's design list data >>", data);
+        if (!data) {
+          console.log("no data");
+          data = [];
+        }
+        if (page === 0) {
+          dispatch(MyDesignInDesignerClear(data));
+          return;
+        }
+        dispatch(GetMyDesignInDesigner(data));
+      }).catch((error) => {
+        dispatch(MyDesignInDesignerFail());
+        console.log("err", error);
+      });
+  }
+};
+
+export function GetMyDesignInDesigner(data) {
+  return {
+    type: types.GET_MY_DESIGN_IN_DESIGNER,
+    MyDesignInDesigner : data
+  }
+};
+
+export function MyDesignInDesignerClear(data) {
+  return {
+    type: types.GET_MY_DESIGN_IN_DESIGNER_CLEAR,
+    MyDesignInDesigner: data,
+    MyDesignInDesignerAdded: []
+  }
+};
+
+export function MyDesignInDesignerFail() {
+  return {
+    type: types.MY_DESIGN_IN_DESIGNER_FAIL,
+    MyDesignInDesigner: [],
+    MyDesignInDesignerAdded: []
+  }
+};
+
+// 디자이너의 참여 리스트 가져오기
 export function GetDesignInDesignerRequest(id, page) {
   return (dispatch) => {
     return fetch(`${host}/designer/designerDetail/`+id+"/design/"+page, {

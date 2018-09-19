@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
+import MyDesignInDesignerContainer from "containers/Designer/MyDesignInDesignerContainer";
 import DesignInDesignerContainer from "containers/Designer/DesignInDesignerContainer";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer";
 import Button from "components/Commons/Button";
@@ -277,8 +278,11 @@ class DesignerDetail extends Component {
                   <Head devided="vertically" padded={true} columns={2}>
                     <Grid.Row>
                       <Grid.Column as="ul">
+                        <li id="my"
+                            className={this.props.type === "my" || this.props.type === null? "onSelected" : ""}
+                            onClick={this.typeChange}>등록한 디자인</li>
                         <li id="design"
-                            className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
+                            className={this.props.type === "design"? "onSelected" : ""}
                             onClick={this.typeChange}>참여 디자인</li>
                         <li id="like"
                             className={this.props.type === "like"? "onSelected" : ""}
@@ -289,7 +293,11 @@ class DesignerDetail extends Component {
                   </Head>
                   <MiniContentBox>
                     <Route path="/designerDetail/:id/:type?"
-                           component={this.props.type === "like"? LikeInDesignerContainer : DesignInDesignerContainer}/>
+                           component={this.props.type === "like"
+                                      ? LikeInDesignerContainer
+                                      : this.props.type === "design"
+                                      ? DesignInDesignerContainer
+                                      : MyDesignInDesignerContainer}/>
                   </MiniContentBox>
                 </TabContainer>
               </Grid.Row>
