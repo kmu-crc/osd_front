@@ -531,6 +531,21 @@ class DesignDetail extends Component {
     }
   }
 
+  joinMember = () => {
+    if (!this.props.userInfo || !this.props.token) {
+      alert("로그인을 해주세요.");
+    } else if (this.props.userInfo && this.props.DesignDetail.is_team === 1) {
+      alert("이미 멤버입니다.");
+    } else {
+      const confirm = window.confirm("해당 디자인에 가입 신청하시겠습니까?");
+      if (confirm) {
+        //// 리퀘스트 보내기
+      } else {
+        return;
+      }
+    }
+  }
+
   render() {
     const designDetail = this.props.DesignDetail;
     const count = this.props.Count;
@@ -581,6 +596,9 @@ class DesignDetail extends Component {
             <button onClick={this.deleteDesign}>삭제</button>
           </li>
           }
+          <li>
+            <button onClick={this.joinMember}>가입 신청</button>
+          </li>
           <li>
             <button onClick={this.onCloseMoreBtn}>파생디자인 생성</button>
           </li>

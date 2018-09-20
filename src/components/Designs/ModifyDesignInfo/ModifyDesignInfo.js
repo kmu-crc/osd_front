@@ -124,7 +124,7 @@ class ModifyDesignInfo extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    //this.state.member.value = JSON.stringify(this.state.member.value);
+    this.state.member.value = JSON.stringify(this.state.member.value);
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
@@ -134,13 +134,13 @@ class ModifyDesignInfo extends Component {
           this.props.history.push(`/designDetail/${data.res.design_id}`);
         } else {
           alert("다시 시도해주세요");
-          //this.state.member.value = JSON.parse(this.state.member.value);
+          this.state.member.value = JSON.parse(this.state.member.value);
           this.props.setLoader();
         }
       });
     }).catch(e => {
       console.log("실패", e);
-      //this.state.member.value = JSON.parse(this.state.member.value);
+      this.state.member.value = JSON.parse(this.state.member.value);
     });
   };
 
@@ -206,8 +206,8 @@ class ModifyDesignInfo extends Component {
                     value={currentDesign.category_level2}
                   />
                 </Form.Group>
-                {/* <Form.Group widths="equal">
-                  <Label>멤버추가</Label>
+                <Form.Group widths="equal">
+                  <Label>멤버수정</Label>
                   <AsyncInput
                     name="member"
                     getValue={this.onChangeValue}
@@ -215,7 +215,7 @@ class ModifyDesignInfo extends Component {
                     list={this.props.members}
                     value={this.returnToMemberFormat(currentDesign.member)}
                   />
-                </Form.Group> */}
+                </Form.Group>
               </Grid.Column>
             </Grid>
           </FromFieldCard>
