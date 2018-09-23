@@ -5,7 +5,7 @@ export const CreateDesignRequest = (data, token) => {
   return (dispatch) => {
     dispatch(CreateDesign());
 
-    return fetch(`${host}/design/createDesign`, { headers: { "x-access-token": token }, method: "POST", body: data })
+    return fetch(`${host}/design/createDesign`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
         return res.json();
       })
