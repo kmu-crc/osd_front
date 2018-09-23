@@ -106,7 +106,7 @@ class DesignCardModify extends Component {
           getValue={this.onChangeValue}
           value={this.props.detail.content}
         />
-
+        <Label>컨텐츠</Label>
         <CardSourceDetail
           {...this.props}
           uid={this.props.uid}

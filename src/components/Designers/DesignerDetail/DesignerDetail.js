@@ -71,6 +71,10 @@ const ProfileSection = styled.div`
     margin: 5px 0;
     & button {
       padding: 0.75em 1.6em;
+      border: 0;
+      &:focus {
+        outline: 0;
+      }
     }
     & .likeBtn {
       background: ${StyleGuide.color.sub.bule.light};
@@ -275,7 +279,7 @@ class DesignerDetail extends Component {
                       <Grid.Column as="ul">
                         <li id="design"
                             className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
-                            onClick={this.typeChange}>등록 디자인</li>
+                            onClick={this.typeChange}>참여 디자인</li>
                         <li id="like"
                             className={this.props.type === "like"? "onSelected" : ""}
                             onClick={this.typeChange}>관심 디자인</li>

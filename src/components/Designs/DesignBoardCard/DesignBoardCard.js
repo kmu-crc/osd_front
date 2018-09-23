@@ -87,6 +87,7 @@ const CommentContainer = styled.div`
       position: absolute;
       top: 0;
       right: 0;
+      cursor: pointer;
     }
   }
   & h4 {
@@ -175,6 +176,10 @@ class DesignBoardCard extends Component {
       alert("로그인을 해주세요.");
       return;
     }
+    if (FormDataToJson(data) && FormDataToJson(data).comment === ""){
+      alert("내용을 입력해 주세요.");
+      return;
+    }
     this.props
       .CreateCardCommentRequest(
         FormDataToJson(data),
@@ -232,7 +237,6 @@ class DesignBoardCard extends Component {
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
           <FormField
             name="comment"
-            validates={["required"]}
             RenderComponent={FormTextArea}
           />
           <Button
@@ -264,7 +268,6 @@ class DesignBoardCard extends Component {
             </div>
           </div>
 
-          {/* {this.props.isTeam > 0 && <DeleteBtn onClick={this.onDelete}><i aria-hidden="true" className="trash alternate icon"></i></DeleteBtn>} */}
         </BoardCard>
         {this.props.card.uid === this.props.detail.uid ? (
           <CustomModal
@@ -289,7 +292,7 @@ class DesignBoardCard extends Component {
                 </div>
               ) : (
                 <div>
-                  {this.props.isTeam && !this.state.edit ? (
+                  {this.props.userInfo && (this.props.userInfo.uid === this.props.card.user_id) && !this.state.edit ? (
                     <div>
                       <Button
                         type="button"
@@ -341,13 +344,12 @@ class DesignBoardCard extends Component {
                       </div>
                       {this.props.userInfo &&
                         this.props.userInfo.uid === comm.user_id && (
-                          <Button
-                            size="small"
-                            className="delBtn"
-                            onClick={() => this.deleteComment(comm.uid)}
-                          >
-                            삭제
-                          </Button>
+                          <i
+                          size="small"
+                          className="delBtn trash alternate outline icon"
+                          onClick={() => this.deleteComment(comm.uid)}
+                        >
+                        </i>
                         )}
                     </div>
                   ))

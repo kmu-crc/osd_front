@@ -16,7 +16,8 @@ const ControllerWrap = styled.div`
     .editBtn {
       display: block;
     }
-    border: 2px dashed ${StyleGuide.color.geyScale.scale6};
+    // border: 2px dashed ${StyleGuide.color.geyScale.scale6};
+    border: 1px dashed ${StyleGuide.color.geyScale.scale5};
     & .initWrap {
       & > ul {
         display: flex;

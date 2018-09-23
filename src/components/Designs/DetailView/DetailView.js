@@ -50,6 +50,7 @@ const CommentContainer = styled.div`
       position: absolute;
       top: 0;
       right: 0;
+      cursor: pointer;
     }
   }
   & p {
@@ -131,6 +132,10 @@ class DetailView extends Component {
       alert("로그인을 해주세요.");
       return;
     }
+    if (FormDataToJson(data) && FormDataToJson(data).content === ""){
+      alert("내용을 입력해 주세요.");
+      return;
+    }
     this.props
       .CreateCardCommentRequest(
         FormDataToJson(data),
@@ -189,7 +194,6 @@ class DetailView extends Component {
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
           <FormField
             name="comment"
-            validates={["required"]}
             RenderComponent={FormTextArea}
           />
           <Button type="submit" className="ui icon primary left labeled button">
@@ -247,13 +251,12 @@ class DetailView extends Component {
                     </div>
                     {this.props.userInfo &&
                       this.props.userInfo.uid === comm.user_id && (
-                        <Button
+                        <i
                           size="small"
-                          className="delBtn"
+                          className="delBtn trash alternate outline icon"
                           onClick={() => this.deleteComment(comm.uid)}
                         >
-                          삭제
-                        </Button>
+                        </i>
                       )}
                   </div>
                 ))

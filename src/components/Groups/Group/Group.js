@@ -78,9 +78,9 @@ const Count = styled.div`
 
 
 class Group extends Component {
-  refresh = (e) => {
+  refresh = (id) => {
     if (this.props.rerender) {
-      Component.forceUpdate();
+      window.location.href(`/groupDetail/${id}`);
     } else {
       return;
     }
@@ -90,7 +90,7 @@ class Group extends Component {
     let group = this.props.data;
 
     return(
-      <NavLink to={"/groupDetail/"+group.uid} onClick={this.refresh}>
+      <NavLink to={"/groupDetail/"+group.uid} onClick={()=>this.refresh(group.uid)}>
         <Groupli>
           <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>

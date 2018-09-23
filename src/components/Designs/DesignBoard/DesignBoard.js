@@ -131,7 +131,11 @@ class DesignBoard extends Component {
     this.setState({ active: false });
   };
   onDelete = () => {
-    const confirm = window.confirm("스탭을 삭제하시겠습니까?");
+    if (this.props.board.cards && this.props.board.cards.length > 0) {
+      alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.");
+      return;
+    }
+    const confirm = window.confirm("단계를 삭제하시겠습니까?");
     if(confirm) {
       this.props
       .DeleteDesignBoardRequest(

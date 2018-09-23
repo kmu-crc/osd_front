@@ -567,33 +567,24 @@ class DesignDetail extends Component {
     const SubMenuCompo = () => {
       return (
         <SideMenu>
-          <li
-            style={{
-              display: designDetail.is_team ? "block" : "none"
-            }}
-          >
+          {this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id) &&
+          <li style={{display: designDetail.is_team ? "block" : "none"}}>
             <Link
               to={`/designModify/${this.props.id}`}
-              onClick={this.onCloseMoreBtn}
-            >
+              onClick={this.onCloseMoreBtn}>
               <button>수정</button>
             </Link>
           </li>
-          <li
-            style={{
-              display: designDetail.is_team ? "block" : "none"
-            }}
-          >
+          }
+          {this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id) &&
+          <li style={{display: designDetail.is_team ? "block" : "none"}}>
             <button onClick={this.deleteDesign}>삭제</button>
           </li>
+          }
           <li>
             <button onClick={this.onCloseMoreBtn}>파생디자인 생성</button>
           </li>
-          <li
-            style={{
-              display: designDetail.parent_design ? "block" : "none"
-            }}
-          >
+          <li style={{display: designDetail.parent_design ? "block" : "none"}}>
             <button onClick={this.onCloseMoreBtn}>원본디자인 보기</button>
           </li>
         </SideMenu>
@@ -697,6 +688,7 @@ class DesignDetail extends Component {
                                 } else {
                                   return (
                                     <MemberItem
+                                      key={index}
                                       style={{
                                         backgroundImage: item.thumbnail
                                           ? `url(${item.thumbnail.s_img})`
@@ -721,9 +713,9 @@ class DesignDetail extends Component {
                                   this.state.memberActive ? "active" : null
                                 }
                               >
-                                {designDetail.member.map(item => {
+                                {designDetail.member.map((item, i) => {
                                   return (
-                                    <Link to={`/designerDetail/${item.user_id}`}>
+                                    <Link to={`/designerDetail/${item.user_id}`} key={i}>
                                       <MemberlistItem>
                                         <MemberItem
                                           style={{
