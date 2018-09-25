@@ -11,7 +11,7 @@ import EmbController from "./EmbController";
 // css styling
 const ControllerWrap = styled.div`
   position: relative;
-  border: 2px dashed white;
+  border: 1px dashed white;
   &:hover {
     .editBtn {
       display: block;

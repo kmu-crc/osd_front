@@ -275,7 +275,7 @@ class DesignerDetail extends Component {
                   </CountSection>
                 </HeadContainer>
                 <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
-                  <Head devided="vertically" padded={true} columns={2}>
+                  <Head devided="vertically" padded={true}>
                     <Grid.Row>
                       <Grid.Column as="ul">
                         <li id="my"

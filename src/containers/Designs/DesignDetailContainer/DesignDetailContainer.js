@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
 import { DeleteDesignRequest } from "actions/Designs/DeleteDesign";
 import DesignDetail from "components/Designs/DesignDetail";
+import { JoinDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign";
 
 class DesignDetailContainer extends Component {
   render() {
@@ -49,6 +50,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     DeleteDesignRequest: (id, token) => {
       return dispatch(DeleteDesignRequest(id, token))
+    },
+    JoinDesignRequest: (id, token) => {
+      return dispatch(JoinDesignRequest(id, token))
+    },
+    GetoutDesignRequest: (id, token) => {
+      return dispatch(GetoutDesignRequest(id, token))
     }
   };
 };

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
 import UserImg from "source/thumbnail.png";
+import DateFormat from "modules/DateFormat";
 
 // css styling
 
@@ -227,6 +228,9 @@ const CreateDate = styled.div`
   span {
     color: white;
     font-weight: bold;
+    &.update {
+      margin-left: 4rem;
+    }
   }
 `;
 
@@ -534,12 +538,17 @@ class DesignDetail extends Component {
   joinMember = () => {
     if (!this.props.userInfo || !this.props.token) {
       alert("로그인을 해주세요.");
-    } else if (this.props.userInfo && this.props.DesignDetail.is_team === 1) {
-      alert("이미 멤버입니다.");
     } else {
       const confirm = window.confirm("해당 디자인에 가입 신청하시겠습니까?");
       if (confirm) {
-        //// 리퀘스트 보내기
+        this.props.JoinDesignRequest(this.props.id, this.props.token)
+        .then(res => {
+          if (res.data && res.data.success) {
+            alert("가입 신청이 완료되었습니다.");
+          } else {
+            alert("다시 시도해주세요");
+          }
+        });
       } else {
         return;
       }
@@ -580,25 +589,25 @@ class DesignDetail extends Component {
       );
     };
     const SubMenuCompo = () => {
+      const isLeader = (this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id));
+      const isMember = (this.props.userInfo && (this.props.DesignDetail.is_team === 1));
       return (
         <SideMenu>
-          {this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id) &&
-          <li style={{display: designDetail.is_team ? "block" : "none"}}>
-            <Link
-              to={`/designModify/${this.props.id}`}
-              onClick={this.onCloseMoreBtn}>
-              <button>수정</button>
-            </Link>
-          </li>
+          {isLeader &&
+            <li style={{display: designDetail.is_team ? "block" : "none"}}>
+              <Link
+                to={`/designModify/${this.props.id}`}
+                onClick={this.onCloseMoreBtn}>
+                <button>수정</button>
+              </Link>
+            </li>
           }
-          {this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id) &&
-          <li style={{display: designDetail.is_team ? "block" : "none"}}>
-            <button onClick={this.deleteDesign}>삭제</button>
-          </li>
+          {isLeader &&
+            <li style={{display: designDetail.is_team ? "block" : "none"}}>
+              <button onClick={this.deleteDesign}>삭제</button>
+            </li>
           }
-          <li>
-            <button onClick={this.joinMember}>가입 신청</button>
-          </li>
+          {!isMember && <li><button onClick={this.joinMember}>가입 신청</button></li>}
           <li>
             <button onClick={this.onCloseMoreBtn}>파생디자인 생성</button>
           </li>
@@ -657,6 +666,8 @@ class DesignDetail extends Component {
                         <CreateDate>
                           <span>작성일: </span>
                           {designDetail.create_time.split("T")[0]}
+                          <span className="update">최근 업데이트: </span>
+                          {DateFormat(designDetail.update_time)}
                         </CreateDate>
                       </Grid.Column>
                       <Grid.Column width={8} textAlign="right">

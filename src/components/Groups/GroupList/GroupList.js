@@ -146,7 +146,7 @@ class GroupList extends Component {
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
                   <Grid.Column className="addGroup">
-                    <Link to="/createGroup"><button>새 그룹 추가 +</button></Link>
+                    <Link to="/createGroup"><button>그룹 등록</button></Link>
                   </Grid.Column>
                   <Sorting handleChange={this.sortChange} placeholder={sort}/>
                 </Grid.Row>
