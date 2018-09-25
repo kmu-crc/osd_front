@@ -653,9 +653,9 @@ export function CreateNewGroupRequest(data, token) {
   return (dispatch) => {
     dispatch(CreateNewGroup());
     return fetch(`${host}/group/createGroup`, {
-      headers: { 'x-access-token': token },
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
       method: "POST",
-      body: data
+      body: JSON.stringify(data)
     }).then((response) => {
       return response.json();
     })
@@ -692,9 +692,9 @@ export function UpdateGroupRequest(id, data, token) {
   return (dispatch) => {
     dispatch(UpdateGroup());
     return fetch(`${host}/group/${id}/updateGroup`, {
-      headers: { 'x-access-token': token },
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
       method: "POST",
-      body: data
+      body: JSON.stringify(data)
     }).then((response) => {
       return response.json();
     }).then((res) => {

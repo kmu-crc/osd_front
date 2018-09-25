@@ -44,7 +44,7 @@ class UserDetailFrom extends Component {
   onSubmit = async e => {
     console.log(this.state);
     e.preventDefault();
-    ValidationGroup(this.state, false).then(async data => {
+    ValidationGroup(this.state).then(async data => {
       console.log("성공", data);
       await this.setState({
         loading: true
