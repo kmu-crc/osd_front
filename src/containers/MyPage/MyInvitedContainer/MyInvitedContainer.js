@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import styled from "styled-components";
 import { AcceptDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign";
 import { GetMyInvitedListRequest } from "actions/Users/MyDetail";
 
+// css styling
+const List = styled.li`
+  margin: 0.1rem 0;
+`;
+
 class MyInvitedContainer extends Component {
+  componentDidMount() {
+    this.props.GetMyInvitedListRequest(this.props.token);
+  }
   render(){
     return(
-      <div>내가받은초대</div>
+      <div>
+        {this.props.list.length > 0?
+          <ul>
+            {this.props.list.map((design, i) => (
+              <List key={i}>{design.title}</List>
+            ))}
+          </ul>
+        : <div>받은 초대가 없습니다.</div>
+        }
+      </div>
     );
   }
 }

@@ -4,9 +4,20 @@ import { GetoutDesignRequest } from "actions/Designs/JoinDesign";
 import { GetMyInvitingListRequest } from "actions/Users/MyDetail";
 
 class MyInvitingContainer extends Component {
+  componentDidMount(){
+    this.props.GetMyInvitingListRequest(this.props.token);
+  }
+
   render(){
     return(
-      <div>내가 보낸 초대</div>
+      <div>
+        {this.props.list.length > 0
+        ? this.props.list.map((design, i) => (
+          <li key={i}>{design.title}</li>
+        ))
+        : <div>가입 신청한 디자인이 없습니다.</div>
+        }
+      </div>
     );
   }
 }
