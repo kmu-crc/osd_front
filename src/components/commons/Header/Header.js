@@ -6,6 +6,7 @@ import { Grid, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
+import socketIOClient from 'socket.io-client';
 
 // css styling
 const Head = styled.header`
@@ -242,6 +243,18 @@ class Header extends Component {
       });
     }
   }
+  shouldComponentUpdate(nextProps){
+    if(JSON.stringify(nextProps.valid) !== JSON.stringify(this.props.valid)){
+      return true
+    }
+    if(JSON.stringify(nextProps.active) !== JSON.stringify(this.props.active)){
+      return true
+    }
+    if(JSON.stringify(nextProps.userInfo) !== JSON.stringify(this.props.userInfo)){
+      return true
+    }
+    return false;
+  }
 
   submitEnter = (e) => {
     if (e.keyCode === 13) {
@@ -250,6 +263,21 @@ class Header extends Component {
   }
 
   render() {
+    if (this.props.valid) {
+      try {
+        const socket = socketIOClient('http://localhost:8080');
+        socket.emit('INIT', this.props.userInfo.uid);
+        setInterval(function(){
+          socket.emit('live socket id', this.props.userInfo.uid);
+        }.bind(this), 500);
+        socket.on('getNoti', (color) => {
+          // setting the color of our button
+          console.log(color);
+        });
+      } catch(err){
+        console.log(err);
+      }
+    }
     const LoginNav = () => {
       return (
         <UserInterface>
