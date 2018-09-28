@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled, { css } from "styled-components";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
-import { Grid, Icon } from "semantic-ui-react";
+import { Grid, Icon, Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
 import UserImg from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
+import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 
 // css styling
 
@@ -441,7 +442,8 @@ const MemberlistItem = styled.div`
 class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
-    memberActive: false
+    memberActive: false,
+    manageMember: false
   };
 
   componentDidMount() {
@@ -540,8 +542,9 @@ class DesignDetail extends Component {
       alert("로그인을 해주세요.");
     } else {
       const confirm = window.confirm("해당 디자인에 가입 신청하시겠습니까?");
+      const data = [{ uid: this.props.userInfo.uid }];
       if (confirm) {
-        this.props.JoinDesignRequest(this.props.id, this.props.token)
+        this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
         .then(res => {
           if (res.data && res.data.success) {
             alert("가입 신청이 완료되었습니다.");
@@ -553,6 +556,13 @@ class DesignDetail extends Component {
         return;
       }
     }
+  }
+
+  closeMemberModal = () => {
+    this.setState({
+      manageMember: false,
+      activeMoreBtn: false
+    });
   }
 
   render() {
@@ -588,24 +598,26 @@ class DesignDetail extends Component {
         </CounterWrap>
       );
     };
+
     const SubMenuCompo = () => {
       const isLeader = (this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id));
       const isMember = (this.props.userInfo && (this.props.DesignDetail.is_team === 1));
       return (
         <SideMenu>
           {isLeader &&
-            <li style={{display: designDetail.is_team ? "block" : "none"}}>
-              <Link
-                to={`/designModify/${this.props.id}`}
-                onClick={this.onCloseMoreBtn}>
+            <li onClick={() => this.setState({manageMember: !this.state.manageMember, activeMoreBtn: false})}>
+              <button>멤버관리</button>
+            </li>
+          }
+          {isLeader &&
+            <li>
+              <Link to={`/designModify/${this.props.id}`} onClick={this.onCloseMoreBtn}>
                 <button>수정</button>
               </Link>
             </li>
           }
           {isLeader &&
-            <li style={{display: designDetail.is_team ? "block" : "none"}}>
-              <button onClick={this.deleteDesign}>삭제</button>
-            </li>
+            <li><button onClick={this.deleteDesign}>삭제</button></li>
           }
           {!isMember && <li><button onClick={this.joinMember}>가입 신청</button></li>}
           <li>
@@ -617,6 +629,14 @@ class DesignDetail extends Component {
         </SideMenu>
       );
     };
+
+    const MemberModal = () => {
+      return(
+        <Modal open={this.state.manageMember} closeOnDimmerClick={true} onClose={this.closeMemberModal}>
+          <DesignMemberContainer DesignDetail={designDetail}/>
+        </Modal>
+      );
+    }
     return (
       <div>
         {designDetail.length !== 0 && (
@@ -806,6 +826,7 @@ class DesignDetail extends Component {
             </ContentBox>
           </Wrapper>
         )}
+        <MemberModal/>
       </div>
     );
   }

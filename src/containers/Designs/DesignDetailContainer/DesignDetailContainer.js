@@ -51,8 +51,8 @@ const mapDispatchToProps = (dispatch) => {
     DeleteDesignRequest: (id, token) => {
       return dispatch(DeleteDesignRequest(id, token))
     },
-    JoinDesignRequest: (id, token) => {
-      return dispatch(JoinDesignRequest(id, token))
+    JoinDesignRequest: (id, data, flag, token) => {
+      return dispatch(JoinDesignRequest(id, data, flag, token))
     },
     GetoutDesignRequest: (id, token) => {
       return dispatch(GetoutDesignRequest(id, token))
