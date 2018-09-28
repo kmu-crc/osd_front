@@ -7,6 +7,8 @@ import MyDesignContainer from "containers/MyPage/MyDesignContainer";
 import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
+import MyInvitedContainer from "containers/MyPage/MyInvitedContainer";
+import MyInvitingContainer from "containers/MyPage/MyInvitingContainer";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
@@ -164,9 +166,16 @@ class MyDetail extends Component {
   }
 
   typeChange = e => {
-    let url = "/myPage" + e.target.id;
-    this.props.history.replace(url, { token: this.props.token });
+    const target = e.target;
+    let url = `/myPage${target.id}`;
+    this.props.history.replace(url);
   };
+
+  type2Change = e => {
+    const target = e.target;
+    let url = `/myPage/${this.props.type}${target.id}`;
+    this.props.history.replace(url);
+  }
 
   render() {
     let MyInfo = this.props.MyDetail;
@@ -182,13 +191,66 @@ class MyDetail extends Component {
       };
     }
 
-    const ContainerPage = () => {
+    const ContentPage = () => {
       if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
         return <div />;
       } else {
-        return <MyDesignContainer token={this.props.token}/>;
+        return (
+          <div>
+            {this.props.type2 === "group"
+            ? <MyGroupContainer token={this.props.token}/>
+            : <MyDesignContainer token={this.props.token}/>
+            }
+          </div>
+        );
       }
     };
+
+    const LikePage = () => {
+      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
+        return <div />;
+      } else {
+        return (
+          <div>
+            {this.props.type2 === "designer"
+            ? <MyLikeDesignerContainer token={this.props.token}/>
+            : <MyLikeDesignContainer token={this.props.token}/>
+            }
+          </div>
+        )
+      }
+    }
+
+    const JoinPage = () => {
+      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
+        return <div />;
+      } else {
+        return (
+          <div>
+            {this.props.type2 === "invited"
+            ? <MyInvitedContainer/>
+            : <MyInvitingContainer/>
+            }
+          </div>
+        )
+      }
+    }
+
+    const ContentOption = [
+      { text: "디자인", value: "design" },
+      { text: "그룹", value: "group" },
+    ];
+
+    const JoinOption = [
+      { text: "내가 보낸 신청", value: "inviting" },
+      { text: "내가 받은 초대", value: "invited" },
+    ];
+
+    const LikeOption = [
+      { text: "디자인", value: "design" },
+      { text: "디자이너", value: "designer" },
+    ];
+
 
     return (
       <div>
@@ -214,6 +276,10 @@ class MyDetail extends Component {
                         <h3>{MyInfo.nick_name}</h3>
                       </div>
                       <div className="category">{MyInfo.categoryName? MyInfo.categoryName : "전체"}</div>
+                      <InfoSection>
+                        <h4>소개</h4>
+                        <p className="explanation">{MyInfo.about_me}</p>
+                      </InfoSection>
                     </ProfileSection>
                     <CountSection>
                       <div className="list">
@@ -237,46 +303,58 @@ class MyDetail extends Component {
                         <span>{count.total_like}</span>
                       </div>
                     </CountSection>
-                    <InfoSection>
-                      <h4>소개</h4>
-                      <p className="explanation">{MyInfo.about_me}</p>
-                    </InfoSection>
                   </HeadContainer>
                   {/* ------------------------ 우측 카드 렌더링 섹션 -------------------------- */}
                   <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
                     <Head padded={true}>
                       <Grid.Row>
                         <Grid.Column as="ul">
-                          <li id="/design"
-                              className={this.props.type === "design" || this.props.type === null? "onSelected" : ""}
+                          <li id="/content"
+                              className={this.props.type === "content" || this.props.type === null? "onSelected" : ""}
                               onClick={this.typeChange}>
-                            내 디자인
+                            내 컨텐츠
                           </li>
-                          <li id="/group"
-                              className={this.props.type === "group" ? "onSelected" : ""}
+                          <li id="/join"
+                              className={this.props.type === "join" ? "onSelected" : ""}
                               onClick={this.typeChange}>
-                            내 그룹
+                            내 가입 관리
                           </li>
-                          <li id="/likeDesign"
-                              className={this.props.type === "likeDesign" ? "onSelected" : ""}
+                          <li id="/like"
+                              className={this.props.type === "like" ? "onSelected" : ""}
                               onClick={this.typeChange}>
-                            관심 디자인
-                          </li>
-                          <li id="/likeDesigner"
-                              className={this.props.type === "likeDesigner" ? "onSelected" : ""}
-                              onClick={this.typeChange}>
-                            관심 디자이너
+                            내 좋아요
                           </li>
                           <div className="clear" />
                         </Grid.Column>
                       </Grid.Row>
+                      <Grid.Row>
+                        <Grid.Column as="ul">
+                          {this.props.type === "like"
+                          ? LikeOption.map((item, i) => (
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : ""} onClick={this.type2Change}>
+                            {item.text}
+                            </li>
+                          ))
+                          : this.props.type === "join"
+                          ? JoinOption.map((item, i) => (
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : ""} onClick={this.type2Change}>
+                            {item.text}
+                            </li>
+                          ))
+                          : ContentOption.map((item, i) => (
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : ""} onClick={this.type2Change}>
+                            {item.text}
+                            </li>
+                          ))
+                          }
+                        </Grid.Column>
+                      </Grid.Row>
                     </Head>
                     <MiniContentBox>
-                      <Route path="/myPage/:type?"
-                            component={this.props.type === "likeDesigner" ? MyLikeDesignerContainer
-                                        : this.props.type === "likeDesign" ? MyLikeDesignContainer
-                                        : this.props.type === "group" ? MyGroupContainer
-                                        : ContainerPage}
+                      <Route path="/myPage/:type?/:type2?"
+                             component={this.props.type === "join" ? JoinPage
+                                        : this.props.type === "like" ? LikePage
+                                        : ContentPage}
                       />
                     </MiniContentBox>
                   </TabContainer>

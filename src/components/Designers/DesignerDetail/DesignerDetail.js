@@ -265,11 +265,11 @@ class DesignerDetail extends Component {
                       <span>{count.total_design}</span>
                     </div>
                     <div className="list">
-                      <Icon name="heart" color="grey" size="tiny"></Icon> 좋아요
+                      <Icon name="heart" color="grey" size="tiny"></Icon> 받은 좋아요
                       <span>{count.total_like}</span>
                     </div>
                     <div className="list">
-                      <Icon name="user" color="grey" size="tiny"></Icon> 조회수
+                      <Icon name="user" color="grey" size="tiny"></Icon> 받은 조회수
                       <span>{count.total_view}</span>
                     </div>
                   </CountSection>
