@@ -132,7 +132,7 @@ class ModifyDesignMember extends Component {
   };
 
   getMember = data => {
-    this.props.SearchMemberRequest({key: data}, this.props.token);
+    this.props.SearchMemberRequest(this.props.match.params.id, {key: data}, this.props.token);
   }
 
   getoutMember = (flag, id) => {

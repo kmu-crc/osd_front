@@ -731,7 +731,7 @@ class DesignDetail extends Component {
                           <InfoItem>
                             <h3>멤버</h3>
                             <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
-                              {designDetail.member.map((item, index) => {
+                              {designDetail.member && designDetail.member.map((item, index) => {
                                 if (index > 3) {
                                   return;
                                 } else {
@@ -762,7 +762,7 @@ class DesignDetail extends Component {
                                   this.state.memberActive ? "active" : null
                                 }
                               >
-                                {designDetail.member.map((item, i) => {
+                                {designDetail.member && designDetail.member.map((item, i) => {
                                   return (
                                     <Link to={`/designerDetail/${item.user_id}`} key={i}>
                                       <MemberlistItem>

@@ -27,8 +27,8 @@ const mapDispatchToProps = (dispatch) => {
     GetDesignDetailRequest: (id, token) => {
       return dispatch(GetDesignDetailRequest(id, token));
     },
-    SearchMemberRequest: (data, token) => {
-      return dispatch(SearchMemberRequest(data, token));
+    SearchMemberRequest: (id, data, token) => {
+      return dispatch(SearchMemberRequest(id, data, token));
     },
     AcceptDesignRequest: (id, memberId, token) => {
       return dispatch(AcceptDesignRequest(id, memberId, token));

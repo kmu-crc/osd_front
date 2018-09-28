@@ -2,11 +2,13 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 // 멤버 검색
-export function SearchMemberRequest (data, token) {
+export function SearchMemberRequest (id, data, token) {
   return (dispatch) => {
     dispatch(SearchMember());
+    console.log(data);
+    console.log(id);
 
-    return fetch(`${host}/search/members`, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
+    return fetch(`${host}/search/members/${id}`, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
         return res.json();
       })
@@ -45,8 +47,8 @@ export function SearchIssueRequest (id, keyword) {
     if (!keyword) {
       keyword = "null";
     }
-    return fetch(`${host}/search/${id}/designIssue/${keyword}`, { 
-      headers: { "Content-Type": "application/json" }, 
+    return fetch(`${host}/search/${id}/designIssue/${keyword}`, {
+      headers: { "Content-Type": "application/json" },
       method: "GET"
     }).then(res => {
         return res.json();

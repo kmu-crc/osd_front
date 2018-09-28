@@ -103,7 +103,7 @@ class CreateDesignForm extends Component {
   };
 
   getMember = data => {
-    this.props.SearchMemberRequest({key: data}, this.props.token);
+    this.props.SearchMemberRequest(null, {key: data}, this.props.token);
   }
 
   render() {
