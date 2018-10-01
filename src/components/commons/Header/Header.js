@@ -6,7 +6,8 @@ import { Grid, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
-import socketIOClient from 'socket.io-client';
+import socketIOClient from "socket.io-client";
+import Alram from "./Alram";
 
 // css styling
 const Head = styled.header`
@@ -17,7 +18,7 @@ const Head = styled.header`
   z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
   background-color: #fff;
-  box-shadow: 0 1px 1px 1px #E1E4E6;
+  box-shadow: 0 1px 1px 1px #e1e4e6;
   a {
     font-weight: normal;
     &:hover {
@@ -54,6 +55,7 @@ const MenuItem = styled.li`
 const SubMenu = styled.div`
   display: block;
   position: absolute;
+  width: 300px;
   height: 100%;
   right: 0;
   top: 0;
@@ -62,6 +64,15 @@ const SubMenu = styled.div`
     display: block;
     clear: both;
     content: "";
+  }
+`;
+
+const SubMenuGroup = styled.div`
+  .submenu-item {
+    & > a,
+    & > button {
+      margin: 0 1rem;
+    }
   }
 `;
 
@@ -75,14 +86,23 @@ const SubMenuItem = styled.div`
     padding: 0.5em 1em;
     position: absolute;
     top: 50%;
-    right: 2vw;
-    transform: translateY(-50%);
+    /* right: 2vw; */
+    transform: translate(-100%, -50%);
+    -ms-transform: translate(-100%, -50%);
     @media only screen and (max-width: 1200px) {
       display: none;
     }
   }
   & a {
     line-height: 60px;
+  }
+
+  & > button {
+    position: relative;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    outline: 0;
   }
 `;
 
@@ -99,6 +119,7 @@ const Logo = styled.a`
 `;
 
 const UserInterface = styled.div`
+  width: 155px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -110,7 +131,7 @@ const UserInterface = styled.div`
   }
 `;
 const UserItem = styled.div`
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   text-align: right;
 `;
 
@@ -118,7 +139,8 @@ const UserBtn = styled.button`
   color: ${StyleGuide.color.geyScale.scale9};
   text-align: right;
   vertical-align: top;
-  margin-left: 20px;
+  /* margin-left: 20px; */
+  width: 100%;
   padding: 0;
   height: 60px;
   line-height: 60px;
@@ -199,12 +221,54 @@ const LogOutBtn = styled.button`
   color: ${StyleGuide.color.geyScale.scale9};
 `;
 
+const AlarmLabel = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+  vertical-align: middle;
+  padding-top: 2px;
+  transform: scale(0.6);
+  -ms-transform: scale(0.6);
+  transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+`;
+
 class Header extends Component {
   state = {
     profile: false,
     active: false,
-    keyword: null
+    keyword: null,
+    noti: {}
   };
+  componentDidMount(){
+    if (this.props.valid) {
+      try {
+        const socket = socketIOClient("http://localhost:8080");
+        socket.emit("INIT", this.props.userInfo.uid);
+        setInterval(
+          function() {
+            socket.emit("live socket id", this.props.userInfo.uid);
+          }.bind(this),
+          500
+        );
+        socket.on("getNoti", noti => {
+          // setting the color of our button
+          console.log("noti", noti);
+          this.setState({ noti: noti });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
 
   handleSignOut = () => {
     this.props.SignOutRequest();
@@ -229,7 +293,7 @@ class Header extends Component {
     this.props.SetActive(active, target);
   };
 
-  saveKeyWord = (e) => {
+  saveKeyWord = e => {
     const target = e.target;
     const word = target.value;
     let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
@@ -242,42 +306,15 @@ class Header extends Component {
         keyword: word
       });
     }
-  }
-  shouldComponentUpdate(nextProps){
-    if(JSON.stringify(nextProps.valid) !== JSON.stringify(this.props.valid)){
-      return true
-    }
-    if(JSON.stringify(nextProps.active) !== JSON.stringify(this.props.active)){
-      return true
-    }
-    if(JSON.stringify(nextProps.userInfo) !== JSON.stringify(this.props.userInfo)){
-      return true
-    }
-    return false;
-  }
+  };
 
-  submitEnter = (e) => {
+  submitEnter = e => {
     if (e.keyCode === 13) {
       document.getElementById("searchLink").click();
     }
-  }
+  };
 
   render() {
-    if (this.props.valid) {
-      try {
-        const socket = socketIOClient('http://localhost:8080');
-        socket.emit('INIT', this.props.userInfo.uid);
-        setInterval(function(){
-          socket.emit('live socket id', this.props.userInfo.uid);
-        }.bind(this), 500);
-        socket.on('getNoti', (color) => {
-          // setting the color of our button
-          console.log(color);
-        });
-      } catch(err){
-        console.log(err);
-      }
-    }
     const LoginNav = () => {
       return (
         <UserInterface>
@@ -305,17 +342,20 @@ class Header extends Component {
                 <UserMenu>
                   <UserMenuItem>
                     <a href="/myPage">
-                      <Icon name="user" />마이페이지
+                      <Icon name="user" />
+                      마이페이지
                     </a>
                   </UserMenuItem>
-                  <UserMenuItem>
+                  {/* <UserMenuItem>
                     <a href="/message">
-                      <Icon name="envelope" />메시지함
+                      <Icon name="envelope" />
+                      메시지함
                     </a>
-                  </UserMenuItem>
+                  </UserMenuItem> */}
                   <UserMenuItem>
                     <LogOutBtn onClick={this.handleSignOut}>
-                      <Icon name="log out" />logout
+                      <Icon name="log out" />
+                      로그아웃
                     </LogOutBtn>
                   </UserMenuItem>
                 </UserMenu>
@@ -342,31 +382,46 @@ class Header extends Component {
       <Head>
         <Content>
           <MainMenu>
-            <Logo href="/"></Logo>
+            <Logo href="/" />
             <MenuItem>
-              <a href="/design"
-                 className={this.props.location.pathname === "/design"
-                            || this.props.match.path.indexOf("/design/") === 0
-                            || this.props.match.path.indexOf("/designDetail") !== -1
-                            ? "active" : ""}>
-              디자인
+              <a
+                href="/design"
+                className={
+                  this.props.location.pathname === "/design" ||
+                  this.props.match.path.indexOf("/design/") === 0 ||
+                  this.props.match.path.indexOf("/designDetail") !== -1
+                    ? "active"
+                    : ""
+                }
+              >
+                디자인
               </a>
             </MenuItem>
             <MenuItem>
-              <a href="/group"
-                 className={this.props.location.pathname === "/group"
-                            || this.props.match.path.indexOf("/groupDetail") !== -1
-                            ? "active" : ""}>
-              그룹
+              <a
+                href="/group"
+                className={
+                  this.props.location.pathname === "/group" ||
+                  this.props.match.path.indexOf("/groupDetail") !== -1
+                    ? "active"
+                    : ""
+                }
+              >
+                그룹
               </a>
             </MenuItem>
             <MenuItem>
-              <a href="/designer"
-                 className={this.props.location.pathname === "/designer"
-                            || this.props.match.path.indexOf("/designer/") === 0
-                            || this.props.match.path.indexOf("/designerDetail") !== -1
-                            ? "active" : ""}>
-              디자이너
+              <a
+                href="/designer"
+                className={
+                  this.props.location.pathname === "/designer" ||
+                  this.props.match.path.indexOf("/designer/") === 0 ||
+                  this.props.match.path.indexOf("/designerDetail") !== -1
+                    ? "active"
+                    : ""
+                }
+              >
+                디자이너
               </a>
             </MenuItem>
             <MenuItem>
@@ -378,12 +433,32 @@ class Header extends Component {
             </MenuItem>
           </MainMenu>
           <SubMenu>
-            <SubMenuItem>
-              <input onChange={this.saveKeyWord} onKeyDown={this.submitEnter}/>
-              <a href={`/search/null/null/${this.state.keyword}`} id="searchLink">
-                <Icon name="search" />
-              </a>
-            </SubMenuItem>
+            <SubMenuGroup>
+              <SubMenuItem className="submenu-item">
+                <input
+                  onChange={this.saveKeyWord}
+                  onKeyDown={this.submitEnter}
+                />
+                <a
+                  href={`/search/null/null/${this.state.keyword}`}
+                  id="searchLink"
+                >
+                  <Icon name="search" />
+                </a>
+              </SubMenuItem>
+              {this.props.valid ? (
+                <div>
+                  <SubMenuItem className="submenu-item">
+                    <Alram open={this.openAlarmHandler} close={this.onAlarmHandler} noti={this.state.noti} valid={this.props.valid} uid={this.props.userInfo.uid}/>
+                  </SubMenuItem>
+                  <SubMenuItem className="submenu-item">
+                    <a href="/message">
+                      <Icon name="envelope" />
+                    </a>
+                  </SubMenuItem>
+                </div>
+              ) : null}
+            </SubMenuGroup>
             <SubMenuItem>
               {this.props.valid ? <LoginNav /> : <LogOutNav />}
             </SubMenuItem>
