@@ -237,18 +237,18 @@ class MyDetail extends Component {
     }
 
     const ContentOption = [
-      { text: "디자인", value: "design" },
-      { text: "그룹", value: "group" },
+      { text: "디자인", value: "design", default: null },
+      { text: "그룹", value: "group", default: "group" },
     ];
 
     const JoinOption = [
-      { text: "내가 보낸 신청", value: "inviting" },
-      { text: "내가 받은 초대", value: "invited" },
+      { text: "내가 보낸 신청", value: "inviting", default: null },
+      { text: "내가 받은 초대", value: "invited", default: "invited" },
     ];
 
     const LikeOption = [
-      { text: "디자인", value: "design" },
-      { text: "디자이너", value: "designer" },
+      { text: "디자인", value: "design", default: null },
+      { text: "디자이너", value: "designer", default: "designer" },
     ];
 
 
@@ -331,18 +331,18 @@ class MyDetail extends Component {
                         <Grid.Column as="ul">
                           {this.props.type === "like"
                           ? LikeOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
                           : this.props.type === "join"
                           ? JoinOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
                           : ContentOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
