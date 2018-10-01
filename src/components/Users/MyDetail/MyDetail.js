@@ -105,10 +105,15 @@ const TabContainer = styled(Grid.Column)`
 `;
 
 const Head = styled(Grid)`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   &.ui.grid > .row {
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
+    padding-bottom: 0.2rem;
+    padding-top: 0.2rem;
+  }
+  & ul.mainOption {
+    font-size: 1.2rem;
+    font-weight: 500;
+
   }
   & ul {
     line-height: 38px;
@@ -308,7 +313,7 @@ class MyDetail extends Component {
                   <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
                     <Head padded={true}>
                       <Grid.Row>
-                        <Grid.Column as="ul">
+                        <Grid.Column as="ul" className="mainOption">
                           <li id="/content"
                               className={this.props.type === "content" || this.props.type === null? "onSelected" : ""}
                               onClick={this.typeChange}>
