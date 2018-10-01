@@ -9,9 +9,14 @@ import { GetMyInvitedListRequest } from "actions/Users/MyDetail";
 
 // css styling
 const List = styled.li`
-  height: 100px;
+  height: 80px;
   width: 100%;
   position: relative;
+  margin: 1rem 0;
+  cursor: pointer;
+  &:hover, &:focus {
+    background-color: ${StyleGuide.color.geyScale.scale1};
+  }
 `;
 
 const BoxWrap = styled.div`
@@ -41,7 +46,7 @@ const ButtonWrap = styled.div`
 `;
 
 const TextPart = styled.div`
-  padding: 10px 20px;
+  padding: 0 20px;
   font-size: ${StyleGuide.font.size.paragraph};
   float: left;
   width: 50%;
@@ -70,12 +75,17 @@ const TextPart = styled.div`
   }
 `;
 
+const Nodata = styled.p`
+  text-align: center;
+`;
+
 class MyInvitedContainer extends Component {
   componentDidMount() {
     this.props.GetMyInvitedListRequest(this.props.token);
   }
 
-  getoutMember = (id) => {
+  getoutMember = (e, id) => {
+    e.stopPropagation();
     const confirm = window.confirm("가입을 거절하시겠습니까?");
     if (confirm) {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token)
@@ -92,7 +102,8 @@ class MyInvitedContainer extends Component {
     }
   }
 
-  acceptMember = (id) => {
+  acceptMember = (e, id) => {
+    e.stopPropagation();
     const confirm = window.confirm("가입을 승인하시겠습니까?");
     if (confirm) {
       this.props.AcceptDesignRequest(id, this.props.userInfo.uid, this.props.token)
@@ -109,13 +120,17 @@ class MyInvitedContainer extends Component {
     }
   }
 
+  goLink = (id) => {
+    this.props.history.push(`/designDetail/${id}`);
+  }
+
   render(){
     return(
       <div>
         {this.props.list.length > 0?
           <ul>
             {this.props.list.map((design, i) => (
-              <List key={i}>
+              <List onClick={() => this.goLink(design.uid)} key={i}>
                 <BoxWrap>
                   <div className="img" style={design.thumbnailUrl? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}></div>
                   <TextPart>
@@ -128,13 +143,13 @@ class MyInvitedContainer extends Component {
                   </TextPart>
                 </BoxWrap>
                 <ButtonWrap>
-                  <Button size="small" onClick={() => this.acceptMember(design.uid)}>승인</Button>
-                  <Button size="small" onClick={() => this.getoutMember(design.uid)}>거절</Button>
+                  <Button size="small" onClick={(e) => this.acceptMember(e, design.uid)}>승인</Button>
+                  <Button size="small" onClick={(e) => this.getoutMember(e, design.uid)}>거절</Button>
                 </ButtonWrap>
               </List>
             ))}
           </ul>
-        : <div>받은 초대가 없습니다.</div>
+        : <Nodata>받은 초대가 없습니다.</Nodata>
         }
       </div>
     );

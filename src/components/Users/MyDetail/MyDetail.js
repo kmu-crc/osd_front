@@ -228,8 +228,8 @@ class MyDetail extends Component {
         return (
           <div>
             {this.props.type2 === "invited"
-            ? <MyInvitedContainer token={this.props.token}/>
-            : <MyInvitingContainer token={this.props.token}/>
+            ? <MyInvitedContainer token={this.props.token} history={this.props.history}/>
+            : <MyInvitingContainer token={this.props.token} history={this.props.history}/>
             }
           </div>
         )
