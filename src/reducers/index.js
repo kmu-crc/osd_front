@@ -3,7 +3,7 @@ import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDet
 import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
 import { SignIn, SignUp, FindPw } from "reducers/Registration";
-import { UserInfo, MyDetail } from "reducers/Users";
+import { UserInfo, MyDetail, MyJoin } from "reducers/Users";
 import { MessageList, MessageDetail } from "reducers/Messages";
 import { Categorys, CategoryAll } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
@@ -48,6 +48,7 @@ export default combineReducers({
     CategoryAll,
     form: formReducer,
     MyDetail,
+    MyJoin,
     Search,
     SearchIssue,
     TopList,

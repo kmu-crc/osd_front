@@ -240,3 +240,95 @@ export function MyLikeDesignerFail() {
   }
 };
 
+// 내가 받은 초대 리스트 가져오기
+export function GetMyInvitedListRequest(token) {
+  return (dispatch) => {
+    dispatch(GetMyInvitedList());
+    return fetch(`${host}/users/myPage/invited`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method: "get"
+    }).then(response => {
+      return response.json();
+      }).then((data) => {
+        console.log("my invited list data >>", data);
+        if (!data) {
+          console.log("no data");
+          data = [];
+        }
+        dispatch(GetMyInvitedListSuccess(data));
+      }).catch((error) => {
+        dispatch(GetMyInvitedListFailure());
+        console.log("err", error);
+      });
+  }
+};
+
+export function GetMyInvitedList() {
+  return {
+    type: types.GET_MY_INVITED_LIST
+  }
+};
+
+export function GetMyInvitedListSuccess(data) {
+  return {
+    type: types.GET_MY_INVITED_LIST_SUCCESS,
+    list: data
+  }
+};
+
+export function GetMyInvitedListFailure() {
+  return {
+    type: types.GET_MY_INVITED_LIST_FAILURE,
+    list: []
+  }
+};
+
+// 내가 보낸 가입 신청 리스트 가져오기
+export function GetMyInvitingListRequest(token) {
+  return (dispatch) => {
+    dispatch(GetMyInvitingList());
+    return fetch(`${host}/users/myPage/inviting`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method: "get"
+    }).then(response => {
+      return response.json();
+      }).then((data) => {
+        console.log("my inviting list data >>", data);
+        if (!data) {
+          console.log("no data");
+          data = [];
+        }
+        dispatch(GetMyInvitingListSuccess(data));
+      }).catch((error) => {
+        dispatch(GetMyInvitingListFailure());
+        console.log("err", error);
+      });
+  }
+};
+
+export function GetMyInvitingList() {
+  return {
+    type: types.GET_MY_INVITING_LIST
+  }
+};
+
+export function GetMyInvitingListSuccess(data) {
+  return {
+    type: types.GET_MY_INVITING_LIST_SUCCESS,
+    list: data
+  }
+};
+
+export function GetMyInvitingListFailure() {
+  return {
+    type: types.GET_MY_INVITING_LIST_FAILURE,
+    list: []
+  }
+};
+
