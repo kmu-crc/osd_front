@@ -540,6 +540,8 @@ class DesignDetail extends Component {
   joinMember = () => {
     if (!this.props.userInfo || !this.props.token) {
       alert("로그인을 해주세요.");
+    } else if (this.props.DesignDetail.waitingStatus === 1) {
+      alert("가입 대기중인 디자인입니다.");
     } else {
       const confirm = window.confirm("해당 디자인에 가입 신청하시겠습니까?");
       const data = [{ uid: this.props.userInfo.uid }];
