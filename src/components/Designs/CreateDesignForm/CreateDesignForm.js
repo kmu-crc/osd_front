@@ -160,7 +160,7 @@ class CreateDesignForm extends Component {
                 />
               </Form.Group>
               <Form.Group widths="equal">
-                <Label>멤버추가</Label>
+                <Label>멤버 초대</Label>
                 <AsyncInput
                   name="member"
                   getValue={this.onChangeValue}
