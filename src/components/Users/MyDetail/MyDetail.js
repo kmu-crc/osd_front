@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import MyDesignContainer from "containers/MyPage/MyDesignContainer";
+import MemberDesignContainer from "containers/MyPage/MemberDesignContainer";
 import MyGroupContainer from "containers/MyPage/MyGroupContainer";
 import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
 import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
 import MyInvitedContainer from "containers/MyPage/MyInvitedContainer";
-import MyInvitingContainer from "containers/MyPage/MyInvitingContainer";
+// import MyInvitingContainer from "containers/MyPage/MyInvitingContainer";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
@@ -99,7 +100,7 @@ const TabContainer = styled(Grid.Column)`
     padding: 0 20px;
   }
   & .ui.default.dropdown:not(.button) > .text,
-  .ui.dropdown:not(.button) > .default.text {
+  & .ui.dropdown:not(.button) > .default.text {
     color: inherit;
   }
 `;
@@ -113,16 +114,19 @@ const Head = styled(Grid)`
   & ul.mainOption {
     font-size: 1.2rem;
     font-weight: 500;
-
+    & li {
+      padding-right: 4rem;
+    }
   }
-  & ul {
+  &.ui.grid > .row > ul.column {
     line-height: 38px;
+    padding-left: 2rem;
   }
   & li {
     float: left;
-    padding: 0 30px;
     text-align: center;
     cursor: pointer;
+    padding-right: 2rem;
   }
   & li:hover {
     font-weight: 500;
@@ -130,6 +134,9 @@ const Head = styled(Grid)`
   & li.onSelected {
     color: red;
     position: relative;
+  }
+  & li.onBold {
+    font-weight: bold;
   }
 `;
 
@@ -204,6 +211,8 @@ class MyDetail extends Component {
           <div>
             {this.props.type2 === "group"
             ? <MyGroupContainer token={this.props.token}/>
+            : this.props.type2 === "teamDesign"
+            ? <MemberDesignContainer token={this.props.token} uid={MyInfo.uid}/>
             : <MyDesignContainer token={this.props.token}/>
             }
           </div>
@@ -231,24 +240,15 @@ class MyDetail extends Component {
         return <div />;
       } else {
         return (
-          <div>
-            {this.props.type2 === "invited"
-            ? <MyInvitedContainer token={this.props.token} history={this.props.history}/>
-            : <MyInvitingContainer token={this.props.token} history={this.props.history}/>
-            }
-          </div>
-        )
+          <MyInvitedContainer token={this.props.token} history={this.props.history}/>
+        );
       }
     }
 
     const ContentOption = [
-      { text: "디자인", value: "design", default: null },
-      { text: "그룹", value: "group", default: "group" },
-    ];
-
-    const JoinOption = [
-      { text: "내가 보낸 신청", value: "inviting", default: null },
-      { text: "내가 받은 초대", value: "invited", default: "invited" },
+      { text: "내 디자인", value: "design", default: null },
+      { text: "내가 속한 디자인", value: "teamDesign", default: "teamDesign" },
+      { text: "내 그룹", value: "group", default: "group" }
     ];
 
     const LikeOption = [
@@ -322,7 +322,7 @@ class MyDetail extends Component {
                           <li id="/join"
                               className={this.props.type === "join" ? "onSelected" : ""}
                               onClick={this.typeChange}>
-                            내 가입 관리
+                            내가 받은 초대
                           </li>
                           <li id="/like"
                               className={this.props.type === "like" ? "onSelected" : ""}
@@ -336,18 +336,14 @@ class MyDetail extends Component {
                         <Grid.Column as="ul">
                           {this.props.type === "like"
                           ? LikeOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onBold" : this.props.type2 === item.default? "onBold" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
                           : this.props.type === "join"
-                          ? JoinOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
-                            {item.text}
-                            </li>
-                          ))
+                          ? <div></div>
                           : ContentOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onBold" : this.props.type2 === item.default? "onBold" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
