@@ -108,7 +108,7 @@ class Alram extends Component {
         )}
         {this.state.active && (
           <AlarmDropDown>
-            {this.props.noti.list.length === 0 && this.props.noti.list == null ? (
+            { this.props.noti.list == null || this.props.noti.list.length === 0? (
               <AlarmItem>알람이 없습니다.</AlarmItem>
             ) : (
               this.props.noti.list.map((item, index) => {
@@ -138,9 +138,9 @@ class Alram extends Component {
                             : item.kinds === "REQUEST"
                               ? `디자인 가입요청이 있습니다.`
                               : item.kinds === "INVITE_TRUE"
-                                ? `${item.fromUser}님이 맴버가 되었습니다.`
+                                ? `${item.fromUser}님이 멤버가 되었습니다.`
                                 : item.kinds === "REQUEST_TRUE"
-                                ? `${item.title}의 맴버가 되었습니다.`
+                                ? `${item.title}의 멤버가 되었습니다.`
                                 : item.kinds === "REFUSE"
                                 ? `맴버요청을 거절하셨습니다.`
                                 : ``
