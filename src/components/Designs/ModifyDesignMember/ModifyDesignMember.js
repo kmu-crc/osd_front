@@ -142,7 +142,7 @@ class ModifyDesignMember extends Component {
     }
     const confirm = window.confirm(flag? "이 회원을 탈퇴 처리 하시겠습니까?" : "가입을 거절하시겠습니까?");
     if (confirm) {
-      this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token)
+      this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, true)
       .then(res => {
         if (res.data && res.data.success) {
           if (flag) {

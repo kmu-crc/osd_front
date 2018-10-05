@@ -108,22 +108,51 @@ class Alram extends Component {
         )}
         {this.state.active && (
           <AlarmDropDown>
-            {this.props.noti.list.length === 0 ? (<AlarmItem>알람이 없습니다.</AlarmItem>) : this.props.noti.list.map((item, index) => {
+            {this.props.noti.list.length === 0 && this.props.noti.list == null ? (
+              <AlarmItem>알람이 없습니다.</AlarmItem>
+            ) : (
+              this.props.noti.list.map((item, index) => {
                 return (
                   <AlarmItem
                     key={index}
                     className={item.confirm ? "confirm" : null}
                     onClick={() => this.alramConfirm(item.uid)}
                   >
-                    <Link to={item.type === "MESSAGE" ? "/message" : item.type === "DESIGN" ? item.kinds === "INVITE" ? `/myPage/join/invited` : `/designDetail/${item.content_id}` : null}>
-                      <h4>{item.title}</h4>{item.type === "MESSAGE" ? "새 메시지가 도착했습니다." : item.type === "DESIGN" ? item.kinds === "INVITE" ? `디자인 초대가 왔습니다.` : `디자인 가입요청이 있습니다.` : null}
+                    <Link
+                      to={
+                        item.type === "MESSAGE"
+                          ? "/message"
+                          : item.type === "DESIGN"
+                            ? item.kinds === "INVITE"
+                              ? `/myPage/join/invited`
+                              : `/designDetail/${item.content_id}`
+                            : null
+                      }
+                    >
+                      <h4>{item.title}</h4>
+                      { item.type === "MESSAGE"
+                        ? "새 메시지가 도착했습니다."
+                        : item.type === "DESIGN"
+                          ? item.kinds === "INVITE"
+                            ? `디자인 초대가 왔습니다.`
+                            : item.kinds === "REQUEST"
+                              ? `디자인 가입요청이 있습니다.`
+                              : item.kinds === "INVITE_TRUE"
+                                ? `${item.fromUser}님이 맴버가 되었습니다.`
+                                : item.kinds === "REQUEST_TRUE"
+                                ? `${item.title}의 맴버가 되었습니다.`
+                                : item.kinds === "REFUSE"
+                                ? `맴버요청을 거절하셨습니다.`
+                                : ``
+                          : null}
                       <span className="time">
                         {DateFormat(item.create_time)}
                       </span>
                     </Link>
                   </AlarmItem>
                 );
-              })}
+              })
+            )}
           </AlarmDropDown>
         )}
       </button>

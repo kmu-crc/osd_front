@@ -152,8 +152,8 @@ const mapDispatchToProps = (dispatch) => {
     GetMyInvitingListRequest: (token) => {
       return dispatch(GetMyInvitingListRequest(token))
     },
-    GetoutDesignRequest: (id, memberId, token) => {
-      return dispatch(GetoutDesignRequest(id, memberId, token))
+    GetoutDesignRequest: (id, memberId, token, refuse) => {
+      return dispatch(GetoutDesignRequest(id, memberId, token, refuse))
     }
   }
 }

@@ -36,8 +36,8 @@ const mapDispatchToProps = (dispatch) => {
     JoinDesignRequest: (id, data, flag, token) => {
       return dispatch(JoinDesignRequest(id, data, flag, token));
     },
-    GetoutDesignRequest: (id, memberId, token) => {
-      return dispatch(GetoutDesignRequest(id, memberId, token));
+    GetoutDesignRequest: (id, memberId, token, refuse) => {
+      return dispatch(GetoutDesignRequest(id, memberId, token, refuse));
     },
     DesignWaitingListRequest: (id, token) => {
       return dispatch(DesignWaitingListRequest(id, token));

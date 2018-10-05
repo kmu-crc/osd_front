@@ -85,10 +85,10 @@ export function AcceptDesignFailure() {
 };
 
 // 디자인 탈퇴 >>>
-export function GetoutDesignRequest(id, memberId, token) {
+export function GetoutDesignRequest(id, memberId, token, refuse) {
   return (dispatch) => {
     dispatch(GetoutDesign());
-    return fetch(`${host}/Design/designDetail/${id}/getoutDesign/${memberId}`, {
+    return fetch(`${host}/Design/designDetail/${id}/getoutDesign/${memberId}/${refuse}`, {
       headers: { "Content-Type": "application/json", 'x-access-token': token },
       method: "delete"
     }).then((response) => {
