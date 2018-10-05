@@ -6,7 +6,8 @@ import { Grid, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
-import socketIOClient from "socket.io-client";
+import Socket from "modules/socket";
+
 import Alram from "./Alram";
 
 // css styling
@@ -248,18 +249,18 @@ class Header extends Component {
     keyword: null,
     noti: {}
   };
-  componentDidMount(){
+
+  componentDidMount() {
     if (this.props.valid) {
       try {
-        const socket = socketIOClient("http://localhost:8080");
-        socket.emit("INIT", this.props.userInfo.uid);
+        Socket.emit("INIT", this.props.userInfo.uid);
         setInterval(
           function() {
-            socket.emit("live socket id", this.props.userInfo.uid);
+            Socket.emit("live socket id", this.props.userInfo.uid);
           }.bind(this),
           500
         );
-        socket.on("getNoti", noti => {
+        Socket.on("getNoti", noti => {
           // setting the color of our button
           console.log("noti", noti);
           this.setState({ noti: noti });
@@ -270,10 +271,12 @@ class Header extends Component {
     }
   }
 
-  handleSignOut = () => {
-    this.props.SignOutRequest();
+  handleSignOut = async () => {
+    await this.props.SignOutRequest();
     SetSession("opendesign_token", null).then(data => {
       console.log("setsession", data);
+      // window.location.reload();
+      this.props.history.push("/");
       window.location.reload();
     });
     console.log(this.props);
@@ -449,7 +452,14 @@ class Header extends Component {
               {this.props.valid ? (
                 <div>
                   <SubMenuItem className="submenu-item">
-                    <Alram open={this.openAlarmHandler} close={this.onAlarmHandler} noti={this.state.noti} valid={this.props.valid} uid={this.props.userInfo.uid}/>
+                    <Alram
+                      open={this.openAlarmHandler}
+                      close={this.onAlarmHandler}
+                      noti={this.state.noti}
+                      valid={this.props.valid}
+                      uid={this.props.userInfo.uid}
+                      socket={Socket}
+                    />
                   </SubMenuItem>
                   <SubMenuItem className="submenu-item">
                     <a href="/message">
