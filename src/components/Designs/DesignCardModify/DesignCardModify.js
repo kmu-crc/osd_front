@@ -55,23 +55,24 @@ class DesignCardModify extends Component {
     return new Promise((resolve, reject) => {
       ValidationGroup(this.state, true)
         .then(async res => {
-          if (res["thumbnail[]"]) {
+          console.log("????????????????", res);
+          if (res.files) {
             let thumbObj = {
               img: null,
               file_name: null
             }
-            thumbObj.img = await this.onChangeImgtoBase64(
-              res["thumbnail[]"]
-            );
-            thumbObj.file_name = res["thumbnail[]"].name;
+            thumbObj.img = res.files[0].value;
+            thumbObj.file_name = res.files[0].name;
             res.thumbnail = thumbObj;
             delete res["thumbnail[]"];
-
+            delete res.files;
           } else {
             res.thumbnail = null;
             delete res["thumbnail[]"];
+            delete res.files;
           }
           res.data = data;
+          console.log(res);
           this.props.UpdateCardSourceRequest(res, id, token)
           .then(() => {
             this.props.GetCardDetailRequest(id);
