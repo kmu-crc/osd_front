@@ -15,6 +15,20 @@ const ModalContent = styled(Modal.Content)`
   & ul {
     margin: 1rem 0 2rem 0;
   }
+  & .newMember {
+    & > button {
+      float: right;
+      width: 10%;
+      height: 38px;
+      padding: 0;
+      margin-right: 1rem;
+    }
+    &::after {
+      clear: both;
+      display: block;
+      content: "";
+    }
+  }
 `;
 
 const FormHeader = styled(Header)`
@@ -256,7 +270,7 @@ class ModifyDesignMember extends Component {
                 asyncFn={this.getMember}
                 list={this.props.members}
               />
-              <Button size="small" onClick={this.joinMember}>확인</Button>
+              <Button size="small" onClick={this.joinMember}>초대</Button>
             </Form.Group>
           </Grid.Column>
         </Grid>

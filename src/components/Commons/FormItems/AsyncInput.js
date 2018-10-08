@@ -8,6 +8,8 @@ import { FormInput } from "./FormInput";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
+  width: 85%;
+  float: left;
   .hidden {
     width: 1px;
     height: 1px;
