@@ -31,6 +31,12 @@ ul, ol {
   clear: both;
 }
 
+.clearFix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
 a, button {
   cursor: pointer;
 }

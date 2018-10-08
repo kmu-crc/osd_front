@@ -115,7 +115,7 @@ class CreateDesignForm extends Component {
               <FormHeader as="h2">디자인 정보</FormHeader>
             </Grid.Column>
             <Grid.Column mobile={16} computer={12}>
-              <Form.Group widths="equal">
+              <Form.Group widths="equal" className="clearFix">
                 <Label>디자인 제목</Label>
                 <FormInput
                   name="title"
@@ -125,7 +125,7 @@ class CreateDesignForm extends Component {
                   onBlur={()=>{this.liveCheck("title")}}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
+              <Form.Group widths="equal" className="clearFix">
                 <Label>디자인 설명</Label>
                 <FormInput
                   name="explanation"
@@ -133,7 +133,7 @@ class CreateDesignForm extends Component {
                   getValue={this.onChangeValue}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
+              <Form.Group widths="equal" className="clearFix">
                 <Label>썸네일 등록</Label>
                 <FormThumbnail
                   name="thumbnail"
@@ -143,7 +143,7 @@ class CreateDesignForm extends Component {
                   validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
+              <Form.Group widths="equal" className="clearFix">
                 <Label>카테고리</Label>
                 <FormSelect
                   selection={true}
@@ -159,7 +159,7 @@ class CreateDesignForm extends Component {
                   getValue={this.onChangeValue}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
+              <Form.Group widths="equal" className="clearFix">
                 <Label>멤버 초대</Label>
                 <AsyncInput
                   name="member"

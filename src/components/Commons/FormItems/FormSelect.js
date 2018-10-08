@@ -9,6 +9,11 @@ const InputWrap = styled.div`
   margin-bottom: 2.5rem;
   width: 50%;
   float: left;
+  &::after{
+    content: "";
+    display: block;
+    clear: both;
+  }
 `;
 
 const Message = styled.div`
