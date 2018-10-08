@@ -132,8 +132,10 @@ const UserInterface = styled.div`
   }
 `;
 const UserItem = styled.div`
-  /* margin-left: 1rem; */
   text-align: right;
+  & .logOutNavLink {
+    margin: 0 0.5rem;
+  }
 `;
 
 const UserBtn = styled.button`
@@ -373,10 +375,10 @@ class Header extends Component {
       return (
         <UserInterface>
           <UserItem>
-            <a href="/signin">로그인</a>
+            <a href="/signin" className="logOutNavLink">로그인</a>
           </UserItem>
           <UserItem>
-            <a href="/signup">회원가입</a>
+            <a href="/signup" className="logOutNavLink">회원가입</a>
           </UserItem>
         </UserInterface>
       );
