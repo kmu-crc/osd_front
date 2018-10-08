@@ -18,6 +18,11 @@ const InputWrap = styled.div`
     outline: 0;
     border: 0;
   }
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 `;
 
 const Message = styled.div`
@@ -30,11 +35,18 @@ const Message = styled.div`
 const SearchBox = styled.div`
   width: 100%;
   position: relative;
-  input {
-    width: calc(100% - 60px);
-    float: left;
-    border-right: 0;
-    border-radius: 0.3rem 0 0 0.3rem;
+`;
+
+const InputBox = styled.div`
+  display: block;
+  width: calc(100% - 60px);
+  float: left;
+  border-right: 0;
+  border-radius: 0.3rem 0 0 0.3rem;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
   }
 `;
 
@@ -195,8 +207,8 @@ export class AsyncInput extends Component {
   SearchList = async () => {
     const body = window.document.body.offsetHeight;
     if (this.props.asyncFn) this.props.asyncFn(this.state.textValue);
-    if(body < this.state.target.getBoundingClientRect().y+350){
-      await this.setState({top: true});
+    if (body < this.state.target.getBoundingClientRect().y + 350) {
+      await this.setState({ top: true });
     } else {
       await this.setState({ top: false });
     }
@@ -263,18 +275,20 @@ export class AsyncInput extends Component {
     return (
       <InputWrap>
         <SearchBox>
-          <FormInput
-            type={type ? type : "text"}
-            name={name && name}
-            defaultValue={value && value}
-            placeholder={placeholder && placeholder}
-            style={style && style}
-            id={id ? id : name}
-            value={this.state.value}
-            getValue={this.onChangeValue}
-            prevent={true}
-            className=""
-          />
+          <InputBox>
+            <FormInput
+              type={type ? type : "text"}
+              name={name && name}
+              defaultValue={value && value}
+              placeholder={placeholder && placeholder}
+              style={style && style}
+              id={id ? id : name}
+              value={this.state.value}
+              getValue={this.onChangeValue}
+              prevent={true}
+              className=""
+            />
+          </InputBox>
           <Message />
           <SearchBtn type="button" onClick={this.SearchList}>
             <Icon name="search" />
@@ -285,10 +299,10 @@ export class AsyncInput extends Component {
                 overflowY: this.state.members.length > 3 ? "scroll" : "hidden",
                 top: this.state.top
                   ? this.state.members.length > 3
-                  ? "-201px"
-                  : this.state.members.length === 0
-                  ? "-51px"
-                  :`-${this.state.members.length * 4.5}em`
+                    ? "-201px"
+                    : this.state.members.length === 0
+                      ? "-51px"
+                      : `-${this.state.members.length * 4.5}em`
                   : "inherit"
               }}
               ref={ref => (this.listBox = ref)}
@@ -320,7 +334,8 @@ export class AsyncInput extends Component {
           />
         </SearchBox>
         <AddList>
-          {(this.state.value.constructor.name === "Array" && this.state.value.length > 0) &&
+          {this.state.value.constructor.name === "Array" &&
+            this.state.value.length > 0 &&
             this.state.value.map((item, index) => {
               return (
                 <AddItem key={`additem${index}`}>
