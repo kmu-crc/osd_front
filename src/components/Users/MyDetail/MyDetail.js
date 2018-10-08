@@ -185,7 +185,7 @@ class MyDetail extends Component {
 
   type2Change = e => {
     const target = e.target;
-    let url = `/myPage/${this.props.type}${target.id}`;
+    let url = `/myPage/${this.props.type? this.props.type : "content"}${target.id}`;
     this.props.history.replace(url);
   }
 
