@@ -112,8 +112,8 @@ const Head = styled(Grid)`
     padding-top: 0.2rem;
   }
   & ul.mainOption {
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: bold;
     & li {
       padding-right: 4rem;
     }
@@ -134,9 +134,6 @@ const Head = styled(Grid)`
   & li.onSelected {
     color: red;
     position: relative;
-  }
-  & li.onBold {
-    font-weight: bold;
   }
 `;
 
@@ -336,14 +333,14 @@ class MyDetail extends Component {
                         <Grid.Column as="ul">
                           {this.props.type === "like"
                           ? LikeOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onBold" : this.props.type2 === item.default? "onBold" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
                           : this.props.type === "join"
                           ? <div></div>
                           : ContentOption.map((item, i) => (
-                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onBold" : this.props.type2 === item.default? "onBold" : ""} onClick={this.type2Change}>
+                            <li key={i} id={`/${item.value}`} className={this.props.type2 === item.value? "onSelected" : this.props.type2 === item.default? "onSelected" : ""} onClick={this.type2Change}>
                             {item.text}
                             </li>
                           ))
