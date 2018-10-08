@@ -5,7 +5,7 @@ import StyleGuide from "StyleGuide";
 
 const InputWrap = styled.div`
   position: relative;
-  // margin-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
 `
 
 const Message = styled.div`

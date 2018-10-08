@@ -65,7 +65,7 @@ class ModifyStatus extends Component {
   render(){
     return(
       <ExitGroupWrap>
-        <ModalBtn color="Solid" onClick={this.handleModal}>그룹 탈퇴</ModalBtn>
+        <ModalBtn color="Solid" onClick={this.handleModal}>가입 취소</ModalBtn>
         <Modal open={this.state.open}
                closeOnEscape={true}
                closeOnDimmerClick={true}

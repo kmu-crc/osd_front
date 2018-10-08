@@ -10,7 +10,7 @@ import StyleGuide from 'StyleGuide';
 // css styling
 const TabContainer = styled.div`
   width: 100%;
-  padding-top: 3rem;
+  padding-top: 2rem;
   & .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
