@@ -44,7 +44,9 @@ const InputBox = styled.div`
   width: calc(100% - 60px);
   float: left;
   border-right: 0;
-  border-radius: 0.3rem 0 0 0.3rem;
+  & input {
+    border-radius: 0.3rem 0 0 0.3rem;
+  }
   &::after {
     content: "";
     display: block;
