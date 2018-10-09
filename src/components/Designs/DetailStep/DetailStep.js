@@ -48,7 +48,7 @@ const BoardController = styled.button`
   border: 0;
   height: 50px;
   width: 50px;
-  top: 50%;
+  top: 10%;
   z-index: 100;
   transform: translateY(-50%);
   border-radius: 50%;
