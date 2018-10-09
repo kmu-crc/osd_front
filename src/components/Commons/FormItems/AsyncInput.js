@@ -8,6 +8,8 @@ import { FormInput } from "./FormInput";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
+  width: 85%;
+  float: left;
   .hidden {
     width: 1px;
     height: 1px;
@@ -42,7 +44,9 @@ const InputBox = styled.div`
   width: calc(100% - 60px);
   float: left;
   border-right: 0;
-  border-radius: 0.3rem 0 0 0.3rem;
+  & input {
+    border-radius: 0.3rem 0 0 0.3rem;
+  }
   &::after {
     content: "";
     display: block;

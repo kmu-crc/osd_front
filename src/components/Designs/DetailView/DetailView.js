@@ -42,7 +42,6 @@ const ViewWrapper = styled(Grid)`
 `;
 
 const CommentContainer = styled.div`
-  color: ${StyleGuide.color.geyScale.scale7};
   &.ui.comments {
     max-width: 100%;
     width: 100%;
