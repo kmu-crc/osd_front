@@ -114,7 +114,8 @@ class DesignBoardCard extends Component {
     active: "INIT",
     render: true,
     closeOnDimmerClick: true,
-    edit: false
+    edit: false,
+    modify: false
   };
 
   componentDidMount() {
@@ -125,8 +126,15 @@ class DesignBoardCard extends Component {
   }
 
   onClose = () => {
-    this.setState({ open: false, active: "INIT", edit: false });
-    this.props.GetDesignBoardRequest(this.props.match.params.id);
+    let confirm = true;
+    // if(this.state.modify){
+    //   confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
+    // }
+    confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
+    if(confirm){
+      this.setState({ open: false, active: "INIT", edit: false });
+      this.props.GetDesignBoardRequest(this.props.match.params.id);
+    }
   };
 
   changeActive = async value => {
@@ -134,6 +142,10 @@ class DesignBoardCard extends Component {
       .GetCardDetailRequest(this.props.card.uid)
       .then(this.setState({ active: value }));
   };
+
+  changeModify = () => {
+    this.setState({modify: true});
+  }
 
   openModalHandler = async e => {
     this.props
