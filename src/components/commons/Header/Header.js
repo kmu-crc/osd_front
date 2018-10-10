@@ -256,12 +256,12 @@ class Header extends Component {
     if (this.props.valid) {
       try {
         Socket.emit("INIT", this.props.userInfo.uid);
-        setInterval(
-          function() {
-            Socket.emit("live socket id", this.props.userInfo.uid);
-          }.bind(this),
-          500
-        );
+        // setInterval(
+        //   function() {
+        //     Socket.emit("live socket id", this.props.userInfo.uid);
+        //   }.bind(this),
+        //   500
+        // );
         Socket.on("getNoti", noti => {
           // setting the color of our button
           console.log("noti", noti);
