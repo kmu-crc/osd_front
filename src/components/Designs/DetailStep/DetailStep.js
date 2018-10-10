@@ -117,7 +117,7 @@ class DetailStep extends Component {
           await this.setState({
             right: true
           });
-        } else if (width === 800 && nextProps.DesignDetailStep.length > 3) {
+        } else if (width === 850 && nextProps.DesignDetailStep.length > 3) {
           await this.setState({
             right: true
           });
@@ -179,7 +179,7 @@ class DetailStep extends Component {
         await this.setState({
           right: true
         });
-      } else if (width === 800 && this.props.DesignDetailStep.length > 3) {
+      } else if (width === 850 && this.props.DesignDetailStep.length > 3) {
         await this.setState({
           right: true
         });
