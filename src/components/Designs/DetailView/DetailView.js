@@ -222,7 +222,6 @@ class DetailView extends Component {
         {len > 0 ? (
           <ViewWrapper>
             <div className="date">
-              최근 업데이트 {view.update_time.split("T")[0]}
             </div>
             <CardSourceContainer
               view={this.props.DesignDetailView}
