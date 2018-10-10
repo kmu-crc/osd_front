@@ -127,12 +127,12 @@ class DesignBoardCard extends Component {
 
   onClose = () => {
     let confirm = true;
-    // if(this.state.modify){
-    //   confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
-    // }
-    confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
+    if(this.state.modify){
+      confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
+    }
+    // confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
     if(confirm){
-      this.setState({ open: false, active: "INIT", edit: false });
+      this.setState({ open: false, active: "INIT", edit: false, modify: false});
       this.props.GetDesignBoardRequest(this.props.match.params.id);
     }
   };
@@ -233,7 +233,7 @@ class DesignBoardCard extends Component {
   };
 
   onChangeEditMode = () => {
-    this.setState({ edit: true });
+    this.setState({ edit: true , modify: true});
   };
   onCloseEditMode = () => {
     this.setState({ edit: false });
