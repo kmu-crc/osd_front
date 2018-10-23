@@ -131,7 +131,7 @@ class DetailView extends Component {
       alert("로그인을 해주세요.");
       return;
     }
-    if (FormDataToJson(data) && FormDataToJson(data).content === ""){
+    if (FormDataToJson(data) && FormDataToJson(data).content === "") {
       alert("내용을 입력해 주세요.");
       return;
     }
@@ -191,10 +191,7 @@ class DetailView extends Component {
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
-          <FormField
-            name="comment"
-            RenderComponent={FormTextArea}
-          />
+          <FormField name="comment" RenderComponent={FormTextArea} />
           <Button type="submit" className="ui icon primary left labeled button">
             <i aria-hidden="true" className="edit icon" />
             댓글쓰기
@@ -221,8 +218,7 @@ class DetailView extends Component {
 
         {len > 0 ? (
           <ViewWrapper>
-            <div className="date">
-            </div>
+            <div className="date" />
             <CardSourceContainer
               view={this.props.DesignDetailView}
               edit={this.state.edit}
@@ -245,7 +241,16 @@ class DetailView extends Component {
                       <div className="metadata">
                         <div>{comm.create_time.split("T")[0]}</div>
                       </div>
-                      <div className="text">{comm.comment}</div>
+                      <div className="text">
+                        {comm.comment.split("\n").map((line, i) => {
+                          return (
+                            <span key={i}>
+                              {line}
+                              <br />
+                            </span>
+                          );
+                        })}
+                      </div>
                     </div>
                     {this.props.userInfo &&
                       this.props.userInfo.uid === comm.user_id && (
@@ -253,8 +258,7 @@ class DetailView extends Component {
                           size="small"
                           className="delBtn trash alternate outline icon"
                           onClick={() => this.deleteComment(comm.uid)}
-                        >
-                        </i>
+                        />
                       )}
                   </div>
                 ))

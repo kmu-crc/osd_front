@@ -127,12 +127,19 @@ class DesignBoardCard extends Component {
 
   onClose = () => {
     let confirm = true;
-    if(this.state.modify){
-      confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
+    if (this.state.modify) {
+      confirm = window.confirm(
+        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
+      );
     }
     // confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
-    if(confirm){
-      this.setState({ open: false, active: "INIT", edit: false, modify: false});
+    if (confirm) {
+      this.setState({
+        open: false,
+        active: "INIT",
+        edit: false,
+        modify: false
+      });
       this.props.GetDesignBoardRequest(this.props.match.params.id);
     }
   };
@@ -144,8 +151,8 @@ class DesignBoardCard extends Component {
   };
 
   changeModify = () => {
-    this.setState({modify: true});
-  }
+    this.setState({ modify: true });
+  };
 
   openModalHandler = async e => {
     this.props
@@ -187,7 +194,7 @@ class DesignBoardCard extends Component {
       alert("로그인을 해주세요.");
       return;
     }
-    if (FormDataToJson(data) && FormDataToJson(data).comment === ""){
+    if (FormDataToJson(data) && FormDataToJson(data).comment === "") {
       alert("내용을 입력해 주세요.");
       return;
     }
@@ -233,7 +240,7 @@ class DesignBoardCard extends Component {
   };
 
   onChangeEditMode = () => {
-    this.setState({ edit: true , modify: true});
+    this.setState({ edit: true, modify: true });
   };
   onCloseEditMode = () => {
     this.setState({ edit: false });
@@ -246,10 +253,7 @@ class DesignBoardCard extends Component {
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
-          <FormField
-            name="comment"
-            RenderComponent={FormTextArea}
-          />
+          <FormField name="comment" RenderComponent={FormTextArea} />
           <Button
             type="submit"
             size="small"
@@ -278,7 +282,6 @@ class DesignBoardCard extends Component {
               </span>
             </div>
           </div>
-
         </BoardCard>
         {this.props.card.uid === this.props.detail.uid ? (
           <CustomModal
@@ -303,7 +306,9 @@ class DesignBoardCard extends Component {
                 </div>
               ) : (
                 <div>
-                  {this.props.userInfo && (this.props.userInfo.uid === this.props.card.user_id) && !this.state.edit ? (
+                  {this.props.userInfo &&
+                  this.props.userInfo.uid === this.props.card.user_id &&
+                  !this.state.edit ? (
                     <div>
                       <Button
                         type="button"
@@ -351,16 +356,24 @@ class DesignBoardCard extends Component {
                         <div className="metadata">
                           <div>{comm.create_time.split("T")[0]}</div>
                         </div>
-                        <div className="text">{comm.comment}</div>
+                        <div className="text">
+                          {comm.comment.split("\n").map((line, i) => {
+                            return (
+                              <span key={i}>
+                                {line}
+                                <br />
+                              </span>
+                            );
+                          })}
+                        </div>
                       </div>
                       {this.props.userInfo &&
                         this.props.userInfo.uid === comm.user_id && (
                           <i
-                          size="small"
-                          className="delBtn trash alternate outline icon"
-                          onClick={() => this.deleteComment(comm.uid)}
-                        >
-                        </i>
+                            size="small"
+                            className="delBtn trash alternate outline icon"
+                            onClick={() => this.deleteComment(comm.uid)}
+                          />
                         )}
                     </div>
                   ))
