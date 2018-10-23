@@ -16,14 +16,20 @@ const Designerli = styled.li`
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   background-color: #fff;
   text-align: left;
+  box-sizing: border-box;
+  padding: 10px;
 `;
 
 const ImgPart = styled.div`
-  width: 100%;
+  width: 80%;
   height: 140px;
   overflow: hidden;
   background-position: center;
   background-size: cover;
+  border-radius: 50%;
+  box-sizing: 10px;
+  margin: 0 auto;
+  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   & img {
     width: 100%;
     height: 100%;
