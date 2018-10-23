@@ -17,6 +17,8 @@ const Groupli = styled.li`
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   background-color: #fff;
   list-style-type: none;
+  box-sizing: border-box;
+  padding: 10px;
 `;
 
 const ImgPart = styled.div`
