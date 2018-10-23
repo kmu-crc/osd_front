@@ -312,7 +312,7 @@ const CounterItem = styled.div`
   i.icon {
     margin: 0 auto;
     display: block;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
   }
   &:last-child {
@@ -322,7 +322,7 @@ const CounterItem = styled.div`
     cursor: pointer;
   }
   .title {
-    font-size: ${StyleGuide.font.size.paragraph};
+    font-size: ${StyleGuide.font.size.small};
     font-weight: bold;
     margin-bottom: 0.5rem;
     display: block;
@@ -575,25 +575,25 @@ class DesignDetail extends Component {
       return (
         <CounterWrap>
           <CounterItem>
-            <span className="title">조회수</span>
+            {/* <span className="title">조회수</span> */}
             <Icon name="unhide" />
             <p className="count">{count.view_count}</p>
           </CounterItem>
           {this.props.like === true ? (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
-              <span className="title">좋아요</span>
+              {/* <span className="title">좋아요</span> */}
               <Icon name="heart" color="red" />
               <p className="count">{count.like_count}</p>
             </CounterItem>
           ) : (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
-              <span className="title">좋아요</span>
+              {/* <span className="title">좋아요</span> */}
               <Icon name="heart outline" />
               <p className="count">{count.like_count}</p>
             </CounterItem>
           )}
           <CounterItem>
-            <span className="title">파생</span>
+            {/* <span className="title">파생</span> */}
             <Icon name="fork" />
             <p className="count">{designDetail.children_count["count(*)"]}</p>
           </CounterItem>
@@ -652,8 +652,8 @@ class DesignDetail extends Component {
                     <Grid.Column
                       className="designHeaderCol"
                       mobile={16}
-                      tablet={6}
-                      computer={6}
+                      tablet={5}
+                      computer={5}
                     >
                       <ThumbnailImg img={designDetail.img} />
                     </Grid.Column>
@@ -665,8 +665,8 @@ class DesignDetail extends Component {
                     <Grid.Column
                       className="designHeaderCol"
                       mobile={16}
-                      tablet={9}
-                      computer={9}
+                      tablet={10}
+                      computer={10}
                     >
                       <DesignInfoCard>
                         <DesignTitle>{designDetail.title}</DesignTitle>
@@ -712,7 +712,7 @@ class DesignDetail extends Component {
                 <ContentBox>
                   <HeadContainer padded={true}>
                     <Grid.Row>
-                      <Grid.Column computer={6} only="computer">
+                      <Grid.Column computer={5} only="computer">
                         <CountBox />
                       </Grid.Column>
                       <Grid.Column computer={1} only="computer" />
