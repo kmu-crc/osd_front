@@ -39,6 +39,7 @@ const MsgContent = styled.div`
 
   & .ui.comments .comment.my .content .text{
     background-color: yellow;
+    text-align: left;
   }
 
   & .ui.comments .comment .content .author{
