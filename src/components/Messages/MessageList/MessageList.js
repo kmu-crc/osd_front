@@ -194,7 +194,7 @@ class MessageList extends Component {
       });
       return;
     }
-    this.props.SearchMemberRequest({ key: value }, this.props.token);
+    this.props.SearchMemberRequest(null, { key: value }, this.props.token);
   }
 
   selectMember = async (data) => {
