@@ -169,19 +169,27 @@ class MessageList extends Component {
     render: true
   }
 
-  componentDidMount() {
-    this.props.GetMyMsgListRequest(this.props.token)
-    .then((res) => {
+  async componentDidMount() {
+    await this.props.GetMyMsgListRequest(this.props.token)
+    .then(async (res) => {
       if (res.MsgList && res.MsgList.length > 0) {
         let arr = [];
         res.MsgList.map(list => {
           arr.push(list.friend_id);
         });
-        this.setState({
+        await this.setState({
           friendList: arr
         });
       }
     });
+    if (this.props.id && this.props.name) {
+      let id = parseInt(this.props.id, 10);
+      this.selectMember({
+        email: null,
+        nick_name: this.props.name,
+        uid: id
+      });
+    }
   }
 
   getValue = (value) => {
@@ -251,6 +259,7 @@ class MessageList extends Component {
       this.setState({
         render: true
       });
+      this.props.history.replace("/message");
     })
   }
 

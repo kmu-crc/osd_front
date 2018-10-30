@@ -59,7 +59,7 @@ class App extends Component {
           <Route path="/Privacy/:page" component={FooterPage}/>
           <Route path="/Info/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
-          <Route path="/message" component={RequiresAuth(MessagePage)}/>
+          <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)}/>
           <Route path="/cardTest" component={TestPage3}/>
           <Route path="/resetPw" component={ResetPwPage}/>
           <Route path="/slideTest" component={SlideTestPage}/>
