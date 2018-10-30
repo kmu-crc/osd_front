@@ -196,6 +196,13 @@ class MessageList extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps){
+    setTimeout(() => {
+      this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
+    }, 100);
+    return true;
+  }
+
   getValue = (value) => {
     this.setState({
       openMember: true
@@ -303,7 +310,7 @@ class MessageList extends Component {
                 }
               </ListContainer>
               <ContentContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
-                <DetailWrapper>
+                <DetailWrapper ref={ref => this.list = ref}>
                   {this.state.selectName &&
                     <div className="head">{this.state.selectName}님과의 대화</div>
                   }
