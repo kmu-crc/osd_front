@@ -52,6 +52,10 @@ const ListContainer = styled(Grid.Column)`
     height: 30px;
     margin: 5px 0 10px;
   }
+  & .myMsgList {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
 `;
 
 const MsgList = styled.li`
@@ -169,19 +173,27 @@ class MessageList extends Component {
     render: true
   }
 
-  componentDidMount() {
-    this.props.GetMyMsgListRequest(this.props.token)
-    .then((res) => {
+  async componentDidMount() {
+    await this.props.GetMyMsgListRequest(this.props.token)
+    .then(async (res) => {
       if (res.MsgList && res.MsgList.length > 0) {
         let arr = [];
         res.MsgList.map(list => {
           arr.push(list.friend_id);
         });
-        this.setState({
+        await this.setState({
           friendList: arr
         });
       }
     });
+    if (this.props.id && this.props.name) {
+      let id = parseInt(this.props.id, 10);
+      this.selectMember({
+        email: null,
+        nick_name: this.props.name,
+        uid: id
+      });
+    }
   }
 
   getValue = (value) => {
@@ -194,7 +206,7 @@ class MessageList extends Component {
       });
       return;
     }
-    this.props.SearchMemberRequest({ key: value }, this.props.token);
+    this.props.SearchMemberRequest(null, { key: value }, this.props.token);
   }
 
   selectMember = async (data) => {
@@ -251,6 +263,7 @@ class MessageList extends Component {
       this.setState({
         render: true
       });
+      this.props.history.replace("/message");
     })
   }
 
@@ -274,7 +287,7 @@ class MessageList extends Component {
                 </SearchMember>
                 <div className="heading">내 메시지함</div>
                 {msgList.length > 0 ?
-                  <ul>
+                  <ul className="myMsgList">
                   {msgList.map(msg => (
                     <MsgList key={msg.uid} onClick={() => this.setMsgId(msg.uid, msg.friend_id, msg.friend_name)}>
                       <div className="profile">

@@ -29,8 +29,8 @@ const mapDispatchToProps = (dispatch) => {
     SendMessageRequest: (token, data, id) => {
       return dispatch(SendMessageRequest(token, data, id));
     },
-    SearchMemberRequest: (data, token) => {
-      return dispatch(SearchMemberRequest(data, token));
+    SearchMemberRequest: (id, data, token) => {
+      return dispatch(SearchMemberRequest(id, data, token));
     }
   };
 };
