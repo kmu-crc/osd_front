@@ -52,6 +52,10 @@ const ListContainer = styled(Grid.Column)`
     height: 30px;
     margin: 5px 0 10px;
   }
+  & .myMsgList {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
 `;
 
 const MsgList = styled.li`
@@ -283,7 +287,7 @@ class MessageList extends Component {
                 </SearchMember>
                 <div className="heading">내 메시지함</div>
                 {msgList.length > 0 ?
-                  <ul>
+                  <ul className="myMsgList">
                   {msgList.map(msg => (
                     <MsgList key={msg.uid} onClick={() => this.setMsgId(msg.uid, msg.friend_id, msg.friend_name)}>
                       <div className="profile">
