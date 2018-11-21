@@ -200,6 +200,16 @@ class MessageList extends Component {
     setTimeout(() => {
       this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
     }, 100);
+    if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
+      if (nextProps.id && nextProps.name) {
+        let id = parseInt(nextProps.id, 10);
+        this.selectMember({
+          email: null,
+          nick_name: nextProps.name,
+          uid: id
+        });
+      }
+    }
     return true;
   }
 
@@ -221,6 +231,7 @@ class MessageList extends Component {
       render: false
     });
     const index = this.state.friendList.indexOf(data.uid);
+    console.log(this.state, this.props.MessageList, index);
     if (index === -1) {
       this.setState({
         selectId: data.uid,
@@ -295,7 +306,9 @@ class MessageList extends Component {
                 <div className="heading">내 메시지함</div>
                 {msgList.length > 0 ?
                   <ul className="myMsgList">
-                  {msgList.map(msg => (
+                  {msgList.sort((a, b) => {
+                    return new Date(b.update_time).getTime() - new Date(a.update_time).getTime();
+                  }).map(msg => (
                     <MsgList key={msg.uid} onClick={() => this.setMsgId(msg.uid, msg.friend_id, msg.friend_name)}>
                       <div className="profile">
                         <span>{msg.friend_name}</span>
