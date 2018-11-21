@@ -121,12 +121,14 @@ class Alram extends Component {
                     <Link
                       to={
                         item.type === "MESSAGE"
-                          ? "/message"
+                          ? `/message/${item.from_user_id}/${item.fromUser}`
                           : item.type === "DESIGN"
                             ? item.kinds === "INVITE"
                               ? `/myPage/join/invited`
                               : `/designDetail/${item.content_id}`
-                            : null
+                            : item.type === "GROUP"
+                            ? `/groupDetail/${item.content_id}`
+                            : ""
                       }
                     >
                       <h4>{item.title}</h4>
@@ -144,6 +146,14 @@ class Alram extends Component {
                                 : item.kinds === "REFUSE"
                                 ? `맴버요청을 거절하셨습니다.`
                                 : ``
+                          : item.type === "GROUP"
+                          ? item.kinds === "JOIN"
+                            ? `그룹에 새 가입요청이 있습니다.`
+                            : item.kinds === "JOINSUCCESS"
+                            ? "그룹에 가입이 승인되었습니다."
+                            : item.kinds === "JOINREFUSE"
+                            ? "그룹활동을 거절당하였습니다."
+                            : ""
                           : null}
                       <span className="time">
                         {DateFormat(item.create_time)}
