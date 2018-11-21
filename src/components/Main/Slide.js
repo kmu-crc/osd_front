@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 import StyleGuide from "StyleGuide";
 import Open_img from "source/design_bg.jpg";
 import Easy_img from "source/easy_bg2.jpg";
 import Together_img from "source/together_bg.jpg";
+import ContentBox from "components/Commons/ContentBox";
 
 const SlideWrap = styled.div`
   width: 100%;
@@ -23,6 +25,7 @@ const SlideWrap = styled.div`
     flex-flow: column;
   }
   & .carousel.carousel-slider .control-arrow {
+    z-index: 10;
     top: 50%;
     position: absolute;
     color: #fff;
@@ -59,7 +62,7 @@ const SlideWrap = styled.div`
     text-align: center;
     width: 100%;
     & li {
-      box-shadow: 1px 1px 2px rgba(0,0,0,.9);
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
       background: #fff;
       border-radius: 50%;
       width: 8px;
@@ -67,10 +70,11 @@ const SlideWrap = styled.div`
       cursor: pointer;
       display: inline-block;
       margin: 0 8px;
-      transition: opacity .25s ease-in;
-      opacity: .3;
+      transition: opacity 0.25s ease-in;
+      opacity: 0.3;
     }
-    & .dot.selected, & .dot:hover{
+    & .dot.selected,
+    & .dot:hover {
       opacity: 1;
     }
   }
@@ -102,22 +106,87 @@ const Slide = styled.div`
     background-size: cover;
     background-position: 0 20%;
   }
+  &.guide {
+    background: #6ddb99; /* Old browsers */
+    background: -moz-linear-gradient(
+      top,
+      #6ddb99 0%,
+      #45b291 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+      top,
+      #6ddb99 0%,
+      #45b291 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+      to bottom,
+      #6ddb99 0%,
+      #45b291 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  }
+`;
+
+const Wrap = styled(ContentBox)`
+  position: relative;
+  height: 100%;
+`;
+
+const Content = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: white;
+  .title {
+    color: white;
+    font-size: ${StyleGuide.font.size.heading1};
+    margin-bottom: 1rem;
+  }
+  p {
+    margin-bottom: 1rem;
+  }
+`;
+
+const LinkBtn = styled(Link)`
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.5rem 2rem;
+  border: 1px solid white;
+  color: white;
+  border-radius: 3px;
+  &:hover {
+    color: white;
+  }
 `;
 
 export default class MainSlide extends Component {
   render() {
     return (
       <SlideWrap>
-        <Carousel autoPlay
-                  showArrows={true}
-                  stopOnHover={false}
-                  showIndicators={true}
-                  axis="horizontal"
-                  transitionTime={1000}
-                  interval={10000}
-                  width="100%"
-                  infiniteLoop={true}
-                  showThumbs={false}>
+        <Carousel
+          autoPlay
+          showArrows={true}
+          stopOnHover={false}
+          showIndicators={true}
+          axis="horizontal"
+          transitionTime={1000}
+          interval={10000}
+          width="100%"
+          infiniteLoop={true}
+          showThumbs={false}
+        >
+          <Slide className="guide">
+            <Wrap>
+              <Content>
+                <h1 className="title">사용자 가이드</h1>
+                <p>
+                  오픈디자인에서 제공하는 사용자 설명서입니다.
+                  <br />각 기능에 대하여 사용법이 정리되어있습니다.
+                </p>
+                <LinkBtn to="/designDetail/2494">보러가기</LinkBtn>
+              </Content>
+            </Wrap>
+          </Slide>
           <Slide className="open">
             <span>오픈 디자인</span>
           </Slide>
@@ -131,4 +200,4 @@ export default class MainSlide extends Component {
       </SlideWrap>
     );
   }
-};
+}
