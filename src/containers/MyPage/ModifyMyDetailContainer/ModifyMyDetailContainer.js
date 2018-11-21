@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { GetMyDetailRequest } from "actions/Users/MyDetail";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import { UpdateUserDetailRequest } from "actions/Users/UserInfo";
+import { SecessionRequest } from "actions/Registration/secession";
 import ModifyMyDetail from "components/Users/ModifyMyDetail";
 
 class ModifyMyDetailContainer extends Component {
@@ -35,6 +36,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateUserDetailRequest: (data, token) => {
       return dispatch(UpdateUserDetailRequest(data, token));
+    },
+    SecessionRequest: (token) => {
+      return dispatch(SecessionRequest(token));
     }
   };
 };

@@ -147,6 +147,13 @@ class ModifyMyDetail extends Component {
     });
   };
 
+  onDeleteUser = () => {
+    let confirm = window.confirm("정말 탈퇴하시겠습니까?");
+    if (confirm) {
+      this.props.SecessionRequest(this.props.token);
+    }
+  }
+
   render() {
     const myInfo = this.props.MyDetail;
 
@@ -233,6 +240,7 @@ class ModifyMyDetail extends Component {
                   </Grid.Column>
                 </Grid>
               </FromFieldCard>
+              {/* <Button type="button" style={{float: "right"}} color="Solid" onClick={this.onDeleteUser}>회원탈퇴</Button> */}
               <Button type="button" onClick={this.onSubmit}>수정</Button>
             </form>
           </Wrapper>
