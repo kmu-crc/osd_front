@@ -16,6 +16,7 @@ import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
+import DateFormat from "modules/DateFormat";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -75,6 +76,10 @@ const DeleteBtn = styled.button`
   i.icon {
     margin: 0;
   }
+`;
+
+const CardUpdateDate = styled.span`
+  font-size: ${StyleGuide.font.size.small};
 `;
 
 const CommentContainer = styled.div`
@@ -274,6 +279,7 @@ class DesignBoardCard extends Component {
           ) : null}
           <div className="content">
             <div className="cardTitle">{card.title}</div>
+            <CardUpdateDate>{DateFormat(card.update_time)}</CardUpdateDate>
             <div className="cardInfo">
               {card.nick_name}
               <span className="cardCmt">
@@ -327,7 +333,7 @@ class DesignBoardCard extends Component {
                       </Button>
                     </div>
                   ) : null}
-                  <h2>{detail.title}</h2>
+                  <h2>{detail.title}<CardUpdateDate> {DateFormat(card.update_time)}</CardUpdateDate></h2>
                   <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
                   <CardSourceDetailContainer
                     uid={card.uid}
