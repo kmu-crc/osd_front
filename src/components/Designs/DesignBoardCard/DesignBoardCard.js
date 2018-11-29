@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Modal, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import {
-  CardTitleUpdate,
-  CardContentUpdate,
-  CardImageUpdate,
-  CardSourcUpdate
-} from "components/Designs/DesignBoardCard";
 import eximg from "source/topDesign.png";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";

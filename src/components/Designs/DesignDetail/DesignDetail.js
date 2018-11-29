@@ -11,6 +11,7 @@ import PxtoRem from "modules/PxtoRem";
 import UserImg from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
+import DesignComment from "./DesignComment";
 
 // css styling
 
@@ -443,7 +444,8 @@ class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
     memberActive: false,
-    manageMember: false
+    manageMember: false,
+    commentState: false
   };
 
   componentDidMount() {
@@ -570,7 +572,7 @@ class DesignDetail extends Component {
   render() {
     const designDetail = this.props.DesignDetail;
     const count = this.props.Count;
-
+    console.log(designDetail);
     const CountBox = () => {
       return (
         <CounterWrap>
@@ -785,6 +787,8 @@ class DesignDetail extends Component {
                               </Memberlist>
                             </Members>
                           </InfoItem>
+                          <Button onClick={() => this.setState({commentState: true})}>댓글{this.props.Count.comment_count}</Button>
+                          <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false})} }/>
                         </DesignInfoCard>
                         <HeadContainer padded={true}>
                           <Grid.Row>

@@ -12,3 +12,4 @@ export * from "./ChangeToProject";
 export * from "./UpdateDesign";
 export * from "./DesignSourceDetail";
 export * from "./DesignWaitingList";
+export * from "./DesignDetailComment";
