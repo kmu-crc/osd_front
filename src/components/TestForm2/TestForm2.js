@@ -5,7 +5,7 @@ import {
   FormRadio,
   FormCheckBox,
   FormSelect,
-  FormFile,
+  //FormFile,
   FormThumbnail,
   MultiUpload,
   AsyncInput

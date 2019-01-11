@@ -94,7 +94,7 @@ export function GetCategoryAllRequest() {
       });
       category1.unshift({ text: "전체", value: 0 });
       let category2 = [];
-      res.data.category2.map(data => {
+      res.data.category2.forEach/*map*/(data => {
         let arr = data.map(item => {
           return { text: item.name, value: item.uid, parent: item.parents_id };
         });

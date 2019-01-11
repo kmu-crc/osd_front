@@ -5,7 +5,7 @@ import Sorting from "components/Commons/Sorting";
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-import design_bg from "source/design_bg.jpg";
+//import design_bg from "source/design_bg.jpg";
 import StyleGuide from "StyleGuide";
 
 // css styling
@@ -106,7 +106,7 @@ class DesignList extends Component {
                           : null;
         const n = parseInt(this.props.cate1, 10);
         const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
-                          ? cate2List[n].filter(sub => sub.value == this.props.cate2)
+                          ? cate2List[n].filter(sub => sub.value === this.props.cate2)
                           : null;
         return (
           <Head>

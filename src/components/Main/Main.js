@@ -40,21 +40,47 @@ const Head = styled.div`
 
 class Main extends Component {
   render() {
-    return (
-      <div>
-        <ImgWrapper>
-          <MainSlide/>
-        </ImgWrapper>
-        <TextWrapper>
-          <Content>
-            <Wrapper>
-              <Head>추천 디자인</Head>
-              <ScrollTopDesignContainer/>
-            </Wrapper>
-          </Content>
-        </TextWrapper>
-      </div>
-    );
+    var isLogined = true;//get-state-login
+    if(isLogined === false){
+      return (
+        <div>
+          <ImgWrapper>
+            <MainSlide/>
+          </ImgWrapper>
+          <TextWrapper>
+            <Content>
+              <Wrapper>
+                <Head>추천 디자인</Head>
+                <ScrollTopDesignContainer/>
+              </Wrapper>
+            </Content>
+          </TextWrapper>
+        </div>
+      );
+    }
+    else{
+      return(
+        <div>
+          <ImgWrapper>
+            <MainSlide/>
+          </ImgWrapper>
+          <TextWrapper>
+            <Content>
+              <Wrapper>
+                <Head>내 디자인 </Head>
+                ;
+              </Wrapper>
+            </Content>
+            <Content>
+              <Wrapper>
+                <Head>추천 디자인 </Head>
+                <ScrollTopDesignContainer/>
+              </Wrapper>
+            </Content>
+          </TextWrapper>
+        </div>
+      );
+    }
   }
 }
 
