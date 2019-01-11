@@ -70,6 +70,7 @@
   },
   "scripts": {
     "start": "HTTPS=true REACT_APP_BUILD=false node scripts/start.js",
+    "local": "LOCAL=true node scripts/start.js",
     "build": "REACT_APP_BUILD=true node scripts/build.js",
     "TBuild": "REACT_APP_DEV=true node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
