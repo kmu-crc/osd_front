@@ -735,23 +735,15 @@ class DesignDetail extends Component {
                           <InfoItem>
                             <h3>멤버</h3>
                             <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
-                              {designDetail.member && designDetail.member.map((item, index) => {
-                                if (index > 3) {
-                                  return;
-                                } else {
-                                  return (
-                                    <MemberItem
-                                      key={index}
-                                      style={{
-                                        backgroundImage: item.thumbnail
-                                          ? `url(${item.thumbnail.s_img})`
-                                          : `url(${UserImg})`,
-                                        zIndex: 5 - index
-                                      }}
-                                    />
-                                  );
-                                }
-                              })}
+                              {designDetail.member && 
+                              
+                               //designDetail.member.map((item, index) => {
+                                designDetail.member.filter((item, index) => {
+                                //if (index > 3) { return; }
+                                return ( <MemberItem key={index} style={{ backgroundImage: item.thumbnail ? `url(${item.thumbnail.s_img})` : `url(${UserImg})`, zIndex: 5 - index }}/>);
+                              })
+                              }
+
                               {/* {designDetail.member.length > 5 && (
                                 <MemberItem>
                                   <Icon name="plus" />
@@ -820,7 +812,7 @@ class DesignDetail extends Component {
             {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
             <ContentBox>
               <TabContainer>
-                {designDetail.is_project == 1 ? (
+                {designDetail.is_project === 1 ? (
                   <DesignDetailStepContainer id={this.props.id} />
                 ) : (
                   <DesignDetailViewContainer

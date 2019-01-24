@@ -4,7 +4,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormCheckBox, FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import FileUploader from "components/Commons/FileUploader";
-import host from "config";
+//import host from "config"; // WARNING:not used
 import FormDataToJson from "modules/FormDataToJson";
 
 const FormBox = styled.div`
@@ -20,8 +20,8 @@ class TestForm extends Component {
   onSubmit = (data) => {
     console.log(data);
     data.delete("designs[]");
-    this.state.images.map( item => {
-      data.append("designs[]", item, item.name);
+    data = this.state.images.map( item => { //WARNING: return needed
+      return("design[]",item,item.name);//data.append("designs[]", item, item.name);
     });
     const formData = FormDataToJson(data);
     console.log("testFormData : ", formData);

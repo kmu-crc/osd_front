@@ -12,8 +12,6 @@ import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
 import MainPage from "pages/MainPage/MainPage";
-import TestPage from "pages/TestPage";
-import TestPage2 from "pages/TestPage2";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
@@ -22,8 +20,10 @@ import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
-import TestPage3 from "pages/TestPage3";
 import SlideTestPage from "pages/SlideTestPage/SlideTestPage";
+import TestPage from "pages/TestPage";
+import TestPage2 from "pages/TestPage2";
+import TestPage3 from "pages/TestPage3";
 
 class App extends Component {
   componentDidMount(){
@@ -53,15 +53,15 @@ class App extends Component {
           <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)}/>
-          <Route path="/test" component={TestPage} />
-          <Route path="/test2" component={TestPage2} />
           <Route path="/Term/:page" component={FooterPage}/>
           <Route path="/Privacy/:page" component={FooterPage}/>
           <Route path="/Info/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)}/>
-          <Route path="/cardTest" component={TestPage3}/>
           <Route path="/resetPw" component={ResetPwPage}/>
+          <Route path="/test" component={TestPage} />
+          <Route path="/test2" component={TestPage2} />
+          <Route path="/cardTest" component={TestPage3}/>
           <Route path="/slideTest" component={SlideTestPage}/>
         </Switch>
       </BrowserRouter>

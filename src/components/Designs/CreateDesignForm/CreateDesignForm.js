@@ -5,7 +5,7 @@ import { Header, Grid, Form } from "semantic-ui-react";
 import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
-import copyObject from "modules/CopyObject/CopyObject";
+/* import copyObject from "modules/CopyObject/CopyObject"; */
 
 const FromFieldCard = styled.div`
   width: 100%;
