@@ -1,5 +1,6 @@
 import socketIOClient from "socket.io-client";
+import host from "config";
 
-let Socket = socketIOClient(process.env.REACT_APP_API_URL);
+let Socket = socketIOClient(host);
 
 export default Socket;
