@@ -183,6 +183,8 @@ class ModifyMyDetail extends Component {
                     <FormInput
                       name="nick_name"
                       value={myInfo.nick_name}
+                      maxLength = "25"
+                      placeholder="닉네임을 입력해주세요. (25자 이내)"
                       getValue={this.onChangeValue}
                       validates={["required", "NotSpecialCharacters"]}
                       onBlur={()=>{this.liveCheck("nick_name")}}
@@ -191,7 +193,8 @@ class ModifyMyDetail extends Component {
                     <FormInput
                       name="about_me"
                       value={myInfo.about_me}
-                      placeholder="자기소개를 입력해주세요."
+                      maxLength = "500"
+                      placeholder="자기소개를 입력해주세요. (500자 이내)"
                       getValue={this.onChangeValue}
                     />
                     <Label>비밀번호 변경</Label>
@@ -228,7 +231,7 @@ class ModifyMyDetail extends Component {
                         name="category_level2"
                         value={myInfo.category_level2}
                         getValue={this.onChangeValue}
-                      />
+                      />                    
                     </Form.Group>
                     <Label>디자이너 활동 여부</Label>
                     <FormCheckBox
