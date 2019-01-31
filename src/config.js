@@ -6,5 +6,5 @@ if(process.env.REACT_APP_BUILD === "true" || process.env.REACT_APP_BUILD === tru
 } else if(process.env.REACT_APP_LOCAL === "true" || process.env.REACT_APP_LOCAL === true) {
 	host = process.env.REACT_APP_LOCAL_API_URL;
 }else;
-
+// testing //
 export default host;
