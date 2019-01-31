@@ -193,8 +193,8 @@ class ModifyMyDetail extends Component {
                     <FormInput
                       name="about_me"
                       value={myInfo.about_me}
-                      maxLength = "500"
-                      placeholder="자기소개를 입력해주세요. (500자 이내)"
+                      maxLength="500"
+                      placeholder="자기소개를 입력해주세요.(500자 이내)"
                       getValue={this.onChangeValue}
                     />
                     <Label>비밀번호 변경</Label>
