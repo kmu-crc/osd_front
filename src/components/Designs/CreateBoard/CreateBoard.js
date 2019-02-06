@@ -98,7 +98,8 @@ class CreateBoard extends Component {
             <FInput>
               <FormInput
                 name="title"
-                placeholder="새 단계 추가"
+                placeholder="새 단계 추가 (8자 이내)"
+                maxLength="8"
                 getValue={this.onChangeValue}
                 validates={["Required"]}
               />
