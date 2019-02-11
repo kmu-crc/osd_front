@@ -105,6 +105,11 @@ class SignUpForm extends Component {
       target: this.state.password2.target,
       validates: this.state.password2.validates
     });
+    
+    if(this.state.password.value !== this.state.password2.value){
+      alert("비밀번호 확인을 다시 해주십시오")
+      return false;
+    }else{ return true;}
   }
 
   onSubmit = async e => {
