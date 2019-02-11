@@ -105,16 +105,14 @@ class SignUpForm extends Component {
       target: this.state.password2.target,
       validates: this.state.password2.validates
     });
-    
-    if(this.state.password.value !== this.state.password2.value){
-      alert("비밀번호 확인을 다시 해주십시오")
-      return false;
-    }else{ return true;}
-  }
 
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
+    if(formData.password !== formData.password2) {
+      alert("비밀번호 확인을 다시 해주십시오"); 
+      return false;
+    }
     delete formData.password2;
     ValidationGroup(formData, true).then(data => {
       console.log("성공", data);
