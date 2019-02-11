@@ -90,12 +90,13 @@ export class FormInput extends Component {
     if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
   }
   render() {
-    const { type, name, /*value,*/ placeholder, style, id } = this.props;
+    const { type, maxLength,name, value, placeholder, style, id } = this.props;
     return (
       <InputWrap>
         <Input
           type={type ? type : "text"}
           name={name && name}
+          maxLength = {maxLength ? maxLength : false}
           placeholder={placeholder && placeholder}
           style={style && style}
           id={id ? id : name}
