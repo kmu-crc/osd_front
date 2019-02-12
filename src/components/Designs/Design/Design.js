@@ -99,6 +99,13 @@ class Design extends Component {
               <Icon name="heart" size="mini"></Icon>
               {design.like_count ? design.like_count : 0}
             </div>
+            <div>
+              <Icon name="fork" size="mini"></Icon>
+              <p className="count">{design.children_count}</p>
+            </div>
+            <div>
+              {design.create_time.split("T")[0]}
+            </div>
           </Count>
         </Designli>
       </NavLink>
