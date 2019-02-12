@@ -105,7 +105,7 @@ class SignUpForm extends Component {
       target: this.state.password2.target,
       validates: this.state.password2.validates
     });
-
+  }
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
