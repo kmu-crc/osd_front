@@ -253,7 +253,14 @@ class CardSourceDetail extends Component {
                 <div className="imgContent" key={index}>
                   <img key={index} src={item.content} alt="이미지" />
                 </div>
-              ) : item.type === "FILE" && item.data_type !== "image" ? (
+              ) : item.type === "FILE" && item.data_type == "video" ? (
+                <span>
+                <span className="LinkFileName">{item.file_name}</span>
+                <video key={index} width="640" height="360" controls="controls" className="iconWrap">
+                <source src={item.content} type="video/mp4"></source>
+                </video>
+                </span>
+              ) : item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
                 <a key={index} href={item.content} className="iconWrap">
                   <FileIcon type={item.data_type} extension={item.extension} />
                   <span className="LinkFileName">{item.file_name}</span>
