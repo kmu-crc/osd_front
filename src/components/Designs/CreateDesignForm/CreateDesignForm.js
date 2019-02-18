@@ -119,7 +119,8 @@ class CreateDesignForm extends Component {
                 <Label>디자인 제목</Label>
                 <FormInput
                   name="title"
-                  placeholder="디자인의 제목을 입력해주세요."
+                  maxLength="100"
+                  placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
                   getValue={this.onChangeValue}
                   validates={["Required"]}
                   onBlur={()=>{this.liveCheck("title")}}
@@ -129,7 +130,8 @@ class CreateDesignForm extends Component {
                 <Label>디자인 설명</Label>
                 <FormInput
                   name="explanation"
-                  placeholder="디자인 설명을 입력해주세요."
+                  maxLength="1000"
+                  placeholder="디자인 설명을 입력해주세요. (1000자 이내)"
                   getValue={this.onChangeValue}
                 />
               </Form.Group>
