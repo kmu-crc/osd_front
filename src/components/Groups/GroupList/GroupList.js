@@ -13,6 +13,10 @@ import StyleGuide from "StyleGuide";
 
 const Wrapper = styled.div`
   width: 100%;
+
+  & .Countgroup{
+    font-size: 20px;
+  }
 `;
 
 const Content = styled(ContentBox)`
@@ -24,31 +28,36 @@ const Content = styled(ContentBox)`
 `;
 
 const MenuContainer = styled(Grid)`
+
   & .sorting {
+    padding-left: 20px;
+    margin: 8px 0px 10px 0px;
     text-align: right;
-    line-height: 50px;
+    float: right;
   }
   & .addGroup {
-    line-height: 50px;
+    width: 90%;
+    text-align: right;
   }
   & .addGroup button{
-    padding: 5px 18px;
-    font-size: 14px;
-    border: 1px solid rgba(25,25,25,0.2);
-    font-weight: 400;
-    background-color: #fff;
-    border-radius: 5px;
+    padding: 0.75em 2em;
+    font-size: 12px;
+    border: 1px solid #E72327;
+    background-color: #E72327;
+    border-radius: 2em;
+    color: white;
   }
-  & .addGroup button:hover {
-    background-color: #f2f2f2;
+  & .addGroup button:hover{
+    background-color: #BF1D1F;
+    border: 1px solid #BF1D1F;
   }
   & .ui.default.dropdown:not(.button)>.text,
   & .ui.dropdown:not(.button)>.default.text {
     color: inherit;
   }
-  &.ui.grid > .row {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
+  &.ui.grid {
+    padding-top: 3rem;
+    padding-bottom : 1rem;
   }
 `;
 
@@ -100,7 +109,7 @@ const MenuWrap = styled.div`
 `;
 
 const Head = styled.div`
-  padding-top: 80px;
+  padding-top: 100px;
   padding-bottom: 2rem;
   font-size: ${StyleGuide.font.size.paragraph};
 `;
@@ -130,32 +139,20 @@ class GroupList extends Component {
 
   render(){
     const { sort } = this.props;
-    const Header = () => {
-      return (
-        <Head>
-          <span>그룹 ({this.props.Count})</span>
-        </Head>
-      );
-    };
-
     return(
       <div>
-        <MenuWrap>
-          <Content>
-            <Wrapper>
-              <MenuContainer devided="vertically" padded={true} columns={2}>
-                <Grid.Row stretched={false}>
-                  <Grid.Column className="addGroup">
-                    <Link to="/createGroup"><button>그룹 등록</button></Link>
-                  </Grid.Column>
-                  <Sorting handleChange={this.sortChange} placeholder={sort}/>
-                </Grid.Row>
-              </MenuContainer>
-            </Wrapper>
-          </Content>
-        </MenuWrap>
         <Content>
-          <Header/>
+          <Wrapper>
+            <MenuContainer>
+              <span className="Countgroup"> 그룹 ({this.props.Count}) </span>
+              <div className="addGroup">
+                <Link to="/createGroup"><button>그룹 등록</button></Link>
+                <Sorting handleChange={this.sortChange} placeholder={sort}/>
+              </div>
+            </MenuContainer>
+          </Wrapper>
+        </Content>
+        <Content>
           <Wrapper className="listWrap">
             {this.state.rendering && <ScrollGroupListContainer sort={sort} history={this.props.history}/>}
           </Wrapper>
