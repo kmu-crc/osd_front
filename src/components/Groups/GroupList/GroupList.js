@@ -31,12 +31,12 @@ const Content = styled(ContentBox)`
 const MenuContainer = styled(Grid)`
 
   & .addGroup{
+    width: 60%;
     padding: 0px 0px 5px 0px;
     text-align: right;
   }
 
   & .Sorting{
-    width: 80%;
     text-align: right;
   }
   & .addGroup button{
