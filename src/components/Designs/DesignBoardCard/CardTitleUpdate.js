@@ -59,8 +59,9 @@ export class CardTitleUpdate extends Component {
             <Input
               name="title"
               label="제목"
+              maxLength="100"
               value={this.props.title}
-              placeholder="제목을 입력해주세요."
+              placeholder="제목을 입력해주세요. (100자 이내)"
               type="text"
             />
             <Button type="submit">저장</Button>
