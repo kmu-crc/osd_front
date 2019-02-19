@@ -118,7 +118,7 @@ class DesignComment extends React.Component {
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
-          <FormField name="comment" RenderComponent={FormTextArea} maxLength="500"/>
+          <FormField name="comment" RenderComponent={FormTextArea} maxLength="1000"/>
           <Button
             type="submit"
             size="small"
