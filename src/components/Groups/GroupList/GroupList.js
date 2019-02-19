@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   width: 100%;
 
   & .Countgroup{
+    padding: 5px 10px 5px 20px;
     font-size: 20px;
   }
 `;
@@ -29,14 +30,13 @@ const Content = styled(ContentBox)`
 
 const MenuContainer = styled(Grid)`
 
-  & .sorting {
-    padding-left: 20px;
-    margin: 8px 0px 10px 0px;
+  & .addGroup{
+    padding: 0px 0px 5px 0px;
     text-align: right;
-    float: right;
   }
-  & .addGroup {
-    width: 90%;
+
+  & .Sorting{
+    width: 80%;
     text-align: right;
   }
   & .addGroup button{
@@ -47,18 +47,17 @@ const MenuContainer = styled(Grid)`
     border-radius: 2em;
     color: white;
   }
+
   & .addGroup button:hover{
     background-color: #BF1D1F;
     border: 1px solid #BF1D1F;
   }
-  & .ui.default.dropdown:not(.button)>.text,
-  & .ui.dropdown:not(.button)>.default.text {
-    color: inherit;
-  }
+
   &.ui.grid {
     padding-top: 3rem;
     padding-bottom : 1rem;
   }
+
 `;
 
 const Title = styled.div`
@@ -147,7 +146,9 @@ class GroupList extends Component {
               <span className="Countgroup"> 그룹 ({this.props.Count}) </span>
               <div className="addGroup">
                 <Link to="/createGroup"><button>그룹 등록</button></Link>
-                <Sorting handleChange={this.sortChange} placeholder={sort}/>
+              </div>
+              <div className="Sorting">
+                <Sorting handleClick={this.sortChange} placeholder={sort}/>
               </div>
             </MenuContainer>
           </Wrapper>
