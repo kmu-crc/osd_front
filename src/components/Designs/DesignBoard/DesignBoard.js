@@ -119,13 +119,25 @@ class DesignBoard extends Component {
     this.props.SetActive(active, target);
   };
 
+  // 단계이동위한함수
+  onShiftRight = () => {
+    let data = ({ order: this.props.board.order + 1 });
+    try{this.props.onSwapDesignBoard(this.props.token, this.props.board.order, data)}
+    catch(err){console.log("failed to call parent fn", err)};
+  };
+  onShiftLeft = () => {
+    let data = ({order: this.props.board.order - 1});
+    try{this.props.onSwapDesignBoard(this.props.token, this.props.board.order, data)}
+    catch(err){console.log("failed to call parent fn", err)};
+  };
+
   onModify = () => {
     if (this.props.isTeam !== 1) {
       return;
     } else {
       this.setState({active: true});
     }
-  }
+  };
 
   ModifyComplete = () => {
     this.setState({ active: false });
@@ -149,12 +161,12 @@ class DesignBoard extends Component {
     }
   };
   render() {
-    const { board, changeBoard, activeBoard, designId, list } = this.props;
-    console.log(list);
+    const { board, changeBoard, activeBoard, designId, step } = this.props;
     return (
-      <Board>
+      <Board>{board.order}, {step.length}
         <Title>
-          {this.state.active && this.props.isTeam ? (
+          {this.state.active && this.props.isTeam ?
+          (
             <BoardUpdate
               board={board}
               getBoard={this.props.GetDesignBoardRequest}
@@ -163,7 +175,8 @@ class DesignBoard extends Component {
               value={board.title}
               ModifyComplete={this.ModifyComplete}
             />
-          ) : (
+          ):
+          (
             <div>
               <span onClick={this.onModify}>{board.title}</span>
               {this.props.isTeam > 0 ? (
@@ -180,6 +193,16 @@ class DesignBoard extends Component {
                       : "none"
                 }}
               >
+              {board.order > 0 &&
+                <MenuItem>
+                  <button onClick={this.onShiftLeft}> {"<"} </button>
+                </MenuItem>
+              }
+              {board.order < step.length-1 &&
+                <MenuItem>
+                  <button onClick={this.onShiftRight}> {">"} </button>
+                </MenuItem>
+              }
                 <MenuItem>
                   <button onClick={this.onModify}>수정</button>
                 </MenuItem>
@@ -188,7 +211,8 @@ class DesignBoard extends Component {
                 </MenuItem>
               </Menu>
             </div>
-          )}
+          )
+          }
         </Title>
         <CardList>
         {board.cards.length > 0 &&

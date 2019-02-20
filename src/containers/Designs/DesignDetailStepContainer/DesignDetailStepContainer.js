@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
+import { UpdateDesignBoardRequest, GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 import DetailStep from "components/Designs/DetailStep";
 
 class DesignDetailStepContainer extends Component {
@@ -24,6 +24,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id))
+    },
+    UpdateDesignBoardRequest: (id, token, data) => {
+      return dispatch(UpdateDesignBoardRequest(id, token, data));
     }
   };
 };
