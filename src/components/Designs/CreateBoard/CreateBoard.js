@@ -71,15 +71,12 @@ class CreateBoard extends Component {
     await ValidationGroup(this.state, true)
       .then(data => {
         data.order = this.props.order;
-        console.log(data, "????");
-        this.props
-          .CreateDesignBoardRequest(data, this.props.designId, this.props.token)
-          .then(data => {
-            this.props.GetDesignBoardRequest(this.props.designId);
-          });
+        this.props.CreateDesignBoardRequest(data,this.props.designId, this.props.token)
+        .then(() => { this.props.GetDesignBoardRequest(this.props.designId);})
+        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
-      .catch(console.log("실패"));
+      .catch(err => console.log(err,"실패"));
   };
   handelClose = (e) => {
     if(e.type === "blur" && !this.form.contains(

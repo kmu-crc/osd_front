@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ModifyDesignInfo from "components/Designs/ModifyDesignInfo";
 import { GetDesignDetailRequest } from "actions/Design";
-import { UpdateDesignInfoRequest } from "actions/Designs/UpdateDesign";
+import { UpdateDesignInfoRequest} from "actions/Designs/UpdateDesign";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import { SearchMemberRequest } from "actions/Commons/Search";
 
