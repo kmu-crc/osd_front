@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { CreateDesignCardRequest } from "actions/Designs/DesignCard";
 import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 import CreateCard from "components/Designs/CreateCard";
+import {UpdateDesignTime} from "actions/Designs/UpdateDesign";
 
 class CreateDesignCardContainer extends Component {
   render() {
@@ -25,6 +26,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
+    },
+    UpdateDesignTime: (id) => {
+      return dispatch(UpdateDesignTime(id));
     }
   };
 };

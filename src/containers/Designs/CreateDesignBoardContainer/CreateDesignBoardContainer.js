@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CreateBoard from "components/Designs/CreateBoard";
 import { connect } from "react-redux";
 import { CreateDesignBoardRequest, GetDesignBoardRequest } from "actions/Designs/DesignBoard";
+import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
 
 class CreateDesignBoardContainer extends Component {
   render() {
@@ -24,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
+    },
+    UpdateDesignTime: (design_id, token) => {
+      return dispatch(UpdateDesignTime(design_id, token));
     }
   };
 };
