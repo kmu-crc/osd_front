@@ -72,7 +72,6 @@ class DetailStep extends Component {
     left: false,
     right: false,
     scroll: false,
-    moveBoard: false
   };
   async shouldComponentUpdate(nextProps) {
     if (
@@ -233,33 +232,24 @@ class DetailStep extends Component {
       }
     }
   };
-  onSwapDesignBoard = (token, from, to) => {
-    this.setState({moveBoard:true});
-    let step = this.props.DesignDetailStep;
-    //get board_id from and to
-    let from_board = step.map((board) =>{
-      if (board["order"] == from ) return board["uid"]; 
-    });
-    let to_board = step.map((board) =>{
-      if (board["order"] == to["order"] ) return board["uid"];
-    });
-    from_board = from_board.filter((element)=>{return element!==undefined});
-    to_board = to_board.filter((element)=>{return element!==undefined});
-    
-    let from_data = ({order: from});
-    let to_data = ({order:to["order"]});
-    console.log("from_board: ",from_board," from_data: ", from_data);
-    console.log("to_board: ",to_board," to_data: ", to_data);
-    //request 2 update query!
-    this.props.UpdateDesignBoardRequest(from_board, token, to_data) //from to to
-      .then(this.props.UpdateDesignBoardRequest(to_board, token, from_data)) // to to from
-      .then(this.props.GetDesignBoardRequest(this.props.id))
-//      .then(this.props.GetDesignBoardRequest(from_board))
-//      .then(this.props.GetDesignBoardRequest(to_board))
-      .catch(err=>{console.log("failed to update design board")});
-    //re-update props 
-    this.setState({moveBoard:false});
+  onSwapDesignBoard = (token, A, B) => {
+    //A = ({order:A}); 
+    console.log("a: " , A);
+    console.log("b: " , B);
+
+    let a_id = this.props.DesignDetailStep.find(board=>board.order===A.order).uid;
+    let b_id = this.props.DesignDetailStep.find(board=>board.order===B.order).uid;
+    console.log("a_id", a_id, " to ", B);
+    console.log("b_id", b_id, " to ", A);
+
+    console.log("design", this.props.id);
+
+    this.props.UpdateDesignBoardRequest(a_id, token, B)
+      .then(()=>{this.props.UpdateDesignBoardRequest(b_id, token, A)})
+      .then(()=>{this.props.GetDesignBoardRequest(this.props.id)})
+      .catch(err => console.log("ERROR!", err));
   };
+  
   leftButton = () => {
     this.listPosition(true);
   };
@@ -268,6 +258,8 @@ class DetailStep extends Component {
   };
   render() {
     let step = this.props.DesignDetailStep;
+    console.log("rendering!");
+    
     return (
       <ContentBox ref={ref => (this.ContentBox = ref)}>
         <Container padded={true}>

@@ -689,7 +689,7 @@ class DesignDetail extends Component {
                 <DesignSubInfo>
                   <HeadContainer padded={true}>
                     <Grid.Row>
-                      <Grid.Column width={20} textAlign="right">
+                      <Grid.Column width={16} textAlign="right">
                         <SideMenuBtn
                           tabIndex="1"
                           onBlur={this.onCloseMoreBtn}

@@ -120,14 +120,14 @@ class DesignBoard extends Component {
   };
 
   // 단계이동위한함수
-  onShiftRight = () => {
+  onShiftRight = (e) => {
     let data = ({ order: this.props.board.order + 1 });
-    try{this.props.onSwapDesignBoard(this.props.token, this.props.board.order, data)}
+    try{this.props.onSwapDesignBoard(this.props.token, {order:this.props.board.order}, data)}
     catch(err){console.log("failed to call parent fn", err)};
   };
-  onShiftLeft = () => {
+  onShiftLeft = (e) => {
     let data = ({order: this.props.board.order - 1});
-    try{this.props.onSwapDesignBoard(this.props.token, this.props.board.order, data)}
+    try{this.props.onSwapDesignBoard(this.props.token, {order:this.props.board.order}, data)}
     catch(err){console.log("failed to call parent fn", err)};
   };
 
@@ -163,7 +163,8 @@ class DesignBoard extends Component {
   render() {
     const { board, changeBoard, activeBoard, designId, step } = this.props;
     return (
-      <Board>{board.order}, {step.length}
+      <Board >{board.order}, {step.length}
+        <div draggable="true">
         <Title>
           {this.state.active && this.props.isTeam ?
           (
@@ -235,6 +236,7 @@ class DesignBoard extends Component {
           />
         ) : null}
       </CardList>
+      </div>
       </Board>
     );
   }
