@@ -333,6 +333,10 @@ const CounterItem = styled.div`
   .count {
     font-size: ${StyleGuide.font.size.small};
   }
+  
+  & .fork{
+    transform: rotate(90deg);
+  }
 `;
 
 const InfoItem = styled.div`
