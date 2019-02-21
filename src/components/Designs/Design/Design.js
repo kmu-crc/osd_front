@@ -78,6 +78,9 @@ const Count = styled.div`
     content: "";
     clear: both;
   }
+  & .fork{
+    transform: rotate(90deg);
+  }
 `;
 
 class Design extends Component {
