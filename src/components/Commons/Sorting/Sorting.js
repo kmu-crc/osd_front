@@ -7,7 +7,7 @@ const SortingButton=styled.div`
     width: 80px;
     height: 32px;
     box-sizing: border-box;
-    border: 2px solid #E72327;
+    border: 1px solid #E72327;
     font-size: 11px;
     color: #444444;
     border-radius: 5px 5px 5px 5px;
