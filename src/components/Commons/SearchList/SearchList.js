@@ -194,7 +194,7 @@ class SearchList extends Component {
                               onChange={this.typeChange}/>
                   </Grid.Column>
                   {/* <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2}/> */}
-                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8} handleChange={this.sortChange} placeholder={this.props.sort}/>
+                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8} handleClick={this.sortChange} placeholder={this.props.sort}/>
                 </Grid.Row>
               </MenuContainer>
             </Wrapper>
