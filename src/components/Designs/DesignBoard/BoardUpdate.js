@@ -83,7 +83,8 @@ class BoardUpdate extends Component {
               name="title"
               type="text"
               value={this.props.value}
-              placeholder="새 보드 추가"
+              placeholder="새 보드 추가 (20자 이내)"
+              maxLength="20"
               getValue={this.onChangeValue}
               validates={["Required"]}
             />
