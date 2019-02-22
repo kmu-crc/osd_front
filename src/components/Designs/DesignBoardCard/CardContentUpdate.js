@@ -63,8 +63,9 @@ export class CardContentUpdate extends Component {
           <ValidateForm onSubmit={this.handleSubmit}>
             <TextArea
               name="content"
+              maxLength="1000"
               value={this.props.content}
-              placeholder="디자인의 설명을 입력해주세요."
+              placeholder="디자인의 설명을 입력해주세요. (1000자 이내)"
             />
             <Button type="submit">저장</Button>
             <Button
