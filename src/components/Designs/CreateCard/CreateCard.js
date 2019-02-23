@@ -49,15 +49,15 @@ class CreateCard extends Component {
     ValidationGroup(this.state, true)
       .then(data => {
         data.order = this.props.lastOrder;
-        this.props
-          .CreateDesignCardRequest(data, this.props.designId, this.props.boardId, this.props.token)
+        this.props.CreateDesignCardRequest(data, this.props.designId, this.props.boardId, this.props.token)
           .then(res => {
             if (res.success === true) {
               this.props.GetDesignBoardRequest(this.props.designId);
             } else {
               this.props.GetDesignBoardRequest(this.props.designId);
             }
-          });
+          })
+          .then(this.props.UpdateDesignTime(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));

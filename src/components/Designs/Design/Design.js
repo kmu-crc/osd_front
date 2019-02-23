@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import eximg from "source/myPage.jpeg";
 import StyleGuide from "StyleGuide";
+import DateFormat from "modules/DateFormat";
 
 // css styling
 
@@ -54,6 +55,11 @@ const TextPart = styled.div`
     font-weight: 300;
     font-size: ${StyleGuide.font.size.small};
   }
+  & .update {
+    color: ${StyleGuide.color.geyScale.scale7};
+    padding-left : 10px;
+    float: right;
+  }
 `;
 
 const Count = styled.div`
@@ -72,6 +78,9 @@ const Count = styled.div`
     content: "";
     clear: both;
   }
+  & .fork{
+    transform: rotate(90deg);
+  }
 `;
 
 class Design extends Component {
@@ -88,7 +97,12 @@ class Design extends Component {
               ? <div className="userName">{design.userName}님의 프로젝트</div>
               : <div className="userName">{design.userName}님의 작품</div>
               }
-            <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
+            <div className="cate">
+              {design.categoryName? design.categoryName : "전체"}
+              <span className="update">
+                {DateFormat(design.update_time)}
+              </span>
+            </div>
           </TextPart>
           <Count>
             <div>
@@ -102,9 +116,6 @@ class Design extends Component {
             <div>
               <Icon name="fork" size="mini"></Icon>
               <p className="count">{design.children_count}</p>
-            </div>
-            <div>
-              {design.create_time.split("T")[0]}
             </div>
           </Count>
         </Designli>

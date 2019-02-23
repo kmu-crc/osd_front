@@ -4,6 +4,7 @@ import { GetDesignCardRequest } from "actions/Designs/DesignCard";
 import { UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest } from "actions/Designs/DesignBoard";
 import DesignBoard from "components/Designs/DesignBoard";
 import { SetActive } from "actions/OpenDesign";
+import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
 
 class DesignBoardContainer extends Component {
   render() {
@@ -38,6 +39,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     SetActive: (active) => {
       return dispatch(SetActive(active))
+    },
+    UpdateDesignTime: (id, token) => {
+      return dispatch(UpdateDesignTime(id, token));
     }
   };
 };

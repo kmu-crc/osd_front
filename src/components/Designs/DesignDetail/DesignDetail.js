@@ -60,7 +60,7 @@ const HeaderWrap = styled.div`
   box-sizing: border-box;
   background-color: ${StyleGuide.color.geyScale.scale1};
   .designHeaderCol {
-    margin-top: ${PxtoRem(60)} !important;
+    margin-top: ${PxtoRem(10)} !important;
     &:last-child {
       @media only screen and (max-width: 767px) and (min-width: 320px) {
         margin-top: ${PxtoRem(0)} !important;
@@ -150,6 +150,7 @@ const DesignTitle = styled.h2`
   @media only screen and (max-width: 767px) and (min-width: 320px) {
     color: ${StyleGuide.color.geyScale.scale9};
   }
+  padding-top : 30px;
 `;
 
 const DesignExplanation = styled.div`
@@ -176,7 +177,7 @@ const ThumbnailImg = styled.div`
   top: 0;
   display: block;
   width: 100%;
-  height: ${PxtoRem(250)};
+  height: ${PxtoRem(200)};
   box-sizing: border-box;
   background-position: center;
   background-size: contain;
@@ -225,21 +226,22 @@ const DesignSubInfo = styled.div`
 `;
 
 const CreateDate = styled.div`
-  line-height: ${PxtoRem(60)};
-  color: ${StyleGuide.color.geyScale.scale1};
+  line-height: ${PxtoRem(0)};
+  color: ${StyleGuide.color.geyScale.scale7};
   span {
-    color: white;
+    color: black;
     font-weight: bold;
     &.update {
       margin-left: 4rem;
     }
   }
+  text-align : right;
 `;
 
 const SideMenuBtn = styled.div`
-  position: absolute;
-  right: 0;
-  width: ${PxtoRem(50)};
+  position: relative;
+  float : right;
+  width: ${PxtoRem(0)};
   & > button {
     line-height: ${PxtoRem(60)};
     background-color: transparent;
@@ -289,10 +291,10 @@ const SideMenu = styled.ul`
 const CounterWrap = styled.div`
   width: 100%;
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    margin-top: ${PxtoRem(30)};
+    margin-top: ${PxtoRem(10)};
   }
   @media only screen and (min-width: 1200px) {
-    margin-top: ${PxtoRem(80)};
+    margin-top: ${PxtoRem(50)};
   }
   &::after {
     content: "";
@@ -302,7 +304,7 @@ const CounterWrap = styled.div`
 `;
 
 const CounterItem = styled.div`
-  width: 32.3333%;
+  width: 32.333%;
   margin-right: 1.5%;
   float: left;
   text-align: center;
@@ -331,12 +333,17 @@ const CounterItem = styled.div`
   .count {
     font-size: ${StyleGuide.font.size.small};
   }
+  
+  & .fork{
+    transform: rotate(90deg);
+  }
 `;
 
 const InfoItem = styled.div`
   float: left;
   width: 33.3333%;
-  margin-bottom: ${PxtoRem(20)};
+  margin-bottom: ${PxtoRem(0)};
+  padding-top: 3rem;
   h3 {
     padding-left: 1rem;
     margin-bottom: ${PxtoRem(5)};
@@ -686,15 +693,7 @@ class DesignDetail extends Component {
                 <DesignSubInfo>
                   <HeadContainer padded={true}>
                     <Grid.Row>
-                      <Grid.Column width={8}>
-                        <CreateDate>
-                          <span>작성일: </span>
-                          {designDetail.create_time.split("T")[0]}
-                          <span className="update">최근 업데이트: </span>
-                          {DateFormat(designDetail.update_time)}
-                        </CreateDate>
-                      </Grid.Column>
-                      <Grid.Column width={8} textAlign="right">
+                      <Grid.Column width={16} textAlign="right">
                         <SideMenuBtn
                           tabIndex="1"
                           onBlur={this.onCloseMoreBtn}
@@ -789,6 +788,14 @@ class DesignDetail extends Component {
                           </InfoItem>
                           <Button onClick={() => this.setState({commentState: true})}>댓글{this.props.Count.comment_count}</Button>
                           <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false})} }/>
+                          <Grid.Column width={8}>
+                            <CreateDate>
+                              <span>작성일: </span>
+                              {designDetail.create_time.split("T")[0]}
+                              <span className="update">최근 업데이트: </span>
+                              {DateFormat(designDetail.update_time)}
+                            </CreateDate>
+                          </Grid.Column>
                         </DesignInfoCard>
                         <HeadContainer padded={true}>
                           <Grid.Row>
