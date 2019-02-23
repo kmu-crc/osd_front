@@ -1,13 +1,32 @@
 import React, { Component } from "react";
-import { Grid, Dropdown } from "semantic-ui-react";
+import { Grid, Dropdown, Button } from "semantic-ui-react";
 import styled from "styled-components";
 
-const sorting = [
-  { key: "update", value: "update", text: "업데이트순" },
-  { key: "create", value: "create", text: "등록일순" },
-  { key: "like", value: "like", text: "좋아요순" }
-];
+const SortingButton=styled.div`
+  & .ui.button{
+    width: 80px;
+    height: 32px;
+    box-sizing: border-box;
+    border: 1px solid #E72327;
+    font-size: 11px;
+    color: #444444;
+    border-radius: 5px 5px 5px 5px;
+    background-color: #fff;
+    margin-left: 15px;
+  }
 
+  & .ui.button:hover{
+    background-color: #E72327;
+    color: white;
+  }
+
+
+  & .ui.button.btn-on{
+    background-color: #E72327;
+    color: white;
+  }
+
+`
 
 class Sorting extends Component {
   render() {
@@ -21,17 +40,30 @@ class Sorting extends Component {
         mobile={this.props.mobile ? this.props.mobile : null}
         textAlign={this.props.textAlign ? this.props.textAlign : "right"}
       >
-        <Dropdown
-          placeholder={
-            this.props.placeholder && this.props.placeholder === "create"
-              ? "등록일순"
-              : this.props.placeholder && this.props.placeholder === "like"
-              ? "좋아요순"
-              : "업데이트순"
-          }
-          options={sorting}
-          onChange={this.props.handleChange}
-        />
+        <SortingButton>
+          <Button
+            key={"update"}
+            value={"update"}
+            text={"최신순"}
+            onClick={this.props.handleClick}
+            placeholder="update"
+            className={this.props.placeholder===null?"btn-on":this.props.placeholder==="update"?"btn-on":null}
+          >최신순</Button>
+          <Button
+            key={"create"}
+            value={"create"}
+            text={"등록일순"}
+            onClick={this.props.handleClick}
+            className={this.props.placeholder==="create"?"btn-on":null}
+          >등록일순</Button>
+          <Button
+            key={"like"}
+            value={"like"}
+            text={"좋아요순"}
+            onClick={this.props.handleClick}
+            className={this.props.placeholder==="like"?"btn-on":null}
+          >좋아요순</Button>
+        </SortingButton>
       </Grid.Column>
     );
   }

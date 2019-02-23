@@ -164,6 +164,7 @@ class ModifyDesignInfo extends Component {
                   <Label>디자인 제목</Label>
                   <FormInput
                     name="title"
+                    maxLength="100"
                     getValue={this.onChangeValue}
                     validates={["Required"]}
                     onBlur={()=>{this.liveCheck("title")}}
@@ -174,8 +175,10 @@ class ModifyDesignInfo extends Component {
                   <Label>디자인 설명</Label>
                   <FormInput
                     name="explanation"
+                    maxLength="1000"
                     getValue={this.onChangeValue}
                     value={currentDesign.explanation}
+        
                   />
                 </Form.Group>
                 <Form.Group widths="equal">
