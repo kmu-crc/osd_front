@@ -2,6 +2,7 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 export const UpdateDesignTime= (id, token) => {
+    console.log("UPDATE DESIGN TIME");
   return dispatch => {
     dispatch(UpdateDesignInfo());
     return fetch(`${host}/design/updateDesignTime/${id}`, {
@@ -21,7 +22,6 @@ export const UpdateDesignTime= (id, token) => {
       });
   };
 };
-
 
 export const UpdateDesignInfoRequest = (data, id, token) => {
   return dispatch => {
