@@ -40,9 +40,10 @@ class BoardUpdate extends Component {
         this.props
           .onUpdate(this.props.board.uid, this.props.token, data)
           .then(() => {
+            this.props.designTime(this.props.board.design_id, this.props.token);
             this.props.getBoard(this.props.board.design_id);
             this.props.ModifyComplete();
-          });
+          })
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));

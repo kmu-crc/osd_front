@@ -159,6 +159,7 @@ class DesignBoard extends Component {
               board={board}
               getBoard={this.props.GetDesignBoardRequest}
               onUpdate={this.props.UpdateDesignBoardRequest}
+              designTime={this.props.UpdateDesignTime}
               token={this.props.token}
               value={board.title}
               ModifyComplete={this.ModifyComplete}
