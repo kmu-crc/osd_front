@@ -82,7 +82,7 @@ const BgHeader = styled.div`
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
-  height: ${PxtoRem(220)};
+  height: ${PxtoRem(275)};
   @media only screen and (max-width: 767px) and (min-width: 320px) {
     height: ${PxtoRem(200)};
   }
@@ -175,6 +175,7 @@ const ThumbnailImg = styled.div`
   position: absolute;
   left: 0;
   top: 0;
+  margin-top: 10px;
   display: block;
   width: 100%;
   height: ${PxtoRem(200)};
@@ -207,12 +208,6 @@ const ThumbnailImg = styled.div`
   }
 `;
 
-const DesignInfo = styled.div`
-  width: 100%;
-  padding-top: ${PxtoRem(20)};
-  padding-bottom: ${PxtoRem(20)};
-  background-color: ${StyleGuide.color.geyScale.scale1};
-`;
 
 const DesignSubInfo = styled.div`
   position: absolute;
@@ -227,9 +222,10 @@ const DesignSubInfo = styled.div`
 
 const CreateDate = styled.div`
   line-height: ${PxtoRem(0)};
-  color: ${StyleGuide.color.geyScale.scale7};
+  color: white;
+  padding-top: 1.2rem;
   span {
-    color: black;
+    color: white;
     font-weight: bold;
     &.update {
       margin-left: 4rem;
@@ -290,6 +286,8 @@ const SideMenu = styled.ul`
 
 const CounterWrap = styled.div`
   width: 100%;
+  padding-top : 5px;
+
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
     margin-top: ${PxtoRem(10)};
   }
@@ -301,22 +299,27 @@ const CounterWrap = styled.div`
     display: block;
     clear: both;
   }
+
+  & .comment{
+    background-color: #E72327;
+    border-color: #E72327;
+    padding : 0.5em 1.7em;
+    margin-top: 6px;
+  }
 `;
 
 const CounterItem = styled.div`
-  width: 32.333%;
+  width: 22%;
   margin-right: 1.5%;
   float: left;
   text-align: center;
   padding: ${PxtoRem(10)};
-  background-color: white;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
+  color: white;
   i.icon {
     margin: 0 auto;
-    display: block;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
   }
   &:last-child {
     margin-right: 0;
@@ -333,7 +336,7 @@ const CounterItem = styled.div`
   .count {
     font-size: ${StyleGuide.font.size.small};
   }
-  
+
   & .fork{
     transform: rotate(90deg);
   }
@@ -341,26 +344,31 @@ const CounterItem = styled.div`
 
 const InfoItem = styled.div`
   float: left;
-  width: 33.3333%;
   margin-bottom: ${PxtoRem(0)};
-  padding-top: 3rem;
+  padding-top: 0rem;
+  padding-right: 3rem;
   h3 {
     padding-left: 1rem;
     margin-bottom: ${PxtoRem(5)};
     position: relative;
+    color: #fff;
+
     &::before {
       display: block;
       content: "";
       position: absolute;
       width: ${PxtoRem(4)};
       height: 95%;
-      background-color: ${StyleGuide.color.geyScale.scale7};
+      background-color: #fff;
       left: 0;
       top: 0;
     }
   }
   @media only screen and (max-width: 767px) and (min-width: 320px) {
     width: 100%;
+  }
+  p {
+    color: #fff;
   }
 `;
 
@@ -586,26 +594,27 @@ class DesignDetail extends Component {
           <CounterItem>
             {/* <span className="title">조회수</span> */}
             <Icon name="unhide" />
-            <p className="count">{count.view_count}</p>
+            <span className="count">{count.view_count}</span>
           </CounterItem>
           {this.props.like === true ? (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
               {/* <span className="title">좋아요</span> */}
               <Icon name="heart" color="red" />
-              <p className="count">{count.like_count}</p>
+              <span className="count">{count.like_count}</span>
             </CounterItem>
           ) : (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
               {/* <span className="title">좋아요</span> */}
               <Icon name="heart outline" />
-              <p className="count">{count.like_count}</p>
+              <span className="count">{count.like_count}</span>
             </CounterItem>
           )}
           <CounterItem>
             {/* <span className="title">파생</span> */}
             <Icon name="fork" />
-            <p className="count">{designDetail.children_count["count(*)"]}</p>
+            <span className="count">{designDetail.children_count["count(*)"]}</span>
           </CounterItem>
+          <Button className="comment" onClick={() => this.setState({commentState: true})}>댓글 {this.props.Count.comment_count}</Button>
         </CounterWrap>
       );
     };
@@ -693,7 +702,7 @@ class DesignDetail extends Component {
                 <DesignSubInfo>
                   <HeadContainer padded={true}>
                     <Grid.Row>
-                      <Grid.Column width={20} textAlign="right">
+                      <Grid.Column width={16} textAlign="right">
                         <SideMenuBtn
                           tabIndex="1"
                           onBlur={this.onCloseMoreBtn}
@@ -709,7 +718,6 @@ class DesignDetail extends Component {
                   </HeadContainer>
                 </DesignSubInfo>
               </ContentBox>
-              <DesignInfo>
                 <ContentBox>
                   <HeadContainer padded={true}>
                     <Grid.Row>
@@ -759,7 +767,7 @@ class DesignDetail extends Component {
                               <MemberItem>
                                   {/* <Icon name="plus" /> */}
                                   <i className="icon">{this.props.Count.member_count}</i>{this.props.Count.member_count}
-                                </MemberItem>
+                              </MemberItem>
                               <Memberlist
                                 className={
                                   this.state.memberActive ? "active" : null
@@ -786,16 +794,15 @@ class DesignDetail extends Component {
                               </Memberlist>
                             </Members>
                           </InfoItem>
-                          <Button onClick={() => this.setState({commentState: true})}>댓글{this.props.Count.comment_count}</Button>
                           <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false})} }/>
-                          <Grid.Column width={8}>
-                            <CreateDate>
-                              <span>작성일: </span>
-                              {designDetail.create_time.split("T")[0]}
-                              <span className="update">최근 업데이트: </span>
-                              {DateFormat(designDetail.update_time)}
-                            </CreateDate>
-                          </Grid.Column>
+                        </DesignInfoCard>
+                        <DesignInfoCard>
+                          <CreateDate>
+                            <span>작성일 : </span>
+                            {designDetail.create_time.split("T")[0]}
+                            <span className="update">최근 업데이트 : </span>
+                            {DateFormat(designDetail.update_time)}
+                          </CreateDate>
                         </DesignInfoCard>
                         <HeadContainer padded={true}>
                           <Grid.Row>
@@ -808,7 +815,6 @@ class DesignDetail extends Component {
                     </Grid.Row>
                   </HeadContainer>
                 </ContentBox>
-              </DesignInfo>
               <ContentBox>
                 {/* <TabMenu>
                   <Link to={`/designDetail/${this.props.id}`}>
