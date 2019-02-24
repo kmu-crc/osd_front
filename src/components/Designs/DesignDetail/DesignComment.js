@@ -100,6 +100,23 @@ class DesignComment extends React.Component {
     this.createCommentRequest(FormDataToJson(data));
   };
 
+  onDeleteComment = data =>{
+    if(data.replies.length>0){
+      alert("이 댓글에 답변글이 있어 지우실 수 없습니다.");
+      return;
+    }
+    this.props
+      .DeleteDesignCommentRequest(
+        this.props.id,
+        data.uid,
+        this.props.token
+      )
+      .then(res => {
+        if (res.data && res.data.success === true) {
+          this.getComment();
+        }
+      });
+  }
   deleteComment = id => {
     this.props
       .DeleteDesignCommentRequest(
@@ -115,6 +132,12 @@ class DesignComment extends React.Component {
   };
   render() {
     const { open, onClose, comment } = this.props;
+    let parentcomments = comment.filter( item => item.d_flag == null);
+    let comments = parentcomments.map ( parent => {
+      let replies = comment.filter( item => item.d_flag === parent.uid);
+      return {...parent, replies};
+    });
+    console.log(comments);
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
@@ -136,8 +159,8 @@ class DesignComment extends React.Component {
           <Icon name="close" size="big" onClick={onClose} />
           <CommentContainer className="ui comments">
             <h4>댓글</h4>
-            {comment.length > 0 ? (
-              comment.map(comm => (
+            {comments.length > 0 ? (
+              comments.map(comm => (
                 <div className="comment" key={comm.uid}>
                   <div className="avatar">
                     <img src={comm.s_img ? comm.s_img : eximg} alt="profile" />
@@ -156,14 +179,53 @@ class DesignComment extends React.Component {
                           </span>
                         );
                       })}
+                      { <a >답글달기!</a>}{this.state.render?<CommentForm/>:null}
                     </div>
+                    {comm.replies.length > 0 && 
+                    <div>
+                    <div className="ui reply">
+                      {comm.replies.map(reply => (
+                  <div className="comment" key={reply.uid}>
+                  <div className="avatar">
+                    <img src={reply.s_img ? reply.s_img : eximg} alt="profile" />
+                  </div>
+                  <div className="content">
+                    <a className="author">{reply.nick_name}</a>
+                    <div className="metadata">
+                      <div>{reply.create_time.split("T")[0]}</div>
+                    </div>
+                    <div className="text">
+                      {reply.comment.split("\n").map((line, i) => {
+                        return (
+                          <span key={i}>
+                            {line}
+                            <br />
+                          </span>
+                        );
+                      })}
+                    </div>
+                    </div>
+                  {this.props.userInfo &&
+                    this.props.userInfo.uid === reply.user_id && (
+                      <i
+                        size="small"
+                        className="delBtn trash alternate outline icon"
+                        onClick={() => this.deleteComment(reply.uid)}
+                      />
+                    )}
+                </div>
+
+                      ))}
+                    </div>
+                    </div>
+                    }
                   </div>
                   {this.props.userInfo &&
                     this.props.userInfo.uid === comm.user_id && (
                       <i
                         size="small"
                         className="delBtn trash alternate outline icon"
-                        onClick={() => this.deleteComment(comm.uid)}
+                        onClick={() => this.onDeleteComment(comm)}
                       />
                     )}
                 </div>
