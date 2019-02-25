@@ -115,7 +115,7 @@ class Design extends Component {
             </div>
             <div>
               <Icon name="fork" size="mini"></Icon>
-              <p className="count">{design.children_count}</p>
+              {design.children_count ? design.children_count : 0}
             </div>
           </Count>
         </Designli>
