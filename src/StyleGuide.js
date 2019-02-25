@@ -29,6 +29,11 @@ const StyleGuide = {
         basic: "#10669A",
         dark: "#0B4B73"
       },
+      green: {
+        light: "#2ECC71",
+        basic: "#2ABD68",
+        dark: "#27AE60"
+      },
       purple: {
         light: "#A49EB6",
         basic: "#4A3E6D",
