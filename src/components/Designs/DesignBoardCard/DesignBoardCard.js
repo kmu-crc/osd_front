@@ -39,9 +39,9 @@ const BoardCard = styled.li`
     width: 100%;
     & .cardAuthor{
       color: ${StyleGuide.color.geyScale.scale7};
-      text-align: left;
       display: inline-block;
-      width: 55%;
+      text-align: left;
+      padding-right: 5px;
     }
     & .cardCmt {
       display: inline-block;
@@ -49,9 +49,10 @@ const BoardCard = styled.li`
       width: 20%;
     }
     & .cardUpdateDate{
+      float: right;
       padding-right: 5px;
-      text-align: right;
       display: inline-block;
+      text-align: right;
       width: 25%;
     }
   }
@@ -296,10 +297,10 @@ class DesignBoardCard extends Component {
           </div>*/}
             <div className="cardTitle">{card.title}</div>
             <div className="cardInfo">
+              <div className="cardAuthor">{card.nick_name}</div>
               <div className="cardCmt">
                 <Icon name="comment outline"/>{card.comment_count ? card.comment_count:0}
               </div>
-              <div className="cardAuthor">{card.nick_name}</div>
               <div className="cardUpdateDate">{DateFormat(card.update_time)}</div>
             </div>
           </div>
