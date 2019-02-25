@@ -58,8 +58,8 @@ Validates.MinLength2 = value => {
   return new Promise((resolve, reject) => {
     if(!value) resolve(undefined);
     let data = undefined;
-    console.log(value.length > 2);
-    if(value.length > 2) {
+    console.log(value.length >= 2);
+    if(value.length >= 2) {
       data = undefined;
     } else {
       console.log("??");
