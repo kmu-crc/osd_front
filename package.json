@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.6",
-    "babel-core": "6.26.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
@@ -70,7 +70,7 @@
     "webpack-dev-server": "^2.9.1"
   },
   "scripts": {
-    "start": "HTTPS=true REACT_APP_BUILD=false node scripts/start.js",
+    "start": "HTTPS=true REACT_APP_BUILD=ture node scripts/start.js",
     "local": "REACT_APP_LOCAL=true node scripts/start.js",
     "build": "REACT_APP_BUILD=true node scripts/build.js",
     "TBuild": "REACT_APP_DEV=true node scripts/build.js",
