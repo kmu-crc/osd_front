@@ -76,6 +76,7 @@ class DesignCardModify extends Component {
           console.log("props.design_id", this.props.detail.design_id);
           this.props.UpdateCardSourceRequest(res, id, token)
           .then(this.props.UpdateDesignTime(this.props.detail.design_id, token))
+          .then(this.props.GetDesignDetailRequest(this.props.detail.design_id, token))
           .then(() => {
             this.props.GetCardDetailRequest(id);
             resolve("aa");
