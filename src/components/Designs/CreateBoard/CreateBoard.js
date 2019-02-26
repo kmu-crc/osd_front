@@ -73,7 +73,8 @@ class CreateBoard extends Component {
         data.order = this.props.order;
         this.props.CreateDesignBoardRequest(data,this.props.designId, this.props.token)
         .then(() => { this.props.GetDesignBoardRequest(this.props.designId);})
-        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token));
+        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+        .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
       .catch(err => console.log(err,"실패"));
