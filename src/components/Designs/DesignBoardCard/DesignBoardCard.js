@@ -46,14 +46,14 @@ const BoardCard = styled.li`
     & .cardCmt {
       display: inline-block;
       text-align: left;
-      width: 20%;
+      width: 15%;
     }
     & .cardUpdateDate{
       float: right;
       padding-right: 5px;
       display: inline-block;
       text-align: right;
-      width: 25%;
+      width: 30%;
     }
   }
 `;
