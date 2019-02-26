@@ -278,6 +278,7 @@ class DesignBoardCard extends Component {
         </ValidateForm>
       );
     };
+    console.log("detail", detail);
 
     return (
       <div>
@@ -349,7 +350,7 @@ class DesignBoardCard extends Component {
                       </Button>
                     </div>
                   ) : null}
-                  <h2>{detail.title}<CardUpdateDate> {DateFormat(card.update_time)}</CardUpdateDate></h2>
+                  <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
                   <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
                   <CardSourceDetailContainer
                     uid={card.uid}
