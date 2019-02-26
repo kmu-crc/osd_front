@@ -57,7 +57,8 @@ class CreateCard extends Component {
               this.props.GetDesignBoardRequest(this.props.designId);
             }
           })
-          .then(this.props.UpdateDesignTime(this.props.designId, this.props.token));
+          .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+          .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));

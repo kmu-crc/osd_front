@@ -4,6 +4,7 @@ import { CreateDesignCardRequest } from "actions/Designs/DesignCard";
 import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
 import CreateCard from "components/Designs/CreateCard";
 import {UpdateDesignTime} from "actions/Designs/UpdateDesign";
+import { GetDesignDetailRequest} from "actions/Design";
 
 class CreateDesignCardContainer extends Component {
   render() {
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
+    },
+    GetDesignDetailRequest: (id, token) => {
+      return dispatch(GetDesignDetailRequest(id, token));
     },
     UpdateDesignTime: (id) => {
       return dispatch(UpdateDesignTime(id));
