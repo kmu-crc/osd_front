@@ -108,6 +108,7 @@ class DesignCardModify extends Component {
           name="content"
           getValue={this.onChangeValue}
           value={this.props.detail.content}
+          validates={["Required", "MaxLength(1000)"]}
         />
         <Label>컨텐츠</Label>
         <CardSourceDetail
