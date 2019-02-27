@@ -6,6 +6,7 @@ import DesignBoardContainer from "containers/Designs/DesignBoardContainer";
 import CreateDesignBoardContainer from "containers/Designs/CreateDesignBoardContainer";
 import ContentBox from "components/Commons/ContentBox";
 import PxtoRem from "modules/PxtoRem";
+import { UpdateCardSourceRequest } from "actions/Designs/DesignCard";
 
 // css styling
 
@@ -84,7 +85,7 @@ class DetailStep extends Component {
             .child.stateNode
         ).width
       );
-      console.log("width", width)
+      //console.log("width", width)
       await this.setState({
         right: false
       });
@@ -232,22 +233,20 @@ class DetailStep extends Component {
       }
     }
   };
-  onSwapDesignBoard = (token, A, B) => {
-    //A = ({order:A}); 
-    console.log("a: " , A);
-    console.log("b: " , B);
+  onSwapDesignBoard = async (token, A, B) => {
+    if(this.props.DesignDetailStep.find(board=>board.order===A.order)==undefined)return;
+    if(this.props.DesignDetailStep.find(board=>board.order===B.order)==undefined)return;
 
     let a_id = this.props.DesignDetailStep.find(board=>board.order===A.order).uid;
     let b_id = this.props.DesignDetailStep.find(board=>board.order===B.order).uid;
-    console.log("a_id", a_id, " to ", B);
-    console.log("b_id", b_id, " to ", A);
 
-    console.log("design", this.props.id);
-
-    this.props.UpdateDesignBoardRequest(a_id, token, B)
-      .then(()=>{this.props.UpdateDesignBoardRequest(b_id, token, A)})
-      .then(()=>{this.props.GetDesignBoardRequest(this.props.id)})
-      .catch(err => console.log("ERROR!", err));
+    console.log("swapped design card at design:", this.props.id);
+    const update1 = await this.props.UpdateDesignBoardRequest(a_id, token, B);
+    const update2 = await this.props.UpdateDesignBoardRequest(b_id, token, A);
+    const select1 = await this.props.GetDesignBoardRequest(this.props.id);
+    update1;
+    update2;
+    select1;
   };
   
   leftButton = () => {
@@ -258,8 +257,8 @@ class DetailStep extends Component {
   };
   render() {
     let step = this.props.DesignDetailStep;
-    console.log("rendering!");
-    
+   // console.log("rendering!");
+    console.log(step);
     return (
       <ContentBox ref={ref => (this.ContentBox = ref)}>
         <Container padded={true}>

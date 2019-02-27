@@ -122,13 +122,11 @@ class DesignBoard extends Component {
   // 단계이동위한함수
   onShiftRight = (e) => {
     let data = ({ order: this.props.board.order + 1 });
-    try{this.props.onSwapDesignBoard(this.props.token, {order:this.props.board.order}, data)}
-    catch(err){console.log("failed to call parent fn", err)};
+    this.props.onSwapDesignBoard(this.props.token, {order:this.props.board.order}, data);
   };
   onShiftLeft = (e) => {
     let data = ({order: this.props.board.order - 1});
-    try{this.props.onSwapDesignBoard(this.props.token, {order:this.props.board.order}, data)}
-    catch(err){console.log("failed to call parent fn", err)};
+    this.props.onSwapDesignBoard(this.props.token, {order:this.props.board.order}, data);
   };
 
   onModify = () => {
@@ -163,8 +161,8 @@ class DesignBoard extends Component {
   render() {
     const { board, changeBoard, activeBoard, designId, step } = this.props;
     return (
-      <Board >{board.order}, {step.length}
-        <div draggable="true">
+      <Board >
+        <div draggable="false">
         <Title>
           {this.state.active && this.props.isTeam ?
           (
@@ -194,14 +192,14 @@ class DesignBoard extends Component {
                       : "none"
                 }}
               >
-              {board.order > 0 &&
-                <MenuItem>
-                  <button onClick={this.onShiftLeft}> {"<"} </button>
-                </MenuItem>
-              }
               {board.order < step.length-1 &&
                 <MenuItem>
                   <button onClick={this.onShiftRight}> {">"} </button>
+                </MenuItem>
+              }
+              {board.order > 0 &&
+                <MenuItem>
+                  <button onClick={this.onShiftLeft}> {"<"} </button>
                 </MenuItem>
               }
                 <MenuItem>
