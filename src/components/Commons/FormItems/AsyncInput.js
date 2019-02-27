@@ -202,9 +202,7 @@ export class AsyncInput extends Component {
       validates: data.validates,
       textValue: data.value
     });
-    if (e && e.key === "Enter") {
-      this.SearchList();
-    }
+    this.SearchList();
     this.returnData();
   };
 
