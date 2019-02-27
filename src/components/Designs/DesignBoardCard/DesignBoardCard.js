@@ -278,8 +278,6 @@ class DesignBoardCard extends Component {
         </ValidateForm>
       );
     };
-    console.log("detail", detail);
-
     return (
       <div>
         <BoardCard onClick={this.openModalHandler}>

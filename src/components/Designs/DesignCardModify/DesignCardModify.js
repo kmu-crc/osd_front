@@ -86,7 +86,6 @@ class DesignCardModify extends Component {
     });
   };
   render() {
-    console.log("detail", this.props.detail);
     return (
       <div>
         <Label>썸네일</Label>

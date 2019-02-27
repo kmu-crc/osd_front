@@ -119,11 +119,35 @@ class DesignBoard extends Component {
     this.props.SetActive(active, target);
   };
 
+  // 단계이동위한함수
+  swapBoard = (boardA, boardB) => {
+    this.props.UpdateDesignBoardRequest(boardA.id, this.props.token, boardA.data)
+      .then(this.props.UpdateDesignBoardRequest(boardB.id, this.props.token, boardB.data))
+      .then(() => {
+        this.props.GetDesignBoardRequest(this.props.board.design_id);
+      });
+  };
+  onRight = (e) => {
+    let b = this.props.step.find((board) => { return board.order == this.props.board.order + 1 });
+    let boardA = { id: this.props.board.uid, data: { order: this.props.board.order + 1 } };
+    let boardB = { id: b.uid, data: { order: this.props.board.order } };
+    console.log(boardA, boardA.id, boardA.data);
+    console.log(boardB, boardB.id, boardB.data);
+    this.swapBoard(boardA, boardB);
+  };
+  onLeft = (e) => {
+    let b = this.props.step.find((board) => { return board.order == this.props.board.order - 1 });
+    let boardA = { id: this.props.board.uid, data: { order: this.props.board.order - 1 } };
+    let boardB = { id: b.uid, data: { order: this.props.board.order } };
+    console.log(boardA, boardA.id, boardA.data);
+    console.log(boardB, boardB.id, boardB.data);
+    this.swapBoard(boardA, boardB);
+  }
   onModify = () => {
     if (this.props.isTeam !== 1) {
       return;
     } else {
-      this.setState({active: true});
+      this.setState({ active: true });
     }
   }
 
@@ -136,82 +160,99 @@ class DesignBoard extends Component {
       return;
     }
     const confirm = window.confirm("단계를 삭제하시겠습니까?");
-    if(confirm) {
+    if (confirm) {
       this.props
-      .DeleteDesignBoardRequest(
-        this.props.board.design_id,
-        this.props.board.uid,
-        this.props.token
-      )
-      .then(() => {
-        this.props.GetDesignBoardRequest(this.props.board.design_id);
-      });
+        .DeleteDesignBoardRequest(
+          this.props.board.design_id,
+          this.props.board.uid,
+          this.props.token
+        )
+        .then(() => {
+          this.props.GetDesignBoardRequest(this.props.board.design_id);
+        });
     }
   };
+
   render() {
-    const { board, changeBoard, activeBoard, designId, list } = this.props;
-    console.log(list);
+
+    const { board, changeBoard, activeBoard, designId, step } = this.props;
+
     return (
-      <Board>
-        <Title>
-          {this.state.active && this.props.isTeam ? (
-            <BoardUpdate
-              board={board}
-              getBoard={this.props.GetDesignBoardRequest}
-              onUpdate={this.props.UpdateDesignBoardRequest}
-              designTime={this.props.UpdateDesignTime}
-              token={this.props.token}
-              value={board.title}
-              ModifyComplete={this.ModifyComplete}
-            />
-          ) : (
-            <div>
-              <span onClick={this.onModify}>{board.title}</span>
-              {this.props.isTeam > 0 ? (
-                <MenuIcon className="openMenu" onClick={this.onActive}>
-                  <Icon name="ellipsis vertical" />
-                </MenuIcon>
-              ) : null
-              }
-              <Menu
-                style={{
-                  display:
-                    this.props.isActive === `BOARD${board.uid}`
-                      ? "block"
-                      : "none"
-                }}
-              >
-                <MenuItem>
-                  <button onClick={this.onModify}>수정</button>
-                </MenuItem>
-                <MenuItem>
-                  <button onClick={this.onDelete}>삭제</button>
-                </MenuItem>
-              </Menu>
-            </div>
-          )}
-        </Title>
-        <CardList>
-        {board.cards.length > 0 &&
-          board.cards.map((item, index) => {
-            return (
-              <DesignBoardCardContainer
-                key={`card${index}`}
-                card={item}
+      <Board >
+        <div draggable="false">
+          <Title>
+            {this.state.active && this.props.isTeam ?
+              (
+                <BoardUpdate
+                  board={board}
+                  getBoard={this.props.GetDesignBoardRequest}
+                  onUpdate={this.props.UpdateDesignBoardRequest}
+                  designTime={this.props.UpdateDesignTime}
+                  token={this.props.token}
+                  value={board.title}
+                  ModifyComplete={this.ModifyComplete}
+                />
+              ) :
+              (
+                <div>
+                  <span onClick={this.onModify}>{board.title}</span>
+                  {this.props.isTeam > 0 ? (
+                    <MenuIcon className="openMenu" onClick={this.onActive}>
+                      <Icon name="ellipsis vertical" />
+                    </MenuIcon>
+                  ) : null
+                  }
+                  <Menu
+                    style={{
+                      display:
+                        this.props.isActive === `BOARD${board.uid}`
+                          ? "block"
+                          : "none"
+                    }}
+                  >
+                    {board.order < step.length - 1 &&
+                      <MenuItem>
+                        <button onClick={this.onRight}> {">"} </button>
+                      </MenuItem>
+                    }
+                    {board.order > 0 &&
+                      <MenuItem>
+                        <button onClick={this.onLeft}> {"<"} </button>
+                      </MenuItem>
+                    }
+                    <MenuItem>
+                      <button onClick={this.onModify}>수정</button>
+                    </MenuItem>
+                    <MenuItem>
+                      <button onClick={this.onDelete}>삭제</button>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )
+            }
+          </Title>
+          <CardList>
+            {board.cards.length > 0 &&
+              board.cards.map((item, index) => {
+                return (
+                  <DesignBoardCardContainer
+                    key={`card${index}`}
+                    card={item}
+                    boardId={board.uid}
+                  />
+                );
+              })}
+            {this.props.isTeam > 0 ? (
+              <CreateDesignCardContainer
+                designId={designId}
                 boardId={board.uid}
+                changeBoard={changeBoard}
+                activeBoard={activeBoard}
+                lastOrder={board.cards.length}
               />
-            );
-          })}
-        {this.props.isTeam > 0 ? (
-          <CreateDesignCardContainer
-            designId={designId}
-            boardId={board.uid}
-            changeBoard={changeBoard}
-            activeBoard={activeBoard}
-            lastOrder={board.cards.length}
-          />
-        ) : null}
-      </CardList>
+            ) : null}
+          </CardList>
+        </div>
       </Board>
     );
   }
