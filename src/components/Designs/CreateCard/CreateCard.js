@@ -82,7 +82,7 @@ class CreateCard extends Component {
               <FormInput
                 name="title"
                 maxLength="20"
-                placeholder="새로운 컨텐츠의 제목을 입력해주세요."
+                placeholder="제목을 입력해주세요."
                 getValue={this.onChangeValue}
                 validates={["Required"]}
               />
