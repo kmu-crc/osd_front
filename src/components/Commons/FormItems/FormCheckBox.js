@@ -44,7 +44,7 @@ const CheckBoxLabel = styled.label`
 
 export class FormCheckBox extends Component {
   state = {
-    value: true,
+    value: this.value,
     target: null,
     validates: []
   };

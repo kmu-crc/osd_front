@@ -197,7 +197,7 @@ class SignUpForm extends Component {
                name="use_agreement"
                placeholder="이용약관에 동의하시겠습니까?"
                getValue={this.onChangeValue}
-               value={true} 
+               value={false} 
              />
           <ButtonBox>
             <SignUpBtn type="submit" round={true} fluid={true}>
