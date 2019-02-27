@@ -40,9 +40,10 @@ class BoardUpdate extends Component {
         this.props
           .onUpdate(this.props.board.uid, this.props.token, data)
           .then(() => {
+            this.props.designTime(this.props.board.design_id, this.props.token);
             this.props.getBoard(this.props.board.design_id);
             this.props.ModifyComplete();
-          });
+          })
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));
@@ -83,7 +84,8 @@ class BoardUpdate extends Component {
               name="title"
               type="text"
               value={this.props.value}
-              placeholder="새 보드 추가"
+              placeholder="새 보드 추가 (20자 이내)"
+              maxLength="20"
               getValue={this.onChangeValue}
               validates={["Required"]}
             />

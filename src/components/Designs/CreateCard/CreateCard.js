@@ -49,15 +49,16 @@ class CreateCard extends Component {
     ValidationGroup(this.state, true)
       .then(data => {
         data.order = this.props.lastOrder;
-        this.props
-          .CreateDesignCardRequest(data, this.props.designId, this.props.boardId, this.props.token)
+        this.props.CreateDesignCardRequest(data, this.props.designId, this.props.boardId, this.props.token)
           .then(res => {
             if (res.success === true) {
               this.props.GetDesignBoardRequest(this.props.designId);
             } else {
               this.props.GetDesignBoardRequest(this.props.designId);
             }
-          });
+          })
+          .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+          .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
       .catch(err => console.log("실패", err));
@@ -80,6 +81,7 @@ class CreateCard extends Component {
             <FInput>
               <FormInput
                 name="title"
+                maxLength="20"
                 placeholder="새로운 컨텐츠의 제목을 입력해주세요."
                 getValue={this.onChangeValue}
                 validates={["Required"]}

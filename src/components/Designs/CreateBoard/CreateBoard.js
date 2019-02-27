@@ -71,15 +71,13 @@ class CreateBoard extends Component {
     await ValidationGroup(this.state, true)
       .then(data => {
         data.order = this.props.order;
-        console.log(data, "????");
-        this.props
-          .CreateDesignBoardRequest(data, this.props.designId, this.props.token)
-          .then(data => {
-            this.props.GetDesignBoardRequest(this.props.designId);
-          });
+        this.props.CreateDesignBoardRequest(data,this.props.designId, this.props.token)
+        .then(() => { this.props.GetDesignBoardRequest(this.props.designId);})
+        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+        .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
-      .catch(console.log("실패"));
+      .catch(err => console.log(err,"실패"));
   };
   handelClose = (e) => {
     if(e.type === "blur" && !this.form.contains(
@@ -98,8 +96,8 @@ class CreateBoard extends Component {
             <FInput>
               <FormInput
                 name="title"
-                placeholder="새 단계 추가 (8자 이내)"
-                maxLength="8"
+                placeholder="새 단계 추가 (20자 이내)"
+                maxLength="20"
                 getValue={this.onChangeValue}
                 validates={["Required"]}
               />

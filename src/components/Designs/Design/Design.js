@@ -54,11 +54,11 @@ const TextPart = styled.div`
     color: ${StyleGuide.color.main.basic};
     font-weight: 300;
     font-size: ${StyleGuide.font.size.small};
-    text-align : right;
   }
   & .update {
     color: ${StyleGuide.color.geyScale.scale7};
     padding-left : 10px;
+    float: right;
   }
 `;
 
@@ -77,6 +77,9 @@ const Count = styled.div`
     display: block;
     content: "";
     clear: both;
+  }
+  & .fork{
+    transform: rotate(90deg);
   }
 `;
 
@@ -112,7 +115,7 @@ class Design extends Component {
             </div>
             <div>
               <Icon name="fork" size="mini"></Icon>
-              <p className="count">{design.children_count}</p>
+              {design.children_count ? design.children_count : 0}
             </div>
           </Count>
         </Designli>

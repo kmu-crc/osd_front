@@ -284,7 +284,7 @@ export class AsyncInput extends Component {
               type={type ? type : "text"}
               name={name && name}
               defaultValue={value && value}
-              placeholder={placeholder && placeholder}
+              placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요."
               style={style && style}
               id={id ? id : name}
               value={this.state.value}

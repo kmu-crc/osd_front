@@ -128,7 +128,8 @@ class ModifyDesignInfo extends Component {
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
-      this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
+      this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, 
+        this.props.token)
       .then(data => {
         if (data.res && data.res.success) {
           this.props.history.push(`/designDetail/${data.res.design_id}`);
@@ -137,7 +138,7 @@ class ModifyDesignInfo extends Component {
           // this.state.member.value = JSON.parse(this.state.member.value);
           this.props.setLoader();
         }
-      });
+      })
     }).catch(e => {
       console.log("실패", e);
       // this.state.member.value = JSON.parse(this.state.member.value);
@@ -163,6 +164,7 @@ class ModifyDesignInfo extends Component {
                   <Label>디자인 제목</Label>
                   <FormInput
                     name="title"
+                    maxLength="100"
                     getValue={this.onChangeValue}
                     validates={["Required"]}
                     onBlur={()=>{this.liveCheck("title")}}
@@ -173,8 +175,10 @@ class ModifyDesignInfo extends Component {
                   <Label>디자인 설명</Label>
                   <FormInput
                     name="explanation"
+                    maxLength="1000"
                     getValue={this.onChangeValue}
                     value={currentDesign.explanation}
+        
                   />
                 </Form.Group>
                 <Form.Group widths="equal">

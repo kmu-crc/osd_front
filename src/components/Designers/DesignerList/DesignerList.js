@@ -88,6 +88,11 @@ const Head = styled.div`
   padding-top: 80px;
   padding-bottom: 2rem;
   font-size: ${StyleGuide.font.size.paragraph};
+
+  & .Sorting{
+    float: right;
+  }
+
 `;
 
 
@@ -154,6 +159,10 @@ class DesignerList extends Component {
               <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
             }
             <span> ({this.props.Count})</span>
+            <div className="Sorting">
+              <Sorting handleClick={this.sortChange}
+                       placeholder={sort}/>
+            </div>
           </Head>
         );
       } else {
@@ -168,22 +177,10 @@ class DesignerList extends Component {
             <Wrapper>
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
-                <CategoryContainer widescreen={12}
-                                    largeScreen={12}
-                                    computer={8}
-                                    tablet={10}
-                                    mobile={11}
-                                    handleCate1={this.cate1Change}
+                <CategoryContainer  handleCate1={this.cate1Change}
                                     handleCate2={this.cate2Change}
                                     cate1={this.props.cate1}
                                     cate2={this.props.cate2}/>
-                  <Sorting widescreen={4}
-                           largeScreen={4}
-                           computer={8}
-                           tablet={5}
-                           mobile={4}
-                           handleChange={this.sortChange}
-                           placeholder={sort}/>
                 </Grid.Row>
               </MenuContainer>
             </Wrapper>

@@ -72,8 +72,11 @@ class DesignCardModify extends Component {
             delete res.files;
           }
           res.data = data;
-          console.log(res);
+          console.log("RES: ", res);
+          console.log("props.design_id", this.props.detail.design_id);
           this.props.UpdateCardSourceRequest(res, id, token)
+          .then(this.props.UpdateDesignTime(this.props.detail.design_id, token))
+          .then(this.props.GetDesignDetailRequest(this.props.detail.design_id, token))
           .then(() => {
             this.props.GetCardDetailRequest(id);
             resolve("aa");
@@ -106,6 +109,7 @@ class DesignCardModify extends Component {
           name="content"
           getValue={this.onChangeValue}
           value={this.props.detail.content}
+          validates={["Required", "MaxLength(1000)"]}
         />
         <Label>컨텐츠</Label>
         <CardSourceDetail

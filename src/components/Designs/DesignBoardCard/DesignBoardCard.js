@@ -28,7 +28,6 @@ const BoardCard = styled.li`
     padding: 10px;
   }
   & .cardTitle {
-    display: inline-block;
     width: 100%;
     font-size: ${StyleGuide.font.size.paragraph};
     color: ${StyleGuide.color.geyScale.scale8};
@@ -38,8 +37,23 @@ const BoardCard = styled.li`
     font-size: ${StyleGuide.font.size.small};
     color: ${StyleGuide.color.geyScale.scale8};
     width: 100%;
+    & .cardAuthor{
+      color: ${StyleGuide.color.geyScale.scale7};
+      display: inline-block;
+      text-align: left;
+      padding-right: 5px;
+    }
     & .cardCmt {
-      margin-left: 20px;
+      display: inline-block;
+      text-align: left;
+      width: 15%;
+    }
+    & .cardUpdateDate{
+      float: right;
+      padding-right: 5px;
+      display: inline-block;
+      text-align: right;
+      width: 30%;
     }
   }
 `;
@@ -264,6 +278,7 @@ class DesignBoardCard extends Component {
         </ValidateForm>
       );
     };
+    console.log("detail", detail);
 
     return (
       <div>
@@ -272,7 +287,7 @@ class DesignBoardCard extends Component {
             <img src={card.first_img.m_img} alt="thumbnail" />
           ) : null}
           <div className="content">
-            <div className="cardTitle">{card.title}</div>
+          {/*  <div className="cardTitle">{card.title}</div>
             <CardUpdateDate>{DateFormat(card.update_time)}</CardUpdateDate>
             <div className="cardInfo">
               {card.nick_name}
@@ -280,6 +295,14 @@ class DesignBoardCard extends Component {
                 <Icon name="comment outline" />
                 {card.comment_count ? card.comment_count : 0}
               </span>
+          </div>*/}
+            <div className="cardTitle">{card.title}</div>
+            <div className="cardInfo">
+              <div className="cardAuthor">{card.nick_name}</div>
+              <div className="cardCmt">
+                <Icon name="comment outline"/>{card.comment_count ? card.comment_count:0}
+              </div>
+              <div className="cardUpdateDate">{DateFormat(card.update_time)}</div>
             </div>
           </div>
         </BoardCard>
@@ -327,7 +350,7 @@ class DesignBoardCard extends Component {
                       </Button>
                     </div>
                   ) : null}
-                  <h2>{detail.title}<CardUpdateDate> {DateFormat(card.update_time)}</CardUpdateDate></h2>
+                  <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
                   <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
                   <CardSourceDetailContainer
                     uid={card.uid}

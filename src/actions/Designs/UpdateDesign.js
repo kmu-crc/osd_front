@@ -1,6 +1,28 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+export const UpdateDesignTime= (id, token) => {
+    console.log("UPDATE DESIGN TIME");
+  return dispatch => {
+    dispatch(UpdateDesignInfo());
+    return fetch(`${host}/design/updateDesignTime/${id}`, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST"
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(res) {
+        console.log("update designTIME", res);
+        return dispatch(UpdateDesignInfoSuccess(res));
+      })
+      .catch(err=> {
+        console.log("time update err", err);
+        return dispatch(UpdateDesignInfoFailure(err));
+      });
+  };
+};
+
 export const UpdateDesignInfoRequest = (data, id, token) => {
   return dispatch => {
     dispatch(UpdateDesignInfo());

@@ -144,7 +144,7 @@ const MemberListItem = styled.li`
 
 const DetailWrapper = styled.div`
   background-color: ${StyleGuide.color.geyScale.scale1};
-  height: 300px;
+  height: 780px;
   padding: 1rem 1rem 2rem 1rem;
   overflow-y: scroll;
   position: relative;
