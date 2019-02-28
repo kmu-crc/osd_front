@@ -349,7 +349,7 @@ class DesignBoardCard extends Component {
                     </div>
                   ) : null}
                   <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
-                  <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
+                  <p>{detail.content ? detail.content : ""}</p>
                   <CardSourceDetailContainer
                     uid={card.uid}
                     isTeam={this.props.isTeam}
