@@ -119,6 +119,9 @@ class SignUpForm extends Component {
       alert("비밀번호 확인을 다시 해주십시오"); 
       return false;
     }
+
+    alert("마이페이지로 이동합니다.");
+    
     delete formData.password2;
     ValidationGroup(formData, true).then(data => {
       console.log("성공", data);
