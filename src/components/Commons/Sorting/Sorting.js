@@ -52,17 +52,17 @@ class Sorting extends Component {
           <Button
             key={"create"}
             value={"create"}
-            text={"등록일순"}
+            text={"등록순"}
             onClick={this.props.handleClick}
             className={this.props.placeholder==="create"?"btn-on":null}
-          >등록일순</Button>
+          >등록순</Button>
           <Button
             key={"like"}
             value={"like"}
-            text={"좋아요순"}
+            text={"인기순"}
             onClick={this.props.handleClick}
             className={this.props.placeholder==="like"?"btn-on":null}
-          >좋아요순</Button>
+          >인기순</Button>
         </SortingButton>
       </Grid.Column>
     );

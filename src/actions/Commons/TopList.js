@@ -85,3 +85,51 @@ export function GetTopDesignerListFailure() {
     TopDesignerList : []
   };
 };
+
+export function GetTopGroupListRequest(page) {
+  return (dispatch) => {
+    return fetch(`${host}/group/TopList`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log("group data >>", data);
+        if (!data) {
+          console.log("no data");
+          data = [];
+        }
+        if (page === 0) {
+          dispatch(GetTopGroupListClear(data));
+          return;
+        }
+        dispatch(GetTopGroupListSuccess(data));
+      }).catch((error) => {
+        dispatch(GetTopGroupListFailure());
+        console.log("err", error);
+      })
+  }
+};
+
+export function GetTopGroupListSuccess(data) {
+  return {
+    type: types.GET_TOP_GROUP_LIST_SUCCESS,
+    TopList : data
+  };
+};
+
+export function GetTopGroupListFailure() {
+  return {
+    type: types.GET_TOP_GROUP_LIST_FAILURE,
+    TopList : [],
+    TopListAdded : []
+  };
+};
+
+export function GetTopGroupListClear(data) {
+  return {
+    type: types.GET_TOP_GROUP_LIST_CLEAR,
+    TopList: data,
+    TopListAdded: []
+  }
+}
