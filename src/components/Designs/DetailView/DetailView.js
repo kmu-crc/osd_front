@@ -263,7 +263,7 @@ class DetailView extends Component {
                   </div>
                 ))
               ) : (
-                <p>등록된 코멘트가 없습니다.</p>
+                <p>{/*등록된 코멘트가 없습니다.*/}</p>
               )}
               {this.state.render ? <CommentForm /> : null}
             </CommentContainer>

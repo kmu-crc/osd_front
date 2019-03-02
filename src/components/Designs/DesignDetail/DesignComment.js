@@ -249,7 +249,7 @@ class DesignComment extends React.Component {
                 </div>
               ))
             ) : (
-              <p>등록된 코멘트가 없습니다.</p>
+              <p>{/*등록된 코멘트가 없습니다.*/}</p>
             )}
             {this.state.render ? <CommentForm value={null}/> : null}
           </CommentContainer>
