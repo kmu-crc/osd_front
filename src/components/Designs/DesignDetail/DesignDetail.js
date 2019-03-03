@@ -181,7 +181,7 @@ const ThumbnailImg = styled.div`
   height: ${PxtoRem(200)};
   box-sizing: border-box;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-color: gray;
   border-radius: 3px;

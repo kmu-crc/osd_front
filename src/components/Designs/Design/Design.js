@@ -25,7 +25,7 @@ const ImgPart = styled.div`
   height: 140px;
   overflow: hidden;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 `;
 
