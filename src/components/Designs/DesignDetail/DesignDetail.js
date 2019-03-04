@@ -257,29 +257,34 @@ const SideMenuBtn = styled.div`
 `;
 
 const SideMenu = styled.ul`
-  display: block;
-  position: absolute;
+  position: relative;
+  z-index:1;
   width: ${PxtoRem(150)};
   text-align: center;
   bottom: 0;
   right: 0;
-  transform: translateY(100%);
+  transform: translateX(-40%);
   background-color: white;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   li {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: Pointer;
     &:last-child {
       border: 0;
     }
     & button {
       width: 100%;
-      line-height: ${PxtoRem(45)};
+    line-height: ${PxtoRem(45)};
       background-color: transparent;
       text-align: center;
       border: 0;
       padding: 0;
       outline: 0;
+      &.delete:hover{
+      background-color: #EA0000;
+        color: white;
+      }
     }
   }
 `;
@@ -637,11 +642,13 @@ class DesignDetail extends Component {
             </li>
           }
           {isLeader &&
-            <li><button onClick={this.deleteDesign}>삭제</button></li>
+            <li className="delete" onClick={this.deleteDesign}><button className="delete">삭제</button></li>
           }
           {!isMember && <li><button onClick={this.joinMember}>가입 신청</button></li>}
           <li>
-            <button onClick={this.onCloseMoreBtn}>파생디자인 생성</button>
+            <Link to={`/design/`} onClick={this.onCloseMoreBtn}>
+            <button>파생디자인 생성</button>
+            </Link>
           </li>
           <li style={{display: designDetail.parent_design ? "block" : "none"}}>
             <button onClick={this.onCloseMoreBtn}>원본디자인 보기</button>
