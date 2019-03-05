@@ -5,6 +5,7 @@ import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import Button from "components/Commons/Button";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
+import ScrollTopGroupListContainer from "containers/Groups/ScrollTopGroupListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import group_bg from "source/group_bg.jpg";
 import StyleGuide from "StyleGuide";
@@ -155,6 +156,7 @@ class GroupList extends Component {
         </Content>
         <Content>
           <Wrapper className="listWrap">
+            <ScrollTopGroupListContainer/> 
             {this.state.rendering && <ScrollGroupListContainer sort={sort} history={this.props.history}/>}
           </Wrapper>
         </Content>
