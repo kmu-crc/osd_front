@@ -179,7 +179,6 @@ class DesignBoard extends Component {
 
     return (
       <Board >
-        <div draggable="false">
           <Title>
             {this.state.active && this.props.isTeam ?
               (
@@ -252,7 +251,6 @@ class DesignBoard extends Component {
               />
             ) : null}
           </CardList>
-        </div>
       </Board>
     );
   }
