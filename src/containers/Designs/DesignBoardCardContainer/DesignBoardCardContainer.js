@@ -6,6 +6,7 @@ import {
   UpdateCardTitleRequest,
   UpdateCardContentRequest,
   GetCardDetailRequest,
+  GetDesignCardRequest,
   UpdateCardImagesRequest,
   UpdateCardSourcesRequest,
   DeleteDesignCardRequest,
@@ -32,8 +33,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    UpdateCardTitleRequest: (data, token, id) => {
-      return dispatch(UpdateCardTitleRequest(data, token, id));
+    UpdateCardTitleRequest: (id, token, data) => {
+      return dispatch(UpdateCardTitleRequest(id, token, data));
     },
     UpdateCardContentRequest: (data, token, id) => {
       return dispatch(UpdateCardContentRequest(data, token, id));
@@ -49,6 +50,9 @@ const mapDispatchToProps = dispatch => {
     },
     GetDesignBoardRequest: (id) => {
       return dispatch(GetDesignBoardRequest(id));
+    },
+    GetDesignCardRequest: (design_id, board_id) => {
+      return dispatch(GetDesignCardRequest(design_id, board_id));
     },
     GetCardDetailRequest: id => {
       return dispatch(GetCardDetailRequest(id));

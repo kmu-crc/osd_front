@@ -237,6 +237,8 @@ class DesignBoard extends Component {
                   <DesignBoardCardContainer
                     key={`card${index}`}
                     card={item}
+                    cards={board.cards}
+                    designId={board.design_id}
                     boardId={board.uid}
                   />
                 );

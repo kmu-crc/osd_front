@@ -57,7 +57,42 @@ const BoardCard = styled.li`
     }
   }
 `;
-
+const Title = styled.div`
+  width: 100%;
+  font-size: ${StyleGuide.font.size.paragraph};
+  color: ${StyleGuide.color.geyScale.scale8};
+  margin-bottom: 5px;
+  cursor: pointer;
+  display: inline-block;
+`
+const TitleText = styled.div`
+  width: 100%;
+  font-size: ${StyleGuide.font.size.paragraph};
+  color: ${StyleGuide.color.geyScale.scale8};
+  margin-bottom: 5px;
+  cursor: pointer;
+  display: inline;
+`;
+const MenuIcon = styled.button`
+  background-color: transparent;
+  display: inline;
+  float: right;
+  border: 0;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 3px;
+  &:hover {
+    background-color: ${StyleGuide.color.geyScale.scale1};
+    color: ${StyleGuide.color.geyScale.scale9};
+  }
+  i.icon {
+    color: ${StyleGuide.color.geyScale.scale9};
+    margin: 0;
+  }
+`;
 const CustomModal = styled(Modal)`
   padding: 20px;
   & .icon.close {
@@ -156,7 +191,30 @@ class DesignBoardCard extends Component {
       this.props.GetDesignBoardRequest(this.props.match.params.id);
     }
   };
-
+  swapCard = (cardA, cardB) =>{
+    this.props.UpdateCardTitleRequest(cardA.data, this.props.token, cardA.id)
+      .then(this.props.UpdateCardTitleRequest(cardB.data, this.props.token, cardB.id))
+      .then(()=>{this.props.GetDesignBoardRequest(this.props.designId)})
+      ;//.then(()=>{this.props.GetDesignCardRequest(this.props.designId,this.props.boardId)});
+  };
+  onUp = (e) => {
+    e.stopPropagation();
+    let b = this.props.cards.find((card) => { return card.order == this.props.card.order - 1 });
+    let cardA = { id: this.props.card.uid, data: { order: this.props.card.order - 1 } };
+    let cardB = { id: b.uid, data: { order: this.props.card.order } };
+    this.swapCard(cardA, cardB);
+    e.currentTarget.blur();
+  }
+  onDown = (e) => {
+    e.stopPropagation();
+    let b = this.props.cards.find((card) => { return card.order == this.props.card.order + 1 });
+    let cardA = { id: this.props.card.uid, data: { order: this.props.card.order + 1 } };
+    let cardB = { id: b.uid, data: { order: this.props.card.order } };
+    //console.log(cardA, cardA.id, cardA.data);
+    //console.log(cardB, cardB.id, cardB.data);
+    this.swapCard(cardA, cardB);
+    e.currentTarget.blur();
+  }
   changeActive = async value => {
     this.props
       .GetCardDetailRequest(this.props.card.uid)
@@ -260,24 +318,25 @@ class DesignBoardCard extends Component {
   };
 
   render() {
-    const { card, detail } = this.props;
+    const { card, detail, cards } = this.props;
     const comment = this.props.Comment;
     const { open, closeOnDimmerClick } = this.state;
     const CommentForm = () => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
           <FormField name="comment" RenderComponent={FormTextArea} />
-          <Button
-            type="submit"
-            size="small"
-            className="ui icon primary left labeled button"
-          >
+          <Button type="submit" size="small"
+            className="ui icon primary left labeled button">
             <i aria-hidden="true" className="edit icon" />
             댓글쓰기
           </Button>
         </ValidateForm>
       );
     };
+    console.log("design_id", this.props.detail.design_id);
+    console.log("design_id", this.props.designId);
+    console.log("board_id", this.props.boardId);
+    console.log("props", this.props);
     return (
       <div>
         <BoardCard onClick={this.openModalHandler}>
@@ -285,16 +344,17 @@ class DesignBoardCard extends Component {
             <img src={card.first_img.m_img} alt="thumbnail" />
           ) : null}
           <div className="content">
-          {/*  <div className="cardTitle">{card.title}</div>
-            <CardUpdateDate>{DateFormat(card.update_time)}</CardUpdateDate>
-            <div className="cardInfo">
-              {card.nick_name}
-              <span className="cardCmt">
-                <Icon name="comment outline" />
-                {card.comment_count ? card.comment_count : 0}
-              </span>
-          </div>*/}
-            <div className="cardTitle">{card.title}</div>
+           <Title>
+            <TitleText>{card.title}</TitleText>
+            {this.props.isTeam && (
+              <div style={{float:"right", display:"inline-block"}}>
+                {card.order < cards.length-1 && 
+                <MenuIcon onClick={this.onDown}><Icon name="angle down"/></MenuIcon>}
+                {card.order > 0 &&
+                <MenuIcon onClick={this.onUp}><Icon name="angle up"/></MenuIcon>}
+              </div>
+            )}
+           </Title>
             <div className="cardInfo">
               <div className="cardAuthor">{card.nick_name}</div>
               <div className="cardCmt">
