@@ -250,7 +250,51 @@ export class FormTextArea extends Component {
     );
   }
 }
+const TextAreaRed = styled.textarea`
+  
+`;
+export class FormTextAreaRed extends Component {
+  state = {
+    status: "SUCCESS",
+    message: null,
+    value: "",
+  }
+  componentWillMount() {
+    if (this.props.value) {
+      this.setState({ value: this.props.value });
+    }
+    if (!this.props.validates) {
+      this.setState({ status: "SUCCESS" });
+    }
+  }
 
+  onChangeValue = (event) => {
+    const target = event.target;
+    this.setState({ value: target.value });
+    checkValidate(target.value, this.props.validates).then(data => {
+      this.setState(data);
+    })
+  }
+
+  render() {
+    const { name, placeholder } = this.props;
+    let newProps = {...this.props};
+    delete newProps.getValue;
+    delete newProps.onChange;
+    return (
+      <div>
+        <textarea style={{
+          outline: "none !important",
+          border: "1px solid red",
+          resize: "none",
+        }} 
+        rows="" cols=""
+          status={this.state.status} name={name} {...newProps} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}/>
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </div>
+    );
+  }
+}
 export class FormSelect extends Component {
   state = {
     status: "SUCCESS",
