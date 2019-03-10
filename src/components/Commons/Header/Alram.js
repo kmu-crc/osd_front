@@ -5,6 +5,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import socketIOClient from "socket.io-client";
 import DateFormat from "modules/DateFormat";
+import NumberFormat from "modules/NumberFormat";
 
 const AlarmLabel = styled.div`
   width: 30px;
@@ -104,7 +105,7 @@ class Alram extends Component {
       >
         <Icon name="alarm" />
         {this.props.noti.count > 0 && (
-          <AlarmLabel>{this.props.noti.count}</AlarmLabel>
+          <AlarmLabel>{NumberFormat(this.props.noti.count)}</AlarmLabel>
         )}
         {this.state.active && (
           <AlarmDropDown>

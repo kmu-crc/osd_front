@@ -11,6 +11,7 @@ import StyleGuide from "StyleGuide";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
 import DateFormat from "modules/DateFormat";
+import NumberFormat from "modules/NumberFormat";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -298,7 +299,7 @@ class DesignBoardCard extends Component {
             <div className="cardInfo">
               <div className="cardAuthor">{card.nick_name}</div>
               <div className="cardCmt">
-                <Icon name="comment outline"/>{card.comment_count ? card.comment_count:0}
+                <Icon name="comment outline"/>{card.comment_count ? NumberFormat(card.comment_count):0}
               </div>
               <div className="cardUpdateDate">{DateFormat(card.update_time)}</div>
             </div>

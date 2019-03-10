@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 import eximg from "source/myPage.jpeg";
 import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
-
+import NumberFormat from "modules/NumberFormat";
 // css styling
 
 const Designli = styled.li`
@@ -107,15 +107,15 @@ class Design extends Component {
           <Count>
             <div>
               <Icon name="unhide" size="mini"></Icon>
-              {design.view_count ? design.view_count : 0}
+              {design.view_count ? NumberFormat(design.view_count) : 0}
             </div>
             <div>
               <Icon name="heart" size="mini"></Icon>
-              {design.like_count ? design.like_count : 0}
+              {design.like_count ? NumberFormat(design.like_count) : 0}
             </div>
             <div>
               <Icon name="fork" size="mini"></Icon>
-              {design.children_count ? design.children_count : 0}
+              {design.children_count ? NumberFormat(design.children_count) : 0}
             </div>
           </Count>
         </Designli>

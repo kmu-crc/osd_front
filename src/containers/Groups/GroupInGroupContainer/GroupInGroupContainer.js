@@ -5,6 +5,7 @@ import ScrollList from "components/Commons/ScrollList";
 import Group from "components/Groups/Group";
 import styled from 'styled-components';
 import StyleGuide from 'StyleGuide';
+import NumberFormat from "modules/NumberFormat";
 
 const GroupBox = styled.div`
   margin-bottom: 1rem;
@@ -36,7 +37,7 @@ class GroupInGroupContainer extends Component {
         {this.props.dataListAdded && this.props.dataListAdded.length === 0
         ? <div></div>
         : <GroupBox>
-            <div className="boxTitle">그룹 ({this.props.count})</div>
+            <div className="boxTitle">그룹 ({NumberFormat(this.props.count)})</div>
             <ScrollList rerender={true}
                         getListRequest={this.getList}
                         ListComponent={Group}

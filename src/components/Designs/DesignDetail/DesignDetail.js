@@ -12,7 +12,7 @@ import UserImg from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "./DesignComment";
-
+import NumberFormat from "modules/NumberFormat";
 // css styling
 
 const Wrapper = styled.div`
@@ -599,19 +599,19 @@ class DesignDetail extends Component {
           <CounterItem>
             {/* <span className="title">조회수</span> */}
             <Icon name="unhide" />
-            <span className="count">{count.view_count}</span>
+            <span className="count">{NumberFormat(count.view_count)}</span>
           </CounterItem>
           {this.props.like === true ? (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
               {/* <span className="title">좋아요</span> */}
               <Icon name="heart" color="red" />
-              <span className="count">{count.like_count}</span>
+              <span className="count">{NumberFormat(count.like_count)}</span>
             </CounterItem>
           ) : (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
               {/* <span className="title">좋아요</span> */}
               <Icon name="heart outline" />
-              <span className="count">{count.like_count}</span>
+              <span className="count">{NumberFormat(count.like_count)}</span>
             </CounterItem>
           )}
           <CounterItem>
@@ -619,7 +619,7 @@ class DesignDetail extends Component {
             <Icon name="fork" />
             <span className="count">{designDetail.children_count["count(*)"]}</span>
           </CounterItem>
-          <Button className="comment" onClick={() => this.setState({commentState: true})}>댓글 {this.props.Count.comment_count}</Button>
+          <Button className="comment" onClick={() => this.setState({commentState: true})}>댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
         </CounterWrap>
       );
     };
@@ -773,7 +773,7 @@ class DesignDetail extends Component {
                               )} */}
                               <MemberItem>
                                   {/* <Icon name="plus" /> */}
-                                  <i className="icon">{this.props.Count.member_count}</i>{this.props.Count.member_count}
+                                  <i className="icon">{NumberFormat(this.props.Count.member_count)}</i>{NumberFormat(this.props.Count.member_count)}
                               </MemberItem>
                               <Memberlist
                                 className={
