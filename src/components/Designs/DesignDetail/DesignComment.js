@@ -31,12 +31,42 @@ const CommentContainer = styled.div`
   &.ui.comments {
     max-width: 100%;
     width: 100%;
+    margin-top:0px;
     margin-bottom: 2.5rem;
     & .delBtn {
       position: absolute;
       top: 0;
       right: 0;
       cursor: pointer;
+    }& .reply.comments{margin-left:45px;}
+    & .userIcon{ 
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    border: 0;
+    }
+    & .content {
+      margin-left: 5px;
+      display:inline-block;
+      width: max-content;
+      padding: 5px 15px 5px 5px;
+      border-radius: 10px;
+      background-color: ${StyleGuide.color.main.brightness};
+    }
+    & .author {
+    align-items: center;
+      cursor:arrow;
+    }
+    & .text{
+    align-items: center;
+      display: inline-block;
+    }
+    & .text_btn{
+    align-items: center;
+      display: inline-block;
     }
   }
   & h4 {
@@ -49,12 +79,7 @@ const CommentContainer = styled.div`
       border: 0;
       background: ${StyleGuide.color.main.light};
     }
-  }
-  & .ui.button.reply{
-    background: ${StyleGuide.color.sub.green.basic};
-    font-size: 11px;
-      border: 0;
-      background: ${StyleGuide.color.sub.green.dark};
+    & .cancel {
     }
   }
   & p {
@@ -63,24 +88,7 @@ const CommentContainer = styled.div`
   & .ui.form .field {
     margin-bottom: 1rem;
   }  
-  .content {
-    width: auto;
-    display: block;
-    background-color: ${StyleGuide.color.main.brightness};
-    border-radius: 10px;
-    padding: 5 5 5 5;
-  } 
-  & .userIcon {
-    display: block;
-    left: 10px;
-    width: 35px;
-    height: 35px;
-    background-position: center;
-    background-size: cover;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 0;
-  }
+
 `;
 
 class DesignComment extends React.Component {
@@ -89,6 +97,8 @@ class DesignComment extends React.Component {
   };
 
   onClickedReply = (comment_uid) => (e) => {
+    if(this.props.userInfo === undefined)
+    {alert("로그인 해주세요");return}
     console.log("clicked", comment_uid);
     comment_uid == this.state.reply ? this.setState({reply:null}):this.setState({reply:comment_uid});
     return;
@@ -124,7 +134,7 @@ class DesignComment extends React.Component {
       comment: FormDataToJson(data).comment,
       d_flag: FormDataToJson(data).d_flag == "" ? null :FormDataToJson(data).d_flag,
     } 
-
+    console.log(FormDataToJson(data).d_flag);
     if (!this.props.token) {
       alert("로그인을 해주세요.");
       return;
@@ -170,15 +180,9 @@ class DesignComment extends React.Component {
         <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui comment form">
           <FormField name="comment" RenderComponent={FormTextAreaRed} maxLength="1000"/>
           <FormInput name="d_flag" type="hidden" value={value.value}/>
-          <Button type="submit" size="small"
-            className="ui icon primary left labeled button">
-            <i aria-hidden="true" className="edit icon" />
+          <Button  type="submit" size="small"
+            className="ui icon primary labeled button">
             게시
-          </Button>
-          <Button type="submit" size="small"
-            className="ui icon primary left labeled button">
-            <i aria-hidden="true" className="cancel icon" />
-            취소
           </Button>
         </ValidateForm>
       );
@@ -192,8 +196,8 @@ class DesignComment extends React.Component {
             {comments.length > 0 && (
               comments.map(comm => (
                 <div className="comment" key={comm.uid}>
-                  <div className="userIcon" style={{display:"block", backgroundImage: `url(${comm.s_img}), url(${logo})`}} onError={this.noneImage} />
-                  <div className="content" style={{display:"block"}}>
+                  <div className="userIcon" style={{backgroundImage: `url(${comm.s_img}), url(${logo})`}} onError={this.noneImage} />
+                  <div className="content">
                     <div className="author">{comm.nick_name}</div>
                     <div className="text">
                        { 
@@ -202,53 +206,51 @@ class DesignComment extends React.Component {
                           <span key={i}>
                             {line}
                             {(comm.comment.split("\n")).length != i + 1 ?
-                            <br/> :(      <a onClick={this.onClickedReply(comm.uid)}><b>답글달기</b></a>
-                            )}
+                            <br/>:null}
                           </span>
                         );
                       })}
                       </div>
-                      {this.state.reply == comm.uid && <CommentForm value={comm.uid}/>}
+                  </div>
+                  <div className="metadata">
+                    <a onClick={()=>this.onDeleteComment(comm)}> {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <b>삭제</b>}</a>
                   </div>
                   <div>
                     <div className="metadata">
-                      <div>{DateFormat(comm.create_time.split("T")[0])}</div>
-                      {this.props.userInfo &&
-                    this.props.userInfo.uid === comm.user_id && (
-                    <a onClick={() => this.onDeleteComment(comm)} ><b>삭제하기</b></a>
-                    )}
+                      <div>{DateFormat(comm.create_time.split("T")[0])}</div>&nbsp;&nbsp;&nbsp;
+                      <a onClick={this.onClickedReply(comm.uid)}><b>답글</b></a>
                     </div>
+                      {this.state.reply == comm.uid && <CommentForm value={comm.uid}/>}
                     {comm.replies.length > 0 && 
                     <div>
-                    <div className="ui reply">
+                    <div className="ui reply comments">
                       {comm.replies.map(reply => (
                   <div className="comment" key={reply.uid}>
-                  <div className="userIcon" style={{display:"block", backgroundImage: `url(${reply.s_img}), url(${logo})`}} onError={this.noneImage} />
+                  <div className="userIcon" style={{backgroundImage: `url(${reply.s_img}), url(${logo})`}}/>
                   <div className="content">
-                    <a className="author">{reply.nick_name}</a>
-                    <div className="metadata">
-                      <div>{reply.create_time.split("T")[0]}</div>
-                    </div>
+                    <div className="author">{reply.nick_name}</div>
                     <div className="text">
-                      {reply.comment.split("\n").map((line, i) => {
+                       { 
+                         reply.comment.split("\n").map((line, i) => {
                         return (
                           <span key={i}>
                             {line}
-                            <br />
+                            {(reply.comment.split("\n")).length != i + 1 ?
+                            <br/>:null}
                           </span>
                         );
                       })}
+                      </div>
+                  </div>
+                  <div className="metadata">
+                    <a onClick={() => this.deleteComment(reply.uid)} >{this.props.userInfo&& this.props.userInfo.uid === comm.user_id && <b>삭제</b>}</a>
+                  </div>
+                  <div>
+                    <div className="metadata">
+                      <div>{DateFormat(reply.create_time.split("T")[0])}</div>
                     </div>
-                    </div>
-                  {this.props.userInfo &&
-                    this.props.userInfo.uid === reply.user_id && (
-                      <i
-                        size="small"
-                        className="delBtn trash alternate outline icon"
-                        onClick={() => this.deleteComment(reply.uid)}
-                      />
-                    )}
-                </div>
+                  </div>
+                  </div>
                       ))}
                     </div>
                     </div>

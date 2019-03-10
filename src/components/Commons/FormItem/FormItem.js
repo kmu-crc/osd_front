@@ -244,7 +244,7 @@ export class FormTextArea extends Component {
     delete newProps.onChange;
     return (
       <div>
-        <textarea status={this.state.status} name={name} {...newProps} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}></textarea>
+        <textarea cols="20" wrap="hard" status={this.state.status} name={name} {...newProps} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}></textarea>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
@@ -287,8 +287,9 @@ export class FormTextAreaRed extends Component {
           outline: "none !important",
           border: "1px solid red",
           resize: "none",
+          display:"inline-block"
         }} 
-        rows="" cols=""
+        rows="3" wrap="hard"
           status={this.state.status} name={name} {...newProps} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}/>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
