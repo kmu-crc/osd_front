@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Modal, Icon } from "semantic-ui-react";
-import DateFormat from "modules/DateFormat";
+import StyleGuide from "StyleGuide";
+import styled from "styled-components";
 import Button from "components/Commons/Button";
-import logo from "source/logo.png";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextArea, FormTextAreaRed, FormInput} from "components/Commons/FormItem";
-import FormDataToJson from "modules/FormDataToJson";
-import StyleGuide from "StyleGuide";
-import styled from "styled-components";
-import host from "config";
 import {GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest} from "actions/Designs/DesignComment";
+import DateFormat from "modules/DateFormat";
+import FormDataToJson from "modules/FormDataToJson";
+import logo from "source/thumbnail.png";
+import { relative } from "path";
 
 const CustomModal = styled(Modal)`
   padding: 20px;
@@ -26,79 +26,22 @@ const CustomModal = styled(Modal)`
     min-height: 2rem;
   }
 `;
-
 const CommentContainer = styled.div`
-  &.ui.comments {
-    max-width: 100%;
-    width: 100%;
-    margin-top:0px;
-    margin-bottom: 2.5rem;
-    & .delBtn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      cursor: pointer;
-    }& .reply.comments{margin-left:45px;}
-    & .userIcon{ 
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    background-position: center;
-    background-size: cover;
-    border-radius: 50%;
-    border: 0;
-    }
-    & .content {
-      margin-left: 5px;
-      display:inline-block;
-      width: max-content;
-      padding: 5px 15px 5px 5px;
-      border-radius: 10px;
-      background-color: ${StyleGuide.color.main.brightness};
-    }
-    & .author {
-    align-items: center;
-      cursor:arrow;
-    }
-    & .text{
-    align-items: center;
-      display: inline-block;
-    }
-    & .text_btn{
-    align-items: center;
-      display: inline-block;
-    }
+  max-width:"100%";
+  &.ui.comment{
+
   }
-  & h4 {
+  $ h4 {
     font-size: ${StyleGuide.font.size.heading4};
   }
-  & .ui.button.primary {
-    background: ${StyleGuide.color.main.basic};
-    font-size: 12px;
-    &:hover {
-      border: 0;
-      background: ${StyleGuide.color.main.light};
-    }
-    & .cancel {
-    }
-  }
-  & p {
-    text-align: center;
-  }
-  & .ui.form .field {
-    margin-bottom: 1rem;
-  }  
-
 `;
-
 class DesignComment extends React.Component {
   state = {
     render: true, reply: null
   };
 
   onClickedReply = (comment_uid) => (e) => {
-    if(this.props.userInfo === undefined)
-    {alert("로그인 해주세요");return}
+    if(this.props.userInfo === undefined){alert("로그인 해주세요");return}
     console.log("clicked", comment_uid);
     comment_uid == this.state.reply ? this.setState({reply:null}):this.setState({reply:comment_uid});
     return;
@@ -177,13 +120,11 @@ class DesignComment extends React.Component {
     console.log(comments);
     const CommentForm = (value) => {
       return (
-        <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui comment form">
+        <ValidateForm onSubmit={this.onSubmitCmtForm} style={{padding:"0px 0px 0px 0px",margin:"0px 0px 0px 0px"}}>
           <FormField name="comment" RenderComponent={FormTextAreaRed} maxLength="1000"/>
-          <FormInput name="d_flag" type="hidden" value={value.value}/>
-          <Button  type="submit" size="small"
-            className="ui icon primary labeled button">
-            게시
-          </Button>
+          <FormInput name="d_flag" type="hidden" value={value.value} />
+          <Button type="submit" size="small"> 게시 </Button>
+          <button type="reset" size="small"> 취소 </button>
         </ValidateForm>
       );
     };
@@ -191,75 +132,39 @@ class DesignComment extends React.Component {
       <CustomModal open={open} onClose={onClose}>
         <Modal.Content>
           <Icon name="close" size="big" onClick={onClose} />
-          <CommentContainer className="ui comments">
-            <h3>댓글</h3>
-            {comments.length > 0 && (
-              comments.map(comm => (
-                <div className="comment" key={comm.uid}>
-                  <div className="userIcon" style={{backgroundImage: `url(${comm.s_img}), url(${logo})`}} onError={this.noneImage} />
-                  <div className="content">
-                    <div className="author">{comm.nick_name}</div>
-                    <div className="text">
-                       { 
-                         comm.comment.split("\n").map((line, i) => {
-                        return (
-                          <span key={i}>
-                            {line}
-                            {(comm.comment.split("\n")).length != i + 1 ?
-                            <br/>:null}
-                          </span>
-                        );
-                      })}
-                      </div>
+          <CommentContainer>
+            <h4> 댓글 </h4>
+              {comments.length && (
+              <ul style={{position:"relative"}}>
+              {comments.map(comm => (
+                <li key={comm.uid}>
+                  <div style={{width:"45px",verticalAlign:"top",display:"inline-block"}}>
+                    <div style={{borderRadius:"50%",transform:"translateY(15%)",minWidth:"45px",minHeight:"45px",width:"45px",height:"45px",
+                      backgroundImage:`url(${comm.s_img}), url(${logo})`}}/> 
                   </div>
-                  <div className="metadata">
-                    <a onClick={()=>this.onDeleteComment(comm)}> {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <b>삭제</b>}</a>
+                  <div style={{borderRadius:"10px 10px 10px 10px",marginLeft:"5px",padding:"5px 5px 5px 7px",backgroundColor:"#FFF6F9",width:"80%", display:"inline-block"}}>
+                    <div>{comm.nick_name}</div>
+                    <div style={{width:"100%"}}>
+                      <span style={{overflowWrap:"break-word",fontWeight:"bold"}}>{comm.comment}</span></div>
                   </div>
-                  <div>
-                    <div className="metadata">
-                      <div>{DateFormat(comm.create_time.split("T")[0])}</div>&nbsp;&nbsp;&nbsp;
-                      <a onClick={this.onClickedReply(comm.uid)}><b>답글</b></a>
-                    </div>
-                      {this.state.reply == comm.uid && <CommentForm value={comm.uid}/>}
-                    {comm.replies.length > 0 && 
-                    <div>
-                    <div className="ui reply comments">
-                      {comm.replies.map(reply => (
-                  <div className="comment" key={reply.uid}>
-                  <div className="userIcon" style={{backgroundImage: `url(${reply.s_img}), url(${logo})`}}/>
-                  <div className="content">
-                    <div className="author">{reply.nick_name}</div>
-                    <div className="text">
-                       { 
-                         reply.comment.split("\n").map((line, i) => {
-                        return (
-                          <span key={i}>
-                            {line}
-                            {(reply.comment.split("\n")).length != i + 1 ?
-                            <br/>:null}
-                          </span>
-                        );
-                      })}
-                      </div>
+                  <div style={{zIndex:"100", width:"45px", display:"inline-block"}}>&nbsp;
+                    {this.props.userInfo&&this.props.userInfo.uid === comm.user_id && <a onClick={()=>this.onDeleteComment(comm)} style={{verticalAlign:"bottom"}}>삭제</a>}
                   </div>
-                  <div className="metadata">
-                    <a onClick={() => this.deleteComment(reply.uid)} >{this.props.userInfo&& this.props.userInfo.uid === comm.user_id && <b>삭제</b>}</a>
-                  </div>
-                  <div>
-                    <div className="metadata">
-                      <div>{DateFormat(reply.create_time.split("T")[0])}</div>
+                  <div style={{position:"relative"}}>
+                    <div style={{left:"45px", position:"absolute", display:"inline-block"}}>
+                      {DateFormat(comm.create_time.split("T")[0])},{}&nbsp;
+                      <a onClick={this.onClickedReply(comm.uid)}>답글</a>
                     </div>
                   </div>
-                  </div>
-                      ))}
-                    </div>
-                    </div>
-                    }
-                  </div>
-                </div>
+                  <div style={{paddingTop:"10px", width:"100%",left:"45px"}}><CommentForm/></div>
+                </li>
               ))
+            }
+            </ul>
             )}
-            {this.state.render ? <CommentForm value={null}/> : null}
+            <div><br/>
+              <CommentForm/>
+            </div>
           </CommentContainer>
         </Modal.Content>
       </CustomModal>
