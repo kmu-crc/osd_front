@@ -127,8 +127,11 @@ class Alram extends Component {
                             ? item.kinds === "INVITE"
                               ? `/myPage/join/invited`
                               : `/designDetail/${item.content_id}`
+                              : item.kinds === "LIKE"
+                            ? `/designDetail/${item.content_id}`
                             : item.type === "GROUP"
                             ? `/groupDetail/${item.content_id}`
+                            
                             : ""
                       }
                     >
@@ -146,6 +149,8 @@ class Alram extends Component {
                                 ? `${item.title}의 멤버가 되었습니다.`
                                 : item.kinds === "REFUSE"
                                 ? `맴버요청을 거절하셨습니다.`
+                                : item.kinds === "LIKE"
+                                ? "좋아요가 눌렸습니다."
                                 : ``
                           : item.type === "GROUP"
                           ? item.kinds === "JOIN"
