@@ -37,13 +37,14 @@ const CommentContainer = styled.div`
 `;
 class DesignComment extends React.Component {
   state = {
-    render: true, reply: null
+    render: true, 
+    reply: null, 
+    toWhom: null,
   };
 
-  onClickedReply = (comment_uid) => (e) => {
+  onClickedReply = (comment_uid, comment_toWhom) => (e) => {
     if(this.props.userInfo === undefined){alert("로그인 해주세요");return}
-    console.log("clicked", comment_uid);
-    comment_uid == this.state.reply ? this.setState({reply:null}):this.setState({reply:comment_uid});
+    this.setState({reply:comment_uid,toWhom:comment_toWhom});
     return;
   };
 
@@ -82,14 +83,18 @@ class DesignComment extends React.Component {
       alert("로그인을 해주세요.");
       return;
     }
-    if (packet.comment.length === 0 || packet.comment === "") {
+    if( (this.state.reply==null && (packet.comment.length === 0 || packet.comment === ""))
+    ||(this.state.reply && (packet.comment.length <= this.state.toWhom.length+2 || packet.comment === "")))
+    {
       alert("내용을 입력해 주세요.");
       return;
     }
     this.createCommentRequest(packet);
     this.setState({reply:null});
   };
-
+  commentFormBlur = () => {
+    this.setState({reply:null,toWhom:null})
+  }
   onDeleteComment = data =>{
     if(data.replies.length>0){
       alert("이 댓글에 답변글이 있어 지우실 수 없습니다.");
@@ -110,8 +115,21 @@ class DesignComment extends React.Component {
         }
       });
   };
+  onModalClose = ()=> {
+    if(this.state.reply) {
+      this.commentFormBlur();
+      this.setState({reply:null});
+      return;
+    }
+    this.setState({reply:null,toWhom:null});
+    this.props.onClose();
+  };
+  checkBlur = (e) => {
+    const target = e.target;
+    console.log(target.name != "commentForm" ? target.name:"nodagi");
+  };
   render() {
-    const { open, onClose, comment } = this.props;
+    const { open, comment } = this.props;
     let parentcomments = comment.filter( item => item.d_flag == null);
     let comments = parentcomments.map ( parent => {
       let replies = comment.filter( item => item.d_flag === parent.uid);
@@ -120,51 +138,75 @@ class DesignComment extends React.Component {
     console.log(comments);
     const CommentForm = (value) => {
       return (
-        <ValidateForm onSubmit={this.onSubmitCmtForm} style={{padding:"0px 0px 0px 0px",margin:"0px 0px 0px 0px"}}>
-          <FormField name="comment" RenderComponent={FormTextAreaRed} maxLength="1000"/>
-          <FormInput name="d_flag" type="hidden" value={value.value} />
-          <Button type="submit" size="small"> 게시 </Button>
-          <button type="reset" size="small"> 취소 </button>
+        <ValidateForm onSubmit={this.onSubmitCmtForm} style={{display:"block",padding:"0px 0px 0px 0px",margin:"0px 0px 0px 0px"}}>
+          <FormField name="comment" handleOnBlur={this.commentFormBlur} RenderComponent={FormTextAreaRed} value={value.toWhom} maxLength="1000" />
+          <FormInput name="d_flag" type="hidden" value={value.parent} />
         </ValidateForm>
       );
     };
     return (
-      <CustomModal open={open} onClose={onClose}>
+      <CustomModal open={open} onClose={this.onModalClose}>
         <Modal.Content>
-          <Icon name="close" size="big" onClick={onClose} />
-          <CommentContainer>
+          <Icon name="close" size="big" onClick={this.onModalClose} />
+          <CommentContainer onClick={this.checkBlur}>
             <h4> 댓글 </h4>
-              {comments.length && (
-              <ul style={{position:"relative"}}>
+              {comments.length>0 && (
+              <ul style={{marginTop:"25px", position:"relative"}}>
               {comments.map(comm => (
-                <li key={comm.uid}>
-                  <div style={{width:"45px",verticalAlign:"top",display:"inline-block"}}>
-                    <div style={{borderRadius:"50%",transform:"translateY(15%)",minWidth:"45px",minHeight:"45px",width:"45px",height:"45px",
-                      backgroundImage:`url(${comm.s_img}), url(${logo})`}}/> 
+                <li key={comm.uid} style={{marginTop:"25px"}}>
+                  <div style={{width:"35px",verticalAlign:"top",display:"inline-block"}}>
+                    <div style={{borderRadius:"50%",transform:"translateY(15%)",minWidth:"35px",minHeight:"35px",width:"35px",height:"35px",
+                      backgroundImage:`url(${comm.s_img}), url(${logo})`,backgroundPosition:"center",backgroundSize:"cover"}}/> 
                   </div>
-                  <div style={{borderRadius:"10px 10px 10px 10px",marginLeft:"5px",padding:"5px 5px 5px 7px",backgroundColor:"#FFF6F9",width:"80%", display:"inline-block"}}>
-                    <div>{comm.nick_name}</div>
-                    <div style={{width:"100%"}}>
-                      <span style={{overflowWrap:"break-word",fontWeight:"bold"}}>{comm.comment}</span></div>
+                  <div style={{borderRadius:"10px 10px 10px 10px",marginLeft:"5px",padding:"5px 10px 5px 10px",backgroundColor:"#FFF6F9",minWidth:"15%",maxWidth:"75%",width:"max-content",display:"inline-block"}}>
+                    <div><a onClick={this.onClickedReply(comm.uid,comm.nick_name)}>{comm.nick_name}</a></div>
+                    <div><div style={{overflowWrap:"break-word",fontWeight:"bold"}}>{comm.comment.split("\n").map((line,idx)=>{return(<span>{line}{idx<comm.comment.split("\n").length-1}</span>)})}</div></div>
                   </div>
-                  <div style={{zIndex:"100", width:"45px", display:"inline-block"}}>&nbsp;
+                  <div style={{zIndex:"100", width:"35px", display:"inline-block"}}>&nbsp;
                     {this.props.userInfo&&this.props.userInfo.uid === comm.user_id && <a onClick={()=>this.onDeleteComment(comm)} style={{verticalAlign:"bottom"}}>삭제</a>}
                   </div>
                   <div style={{position:"relative"}}>
-                    <div style={{left:"45px", position:"absolute", display:"inline-block"}}>
+                    <div style={{left:"50px", position:"absolute", display:"inline-block"}}>
                       {DateFormat(comm.create_time.split("T")[0])},{}&nbsp;
-                      <a onClick={this.onClickedReply(comm.uid)}>답글</a>
+                      <div style={{display:"inline-block",cursor:"pointer"}} onClick={this.onClickedReply(comm.uid,comm.nick_name)}>답글</div>
                     </div>
                   </div>
-                  <div style={{paddingTop:"10px", width:"100%",left:"45px"}}><CommentForm/></div>
+                  {this.state.reply === comm.uid &&
+                    <div style={{position:"relative", paddingTop:"10px", width:"80%",left:"35px"}}>
+                    <CommentForm name="commentForm" toWhom={"@"+this.state.toWhom+" "} parent={comm.uid}/>
+                    </div>
+                  }
+              {comm.replies.length>0 && (
+              <ul style={{left:"35px", marginTop:"25px", position:"relative"}}>
+              {comm.replies.map(reply => (
+                <li key={reply.uid} style={{marginTop:"25px"}}>
+                  <div style={{width:"35px",verticalAlign:"top",display:"inline-block"}}>
+                    <div style={{borderRadius:"50%",transform:"translateY(15%)",minWidth:"35px",minHeight:"35px",width:"35px",height:"35px",
+                      backgroundImage:`url(${reply.s_img}), url(${logo})`,backgroundPosition:"center",backgroundSize:"cover"}}/> 
+                  </div>
+                  <div style={{borderRadius:"10px 10px 10px 10px",marginLeft:"5px",padding:"5px 5px 5px 7px",backgroundColor:"#FFF6F9",minWidth:"15%",maxWidth:"75%",width:"max-content",display:"inline-block"}}>
+                    <div><a onClick={this.onClickedReply(comm.uid,reply.nick_name)}>{reply.nick_name}</a></div>
+                    <div><span style={{overflowWrap:"break-word",fontWeight:"bold"}}>{reply.comment}</span></div>
+                  </div>
+                  <div style={{zIndex:"100", width:"35px", display:"inline-block"}}>&nbsp;
+                    {this.props.userInfo&&this.props.userInfo.uid === reply.user_id && <a onClick={()=>this.deleteComment(reply.uid)} style={{verticalAlign:"bottom"}}>삭제</a>}
+                  </div>
+                  <div style={{position:"relative"}}>
+                    <div style={{left:"50px", position:"absolute", display:"inline-block"}}>
+                      {DateFormat(comm.create_time.split("T")[0])}
+                    </div>
+                  </div>
                 </li>
               ))
             }
             </ul>
             )}
-            <div><br/>
-              <CommentForm/>
-            </div>
+                </li>
+              ))
+            }
+            </ul>
+            )}
+            {this.state.render ? <div><br/><CommentForm parent={null} defaultTxt={""}/></div>:null}
           </CommentContainer>
         </Modal.Content>
       </CustomModal>
