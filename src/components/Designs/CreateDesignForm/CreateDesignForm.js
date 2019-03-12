@@ -175,7 +175,7 @@ class CreateDesignForm extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    this.state.member.value = JSON.stringify(this.state.member.value);
+    this.state.value = JSON.stringify(this.state.value);
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
@@ -185,13 +185,13 @@ class CreateDesignForm extends Component {
           this.props.history.push(`/designDetail/${res.design_id}`);
         } else {
           alert("다시 시도해주세요");
-          this.state.member.value = JSON.parse(this.state.member.value);
+          this.state.value = JSON.parse(this.state.value);
           this.props.setLoader();
         }
       });
     }).catch(e => {
       console.log("실패", e);
-      this.state.member.value = JSON.parse(this.state.member.value);
+      this.state.value = JSON.parse(this.state.value);
     });
   };
 
