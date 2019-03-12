@@ -118,7 +118,7 @@ class Alram extends Component {
                     className={item.confirm ? "confirm" : null}
                     onClick={() => this.alramConfirm(item.uid)}
                   >
-                    <Link
+                    <Link onClick = {this.forceUpdate}
                       to={
                         item.type === "MESSAGE"
                           ? `/message/${item.from_user_id}/${item.fromUser}`
