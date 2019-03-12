@@ -10,7 +10,7 @@ class ScrollTopGroupListContainer extends Component {
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
   getList = (page) => {
-    return this.props.GetTopGroupListRequest(page, this.props.sort, this.props.keyword);
+    return this.props.GetTopGroupListRequest(page);
     // ScrollList에서는 그 다음 페이지부터 불러옴
   }
 
