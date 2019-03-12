@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from "components/Commons/Button";
 import styled from "styled-components";
-import { Header, Grid, Form } from "semantic-ui-react";
+import { Header, Grid, Form, Icon } from "semantic-ui-react";
 import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
@@ -66,7 +66,100 @@ const Label = styled.div`
   text-transform: none;
 `;
 
+const SearchMember = styled.div`
+  margin-bottom: 30px;
+  & input {
+    border: 1px solid ${StyleGuide.color.geyScale.scale3};
+    padding: 1 1rem;
+    width: 100%;
+    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
+  }
+`;
+
+const MemberList = styled.ul`
+  width: 100%;
+  padding: 0.5rem;
+  min-height: 100px;
+  max-height: 300px;
+  overflow-Y: scroll;
+  box-sizing: border-box;
+  border: 1px solid ${StyleGuide.color.geyScale.scale3};
+  border-radius: 3px;
+  box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
+`;
+
+const MemberListItem = styled.li`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid ${StyleGuide.color.geyScale.scale3};
+  border-radius: 3px;
+  margin-bottom: 5px;
+
+  .email {
+    font-size: ${StyleGuide.font.size.paragraph};
+    color: ${StyleGuide.color.geyScale.scale7};
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .name {
+    font-size: ${StyleGuide.font.size.small};
+    color: ${StyleGuide.color.geyScale.scale5};
+  }
+`;
+
+const AddList = styled.div`
+  position: relative;
+  margin-top: 1rem;
+  width: 100%;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
+
+const AddItem = styled.div`
+  font-size: ${StyleGuide.font.size.small};
+  background-color: ${StyleGuide.color.geyScale.scale7};
+  color: white;
+  width: auto;
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin-right: 1em;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  position: relative;
+`;
+
+const DeleteBtn = styled.button`
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 12px;
+  color: white;
+  margin-left: 5px;
+  i.icon {
+    margin: 0;
+  }
+`;
+
 class CreateDesignForm extends Component {
+  state = {
+    msgId: -1,
+    selectId: null,
+    selectName: null,
+    openMember: false,
+    friendList: [],
+    render: true,
+    value: [],
+    target: null,
+    validates: [],
+    textValue: "",
+    members: [],
+    render: false,
+    top: false
+
+  }
 
   onChangeValue = async data => {
     let obj = {};
@@ -105,6 +198,93 @@ class CreateDesignForm extends Component {
   getMember = data => {
     this.props.SearchMemberRequest(null, {key: data}, this.props.token);
   }
+
+
+  getValue = value => {
+    this.setState({
+      openMember: true
+    });
+
+    if(!value) {
+      this.setState({
+        openMember: false
+      });
+      return;
+    }
+    this.props.SearchMemberRequest(null, { key: value.value }, this.props.token);
+  }
+
+  selectMember = async (data) => {
+    await this.setState({
+      render: false
+    });
+    const index = this.state.friendList.indexOf(data.uid);
+    console.log(this.state, this.props.MessageList, index);
+    if (index === -1) {
+      this.setState({
+        selectId: data.uid,
+        selectName: data.nick_name,
+        openMember: false,
+        msgId: -1,
+        render: true
+      });
+    } else {
+      this.setState({
+        selectId: data.uid,
+        selectName: data.nick_name,
+        openMember: false,
+        msgId: this.props.MessageList[index].uid,
+        render: true
+      });
+    }
+  }
+
+  addMember = async (data, index) => {
+    console.log("add");
+    let newArr = [...this.state.value];
+    let newMembers = [...this.state.members];
+    newMembers.splice(index, 1);
+    newArr.push(data);
+    await this.setState({ value: newArr, members: newMembers });
+    this.returnData();
+  };
+
+  returnData = async e => {
+    if (this.props.getValue) await this.props.getValue(this.state);
+    if (e && this.props.onBlur) await this.props.onBlur();
+  };
+
+  deleteItem = async (data, index) => {
+    let newArr = [...this.state.value];
+    newArr.splice(index, 1);
+    let newMembers = await this.createNewMember(newArr, this.props.list);
+    console.log(newMembers);
+    await this.setState({ value: newArr, members: newMembers });
+    this.returnData();
+  };
+
+  createNewMember = async (arr, origin) => {
+    console.log("creaeNewMember", arr, origin);
+    if (origin && origin.length > 0) {
+      let newArr = [...origin];
+      if (arr && arr.length > 0) {
+        for (let item of arr) {
+          for (let i = 0; i < origin.length; i++) {
+            console.log(item.uid, newArr[i].uid);
+            if (item.uid === newArr[i].uid) {
+              console.log("index", i);
+              await newArr.splice(i, 1);
+              i = 0;
+              break;
+            }
+          }
+        }
+      }
+      return newArr;
+    } else {
+      return [];
+    }
+  };
 
   render() {
     return (
@@ -162,14 +342,37 @@ class CreateDesignForm extends Component {
                 />
               </Form.Group>
               <Form.Group widths="equal" className="clearFix">
-                <Label>멤버 초대</Label>
-                <AsyncInput
-                  name="member"
-                  getValue={this.onChangeValue}
-                  asyncFn={this.getMember}
-                  list={this.props.members}
-                />
+                <SearchMember>
+                  <Label>멤버 초대</Label>
+                  <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue}/>
+                  <MemberList style={this.state.openMember ? {display: "block"} : {display: "none"}}>
+                    {this.props.members && this.props.members.map((item, index) => {
+                      return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item,index)}>
+                      <p className="email">{item.email}</p>
+                      <p className="name">{item.nick_name}</p>
+                      </MemberListItem>);
+                    })}
+                  </MemberList>
+                </SearchMember>
               </Form.Group>
+            <AddList>
+              {this.state.value.constructor.name === "Array" &&
+                this.state.value.length > 0 &&
+                this.state.value.map((item, index) => {
+                  return (
+                    <AddItem key={`additem${index}`}>
+                      {item.nick_name}
+                      <DeleteBtn
+                        type="button"
+                        onClick={() => this.deleteItem(item, index)}
+                      >
+                        <Icon name="close" />
+                      </DeleteBtn>
+                    </AddItem>
+                  );
+                })}
+            </AddList>
+
             </Grid.Column>
           </Grid>
         </FromFieldCard>
