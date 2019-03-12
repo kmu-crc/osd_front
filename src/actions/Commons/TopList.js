@@ -88,7 +88,7 @@ export function GetTopDesignerListFailure() {
 
 export function GetTopGroupListRequest(page) {
   return (dispatch) => {
-    return fetch(`${host}/group/TopList`, {
+    return fetch(`${host}/group/topGroupList/1/like`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
