@@ -801,7 +801,7 @@ class DesignDetail extends Component {
                               </Memberlist>
                             </Members>
                           </InfoItem>
-                          <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false})} }/>
+                          <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false});(this.props.GetDesignCountRequest(this.props.id))} }/>
                         </DesignInfoCard>
                         <DesignInfoCard>
                           <CreateDate>

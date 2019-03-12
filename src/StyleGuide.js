@@ -14,6 +14,7 @@ const StyleGuide = {
   },
   color: {
     main: {
+      brightness: "#FFF6F7",
       light: "#FACBCB",
       basic: "#E72327",
       dark: "#BF1D1F"
