@@ -263,7 +263,7 @@ export class FormTextAreaRed extends Component {
 
   componentWillMount() {
     if (this.props.value) {
-      this.setState({ value: this.props.value, preValue:this.props.value});
+      this.setState({ preValue:this.props.value, value:""});
     }
     if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
@@ -287,18 +287,19 @@ export class FormTextAreaRed extends Component {
     delete newProps.handleOnBlur;
     delete newProps.getValue;
     delete newProps.onChange;
-    console.log("this.props", this.props.handleOnBlur);
     return (
       <div>
+        <div style={{color:"#555",fontSize:"9pt"}}>{this.state.preValue}</div>
         <textarea style={{
           width: "70%",
           outline: "none !important",
           border: "1px solid red",
           resize: "none",
-          display:"inline-block"
+          display:"inline-block",
+          position:"relative"
         }} 
         rows="3" wrap="hard"
-          status={this.state.status} name={name} {...newProps}placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}/>
+        status={this.state.status} name={name} {...newProps} value={this.state.value} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue}/>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
         <div style={{position:"absolute",display:"inline-block"}}>
           <button style={{backgroundColor: "#E72327",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#FFF",border:"0px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} type="submit">게시</button>

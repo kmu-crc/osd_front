@@ -75,7 +75,7 @@ class DesignComment extends React.Component {
 
   onSubmitCmtForm = async data => {
     let packet = {
-      comment: FormDataToJson(data).comment,
+      comment: FormDataToJson(data).toWhom + " " + FormDataToJson(data).comment,
       d_flag: FormDataToJson(data).d_flag == "" ? null :FormDataToJson(data).d_flag,
     } 
     console.log(FormDataToJson(data).d_flag);
@@ -122,6 +122,7 @@ class DesignComment extends React.Component {
       return;
     }
     this.setState({reply:null,toWhom:null});
+    //this.props
     this.props.onClose();
   };
   checkBlur = (e) => {
@@ -139,8 +140,9 @@ class DesignComment extends React.Component {
     const CommentForm = (value) => {
       return (
         <ValidateForm onSubmit={this.onSubmitCmtForm} style={{display:"block",padding:"0px 0px 0px 0px",margin:"0px 0px 0px 0px"}}>
-          <FormField name="comment" handleOnBlur={this.commentFormBlur} RenderComponent={FormTextAreaRed} value={value.toWhom} maxLength="1000" />
+          <FormField name="comment" handleOnBlur={this.commentFormBlur} value={value.toWhom} RenderComponent={FormTextAreaRed} maxLength="1000" />
           <FormInput name="d_flag" type="hidden" value={value.parent} />
+          <FormInput name="toWhom" type="hidden" value={value.toWhom} />
         </ValidateForm>
       );
     };
@@ -159,8 +161,14 @@ class DesignComment extends React.Component {
                       backgroundImage:`url(${comm.s_img}), url(${logo})`,backgroundPosition:"center",backgroundSize:"cover"}}/> 
                   </div>
                   <div style={{borderRadius:"10px 10px 10px 10px",marginLeft:"5px",padding:"5px 10px 5px 10px",backgroundColor:"#FFF6F9",minWidth:"15%",maxWidth:"75%",width:"max-content",display:"inline-block"}}>
-                    <div><a onClick={this.onClickedReply(comm.uid,comm.nick_name)}>{comm.nick_name}</a></div>
-                    <div><div style={{overflowWrap:"break-word",fontWeight:"bold"}}>{comm.comment.split("\n").map((line,idx)=>{return(<span>{line}{idx<comm.comment.split("\n").length-1}</span>)})}</div></div>
+                    <a style={{fontWeight:"bold"}} onClick={this.onClickedReply(comm.uid,comm.nick_name)}>{comm.nick_name}</a>
+                    <div style={{overflowWrap:"break-word"}}>
+                      {comm.comment.split("\n").map((line)=>{
+                        return(
+                          <span>
+                            {line}{line.id<comm.comment.split("\n").length-1?<br/>:null}
+                          </span>)})}
+                    </div>
                   </div>
                   <div style={{zIndex:"100", width:"35px", display:"inline-block"}}>&nbsp;
                     {this.props.userInfo&&this.props.userInfo.uid === comm.user_id && <a onClick={()=>this.onDeleteComment(comm)} style={{verticalAlign:"bottom"}}>삭제</a>}
@@ -185,10 +193,16 @@ class DesignComment extends React.Component {
                       backgroundImage:`url(${reply.s_img}), url(${logo})`,backgroundPosition:"center",backgroundSize:"cover"}}/> 
                   </div>
                   <div style={{borderRadius:"10px 10px 10px 10px",marginLeft:"5px",padding:"5px 5px 5px 7px",backgroundColor:"#FFF6F9",minWidth:"15%",maxWidth:"75%",width:"max-content",display:"inline-block"}}>
-                    <div><a onClick={this.onClickedReply(comm.uid,reply.nick_name)}>{reply.nick_name}</a></div>
-                    <div><span style={{overflowWrap:"break-word",fontWeight:"bold"}}>{reply.comment}</span></div>
+                    <a style={{fontWeight:"bold"}}onClick={this.onClickedReply(comm.uid,reply.nick_name)}>{reply.nick_name}</a>
+                     <div style={{overflowWrap:"break-word"}}>
+                      {reply.comment.split("\n").map((line)=>{
+                        return(
+                          <span>
+                            {line}{line.id<reply.comment.split("\n").length-1?<br/>:null}
+                          </span>)})}
+                    </div>                  
                   </div>
-                  <div style={{zIndex:"100", width:"35px", display:"inline-block"}}>&nbsp;
+                    <div style={{zIndex:"100", width:"35px", display:"inline-block"}}>&nbsp;
                     {this.props.userInfo&&this.props.userInfo.uid === reply.user_id && <a onClick={()=>this.deleteComment(reply.uid)} style={{verticalAlign:"bottom"}}>삭제</a>}
                   </div>
                   <div style={{position:"relative"}}>
@@ -206,7 +220,7 @@ class DesignComment extends React.Component {
             }
             </ul>
             )}
-            {this.state.render ? <div><br/><CommentForm parent={null} defaultTxt={""}/></div>:null}
+            {this.state.render ? <div><br/><CommentForm parent={null} toWhom={null}/></div>:null}
           </CommentContainer>
         </Modal.Content>
       </CustomModal>
