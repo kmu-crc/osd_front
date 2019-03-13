@@ -60,6 +60,7 @@ class SignUpPage extends Component {
           </InsertDetail>
         </SignUpContent>
       </ClientTemplate>
+      
     );
   }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ClientTemplate from "templates/ClientTemplate";
 import UserDetailFormContainer from "containers/Registration/UserDetailFormContainer";
 import styled from "styled-components";
+import { Script } from 'vm';
 
 const PageContent = styled.div`
   width: 100%;

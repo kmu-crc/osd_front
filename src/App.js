@@ -81,6 +81,5 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(GetCategoryAllRequest());
     }
   };
-};
-
+}
 export default connect(null, mapDispatchToProps)(App);
