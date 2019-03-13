@@ -9,7 +9,7 @@ import styled from "styled-components";
 import Button from "components/Commons/Button";
 import { FormInput, FormCheckBox } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
-import {Link} from 'react-router-dom'
+import SignUpModal from "./SignUpModal";
 
 const SignUpBtn = styled(Button)`
   margin-bottom: 30px;
@@ -46,7 +46,8 @@ class SignUpForm extends Component {
     },
     open: false,
     //isOnlyEmail: false,
-    error: null
+    error: null,
+    success: false
   };
 
   closeConfigShow = (closeOnEscape, closeOnRootNodeClick) => () => {
@@ -142,7 +143,7 @@ class SignUpForm extends Component {
       console.log("성공", data);
       this.props.SignUpRequest(data).then(res => {
         if (res.type === "AUTH_SIGNUP_SUCCESS") {
-          this.props.history.push("/design");
+          this.setState({success:true});
         } else {
           alert("다시 시도해주세요");
         }
@@ -151,12 +152,12 @@ class SignUpForm extends Component {
       console.log("실패", e);
     });
   };
-
   render() {
     const { open, closeOnEscape, closeOnRootNodeClick } = this.state;
     return (
       <div>
         <form onSubmit={this.onSubmit}>
+        {this.state.success===true?<SignUpModal history={this.props.history}/>:null}
           <Label>Email</Label>
           <FormInput
             name="email"
@@ -260,5 +261,4 @@ class SignUpForm extends Component {
     );
   }
 }
-
 export default SignUpForm;
