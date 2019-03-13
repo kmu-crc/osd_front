@@ -10,6 +10,7 @@ import Button from "components/Commons/Button";
 import { FormInput, FormCheckBox } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import SignUpModal from "./SignUpModal";
+import {Link} from "react-router-dom";
 
 const SignUpBtn = styled(Button)`
   margin-bottom: 30px;
