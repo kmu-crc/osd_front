@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import DesignDetailStepCardContainer from "containers/Designs/DesignDetailStepCardContainer";
 import { Modal } from "semantic-ui-react";
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 const CardContainer = styled.div`
@@ -53,7 +54,7 @@ class DesignStepCard extends Component {
             <div>
               <h4>{card.title}</h4>
               <span>{card.nick_name}</span>
-              <span>{card.comment_count}</span>
+              <span>{NumberFormat(card.comment_count)}</span>
               <span className="date">{card.update_time}</span>
             </div>
           }

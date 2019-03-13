@@ -5,6 +5,7 @@ import eximg from "source/myPage.jpeg";
 import { Icon } from "semantic-ui-react";
 import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 
@@ -107,15 +108,15 @@ class Group extends Component {
           <Count>
             <div>
               <Icon name="window restore" size="mini"></Icon>
-              {group.group? group.group : 0}
+              {group.group? NumberFormat(group.group) : 0}
             </div>
             <div>
               <Icon name="signup" size="mini"></Icon>
-              {group.design? group.design : 0}
+              {group.design? NumberFormat(group.design) : 0}
             </div>
             <div>
               <Icon name="heart" size="mini"></Icon>
-              {group.like? group.like : 0}
+              {group.like? NumberFormat(group.like) : 0}
             </div>
           </Count>
         </Groupli>

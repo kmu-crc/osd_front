@@ -12,7 +12,7 @@ import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
 import ModifyStatusContainer from "containers/Groups/ModifyStatusContainer";
-
+import DateFormat from "modules/DateFormat";
 // css styling
 
 const Wrapper = styled.div`
@@ -251,7 +251,7 @@ class GroupDetailNew extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column wideScreen={9} largeScreen={9} computer={9} tablet={16} mobile={16}>
                   <div className="explanation">{groupDetail.explanation}</div>
-                  <div className="date">최근 업데이트 : {groupDetail.child_update_time.split("T")[0]}</div>
+                  <div className="date">최근 업데이트 : {DateFormat(groupDetail.child_update_time)}</div>
                   <div className="owner">개설자 : {groupDetail.userName}</div>
                 </Grid.Column>
                 <Grid.Column className="btnWrap" wideScreen={7} largeScreen={7} computer={7} tablet={16} mobile={16}>

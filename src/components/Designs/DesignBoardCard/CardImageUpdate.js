@@ -205,7 +205,7 @@ export class CardImageUpdate extends Component {
                 );
               })
             ) : (
-              <NoneData>등록된 이미지가 없습니다.</NoneData>
+              <NoneData>{/*등록된 이미지가 없습니다.*/}</NoneData>
             )}
           </div>
         )}

@@ -5,6 +5,7 @@ import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 import styled from 'styled-components';
 import StyleGuide from 'StyleGuide';
+import NumberFormat from "modules/NumberFormat";
 
 const DesignBox = styled.div`
   margin-bottom: 1rem;
@@ -36,7 +37,7 @@ class DesignInGroupContainer extends Component {
         {this.props.dataListAdded && this.props.dataListAdded.length === 0
         ? <div></div>
         : <DesignBox>
-            <div className="boxTitle">디자인 ({this.props.count})</div>
+            <div className="boxTitle">디자인 ({NumberFormat(this.props.count)})</div>
             <ScrollList getListRequest={this.getList}
                         ListComponent={Design}
                         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}

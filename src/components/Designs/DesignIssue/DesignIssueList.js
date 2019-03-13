@@ -157,7 +157,7 @@ class DesignIssueList extends Component {
           </ul>
           :
           <div className="noData">
-              <p>등록된 이슈가 없습니다.</p>
+              <p>{/*등록된 이슈가 없습니다.*/}</p>
           </div>
           }
         </ListWrapper>

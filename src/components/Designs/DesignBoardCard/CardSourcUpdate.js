@@ -228,7 +228,7 @@ export class CardSourcUpdate extends Component {
                 );
               })
             ) : (
-              <NoneData>등록된 소스가 없습니다.</NoneData>
+              <NoneData>{/*등록된 소스가 없습니다.*/}</NoneData>
             )}
           </div>
         )}

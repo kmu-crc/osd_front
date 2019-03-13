@@ -8,6 +8,7 @@ import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer
 import ContentBox from "components/Commons/ContentBox";
 import group_bg from "source/group_bg.jpg";
 import StyleGuide from "StyleGuide";
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 
@@ -143,7 +144,7 @@ class GroupList extends Component {
         <Content>
           <Wrapper>
             <MenuContainer>
-              <span className="Countgroup"> 그룹 ({this.props.Count}) </span>
+              <span className="Countgroup"> 그룹 ({NumberFormat(this.props.Count)}) </span>
               <div className="addGroup">
                 <Link to="/createGroup"><button>그룹 등록</button></Link>
               </div>

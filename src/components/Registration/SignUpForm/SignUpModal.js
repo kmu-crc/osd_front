@@ -10,6 +10,7 @@ export default class SignUpModal extends Component {
       visible : true
     }
   }
+  
   componentDidMount() {
     setTimeout(
       ()=>{
@@ -20,11 +21,15 @@ export default class SignUpModal extends Component {
 
   closeModal() {
     console.log(this.props.history);
-    this.setState({visible : false}
+
+    this.setState({
+        visible : false
+      }
     );
   }
 
   render() {
+
     
     const ModalStyle = {
       textAlign: 'center',

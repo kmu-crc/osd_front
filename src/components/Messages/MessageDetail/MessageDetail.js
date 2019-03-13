@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import thumbnail from "source/thumbnail.png";
+import DateFormat from "modules/DateFormat";
 
 // css styling
 const MsgContent = styled.div`
@@ -97,7 +98,7 @@ class MessageDetail extends Component {
                   })}
                 </div>
                 <div className="metadata">
-                  <div>{item.create_time.split("T")[0]}</div>
+                  <div>{DateFormat(item.create_time)}</div>
                 </div>
               </div>
             </div>

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import socketIOClient from "socket.io-client";
 import DateFormat from "modules/DateFormat";
+import NumberFormat from "modules/NumberFormat";
 
 const AlarmLabel = styled.div`
   width: 30px;
@@ -104,7 +105,7 @@ class Alram extends Component {
       >
         <Icon name="alarm" />
         {this.props.noti.count > 0 && (
-          <AlarmLabel>{this.props.noti.count}</AlarmLabel>
+          <AlarmLabel>{NumberFormat(this.props.noti.count)}</AlarmLabel>
         )}
         {this.state.active && (
           <AlarmDropDown>
@@ -118,7 +119,7 @@ class Alram extends Component {
                     className={item.confirm ? "confirm" : null}
                     onClick={() => this.alramConfirm(item.uid)}
                   >
-                    <Link
+                    <Link onClick = {this.forceUpdate}
                       to={
                         item.type === "MESSAGE"
                           ? `/message/${item.from_user_id}/${item.fromUser}`
@@ -126,8 +127,11 @@ class Alram extends Component {
                             ? item.kinds === "INVITE"
                               ? `/myPage/join/invited`
                               : `/designDetail/${item.content_id}`
+                              : item.kinds === "LIKE"
+                            ? `/designDetail/${item.content_id}`
                             : item.type === "GROUP"
                             ? `/groupDetail/${item.content_id}`
+                            
                             : ""
                       }
                     >
@@ -145,6 +149,8 @@ class Alram extends Component {
                                 ? `${item.title}의 멤버가 되었습니다.`
                                 : item.kinds === "REFUSE"
                                 ? `맴버요청을 거절하셨습니다.`
+                                : item.kinds === "LIKE"
+                                ? "좋아요가 눌렸습니다."
                                 : ``
                           : item.type === "GROUP"
                           ? item.kinds === "JOIN"
