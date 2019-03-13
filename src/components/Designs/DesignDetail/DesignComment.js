@@ -75,7 +75,7 @@ class DesignComment extends React.Component {
 
   onSubmitCmtForm = async data => {
     let packet = {
-      comment: FormDataToJson(data).toWhom + " " + FormDataToJson(data).comment,
+      comment: FormDataToJson(data).toWhom + FormDataToJson(data).comment,
       d_flag: FormDataToJson(data).d_flag == "" ? null :FormDataToJson(data).d_flag,
     } 
     console.log(FormDataToJson(data).d_flag);
@@ -83,8 +83,12 @@ class DesignComment extends React.Component {
       alert("로그인을 해주세요.");
       return;
     }
-    if( (this.state.reply==null && (packet.comment.length === 0 || packet.comment === ""))
-    ||(this.state.reply && (packet.comment.length <= this.state.toWhom.length+2 || packet.comment === "")))
+    if(this.state.reply && (packet.comment.trim().length <= FormDataToJson(data).toWhom.length+2|| packet.comment===""))
+    {
+      alert("내용을 입력해 주세요.");
+      return;
+    }
+    if(this.state.reply==null && (FormDataToJson(data).comment.trim().length === 0 || packet.comment === ""))
     {
       alert("내용을 입력해 주세요.");
       return;
@@ -122,12 +126,7 @@ class DesignComment extends React.Component {
       return;
     }
     this.setState({reply:null,toWhom:null});
-    //this.props
     this.props.onClose();
-  };
-  checkBlur = (e) => {
-    const target = e.target;
-    console.log(target.name != "commentForm" ? target.name:"nodagi");
   };
   render() {
     const { open, comment } = this.props;
@@ -150,7 +149,7 @@ class DesignComment extends React.Component {
       <CustomModal open={open} onClose={this.onModalClose}>
         <Modal.Content>
           <Icon name="close" size="big" onClick={this.onModalClose} />
-          <CommentContainer onClick={this.checkBlur}>
+          <CommentContainer>
             <h4> 댓글 </h4>
               {comments.length>0 && (
               <ul style={{marginTop:"25px", position:"relative"}}>
