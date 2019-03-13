@@ -175,7 +175,7 @@ class DesignComment extends React.Component {
                   </div>
                   <div style={{position:"relative"}}>
                     <div style={{left:"50px", position:"absolute", display:"inline-block"}}>
-                      {DateFormat(comm.create_time.split("T")[0])},{}&nbsp;
+                      {DateFormat(comm.create_time)},{}&nbsp;
                       <div style={{display:"inline-block",cursor:"pointer"}} onClick={this.onClickedReply(comm.uid,comm.nick_name)}>답글</div>
                     </div>
                   </div>
@@ -207,7 +207,7 @@ class DesignComment extends React.Component {
                   </div>
                   <div style={{position:"relative"}}>
                     <div style={{left:"50px", position:"absolute", display:"inline-block"}}>
-                      {DateFormat(comm.create_time.split("T")[0])}
+                      {DateFormat(comm.create_time)}
                     </div>
                   </div>
                 </li>
