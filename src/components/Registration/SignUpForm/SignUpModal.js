@@ -14,7 +14,7 @@ export default class SignUpModal extends Component {
   componentDidMount() {
     setTimeout(
       ()=>{
-        console.log(this.props.history.push('./design'));    
+        this.props.history.push('./myPage');    
         this.setState({visible: false
       });}, 3000);
   }
