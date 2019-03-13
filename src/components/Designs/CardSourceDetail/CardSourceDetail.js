@@ -283,7 +283,7 @@ class CardSourceDetail extends Component {
             :
             <div>등록된 컨텐츠가 없습니다.</div>
             } */}
-            <div>등록된 컨텐츠가 없습니다.</div>
+            <div>{/*등록된 컨텐츠가 없습니다.*/}</div>
           </Nodata>
         )}
         {this.state.loading && <Loading/>}

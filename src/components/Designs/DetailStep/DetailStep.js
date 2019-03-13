@@ -232,7 +232,6 @@ class DetailStep extends Component {
       }
     }
   };
-
   leftButton = () => {
     this.listPosition(true);
   };
@@ -275,6 +274,7 @@ class DetailStep extends Component {
                 {step.length > 0 &&
                   step.map((board, i) => (
                     <DesignBoardContainer
+                      step={step}
                       designId={this.props.id}
                       key={i}
                       board={board}

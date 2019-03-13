@@ -7,6 +7,7 @@ import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
 import designer_bg from "source/designer_bg.jpg";
 import StyleGuide from "StyleGuide";
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 
@@ -158,7 +159,7 @@ class DesignerList extends Component {
             {this.props.cate2 && this.props.cate2 !== "null" &&
               <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
             }
-            <span> ({this.props.Count})</span>
+            <span> ({NumberFormat(this.props.Count)})</span>
             <div className="Sorting">
               <Sorting handleClick={this.sortChange}
                        placeholder={sort}/>

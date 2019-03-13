@@ -7,7 +7,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import styled from "styled-components";
 import Button from "components/Commons/Button";
-import { FormInput } from "components/Commons/FormItems";
+import { FormInput, FormCheckBox } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import SignUpModal from "./SignUpModal";
 
@@ -23,6 +23,15 @@ const Label = styled.div`
   margin: 0 0 0.8rem 0;
   display: block;
   color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
+`;
+
+const Labellink = styled.div`
+  margin: 0 0 0.8rem 0;
+  display: red;
+  color: #E72327;
   font-size: .92857143em;
   font-weight: 700;
   text-transform: none;
@@ -121,8 +130,15 @@ class SignUpForm extends Component {
       alert("비밀번호 확인을 다시 해주십시오"); 
       return false;
     }
-  
+
+    if(!formData.use_agreement.value){
+      alert("이용약관 동의를 해주십시오");
+      return false;
+    }
+
     delete formData.password2;
+    delete formData.use_agreement;
+
     ValidationGroup(formData, true).then(data => {
       console.log("성공", data);
       this.props.SignUpRequest(data).then(res => {
@@ -176,6 +192,14 @@ class SignUpForm extends Component {
             validates={["SamePassword"]}
             onBlur={this.samePwCheck}
           />
+          <Label>이용약관 동의 확인</Label>
+          <Labellink><Link to ='/Term/term' target="_blank">이용약관 보기</Link></Labellink>
+           <FormCheckBox
+               name="use_agreement"
+               placeholder="이용약관에 동의하시겠습니까?"
+               getValue={this.onChangeValue}
+               value={false} 
+             />
           <ButtonBox>
             <SignUpBtn type="submit" round={true} fluid={true}>
               회원가입

@@ -47,12 +47,13 @@ class CurrentJoinListNew extends Component {
   }
 
   render(){
+    const { sort } = this.props;
     return(
       <TabContainer>
         <Head devided="vertically" padded={true}>
           <Grid.Row>
             {/* <Grid.Column largescreen={8} computer={8} tablet={8} mobile={8}></Grid.Column> */}
-            <Sorting largescreen={16} computer={16} tablet={16} mobile={16} handleChange={this.sortChange}/>
+            <Sorting largescreen={16} computer={16} tablet={16} mobile={16} handleClick={this.sortChange} placeholder={sort}/>
           </Grid.Row>
         </Head>
         {this.props.Count.design === 0 && this.props.Count.group === 0 &&

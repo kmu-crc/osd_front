@@ -1,11 +1,27 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Icon } from "semantic-ui-react";
+import { Modal, Icon } from "semantic-ui-react";
 import CreateDesignCardContainer from "containers/Designs/CreateDesignCardContainer";
 import DesignBoardCardContainer from "containers/Designs/DesignBoardCardContainer";
 import BoardUpdate from "components/Designs/DesignBoard/BoardUpdate";
 import StyleGuide from "StyleGuide";
+import {SortableContainer, SortableElement, arrayMove, SortableHandle} from "react-sortable-hoc";
+import { DeleteItems } from "components/Commons/FormItems";
+import Button from "components/Commons/Button";
 
+const CustomModal = styled(Modal)`
+  border: "1px solid";
+  border-color: ${StyleGuide.color.main.dark};
+  padding: 20px;
+  width: 250px;
+  & .icon.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: ${StyleGuide.color.geyScale.scale9};
+    cursor: pointer;
+  }
+`;
 const Board = styled.li`
   width: 250px;
   height: 100%;
@@ -63,7 +79,7 @@ const MenuIcon = styled.button`
 const Menu = styled.ul`
   position: absolute;
   right: 10px;
-  width: 100px;
+  width: 120px;
   background-color: ${StyleGuide.color.geyScale.scale0};
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -100,10 +116,38 @@ const CardList = styled.ul`
   background-color: #dbdada;
   border-radius: 0 0 3px 3px;
 `;
+const DragHandle = SortableHandle(() => <Icon name="bars"/>);
+const SortableItem = SortableElement(({value}) => (
+  <li style={{height:"35px"}}>
+    <div style={{width:"10%",display:"inline-block"}}><Icon color="red" name="minus circle"/></div>
+    <div style={{width:"80%",display:"inline-block"}}>{value}</div>
+    <div style={{width:"10%",display:"inline-block"}}><DragHandle /></div>
+  </li>));
+const Container = SortableContainer(({children}) => {return <ul>{children}</ul>;}); 
+class SortableComponent extends Component {
+  state = {items: this.props.items};
+
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState(({items}) => ({items: arrayMove(items, oldIndex, newIndex),}));
+    this.props.getCardList(this.state.items);
+  };
+  render() {
+    const {items} = this.state;
+    return (
+      <Container onSortEnd={this.onSortEnd} pressThreshold={5} useDragHandle>
+        {items.map((item, index) => (
+          <SortableItem hideSortableGhost="true" key={`item-${index}`} index={index} value={item.title} />
+        ))}
+      </Container>
+    );
+  }
+}
 
 class DesignBoard extends Component {
   state = {
-    active: false
+    active: false,
+    sortable: false,
+    cards: null
   };
 
   onActive = e => {
@@ -119,14 +163,57 @@ class DesignBoard extends Component {
     this.props.SetActive(active, target);
   };
 
+  // 단계이동위한함수
+  swapBoard = (boardA, boardB) => {
+    this.props.UpdateDesignBoardRequest(boardA.id, this.props.token, boardA.data)
+      .then(this.props.UpdateDesignBoardRequest(boardB.id, this.props.token, boardB.data))
+      .then(() => {
+        this.props.GetDesignBoardRequest(this.props.board.design_id);
+      });
+  };
+  onRight = (e) => {
+    let b = this.props.step.find((board) => { return board.order == this.props.board.order + 1 });
+    let boardA = { id: this.props.board.uid, data: { order: this.props.board.order + 1 } };
+    let boardB = { id: b.uid, data: { order: this.props.board.order } };
+    console.log(boardA, boardA.id, boardA.data);
+    console.log(boardB, boardB.id, boardB.data);
+    this.swapBoard(boardA, boardB);
+  };
+  onLeft = (e) => {
+    let b = this.props.step.find((board) => { return board.order == this.props.board.order - 1 });
+    let boardA = { id: this.props.board.uid, data: { order: this.props.board.order - 1 } };
+    let boardB = { id: b.uid, data: { order: this.props.board.order } };
+    console.log(boardA, boardA.id, boardA.data);
+    console.log(boardB, boardB.id, boardB.data);
+    this.swapBoard(boardA, boardB);
+  }
   onModify = () => {
     if (this.props.isTeam !== 1) {
       return;
     } else {
-      this.setState({active: true});
+      this.setState({ active: true });
     }
   }
-
+  requestReSortCardList = async () => {
+    const jobs = [];
+    const promiseAry = [];
+    this.state.cards.forEach( (element,index) => {
+      if(element.order != index) jobs.push({uid:element.uid,neworder:index});
+    });
+    console.log(jobs);
+    jobs.map(job => {
+      promiseAry.push(this.props.UpdateCardTitleRequest({order:job.neworder}, this.props.token, job.uid));
+    })
+    await Promise.all(promiseAry)
+      .then(this.props.GetDesignBoardRequest(this.props.designId))
+      .then(this.setState({sortable:false}))
+  }
+  closeSortableModal = () => {
+    this.setState({sortable:false});
+  }
+  openSortableModal = () => {
+    this.setState({sortable:true});
+  }
   ModifyComplete = () => {
     this.setState({ active: false });
   };
@@ -136,82 +223,119 @@ class DesignBoard extends Component {
       return;
     }
     const confirm = window.confirm("단계를 삭제하시겠습니까?");
-    if(confirm) {
+    if (confirm) {
       this.props
-      .DeleteDesignBoardRequest(
-        this.props.board.design_id,
-        this.props.board.uid,
-        this.props.token
-      )
-      .then(() => {
-        this.props.GetDesignBoardRequest(this.props.board.design_id);
-      });
+        .DeleteDesignBoardRequest(
+          this.props.board.design_id,
+          this.props.board.uid,
+          this.props.token
+        )
+        .then(() => {
+          this.props.GetDesignBoardRequest(this.props.board.design_id);
+        });
     }
   };
+  handleGetCardList = (list) => {
+    this.setState({cards: list})
+    console.log("get list from child", this.state.cards);
+  }
   render() {
-    const { board, changeBoard, activeBoard, designId, list } = this.props;
-    console.log(list);
+    const { board, changeBoard, activeBoard, designId, step } = this.props;
+    let cardList = board.cards.map(card=>{return{title:card.title,uid:card.uid,order:card.order}});
     return (
-      <Board>
-        <Title>
-          {this.state.active && this.props.isTeam ? (
-            <BoardUpdate
-              board={board}
-              getBoard={this.props.GetDesignBoardRequest}
-              onUpdate={this.props.UpdateDesignBoardRequest}
-              designTime={this.props.UpdateDesignTime}
-              token={this.props.token}
-              value={board.title}
-              ModifyComplete={this.ModifyComplete}
-            />
-          ) : (
-            <div>
-              <span onClick={this.onModify}>{board.title}</span>
-              {this.props.isTeam > 0 ? (
-                <MenuIcon className="openMenu" onClick={this.onActive}>
-                  <Icon name="ellipsis vertical" />
-                </MenuIcon>
-              ) : null
-              }
-              <Menu
-                style={{
-                  display:
-                    this.props.isActive === `BOARD${board.uid}`
-                      ? "block"
-                      : "none"
-                }}
-              >
-                <MenuItem>
-                  <button onClick={this.onModify}>수정</button>
-                </MenuItem>
-                <MenuItem>
-                  <button onClick={this.onDelete}>삭제</button>
-                </MenuItem>
-              </Menu>
-            </div>
-          )}
-        </Title>
-        <CardList>
-        {board.cards.length > 0 &&
-          board.cards.map((item, index) => {
-            return (
-              <DesignBoardCardContainer
-                key={`card${index}`}
-                card={item}
+      <Board >
+          <Title>
+            {this.state.active && this.props.isTeam ?
+              (
+                <BoardUpdate
+                  board={board}
+                  getBoard={this.props.GetDesignBoardRequest}
+                  onUpdate={this.props.UpdateDesignBoardRequest}
+                  designTime={this.props.UpdateDesignTime}
+                  token={this.props.token}
+                  value={board.title}
+                  ModifyComplete={this.ModifyComplete}
+                />
+              ) :
+              (
+                <div>
+                  <span onClick={this.onModify}>{board.title}</span>
+                  {this.props.isTeam > 0 ? (
+                    <MenuIcon className="openMenu" onClick={this.onActive}>
+                      <Icon name="ellipsis vertical" />
+                    </MenuIcon>
+                  ) : null
+                  }
+                  <Menu
+                    style={{
+                      display:
+                        this.props.isActive === `BOARD${board.uid}`
+                          ? "block"
+                          : "none"
+                    }}
+                  >
+                    {board.order > 0 &&
+                      <MenuItem style={{width:"50%", height:"30px", maxWidth:"100%",vertialAlign:"middle",display:"inline-block"}} onClick={this.onLeft}>
+                        <Icon name="arrow left"style={{backgroundColor:"transparent",vertialAlign:"middle",width:"100%"}}/>
+                      </MenuItem>
+                    }
+                    {board.order < step.length - 1 &&
+                      <MenuItem style={{width:"50%",height:"30px",vertialAlign:"middle",margin:"0 auto",maxWidth:"100%",display:"inline-block"}} onClick={this.onRight}>
+                        <Icon name="arrow right" style={{backgroundColor:"transparent",vertialAlign:"middle",width:"100%"}}/>
+                      </MenuItem>
+                    }
+                    <MenuItem>
+                      <button onClick={this.openSortableModal}><Icon name="bars"/>목록편집하기</button>
+                    </MenuItem>
+                    <MenuItem>
+                      <button onClick={this.onModify}>이름바꾸기</button>
+                    </MenuItem>
+                    <MenuItem>
+                      <button onClick={this.onDelete}>삭제하기</button>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )
+            }
+          </Title>
+          <CardList>
+            {board.cards.length > 0 &&
+              board.cards.map((item, index) => {
+                return (
+                  <DesignBoardCardContainer
+                    key={`card${index}`}
+                    card={item}
+                    boardId={board.uid}
+                  />
+                );
+              })}
+            {this.props.isTeam > 0 ? (
+              <CreateDesignCardContainer
+                designId={designId}
                 boardId={board.uid}
+                changeBoard={changeBoard}
+                activeBoard={activeBoard}
+                lastOrder={board.cards.length}
               />
-            );
-          })}
-        {this.props.isTeam > 0 ? (
-          <CreateDesignCardContainer
-            designId={designId}
-            boardId={board.uid}
-            changeBoard={changeBoard}
-            activeBoard={activeBoard}
-            lastOrder={board.cards.length}
-          />
-        ) : null}
-      </CardList>
+            ) : null}
+          </CardList>
+          {this.state.sortable && cardList.length > 1 ? (
+          <CustomModal style={{width:"350px"}} open={this.state.sortable} onClose={this.closeSortableModal}>
+            <Modal.Content>
+              <h3>카드목록 편집하기</h3>
+              <div style={{padding:"3px 6px 3px 6px",margin:"0 0 10px 0",borderRadius:"10px 10px 10px 10px",width:"100%",backgroundColor:"#FF6F7F"}}><h3>{board.title}</h3></div>
+              <div>
+                <SortableComponent getCardList={this.handleGetCardList} items={cardList}/>
+              </div><br/>
+              <div align="right" style={{right:"0px",paddingBottom:"5px",paddingRight:"5px"}}>
+              <button style={{fontSize:"9pt",backgroundColor: "#E72327",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#FFF",border:"0px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"65px"}}
+                onClick={this.requestReSortCardList}>완료</button>
+              <button style={{fontSize:"9pt",backgroundColor: "#FFF",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#666",borderStyle:"solid",borderWidth:"1px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"65px"}}
+                onClick={this.closeSortableModal}> 취소</button>
+              </div>
+            </Modal.Content>
+          </CustomModal>
+          ): null}
       </Board>
     );
   }

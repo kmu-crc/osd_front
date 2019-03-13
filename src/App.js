@@ -53,16 +53,17 @@ class App extends Component {
           <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myPage" component={RequiresAuth(MyDetailPage)}/>
           <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)}/>
-          <Route path="/test" component={TestPage} />
-          <Route path="/test2" component={TestPage2} />
           <Route path="/Term/:page" component={FooterPage}/>
           <Route path="/Privacy/:page" component={FooterPage}/>
           <Route path="/Info/:page" component={FooterPage}/>
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)}/>
-          <Route path="/cardTest" component={TestPage3}/>
           <Route path="/resetPw" component={ResetPwPage}/>
-          <Route path="/slideTest" component={SlideTestPage}/>
+
+          {/*<Route path="/slideTest" component={SlideTestPage}/>*/}
+          {/*<Route path="/test" component={TestPage} />*/}
+          {/*<Route path="/test2" component={TestPage2} />*/}
+          {/*<Route path="/cardTest" component={TestPage3}/>*/}
         </Switch>
       </BrowserRouter>
     );

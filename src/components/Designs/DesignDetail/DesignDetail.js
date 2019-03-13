@@ -12,7 +12,7 @@ import UserImg from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "./DesignComment";
-
+import NumberFormat from "modules/NumberFormat";
 // css styling
 
 const Wrapper = styled.div`
@@ -181,7 +181,7 @@ const ThumbnailImg = styled.div`
   height: ${PxtoRem(200)};
   box-sizing: border-box;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-color: gray;
   border-radius: 3px;
@@ -257,29 +257,34 @@ const SideMenuBtn = styled.div`
 `;
 
 const SideMenu = styled.ul`
-  display: block;
-  position: absolute;
+  position: relative;
+  z-index:1;
   width: ${PxtoRem(150)};
   text-align: center;
   bottom: 0;
   right: 0;
-  transform: translateY(100%);
+  transform: translateX(-40%);
   background-color: white;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   li {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: Pointer;
     &:last-child {
       border: 0;
     }
     & button {
       width: 100%;
-      line-height: ${PxtoRem(45)};
+    line-height: ${PxtoRem(45)};
       background-color: transparent;
       text-align: center;
       border: 0;
       padding: 0;
       outline: 0;
+      &.delete:hover{
+      background-color: #EA0000;
+        color: white;
+      }
     }
   }
 `;
@@ -594,19 +599,19 @@ class DesignDetail extends Component {
           <CounterItem>
             {/* <span className="title">조회수</span> */}
             <Icon name="unhide" />
-            <span className="count">{count.view_count}</span>
+            <span className="count">{NumberFormat(count.view_count)}</span>
           </CounterItem>
           {this.props.like === true ? (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
               {/* <span className="title">좋아요</span> */}
               <Icon name="heart" color="red" />
-              <span className="count">{count.like_count}</span>
+              <span className="count">{NumberFormat(count.like_count)}</span>
             </CounterItem>
           ) : (
             <CounterItem className="likeBtn" onClick={this.updateLike}>
               {/* <span className="title">좋아요</span> */}
               <Icon name="heart outline" />
-              <span className="count">{count.like_count}</span>
+              <span className="count">{NumberFormat(count.like_count)}</span>
             </CounterItem>
           )}
           <CounterItem>
@@ -614,7 +619,7 @@ class DesignDetail extends Component {
             <Icon name="fork" />
             <span className="count">{designDetail.children_count["count(*)"]}</span>
           </CounterItem>
-          <Button className="comment" onClick={() => this.setState({commentState: true})}>댓글 {this.props.Count.comment_count}</Button>
+          <Button className="comment" onClick={() => this.setState({commentState: true})}>댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
         </CounterWrap>
       );
     };
@@ -637,11 +642,13 @@ class DesignDetail extends Component {
             </li>
           }
           {isLeader &&
-            <li><button onClick={this.deleteDesign}>삭제</button></li>
+            <li className="delete" onClick={this.deleteDesign}><button className="delete">삭제</button></li>
           }
           {!isMember && <li><button onClick={this.joinMember}>가입 신청</button></li>}
           <li>
-            <button onClick={this.onCloseMoreBtn}>파생디자인 생성</button>
+            <Link to={`/design/`} onClick={this.onCloseMoreBtn}>
+            <button>파생디자인 생성</button>
+            </Link>
           </li>
           <li style={{display: designDetail.parent_design ? "block" : "none"}}>
             <button onClick={this.onCloseMoreBtn}>원본디자인 보기</button>
@@ -766,7 +773,7 @@ class DesignDetail extends Component {
                               )} */}
                               <MemberItem>
                                   {/* <Icon name="plus" /> */}
-                                  <i className="icon">{this.props.Count.member_count}</i>{this.props.Count.member_count}
+                                  <i className="icon">{NumberFormat(this.props.Count.member_count)}</i>{NumberFormat(this.props.Count.member_count)}
                               </MemberItem>
                               <Memberlist
                                 className={
@@ -794,7 +801,7 @@ class DesignDetail extends Component {
                               </Memberlist>
                             </Members>
                           </InfoItem>
-                          <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false})} }/>
+                          <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false});(this.props.GetDesignCountRequest(this.props.id))} }/>
                         </DesignInfoCard>
                         <DesignInfoCard>
                           <CreateDate>

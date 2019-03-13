@@ -274,12 +274,10 @@ class Header extends Component {
   }
 
   handleSignOut = async () => {
-    await this.props.SignOutRequest();
     SetSession("opendesign_token", null).then(data => {
       console.log("setsession", data);
-      // window.location.reload();
+      this.props.SignOutRequest();
       this.props.history.push("/");
-      window.location.reload();
     });
     console.log(this.props);
   };

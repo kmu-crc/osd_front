@@ -9,6 +9,7 @@ import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 
@@ -262,15 +263,15 @@ class DesignerDetail extends Component {
                   <CountSection>
                     <div className="list">
                       <Icon name="signup" color="grey" size="tiny"></Icon> 등록한 디자인
-                      <span>{count.total_design}</span>
+                      <span>{NumberFormat(count.total_design)}</span>
                     </div>
                     <div className="list">
                       <Icon name="heart" color="grey" size="tiny"></Icon> 받은 좋아요
-                      <span>{count.total_like}</span>
+                      <span>{NumberFormat(count.total_like)}</span>
                     </div>
                     <div className="list">
                       <Icon name="user" color="grey" size="tiny"></Icon> 받은 조회수
-                      <span>{count.total_view}</span>
+                      <span>{NumberFormat(count.total_view)}</span>
                     </div>
                   </CountSection>
                 </HeadContainer>

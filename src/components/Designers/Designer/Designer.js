@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import profile from "source/thumbnail.png";
 import StyleGuide from "StyleGuide";
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 
@@ -95,15 +96,15 @@ class Designer extends Component {
           <Count>
             <div>
               <Icon name="signup" size="mini"></Icon>
-              {designer.total_design? designer.total_design : 0}
+              {designer.total_design? NumberFormat(designer.total_design) : 0}
             </div>
             <div>
               <Icon name="unhide" size="mini"></Icon>
-              {designer.total_view? designer.total_view : 0}
+              {designer.total_view? NumberFormat(designer.total_view) : 0}
             </div>
             <div>
               <Icon name="heart" size="mini"></Icon>
-              {designer.total_like? designer.total_like : 0}
+              {designer.total_like? NumberFormat(designer.total_like) : 0}
             </div>
           </Count>
         </Designerli>

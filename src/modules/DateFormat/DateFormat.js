@@ -22,7 +22,11 @@ const DateFormat = (date) => {
   } else if (11 >= diffMon &&m <= diffDay) { // 한달 이후부터
     return `${diffMon}달 전`;
   } else if(12 <= diffMon){
-    return `${(diffMon/12.0).toFixed(1)}년 전`;
+    let year = diffMon/12.0;
+    if(year - year.toFixed(0) === 0)
+      return `${year}년 전`;
+    else
+      return `${year.toFixed(1)}년 전`;
   } 
 }
 

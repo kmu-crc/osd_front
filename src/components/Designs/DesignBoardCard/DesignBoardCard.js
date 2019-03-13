@@ -11,6 +11,7 @@ import StyleGuide from "StyleGuide";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
 import DateFormat from "modules/DateFormat";
+import NumberFormat from "modules/NumberFormat";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -278,8 +279,6 @@ class DesignBoardCard extends Component {
         </ValidateForm>
       );
     };
-    console.log("detail", detail);
-
     return (
       <div>
         <BoardCard onClick={this.openModalHandler}>
@@ -300,7 +299,7 @@ class DesignBoardCard extends Component {
             <div className="cardInfo">
               <div className="cardAuthor">{card.nick_name}</div>
               <div className="cardCmt">
-                <Icon name="comment outline"/>{card.comment_count ? card.comment_count:0}
+                <Icon name="comment outline"/>{card.comment_count ? NumberFormat(card.comment_count):0}
               </div>
               <div className="cardUpdateDate">{DateFormat(card.update_time)}</div>
             </div>
@@ -351,7 +350,7 @@ class DesignBoardCard extends Component {
                     </div>
                   ) : null}
                   <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
-                  <p>{detail.content ? detail.content : "설명이 없습니다."}</p>
+                  <p>{detail.content ? detail.content : ""}</p>
                   <CardSourceDetailContainer
                     uid={card.uid}
                     isTeam={this.props.isTeam}
@@ -401,7 +400,7 @@ class DesignBoardCard extends Component {
                     </div>
                   ))
                 ) : (
-                  <p>등록된 코멘트가 없습니다.</p>
+                  <p>{/*등록된 코멘트가 없습니다.*/}</p>
                 )}
                 {this.state.render ? <CommentForm /> : null}
               </CommentContainer>

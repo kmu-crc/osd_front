@@ -77,7 +77,7 @@ export class CardContentUpdate extends Component {
           </ValidateForm>
         ) : (
           <p onClick={this.onActive}>
-            {this.props.content || "설명이 없습니다."}
+            {this.props.content || ""}
           </p>
         )}
       </CardContent>
