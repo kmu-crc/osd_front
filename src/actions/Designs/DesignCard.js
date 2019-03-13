@@ -139,6 +139,7 @@ export const GetCardDetailFailure = error => {
 export const UpdateCardTitleRequest = (data, token, id) => {
   return dispatch => {
     dispatch(UpdateCardTitle());
+    console.log(data);
     return fetch(`${host}/design/designDetail/updateCardTitle/${id}`, {
       headers: { "x-access-token": token, "Content-Type": "application/json" },
       method: "POST",

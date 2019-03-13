@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { GetDesignCardRequest } from "actions/Designs/DesignCard";
+import { GetDesignCardRequest, UpdateCardTitleRequest } from "actions/Designs/DesignCard";
 import { UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest } from "actions/Designs/DesignBoard";
 import DesignBoard from "components/Designs/DesignBoard";
 import { SetActive } from "actions/OpenDesign";
@@ -25,6 +25,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    UpdateCardTitleRequest: (data, token, id) =>{
+      return dispatch(UpdateCardTitleRequest(data,token,id));
+    },
     GetDesignCardRequest: (id, board_id) => {
       return dispatch(GetDesignCardRequest(id, board_id));
     },

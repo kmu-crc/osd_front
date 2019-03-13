@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.6",
-    "babel-core": "6.26.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
@@ -41,6 +41,7 @@
     "react-responsive-carousel": "^3.1.41",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-sortable-hoc": "^1.7.1",
     "react-sortable-pane": "^1.0.1",
     "react-styled-components": "^0.1.11",
     "react-thunk": "^1.0.0",
