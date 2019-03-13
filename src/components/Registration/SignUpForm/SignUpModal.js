@@ -10,7 +10,6 @@ export default class SignUpModal extends Component {
       visible : true
     }
   }
-
   componentDidMount() {
     setTimeout(
       ()=>{
