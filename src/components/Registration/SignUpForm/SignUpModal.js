@@ -14,13 +14,13 @@ export default class SignUpModal extends Component {
   componentDidMount() {
     setTimeout(
       ()=>{
-        console.log(this.props.history.push('./design'));    
+        this.props.history.push('./design');    
         this.setState({visible: false
       });}, 3000);
   }
 
   closeModal() {
-    console.log(this.props.history);
+    //console.log(this.props.history);
     this.setState({
         visible : false
       }
