@@ -157,7 +157,7 @@ class GroupList extends Component {
         </Content>
         <Content>
           <Wrapper className="listWrap">
-            <ScrollTopGroupListContainer/> 
+            {/*<ScrollTopGroupListContainer/> in this verision we do not use this function FOR NOW*/}
             {this.state.rendering && <ScrollGroupListContainer sort={sort} history={this.props.history}/>}
           </Wrapper>
         </Content>
