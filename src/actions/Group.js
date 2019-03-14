@@ -4,7 +4,7 @@ import host from "config";
 export function GetGroupListRequest(page, sort, keyword) {
   return (dispatch) => {
     //return fetch(`${host}/group/groupList/${page}/${sort}/${keyword}`, {
-      return fetch(`${host}/group/topGroupList/${page}/null/null`,{
+      return fetch(`${host}/group/topGroupList/${page}/${sort}/${keyword}`,{
       headers: { 'Content-Type': 'application/json' },
       method: "get"
     }).then((response) => {
