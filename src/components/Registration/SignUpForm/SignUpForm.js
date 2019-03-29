@@ -205,6 +205,7 @@ class SignUpForm extends Component {
             <SignUpBtn type="submit" round={true} fluid={true}>
               회원가입
             </SignUpBtn>
+{/*
             <FacebookLogin
               appId="799483036860094"
               autoLoad={false}
@@ -223,6 +224,7 @@ class SignUpForm extends Component {
                 </Button>
               )}
             />
+*/}
           </ButtonBox>
         </form>
         <Modal

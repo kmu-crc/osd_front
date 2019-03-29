@@ -699,7 +699,7 @@ class DesignDetail extends Component {
                           <p>
                             {designDetail.explanation
                               ? designDetail.explanation
-                              : "설명없음"}
+                              : null }
                           </p>
                         </DesignExplanation>
                       </DesignInfoCard>

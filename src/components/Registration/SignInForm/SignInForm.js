@@ -127,6 +127,7 @@ class SignInForm extends Component {
           <LoginBtn type="submit" round={true} fluid={true}>
             로그인
           </LoginBtn>
+{/*
           <FacebookLogin
             appId="799483036860094"
             autoLoad={false}
@@ -144,6 +145,7 @@ class SignInForm extends Component {
               </Button>
             )}
           />
+*/}
         </BtnWrap>
       </form>
     );
