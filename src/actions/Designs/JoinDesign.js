@@ -106,6 +106,7 @@ export function GetoutDesignRequest(id, memberId, token, refuse) {
   }
 }
 
+
 export function GetoutDesign() {
   return {
     type: types.GETOUT_DESIGN
