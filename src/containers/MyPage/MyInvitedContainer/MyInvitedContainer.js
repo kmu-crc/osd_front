@@ -88,7 +88,7 @@ class MyInvitedContainer extends Component {
     e.stopPropagation();
     const confirm = window.confirm("가입을 거절하시겠습니까?");
     if (confirm) {
-      this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token, true)
+      this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token, "DesignInviteReject")
       .then(res => {
         if (res.data && res.data.success) {
           alert("가입 요청을 거절하였습니다.");
