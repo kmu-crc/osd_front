@@ -154,16 +154,18 @@ class ModifyDesignMember extends Component {
       alert("팀장은 탈퇴할 수 없습니다.");
       return;
     }
-    const confirm = window.confirm(flag? "이 회원을 탈퇴 처리 하시겠습니까?" : "가입을 거절하시겠습니까?");
-    if (confirm) {
-      this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, true)
+    const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?":"가입을 거절하시겠습니까?";
+    const confirm = window.confirm(msg);
+    if(!confirm) return;
+    
+    this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, flag)
       .then(res => {
         if (res.data && res.data.success) {
-          if (flag) {
+          if (flag === "DesignGetout") {
             alert("탈퇴 처리되었습니다.");
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
             .then(this.props.GetDesignCountRequest(this.props.match.params.id));
-          } else {
+          } else if(flag==="DesignRefuse"){
             alert("가입 요청을 거절하였습니다.");
             this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
           }
@@ -171,9 +173,6 @@ class ModifyDesignMember extends Component {
           alert("다시 시도해주세요.");
         }
       });
-    } else {
-      return;
-    }
   }
 
   acceptMember = (id) => {
@@ -233,7 +232,7 @@ class ModifyDesignMember extends Component {
                                   : `url(${UserImg})`}}/>
                       {" "}
                       <span className="nickName">{mem.nick_name}</span>
-                      <Button size="small" onClick={() => this.getoutMember(true, mem.user_id)}>탈퇴</Button>
+                      <Button size="small" onClick={() => this.getoutMember("DesignGetout", mem.user_id)}>탈퇴</Button>
                     </MemberlistItem>
                   </li>
                 )
@@ -253,7 +252,7 @@ class ModifyDesignMember extends Component {
                                   : `url(${UserImg})`}}/>
                       {" "}
                       <span className="nickName">{mem.nick_name}</span>
-                      <Button size="small" onClick={() => this.getoutMember(false, mem.user_id)}>거절</Button>
+                      <Button size="small" onClick={() => this.getoutMember("DesignRefuse", mem.user_id)}>거절</Button>
                       <Button size="small" onClick={() => this.acceptMember(mem.user_id)}>승인</Button>
                     </MemberlistItem>
                   </li>
