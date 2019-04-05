@@ -210,7 +210,7 @@ export class AsyncInput extends Component {
 
   SearchList = async () => {
     const body = window.document.body.offsetHeight;
-    if (this.props.asyncFn) this.props.asyncFn(this.state.textValue);
+    if (this.props.asyncFn && (this.state.textValue.length >= 1)) this.props.asyncFn(this.state.textValue);
     if (body < this.state.target.getBoundingClientRect().y + 350) {
       await this.setState({ top: true });
     } else {
@@ -290,6 +290,7 @@ export class AsyncInput extends Component {
               value={this.state.value}
               getValue={this.onChangeValue}
               prevent={true}
+              minLength="1"
               className=""
             />
           </InputBox>
