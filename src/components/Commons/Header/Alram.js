@@ -78,21 +78,36 @@ const AlarmItem = styled.li`
 class Alram extends Component {
   state = {
     active: false
-  };
+  }
 
   onAlarmHandler = e => {
     if (e.type === "blur" && !this.alram.contains(e.relatedTarget)) {
       this.setState({ active: false });
     }
-  };
+  }
 
   openAlarmHandler = e => {
     this.setState({ active: !this.state.active });
-  };
+  }
 
   alramConfirm = id => {
     this.props.socket.emit("confirm", { uid: this.props.uid, alramId: id });
-  };
+  }
+
+  getLink = item => {
+    let link = ``;
+    if ( item.type === "MESSAGE" ){
+      link = `/message/${item.from_user_id}/${item.fromUser}`
+    } else if ( item.type === "DESIGN" ) {
+      link = `/designDetail/${item.content_id}`
+      if(item.kinds === "INVITE") {
+        link = `/myPage/join/invited`
+      } 
+    } else if ( item.type === "GROUP" ) {
+      link = `/groupDetail/${item.content_id}`
+    }
+    return link
+  }
 
   getMessageText = item => {
     let msg = ""
@@ -115,6 +130,12 @@ class Alram extends Component {
         msg = `초대를 거절하였습니다.`
       } else if (item.kinds === "LIKE") {
         msg = `좋아요가 눌렸습니다.`
+      } else if (item.kinds === "COMMENT") {
+        msg = `디자인에 댓글이 달렸습니다.`
+      } else if (item.kinds === "CARD_COMMENT") {
+        msg = `디자인 카드에 댓글이 달렸습니다.`
+      } else if (item.kinds === "COMMENT_COMMENT"){
+        msg = `댓글에 답변이 달렸습니다.`
       }
     } else if (item.type === "GROUP") {
       if(item.kinds === "JOIN"){
@@ -123,23 +144,13 @@ class Alram extends Component {
         msg = `그룹에 가입이 승인되었습니다.`
       } else if(item.kinds === "JOINREFUSE"){
         msg = `그룹활동이 거절되었습니다.`
+      } else if (item.kinds === "LIKE") {
+        msg = `좋아요가 눌렸습니다.`
       }
     }
-    /*{item.type === "MESSAGE" ? "새 메시지가 도착했습니다."
-    : item.type === "DESIGN"
-      ? item.kinds === "INVITE" ? `디자인 초대가 왔습니다.`
-      : item.kinds === "REQUEST" ? `디자인 가입요청이 있습니다.`
-      : item.kinds === "INVITE_TRUE" ? `${item.fromUser}님이 멤버가 되었습니다.`
-      : item.kinds === "REQUEST_TRUE" ? `${item.title}의 멤버가 되었습니다.`
-      : item.kinds === "REFUSE" ? `맴버요청을 거절하셨습니다.`
-      : item.kinds === "LIKE" ? "좋아요가 눌렸습니다." : ``
-    : item.type === "GROUP"
-      ? item.kinds === "JOIN" ? `그룹에 새 가입요청이 있습니다.`
-      : item.kinds === "JOINSUCCESS" ? "그룹에 가입이 승인되었습니다."
-      : item.kinds === "JOINREFUSE" ? "그룹활동을 거절당하였습니다." : ""
-    : null}*/
     return msg;
   }
+
   render() {
     return (
       <button
@@ -166,20 +177,7 @@ class Alram extends Component {
                     onClick={() => this.alramConfirm(item.uid)}
                   >
                     <Link onClick = {this.forceUpdate}
-                      to={
-                        item.type === "MESSAGE"
-                          ? `/message/${item.from_user_id}/${item.fromUser}`
-                          : item.type === "DESIGN"
-                            ? item.kinds === "INVITE"
-                              ? `/myPage/join/invited`
-                              : `/designDetail/${item.content_id}`
-                              : item.kinds === "LIKE"
-                            ? `/designDetail/${item.content_id}`
-                            : item.type === "GROUP"
-                            ? `/groupDetail/${item.content_id}`
-                            
-                            : ""
-                      }
+                      to={this.getLink(item)}
                     >
                       <h4>{item.title}</h4>
                       {this.getMessageText(item)}
