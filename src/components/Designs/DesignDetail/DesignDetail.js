@@ -13,6 +13,18 @@ import DateFormat from "modules/DateFormat";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "./DesignComment";
 import NumberFormat from "modules/NumberFormat";
+import Loading from "components/Commons/Loading";
+import host from "config";
+
+// modal class of request fork design
+/*class Modal extends React.Component{
+  render(){
+    if(!this.props.shwow){
+      return null;
+    }
+  }
+}*/
+
 // css styling
 
 const Wrapper = styled.div`
@@ -465,13 +477,13 @@ class DesignDetail extends Component {
     activeMoreBtn: false,
     memberActive: false,
     manageMember: false,
-    commentState: false
-  };
+    commentState: false,
+    forkDesign: false
+  }
 
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token); // 디자인에 대한 정보
-    this.props
-      .UpdateDesignViewRequest(this.props.id)
+    this.props.UpdateDesignViewRequest(this.props.id)
       .then(this.props.GetDesignCountRequest(this.props.id)); // 디자인 조회수 업데이트 후 카운트 정보 가져옴
     if (this.props.token) {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
@@ -488,7 +500,7 @@ class DesignDetail extends Component {
         activeMoreBtn: !this.state.activeMoreBtn
       });
     }
-  };
+  }
 
   onCloseMoreBtn = e => {
     if (
@@ -506,35 +518,31 @@ class DesignDetail extends Component {
         activeMoreBtn: false
       });
     }
-  };
+  }
 
   updateLike = () => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
-      return;
+      alert("로그인을 해주세요.")
+      return
     }
     if (this.props.like === true) {
-      this.props
-        .UnlikeDesignRequest(this.props.id, this.props.token)
+      this.props.UnlikeDesignRequest(this.props.id, this.props.token)
         .then(data => {
           if (data.success === true) {
-            this.props
-              .GetLikeDesignRequest(this.props.id, this.props.token)
+            this.props.GetLikeDesignRequest(this.props.id, this.props.token)
               .then(this.props.GetDesignCountRequest(this.props.id));
           }
-        });
+        })
     } else {
-      this.props
-        .LikeDesignRequest(this.props.id, this.props.token)
+      this.props.LikeDesignRequest(this.props.id, this.props.token)
         .then(data => {
           if (data.success === true) {
-            this.props
-              .GetLikeDesignRequest(this.props.id, this.props.token)
+            this.props.GetLikeDesignRequest(this.props.id, this.props.token)
               .then(this.props.GetDesignCountRequest(this.props.id));
           }
-        });
+        })
     }
-  };
+  }
 
   deleteDesign = () => {
     const confirm = window.confirm("디자인을 삭제하시겠습니까?");
@@ -545,16 +553,14 @@ class DesignDetail extends Component {
     } else {
       return;
     }
-  };
+  }
 
   openMemberList = async e => {
     this.setState({ memberActive: !this.state.memberActive });
-  };
+  }
 
   memberOut = e => {
-    if(e.type === "blur" && !this.members._reactInternalFiber.child.stateNode.contains(
-      e.relatedTarget
-    )){
+    if (e.type === "blur" && !this.members._reactInternalFiber.child.stateNode.contains(e.relatedTarget)) {
       this.setState({ memberActive: false });
     }
   }
@@ -582,17 +588,31 @@ class DesignDetail extends Component {
     }
   }
 
-  closeMemberModal = () => {
-    this.setState({
-      manageMember: false,
-      activeMoreBtn: false
-    });
+  forkDesign = () => {
+    if(this.props.userInfo === null){
+      alert("로그인 후 진행가능합니다, 로그인 페이지로 이동합니다.")
+      return this.props.history.push("/Signin/")
+    }
+    if(this.props.userInfo.is_designer){
+      alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
+      return this.props.history.push("/myModify")
+    }
+    this.setState({forkDesign: true})
+    this.props.ForkDesignRequest(this.props.DesignDetail.uid, this.props.userInfo.uid, this.props.token)
+    .then(() => {
+      alert(`"파생 디자인(${this.props.new_design_id})이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
+      this.props.history.push("/designModify/" + this.props.new_design_id)
+    }).catch(err => {alert(`파생디자인생성실패`)})
+    .then(this.closeForkModal())
   }
 
+  closeMemberModal = () => {this.setState({manageMember: false, activeMoreBtn: false})}
+  closeForkModal = () => {this.setState({forkDesign: false, activeMoreBtn: false})}
+
   render() {
-    const designDetail = this.props.DesignDetail;
-    const count = this.props.Count;
-    console.log(designDetail);
+    const designDetail = this.props.DesignDetail
+    const count = this.props.Count
+    console.log(designDetail)
     const CountBox = () => {
       return (
         <CounterWrap>
@@ -619,51 +639,53 @@ class DesignDetail extends Component {
             <Icon name="fork" />
             <span className="count">{designDetail.children_count["count(*)"]}</span>
           </CounterItem>
-          <Button className="comment" onClick={() => this.setState({commentState: true})}>댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
+          <Button className="comment" onClick={() => this.setState({commentState: true})}> 댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
         </CounterWrap>
-      );
-    };
-
+      )
+    }
     const SubMenuCompo = () => {
       const isLeader = (this.props.userInfo && (this.props.userInfo.uid === this.props.DesignDetail.user_id));
       const isMember = (this.props.userInfo && (this.props.DesignDetail.is_team === 1));
       return (
         <SideMenu>
-          {isLeader &&
-            <li onClick={() => this.setState({manageMember: !this.state.manageMember, activeMoreBtn: false})}>
+            <li style={{display:isLeader ? "block":"none"}} onClick={() => this.setState({manageMember: !this.state.manageMember, activeMoreBtn: false})}>
               <button>멤버관리</button>
             </li>
-          }
-          {isLeader &&
-            <li>
+            <li style={{display:isLeader ? "block":"none"}}>
               <Link to={`/designModify/${this.props.id}`} onClick={this.onCloseMoreBtn}>
                 <button>수정</button>
               </Link>
             </li>
-          }
-          {isLeader &&
-            <li className="delete" onClick={this.deleteDesign}><button className="delete">삭제</button></li>
-          }
-          {!isMember && <li><button onClick={this.joinMember}>가입 신청</button></li>}
-          <li>
-            <Link to={`/design/`} onClick={this.onCloseMoreBtn}>
-            <button>파생디자인 생성</button>
-            </Link>
-          </li>
-          <li style={{display: designDetail.parent_design ? "block" : "none"}}>
-            <button onClick={this.onCloseMoreBtn}>원본디자인 보기</button>
-          </li>
+            <li style={{display: isLeader ? "block" : "none"}} className="delete" onClick={this.deleteDesign}>
+              <button className="delete">삭제</button>
+            </li>
+            <li style={{display: isMember || isLeader ? "none" : "block"}}>
+              <button onClick={this.joinMember}>가입 신청</button>
+            </li>
+            <li style={{display: designDetail.is_modify ? "block" : "none"}}>
+             <button onClick={this.forkDesign}>파생디자인 생성</button>
+           </li>
+           <li style={{display: designDetail.parent_design ? "block" : "none"}}>
+             <button onClick={this.onCloseMoreBtn}>원본디자인 보기</button>
+           </li>
         </SideMenu>
       );
     };
-
+    const ForkModal = () => {
+      return (
+        <Modal open={this.state.forkDesign} closeOnDimmerClick={false} onClose={this.closeForkModal}>
+          {<Loading/>}
+          {console.log(this.props.new_design_id)}
+        </Modal>
+      );
+    };
     const MemberModal = () => {
       return(
         <Modal open={this.state.manageMember} closeOnDimmerClick={true} onClose={this.closeMemberModal}>
           <DesignMemberContainer DesignDetail={designDetail}/>
         </Modal>
       );
-    }
+    };
     return (
       <div>
         {designDetail.length !== 0 && (
@@ -699,7 +721,7 @@ class DesignDetail extends Component {
                           <p>
                             {designDetail.explanation
                               ? designDetail.explanation
-                              : null }
+                              : "설명없음"}
                           </p>
                         </DesignExplanation>
                       </DesignInfoCard>
@@ -751,7 +773,7 @@ class DesignDetail extends Component {
                             <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
                               {designDetail.member && designDetail.member.map((item, index) => {
                                 if (index > 3) {
-                                  return;
+                                  return null
                                 } else {
                                   return (
                                     <MemberItem
@@ -840,7 +862,7 @@ class DesignDetail extends Component {
             {/* --------------- 하단 이슈/뷰/스텝 페이지 렌더링 ---------------  */}
             <ContentBox>
               <TabContainer>
-                {designDetail.is_project == 1 ? (
+                {designDetail.is_project === 1 ? (
                   <DesignDetailStepContainer id={this.props.id} />
                 ) : (
                   <DesignDetailViewContainer
@@ -853,6 +875,7 @@ class DesignDetail extends Component {
           </Wrapper>
         )}
         <MemberModal/>
+        {this.state.forkDesign?<ForkModal/>:null}
       </div>
     );
   }

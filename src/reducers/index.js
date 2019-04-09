@@ -7,7 +7,8 @@ import { UserInfo, MyDetail, MyJoin } from "reducers/Users";
 import { MessageList, MessageDetail } from "reducers/Messages";
 import { Categorys, CategoryAll } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
-import { Search, SearchIssue, TopList } from "reducers/Commons";
+import { Search, SearchIssue, TopList } from "reducers/Commons"
+import { DesignForked } from "reducers/Designs/DesignForked"
 import OpenDesign from "reducers/OpenDesign";
 
 import { combineReducers } from "redux";
@@ -19,6 +20,7 @@ export default combineReducers({
     DesignDetailView,
     DesignDetailStep,
     DesignDetailStepCard,
+    DesignForked,
     DesignSourceDetail,
     DesignCardComment,
     DesignDetailComment,

@@ -146,7 +146,8 @@ class ModifyDesignInfo extends Component {
   };
 
   render() {
-    const currentDesign = this.props.DesignDetail;
+    const currentDesign = this.props.DesignDetail
+    const disabledTxt = `파생된 디자인은 라이센스 수정권한이 없습니다.`
 
     return (
       <InfoWrapper>
@@ -231,18 +232,21 @@ class ModifyDesignInfo extends Component {
               <Grid.Column mobile={16} computer={12}>
                 <Form.Group widths={4}>
                   <FormCheckBox
+                    disabled={currentDesign.parent_design}
                     name="is_commercial"
                     placeholder="상업적 이용 가능"
                     getValue={this.onChangeValue}
                     value={currentDesign.is_commercial}
                   />
                   <FormCheckBox
+                    disabled={currentDesign.parent_design}
                     name="is_display_creater"
                     placeholder="원작자 표시"
                     getValue={this.onChangeValue}
                     value={currentDesign.is_display_creater}
                   />
                   <FormCheckBox
+                    disabled={currentDesign.parent_design}
                     name="is_modify"
                     placeholder="수정 가능"
                     getValue={this.onChangeValue}
