@@ -83,11 +83,9 @@ const Label = styled.div`
 `;
 
 class ModifyDesignInfo extends Component {
-
   componentWillMount() {
     this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
     .then(data => {
-      console.log(data);
       this.props.GetCategoryLevel2Request(data.DesignDetail.category_level1);
     });
   }
@@ -146,8 +144,8 @@ class ModifyDesignInfo extends Component {
   };
 
   render() {
-    const currentDesign = this.props.DesignDetail;
-
+    const currentDesign = this.props.DesignDetail
+    console.log("current Design:", this.props.DesignDetail)
     return (
       <InfoWrapper>
         {currentDesign.length === 0 ?
