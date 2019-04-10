@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DesignListPage, { DesignDetailPage } from "pages/DesignPage";
 import GroupListPage, { GroupDetailPage } from "pages/GroupPage";
@@ -12,16 +13,15 @@ import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
 import MainPage from "pages/MainPage/MainPage";
-import TestPage from "pages/TestPage";
-import TestPage2 from "pages/TestPage2";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import ResetPwPage from "pages/ResetPwPage";
-import { connect } from "react-redux";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
+import TestPage from "pages/TestPage";
+import TestPage2 from "pages/TestPage2";
 import TestPage3 from "pages/TestPage3";
 import SlideTestPage from "pages/SlideTestPage/SlideTestPage";
 

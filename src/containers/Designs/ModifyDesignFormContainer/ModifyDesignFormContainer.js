@@ -5,20 +5,36 @@ import ModifyDesignForm from "components/Designs/ModifyDesignForm";
 import { GetDesignDetailRequest } from "actions/Design";
 
 class ModifyDesignFormContainer extends Component {
-  componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id, this.props.token);
+  state = {
+    isAuthor: false
   }
-
+  isAuthor=()=>{(this.props.userInfo.uid === this.props.DesignDetail.user_id)}
+  componentDidMount() {
+    this.props.GetDesignDetailRequest(this.props.id, this.props.token)
+      .then(()=>{
+        if(this.props.userInfo.uid !== this.props.DesignDetail.user_id){
+          alert("이 디자인에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.")
+          this.props.history.go(-1)
+        } else { this.setState({isAuthor:true})}
+      })
+  }
   render() {
     return(
-      <ModifyDesignForm {...this.props}/>
-    );
+      <div>
+        {this.state.isAuthor?(
+          <ModifyDesignForm {...this.props}/>
+        ):(
+          <p style={{color:"#FFF"}}> 수정권한을 확인 중입니다.</p>
+        )}
+      </div>
+      )
   }
 }
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    DesignDetail: state.DesignDetail.status.DesignDetail
+    DesignDetail: state.DesignDetail.status.DesignDetail,
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
