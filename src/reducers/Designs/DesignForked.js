@@ -6,7 +6,7 @@ const initialState = {
     status: "INIT"
   },
   status: {
-    DesignForked: [], NewDesignId: null, Message: ""
+    DesignForked: [], new_design_id: null, Message: ""
   }
 }
 
@@ -23,7 +23,7 @@ export function DesignForked(state, action) {
       return update(state, {
         status: {
           DesignForked: { $set: "SUCCESS_FORK"}, 
-          NewDesignId: { $set: action.new_design_id},
+          new_design_id: { $set: action.new_design_id},
           Message: { $set: action.message } 
         }
       })

@@ -478,7 +478,8 @@ class DesignDetail extends Component {
     memberActive: false,
     manageMember: false,
     commentState: false,
-    forkDesign: false
+    forkDesign: false,
+    forkWaiting: false
   }
 
   componentDidMount() {
@@ -599,10 +600,11 @@ class DesignDetail extends Component {
     }
     this.setState({forkDesign: true})
     this.props.ForkDesignRequest(this.props.DesignDetail.uid, this.props.userInfo.uid, this.props.token)
+    //.then(this.setState({forkWaiting:true}))
     .then(() => {
       alert(`"파생 디자인(${this.props.new_design_id})이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
       this.props.history.push("/designModify/" + this.props.new_design_id)
-    }).catch(err => {alert(`파생디자인생성실패`)})
+    }).catch(err => {alert(`${err} 파생디자인생성실패`)})
     .then(this.closeForkModal())
   }
 
@@ -612,7 +614,7 @@ class DesignDetail extends Component {
   render() {
     const designDetail = this.props.DesignDetail
     const count = this.props.Count
-    console.log(designDetail)
+
     const CountBox = () => {
       return (
         <CounterWrap>
@@ -621,19 +623,13 @@ class DesignDetail extends Component {
             <Icon name="unhide" />
             <span className="count">{NumberFormat(count.view_count)}</span>
           </CounterItem>
-          {this.props.like === true ? (
-            <CounterItem className="likeBtn" onClick={this.updateLike}>
-              {/* <span className="title">좋아요</span> */}
-              <Icon name="heart" color="red" />
+          <CounterItem className="likeBtn" onClick={this.updateLike}>
+            {/* <span className="title">좋아요</span> */}
+            {this.props.like === true?
+            <Icon name="heart" color="red"/>:
+            <Icon name="heart outline" />}
               <span className="count">{NumberFormat(count.like_count)}</span>
-            </CounterItem>
-          ) : (
-            <CounterItem className="likeBtn" onClick={this.updateLike}>
-              {/* <span className="title">좋아요</span> */}
-              <Icon name="heart outline" />
-              <span className="count">{NumberFormat(count.like_count)}</span>
-            </CounterItem>
-          )}
+          </CounterItem>
           <CounterItem>
             {/* <span className="title">파생</span> */}
             <Icon name="fork" />
@@ -675,7 +671,7 @@ class DesignDetail extends Component {
       return (
         <Modal open={this.state.forkDesign} closeOnDimmerClick={false} onClose={this.closeForkModal}>
           {<Loading/>}
-          {console.log(this.props.new_design_id)}
+          {console.log("new design:", this.props.new_design_id)}
         </Modal>
       );
     };

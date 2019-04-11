@@ -147,7 +147,7 @@ class ModifyDesignInfo extends Component {
 
   render() {
     const currentDesign = this.props.DesignDetail
-    const disabledTxt = `파생된 디자인은 라이센스 수정권한이 없습니다.`
+    const disabledTxt = new String(`파생된 디자인은 라이센스 수정권한이 없습니다.`)
 
     return (
       <InfoWrapper>
@@ -211,16 +211,6 @@ class ModifyDesignInfo extends Component {
                     value={currentDesign.category_level2}
                   />
                 </Form.Group>
-                {/* <Form.Group widths="equal">
-                  <Label>멤버수정</Label>
-                  <AsyncInput
-                    name="member"
-                    getValue={this.onChangeValue}
-                    asyncFn={this.getMember}
-                    list={this.props.members}
-                    value={this.returnToMemberFormat(currentDesign.member)}
-                  />
-                </Form.Group> */}
               </Grid.Column>
             </Grid>
           </FromFieldCard>
@@ -233,6 +223,7 @@ class ModifyDesignInfo extends Component {
                 <Form.Group widths={4}>
                   <FormCheckBox
                     disabled={currentDesign.parent_design}
+                    disableMsg={disabledTxt}
                     name="is_commercial"
                     placeholder="상업적 이용 가능"
                     getValue={this.onChangeValue}
@@ -240,6 +231,7 @@ class ModifyDesignInfo extends Component {
                   />
                   <FormCheckBox
                     disabled={currentDesign.parent_design}
+                    disableMsg={disabledTxt}
                     name="is_display_creater"
                     placeholder="원작자 표시"
                     getValue={this.onChangeValue}
@@ -247,6 +239,7 @@ class ModifyDesignInfo extends Component {
                   />
                   <FormCheckBox
                     disabled={currentDesign.parent_design}
+                    disableMsg={disabledTxt}
                     name="is_modify"
                     placeholder="수정 가능"
                     getValue={this.onChangeValue}

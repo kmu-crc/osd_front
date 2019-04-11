@@ -18,7 +18,7 @@ class DesignDetailContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignForked:state.DesignForked.status.DesignForked,
-    new_design_id:state.DesignForked.status.NewDesignId,
+    new_design_id:state.DesignForked.status.new_design_id,
     DesignDetail: state.DesignDetail.status.DesignDetail,
     Count: state.DesignDetail.status.Count,
     userInfo: state.Authentication.status.userInfo,
