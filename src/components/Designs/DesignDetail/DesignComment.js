@@ -207,7 +207,7 @@ class DesignComment extends React.Component {
                   </div>
                   <div style={{position:"relative"}}>
                     <div style={{left:"50px", position:"absolute", display:"inline-block"}}>
-                      {DateFormat(comm.create_time)}
+                      {DateFormat(reply.create_time)}
                     </div>
                   </div>
                 </li>

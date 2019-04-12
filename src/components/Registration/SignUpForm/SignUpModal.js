@@ -14,7 +14,7 @@ export default class SignUpModal extends Component {
   componentDidMount() {
     setTimeout(
       ()=>{
-        this.props.history.push('./design');    
+        this.props.history.push('./design');
         this.setState({visible: false
       });}, 3000);
   }
@@ -36,7 +36,7 @@ export default class SignUpModal extends Component {
 
     return(
       <section>
-        <Modal 
+        <Modal
         onLoad
         visible={this.state.visible}
         width="400"

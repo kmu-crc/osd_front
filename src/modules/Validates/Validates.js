@@ -58,12 +58,12 @@ Validates.MinLength2 = value => {
   return new Promise((resolve, reject) => {
     if(!value) resolve(undefined);
     let data = undefined;
-    console.log(value.length >= 2);
-    if(value.length >= 2) {
+    console.log(value.length >= 1);
+    if(value.length >= 1) {
       data = undefined;
     } else {
       console.log("??");
-      data = "2자 이상 입력해 주세요.";
+      data = "1자 이상 입력해 주세요.";
     }
     resolve(data);
   });
