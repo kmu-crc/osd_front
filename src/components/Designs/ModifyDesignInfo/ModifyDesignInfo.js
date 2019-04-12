@@ -155,6 +155,7 @@ class ModifyDesignInfo extends Component {
         <div></div>
         :
         <form onSubmit={this.onSubmit}>
+          {currentDesign.parent_design?<div style={{color:"#FEE"}}>파생된 디자인을 수정합니다.</div>:null}
           <FromFieldCard>
             <Grid>
               <Grid.Column mobile={16} computer={4}>

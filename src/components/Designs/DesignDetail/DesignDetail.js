@@ -218,6 +218,9 @@ const ThumbnailImg = styled.div`
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
     height: ${PxtoRem(200)};
   }
+  i.icon-fork{
+    color: ${StyleGuide.color.main.dark};
+  }
 `;
 
 
@@ -600,21 +603,24 @@ class DesignDetail extends Component {
     }
     this.setState({forkDesign: true})
     this.props.ForkDesignRequest(this.props.DesignDetail.uid, this.props.userInfo.uid, this.props.token)
-    //.then(this.setState({forkWaiting:true}))
-    .then(() => {
-      alert(`"파생 디자인(${this.props.new_design_id})이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
+      .then(this.moveDegisnForked)
+      .catch(err=>{alert(err)})
+    }
+  moveDegisnForked = () => {
+    this.closeForkModal()
+    if(this.props.new_design_id){
+      alert(`"파생 디자인이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
       this.props.history.push("/designModify/" + this.props.new_design_id)
-    }).catch(err => {alert(`${err} 파생디자인생성실패`)})
-    .then(this.closeForkModal())
+    } else {
+      ;
+    }
   }
-
   closeMemberModal = () => {this.setState({manageMember: false, activeMoreBtn: false})}
   closeForkModal = () => {this.setState({forkDesign: false, activeMoreBtn: false})}
 
   render() {
     const designDetail = this.props.DesignDetail
     const count = this.props.Count
-
     const CountBox = () => {
       return (
         <CounterWrap>
@@ -633,7 +639,7 @@ class DesignDetail extends Component {
           <CounterItem>
             {/* <span className="title">파생</span> */}
             <Icon name="fork" />
-            <span className="count">{designDetail.children_count["count(*)"]}</span>
+            <span className="count">{NumberFormat(designDetail.children_count["count(*)"])}</span>
           </CounterItem>
           <Button className="comment" onClick={() => this.setState({commentState: true})}> 댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
         </CounterWrap>
@@ -671,7 +677,6 @@ class DesignDetail extends Component {
       return (
         <Modal open={this.state.forkDesign} closeOnDimmerClick={false} onClose={this.closeForkModal}>
           {<Loading/>}
-          {console.log("new design:", this.props.new_design_id)}
         </Modal>
       );
     };
@@ -682,6 +687,7 @@ class DesignDetail extends Component {
         </Modal>
       );
     };
+    if(this.props.new_design_id != null) {this.closeForkModal}
     return (
       <div>
         {designDetail.length !== 0 && (
@@ -692,33 +698,17 @@ class DesignDetail extends Component {
               <ContentBox>
                 <HeadContainer padded={true}>
                   <Grid.Row>
-                    <Grid.Column
-                      className="designHeaderCol"
-                      mobile={16}
-                      tablet={5}
-                      computer={5}
-                    >
-                      <ThumbnailImg img={designDetail.img} />
+                    <Grid.Column className="designHeaderCol" mobile={16} tablet={5} computer={5} >
+                      <ThumbnailImg img={designDetail.img}>
+                        {designDetail.parent_design?<i className="icon fork large icon-fork"/>:null}
+                      </ThumbnailImg>
                     </Grid.Column>
-                    <Grid.Column
-                      tablet={1}
-                      computer={1}
-                      only="tablet computer"
-                    />
-                    <Grid.Column
-                      className="designHeaderCol"
-                      mobile={16}
-                      tablet={10}
-                      computer={10}
-                    >
+                    <Grid.Column tablet={1} computer={1} only="tablet computer"/>
+                    <Grid.Column className="designHeaderCol" mobile={16} tablet={10} computer={10}>
                       <DesignInfoCard>
                         <DesignTitle>{designDetail.title}</DesignTitle>
                         <DesignExplanation>
-                          <p>
-                            {designDetail.explanation
-                              ? designDetail.explanation
-                              : "설명없음"}
-                          </p>
+                          <p>{designDetail.explanation ? designDetail.explanation : "설명없음"}</p>
                         </DesignExplanation>
                       </DesignInfoCard>
                     </Grid.Column>
@@ -728,11 +718,7 @@ class DesignDetail extends Component {
                   <HeadContainer padded={true}>
                     <Grid.Row>
                       <Grid.Column width={16} textAlign="right">
-                        <SideMenuBtn
-                          tabIndex="1"
-                          onBlur={this.onCloseMoreBtn}
-                          ref={ref => (this.MoreBtn = ref)}
-                        >
+                        <SideMenuBtn tabIndex="1" onBlur={this.onCloseMoreBtn} ref={ref => (this.MoreBtn = ref)}>
                           <button onClick={this.onActiveMoreBtn}>
                             <Icon name="ellipsis vertical" />
                           </button>
@@ -758,11 +744,7 @@ class DesignDetail extends Component {
                           </InfoItem>
                           <InfoItem>
                             <h3>카테고리</h3>
-                            <p>
-                              {designDetail.categoryName
-                                ? designDetail.categoryName
-                                : "전체"}
-                            </p>
+                            <p>{designDetail.categoryName ? designDetail.categoryName:"전체"}</p>
                           </InfoItem>
                           <InfoItem>
                             <h3>멤버</h3>
@@ -774,12 +756,7 @@ class DesignDetail extends Component {
                                   return (
                                     <MemberItem
                                       key={index}
-                                      style={{
-                                        backgroundImage: item.thumbnail
-                                          ? `url(${item.thumbnail.s_img})`
-                                          : `url(${UserImg})`,
-                                        zIndex: 5 - index
-                                      }}
+                                      style={{ backgroundImage: item.thumbnail ? `url(${item.thumbnail.s_img})` : `url(${UserImg})`, zIndex: 5 - index}}
                                     />
                                   );
                                 }

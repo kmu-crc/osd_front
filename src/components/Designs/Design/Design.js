@@ -27,6 +27,9 @@ const ImgPart = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  i.icon-fork{
+    color: ${StyleGuide.color.main.dark};
+  }
 `;
 
 const TextPart = styled.div`
@@ -86,11 +89,15 @@ const Count = styled.div`
 class Design extends Component {
   render() {
     let design = this.props.data;
-
+    console.log("design", design)
     return (
       <NavLink to={"/designDetail/"+design.uid}>
         <Designli>
-          <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
+          <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}>
+            {design.parent_design === null
+              ? null
+              : <i className="icon fork large icon-fork"/>}
+          </ImgPart>
           <TextPart>
             <div className="title">{design.title}</div>
               {design.is_project === 1
