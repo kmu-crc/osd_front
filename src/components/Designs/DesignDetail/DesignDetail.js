@@ -113,13 +113,13 @@ const BgHeader = styled.div`
     background-size: cover;
     background-position: center;
     ${props =>
-      props.img
-        ? css`
+    props.img
+      ? css`
              {
               background-image: url(${props.img.l_img});
             }
           `
-        : null};
+      : null};
     opacity: 0.3;
     background-color: rgba(0, 0, 0, 0.4);
     -webkit-filter: blur(7px);
@@ -579,13 +579,13 @@ class DesignDetail extends Component {
       const data = [{ uid: this.props.userInfo.uid }];
       if (confirm) {
         this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
-        .then(res => {
-          if (res.data && res.data.success) {
-            alert("가입 신청이 완료되었습니다.");
-          } else {
-            alert("다시 시도해주세요");
-          }
-        });
+          .then(res => {
+            if (res.data && res.data.success) {
+              alert("가입 신청이 완료되었습니다.");
+            } else {
+              alert("다시 시도해주세요");
+            }
+          });
       } else {
         return;
       }
@@ -593,33 +593,35 @@ class DesignDetail extends Component {
   }
 
   forkDesign = () => {
-    if(this.props.userInfo === null){
+    if (this.props.userInfo === null) {
       alert("로그인 후 진행가능합니다, 로그인 페이지로 이동합니다.")
       return this.props.history.push("/Signin/")
     }
-    if(this.props.userInfo.is_designer){
+    if (this.props.userInfo.is_designer) {
       alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
       return this.props.history.push("/myModify")
     }
-    this.setState({forkDesign: true})
+    this.setState({ forkDesign: true })
     this.props.ForkDesignRequest(this.props.DesignDetail.uid, this.props.userInfo.uid, this.props.token)
       .then(this.moveDegisnForked)
-      .catch(err=>{alert(err)})
-    }
+      .catch(err => { alert(err) })
+  }
   moveDegisnForked = () => {
     this.closeForkModal()
-    if(this.props.new_design_id){
+    if (this.props.new_design_id) {
       alert(`"파생 디자인이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
       this.props.history.push("/designModify/" + this.props.new_design_id)
     } else {
       ;
     }
   }
-  closeMemberModal = () => {this.setState({manageMember: false, activeMoreBtn: false})}
-  closeForkModal = () => {this.setState({forkDesign: false, activeMoreBtn: false})}
 
+  closeMemberModal = () => { this.setState({ manageMember: false, activeMoreBtn: false }) }
+  closeForkModal = () => { this.setState({ forkDesign: false, activeMoreBtn: false }) }
+  
   render() {
     const designDetail = this.props.DesignDetail
+    console.log("design deatil", designDetail)
     const count = this.props.Count
     const CountBox = () => {
       return (
@@ -631,17 +633,17 @@ class DesignDetail extends Component {
           </CounterItem>
           <CounterItem className="likeBtn" onClick={this.updateLike}>
             {/* <span className="title">좋아요</span> */}
-            {this.props.like === true?
-            <Icon name="heart" color="red"/>:
-            <Icon name="heart outline" />}
-              <span className="count">{NumberFormat(count.like_count)}</span>
+            {this.props.like === true ?
+              <Icon name="heart" color="red" /> :
+              <Icon name="heart outline" />}
+            <span className="count">{NumberFormat(count.like_count)}</span>
           </CounterItem>
           <CounterItem>
             {/* <span className="title">파생</span> */}
             <Icon name="fork" />
             <span className="count">{NumberFormat(designDetail.children_count["count(*)"])}</span>
           </CounterItem>
-          <Button className="comment" onClick={() => this.setState({commentState: true})}> 댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
+          <Button className="comment" onClick={() => this.setState({ commentState: true })}> 댓글 {NumberFormat(this.props.Count.comment_count)}</Button>
         </CounterWrap>
       )
     }
@@ -650,44 +652,46 @@ class DesignDetail extends Component {
       const isMember = (this.props.userInfo && (this.props.DesignDetail.is_team === 1));
       return (
         <SideMenu>
-            <li style={{display:isLeader ? "block":"none"}} onClick={() => this.setState({manageMember: !this.state.manageMember, activeMoreBtn: false})}>
-              <button>멤버관리</button>
-            </li>
-            <li style={{display:isLeader ? "block":"none"}}>
-              <Link to={`/designModify/${this.props.id}`} onClick={this.onCloseMoreBtn}>
-                <button>수정</button>
-              </Link>
-            </li>
-            <li style={{display: isLeader ? "block" : "none"}} className="delete" onClick={this.deleteDesign}>
-              <button className="delete">삭제</button>
-            </li>
-            <li style={{display: isMember || isLeader ? "none" : "block"}}>
-              <button onClick={this.joinMember}>가입 신청</button>
-            </li>
-            <li style={{display: designDetail.is_modify ? "block" : "none"}}>
-             <button onClick={this.forkDesign}>파생디자인 생성</button>
-           </li>
-           <li style={{display: designDetail.parent_design ? "block" : "none"}}>
-             <button onClick={this.onCloseMoreBtn}>원본디자인 보기</button>
-           </li>
+          <li style={{ display: isLeader ? "block" : "none" }} onClick={() => this.setState({ manageMember: !this.state.manageMember, activeMoreBtn: false })}>
+            <button>멤버관리</button>
+          </li>
+          <li style={{ display: isLeader ? "block" : "none" }}>
+            <Link to={`/designModify/${this.props.id}`} onClick={this.onCloseMoreBtn}>
+              <button>수정</button>
+            </Link>
+          </li>
+          <li style={{ display: isLeader ? "block" : "none" }} className="delete" onClick={this.deleteDesign}>
+            <button className="delete">삭제</button>
+          </li>
+          <li style={{ display: isMember || isLeader ? "none" : "block" }}>
+            <button onClick={this.joinMember}>가입 신청</button>
+          </li>
+          <li style={{ display: designDetail.is_modify ? "block" : "none" }}>
+            <button onClick={this.forkDesign}>파생디자인 생성</button>
+          </li>
+          <li style={{ display: designDetail.parent_design ? "block" : "none" }}>
+            <Link to={`/designDetail/${designDetail.parent_design}`} onClick={this.forceUpdate}>
+              <button >원본디자인 보기</button>
+            </Link>
+          </li>
         </SideMenu>
       );
     };
     const ForkModal = () => {
       return (
         <Modal open={this.state.forkDesign} closeOnDimmerClick={false} onClose={this.closeForkModal}>
-          {<Loading/>}
+          {<Loading />}
         </Modal>
       );
     };
     const MemberModal = () => {
-      return(
+      return (
         <Modal open={this.state.manageMember} closeOnDimmerClick={true} onClose={this.closeMemberModal}>
-          <DesignMemberContainer DesignDetail={designDetail}/>
+          <DesignMemberContainer DesignDetail={designDetail} />
         </Modal>
       );
     };
-    if(this.props.new_design_id != null) {this.closeForkModal}
+    if (this.props.new_design_id != null) { this.closeForkModal }
     return (
       <div>
         {designDetail.length !== 0 && (
@@ -700,10 +704,10 @@ class DesignDetail extends Component {
                   <Grid.Row>
                     <Grid.Column className="designHeaderCol" mobile={16} tablet={5} computer={5} >
                       <ThumbnailImg img={designDetail.img}>
-                        {designDetail.parent_design?<i className="icon fork large icon-fork"/>:null}
+                        {designDetail.parent_design ? <i className="icon fork large icon-fork" /> : null}
                       </ThumbnailImg>
                     </Grid.Column>
-                    <Grid.Column tablet={1} computer={1} only="tablet computer"/>
+                    <Grid.Column tablet={1} computer={1} only="tablet computer" />
                     <Grid.Column className="designHeaderCol" mobile={16} tablet={10} computer={10}>
                       <DesignInfoCard>
                         <DesignTitle>{designDetail.title}</DesignTitle>
@@ -729,94 +733,94 @@ class DesignDetail extends Component {
                   </HeadContainer>
                 </DesignSubInfo>
               </ContentBox>
-                <ContentBox>
-                  <HeadContainer padded={true}>
-                    <Grid.Row>
-                      <Grid.Column computer={5} only="computer">
-                        <CountBox />
-                      </Grid.Column>
-                      <Grid.Column computer={1} only="computer" />
-                      <Grid.Column mobile={16} tablet={16} computer={9}>
-                        <DesignInfoCard>
-                          <InfoItem>
-                            <h3>작성자</h3>
-                            <p><Link to={`/designerDetail/${designDetail.user_id}`}>{designDetail.userName}</Link></p>
-                          </InfoItem>
-                          <InfoItem>
-                            <h3>카테고리</h3>
-                            <p>{designDetail.categoryName ? designDetail.categoryName:"전체"}</p>
-                          </InfoItem>
-                          <InfoItem>
-                            <h3>멤버</h3>
-                            <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
-                              {designDetail.member && designDetail.member.map((item, index) => {
-                                if (index > 3) {
-                                  return null
-                                } else {
-                                  return (
-                                    <MemberItem
-                                      key={index}
-                                      style={{ backgroundImage: item.thumbnail ? `url(${item.thumbnail.s_img})` : `url(${UserImg})`, zIndex: 5 - index}}
-                                    />
-                                  );
-                                }
-                              })}
-                              {/* {designDetail.member.length > 5 && (
+              <ContentBox>
+                <HeadContainer padded={true}>
+                  <Grid.Row>
+                    <Grid.Column computer={5} only="computer">
+                      <CountBox />
+                    </Grid.Column>
+                    <Grid.Column computer={1} only="computer" />
+                    <Grid.Column mobile={16} tablet={16} computer={9}>
+                      <DesignInfoCard>
+                        <InfoItem>
+                          <h3>작성자</h3>
+                          <p><Link to={`/designerDetail/${designDetail.user_id}`}>{designDetail.userName}</Link></p>
+                        </InfoItem>
+                        <InfoItem>
+                          <h3>카테고리</h3>
+                          <p>{designDetail.categoryName ? designDetail.categoryName : "전체"}</p>
+                        </InfoItem>
+                        <InfoItem>
+                          <h3>멤버</h3>
+                          <Members ref={ref => this.members = ref} onClick={this.openMemberList} onBlur={this.memberOut} tabIndex="1">
+                            {designDetail.member && designDetail.member.map((item, index) => {
+                              if (index > 3) {
+                                return null
+                              } else {
+                                return (
+                                  <MemberItem
+                                    key={index}
+                                    style={{ backgroundImage: item.thumbnail ? `url(${item.thumbnail.s_img})` : `url(${UserImg})`, zIndex: 5 - index }}
+                                  />
+                                );
+                              }
+                            })}
+                            {/* {designDetail.member.length > 5 && (
                                 <MemberItem>
                                   <Icon name="plus" />
                                 </MemberItem>
                               )} */}
-                              <MemberItem>
-                                  {/* <Icon name="plus" /> */}
-                                  <i className="icon">{NumberFormat(this.props.Count.member_count)}</i>{NumberFormat(this.props.Count.member_count)}
-                              </MemberItem>
-                              <Memberlist
-                                className={
-                                  this.state.memberActive ? "active" : null
-                                }
-                              >
-                                {designDetail.member && designDetail.member.map((item, i) => {
-                                  return (
-                                    <Link to={`/designerDetail/${item.user_id}`} key={i}>
-                                      <MemberlistItem>
-                                        <MemberItem
-                                          style={{
-                                            backgroundImage: item.thumbnail
-                                              ? `url(${item.thumbnail.s_img})`
-                                              : `url(${UserImg})`
-                                          }}
-                                        />{" "}
-                                        <span className="nickName">
-                                          {item.nick_name}
-                                        </span>
-                                      </MemberlistItem>
-                                    </Link>
-                                  );
-                                })}
-                              </Memberlist>
-                            </Members>
-                          </InfoItem>
-                          <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => {this.setState({commentState: false});(this.props.GetDesignCountRequest(this.props.id))} }/>
-                        </DesignInfoCard>
-                        <DesignInfoCard>
-                          <CreateDate>
-                            <span>작성일 : </span>
-                            {designDetail.create_time.split("T")[0]}
-                            <span className="update">최근 업데이트 : </span>
-                            {DateFormat(designDetail.update_time)}
-                          </CreateDate>
-                        </DesignInfoCard>
-                        <HeadContainer padded={true}>
-                          <Grid.Row>
-                            <Grid.Column only="tablet mobile">
-                              <CountBox />
-                            </Grid.Column>
-                          </Grid.Row>
-                        </HeadContainer>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </HeadContainer>
-                </ContentBox>
+                            <MemberItem>
+                              {/* <Icon name="plus" /> */}
+                              <i className="icon">{NumberFormat(this.props.Count.member_count)}</i>{NumberFormat(this.props.Count.member_count)}
+                            </MemberItem>
+                            <Memberlist
+                              className={
+                                this.state.memberActive ? "active" : null
+                              }
+                            >
+                              {designDetail.member && designDetail.member.map((item, i) => {
+                                return (
+                                  <Link to={`/designerDetail/${item.user_id}`} key={i}>
+                                    <MemberlistItem>
+                                      <MemberItem
+                                        style={{
+                                          backgroundImage: item.thumbnail
+                                            ? `url(${item.thumbnail.s_img})`
+                                            : `url(${UserImg})`
+                                        }}
+                                      />{" "}
+                                      <span className="nickName">
+                                        {item.nick_name}
+                                      </span>
+                                    </MemberlistItem>
+                                  </Link>
+                                );
+                              })}
+                            </Memberlist>
+                          </Members>
+                        </InfoItem>
+                        <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => { this.setState({ commentState: false }); (this.props.GetDesignCountRequest(this.props.id)) }} />
+                      </DesignInfoCard>
+                      <DesignInfoCard>
+                        <CreateDate>
+                          <span>작성일 : </span>
+                          {designDetail.create_time.split("T")[0]}
+                          <span className="update">최근 업데이트 : </span>
+                          {DateFormat(designDetail.update_time)}
+                        </CreateDate>
+                      </DesignInfoCard>
+                      <HeadContainer padded={true}>
+                        <Grid.Row>
+                          <Grid.Column only="tablet mobile">
+                            <CountBox />
+                          </Grid.Column>
+                        </Grid.Row>
+                      </HeadContainer>
+                    </Grid.Column>
+                  </Grid.Row>
+                </HeadContainer>
+              </ContentBox>
               <ContentBox>
                 {/* <TabMenu>
                   <Link to={`/designDetail/${this.props.id}`}>
@@ -838,17 +842,17 @@ class DesignDetail extends Component {
                 {designDetail.is_project === 1 ? (
                   <DesignDetailStepContainer id={this.props.id} />
                 ) : (
-                  <DesignDetailViewContainer
-                    id={this.props.id}
-                    history={this.props.history}
-                  />
-                )}
+                    <DesignDetailViewContainer
+                      id={this.props.id}
+                      history={this.props.history}
+                    />
+                  )}
               </TabContainer>
             </ContentBox>
           </Wrapper>
         )}
-        <MemberModal/>
-        {this.state.forkDesign?<ForkModal/>:null}
+        <MemberModal />
+        {this.state.forkDesign ? <ForkModal /> : null}
       </div>
     );
   }
