@@ -74,24 +74,32 @@ class DesignComment extends React.Component {
   }
 
   onSubmitCmtForm = async data => {
+    const toWhom = FormDataToJson(data).toWhom
+    const comment = FormDataToJson(data).comment
+    const d_flag = FormDataToJson(data).d_flag || null;
+
     let packet = {
-      comment: FormDataToJson(data).toWhom + " " + FormDataToJson(data).comment,
-      d_flag: FormDataToJson(data).d_flag == "" ? null :FormDataToJson(data).d_flag,
+      comment: toWhom + " " + comment,
+      d_flag: d_flag,
     } 
-    console.log(FormDataToJson(data).d_flag);
     if (!this.props.token) {
       alert("로그인을 해주세요.");
       return;
     }
-    if( (this.state.reply==null && (packet.comment.length === 0 || packet.comment === ""))
-    ||(this.state.reply && (packet.comment.length <= this.state.toWhom.length+2 || packet.comment === "")))
+    if(!this.state.reply && (packet.comment.length === 0 || packet.comment.trim() === ""))
     {
       alert("내용을 입력해 주세요.");
       return;
     }
+    if(this.state.reply && packet.comment.replace(toWhom,"").trim() === "" )
+    {
+        alert("내용을 입력해 주세요.");
+        return;
+    }
+
     this.createCommentRequest(packet);
     this.setState({reply:null});
-  };
+  }
   commentFormBlur = () => {
     this.setState({reply:null,toWhom:null})
   }
