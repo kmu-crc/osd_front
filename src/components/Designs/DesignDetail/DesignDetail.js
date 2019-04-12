@@ -218,9 +218,18 @@ const ThumbnailImg = styled.div`
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
     height: ${PxtoRem(200)};
   }
-  i.icon-fork{
-    color: ${StyleGuide.color.main.dark};
+  padding: 3px 3px;
+  div.icon-span{
+    border-radius: 15%;
+    background-color:#FFF;
+    width: 23px;
+    height: 23px;
+    box-shadow: 0px 0.2px ${StyleGuide.color.geyScale.scale7};
   }
+  i.icon-fork{
+    transform: translateY(0.5px);
+    color: ${StyleGuide.color.main.dark};
+  }}
 `;
 
 
@@ -611,9 +620,7 @@ class DesignDetail extends Component {
     if (this.props.new_design_id) {
       alert(`"파생 디자인이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
       this.props.history.push("/designModify/" + this.props.new_design_id)
-    } else {
-      ;
-    }
+    } 
   }
 
   closeMemberModal = () => { this.setState({ manageMember: false, activeMoreBtn: false }) }
@@ -704,7 +711,10 @@ class DesignDetail extends Component {
                   <Grid.Row>
                     <Grid.Column className="designHeaderCol" mobile={16} tablet={5} computer={5} >
                       <ThumbnailImg img={designDetail.img}>
-                        {designDetail.parent_design ? <i className="icon fork large icon-fork" /> : null}
+                        {designDetail.parent_design ? <div className="icon-span">
+                          <i className="icon fork large icon-fork" /> 
+                          </div>
+                          : null}
                       </ThumbnailImg>
                     </Grid.Column>
                     <Grid.Column tablet={1} computer={1} only="tablet computer" />

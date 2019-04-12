@@ -27,6 +27,14 @@ const ImgPart = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  padding: 3px 3px;
+  div.icon-span{
+    border-radius: 15%;
+    background-color:#FFF;
+    width: 23px;
+    height: 23px;
+    box-shadow: 0px 0.2px ${StyleGuide.color.geyScale.scale7};
+  }
   i.icon-fork{
     color: ${StyleGuide.color.main.dark};
   }
@@ -96,7 +104,10 @@ class Design extends Component {
           <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}>
             {design.parent_design === null
               ? null
-              : <i className="icon fork large icon-fork"/>}
+              : <div className="icon-span">
+                  <i className="icon fork large icon-fork"/>
+                </div>
+            }
           </ImgPart>
           <TextPart>
             <div className="title">{design.title}</div>
