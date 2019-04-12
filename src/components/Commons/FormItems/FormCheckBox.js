@@ -40,6 +40,10 @@ const CheckBoxLabel = styled.label`
     left: 4px;
     top: -1px;
   }
+  &.disabled{
+    color: ${StyleGuide.color.geyScale.scale6}
+    // text-decoration-line: line-through;
+  }
 `
 
 export class FormCheckBox extends Component {
@@ -77,15 +81,25 @@ export class FormCheckBox extends Component {
     if(e && this.props.onBlur) await this.props.onBlur();
   }
   render() {
-    const { name, value, placeholder, id } = this.props;
+    const { name, value, disableMsg, disabled, placeholder, id } = this.props;
     return (
       <InputWrap>
-        <CheckBoxLabel
+      {disabled?(
+        <CheckBoxLabel      
+        className={this.state.value ? "disabled checked" : null}
+        htmlFor={id ? id+value : name+value}
+        onBlur={this.returnData}
+        title={disableMsg}
+        >{placeholder}</CheckBoxLabel>
+        
+        ):(
+          <CheckBoxLabel
           className={this.state.value ? "checked" : null}
           htmlFor={id ? id+value : name+value}
           onClick={this.onChangeValue}
           onBlur={this.returnData}
           >{placeholder}</CheckBoxLabel>
+          )}
         <input
           type="checkbox"
           id={id ? id+value : name+value}
@@ -94,13 +108,15 @@ export class FormCheckBox extends Component {
           defaultValue={value && value}
           ref={ref => (this.input = ref)}
           />
-        <Message></Message>
+        <Message/>
       </InputWrap>
-    );
+    )
   }
 }
 
 FormCheckBox.propTypes = {
+  disabled: PropTypes.bool,
+  disableMsg: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   id: PropTypes.string,

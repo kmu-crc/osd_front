@@ -1,29 +1,32 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design";
-import { DeleteDesignRequest } from "actions/Designs/DeleteDesign";
-import DesignDetail from "components/Designs/DesignDetail";
-import { JoinDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import DesignDetail from "components/Designs/DesignDetail"
+import { GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design"
+import { DeleteDesignRequest } from "actions/Designs/DeleteDesign"
+import { JoinDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign"
+import { ForkDesignRequest }  from "actions/Designs/ForkDesign"
 
 class DesignDetailContainer extends Component {
   render() {
     return (
       <DesignDetail {...this.props}/>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    DesignForked:state.DesignForked.status.DesignForked,
+    new_design_id:state.DesignForked.status.new_design_id,
     DesignDetail: state.DesignDetail.status.DesignDetail,
-    valid: state.Authentication.status.valid,
+    Count: state.DesignDetail.status.Count,
     userInfo: state.Authentication.status.userInfo,
+    valid: state.Authentication.status.valid,
     token: state.Authentication.status.token,
-    like: state.DesignLike.status.like,
-    Count: state.DesignDetail.status.Count
-  };
-};
+    like: state.DesignLike.status.like
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -56,8 +59,11 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetoutDesignRequest: (id, token) => {
       return dispatch(GetoutDesignRequest(id, token))
+    },
+    ForkDesignRequest: (designId, userId, token) => {
+      return dispatch(ForkDesignRequest(designId, userId, token))
     }
-  };
-};
+  }
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DesignDetailContainer));

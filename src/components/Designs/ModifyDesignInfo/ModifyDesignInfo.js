@@ -145,13 +145,14 @@ class ModifyDesignInfo extends Component {
 
   render() {
     const currentDesign = this.props.DesignDetail
-    console.log("current Design:", this.props.DesignDetail)
+    const disabledTxt = new String(`파생된 디자인은 라이센스 수정권한이 없습니다.`)
     return (
       <InfoWrapper>
         {currentDesign.length === 0 ?
         <div></div>
         :
         <form onSubmit={this.onSubmit}>
+          {currentDesign.parent_design?<div style={{color:"#FEE"}}>파생된 디자인을 수정합니다.</div>:null}
           <FromFieldCard>
             <Grid>
               <Grid.Column mobile={16} computer={4}>
@@ -208,16 +209,6 @@ class ModifyDesignInfo extends Component {
                     value={currentDesign.category_level2}
                   />
                 </Form.Group>
-                {/* <Form.Group widths="equal">
-                  <Label>멤버수정</Label>
-                  <AsyncInput
-                    name="member"
-                    getValue={this.onChangeValue}
-                    asyncFn={this.getMember}
-                    list={this.props.members}
-                    value={this.returnToMemberFormat(currentDesign.member)}
-                  />
-                </Form.Group> */}
               </Grid.Column>
             </Grid>
           </FromFieldCard>
@@ -229,18 +220,24 @@ class ModifyDesignInfo extends Component {
               <Grid.Column mobile={16} computer={12}>
                 <Form.Group widths={4}>
                   <FormCheckBox
+                    disabled={currentDesign.parent_design}
+                    disableMsg={disabledTxt}
                     name="is_commercial"
                     placeholder="상업적 이용 가능"
                     getValue={this.onChangeValue}
                     value={currentDesign.is_commercial}
                   />
                   <FormCheckBox
+                    disabled={currentDesign.parent_design}
+                    disableMsg={disabledTxt}
                     name="is_display_creater"
                     placeholder="원작자 표시"
                     getValue={this.onChangeValue}
                     value={currentDesign.is_display_creater}
                   />
                   <FormCheckBox
+                    disabled={currentDesign.parent_design}
+                    disableMsg={disabledTxt}
                     name="is_modify"
                     placeholder="수정 가능"
                     getValue={this.onChangeValue}
