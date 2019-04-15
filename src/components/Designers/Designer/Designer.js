@@ -83,9 +83,9 @@ const Count = styled.div`
 class Designer extends Component {
   render(){
     let designer = this.props.data;
-
+    const userInfo = this.props.user;
     return(
-      <NavLink to={"/designerDetail/"+designer.uid}>
+      <NavLink to={designer.uid===userInfo.uid?"/myPage":"/designerDetail/"+designer.uid}>
         <Designerli>
           <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${profile})`}}/>
           <TextPart>

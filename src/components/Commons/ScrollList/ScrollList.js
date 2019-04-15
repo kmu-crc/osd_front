@@ -45,6 +45,7 @@ class ScrollList extends Component {
   render() {
     const ListComponent = this.props.ListComponent;
     const type = this.props.type;
+    const userInfo = this.props.userInfo
 
     return (
       <ScrollContainer>
@@ -61,7 +62,7 @@ class ScrollList extends Component {
                                 largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
                                 className={this.props.customClass}
                                 key={content.uid}>
-                      <ListComponent data={content} rerender={this.props.rerender}/>
+                      <ListComponent user={userInfo} data={content} rerender={this.props.rerender}/>
                     </Grid.Column>
                   ))
                 }

@@ -18,6 +18,7 @@ class ScrollDesignerListContainer extends Component {
     return(
       <ScrollList getListRequest={this.getList}
                   ListComponent={Designer}
+                  userInfo={this.props.userInfo}
                   type="Designer"
                   dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                   mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
