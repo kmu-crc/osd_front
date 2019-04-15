@@ -13,6 +13,7 @@ import MyInvitedContainer from "containers/MyPage/MyInvitedContainer";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
+import NumberFormat from "modules/NumberFormat"
 
 // css styling
 
@@ -287,22 +288,22 @@ class MyDetail extends Component {
                       <div className="list">
                         <Icon name="signup" color="grey" size="tiny"/>
                         등록한 디자인
-                        <span>{count.total_design}</span>
+                        <span>{NumberFormat(count.total_design)}</span>
                       </div>
                       <div className="list">
                         <Icon name="window restore" color="grey" size="tiny"/>
                         등록한 그룹
-                        <span>{count.total_group}</span>
+                        <span>{NumberFormat(count.total_group)}</span>
                       </div>
                       <div className="list">
                         <Icon name="user" color="grey" size="tiny"/>
                         내 조회수
-                        <span>{count.total_view}</span>
+                        <span>{NumberFormat(count.total_view)}</span>
                       </div>
                       <div className="list">
                         <Icon name="heart" color="grey" size="tiny"/>
                         내가 받은 좋아요
-                        <span>{count.total_like}</span>
+                        <span>{NumberFormat(count.total_like)}</span>
                       </div>
                     </CountSection>
                   </HeadContainer>
