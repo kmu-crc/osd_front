@@ -319,6 +319,15 @@ class Header extends Component {
     }
   };
 
+  limitNickName = str => {
+    if (str.length <= 6) {
+      return str;
+    }
+    else{
+      return str.slice(0,3) + "...";
+    }
+  }
+
   render() {
     const LoginNav = () => {
       return (
@@ -336,7 +345,7 @@ class Header extends Component {
                 }}
                 onError={this.noneImage}
               />
-              {this.props.userInfo.nickName}
+              {this.limitNickName(this.props.userInfo.nickName)}
             </UserBtn>
             <UserMenuDimm
               style={{
