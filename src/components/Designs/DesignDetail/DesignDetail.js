@@ -722,7 +722,7 @@ class DesignDetail extends Component {
                       <DesignInfoCard>
                         <DesignTitle>{designDetail.title}</DesignTitle>
                         <DesignExplanation>
-                          <p>{designDetail.explanation ? designDetail.explanation : "설명없음"}</p>
+                          <p>{designDetail.explanation}</p>
                         </DesignExplanation>
                       </DesignInfoCard>
                     </Grid.Column>
