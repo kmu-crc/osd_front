@@ -320,11 +320,11 @@ class Header extends Component {
   };
 
   limitNickName = str => {
-    if (str.length <= 6) {
+    if (str.length < 6) {
       return str;
     }
     else{
-      return str.slice(0,3) + "...";
+      return str.slice(0,5) + "...";
     }
   }
 
