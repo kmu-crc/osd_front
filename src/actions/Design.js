@@ -99,9 +99,9 @@ export function GetDesignDetailRequest(id, token) {
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("design Detail data >>", data);
+        // console.log("design Detail data >>", data);
         if (!data) {
-          console.log("no data");
+          // console.log("no data");
           data = [];
         }
         return dispatch(GetDesignDetail(data));
