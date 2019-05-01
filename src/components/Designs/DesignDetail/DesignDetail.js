@@ -14,16 +14,6 @@ import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "./DesignComment";
 import NumberFormat from "modules/NumberFormat";
 import Loading from "components/Commons/Loading";
-import host from "config";
-
-// modal class of request fork design
-/*class Modal extends React.Component{
-  render(){
-    if(!this.props.shwow){
-      return null;
-    }
-  }
-}*/
 
 // css styling
 
@@ -483,7 +473,19 @@ const MemberlistItem = styled.div`
     white-space: nowrap;
   }
 `;
-
+const CustomModal = styled(Modal)`
+  border: "1px solid";
+  border-color: ${StyleGuide.color.main.dark};
+  padding: 20px;
+  width: 250px;
+  & .icon.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: ${StyleGuide.color.geyScale.scale9};
+    cursor: pointer;
+  }
+`;
 class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
@@ -491,7 +493,8 @@ class DesignDetail extends Component {
     manageMember: false,
     commentState: false,
     forkDesign: false,
-    forkWaiting: false
+    forkListCompleted: false,
+    forkDesignList: false
   }
 
   componentDidMount() {
@@ -620,15 +623,19 @@ class DesignDetail extends Component {
     if (this.props.new_design_id) {
       alert(`"파생 디자인이 생성되었습니다. 파생디자인 편집화면으로 이동합니다."`)
       this.props.history.push("/designModify/" + this.props.new_design_id)
-    } 
+    }
   }
 
+  getListChildDesign = () => {
+    this.setState({ forkDesignList: true })
+    this.props.ForkDesignListRequest(this.props.DesignDetail.uid)
+  }
   closeMemberModal = () => { this.setState({ manageMember: false, activeMoreBtn: false }) }
   closeForkModal = () => { this.setState({ forkDesign: false, activeMoreBtn: false }) }
-  
+  closeForkListModal = () => { this.setState({ forkListCompleted: false, forkDesignList: false, activeMoreBtn: false }) }
+
   render() {
     const designDetail = this.props.DesignDetail
-    console.log("design deatil", designDetail)
     const count = this.props.Count
     const CountBox = () => {
       return (
@@ -678,27 +685,78 @@ class DesignDetail extends Component {
           </li>
           <li style={{ display: designDetail.parent_design ? "block" : "none" }}>
             <Link to={`/designDetail/${designDetail.parent_design}`} onClick={this.forceUpdate}>
-              <button >원본디자인 보기</button>
+              <button>원본디자인 보기</button>
             </Link>
           </li>
+          <li style={{ display: designDetail.children_count["count(*)"]>0? "block" : "none" }}>
+            <button onClick={this.getListChildDesign}>파생디자인 목록보기</button>
+          </li>
         </SideMenu>
-      );
-    };
+      )
+    }
+    const ForkDesignList = (list) => {
+      const design_list = list.list
+      console.log(this.props, "props")
+      
+      return (
+        <Modal.Content style={{padding:"10px 5px 10px 5px"}}>
+          <Icon name="close" style={{cursor:"pointer", float:"right"}} size="big" onClick={this.closeForkListModal}/>
+          <h5 style={{leftPadding:"25px", left:"25px"}}>파생디자인 목록보기</h5>
+          <div>
+            <ol style={{fontSize:"12px", padding:"0 0 0 0"}}>
+              <li style={{verticalAlign:"middle", bottomPadding:"0"}}>
+                <img style={{verticalAlign:"middle", borderRadius:"30%", width:"20px", height:"20px"}} src={this.props.DesignDetail.member.find( mem => mem.user_id===this.props.DesignDetail.user_id).thumbnail.s_img}/>
+                &nbsp;{this.props.DesignDetail.userName}
+                &nbsp;/&nbsp;{this.props.DesignDetail.title}
+              </li>
+              {design_list.map((li, i) => { return (
+              <li style={{textAlign:"left", bottomPadding:"0", verticalAlign:"middle"}} key={i}>
+                <img style={{verticalAlign:"middle"}} src={design_list.length > i+1
+                ?"https://github.githubassets.com/images/modules/network/t.png"
+                :"https://github.githubassets.com/images/modules/network/l.png"}/>
+                <img style={{verticalAlign:"middle", borderRadius:"30%", width:"20px", height:"20px"}} src={li.s_img}/>
+                &nbsp;
+                <Link to={`/designerDetail/${li.user_id}`}>
+                  {li.nick_name}
+                </Link>
+                &nbsp;/&nbsp;
+                {/* <img style={{verticalAlign:"middle",borderRadius:"30%", width:"20px",height:"20px"}} src={li.p_s_img}/> */}
+                <Link to={`/designDetail/${li.uid}`} onClick={this.forceUpdate}>
+                  {li.title} 
+                </Link>
+              </li>)})}
+            </ol>
+          </div>
+
+        </Modal.Content>
+      )
+    }
+    const ForkListModal = () => {
+      return (
+        <Modal open={this.state.forkDesignList} closeOnDimmerClick={false} onClose={this.closeForkListModal}>
+          {this.props.forked_list
+          ?<div>
+            <ForkDesignList list={this.props.forked_list} />  
+          </div>
+          :<Loading/>}
+        </Modal>
+      )
+    }
     const ForkModal = () => {
       return (
         <Modal open={this.state.forkDesign} closeOnDimmerClick={false} onClose={this.closeForkModal}>
           {<Loading />}
         </Modal>
-      );
-    };
+      )
+    }
     const MemberModal = () => {
       return (
         <Modal open={this.state.manageMember} closeOnDimmerClick={true} onClose={this.closeMemberModal}>
           <DesignMemberContainer DesignDetail={designDetail} />
         </Modal>
-      );
-    };
-    if (this.props.new_design_id != null) { this.closeForkModal }
+      )
+    }
+    if (this.props.new_design_id !== null) { this.closeForkModal }
     return (
       <div>
         {designDetail.length !== 0 && (
@@ -712,8 +770,8 @@ class DesignDetail extends Component {
                     <Grid.Column className="designHeaderCol" mobile={16} tablet={5} computer={5} >
                       <ThumbnailImg img={designDetail.img}>
                         {designDetail.parent_design ? <div className="icon-span">
-                          <i className="icon fork large icon-fork" /> 
-                          </div>
+                          <i className="icon fork large icon-fork" />
+                        </div>
                           : null}
                       </ThumbnailImg>
                     </Grid.Column>
@@ -862,9 +920,10 @@ class DesignDetail extends Component {
           </Wrapper>
         )}
         <MemberModal />
-        {this.state.forkDesign ? <ForkModal /> : null}
+        <ForkModal />
+        <ForkListModal />
       </div>
-    );
+    )
   }
 }
 

@@ -175,16 +175,16 @@ class DesignBoard extends Component {
     let b = this.props.step.find((board) => { return board.order == this.props.board.order + 1 });
     let boardA = { id: this.props.board.uid, data: { order: this.props.board.order + 1 } };
     let boardB = { id: b.uid, data: { order: this.props.board.order } };
-    console.log(boardA, boardA.id, boardA.data);
-    console.log(boardB, boardB.id, boardB.data);
+    // console.log(boardA, boardA.id, boardA.data);
+    // console.log(boardB, boardB.id, boardB.data);
     this.swapBoard(boardA, boardB);
   };
   onLeft = (e) => {
     let b = this.props.step.find((board) => { return board.order == this.props.board.order - 1 });
     let boardA = { id: this.props.board.uid, data: { order: this.props.board.order - 1 } };
     let boardB = { id: b.uid, data: { order: this.props.board.order } };
-    console.log(boardA, boardA.id, boardA.data);
-    console.log(boardB, boardB.id, boardB.data);
+    // console.log(boardA, boardA.id, boardA.data);
+    // console.log(boardB, boardB.id, boardB.data);
     this.swapBoard(boardA, boardB);
   }
   onModify = () => {
@@ -200,7 +200,7 @@ class DesignBoard extends Component {
     this.state.cards.forEach( (element,index) => {
       if(element.order != index) jobs.push({uid:element.uid,neworder:index});
     });
-    console.log(jobs);
+    // console.log(jobs);
     jobs.map(job => {
       promiseAry.push(this.props.UpdateCardTitleRequest({order:job.neworder}, this.props.token, job.uid));
     })
@@ -237,7 +237,7 @@ class DesignBoard extends Component {
   };
   handleGetCardList = (list) => {
     this.setState({cards: list})
-    console.log("get list from child", this.state.cards);
+    // console.log("get list from child", this.state.cards);
   }
   render() {
     const { board, changeBoard, activeBoard, designId, step } = this.props;

@@ -133,7 +133,7 @@ class DesignBoardCard extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.card);
+    // console.log(this.props.card);
   }
   shouldComponentUpdate(nextProps) {
     return true;
@@ -181,7 +181,7 @@ class DesignBoardCard extends Component {
   };
 
   handleSubmit = data => {
-    console.log(data);
+    // console.log(data);
   };
 
   onDelete = e => {

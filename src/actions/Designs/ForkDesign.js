@@ -39,3 +39,41 @@ export function ForkDesignFailure() {
     type: types.FORK_DESIGN_FAILURE
   }
 }
+
+export function ForkDesignListRequest(design_id, token) {
+  return (dispatch) => {
+    dispatch(ForkDesignList())
+    return fetch(`${host}/design/forkDesignList/${design_id}`, {
+      headers: { "Content-Type": "application/json"}, method: "post"
+    }).then((response) => {
+      return response.json()
+    }).then((data) => {
+      if(data.success){
+        // console.log("DATA", data)
+        return dispatch(ForkDesignListSuccess(data.list))
+      }
+      return dispatch(ForkDesignListFailure())
+    }).catch((error) => {
+      console.log("err", error)
+      return dispatch(ForkDesignListFailure())
+    })
+  }
+}
+
+export function ForkDesignList() {
+  return {
+    type: types.FORK_DESIGN_LIST
+  }
+}
+
+export function ForkDesignListSuccess(list) {
+  return {
+    type: types.FORK_DESIGN_LIST_SUCCESS, list 
+  }
+}
+
+export function ForkDesignListFailure() {
+  return {
+    type: types.FORK_DESIGN_LIST_FAILURE
+  }
+}

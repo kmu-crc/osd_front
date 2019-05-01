@@ -84,7 +84,7 @@ class DetailStep extends Component {
             .child.stateNode
         ).width
       );
-      console.log("width", width)
+      // console.log("width", width)
       await this.setState({
         right: false
       });
@@ -217,7 +217,7 @@ class DetailStep extends Component {
         this.setState({ left: false, right: true });
       }
     } else {
-      console.log(this.state.boardWidth, scroll)
+      // console.log(this.state.boardWidth, scroll)
       if (
         this.state.boardWidth - parseInt(
           window.getComputedStyle(
