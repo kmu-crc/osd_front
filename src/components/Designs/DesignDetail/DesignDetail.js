@@ -609,7 +609,7 @@ class DesignDetail extends Component {
       alert("로그인 후 진행가능합니다, 로그인 페이지로 이동합니다.")
       return this.props.history.push("/Signin/")
     }
-    if (this.props.userInfo.is_designer) {
+    if (!this.props.userInfo.is_designer) {
       console.log("userinfo", this.props.userInfo.is_designer)
       alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
       return this.props.history.push("/myModify")
