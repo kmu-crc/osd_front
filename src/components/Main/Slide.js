@@ -175,18 +175,20 @@ export default class MainSlide extends Component {
           infiniteLoop={true}
           showThumbs={false}
         >
-          <Slide className="guide">
-            <Wrap>
-              <Content>
-                <h1 className="title">사용자 가이드</h1>
-                <p>
-                  오픈디자인에서 제공하는 사용자 설명서입니다.
-                  <br />각 기능에 대하여 사용법이 정리되어있습니다.
-                </p>
-                <LinkBtn to="/designDetail/2494">보러가기</LinkBtn>
-              </Content>
-            </Wrap>
-          </Slide>
+        {
+          // <Slide className="guide">
+          //   <Wrap>
+          //     <Content>
+          //       <h1 className="title">사용자 가이드</h1>
+          //       <p>
+          //         오픈디자인에서 제공하는 사용자 설명서입니다.
+          //         <br />각 기능에 대하여 사용법이 정리되어있습니다.
+          //       </p>
+          //       <LinkBtn to="/designDetail/2494">보러가기</LinkBtn>
+          //     </Content>
+          //   </Wrap>
+          // </Slide>
+        }
           <Slide className="open">
             <span>오픈 디자인</span>
           </Slide>
