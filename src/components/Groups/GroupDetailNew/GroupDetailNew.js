@@ -13,6 +13,7 @@ import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
 import ModifyStatusContainer from "containers/Groups/ModifyStatusContainer";
 import DateFormat from "modules/DateFormat";
+import TextFormat from "modules/TextFormat";
 // css styling
 
 const Wrapper = styled.div`
@@ -32,8 +33,8 @@ const InfoContainer = styled(Grid)`
   }
   & .title {
     font-size: ${StyleGuide.font.size.heading3};
-    padding: 1rem 1rem 0 0 !important;
     & span {
+      padding: 1rem 1rem 0 0 !important;
       line-height: 1.2;
       margin-right: 5px;
     }
@@ -233,11 +234,12 @@ class GroupDetailNew extends Component {
             <Wrapper>
             {/* ------------------------ 상단 프로필 섹션 -------------------------- */}
             <InfoContainer>
-              <Grid.Row className="title">
-                <span><a href={`/group`}>그룹 > </a></span>
-                <span><a href={`/groupDetail/${groupDetail.parentId}`}>{groupDetail.parentName && groupDetail.parentName + " > "}</a></span>
-                <span>{groupDetail.title}</span>
-                {user && (user.uid === groupDetail.user_id) &&
+              <Grid.Row>
+                <div style={{display:"flex",fontSize:StyleGuide.font.size.heading4,justifyContent:"space-between"}}>
+                  그룹&nbsp;>&nbsp;
+                  <TextFormat txt={groupDetail.parentName&&groupDetail.parentName}/>&nbsp;>&nbsp;
+                  <TextFormat txt={groupDetail.title} chars={32}/>
+                  {user && (user.uid === groupDetail.user_id) &&
                   <SideMenuBtn tabIndex="1"
                                onBlur={this.onCloseMoreBtn}
                                ref={ref => (this.MoreBtn = ref)}>
@@ -245,14 +247,16 @@ class GroupDetailNew extends Component {
                       <Icon name="ellipsis vertical" />
                     </button>
                     {this.state.activeMoreBtn? <SubMenuCompo /> : null}
-                  </SideMenuBtn>
-                }
+                  </SideMenuBtn>}
+                </div>
               </Grid.Row>
               <Grid.Row columns={2}>
                 <Grid.Column wideScreen={9} largeScreen={9} computer={9} tablet={16} mobile={16}>
-                  <div className="explanation">{groupDetail.explanation}</div>
-                  <div className="date">최근 업데이트 : {DateFormat(groupDetail.child_update_time)}</div>
-                  <div className="owner">개설자 : {groupDetail.userName}</div>
+                    <div className="explanation"><TextFormat txt={groupDetail.explanation}/></div>
+                  <div>
+                    <div className="date">최근 업데이트 : {DateFormat(groupDetail.child_update_time)}</div>
+                    <div style={{display:"flex"}} className="owner">개설자 : &nbsp;<TextFormat style={{flex:"1"}} txt={groupDetail.userName} chars={12}/></div>
+                  </div>
                 </Grid.Column>
                 <Grid.Column className="btnWrap" wideScreen={7} largeScreen={7} computer={7} tablet={16} mobile={16}>
                 {this.state.editMode

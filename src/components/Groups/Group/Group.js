@@ -6,6 +6,7 @@ import { Icon } from "semantic-ui-react";
 import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
+import TextFormat from "modules/TextFormat";
 
 // css styling
 
@@ -41,18 +42,12 @@ const TextPart = styled.div`
     line-height: 1.35;
     margin: 5px 0;
     color: ${StyleGuide.color.geyScale.scale6};
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   & .title {
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
     height: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     color: ${StyleGuide.color.geyScale.scale7};
   }
   & .cate {
@@ -97,10 +92,8 @@ class Group extends Component {
         <Groupli>
           <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
           <TextPart>
-            <div className="title">{group.title}</div>
-            <div className="owner">
-              {group.userName}님의 그룹
-            </div>
+            <div className="title"><TextFormat txt={group.title}/></div>
+            <div className="owner" style={{display:"flex"}}><TextFormat txt={group.userName} chars={10}/> 님의 그룹</div>
             <div className="cate">
               최근 업데이트 {DateFormat(group.child_update_time)}
             </div>

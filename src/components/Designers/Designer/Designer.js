@@ -5,6 +5,7 @@ import { Icon } from "semantic-ui-react";
 import profile from "source/thumbnail.png";
 import StyleGuide from "StyleGuide";
 import NumberFormat from "modules/NumberFormat";
+import TextFormat from "modules/TextFormat";
 
 // css styling
 
@@ -51,9 +52,6 @@ const TextPart = styled.div`
     font-weight: bold;
     line-height: 20px;
     height: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   & .cate {
     color: ${StyleGuide.color.main.basic};
@@ -82,15 +80,15 @@ const Count = styled.div`
 
 class Designer extends Component {
   render(){
-    let designer = this.props.data;
+    const designer = this.props.data;
 
     return(
       <NavLink to={"/designerDetail/"+designer.uid}>
         <Designerli>
           <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${profile})`}}/>
           <TextPart>
-            <div className="userName">{designer.nick_name}</div>
-            <div className="cate">{designer.categoryName? designer.categoryName : "전체"}</div>
+            <div className="userName"><TextFormat txt={designer.nick_name} /></div>
+            <div className="cate"><TextFormat txt={designer.categoryName? designer.categoryName : "전체"}/></div>
             <div className="date">{designer.create_time? designer.create_time.split("T")[0]+"부터 활동" : ""}</div>
           </TextPart>
           <Count>

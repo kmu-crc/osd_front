@@ -14,6 +14,7 @@ import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
 import NumberFormat from "modules/NumberFormat"
+import TextFormat from "modules/TextFormat"
 
 // css styling
 
@@ -254,7 +255,6 @@ class MyDetail extends Component {
       { text: "디자이너", value: "designer", default: "designer" },
     ];
 
-
     return (
       <div>
         {MyInfo !== null && (
@@ -276,12 +276,15 @@ class MyDetail extends Component {
                         </div>
                       </div>
                       <div className="title">
-                        <h3>{MyInfo.nick_name}</h3>
+                        <h3><TextFormat txt={MyInfo.nick_name}/></h3>
                       </div>
                       <div className="category">{MyInfo.categoryName? MyInfo.categoryName : "전체"}</div>
                       <InfoSection>
                         <h4>소개</h4>
-                        <p className="explanation">{MyInfo.about_me}</p>
+                        <p className="explanation">
+                        <TextFormat lines={3} txt={MyInfo.about_me}/>
+                        {/* {MyInfo.about_me} */}
+                        </p>
                       </InfoSection>
                     </ProfileSection>
                     <CountSection>

@@ -12,6 +12,7 @@ import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContai
 import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
+import TextFormat from "modules/TextFormat";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -27,6 +28,7 @@ const BoardCard = styled.li`
   }
   .content {
     padding: 10px;
+    vertical-align: middle;
   }
   & .cardTitle {
     width: 100%;
@@ -286,22 +288,11 @@ class DesignBoardCard extends Component {
             <img src={card.first_img.m_img} alt="thumbnail" />
           ) : null}
           <div className="content">
-          {/*  <div className="cardTitle">{card.title}</div>
-            <CardUpdateDate>{DateFormat(card.update_time)}</CardUpdateDate>
-            <div className="cardInfo">
-              {card.nick_name}
-              <span className="cardCmt">
-                <Icon name="comment outline" />
-                {card.comment_count ? card.comment_count : 0}
-              </span>
-          </div>*/}
-            <div className="cardTitle">{card.title}</div>
-            <div className="cardInfo">
-              <div className="cardAuthor">{card.nick_name}</div>
-              <div className="cardCmt">
-                <Icon name="comment outline"/>{card.comment_count ? NumberFormat(card.comment_count):0}
-              </div>
-              <div className="cardUpdateDate">{DateFormat(card.update_time)}</div>
+            <div className="cardTitle"><TextFormat txt={card.title}/></div>
+            <div className="cardInfo" style={{display:"flex", justifyContent:"space-between",alignItems:"center"}}>
+              <div style={{flex:"1"}}><TextFormat txt={card.nick_name} chars={6}/></div>
+              <div style={{flex:"1"}}>&nbsp;<Icon name="comment outline"/>{card.comment_count?NumberFormat(card.comment_count):0}</div>
+              <div className="cardUpdateTime" style={{flex:"2",textAlign:"right"}}>&nbsp;{DateFormat(card.update_time)}</div>
             </div>
           </div>
         </BoardCard>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import thumbnail from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
+import TextFormat from "modules/TextFormat";
 
 // css styling
 const MsgContent = styled.div`
@@ -86,7 +87,7 @@ class MessageDetail extends Component {
                 <img src={item.s_img ? item.s_img : thumbnail} alt="profile" />
               </div>
               <div className="content">
-                <a className="author">{item.nick_name}</a>
+                <a className="author"><TextFormat txt={item.nick_name} chars={12}/></a>
                 <div className="text">
                   {item.message.split("\n").map((line, i) => {
                     return (

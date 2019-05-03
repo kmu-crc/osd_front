@@ -8,6 +8,7 @@ import StyleGuide from "StyleGuide";
 import {SortableContainer, SortableElement, arrayMove, SortableHandle} from "react-sortable-hoc";
 import { DeleteItems } from "components/Commons/FormItems";
 import Button from "components/Commons/Button";
+import TextFormat from "modules/TextFormat";
 
 const CustomModal = styled(Modal)`
   border: "1px solid";
@@ -47,9 +48,6 @@ const Title = styled.div`
     display: inline-block;
     width: 190px;
     line-height: 38px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     vertical-align: top;
   }
 `;
@@ -259,7 +257,7 @@ class DesignBoard extends Component {
               ) :
               (
                 <div>
-                  <span onClick={this.onModify}>{board.title}</span>
+                  <span onClick={this.onModify}><TextFormat txt={board.title}/></span>
                   {this.props.isTeam > 0 ? (
                     <MenuIcon className="openMenu" onClick={this.onActive}>
                       <Icon name="ellipsis vertical" />

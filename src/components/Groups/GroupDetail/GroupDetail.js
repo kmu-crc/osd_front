@@ -14,6 +14,7 @@ import FormDataToJson from "modules/FormDataToJson";
 import DateFormat from "modules/DateFormat";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
+import TextFormat from "modules/TextFormat";
 
 // css styling
 
@@ -327,7 +328,7 @@ class GroupDetail extends Component {
                     <div className="list">
                       <Icon name="user" color="grey" size="tiny"></Icon> 개설자
                       <span><Link to={`/designerDetail/${groupDetail.user_id}`}>
-                        {groupDetail.userName}
+                        <TextFormat txt={groupDetail.userName} chars={10}/>
                       </Link></span>
                     </div>
                     <div className="list">

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import TextFormat from "modules/TextFormat"
 
 // css styling
 
@@ -33,7 +34,7 @@ class Footer extends Component {
       <Foot>
         <Grid padded={true} columns={2}>
           <Grid.Row>
-            <Grid.Column className="copyright">Copyright @ 2018 Open Design Inc.</Grid.Column>
+            <Grid.Column className="copyright"><TextFormat txt="Copyright @ 2019 Open Design Inc."/></Grid.Column>
             <Grid.Column as="ul" className="list">
               <Link to="/Info/info">사이트 소개</Link>
               <Link to="/Term/term">이용약관</Link>
