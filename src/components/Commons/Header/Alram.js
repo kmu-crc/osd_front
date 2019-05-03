@@ -6,6 +6,7 @@ import StyleGuide from "StyleGuide";
 import socketIOClient from "socket.io-client";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
+import TextFormat from "modules/TextFormat";
 
 const AlarmLabel = styled.div`
   width: 30px;
@@ -59,9 +60,6 @@ const AlarmItem = styled.li`
   }
   h4 {
     width: 80%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     line-height: 1;
   }
   &:last-child {
@@ -225,8 +223,8 @@ class Alram extends Component {
                     <Link onClick = {this.forceUpdate}
                       to={this.getLink(item)}
                     >
-                      <h4>{item.title}</h4>
-                      {this.getMessageText(item)}
+                      <h4><TextFormat txt={item.title}/></h4>
+                      <TextFormat txt={this.getMessageText(item)}/>
                       <span className="time">
                         {DateFormat(item.create_time)}
                       </span>

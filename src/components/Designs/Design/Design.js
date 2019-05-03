@@ -6,6 +6,7 @@ import eximg from "source/myPage.jpeg";
 import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
+import TextFormat from "modules/TextFormat";
 // css styling
 
 const Designli = styled.li`
@@ -47,9 +48,6 @@ const TextPart = styled.div`
     font-weight: bold;
     line-height: 20px;
     height: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     color: ${StyleGuide.color.geyScale.scale7};
     font-size: 16px;
   }
@@ -57,9 +55,6 @@ const TextPart = styled.div`
     line-height: 1.35;
     margin: 5px 0;
     color: ${StyleGuide.color.geyScale.scale6};
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   & .cate {
     color: ${StyleGuide.color.main.basic};
@@ -110,10 +105,10 @@ class Design extends Component {
             }
           </ImgPart>
           <TextPart>
-            <div className="title">{design.title}</div>
+            <div className="title"><TextFormat txt={design.title}/></div>
               {design.is_project === 1
-              ? <div className="userName">{design.userName}님의 프로젝트</div>
-              : <div className="userName">{design.userName}님의 작품</div>
+              ? <div className="userName" style={{display:"flex",justifyContent:"space-between"}}><TextFormat style={{flex:"1"}} txt={design.userName} chars={9}/><div style={{flex:"1"}}>님의 프로젝트</div></div>
+              : <div className="userName" style={{display:"flex"}}><TextFormat txt={design.userName} chars={10}/> 님의 작품</div>
               }
             <div className="cate">
               {design.categoryName? design.categoryName : "전체"}

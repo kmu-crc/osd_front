@@ -10,6 +10,7 @@ import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
 import NumberFormat from "modules/NumberFormat";
+import TextFormat from "modules/TextFormat";
 
 // css styling
 
@@ -220,7 +221,7 @@ class DesignerDetail extends Component {
   render(){
     const designerDetail = this.props.DesignerDetail;
     const count = this.props.Count;
-    console.log(designerDetail);
+    // console.log(designerDetail);
 
     return(
       <div>
@@ -243,14 +244,15 @@ class DesignerDetail extends Component {
                       </div>
                     </div>
                     <div className="title">
-                      <h3>{designerDetail.nick_name}</h3>
+                      <h3><TextFormat txt={designerDetail.nick_name}/></h3>
                     </div>
                     <div className="category">
-                      {designerDetail.categoryName? designerDetail.categoryName : "전체"}
+                      <TextFormat txt={designerDetail.categoryName? designerDetail.categoryName : "전체"}/>
                     </div>
                     <InfoSection>
                       <h4>소개</h4>
-                      <p className="explanation">{designerDetail.about_me}</p>
+                      <p className="explanation">
+                      <TextFormat lines={3} txt={designerDetail.about_me}/></p>
                     </InfoSection>
                     <div className="btnContainer">
                       {this.props.like === true

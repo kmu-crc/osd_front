@@ -11,6 +11,7 @@ import { FormInput } from "components/Commons/FormItem";
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Button from "components/Commons/Button";
 import DateFormat from "modules/DateFormat";
+import TextFormat from 'modules/TextFormat';
 
 
 // css styling
@@ -325,7 +326,7 @@ class MessageList extends Component {
               <ContentContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
                 <DetailWrapper ref={ref => this.list = ref}>
                   {this.state.selectName &&
-                    <div className="head">{this.state.selectName}님과의 대화</div>
+                    <div className="head" style={{display:"flex"}}><TextFormat txt={this.state.selectName} chars={12}/>님과의 대화</div>
                   }
                   {this.state.render &&
                     <MessageDetailContainer id={this.state.msgId}/>
