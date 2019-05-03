@@ -236,8 +236,8 @@ class GroupDetailNew extends Component {
             <InfoContainer>
               <Grid.Row>
                 <div style={{display:"flex",fontSize:StyleGuide.font.size.heading4,justifyContent:"space-between"}}>
-                  그룹&nbsp;>&nbsp;
-                  <TextFormat txt={groupDetail.parentName&&groupDetail.parentName}/>&nbsp;>&nbsp;
+                  <a href={`/group`}>그룹&nbsp;>&nbsp;</a>
+                  {groupDetail.parentName&&<a href={`/groupDetail/${groupDetail.parentId}`} style={{display:"flex"}}><TextFormat txt={groupDetail.parentName} chars={16}/>&nbsp;>&nbsp;</a>}
                   <TextFormat txt={groupDetail.title} chars={32}/>
                   {user && (user.uid === groupDetail.user_id) &&
                   <SideMenuBtn tabIndex="1"
