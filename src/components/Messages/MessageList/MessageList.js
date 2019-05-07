@@ -270,6 +270,12 @@ class MessageList extends Component {
       alert("받는 사람을 지정해주세요.");
       return;
     }
+
+    console.log("this for check",data);
+    if (FormData.length === 0) {
+      alert("메시지 내용을 입력해주세요.");
+      return;
+    }
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)
     .then(async res => {
       if (res.data && res.data.success === true) {
