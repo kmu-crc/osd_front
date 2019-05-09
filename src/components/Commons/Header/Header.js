@@ -252,6 +252,10 @@ class Header extends Component {
     noti: {}
   };
 
+  getNoti = () => {
+    console.log('getnotititititi')
+    this.props.valud && Socket.on("getNoti", noti => { this.setState({ noti: noti }) })
+  }
   componentDidMount() {
     if (this.props.valid) {
       try {
@@ -321,8 +325,8 @@ class Header extends Component {
     if (str.length < 6) {
       return str;
     }
-    else{
-      return str.slice(0,5) + "...";
+    else {
+      return str.slice(0, 5) + "...";
     }
   }
 
@@ -400,8 +404,8 @@ class Header extends Component {
                 href="/design"
                 className={
                   this.props.location.pathname === "/design" ||
-                  this.props.match.path.indexOf("/design/") === 0 ||
-                  this.props.match.path.indexOf("/designDetail") !== -1
+                    this.props.match.path.indexOf("/design/") === 0 ||
+                    this.props.match.path.indexOf("/designDetail") !== -1
                     ? "active"
                     : ""
                 }
@@ -414,7 +418,7 @@ class Header extends Component {
                 href="/group"
                 className={
                   this.props.location.pathname === "/group" ||
-                  this.props.match.path.indexOf("/groupDetail") !== -1
+                    this.props.match.path.indexOf("/groupDetail") !== -1
                     ? "active"
                     : ""
                 }
@@ -427,8 +431,8 @@ class Header extends Component {
                 href="/designer"
                 className={
                   this.props.location.pathname === "/designer" ||
-                  this.props.match.path.indexOf("/designer/") === 0 ||
-                  this.props.match.path.indexOf("/designerDetail") !== -1
+                    this.props.match.path.indexOf("/designer/") === 0 ||
+                    this.props.match.path.indexOf("/designerDetail") !== -1
                     ? "active"
                     : ""
                 }
@@ -465,6 +469,7 @@ class Header extends Component {
                       open={this.openAlarmHandler}
                       close={this.onAlarmHandler}
                       noti={this.state.noti}
+                      getNoti={this.getNoti}
                       valid={this.props.valid}
                       uid={this.props.userInfo.uid}
                       socket={Socket}
