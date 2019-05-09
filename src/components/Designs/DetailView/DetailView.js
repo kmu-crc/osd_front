@@ -95,14 +95,14 @@ class DetailView extends Component {
   componentDidMount() {
     this.props
       .GetDesignDetailViewRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.DesignDetailView !== null) {
-          this.props.GetCardCommentRequest(
-            this.props.id,
-            data.DesignDetailView.uid
-          );
-        }
-      });
+      // .then(data => { if (data.DesignDetailView !== null) { this.props.GetCardCommentRequest( this.props.id, data.DesignDetailView.uid ); } })
+      .then(()=>{
+        // console.log(this.props, "props")
+        this.props.DesignDetailView && this.props.userInfo &&
+        this.props.isTeam &&
+        // this.props.DesignDetailView.user_id === this.props.userInfo.uid && 
+        this.setState({edit:true})
+      })
   }
 
   componentWillUnmount() {
@@ -158,54 +158,28 @@ class DetailView extends Component {
       });
   };
 
-  deleteComment = id => {
-    this.props
-      .DeleteCardCommentRequest(
-        this.props.id,
-        this.props.DesignDetailView.uid,
-        id,
-        this.props.token
-      )
-      .then(res => {
-        if (res.data.success === true) {
-          this.props.GetCardCommentRequest(
-            this.props.id,
-            this.props.DesignDetailView.uid
-          );
-        }
-      });
-  };
 
   onChangeEditMode = () => {
     this.setState({ edit: true });
   };
   onCloseEditMode = () => {
-    this.setState({ edit: false });
+    // this.setState({ edit: true });
   };
-
+  onPreviewMode = () => {
+    this.setState({edit:!this.state.edit})
+  }
+  onCancel = () => {
+    window.confirm('변경하신 데이터가 저장되지 않습니다, 그래도 취소하시겠습니까?') && window.location.reload()
+  }
   render() {
     const view = this.props.DesignDetailView;
     const len = Object.keys(view).length;
-    const comment = this.props.Comment;
-
-    const CommentForm = () => {
-      return (
-        <ValidateForm onSubmit={this.onSubmitCmtForm} className="ui reply form">
-          <FormField name="comment" RenderComponent={FormTextArea} />
-          <Button type="submit" className="ui icon primary left labeled button">
-            <i aria-hidden="true" className="edit icon" />
-            댓글쓰기
-          </Button>
-        </ValidateForm>
-      );
-    };
-
     return (
       <div>
         <BtnWrap>
-          {this.props.isTeam && !this.state.edit ? (
-            <Button type="button" size="small" onClick={this.onChangeEditMode}>
-              컨텐츠 수정
+          {this.props.isTeam ? (
+            <Button type="button" size="small" onClick={this.onPreviewMode}>
+              {this.state.edit?"미리보기":"편집하기"}
             </Button>
           ) : null}
           {this.props.token &&
@@ -224,49 +198,10 @@ class DetailView extends Component {
               edit={this.state.edit}
               closeEdit={this.onCloseEditMode}
               openEdit={this.onChangeEditMode}
+              isCancel={true}
+              onCancel={this.onCancel}
             />
-            <CommentContainer className="ui comments">
-              <h4>댓글</h4>
-              {comment.length > 0 ? (
-                comment.map(comm => (
-                  <div className="comment" key={comm.uid}>
-                    <div className="avatar">
-                      <img
-                        src={comm.s_img ? comm.s_img : eximg}
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="content">
-                      <a className="author">{comm.nick_name}</a>
-                      <div className="metadata">
-                        <div>{comm.create_time.split("T")[0]}</div>
-                      </div>
-                      <div className="text">
-                        {comm.comment.split("\n").map((line, i) => {
-                          return (
-                            <span key={i}>
-                              {line}
-                              <br />
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    {this.props.userInfo &&
-                      this.props.userInfo.uid === comm.user_id && (
-                        <i
-                          size="small"
-                          className="delBtn trash alternate outline icon"
-                          onClick={() => this.deleteComment(comm.uid)}
-                        />
-                      )}
-                  </div>
-                ))
-              ) : (
-                <p>{/*등록된 코멘트가 없습니다.*/}</p>
-              )}
-              {this.state.render ? <CommentForm /> : null}
-            </CommentContainer>
+            {/*comment form deleted */}
           </ViewWrapper>
         ) : (
           <Loading />
