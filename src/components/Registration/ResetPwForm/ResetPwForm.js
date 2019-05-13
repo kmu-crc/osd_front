@@ -4,6 +4,7 @@ import PxtoRem from "modules/PxtoRem";
 import { FormInput } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import Button from "components/Commons/Button";
+import ResetPwModal from "./ResetPwModal";
 
 const Bg = styled.div`
   width: 100vw;
@@ -43,11 +44,19 @@ const SubmitBtn = styled(Button)`
 
 class ResetPwForm extends Component {
 
+  state = {
+    loading: false
+  };
+
   shouldComponentUpdate(nextProps){
     if(JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)){
       if(nextProps.status === "SUCCESS"){
+        this.setState({loading:false});
+        console.log("this loading state success >> ", this.state.loading);
         alert(nextProps.message);
       } else if (nextProps.status === "FAILURE") {
+        this.setState({loading:false});
+        console.log("this loading state failure >> ", this.state.loading);
         alert(nextProps.message);
       }
     }
@@ -68,6 +77,8 @@ class ResetPwForm extends Component {
     ValidationGroup(this.state, true)
       .then(data => {
         this.props.FindPwRequest(data);
+        this.setState({loading:true});
+        console.log("this loading state onsubmit >> ", this.state.loading);
       })
       .catch(e => {
         console.log("실패", e);
@@ -75,11 +86,12 @@ class ResetPwForm extends Component {
   };
   render() {
     return (
-      <Bg>
+        <Bg>
         <ResetFormCard>
           <h2>비밀번호 찾기</h2>
           <p>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</p>
           <ResetForm onSubmit={this.onSubmit}>
+            {this.state.loading===true?<ResetPwModal history={this.props.history} timeover = {this.state.timeover}/>:null}
             <FormInput
               name="email"
               validates={["Required", "IsEmail"]}
