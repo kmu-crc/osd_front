@@ -24,6 +24,7 @@ import TestPage from "pages/TestPage";
 import TestPage2 from "pages/TestPage2";
 import TestPage3 from "pages/TestPage3";
 import SlideTestPage from "pages/SlideTestPage/SlideTestPage";
+import Alarm from "components/Commons/Header/Alarm"
 
 class App extends Component {
   componentDidMount(){
@@ -37,6 +38,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={MainPage}/>
+          <Route path="/alarm" component={Alarm}/>
           <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)}/>
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage}/>

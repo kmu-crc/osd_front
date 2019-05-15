@@ -15,6 +15,7 @@ class HeaderContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    token: state.Authentication.status.token,
     valid: state.Authentication.status.valid,
     userInfo: state.Authentication.status.userInfo,
     isActive: state.OpenDesign.isActive

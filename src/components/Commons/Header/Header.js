@@ -9,6 +9,7 @@ import StyleGuide from "StyleGuide";
 import Socket from "modules/socket";
 
 import Alram from "./Alram";
+import Alarm from "./Alarm"
 
 // css styling
 const Head = styled.header`
@@ -465,7 +466,9 @@ class Header extends Component {
               {this.props.valid ? (
                 <div>
                   <SubMenuItem className="submenu-item">
-                    <Alram
+                    <Alarm
+                      history={this.props.history}
+                      token={this.props.token}
                       open={this.openAlarmHandler}
                       close={this.onAlarmHandler}
                       noti={this.state.noti}

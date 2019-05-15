@@ -459,7 +459,7 @@ export function GetMyGroupListFailure(data) {
 
 // 그룹에 가입 신청중인 디자인 가져오기
 export function GetWaitingDesignRequest(id, sort) {
-  console.log(sort);
+  // console.log(sort);
   return (dispatch) => {
     return fetch(`${host}/group/groupDetail/${id}/waitingDesign/${sort}`, {
       headers: { "Content-Type": "application/json" },
