@@ -236,9 +236,11 @@ class CardSourceDetail extends Component {
             <Button type="button" onClick={this.onSubmit}>
               저장
             </Button>
-            <Button type="button" onClick={this.props.closeEdit}>
-              취소
-            </Button>
+            {
+              this.props.isCancel ? (
+                  <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (
+                  <Button type="button" onClick={this.props.closeEdit}>취소</Button> )
+            }
           </form>
         ) : content.length > 0 ? (
           <ViewContent>

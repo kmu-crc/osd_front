@@ -6,7 +6,9 @@ import { Icon } from "semantic-ui-react";
 const Btn = styled.button`
   padding: 0.75em 2em;
   ${props => props.fluid && "width: 100%"};
-  font-size: ${props => props.size === "small"
+  font-size: ${props => props.size === "tiny"
+                ? "10px"
+                : props.size === "small"
                 ? "12px"
                 : props.size === "large"
                 ? "26px"

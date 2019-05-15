@@ -55,6 +55,7 @@ class CardSource extends Component {
 
   render() {
     const view = this.props.view;
+    console.log("CANCEL",this.props.isCancel, this.props.on)
     return (
       <FormWrapper>
         <FromFieldCard>
@@ -67,6 +68,8 @@ class CardSource extends Component {
                   edit={this.props.edit}
                   closeEdit={this.props.closeEdit}
                   openEdit={this.props.openEdit}
+                  isCancel={this.props.isCancel}
+                  onCancel={this.props.onCancel}
                 />
               </Form.Group>
             </Grid.Column>
