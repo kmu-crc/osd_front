@@ -52,6 +52,7 @@ class ResetPwForm extends Component {
     if(JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)){
       if(nextProps.status === "SUCCESS"){
         this.setState({loading:false});
+        this.props.history.push('./signin');
         console.log("this loading state success >> ", this.state.loading);
         alert(nextProps.message);
       } else if (nextProps.status === "FAILURE") {
@@ -91,7 +92,7 @@ class ResetPwForm extends Component {
           <h2>비밀번호 찾기</h2>
           <p>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</p>
           <ResetForm onSubmit={this.onSubmit}>
-            {this.state.loading===true?<ResetPwModal history={this.props.history} timeover = {this.state.timeover}/>:null}
+            {this.state.loading===true ? <ResetPwModal/> : null}
             <FormInput
               name="email"
               validates={["Required", "IsEmail"]}

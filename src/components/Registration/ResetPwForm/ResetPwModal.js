@@ -16,11 +16,11 @@ export default class ResetPwModal extends Component {
   //       this.props.history.go(-1);
   //       this.setState({visible: false});
   //     }, 4000);
-  // }
+  //}
 
-  // closeModal() {
-  //   this.setState({visible : false});
-  // }
+  closeModal() {
+    this.setState({visible : false});
+  }
 
   render() {
     const ModalStyle = {
