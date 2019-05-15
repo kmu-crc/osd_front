@@ -690,7 +690,7 @@ class DesignDetail extends Component {
               <button>원본디자인 보기</button>
             </Link>
           </li>
-          <li style={{ display: designDetail.children_count["count(*)"]>0? "block" : "none" }}>
+          <li style={{ display: designDetail.children_count["count(*)"] > 0 ? "block" : "none" }}>
             <button onClick={this.getListChildDesign}>파생디자인 목록보기</button>
           </li>
         </SideMenu>
@@ -699,44 +699,47 @@ class DesignDetail extends Component {
     const ForkDesignList = (list) => {
       const design_list = list.list
       // console.log(this.props, "props")
-      
+      console.log("design_detail", this.props.DesignDetail.member)
+      const member = this.props.DesignDetail.member.find(mem => mem.user_id === this.props.DesignDetail.user_id)
+      const url = member.thumbnail === null ? UserImg : member.thumbnail.s_img
       return (
-        <Modal.Content style={{padding:"10px 5px 10px 5px"}}>
-          <Icon name="close" style={{cursor:"pointer", float:"right"}} size="big" onClick={this.closeForkListModal}/>
-          <h5 style={{leftPadding:"25px", left:"25px"}}>파생디자인 목록보기</h5>
+        <Modal.Content style={{ padding: "10px 5px 10px 5px" }}>
+          <Icon name="close" style={{ cursor: "pointer", float: "right" }} size="big" onClick={this.closeForkListModal} />
+          <h5 style={{ leftPadding: "25px", left: "25px" }}>파생디자인 목록보기</h5>
           <div>
-            <ol style={{fontSize:"12px", padding:"0 0 0 0"}}>
-
-              <li style={{verticalAlign:"middle", bottomPadding:"0"}}>
-                <div style={{display:"block"}}>
-                <img style={{verticalAlign:"middle", borderRadius:"30%", width:"20px", height:"20px"}} src={this.props.DesignDetail.member.find( mem => mem.user_id===this.props.DesignDetail.user_id).thumbnail.s_img}/>
-                &nbsp;<div style={{display:"inline-block"}}><TextFormat chars={16} txt={this.props.DesignDetail.userName}/></div>
-                &nbsp;/&nbsp;<div style={{display:"inline-block"}}><TextFormat chars={32} txt={this.props.DesignDetail.title}/></div>
+            <ol style={{ fontSize: "12px", padding: "0 0 0 0" }}>
+              <li style={{ verticalAlign: "middle", bottomPadding: "0" }}>
+                <div style={{ display: "block" }}>
+                  <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={url} />
+                  &nbsp;<div style={{ display: "inline-block" }}><TextFormat chars={16} txt={this.props.DesignDetail.userName} /></div>
+                  &nbsp;/&nbsp;<div style={{ display: "inline-block" }}><TextFormat chars={32} txt={this.props.DesignDetail.title} /></div>
                 </div>
               </li>
 
-              {design_list.map((li, i) => { return (
-              <li style={{textAlign:"left", bottomPadding:"0", verticalAlign:"middle"}} key={i}>
-              <div stype={{display:"block"}}>
-                <img style={{verticalAlign:"middle"}} src={design_list.length > i+1
-?"https://github.githubassets.com/images/modules/network/t.png"
-:"https://github.githubassets.com/images/modules/network/l.png"}/>
-                <img style={{verticalAlign:"middle", borderRadius:"30%", width:"20px", height:"20px"}} src={li.s_img}/>
-                &nbsp;
+              {design_list.map((li, i) => {
+                return (
+                  <li style={{ textAlign: "left", bottomPadding: "0", verticalAlign: "middle" }} key={i}>
+                    <div stype={{ display: "block" }}>
+                      <img style={{ verticalAlign: "middle" }} src={design_list.length > i + 1
+                        ? "https://github.githubassets.com/images/modules/network/t.png"
+                        : "https://github.githubassets.com/images/modules/network/l.png"} />
+                      <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={li.s_img} />
+                      &nbsp;
                 <Link to={`/designerDetail/${li.user_id}`}>
-                <div style={{display:"inline-block"}}>
-                  <TextFormat chars={16} txt={li.nick_name}/>
-                </div>
-                </Link>
-                &nbsp;/&nbsp;
+                        <div style={{ display: "inline-block" }}>
+                          <TextFormat chars={16} txt={li.nick_name} />
+                        </div>
+                      </Link>
+                      &nbsp;/&nbsp;
                 {/* <img style={{verticalAlign:"middle",borderRadius:"30%", width:"20px",height:"20px"}} src={li.p_s_img}/> */}
-                <Link to={`/designDetail/${li.uid}`} onClick={this.forceUpdate}>
-                <div style={{display:"inline-block"}}>
-                  <TextFormat chars={32} txt={li.title}/>
-                </div> 
-                </Link>
-                </div>
-              </li>)})}
+                      <Link to={`/designDetail/${li.uid}`} onClick={this.forceUpdate}>
+                        <div style={{ display: "inline-block" }}>
+                          <TextFormat chars={32} txt={li.title} />
+                        </div>
+                      </Link>
+                    </div>
+                  </li>)
+              })}
             </ol>
           </div>
 
@@ -747,10 +750,10 @@ class DesignDetail extends Component {
       return (
         <Modal open={this.state.forkDesignList} closeOnDimmerClick={false} onClose={this.closeForkListModal}>
           {this.props.forked_list
-          ?<div>
-            <ForkDesignList list={this.props.forked_list} />  
-          </div>
-          :<Loading/>}
+            ? <div>
+              <ForkDesignList list={this.props.forked_list} />
+            </div>
+            : <Loading />}
         </Modal>
       )
     }
@@ -790,9 +793,9 @@ class DesignDetail extends Component {
                     <Grid.Column tablet={1} computer={1} only="tablet computer" />
                     <Grid.Column className="designHeaderCol" mobile={16} tablet={10} computer={10}>
                       <DesignInfoCard>
-                        <DesignTitle><TextFormat txt={designDetail.title}/></DesignTitle>
+                        <DesignTitle><TextFormat txt={designDetail.title} /></DesignTitle>
                         <DesignExplanation>
-                          <p><TextFormat txt={designDetail.explanation} lines={2}/></p>
+                          <p><TextFormat txt={designDetail.explanation} lines={2} /></p>
                         </DesignExplanation>
                       </DesignInfoCard>
                     </Grid.Column>
@@ -824,11 +827,11 @@ class DesignDetail extends Component {
                       <DesignInfoCard>
                         <InfoItem>
                           <h3>작성자</h3>
-                          <p><Link to={`/designerDetail/${designDetail.user_id}`}><TextFormat txt={designDetail.userName} chars={16}/></Link></p>
+                          <p><Link to={`/designerDetail/${designDetail.user_id}`}><TextFormat txt={designDetail.userName} chars={16} /></Link></p>
                         </InfoItem>
                         <InfoItem>
                           <h3>카테고리</h3>
-                          <p><TextFormat txt={designDetail.categoryName ? designDetail.categoryName : "전체"} chars={16}/></p>
+                          <p><TextFormat txt={designDetail.categoryName ? designDetail.categoryName : "전체"} chars={16} /></p>
                         </InfoItem>
                         <InfoItem>
                           <h3>멤버</h3>
@@ -870,7 +873,7 @@ class DesignDetail extends Component {
                                             : `url(${UserImg})`
                                         }}
                                       />{" "}
-                                      <TextFormat txt={item.nick_name}/>
+                                      <TextFormat txt={item.nick_name} />
                                     </MemberlistItem>
                                   </Link>
                                 );
