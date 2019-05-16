@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import logo from "source/logo.png";
 import { SetSession } from "modules/Sessions";
-import { Grid, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Socket from "modules/socket";
 
-import Alram from "./Alram";
 import Alarm from "./Alarm"
+import NumberFormat from "modules/NumberFormat";
 
 // css styling
 const Head = styled.header`
@@ -250,28 +250,19 @@ class Header extends Component {
     profile: false,
     active: false,
     keyword: null,
-    noti: {}
+    noti: {},
+    msg: null
   };
 
-  getNoti = () => {
-    console.log('getnotititititi')
-    this.props.valud && Socket.on("getNoti", noti => { this.setState({ noti: noti }) })
-  }
   componentDidMount() {
     if (this.props.valid) {
       try {
         Socket.emit("INIT", this.props.userInfo.uid);
-        // setInterval(
-        //   function() {
-        //     Socket.emit("live socket id", this.props.userInfo.uid);
-        //   }.bind(this),
-        //   500
-        // );
         Socket.on("getNoti", noti => {
           // setting the color of our button
-          console.log("noti", noti);
+          console.log("noti?", noti);
           this.setState({ noti: noti });
-        });
+        })
       } catch (err) {
         console.log(err);
       }
@@ -472,7 +463,6 @@ class Header extends Component {
                       open={this.openAlarmHandler}
                       close={this.onAlarmHandler}
                       noti={this.state.noti}
-                      getNoti={this.getNoti}
                       valid={this.props.valid}
                       uid={this.props.userInfo.uid}
                       socket={Socket}
@@ -481,6 +471,9 @@ class Header extends Component {
                   <SubMenuItem className="submenu-item">
                     <a href="/message">
                       <Icon name="envelope" />
+                      {this.state.noti.countMsg>0 &&(
+                        <AlarmLabel>{NumberFormat(this.state.noti.countMsg)}</AlarmLabel>
+                      )}
                     </a>
                   </SubMenuItem>
                 </div>

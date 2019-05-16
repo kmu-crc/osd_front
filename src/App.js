@@ -20,11 +20,6 @@ import ResetPwPage from "pages/ResetPwPage";
 import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
-import TestPage from "pages/TestPage";
-import TestPage2 from "pages/TestPage2";
-import TestPage3 from "pages/TestPage3";
-import SlideTestPage from "pages/SlideTestPage/SlideTestPage";
-import Alarm from "components/Commons/Header/Alarm"
 
 class App extends Component {
   componentDidMount(){
@@ -38,7 +33,6 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={MainPage}/>
-          <Route path="/alarm" component={Alarm}/>
           <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)}/>
           <Route path="/designDetail/:id" component={DesignDetailPage}/>
           <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage}/>
@@ -61,11 +55,6 @@ class App extends Component {
           <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage}/>
           <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)}/>
           <Route path="/resetPw" component={ResetPwPage}/>
-
-          {/*<Route path="/slideTest" component={SlideTestPage}/>*/}
-          {/*<Route path="/test" component={TestPage} />*/}
-          {/*<Route path="/test2" component={TestPage2} />*/}
-          {/*<Route path="/cardTest" component={TestPage3}/>*/}
         </Switch>
       </BrowserRouter>
     );
