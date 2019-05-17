@@ -40,7 +40,8 @@ const MsgContent = styled.div`
   }
 
   & .ui.comments .comment.my .content .text{
-    background-color: yellow;
+    background-color: #444;
+    color: #FFF;
     text-align: left;
   }
 
@@ -52,12 +53,19 @@ const MsgContent = styled.div`
     text-align: right;
   }
 
-  & .ui.comments .comment .content .metadata{
-    display: block;
+  & .ui.comments .comment .content .wrapper.my{
+    display: flex;
+    justify-content: flex-end;
   }
-
-  & .ui.comments .comment .content.my .metadata{
-    text-align: right;
+  & .ui.comments .comment .content .wrapper{
+    display: flex;
+    justify-content: flex-start;
+  }
+  & .ui.comments .comment .content .wrapper .metadata{
+    margin-bottom: 0;
+    align-self: flex-end;
+    color: #444;
+    font-size: 9pt;
   }
 `;
 
@@ -79,27 +87,14 @@ class MessageDetail extends Component {
       <MsgContent>
         <div className="ui comments">
           {list.map(item => (
-            <div
-              className={item.from_user_id === myId ? "comment my" : "comment"}
-              key={item.uid}
-            >
-              <div className="avatar">
-                <img src={item.s_img ? item.s_img : thumbnail} alt="profile" />
-              </div>
-              <div className="content">
-                <a className="author"><TextFormat txt={item.nick_name} chars={12}/></a>
-                <div className="text">
-                  {item.message.split("\n").map((line, i) => {
-                    return (
-                      <span key={i}>
-                        {line}
-                        <br />
-                      </span>
-                    );
-                  })}
-                </div>
-                <div className="metadata">
-                  <div>{DateFormat(item.create_time)}</div>
+            <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
+              {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
+              <div className={item.from_user_id === myId ? "content my" : "content"}>
+                {item.from_user_id !== myId && <a className="author"><TextFormat txt={item.nick_name} chars={12} /></a>}
+                <div className={item.from_user_id === myId ? "wrapper my" : "wrapper"} >
+                  {item.from_user_id === myId && <div className="metadata">{DateFormat(item.create_time)}</div>}
+                  < div className="text">{item.message.split("\n").map((line, i) => { return (<span key={i}> {line} <br /></span>) })}</div>
+                  {item.from_user_id !== myId && <div className="metadata"><div>{DateFormat(item.create_time)}</div></div>}
                 </div>
               </div>
             </div>
