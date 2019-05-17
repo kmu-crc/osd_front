@@ -12,7 +12,8 @@ import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Button from "components/Commons/Button";
 import DateFormat from "modules/DateFormat";
 import TextFormat from 'modules/TextFormat';
-
+import Socket from "modules/socket"
+import NumberFormat from 'modules/NumberFormat';
 
 // css styling
 const Container = styled(ContentBox)`
@@ -64,6 +65,7 @@ const MsgList = styled.li`
   height: 50px;
   cursor: pointer;
   margin: 0.3rem 0;
+  display: flex;
   & .profile {
     width: 50px;
     height: 50px;
@@ -85,8 +87,8 @@ const MsgList = styled.li`
   & .update {
     color: ${StyleGuide.color.geyScale.scale5};
     font-weight: 400;
-    float: left;
     padding: 1rem;
+    display: flex;
   }
   &:hover .update {
     font-weight: bold;
@@ -163,7 +165,22 @@ const DetailWrapper = styled.div`
     font-size: ${StyleGuide.font.size.heading4};
   }
 `;
-
+const AlarmLabel = styled.div`
+  width: 30px;
+  height: 30px;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+  vertical-align: middle;
+  padding-top: 2px;
+  transform: scale(0.6);
+  -ms-transform: scale(0.6);
+  transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+`;
 class MessageList extends Component {
   state = {
     msgId: -1,
@@ -171,33 +188,37 @@ class MessageList extends Component {
     selectName: null,
     openMember: false,
     friendList: [],
-    render: true
+    render: true,
   }
 
   async componentDidMount() {
     await this.props.GetMyMsgListRequest(this.props.token)
-    .then(async (res) => {
-      if (res.MsgList && res.MsgList.length > 0) {
-        let arr = [];
-        res.MsgList.map(list => {
-          arr.push(list.friend_id);
-        });
-        await this.setState({
-          friendList: arr
-        });
-      }
-    });
+      .then(async (res) => {
+        if (res.MsgList && res.MsgList.length > 0) {
+          let arr = [];
+          res.MsgList.map(list => {
+            arr.push(list.friend_id);
+          });
+          await this.setState({
+            friendList: arr
+          });
+        }
+      });
     if (this.props.id && this.props.name) {
       let id = parseInt(this.props.id, 10);
       this.selectMember({
         email: null,
         nick_name: this.props.name,
         uid: id
-      });
+      })
+      Socket.on("reload_msglist", () => {
+        console.log("giveit")
+        this.setState({ render: true })
+      })
     }
   }
 
-  shouldComponentUpdate(nextProps){
+  shouldComponentUpdate(nextProps) {
     setTimeout(() => {
       this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
     }, 100);
@@ -218,7 +239,7 @@ class MessageList extends Component {
     this.setState({
       openMember: true
     });
-    if(!value) {
+    if (!value) {
       this.setState({
         openMember: false
       });
@@ -263,6 +284,14 @@ class MessageList extends Component {
     this.setState({
       render: true
     });
+    setTimeout(async () => {
+      await this.props.GetMyMsgListRequest(this.props.token)
+      this.setState({ render: true })
+    }, 500)
+  }
+
+  comfirmMsgAlarm = (from) => {
+    Socket.emit("confirmMsgAlarm", { uid: this.props.userInfo, fromID: from })
   }
 
   onSubmitForm = async (data) => {
@@ -271,42 +300,40 @@ class MessageList extends Component {
       return;
     }
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)
-    .then(async res => {
-      if (res.data && res.data.success === true) {
-        await this.props.GetMyMsgListRequest(this.props.token)
-        await this.setState({
-          msgId: res.data.groupId,
-          render: false
+      .then(async res => {
+        if (res.data && res.data.success === true) {
+          await this.props.GetMyMsgListRequest(this.props.token)
+          await this.setState({
+            msgId: res.data.groupId,
+            render: false
+          });
+        }
+        this.setState({
+          render: true
         });
-      }
-      this.setState({
-        render: true
-      });
-      this.props.history.replace("/message");
-    })
+        this.props.history.replace("/message");
+      })
   }
 
-  render(){
-    const msgList = this.props.MessageList;
-
-    return(
-      <div>
-        <Container>
-          <Wrapper padded={false} columns={2}>
-            <Grid.Row>
-              <ListContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
-                <SearchMember>
-                  <div className="heading">멤버 검색</div>
-                  <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue}/>
-                  <MemberList style={this.state.openMember ? {display: "block"} : {display: "none"}}>
-                    {this.props.members && this.props.members.map((item, index) => {
-                      return (<MemberListItem key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</MemberListItem>);
-                    })}
-                  </MemberList>
-                </SearchMember>
-                <div className="heading">내 메시지함</div>
-                {msgList.length > 0 ?
-                  <ul className="myMsgList">
+  render() {
+    const msgList = this.props.MessageList
+    return (
+      <Container>
+        <Wrapper padded={false} columns={2}>
+          <Grid.Row>
+            <ListContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
+              <SearchMember>
+                <div className="heading">멤버 검색</div>
+                <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
+                <MemberList style={this.state.openMember ? { display: "block" } : { display: "none" }}>
+                  {this.props.members && this.props.members.map((item, index) => {
+                    return (<MemberListItem key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</MemberListItem>);
+                  })}
+                </MemberList>
+              </SearchMember>
+              <div className="heading">내 메시지함</div>
+              {msgList.length > 0 ?
+                <ul className="myMsgList">
                   {msgList.sort((a, b) => {
                     return new Date(b.update_time).getTime() - new Date(a.update_time).getTime();
                   }).map(msg => (
@@ -314,39 +341,40 @@ class MessageList extends Component {
                       <div className="profile">
                         <span>{msg.friend_name}</span>
                       </div>
-                      <div className="update">최근 메시지 {DateFormat(msg.update_time)}</div>
+                      <div className="update">
+                        최근 메시지 {DateFormat(msg.update_time)}
+                        {msg.noti > 0 && <AlarmLabel>{NumberFormat(msg.noti)}</AlarmLabel>}
+                      </div>
                     </MsgList>
                   ))
                   }
-                  </ul>
-                :
-                <div>메시지없음</div>
+                </ul>
+                : <div>메시지없음</div>
+              }
+            </ListContainer>
+            <ContentContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
+              <DetailWrapper ref={ref => this.list = ref}>
+                {this.state.selectName &&
+                  <div className="head" style={{ display: "flex" }}><TextFormat txt={this.state.selectName} chars={12} />님과의 대화</div>
                 }
-              </ListContainer>
-              <ContentContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
-                <DetailWrapper ref={ref => this.list = ref}>
-                  {this.state.selectName &&
-                    <div className="head" style={{display:"flex"}}><TextFormat txt={this.state.selectName} chars={12}/>님과의 대화</div>
-                  }
-                  {this.state.render &&
-                    <MessageDetailContainer id={this.state.msgId}/>
-                  }
-                </DetailWrapper>
-                <SendingMsg>
-                  {this.state.render &&
+                {this.state.render &&
+                  <MessageDetailContainer id={this.state.msgId} />
+                }
+              </DetailWrapper>
+              <SendingMsg>
+                {this.state.render &&
                   <ValidateForm onSubmit={this.onSubmitForm} className="ui reply form">
                     <FormField name="message" validates={["required"]} RenderComponent={FormTextArea} />
                     <Button type="submit">
                       보내기
                     </Button>
                   </ValidateForm>
-                  }
-                </SendingMsg>
-              </ContentContainer>
-            </Grid.Row>
-          </Wrapper>
-        </Container>
-      </div>
+                }
+              </SendingMsg>
+            </ContentContainer>
+          </Grid.Row>
+        </Wrapper>
+      </Container>
     );
   }
 }

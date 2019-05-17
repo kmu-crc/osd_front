@@ -124,7 +124,6 @@ class Alarm extends Component {
   allAlarmConfirm = () => {
     alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.')
     this.props.socket.emit("allConfirm", { user_id: this.props.uid })
-    this.props.getNoti
   }
 
   getLink = item => {
