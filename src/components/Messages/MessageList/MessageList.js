@@ -13,7 +13,7 @@ import Button from "components/Commons/Button";
 import DateFormat from "modules/DateFormat";
 import TextFormat from 'modules/TextFormat';
 import Socket from "modules/socket"
-import Alarm from 'components/Commons/Header/Alarm';
+import NumberFormat from 'modules/NumberFormat';
 
 // css styling
 const Container = styled(ContentBox)`
@@ -65,6 +65,7 @@ const MsgList = styled.li`
   height: 50px;
   cursor: pointer;
   margin: 0.3rem 0;
+  display: flex;
   & .profile {
     width: 50px;
     height: 50px;
@@ -86,8 +87,8 @@ const MsgList = styled.li`
   & .update {
     color: ${StyleGuide.color.geyScale.scale5};
     font-weight: 400;
-    float: left;
     padding: 1rem;
+    display: flex;
   }
   &:hover .update {
     font-weight: bold;
@@ -167,9 +168,6 @@ const DetailWrapper = styled.div`
 const AlarmLabel = styled.div`
   width: 30px;
   height: 30px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
   color: white;
   background-color: red;
   border-radius: 15px;
@@ -212,6 +210,10 @@ class MessageList extends Component {
         email: null,
         nick_name: this.props.name,
         uid: id
+      })
+      Socket.on("reload_msglist", () => {
+        console.log("giveit")
+        this.setState({ render: true })
       })
     }
   }
@@ -270,7 +272,7 @@ class MessageList extends Component {
       });
     }
   }
-  
+
   setMsgId = async (group_id, user_id, user_name) => {
     await this.setState({
       msgId: group_id,
@@ -279,10 +281,13 @@ class MessageList extends Component {
       openMember: false,
       render: false
     });
-    await this.props.GetMyMsgListRequest(this.props.token)
     this.setState({
-      render: true 
+      render: true
     });
+    setTimeout(async () => {
+      await this.props.GetMyMsgListRequest(this.props.token)
+      this.setState({ render: true })
+    }, 500)
   }
 
   comfirmMsgAlarm = (from) => {
@@ -335,9 +340,11 @@ class MessageList extends Component {
                     <MsgList key={msg.uid} onClick={() => this.setMsgId(msg.uid, msg.friend_id, msg.friend_name)}>
                       <div className="profile">
                         <span>{msg.friend_name}</span>
-                      {msg.noti > 0 && <AlarmLabel />}
                       </div>
-                      <div className="update">최근 메시지 {DateFormat(msg.update_time)}</div>
+                      <div className="update">
+                        최근 메시지 {DateFormat(msg.update_time)}
+                        {msg.noti > 0 && <AlarmLabel>{NumberFormat(msg.noti)}</AlarmLabel>}
+                      </div>
                     </MsgList>
                   ))
                   }
