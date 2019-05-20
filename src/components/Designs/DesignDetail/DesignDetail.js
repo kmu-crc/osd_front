@@ -699,6 +699,7 @@ class DesignDetail extends Component {
     const ForkDesignList = (list) => {
       const design_list = list.list
       // console.log(this.props, "props")
+
       console.log("design_detail", this.props.DesignDetail.member)
       const member = this.props.DesignDetail.member.find(mem => mem.user_id === this.props.DesignDetail.user_id)
       const url = member.thumbnail === null ? UserImg : member.thumbnail.s_img
