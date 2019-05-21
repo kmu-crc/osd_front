@@ -276,14 +276,14 @@ class DesignBoard extends Component {
                   {board.order > 0 &&
                     <MenuItem>
                       <button onClick={this.onLeft} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                        <Icon name="arrow left" /><p>왼쪽으로 보내기</p>
+                        <Icon name="arrow circle left" /><p>왼쪽으로 보내기</p>
                       </button>
                     </MenuItem>
                   }
                   {board.order < step.length - 1 &&
                     <MenuItem>
                       <button onClick={this.onRight} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                        <Icon name="arrow right" /><p>오른쪽으로 보내기</p></button>
+                        <Icon name="arrow circle right" /><p>오른쪽으로 보내기</p></button>
                     </MenuItem>
                   }
                   <MenuItem>
