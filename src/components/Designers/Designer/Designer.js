@@ -79,30 +79,27 @@ const Count = styled.div`
 `;
 
 class Designer extends Component {
-  render(){
+  render() {
     const designer = this.props.data;
 
-    return(
-      <NavLink to={"/designerDetail/"+designer.uid}>
+    return (
+      <NavLink to={"/designerDetail/" + designer.uid}>
         <Designerli>
-          <ImgPart style={designer.imgURL ? {backgroundImage: `url(${designer.imgURL.m_img})`} : {backgroundImage: `url(${profile})`}}/>
+          <ImgPart style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${profile})` }} />
           <TextPart>
             <div className="userName"><TextFormat txt={designer.nick_name} /></div>
-            <div className="cate"><TextFormat txt={designer.categoryName? designer.categoryName : "전체"}/></div>
-            <div className="date">{designer.create_time? designer.create_time.split("T")[0]+"부터 활동" : ""}</div>
+            <div className="cate"><TextFormat txt={designer.categoryName ? designer.categoryName : "전체"} /></div>
+            <div className="date">{designer.create_time ? designer.create_time.split("T")[0] + "부터 활동" : ""}</div>
           </TextPart>
           <Count>
             <div>
-              <Icon name="signup" size="mini"></Icon>
-              {designer.total_design? NumberFormat(designer.total_design) : 0}
+              <Icon name="signup" /> {designer.total_design ? NumberFormat(designer.total_design) : 0}
             </div>
             <div>
-              <Icon name="unhide" size="mini"></Icon>
-              {designer.total_view? NumberFormat(designer.total_view) : 0}
+              <Icon name="unhide" /> {designer.total_view ? NumberFormat(designer.total_view) : 0}
             </div>
             <div>
-              <Icon name="heart" size="mini"></Icon>
-              {designer.total_like? NumberFormat(designer.total_like) : 0}
+              <Icon name="heart" /> {designer.total_like ? NumberFormat(designer.total_like) : 0}
             </div>
           </Count>
         </Designerli>

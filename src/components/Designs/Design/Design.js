@@ -85,7 +85,7 @@ const Count = styled.div`
     clear: both;
   }
   & .fork{
-    transform: rotate(90deg);
+    transform: translateY(25%) rotate(90deg);
   }
 `;
 
@@ -94,24 +94,24 @@ class Design extends Component {
     let design = this.props.data;
     console.log("design", design)
     return (
-      <NavLink to={"/designDetail/"+design.uid}>
+      <NavLink to={"/designDetail/" + design.uid}>
         <Designli>
-          <ImgPart style={design.thumbnailUrl ? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}>
+          <ImgPart style={design.thumbnailUrl ? { backgroundImage: `url(${design.thumbnailUrl.m_img})` } : { backgroundImage: `url(${eximg})` }}>
             {design.parent_design === null
               ? null
               : <div className="icon-span">
-                  <i className="icon fork large icon-fork"/>
-                </div>
+                <i className="icon fork large icon-fork" />
+              </div>
             }
           </ImgPart>
           <TextPart>
-            <div className="title"><TextFormat txt={design.title}/></div>
-              {design.is_project === 1
-              ? <div className="userName" style={{display:"flex",justifyContent:"space-between"}}><TextFormat style={{flex:"1"}} txt={design.userName} chars={9}/><div style={{flex:"1"}}>님의 프로젝트</div></div>
-              : <div className="userName" style={{display:"flex"}}><TextFormat txt={design.userName} chars={10}/> 님의 작품</div>
-              }
+            <div className="title"><TextFormat txt={design.title} /></div>
+            {design.is_project === 1
+              ? <div className="userName" style={{ display: "flex", justifyContent: "space-between" }}><TextFormat style={{ flex: "1" }} txt={design.userName} chars={9} /><div style={{ flex: "1" }}>님의 프로젝트</div></div>
+              : <div className="userName" style={{ display: "flex" }}><TextFormat txt={design.userName} chars={10} /> 님의 작품</div>
+            }
             <div className="cate">
-              {design.categoryName? design.categoryName : "전체"}
+              {design.categoryName ? design.categoryName : "전체"}
               <span className="update">
                 {DateFormat(design.update_time)}
               </span>
@@ -119,15 +119,15 @@ class Design extends Component {
           </TextPart>
           <Count>
             <div>
-              <Icon name="unhide" size="mini"></Icon>
+              <Icon name="unhide"/>
               {design.view_count ? NumberFormat(design.view_count) : 0}
             </div>
             <div>
-              <Icon name="heart" size="mini"></Icon>
+              <Icon name="heart" />
               {design.like_count ? NumberFormat(design.like_count) : 0}
             </div>
             <div>
-              <Icon name="fork" size="mini"></Icon>
+              <Icon name="fork" />
               {design.children_count ? NumberFormat(design.children_count) : 0}
             </div>
           </Count>
