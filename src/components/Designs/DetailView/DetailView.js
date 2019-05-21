@@ -90,18 +90,18 @@ class DetailView extends Component {
   state = {
     render: true,
     edit: false
-  };
+  }
 
   componentDidMount() {
     this.props
       .GetDesignDetailViewRequest(this.props.id, this.props.token)
       // .then(data => { if (data.DesignDetailView !== null) { this.props.GetCardCommentRequest( this.props.id, data.DesignDetailView.uid ); } })
-      .then(()=>{
+      .then(() => {
         // console.log(this.props, "props")
         this.props.DesignDetailView && this.props.userInfo &&
-        this.props.isTeam &&
-        // this.props.DesignDetailView.user_id === this.props.userInfo.uid && 
-        this.setState({edit:true})
+          this.props.isTeam &&
+          // this.props.DesignDetailView.user_id === this.props.userInfo.uid && 
+          this.setState({ edit: true })
       })
   }
 
@@ -136,27 +136,17 @@ class DetailView extends Component {
       return;
     }
     this.props
-      .CreateCardCommentRequest(
-        FormDataToJson(data),
-        this.props.id,
-        this.props.DesignDetailView.uid,
-        this.props.token
-      )
+      .CreateCardCommentRequest(FormDataToJson(data), this.props.id, this.props.DesignDetailView.uid, this.props.token)
+      .then(this.props.UpdateDesignTime(this.props.id, this.prop.token))
       .then(async res => {
         if (res.data.success === true) {
-          this.props.GetCardCommentRequest(
-            this.props.id,
-            this.props.DesignDetailView.uid
-          );
+          this.props.GetCardCommentRequest(this.props.id,this.props.DesignDetailView.uid)
         }
-        await this.setState({
-          render: false
-        });
-        this.setState({
-          render: true
-        });
-      });
-  };
+        await this.setState({render: false})
+        this.setState({render: true})
+      })
+      
+  }
 
 
   onChangeEditMode = () => {
@@ -166,7 +156,7 @@ class DetailView extends Component {
     // this.setState({ edit: true });
   };
   onPreviewMode = () => {
-    this.setState({edit:!this.state.edit})
+    this.setState({ edit: !this.state.edit })
   }
   onCancel = () => {
     window.confirm('변경하신 데이터가 저장되지 않습니다, 그래도 취소하시겠습니까?') && window.location.reload()
@@ -179,7 +169,7 @@ class DetailView extends Component {
         <BtnWrap>
           {this.props.isTeam ? (
             <Button type="button" size="small" onClick={this.onPreviewMode}>
-              {this.state.edit?"미리보기":"편집하기"}
+              {this.state.edit ? "미리보기" : "편집하기"}
             </Button>
           ) : null}
           {this.props.token &&
@@ -204,8 +194,8 @@ class DetailView extends Component {
             {/*comment form deleted */}
           </ViewWrapper>
         ) : (
-          <Loading />
-        )}
+            <Loading />
+          )}
       </div>
     );
   }
