@@ -23,10 +23,15 @@ export const FormControl = async obj => {
       fnList[i] = fn[0];
       fnData = fnDatas[0];
       console.log(
-        "fn : ",fn,
-        "fnDatas :",fnDatas,
-        "fnList[i] :",fnList[i],
-        "fnData : ",fnData);
+        "fn : ",
+        fn,
+        "fnDatas :",
+        fnDatas,
+        "fnList[i] :",
+        fnList[i],
+        "fnData : ",
+        fnData
+      );
     }
     if (Validates[fnList[i]]) {
       await qArray.push(Validates[fnList[i]](value, target, fnData));
