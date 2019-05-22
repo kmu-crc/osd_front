@@ -55,7 +55,7 @@ class CardSource extends Component {
 
   render() {
     const view = this.props.view;
-    console.log("CANCEL",this.props.isCancel, this.props.on)
+    // console.log("CANCEL",this.props.isCancel, this.props.on)
     return (
       <FormWrapper>
         <FromFieldCard>
@@ -63,6 +63,7 @@ class CardSource extends Component {
             <Grid.Column mobile={16} computer={16}>
               <Form.Group widths="equal">
                 <CardSourceDetailContainer
+                  design_id={view.design_id}
                   uid={view.uid}
                   isTeam={view.is_team}
                   edit={this.props.edit}

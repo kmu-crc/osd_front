@@ -178,16 +178,12 @@ class CardSourceDetail extends Component {
     await this.setState({content: copyContent});
     let formData = await ContentForm(this.state);
     await this.setState({loading: true});
-    await setTimeout(() => {
+    await setTimeout(() => {}, 500);
+    
+    this.props.upDateRequest(formData, this.props.uid, this.props.token)
+      .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+  }
 
-    }, 500);
-
-    this.props.upDateRequest(
-      formData,
-      this.props.uid,
-      this.props.token
-    )
-  };
 
   render() {
     const { edit, content } = this.state;
