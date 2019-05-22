@@ -84,7 +84,8 @@ class FileController extends Component {
       }
       await this.setInit(obj);
     } else if (
-      nextProps.item.fileUrl == null || nextProps.item.content === ""
+      nextProps.item.fileUrl == null ||
+      nextProps.item.content === ""
     ) {
       if (this.state.target) {
         setTimeout(() => {
@@ -135,32 +136,56 @@ class FileController extends Component {
   };
 
   onChangeValue = async (e) => {
-    console.log("onChangeValue", this.input.files)
-    const event = { ...e }
-    let files = this.input.files
-    let data = []
-    if (files[0]) {
-      for (var i = 0; i < files.length; i++) {
-        const type = files[i].type && await files[i].type.split("/")[0]
-        const extension = await files[i].name.split(".").pop()
-        const fileUrl = await this.readUploadedFileAsText(files[i])
-        const file = await {
-          content: "", extension: extension,
-          fileUrl: fileUrl, file_name: files[i].name, file_type: type,
-          is_image: type === "image", order: null, type: "FILE", uid: null,
-          validates: ["MaxFileSize(99999999)"], value: event.currentTarget.files, target: event.currentTarget
-        }
-        await FormControl(file).then(() => {
-          // console.log(data.length,"???",data)
-          data.push(file)
-          // console.log(data.length,"!!!!!", data)
-        }).catch(err => { alert(err.message) })
+    console.log("onChangeValue", this.input.files);
+    const event = {...e};
+    let data = this.input.files;
+    if (data[0]) {
+      let type = null;
+      if (data[0].type) type = await data[0].type.split("/")[0];
+      let extension = await data[0].name.split(".");
+      extension = await extension[extension.length - 1];
+
+      const fileUrl = await this.readUploadedFileAsText(data[0]);
+      if (type === "image") {
+        await this.setState({
+          fileUrl: fileUrl,
+          is_image: true,
+          file_type: type,
+          extension: extension,
+          file_name: data[0].name
+        });
+      } else {
+        await this.setState({
+          fileUrl: fileUrl,
+          is_image: false,
+          file_type: type,
+          extension: extension,
+          file_name: data[0].name
+        });
       }
-      await this.setState({ data: data})
-      // console.log("WILL SEND DATA", this.state)
-      this.returnData()
+    } else {
+      await this.setState({
+        fileUrl: "",
+        is_image: false,
+        file_type: "",
+        extension: "",
+        file_name: null
+      });
     }
-  }
+    await this.setState({ ...data });
+    if (data.length > 0) {
+      const target = event.currentTarget;
+      await this.setState({ value: target.files, target });
+      FormControl(this.state)
+        .then(data => {
+          this.returnData();
+        })
+        .catch(err => {
+          console.log("formFile", err);
+          alert(err.message);
+        });
+    }
+  };
 
   onClickFile = () => {
     this.state.target.click();
@@ -173,21 +198,31 @@ class FileController extends Component {
 
   render() {
     const contentImg = this.props.item.content
-      ? this.props.item.content : this.props.item.fileUrl;
+      ? this.props.item.content
+      : this.props.item.fileUrl;
     return (
       <FileWrap>
         {(this.props.item.content || this.props.item.fileUrl) &&
-          this.state.is_image ? (
-            <img src={contentImg} alt="이미지" />
-          ) : (this.props.item.content || this.props.item.extension) &&
-            !this.state.is_image ? (
-              <div className="iconWrap">
-                <FileIcon type={this.props.item.file_type} extension={this.props.item.extension} />
-                <span className="LinkFileName">{this.props.item.file_name}</span>
-              </div>
-            ) : null}
+        this.state.is_image ? (
+          <img src={contentImg} alt="이미지" />
+        ) : (this.props.item.content || this.props.item.extension) &&
+        !this.state.is_image ? (
+          <div className="iconWrap">
+            <FileIcon
+              type={this.props.item.file_type}
+              extension={this.props.item.extension}
+            />
+            <span className="LinkFileName">{this.props.item.file_name}</span>
+          </div>
+        ) : null}
         <File>
-          <input multiple type="file" name="source" onChange={this.onChangeValue} ref={ref => (this.input = ref)} style={{ display: "none" }} />
+          <input
+            type="file"
+            name="source"
+            onChange={this.onChangeValue}
+            ref={ref => (this.input = ref)}
+            style={{ display: "none" }}
+          />
           <span></span>
         </File>
       </FileWrap>
