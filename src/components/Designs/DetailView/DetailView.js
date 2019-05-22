@@ -137,7 +137,7 @@ class DetailView extends Component {
     }
     this.props
       .CreateCardCommentRequest(FormDataToJson(data), this.props.id, this.props.DesignDetailView.uid, this.props.token)
-      .then(this.props.UpdateDesignTime(this.props.id, this.prop.token))
+      .then(this.props.UpdateDesignTime(this.props.id, this.props.token))
       .then(async res => {
         if (res.data.success === true) {
           this.props.GetCardCommentRequest(this.props.id,this.props.DesignDetailView.uid)

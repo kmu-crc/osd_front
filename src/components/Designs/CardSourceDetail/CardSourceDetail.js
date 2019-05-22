@@ -184,6 +184,7 @@ class CardSourceDetail extends Component {
     await setTimeout(() => { }, 500)
 
     this.props.upDateRequest(formData, this.props.uid, this.props.token)
+      .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
   }
 
   render() {
