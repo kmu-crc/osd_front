@@ -190,8 +190,8 @@ Validates.OnlyImages = (data, target) => {
         if (
           item.type === "image/jpeg" ||
           item.type === "image/png" ||
+          item.type === "image/bmp" ||
           item.type === "image/gif"
-          // item.type === "image/bmp" ||
           // item.type === "image/webp"
         ) {
           await resolve(true);
