@@ -13,26 +13,28 @@ const DesignBox = styled.div`
 `;
 
 class EditDesignListContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetDesignInGroupRequest(this.props.id, null, null);
   }
 
   setOut = (id) => {
+    const confirm = window.confirm("디자인을 그룹에서 탈퇴시키겠습니까?")
+    if (!confirm) return
     this.props.DeleteDesignInGroupRequest(this.props.id, id)
-    .then(res => {
-      if (res.data.success === true) {
-        this.props.GetDesignInGroupRequest(this.props.id, null, null);
-      }
-    }).catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        if (res.data.success === true) {
+          this.props.GetDesignInGroupRequest(this.props.id, null, null);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
-    return(
+    return (
       <DesignBox>
         <div className="boxTitle">등록된 디자인 ({this.props.EditDesignList.length})</div>
-        <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut}/>
+        <ContentList data={this.props.EditDesignList} type="design" handleClick={this.setOut} />
       </DesignBox>
     );
   }
@@ -46,12 +48,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignInGroupRequest: (id, page, sort) => {
-        return dispatch(GetDesignInGroupRequest(id, page, sort))
-      },
-      DeleteDesignInGroupRequest : (id, designId) => {
-        return dispatch(DeleteDesignInGroupRequest(id, designId))
-      }
+    GetDesignInGroupRequest: (id, page, sort) => {
+      return dispatch(GetDesignInGroupRequest(id, page, sort))
+    },
+    DeleteDesignInGroupRequest: (id, designId) => {
+      return dispatch(DeleteDesignInGroupRequest(id, designId))
+    }
   };
 };
 
