@@ -112,17 +112,22 @@ class CardSourceDetail extends Component {
     let copyContent = [...this.state.content]
     let copyData = {} // { ...data };
     console.log("DATA", data)
-    // copyData.initClick = true;
-    for (let item of copyContent) {
-      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
-        await copyContent.splice(item.order, 1, null)
+    if (data.type === "TEXT") {
+      delete data.data
+      // copyData = {...data}
+      await copyContent.splice(data.order, 0, data)
+    } else {
+      // copyData.initClick = true;
+      for (let item of copyContent) {
+        if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+          await copyContent.splice(item.order, 1, null)
+        }
       }
-    }
-    for (let i = 0; i < data.data.length; i++) {
-      data.data[i].initClick = true
-      delete data.data.target
-      // console.log("i:", i, "order+i", copyData.order, i)
-      await copyContent.splice(data.order + i, 0, data.data[i])
+      for (let i = 0; i < data.data.length; i++) {
+        data.data[i].initClick = true
+        delete data.data.target
+        await copyContent.splice(data.order + i, 0, data.data[i])
+      }
     }
     // console.log(copyContent)
 
@@ -143,7 +148,7 @@ class CardSourceDetail extends Component {
     )
     console.log("NEW", newContent)
     await this.setState({ content: newContent })
-  };
+  }
 
   deleteItem = async index => {
     let copyContent = [...this.state.content]
