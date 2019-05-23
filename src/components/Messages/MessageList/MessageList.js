@@ -14,6 +14,7 @@ import DateFormat from "modules/DateFormat";
 import TextFormat from 'modules/TextFormat';
 import Socket from "modules/socket"
 import NumberFormat from 'modules/NumberFormat';
+import TextSlicer from 'modules/TextSlicer'
 
 // css styling
 const Container = styled(ContentBox)`
@@ -146,8 +147,9 @@ const MemberListItem = styled.li`
 `;
 
 const DetailWrapper = styled.div`
-  background-color: ${StyleGuide.color.geyScale.scale1};
-  height: 780px;
+  background-color: #F0F0F0;
+  min-height: 250px;
+  max-height: 600px;
   padding: 1rem 1rem 2rem 1rem;
   overflow-y: scroll;
   position: relative;
@@ -158,12 +160,7 @@ const DetailWrapper = styled.div`
     left: 50%;
     transform: translateX(-50%);
   }
-  & .head {
-    height: 50px;
-    font-weight: bold;
-    color: ${StyleGuide.color.sub.bule.dark};
-    font-size: ${StyleGuide.font.size.heading4};
-  }
+
 `;
 const AlarmLabel = styled.div`
   width: 30px;
@@ -287,7 +284,7 @@ class MessageList extends Component {
     setTimeout(async () => {
       await this.props.GetMyMsgListRequest(this.props.token)
       this.setState({ render: true })
-    }, 500)
+    }, 250)
   }
 
   comfirmMsgAlarm = (from) => {
@@ -296,8 +293,8 @@ class MessageList extends Component {
 
   onSubmitForm = async (data) => {
     if (this.state.selectId === null) {
-      alert("받는 사람을 지정해주세요.");
-      return;
+      alert("받는 사람을 지정해주세요.")
+      return
     }
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)
       .then(async res => {
@@ -321,7 +318,7 @@ class MessageList extends Component {
       <Container>
         <Wrapper padded={false} columns={2}>
           <Grid.Row>
-            <ListContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
+            <ListContainer widescreen={5} largeScreen={5} computer={6} tablet={16} mobile={16}>
               <SearchMember>
                 <div className="heading">멤버 검색</div>
                 <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
@@ -352,16 +349,19 @@ class MessageList extends Component {
                 : <div>메시지없음</div>
               }
             </ListContainer>
-            <ContentContainer widescreen={8} largeScreen={8} computer={8} tablet={16} mobile={16}>
-              <DetailWrapper ref={ref => this.list = ref}>
-                {this.state.selectName &&
-                  <div className="head" style={{ display: "flex" }}><TextFormat txt={this.state.selectName} chars={12} />님과의 대화</div>
-                }
+            <ContentContainer widescreen={11} largeScreen={11} computer={10} tablet={16} mobile={16}>
+              <div style={{
+                height: "50px", fontWeight: "bold", color: `${StyleGuide.color.sub.bule.dark}`,
+                fontSize: `${StyleGuide.font.size.heading4}`, display: "flex"
+              }}>
+                {this.state.selectName && (TextSlicer(this.state.selectName, 16) + "님과의 대화")}
+              </div>
+              <DetailWrapper style={{ maxHeight: "250px" }} ref={ref => this.list = ref}>
                 {this.state.render &&
                   <MessageDetailContainer id={this.state.msgId} />
                 }
               </DetailWrapper>
-              <SendingMsg>
+              <SendingMsg style={{ height: "50px" }}>
                 {this.state.render &&
                   <ValidateForm onSubmit={this.onSubmitForm} className="ui reply form">
                     <FormField name="message" validates={["required"]} RenderComponent={FormTextArea} />
@@ -375,7 +375,7 @@ class MessageList extends Component {
           </Grid.Row>
         </Wrapper>
       </Container>
-    );
+    )
   }
 }
 

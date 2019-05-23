@@ -84,32 +84,29 @@ class Group extends Component {
     }
   }
 
-  render(){
+  render() {
     let group = this.props.data;
 
-    return(
-      <NavLink to={"/groupDetail/"+group.uid} onClick={()=>this.refresh(group.uid)}>
+    return (
+      <NavLink to={"/groupDetail/" + group.uid} onClick={() => this.refresh(group.uid)}>
         <Groupli>
-          <ImgPart style={group.thumbnailUrl ? {backgroundImage: `url(${group.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}/>
+          <ImgPart style={group.thumbnailUrl ? { backgroundImage: `url(${group.thumbnailUrl.m_img})` } : { backgroundImage: `url(${eximg})` }} />
           <TextPart>
-            <div className="title"><TextFormat txt={group.title}/></div>
-            <div className="owner" style={{display:"flex"}}><TextFormat txt={group.userName} chars={10}/> 님의 그룹</div>
+            <div className="title"><TextFormat txt={group.title} /></div>
+            <div className="owner" style={{ display: "flex" }}><TextFormat txt={group.userName} chars={10} /> 님의 그룹</div>
             <div className="cate">
               최근 업데이트 {DateFormat(group.child_update_time)}
             </div>
           </TextPart>
           <Count>
             <div>
-              <Icon name="window restore" size="mini"></Icon>
-              {group.group? NumberFormat(group.group) : 0}
+              <Icon name="window restore" /> {group.group ? NumberFormat(group.group) : 0}
             </div>
             <div>
-              <Icon name="signup" size="mini"></Icon>
-              {group.design? NumberFormat(group.design) : 0}
+              <Icon name="signup" /> {group.design ? NumberFormat(group.design) : 0}
             </div>
             <div>
-              <Icon name="heart" size="mini"></Icon>
-              {group.like? NumberFormat(group.like) : 0}
+              <Icon name="heart" /> {group.like ? NumberFormat(group.like) : 0}
             </div>
           </Count>
         </Groupli>

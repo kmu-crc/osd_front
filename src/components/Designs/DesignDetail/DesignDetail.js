@@ -354,11 +354,12 @@ const CounterItem = styled.div`
     display: block;
   }
   .count {
+    font-size: 12pt;
     font-size: ${StyleGuide.font.size.small};
   }
 
   & .fork{
-    transform: rotate(90deg);
+    transform: translateY(25%) rotate(90deg);
   }
 `;
 

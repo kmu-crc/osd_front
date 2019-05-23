@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { GetDesignDetailViewRequest, ChangeToProjectRequest, DesignDetailViewResetRequest } from "actions/Design";
 import DetailView from "components/Designs/DetailView";
 import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "actions/Designs/DesignCard";
+import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
 
 class DesignDetailViewContainer extends Component {
   render() {
     return (
       <DetailView {...this.props}/>
-    );
+    )
   }
 }
 
@@ -31,18 +32,21 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(ChangeToProjectRequest(id, token))
     },
     GetCardCommentRequest: (design_id, card_id) => {
-      return dispatch(GetCardCommentRequest(design_id, card_id));
+      return dispatch(GetCardCommentRequest(design_id, card_id))
     },
     CreateCardCommentRequest: (data, design_id, card_id, token) => {
-      return dispatch(CreateCardCommentRequest(data, design_id, card_id, token));
+      return dispatch(CreateCardCommentRequest(data, design_id, card_id, token))
     },
     DeleteCardCommentRequest: (design_id, card_id, comment_id, token) => {
-      return dispatch(DeleteCardCommentRequest(design_id, card_id, comment_id, token));
+      return dispatch(DeleteCardCommentRequest(design_id, card_id, comment_id, token))
     },
     DesignDetailViewResetRequest: () => {
-      return dispatch(DesignDetailViewResetRequest());
+      return dispatch(DesignDetailViewResetRequest())
+    },
+    UpdateDesignTime:(id, token)=>{
+      return dispatch(UpdateDesignTime(id, token))
     }
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DesignDetailViewContainer);
