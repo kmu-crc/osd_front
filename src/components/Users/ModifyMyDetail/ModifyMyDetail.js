@@ -120,6 +120,17 @@ class ModifyMyDetail extends Component {
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
+    var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
+    if(!reg_pw.test(formData.password.value)||formData.password.value.length < 6||formData.password.value.length > 15){
+      alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
+      return false;
+    }
+
+    if(formData.password.value !== formData.password2.value){
+      alert("비밀번호 확인을 다시 해주십시오");
+      return false;
+    }
+
     delete formData.password2;
     ValidationGroup(formData, false).then(async data => {
       console.log("성공", data);
@@ -231,7 +242,7 @@ class ModifyMyDetail extends Component {
                         name="category_level2"
                         value={myInfo.category_level2}
                         getValue={this.onChangeValue}
-                      />                    
+                      />
                     </Form.Group>
                     <Label>디자이너 활동 여부</Label>
                     <FormCheckBox
