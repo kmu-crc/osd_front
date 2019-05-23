@@ -50,7 +50,6 @@ const Wrapper = styled(ContentBox)`
 
 class ModifyDesign extends Component {
   render() {
-    console.log("props", this.props)
     return (
       <div>
         <ImgWrapper>

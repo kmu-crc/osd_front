@@ -1,25 +1,24 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import { Grid, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
-import ModifyJoinListNew from "components/Groups/ModifyJoinListNew";
-import ModifyExistListNew from "components/Groups/ModifyExistListNew";
-import CurrentJoinListNew from "components/Groups/CurrentJoinListNew";
-import Button from "components/Commons/Button";
-import eximg from "source/myPage.jpeg";
-import ContentBox from "components/Commons/ContentBox";
-import StyleGuide from "StyleGuide";
-import PxtoRem from "modules/PxtoRem";
-import ModifyStatusContainer from "containers/Groups/ModifyStatusContainer";
-import DateFormat from "modules/DateFormat";
-import TextFormat from "modules/TextFormat";
-// css styling
+import React, { Component } from "react"
+import styled from "styled-components"
+import { Grid, Icon } from "semantic-ui-react"
+import { Link } from "react-router-dom"
+import JoinGroupContainer from "containers/Groups/JoinGroupContainer"
+import ModifyJoinListNew from "components/Groups/ModifyJoinListNew"
+import ModifyExistListNew from "components/Groups/ModifyExistListNew"
+import CurrentJoinListNew from "components/Groups/CurrentJoinListNew"
+import Button from "components/Commons/Button"
+import ContentBox from "components/Commons/ContentBox"
+import StyleGuide from "StyleGuide"
+import PxtoRem from "modules/PxtoRem"
+import ModifyStatusContainer from "containers/Groups/ModifyStatusContainer"
+import DateFormat from "modules/DateFormat"
+import TextFormat from "modules/TextFormat"
 
+// css styling
 const Wrapper = styled.div`
   width: 100%;
   padding-bottom: 30px;
-`;
+`
 
 const InfoContainer = styled(Grid)`
   width: 100%;
@@ -54,7 +53,7 @@ const InfoContainer = styled(Grid)`
   & .btnWrap {
     text-align: right;
   }
-`;
+`
 
 const BtnContainer = styled.div`
   float: right;
@@ -72,7 +71,7 @@ const BtnContainer = styled.div`
   & i {
     margin: 0;
   }
-`;
+`
 
 const SideMenuBtn = styled.div`
   position: absolute;
@@ -95,7 +94,7 @@ const SideMenuBtn = styled.div`
       }
     }
   }
-`;
+`
 
 const SideMenu = styled.ul`
   display: block;
@@ -124,17 +123,17 @@ const SideMenu = styled.ul`
       outline: 0;
     }
   }
-`;
+`
 
 class GroupDetailNew extends Component {
   state = {
     editMode: false,
     activeMoreBtn: false
-  };
+  }
 
   componentWillMount() {
-    const url = `/groupDetail/${this.props.id}`;
-    this.props.history.replace(url);
+    const url = `/groupDetail/${this.props.id}`
+    this.props.history.replace(url)
     // 어떤 페이지를 마지막으로 새로고침 했더라도 새로고침 후에는 기본 설정으로 돌아감
   }
 
@@ -153,20 +152,20 @@ class GroupDetailNew extends Component {
     }
     if (this.props.like === true) {
       this.props.UnlikeGroupRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.success === true) {
-          this.props.GetLikeGroupRequest(this.props.id, this.props.token)
-          .then(this.props.GetGroupCountRequest(this.props.id))
-        }
-      });
+        .then(data => {
+          if (data.success === true) {
+            this.props.GetLikeGroupRequest(this.props.id, this.props.token)
+              .then(this.props.GetGroupCountRequest(this.props.id))
+          }
+        });
     } else {
       this.props.LikeGroupRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.success === true) {
-          this.props.GetLikeGroupRequest(this.props.id, this.props.token)
-          .then(this.props.GetGroupCountRequest(this.props.id))
-        }
-      });
+        .then(data => {
+          if (data.success === true) {
+            this.props.GetLikeGroupRequest(this.props.id, this.props.token)
+              .then(this.props.GetGroupCountRequest(this.props.id))
+          }
+        });
     }
   }
 
@@ -200,17 +199,17 @@ class GroupDetailNew extends Component {
     const confirm = window.confirm("그룹을 삭제하시겠습니까?");
     if (confirm) {
       this.props.DeleteGroupRequest(this.props.id, this.props.token)
-      .then(data => {
-        this.props.history.push("/group");
-      });
+        .then(data => {
+          this.props.history.push("/group");
+        });
     } else {
       return;
     }
   }
 
-  render(){
-    const groupDetail = this.props.GroupDetail;
-    const user = this.props.userInfo;
+  render() {
+    const groupDetail = this.props.GroupDetail
+    const user = this.props.userInfo
 
     const SubMenuCompo = () => {
       return (
@@ -225,84 +224,82 @@ class GroupDetailNew extends Component {
           </li>
         </SideMenu>
       );
-    };
+    }
 
-    return(
+    return (
       <div>
         {groupDetail.length !== 0 &&
           <ContentBox>
             <Wrapper>
-            {/* ------------------------ 상단 프로필 섹션 -------------------------- */}
-            <InfoContainer>
-              <Grid.Row>
-                <div style={{display:"flex",fontSize:StyleGuide.font.size.heading4,justifyContent:"space-between"}}>
-                  <a href={`/group`}>그룹&nbsp;>&nbsp;</a>
-                  {groupDetail.parentName&&<a href={`/groupDetail/${groupDetail.parentId}`} style={{display:"flex"}}><TextFormat txt={groupDetail.parentName} chars={16}/>&nbsp;>&nbsp;</a>}
-                  <TextFormat txt={groupDetail.title} chars={32}/>
-                  {user && (user.uid === groupDetail.user_id) &&
-                  <SideMenuBtn tabIndex="1"
-                               onBlur={this.onCloseMoreBtn}
-                               ref={ref => (this.MoreBtn = ref)}>
-                    <button onClick={this.onActiveMoreBtn}>
-                      <Icon name="ellipsis vertical" />
-                    </button>
-                    {this.state.activeMoreBtn? <SubMenuCompo /> : null}
-                  </SideMenuBtn>}
-                </div>
-              </Grid.Row>
-              <Grid.Row columns={2}>
-                <Grid.Column wideScreen={9} largeScreen={9} computer={9} tablet={16} mobile={16}>
-                    <div className="explanation"><TextFormat txt={groupDetail.explanation}/></div>
-                  <div>
-                    <div className="date">최근 업데이트 : {DateFormat(groupDetail.child_update_time)}</div>
-                    <div style={{display:"flex"}} className="owner">개설자 : &nbsp;<TextFormat style={{flex:"1"}} txt={groupDetail.userName} chars={12}/></div>
+              {/* ------------------------ 상단 프로필 섹션 -------------------------- */}
+              <InfoContainer>
+                <Grid.Row>
+                  <div style={{ display: "flex", fontSize: StyleGuide.font.size.heading4, justifyContent: "space-between" }}>
+                    <a href={`/group`}>그룹&nbsp;>&nbsp;</a>
+                    {groupDetail.parentName && <a href={`/groupDetail/${groupDetail.parentId}`} style={{ display: "flex" }}><TextFormat txt={groupDetail.parentName} chars={16} />&nbsp;>&nbsp;</a>}
+                    <TextFormat txt={groupDetail.title} chars={32} />
+                    {user && (user.uid === groupDetail.user_id) &&
+                      <SideMenuBtn tabIndex="1"
+                        onBlur={this.onCloseMoreBtn}
+                        ref={ref => (this.MoreBtn = ref)}>
+                        <button onClick={this.onActiveMoreBtn}>
+                          <Icon name="ellipsis vertical" />
+                        </button>
+                        {this.state.activeMoreBtn ? <SubMenuCompo /> : null}
+                      </SideMenuBtn>}
                   </div>
-                </Grid.Column>
-                <Grid.Column className="btnWrap" wideScreen={7} largeScreen={7} computer={7} tablet={16} mobile={16}>
-                {this.state.editMode
-                ? <BtnContainer>
-                    <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>확인</Button>
-                  </BtnContainer>
-                : <BtnContainer>
-                    {this.props.like === true
-                    ? <Button color="Primary" onClick={this.updateLike}>
-                        좋아요
+                </Grid.Row>
+                <Grid.Row columns={2}>
+                  <Grid.Column wideScreen={9} largeScreen={9} computer={9} tablet={16} mobile={16}>
+                    <div className="explanation"><TextFormat txt={groupDetail.explanation} /></div>
+                    <div>
+                      <div className="date">최근 업데이트 : {DateFormat(groupDetail.child_update_time)}</div>
+                      <div style={{ display: "flex" }} className="owner">개설자 : &nbsp;<TextFormat style={{ flex: "1" }} txt={groupDetail.userName} chars={12} /></div>
+                    </div>
+                  </Grid.Column>
+                  <Grid.Column className="btnWrap" wideScreen={7} largeScreen={7} computer={7} tablet={16} mobile={16}>
+                    {this.state.editMode
+                      ? <BtnContainer>
+                        <Button className="edit" color="Solid" onClick={() => this.setState({ editMode: !this.state.editMode })}>확인</Button>
+                      </BtnContainer>
+                      : <BtnContainer>
+                        {this.props.like === true
+                          ? <Button color="Primary" onClick={this.updateLike}>
+                            좋아요
                         <Icon name="heart" color="red" />
-                        {/* ({this.props.Count.like}) */}
-                      </Button>
-                    : <Button className="likeBtn" onClick={this.updateLike}>
-                        좋아요
+                            {/* ({this.props.Count.like}) */}
+                          </Button>
+                          : <Button className="likeBtn" onClick={this.updateLike}>
+                            좋아요
                         <Icon name="heart outline" />
-                        {/* ({this.props.Count.like}) */}
-                      </Button>
+                            {/* ({this.props.Count.like}) */}
+                          </Button>
+                        }
+                        <JoinGroupContainer />
+                        {user && (user.uid !== groupDetail.user_id) && <ModifyStatusContainer id={this.props.id} />}
+                      </BtnContainer>
                     }
-                    <JoinGroupContainer/>
-                    {user && (user.uid === groupDetail.user_id)
-                    ? <Button className="edit" color="Solid" onClick={()=>this.setState({editMode: !this.state.editMode})}>
-                        가입 관리
-                      </Button>
-                    : <ModifyStatusContainer id={this.props.id}/>
-                    }
-                  </BtnContainer>
-                }
-                </Grid.Column>
-              </Grid.Row>
-            </InfoContainer>
-            {/* ------------------------ 하단 카드 렌더링 섹션 -------------------------- */}
-            {this.state.editMode
-            ? user && (user.uid === groupDetail.user_id) &&
-              <div>
-                <ModifyJoinListNew {...this.props}/>
-                <ModifyExistListNew {...this.props}/>
-              </div>
-            : <CurrentJoinListNew {...this.props}/>
-            }
+                  </Grid.Column>
+                </Grid.Row>
+              </InfoContainer>
+              {/* ------------------------ 하단 카드 렌더링 섹션 -------------------------- */}
+              {
+                user && (user.uid === groupDetail.user_id)
+                  ? (
+                    <div>
+                      <ModifyJoinListNew {...this.props} />
+                      <ModifyExistListNew {...this.props} />
+                    </div>)
+                  : (
+                    <CurrentJoinListNew {...this.props} />
+                  )
+              }
             </Wrapper>
           </ContentBox>
         }
       </div>
-    );
+    )
   }
 }
 
-export default GroupDetailNew;
+export default GroupDetailNew
