@@ -6,6 +6,7 @@ class ValidateForm extends Component {
   }
   handelSubmit = async (event) => {
     event.preventDefault();
+    console.log("ignore", this.props.ignore)
     const target = event.target;
     const formData = new FormData(target);
     for (let data of Array.from(target.elements)) {
@@ -15,7 +16,7 @@ class ValidateForm extends Component {
           data.focus();
           break;
         } else {
-          if(data.type === "checkbox"){
+          if (data.type === "checkbox") {
             console.log("checkbox value", data.value);
             data.value === "1" ? formData.set(data.name, 1) : formData.set(data.name, 0);
           } else if (data.type === "file") {
@@ -25,6 +26,7 @@ class ValidateForm extends Component {
         }
       }
     }
+    if (this.props.ignore) await this.setState({ submit: true })
     if (this.state.submit) {
       this.props.onSubmit(formData);
     }
