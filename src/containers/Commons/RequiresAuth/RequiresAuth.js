@@ -13,7 +13,7 @@ export default function RequiresAuth(Component) {
       GetSession("opendesign_token").then( token => {
         this.props.CheckTokenRequest(token).then((data) => {
           if (data.type === "AUTH_CHECK_TOKEN_FAILURE") {
-            SetSession("opendesign_token", null);
+            // SetSession("opendesign_token", null);
             return this._checkAndRedirect();
           }
           return this._checkAndRedirect();
