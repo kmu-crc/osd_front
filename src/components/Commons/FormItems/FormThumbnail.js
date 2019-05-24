@@ -68,7 +68,7 @@ export class FormThumbnail extends Component {
       ) {
         let reader = new FileReader();
         reader.onloadend = async () => {
-          console.log("result", reader.result)
+          // console.log("result", reader.result)
           await this.setState({
             imageUrl: reader.result
           });
