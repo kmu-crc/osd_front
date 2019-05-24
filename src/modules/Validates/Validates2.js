@@ -229,9 +229,9 @@ Validates.NotSpecialCharacters = (data, target) => {
     if (Validates.NotRequired(data)) {
       resolve(true);
     } else {
-      let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
+      let regExp = /^[a-zA-Zㄱ-힣0-9~!_]*$/i;
       if (!data.match(regExp)) {
-        message = "특수문자는 사용할 수 없습니다.";
+        message = "'~','!','_' 를 제외한 특수문자는 사용할 수 없습니다.";
         reject({ message, target });
       } else {
         resolve(true);

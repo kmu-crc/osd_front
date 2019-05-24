@@ -170,6 +170,7 @@ class SignUpForm extends Component {
           <Label>닉네임</Label>
           <FormInput
             name="nick_name"
+            maxLength="20"
             placeholder="닉네임을 입력해주세요."
             getValue={this.onChangeValue}
             validates={["Required", "NotSpecialCharacters", "CheckNickName"]}
