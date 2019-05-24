@@ -271,12 +271,13 @@ class Header extends Component {
 
   handleSignOut = async () => {
     SetSession("opendesign_token", null).then(data => {
-      console.log("setsession", data);
-      this.props.SignOutRequest();
-      this.props.history.push("/");
-    });
-    console.log(this.props);
-  };
+      console.log("setsession", data)
+      this.props.SignOutRequest()
+      this.setState({profile: false, active: false, keyword: null, noti: {}, msg: null })
+      this.props.history.push("/")
+    })
+    console.log(this.props)
+  }
 
   onActive = e => {
     const event = e;
@@ -471,7 +472,7 @@ class Header extends Component {
                   <SubMenuItem className="submenu-item">
                     <a href="/message">
                       <Icon name="envelope" />
-                      {this.state.noti.countMsg>0 &&(
+                      {this.state.noti.countMsg > 0 && (
                         <AlarmLabel>{NumberFormat(this.state.noti.countMsg)}</AlarmLabel>
                       )}
                     </a>
