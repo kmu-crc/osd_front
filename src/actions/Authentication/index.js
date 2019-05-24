@@ -11,12 +11,12 @@ export function CheckTokenRequest(token) {
         if (res.success) {
           return dispatch(CkeckTokenSuccess(res.info, token));
         } else {
-          SetSession("opendesign_token", null);
+          // SetSession("opendesign_token", null);
           return dispatch(CkeckTokenFailure());
         }
       })
       .catch(err => {
-        SetSession("opendesign_token", null);
+        // SetSession("opendesign_token", null);
         dispatch(CkeckTokenFailure());
       });
   };
