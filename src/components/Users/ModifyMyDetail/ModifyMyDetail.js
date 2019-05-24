@@ -202,8 +202,8 @@ class ModifyMyDetail extends Component {
                     <FormInput
                       name="nick_name"
                       value={myInfo.nick_name}
-                      maxLength="45"
-                      placeholder="닉네임을 입력해주세요.(45자 이내)"
+                      maxLength="20"
+                      placeholder="닉네임을 입력해주세요.(20자 이내)"
                       getValue={this.onChangeValue}
                       validates={["required", "NotSpecialCharacters"]}
                       onBlur={() => { this.liveCheck("nick_name") }}
