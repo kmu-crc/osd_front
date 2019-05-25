@@ -6,7 +6,7 @@ class ValidateForm extends Component {
   }
   handelSubmit = async (event) => {
     event.preventDefault();
-    console.log("ignore", this.props.ignore)
+    // console.log("ignore", this.props.ignore)
     const target = event.target;
     const formData = new FormData(target);
     for (let data of Array.from(target.elements)) {

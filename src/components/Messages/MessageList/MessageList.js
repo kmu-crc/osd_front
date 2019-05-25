@@ -296,6 +296,9 @@ class MessageList extends Component {
       alert("받는 사람을 지정해주세요.")
       return
     }
+    if(FormDataToJson(data).message.trim().length === 0)
+      return
+
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {
