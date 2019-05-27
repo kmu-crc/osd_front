@@ -41,26 +41,24 @@ class CurrentJoinListNew extends Component {
     this.props.GroupInGroupClear([]);
   }
 
-  sortChange = (e, {value}) => {
+  sortChange = (e, { value }) => {
     const url = `/groupDetail/${this.props.id}`;
     this.props.history.replace(`${url}/${value}`);
   }
 
-  render(){
+  render() {
     const { sort } = this.props;
-    return(
+    return (
       <TabContainer>
         <Head devided="vertically" padded={true}>
           <Grid.Row>
             {/* <Grid.Column largescreen={8} computer={8} tablet={8} mobile={8}></Grid.Column> */}
-            <Sorting largescreen={16} computer={16} tablet={16} mobile={16} handleClick={this.sortChange} placeholder={sort}/>
+            <Sorting largescreen={16} computer={16} tablet={16} mobile={16} handleClick={this.sortChange} placeholder={sort} />
           </Grid.Row>
         </Head>
-        {this.props.Count.design === 0 && this.props.Count.group === 0 &&
-        <p>가입된 컨텐츠가 없습니다.</p>
-        }
-        <GroupInGroupContainer id={this.props.id} sort={this.props.sort} count={this.props.Count.group}/>
-        <DesignInGroupContainer id={this.props.id} sort={this.props.sort} count={this.props.Count.design}/>
+        {this.props.Count.design === 0 && this.props.Count.group === 0 && <p>가입된 컨텐츠가 없습니다.</p>}
+        <GroupInGroupContainer id={this.props.id} sort={this.props.sort} count={this.props.Count.group} />
+        <DesignInGroupContainer id={this.props.id} sort={this.props.sort} count={this.props.Count.design} />
       </TabContainer>
     );
   }

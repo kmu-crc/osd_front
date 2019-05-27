@@ -478,7 +478,9 @@ export const GET_TOP_GROUP_LIST_SUCCESS = "GET_TOP_GROUP_LIST_SUCCESS";
 export const GET_TOP_GROUP_LIST_FAILURE = "GET_TOP_GROUP_LIST_FAILURE";
 export const GET_TOP_GROUP_LIST_CLEAR = "GET_TOP_GROUP_LIST_CLEAR";
 
-
+export const GET_COUNT_MY_DESIGN_GROUP_IN_GROUP = "GET_COUNT_MY_DESIGN_GROUP_IN_GROUP"
+export const GET_COUNT_MY_DESIGN_GROUP_IN_GROUP_SUCCESS = "GET_COUNT_MY_DESIGN_GROUP_IN_GROUP_SUCCESS"
+export const GET_COUNT_MY_DESIGN_GROUP_IN_GROUP_FAILURE = "GET_COUNT_MY_DESIGN_GROUP_IN_GROUP_FAILURE"
 ////////////////////////////////////////////////////////////////////////////
 // message
 ////////////////////////////////////////////////////////////////////////////

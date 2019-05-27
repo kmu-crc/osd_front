@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import ModifyStatus from "components/Groups/ModifyStatus";
 
 class ModifyStatusContainer extends Component {
-  render(){
-    return(
-      <ModifyStatus {...this.props}/>
+  render() {
+    console.log("Fn:", this.props)
+    return (
+      <ModifyStatus {...this.props} />
     );
   }
 }

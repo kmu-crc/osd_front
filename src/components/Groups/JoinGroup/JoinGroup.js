@@ -63,6 +63,8 @@ class JoinGroup extends Component {
 
   handleCloseModal = () => {
     this.setState({ open: false, active: "design" });
+    // alert(this.props.handleReload())
+    this.props.handleReload()
   };
 
   handleChangeTab = tab => {
