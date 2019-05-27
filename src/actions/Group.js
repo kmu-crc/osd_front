@@ -4,33 +4,33 @@ import host from "config";
 export function GetGroupListRequest(page, sort, keyword) {
   return (dispatch) => {
     //return fetch(`${host}/group/groupList/${page}/${sort}/${keyword}`, {
-      return fetch(`${host}/group/topGroupList/${page}/${sort}/${keyword}`,{
+    return fetch(`${host}/group/topGroupList/${page}/${sort}/${keyword}`, {
       headers: { 'Content-Type': 'application/json' },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("group data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(GroupListClear(data));
-          return;
-        }
-        dispatch(GetGroupList(data));
-      }).catch((error) => {
-        dispatch(GroupListFail());
-        console.log("err", error);
-      });
+      return response.json();
+    }).then((data) => {
+      console.log("group data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(GroupListClear(data));
+        return;
+      }
+      dispatch(GetGroupList(data));
+    }).catch((error) => {
+      dispatch(GroupListFail());
+      console.log("err", error);
+    });
   }
 };
 
 export function GetGroupList(data) {
   return {
     type: types.GET_GROUP_LIST,
-    GroupList : data
+    GroupList: data
   }
 };
 
@@ -56,26 +56,26 @@ export function GetGroupTotalCountRequest() {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        if (!data) {
-          console.log("no data");
-          data = 0;
-        } else {
-          data = data["count(*)"];
-        }
-        dispatch(GetGroupTotalCount(data));
-      }).catch((error) => {
-        dispatch(GroupTotalCountFail());
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      if (!data) {
+        console.log("no data");
+        data = 0;
+      } else {
+        data = data["count(*)"];
+      }
+      dispatch(GetGroupTotalCount(data));
+    }).catch((error) => {
+      dispatch(GroupTotalCountFail());
+      console.log("err", error);
+    })
   }
 };
 
 export function GetGroupTotalCount(data) {
   return {
     type: types.GET_GROUP_TOTAL_COUNT,
-    Count : data
+    Count: data
   }
 };
 
@@ -92,24 +92,24 @@ export function GetGroupDetailRequest(id) {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("group Detail data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        dispatch(GetGroupDetail(data));
-      }).catch((error) => {
-        console.log("err", error);
-      });
+      return response.json();
+    }).then((data) => {
+      console.log("group Detail data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetGroupDetail(data));
+    }).catch((error) => {
+      console.log("err", error);
+    });
   }
 };
 
 export function GetGroupDetail(data) {
   return {
     type: types.GET_GROUP_DETAIL,
-    GroupDetail : data
+    GroupDetail: data
   }
 };
 
@@ -121,13 +121,14 @@ export function GetGroupCountRequest(id) {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log("group count >>", data);
+      // console.log("group count >>", data);
       if (!data) {
         console.log("no data");
         data = {
           like: 0,
           design: 0,
-          group: 0 };
+          group: 0
+        };
       }
       dispatch(GetGroupCount(data));
     }).catch((err) => {
@@ -188,33 +189,33 @@ export function GetLikeGroupFailure(data) {
 // 그룹 안에 속한 디자인 리스트 가져오기
 export function GetDesignInGroupRequest(id, page, sort) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/`+id+"/design/"+page+"/"+sort, {
+    return fetch(`${host}/group/groupDetail/` + id + "/design/" + page + "/" + sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design in group data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(DesignInGroupClear(data));
-          return;
-        }
-        return dispatch(GetDesignInGroup(data));
-      }).catch((error) => {
-        return dispatch(DesignInGroupFail());
-        console.log("err", error);
-      });
+      return response.json();
+    }).then((data) => {
+      console.log("design in group data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(DesignInGroupClear(data));
+        return;
+      }
+      return dispatch(GetDesignInGroup(data));
+    }).catch((error) => {
+      return dispatch(DesignInGroupFail());
+      console.log("err", error);
+    });
   }
 };
 
 export function GetDesignInGroup(data) {
   return {
     type: types.GET_DESIGN_IN_GROUP,
-    DesignInGroup : data
+    DesignInGroup: data
   }
 };
 
@@ -237,33 +238,33 @@ export function DesignInGroupFail() {
 // 그룹 안에 속한 그룹 리스트 가져오기
 export function GetGroupInGroupRequest(id, page, sort) {
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/`+id+"/group/"+page+"/"+sort, {
+    return fetch(`${host}/group/groupDetail/` + id + "/group/" + page + "/" + sort, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("group in group data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(GroupInGroupClear(data));
-          return;
-        }
-        return dispatch(GetGroupInGroup(data));
-      }).catch((error) => {
-        return dispatch(GroupInGroupFail());
-        console.log("err", error);
-      });
+      return response.json();
+    }).then((data) => {
+      console.log("group in group data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(GroupInGroupClear(data));
+        return;
+      }
+      return dispatch(GetGroupInGroup(data));
+    }).catch((error) => {
+      return dispatch(GroupInGroupFail());
+      console.log("err", error);
+    });
   }
 };
 
 export function GetGroupInGroup(data) {
   return {
     type: types.GET_GROUP_IN_GROUP,
-    GroupInGroup : data
+    GroupInGroup: data
   }
 };
 
@@ -543,14 +544,14 @@ export function DeleteDesignInGroupRequest(id, designid) {
   }
 };
 
-export function DeleteDesignInGroupSuccess(data){
+export function DeleteDesignInGroupSuccess(data) {
   return {
     type: types.DELETE_DESIGN_IN_GROUP_SUCCESS,
     data
   }
 };
 
-export function DeleteDesignInGroupFail(){
+export function DeleteDesignInGroupFail() {
   return {
     type: types.DELETE_DESIGN_IN_GROUP_FAIL
   }
@@ -574,14 +575,14 @@ export function UpdateDesignInGroupRequest(id, designid) {
   }
 };
 
-export function UpdateDesignInGroupSuccess(data){
+export function UpdateDesignInGroupSuccess(data) {
   return {
     type: types.UPDATE_DESIGN_IN_GROUP_SUCCESS,
     data
   }
 };
 
-export function UpdateDesignInGroupFail(){
+export function UpdateDesignInGroupFail() {
   return {
     type: types.UPDATE_DESIGN_IN_GROUP_FAIL
   }
@@ -605,14 +606,14 @@ export function DeleteGroupInGroupRequest(id, groupid) {
   }
 };
 
-export function DeleteGroupInGroupSuccess(data){
+export function DeleteGroupInGroupSuccess(data) {
   return {
     type: types.DELETE_GROUP_IN_GROUP_SUCCESS,
     data
   }
 };
 
-export function DeleteGroupInGroupFail(){
+export function DeleteGroupInGroupFail() {
   return {
     type: types.DELETE_GROUP_IN_GROUP_FAIL
   }
@@ -636,14 +637,14 @@ export function UpdateGroupInGroupRequest(id, groupid) {
   }
 };
 
-export function UpdateGroupInGroupSuccess(data){
+export function UpdateGroupInGroupSuccess(data) {
   return {
     type: types.UPDATE_GROUP_IN_GROUP_SUCCESS,
     data
   }
 };
 
-export function UpdateGroupInGroupFail(){
+export function UpdateGroupInGroupFail() {
   return {
     type: types.UPDATE_GROUP_IN_GROUP_FAIL
   }
@@ -660,12 +661,12 @@ export function CreateNewGroupRequest(data, token) {
     }).then((response) => {
       return response.json();
     })
-    .then((res) => {
-      return dispatch(CreateNewGroupSuccess(res.id));
-    }).catch((error) => {
-      dispatch(CreateGroupFailure());
-      console.log(error);
-    })
+      .then((res) => {
+        return dispatch(CreateNewGroupSuccess(res.id));
+      }).catch((error) => {
+        dispatch(CreateGroupFailure());
+        console.log(error);
+      })
   }
 };
 
@@ -1019,3 +1020,19 @@ export function GetExistGroupListFailure(data) {
     success: data.success
   };
 };
+
+export function GetCountMyDesignAndGroupInGroupRequest(gid, uid) {
+  return new Promise((resolve, reject) => {
+    fetch(`${host}/group/getCountDesignGroupInGroup/${gid}/${uid}`, {
+      headers: { "Content-Type": "application/json" }, method: "get"
+    }).then(res => { return res.json() })
+      .then(count => {
+        if (count)
+          resolve(count)
+      })
+      .catch(error => {
+        alert('그룹정보를 서버로부터 가져오는 중 다음과 같은 원인으로 에러가 발생하였습니다.' + error)
+        resolve(null)
+      })
+  })
+}

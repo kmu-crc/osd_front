@@ -26,9 +26,9 @@ class MyDesignList extends Component {
   }
 
   handleSubmit = (data) => {
-    const list = this.state.joinList;
+    const list = this.refs.dropdown.state.value
     if (list.length > 0) {
-      this.props.JoinGroupRequest({ "join_design": this.state.joinList }, this.props.token, this.props.match.params.id)
+      this.props.JoinGroupRequest({ "join_design": list }, this.props.token, this.props.match.params.id)
         .then(data => { this.props.handleCloseModal() });
     } else {
       return;
@@ -59,6 +59,7 @@ class MyDesignList extends Component {
     console.log(this.refs.dropdown.state.value)
     console.log(value, { value })
     await this.refs.dropdown.setState({ value })
+    console.log("state", this.state.joinList)
     console.log(this.refs.dropdown.state.value)
   }
   render() {

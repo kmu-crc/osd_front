@@ -260,7 +260,7 @@ class Header extends Component {
         Socket.emit("INIT", this.props.userInfo.uid);
         Socket.on("getNoti", noti => {
           // setting the color of our button
-          console.log("noti?", noti);
+          // console.log("noti?", noti);
           this.setState({ noti: noti });
         })
       } catch (err) {

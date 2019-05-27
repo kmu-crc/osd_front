@@ -61,60 +61,66 @@ class ModifyStatus extends Component {
     }
   };
 
-  handleCloseModal = () => {
-    this.setState({ open: false, active: "design" });
-  };
+  handleCloseModal = async () => {
+    // alert(this.props.handleReload())
+    this.props.handleReload()
+    this.setState({ open: false, active: "design" })
+  }
+
 
   handleChangeTab = tab => {
     this.setState({ active: tab });
   };
 
   render() {
+    const { open, active } = this.state
     return (
-      <ExitGroupWrap>
-        <ModalBtn color="Solid" onClick={this.handleModal}>
-          가입 취소
+      this.props.visible && (
+        <ExitGroupWrap>
+          <ModalBtn color="Solid" onClick={this.handleModal}>
+            가입 취소
         </ModalBtn>
-        <Modal
-          open={this.state.open}
-          closeOnEscape={true}
-          closeOnDimmerClick={true}
-          onClose={this.handleCloseModal}
-        >
-          <Modal.Content>
-            <ModalContent>
-              <Icon name="close" size="big" onClick={this.handleCloseModal} />
-              <Title>그룹 탈퇴하기</Title>
-              <ExitTab>
-                <TabItem
-                  className={this.state.active === "design" && "active"}
-                  onClick={() => this.handleChangeTab("design")}
-                >
-                  디자인
+          <Modal
+            open={open}
+            closeOnEscape={true}
+            closeOnDimmerClick={true}
+            onClose={this.handleCloseModal}
+          >
+            <Modal.Content>
+              <ModalContent>
+                <Icon name="close" size="big" onClick={this.handleCloseModal} />
+                <Title>그룹 탈퇴하기</Title>
+                <ExitTab>
+                  <TabItem
+                    className={this.state.active === "design" && "active"}
+                    onClick={() => this.handleChangeTab("design")}
+                  >
+                    디자인
                 </TabItem>
-                <TabItem
-                  className={this.state.active === "group" && "active"}
-                  onClick={() => this.handleChangeTab("group")}
-                >
-                  그룹
+                  <TabItem
+                    className={this.state.active === "group" && "active"}
+                    onClick={() => this.handleChangeTab("group")}
+                  >
+                    그룹
                 </TabItem>
-              </ExitTab>
-              {this.state.active === "design" ? (
-                <MyExistDesignListContainer
-                  handleCloseModal={this.handleCloseModal}
-                  id={this.props.id}
-                />
-              ) : this.state.active === "group" ? (
-                <MyExistGroupListContainer
-                  handleCloseModal={this.handleCloseModal}
-                  id={this.props.id}
-                />
-              ) : null}
-            </ModalContent>
-          </Modal.Content>
-        </Modal>
-      </ExitGroupWrap>
-    );
+                </ExitTab>
+                {this.state.active === "design" ? (
+                  <MyExistDesignListContainer
+                    handleCloseModal={this.handleCloseModal}
+                    id={this.props.id}
+                  />
+                ) : this.state.active === "group" ? (
+                  <MyExistGroupListContainer
+                    handleCloseModal={this.handleCloseModal}
+                    id={this.props.id}
+                  />
+                ) : null}
+              </ModalContent>
+            </Modal.Content>
+          </Modal>
+        </ExitGroupWrap>
+      )
+    )
   }
 }
 

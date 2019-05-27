@@ -290,7 +290,7 @@ class Alarm extends Component {
   }
 
   render() {
-    console.log(this.props, "props")
+    // console.log(this.props, "props")
     return (
       <button type="button" style={{ height: "60px" }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         <Icon name="alarm" />
@@ -310,7 +310,7 @@ class Alarm extends Component {
                   {this.props.noti.count > 1 &&
                     <AlarmItem style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
                       <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
-                      <div><Icon name="check square outline" /></div>
+                      <div><Icon name="check square" /></div>
                       <div><h4>모두읽음처리</h4></div>
                     </AlarmItem>
                   }
