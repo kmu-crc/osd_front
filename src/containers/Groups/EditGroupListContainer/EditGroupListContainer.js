@@ -19,8 +19,6 @@ class EditGroupListContainer extends Component {
   }
 
   setOut = (id) => {
-    const confirm = window.confirm("이 그룹을 탈퇴시키겠습니까?")
-    if (!confirm) return
     this.props.DeleteGroupInGroupRequest(this.props.id, id)
     .then(res => {
       if (res.data.success === true) {
