@@ -10,7 +10,6 @@ import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import PxtoRem from "modules/PxtoRem";
-import ModifyStatusContainer from "containers/Groups/ModifyStatusContainer";
 import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
 import { GetCountMyDesignAndGroupInGroupRequest } from "actions/Group"
