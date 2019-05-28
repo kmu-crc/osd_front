@@ -1027,7 +1027,8 @@ export function GetCountMyDesignAndGroupInGroupRequest(gid, uid) {
       headers: { "Content-Type": "application/json" }, method: "get"
     }).then(res => { return res.json() })
       .then(count => {
-        if (count)
+        console.log("Cnt:", count)
+        // if (count)
           resolve(count)
       })
       .catch(error => {

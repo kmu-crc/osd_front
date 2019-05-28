@@ -150,14 +150,13 @@ class GroupDetailNew extends Component {
     }
   }
 
-  checkCancelBtnState = () => {
-    console.log("DATA: check cancel btn")
-    GetCountMyDesignAndGroupInGroupRequest(this.props.id, this.props.userInfo.uid)
+  checkCancelBtnState = async (flag = null) => {
+    await GetCountMyDesignAndGroupInGroupRequest(this.props.id, this.props.userInfo.uid)
       .then(cnt => {
-        console.log("DATA: cond: ", cnt > 0, cnt)
-        // alert(cnt)
-        this.setState({ cancelBtn: cnt > 0 })
-        cnt === 0 && this.props.history.replace(`/groupDetail/${this.props.id}`)
+        if (flag === 0)
+          this.setState({ cancelBtn: false })
+        else
+          this.setState({ cancelBtn: cnt > 0 })
       })
   }
 
@@ -221,6 +220,10 @@ class GroupDetailNew extends Component {
     } else {
       return;
     }
+  }
+
+  visibleTest = () => {
+    this.setState({ cancelBtn: !this.state.cancelBtn })
   }
 
   render() {
@@ -295,7 +298,10 @@ class GroupDetailNew extends Component {
                         <JoinGroupContainer handleReload={this.checkCancelBtnState} />
                         {user && (user.uid === groupDetail.user_id) &&
                           <Button className="edit" color="Solid" onClick={() => this.setState({ editMode: !this.state.editMode })}>가입 관리</Button>}
-                        <ModifyStatusContainer visible={this.state.cancelBtn} handleReload={this.checkCancelBtnState} id={this.props.id} />
+                        <ModifyStatusContainer
+                          visible={user && (user.uid !== groupDetail.user_id) && this.state.cancelBtn}
+                          handleReload={() => { GetCountMyDesignAndGroupInGroupRequest(this.props.GroupDetail.id, this.props.userInfo.user_id).then(cnt => this.checkCancelBtnState(cnt)) }}//(cnt) => { alert(cnt);this.setState({ cancelBtn: false }) }}
+                          id={this.props.id} />
                       </BtnContainer>
                     }
                   </Grid.Column>
