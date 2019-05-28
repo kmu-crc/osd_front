@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Route } from "react-router-dom";
 import styled from 'styled-components';
 import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import DesignInGroupContainer from "containers/Groups/DesignInGroupContainer";
 import GroupInGroupContainer from "containers/Groups/GroupInGroupContainer";
-import StyleGuide from 'StyleGuide';
 
 // css styling
 const TabContainer = styled.div`

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
 import { setTimeout } from 'timers';
-import { relative } from 'path';
 
 export default class SignUpModal extends Component {
   constructor(props) {

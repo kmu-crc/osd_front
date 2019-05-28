@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Form } from "semantic-ui-react";
-import Button from "components/Commons/Button";
-import {
-  CardImageUpdate,
-  CardSourcUpdate
-} from "components/Designs/DesignBoardCard";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 
 // css styling

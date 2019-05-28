@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { FormMultiSelect } from "components/Commons/FormItem";
-import { FormField } from "components/Commons/FormField";
 import ValidateForm from "components/Commons/ValidateForm";
 import Button from "components/Commons/Button";
 import styled from "styled-components";
@@ -45,9 +43,7 @@ class MyDesignList extends Component {
     let dropdown = this.refs.dropdown
     if (target.checked) {
       let value = []
-      this.props.designList.map((obj) => {
-        value.push(obj.value)
-      })
+      value = this.props.designList.map((obj) => { return (obj.value)})
       await dropdown.setState({ value })
     } else {
       await dropdown.setState({ value: [] })

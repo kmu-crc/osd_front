@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import { FormField } from "components/Commons/FormField";
-// import { FormInput } from "components/Commons/FormItem";
-// import ValidateForm from "components/Commons/ValidateForm";
 import styled from "styled-components";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import Button from "components/Commons/Button";
 import { FormInput } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";

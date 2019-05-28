@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import eximg from "source/myPage.jpeg";

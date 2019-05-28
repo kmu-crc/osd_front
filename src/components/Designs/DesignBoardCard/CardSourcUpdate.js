@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
 import { MultiUpload } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+import { ValidationGroup } from "modules/FormControl";
 
 const CardSource = styled.div`
   margin-bottom: 2rem;
@@ -25,24 +25,6 @@ const DeleteImgItem = styled.div`
   box-sizing: border-box;
   float: left;
   position: relative;
-`;
-
-const ItemImg = styled.div`
-  width: 100%;
-  height: 100px;
-  background-position: center;
-  background-size: cover;
-  background-clip: content-box;
-`;
-
-const ItemText = styled.p`
-  width: 100%;
-  height: 36px;
-  word-break: break-all;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
 `;
 
 const DeleteBtn = styled.button`

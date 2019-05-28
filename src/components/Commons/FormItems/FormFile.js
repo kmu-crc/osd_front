@@ -24,15 +24,15 @@ export class FormFile extends Component {
     validates: []
   };
 
-  componentDidMount(){
-    if(this.props.validates){
+  componentDidMount() {
+    if (this.props.validates) {
       this.setState({ validates: this.props.validates });
     }
     this.init();
   }
 
   init = async () => {
-    await this.setState({target: this.input})
+    await this.setState({ target: this.input })
     this.returnData();
   }
 
@@ -48,25 +48,16 @@ export class FormFile extends Component {
   };
 
   returnData = async (e) => {
-    if(this.props.getValue) await this.props.getValue(this.state);
-    if(e && this.props.onBlur) await this.props.onBlur();
+    if (this.props.getValue) await this.props.getValue(this.state);
+    if (e && this.props.onBlur) await this.props.onBlur();
   }
   render() {
-    const { name, placeholder, style, id, hidden, onlyImage } = this.props;
+    const { name, placeholder, /*style,*/ id, hidden, onlyImage } = this.props;
     return (
       <InputWrap>
-        <input
-          type="file"
-          name={name && `${name}[]`}
-          placeholder={placeholder && placeholder}
-          style={style && style}
-          id={id ? id : name}
-          onChange={this.onChangeValue}
-          ref={ref => (this.input = ref)}
-          style={ hidden ? {display:  "none"} : null }
-          className=""
-          accept={onlyImage ? "image/*" : "*"}
-        />
+        <input type="file" name={name && `${name}[]`} placeholder={placeholder && placeholder}
+          id={id ? id : name} onChange={this.onChangeValue} ref={ref => (this.input = ref)} style={hidden ? { display: "none" } : null }
+          className="" accept={onlyImage ? "image/*" : "*"} />
         <Message></Message>
       </InputWrap>
     );

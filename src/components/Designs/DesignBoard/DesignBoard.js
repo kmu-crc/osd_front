@@ -6,8 +6,6 @@ import DesignBoardCardContainer from "containers/Designs/DesignBoardCardContaine
 import BoardUpdate from "components/Designs/DesignBoard/BoardUpdate";
 import StyleGuide from "StyleGuide";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
-import { DeleteItems } from "components/Commons/FormItems";
-import Button from "components/Commons/Button";
 import TextFormat from "modules/TextFormat";
 
 const CustomModal = styled(Modal)`
@@ -171,7 +169,7 @@ class DesignBoard extends Component {
       });
   };
   onRight = (e) => {
-    let b = this.props.step.find((board) => { return board.order == this.props.board.order + 1 });
+    let b = this.props.step.find((board) => { return board.order === this.props.board.order + 1 });
     let boardA = { id: this.props.board.uid, data: { order: this.props.board.order + 1 } };
     let boardB = { id: b.uid, data: { order: this.props.board.order } };
     // console.log(boardA, boardA.id, boardA.data);
@@ -179,7 +177,7 @@ class DesignBoard extends Component {
     this.swapBoard(boardA, boardB);
   };
   onLeft = (e) => {
-    let b = this.props.step.find((board) => { return board.order == this.props.board.order - 1 });
+    let b = this.props.step.find((board) => { return board.order === this.props.board.order - 1 });
     let boardA = { id: this.props.board.uid, data: { order: this.props.board.order - 1 } };
     let boardB = { id: b.uid, data: { order: this.props.board.order } };
     // console.log(boardA, boardA.id, boardA.data);
@@ -195,14 +193,13 @@ class DesignBoard extends Component {
   }
   requestReSortCardList = async () => {
     const jobs = [];
-    const promiseAry = [];
+    let promiseAry = [];
     this.state.cards.forEach((element, index) => {
-      if (element.order != index) jobs.push({ uid: element.uid, neworder: index });
+      if (element.order !== index) jobs.push({ uid: element.uid, neworder: index });
     });
     // console.log(jobs);
-    jobs.map(job => {
-      promiseAry.push(this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid));
-    })
+    promiseAry = jobs.map(job => { return this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid) })
+
     await Promise.all(promiseAry)
       .then(this.props.GetDesignBoardRequest(this.props.designId))
       .then(this.setState({ sortable: false }))

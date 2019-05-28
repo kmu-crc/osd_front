@@ -91,7 +91,7 @@ export class FormTextArea extends Component {
     if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
   }
   render() {
-    const { type, name, value, placeholder, style, id } = this.props;
+    const { type, name, placeholder, style, id } = this.props;
     return (
       <InputWrap>
         <Input

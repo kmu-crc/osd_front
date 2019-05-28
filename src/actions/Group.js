@@ -207,7 +207,6 @@ export function GetDesignInGroupRequest(id, page, sort) {
       return dispatch(GetDesignInGroup(data));
     }).catch((error) => {
       return dispatch(DesignInGroupFail());
-      console.log("err", error);
     });
   }
 };
@@ -256,7 +255,6 @@ export function GetGroupInGroupRequest(id, page, sort) {
       return dispatch(GetGroupInGroup(data));
     }).catch((error) => {
       return dispatch(GroupInGroupFail());
-      console.log("err", error);
     });
   }
 };
@@ -476,7 +474,6 @@ export function GetWaitingDesignRequest(id, sort) {
       return dispatch(GetWaitingDesign(data));
     }).catch((error) => {
       return dispatch(GetWaitingDataFail());
-      console.log("err", error);
     });
   }
 };
@@ -506,7 +503,6 @@ export function GetWaitingGroupRequest(id, sort) {
       return dispatch(GetWaitingGroup(data));
     }).catch((error) => {
       return dispatch(GetWaitingDataFail());
-      console.log("err", error);
     });
   }
 };

@@ -1,4 +1,3 @@
-import * as types from "actions/ActionTypes";
 import host from "config";
 import { SetSession } from "modules/Sessions";
 

@@ -73,7 +73,7 @@ class ModifyStatus extends Component {
   };
 
   render() {
-    const { open, active } = this.state
+    const { open/*, active */} = this.state
     return (
       this.props.visible && (
         <ExitGroupWrap>

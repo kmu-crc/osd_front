@@ -250,9 +250,7 @@ export class FormTextArea extends Component {
     );
   }
 }
-const TextAreaRed = styled.textarea`
-  
-`;
+
 export class FormTextAreaRed extends Component {
   state = {
     status: "SUCCESS",
@@ -325,8 +323,8 @@ export class FormSelect extends Component {
     // Number로 바꿔주는 로직
     let value = this.props.value;
     if (!this.props.validates) {
-      if(!isNaN(parseInt(value))){
-        value = parseInt(value);
+      if(!isNaN(parseInt(value, 10))){
+        value = parseInt(value, 10)
       }
       // FormDropBox component의 defaultValue는 처음 render되었을때만 동작하기 때문에
       // 중간에 전달되는 value가 바뀌어도 defaultValue는 동작하지 않는다.

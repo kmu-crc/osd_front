@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Container, Header, Grid } from "semantic-ui-react";
+import {  Header, Grid } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 

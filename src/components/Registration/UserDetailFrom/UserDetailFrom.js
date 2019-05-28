@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { Form, Grid } from "semantic-ui-react";
-//import {
-//   FormCheckBox,
-//   FormTextArea,
-//   FormSelect
-// } from "components/Commons/FormItem";
-//import { FormField } from "components/Commons/FormField";
-//import ValidateForm from "components/Commons/ValidateForm";
 import styled from "styled-components";
 import Button from "components/Commons/Button";
-import ProfileImage from "components/Users/ProfileImage";
 import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import Loading from "components/Commons/Loading";

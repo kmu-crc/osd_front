@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Header, Grid, Form } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
+import { FormInput, FormThumbnail, FormCheckBox, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 
@@ -85,9 +85,9 @@ const Label = styled.div`
 class ModifyDesignInfo extends Component {
   componentWillMount() {
     this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
-    .then(data => {
-      this.props.GetCategoryLevel2Request(data.DesignDetail.category_level1);
-    });
+      .then(data => {
+        this.props.GetCategoryLevel2Request(data.DesignDetail.category_level1);
+      });
   }
 
   liveCheck = (target) => {
@@ -96,7 +96,7 @@ class ModifyDesignInfo extends Component {
 
   onChangeValue = async data => {
     let obj = {};
-    if(data.target){
+    if (data.target) {
       obj[data.target.name] = data;
     }
     await this.setState(obj);
@@ -105,19 +105,13 @@ class ModifyDesignInfo extends Component {
   returnToMemberFormat = (arr) => {
     let list = [];
     if (arr !== null) {
-      arr.map(user => {
-        const userInfo = {
-          uid: user.user_id,
-          nick_name: user.nick_name
-        }
-        list.push(userInfo);
-      });
+      list = arr.map(user => { const userInfo = { uid: user.user_id, nick_name: user.nick_name }; return userInfo })
     }
     return list;
   }
 
   getMember = data => {
-    this.props.SearchMemberRequest({key: data}, this.props.token);
+    this.props.SearchMemberRequest({ key: data }, this.props.token);
   }
 
   onSubmit = async e => {
@@ -126,17 +120,17 @@ class ModifyDesignInfo extends Component {
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.setLoader();
-      this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, 
+      this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid,
         this.props.token)
-      .then(data => {
-        if (data.res && data.res.success) {
-          this.props.history.push(`/designDetail/${data.res.design_id}`);
-        } else {
-          alert("다시 시도해주세요");
-          // this.state.member.value = JSON.parse(this.state.member.value);
-          this.props.setLoader();
-        }
-      })
+        .then(data => {
+          if (data.res && data.res.success) {
+            this.props.history.push(`/designDetail/${data.res.design_id}`);
+          } else {
+            alert("다시 시도해주세요");
+            // this.state.member.value = JSON.parse(this.state.member.value);
+            this.props.setLoader();
+          }
+        })
     }).catch(e => {
       console.log("실패", e);
       // this.state.member.value = JSON.parse(this.state.member.value);
@@ -145,115 +139,115 @@ class ModifyDesignInfo extends Component {
 
   render() {
     const currentDesign = this.props.DesignDetail
-    const disabledTxt = new String(`파생된 디자인은 라이센스 수정권한이 없습니다.`)
+    const disabledTxt = `파생된 디자인은 라이센스 수정권한이 없습니다.`
     return (
       <InfoWrapper>
         {currentDesign.length === 0 ?
-        <div></div>
-        :
-        <form onSubmit={this.onSubmit}>
-          {currentDesign.parent_design?<div style={{color:"#FEE"}}>파생된 디자인을 수정합니다.</div>:null}
-          <FromFieldCard>
-            <Grid>
-              <Grid.Column mobile={16} computer={4}>
-                <FormHeader as="h2">디자인 정보</FormHeader>
-              </Grid.Column>
-              <Grid.Column mobile={16} computer={12}>
-                <Form.Group widths="equal">
-                  <Label>디자인 제목</Label>
-                  <FormInput
-                    name="title"
-                    maxLength="100"
-                    getValue={this.onChangeValue}
-                    validates={["Required"]}
-                    onBlur={()=>{this.liveCheck("title")}}
-                    value={currentDesign.title}
-                  />
-                </Form.Group>
-                <Form.Group widths="equal">
-                  <Label>디자인 설명</Label>
-                  <FormInput
-                    name="explanation"
-                    maxLength="1000"
-                    getValue={this.onChangeValue}
-                    value={currentDesign.explanation}
-        
-                  />
-                </Form.Group>
-                <Form.Group widths="equal">
-                  <Label>썸네일 수정</Label>
-                  <FormThumbnail
-                    name="thumbnail"
-                    placeholder="썸네일 수정"
-                    getValue={this.onChangeValue}
-                    onChange={()=>{this.liveCheck("thumbnail")}}
-                    image={currentDesign.img && currentDesign.img.m_img}
-                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                  />
-                </Form.Group>
-                <Form.Group widths="equal">
-                  <Label>카테고리</Label>
-                  <FormSelect
-                    selection={true}
-                    options={this.props.category1}
-                    name="category_level1"
-                    getValue={this.onChangeValue}
-                    onChange={()=>this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
-                    value={currentDesign.category_level1}
-                  />
-                  <FormSelect
-                    selection={true}
-                    options={this.props.category2}
-                    name="category_level2"
-                    getValue={this.onChangeValue}
-                    value={currentDesign.category_level2}
-                  />
-                </Form.Group>
-              </Grid.Column>
-            </Grid>
-          </FromFieldCard>
-          <FromFieldCard>
-            <Grid>
-              <Grid.Column mobile={16} computer={4}>
-                <FormHeader as="h2">라이센스</FormHeader>
-              </Grid.Column>
-              <Grid.Column mobile={16} computer={12}>
-                <Form.Group widths={4}>
-                  <FormCheckBox
-                    disabled={currentDesign.parent_design}
-                    disableMsg={disabledTxt}
-                    name="is_commercial"
-                    placeholder="상업적 이용 가능"
-                    getValue={this.onChangeValue}
-                    value={currentDesign.is_commercial}
-                  />
-                  <FormCheckBox
-                    disabled={currentDesign.parent_design}
-                    disableMsg={disabledTxt}
-                    name="is_display_creater"
-                    placeholder="원작자 표시"
-                    getValue={this.onChangeValue}
-                    value={currentDesign.is_display_creater}
-                  />
-                  <FormCheckBox
-                    disabled={currentDesign.parent_design}
-                    disableMsg={disabledTxt}
-                    name="is_modify"
-                    placeholder="수정 가능"
-                    getValue={this.onChangeValue}
-                    value={currentDesign.is_modify}
-                  />
-                </Form.Group>
-              </Grid.Column>
-            </Grid>
-          </FromFieldCard>
-          <Button type="submit">수정</Button>
-          <Link to={`/designDetail/${this.props.DesignDetail.uid}`}>
-            <Button type="button">취소</Button>
-          </Link>
-        </form>
+          <div></div>
+          :
+          <form onSubmit={this.onSubmit}>
+            {currentDesign.parent_design ? <div style={{ color: "#FEE" }}>파생된 디자인을 수정합니다.</div> : null}
+            <FromFieldCard>
+              <Grid>
+                <Grid.Column mobile={16} computer={4}>
+                  <FormHeader as="h2">디자인 정보</FormHeader>
+                </Grid.Column>
+                <Grid.Column mobile={16} computer={12}>
+                  <Form.Group widths="equal">
+                    <Label>디자인 제목</Label>
+                    <FormInput
+                      name="title"
+                      maxLength="100"
+                      getValue={this.onChangeValue}
+                      validates={["Required"]}
+                      onBlur={() => { this.liveCheck("title") }}
+                      value={currentDesign.title}
+                    />
+                  </Form.Group>
+                  <Form.Group widths="equal">
+                    <Label>디자인 설명</Label>
+                    <FormInput
+                      name="explanation"
+                      maxLength="1000"
+                      getValue={this.onChangeValue}
+                      value={currentDesign.explanation}
+
+                    />
+                  </Form.Group>
+                  <Form.Group widths="equal">
+                    <Label>썸네일 수정</Label>
+                    <FormThumbnail
+                      name="thumbnail"
+                      placeholder="썸네일 수정"
+                      getValue={this.onChangeValue}
+                      onChange={() => { this.liveCheck("thumbnail") }}
+                      image={currentDesign.img && currentDesign.img.m_img}
+                      validates={["OnlyImages", "MaxFileSize(10000000)"]}
+                    />
+                  </Form.Group>
+                  <Form.Group widths="equal">
+                    <Label>카테고리</Label>
+                    <FormSelect
+                      selection={true}
+                      options={this.props.category1}
+                      name="category_level1"
+                      getValue={this.onChangeValue}
+                      onChange={() => this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
+                      value={currentDesign.category_level1}
+                    />
+                    <FormSelect
+                      selection={true}
+                      options={this.props.category2}
+                      name="category_level2"
+                      getValue={this.onChangeValue}
+                      value={currentDesign.category_level2}
+                    />
+                  </Form.Group>
+                </Grid.Column>
+              </Grid>
+            </FromFieldCard>
+            <FromFieldCard>
+              <Grid>
+                <Grid.Column mobile={16} computer={4}>
+                  <FormHeader as="h2">라이센스</FormHeader>
+                </Grid.Column>
+                <Grid.Column mobile={16} computer={12}>
+                  <Form.Group widths={4}>
+                    <FormCheckBox
+                      disabled={currentDesign.parent_design}
+                      disableMsg={disabledTxt}
+                      name="is_commercial"
+                      placeholder="상업적 이용 가능"
+                      getValue={this.onChangeValue}
+                      value={currentDesign.is_commercial}
+                    />
+                    <FormCheckBox
+                      disabled={currentDesign.parent_design}
+                      disableMsg={disabledTxt}
+                      name="is_display_creater"
+                      placeholder="원작자 표시"
+                      getValue={this.onChangeValue}
+                      value={currentDesign.is_display_creater}
+                    />
+                    <FormCheckBox
+                      disabled={currentDesign.parent_design}
+                      disableMsg={disabledTxt}
+                      name="is_modify"
+                      placeholder="수정 가능"
+                      getValue={this.onChangeValue}
+                      value={currentDesign.is_modify}
+                    />
+                  </Form.Group>
+                </Grid.Column>
+              </Grid>
+            </FromFieldCard>
+            <Button type="submit">수정</Button>
+            <Link to={`/designDetail/${this.props.DesignDetail.uid}`}>
+              <Button type="button">취소</Button>
+            </Link>
+          </form>
         }
-        </InfoWrapper>
+      </InfoWrapper>
     );
   }
 }

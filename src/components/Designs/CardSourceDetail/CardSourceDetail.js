@@ -124,12 +124,13 @@ class CardSourceDetail extends Component {
     }
     await copyContent.splice(copyData.order, 0, copyData);
 
-    let newContent = [];
-    copyContent = copyContent.map((item, index) => {
-      if(item != null){
-        newContent.push(item);
-      }
-    })
+    // let newContent = [];
+    //copyContent = copyContent.map((item, index) => {
+    //  if(item != null){
+    //    newContent.push(item);
+    //  }
+    //})
+    let newContent = copyContent.filter((item)=>{return item !== null})
     newContent = await Promise.all(
       newContent.map(async (item, index) => {
         item.order = await index;
@@ -186,7 +187,7 @@ class CardSourceDetail extends Component {
 
 
   render() {
-    const { edit, content } = this.state;
+    const { /*edit,*/ content } = this.state;
     return (
       <CardSrcWrap>
 
@@ -251,7 +252,7 @@ class CardSourceDetail extends Component {
                 <div className="imgContent" key={index}>
                   <img key={index} src={item.content} alt="이미지" download={item.file_name} />
                 </div>
-              ) : item.type === "FILE" && item.data_type == "video" ? (
+              ) : item.type === "FILE" && item.data_type === "video" ? (
                 <span>
                 <span className="LinkFileName">{item.file_name}</span>
                 <video key={index} width="640" height="360" controls="controls" className="iconWrap" >

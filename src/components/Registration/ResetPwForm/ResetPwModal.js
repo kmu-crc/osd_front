@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
-import { relative } from 'path';
 
 export default class ResetPwModal extends Component {
   constructor(props) {
@@ -9,14 +8,6 @@ export default class ResetPwModal extends Component {
       visible : true
     }
   }
-
-  // componentDidMount() {
-  //   setTimeout(
-  //     ()=>{
-  //       this.props.history.go(-1);
-  //       this.setState({visible: false});
-  //     }, 4000);
-  //}
 
   closeModal() {
     this.setState({visible : false});

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Carousel } from "react-responsive-carousel";
 import StyleGuide from "StyleGuide";
 import Open_img from "source/design_bg.jpg";
 import Easy_img from "source/easy_bg2.jpg";
 import Together_img from "source/together_bg.jpg";
-import ContentBox from "components/Commons/ContentBox";
 
 const SlideWrap = styled.div`
   width: 100%;
@@ -123,39 +121,6 @@ const Slide = styled.div`
       #6ddb99 0%,
       #45b291 100%
     ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  }
-`;
-
-const Wrap = styled(ContentBox)`
-  position: relative;
-  height: 100%;
-`;
-
-const Content = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  color: white;
-  .title {
-    color: white;
-    font-size: ${StyleGuide.font.size.heading1};
-    margin-bottom: 1rem;
-  }
-  p {
-    margin-bottom: 1rem;
-  }
-`;
-
-const LinkBtn = styled(Link)`
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 0.5rem 2rem;
-  border: 1px solid white;
-  color: white;
-  border-radius: 3px;
-  &:hover {
-    color: white;
   }
 `;
 

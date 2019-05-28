@@ -11,7 +11,7 @@ const DateFormat = (date) => {
   const diffDay = parseInt(diffHour / 24, 10); // N일 전
   const diffMon = parseInt(diffDay/m, 10);
 
-  if (diffMin == 0) {
+  if (diffMin === 0) {
     return `방금 전`;
   } else if (diffHour < 1) { // 한시간 전까지
     return `${diffMin}분 전`;

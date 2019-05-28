@@ -30,12 +30,6 @@ const SignUpContent = styled.div`
   }
 `;
 
-const SignUpCard = styled.div`
-  width: 600px;
-  padding: 50px 20px;
-  background-color: #fff;
-`;
-
 const InsertDetail = styled.div`
   position: relative;
   z-index: 2;
@@ -43,11 +37,6 @@ const InsertDetail = styled.div`
   padding: 30px 20px;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
-`;
-
-const FromFilde = styled.div`
-  width: 100%;
-  margin-bottom: 20px;
 `;
 
 class SignUpPage extends Component {

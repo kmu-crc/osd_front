@@ -8,7 +8,6 @@ class ModifyDesignFormContainer extends Component {
   state = {
     isAuthor: false
   }
-  isAuthor=()=>{(this.props.userInfo.uid === this.props.DesignDetail.user_id)}
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token)
       .then(()=>{
