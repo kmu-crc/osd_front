@@ -296,10 +296,7 @@ class GroupDetailNew extends Component {
                         <JoinGroupContainer handleReload={this.checkCancelBtnState} />
                         {user && (user.uid === groupDetail.user_id) &&
                           <Button className="edit" color="Solid" onClick={() => this.setState({ editMode: !this.state.editMode })}>가입 관리</Button>}
-                        <ModifyStatusContainer
-                          visible={user && (user.uid !== groupDetail.user_id) && this.state.cancelBtn}
-                          handleReload={() => { GetCountMyDesignAndGroupInGroupRequest(this.props.GroupDetail.id, this.props.userInfo.user_id).then(cnt => this.checkCancelBtnState(cnt)) }}//(cnt) => { alert(cnt);this.setState({ cancelBtn: false }) }}
-                          id={this.props.id} />
+                        {/*<ModifyStatusContainer visible={user && (user.uid !== groupDetail.user_id) && this.state.cancelBtn} handleReload={() => { GetCountMyDesignAndGroupInGroupRequest(this.props.GroupDetail.id, this.props.userInfo.user_id).then(cnt => this.checkCancelBtnState(cnt)) }} id={this.props.id} />*/}
                       </BtnContainer>
                     }
                   </Grid.Column>
