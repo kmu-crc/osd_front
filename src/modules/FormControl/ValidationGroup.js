@@ -1,5 +1,4 @@
 import { FormControl } from "./FormControl";
-import FormDataToJson from "modules/FormDataToJson";
 
 export const ValidationGroup = async (list, isJSON) => {
   console.log("list : ", list);

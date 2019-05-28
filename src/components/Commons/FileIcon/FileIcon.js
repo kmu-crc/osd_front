@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
 
 const FileWrap = styled.div`
   display: inline-block;

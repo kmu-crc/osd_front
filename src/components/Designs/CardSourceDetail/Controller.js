@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-import { Icon } from "semantic-ui-react";
 import TextController from "./TextController.js";
 import FileController from "./FileController";
-import { FormFile } from "components/Commons/FormItems";
-import FileIcon from "components/Commons/FileIcon";
 import EmbController from "./EmbController";
 
 // css styling

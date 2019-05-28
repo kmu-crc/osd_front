@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { Header, Grid, Form, Modal } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import StyleGuide from "StyleGuide";

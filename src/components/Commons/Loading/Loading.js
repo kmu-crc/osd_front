@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Loader, Segment, Dimmer } from "semantic-ui-react";
+import { Loader } from "semantic-ui-react";
 import styled from "styled-components";
 
 const DimmerContainer = styled.div`

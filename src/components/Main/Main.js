@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Grid, Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import ScrollTopDesignContainer from "containers/Commons/ScrollTopDesignContainer";

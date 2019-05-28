@@ -31,13 +31,6 @@ const ButtonWrap = styled.div`
   margin-top: 1rem;
 `;
 
-const CloseBtn = styled(Button)`
-  background-color: transparent !important;
-  border: 0 !important;
-  padding: 10px !important;
-  margin-left: 10px !important;
-`;
-
 const FInput = styled.div`
   & > div {
     margin-bottom: 1.5rem;

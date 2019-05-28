@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Grid, Form, Header } from "semantic-ui-react";
+import { Grid, Form } from "semantic-ui-react";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";

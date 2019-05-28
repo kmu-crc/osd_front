@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { FormFile } from "components/Commons/FormItems";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
 import FileIcon from "components/Commons/FileIcon";
-import Button from "components/Commons/Button";
 import { FormControl } from "modules/FormControl";
 
 const FileWrap = styled.div`
@@ -26,10 +23,6 @@ const FileWrap = styled.div`
       font-size: 20px;
     }
   }
-`;
-
-const UploadBtn = styled(Button)`
-  margin: 10px 0;
 `;
 
 const File = styled.div`

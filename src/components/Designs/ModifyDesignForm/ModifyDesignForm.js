@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import ModifyDesignInfoContainer from "containers/Designs/ModifyDesignInfoContainer";
-import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
 
 class ModifyDesignForm extends Component {

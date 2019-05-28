@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Comment } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import eximg from "source/topDesign.png";
-import ValidateForm from "components/Commons/ValidateForm";
-import { FormField } from "components/Commons/FormField";
-import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
@@ -38,36 +34,6 @@ const ViewWrapper = styled(Grid)`
   }
   & .imageInfo img {
     width: 100%;
-  }
-`;
-
-const CommentContainer = styled.div`
-  &.ui.comments {
-    max-width: 100%;
-    width: 100%;
-    & .delBtn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      cursor: pointer;
-    }
-  }
-  & p {
-    text-align: center;
-  }
-  & .ui.button {
-    background: ${StyleGuide.color.sub.bule.basic};
-    font-size: 12px;
-    &:hover {
-      border: 0;
-      background: ${StyleGuide.color.sub.bule.dark};
-    }
-  }
-  & .ui.form .field {
-    margin-bottom: 1rem;
-  }
-  & .ui.form textarea:not([rows]) {
-    min-height: 2rem;
   }
 `;
 

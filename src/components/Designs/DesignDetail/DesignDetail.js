@@ -475,19 +475,7 @@ const MemberlistItem = styled.div`
     white-space: nowrap;
   }
 `;
-const CustomModal = styled(Modal)`
-  border: "1px solid";
-  border-color: ${StyleGuide.color.main.dark};
-  padding: 20px;
-  width: 250px;
-  & .icon.close{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: ${StyleGuide.color.geyScale.scale9};
-    cursor: pointer;
-  }
-`;
+
 class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
@@ -699,7 +687,8 @@ class DesignDetail extends Component {
     }
     const ForkDesignList = (list) => {
       const design_list = list.list
-      // console.log(this.props, "props")
+      const img_t_url = "https://github.githubassets.com/images/modules/network/t.png"
+      const img_l_url = "https://github.githubassets.com/images/modules/network/l.png"
 
       console.log("design_detail", this.props.DesignDetail.member)
       const member = this.props.DesignDetail.member.find(mem => mem.user_id === this.props.DesignDetail.user_id)
@@ -712,7 +701,7 @@ class DesignDetail extends Component {
             <ol style={{ fontSize: "12px", padding: "0 0 0 0" }}>
               <li style={{ verticalAlign: "middle", bottomPadding: "0" }}>
                 <div style={{ display: "block" }}>
-                  <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={url} />
+                  <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={url} alt="profile" />
                   &nbsp;<div style={{ display: "inline-block" }}><TextFormat chars={16} txt={this.props.DesignDetail.userName} /></div>
                   &nbsp;/&nbsp;<div style={{ display: "inline-block" }}><TextFormat chars={32} txt={this.props.DesignDetail.title} /></div>
                 </div>
@@ -722,10 +711,8 @@ class DesignDetail extends Component {
                 return (
                   <li style={{ textAlign: "left", bottomPadding: "0", verticalAlign: "middle" }} key={i}>
                     <div stype={{ display: "block" }}>
-                      <img style={{ verticalAlign: "middle" }} src={design_list.length > i + 1
-                        ? "https://github.githubassets.com/images/modules/network/t.png"
-                        : "https://github.githubassets.com/images/modules/network/l.png"} />
-                      <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={li.s_img} />
+                      <img style={{ verticalAlign: "middle" }} src={design_list.length > i + 1 ? img_t_url : img_l_url} alt="showing list"/>
+                      <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={li.s_img} alt="showing list" />
                       &nbsp;
                 <Link to={`/designerDetail/${li.user_id}`}>
                         <div style={{ display: "inline-block" }}>
@@ -773,7 +760,7 @@ class DesignDetail extends Component {
         </Modal>
       )
     }
-    if (this.props.new_design_id !== null) { this.closeForkModal }
+    if (this.props.new_design_id !== null) { this.closeForkModal() }
     return (
       <div>
         {designDetail.length !== 0 && (

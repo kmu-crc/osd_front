@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-import { FormFile } from "./FormFile";
-import fileImg from "source/file.png";
 import { Icon } from "semantic-ui-react";
-import { FormControl } from "modules/FormControl";
 
 const DeleteImg = styled.div`
   width: 100%;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
 import { FormInput } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+import { ValidationGroup } from "modules/FormControl";
 import Button from "components/Commons/Button";
 import ResetPwModal from "./ResetPwModal";
 

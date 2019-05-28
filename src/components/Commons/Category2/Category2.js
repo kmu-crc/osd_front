@@ -93,7 +93,7 @@ class Category2 extends Component {
             {list && list.length !== 0 && list.map((subcate, i) => (
               subcate.value !== 0 &&
                 <SubCateItem key={i}
-                             className={subcate.value == this.props.cate2
+                             className={subcate.value === this.props.cate2
                                         ? "active" : ""}
                              onClick={(e) => this.onChangeCategory2(e, subcate.parent, subcate.value)}>
                   {subcate.text}
@@ -113,7 +113,7 @@ class Category2 extends Component {
           {this.props.category1.map((cate, i) => (
             cate.value !== 0 &&
               <CateItem key={i}
-                        className={cate.value == this.props.cate1 ||
+                        className={cate.value === this.props.cate1 ||
                                   (cate.value === 0 && this.props.cate1 === null) ||
                                   (cate.value === 0 && this.props.cate1 === "null")
                                   ? "active" : ""}

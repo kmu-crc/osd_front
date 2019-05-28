@@ -5,7 +5,6 @@ import Sorting from "components/Commons/Sorting";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-import designer_bg from "source/designer_bg.jpg";
 import StyleGuide from "StyleGuide";
 import NumberFormat from "modules/NumberFormat";
 
@@ -35,42 +34,6 @@ const MenuContainer = styled(Grid)`
   &.ui.grid > .row {
     padding-top: 0rem;
     padding-bottom: 0rem;
-  }
-`;
-
-const ImgWrapper = styled.div`
-  background-image: url(${designer_bg});
-  background-position: center;
-  background-size: cover;
-  width: 100%;
-  height: 200px;
-  position: relative;
-  &::after{
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-  }
-`;
-
-const Title = styled.div`
-  width: 100%;
-  color: white;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
-  h1{
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: 2.5rem;
-    font-weight: bold;
   }
 `;
 
@@ -148,7 +111,7 @@ class DesignerList extends Component {
                           : null;
         const n = parseInt(this.props.cate1, 10);
         const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
-                          ? cate2List[n].filter(sub => sub.value == this.props.cate2)
+                          ? cate2List[n].filter(sub => sub.value === this.props.cate2)
                           : null;
         return (
           <Head>

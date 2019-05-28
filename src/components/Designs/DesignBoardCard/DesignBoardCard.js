@@ -75,20 +75,6 @@ const CustomModal = styled(Modal)`
   }
 `;
 
-const DeleteBtn = styled.button`
-  position: absolute;
-  right: 0;
-  background-color: transparent;
-  border: 0;
-  padding: 7px;
-  top: 50%;
-  right: 5px;
-  transform: translateY(-50%);
-  i.icon {
-    margin: 0;
-  }
-`;
-
 const CardUpdateDate = styled.span`
   font-size: ${StyleGuide.font.size.small};
 `;

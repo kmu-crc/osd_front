@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Form, Icon, Modal } from "semantic-ui-react";
-import { OverlapField, FormField } from "components/Commons/FormField";
+import { Modal } from "semantic-ui-react";
+import { FormField } from "components/Commons/FormField";
 // import { FormInput } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import ValidateForm from "components/Commons/ValidateForm";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import styled from "styled-components";
 import Button from "components/Commons/Button";
 import { FormInput, FormCheckBox } from "components/Commons/FormItems";

@@ -1,5 +1,4 @@
 import * as types from "actions/ActionTypes";
-import { SetSession } from "modules/Sessions";
 import host from "config";
 
 export function CheckTokenRequest(token) {

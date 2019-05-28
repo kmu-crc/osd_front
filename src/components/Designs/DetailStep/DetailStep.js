@@ -83,7 +83,7 @@ class DetailStep extends Component {
           this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
             .child.stateNode
         ).width
-      );
+      ,10);
       // console.log("width", width)
       await this.setState({
         right: false
@@ -145,7 +145,7 @@ class DetailStep extends Component {
         this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
           .child.stateNode
       ).width
-    );
+    ,10);
     await this.setState({
       right: false
     });
@@ -224,7 +224,7 @@ class DetailStep extends Component {
             this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
               .child.stateNode
           ).width
-        ) <= scroll
+        ,10) <= scroll
       ) {
         this.setState({ right: false, left: true });
       } else {

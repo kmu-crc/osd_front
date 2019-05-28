@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Grid, Icon, Form } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { FormField } from "components/Commons/FormField";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormTextArea } from "components/Commons/FormItem";
@@ -11,7 +11,6 @@ import { FormInput } from "components/Commons/FormItem";
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Button from "components/Commons/Button";
 import DateFormat from "modules/DateFormat";
-import TextFormat from 'modules/TextFormat';
 import Socket from "modules/socket"
 import NumberFormat from 'modules/NumberFormat';
 import TextSlicer from 'modules/TextSlicer'
@@ -193,9 +192,7 @@ class MessageList extends Component {
       .then(async (res) => {
         if (res.MsgList && res.MsgList.length > 0) {
           let arr = [];
-          res.MsgList.map(list => {
-            arr.push(list.friend_id);
-          });
+          arr = res.MsgList.map(list => {return (list.friend_id)})
           await this.setState({
             friendList: arr
           });

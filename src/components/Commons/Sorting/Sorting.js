@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Dropdown, Button } from "semantic-ui-react";
+import { Grid, Button } from "semantic-ui-react";
 import styled from "styled-components";
 
 const SortingButton=styled.div`

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest, GetDesignTotalCountRequest } from "actions/Design";
-import { GetCategoryLevel2Request } from "actions/Categorys";
 import DesignList from "components/Designs/DesignList";
 
 class DesignListContainer extends Component {

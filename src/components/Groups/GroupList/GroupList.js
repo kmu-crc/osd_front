@@ -3,12 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
-import Button from "components/Commons/Button";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
-import ScrollTopGroupListContainer from "containers/Groups/ScrollTopGroupListContainer";
 import ContentBox from "components/Commons/ContentBox";
-import group_bg from "source/group_bg.jpg";
-import StyleGuide from "StyleGuide";
 import NumberFormat from "modules/NumberFormat";
 
 // css styling
@@ -60,59 +56,6 @@ const MenuContainer = styled(Grid)`
     padding-bottom : 1rem;
   }
 
-`;
-
-const Title = styled.div`
-  width: 100%;
-  color: white;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
-  h1{
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: 2.5rem;
-    font-weight: bold;
-  }
-`;
-
-const ImgWrapper = styled.div`
-  background-image: url(${group_bg});
-  background-position: center 15%;
-  background-size: cover;
-  width: 100%;
-  height: 200px;
-  position: relative;
-  &::after{
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-  }
-`;
-
-const MenuWrap = styled.div`
-  background-color: white;
-  border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  z-index: 3;
-`;
-
-const Head = styled.div`
-  padding-top: 100px;
-  padding-bottom: 2rem;
-  font-size: ${StyleGuide.font.size.paragraph};
 `;
 
 class GroupList extends Component {
