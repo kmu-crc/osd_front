@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { Modal } from "semantic-ui-react";
-import { FormField } from "components/Commons/FormField";
-// import { FormInput } from "components/Commons/FormItem";
-import FormDataToJson from "modules/FormDataToJson";
-import ValidateForm from "components/Commons/ValidateForm";
+import { Modal, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import Button from "components/Commons/Button";
-import { FormInput, FormCheckBox } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import {Link} from 'react-router-dom'
-import SignUpModal from "./SignUpModal";
+import { FormInput } from "components/Commons/FormItems";
+import { FormControl, ValidationGroup } from "modules/FormControl"
+import SignUpModal from "./SignUpModal"
+import StyleGuide from "StyleGuide"
+import FooterPara from "components/Commons/FooterTerm/FooterPara";
 
 const SignUpBtn = styled(Button)`
   margin-bottom: 30px;
@@ -37,134 +34,107 @@ const Labellink = styled.div`
   text-transform: none;
 `;
 
+const CustomModal = styled(Modal)`
+  padding: 20px;
+  & .icon.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: ${StyleGuide.color.geyScale.scale9};
+    cursor: pointer;
+  }
+  & .ui.form textarea:not([rows]) {
+    min-height: 2rem;
+  }
+`;
+
 class SignUpForm extends Component {
   state = {
-    SignUpData: {
-      email: null,
-      FB_user_id: null,
-      nick_name: null
-    },
-    open: false,
-    //isOnlyEmail: false,
-    error: null,
-    success: false
-  };
-
-  closeConfigShow = (closeOnEscape, closeOnRootNodeClick) => () => {
-    this.setState({ closeOnEscape, closeOnRootNodeClick, open: true });
-  };
-
-  close = () => this.setState({ open: false });
-
-  handleSignUpFB = response => {
-    this.setState({
-      SignUpData: {
-        email: response.email,
-        FB_user_id: response.userID,
-        nick_name: response.name
-      }
-    });
-    this.props
-      .CheckFBUserRequest({ FB_user_id: response.userID })
-      .then(data => {
-        if (data.checkFBUser) {
-          if (response.email == null || !response.email) {
-            return this.setState({ open: true });
-          } else {
-            this.handleSubmitFB(response);
-          }
-        } else {
-          alert(data.error);
-        }
-      });
-  };
-
-  handleSubmitFB = data => {
-    if (data.constructor && data.constructor.name === "FormData") {
-      data = FormDataToJson(data);
-    }
-    this.setState({
-      open: false,
-      SignUpData: {
-        ...this.state.SignUpData,
-        email: data.email
-      }
-    });
-    this.props.FBSignUpRequest(this.state.SignUpData).then(data => {
-      if (data.type === "AUTH_FBSIGNUP_SUCCESS") {
-        this.props.history.push("/design");
-      }
-    });
-  };
+    SignUpData: { email: null, nick_name: null },
+    agree: false, openTerm: false, error: null, success: false
+  }
 
   onChangeValue = async data => {
     let obj = {};
-    if(data.target){
-      obj[data.target.name] = data;
+    if (data.target) {
+      console.log(obj, data.target.name, data)
+      obj[data.target.name] = data
     }
-    await this.setState(obj);
-    console.log(this.state);
-  };
+    await this.setState(obj)
+    console.log(this.state)
+  }
 
   liveCheck = (target) => {
-    FormControl(this.state[target]);
-  };
+    FormControl(this.state[target])
+  }
 
   samePwCheck = () => {
     FormControl({
       value: [this.state.password.value, this.state.password2.value],
       target: this.state.password2.target,
       validates: this.state.password2.validates
-    });
+    })
   }
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
     var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
-    if(!reg_pw.test(formData.password.value)||formData.password.value.length < 6||formData.password.value.length > 15){
+    if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
       alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
       return false;
     }
 
-    if(formData.password.value !== formData.password2.value){
+    if (formData.password.value !== formData.password2.value) {
       alert("비밀번호 확인을 다시 해주십시오");
       return false;
     }
 
-    if(!formData.use_agreement.value){
-      alert("이용약관 동의를 해주십시오");
+    if (!this.state.agree) {
+      alert("이용약관에 동의해주십시오");
       return false;
     }
 
     delete formData.password2;
-    delete formData.use_agreement;
 
     ValidationGroup(formData, true).then(data => {
-      console.log("성공", data);
       this.props.SignUpRequest(data).then(res => {
         if (res.type === "AUTH_SIGNUP_SUCCESS") {
-          this.setState({success:true});
+          this.setState({ success: true });
         } else {
-          alert("다시 시도해주세요");
+          alert("다시 시도해주세요")
         }
-      });
+      })
     }).catch(e => {
       console.log("실패", e);
-    });
-  };
+    })
+  }
+  openTermModal = () => { this.setState({ openTerm: true }) }
+  checkAgree = async () => {
+    let obj = this.refs.use_agreement
+    obj.checked = true
+    await this.setState({ openTerm: false, agree: true })
+  }
+  preventClick = () => {
+    if (this.state.agree === false) {
+      alert("`이용약관 보기`를 통해 동의하실 수 있습니다")
+      this.refs.use_agreement.checked = false
+    }
+  }
+  onCloseTerm = () => { this.setState({ openTerm: false }) }
   render() {
-    const { open, closeOnEscape, closeOnRootNodeClick } = this.state;
+    console.log(this.state.agree)
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-        {this.state.success===true?<SignUpModal history={this.props.history}/>:null}
+          {this.state.success === true && <SignUpModal history={this.props.history} />}
+          {/* {this.state.openTerm === true && <TermModal handleCheck={this.checkAgree}/>} */}
           <Label>Email</Label>
           <FormInput
             name="email"
             placeholder="email을 입력해주세요."
             getValue={this.onChangeValue}
             validates={["Required", "IsEmail", "CheckEmail"]}
-            onBlur={()=>{this.liveCheck("email")}}
+            onBlur={() => { this.liveCheck("email") }}
           />
           <Label>닉네임</Label>
           <FormInput
@@ -173,7 +143,7 @@ class SignUpForm extends Component {
             placeholder="닉네임을 입력해주세요."
             getValue={this.onChangeValue}
             validates={["Required", "NotSpecialCharacters", "CheckNickName"]}
-            onBlur={()=>{this.liveCheck("nick_name")}}
+            onBlur={() => { this.liveCheck("nick_name") }}
           />
           <Label>Password</Label>
           <FormInput
@@ -182,7 +152,7 @@ class SignUpForm extends Component {
             placeholder="비밀번호를 입력해주세요."
             getValue={this.onChangeValue}
             validates={["Required", "NotBlank"]}
-            onBlur={()=>{this.liveCheck("password")}}
+            onBlur={() => { this.liveCheck("password") }}
           />
           <Label>Password 확인</Label>
           <FormInput
@@ -194,74 +164,27 @@ class SignUpForm extends Component {
             onBlur={this.samePwCheck}
           />
           <Label>이용약관 동의 확인</Label>
-          <Labellink><Link to ='/Term/term' target="_blank">이용약관 보기</Link></Labellink>
-           <FormCheckBox
-               name="use_agreement"
-               placeholder="이용약관에 동의하시겠습니까?"
-               getValue={this.onChangeValue}
-               value={false}
-             />
+          <Labellink><div style={{ cursor: "pointer" }} onClick={this.openTermModal}>이용약관 보기</div></Labellink>
+          <label><input disabled ref="use_agreement" value={this.state.agree} onClick={this.preventClick} type="checkbox" /> 이용약관에 동의함</label>
           <ButtonBox>
-            <SignUpBtn type="submit" round={true} fluid={true}>
-              회원가입
-            </SignUpBtn>
-{/*
-            <FacebookLogin
-              appId="799483036860094"
-              autoLoad={false}
-              fields="name,email"
-              callback={this.handleSignUpFB}
-              render={renderProps => (
-                <Button
-                  onClick={renderProps.onClick}
-                  type="button"
-                  color="facebook"
-                  icon="facebook f"
-                  round={true}
-                  fluid={true}
-                >
-                  FaceBook 회원가입
-                </Button>
-              )}
-            />
-*/}
+            <SignUpBtn type="submit" round={true} fluid={true}> 회원가입 </SignUpBtn>
           </ButtonBox>
         </form>
-        <Modal
-          open={open}
-          closeOnEscape={closeOnEscape}
-          closeOnRootNodeClick={closeOnRootNodeClick}
-          onClose={this.close}
-        >
-          <Modal.Header>Delete Your Account</Modal.Header>
-          <Modal.Content>
-            <ValidateForm onSubmit={this.handleSubmitFB}>
-              <FormField
-                name="email"
-                type="text"
-                placeholder="E-Mail"
-                label="email"
-                validates={["required", "email", "checkEmail"]}
-                RenderComponent={FormInput}
-              />
-              <Button
-                type="button"
-                negative
-                content="닫기"
-                onClick={this.close}
-              />
-              <Button
-                type="submit"
-                positive
-                labelPosition="right"
-                icon="checkmark"
-                content="등록"
-              />
-            </ValidateForm>
-          </Modal.Content>
-        </Modal>
+        {this.state.openTerm && (
+          <CustomModal open={this.state.openTerm} onClose={this.onCloseTerm}>
+            <Modal.Content>
+              <Icon name="close" size="big" onClick={this.onCloseTerm} />
+              <div style={{ overflowY: "scroll", overflowX: "hidden", height: "450px", width: "100%" }}>
+                <FooterPara style={{ backgroundColor: "#EEE" }} />
+              </div>
+              <div style={{ paddingTop: "5px", display: "flex", justifyContent: "right" }}>
+                <Button onClick={this.checkAgree}>동의</Button>
+              </div>
+            </Modal.Content>
+          </CustomModal>
+        )}
       </div>
-    );
+    )
   }
 }
-export default SignUpForm;
+export default SignUpForm
