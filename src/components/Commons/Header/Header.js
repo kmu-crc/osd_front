@@ -33,7 +33,7 @@ const Notification = styled.header`
   height: 60px;
   top: 0;
   position: fixed;
-  z-index: 101;
+  z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
   background-color: #fff;
   box-shadow: 0 1px 1px 1px #e1e4e6;
@@ -269,7 +269,7 @@ class Header extends Component {
     notification: null,
     msg: null
   }
-  _getNotification() {
+  _getNotification = () => {
     return fetch(`${host}/common/notice`, { headers: { "Content-Type": "application/json" }, method: "get" })
       .then((response) => { return response.json() })
       .then((data) => {
@@ -277,7 +277,7 @@ class Header extends Component {
           console.log("!!!", data)
           this.setState({ notification: data })
         }
-      }).catch(err => console.log(err))
+      })//.catch(err => console.log(err))
   }
   componentDidMount() {
     if (this.props.valid) {
@@ -292,9 +292,9 @@ class Header extends Component {
     }
     this._getNotification()
   }
-  shouldComponentUpdate(nextState) {
-    return (JSON.stringify(this.state.notification) !== JSON.stringify(nextState.notification))
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  // return this.state.notification != nextState.notification;
+  // }
   handleSignOut = async () => {
     SetSession("opendesign_token", null).then(data => {
       console.log("setsession", data)
@@ -348,7 +348,9 @@ class Header extends Component {
       return str.slice(0, 5) + "...";
     }
   }
-
+  close = (title) => (e) => {
+    console.log(this[`notice${title}`])//.style.backgroundColor = "#000";
+  }
   render() {
     const LoginNav = () => {
       return (
@@ -413,17 +415,15 @@ class Header extends Component {
         </UserInterface>
       );
     };
-    const notice = this.state.notication
-    console.log("notifi", notice)
+    const notice = this.state.notification
+    console.log("notifi", notice, this.state.notification)
     return (
       <Head>
-        {notice && (
-          notice.data && notice.data.content
-          // this.state.notification.data.map(notifi => {
-          // console.log(notifi)
-          // < Notification > { notifi.content }</Notification>
-          // })
-        )}
+        {notice && notice.length > 0 &&
+          notice.map(notifi => {
+            return <Notification ref={input => { this[`notice${notifi.title}`] = input }} > {notifi.content} <input type="checkbox" name={notifi.uid} onClick={this.close(notifi.title)} />그만보기</Notification>
+          }
+          )}
         <Content>
           <MainMenu>
             <Logo href="/" />
