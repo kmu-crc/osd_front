@@ -7,7 +7,7 @@ import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Socket from "modules/socket";
-
+import host from "config"
 import Alarm from "./Alarm"
 import NumberFormat from "modules/NumberFormat";
 
@@ -28,7 +28,22 @@ const Head = styled.header`
     }
   }
 `;
-
+const Notification = styled.header`
+  width: 100%;
+  height: 60px;
+  top: 0;
+  position: fixed;
+  z-index: 101;
+  color: ${StyleGuide.color.geyScale.scale9};
+  background-color: #fff;
+  box-shadow: 0 1px 1px 1px #e1e4e6;
+  a {
+    font-weight: normal;
+    &:hover {
+      color: ${StyleGuide.color.main.basic};
+    }
+  }
+`;
 const Content = styled(ContentBox)`
   position: relative;
 `;
@@ -251,29 +266,40 @@ class Header extends Component {
     active: false,
     keyword: null,
     noti: {},
+    notification: null,
     msg: null
-  };
-
+  }
+  _getNotification() {
+    return fetch(`${host}/common/notice`, { headers: { "Content-Type": "application/json" }, method: "get" })
+      .then((response) => { return response.json() })
+      .then((data) => {
+        if (data) {
+          console.log("!!!", data)
+          this.setState({ notification: data })
+        }
+      }).catch(err => console.log(err))
+  }
   componentDidMount() {
     if (this.props.valid) {
       try {
-        Socket.emit("INIT", this.props.userInfo.uid);
+        Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", noti => {
-          // setting the color of our button
-          // console.log("noti?", noti);
-          this.setState({ noti: noti });
+          this.setState({ noti: noti })
         })
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
+    this._getNotification()
   }
-
+  shouldComponentUpdate(nextState) {
+    return (JSON.stringify(this.state.notification) !== JSON.stringify(nextState.notification))
+  }
   handleSignOut = async () => {
     SetSession("opendesign_token", null).then(data => {
       console.log("setsession", data)
       this.props.SignOutRequest()
-      this.setState({profile: false, active: false, keyword: null, noti: {}, msg: null })
+      this.setState({ profile: false, active: false, keyword: null, noti: {}, msg: null })
       this.props.history.push("/")
     })
     console.log(this.props)
@@ -387,8 +413,17 @@ class Header extends Component {
         </UserInterface>
       );
     };
+    const notice = this.state.notication
+    console.log("notifi", notice)
     return (
       <Head>
+        {notice && (
+          notice.data && notice.data.content
+          // this.state.notification.data.map(notifi => {
+          // console.log(notifi)
+          // < Notification > { notifi.content }</Notification>
+          // })
+        )}
         <Content>
           <MainMenu>
             <Logo href="/" />
