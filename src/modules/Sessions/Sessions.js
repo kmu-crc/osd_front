@@ -22,7 +22,7 @@ function storageAvailable(type) {
   }
 }
 
-function setCookie(cookie_name, value, days) {
+export function setCookie(cookie_name, value, days) {
   var exdate = new Date();
   exdate.setDate(exdate.getDate() + days);
   // 설정 일수만큼 현재시간에 만료값으로 지정
@@ -31,18 +31,7 @@ function setCookie(cookie_name, value, days) {
   document.cookie = cookie_name + '=' + cookie_value;
 }
 
-export const SetSession = (key, data) => {
-  return new Promise((resolve, reject) => {
-    if (storageAvailable("localStorage")) {
-      window.localStorage.setItem(key, data)
-    } else {
-      setCookie(key, data, 7);
-    }
-    resolve(data);
-  });
-};
-
-const getCookie = (cookie_name) => {
+export const getCookie = (cookie_name) => {
   var x, y;
   var val = document.cookie.split(';');
 
@@ -55,6 +44,17 @@ const getCookie = (cookie_name) => {
     }
   }
   return null;
+};
+
+export const SetSession = (key, data) => {
+  return new Promise((resolve, reject) => {
+    if (storageAvailable("localStorage")) {
+      window.localStorage.setItem(key, data)
+    } else {
+      setCookie(key, data, 7);
+    }
+    resolve(data);
+  });
 };
 
 export const GetSession = (key) => {

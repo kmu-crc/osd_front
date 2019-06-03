@@ -92,7 +92,7 @@ const Count = styled.div`
 class Design extends Component {
   render() {
     let design = this.props.data;
-    console.log("design", design)
+    // console.log("design", design)
     return (
       <NavLink to={"/designDetail/" + design.uid}>
         <Designli>

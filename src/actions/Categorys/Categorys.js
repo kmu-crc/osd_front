@@ -7,7 +7,7 @@ export function GetCategoryLevel1Request() {
 
     return fetch(`${host}/categorys/getCategoryLevel1`, { method: "GET" })
       .then(function (res) {
-        console.log("res", res);
+        // console.log("res", res);
         return res.json();
       })
       .then(function (res) {
@@ -48,7 +48,7 @@ export function GetCategoryLevel2Request(id) {
 
     return fetch(`${host}/categorys/getCategoryLevel2/${id}`, { method: "GET" })
       .then(function (res) {
-        console.log("res", res);
+        // console.log("res", res);
         return res.json();
       })
       .then(function (res) {

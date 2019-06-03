@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import logo from "source/logo.png";
-import { SetSession } from "modules/Sessions";
+import { setCookie, getCookie, SetSession } from "modules/Sessions";
 import { Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Socket from "modules/socket";
-
+import host from "config"
 import Alarm from "./Alarm"
 import NumberFormat from "modules/NumberFormat";
 
@@ -28,7 +28,45 @@ const Head = styled.header`
     }
   }
 `;
-
+const keyframe = keyframes`
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 75px;
+  }
+`
+const Notification = styled.header`
+  animation: ${keyframe} 0.4s ease-in-out;
+  visibility: ${props => props.visible};
+  width: 100%;
+  height: 75px;
+  top: 0;
+  position: fixed;
+  z-index: 100;
+  color: ${StyleGuide.color.geyScale.scale9};
+  background-color: #F2A3A9;
+  .bottom{
+    height: 35%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 3px 3px 3px 3px;
+    color: white;
+  }
+  .content{
+    height: 65%;
+    color: white;
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+    button{
+      border: none;
+      color: white;
+      background-color:${StyleGuide.color.main.dark};
+    }
+  }
+  }
+`;
 const Content = styled(ContentBox)`
   position: relative;
 `;
@@ -251,29 +289,39 @@ class Header extends Component {
     active: false,
     keyword: null,
     noti: {},
+    notification: null,
     msg: null
-  };
-
+  }
+  _getNotification = () => {
+    return fetch(`${host}/common/notice`, { headers: { "Content-Type": "application/json" }, method: "get" })
+      .then((response) => { return response.json() })
+      .then((data) => {
+        if (data) {
+          this.setState({ notification: data })
+        }
+      })//.catch(err => console.log(err))
+  }
   componentDidMount() {
     if (this.props.valid) {
       try {
-        Socket.emit("INIT", this.props.userInfo.uid);
+        Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", noti => {
-          // setting the color of our button
-          // console.log("noti?", noti);
-          this.setState({ noti: noti });
+          this.setState({ noti: noti })
         })
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
+    this._getNotification()
   }
-
+  // shouldComponentUpdate(nextProps, nextState) {
+  // return this.state.notification != nextState.notification;
+  // }
   handleSignOut = async () => {
     SetSession("opendesign_token", null).then(data => {
       console.log("setsession", data)
       this.props.SignOutRequest()
-      this.setState({profile: false, active: false, keyword: null, noti: {}, msg: null })
+      this.setState({ profile: false, active: false, keyword: null, noti: {}, msg: null })
       this.props.history.push("/")
     })
     console.log(this.props)
@@ -323,6 +371,17 @@ class Header extends Component {
     }
   }
 
+  close = (noti) => (e) => {
+    var dif = Math.abs(new Date(noti.expiry_time) - new Date()) / (1000 * 60 * 60 * 24)
+    this.refs[noti.uid].checked && setCookie('noti_' + noti.uid, 'hidden' + noti.uid, parseInt(dif, 10) + 1)
+    let notification = this.state.notification
+    for (var i = 0; i < notification.length; i++) {
+      if (notification[i].uid === noti.uid) {
+        notification[i].visible = "hidden"
+      }
+    }
+    this.setState({ notification: notification })
+  }
   render() {
     const LoginNav = () => {
       return (
@@ -387,8 +446,28 @@ class Header extends Component {
         </UserInterface>
       );
     };
+    const notice = this.state.notification
     return (
       <Head>
+        {notice && notice.length > 0 &&
+          notice.map(notifi => {
+            if (getCookie('noti_' + notifi.uid))
+              return;
+            else
+              return <Notification visible={notifi.visible || "visible"} key={notifi.uid} >
+                <div className="content">
+                  <div>
+                    {notifi.content}<br />
+                  </div>
+                  <div className="bottom">
+                    <div >
+                      <input type="checkbox" name={notifi.uid} ref={notifi.uid} /> 그만보기
+                      &nbsp;<button type="button" onClick={this.close(notifi)} >닫기</button>
+                    </div>
+                  </div>
+                </div>
+              </Notification>
+          })}
         <Content>
           <MainMenu>
             <Logo href="/" />
@@ -486,8 +565,8 @@ class Header extends Component {
           </SubMenu>
         </Content>
       </Head>
-    );
-  }
+    )
+  };
 }
 
 export default Header;
