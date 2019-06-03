@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import logo from "source/logo.png";
-import { SetSession } from "modules/Sessions";
+import { setCookie, getCookie, SetSession } from "modules/Sessions";
 import { Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
@@ -28,20 +28,43 @@ const Head = styled.header`
     }
   }
 `;
+const keyframe = keyframes`
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 75px;
+  }
+`
 const Notification = styled.header`
+  animation: ${keyframe} 0.4s ease-in-out;
+  visibility: ${props => props.visible};
   width: 100%;
-  height: 60px;
+  height: 75px;
   top: 0;
   position: fixed;
   z-index: 100;
   color: ${StyleGuide.color.geyScale.scale9};
-  background-color: #fff;
-  box-shadow: 0 1px 1px 1px #e1e4e6;
-  a {
-    font-weight: normal;
-    &:hover {
-      color: ${StyleGuide.color.main.basic};
+  background-color: #F2A3A9;
+  .bottom{
+    height: 35%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 3px 3px 3px 3px;
+    color: white;
+  }
+  .content{
+    height: 65%;
+    color: white;
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+    button{
+      border: none;
+      color: white;
+      background-color:${StyleGuide.color.main.dark};
     }
+  }
   }
 `;
 const Content = styled(ContentBox)`
@@ -274,7 +297,6 @@ class Header extends Component {
       .then((response) => { return response.json() })
       .then((data) => {
         if (data) {
-          console.log("!!!", data)
           this.setState({ notification: data })
         }
       })//.catch(err => console.log(err))
@@ -348,8 +370,17 @@ class Header extends Component {
       return str.slice(0, 5) + "...";
     }
   }
-  close = (title) => (e) => {
-    console.log(this[`notice${title}`])//.style.backgroundColor = "#000";
+
+  close = (noti) => (e) => {
+    var dif = Math.abs(new Date(noti.expiry_time) - new Date()) / (1000 * 60 * 60 * 24)
+    this.refs[noti.uid].checked && setCookie('noti_' + noti.uid, 'hidden' + noti.uid, parseInt(dif, 10) + 1)
+    let notification = this.state.notification
+    for (var i = 0; i < notification.length; i++) {
+      if (notification[i].uid === noti.uid) {
+        notification[i].visible = "hidden"
+      }
+    }
+    this.setState({ notification: notification })
   }
   render() {
     const LoginNav = () => {
@@ -416,14 +447,27 @@ class Header extends Component {
       );
     };
     const notice = this.state.notification
-    console.log("notifi", notice, this.state.notification)
     return (
       <Head>
         {notice && notice.length > 0 &&
           notice.map(notifi => {
-            return <Notification ref={input => { this[`notice${notifi.title}`] = input }} > {notifi.content} <input type="checkbox" name={notifi.uid} onClick={this.close(notifi.title)} />그만보기</Notification>
-          }
-          )}
+            if (getCookie('noti_' + notifi.uid))
+              return;
+            else
+              return <Notification visible={notifi.visible || "visible"} key={notifi.uid} >
+                <div className="content">
+                  <div>
+                    {notifi.content}<br />
+                  </div>
+                  <div className="bottom">
+                    <div >
+                      <input type="checkbox" name={notifi.uid} ref={notifi.uid} /> 그만보기
+                      &nbsp;<button type="button" onClick={this.close(notifi)} >닫기</button>
+                    </div>
+                  </div>
+                </div>
+              </Notification>
+          })}
         <Content>
           <MainMenu>
             <Logo href="/" />
@@ -521,8 +565,8 @@ class Header extends Component {
           </SubMenu>
         </Content>
       </Head>
-    );
-  }
+    )
+  };
 }
 
 export default Header;
