@@ -111,10 +111,6 @@ class AddController extends Component {
               <Icon name="font"/>
               TEXT
             </li>
-            {/* <li onClick={() => this.addContent("EMBED")}>
-              <Icon name="code" />
-              EMBED
-            </li> */}
           </ControllerMenu>
           {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData}/>}
         </div>

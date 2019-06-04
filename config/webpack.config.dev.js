@@ -12,6 +12,8 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
+const { styles } = require('@ckeditor/ckeditor5-dev-utils')
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -108,6 +110,29 @@ module.exports = {
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        use: [ 'raw-loader' ]
+      },
+      {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              singleton: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: styles.getPostCssConfig( {
+              themeImporter: {
+                themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+              },
+              minify: true
+            } )
+          }
+        ]
+      }, {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
         use: [
@@ -158,6 +183,7 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.css$/,
+            exclude: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/,
             use: [
               require.resolve('style-loader'),
               {
@@ -198,7 +224,9 @@ module.exports = {
             // its runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
