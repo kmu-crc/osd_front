@@ -12,6 +12,8 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
+const { styles } = require('@ckeditor/ckeditor5-dev-utils')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -43,7 +45,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+  { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -114,6 +116,29 @@ module.exports = {
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        use: [ 'raw-loader' ]
+      },
+      {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              singleton: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: styles.getPostCssConfig( {
+              themeImporter: {
+                themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+              },
+              minify: true
+            } )
+          }
+        ]
+      }, {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
         use: [
@@ -166,7 +191,8 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.css$/,  
+            exclude: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -218,15 +244,21 @@ module.exports = {
           // that fall through the other loaders.
           {
             loader: require.resolve('file-loader'),
-            // Exclude `js` files to keep "css" loader working as it injects
-            // it's runtime that would otherwise processed through "file" loader.
+            // Exclude `js` files to keep the "css" loader working as it injects
+            // its runtime that would otherwise be processed through the "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
-            // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+            // by webpack's internal loaders.
+            exclude: [
+              /\.(js|jsx|mjs)$/,
+              /\.html$/,
+              /\.json$/,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/
+            ],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'static/media/[name].[hash:8].[ext]'
             },
-          },
+          }
           // ** STOP ** Are you adding a new loader?
           // Make sure to add the new loader(s) before the "file" loader.
         ],
@@ -263,7 +295,7 @@ module.exports = {
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJsWebpackPlugin({
       compress: {
         warnings: false,
         // Disabled because of an issue with Uglify breaking seemingly valid code:
