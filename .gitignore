@@ -4,3 +4,4 @@ build
 .env.local
 .vscode
 deploy.sh
+_backup_
