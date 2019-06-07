@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #F8FAFB;
+  color: #4D5256;
+}
+h1, h2, h3, h4, h5, h6{
+  color: #292A2B;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clear {
+  display: block;
+  clear: both;
+}
+
+.clearFix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+a, button {
+  cursor: pointer;
+}
+
+.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
+  display: flex!important;
+}
+
+.ui.modal.transition.visible.active{
+  margin: 1rem auto!important
+}
+.ui.form .fields, .ui.form .field{
+  margin-bottom: 3rem;
+}
+
+.ui.form .field>label {
+  margin: 0 0 0.8rem 0;
+}
+
+label.checked::after{
+  content: "\f00c";
+}
+
+.ui.form textarea:not([rows]){
+  height: initial;
+}
+.ui.grid>.column:not(.row), .ui.grid>.row>.column{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media only screen and (max-width: 1919px) and (min-width: 1200px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 20%!important;
+  }
+}
+
+/* @media only screen and (max-width: 1699px) and (min-width: 1400px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 16.66666%!important;
+  }
+}*/
+@media only screen and (min-width: 1920px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 20%!important;
+  }
+}
