@@ -1,6 +1,6 @@
 {
-  "name": "newfront",
-  "version": "0.1.0",
+  "name": "osd_front",
+  "version": "1.5.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
@@ -14,6 +14,7 @@
     "babel-preset-react-app": "^9.0.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "core-js": "2.5.3",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
@@ -46,8 +47,13 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
+    "semantic-ui-css": "^2.4.1",
     "semver": "6.0.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
@@ -59,8 +65,10 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "REACT_APP_TYPE=local node scripts/start.js",
+    "local_test": "REACT_APP_TYPE=local node scripts/start.js",
+    "dev": "REACT_APP_TYPE=local node scripts/start.js",
+    "build_dev": "REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
