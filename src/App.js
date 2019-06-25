@@ -9,8 +9,6 @@ import GroupListPage from "pages/GroupList/GroupListPage"
 
 import host from "./config"
 
-
-
 class CreateDesignPage extends React.Component { }
 class DesignDetailPage extends React.Component { }
 class DesignerListPage extends React.Component { }

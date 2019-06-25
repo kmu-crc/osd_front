@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import ClientTemplate from "templates/ClientTemplate"
 // import MainContainer from ''
 
 class MainContainer extends Component {
-    render(){
-        return(
-            <div>MainContainer</div>
+    render() {
+        return (
+            <div><br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer<br/><br/><br/>MainContainer</div>
         )
     }
 }
@@ -12,9 +13,9 @@ class MainContainer extends Component {
 class MainPage extends Component {
     render() {
         return (
-            //<ClientTemplate>
-            <MainContainer />
-            //</ClientTemplate>
+            <ClientTemplate>
+                <MainContainer />
+            </ClientTemplate>
         )
     }
 }
