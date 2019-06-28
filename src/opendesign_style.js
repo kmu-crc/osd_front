@@ -1,4 +1,4 @@
-const OpendesignStyle = {
+const opendesign_style = {
     font: {
         notoSans: "",
         notoSerif: "",
@@ -24,4 +24,4 @@ const OpendesignStyle = {
     }
 }
 
-export default OpendesignStyle
+export default opendesign_style 

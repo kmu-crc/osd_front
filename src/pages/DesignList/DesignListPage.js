@@ -6,6 +6,7 @@ class DesignListPage extends Component {
     render() {
         return (
             <div> list page
+                    <br/>l<br/>i<br/>s<br/>t<br/>
                 {/* <Design /> */}
                 {/* <DesignListContainer /> */}
             </div>

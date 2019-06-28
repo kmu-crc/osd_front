@@ -1,88 +1,15 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import logo from "source/logo.png"
-// import ContentBox from "components/Commons/ContentBox"
-import { Input, Icon } from 'semantic-ui-react'
-
-// todo:
-class Alarm extends Component {
-    state = {}
-    render() {
-        const { alarms } = this.props
-        return (alarms ? <div><Icon name='alarm' /></div> : <div>_alarm</div>)
-    }
-}
-// todo: 
-class Notification extends Component {
-    state = {}
-    render() {
-        return (<div>a</div>)
-    }
-}
-// todo:
-const SearchContainer = styled.div`
-    width: 327px;
-    height: 36px;
-    margin: 0 auto;
-    border: 1.5px solid #707070;
-    border-radius: 20px;
-    box-shadow: 0px 0px #888888;
-    justfy-content: space-between;
-    padding-left: 12.7px;
-    input {
-        focus:0;
-        border: none;
-    }
-    .search-icon {
-        paddding-top: 6.11px;
-        width: 21.49px;
-        height: 21.49px;
-    }
-    `
-// right: 12.7px;
-class Search extends Component {
-    state = {}
-    _search = () => { }
-    _handleKeyDown = (e) => {
-
-        if (e.key === 'Enter') {
-            console.log('Enter')
-        }
-    }
-    render() {
-        return (<SearchContainer onKeyDown={this._handleKeyDown}>
-            <input type="text" placeholder="Search..." />
-            <Icon onClick={this._search} className="search-icon" name="search" />
-        </SearchContainer>)
-    }
-}
-// todo: 
-const SignComponent = styled.div`
-    font-size: 15px;
-    img {
-        margin-right: 10px;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        border: 0px;
-        background-color: #D6D6D6;
-    }
-`
-class Sign extends Component {
-    state = {}
-    render() {
-        return (
-            <SignComponent>
-                <img />
-                {this.props.nickname}
-            </SignComponent>
-        )
-    }
-}
-
+import SignNav from "components/Commons/SignNav/SignNav"
+import SearchForm from "components/Commons/SearchForm"
+import Notification from "components/Commons/Notification"
+import Alarm from "components/Commons/Alarm"
+import ContentBox from "components/Commons/ContentBox"
 // css
-// width: 100%;
 const Head = styled.header`
+    margin: 0 auto;
     width: 100%;
     top: 0px;
     position: fixed;
@@ -93,12 +20,8 @@ const Head = styled.header`
     font-size: 20px;
     font-family: "Noto Sans KR";
 `
-// const Content = styled(ContentBox)`
-// position: absolute;
-// `
-// display: flex;
-
 const Menu = styled.ul`
+    margin: 0 auto;
     height: 70px;
     width: 100%;
     display: block;
@@ -106,11 +29,10 @@ const Menu = styled.ul`
     &.toleft{
        align: left; 
     }
+    border: 1px solid red;
 `
-// justify-content: space-between;
-// align-items: center;
 const MenuItem = styled.li`
-    padding: 0 0 0 0;
+    border: 1px solid red;
     margin-right: 50px;
     height: 29px;
     display: inline-block;
@@ -130,49 +52,50 @@ const MenuItem = styled.li`
         text-decoration: underline;
     }
 `
-const Logo = styled.a`
+const Logo = styled.div`
     height: 55px;
     width: 55px;
-    top: 0px;
-    left: 10px;
     padding: 0 0 0 0;
-    position: absolute;
+    margin: 0 auto;
+    position: relative;
     background-image: url(${logo});
     background-size: cover;
 `
+const Content = styled(ContentBox)`position: relative;`
 
 class Header extends Component {
     render() {
         return (
             <Head>
-                {/* <Content> */}
-                <Menu>
-                    <MenuItem>
-                        <Logo href="/" />
-                    </MenuItem>
-                    <MenuItem>
-                        <a href="/design">디자인</a>
-                    </MenuItem>
-                    <MenuItem>
-                        <a href="/group">그룹</a>
-                    </MenuItem>
-                    <MenuItem>
-                        <a href="/designer">디자이너</a>
-                    </MenuItem>
-                    <MenuItem>
-                        <Search />
-                    </MenuItem>
-                    <MenuItem>
-                        <Alarm alarms={{ count: 1, ary: [{ id: 1, content: "test" }] }} />
-                    </MenuItem>
-                    <MenuItem className="special_btn">
-                        <a href="/createDesign">디자인등록</a>
-                    </MenuItem>
-                    <MenuItem>
-                        <Sign nickname={"진아진아진아"} />
-                    </MenuItem>
-                </Menu>
-                {/* </Content> */}
+                <Content>
+                    <Notification count={0} />
+                    <Menu>
+                        <MenuItem>
+                            <Link to="/"><Logo /></Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to="/design">디자인</Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to="/group">그룹</Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to="/designer">디자이너</Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <SearchForm />
+                        </MenuItem>
+                        <MenuItem>
+                            <Alarm alarms={{ count: 1, ary: [{ id: 1, content: "test" }] }} />
+                        </MenuItem>
+                        <MenuItem className="special_btn">
+                            <a href="/createDesign">디자인등록</a>
+                        </MenuItem>
+                        <MenuItem>
+                            <SignNav nickname={"진아진아진아"} />
+                        </MenuItem>
+                    </Menu>
+                </Content>
             </Head>
         )
     }

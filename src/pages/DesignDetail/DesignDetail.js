@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-class DesignDetail extends Component{
+import React, { Component } from 'react'
+class DesignDetail extends Component {
     render() {
-        return(
-            <div>designdetail</div>
+        return (
+                <div>designdetail</div>
         )
     }
 }
