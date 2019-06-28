@@ -6,22 +6,22 @@ import MainPage from "pages/Main/MainPage"
 import TourPage from "pages/Tour/TourPage"
 import DesignListPage from "pages/DesignList/DesignListPage"
 import GroupListPage from "pages/GroupList/GroupListPage"
+import CreateDesignPage from "pages/CreateDesign/CreateDesign"
+import DesignDetailPage from "pages/DesignDetail/DesignDetail.js"
+import DesignerListPage from "pages/DesignerList/DesignerList.js"
+import DesignerDetailPage from "pages/DesignerDetail/DesignerDetail.js"
+import CreateGroupPage from "pages/CreateGroup/CreateGroup.js"
+import GroupDetailPage from "pages/GroupDetail/GroupDetail.js"
+import MessagesPage from "pages/Messages/Messages.js"
+import SignUpPage from "pages/SignUp/SignUp.js"
+import NotFoundPage from "pages/NotFound/NotFound.js"
 
 import host from "./config"
 
-class CreateDesignPage extends React.Component { }
-class DesignDetailPage extends React.Component { }
-class DesignerListPage extends React.Component { }
-class DesignerDetailPage extends React.Component { }
-class CreateGroupPage extends React.Component { }
-class GroupDetailPage extends React.Component { }
-class MessagesPage extends React.Component { render() { return (<div>a?</div>) } }
-class SignUpPage extends React.Component { render() { return (<div>a</div>) } }
-class NotFoundPage extends React.Component { render() { return (<div>404</div>) } }
-
 function App() {
-  console.log("backend:", host)
-  console.log("process.env:", process.env)
+  console.log("backend: ", host)
+  console.log("process.env: ", process.env)
+
   return (
     <BrowserRouter>
       <Switch>

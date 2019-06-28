@@ -16,10 +16,10 @@ const FooterContainer = styled.header`
     font-family: "Noto Sans KR";
     & .copyright {}
     & .links > a {
-        -webkit-text-size-adjust:none;
-        -ms-text-size-adjust:none;
-        -moz-text-size-adjust:none;
-        text-size-adjust:none;
+        -webkit-text-size-adjust: none;
+        -ms-text-size-adjust: none;
+        -moz-text-size-adjust: none;
+        text-size-adjust: none;
         color: #707070;
         margin-right: 17px;
         font-size: 15px;
