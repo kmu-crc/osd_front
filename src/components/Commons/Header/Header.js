@@ -7,6 +7,7 @@ import SearchForm from "components/Commons/SearchForm"
 import Notification from "components/Commons/Notification"
 import Alarm from "components/Commons/Alarm"
 import ContentBox from "components/Commons/ContentBox"
+
 // css
 const Head = styled.header`
     margin: 0 auto;
@@ -29,13 +30,12 @@ const Menu = styled.ul`
     &.toleft{
        align: left; 
     }
-    border: 1px solid red;
 `
 const MenuItem = styled.li`
-    border: 1px solid red;
     margin-right: 50px;
     height: 29px;
     display: inline-block;
+    font-family: "Noto Sans KR";
     a {
         font-size: 15px;
         font-weight: normal;
@@ -61,7 +61,9 @@ const Logo = styled.div`
     background-image: url(${logo});
     background-size: cover;
 `
-const Content = styled(ContentBox)`position: relative;`
+const Content = styled(ContentBox)`
+    position: relative;
+`
 
 class Header extends Component {
     render() {
@@ -70,30 +72,14 @@ class Header extends Component {
                 <Content>
                     <Notification count={0} />
                     <Menu>
-                        <MenuItem>
-                            <Link to="/"><Logo /></Link>
-                        </MenuItem>
-                        <MenuItem>
-                            <Link to="/design">디자인</Link>
-                        </MenuItem>
-                        <MenuItem>
-                            <Link to="/group">그룹</Link>
-                        </MenuItem>
-                        <MenuItem>
-                            <Link to="/designer">디자이너</Link>
-                        </MenuItem>
-                        <MenuItem>
-                            <SearchForm />
-                        </MenuItem>
-                        <MenuItem>
-                            <Alarm alarms={{ count: 1, ary: [{ id: 1, content: "test" }] }} />
-                        </MenuItem>
-                        <MenuItem className="special_btn">
-                            <a href="/createDesign">디자인등록</a>
-                        </MenuItem>
-                        <MenuItem>
-                            <SignNav nickname={"진아진아진아"} />
-                        </MenuItem>
+                        <MenuItem><Link to="/" onClick={this.forceUpdate}><Logo /></Link></MenuItem>
+                        <MenuItem><Link to="/design">디자인</Link></MenuItem>
+                        <MenuItem><Link to="/group">그룹</Link></MenuItem>
+                        <MenuItem><Link to="/designer">디자이너</Link></MenuItem>
+                        <MenuItem><SearchForm /></MenuItem>
+                        <MenuItem><Alarm alarms={{ count: 2, ary: [{ id: 0, content: "0test" }, { id: 1, content: "1test" }] }} /></MenuItem>
+                        <MenuItem className="special_btn"><a href="/createDesign">디자인등록</a></MenuItem>
+                        <MenuItem><SignNav nickname={"진아진아진아"} /></MenuItem>
                     </Menu>
                 </Content>
             </Head>

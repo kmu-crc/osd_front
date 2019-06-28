@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-//pages
+// pages
 import MainPage from "pages/Main"
 import TourPage from "pages/Tour"
 import DesignListPage from "pages/DesignList"
@@ -16,9 +16,10 @@ import MessagesPage from "pages/Messages"
 import SignUpPage from "pages/SignUp"
 import NotFoundPage from "pages/NotFound"
 
-//template
+// template
 import ClientTemplate from "templates/ClientTemplate"
 
+// temporary
 import host from "./config"
 
 function App() {

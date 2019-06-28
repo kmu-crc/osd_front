@@ -30,7 +30,7 @@ class SignNav extends Component {
                     {this.props.nickname}
                     {this.state.user_popup &&
                         <div>
-                            <Link to="/designer">마이페이지</Link>
+                            <Link to="/designerDetail">마이페이지</Link>
                             <div onClick={this.handleSignOut}>로그아웃</div>
                         </div>
                     }

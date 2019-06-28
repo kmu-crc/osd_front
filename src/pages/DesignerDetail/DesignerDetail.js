@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-class DesignerDetail extends Component{
-    render(){
-        return(
-                <div>designerdetail</div>
+import React, { Component } from 'react'
+class DesignerDetail extends Component {
+    render() {
+        return (
+            <div>designerdetail</div>
         )
     }
 }
