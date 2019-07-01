@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import SignInModal from "components/Commons/SignNav/SignInModal"
 
 const SignNavContainer = styled.div`
 font-size: 15px;
+display:flex;
 img {
     margin-right: 10px;
     width: 30px;
@@ -15,6 +15,7 @@ img {
 }
 `
 const UserPopup = styled.div`
+    background-color: white;
     border-radius: 15px 15px 15px 15px;
     padding: 10px .88px 10px .88px;
     border: 1px solid red;
@@ -44,6 +45,7 @@ class SignNav extends Component {
     handleSignIn = (success) => { this.setState({ valid: success, signin_modal: false }) }
     handleSignOut = () => { this.setState({ valid: false }) }
     gotoMyDetail = () => { window.location.href = "/designerDetail" }
+    gotoSignUp = () => { window.location.href = "/signup" }
     _popup = () => { this.setState({ user_popup: !this.state.user_popup }) }
     render() {
         const User = () => {
@@ -62,8 +64,8 @@ class SignNav extends Component {
         const NonUser = () => {
             return (
                 <div style={{ display: "flex" }}>
-                    <div onClick={this._open_signin_modal}>로그인</div>
-                    <Link to="/signup"><div>회원가입</div></Link>
+                    <div style={{ marginLeft: "5px" }} onClick={this._open_signin_modal}>로그인</div>
+                    <div style={{ marginLeft: "5px" }} onClick={this.gotoSignUp}>회원가입</div>
                 </div>)
         }
         return (

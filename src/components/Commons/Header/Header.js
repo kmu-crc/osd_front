@@ -6,7 +6,6 @@ import SignNav from "components/Commons/SignNav/SignNav"
 import SearchForm from "components/Commons/SearchForm"
 import Notification from "components/Commons/Notification"
 import Alarm from "components/Commons/Alarm"
-import ContentBox from "components/Commons/ContentBox"
 
 // css
 const Head = styled.header`
@@ -16,7 +15,7 @@ const Head = styled.header`
     position: fixed;
     z-index: 100;
     color: #707070;
-    background-color:#FFFFFF;
+    background-color: #FFFFFF;
     justify-content: space-between;
     font-size: 20px;
     font-family: "Noto Sans KR";
@@ -25,8 +24,9 @@ const Menu = styled.ul`
     margin: 0 auto;
     height: 70px;
     width: 100%;
-    display: block;
+    display: flex;
     list-style: none;
+    vertical-align: middle;
     &.toleft{
        align: left; 
     }
@@ -34,7 +34,6 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
     margin-right: 50px;
     height: 29px;
-    display: inline-block;
     font-family: "Noto Sans KR";
     a {
         font-size: 15px;
@@ -51,6 +50,10 @@ const MenuItem = styled.li`
         color: #FF0000 !important;
         border-bottom: 1px solid red;
     }
+    &.left_menu {
+    }
+    &.right_menu {
+    }
 `
 const Logo = styled.div`
     height: 55px;
@@ -61,27 +64,27 @@ const Logo = styled.div`
     background-image: url(${logo});
     background-size: cover;
 `
-const Content = styled(ContentBox)`
-    position: relative;
-`
+
 
 class Header extends Component {
     render() {
         return (
             <Head>
-                {/* <Content> */}
                 <Notification count={0} />
                 <Menu>
-                    <MenuItem><Link to="/"><Logo /></Link></MenuItem>
-                    <MenuItem><Link to="/design">디자인</Link></MenuItem>
-                    <MenuItem><Link to="/group">그룹</Link></MenuItem>
-                    <MenuItem><Link to="/designer">디자이너</Link></MenuItem>
-                    <MenuItem><SearchForm /></MenuItem>
-                    <MenuItem><Alarm alarms={{ count: 2, ary: [{ id: 0, content: "0test" }, { id: 1, content: "1test" }] }} /></MenuItem>
-                    <MenuItem className="special_btn"><a href="/createDesign">디자인등록</a></MenuItem>
-                    <MenuItem><SignNav nickname={"진아진아진아"} /></MenuItem>
+                    <div style={{ display: "flex", alignContent: "flex-start" }}>
+                        <MenuItem><a href="/"><Logo /></a></MenuItem>
+                        <MenuItem><a href="/design">디자인</a></MenuItem>
+                        <MenuItem><a href="/group">그룹</a></MenuItem>
+                        <MenuItem><a href="/designer">디자이너</a></MenuItem>
+                    </div>
+                    <div style={{ display: "flex", alignContent: "flex-end" }}>
+                        <MenuItem><SearchForm /></MenuItem>
+                        <MenuItem><Alarm alarms={{ count: 2, ary: [{ id: 0, content: "0test" }, { id: 1, content: "1test" }] }} /></MenuItem>
+                        <MenuItem className="special_btn"><a href="/createDesign">디자인등록</a></MenuItem>
+                        <MenuItem><SignNav nickname={"진아진아진아"} /></MenuItem>
+                    </div>
                 </Menu>
-                {/* </Content> */}
             </Head>
         )
     }
