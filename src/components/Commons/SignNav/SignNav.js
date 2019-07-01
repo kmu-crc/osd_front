@@ -14,6 +14,35 @@ img {
     background-color: #D6D6D6;
 }
 `
+const UserPopup = styled.div`
+    border-radius: 15px 15px 15px 15px;
+    padding: 10px .88px 10px .88px;
+    border: 1px solid red;
+    display: block;
+    position: relative;
+    width: 154px;
+    height: 150px;
+    text-align: center;
+`
+const UserPopupMenu = styled.div`
+    width: 100%;
+    height: 50px;
+    vertical-align: middle;
+    :hover{
+        color: white;
+        background-color: red;
+    }
+    &a{
+        color: inherit;
+        :link { TEXT-DECORATION: none; font-weight: normal }
+        :visited { TEXT-DECORATION: none; font-weight: normal }
+        :active { COLOR: white; TEXT-DECORATION: none }
+        :hover { COLOR: white; TEXT-DECORATION: none; font-weight: none }
+    }
+`
+const UserProfile = styled.div`
+    position: fixed;
+`
 class SignNav extends Component {
     state = { valid: false, user_popup: false, signin_modal: false }
     _handleClick = () => { }
@@ -21,20 +50,21 @@ class SignNav extends Component {
     handleCloseModal = () => { this.setState({ signin_modal: false }) }
     handleSignIn = (success) => { this.setState({ valid: success, signin_modal: false }) }
     handleSignOut = () => { this.setState({ valid: false }) }
-    _popup = () => { this.setState({ user_popup: true }) }
+    gotoMyDetail = () => { window.location.href = "/designerDetail" }
+    _popup = () => { this.setState({ user_popup: !this.state.user_popup }) }
     render() {
         const User = () => {
             return (
-                <div onClick={this._popup}>
+                <UserProfile onClick={this._popup}>
                     <img />
                     {this.props.nickname}
                     {this.state.user_popup &&
-                        <div>
-                            <Link to="/designerDetail">마이페이지</Link>
-                            <div onClick={this.handleSignOut}>로그아웃</div>
-                        </div>
+                        <UserPopup>
+                            <UserPopupMenu onClick={this.gotoMyDetail}>마이페이지</UserPopupMenu>
+                            <UserPopupMenu onClick={this.handleSignOut}>로그아웃</UserPopupMenu>
+                        </UserPopup>
                     }
-                </div>)
+                </UserProfile>)
         }
         const NonUser = () => {
             return (

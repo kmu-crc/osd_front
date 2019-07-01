@@ -69,19 +69,19 @@ class Header extends Component {
     render() {
         return (
             <Head>
-                <Content>
-                    <Notification count={0} />
-                    <Menu>
-                        <MenuItem><Link to="/" onClick={this.forceUpdate}><Logo /></Link></MenuItem>
-                        <MenuItem><Link to="/design">디자인</Link></MenuItem>
-                        <MenuItem><Link to="/group">그룹</Link></MenuItem>
-                        <MenuItem><Link to="/designer">디자이너</Link></MenuItem>
-                        <MenuItem><SearchForm /></MenuItem>
-                        <MenuItem><Alarm alarms={{ count: 2, ary: [{ id: 0, content: "0test" }, { id: 1, content: "1test" }] }} /></MenuItem>
-                        <MenuItem className="special_btn"><a href="/createDesign">디자인등록</a></MenuItem>
-                        <MenuItem><SignNav nickname={"진아진아진아"} /></MenuItem>
-                    </Menu>
-                </Content>
+                {/* <Content> */}
+                <Notification count={0} />
+                <Menu>
+                    <MenuItem><Link to="/"><Logo /></Link></MenuItem>
+                    <MenuItem><Link to="/design">디자인</Link></MenuItem>
+                    <MenuItem><Link to="/group">그룹</Link></MenuItem>
+                    <MenuItem><Link to="/designer">디자이너</Link></MenuItem>
+                    <MenuItem><SearchForm /></MenuItem>
+                    <MenuItem><Alarm alarms={{ count: 2, ary: [{ id: 0, content: "0test" }, { id: 1, content: "1test" }] }} /></MenuItem>
+                    <MenuItem className="special_btn"><a href="/createDesign">디자인등록</a></MenuItem>
+                    <MenuItem><SignNav nickname={"진아진아진아"} /></MenuItem>
+                </Menu>
+                {/* </Content> */}
             </Head>
         )
     }
