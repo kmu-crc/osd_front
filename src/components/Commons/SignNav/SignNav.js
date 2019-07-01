@@ -32,13 +32,6 @@ const UserPopupMenu = styled.div`
         color: white;
         background-color: red;
     }
-    &a{
-        color: inherit;
-        :link { TEXT-DECORATION: none; font-weight: normal }
-        :visited { TEXT-DECORATION: none; font-weight: normal }
-        :active { COLOR: white; TEXT-DECORATION: none }
-        :hover { COLOR: white; TEXT-DECORATION: none; font-weight: none }
-    }
 `
 const UserProfile = styled.div`
     position: fixed;
