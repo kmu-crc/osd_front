@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react'
 // todo:
 const SearchContainer = styled.div`
     width: 327px;
-    height: 36px;
+    height: 30px;
     margin: 0 auto;
     border: 1.5px solid #707070;
     border-radius: 20px;

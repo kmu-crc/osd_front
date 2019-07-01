@@ -49,7 +49,7 @@ const MenuItem = styled.li`
     }
     &.special_btn > a{
         color: #FF0000 !important;
-        text-decoration: underline;
+        border-bottom: 1px solid red;
     }
 `
 const Logo = styled.div`
