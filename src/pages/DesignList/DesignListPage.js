@@ -9,7 +9,7 @@ class Category extends Component {
     render() {
         return (
             <div style={{ zIndex: "100", position: "fixed", top: "40px", left: "145px", display: "flex" }}>
-                <div style={{ color: "red", marginRight: "10px" }} onClick={() => this.changeCategory(undefined)}>전체</div>
+                {/* <div style={{ color: "red", marginRight: "10px" }} onClick={() => this.changeCategory(undefined)}>전체</div> */}
                 {this.props.list.map((element, idx) => {
                     return (
                         <div key={idx} style={{ color: "red", marginRight: "10px" }} onClick={() => this.changeCategory(idx)}>{element}</div>

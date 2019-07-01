@@ -3,21 +3,21 @@ import styled from 'styled-components'
 import SignInModal from "components/Commons/SignNav/SignInModal"
 
 const SignNavContainer = styled.div`
-font-size: 15px;
-display:flex;
-img {
-    margin-right: 10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 0px;
-    background-color: #D6D6D6;
-}
+    font-family: "Noto Sans KR";
+    font-size: 20px;
+    display:flex;
+    img {
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 0px;
+        background-color: #D6D6D6;
+    }
 `
 const UserPopup = styled.div`
     background-color: white;
     border-radius: 15px 15px 15px 15px;
-    padding: 10px .88px 10px .88px;
     border: 1px solid red;
     display: block;
     position: relative;
@@ -35,7 +35,8 @@ const UserPopupMenu = styled.div`
     }
 `
 const UserProfile = styled.div`
-    position: fixed;
+    position: relative;
+    display: flex;
 `
 class SignNav extends Component {
     state = { valid: false, user_popup: false, signin_modal: false }
@@ -64,8 +65,8 @@ class SignNav extends Component {
         const NonUser = () => {
             return (
                 <div style={{ display: "flex" }}>
-                    <div style={{ marginLeft: "5px" }} onClick={this._open_signin_modal}>로그인</div>
-                    <div style={{ marginLeft: "5px" }} onClick={this.gotoSignUp}>회원가입</div>
+                    <div style={{ marginLeft: "0px" }} onClick={this._open_signin_modal}>로그인</div>
+                    <div style={{ marginLeft: "15px" }} onClick={this.gotoSignUp}>회원가입</div>
                 </div>)
         }
         return (
