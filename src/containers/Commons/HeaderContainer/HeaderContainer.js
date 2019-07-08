@@ -4,7 +4,7 @@ import Header from "components/Commons/Header"
 class HeaderContainer extends Component {
     render() {
         return (
-            <Header/>
+            <Header {...this.props} />
         )
     }
 }

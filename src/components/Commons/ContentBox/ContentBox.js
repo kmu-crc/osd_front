@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import opendesign_style from "opendesign_style"
 
 const Container = styled.div`
-    margin: 0 auto;
     @media only screen and (max-width: 767px) and (min-width: 320px){
         padding: 0 20px;
         width: ${opendesign_style.gridContent.mobile};

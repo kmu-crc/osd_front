@@ -1,26 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import DesignListContainer from "containers/Designs/DesignListContainer"
-import ContentBox from 'components/Commons/ContentBox';
+import Design from "components/Designs/Design"
+import styled from 'styled-components'
 
+const CategoryContainer = styled.div`
+    z-index: 902;
+    background-color: #FFFFFF;
+    position: fixed;
+    width: 100%;
+    top: 55px;
+    padding-left: 115px;
+    display: flex;
+    &.hidemenu {
+        top: 0px;
+        background-color: red;
+    }
+    -webkit-transition: all 0.45s;
+    -moz-transition: all 0.45s;
+    -ms-transition: all 0.45s;
+    -o-transition: all 0.45s;
+    transition: all 0.45s;
+`
 class Category extends Component {
     changeCategory = (idx) => {
         this.props.category_clicked(idx)
     }
     render() {
         return (
-            <div style={{ zIndex: "100", position: "fixed", top: "40px", left: "145px", display: "flex" }}>
-                {/* <div style={{ color: "red", marginRight: "10px" }} onClick={() => this.changeCategory(undefined)}>전체</div> */}
+            <CategoryContainer className={this.props.hidemenu && "hidemenu"}>
                 {this.props.list.map((element, idx) => {
-                    return (
-                        <div key={idx} style={{ color: "red", marginRight: "10px" }} onClick={() => this.changeCategory(idx)}>{element}</div>
-                    )
+                    return (<div key={idx} style={{
+                        color: "red", fontFamily: "Noto Sans KR",
+                        fontSize: "20px", fontWeight: "300", marginRight: "30px"
+                    }}
+                        onClick={() => this.changeCategory(idx)}>{element}</div>)
                 })}
-            </div>
+            </CategoryContainer>
         )
     }
 }
 const category = {
-    first: ["패션", "제품", "커뮤니케이션", "공간", "엔터테인먼트", "소프트웨어", "새분야"]
+    first: ["카테고리", "카테고리", "카테고리", "카테고리"], second: ["패션", "제품", "커뮤니케이션", "공간", "엔터테인먼트", "소프트웨어", "새분야"]
 }
 const dummy =
     [{ "uid": 0, "user_id": 71, "title": "AWARE website design page", "thumbnail": 4492, "parent_design": null, "category_level1": 3, "category_level2": 10, "create_time": "2017-08-24T15:49:00.000Z", "update_time": "2019-06-21T02:43:58.000Z", "is_public": 1, "is_project": 0, "like_count": 1, "member_count": 3, "card_count": 1, "view_count": 138, "children_count": null, "nick_name": "_지워질_계정_", "userName": "_지워질_계정_", "categoryName": "UI/UX", "thumbnailUrl": { "s_img": "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/d32146a5-fe62-4192-8fe2-4f1a319c213c-x50.jpg", "m_img": "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/d32146a5-fe62-4192-8fe2-4f1a319c213c-x200.jpg" } }
@@ -79,6 +99,7 @@ const dummy =
     ]
 
 const orderoption = ["인기순", "최신순"]
+const orderoption_margin = [30, 44]
 class OrderOption extends Component {
     state = { options: orderoption }
     handleClicked = (idx) => {
@@ -87,10 +108,13 @@ class OrderOption extends Component {
     render() {
         const opts = this.state.options
         return (
-            <div style={{ display: "flex", justifyContent: "flex-end", textAlign: "middle" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: "35px", fontSize: "20px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", lineHeight: "29px", textAlign: "middle" }}>
                 {opts.map((option, key) => {
                     return (
-                        <div onClick={() => this.handleClicked(key)} key={key} style={key === this.props.selected ? { borderBottom: "1px solid red", color: "red", marginRight: "15px" } : { color: "#707070", marginRight: "15px" }}>
+                        <div onClick={() => this.handleClicked(key)} key={key}
+                            style={key === this.props.selected
+                                ? { color: "#FF0000", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", borderBottom: "1.5px solid red" }
+                                : { color: "#707070", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px" }}>
                             {option}
                         </div>
                     )
@@ -99,6 +123,18 @@ class OrderOption extends Component {
         )
     }
 }
+//     getTotalCount = (target) => {
+//         return target === undefined ? dummy.length : "?"
+//     }
+//     render() {
+//         return (
+//             <div style={{ width: "100%", paddingTop: "70px" }}>
+//                 <h3 style={{ textAlign: "center", color: "red" }}>{this.state.this_category || "디자인"}{"(" + this.getTotalCount(this.state.category) + ")"}</h3>
+//                 <DesignListContainer dataList={dummy} dataListAdded={dummy} />
+//             </div>
+//         )
+//     }
+
 class DesignListPage extends Component {
     state = { this_category: null, this_order: 0 }
     handleChangeCategory = (idx) => {
@@ -109,17 +145,21 @@ class DesignListPage extends Component {
         this.setState({ this_order: idx })
         console.log("changed_order", idx)
     }
-    getTotalCount = (target) => {
-        return target === undefined ? dummy.length : "?"
-    }
     render() {
+        console.log(this.props)
         return (
-            <div style={{ width: "100%", paddingTop: "70px" }}>
-                <Category category_clicked={this.handleChangeCategory} list={category.first} />
-                <h3 style={{ textAlign: "center", color: "red" }}>{this.state.this_category || "디자인"}{"(" + this.getTotalCount(this.state.category) + ")"}</h3>
+            <Fragment>
+                <Category className={this.props.hidemenu ? "hidemenu" : ""} category_clicked={this.handleChangeCategory} list={category.first} />
+                <div style={{ position: "relative", top: "25px", textAlign: "center", fontSize: "25px", fontFamily: "Noto Sans KR", fontWeight: "700", color: "red" }}>패션 디자인(333)</div>
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
-                <DesignListContainer dataList={dummy} dataListAdded={dummy} />
-            </div>
+                <Fragment>
+                    <div style={{ marginLeft: "10px", paddingTop: "30px", paddingBottom: "80px", display: "flex" }}><Design forked={true} /><Design /><Design /><Design /><Design /></div>
+                    <div style={{ marginLeft: "10px", paddingTop: "60px", paddingBottom: "80px", display: "flex" }}><Design forked={true} /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
+                    <div style={{ marginLeft: "10px", paddingTop: "60px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
+                    <div style={{ marginLeft: "10px", paddingTop: "60px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
+                    <div style={{ marginLeft: "10px", paddingTop: "60px", paddingBottom: "68px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
+                </Fragment>
+            </Fragment>
         )
     }
 }

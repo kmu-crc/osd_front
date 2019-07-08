@@ -1,80 +1,59 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import logo from "source/logo.png"
+
 import SignNav from "components/Commons/SignNav/SignNav"
 import SearchForm from "components/Commons/SearchForm"
 import Notification from "components/Commons/Notification"
 import Alarm from "components/Commons/Alarm"
 
-// css
-const Head = styled.header`
-    margin: 0 auto;
-    padding: 0px;
-    width: 100%;
-    height: 70px;
-    position: fixed;
-    z-index: 100;
-    color: #707070;
-    background-color: #FFFFFF;
-    font-size: 20px;
-    font-family: "Noto Sans KR";
-`
+import logo from "source/logo.png"
+import zoom from "source/zoom.svg"
+import alarm from "source/alarm.png"
+
+// CSS
+const Head = styled.header``
+const MenuItem = styled.span``
 const Menu = styled.div`
-    height: 70px;
-    border: 1px solid red;
-    margin: 0 auto;
-    padding: 0 auto;
-    width: 100%;
-    display: flex;
-`
-const MenuItem = styled.span`
-    position:relative;
-    height: 29px;
-    font-family: "Noto Sans KR";
-    top: 11px;
-    border: 1px solid red;
-    margin-right: 50px;
-    a {
-        font-size: 20px;
-        font-weight: normal;
-        color: #707070;
-        &:hover {color: #E72327;}
-    }
-    a.active{color: #FF0000;}
-    &.special_btn > a{
-        color: #FF0000 !important;
-        padding: 0 auto;
-        border-bottom: 1.5px solid red;
-    }
-    &.left { margin-right: 50px;}
-    &.first { top: 0px; margin-left: 10px; height:55px; }
-    &.right { margin-left: auto;}
-`
-// &.toRight{ }
-const Logo = styled.div`
+    z-index: 900;
+    justify-content: space-between;
     height: 55px;
-    width: 55px;
-    background-image: url(${logo});
-    background-size: cover;
+    background-color: #FFF;
+    font-family: "Noto Sans KR";
+    font-weight: 500;
+    font-size: 20px;
+    color: #707070;
+    width: 100%;
+    position: fixed;
+    display: flex;
+
+    &.hidemenu{
+        top: -55px;
+        opacity: 0;
+    }
+    -webkit-transition: all 0.45s;
+    -moz-transition: all 0.45s;
+    -ms-transition: all 0.45s;
+    -o-transition: all 0.45s;
+    transition: all 0.45s;
 `
 
 class Header extends Component {
-
     render() {
         return (
-            <Head>
-                <Notification count={0} />
-                <Menu>
-                    <MenuItem className="first"><a href="/"><Logo /></a></MenuItem>
-                    <MenuItem className="left"><a href="/design">디자인</a></MenuItem>
-                    <MenuItem className="left"><a href="/group">그룹</a></MenuItem>
-                    <MenuItem className="left"><a href="/designer">디자이너</a></MenuItem>
-                    <MenuItem className="right"><SearchForm /></MenuItem>
-                    <MenuItem className=""><Alarm alarms={{ count: 1 }} /></MenuItem>
-                    <MenuItem className=" special_btn"><a href="/createDesign">디자인등록</a></MenuItem>
-                    <MenuItem className=" last"><SignNav nickname={"jinna"} /></MenuItem>
-                </Menu>
-            </Head>
+            <Menu className={(this.props.hidemenu ? " hidemenu" : "")}>
+                <ul className={"menu"} style={{ minWidth: "523px", margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
+                    <li style={{ minWidth: "55px", height: "55px", marginLeft: "10px" }}><a href="/"><img style={{ width: "55px", height: "55px" }} src={logo} /></a></li>
+                    <li style={{ minWidth: "55px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/design') ? { color: "red" } : { color: "#707070" }} href="/design">디자인</a></li>
+                    <li style={{ minWidth: "37px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/group') ? { color: "red" } : { color: "#707070" }} href="/group">그룹</a></li>
+                    <li style={{ minWidth: "74px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/designer') ? { color: "red" } : { color: "#707070" }} href="/designer">디자이너</a></li>
+                </ul>
+                <ul style={{ margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
+                    <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}><input style={{ background: `url(${zoom})`, backgroundSize: "21.49px 21.49px", borderRadius: "20px", border: "1.5px solid #707070", backgroundRepeat: "no-repeat", backgroundPosition: "right 12.7px top 4px", textIndent: "10px", width: "327px", height: "36px" }} /></li>
+                    <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}><div style={{ background: `url(${alarm})`, width: "34px", height: "34px", backgroundSize: "100% 100%", opacity: ".5", backgroundRepeat: "no-repeat", backgroundPosition: "center center", border: "none" }} /></li>
+                    <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}><div style={{ width: "100%", height: "100%", borderBottom: "1.5px solid red", color: "red" }}>디자인 등록</div></li>
+                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}><div style={{ margin: "0", padding: "0", cursor: "pointer" }}>로그인</div></li>
+                </ul>
+            </Menu>
         )
     }
 }

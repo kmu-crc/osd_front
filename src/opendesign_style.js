@@ -1,6 +1,6 @@
 const opendesign_style = {
     font: {
-        notoSans: "'Noto Sans', sans-serif",
+        notoSans: "'Noto Sans KR', sans-serif",
         notoSerif: "'Noto Serif', serif",
         lineHeight: 1.4,
         size: {
