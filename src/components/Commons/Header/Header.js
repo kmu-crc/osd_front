@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import SignNav from "components/Commons/SignNav/SignNav"
-import SearchForm from "components/Commons/SearchForm"
-import Notification from "components/Commons/Notification"
-import Alarm from "components/Commons/Alarm"
+import MenuContext from "Global/Context/GlobalContext"
+
+// import SignNav from "components/Commons/SignNav/SignNav"
+// import SearchForm from "components/Commons/SearchForm"
+// import Notification from "components/Commons/Notification"
+// import Alarm from "components/Commons/Alarm"
 
 import logo from "source/logo.png"
 import zoom from "source/zoom.svg"
 import alarm from "source/alarm.png"
 
 // CSS
-const Head = styled.header``
-const MenuItem = styled.span``
+// const Head = styled.header``
+// const MenuItem = styled.span``
 const Menu = styled.div`
     z-index: 900;
     justify-content: space-between;
@@ -38,11 +40,12 @@ const Menu = styled.div`
 `
 
 class Header extends Component {
+    static contextType = MenuContext
     render() {
         return (
-            <Menu className={(this.props.hidemenu ? " hidemenu" : "")}>
+            <Menu className={(this.context ? " hidemenu" : "")}>
                 <ul className={"menu"} style={{ minWidth: "523px", margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
-                    <li style={{ minWidth: "55px", height: "55px", marginLeft: "10px" }}><a href="/"><img style={{ width: "55px", height: "55px" }} src={logo} /></a></li>
+                    <li style={{ minWidth: "55px", height: "55px", marginLeft: "10px" }}><a href="/"><img alt="logo" style={{ width: "55px", height: "55px" }} src={logo} /></a></li>
                     <li style={{ minWidth: "55px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/design') ? { color: "red" } : { color: "#707070" }} href="/design">디자인</a></li>
                     <li style={{ minWidth: "37px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/group') ? { color: "red" } : { color: "#707070" }} href="/group">그룹</a></li>
                     <li style={{ minWidth: "74px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/designer') ? { color: "red" } : { color: "#707070" }} href="/designer">디자이너</a></li>

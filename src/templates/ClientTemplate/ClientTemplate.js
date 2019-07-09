@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import HeaderContainer from "containers/Commons/HeaderContainer"
 import Footer from "components/Commons/Footer"
 import styled from 'styled-components'
+import MenuContext from "Global/Context/GlobalContext"
 
 const ContentContainer = styled.div`
     top: 55px;
@@ -28,21 +29,18 @@ class ClientTemplate extends Component {
         setTimeout(() => { this.setState({ scroll: false }) }, 1500);
     }
     checkScrollUp = (obj) => {
-
         const currentScrollPos = obj.scrollTop
         const prevScrollPos = this.state.prevScroll
         const { hidemenu, whensmall } = this.state
 
         if (hidemenu === false) {
             if (currentScrollPos > whensmall * 2) {
-                if (prevScrollPos < currentScrollPos) {
-                    console.log("hide")
+                if (prevScrollPos < currentScrollPos) { // console.log("hide")
                     this.setState({ hidemenu: true })
                 }
             }
         } else {
-            if (prevScrollPos > currentScrollPos) {
-                console.log("show")
+            if (prevScrollPos > currentScrollPos) { // console.log("show")
                 this.setState({ hidemenu: false })
             }
         }
@@ -54,20 +52,21 @@ class ClientTemplate extends Component {
         this.checkIsOutScroll(obj)
     }
     render() {
-        console.log(this.props.children)
         return (
             <Fragment>
-                <HeaderContainer hidemenu={this.state.hidemenu} />
-                <ContentContainer className={
-                    (this.state.scroll ? "partial-scroll-on" : "partical-scroll-none") +
-                    (this.state.hidemenu ? " hidemenu" : "")} onScroll={this.handleScroll}>
+                <MenuContext.Provider value={this.state.hidemenu}>
+                    <HeaderContainer />
+                    <ContentContainer className={
+                        (this.state.scroll ? "partial-scroll-on" : "partical-scroll-none") +
+                        (this.state.hidemenu ? " hidemenu" : "")} onScroll={this.handleScroll}>
 
-                    <div style={{ width: "1920px" }}>
-                        {this.props.children}
-                        <Footer />
-                    </div>
+                        <div style={{ width: "1920px" }}>
+                            {this.props.children}
+                            <Footer />
+                        </div>
 
-                </ContentContainer>
+                    </ContentContainer>
+                </MenuContext.Provider>
             </Fragment>)
     }
 }

@@ -1,94 +1,13 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import StyleGuide from "opendesign_style"
+// import StyleGuide from "opendesign_style"
 
 import forked from "source/forked.svg"
 import iForked from "source/forked_icon_white.png"
 import iThumbUp from "source/thumbup_icon_white.png"
 import iView from "source/view_icon_white.png"
 
-// css styling
-
-const Designli = styled.li`
-  width: 100%;
-  margin: 0 auto 2rem;
-  font-size: 13px;
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: #fff;
-  border: 1px solid #a0a0a0;
-  text-align: left;
-  list-style-type: none;
-`;
-
-const ImgPart = styled.div`
-  width: 100%;
-  height: 140px;
-  overflow: hidden;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 3px 3px;
-  div.icon-span{
-    border-radius: 15%;
-    background-color:#FFF;
-    width: 23px;
-    height: 23px;
-    box-shadow: 0px 0.2px ${StyleGuide.color.grayScale.scale7};
-  }
-  i.icon-fork{
-    color: ${StyleGuide.color.main.dark};
-  }
-`;
-
-const TextPart = styled.div`
-  padding: 10px 10px;
-  font-size: ${StyleGuide.font.size.paragraph};
-  & .title {
-    font-weight: bold;
-    line-height: 20px;
-    height: 20px;
-    color: ${StyleGuide.color.grayScale.scale7};
-    font-size: 16px;
-  }
-  & .userName {
-    line-height: 1.35;
-    margin: 5px 0;
-    color: ${StyleGuide.color.grayScale.scale6};
-  }
-  & .cate {
-    color: ${StyleGuide.color.main.basic};
-    font-weight: 300;
-    font-size: ${StyleGuide.font.size.small};
-  }
-  & .update {
-    color: ${StyleGuide.color.grayScale.scale7};
-    padding-left : 10px;
-    float: right;
-  }
-`;
-
-const Count = styled.div`
-  background-color: #fff;
-  padding: 5px 10px;
-  color: ${StyleGuide.color.grayScale.scale6};
-  border-top: 1px solid ${StyleGuide.color.grayScale.scale1};
-  font-weight: 400;
-  font-size: 12px;
-  & div {
-    float: left;
-    padding-right: 10px;
-  }
-  &::after{
-    display: block;
-    content: "";
-    clear: both;
-  }
-  & .fork{
-    transform: translateY(25%) rotate(90deg);
-  }
-`;
-
+// css 
 const DesignElement = styled.div`
     min-width:330px;
     min-height:330px;
@@ -118,6 +37,7 @@ const DesignElement = styled.div`
 `
 class Design extends Component {
   state = { info: { title: "캡스톤 디자인 2019", author: "진아", counter: { view: 220, thumbup: 220, forked: 220 }, category: "패션" } }
+
   render() {
     const isForked = this.props.forked
     const info = this.state.info
@@ -191,4 +111,3 @@ export default Design
 //     )
 //   }
 // }
-

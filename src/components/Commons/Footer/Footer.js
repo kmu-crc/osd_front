@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+// import styled from 'styled-components'
+// import { Link } from 'react-router-dom'
 
 class Footer extends Component {
     render() {
