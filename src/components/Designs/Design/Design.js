@@ -5,7 +5,7 @@ import styled from "styled-components"
 import forked from "source/forked.svg"
 import iForked from "source/forked_icon_white.png"
 import iThumbUp from "source/thumbup_icon_white.png"
-import iView from "source/view_icon_white.png"
+import IconView from "source/IconView"
 
 // css 
 const DesignElement = styled.div`
@@ -51,11 +51,12 @@ class Design extends Component {
         </div>
         <div style={{ marginTop: "9px", display: "flex", justifyContent: "space-between" }}>
           <div style={{ marginLeft: "24.92px", fontWeight: "500", fontSize: "15px" }}>
-            <img style={{ width: "13.83px", height: "9.16px", marginRight: "4.25px" }} src={iView} />
+            <IconView />
+            {/* <img alt="icon" style={{ width: "13.83px", height: "9.16px", marginRight: "4.25px" }} src={iView} /> */}
             <span style={{ marginRight: "4.25px" }}>{info.counter.view}</span>
-            <img style={{ width: "12px", height: "12px", marginRight: "4.25px" }} src={iThumbUp} />
+            <img alt="icon" style={{ width: "12px", height: "12px", marginRight: "4.25px" }} src={iThumbUp} />
             <span style={{ marginRight: "4.25px" }}>{info.counter.thumbup}</span>
-            <img style={{ width: "13px", height: "13px", marginRight: "4.25px" }} src={iForked} />
+            <img alt="icon" style={{ width: "13px", height: "13px", marginRight: "4.25px" }} src={iForked} />
             <span >{info.counter.forked}</span>
           </div>
           <div style={{ marginRight: "31px", width: "37px", height: "29px", fontSize: "20px", fontWeight: "300", color: "#F00" }}>{info.category}</div>
