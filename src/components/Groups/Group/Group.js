@@ -5,7 +5,7 @@ import noimg from "source/noimg.png"
 import forked from "source/forked.svg"
 import iForked from "source/forked_icon_black.png"
 import iThumbUp from "source/thumbup_icon_black.png"
-import iView from "source/view.svg"
+// import iView from "source/view.svg"
 import IconView from "source/IconView"
 
 const GroupComp = styled.div`
@@ -81,7 +81,7 @@ class Group extends Component {
                     <div style={{ marginTop: "23px", marginLeft: "0.08px", width: "167px", fontWeight: "700" }}>캡스톤 디자인 2019</div>
                     <div style={{ marginTop: "11px", marginLeft: "0.08px", width: "516px", lineHeight: "35px", height: "69px", fontWeight: "100" }}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </div>
                     <div style={{ marginTop: "21px", marginLeft: "0.08px", width: "291px", fontWeight: "300" }}>진아님의 그룹</div>
-                    <div style={{ marginTop: "17px", display: "flex", justifyContent: "space-start", width: "291px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", display: "flex", alignItems: "center" }}>
+                    <div style={{ marginTop: "17px", display: "flex", justifyContent: "space-start", width: "291px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                         <div style={{ marginRight: "4.25px" }}><IconView width="13.83px" height="9.16px" fill="black" opacity="0.55" /></div>
                         <div style={{ marginRight: "8px" }}>220</div>
                         <div style={{ marginRight: "4.25px" }}><img alt="icon" style={{ opacity: "0.55", width: "12px", height: "12px" }} src={iThumbUp} /></div>

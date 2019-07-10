@@ -1,5 +1,6 @@
-import React, { Component } from "react"
-import styled from "styled-components"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+// import { NavLink } from 'react-router-dom'
 // import StyleGuide from "opendesign_style"
 
 import forked from "source/forked.svg"
@@ -20,8 +21,8 @@ const DesignElement = styled.div`
     font-size: 20px;
     font-family: "Noto Sans KR";
     .forked {
-      position: relative;
-      margin-left: 263.93px;
+      position: absolute;
+      margin-left: 266px;
       margin-top: 0px;
       width: 32.63px;
       height: 70.48px;
@@ -36,32 +37,28 @@ const DesignElement = styled.div`
     }
 `
 class Design extends Component {
-  state = { info: { title: "캡스톤 디자인 2019", author: "진아", counter: { view: 220, thumbup: 220, forked: 220 }, category: "패션" } }
 
   render() {
     const isForked = this.props.forked
-    const info = this.state.info
 
     return (
-      <DesignElement>
-        {isForked ? <div className="forked" /> : <div className="not" />}
-        <div style={{ width: "167px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "136.45px" }}>
+      <DesignElement >
+        {isForked && <div className="forked" />}
+        <div style={{ position: "absolute", marginLeft: "262px", marginTop: "285px", width: "37px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>패션</div>
+        <div style={{ width: "167px", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
           <div style={{ fontSize: "20px", fontWeight: "700" }}>캡스톤 디자인 2019</div>
           <div style={{ fontSize: "20px", fontWeight: "300" }}>진아</div>
         </div>
-        <div style={{ marginTop: "9px", display: "flex", justifyContent: "space-between" }}>
-          <div style={{ marginLeft: "24.92px", fontWeight: "500", fontSize: "15px" }}>
-            <IconView />
-            {/* <img alt="icon" style={{ width: "13.83px", height: "9.16px", marginRight: "4.25px" }} src={iView} /> */}
-            <span style={{ marginRight: "4.25px" }}>{info.counter.view}</span>
-            <img alt="icon" style={{ width: "12px", height: "12px", marginRight: "4.25px" }} src={iThumbUp} />
-            <span style={{ marginRight: "4.25px" }}>{info.counter.thumbup}</span>
-            <img alt="icon" style={{ width: "13px", height: "13px", marginRight: "4.25px" }} src={iForked} />
-            <span >{info.counter.forked}</span>
-          </div>
-          <div style={{ marginRight: "31px", width: "37px", height: "29px", fontSize: "20px", fontWeight: "300", color: "#F00" }}>{info.category}</div>
+        <div style={{ marginLeft: "24.92px", marginTop: "14px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+          <div style={{ marginRight: "4.25px" }}><IconView width="13.83px" height="9.16px" fill="white" /></div>
+          <div style={{ marginRight: "6px" }}>220</div>
+          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "10px", height: "10px" }} src={iThumbUp} /></div>
+          <div style={{ marginRight: "6px" }}>220</div>
+          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "13px", height: "13px" }} src={iForked} /></div>
+          <div style={{ marginRight: "0px" }}>220</div>
         </div>
-      </DesignElement>)
+      </DesignElement>
+    )
   }
 }
 export default Design

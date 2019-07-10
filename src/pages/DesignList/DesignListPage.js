@@ -33,7 +33,7 @@ class Category extends Component {
                 {this.props.list.map((element, idx) => {
                     return (<div key={idx} style={{
                         color: "red", fontFamily: "Noto Sans KR",
-                        fontSize: "20px", fontWeight: "300", marginRight: "30px"
+                        fontSize: "20px", fontWeight: "300", marginRight: "30px", cursor: "pointer"
                     }}
                         onClick={() => this.changeCategory(idx)}>{element}</div>)
                 })}

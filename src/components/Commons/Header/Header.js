@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import MenuContext from "Global/Context/GlobalContext"
 
-// import SignNav from "components/Commons/SignNav/SignNav"
 // import SearchForm from "components/Commons/SearchForm"
 // import Notification from "components/Commons/Notification"
 // import Alarm from "components/Commons/Alarm"
@@ -11,6 +10,22 @@ import MenuContext from "Global/Context/GlobalContext"
 import logo from "source/logo.png"
 import zoom from "source/zoom.svg"
 import alarm from "source/alarm.png"
+import SignInModal from '../SignNav/SignInModal';
+
+// import SignNav from "components/Commons/SignNav/SignNav"
+class SignNav extends Component {
+    state = { signin_modal: false }
+    openModal = () => { this.setState({ signin_modal: true }) }
+    handleClose = () => { this.setState({ signin_modal: false }); console.log("close") }
+    render() {
+        return (
+            <>
+                {this.state.signin_modal && <SignInModal open={this.state.signin_modal} close={this.handleClose} />}
+                <div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>로그인</div>
+            </>
+        )
+    }
+}
 
 // CSS
 // const Head = styled.header``
@@ -51,10 +66,12 @@ class Header extends Component {
                     <li style={{ minWidth: "74px", height: "29px", marginLeft: "50px", marginTop: "11px" }}><a style={(window.location.pathname === '/designer') ? { color: "red" } : { color: "#707070" }} href="/designer">디자이너</a></li>
                 </ul>
                 <ul style={{ margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
-                    <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}><input style={{ margin:"0 0", background: `url(${zoom})`, backgroundSize: "21.49px 21.49px", borderRadius: "20px", border: "1.5px solid #707070", backgroundRepeat: "no-repeat", backgroundPosition: "right 12.7px top 4px", textIndent: "10px", width: "327px", height: "36px" }} /></li>
+                    <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}><input style={{ margin: "0 0", background: `url(${zoom})`, backgroundSize: "21.49px 21.49px", borderRadius: "20px", border: "1.5px solid #707070", backgroundRepeat: "no-repeat", backgroundPosition: "right 12.7px top 4px", textIndent: "10px", width: "327px", height: "36px" }} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}><div style={{ background: `url(${alarm})`, width: "34px", height: "34px", backgroundSize: "100% 100%", opacity: ".5", backgroundRepeat: "no-repeat", backgroundPosition: "center center", border: "none" }} /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}><div style={{ width: "100%", height: "100%", borderBottom: "1.5px solid red", color: "red" }}>디자인 등록</div></li>
-                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}><div style={{ margin: "0", padding: "0", cursor: "pointer" }}>로그인</div></li>
+                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
+                        <SignNav />
+                    </li>
                 </ul>
             </Menu>
         )
