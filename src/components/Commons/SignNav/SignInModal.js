@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal} from 'semantic-ui-react'
+import { Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 // import close from "source/close_white.png"
@@ -26,6 +26,7 @@ font-family: Noto Sans KR;
 class SignInModal extends Component {
     _signin = () => {
         let success = true
+        console.log(success, "signed")
         this.props.signin(success)
     }
     onClose = () => { this.props.close() }
@@ -38,12 +39,13 @@ class SignInModal extends Component {
                     <div className="title">OPEN SOURCE DESIGN, OPEN DESIGN</div>
                     <form style={{ marginTop: "136px", marginLeft: "225px" }} onSubmit={this._signin}>
                         <div style={{ marginLeft: "0px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left", width: "56px", height: "29px" }}>아이디</div>
-                        <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px" }}><input style={{ textIndent: "35px", width: "708px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", borderRadius: "15px", backgroundColor: "#EFEFEF" }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." /></div>
+                        <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}><input style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." /></div>
                         <div style={{ marginTop: "53px", marginLeft: "7px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left", width: "74px", height: "29px" }}>비밀번호</div>
-                        <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px" }}><input style={{ textIndent: "35px", width: "708px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", borderRadius: "15px", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요" /></div>
-                        <div style={{ width: "56px", height: "29px", borderBottom: "1.5px solid red", marginTop: "65px", marginLeft: "653px", color: "#FF0000", fontWeight: "700", fontSize: "20px", lineHeight: "29px", textAlign: "left" }} >로그인</div>
+                        {/* <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px" }}><input style={{ textIndent: "35px", width: "708px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", borderRadius: "15px", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요" /></div> */}
+                        <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}><input style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요." /></div>
+                        <div style={{ marginTop: "65px", marginLeft: "653px", width: "56px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer", color: "#FF0000", fontWeight: "700", fontSize: "20px", lineHeight: "29px", textAlign: "left" }} onClick={this._signin}>로그인</div>
                         <div style={{ marginTop: "65px", marginLeft: "7px", width: "178px", height: "29px" }} >
-                            <Link style={{ fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left" }} to="/findidpw" onClick={this.onClose}>아이디/비밀번호 찾기</Link></div>
+                            <Link style={{ fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left" }} to="/findidpw" onClick={this._signin}>아이디/비밀번호 찾기</Link></div>
                         <div style={{ marginTop: "65px", marginLeft: "7px", lineHeight: "35px", width: "203px", height: "64px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }}>
                             아직 계정이 없으신가요?<br /><Link style={{ color: "#FF0000" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
                     </form>
