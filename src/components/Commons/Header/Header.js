@@ -6,38 +6,11 @@ import MenuContext from "Global/Context/GlobalContext"
 // import SearchForm from "components/Commons/SearchForm"
 // import Notification from "components/Commons/Notification"
 // import Alarm from "components/Commons/Alarm"
+import SignNav from "components/Commons/SignNav/SignNav"
 
 import logo from "source/logo.png"
 import zoom from "source/zoom.svg"
 import alarm from "source/alarm.png"
-import SignInModal from '../SignNav/SignInModal'
-
-// import SignNav from "components/Commons/SignNav/SignNav"
-class SignNav extends Component {
-    state = { is_signed: false, signin_modal: false }
-    openModal = () => { this.setState({ signin_modal: true }) }
-    openUserMenu = () => { this.setState({ user_popup: true }) }
-    handleClose = () => { this.setState({ signin_modal: false }) }
-    signin = (success) => {
-        this.setState({ is_signed: success })
-        this.handleClose()
-    }
-    render() {
-        return (
-            <>
-                {this.state.user_popup &&
-                    <div style={{ border: "1px solid red", backgroundColor: "#FFF", position: "absolute", zIndex: "903" }}>
-                        <div>마이페이지</div>
-                        <div>로그아웃</div>
-                    </div>}
-                {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signin={this.signin} close={this.handleClose} />}
-                {this.state.is_signed
-                    ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer" }}>진아진아진아</div>)
-                    : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>로그인</div>)}
-            </>
-        )
-    }
-}
 
 // CSS
 // const Head = styled.header``
@@ -88,8 +61,7 @@ class Header extends Component {
                         <div style={{ background: `url(${alarm})`, width: "34px", height: "34px", backgroundSize: "100% 100%", opacity: ".5", backgroundRepeat: "no-repeat", backgroundPosition: "center center", border: "none" }} /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <div style={{ width: "100%", height: "100%", borderBottom: "1.5px solid red", color: "red" }}>디자인 등록</div></li>
-                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
-                        <SignNav /></li>
+                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}><SignNav /></li>
                 </ul>
             </Menu>
         )
