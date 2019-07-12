@@ -1,33 +1,31 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Icon } from 'semantic-ui-react'
-// todo:
-// border: 1.5px solid #707070;
+import zoom from "source/zoom.svg"
+
 const SearchContainer = styled.div`
-    width: 327px;
-    height: 30px;
+    background-color: #FFFFFF;
     border-radius: 20px;
-    box-shadow: 0px 0px #888888;
-    justfy-content: space-between;
+    border: 1.5px solid #707070;
+    width: 327px;
+    height: 36px;
+    background: url(${zoom});
+    background-size: 21.49px 21.49px;
+    background-repeat: no-repeat;
+    background-position: right 12.7px top 4px;
+    &:focus{
+        outline: 1.5px solid red;
+    }
     input {
-        text-indent: 5px;
-        border: 1px solid #707070;
-        border-radius: 20px;
+        outline: none;
+        width: 280px;
+        border: none;
+        margin: 0px 10px;
     }
-    .search-icon {
-        paddding-top: 6.11px;
-        position: absolute;
-        width: 21.49px;
-        height: 21.49px;
-        transform: translateX(-170%);
-    }
-    `
-// right: 12.7px;
+`
 class SearchForm extends Component {
     state = {}
     _search = () => { }
     _handleKeyDown = (e) => {
-
         if (e.key === 'Enter') {
             console.log('Enter')
         }
@@ -35,10 +33,11 @@ class SearchForm extends Component {
     render() {
         return (
             <SearchContainer onKeyDown={this._handleKeyDown}>
-                <input type="text" style={{ width: "327px" }} placeholder="Search..." />
-                <Icon onClick={this._search} className="search-icon" name="search" />
+                <input type="text" placeholder="Search..." />
             </SearchContainer>)
     }
 }
+
+
 
 export default SearchForm
