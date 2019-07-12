@@ -1,1 +1,1 @@
-export {default} from "./CheckAuth";
+export { default } from "./CheckAuth"

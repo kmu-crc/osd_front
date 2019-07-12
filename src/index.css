@@ -1,95 +1,55 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif');
-
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700&display=swap&subset=korean');
+/* Noto Sans KR
+  (100, Thin) 
+  (300, Light) 
+  (400, Regular) 
+  (500, Medium) 
+  (700, Bold) 
+*/
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans', sans-serif;
-  background-color: #F8FAFB;
-  color: #4D5256;
-}
-h1, h2, h3, h4, h5, h6{
-  color: #292A2B;
+  font-family: -apple-system, BlinkMacSystemFont,"Noto Sans KR", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
-* {
-  box-sizing: border-box;
+.partial-scroll-on{
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s
+}
+.partical-scroll-none::-webkit-scrollbar {
+  position: absolute;
+  width: 0px;
+}
+.partical-scroll-none::-webkit-scrollbar * {
+  background: transparent; 
+}
+.partical-scroll-none::-webkit-scrollbar-thumb {
+  background: transparent;
+ 
+}
+.partial-scroll-on::-webkit-scrollbar {
+  position: absolute;
+  width: 3.9px;
+}
+.partial-scroll-on::-webkit-scrollbar * {
+  background: transparent;
+}
+.partial-scroll-on::-webkit-scrollbar-thumb {
+  background: rgba(255,0,0,0.45) !important;
 }
 
-ul, ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+li {
+  /* border: 1px solid royalblue; */
 }
-
-.clear {
-  display: block;
-  clear: both;
-}
-
-.clearFix::after {
-  display: block;
-  clear: both;
-  content: "";
-}
-
-a, button {
-  cursor: pointer;
-}
-
-.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
-  display: flex!important;
-}
-
-.ui.modal.transition.visible.active{
-  margin: 1rem auto!important
-}
-.ui.form .fields, .ui.form .field{
-  margin-bottom: 3rem;
-}
-
-.ui.form .field>label {
-  margin: 0 0 0.8rem 0;
-}
-
-label.checked::after{
-  content: "\f00c";
-}
-
-.ui.form textarea:not([rows]){
-  height: initial;
-}
-.ui.grid>.column:not(.row), .ui.grid>.row>.column{
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-@media only screen and (max-width: 1919px) and (min-width: 1200px){
-  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>[class*="two wide large screen"].column.largeCustom {
-      width: 20%!important;
-  }
-}
-
-/* @media only screen and (max-width: 1699px) and (min-width: 1400px){
-  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>[class*="two wide large screen"].column.largeCustom {
-      width: 16.66666%!important;
-  }
-}*/
-@media only screen and (min-width: 1920px){
-  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
-  .ui.grid>[class*="two wide large screen"].column.largeCustom {
-      width: 20%!important;
-  }
+ul {
+  /* border: 1px solid red; */
 }
