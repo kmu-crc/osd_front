@@ -29,8 +29,8 @@ class SignInModal extends Component {
         // todo: request login!
         this.props.signin(success)
     }
-    findIDPW = () =>{
-        console.log("not yet!")
+    findIDPW = () => {
+        this.props.close()
     }
     onClose = () => { this.props.close() }
     render() {
