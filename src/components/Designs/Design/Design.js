@@ -28,13 +28,6 @@ const DesignElement = styled.div`
       height: 70.48px;
       background-image: url(${forked});
     }
-    .not{
-      position: relative;
-      margin-left: 263.93px;
-      margin-top: 0px;
-      width: 32.63px;
-      height: 70.48px;
-    }
 `
 class Design extends Component {
 
