@@ -16,7 +16,16 @@ const Options = styled.div`
     font-weight: 500;
     line-height: 29px;
     text-align: middle;
-`
+`;
+const TextWrapper = styled.div`
+    position: relative;
+    padding-top: 27px;
+    text-align: center;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    font-weight: 700;
+    color: red;
+`;
 class OrderOption extends Component {
     state = { options: orderoption }
     handleClicked = (idx) => {
@@ -50,14 +59,26 @@ class DesignerListPage extends Component {
         console.log("designer:", this.props)
         return (
             <>
+                <TextWrapper>디자이너(333)</TextWrapper>
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
-                <div>
-                    <Designer />
 
-                </div>
+                <div style={{display:"flex", paddingTop:"29px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+                <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+                <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+                <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+                <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+                <div style={{display:"flex", paddingTop:"80px",paddingBottom:"66px",marginLeft:"10px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+
             </>
         )
 
     }
 }
+/*
+                  <div style = {{display:"flex", justifyContent:"space-between", height:"230px"}}><Designer /> <Designer /> <Designer /></div>
+                  <div style = {{display:"flex", justifyContent:"space-between", height:"230px"}}><Designer /> <Designer /> <Designer /></div>
+                  <div style = {{display:"flex", justifyContent:"space-between", height:"230px"}}><Designer /> <Designer /> <Designer /></div>
+                  <div style = {{display:"flex", justifyContent:"space-between", height:"230px"}}><Designer /> <Designer /> <Designer /></div>
+                  <div style = {{display:"flex", justifyContent:"space-between", height:"230px"}}><Designer /> <Designer /> <Designer /></div>
+              */
 export default DesignerListPage

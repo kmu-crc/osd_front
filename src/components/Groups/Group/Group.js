@@ -42,7 +42,7 @@ const GroupComp = styled.div`
         margin-left: 53.92px;
         padding: 0 0;
     }
-
+}
 .category {
     position: absolute;
     margin-left: 763px;
