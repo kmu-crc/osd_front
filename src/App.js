@@ -48,6 +48,10 @@ function App() {
           <Route path="/messages" component={MessagesPage} />
           <Route path="/signup" component={SignUpPage} />
           <Route component={NotFoundPage} />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 390cdf5... MemberList develop
         </Switch>
       </ClientTemplate>
     </BrowserRouter>

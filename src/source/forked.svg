@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32.626" height="70.483" viewBox="0 0 32.626 70.483">
   <g id="그룹_165" data-name="그룹 165" transform="translate(-275.929 -577.071)">
     <path id="패스_153" data-name="패스 153" d="M-121.169,504v32.626h70.483v-1.109l-16.1-14.989,16.1-15.267v-.831Z" transform="translate(812.555 698.24) rotate(90)" fill="red"/>
     <image id="baseline_timeline_white_48dp" width="30" height="30" transform="translate(277.169 594)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAByUlEQVR4Ae3aQUpCYRTF8TcTwiWELcOJo5ZUbUHbQW8N0SKqeT6h2kFERAaaaEXqv2EN9ARxP7jC+Y0VzpHL5Xm1sozMzMzMzMzMzIx9jrhmzJgrjtnfrfBtzlnx24pz9nYlfosbNrmhtRsFztim3oFZpcOSbb44SD+r9FH66WeVIUoTWaAuMatMUCZx8TusSswqC5RpJSWYVe5QRnEFmhKzyiEfKIO4AtP4WaWHjr+kE1fgE2Xxr/hztLqKwz3KfYH4Q7Gew2d1Ti80/poL2vHxAyqI+HMegDGXnOhHlPj4uoKOr99dPr4IkT++CJI6/oxnAJ6YbQzTTR7/JyBdZvoVv9FNFv/vCuKVCeKLz1UUzRZfTPaMbv74usIbjwA8JoovKwhp4usKqeKLzS6e7nPG78U+9CWNryskiB/0Jf02QXyNd5SPyBvnMde8Ag8sRPzYL//TuBvnusys0qCMom6cxTYFg+J3Hupy8fW5nCWdoBunjp/6BwsGpfc0LYYF7zw05fc0bS5YF7rzMEV5D17TL+F3HuYokyo7RihN/gKnKP0qgYA9nRo125xVCQTs6eTEns5J7OkrJrxwmfXvLWZmZmZmZmZmZt8Oaz51z497wwAAAABJRU5ErkJggg=="/>
   </g>
 </svg>
+=======
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32.626" height="70.483" viewBox="0 0 32.626 70.483">
+  <g id="그룹_165" data-name="그룹 165" transform="translate(-275.929 -577.071)">
+    <path id="패스_153" data-name="패스 153" d="M-121.169,504v32.626h70.483v-1.109l-16.1-14.989,16.1-15.267v-.831Z" transform="translate(812.555 698.24) rotate(90)" fill="red"/>
+    <image id="baseline_timeline_white_48dp" width="30" height="30" transform="translate(277.169 594)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAByUlEQVR4Ae3aQUpCYRTF8TcTwiWELcOJo5ZUbUHbQW8N0SKqeT6h2kFERAaaaEXqv2EN9ARxP7jC+Y0VzpHL5Xm1sozMzMzMzMzMzIx9jrhmzJgrjtnfrfBtzlnx24pz9nYlfosbNrmhtRsFztim3oFZpcOSbb44SD+r9FH66WeVIUoTWaAuMatMUCZx8TusSswqC5RpJSWYVe5QRnEFmhKzyiEfKIO4AtP4WaWHjr+kE1fgE2Xxr/hztLqKwz3KfYH4Q7Gew2d1Ti80/poL2vHxAyqI+HMegDGXnOhHlPj4uoKOr99dPr4IkT++CJI6/oxnAJ6YbQzTTR7/JyBdZvoVv9FNFv/vCuKVCeKLz1UUzRZfTPaMbv74usIbjwA8JoovKwhp4usKqeKLzS6e7nPG78U+9CWNryskiB/0Jf02QXyNd5SPyBvnMde8Ag8sRPzYL//TuBvnusys0qCMom6cxTYFg+J3Hupy8fW5nCWdoBunjp/6BwsGpfc0LYYF7zw05fc0bS5YF7rzMEV5D17TL+F3HuYokyo7RihN/gKnKP0qgYA9nRo125xVCQTs6eTEns5J7OkrJrxwmfXvLWZmZmZmZmZmZt8Oaz51z497wwAAAABJRU5ErkJggg=="/>
+  </g>
+</svg>
+>>>>>>> 390cdf5... MemberList develop
