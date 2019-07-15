@@ -43,11 +43,11 @@ class Design extends Component {
           <div style={{ fontSize: "20px", fontWeight: "300" }}>진아</div>
         </div>
         <div style={{ marginLeft: "24.92px", marginTop: "14px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-          <div style={{ marginRight: "4.25px" }}><IconView width="13.83px" height="9.16px" fill="white" /></div>
+          <div style={{ marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
           <div style={{ marginRight: "6px" }}>220</div>
-          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "10px", height: "10px" }} src={iThumbUp} /></div>
+          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "11px", height: "11px" }} src={iThumbUp} /></div>
           <div style={{ marginRight: "6px" }}>220</div>
-          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "13px", height: "13px" }} src={iForked} /></div>
+          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "22px", height: "11px" }} src={iForked} /></div>
           <div style={{ marginRight: "0px" }}>220</div>
         </div>
       </DesignElement>
