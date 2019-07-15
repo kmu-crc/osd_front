@@ -3,8 +3,11 @@ import banner from "source/tmp_main_banner.png"
 import context from "source/context_banner.png"
 import Design from "components/Designs/Design"
 import styled from 'styled-components'
+<<<<<<< HEAD
 import MemberList from "../../components/Commons/MemberList/MemberList";
 const Memberlist = MemberList;
+=======
+>>>>>>> 9e041528fd422b3137dac7f398a8a83f4ef35871
 
 const Textwrapper = styled.div`
     margin-top: 60.5px;
@@ -63,7 +66,10 @@ class MainPage extends Component {
                 <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
                 <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
                 <div style={{ marginLeft: "10px", paddingBottom: "68px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
+<<<<<<< HEAD
                 <MemberList />
+=======
+>>>>>>> 9e041528fd422b3137dac7f398a8a83f4ef35871
             </Fragment>)
     }
 }
