@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+node_modules
+build
+.DS_Store
+.env.local
+.vscode
+deploy.sh
+_backup_
+=======
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -24,3 +33,4 @@ yarn-error.log*
 
 #eidtor
 .idea
+>>>>>>> 9e041528fd422b3137dac7f398a8a83f4ef35871
