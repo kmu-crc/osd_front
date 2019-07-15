@@ -62,7 +62,7 @@ class MainPage extends Component {
                 <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
                 <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
                 <div style={{ marginLeft: "10px", paddingBottom: "68px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
-                
+
             </Fragment>)
     }
 }
