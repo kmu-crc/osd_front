@@ -12,21 +12,21 @@ const List = styled.div`
     }
 `
 const TextArea = styled.textarea`
-padding-top: 13px;
-padding-right: 30px;
-background-color: #EFEFEF;
-border: none;
-resize: none;
-width: 1091px;
-height: 147px;
-font-size: 18px;
-line-height: 27px;
-font-weight: 500;
-text-align: left;
-color: #707070;
-&:focus{
-    outline: 1px solid #707070;
-}
+    padding-top: 13px;
+    padding-right: 60px;
+    background-color: #EFEFEF;
+    border: none;
+    resize: none;
+    width: 1121px;
+    height: 170px;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 500;
+    text-align: left;
+    color: #707070;
+    &:focus{
+        outline: 1px solid #707070;
+    }
 `
 class Messages extends Component {
     render() {
@@ -97,7 +97,7 @@ class Messages extends Component {
                             </div>
                         </div>
                         <div style={{ marginRight: "23px", borderTop: "1px solid #707070", display: "flex" }}>
-                            <div style={{ width: "1091px", height: "170px", marginTop: "10px", marginRight: "10px" }}>
+                            <div style={{ width: "1091px", height: "170px", marginRight: "40px" }}>
                                 <TextArea >
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                 </TextArea>
