@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import SignInModal from '../SignNav/SignInModal'
-import jina from "source/jina.png"
 
 const UserMenu = styled.div`
   display: ${props => props.display};
@@ -20,6 +19,7 @@ const UserMenu = styled.div`
   font-weight: 500;
   padding: 15px;
 `;
+// border: 1px solid blue;
 const UserMenuItem = styled.div`
   cursor: pointer;
   width: 100%;
@@ -66,6 +66,7 @@ class SignNav extends Component {
     }
     render() {
         const info = userinfo
+        const thm_url = "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/8c591282228133.5d1a240959aed.jpg"
         return (
             <>
                 {this.state.user_popup &&
@@ -76,7 +77,7 @@ class SignNav extends Component {
                 {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signin={this.signin} close={this.closeModal} />}
                 {this.state.is_signed
                     ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
-                        <div style={{ marginRight: "10px", borderRadius: "50%", backgroundPosition: "center cetner", backgroundSize: "cover", backgroundColor: "#D6D6D6", width: "30px", height: "30px", backgroundImage: `url(${info.thumbnail}), url(${jina})` }} />{info.nickname}</div>)
+                        <div style={{ marginRight: "10px", borderRadius: "50%", backgroundPosition: "center cetner", backgroundSize: "cover", backgroundColor: "#D6D6D6", width: "30px", height: "30px", backgroundImage: `url(${info.thumbnail}), url(${thm_url})` }} />{info.nickname}</div>)
                     : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>로그인</div>)}
             </>
         )

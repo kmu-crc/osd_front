@@ -3,10 +3,6 @@ import banner from "source/tmp_main_banner.png"
 import context from "source/context_banner.png"
 import Design from "components/Designs/Design"
 import styled from 'styled-components'
-<<<<<<< HEAD
-=======
-
->>>>>>> 390cdf5... MemberList develop
 
 const Textwrapper = styled.div`
     margin-top: 60.5px;
@@ -65,10 +61,7 @@ class MainPage extends Component {
                 <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
                 <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
                 <div style={{ marginLeft: "10px", paddingBottom: "68px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
-<<<<<<< HEAD
-=======
-                
->>>>>>> 390cdf5... MemberList develop
+
             </Fragment>)
     }
 }
