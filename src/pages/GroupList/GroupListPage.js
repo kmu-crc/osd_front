@@ -26,12 +26,15 @@ class OrderOption extends Component {
         const opts = this.state.options
         return (
             <Options>
+                <div style={{color: "#FF0000", marginRight: "50px", fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", cursor: "pointer", borderBottom: "1.5px solid red" }}>
+                    그룹 등록
+                </div>
                 {opts.map((option, key) => {
                     return (
                         <div onClick={() => this.handleClicked(key)} key={key}
                             style={key === this.props.selected
-                                ? { color: "#FF0000", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", borderBottom: "1.5px solid red" }
-                                : { color: "#707070", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px" }}>
+                                ? { color: "#FF0000", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", cursor: "pointer", borderBottom: "1.5px solid red" }
+                                : { color: "#707070", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", cursor: "pointer"}}>
                             {option}
                         </div>
                     )
