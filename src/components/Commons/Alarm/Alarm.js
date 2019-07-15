@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import alarm from "source/alarm.png"
 
 const AlarmContainer = styled.div`
+    cursor: pointer;
     background: url(${alarm});
     width: 34px;
     height: 34px;
@@ -99,7 +100,7 @@ class Alarm extends Component {
                         }
                     </div>
                 </AlarmList>}
-                {alarms && <AlarmLabel left={document.getElementById("alarm")} />}
+                {alarms && <AlarmLabel top={10} left={1200}/>}
                 <AlarmContainer id="alarm" onClick={this.openAlarmList} />
             </>
         )
