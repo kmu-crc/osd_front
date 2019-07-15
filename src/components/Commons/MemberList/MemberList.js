@@ -4,10 +4,24 @@ import styled from 'styled-components'
 const MemberBox = styled.div`
     font-family: Noto Sans KR;
     width:424px;
-    height:630px;
+    min-height:630px;
+    max-height:630px;
     border: 1px solid red;
+    position:relative;
     
+    
+   
+    overscroll-behavior:contain;
     border-radius: 30px 30px 30px 30px;
+    background-color:white;    
+    .Members{
+        margin-top:30px;
+        overflow:hidden;
+        max-height:570px;
+        :hover{
+            overflow-y:scroll;
+        }
+    }
     .GroupMaker{
         
         position:relative;
@@ -16,9 +30,16 @@ const MemberBox = styled.div`
         border: 0px solid red;
         border-bottom: 1px solid #b8b8b8;
         left:37px;
-        top:27px;
         
     }
+    .GroupMember{
+        position:relative;
+        width:345px;
+        height:80px;
+        left:37px;
+    
+    }
+    
     
     .MemberImage{
         position:absolute;
@@ -43,6 +64,14 @@ const MemberBox = styled.div`
         color:#707070;
         font-weight: 100;
     }
+    .Padding-bottom{
+        position:relative;
+        width:300px;
+        height:35px;
+        bottom:0px;
+        background-color:white;
+    }
+    
 `;
 
 class MemberList extends Component{
@@ -53,12 +82,57 @@ class MemberList extends Component{
 
         return(
             <MemberBox>
-                <div className="GroupMaker">
-                    <div className="MemberImage"></div>
-                    <div className="MemberName">{makerName}</div>
-                    <div className="Status">{status}</div>
+                <div className="Members">
+                    <div className="GroupMaker">
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{makerName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
+
+                    <div className="GroupMember" style={{top:"20px"}}>
+                        <div className="MemberImage"></div>
+                        <div className="MemberName">{memberName}</div>
+                        <div className="Status">{status}</div>
+                    </div>
                 </div>
+
             </MemberBox>
+
 
         )
     }
