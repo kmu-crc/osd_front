@@ -22,7 +22,7 @@ const Content = styled(ContentBox)`
   }
 `;
 
-const MenuContainer = styled(Grid) `
+const MenuContainer = styled(Grid)`
   font-size: 1rem;
 
   &.ui.grid > .row {
@@ -57,7 +57,7 @@ class DesignList extends Component {
     rendering: true
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.GetDesignTotalCountRequest(this.props.cate1, this.props.cate2);
   }
 
@@ -99,12 +99,12 @@ class DesignList extends Component {
 
       if (cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0) {
         const cate1Name = this.props.cate1 && this.props.cate1 !== "null"
-                          ? cate1List[this.props.cate1]
-                          : null;
+          ? cate1List[this.props.cate1]
+          : null;
         const n = parseInt(this.props.cate1, 10);
         const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
-                          ? cate2List[n].filter(sub => sub.value === this.props.cate2)
-                          : null;
+          ? cate2List[n].filter(sub => sub.value === parseInt(this.props.cate2, 10))
+          : null;
         return (
           <Head>
             <span>디자인 </span>
@@ -117,7 +117,7 @@ class DesignList extends Component {
             <span> ({NumberFormat(this.props.Count)})</span>
             <div className="Sorting">
               <Sorting handleClick={this.sortChange}
-                       placeholder={sort} />
+                placeholder={sort} />
             </div>
           </Head>
         );
@@ -131,19 +131,19 @@ class DesignList extends Component {
           <Content>
             <Wrapper>
               <MenuContainer>
-                  <CategoryContainer handleCate1={this.cate1Change}
-                                     handleCate2={this.cate2Change}
-                                     cate1={this.props.cate1}
-                                     cate2={this.props.cate2}/>
+                <CategoryContainer handleCate1={this.cate1Change}
+                  handleCate2={this.cate2Change}
+                  cate1={this.props.cate1}
+                  cate2={this.props.cate2} />
               </MenuContainer>
             </Wrapper>
           </Content>
         </MenuWrap>
         <Content>
-          <Header/>
+          <Header />
           <Wrapper className="listWrap">
             {this.state.rendering &&
-              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>
+              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />
             }
           </Wrapper>
         </Content>

@@ -236,7 +236,7 @@ class GroupDetailNew extends Component {
             </Link>
           </li>
           <li>
-            <button onClick={this.deleteGroup}>삭제</button>
+            <button onClick={this.deleteGroup}>-삭-제-</button>
           </li>
         </SideMenu>
       );
