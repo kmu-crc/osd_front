@@ -76,7 +76,7 @@ const DesignerComp = styled.div`
 
 class Designer extends Component{
     render(){
-        const designer = this.props.data;
+        // const designer = this.props.data;
         const designCount = 5, groupdesignCount = 4;//임시로 지정한 값.
         return(
             <>

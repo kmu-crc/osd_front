@@ -13,6 +13,7 @@ import DesignerDetailPage from "pages/DesignerDetail"
 import CreateGroupPage from "pages/CreateGroup"
 import GroupDetailPage from "pages/GroupDetail"
 import MessagesPage from "pages/Messages"
+import MyPage from "pages/MyPage"
 import SignUpPage from "pages/SignUp"
 import NotFoundPage from "pages/NotFound"
 
@@ -44,9 +45,11 @@ function App() {
           <Route path="/group" component={GroupListPage} />
           <Route path="/createGroup" component={CreateGroupPage} />
           <Route path="/groupDetail" component={GroupDetailPage} />
-          {/* mics. */}
+          {/* personal */}
           <Route path="/messages" component={MessagesPage} />
+          <Route path="/mypage" component={MyPage} />
           <Route path="/signup" component={SignUpPage} />
+          {/* mics. */}
           <Route component={NotFoundPage} />
         </Switch>
       </ClientTemplate>

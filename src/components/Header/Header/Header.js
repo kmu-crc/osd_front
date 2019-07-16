@@ -6,7 +6,7 @@ import MenuContext from "Global/Context/GlobalContext"
 // import SearchForm from "components/Commons/SearchForm"
 // import Notification from "components/Commons/Notification"
 // import Alarm from "components/Commons/Alarm"
-import SignNav from "components/Commons/SignNav/SignNav"
+import SignNav from "components/Header/SignNav/SignNav"
 
 import logo from "source/logo.png"
 import zoom from "source/zoom.svg"
