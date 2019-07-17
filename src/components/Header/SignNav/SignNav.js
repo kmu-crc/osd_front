@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import SignInModal from '../SignNav/SignInModal'
+import SignInModal from './SignInModal'
 import jina from "source/jina.png"
 
 const UserMenu = styled.div`
@@ -53,6 +53,7 @@ class SignNav extends Component {
     }
     gotoMyPage = () => {
         this.setState({ user_popup: null })
+        window.location.href = "/mypage"
     }
 
     myRef = React.createRef()
