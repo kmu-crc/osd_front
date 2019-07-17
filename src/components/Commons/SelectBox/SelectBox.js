@@ -3,20 +3,26 @@ import styled from 'styled-components'
 
 const SelectBoxContainer = styled.div`
 .select-box--container {
-  z-index: 950;
-  border: 1px solid red;
+    z-index: 950;
+    border: 1px solid red;
     position: relative;
     border: 1px solid #EFEFEF;
     height: 29.92px;
     margin: 0px;
     padding: 0px;
-    width: ${(props) => props.width};
+    width: 90%;
+    font-family: Noto Sans KR;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 29px;
+    color: #707070;
   }
   
   .select-box--box {
     background: #EFEFEF;
-    width: ${(props) => props.width};
+    width: 90%;
     margin-top: 10.04px;
+    margin-left: 27px;
   }
   
   .select-box--arrow {
@@ -25,31 +31,15 @@ const SelectBoxContainer = styled.div`
     margin: 0px;
     padding: 0px;
     display: inline-block;
+    float: right;
     background: #EFEFEF;
-    position: absolute;
-    right: 0;
-    top: 0;
   }
   .select-box--arrow-down {
-    position: absolute;
-    top: 10px;
-    left: 8px;
     width: 0; 
     height: 0; 
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 10px solid #707070;
-  }
-  
-  .select-box--arrow-up {
-    position: absolute;
-    top: 10px;
-    left: 8px;
-    width: 0; 
-    height: 0; 
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 10px solid #707070;
   }
 
   .select-box--selected-item {

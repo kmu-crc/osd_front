@@ -13,6 +13,7 @@ import DesignerDetailPage from "pages/DesignerDetail"
 import CreateGroupPage from "pages/CreateGroup"
 import GroupDetailPage from "pages/GroupDetail"
 import MessagesPage from "pages/Messages"
+import MyInfoModifyPage from "pages/MyInfoModifyPage"
 import MyPage from "pages/MyPage"
 import SignUpPage from "pages/SignUp"
 import NotFoundPage from "pages/NotFound"
@@ -48,6 +49,7 @@ function App() {
           {/* personal */}
           <Route path="/messages" component={MessagesPage} />
           <Route path="/mypage" component={MyPage} />
+          <Route path="/myinfomodify" component={MyInfoModifyPage} />
           <Route path="/signup" component={SignUpPage} />
           {/* mics. */}
           <Route component={NotFoundPage} />

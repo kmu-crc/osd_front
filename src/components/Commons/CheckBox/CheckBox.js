@@ -15,7 +15,6 @@ const CheckboxContainer = styled.label`
         line-height: 25px;
         text-align: left;
         margin-left: 49px; 
-        width: 228px;
         height: 27px;
         font-size: 17px;
         font-weight: 500;
@@ -39,8 +38,8 @@ const CheckboxContainer = styled.label`
         position: absolute;
         top: 0;
         left: 0;
-        height: 29px;
-        width: 28px;
+        height: 27px;
+        width: 26px;
         background-color: #FFFFFF;
         box-shadow: inset 0px 0px 0px 0.5px #707070;
         &:after {
