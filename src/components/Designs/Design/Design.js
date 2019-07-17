@@ -28,27 +28,38 @@ const DesignElement = styled.div`
       height: 70.48px;
       background-image: url(${forked});
     }
-`
-class Design extends Component {
+`;
 
+const Design_info = {
+    title:"캡스톤",
+    userName:"진아",
+    categoryName:"패션",
+    like_count:0,
+    children_count:0,
+    view_count:0,
+}
+
+class Design extends Component {
+    state = {data:Design_info};
   render() {
+    const data = this.state.data;
     const isForked = this.props.forked
 
     return (
       <DesignElement >
         {isForked && <div className="forked" />}
-        <div style={{ position: "absolute", marginLeft: "262px", marginTop: "285px", width: "37px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>패션</div>
+        <div style={{ position: "absolute", marginLeft: "262px", marginTop: "285px", width: "37px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
         <div style={{ width: "167px", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
-          <div style={{ fontSize: "20px", fontWeight: "700" }}>캡스톤 디자인 2019</div>
-          <div style={{ fontSize: "20px", fontWeight: "300" }}>진아</div>
+          <div style={{ fontSize: "20px", fontWeight: "700" }}>{data.title}</div>
+          <div style={{ fontSize: "20px", fontWeight: "300" }}>{data.userName}</div>
         </div>
         <div style={{ marginLeft: "24.92px", marginTop: "14px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
           <div style={{ marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
-          <div style={{ marginRight: "6px" }}>220</div>
+          <div style={{ marginRight: "6px" }}>{data.view_count}</div>
           <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "11px", height: "11px" }} src={iThumbUp} /></div>
-          <div style={{ marginRight: "6px" }}>220</div>
+          <div style={{ marginRight: "6px" }}>{data.like_count}</div>
           <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "22px", height: "11px" }} src={iForked} /></div>
-          <div style={{ marginRight: "0px" }}>220</div>
+          <div style={{ marginRight: "0px" }}>{data.children_count}</div>
         </div>
       </DesignElement>
     )

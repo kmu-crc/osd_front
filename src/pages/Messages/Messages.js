@@ -87,7 +87,7 @@ class Messages extends Component {
                             </div>
                             {/* sent */}
                             <div style={{
-                                width: "571px", height: "139px", backgroundColor: "#FFFFFF", borderRadius: "25px", marginBottom: "4px"
+                                width: "571px", height: "139px", backgroundColor: "#FFFFFF", borderRadius: "25px"
                                 , paddingTop: "16px", paddingRight: "25px", paddingBottom: "18px", paddingLeft: "20px"
                                 , marginLeft: "677px", marginBottom: "70px"
                             }}>

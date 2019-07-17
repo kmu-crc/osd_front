@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-//D6D6D6
+import jina from "source/jina.png"
+
+//styled
+
 const DesignerComp = styled.div`
     font-family: Noto Sans KR;
     height:150px;
@@ -13,7 +16,7 @@ const DesignerComp = styled.div`
         background-color: #D6D6D6;
         border-radius: 50%;
         position: absolute;
-         
+        background-size:cover;
         & img {
           width: 100%;
           height: 100%;
@@ -66,27 +69,33 @@ const DesignerComp = styled.div`
         position:absolute;
         font-weight: 100;
     }
-    & img {
-      width: 100%;
-      height: 100%;
-    }
+    
 `;
 
-
+const user_info = {
+    userName : "",
+    designerDescription : "",
+    categoryName : "",
+    designCount:0,
+    groupCount:0,
+    thumbnail:"",
+};
+//`url(${info.thumbnail}), url(${jina})`
 
 class Designer extends Component{
+    state = {data:user_info};
+
     render(){
-        const designer = this.props.data;
-        const designCount = 5, groupdesignCount = 4;//임시로 지정한 값.
+        const designer = this.state.data;
         return(
             <>
                 <DesignerComp>
-                    <div className="ImageBox"></div>
+                    <div className="ImageBox" style={{backgroundImage:`url(${designer.thumbnail}), url(${jina})`}}></div>
                     <div className="TextBox">
-                        <div className="userName">진아진아진아</div>
-                        <div className="description">Lorem ipsum dolor sit amet </div>
-                        <div className="cate">패션</div>
-                        <div className="counts">디자인:&nbsp;{designCount}개 &nbsp; &nbsp; 그룹: {groupdesignCount}개</div>
+                        <div className="userName">{designer.userName}</div>
+                        <div className="description">{designer.designerDescription} </div>
+                        <div className="cate">{designer.categoryName}</div>
+                        <div className="counts">디자인:&nbsp;{designer.designCount}개 &nbsp; &nbsp; 그룹: {designer.groupCount}개</div>
                     </div>
 
                 </DesignerComp>

@@ -5,9 +5,9 @@ import MenuContext from "Global/Context/GlobalContext"
 
 import logo from "source/logo.png"
 // import Notification from "components/Commons/Notification"
-import SearchForm from "components/Commons/SearchForm"
-import Alarm from "components/Commons/Alarm"
-import SignNav from "components/Commons/SignNav/SignNav"
+import Alarm from "components/Header/Alarm"
+import SignNav from "components/Header/SignNav/SignNav"
+import SearchForm from "components/Header/SearchForm"
 
 // CSS
 const Menu = styled.div`

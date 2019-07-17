@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import HeaderContainer from "containers/Commons/HeaderContainer"
-import Footer from "components/Commons/Footer"
+import Footer from "components/Header/Footer"
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
