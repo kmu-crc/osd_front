@@ -3,18 +3,13 @@ import styled from 'styled-components'
 
 import MenuContext from "Global/Context/GlobalContext"
 
-// import SearchForm from "components/Commons/SearchForm"
-// import Notification from "components/Commons/Notification"
-// import Alarm from "components/Commons/Alarm"
-import SignNav from "components/Header/SignNav/SignNav"
-
 import logo from "source/logo.png"
-import zoom from "source/zoom.svg"
-import alarm from "source/alarm.png"
+// import Notification from "components/Commons/Notification"
+import Alarm from "components/Header/Alarm"
+import SignNav from "components/Header/SignNav/SignNav"
+import SearchForm from "components/Header/SearchForm"
 
 // CSS
-// const Head = styled.header``
-// const MenuItem = styled.span``
 const Menu = styled.div`
     z-index: 900;
     justify-content: space-between;
@@ -38,7 +33,12 @@ const Menu = styled.div`
     -o-transition: all 0.45s;
     transition: all 0.45s;
 `
-
+const DesignCreateBtn = styled.div`
+    width: 100%;
+    height: 100%;
+    color: red;
+    border-bottom: 1.5px solid red;
+`
 class Header extends Component {
     static contextType = MenuContext
     render() {
@@ -56,12 +56,13 @@ class Header extends Component {
                 </ul>
                 <ul style={{ margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
                     <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}>
-                        <input style={{ margin: "0 0", background: `url(${zoom})`, backgroundSize: "21.49px 21.49px", borderRadius: "20px", border: "1.5px solid #707070", backgroundRepeat: "no-repeat", backgroundPosition: "right 12.7px top 4px", textIndent: "10px", width: "327px", height: "36px" }} /></li>
+                        <SearchForm /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
-                        <div style={{ background: `url(${alarm})`, width: "34px", height: "34px", backgroundSize: "100% 100%", opacity: ".5", backgroundRepeat: "no-repeat", backgroundPosition: "center center", border: "none" }} /></li>
+                        <Alarm /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
-                        <div style={{ width: "100%", height: "100%", borderBottom: "1.5px solid red", color: "red" }}>디자인 등록</div></li>
-                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}><SignNav /></li>
+                        <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
+                    <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
+                        <SignNav /></li>
                 </ul>
             </Menu>
         )

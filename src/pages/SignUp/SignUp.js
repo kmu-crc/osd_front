@@ -72,17 +72,20 @@ const CheckboxContainer = styled.label`
 
     &:hover input ~ .checkmark {
     }
-    `
-// background-color: #EFEFEF;
-// box-shadow: inset 0px 0px 0px 0.5px #707070;
+`
 
 class SignUpModal extends Component {
-    state = { term_use: false, checked: false, open_term: false, success_signup: false }
+    state = { term_use: false, open_term: false, success_signup: false }
+    componentDidMount() {
+        this.checkbox = React.createRef()
+    }
     openterm = () => {
         this.setState({ open_term: true })
     }
     agree = () => {
-        this.setState({ open_term: false, checked: true })
+        console.log("checkbox", this.checkbox.current.checked)
+        this.checkbox.current.checked = true
+        this.setState({ open_term: false })
     }
     sign = () => {
         // let success = true
@@ -176,7 +179,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>이용약관</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
-                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input type="checkbox" checked={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
+                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input ref={this.checkbox} type="checkbox" /><span className="checkmark" /></CheckboxContainer>
                                         <div style={{ marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div></div>
                                     <div style={{
                                         marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",
@@ -191,7 +194,6 @@ class SignUpModal extends Component {
     }
 }
 
-
 class SignUp extends Component {
     state = { is_signed: false, }
     render() {
@@ -204,4 +206,3 @@ class SignUp extends Component {
 }
 
 export default SignUp
-
