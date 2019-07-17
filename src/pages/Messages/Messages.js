@@ -12,13 +12,13 @@ const List = styled.div`
     }
 `
 const TextArea = styled.textarea`
-    padding-top: 13px;
-    padding-right: 60px;
+    padding-top: 24.5px;
+    padding-right: 40px;
     background-color: #EFEFEF;
     border: none;
     resize: none;
-    width: 1121px;
-    height: 170px;
+    width: 1131px;
+    height: 171.5px;
     font-size: 18px;
     line-height: 27px;
     font-weight: 500;
@@ -36,16 +36,16 @@ class Messages extends Component {
                     <div style={{ width: "70px", height: "70px", background: `url(${jina})`, backgroundSize: "cover", backgroundPosition: "center center" }} />
                     <div style={{ width: "244px", height: "70px", marginLeft: "22px" }}>
                         <div style={{ display: "flex" }}>
-                            <div style={{ width: "123px", height: "29px", fontSize: "17px", color: "#707070", textAlign: "left", fontWeight: "500", marginRight: "22px" }}>진아진아진아</div>
-                            <div style={{ marginTop: "3px", width: "99px", height: "23px", fontSize: "14px", color: "#707070", textAlign: "left", fontWeight: "300" }}>최근 활동:8분 전</div>
+                            <div style={{ width: "123px", height: "29px", fontSize: "17px", lineHeight: "25px", color: "#707070", textAlign: "left", fontWeight: "500", marginRight: "22px" }}>진아진아진아</div>
+                            <div style={{ marginTop: "3px", width: "99px", height: "23px", fontSize: "14px", lineHeight: "20px", color: "#707070", textAlign: "left", fontWeight: "300" }}>최근 활동: 8분 전</div>
                         </div>
-                        <div style={{ width: "244px", height: "28px", marginTop: "10px", fontSize: "17px", color: "#707070", textAlign: "left", fontWeight: "300" }}>아 감사합니다!</div>
+                        <div style={{ width: "244px", height: "28px", marginTop: "10px", fontSize: "17px", lineHeight: "25px", color: "#707070", textAlign: "left", fontWeight: "300" }}>아 감사합니다!</div>
                     </div>
                 </div>
             )
         }
         return (<>
-            <div style={{ width: "1920px", display: "block", height: "48px", backgroundColor: "#EFEFEF" }}>
+            <div style={{ width: "1920px", height: "48px", marginTop: "8px", display: "block", backgroundColor: "#EFEFEF" }}>
                 <div style={{
                     display: "inline-block", marginLeft: "65px", marginTop: "9px", width: "74px", height: "29px",
                     fontFamily: "Noto Sans KR", fontWeight: "500", textAlign: "left", lineHeight: "29px", color: "#707070", fontSize: "20px"
@@ -72,9 +72,9 @@ class Messages extends Component {
                 <div style={{ width: "7px", backgroundColor: "#FFFFFF" }}></div>
                 <div style={{ width: "1298px", backgroundColor: "#EFEFEF", borderRadius: "0px 25px 25px 0px", paddingLeft: "27px" }}>
                     <div style={{ width: "123px", height: "29px", marginTop: "36px", fontWeight: "500", fontSize: "20px", lineHeight: "29px", color: "#707070" }}>진아진아진아</div>
-                    <div style={{ width: "99px", height: "23px", marginTop: "5px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", color: "#707070" }}>최근 활동:8분 전</div>
+                    <div style={{ width: "99px", height: "23px", marginTop: "5px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", color: "#707070" }}>최근 활동: 8분 전</div>
                     <div>
-                        <div >
+                        <div style={{ width: "1249px", borderBottom: "1px solid #707070", paddingBottom: "68.5px" }} >
                             {/* received */}
                             <div style={{
                                 marginTop: "311px",
@@ -88,22 +88,21 @@ class Messages extends Component {
                             {/* sent */}
                             <div style={{
                                 width: "571px", height: "139px", backgroundColor: "#FFFFFF", borderRadius: "25px"
-                                , paddingTop: "16px", paddingRight: "25px", paddingBottom: "18px", paddingLeft: "20px"
-                                , marginLeft: "677px", marginBottom: "70px"
+                                , paddingTop: "18px", paddingRight: "25px", paddingBottom: "16px", paddingLeft: "20px"
+                                , marginLeft: "677px",
                             }}>
                                 <div style={{ width: "526px", height: "105px", fontSize: "17px", fontWeight: "500", lineHeight: "25px", textAlign: "left", color: "#707070" }}>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                </div>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in</div>
                             </div>
                         </div>
-                        <div style={{ marginRight: "23px", borderTop: "1px solid #707070", display: "flex" }}>
-                            <div style={{ width: "1091px", height: "170px", marginRight: "40px" }}>
+                        <div style={{ marginRight: "23px", display: "flex" }}>
+                            <div style={{ width: "1131px", height: "170px" }}>
                                 <TextArea >
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                 </TextArea>
                             </div>
-                            <div style={{ width: "117px", height: "170px", backgroundColor: "#FFFFFF", borderRadius: "0 0 25px 0", display: "table" }}>
-                                <div style={{ display: "table-cell", verticalAlign: "middle", textAlign: "center", width: "68px", height: "33px", fontSize: "18px", cursor: "pointer", lineHeight: "27px", color: "#707070" }}>
+                            <div style={{ width: "117px", height: "170px", marginTop: "1.5px", backgroundColor: "#FFFFFF", borderRadius: "0 0 25px 0", cursor: "pointer" }}>
+                                <div style={{ marginTop: "69px", marginLeft: "27px", fontWeight: "500", textAlign: "left", width: "68px", height: "33px", fontSize: "18px", lineHeight: "27px", color: "#707070" }}>
                                     전송하기
                                 </div>
                             </div>
