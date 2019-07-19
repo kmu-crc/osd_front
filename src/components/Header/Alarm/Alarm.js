@@ -1,29 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import alarm from "source/alarm.png"
 
-const AlarmContainer = styled.div`
-    z-index:989;
-    cursor: pointer;
-    background: url(${alarm});
-    width: 34px;
-    height: 34px;
-    background-size: 100% 100%;
-    opacity: .5; 
-    background-repeat: no-repeat;
-    background-position: center center;
-    border: none;
-`
-const AlarmLabel = styled.div`
-    position: absolute;
-    opacity: 100%;
-    top: ${props => props.top};
-    left: ${props => props.left};
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: red;
-`
 const AlarmList = styled.div`
   display: ${props => props.display};
   z-index: 1000;
@@ -152,8 +129,12 @@ class Alarm extends Component {
                                 )}
                         </div>
                     </AlarmList>}
-                {alarms && <AlarmLabel top={10} left={1200} />}
-                <AlarmContainer id="alarm" onClick={this.openAlarmList} />
+                <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
+                    <div style={{ width: "48px", position: "absolute" }}>
+                        {alarms && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
+                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
+                    </div>
+                </div>
             </>
         )
     }
