@@ -10,9 +10,9 @@ const ContentContainer = styled.div`
     left: 0px;
     right: 0px;
     bottom: 0px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
-    &.hidemenu{
+    &.hidemenu {
         top: 0px;
     }
     -webkit-transition: all 0.45s;
@@ -47,18 +47,21 @@ class ClientTemplate extends Component {
         this.setState({ prevScroll: currentScrollPos })
     }
     handleScroll = (e) => {
+        console.log(e)
         const obj = e.target
         this.checkScrollUp(obj)
         this.checkIsOutScroll(obj)
     }
     render() {
+        const { scroll, hidemenu } = this.state
         return (
             <Fragment>
-                <MenuContext.Provider value={this.state.hidemenu}>
+                <MenuContext.Provider value={hidemenu}>
                     <HeaderContainer />
-                    <ContentContainer className={
-                        (this.state.scroll ? "partial-scroll-on" : "partical-scroll-none") +
-                        (this.state.hidemenu ? " hidemenu" : "")} onScroll={this.handleScroll}>
+                    <ContentContainer
+                        className={(scroll ? "partial-scroll-on" : "partical-scroll-none") + (hidemenu ? " hidemenu" : "")}
+                        onScroll={this.handleScroll}
+                    >
 
                         <div style={{ width: "1920px" }}>
                             {this.props.children}

@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import banner from "source/tmp_main_banner.png"
 import context from "source/context_banner.png"
-import Design from "components/Designs/Design"
+// import Design from "components/Designs/Design"
 import styled from 'styled-components'
+import TopDesignList from "containers/Designs/TopDesignListContainer"
 
 const Textwrapper = styled.div`
     margin-top: 60.5px;
@@ -56,11 +57,12 @@ class MainPage extends Component {
                     <div className="goto_guide" ><a href="/tour">이용 가이드 보러가기</a></div>
                 </BannerWrapper>
                 <Textwrapper>인기 디자인</Textwrapper>
-                <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design forked={true} /><Design /><Design /><Design /><Design /></div>
-                <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design forked={true} /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
-                <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design forked={true} /><Design forked={true} /><Design /></div>
-                <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
-                <div style={{ marginLeft: "10px", paddingBottom: "68px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div>
+                <TopDesignList />
+                {/* <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design forked={true} /><Design /><Design /><Design /><Design /></div> */}
+                {/* <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design forked={true} /><Design /><Design forked={true} /><Design forked={true} /><Design /></div> */}
+                {/* <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design forked={true} /><Design forked={true} /><Design /></div> */}
+                {/* <div style={{ marginLeft: "10px", paddingBottom: "80px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div> */}
+                {/* <div style={{ marginLeft: "10px", paddingBottom: "68px", display: "flex" }}><Design /><Design /><Design /><Design /><Design /></div> */}
             </Fragment>)
     }
 }

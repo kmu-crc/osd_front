@@ -1,84 +1,65 @@
-import React, { Component } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
-import { Grid, Loader } from 'semantic-ui-react'
-import styled from 'styled-components'
+import React, { Component } from "react"
+import styled from "styled-components"
 
-// css styling
-const ScrollContainer = styled.div`
-  & .ui.centered.inline.loader.active.loading,
-  & .ui.centered.inline.loader.visible.loading {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-  & p {
-    text-align: center;
-  }
-`;
-
-const ListContainer = styled(Grid)`
-  margin-top: 30px;
-`;
-
+// css 
+const FlexContainer = styled.div`
+  width: 1910px;
+  padding: 0;
+  margin-left: 10px;
+  list-style: none;
+`
+const FlexBox = styled.div`
+  width: ${props => props.width || "330px"};
+  height:${props => props.height || "330px"};
+  margin-right: ${props => props.marginRight || "63px"};
+  margin-bottom: ${props => props.marginBottom || "80px"};
+  &.right-last { margin-right: ${props => props.marginRight || "8px"}; }
+  &.bottom-last { margin-bottom: ${props => props.marginBottom || "26px"}; }
+  display: inline-block;
+`
 class ScrollList extends Component {
-    state = {
-        hasMore: true,
-        loading: false
-    };
-
-    getLoadData = page => {
-        // this.props.getListRequest(page)
-        //     .then(() => {
-        //         this.setState({
-        //             hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true,
-        //             loading: true
-        //         });
-        //     }).catch((err) => {
-        //         console.log(err);
-        //         this.setState({
-        //             hasMore: false
-        //         });
-        //     });
+  state = { hasMore: true, loading: false }
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll, true)
+  }
+  handleScroll = (e) => {
+    const { hasMore, loading } = this.state
+    if (this.myRef.current && this.myRef.current.getBoundingClientRect().bottom <= window.innerHeight && hasMore && loading === false) {
+      this.getLoadData()
     }
-
-    render() {
-        const ListComponent = this.props.ListComponent;
-        const type = this.props.type;
-        console.log(this.props)
-        return (
-            <ScrollContainer>
-                {this.props.dataListAdded.length > 0 ?
-                    <InfiniteScroll threshold={100} pageStart={0}
-                        loadMore={this.getLoadData} hasMore={this.state.hasMore}
-                        loader={
-                            <Loader className="loading" active={false} inline="centered" size="huge" key={0} />
-                        }>
-                        <ListContainer devided="vertically" padded={true} as="ul">
-                            <Grid.Row>
-                                {this.props.dataListAdded.map((content) => (
-                                    <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer}
-                                        largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
-                                        className={this.props.customClass}
-                                        key={content.uid}>
-                                        <ListComponent data={content} rerender={this.props.rerender} />
-                                    </Grid.Column>
-                                ))
-                                }
-                            </Grid.Row>
-                        </ListContainer>
-                    </InfiniteScroll>
-                    :
-                    <p>
-                        {type === "Designer" ? "등록된 디자이너가 없습니다"
-                            : type === "Group" ? "등록된 그룹이 없습니다"
-                                : "등록된 작품이 없습니다"
-                        }
-                    </p>
-                }
-            </ScrollContainer>
-        );
+    if (this.hasMore === false) {
+      window.addEventListener("scroll", this.handleScroll, true)
     }
+  }
+  getLoadData = () => {
+    if (this.state.hasMore === false) return
+    this.setState({ loading: true })
+    this.props.getListRequest()
+      .then(() => {
+        this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
+      }).catch((err) => {
+        this.setState({ hasMore: false, loading: false }) // console.log(err)
+      })
+  }
+  myRef = React.createRef()
+  render() {
+    const ListComponent = this.props.ListComponent
+    const { cols } = this.props
+    return (<>
+      {this.props.dataListAdded.length > 0 &&
+        <FlexContainer ref={this.myRef}>
+          {this.props.dataListAdded.map((item, i) => {
+            const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : ""
+            const bottom = (this.props.dataListAdded.length - cols) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : ""
+            return (<FlexBox key={i} className={`${last} ${bottom}`}>
+              <ListComponent data={item} />
+            </FlexBox>)
+          })}
+          {this.state.loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "16px", textAlign: "center", width: "100%" }}>목록을 가져오고 있습니다.</p>}
+          {this.state.hasMore && <i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i>}
+        </FlexContainer>}
+    </>)
+  }
 }
 
-export default ScrollList;
+export default ScrollList

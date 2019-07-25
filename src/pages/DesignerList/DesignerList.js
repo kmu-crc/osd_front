@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Designer from "components/Designer/Designer";
+import Designer from "components/Designers/Designer/Designer";
 import styled from 'styled-components'
 
 
