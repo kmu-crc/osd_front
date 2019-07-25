@@ -8071,11 +8071,6 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
-react-bidirectional-infinite-scroll@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-bidirectional-infinite-scroll/-/react-bidirectional-infinite-scroll-2.0.1.tgz#abda647b692414c1d212070347c802817319852a"
-  integrity sha512-2ABmUQnHlNkrDWeWffaygiep/BOaWErOVbA4Ej1k/AlsTmVrDx/HeivTw3UXDQr+o9SHow0FrzDkEExm7kHJlg==
-
 react-dev-utils@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.1.tgz#5c03d85a0b2537d0c46af7165c24a7dfb274bef2"

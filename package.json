@@ -47,7 +47,6 @@
     "react": "^16.8.6",
     "react-addons-update": "^15.6.2",
     "react-app-polyfill": "^1.0.1",
-    "react-bidirectional-infinite-scroll": "^2.0.1",
     "react-dev-utils": "^9.0.1",
     "react-dom": "^16.8.6",
     "react-infinite-scroller": "^1.2.4",
