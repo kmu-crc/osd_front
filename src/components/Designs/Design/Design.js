@@ -10,106 +10,72 @@ import IconView from "source/IconView"
 
 // css 
 const DesignElement = styled.div`
-    min-width:330px;
-    min-height:330px;
+  position: relative;
+  border: 1px solid #FFF;
+  z-index:700;
+  width: 330px;
+  height: 330px;
+  border-radius: 15px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(${props => props.img});
+  color: white;
+  font-size: 20px;
+  font-family: "Noto Sans KR";
+  .cover {
+    z-index: 701;
+    position: absolute;
+    border-radius: 15px;
+    background-image: linear-gradient(rgba(0,0,0, 0), rgba(64,64,64, 0.4), rgba(32,32,32, 1));
     width: 330px;
     height: 330px;
-    border-radius: 15px;
-    background-image: linear-gradient(#E8E8E8, #808080);
-    margin-right: 63px; 
-    color: white;
-    font-size: 20px;
-    font-family: "Noto Sans KR";
-    .forked {
-      position: absolute;
-      margin-left: 266px;
-      margin-top: 0px;
-      width: 32.63px;
-      height: 70.48px;
-      background-image: url(${forked});
-    }
+  }
+  .forked {
+    position: absolute;
+    margin-left: 266px;
+    margin-top: 0px;
+    width: 32.63px;
+    height: 70.48px;
+    background-image: url(${forked});
+  }
 `;
 
-const Design_info = {
-    title:"캡스톤",
-    userName:"진아",
-    categoryName:"패션",
-    like_count:0,
-    children_count:0,
-    view_count:0,
+const DesignEmpty = {
+  title: "타이틀", userName: "개설자", categoryName: "분야",
+  like_count: 0, children_count: 0, view_count: 0,
+  thumbnailUrl: { m_img: null },
 }
 
 class Design extends Component {
-    state = {data:Design_info};
+  state = { data: this.props.data || DesignEmpty }
   render() {
-    const data = this.state.data;
-    const isForked = this.props.forked
+    const data = this.state.data
+    const isForked = this.props.forked || data.parent_design
 
     return (
-      <DesignElement >
+      <DesignElement img={data.thumbnailUrl.m_img}>
+        <div className="cover" />
         {isForked && <div className="forked" />}
-        <div style={{ position: "absolute", marginLeft: "262px", marginTop: "285px", width: "37px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
-        <div style={{ width: "167px", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
-          <div style={{ fontSize: "20px", fontWeight: "700" }}>{data.title}</div>
+        <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "190px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
+        <div style={{ zIndex: "703", position: "absolute", width: "274.08px", color: "#FFF", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
+          <div style={{ fontSize: "20px", fontWeight: "700" }}>{data.title.substr(0, 16)}</div>
           <div style={{ fontSize: "20px", fontWeight: "300" }}>{data.userName}</div>
         </div>
-        <div style={{ marginLeft: "24.92px", marginTop: "14px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-          <div style={{ marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
-          <div style={{ marginRight: "6px" }}>{data.view_count}</div>
-          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "11px", height: "11px" }} src={iThumbUp} /></div>
-          <div style={{ marginRight: "6px" }}>{data.like_count}</div>
-          <div style={{ marginRight: "4px" }}><img alt="icon" style={{ width: "22px", height: "11px" }} src={iForked} /></div>
-          <div style={{ marginRight: "0px" }}>{data.children_count}</div>
+        <div style={{ zIndex: "703", marginLeft: "24.92px", marginTop: "280px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+          <div style={{ zIndex: "703", marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
+          <div style={{ zIndex: "703", marginRight: "6px" }}>{data.view_count}</div>
+          <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "11px", height: "11px" }} src={iThumbUp} /></div>
+          <div style={{ zIndex: "703", marginRight: "6px" }}>{data.like_count}</div>
+          <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "22px", height: "11px" }} src={iForked} /></div>
+          <div style={{ zIndex: "703", marginRight: "0px" }}>{data.children_count || 0}</div>
         </div>
       </DesignElement>
     )
   }
 }
 export default Design
-// class Design extends Component {
-//   render() {
-//     let design = this.props.data;
-//     // console.log("design", design)
-//     return (
-//       <NavLink to={"/designDetail/" + design.uid}>
-//         <Designli>
-//           <ImgPart style={design.thumbnailUrl ? { backgroundImage: `url(${design.thumbnailUrl.m_img})` } : { backgroundImage: `url(${noimg})` }}>
-//             {design.parent_design === null
-//               ? null
-//               : <div className="icon-span">
-//                 <i className="icon fork large icon-fork" />
-//               </div>
-//             }
-//           </ImgPart>
-//           <TextPart>
-//             <div className="title">{design.title}</div>
-//             {design.is_project === 1
-//               ? <div className="userName" style={{ display: "flex", justifyContent: "space-between" }}>{design.userName}님의 프로젝트</div>
-//               : <div className="userName" style={{ display: "flex" }}>{design.userName}님의 작품</div>
-//             }
-//             <div className="cate">
-//               {design.categoryName ? design.categoryName : "전체"}
-//               <span className="update">
-//                 {design.update_time}
-//               </span>
-//             </div>
-//           </TextPart>
-//           <Count>
-//             <div>
-//               <Icon name="unhide"/>
-//               {design.view_count ? design.view_count : 0}
-//             </div>
-//             <div>
-//               <Icon name="heart" />
-//               {design.like_count ? design.like_count : 0}
-//             </div>
-//             <div>
-//               <Icon name="fork" />
-//               {design.children_count ? design.children_count : 0}
-//             </div>
-//           </Count>
-//         </Designli>
-//       </NavLink>
-//     )
-//   }
-// }
+
+//return (
+//  <NavLink to={"/designDetail/" + design.uid}><Designli></Designli></NavLink>
+//)
