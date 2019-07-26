@@ -1,5 +1,5 @@
-import * as types from "actions/ActionTypes";
-import host from "config";
+import * as types from "actions/ActionTypes"
+import host from "config"
 
 export function GetDesignListRequest(page = 0, sort = null, cate1, cate2, keyword = null) {
     console.log(`${host}, ${page}, ${sort}, ${cate1}, ${cate2}, ${keyword}`)
@@ -10,14 +10,11 @@ export function GetDesignListRequest(page = 0, sort = null, cate1, cate2, keywor
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            // console.log("design data >>", data)
             if (!data) {
-                // console.log("no data")
                 data = []
             }
             if (page === 0) {
                 dispatch(GetDesignListClear(data))
-                // return
             }
             dispatch(GetDesignListSuccess(data))
         }).catch((error) => {

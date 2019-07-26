@@ -90,13 +90,11 @@ class Category extends Component {
             {this.props.list.map(element => {
                 return (<CategoryElement key={element.value} onMouseOver={(event) => this.displaySubCateMenu(event, element)} onClick={() => this.changeCategory(element)}>{element.text}</CategoryElement>)
             })}
-            {open &&
-                <SubCategoryWrapper ref={this.mySubRef} left={left} top={top}>
-                    {subs.map(element => {
-                        return element.value !== 0 &&
-                            <SubCategoryElement key={element.value} onClick={() => this.changeSubCategory(element)}>{element.text}</SubCategoryElement>
-                    })}
-                </SubCategoryWrapper>}
+            {open && <SubCategoryWrapper ref={this.mySubRef} left={left} top={top}>
+                {subs.map(element => {
+                    return element.value !== 0 && <SubCategoryElement key={element.value} onClick={() => this.changeSubCategory(element)}>{element.text}</SubCategoryElement>
+                })}
+            </SubCategoryWrapper>}
         </ CategoryContainer>)
     }
 }

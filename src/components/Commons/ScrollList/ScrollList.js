@@ -40,8 +40,9 @@ class ScrollList extends Component {
     this.props.getListRequest()
       .then(() => {
         this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
-      }).catch((err) => {
-        this.setState({ hasMore: false, loading: false }) // console.log(err)
+      }).catch(err => {
+        this.setState({ hasMore: false, loading: false })
+        console.log(err)
       })
   }
   componentWillReceiveProps(newProps) {
@@ -53,6 +54,7 @@ class ScrollList extends Component {
   render() {
     const ListComponent = this.props.ListComponent
     const { cols } = this.props
+    console.log(this.props.dataList, this.props.dataListAdded)
     return (<>
       {this.props.dataListAdded.length > 0 &&
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
