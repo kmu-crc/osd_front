@@ -1,33 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { GetTopDesignListRequest } from "actions/Designs/TopDesign/TopDesignList"
+import { GetTopDesignListRequest } from "actions/Designs/TopDesignList/TopDesignList"
 import ScrollList from "components/Commons/ScrollList"
-import { Loader } from "semantic-ui-react";
-
 import Design from "components/Designs/Design"
+import Loading from "components/Commons/Loading"
 
-class Loading extends Component {
-    render() {
-        return (<Loader size="huge" active >
-            <p style={{ fontSize: "24px", color: "#707070", fontWeight: "500", fontFamily: "Noto Sans KR" }}>
-                데이터를 가져오고 있습니다.
-            </p>
-        </Loader>);
-    }
-}
 class TopDesignListContainer extends Component {
     state = { page: 0 }
     componentDidMount() {
         this.props.GetTopDesignListRequest(0)
     }
     getList = async () => {
-        // console.log("page: ", this.state.page)
         await this.setState({ page: this.state.page + 1 })
         return this.props.GetTopDesignListRequest(this.state.page)
     }
 
     render() {
-        // console.log(this.props, "this.props")
         return (<>
             {this.props.status === "INIT" ?
                 <Loading /> :

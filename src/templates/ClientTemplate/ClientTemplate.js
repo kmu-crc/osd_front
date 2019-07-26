@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import HeaderContainer from "containers/Commons/HeaderContainer"
 import Footer from "components/Header/Footer"
 import styled from 'styled-components'
@@ -23,10 +23,10 @@ const ContentContainer = styled.div`
 `
 
 class ClientTemplate extends Component {
-    state = { scroll: false, whensmall: 256, hidemenu: false, prevScroll: 0 }
+    state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
     checkIsOutScroll = (obj) => {
         this.setState({ scroll: true })
-        setTimeout(() => { this.setState({ scroll: false }) }, 1500);
+        setTimeout(() => { this.setState({ scroll: false }) }, 100)
     }
     checkScrollUp = (obj) => {
         const currentScrollPos = obj.scrollTop
@@ -34,6 +34,12 @@ class ClientTemplate extends Component {
         const { hidemenu, whensmall } = this.state
 
         if (hidemenu === false) {
+            if (currentScrollPos > 25) {
+                this.setState({ larger: true })
+            }
+            else {
+                this.setState({ larger: false })
+            }
             if (currentScrollPos > whensmall * 2) {
                 if (prevScrollPos < currentScrollPos) { // console.log("hide")
                     this.setState({ hidemenu: true })
@@ -47,19 +53,22 @@ class ClientTemplate extends Component {
         this.setState({ prevScroll: currentScrollPos })
     }
     handleScroll = (e) => {
-        console.log(e)
+        // console.log(e)
         const obj = e.target
         this.checkScrollUp(obj)
         this.checkIsOutScroll(obj)
     }
     render() {
-        const { scroll, hidemenu } = this.state
+        const { scroll, hidemenu, larger } = this.state
+        const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
+        const hidemenu_style = (hidemenu ? "hidemenu " : "")
+        const larger_style = (larger ? "larger " : "")
         return (
-            <Fragment>
-                <MenuContext.Provider value={hidemenu}>
+            <>
+                <MenuContext.Provider value={{ hidemenu, larger }}>
                     <HeaderContainer />
                     <ContentContainer
-                        className={(scroll ? "partial-scroll-on" : "partical-scroll-none") + (hidemenu ? " hidemenu" : "")}
+                        className={`${scroll_style}${hidemenu_style}${larger_style}`}
                         onScroll={this.handleScroll}
                     >
 
@@ -70,7 +79,7 @@ class ClientTemplate extends Component {
 
                     </ContentContainer>
                 </MenuContext.Provider>
-            </Fragment>)
+            </>)
     }
 }
 

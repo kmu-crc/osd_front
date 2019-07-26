@@ -2,7 +2,6 @@ import * as types from "actions/ActionTypes"
 import host from "config"
 
 export function GetTopDesignListRequest(page) {
-    console.log("GetTopDesignListRequest(" + page + ")")
     return (dispatch) => {
         return fetch(`${host}/design/TopDesignList/${page}`, {
             headers: { "Content-Type": "application/json" }, method: "get"
@@ -13,7 +12,6 @@ export function GetTopDesignListRequest(page) {
                 data = []
             }
             if (page === 0) {
-                // console.log("data", data)
                 dispatch(GetTopDesignListClear(data))
                 return
             }

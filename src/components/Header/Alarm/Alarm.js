@@ -86,49 +86,48 @@ class Alarm extends Component {
         const alarms = ALARM
         const messages = MESSAGES
         return (
-            <>
-                {this.state.open &&
-                    <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
-                        <div style={{ display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
-                            <div style={{ cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: mode === "alarm" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("alarm")}>
-                                <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
-                            <div style={{ cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: mode === "message" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("message")}>
-                                <div style={{ marginTop: "13px", marginLeft: "28px" }} >메시지</div></div>
-                        </div>
-                        <div className="list">
-                            {mode === "alarm" ? (
-                                alarms.list.map(item => {
-                                    return (<ListItem confirm={item.confirm} key={item.uid}>
-                                        <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "15%" }} />
-                                        <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
-                                            <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{item.message_code}</div>
-                                            <div style={{ width: "100%", float: "right", marginTop: "16px", fontSize: "13px", fontWeight: "300", display: "flex", justifyContent: "space-between" }}>
-                                                <div>{item.date}</div>
-                                                <div style={{ display: "flex" }}>
-                                                    {item.quest && !item.confirm ?
-                                                        (<>
-                                                            <div style={{ cursor: "pointer", margin: "auto 0", color: "#FF0000", borderBottom: "1px solid red" }}>승인</div>
-                                                            <div style={{ cursor: "pointer", marginLeft: "10px", borderBottom: "1px solid #707070" }}>거절</div>
-                                                        </>)
-                                                        : (<></>)
-                                                    }
-                                                </div>
+            <>{this.state.open &&
+                <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
+                    <div style={{ display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
+                        <div style={{ cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: mode === "alarm" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("alarm")}>
+                            <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
+                        <div style={{ cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: mode === "message" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("message")}>
+                            <div style={{ marginTop: "13px", marginLeft: "28px" }} >메시지</div></div>
+                    </div>
+                    <div className="list">
+                        {mode === "alarm" ? (
+                            alarms.list.map(item => {
+                                return (<ListItem confirm={item.confirm} key={item.uid}>
+                                    <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "15%" }} />
+                                    <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
+                                        <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{item.message_code}</div>
+                                        <div style={{ width: "100%", float: "right", marginTop: "16px", fontSize: "13px", fontWeight: "300", display: "flex", justifyContent: "space-between" }}>
+                                            <div>{item.date}</div>
+                                            <div style={{ display: "flex" }}>
+                                                {item.quest && !item.confirm ?
+                                                    (<>
+                                                        <div style={{ cursor: "pointer", margin: "auto 0", color: "#FF0000", borderBottom: "1px solid red" }}>승인</div>
+                                                        <div style={{ cursor: "pointer", marginLeft: "10px", borderBottom: "1px solid #707070" }}>거절</div>
+                                                    </>)
+                                                    : (<></>)
+                                                }
                                             </div>
                                         </div>
+                                    </div>
+                                </ListItem>)
+                            })) : (
+                                messages.list.map(item => {
+                                    return (<ListItem confirm={item.confirm} key={item.uid}>
+                                        <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "50%" }} />
+                                        <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
+                                            <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{item.message_code}</div>
+                                            <div style={{ marginTop: "16px", fontSize: "13px", fontWeight: "300" }}>{item.date}</div>
+                                        </div>
                                     </ListItem>)
-                                })) : (
-                                    messages.list.map(item => {
-                                        return (<ListItem confirm={item.confirm} key={item.uid}>
-                                            <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "50%" }} />
-                                            <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
-                                                <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{item.message_code}</div>
-                                                <div style={{ marginTop: "16px", fontSize: "13px", fontWeight: "300" }}>{item.date}</div>
-                                            </div>
-                                        </ListItem>)
-                                    })
-                                )}
-                        </div>
-                    </AlarmList>}
+                                })
+                            )}
+                    </div>
+                </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
                         {alarms && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
