@@ -7,11 +7,12 @@ import forked from "source/forked.svg"
 import iForked from "source/forked_icon_white.png"
 import iThumbUp from "source/thumbup_icon_white.png"
 import IconView from "source/IconView"
+import noimg from "source/noimg.png"
 
 // css 
 const DesignElement = styled.div`
   position: relative;
-  border: 1px solid #FFF;
+  border: 1px solid #EFEFEF;
   z-index:700;
   width: 330px;
   height: 330px;
@@ -51,13 +52,13 @@ class Design extends Component {
   state = { data: this.props.data || DesignEmpty }
   render() {
     const data = this.state.data
+    const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design
-
     return (
-      <DesignElement img={data.thumbnailUrl.m_img}>
+      <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
         <div className="cover" />
         {isForked && <div className="forked" />}
-        <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "190px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
+        <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
         <div style={{ zIndex: "703", position: "absolute", width: "274.08px", color: "#FFF", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
           <div style={{ fontSize: "20px", fontWeight: "700" }}>{data.title.substr(0, 16)}</div>
           <div style={{ fontSize: "20px", fontWeight: "300" }}>{data.userName}</div>

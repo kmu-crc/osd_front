@@ -43,7 +43,7 @@ class Header extends Component {
     static contextType = MenuContext
     render() {
         return (
-            <Menu className={(this.context ? " hidemenu" : "")}>
+            <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
                 <ul className={"menu"} style={{ minWidth: "523px", margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
                     <li style={{ minWidth: "55px", height: "55px", marginLeft: "10px" }}>
                         <a href="/"><img alt="logo" style={{ width: "55px", height: "55px" }} src={logo} /></a></li>
