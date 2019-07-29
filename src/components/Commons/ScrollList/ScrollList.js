@@ -69,9 +69,9 @@ class ScrollList extends Component {
   myRef = React.createRef()
   render() {
     const ListComponent = this.props.ListComponent
-    const { width, height, marginRight, marginBottom, marginRightLast, marginBottomLast, cols, dataListAdded } = this.props
+    const { width, height, marginRight, marginBottom, marginRightLast, marginBottomLast, cols, dataListAdded, dataList } = this.props
     const { loading, hasMore } = this.state
-    // console.log(this.props.dataList, this.props.dataListAdded)
+    console.log(dataList, dataListAdded)
 
     return (<>
       {dataListAdded.length > 0 &&
@@ -79,10 +79,9 @@ class ScrollList extends Component {
           {dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : ""
             const bottom = (dataListAdded.length - cols) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : ""
-            return (<FlexBox
-              className={`${last} ${bottom}`}
+            return (<FlexBox className={`${last} ${bottom}`}
               width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast}
-              key={i} >
+              key={i}>
               <ListComponent data={item} />
             </FlexBox>)
           })}

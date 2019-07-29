@@ -16,7 +16,7 @@ export function GetGroupListRequest(page = 0, sort = null, keyword = null) {
             if (page === 0) {
                 dispatch(GetGroupListClear(data))
             }
-            GetGroupListSuccess(data)
+            dispatch(GetGroupListSuccess(data))
         }).catch(error => {
             dispatch(GetGroupListFailure())
             console.log("error:", error)

@@ -37,8 +37,9 @@ class GroupListPage extends Component {
         this.reloadData()
     }
     reloadData = () => {
-        this.props.GetGroupListRequest(this.state.page, this.state.this_order.keyword, this.state.search)
-        console.log(this.state.page, this.state.this_order.keyword, this.state.search)
+        const { page, this_order, search } = this.state
+        this.props.GetGroupListRequest(page, this_order.keyword, search)
+        console.log(page, this_order.keyword, search)
     }
     getList = async () => {
         await this.setState({ page: this.state.page + 1 })
@@ -51,6 +52,7 @@ class GroupListPage extends Component {
         // console.log(this.props.Count, this.props.dataList, this.props.dataListAdded)
         return (
             <>
+                {/* <SubCategoryMenu list={}/> */}
                 <TextWrapper>그룹(333)</TextWrapper>
                 {/* <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} /> */}
                 <div style={{ color: "#FF0000", marginRight: "50px", fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", cursor: "pointer", borderBottom: "1.5px solid red" }}>그룹 등록</div>
@@ -69,7 +71,7 @@ const mapStateToProps = (state) => {
         dataList: state.GroupList.status.GroupList,
         dataListAdded: state.GroupList.status.GroupListAdded,
         Count: state.GroupList.status.Count,
-        status: state.GroupList.status
+        // status: state.GroupList.status
     }
 }
 
