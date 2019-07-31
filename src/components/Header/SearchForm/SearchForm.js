@@ -22,12 +22,12 @@ const SearchContainer = styled.div`
         border: none;
         margin: 0px 10px;
     }
-    .shadow_button{	
-        position: absolute;	
-        transform: translate( 285px, -2px);	
-        width:36px;	
-        height:36px;	
-        cursor: pointer;	
+    .shadow_button{
+        position: absolute;
+        transform: translate( 285px, -2px);
+        width:36px;
+        height:36px;
+        cursor: pointer;
     }
 `
 class SearchForm extends Component {
