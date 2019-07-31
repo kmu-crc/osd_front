@@ -44,6 +44,7 @@ class SearchForm extends Component {
     render() {
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
+                <div className="shadow_button" onClick={this.goSearch} />
                 <input type="text" placeholder="Search..." />
             </SearchContainer>)
     }
