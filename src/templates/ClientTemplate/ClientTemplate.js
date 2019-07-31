@@ -66,10 +66,12 @@ class ClientTemplate extends Component {
         return (<MenuContext.Provider value={{ hidemenu, larger }}>
             <HeaderContainer />
             <ContentContainer className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+
                 <div style={{ width: "1920px" }}>
                     {this.props.children}
                     <Footer />
                 </div>
+
             </ContentContainer>
         </MenuContext.Provider>)
     }
