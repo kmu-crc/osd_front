@@ -38,8 +38,8 @@ class SearchForm extends Component {
             window.location.href = '/search'
         }
     }
-    goSearch = () => {	
-        window.location.href = '/search'	
+    goSearch = () => {
+        window.location.href = '/search'
     }
     render() {
         return (
