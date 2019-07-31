@@ -16,6 +16,7 @@ import MessagesPage from "pages/Messages"
 import MyInfoModifyPage from "pages/MyInfoModifyPage"
 import MyPage from "pages/MyPage"
 import SignUpPage from "pages/SignUp"
+import SearchPage from "pages/Search"
 import NotFoundPage from "pages/NotFound"
 
 // template
@@ -52,6 +53,7 @@ function App() {
           <Route path="/myinfomodify" component={MyInfoModifyPage} />
           <Route path="/signup" component={SignUpPage} />
           {/* mics. */}
+          <Route path="/search" component={SearchPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </ClientTemplate>
