@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import zoom from "source/zoom.svg"
 
 const SearchContainer = styled.div`
+    display: ${props => props.visible};
     background-color: #FFFFFF;
     border-radius: 20px;
     border: 1.5px solid #707070;
