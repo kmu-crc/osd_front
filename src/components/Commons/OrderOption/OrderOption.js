@@ -13,6 +13,7 @@ const OrderWrapper = styled.div`
     text-align: middle;
 `
 const OrderElement = styled.div`
+    z-index:930;
     font-family: Noto Sans KR;
     font-weight: 500;
     line-height: 29px;
