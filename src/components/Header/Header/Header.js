@@ -8,7 +8,18 @@ import logo from "source/logo.png"
 import Alarm from "components/Header/Alarm"
 import SignNav from "components/Header/SignNav/SignNav"
 import SearchForm from "components/Header/SearchForm"
+// import Message from "components/Header/Message"
 
+class Message extends Component {
+    gotoMessagePage() {
+        window.location.href = '/messages'
+    }
+    render() {
+        return (<div style={{ cursor: "pointer" }} onClick={this.gotoMessagePage}>
+            <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons">email</i>
+        </div>)
+    }
+}
 // CSS
 const Menu = styled.div`
     z-index: 900;
@@ -58,6 +69,8 @@ class Header extends Component {
                         <SearchForm /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
                         <Alarm /></li>
+                    <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
+                        <Message /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>

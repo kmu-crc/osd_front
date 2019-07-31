@@ -7,7 +7,7 @@ const Container = styled.div`
     width: 100%;
     top: 50px;
     position: fixed;
-    z-index: 900;
+    z-index: 800;
     background-color: #FFFFFF;
     &.hidemenu {
 		top: -55px;
@@ -22,7 +22,7 @@ const Container = styled.div`
 `
 const MainCategory = styled.div`
     position: fixed;
-    z-index: 920;
+    z-index: 820;
     width: 100%;
     top: 50px;
     padding-left: 115px;
@@ -30,7 +30,7 @@ const MainCategory = styled.div`
     background-color: #FFFFFF;
 `
 const MainCateElement = styled.div`
-    z-index: 920;
+    z-index: 820;
     height: 29px;
     font-size: 20px;
     font-weight: 300;
@@ -42,7 +42,7 @@ const MainCateElement = styled.div`
     cursor: pointer;
 `
 const SubCategory = styled.div`
-    z-index: 910;
+    z-index: 810;
     position: fixed;
     width: 100%;
     top: 70px;
@@ -52,7 +52,7 @@ const SubCategory = styled.div`
     background-color: #FFFFFF;
 `
 const SubCateElement = styled.div`
-    z-index: 910;
+    z-index: 810;
     height: 29px;
     font-size: 20px;
     font-weight: 300;
