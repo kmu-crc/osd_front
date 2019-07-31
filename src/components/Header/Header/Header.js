@@ -19,7 +19,8 @@ class Message extends Component {
             <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons">email</i>
         </div>)
     }
-}// CSS
+}
+// CSS
 const Menu = styled.div`
     z-index: 900;
     justify-content: space-between;
