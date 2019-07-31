@@ -31,11 +31,11 @@ const SearchContainer = styled.div`
     }
 `
 class SearchForm extends Component {
-    state = {}
     _search = () => { }
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            console.log('Enter')
+            // console.log('Enter')
+            window.location.href = '/search'
         }
     }
     render() {
