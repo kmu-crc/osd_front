@@ -69,7 +69,7 @@ class Header extends Component {
                         <SearchForm visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
                         <Alarm /></li>
-                    <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>	
+                    <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
                         <Message /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
