@@ -43,8 +43,8 @@ class DesignListPage extends Component {
         this.reloadData()
     }
     handleChangeSubCategory = async (parent, category) => {
-        console.log(this.props.category1[parent], parent)
-        await this.setState({ page: 0, main_category: this.props.category1[parent], sub_category: category, this_category: category })
+        // console.log(this.props.category1[parent], parent)
+        await this.setState({ page: 0, main_category: this.props.category1[parent], this_category: this.props.category1[parent], sub_category: category })
         this.props.GetDesignListCountRequest(this.state.main_category.value, category.value)
         this.reloadData()
     }
