@@ -2,27 +2,23 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
-const CategoryContainer = styled.div`
-    z-index: 899;
-    background-color: #FFFFFF;
-    position: fixed;
+const Container = styled.div`
+    height: ${props => props.height};
     width: 100%;
-    height: 20px;
-    top: 55px;
-    padding-left: 115px;
-    display: flex;
+    top: 50px;
+    position: fixed;
+    z-index: 800;
+    background-color: #FFFFFF;
     &.hidemenu {
-        top: -55px;
-        opacity: 0;
-    }
-    &.larger {
-        height: 30px;
-    }
-    -webkit-transition: all 0.45s;
-    -moz-transition: all 0.45s;
-    -ms-transition: all 0.45s;
-    -o-transition: all 0.45s;
-    transition: all 0.45s;
+		top: -55px;	
+		opacity: 0;	
+    }&.larger {;}	
+    	
+    -webkit-transition: all 0.45s;	
+	-moz-transition: all 0.45s;	
+	-ms-transition: all 0.45s;	
+	-o-transition: all 0.45s;	
+	transition: all 0.45s;	
 `
 const CategoryElement = styled.div`
     color: red;
