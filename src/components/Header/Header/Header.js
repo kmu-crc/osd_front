@@ -66,7 +66,7 @@ class Header extends Component {
                 </ul>
                 <ul style={{ margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
                     <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}>
-                        <SearchForm /></li>
+                        <SearchForm visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
                         <Alarm /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
