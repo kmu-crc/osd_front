@@ -33,7 +33,7 @@ const Menu = styled.div`
     width: 100%;
     position: fixed;
     display: flex;
-    &.hidemenu{
+    &.hidemenu {
         top: -55px;
         opacity: 0;
     }
