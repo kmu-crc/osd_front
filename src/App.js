@@ -52,7 +52,7 @@ function App() {
           <Route path="/mypage" component={MyPage} />
           <Route path="/myinfomodify" component={MyInfoModifyPage} />
           <Route path="/signup" component={SignUpPage} />
-          {/* mics. */}
+          {/* etc. */}
           <Route path="/search" component={SearchPage} />
           <Route component={NotFoundPage} />
         </Switch>
