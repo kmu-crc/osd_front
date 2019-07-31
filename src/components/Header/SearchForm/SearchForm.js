@@ -43,7 +43,7 @@ class SearchForm extends Component {
     }
     render() {
         return (
-            <SearchContainer onKeyDown={this._handleKeyDown}>
+            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
                 <input type="text" placeholder="Search..." />
             </SearchContainer>)
     }
