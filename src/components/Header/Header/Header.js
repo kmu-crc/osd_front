@@ -8,7 +8,18 @@ import logo from "source/logo.png"
 import Alarm from "components/Header/Alarm"
 import SignNav from "components/Header/SignNav/SignNav"
 import SearchForm from "components/Header/SearchForm"
+// import Message from "components/Header/Message"	
 
+class Message extends Component {	
+    gotoMessagePage() {	
+        window.location.href = '/messages'	
+    }	
+    render() {	
+        return (<div style={{ cursor: "pointer" }} onClick={this.gotoMessagePage}>	
+            <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons">email</i>	
+        </div>)	
+    }	
+}
 // CSS
 const Menu = styled.div`
     z-index: 900;
