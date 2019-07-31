@@ -12,22 +12,24 @@ import Loading from "components/Commons/Loading"
 
 const TextWrapper = styled.div`
     position: relative;
+    width: 100%;
     top: 25px;
     text-align: center;
     font-size: 25px;
     font-family: Noto Sans KR;
     font-weight: 700;
     color: red;
+    cursor: pointer;
 `
 const margin = { width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
 class DesignListPage extends Component {
     state = {
         page: 0,
-        this_category: { text: null, value: 0 },
+        search: null,
+        this_category: { text: null, value: null },
         main_category: { text: null, value: null },
         sub_category: { text: null, value: null },
-        this_order: { text: "등록순", keyword: "update" },
-        search: null
+        this_order: { text: "등록순", keyword: "update" }
     }
     componentDidMount() {
         this.props.GetCategoryListRequest()
