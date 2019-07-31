@@ -9,10 +9,10 @@ import iThumbUp from "source/thumbup_icon_white.png"
 import IconView from "source/IconView"
 import noimg from "source/noimg.png"
 
-// css 
+// CSS 
 const DesignElement = styled.div`
+border: 1px solid #FFFFFF;
   position: relative;
-  border: 1px solid #EFEFEF;
   z-index:700;
   width: 330px;
   height: 330px;
