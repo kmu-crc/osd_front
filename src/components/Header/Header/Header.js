@@ -25,8 +25,8 @@ const Menu = styled.div`
     z-index: 900;
     justify-content: space-between;
     height: 55px;
-    background-color: #FFF;
-    font-family: "Noto Sans KR";
+    background-color: #FFFFFF;
+    font-family: Noto Sans KR;
     font-weight: 500;
     font-size: 20px;
     color: #707070;
