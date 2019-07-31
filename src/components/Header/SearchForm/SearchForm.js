@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import zoom from "source/zoom.svg"
 
 const SearchContainer = styled.div`
+    display: ${props => props.visible};
     background-color: #FFFFFF;
     border-radius: 20px;
     border: 1.5px solid #707070;
@@ -30,7 +31,6 @@ const SearchContainer = styled.div`
     }
 `
 class SearchForm extends Component {
-    state = {}
     _search = () => { }
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -43,13 +43,11 @@ class SearchForm extends Component {
     }
     render() {
         return (
-            <SearchContainer onKeyDown={this._handleKeyDown}>
+            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
                 <input type="text" placeholder="Search..." />
             </SearchContainer>)
     }
 }
-
-
 
 export default SearchForm
