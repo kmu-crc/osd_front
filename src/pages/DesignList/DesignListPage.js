@@ -61,7 +61,10 @@ class DesignListPage extends Component {
         const { page, main_category, sub_category, keyword, order } = this.state
         return this.props.GetDesignListRequest(page, order, main_category.value, sub_category.value, keyword)
     }
-
+    changeCategory = (category) => {	
+         this.handleChangeCategory(category)	
+        // console.log(this.state)	
+    }
     render() {
         const { this_category, page, this_order } = this.state
         const { category1, category2 } = this.props
