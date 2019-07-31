@@ -2,7 +2,7 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 export function GetCategoryListRequest() {
-    // console.log("GetCategoryListRequest")
+    console.log("GetCategoryListRequest")
     return (dispatch) => {
         return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
             .then((res) => {

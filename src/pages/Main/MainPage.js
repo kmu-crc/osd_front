@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import banner from "source/tmp_main_banner.png"
 import context from "source/context_banner.png"
+// import Design from "components/Designs/Design"
 import styled from 'styled-components'
 import TopDesignList from "containers/Designs/TopDesignListContainer"
 

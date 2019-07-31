@@ -1,74 +1,56 @@
 import React, { Component } from 'react'
 import Designer from "components/Designers/Designer/Designer";
 import styled from 'styled-components'
+import OrderOption from "components/Commons/OrderOption"
 
-
-const orderoption = ["인기순", "최신순"]
-const orderoption_margin = [30, 44]
-const Options = styled.div`
-    position: relative;
-    padding-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-    font-size: 20px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    font-weight: 500;
-    line-height: 29px;
-    text-align: middle;
-`;
 const TextWrapper = styled.div`
     position: relative;
-    padding-top: 27px;
     text-align: center;
+    line-height:37px;
     font-size: 25px;
     font-family: Noto Sans KR;
     font-weight: 700;
     color: red;
 `;
-class OrderOption extends Component {
-    state = { options: orderoption }
-    handleClicked = (idx) => {
-        this.props.order_clicked(idx)
-    }
-    render() {
-        const opts = this.state.options
-        return (
-            <Options>
-                {opts.map((option, key) => {
-                    return (
-                        <div onClick={() => this.handleClicked(key)} key={key}
-                             style={key === this.props.selected
-                                 ? { color: "#FF0000", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px", borderBottom: "1.5px solid red" }
-                                 : { color: "#707070", marginRight: orderoption_margin[key], fontFamily: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", fontSize: "20px" }}>
-                            {option}
-                        </div>
-                    )
-                })}
-            </Options>
-        )
-    }
-}
+const JoinDesigner = styled.div`
+    position: relative;
+    left: 1724px;
+    width:152px;
+    text-align: left;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: Noto Sans KR;
+    font-weight:500;
+    color: red;
+    line-height: 29px;
+    border-bottom: 1.5px solid red;
+`;
+
+
 class DesignerListPage extends Component {
     state = { this_order: 0 }
-    handleChangeOrderOps = (idx) => {
-        this.setState({ this_order: idx })
-        // console.log("changed_order", idx)
+    handleChangeOrderOps = async (order) => {
+        await this.setState({ page: 0, this_order: order })
+        this.reloadData()
+    };
+    handleClickJoin = () => {
+        console.log("click!!");
     }
+
     render() {
         console.log("designer:", this.props)
+        let designerData = this.state;
         return (
             <>
+                <OrderOption order_clicked = {this.handleChangeOrderOps} selected = {designerData.this_order}/>
                 <TextWrapper>디자이너(333)</TextWrapper>
-                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
-
-                <div style={{display:"flex", paddingTop:"29px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
+                <div style = {{position:"relative"}}><JoinDesigner onClick = {()=>this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
+                <div style={{display:"flex", paddingTop:"100px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
                 <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
                 <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
                 <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
                 <div style={{display:"flex", paddingTop:"80px",marginLeft:"9px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
                 <div style={{display:"flex", paddingTop:"80px",paddingBottom:"66px",marginLeft:"10px", marginRight:"12px",justifyContent:"space-between"}}><Designer /><Designer/><Designer /></div>
-
             </>
         )
 

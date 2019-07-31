@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const OrderWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
-    padding-top: 35px;
+    padding-top: 55px;
     font-size: 20px;
     font-family: Noto Sans KR;
     color: #707070;
@@ -13,7 +13,6 @@ const OrderWrapper = styled.div`
     text-align: middle;
 `
 const OrderElement = styled.div`
-    z-index:830;
     font-family: Noto Sans KR;
     font-weight: 500;
     line-height: 29px;
@@ -42,6 +41,7 @@ class OrderOption extends Component {
         const { options } = this.state
         const { selected } = this.props
         return (
+
             <OrderWrapper>
                 {options.map(opt => {
                     return (<OrderElement

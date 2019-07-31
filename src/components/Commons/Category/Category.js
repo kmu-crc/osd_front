@@ -2,105 +2,102 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
-const Container = styled.div`
-    height: ${props => props.height};
-    width: 100%;
-    top: 50px;
-    position: fixed;
-    z-index: 800;
+const CategoryContainer = styled.div`
+    z-index: 899;
     background-color: #FFFFFF;
-    &.hidemenu {
-		top: -55px;
-		opacity: 0;
-    }&.larger {;}
-    
-    -webkit-transition: all 0.45s;
-	-moz-transition: all 0.45s;
-	-ms-transition: all 0.45s;
-	-o-transition: all 0.45s;
-	transition: all 0.45s;
-`
-const MainCategory = styled.div`
     position: fixed;
-    z-index: 820;
     width: 100%;
-    top: 50px;
+    height: 20px;
+    top: 55px;
     padding-left: 115px;
     display: flex;
-    background-color: #FFFFFF;
+    &.hidemenu {
+        top: -55px;
+        opacity: 0;
+    }
+    &.larger {
+        height: 30px;
+    }
+    -webkit-transition: all 0.45s;
+    -moz-transition: all 0.45s;
+    -ms-transition: all 0.45s;
+    -o-transition: all 0.45s;
+    transition: all 0.45s;
 `
-const MainCateElement = styled.div`
-    z-index: 820;
-    height: 29px;
+const CategoryElement = styled.div`
+    color: red;
+    font-family: Noto Sans KR;
     font-size: 20px;
     font-weight: 300;
-    font-family: Noto Sans KR;
-    line-height: 29px;
-    text-align: left;
-    color: #FF0000;
-    margin-right: 30px;    
+    padding-right: 30px;
     cursor: pointer;
+    :hover {}
 `
-const SubCategory = styled.div`
-    z-index: 810;
-    position: fixed;
-    width: 100%;
-    top: 70px;
-    padding-top: 17px;
-    display: flex;
-    justify-content: center;
-    background-color: #FFFFFF;
+// display: ${props => props.display === "yes" ? "display" : "none"};
+const SubCategoryWrapper = styled.div`
+    position: absolute;
+    background: #FFF;
+    border-radius: 25px;
+    border: 1px solid red;
+    padding: 15px;
+    left: ${props => props.left + "px"};
+    top: ${props => props.top + "px"};
 `
-const SubCateElement = styled.div`
-    z-index: 810;
-    height: 29px;
-    font-size: 20px;
-    font-weight: 300;
+const SubCategoryElement = styled.div`
+    color: red;
     font-family: Noto Sans KR;
-    line-height: 29px;
-    text-align: left;
-    color: #707070;
-    margin-right: 20px;    
-    &.selected {
-        color: #FF0000;
+    font-size: 16px;
+    font-weight: 300px;
+    margin-bottom: 10px;
+    &:hover{
+        background: #F0F0F0;
     }
-    &:hover {
-        color: #FFA0A0;
-    }
-    cursor: pointer;
 `
 class Category extends Component {
     static contextType = MenuContext
-    state = { parent: null }
-
-    clickedMainCategory = (category) => {
-        // console.log("!!!")
+    state = { event: false, subs: [], top: 0, left: 0, open: false }
+    changeCategory = (category) => {
         this.props.category_clicked(category)
-        // handleChangeSubCategory = async (parent, category) => {
-        // handleChangeCategory = async (category) => {
-        this.setState({ parent: category.value })
     }
-    clickedSubCategory = (parent, category) => {
-        this.props.subcategory_clicked(parent, category)
+    changeSubCategory = (category) => {
+        this.props.subcategory_clicked(category.parent, category)
     }
+    displaySubCateMenu = (event, parent) => {
+        if (parent.value === 0) { this.setState({ open: false }); return }
+        const subs = this.props.sublist[parent.value]
+        const top = event.target.getBoundingClientRect().y - 31
+        const left = event.target.getBoundingClientRect().x
+        this.state.event === false && document.addEventListener("mousemove", this.checkMoveOutside)
+        this.setState({ event: true, subs: subs, open: true, top: top, left: left })
+    }
+    checkMoveOutside = (e) => {
+        if (this.myMainRef.current === null || this.mySubRef.current === null) return
+        if (!this.myMainRef.current.contains(e.target) && !this.mySubRef.current.contains(e.target)) {
+            this.outFocus()
+        }
+    }
+    outFocus = () => {
+        this.state.event && document.removeEventListener("mousemove", this.checkMoveOutside)
+        this.setState({ open: false, event: false })
+    }
+    mySubRef = React.createRef()
+    myMainRef = React.createRef()
     render() {
-        const { category1, category2, sub_selected } = this.props
-        const main = category1
-        const sub = category2
-        const selected = sub_selected && sub_selected.value
-        const hidemenu = this.context.hidemenu ? "hidemenu " : ""
-        const larger = this.context.larger ? "larger " : ""
-        return (<Container className={`${hidemenu}${larger}`} >
-            <MainCategory>
-                {main.map(element => {
-                    return element.value > 0 && <MainCateElement onClick={() => this.clickedMainCategory(element)} key={element.value}>{element.text}</MainCateElement>
-                })}</MainCategory>
-            <SubCategory>
-                {sub && sub.length > 0 && sub.map(element => {
-                    const style = element.value === selected ? "selected " : ""
-                    return element.value > 0 && <SubCateElement onClick={() => this.clickedSubCategory(this.state.parent, element)} key={element.value} className={`${style}`}>{element.text}</SubCateElement>
-                })}</SubCategory>
-        </Container>)
+        const { subs, top, left, open } = this.state
+        const hidemenu_style = this.context.hidemenu ? "hidemenu " : ""
+        const larger_style = this.context.larger ? "larger " : ""
+        return (<CategoryContainer ref={this.myMainRef} className={`${hidemenu_style}${larger_style}`} >
+            {this.props.list.map(element => {
+                return (<CategoryElement key={element.value} onMouseOver={(event) => this.displaySubCateMenu(event, element)} onClick={() => this.changeCategory(element)}>{element.text}</CategoryElement>)
+            })}
+            {open &&
+                <SubCategoryWrapper ref={this.mySubRef} left={left} top={top}>
+                    {subs.map(element => {
+                        return element.value !== 0 &&
+                            <SubCategoryElement key={element.value} onClick={() => this.changeSubCategory(element)}>{element.text}</SubCategoryElement>
+                    })}
+                </SubCategoryWrapper>}
+        </ CategoryContainer>)
     }
 }
 

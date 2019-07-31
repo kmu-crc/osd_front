@@ -63,17 +63,23 @@ class ClientTemplate extends Component {
         const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
         const hidemenu_style = (hidemenu ? "hidemenu " : "")
         const larger_style = (larger ? "larger " : "")
-        return (<MenuContext.Provider value={{ hidemenu, larger }}>
-            <HeaderContainer />
-            <ContentContainer className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+        return (
+            <>
+                <MenuContext.Provider value={{ hidemenu, larger }}>
+                    <HeaderContainer />
+                    <ContentContainer
+                        className={`${scroll_style}${hidemenu_style}${larger_style}`}
+                        onScroll={this.handleScroll}
+                    >
 
-                <div style={{ width: "1920px" }}>
-                    {this.props.children}
-                    <Footer />
-                </div>
+                        <div style={{ width: "1920px" }}>
+                            {this.props.children}
+                            <Footer />
+                        </div>
 
-            </ContentContainer>
-        </MenuContext.Provider>)
+                    </ContentContainer>
+                </MenuContext.Provider>
+            </>)
     }
 }
 
