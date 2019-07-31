@@ -38,7 +38,7 @@ class DesignListPage extends Component {
     }
     handleChangeCategory = async (category) => {
         await this.setState({ page: 0, main_category: category, this_category: category, sub_category: { text: null, value: null } })
-        console.log("category.value:", category.value)
+        // console.log("category.value:", category.value)
         this.props.GetDesignListCountRequest(category.value || null)
         this.reloadData()
     }
@@ -54,7 +54,7 @@ class DesignListPage extends Component {
     }
     reloadData = () => {
         this.props.GetDesignListRequest(this.state.page, this.state.this_order.keyword, this.state.main_category.value || null, this.state.sub_category.value || null, this.state.search)
-        console.log("clicked, and will request as below\n", this.state.page, this.state.this_order.keyword, this.state.main_category.value, this.state.sub_category.value, this.state.search)
+        // console.log("clicked, and will request as below\n", this.state.page, this.state.this_order.keyword, this.state.main_category.value, this.state.sub_category.value, this.state.search)
     }
     getList = async () => {
         await this.setState({ page: this.state.page + 1 })
