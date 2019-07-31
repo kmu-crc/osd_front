@@ -27,8 +27,8 @@ class DesignListPage extends Component {
         page: 0,
         search: null,
         this_category: { text: null, value: null },
-        main_category: { text: null, value: null },
         sub_category: { text: null, value: null },
+        main_category: { text: null, value: null },
         this_order: { text: "등록순", keyword: "update" }
     }
     componentDidMount() {
