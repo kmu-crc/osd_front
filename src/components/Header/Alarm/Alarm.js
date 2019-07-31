@@ -88,11 +88,11 @@ class Alarm extends Component {
         return (
             <>{this.state.open &&
                 <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
-                    <div style={{ zIndex:"999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
-                        <div style={{ cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: mode === "alarm" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("alarm")}>
-                            <div style={{ zIndex:"999", marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
-                        <div style={{ cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: mode === "message" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("message")}>
-                            <div style={{ zIndex:"999", marginTop: "13px", marginLeft: "28px" }} >메시지</div></div>
+                    <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
+                        <div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: mode === "alarm" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("alarm")}>
+                            <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
+                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: mode === "message" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("message")}>
+                            <div style={{ marginTop: "13px", marginLeft: "28px" }} >메시지</div></div>
                     </div>
                     <div className="list">
                         {mode === "alarm" ? (
