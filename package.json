@@ -52,6 +52,7 @@
     "react-infinite-scroller": "^1.2.4",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
+    "react-router-redux": "^4.0.8",
     "redux": "^4.0.1",
     "redux-form": "^8.2.4",
     "redux-thunk": "^2.3.0",

@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { GetDesignListRequest, GetDesignListCountRequest } from "actions/Designs/DesignList/DesignList"
-import { GetCategoryListRequest } from "actions/Category/Category"
+import { GetDesignListRequest, GetDesignListCountRequest } from "redux/modules/designlist"
+import { GetCategoryListRequest } from "redux/modules/category"
 import styled from 'styled-components'
 import Category from "components/Commons/Category"
 import OrderOption from "components/Commons/OrderOption"
 
 import ScrollList from "components/Commons/ScrollList"
-import Design from "components/Designs/Design"
 import Loading from "components/Commons/Loading"
+import Design from "components/Designs/Design"
 
 const TextWrapper = styled.div`
     position: relative;
@@ -91,13 +91,14 @@ class DesignListPage extends Component {
 }
 
 const mapStateToProps = (state) => {
+    // console.log("designlist:", state)
     return {
-        dataList: state.DesignList.status.DesignList,
-        dataListAdded: state.DesignList.status.DesignListAdded,
-        category1: state.Category.status.category1,
-        category2: state.Category.status.category2,
-        Count: state.DesignList.status.Count,
-        status: state.DesignList.status
+        dataList: state.designlist.status.DesignList,
+        dataListAdded: state.designlist.status.DesignListAdded,
+        category1: state.category.status.category1,
+        category2: state.category.status.category2,
+        Count: state.designlist.status.Count,
+        status: state.designlist.status
     }
 }
 const mapDispatchToProps = (dispatch) => {

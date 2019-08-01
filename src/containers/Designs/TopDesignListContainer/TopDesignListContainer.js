@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { GetTopDesignListRequest } from "actions/Designs/TopDesignList/TopDesignList"
+import { GetTopDesignListRequest } from "redux/modules/topdesign"
 import ScrollList from "components/Commons/ScrollList"
 import Design from "components/Designs/Design"
 import Loading from "components/Commons/Loading"
@@ -29,9 +29,9 @@ class TopDesignListContainer extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        dataList: state.TopDesignList.status.TopDesignList,
-        dataListAdded: state.TopDesignList.status.TopDesignListAdded,
-        status: state.TopDesignList.TopDesignList.status
+        dataList: state.topdesign.status.TopDesignList,
+        dataListAdded: state.topdesign.status.TopDesignListAdded,
+        status: state.topdesign.TopDesignList.status
     }
 }
 
