@@ -5,7 +5,7 @@ import MenuContext from "Global/Context/GlobalContext"
 
 import logo from "source/logo.png"
 // import Notification from "components/Commons/Notification"
-import Alarm from "components/Header/Alarm"
+import AlarmContainer from 'containers/Header/AlarmContainer';
 import SignNavContainer from "containers/Commons/SignNavContainer"
 import SearchForm from "components/Header/SearchForm"
 // import Message from "components/Header/Message"
@@ -68,7 +68,7 @@ class Header extends Component {
                     <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}>
                         <SearchForm visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
-                        <Alarm /></li>
+                        <AlarmContainer /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
                         <Message /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
