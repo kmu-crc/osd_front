@@ -6,7 +6,7 @@ import MenuContext from "Global/Context/GlobalContext"
 import logo from "source/logo.png"
 // import Notification from "components/Commons/Notification"
 import Alarm from "components/Header/Alarm"
-import SignNav from "components/Header/SignNav/SignNav"
+import SignNavContainer from "containers/Commons/SignNavContainer"
 import SearchForm from "components/Header/SearchForm"
 // import Message from "components/Header/Message"
 
@@ -74,7 +74,7 @@ class Header extends Component {
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
-                        <SignNav /></li>
+                        <SignNavContainer/></li>
                 </ul>
             </Menu>
         )
