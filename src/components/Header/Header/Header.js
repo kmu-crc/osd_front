@@ -68,13 +68,13 @@ class Header extends Component {
                     <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}>
                         <SearchForm visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
-                        <AlarmContainer /></li>
+                        <AlarmContainer {...this.props} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
                         <Message /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
-                        <SignNavContainer/></li>
+                        <SignNavContainer /></li>
                 </ul>
             </Menu>
         )

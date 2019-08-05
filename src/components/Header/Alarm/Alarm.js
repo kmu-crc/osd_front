@@ -2,133 +2,84 @@ import React, { Component } from "react"
 import { Icon } from "semantic-ui-react"
 import styled from "styled-components"
 import osd_style from "opendesign_style"
-import Socket from "modules/Socket"
 
-const Btn = styled.button`
-  padding: 0.75em 1.5em;
-  width: 50%;
-  font-size: 11px;
-  border-radius: 5px;
-  color: white;
-  margin-top: 1px;
-  margin-right: 1px;
-  background-color: ${osd_style.color.geyScale.scale5};
-  border: 1px solid ${osd_style.color.geyScale.scale5};
-  &:hover{
-    background-color: ${osd_style.color.geyScale.scale7};
-    border: 1px solid ${osd_style.color.geyScale.scale7};
-  }
+const AlarmList = styled.div`
+  display: ${props => props.display};
+  z-index: 999;
+  position: absolute;
+  pointer-events: auto;
+  top: ${props => props.top + "px"};
+  left: ${props => props.left + "px"};
+  z-index: 904;
+  height: 634px;
+  width: 424px;
+  border-radius: 25px;
+  border: 2px solid #FF0000;
+  background-color: #FFFFFF;
+  font-family: Noto Sans KR;
+  .list {
+      margin-top: 36px;
+      padding-left: 36px;
+      padding-right: 36px;
+      padding-bottom: 5px;
+      height: 520px;
+      overflow-y: hidden;
+    &:hover{
+        overflow-y: scroll;
+        }
+    }
 `
-
-const AlarmLabel = styled.div`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: white;
-  background-color: red;
-  border-radius: 15px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 16px;
-  vertical-align: middle;
-  padding-top: 2px;
-  transform: scale(0.6);
-  -ms-transform: scale(0.6);
-  transform-origin: 0 0;
-  -ms-transform-origin: 0 0;
-`;
-
-const AlarmDropDown = styled.ul`
-  position: absolute;
-  min-height: 50px;
-  max-height: 300px;
-  width: 320px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  top: 60px;
-  left: 0;
-  background-color: white;
-  transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  box-shadow: 1px 0px 3px ${osd_style.color.geyScale.scale2};
-`;
-
-// padding: 10px 20px;
-const AlarmItem = styled.li`
-border-bottom: 1px solid #222;
-text-align: left;
-position: relative;
-box-sizing: border-box;
-padding: 2px 2px 1px 2px;
-display: flex;
-.time {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-}
-:hover{
-  background-color:${osd_style.color.geyScale.scale1};
-}
-div { 
-}
-h4 {
-  font-size: 9pt;
-  text-align: center;
-}
-&:last-child {
-  border-bottom: 0;
-}
-&.confirm {
-  display: flex;
-  flexDirection: row;
-  justify-content: left;
-  h5 {
-    font-size: 10pt;
-    color: ${osd_style.color.geyScale.scale6};
-  }
-  color: ${osd_style.color.geyScale.scale5};
-}  
-&.unconfirm {
-  display: flex;
-  flexDirection: row;
-  justify-content: left;
-}
-`;
+const ListItem = styled.div`
+    opacity: ${props => props.confirm ? 0.5 : 1};
+    width: 351px;
+    display: flex;
+    height: 70px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #B7B7B7;
+    &:hover {
+        background-color: #EFEFEF;
+        opacity: 0.95;
+    }
+`
 
 class Alarm extends Component {
     state = {
-        active: false
+        profile: false,
+        active: false,
+        keyword: null,
+        msg: null,
+        top: 0, left: 0
     }
-
-    componentDidMout() {
-        if (this.props.isSignedIn) {
-            try {
-                Socket.emit("INIT", this.props.userInfo.uid)
-            } catch (err) {
-                //TODO v2: doesn't meaning in client, so! report administrator e-mail
-                console.log(err)
-            }
+    myRef = React.createRef()
+    openAlarmList = (e) => {
+        document.addEventListener("mousedown", this.checkClickOutside)
+        const top = e.clientY + 10
+        const left = e.clientX - (e.clientX + 150 > window.screenLeft ? 250 : 175)
+        this.setState({ active: true, top: top, left: left })
+    }
+    checkClickOutside = (e) => {
+        if (this.myRef.current === null) return
+        if (!this.myRef.current.contains(e.target)) {
+            this.setState({ active: false, top: 0, left: 0 })
+            document.removeEventListener("mousedown", this.checkClickOutside)
         }
     }
-    onAlarmHandler = e => {
-        if (e.type === "blur" && !this.alarm.contains(e.relatedTarget)) {
-            this.setState({ active: false });
-        }
-    }
+    // onAlarmHandler = e => {
+    //     if (e.type === "blur" && !this.alarm.contains(e.relatedTarget)) {
+    //         this.setState({ active: false });
+    //     }
+    // }
+    // openAlarmHandler = e => {
+    //     this.setState({ active: !this.state.active });
+    // }
 
-    openAlarmHandler = e => {
-        this.setState({ active: !this.state.active });
-    }
-
-    alarmConfirm = id => {
-        this.props.socket.emit("confirm", { uid: this.props.uid, alarmId: id });
+    alarmConfirm = (uid, alarmID) => {
+        this.props.handleAlarmConfirm(uid, alarmID)
     }
 
     allAlarmConfirm = () => {
         alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.')
-        this.props.socket.emit("allConfirm", { user_id: this.props.uid })
+        this.props.handleAllAlarmConfirm(this.props.uid)
     }
 
     getLink = item => {
@@ -148,9 +99,9 @@ class Alarm extends Component {
 
     getMessageText = item => {
         let msg = ""
-        const from = item.from ? TextSlicer(item.from, 4) : "유저"
-        const to = item.to ? TextSlicer(item.to, 4) : "유저"
-        const title = item.title ? TextSlicer(item.title, 16) : item.type === "DESIGN" ? "디자인" : "그룹"
+        const from = item.from //? TextSlicer(item.from, 4) : "유저"
+        const to = item.to //? TextSlicer(item.to, 4) : "유저"
+        const title = item.title //? TextSlicer(item.title, 16) : item.type === "DESIGN" ? "디자인" : "그룹"
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
                 msg = `${from}님이 이 디자인에 초대하였습니다.`
@@ -295,219 +246,50 @@ class Alarm extends Component {
     }
 
     render() {
-        // console.log(this.props, "props")
+        console.log(this.props, "props")
+        const alarms = this.props.alarm
         return (
-            <button type="button" style={{ height: "60px" }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
-                <Icon name="alarm" />
-                {this.props.noti.count > 0 && (
-                    <AlarmLabel>{NumberFormat(this.props.noti.count)}</AlarmLabel>
-                )}
-                {this.state.active && (
-                    <AlarmDropDown>
-                        {this.props.noti.list == null || this.props.noti.list.length === 0 ? (
-                            <AlarmItem>
-                                <div style={{ width: "2%", backgroundColor: "blue" }}>&nbsp;</div>
-                                <div style={{ paddingLeft: "5px" }}><Icon name="calendar outline" /></div>
-                                <div><h4>알람이 없습니다.</h4></div>
-                            </AlarmItem>
-                        ) : (
-                                <div>
-                                    {this.props.noti.count > 1 &&
-                                        <AlarmItem style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
-                                            <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
-                                            <div><Icon name="check square" /></div>
-                                            <div><h4>모두읽음처리</h4></div>
-                                        </AlarmItem>
-                                    }
-                                    {this.props.noti.list.map((item, index) => {
-                                        const alarmtype = this.showButton(item)
-                                        return (
-                                            <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid)}>
-                                                <div style={item.confirm ? { width: "1%", backgroundColor: "#EAA" } : { backgroundColor: "red" }}>&nbsp;</div>
-                                                <div style={{ paddingLeft: "3px" }} >
-                                                    <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
-                                                        <div>
-                                                            {item.kinds === "LIKE" ? <Icon name="heart" size="small" /> : <Icon name="bell outline" />}
-                                                        </div>
-                                                        <div>
-                                                            <h5>{TextSlicer(item.title, 28)}</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div style={{ height: "45px", display: "flex" }}>
-                                                        <div style={{
-                                                            width: "45px", borderRadius: "15%", borderRight: "0.5px solid gray", borderBottom: "0.5px solid black",
-                                                            backgroundPosition: "center", backgroundSize: "center", backgroundImage: `url(${item.thumbnail})`
-                                                        }}>&nbsp;</div>
-                                                        <div style={{ verticalAlign: "middle", paddingLeft: "3px" }}>
-                                                            <div style={{ width: "100%", fontSize: "9pt" }}>{this.getMessageText(item)}</div>
-                                                            <div style={{ display: "flex" }}>
-                                                                <div style={{ fontSize: "9pt", color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
-                                                                {alarmtype &&
-                                                                    <div style={{ position: "absolute", right: "0", display: "flex" }}>
-                                                                        <Btn size="tiny" onClick={e => this.accept(e, item)}>승인</Btn>
-                                                                        <Btn size="tiny" onClick={e => this.reject(e, item)}>거절</Btn>
-                                                                    </div>}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </AlarmItem>
-                                        )
-                                    })}
+            <>{this.state.active &&
+                <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
+                    <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
+                        <div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: "#FFFFFF" }}>
+                            <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
+                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF" }}>
+                            <div style={{ marginTop: "13px", marginLeft: "28px" }} ></div></div>
+                    </div>
+                    <div className="list">
+                        {alarms.list.map(item => {
+                            const alarmtype = this.showButton(item)
+                            return (<ListItem confirm={item.confirm} key={item.uid}>
+                                <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "15%" }} />
+                                <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
+                                    <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{this.getMessageText(item)}</div>
+                                    <div style={{ width: "100%", float: "right", marginTop: "16px", fontSize: "13px", fontWeight: "300", display: "flex", justifyContent: "space-between" }}>
+                                        <div>{item.create_time}</div>
+                                        <div style={{ display: "flex" }}>
+                                            {/* {item.quest && !item.confirm ? */}
+                                            {alarmtype ?
+                                                (<>
+                                                    <div style={{ cursor: "pointer", margin: "auto 0", color: "#FF0000", borderBottom: "1px solid red" }}>승인</div>
+                                                    <div style={{ cursor: "pointer", marginLeft: "10px", borderBottom: "1px solid #707070" }}>거절</div>
+                                                </>) : (<></>)
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
-                            )
-                        }
-                    </AlarmDropDown>
-                )}
-            </button>
+                            </ListItem>)
+                        })}
+                    </div>
+                </AlarmList>}
+                <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
+                    <div style={{ width: "48px", position: "absolute" }}>
+                        {alarms && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
+                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
+                    </div>
+                </div>
+            </>
         )
     }
 }
-
 export default Alarm
 
-
-
-
-
-
-
-// import React, { Component } from 'react'
-// import styled from 'styled-components'
-// const AlarmList = styled.div`
-//   display: ${props => props.display};
-//   z-index: 999;
-//   position: absolute;
-//   pointer-events: auto;
-//   top: ${props => props.top + "px"};
-//   left: ${props => props.left + "px"};
-//   z-index: 904;
-//   height: 634px;
-//   width: 424px;
-//   border-radius: 25px;
-//   border: 1px solid #FF0000;
-//   background-color: #FFFFFF;
-//   font-family: Noto Sans KR;
-//   .list {
-//       margin-top: 36px;
-//       padding-left: 36px;
-//       padding-right: 36px;
-//       padding-bottom: 5px;
-//       height: 520px;
-//       overflow-y: hidden;
-//     &:hover{
-//         overflow-y: scroll;
-//         }
-//     }
-// `
-// const ListItem = styled.div`
-//         opacity: ${props => props.confirm ? 0.5 : 1};
-//         width: 351px;
-//         display: flex;
-//         height: 70px;
-//         margin-bottom: 15px;
-//         border-bottom: 1px solid #B7B7B7;
-//         &:hover {
-//             background-color: #EFEFEF;
-//             opacity: 0.95;
-//         }
-// `
-// const ALARM = {
-//     list: [
-//         { uid: 0, quest: true, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/de28da48192867.5891272d2dd95.jpg", date: "3시간 전", message_code: "님이 이 디자인에 초대하였습니다.", from: "진아진아진아" },
-//         { uid: 1, quest: true, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/bb380d81730827.5d1e1805aa11d.png", date: "3시간 전", message_code: "님이 그룹가입신청을 하였습니다.", from: "진아진아진아" },
-//         { uid: 2, quest: false, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/6aa1af48192867.58912f833de55.jpg", date: "3시간 전", message_code: "님이 좋아요를 눌렀습니다.", from: "진아진아진아" },
-//         { uid: 3, quest: false, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/5bdefb48192867.58912f8340811.jpg", date: "3시간 전", message_code: "님이 좋아요를 눌렀습니다.", from: "진아진아진아" },
-//         { uid: 4, quest: false, confirm: true, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/61f04381730827.5d1e1805a8c42.png", date: "3시간 전", message_code: "님이 좋아요를 눌렀습니다.", from: "진아진아진아" },
-//         { uid: 5, quest: false, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/2ace3981543905.5d034f109b630.png", date: "3시간 전", message_code: "님이 좋아요를 눌렀습니다.", from: "진아진아진아" },
-//         { uid: 6, quest: false, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/a7017e74391183.5c2e4cf28b286.png", date: "3시간 전", message_code: "님이 좋아요를 눌렀습니다.", from: "진아진아진아" },
-//     ]
-// }
-// const MESSAGES = {
-//     list: [
-//         { uid: 0, confirm: true, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/de28da48192867.5891272d2dd95.jpg", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//         { uid: 1, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/6aa1af48192867.58912f833de55.jpg", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//         { uid: 2, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/5bdefb48192867.58912f8340811.jpg", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//         { uid: 3, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/61f04381730827.5d1e1805a8c42.png", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//         { uid: 4, confirm: true, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/bb380d81730827.5d1e1805aa11d.png", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//         { uid: 5, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/2ace3981543905.5d034f109b630.png", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//         { uid: 6, confirm: false, thumbnail: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/a7017e74391183.5c2e4cf28b286.png", date: "3시간 전", message_code: "님이 메시지를 보냈습니다.", from: "진아진아진아" },
-//     ]
-// }
-// class Alarm extends Component {
-//     state = { open: false, top: 0, left: 0, mode: "alarm" }
-//     openAlarmList = (e) => {
-//         document.addEventListener("mousedown", this.checkClickOutside)
-//         const top = e.clientY + 10
-//         const left = e.clientX - (e.clientX + 150 > window.screenLeft ? 250 : 175)
-//         this.setState({ open: true, top: top, left: left })
-//     }
-//     switchMode = (mode) => {
-//         this.setState({ mode: mode })
-//     }
-//     myRef = React.createRef()
-//     checkClickOutside = (e) => {
-//         if (this.myRef.current === null) return
-//         if (!this.myRef.current.contains(e.target)) {
-//             this.setState({ open: false, top: 0, left: 0 })
-//             document.removeEventListener("mousedown", this.checkClickOutside)
-//         }
-//     }
-//     render() {
-//         const { mode } = this.state
-//         const alarms = ALARM
-//         const messages = MESSAGES
-//         return (
-//             <>{this.state.open &&
-//                 <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
-//                     <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
-//                         <div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: mode === "alarm" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("alarm")}>
-//                             <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
-//                         <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: mode === "message" ? "#FFFFFF" : "#F8F8F8" }} onClick={() => this.switchMode("message")}>
-//                             <div style={{ marginTop: "13px", marginLeft: "28px" }} >메시지</div></div>
-//                     </div>
-//                     <div className="list">
-//                         {mode === "alarm" ? (
-//                             alarms.list.map(item => {
-//                                 return (<ListItem confirm={item.confirm} key={item.uid}>
-//                                     <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "15%" }} />
-//                                     <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
-//                                         <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{item.message_code}</div>
-//                                         <div style={{ width: "100%", float: "right", marginTop: "16px", fontSize: "13px", fontWeight: "300", display: "flex", justifyContent: "space-between" }}>
-//                                             <div>{item.date}</div>
-//                                             <div style={{ display: "flex" }}>
-//                                                 {item.quest && !item.confirm ?
-//                                                     (<>
-//                                                         <div style={{ cursor: "pointer", margin: "auto 0", color: "#FF0000", borderBottom: "1px solid red" }}>승인</div>
-//                                                         <div style={{ cursor: "pointer", marginLeft: "10px", borderBottom: "1px solid #707070" }}>거절</div>
-//                                                     </>)
-//                                                     : (<></>)
-//                                                 }
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </ListItem>)
-//                             })) : (
-//                                 messages.list.map(item => {
-//                                     return (<ListItem confirm={item.confirm} key={item.uid}>
-//                                         <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "50%" }} />
-//                                         <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
-//                                             <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{item.message_code}</div>
-//                                             <div style={{ marginTop: "16px", fontSize: "13px", fontWeight: "300" }}>{item.date}</div>
-//                                         </div>
-//                                     </ListItem>)
-//                                 })
-//                             )}
-//                     </div>
-//                 </AlarmList>}
-//                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
-//                     <div style={{ width: "48px", position: "absolute" }}>
-//                         {alarms && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
-//                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
-//                     </div>
-//                 </div>
-//             </>
-//         )
-//     }
-// }
-// export default Alarm
