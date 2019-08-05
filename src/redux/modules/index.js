@@ -5,6 +5,7 @@ import { combineReducers } from 'redux'
 import category from "./category"
 import topdesign from "./topdesign"
 import designlist from "./designlist"
+import designerlist from "./designerlist"
 //...new reducers import here
 
 
@@ -12,7 +13,9 @@ export default combineReducers({
     // form,
     category,
     designlist,
-    topdesign
+    topdesign,
+    designerlist,
+
 })
 
 //import { TopDesignList } from "reducers/Designs/TopDesignList"
