@@ -65,12 +65,12 @@ class Header extends Component {
                         <a style={(window.location.pathname === '/designer') ? { color: "red" } : { color: "#707070" }} href="/designer">디자이너</a></li>
                 </ul>
                 <ul style={{ margin: "0px", padding: "0px", listStyle: "none", display: "flex", lineHeight: "29px", verticalAlign: "top" }} >
-                    <li style={{ minWidth: "327px", height: "36px", marginRight: "47px", marginTop: "9px", border: "none" }}>
+                    <li style={{ minWidth: "327px", height: "36px", marginRight: "50px", marginTop: "9px", border: "none" }}>
                         <SearchForm visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
-                    <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
-                        <AlarmContainer {...this.props} /></li>
-                    <li style={{ width: "34px", height: "34px", marginRight: "47px", marginTop: "10px" }}>
+                    <li style={{ width: "34px", height: "34px", marginRight: "50px", marginTop: "10px" }}>
                         <Message /></li>
+                    <li style={{ width: "34px", height: "34px", marginRight: "50px", marginTop: "10px" }}>
+                        <AlarmContainer {...this.props} /></li>
                     <li style={{ minWidth: "97px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
