@@ -43,11 +43,11 @@ class DesignerListPage extends Component {
         main_category: { text: null, value: null },
         this_order: { text: "등록순", keyword: "update" }
     }
-    // componentDidMount() {
-    //     this.props.GetCategoryListRequest()
-    //         .then(() => { this.props.GetDesignerListCountRequest() });
-    //     this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
-    // }
+    componentDidMount() {
+        // this.props.GetCategoryListRequest()
+        //     .then(() => { this.props.GetDesignerListCountRequest() });
+        this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
+    }
     // handleChangeCategory = async (category) => {
     //     await this.setState({ page: 0, main_category: category, this_category: category, sub_category: { text: null, value: null } })
     //     // console.log("category.value:", category.value)
@@ -69,9 +69,9 @@ class DesignerListPage extends Component {
     //     // console.log("clicked, and will request as below\n", this.state.page, this.state.this_order.keyword, this.state.main_category.value, this.state.sub_category.value, this.state.search)
     // }
     getList = async () => {
-        await this.setState({ page: this.state.page + 1 })
+        await this.setState({ page: this.state.page + 1 });
         const { page, main_category, sub_category, keyword, order } = this.state;
-        return this.props.GetDesignerListRequest(page, order, "패션", "의상", keyword)
+        return this.props.GetDesignerListRequest(page, order, main_category, sub_category, keyword)
     };
     // changeCategory = (category) => {
     //     this.handleChangeCategory(category)
@@ -81,19 +81,21 @@ class DesignerListPage extends Component {
 
 
     render() {
-        console.log("designer:", this.props)
-        let designerData = this.state;
-        const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin
+        const { this_category, sub_category, page, this_order } = this.state
+        const { category1, category2, Count, status } = this.props
 
+        let designerData = this.state;
+
+        const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
         return (
             <>
                 <OrderOption order_clicked = {this.handleChangeOrderOps} selected = {designerData.this_order}/>
-                <TextWrapper>디자이너(333)</TextWrapper>
+                <TextWrapper>디자이너({Count})</TextWrapper>
                 <div style = {{position:"relative"}}><JoinDesigner onClick = {()=>this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
-                <div style={{ paddingTop: "128px", paddingBottom: "68px" }}>
+                <div style={{ paddingTop: "100px", paddingBottom: "68px" }}>
                     <ScrollList cols={5} width={width} height={height}
                         marginRight={marginRight} marginRightLast={marginRightLast} marginBottom={marginBottom} marginBottomLast={marginBottomLast}
-                        page={0} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
+                        page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
                 </div>
             </>
         )

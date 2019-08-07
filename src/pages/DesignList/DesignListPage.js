@@ -56,7 +56,7 @@ class DesignListPage extends Component {
         this.props.GetDesignListRequest(this.state.page, this.state.this_order.keyword, this.state.main_category.value || null, this.state.sub_category.value || null, this.state.search)
         // console.log("clicked, and will request as below\n", this.state.page, this.state.this_order.keyword, this.state.main_category.value, this.state.sub_category.value, this.state.search)
     }
-    getList = async () => {redu
+    getList = async () => {
         await this.setState({ page: this.state.page + 1 })
         const { page, main_category, sub_category, keyword, order } = this.state
         return this.props.GetDesignListRequest(page, order, main_category.value, sub_category.value, keyword)
@@ -66,9 +66,9 @@ class DesignListPage extends Component {
         // console.log(this.state)
     }
     render() {
-        console.log(this.props);
         const { this_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
+        console.log(Count);
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin
         return (<>
             <Category
