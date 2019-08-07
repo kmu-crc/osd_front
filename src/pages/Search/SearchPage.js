@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SearchForm from "components/Header/SearchForm"
+// import SearchForm from "components/Header/SearchForm"
 
 class SearchResult extends Component {
     render() {
