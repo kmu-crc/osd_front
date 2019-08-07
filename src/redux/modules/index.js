@@ -5,6 +5,7 @@ import auth from "./auth"
 import category from "./category"
 import topdesign from "./topdesign"
 import designlist from "./designlist"
+import grouplist from "./grouplist"
 //...new reducers import here
 
 
@@ -13,6 +14,7 @@ export default combineReducers({
     auth,
     category,
     designlist,
+    grouplist,
     topdesign
 })
 
