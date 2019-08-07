@@ -72,7 +72,7 @@ class Messages extends Component {
                 <div style={{ width: "7px", backgroundColor: "#FFFFFF" }}></div>
                 <div style={{ width: "1298px", backgroundColor: "#EFEFEF", borderRadius: "0px 25px 25px 0px", paddingLeft: "27px" }}>
                     <div style={{ width: "123px", height: "29px", marginTop: "36px", fontWeight: "500", fontSize: "20px", lineHeight: "29px", color: "#707070" }}>진아진아진아</div>
-                    <div style={{ width: "99px", height: "23px", marginTop: "5px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", color: "#707070" }}>최근 활동: 8분 전</div>
+                    {/* <div style={{ width: "99px", height: "23px", marginTop: "5px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", color: "#707070" }}>최근 활동: 8분 전</div> */}
                     <div>
                         <div style={{ width: "1249px", borderBottom: "1px solid #707070", paddingBottom: "68.5px" }} >
                             {/* received */}
