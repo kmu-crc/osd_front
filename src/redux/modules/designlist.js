@@ -68,7 +68,6 @@ export default function designlist(state, action) {
 // api actions
 export function GetDesignListRequest(page = 0, sort = null, cate1, cate2, keyword = null) {
     // console.log(`${host}, ${page}, ${sort}, ${cate1}, ${cate2}, ${keyword}`)
-    // console.log(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`)
     return (dispatch) => {
         return fetch(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
             headers: { "Content-Type": "application/json" }, method: "get"

@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import jina from "source/jina.png"
+import noimg from "source/noimg.png"
+
+
+import forked from "source/forked.svg"
+import iForked from "source/forked_icon_black.png"
+import iThumbUp from "source/thumbup_icon_black.png"
+import IconView from "source/IconView"
 
 //styled
 
@@ -53,7 +59,7 @@ const DesignerComp = styled.div`
         font-weight: 100;
     }
     .cate{
-        top:20px;
+        top:90px;
         left:462px;
         font-size:20px;
         position:absolute;
@@ -61,41 +67,47 @@ const DesignerComp = styled.div`
         font-weight: 300;
         
     }
-    .counts{
-        top:95px;
-        left:357px;
-        font-size:15px;
-        color:#707070;
+    .view{
         position:absolute;
-        font-weight: 100;
+        width:22px;
+        top:100px;
+        left:115px;
+    }
+    .like{
+        position:absolute;
+        width:11px;
+        top:100px;
+        left:175px;
+    }
+    .child{
+        position:absolute;
+        width:22px;
+        top:100px;
+        left:235px;
     }
     
 `;
 
-const user_info = {
-    userName : "",
-    designerDescription : "",
-    categoryName : "",
-    designCount:0,
-    groupCount:0,
-    thumbnail:"",
-};
-//`url(${info.thumbnail}), url(${jina})`
+
 
 class Designer extends Component{
-    state = {data:user_info};
-
+    state = {data : this.props.data};
     render(){
         const designer = this.state.data;
         return(
             <>
                 <DesignerComp>
-                    <div className="ImageBox" style={{backgroundImage:`url(${designer.thumbnail}), url(${jina})`}}></div>
+                    <div className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
                     <div className="TextBox">
-                        <div className="userName">{designer.userName}</div>
-                        <div className="description">{designer.designerDescription} </div>
+                        <div className="userName">{designer.nick_name}</div>
+                        <div className="description"> </div>
                         <div className="cate">{designer.categoryName}</div>
-                        <div className="counts">디자인:&nbsp;{designer.designCount}개 &nbsp; &nbsp; 그룹: {designer.groupCount}개</div>
+                        <div className="view" ><IconView width="22px" height="11px"  fill="#000000"/></div>
+                        <div style={{position:'absolute',top:'100px', left:'135px' , fontSize:'15px'}}>{designer.total_view}</div>
+                        <div className="like" ><img alt="icon" src={iThumbUp}  style={{ width: "11px", height: "11px" }}/></div>
+                        <div style={{position:'absolute',top:'100px', left:'190px' , fontSize:'15px'}}>{designer.total_like}</div>
+                        <div className="child"><img alt="icon" src={iForked} style={{ width: "22px", height: "11px" }} /></div>
+                        <div style={{position:'absolute',top:'100px', left:'250px', fontSize:'15px'}}>{designer.total_group}</div>
                     </div>
 
                 </DesignerComp>

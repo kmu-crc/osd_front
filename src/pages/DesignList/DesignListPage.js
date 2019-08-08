@@ -68,7 +68,6 @@ class DesignListPage extends Component {
     render() {
         const { this_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
-        console.log(Count);
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin
         return (<>
             <Category

@@ -53,8 +53,8 @@ class Design extends Component {
   render() {
     const data = this.state.data
     const thumbnail = data.thumbnailUrl
-    const isForked = this.props.forked || data.parent_design
-    return (
+    const isForked = this.props.forked || data.parent_design;
+      return (
       <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
         <div className="cover" />
         {isForked && <div className="forked" />}

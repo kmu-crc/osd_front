@@ -57,7 +57,7 @@ class ScrollList extends Component {
       {this.props.dataListAdded.length > 0 &&
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
           {this.props.dataListAdded.map((item, i) => {
-            const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : ""
+            const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
             const bottom = (this.props.dataListAdded.length - cols) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : ""
             return (<FlexBox width={this.props.width} height={this.props.height} marginRight={this.props.marginRight} marginBottom={this.props.marginBottom} marginRightLast={this.props.marginRightLast} marginBottomLast={this.props.marginBottomLast} key={i} className={`${last} ${bottom}`}>
               <ListComponent data={item} />
