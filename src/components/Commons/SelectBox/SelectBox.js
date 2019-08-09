@@ -2,25 +2,25 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const SelectBoxContainer = styled.div`
-border: 1px solid purple;
   .select-box--container {
     z-index: 950;
     position: relative;
     border: 1px solid #EFEFEF;
     margin: 0px;
     padding: 0px;
-    width: ${props => props.width};
+    width: 100%;
+    height: 100%;
     font-family: Noto Sans KR;
     font-weight: 300;
     font-size: 20px;
     line-height: 29px;
     color: #707070;
-    background-color: white;
+    background-color: #EFEFEF;
   }
   
   .select-box--box {
     background: #EFEFEF;
-    width: 100%; 
+    width: 100%;
     margin-top: 10.04px;
     /*margin-left: 27px;*/
   }
@@ -37,8 +37,8 @@ border: 1px solid purple;
   }
   .select-box--arrow-down {
     position: absolute;
-    left: 45%;
-    top: 45%;
+    left: 25%;
+    top: 35%;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 10px solid #707070;
@@ -47,12 +47,13 @@ border: 1px solid purple;
   .select-box--selected-item {
     display: inline-block;
     height: 100%;
-    width: 100%;
+    width: 92%;
     vertical-align: middle;
+    padding-left: 12px;
   }
   
   .select-box--items {
-    background-color: white;/* #EFEFEF;*/
+    background-color:  #EFEFEF;
     font-size: 20px;
   }
   
@@ -60,12 +61,11 @@ border: 1px solid purple;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    padding: 6px;
-    padding-left: 20px;
+    padding: 12px;
   }
   
   .select-box--items div.selected {
-    background-color: #EFEFEF;
+    background-color: #FFFFFF;
     background-image: url('/check.png');
     background-size: 16px;
     background-repeat: no-repeat;
@@ -73,7 +73,9 @@ border: 1px solid purple;
   }
   
   .select-box--items div:hover {
-    background-color: #FFF;
+    background-color: #000;
+    color:white;
+    opacity: 0.3;
   }
   
 `
@@ -91,8 +93,18 @@ class SelectBox extends Component {
     this.setState({ selectedItem: item, showItems: false, })
   }
   clicked = () => {
-    if (this.state.showItems === false)
+    if (this.state.showItems === false) {
       document.addEventListener("mousedown", this.handleClickOutside)
+      // document.addEventListener("mousemove", this.handleSelection)
+      // document.addEventListener("mouseup", this.handleSelection)
+    }
+  }
+  handleSelection = () => {
+    if (document.selection) {
+      // document.selection.empty()
+    } else {
+      // window.getSelection().removeAllRanges()
+    }
   }
   myRef = React.createRef()
   handleClickOutside = e => {
@@ -100,16 +112,16 @@ class SelectBox extends Component {
     if (!this.myRef.current.contains(e.target)) {
       this.setState({ showItems: false })
       document.removeEventListener("mousedown", this.handleClickOutside)
+      // document.addEventListener("mousemove", this.handleSelection)
+      // document.addEventListener("mouseup", this.handleSelection)
     }
   }
   render() {
-    const width = this.props.width - 30
-    console.log("w:", width + "px")
     return <>
       <SelectBoxContainer onClick={this.clicked} ref={this.myRef} >
         <div className="select-box--box">
-          <div className="select-box--container" width={this.props.width} onClick={this.dropDown}>
-            <div className="select-box--selected-item">
+          <div className="select-box--container" onClick={this.dropDown}>
+            <div className="select-box--selected-item" width={this.props.width + "px"}>
               {this.state.selectedItem.value}</div>
             <div className="select-box--arrow">
               <span className={`${this.state.showItems ? 'select-box--arrow-up' : 'select-box--arrow-down'}`} /></div>

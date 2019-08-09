@@ -37,7 +37,7 @@ class MyInfoModifyPage extends Component {
         const { selected } = this.state
         const Section_Basics = () => {
             return (
-                <section id="basic">
+                <section id="basic" style={{ paddingLeft: "95.5px" }} >
                     {/* thumbnail */}
                     <div style={{ width: "1200px" }}>
                         <div style={{ display: "flex" }}>
@@ -80,9 +80,9 @@ class MyInfoModifyPage extends Component {
         }
         const Section_Security = () => {
             return (
-                <section id="security">
+                <section id="security" style={{ paddingLeft: "95.5px" }} >
                     {/* pw */}
-                    <div style={{ marginTop: "38px", display: "flex" }}>
+                    <div style={{ display: "flex" }}>
                         <div style={{ width: "75px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>비밀번호</div>
                         <div style={{
                             marginLeft: "98px", marginTop: "9px",
@@ -119,9 +119,9 @@ class MyInfoModifyPage extends Component {
         }
         const Section_Additional = () => {
             return (
-                <section id="additional">
+                <section id="additional" style={{ paddingLeft: "95.5px" }} >
                     {/* category */}
-                    <div style={{ marginTop: "51px", display: "flex" }}>
+                    <div style={{ display: "flex" }}>
                         <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
                         <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
                             <SelectBox items={category1} width="410" /></div>
@@ -136,7 +136,7 @@ class MyInfoModifyPage extends Component {
                 <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
             </div>
 
-            <div style={{ display: "flex", marginTop: "60px" }}>
+            <div style={{ display: "flex", marginTop: "60px", marginBottom: "111px" }}>
                 {/* scroll - menu */}
                 <div style={{ width: "325px", marginLeft: "64px" }}>
                     <div style={{ position: "fixed", top: "197px", width: "325px", height: "190px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
@@ -148,17 +148,20 @@ class MyInfoModifyPage extends Component {
                     </div>
                 </div>
                 {/* form */}
-                <div style={{ marginLeft: "45px" }}>
-                    <div style={{ width: "1422px", height: "1619px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px", paddingLeft: "50.5px" }}>
-                        <form onSubmit={this.submit}>
-                            <Section_Basics />
-                            <Section_Security />
-                            <Section_Additional />
-                            {/* submit */}
-                            <div style={{ marginTop: "56px", marginLeft: "1470px", marginBottom: "156px" }}>
-                                <button type="submit" style={{ width: "74px", height: "29px", lineHeight: "29px", color: "#FF0000", fontSize: "20px", borderBottom: "1.5px solid #FF0000", fontWeight: "500", cursor: "pointer" }}>등록하기</button></div>
-                        </form>
-                    </div>
+                <div style={{ width: "1422px", height: "1619px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
+                    <form onSubmit={this.submit}>
+                        <Section_Basics />
+                        <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
+                        <Section_Security />
+                        <div style={{ marginTop: "101.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
+                        <Section_Additional />
+                        {/* submit */}
+                        <div style={{ marginTop: "200px", justifyContent: "flex-end", display: "flex" }}>
+                            <div style={{ width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
+                                <p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>등록하기</p>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </>)
