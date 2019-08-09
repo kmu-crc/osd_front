@@ -43,7 +43,8 @@ class DesignerListPage extends Component {
         this_category: { text: null, value: null },
         sub_category: { text: null, value: null },
         main_category: { text: null, value: null },
-        this_order: { text: "등록순", keyword: "update" }
+        this_order: { text: "등록순", keyword: "update" },
+        checkDataLength:0,
     }
     componentDidMount() {
          this.props.GetCategoryListRequest()
@@ -68,12 +69,13 @@ class DesignerListPage extends Component {
     }
     reloadData = () => {
         this.props.GetDesignerListRequest(this.state.page, this.state.this_order.keyword, this.state.main_category.value || null, this.state.sub_category.value || null, this.state.search)
-        // console.log("clicked, and will request as below\n", this.state.page, this.state.this_order.keyword, this.state.main_category.value, this.state.sub_category.value, this.state.search)
     }
     getList = async () => {
         await this.setState({ page: this.state.page + 1 });
         const { page, main_category, sub_category, keyword, order } = this.state;
-        return this.props.GetDesignerListRequest(page, order, main_category.value, sub_category.value, keyword)
+
+        return this.props.GetDesignerListRequest(page, order, main_category.value, sub_category.value, keyword);
+
     };
     changeCategory = (category) => {
         this.handleChangeCategory(category)
@@ -84,9 +86,6 @@ class DesignerListPage extends Component {
     render() {
         const { this_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
-
-        let designerData = this.state;
-
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
         return (
             <>

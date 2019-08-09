@@ -18,7 +18,7 @@ const FlexBox = styled.div`
   display: inline-block;
 `
 class ScrollList extends Component {
-  state = { hasMore: true, loading: false }
+  state = { hasMore: true, loading: false, callCount:0}
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll, true)
   }
@@ -26,9 +26,14 @@ class ScrollList extends Component {
     window.removeEventListener("scroll", this.handleScroll, true)
   }
   checkAndGetData = () => {
-    const { hasMore, loading } = this.state
-    if (this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false) {
-      this.getLoadData()
+    const { hasMore, loading, callCount } = this.state;
+
+    if(callCount < 2){
+      this.setState({callCount:callCount+1});
+      this.getLoadData();
+    }
+    if ((this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false)) {
+      this.state.callCount = 0;
     }
   }
   handleScroll = (e) => {
@@ -36,7 +41,8 @@ class ScrollList extends Component {
   }
   getLoadData = () => {
     if (this.state.hasMore === false) return
-    this.setState({ loading: true })
+    this.setState({ loading: true });
+    console.log(this.props.dataListAdded.length);
     this.props.getListRequest()
       .then(() => {
         this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })

@@ -8,6 +8,9 @@ import iForked from "source/forked_icon_black.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"
 
+//formats
+import NumberFormat from 'formats/NumberFormat'
+
 //styled
 
 const DesignerComp = styled.div`
@@ -50,21 +53,29 @@ const DesignerComp = styled.div`
         font-weight: bold;
 
     }
+
     .description{
         top:56px;
         left:114px;
         font-size:20px;
+        max-height: 30px;
+        max-width:330px;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
         position:absolute;
         color:#707070;
         font-weight: 100;
     }
     .cate{
         top:90px;
-        left:462px;
-        font-size:20px;
+        left:395px;
+        width:120px;
         position:absolute;
         color:#FF0000;
         font-weight: 300;
+        font-size:20px;
+        text-align:right;
         
     }
     .view{
@@ -93,6 +104,7 @@ const DesignerComp = styled.div`
 class Designer extends Component{
     state = {data : this.props.data};
     render(){
+
         const designer = this.state.data;
         return(
             <>
@@ -100,14 +112,14 @@ class Designer extends Component{
                     <div className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
                     <div className="TextBox">
                         <div className="userName">{designer.nick_name}</div>
-                        <div className="description"> </div>
-                        <div className="cate">{designer.categoryName}</div>
-                        <div className="view" ><IconView width="22px" height="11px"  fill="#000000"/></div>
-                        <div style={{position:'absolute',top:'100px', left:'135px' , fontSize:'15px'}}>{designer.total_view}</div>
+                        <div className="description">{designer.about_me}</div>
+                        <div className="cate">{designer.categoryName || "전체"}</div>
+                        <div className="view" ><IconView width="22px" height="11px"  fill="#808080"/></div>
+                        <div style={{position:'absolute',top:'100px', left:'135px' , fontSize:'15px'}}>{NumberFormat(designer.total_view)}</div>
                         <div className="like" ><img alt="icon" src={iThumbUp}  style={{ width: "11px", height: "11px" }}/></div>
-                        <div style={{position:'absolute',top:'100px', left:'190px' , fontSize:'15px'}}>{designer.total_like}</div>
+                        <div style={{position:'absolute',top:'100px', left:'190px' , fontSize:'15px'}}>{NumberFormat(designer.total_like)}</div>
                         <div className="child"><img alt="icon" src={iForked} style={{ width: "22px", height: "11px" }} /></div>
-                        <div style={{position:'absolute',top:'100px', left:'250px', fontSize:'15px'}}>{designer.total_group}</div>
+                        <div style={{position:'absolute',top:'100px', left:'250px', fontSize:'15px'}}>{NumberFormat(designer.total_group)}</div>
                     </div>
 
                 </DesignerComp>
