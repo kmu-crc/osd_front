@@ -1,27 +1,62 @@
-import { combineReducers } from 'redux'
+import Authentication from "./auth"
+import Account from "./account"
+import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignCardComment, DesignIssueList, DesignIssueComment, DesignLike, DeleteDesign, ChangeToProject, UpdateDesign, DesignSourceDetail, DesignWaitingList, DesignDetailComment } from "reducers/Designs";
+import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
+import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
+import { SignIn, SignUp, FindPw } from "reducers/Registration";
+import { UserInfo, MyDetail, MyJoin } from "reducers/Users";
+import { MessageList, MessageDetail } from "reducers/Messages";
+import { Categorys, CategoryAll } from "reducers/Categorys";
+import { reducer as formReducer } from 'redux-form';
+import { Search, SearchIssue, TopList } from "reducers/Commons"
+import { DesignForked } from "reducers/Designs/DesignForked"
+import OpenDesign from "reducers/OpenDesign";
 
-// import { reducer as form } from 'redux-form'
-import auth from "./auth"
-import category from "./category"
-import topdesign from "./topdesign"
-import designlist from "./designlist"
-import grouplist from "./grouplist"
-//...new reducers import here
-
+import { combineReducers } from "redux";
 
 export default combineReducers({
-    // form,
-    auth,
-    category,
-    designlist,
-    grouplist,
-    topdesign
-})
-
-//import { TopDesignList } from "reducers/Designs/TopDesignList"
-//import { DesignList } from "reducers/Designs/DesignList"
-//import { Category } from "reducers/Category/Category"
-//import { combineReducers } from 'redux'
-//import { reducer as formReducer } from 'redux-form'
-//
-//export default combineReducers({ Category, DesignList, TopDesignList, form: formReducer, })
+    Authentication, Account,
+    DesignList,
+    DesignDetail,
+    DesignDetailView,
+    DesignDetailStep,
+    DesignDetailStepCard,
+    DesignForked,
+    DesignSourceDetail,
+    DesignCardComment,
+    DesignDetailComment,
+    DesignIssueList,
+    DesignIssueComment,
+    DesignLike,
+    DeleteDesign,
+    ChangeToProject,
+    UpdateDesign,
+    DesignWaitingList,
+    CreateGroup,
+    GroupLike,
+    GroupList,
+    GroupDetail,
+    GroupWaitingList,
+    MyList,
+    DeleteGroup,
+    GroupIssue,
+    MyExistList,
+    DesignerList,
+    DesignerLike,
+    DesignerDetail,
+    SignIn,
+    SignUp,
+    FindPw,
+    UserInfo,
+    Categorys,
+    CategoryAll,
+    form: formReducer,
+    MyDetail,
+    MyJoin,
+    Search,
+    SearchIssue,
+    TopList,
+    OpenDesign,
+    MessageList,
+    MessageDetail
+});

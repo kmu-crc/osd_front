@@ -1,50 +1,112 @@
-import React, { Component } from 'react'
-import ScrollList from "components/Commons/ScrollList"
-import Loading from "components/Commons/Loading"
-import Group from "components/Groups/Group"
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { Grid } from "semantic-ui-react";
+import Sorting from "components/Commons/Sorting";
+import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
+import ContentBox from "components/Commons/ContentBox";
+import NumberFormat from "modules/NumberFormat";
 
+// css styling
+
+const Wrapper = styled.div`
+  width: 100%;
+
+  & .Countgroup{
+    padding: 5px 10px 5px 20px;
+    font-size: 20px;
+  }
+`;
+
+const Content = styled(ContentBox)`
+  @media only screen and (max-width: 991px) and (min-width: 768px){
+    & .ui.grid>.row{
+      margin-left: 6.25% !important;
+    }
+  }
+`;
+
+const MenuContainer = styled(Grid)`
+
+  & .addGroup{
+    width: 60%;
+    padding: 0px 0px 5px 0px;
+    text-align: right;
+  }
+
+  & .Sorting{
+    text-align: right;
+  }
+  & .addGroup button{
+    padding: 0.75em 2em;
+    font-size: 12px;
+    border: 1px solid #E72327;
+    background-color: #E72327;
+    border-radius: 2em;
+    color: white;
+  }
+
+  & .addGroup button:hover{
+    background-color: #BF1D1F;
+    border: 1px solid #BF1D1F;
+  }
+
+  &.ui.grid {
+    padding-top: 3rem;
+    padding-bottom : 1rem;
+  }
+
+`;
 
 class GroupList extends Component {
-    state = {
-        page: 0
-    }
-    componentDidMount() {
-        this.getInitData()
-    }
-    getInitData = async () => {
-        await this.setState({ page: 0 })
-        const keyword = this.props.search
-        const sort = this.props.this_order.keyword
-        this.props.GetGroupListCountRequest()
-            .then(() => { this.props.updateGroupCount(this.props.Count) })
-            .then(() => { this.props.GetGroupListRequest(0, sort, keyword) })
-    }
-    getList = async () => {
-        await this.setState({ page: this.state.page + 1 })
-        const keyword = this.props.search
-        const sort = this.props.this_order.keyword
-        const page = this.state.page
-        return this.props.GetGroupListCountRequest()
-            .then(() => { this.props.updateGroupCount(this.props.Count) })
-            .then(() => { this.props.GetGroupListRequest(page, sort, keyword) })
-    }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.this_order.keyword !== this.props.this_order.keyword) {
-            this.getInitData()
-        }
-    }
-    render() {
-        const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = this.props
-        return (
-            <>
-                {this.props.status === "INIT" ?
-                    <Loading /> :
-                    <ScrollList cols={2}
-                        width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast}
-                        page={this.state.page} ListComponent={Group} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
-            </>
-        )
-    }
+  state = {
+    rendering: true
+  }
+
+  componentDidMount(){
+    this.props.GetGroupTotalCountRequest();
+  }
+
+  changeState = async () => {
+    await this.setState({
+      rendering: false
+    });
+    await this.setState({
+      rendering: true
+    });
+  }
+
+  sortChange = (e, { value }) => {
+    this.props.history.replace(`/group/${value}`);
+    this.changeState();
+  }
+
+  render(){
+    const { sort } = this.props;
+    return(
+      <div>
+        <Content>
+          <Wrapper>
+            <MenuContainer>
+              <span className="Countgroup"> 그룹 ({NumberFormat(this.props.Count)}) </span>
+              <div className="addGroup">
+                <Link to="/createGroup"><button>그룹 등록</button></Link>
+              </div>
+              <div className="Sorting">
+                <Sorting handleClick={this.sortChange} placeholder={sort}/>
+              </div>
+            </MenuContainer>
+          </Wrapper>
+        </Content>
+        <Content>
+          <Wrapper className="listWrap">
+            {/*<ScrollTopGroupListContainer/> in this verision we do not use this function FOR NOW*/}
+            {this.state.rendering && <ScrollGroupListContainer sort={sort} history={this.props.history}/>}
+          </Wrapper>
+        </Content>
+      </div>
+    );
+  }
 }
 
-export default GroupList
+export default GroupList;

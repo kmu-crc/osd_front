@@ -1,21 +1,38 @@
-import React, { Component } from 'react'
-import ScrollList from "components/Commons/ScrollList"
-import Design from "components/Designs/Design"
-import Loading from "components/Commons/Loading"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { GetDesignListRequest, GetDesignTotalCountRequest } from "actions/Design";
+import DesignList from "components/Designs/DesignList";
 
 class DesignListContainer extends Component {
-    render() {
-        const { page, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = this.props
-        return (
-            <div style={{ paddingTop: "30px", paddingBottom: "68px" }}>
-                {this.props.status === "INIT" ?
-                    <Loading /> :
-                    <ScrollList cols={5}
-                        width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast}
-                        page={page} ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
-            </div>
-        )
-    }
+  render() {
+    return(
+      <div>
+        <DesignList {...this.props}/>
+      </div>
+    );
+  }
 }
 
-export default DesignListContainer
+const mapStateToProps = (state) => {
+  return {
+    DesignList: state.DesignList.status.DesignList,
+    DesignListAdded: state.DesignList.status.DesignListAdded,
+    userInfo: state.Authentication.status.userInfo,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+    Count: state.DesignList.status.Count
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2) => {
+        return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2))
+      },
+      GetDesignTotalCountRequest: (category1, category2) => {
+        return dispatch(GetDesignTotalCountRequest(category1, category2))
+      }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DesignListContainer);

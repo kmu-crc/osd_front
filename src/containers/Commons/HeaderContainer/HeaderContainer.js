@@ -1,29 +1,40 @@
-import React, { Component } from 'react'
-import Header from "components/Header/Header"
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { SignInRequest } from "redux/modules/auth"
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import Header from "components/Commons/Header";
+import { SignOutRequest } from "redux/modules/account";
+import { SetActive } from "actions/OpenDesign";
+// import {GetNotification} from "actions/Commons/Notification"
 class HeaderContainer extends Component {
-    render() {
-        console.log("HC:", this.props)
-        return (
-            <Header {...this.props} />
-        )
-    }
-}
-const mapStateTopProps = (state) => {
-    return {
-        userInfo: state.auth.status.userInfo,
-        isSignedIn: state.auth.status.isSignedIn
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        SignInRequest: (data) => {
-            return dispatch(SignInRequest(data))
-        }
-    }
+  render() {
+    return (
+      <Header {...this.props} />
+    );
+  }
 }
 
-export default withRouter(connect(mapStateTopProps, mapDispatchToProps)(HeaderContainer))
+const mapStateToProps = (state) => {
+  return {
+    token: state.Authentication.status.token,
+    valid: state.Authentication.status.valid,
+    // notification: state.Authentication.status.notification,
+    userInfo: state.Authentication.status.userInfo,
+    isActive: state.OpenDesign.isActive
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // GetNotification: ()=>{
+    // return dispatch(GetNotification())
+    // },
+    SignOutRequest: () => {
+      return dispatch(SignOutRequest());
+    },
+    SetActive: (active) => {
+      return dispatch(SetActive(active))
+    }
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));

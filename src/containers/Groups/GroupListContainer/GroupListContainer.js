@@ -1,32 +1,37 @@
-import React, { Component } from 'react'
-import GroupList from "components/Groups/GroupList"
-
-import { connect } from 'react-redux'
-import { GetGroupListRequest, GetGroupListCountRequest } from "redux/modules/grouplist"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { GetGroupListRequest, GetGroupTotalCountRequest } from "actions/Group";
+import GroupList from "components/Groups/GroupList";
 
 class GroupListContainer extends Component {
-    render() {
-        return (<GroupList {...this.props} />)
-    }
+  render() {
+    return(
+      <div>
+        <GroupList {...this.props}/>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        dataList: state.grouplist.status.GroupList,
-        dataListAdded: state.grouplist.status.GroupListAdded,
-        Count: state.grouplist.status.Count,
-        status: state.grouplist.status
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        GetGroupListRequest: (page, sort, keyword) => {
-            return dispatch(GetGroupListRequest(page, sort, keyword))
-        },
-        GetGroupListCountRequest: () => {
-            return dispatch(GetGroupListCountRequest())
-        }
-    }
-}
+  return {
+    GroupList: state.GroupList.status.GroupList,
+    GroupListAdded: state.GroupList.status.GroupListAdded,
+    valid: state.Authentication.status.valid,
+    userInfo: state.Authentication.status.userInfo,
+    Count: state.GroupList.status.Count
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer)
+const mapDispatchToProps = (dispatch) => {
+  return {
+      GetGroupListRequest: (sort) => {
+        return dispatch(GetGroupListRequest(sort))
+      },
+      GetGroupTotalCountRequest: () => {
+        return dispatch(GetGroupTotalCountRequest())
+      }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer);

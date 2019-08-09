@@ -1,1 +1,1 @@
-export { default } from "./ScrollList"
+export { default } from "./ScrollList";
