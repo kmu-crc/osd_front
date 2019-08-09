@@ -30,7 +30,7 @@ class Group extends Component {
                         <div style={{ lineHeight: "35px", height: "69px", textAlign: "left", fontWeight: "100", fontSize: "20px", width: "516px", whiteSpace: "pre-wrap" }}>{group.explanation || "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore"}</div>
                         <div style={{ lineHeight: "40px", textAlign: "left", fontWeight: "300", fontSize: "20px" }}>{group.nick_name}님의 그룹</div>
                     </div>
-                    <div style={{ marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+                    <div style={{ marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                         <div style={{ display: "flex", marginRight: "22px" }}>
                             <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
                             <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>1004</div>
