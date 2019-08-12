@@ -4,7 +4,7 @@ import noimg from "source/noimg.png"
 
 
 import forked from "source/forked.svg"
-import iForked from "source/forked_icon_black.png"
+import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"
 
@@ -40,8 +40,8 @@ const DesignerComp = styled.div`
         background-color:#EFEFEF;
         border-radius: 15px 15px 15px 15px;
         position: relative;
-        left:60px;
-        top:10px;
+        left:65px;
+        top:8px;
     }
     .userName{
         
@@ -68,8 +68,9 @@ const DesignerComp = styled.div`
         font-weight: 100;
     }
     .cate{
-        top:90px;
-        left:395px;
+        top:95px;
+        left:380px;
+        height:30px;
         width:120px;
         position:absolute;
         color:#FF0000;
@@ -77,24 +78,6 @@ const DesignerComp = styled.div`
         font-size:20px;
         text-align:right;
         
-    }
-    .view{
-        position:absolute;
-        width:22px;
-        top:100px;
-        left:115px;
-    }
-    .like{
-        position:absolute;
-        width:11px;
-        top:100px;
-        left:175px;
-    }
-    .child{
-        position:absolute;
-        width:22px;
-        top:100px;
-        left:235px;
     }
     
 `;
@@ -114,12 +97,14 @@ class Designer extends Component{
                         <div className="userName">{designer.nick_name}</div>
                         <div className="description">{designer.about_me}</div>
                         <div className="cate">{designer.categoryName || "전체"}</div>
-                        <div className="view" ><IconView width="22px" height="11px"  fill="#808080"/></div>
-                        <div style={{position:'absolute',top:'100px', left:'135px' , fontSize:'15px'}}>{NumberFormat(designer.total_view)}</div>
-                        <div className="like" ><img alt="icon" src={iThumbUp}  style={{ width: "11px", height: "11px" }}/></div>
-                        <div style={{position:'absolute',top:'100px', left:'190px' , fontSize:'15px'}}>{NumberFormat(designer.total_like)}</div>
-                        <div className="child"><img alt="icon" src={iForked} style={{ width: "22px", height: "11px" }} /></div>
-                        <div style={{position:'absolute',top:'100px', left:'250px', fontSize:'15px'}}>{NumberFormat(designer.total_group)}</div>
+                        <div style={{ display: "flex", justifyContent: "space-start", paddingTop:'100px'}}>
+                            <div className="view" style={{paddingLeft:"110px"}} ><IconView width="22px" height="11px"  fill="#000000" opacity="0.55"/></div>
+                            <div style={{paddingLeft:"5px",fontSize:'15px'}}>{NumberFormat(designer.total_view)}</div>
+                            <div className="like" style={{paddingLeft:"22px"}}><img alt="icon" src={iThumbUp}  style={{ width: "11px", height: "11px", opacity:"0.55"}}/></div>
+                            <div style={{paddingLeft:"5px",fontSize:'15px'}}>{NumberFormat(designer.total_like)}</div>
+                            <div className="child" style={{paddingLeft:"22px"}}><img alt="icon" src={iForked} style={{ width: "21px", height: "21px" , opacity:"0.55"}} /></div>
+                            <div style={{paddingLeft:"5px",fontSize:'15px'}}>{NumberFormat(designer.total_group)}</div>
+                        </div>
                     </div>
 
                 </DesignerComp>

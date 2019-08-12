@@ -33,7 +33,7 @@ class ScrollList extends Component {
       this.getLoadData();
     }
     if ((this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false)) {
-      this.state.callCount = 0;
+      this.setState({callCount:0});
     }
   }
   handleScroll = (e) => {
@@ -42,7 +42,6 @@ class ScrollList extends Component {
   getLoadData = () => {
     if (this.state.hasMore === false) return
     this.setState({ loading: true });
-    console.log(this.props.dataListAdded.length);
     this.props.getListRequest()
       .then(() => {
         this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
