@@ -12,7 +12,7 @@ import Design from "components/Designs/Design"
 
 const TextWrapper = styled.div`
     position: relative;
-    width: 100%;
+    width: 1920px;
     top: 25px;
     text-align: center;
     font-size: 25px;

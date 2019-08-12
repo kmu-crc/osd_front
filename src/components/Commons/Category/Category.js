@@ -4,7 +4,7 @@ import MenuContext from "Global/Context/GlobalContext"
 
 const Container = styled.div`
     height: ${props => props.height};
-    width: 100%;
+    width: 1920px;
     top: 50px;
     position: fixed;
     z-index: 800;
@@ -23,7 +23,7 @@ const Container = styled.div`
 const MainCategory = styled.div`
     position: fixed;
     z-index: 820;
-    width: 100%;
+    width: 1920px;
     top: 50px;
     padding-left: 115px;
     display: flex;
@@ -44,7 +44,7 @@ const MainCateElement = styled.div`
 const SubCategory = styled.div`
     z-index: 810;
     position: fixed;
-    width: 100%;
+    width: 1920px;
     top: 70px;
     padding-top: 17px;
     display: flex;

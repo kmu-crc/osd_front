@@ -45,7 +45,7 @@ class ScrollList extends Component {
     this.props.getListRequest()
       .then(() => {
         this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
-      }).catch((err) => {
+      }).catch(err => {
         this.setState({ hasMore: false, loading: false }) // console.log(err)
       })
   }
@@ -59,16 +59,17 @@ class ScrollList extends Component {
     const ListComponent = this.props.ListComponent;
     const { cols } = this.props;
     return (<>
-      {this.props.dataListAdded.length > 0 &&
+      {dataListAdded && dataListAdded.length > 0 &&
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
           {this.props.dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
             const bottom = (this.props.dataListAdded.length - cols) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : ""
             return (<FlexBox width={this.props.width} height={this.props.height} marginRight={this.props.marginRight} marginBottom={this.props.marginBottom} marginRightLast={this.props.marginRightLast} marginBottomLast={this.props.marginBottomLast} key={i} className={`${last} ${bottom}`}>
+
               <ListComponent data={item} />
             </FlexBox>)
           })}
-          {this.state.loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "16px", textAlign: "center", width: "100%" }}>목록을 가져오고 있습니다.</p>}
+          {this.state.loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "32px", textAlign: "center", width: "100%", transform: "translateY(-25px)" }}>목록을 가져오고 있습니다.</p>}
           {this.state.hasMore && <i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i>}
         </FlexContainer>}
     </>)

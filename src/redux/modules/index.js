@@ -1,21 +1,23 @@
 import { combineReducers } from 'redux'
 
 // import { reducer as form } from 'redux-form'
-
+import auth from "./auth"
 import category from "./category"
 import topdesign from "./topdesign"
 import designlist from "./designlist"
 import designerlist from "./designerlist"
+
 //...new reducers import here
 
 
 export default combineReducers({
     // form,
+    auth,
     category,
     designlist,
     topdesign,
     designerlist,
-
+    grouplist
 })
 
 //import { TopDesignList } from "reducers/Designs/TopDesignList"
