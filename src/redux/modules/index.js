@@ -6,7 +6,7 @@ import category from "./category"
 import topdesign from "./topdesign"
 import designlist from "./designlist"
 import designerlist from "./designerlist"
-
+import grouplist from "./grouplist"
 //...new reducers import here
 
 
@@ -17,7 +17,7 @@ export default combineReducers({
     designlist,
     topdesign,
     designerlist,
-    grouplist
+    grouplist,
 })
 
 //import { TopDesignList } from "reducers/Designs/TopDesignList"

@@ -59,7 +59,7 @@ class ScrollList extends Component {
     const ListComponent = this.props.ListComponent;
     const { cols } = this.props;
     return (<>
-      {dataListAdded && dataListAdded.length > 0 &&
+      {this.props.dataListAdded && this.props.dataListAdded.length > 0 &&
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
           {this.props.dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";

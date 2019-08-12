@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Designer from "components/Designers/Designer/Designer";
-import {GetDesignerListRequest, GetDesignerListCountRequest} from "redux/modules/designerlist"
+import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designerlist"
 import { GetCategoryListRequest } from "redux/modules/category"
 
 import styled from 'styled-components'
-
 import Category from "components/Commons/Category"
 import OrderOption from "components/Commons/OrderOption"
 import ScrollList from "components/Commons/ScrollList"
