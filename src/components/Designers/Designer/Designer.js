@@ -9,8 +9,8 @@ import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"
 
 //formats
-import NumberFormat from 'formats/NumberFormat'
-
+import NumberFormat from 'modules/formats/NumberFormat'
+import TextFormat from 'modules/formats/TextFormat'
 //styled
 
 const DesignerComp = styled.div`
@@ -44,14 +44,12 @@ const DesignerComp = styled.div`
         top:8px;
     }
     .userName{
-        
         top:19px;
         left:114px;
         font-size:20px;
         position:absolute;
         color:#707070;
         font-weight: bold;
-
     }
 
     .description{
@@ -95,7 +93,7 @@ class Designer extends Component{
                     <div className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
                     <div className="TextBox">
                         <div className="userName">{designer.nick_name}</div>
-                        <div className="description">{designer.about_me}</div>
+                        <div className="description"><TextFormat txt={designer.about_me}/></div>
                         <div className="cate">{designer.categoryName || "전체"}</div>
                         <div style={{ display: "flex", justifyContent: "space-start", paddingTop:'100px'}}>
                             <div className="view" style={{paddingLeft:"110px"}} ><IconView width="22px" height="11px"  fill="#000000" opacity="0.55"/></div>
