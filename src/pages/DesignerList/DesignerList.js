@@ -33,6 +33,8 @@ const JoinDesigner = styled.div`
     line-height: 29px;
     border-bottom: 1.5px solid red;
 `;
+
+
 const margin = { width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
 
 class DesignerListPage extends Component {

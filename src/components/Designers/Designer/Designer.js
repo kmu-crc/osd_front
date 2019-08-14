@@ -3,7 +3,6 @@ import styled from "styled-components";
 import noimg from "source/noimg.png"
 
 
-import forked from "source/forked.svg"
 import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"

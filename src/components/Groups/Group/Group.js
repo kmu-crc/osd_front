@@ -5,8 +5,8 @@ import IconView from 'source/IconView'
 
 class Group extends Component {
     render() {
-        const group = this.props.data
-        var four_child = [null, null, null, null]
+        const group = this.props.data;
+        var four_child = [null, null, null, null];
         if (group.children) {
             for (var i = 0; i < 4; i++) {
                 four_child[i] = group.children[i]
