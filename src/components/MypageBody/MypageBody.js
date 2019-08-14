@@ -48,7 +48,7 @@ class MypageBody extends Component{
                 <div className="MypageCategory">
                     {this.state.categorys.map((category, index) => {
                         return(
-                            <div className={this.state.selectCate} style={{paddingLeft:catePadding[index],cursor: 'pointer'}} key={index} onClick={this.changeCategory.bind(this, index)} >{category}</div>
+                            <div clMyassName={this.state.selectCate} style={{paddingLeft:catePadding[index],cursor: 'pointer'}} key={index} onClick={this.changeCategory.bind(this, index)} >{category}</div>
                         )
                     })}
                 </div>
@@ -101,8 +101,48 @@ class MypageBody extends Component{
                 }
                 {this.state.cateIndex === 2 &&
                 <div className="compWrapper" style={{top:"30px"}}>
+                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'80px'}}>
+                        <div style={{paddingLeft:"10px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                    </div>
+                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'80px'}}>
+                        <div style={{paddingLeft:"10px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                        <div style={{paddingLeft:"60px"}}><Design /></div>
+                    </div>
+
+                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'80px'}}>
+                        <div style={{paddingLeft:"10px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
+                        <div style={{paddingLeft:"95px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
+
+                    </div>
+                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'80px'}}>
+                        <div style={{paddingLeft:"10px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
+                        <div style={{paddingLeft:"95px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
+
+                    </div>
+
+                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'67px'}}>
+                        <div style={{paddingLeft:"10px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
+                        <div style={{paddingLeft:"95px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
+
+                    </div>
+                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'100px'}}>
+                        <div style={{paddingLeft:"10px"}}><Designer data={{imgURL:null}}/></div>
+                        <div style={{paddingLeft:"70px"}}><Designer data={{imgURL:null}}/></div>
+                        <div style={{paddingLeft:"70px"}}><Designer data={{imgURL:null}}/></div>
+
+
+                    </div>
+
 
                 </div>
+
 
                 }
 
