@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { GetWaitingDesignRequest, DeleteDesignInGroupRequest, UpdateDesignInGroupRequest, GetDesignInGroupRequest } from "actions/Group";
-import ContentList from "components/Commons/ContentList";
-import StyleGuide from 'StyleGuide';
-import styled from 'styled-components';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { GetWaitingDesignRequest, DeleteDesignInGroupRequest, UpdateDesignInGroupRequest, GetDesignInGroupRequest } from "redux/modules/group"
+import ContentList from "components/Commons/ContentList"
+import StyleGuide from 'StyleGuide'
+import styled from 'styled-components'
 
 const DesignBox = styled.div`
   margin-bottom: 1rem;
@@ -11,7 +11,7 @@ const DesignBox = styled.div`
     padding-bottom: 1rem;
     font-size: ${StyleGuide.font.size.heading4};
   }
-`;
+`
 
 class WaitingDesignContainer extends Component {
   componentWillMount(){

@@ -8,13 +8,13 @@ import { Grid } from "semantic-ui-react";
 class CategoryContainer extends Component {
 
   render() {
-    return(
+    return (
       <Grid.Column tablet={10} computer={8} widescreen={12}
-      largeScreen={12}>
+        largeScreen={12}>
         {this.props.category1.length > 0 && this.props.category2.length > 0 &&
           <div>
-            <Category2 {...this.props}/>
-            <Category {...this.props}/>
+            <Category2 {...this.props} />
+            <Category {...this.props} />
           </div>
         }
       </Grid.Column>
@@ -23,8 +23,8 @@ class CategoryContainer extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    category1: state.CategoryAll.status.category1,
-    category2: state.CategoryAll.status.category2
+    category1: state.Category.status.category1,
+    category2: state.Category.status.category2
   };
 };
 

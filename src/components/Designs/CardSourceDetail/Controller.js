@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-import TextController from "./TextController.js";
+import TextController from "./TextController";
 import FileController from "./FileController";
 import EmbController from "./EmbController";
 

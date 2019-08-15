@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ModifyDesignMember from "components/Designs/ModifyDesignMember";
-import { GetDesignDetailRequest, GetDesignCountRequest } from "actions/Design";
-import { SearchMemberRequest } from "actions/Commons/Search";
-import { JoinDesignRequest, AcceptDesignRequest, GetoutDesignRequest, DesignWaitingListRequest } from "actions/Designs/JoinDesign";
+import { GetDesignDetailRequest, GetDesignCountRequest } from "redux/modules/design";
+import { SearchMemberRequest } from "redux/modules/search";
+import { JoinDesignRequest, AcceptDesignRequest, GetoutDesignRequest, DesignWaitingListRequest } from "redux/modules/design";
 
 class DesignMemberContainer extends Component {
   render() {

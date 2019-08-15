@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { CreateDesignCardRequest } from "actions/Designs/DesignCard";
-import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
+import { CreateDesignCardRequest, GetDesignBoardRequest, GetDesignDetailRequest, UpdateDesignTime } from "redux/modules/design";
 import CreateCard from "components/Designs/CreateCard";
-import {UpdateDesignTime} from "actions/Designs/UpdateDesign";
-import { GetDesignDetailRequest} from "actions/Design";
 
 class CreateDesignCardContainer extends Component {
   render() {
-    return(
-      <CreateCard {...this.props}/>
+    return (
+      <CreateCard {...this.props} />
     );
   }
 }

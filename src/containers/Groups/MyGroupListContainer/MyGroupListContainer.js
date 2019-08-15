@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MyGroupList from "components/Groups/JoinGroup/MyGroupList";
-import { GetMyGroupListRequest, GroupJoinGroupRequest } from "actions/Group";
+import { GetMyGroupListRequest, GroupJoinGroupRequest } from "redux/modules/group";
 import { withRouter } from "react-router-dom";
 
 class MyGroupListContainer extends Component {

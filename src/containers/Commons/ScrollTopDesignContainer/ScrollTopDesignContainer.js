@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetTopDesignListRequest } from "actions/Commons/TopList";
 import ScrollList from "components/Commons/ScrollList";
-import Design from "components/Designs/Design";
+import Design from "components/Design";
 import Loading from "components/Commons/Loading";
 
 class ScrollTopDesignContainer extends Component {

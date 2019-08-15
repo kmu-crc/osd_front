@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import CreateBoard from "components/Designs/CreateBoard";
 import { connect } from "react-redux";
-import { CreateDesignBoardRequest, GetDesignBoardRequest } from "actions/Designs/DesignBoard";
-import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
-import { GetDesignDetailRequest } from "actions/Design";
+import { GetDesignDetailRequest, CreateDesignBoardRequest, UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
 
 class CreateDesignBoardContainer extends Component {
   render() {
-    return(
+    return (
       <CreateBoard {...this.props} />
     );
   }

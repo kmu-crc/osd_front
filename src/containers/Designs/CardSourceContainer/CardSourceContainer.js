@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import CardSource from "components/Designs/CardSource";
-import { UpdateCardImagesRequest, UpdateCardSourcesRequest } from "actions/Designs/DesignCard";
-import { GetDesignDetailViewRequest } from "actions/Design";
+import { UpdateCardImagesRequest, UpdateCardSourcesRequest, GetDesignDetailViewRequest } from "redux/modules/design";
 
 class CardSourceContainer extends Component {
   render() {
-    return(
-      <CardSource {...this.props}/>
+    return (
+      <CardSource {...this.props} />
     );
   }
 }
@@ -22,7 +21,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignDetailViewRequest:(id, token) => {
+    GetDesignDetailViewRequest: (id, token) => {
       return dispatch(GetDesignDetailViewRequest(id, token))
     },
     UpdateCardImagesRequest: (data, token, id) => {

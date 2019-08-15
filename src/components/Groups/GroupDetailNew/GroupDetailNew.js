@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import { Grid, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
-import ModifyJoinListNew from "components/Groups/ModifyJoinListNew";
-import ModifyExistListNew from "components/Groups/ModifyExistListNew";
-import CurrentJoinListNew from "components/Groups/CurrentJoinListNew";
-import Button from "components/Commons/Button";
-import ContentBox from "components/Commons/ContentBox";
-import StyleGuide from "StyleGuide";
-import PxtoRem from "modules/PxtoRem";
-import DateFormat from "modules/DateFormat";
-import TextFormat from "modules/TextFormat";
-import { GetCountMyDesignAndGroupInGroupRequest } from "actions/Group"
+import React, { Component } from "react"
+import styled from "styled-components"
+import { Grid, Icon } from "semantic-ui-react"
+import { Link } from "react-router-dom"
+import JoinGroupContainer from "containers/Groups/JoinGroupContainer"
+import ModifyJoinListNew from "components/Groups/ModifyJoinListNew"
+import ModifyExistListNew from "components/Groups/ModifyExistListNew"
+import CurrentJoinListNew from "components/Groups/CurrentJoinListNew"
+import Button from "components/Commons/Button"
+import ContentBox from "components/Commons/ContentBox"
+import StyleGuide from "StyleGuide"
+import PxtoRem from "modules/PxtoRem"
+import DateFormat from "modules/DateFormat"
+import TextFormat from "modules/TextFormat"
+import { GetCountMyDesignAndGroupInGroupRequest } from "redux/modules/group"
+
 // css styling
 
 const Wrapper = styled.div`

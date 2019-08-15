@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest} from "actions/Designs/DesignCard";
+import {UpdateDesignTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest} from "redux/modules/design";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
-import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
 
 class CardSourceDetailContainer extends Component {
   constructor(props) {

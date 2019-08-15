@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import CreateDesignForm from "components/Designs/CreateDesignForm";
-import { CreateDesignRequest } from "actions/Designs/CreateDesign";
-import { SearchMemberRequest } from "actions/Commons/Search";
-import { GetCategoryLevel2Request } from "actions/Categorys";
+import { CreateDesignRequest } from "redux/modules/design";
+import { SearchMemberRequest } from "redux/modules/search";
+import { GetCategoryLevel2Request } from "redux/modules/category";
 
 class CreateDesignFormContainer extends Component {
 

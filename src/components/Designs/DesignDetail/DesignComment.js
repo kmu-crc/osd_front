@@ -6,7 +6,7 @@ import styled from "styled-components";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextAreaRed, FormInput } from "components/Commons/FormItem";
-import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "actions/Designs/DesignComment";
+import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/modules/design";
 import DateFormat from "modules/DateFormat";
 import FormDataToJson from "modules/FormDataToJson";
 import logo from "source/thumbnail.png";
@@ -167,7 +167,7 @@ class DesignComment extends React.Component {
                       }} />
                     </div>
                     <div style={{ borderRadius: "10px 10px 10px 10px", marginLeft: "5px", padding: "5px 10px 5px 10px", backgroundColor: "#FFF6F9", minWidth: "15%", maxWidth: "75%", width: "max-content", display: "inline-block" }}>
-                      <a style={{ fontWeight: "bold" }} onClick={this.onClickedReply(comm.uid, comm.nick_name)}>{comm.nick_name}</a>
+                      <div style={{ fontWeight: "bold" }} onClick={this.onClickedReply(comm.uid, comm.nick_name)}>{comm.nick_name}</div>
                       <div style={{ overflowWrap: "break-word" }}>
                         {comm.comment.split("\n").map((line) => {
                           return (
@@ -178,7 +178,7 @@ class DesignComment extends React.Component {
                       </div>
                     </div>
                     <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <a onClick={() => this.onDeleteComment(comm)} style={{ verticalAlign: "bottom" }}>삭제</a>}
+                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <div onClick={() => this.onDeleteComment(comm)} style={{ verticalAlign: "bottom" }}>삭제</div>}
                     </div>
                     <div style={{ position: "relative" }}>
                       <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>
@@ -202,7 +202,7 @@ class DesignComment extends React.Component {
                               }} />
                             </div>
                             <div style={{ borderRadius: "10px 10px 10px 10px", marginLeft: "5px", padding: "5px 5px 5px 7px", backgroundColor: "#FFF6F9", minWidth: "15%", maxWidth: "75%", width: "max-content", display: "inline-block" }}>
-                              <a style={{ fontWeight: "bold" }} onClick={this.onClickedReply(comm.uid, reply.nick_name)}>{reply.nick_name}</a>
+                              <div style={{ fontWeight: "bold" }} onClick={this.onClickedReply(comm.uid, reply.nick_name)}>{reply.nick_name}</div>
                               <div style={{ overflowWrap: "break-word" }}>
                                 {reply.comment.split("\n").map((line) => {
                                   return (
@@ -213,7 +213,7 @@ class DesignComment extends React.Component {
                               </div>
                             </div>
                             <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                    {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <a onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</a>}
+                    {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <div onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</div>}
                             </div>
                             <div style={{ position: "relative" }}>
                               <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>

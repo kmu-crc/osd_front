@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetDesignInGroupRequest } from "actions/Group";
+import { GetDesignInGroupRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 import styled from 'styled-components';

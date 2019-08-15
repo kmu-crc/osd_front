@@ -2,6 +2,7 @@ import host from "config"
 import update from "react-addons-update"
 import { SetSession } from "modules/Sessions"
 
+
 const AUTH_SIGNIN = "AUTH_SIGNIN"
 const AUTH_SIGNIN_SUCCESS = "AUTH_SIGNIN_SUCCESS"
 const AUTH_SIGNIN_FAILURE = "AUTH_SIGNIN_FAILURE"
@@ -15,86 +16,20 @@ const FIND_PW = "FIND_PW"
 const FIND_PW_SUCCESS = "FIND_PW_SUCCESS"
 const FIND_PW_FAILURE = "FIND_PW_FAILURE"
 
-function FindPw() {
-    return {
-        type: FIND_PW
-    }
-}
-function FindPwSuccess(res) {
-    return {
-        type: FIND_PW_SUCCESS,
-        message: res.message
-    }
-}
-function FindPwFailure(err) {
-    return {
-        type: FIND_PW_FAILURE,
-        message: err.message
-    }
-}
-function SecessionSuccess(res) {
-    SetSession("opendesign_token", null)
-    window.location.href = "/"
-    return {
-        type: "SUCCESS",
-        message: res.message
-    }
-}
-function SecessionFailure(err) {
-    return {
-        type: "FAILURE",
-        message: err.message
-    }
-}
-function SignIn() {
-    return {
-        type: AUTH_SIGNIN
-    }
-}
-function SignInIsNotMember() {
-    return {
-        type: AUTH_SIGNIN_IS_NOT_MEMBER,
-        success: false,
-    }
-}
-function SignInIsNotPassword() {
-    return {
-        type: AUTH_SIGNIN_IS_NOT_PASSWORD,
-        success: false,
-    }
-}
-function SignInSuccess(token) {
-    return {
-        type: AUTH_SIGNIN_SUCCESS,
-        token: token
-    }
-}
-function SignInFailure() {
-    return {
-        type: AUTH_SIGNIN_FAILURE,
-        success: false
-    }
-}
-function SignOut() {
-    return {
-        type: AUTH_SIGNOUT
-    }
-}
-function SignUp() {
-    return {
-        type: AUTH_SIGNUP
-    }
-}
-function SignUpSuccess() {
-    return {
-        type: AUTH_SIGNUP_SUCCESS
-    }
-}
-function SignUpFailure() {
-    return {
-        type: AUTH_SIGNUP_FAILURE
-    }
-}
+
+const FindPw = () => ({ type: FIND_PW })
+const FindPwSuccess = (res) => ({ type: FIND_PW_SUCCESS, message: res.message })
+const FindPwFailure = (err) => ({ type: FIND_PW_FAILURE, message: err.message })
+const SignIn = () => ({ type: AUTH_SIGNIN })
+const SignInIsNotMember = () => ({ type: AUTH_SIGNIN_IS_NOT_MEMBER, success: false })
+const SignInIsNotPassword = () => ({ type: AUTH_SIGNIN_IS_NOT_PASSWORD, success: false })
+const SignInSuccess = (token) => ({ type: AUTH_SIGNIN_SUCCESS, token: token })
+const SignInFailure = () => ({ type: AUTH_SIGNIN_FAILURE, success: false })
+const SignOut = () => ({ type: AUTH_SIGNOUT })
+const SignUp = () => ({ type: AUTH_SIGNUP })
+const SignUpSuccess = () => ({ type: AUTH_SIGNUP_SUCCESS })
+const SignUpFailure = () => ({ type: AUTH_SIGNUP_FAILURE })
+
 
 const initialState = {
     FindPw: { status: "INIT" },
@@ -102,6 +37,7 @@ const initialState = {
     status: { success: false, massege: null }
     // ,status: { message: "" }
 }
+
 
 export default function Account(state, action) {
     if (typeof state === "undefined")
@@ -188,6 +124,7 @@ export default function Account(state, action) {
     }
 }
 
+
 export function SignUpRequest(data) {
     return (dispatch) => {
         dispatch(SignUp())
@@ -235,19 +172,6 @@ export function SignInRequest(data) {
             })
     }
 }
-export function SecessionRequest(token) {
-    return (dispatch) => {
-        return fetch(`${host}/users/deleteUser`, { headers: { 'x-access-token': token, 'Content-Type': 'application/json' }, method: "POST" })
-            .then(function (res) {
-                return res.json()
-            })
-            .then(function (res) {
-                SecessionSuccess(res)
-            }).catch((error) => {
-                SecessionFailure(error)
-            })
-    }
-}
 export function FindPwRequest(data) {
     return (dispatch) => {
         dispatch(FindPw())
@@ -263,3 +187,4 @@ export function FindPwRequest(data) {
             })
     }
 }
+

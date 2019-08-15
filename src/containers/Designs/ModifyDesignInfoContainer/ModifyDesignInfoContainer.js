@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ModifyDesignInfo from "components/Designs/ModifyDesignInfo";
-import { GetDesignDetailRequest } from "actions/Design";
-import { UpdateDesignInfoRequest} from "actions/Designs/UpdateDesign";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
-import { SearchMemberRequest } from "actions/Commons/Search";
+import { GetDesignDetailRequest, UpdateDesignInfoRequest } from "redux/modules/design";
+import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "redux/modules/category";
+import { SearchMemberRequest } from "redux/modules/search";
 
 class ModifyDesignInfoContainer extends Component {
   render() {
-    return(
-      <ModifyDesignInfo {...this.props}/>
+    return (
+      <ModifyDesignInfo {...this.props} />
     );
   }
 }

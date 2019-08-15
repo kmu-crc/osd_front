@@ -351,7 +351,7 @@ class DesignBoardCard extends Component {
                         />
                       </div>
                       <div className="content">
-                        <a className="author">{comm.nick_name}</a>
+                        <div className="author">{comm.nick_name}</div>
                         <div className="metadata">
                           <div>{comm.create_time.split("T")[0]}</div>
                         </div>

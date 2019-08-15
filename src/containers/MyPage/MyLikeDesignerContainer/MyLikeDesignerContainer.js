@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyLikeDesignerRequest } from "actions/Users/MyDetail";
+import { GetMyLikeDesignerRequest } from "redux/modules/personal";
 import ScrollList from "components/Commons/ScrollList";
 import Designer from "components/Designers/Designer";
 

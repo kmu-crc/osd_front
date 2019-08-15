@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetGroupDetailRequest, UpdateGroupRequest } from "actions/Group";
+import { GetGroupDetailRequest, UpdateGroupRequest } from "redux/modules/group";
 import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
 
 class ModifyGroupInfoContainer extends Component {

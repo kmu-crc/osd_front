@@ -90,7 +90,7 @@ class MessageDetail extends Component {
             <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
               {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
               <div className={item.from_user_id === myId ? "content my" : "content"}>
-                {item.from_user_id !== myId && <a className="author"><TextFormat txt={item.nick_name} chars={12} /></a>}
+                {item.from_user_id !== myId && <div className="author"><TextFormat txt={item.nick_name} chars={12} /></div>}
                 <div className={item.from_user_id === myId ? "wrapper my" : "wrapper"} >
                   {item.from_user_id === myId && <div className="metadata">{DateFormat(item.create_time)}</div>}
                   < div className="text">{item.message.split("\n").map((line, i) => { return (<span key={i}> {line} <br /></span>) })}</div>

@@ -1,182 +1,38 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Grid } from "semantic-ui-react";
-import { FormField } from "components/Commons/FormField";
-import ValidateForm from "components/Commons/ValidateForm";
-import { FormTextArea } from "components/Commons/FormItem";
-import FormDataToJson from "modules/FormDataToJson";
-import StyleGuide from "StyleGuide";
-import ContentBox from "components/Commons/ContentBox";
-import { FormInput } from "components/Commons/FormItem";
-import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
-import Button from "components/Commons/Button";
-import DateFormat from "modules/DateFormat";
-import Socket from "modules/socket"
-import NumberFormat from 'modules/NumberFormat';
-import TextSlicer from 'modules/TextSlicer'
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import FormDataToJson from "modules/FormDataToJson"
+// import MessageDetailContainer from "containers/Messages/MessageDetailContainer"
+import Socket from "modules/Socket"
+import plus from "source/plus_cross_gray.png"
+import jina from "source/jina.png"
 
-// css styling
-const Container = styled(ContentBox)`
-@media only screen and (max-width: 991px) and (min-width: 768px){
-  & .ui.grid>.row{
-    margin-left: 6.25% !important;
-  }
-  }
-`;
-
-const Wrapper = styled(Grid)`
-  width: 100%;
-  &.ui.grid {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 0rem;
-    margin-right: 0rem;
-  }
-  &.ui.grid > .row > .column {
-    padding: 1.5rem;
-  }
-`;
-
-const ListContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 0 5px rgba(0,0,0,0.25);
-  & .heading {
-    font-size: ${StyleGuide.font.size.heading4};
-    color: ${StyleGuide.color.gey.dark};
-    margin-bottom: 20px;
-  }
-  & label {
-    font-size: ${StyleGuide.font.size.heading4};
-    color: ${StyleGuide.color.gey.dark};
-  }
-  & input {
-    width: 80%;
-    height: 30px;
-    margin: 5px 0 10px;
-  }
-  & .myMsgList {
-    max-height: 300px;
+const List = styled.div`
+  margin-top: 14.09px;
+  width: 365px;
+  height: 738px;
+  overflow: hidden;
+  &:hover {
     overflow-y: scroll;
   }
-`;
-
-const MsgList = styled.li`
-  width: 100%;
-  height: 50px;
-  cursor: pointer;
-  margin: 0.3rem 0;
-  display: flex;
-  & .profile {
-    width: 50px;
-    height: 50px;
-    border-radius: 50% 50%;
-    overflow: hidden;
-    position: relative;
-    background-color: ${StyleGuide.color.sub.bule.light};
-    color: #fff;
-    float: left;
-    & span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      text-align: center;
-    }
+`
+const TextArea = styled.textarea`
+  padding-top: 24.5px;
+  padding-right: 40px;
+  background-color: #EFEFEF;
+  border: none;
+  resize: none;
+  width: 1131px;
+  height: 171.5px;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  text-align: left;
+  color: #707070;
+  &:focus{
+    outline: 1px solid #707070;
   }
-  & .update {
-    color: ${StyleGuide.color.geyScale.scale5};
-    font-weight: 400;
-    padding: 1rem;
-    display: flex;
-  }
-  &:hover .update {
-    font-weight: bold;
-  }
-  &::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-`;
+`
 
-const ContentContainer = styled(Grid.Column)`
-  border-right: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 0 5px rgba(0,0,0,0.25);
-  padding: 1rem;
-  & .ui.form .field {
-    margin-bottom: 1rem;
-  }
-  & .ui.form .field textarea:not([rows]) {
-    min-height: 2rem;
-  }
-`;
-
-const SendingMsg = styled.div`
-`;
-
-const SearchMember = styled.div`
-  margin-bottom: 30px;
-  & input {
-    border: 1px solid ${StyleGuide.color.geyScale.scale3};
-    background-color: ${StyleGuide.color.geyScale.scale1};
-    padding: 0 1rem;
-    width: 100%;
-    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
-  }
-`;
-
-const MemberList = styled.ul`
-  width: 100%;
-  padding: 0.5rem;
-  min-height: 100px;
-  max-height: 300px;
-  overflow-Y: scroll;
-  box-sizing: border-box;
-  border: 1px solid #181818;
-  border-radius: 3px;
-`;
-
-const MemberListItem = styled.li`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #181818;
-  border-radius: 3px;
-  margin-bottom: 5px;
-`;
-
-const DetailWrapper = styled.div`
-  background-color: #F0F0F0;
-  min-height: 250px;
-  max-height: 600px;
-  padding: 1rem 1rem 2rem 1rem;
-  overflow-y: scroll;
-  position: relative;
-  & p {
-    text-align: center;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-`;
-const AlarmLabel = styled.div`
-  width: 30px;
-  height: 30px;
-  color: white;
-  background-color: red;
-  border-radius: 15px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 16px;
-  vertical-align: middle;
-  padding-top: 2px;
-  transform: scale(0.6);
-  -ms-transform: scale(0.6);
-  transform-origin: 0 0;
-  -ms-transform-origin: 0 0;
-`;
 class MessageList extends Component {
   state = {
     msgId: -1,
@@ -192,7 +48,7 @@ class MessageList extends Component {
       .then(async (res) => {
         if (res.MsgList && res.MsgList.length > 0) {
           let arr = [];
-          arr = res.MsgList.map(list => {return (list.friend_id)})
+          arr = res.MsgList.map(list => { return (list.friend_id) })
           await this.setState({
             friendList: arr
           });
@@ -214,7 +70,7 @@ class MessageList extends Component {
 
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
-      this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
+      // this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
     }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
@@ -310,68 +166,88 @@ class MessageList extends Component {
   }
 
   render() {
-    const msgList = this.props.MessageList
+    // const msgList = this.props.MessageList
+    const Peer = () => {
+      return (
+        <div style={{ width: "336px", marginBottom: "30px", display: "flex" }}>
+          <div style={{ width: "70px", height: "70px", background: `url(${jina})`, backgroundSize: "cover", backgroundPosition: "center center" }} />
+          <div style={{ width: "244px", height: "70px", marginLeft: "22px" }}>
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "123px", height: "29px", fontSize: "17px", lineHeight: "25px", color: "#707070", textAlign: "left", fontWeight: "500", marginRight: "22px" }}>진아진아진아</div>
+              <div style={{ marginTop: "3px", width: "99px", height: "23px", fontSize: "14px", lineHeight: "20px", color: "#707070", textAlign: "left", fontWeight: "300" }}>최근 활동: 8분 전</div>
+            </div>
+            <div style={{ width: "244px", height: "28px", marginTop: "10px", fontSize: "17px", lineHeight: "25px", color: "#707070", textAlign: "left", fontWeight: "300" }}>아 감사합니다!</div>
+          </div>
+        </div>
+      )
+    }
     return (
-      <Container>
-        <Wrapper padded={false} columns={2}>
-          <Grid.Row>
-            <ListContainer widescreen={5} largeScreen={5} computer={6} tablet={16} mobile={16}>
-              <SearchMember>
-                <div className="heading">멤버 검색</div>
-                <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
-                <MemberList style={this.state.openMember ? { display: "block" } : { display: "none" }}>
-                  {this.props.members && this.props.members.map((item, index) => {
-                    return (<MemberListItem key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</MemberListItem>);
-                  })}
-                </MemberList>
-              </SearchMember>
-              <div className="heading">내 메시지함</div>
-              {msgList.length > 0 ?
-                <ul className="myMsgList">
-                  {msgList.sort((a, b) => {
-                    return new Date(b.update_time).getTime() - new Date(a.update_time).getTime();
-                  }).map(msg => (
-                    <MsgList key={msg.uid} onClick={() => this.setMsgId(msg.uid, msg.friend_id, msg.friend_name)}>
-                      <div className="profile">
-                        <span>{msg.friend_name}</span>
-                      </div>
-                      <div className="update">
-                        최근 메시지 {DateFormat(msg.update_time)}
-                        {msg.noti > 0 && <AlarmLabel>{NumberFormat(msg.noti)}</AlarmLabel>}
-                      </div>
-                    </MsgList>
-                  ))
-                  }
-                </ul>
-                : <div>메시지없음</div>
-              }
-            </ListContainer>
-            <ContentContainer widescreen={11} largeScreen={11} computer={10} tablet={16} mobile={16}>
+      <>
+        <div style={{ width: "1920px", height: "48px", marginTop: "8px", display: "block", backgroundColor: "#EFEFEF" }}>
+          <div style={{
+            display: "inline-block", marginLeft: "65px", marginTop: "9px", width: "74px", height: "29px",
+            fontFamily: "Noto Sans KR", fontWeight: "500", textAlign: "left", lineHeight: "29px", color: "#707070", fontSize: "20px"
+          }}>메시지함</div>
+        </div>
+        <div style={{ width: "1750px", height: "869px", marginTop: "25px", marginLeft: "85px", marginBottom: "28px", display: "flex" }}>
+          <div style={{ width: "445px", backgroundColor: "#EFEFEF", borderRadius: "25px 0 0 25px", paddingLeft: "54px" }}>
+            <div style={{ display: "flex" }}>
               <div style={{
-                height: "50px", fontWeight: "bold", color: `${StyleGuide.color.sub.bule.dark}`,
-                fontSize: `${StyleGuide.font.size.heading4}`, display: "flex"
-              }}>
-                {this.state.selectName && (TextSlicer(this.state.selectName, 16) + "님과의 대화")}
+                width: "303px", height: "30px", marginTop: "34px", fontFamily: "Noto Sans KR",
+                fontWeight: "500", textAlign: "left", fontSize: "20px", lineHeight: "29px", color: "#707070"
+              }}>받은 메시지함</div>
+              <div style={{
+                width: "50.91px", height: "50.91px", marginLeft: "20px", marginTop: "25px",
+                background: `url(${plus})`, backgroundSize: "cover", backgroundPosition: "center center"
+              }} />
+            </div>
+            {/* <div style={{ marginTop: "14.09px", width: "336px", height: "738px", overflowY: "auto" }}> */}
+            <List>
+              <Peer /><Peer /><Peer /><Peer /><Peer /><Peer /><Peer /><Peer /><Peer /><Peer /><Peer /><Peer />
+            </List>
+            {/* </div> */}
+          </div>
+          <div style={{ width: "7px", backgroundColor: "#FFFFFF" }}></div>
+          <div style={{ width: "1298px", backgroundColor: "#EFEFEF", borderRadius: "0px 25px 25px 0px", paddingLeft: "27px" }}>
+            <div style={{ width: "123px", height: "29px", marginTop: "36px", fontWeight: "500", fontSize: "20px", lineHeight: "29px", color: "#707070" }}>진아진아진아</div>
+            <div style={{ width: "99px", height: "23px", marginTop: "5px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", color: "#707070" }}>최근 활동: 8분 전</div>
+            <div>
+              <div style={{ width: "1249px", borderBottom: "1px solid #707070", paddingBottom: "68.5px" }} >
+                {/* received */}
+                <div style={{
+                  marginTop: "311px",
+                  width: "571px", height: "57px", backgroundColor: "#FFFFFF", borderRadius: "25px", marginBottom: "4px",
+                  paddingTop: "16px", paddingRight: "25px", paddingBottom: "18px", paddingLeft: "20px"
+                }}>
+                  <div style={{ width: "526px", height: "23px", fontSize: "17px", fontWeight: "500", textAlign: "left", lineHeight: "25px", color: "#707070" }}>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                        </div>
+                </div>
+                {/* sent */}
+                <div style={{
+                  width: "571px", height: "139px", backgroundColor: "#FFFFFF", borderRadius: "25px"
+                  , paddingTop: "18px", paddingRight: "25px", paddingBottom: "16px", paddingLeft: "20px"
+                  , marginLeft: "677px",
+                }}>
+                  <div style={{ width: "526px", height: "105px", fontSize: "17px", fontWeight: "500", lineHeight: "25px", textAlign: "left", color: "#707070" }}>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in</div>
+                </div>
               </div>
-              <DetailWrapper style={{ maxHeight: "250px" }} ref={ref => this.list = ref}>
-                {this.state.render &&
-                  <MessageDetailContainer id={this.state.msgId} />
-                }
-              </DetailWrapper>
-              <SendingMsg style={{ height: "50px" }}>
-                {this.state.render &&
-                  <ValidateForm onSubmit={this.onSubmitForm} className="ui reply form">
-                    <FormField name="message" validates={["required"]} RenderComponent={FormTextArea} />
-                    <Button type="submit">
-                      보내기
-                    </Button>
-                  </ValidateForm>
-                }
-              </SendingMsg>
-            </ContentContainer>
-          </Grid.Row>
-        </Wrapper>
-      </Container>
+              <div style={{ marginRight: "23px", display: "flex" }}>
+                <div style={{ width: "1131px", height: "170px" }}>
+                  <TextArea >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </TextArea>
+                </div>
+                <div style={{ width: "117px", height: "170px", marginTop: "1.5px", backgroundColor: "#FFFFFF", borderRadius: "0 0 25px 0", cursor: "pointer" }}>
+                  <div style={{ marginTop: "69px", marginLeft: "27px", fontWeight: "500", textAlign: "left", width: "68px", height: "33px", fontSize: "18px", lineHeight: "27px", color: "#707070" }}>
+                    전송하기</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     )
   }
 }

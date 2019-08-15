@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetDesignerListRequest, GetDesignerTotalCountRequest } from "actions/Designer";
+import { GetDesignerListRequest, GetDesignerTotalCountRequest } from "redux/modules/designer";
 import DesignerList from "components/Designers/DesignerList";
 
 class DesignerListContainer extends Component {

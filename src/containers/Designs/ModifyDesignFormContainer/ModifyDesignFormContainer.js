@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ModifyDesignForm from "components/Designs/ModifyDesignForm";
-import { GetDesignDetailRequest } from "actions/Design";
+import { GetDesignDetailRequest } from "redux/modules/design";
 
 class ModifyDesignFormContainer extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import JoinGroup from "components/Groups/JoinGroup";
 import { connect } from "react-redux";
-import { JoinGroupRequest } from "actions/Group";
+import { JoinGroupRequest } from "redux/modules/group";
 
 class JoinGroupContainer extends Component {
   render() {

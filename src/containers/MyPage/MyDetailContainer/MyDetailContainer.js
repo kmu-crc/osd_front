@@ -1,35 +1,35 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { GetMyDetailRequest, GetMyDesignListRequest } from "actions/Users/MyDetail";
-import MyDetail from "components/Users/MyDetail";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { GetMyDetailRequest, GetMyDesignListRequest } from "redux/modules/personal"
+import MyDetail from "components/Users/MyDetail"
 
 class MyDetailContainer extends Component {
   componentWillMount() {
-    this.props.GetMyDetailRequest(this.props.token);
+    this.props.GetMyDetailRequest(this.props.token)
   }
 
   render() {
-    return(
-      <MyDetail {...this.props}/>
-    );
+    return (
+      <MyDetail {...this.props} />
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    MyDetail: state.MyDetail.status.MyDetail
-  };
-};
+    MyDetail: state.Personal.status.MyDetail
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
     GetMyDetailRequest: (token) => {
-      return dispatch(GetMyDetailRequest(token));
+      return dispatch(GetMyDetailRequest(token))
     },
     GetMyDesignListRequest: (token, page) => {
-      return dispatch(GetMyDesignListRequest(token, page));
+      return dispatch(GetMyDesignListRequest(token, page))
     }
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer)

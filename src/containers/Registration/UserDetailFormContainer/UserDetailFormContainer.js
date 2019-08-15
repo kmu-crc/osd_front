@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserDetailForm from "components/Registration/UserDetailFrom";
-import { InsertUserDetailRequest } from "actions/Users";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
+import { InsertUserDetailRequest } from "redux/modules/personal";
+import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "redux/modules/category";
 
 class UpdateUserInfoContainer extends Component {
   render() {

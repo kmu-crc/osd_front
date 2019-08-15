@@ -3,17 +3,11 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import DesignBoardCard from "components/Designs/DesignBoardCard";
 import {
-  UpdateCardTitleRequest,
-  UpdateCardContentRequest,
-  GetCardDetailRequest,
-  UpdateCardImagesRequest,
-  UpdateCardSourcesRequest,
-  DeleteDesignCardRequest,
-  GetCardCommentRequest,
-  CreateCardCommentRequest,
-  DeleteCardCommentRequest
-} from "actions/Designs/DesignCard";
-import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
+  UpdateCardTitleRequest, UpdateCardContentRequest, GetCardDetailRequest,
+  UpdateCardImagesRequest, UpdateCardSourcesRequest, DeleteDesignCardRequest,
+  GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest,
+  GetDesignBoardRequest
+} from "redux/modules/design";
 
 class DesignBoardCardContainer extends Component {
   render() {

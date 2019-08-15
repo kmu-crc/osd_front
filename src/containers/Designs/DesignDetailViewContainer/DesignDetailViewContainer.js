@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignDetailViewRequest, ChangeToProjectRequest, DesignDetailViewResetRequest } from "actions/Design";
 import DetailView from "components/Designs/DetailView";
-import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "actions/Designs/DesignCard";
-import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
+import { GetDesignDetailViewRequest, UpdateDesignTime, ChangeToProjectRequest, DesignDetailViewResetRequest, GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "redux/modules/design";
 
 class DesignDetailViewContainer extends Component {
   render() {
     return (
-      <DetailView {...this.props}/>
+      <DetailView {...this.props} />
     )
   }
 }
@@ -43,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     DesignDetailViewResetRequest: () => {
       return dispatch(DesignDetailViewResetRequest())
     },
-    UpdateDesignTime:(id, token)=>{
+    UpdateDesignTime: (id, token) => {
       return dispatch(UpdateDesignTime(id, token))
     }
   }

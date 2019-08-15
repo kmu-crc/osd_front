@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetGroupListRequest } from "actions/Group";
+import { GetGroupListRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import Group from "components/Groups/Group";
 

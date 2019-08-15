@@ -1,27 +1,10 @@
-import React, { Component } from "react";
-import { Loader } from "semantic-ui-react";
-import styled from "styled-components";
+import React from 'react'
+import {Loader} from 'semantic-ui-react'
 
-const DimmerContainer = styled.div`
-  & .ui.loader {
-    position: fixed;
-    &.ui.dimmer::before {
-      border-color: rgba(255,255,255,.7);
-    }
-    &::after {
-      border-color: #000 transparent transparent !important;
-    }
-  }
-`;
-
-class Loading extends Component {
-  render(){
-    return(
-      <DimmerContainer>
-        <Loader size="huge" active/>
-      </DimmerContainer>
-    );
-  }
+function Loading() {
+    return (<Loader size="huge" active >
+        <p style={{ fontSize: "24px", color: "#707070", fontWeight: "500", fontFamily: "Noto Sans KR" }}>
+            데이터를 가져오고 있습니다.</p>
+    </Loader>)
 }
-
-export default Loading;
+export default Loading

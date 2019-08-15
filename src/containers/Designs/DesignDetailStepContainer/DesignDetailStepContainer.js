@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignBoardRequest } from "actions/Designs/DesignBoard";
+import { UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
 import DetailStep from "components/Designs/DetailStep";
-import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
 
 class DesignDetailStepContainer extends Component {
   render() {

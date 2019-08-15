@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { GetDesignCardRequest, UpdateCardTitleRequest } from "actions/Designs/DesignCard";
-import { UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest } from "actions/Designs/DesignBoard";
+import { UpdateDesignTime, UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest, GetDesignCardRequest, UpdateCardTitleRequest } from "redux/modules/design";
 import DesignBoard from "components/Designs/DesignBoard";
-import { SetActive } from "actions/OpenDesign";
-import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
+import { SetActive } from "redux/modules/auth"
 
 class DesignBoardContainer extends Component {
   render() {
-    return(
-      <DesignBoard {...this.props}/>
+    return (
+      <DesignBoard {...this.props} />
     );
   }
 }
@@ -18,15 +16,15 @@ const mapStateToProps = (state) => {
   return {
     list: state.DesignDetailStepCard.status,
     isTeam: state.DesignDetail.status.DesignDetail.is_team,
-    isActive: state.OpenDesign.isActive,
+    isActive: state.Authentication.isActive,
     token: state.Authentication.status.token
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    UpdateCardTitleRequest: (data, token, id) =>{
-      return dispatch(UpdateCardTitleRequest(data,token,id));
+    UpdateCardTitleRequest: (data, token, id) => {
+      return dispatch(UpdateCardTitleRequest(data, token, id));
     },
     GetDesignCardRequest: (id, board_id) => {
       return dispatch(GetDesignCardRequest(id, board_id));

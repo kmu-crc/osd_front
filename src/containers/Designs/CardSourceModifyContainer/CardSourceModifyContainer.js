@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {GetDesignSourceRequest, DesignSourceResetRequest, UpdateCardSourceRequest, GetCardDetailRequest} from "actions/Designs/DesignCard";
-import {GetDesignDetailRequest} from "actions/Design";
-import {UpdateDesignTime} from "actions/Designs/UpdateDesign";
+import { UpdateDesignTime, GetDesignDetailRequest, GetDesignSourceRequest, DesignSourceResetRequest, UpdateCardSourceRequest, GetCardDetailRequest } from "redux/modules/design";
 import DesignCardModify from "components/Designs/DesignCardModify";
 
 class CardSourceModifyContainer extends Component {
   render() {
-    return(
+    return (
       <DesignCardModify {...this.props} />
     );
   }

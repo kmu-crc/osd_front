@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetDesignInGroupRequest, DeleteDesignInGroupRequest } from "actions/Group";
+import { GetDesignInGroupRequest, DeleteDesignInGroupRequest } from "redux/modules/group";
 import ContentList from "components/Commons/ContentList";
 import StyleGuide from 'StyleGuide';
 import styled from 'styled-components';

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import Button from "components/Commons/Button";
 import eximg from "source/myPage.jpeg";
-import { AcceptDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign";
-import { GetMyInvitedListRequest } from "actions/Users/MyDetail";
+import { AcceptDesignRequest, GetoutDesignRequest } from "redux/modules/design";
+import { GetMyInvitedListRequest } from "redux/modules/personal";
 
 // css styling
 const List = styled.li`

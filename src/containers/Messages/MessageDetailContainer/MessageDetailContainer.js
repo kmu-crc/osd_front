@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageDetail from "components/Messages/MessageDetail";
-import { GetMyMsgDetailRequest, GetMyMessageDetailClear } from "actions/Message";
+import { GetMyMsgDetailRequest, GetMyMessageDetailClear } from "redux/modules/message";
 
 class MessageDetailContainer extends Component {
   render() {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetDesignInDesignerRequest } from "actions/Designer";
+import { GetDesignInDesignerRequest } from "redux/modules/designer";
 import ScrollList from "components/Commons/ScrollList";
-import Design from "components/Designs/Design";
+import Design from "components/Design";
 
 class DesignInDesignerContainer extends Component {
   componentWillMount() {
