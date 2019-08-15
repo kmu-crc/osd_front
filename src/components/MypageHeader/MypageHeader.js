@@ -35,15 +35,15 @@ const MypageHeaderElement = styled.div`
         font-size:17px;
         font-weight:100;
         font-color:#707070;
-        padding-top:15px;
-        padding-left:1180px;
+        padding-top:17px;
+        padding-left:1174px;
         
     }
     
     .ImageBox{
         position:relative;
-        top:90px;
-        left:70px;
+        top:89px;
+        left:75px;
         width: 200px;
         height: 200px;
         background-color: #D6D6D6;
@@ -72,14 +72,14 @@ class MypageHeader extends Component{
         return(
             <>
                 <MypageHeaderElement>
-                    <div style={{display:'flex', justifyContent: "space-start", paddingTop:'25px', paddingLeft:'115px'}}>
+                    <div style={{display:'flex', justifyContent: "space-start", paddingTop:'32px', paddingLeft:'115px'}}>
                         <div className="MynameBox">진아진아진아</div>
                         <div className="Category">패션패션패션</div>
                         <div className="reviseInformation">정보 수정하기</div>
                         <div><img alt="icon" src={iEdit} style={{paddingLeft:"15px"}}/></div>
                     </div>
                     <div className="ImageBox"></div>
-                    <div className="Descriptions" style={{display:'flex', justifyContent: "space-start", paddingTop:'20px', paddingLeft:"415px"}}>
+                    <div className="Descriptions" style={{display:'flex', justifyContent: "space-start", paddingTop:'12px', paddingLeft:"419px"}}>
                         <div className="inputBox" style={{position:'relative',width:"480px", height:"150px", fontSize:'20px', fontWeight:'100', lineHeight:'35PX'}}>
                             {textData}
                         </div>

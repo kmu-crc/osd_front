@@ -5,7 +5,14 @@ import IconView from 'source/IconView'
 
 class Group extends Component {
     render() {
+        const defaultVal = {title: "타이틀", nick_name:"닉네임"};
         const group = this.props.data;
+        if(group.title === ""){
+            group.title = defaultVal.title;
+        }
+        if(group.nick_name === undefined){
+            group.nick_name = defaultVal.nick_name;
+        }
         var four_child = [null, null, null, null];
         if (group.children) {
             for (var i = 0; i < 4; i++) {
