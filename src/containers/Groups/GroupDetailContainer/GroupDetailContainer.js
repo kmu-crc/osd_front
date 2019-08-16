@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { DesignInGroupClear, GroupInGroupClear, GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest, DeleteGroupRequest } from "redux/modules/group";
-// import GroupDetail from "components/Groups/GroupDetail";
-import GroupDetailNew from "components/Groups/GroupDetailNew";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { DesignInGroupClear, GroupInGroupClear, GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest, DeleteGroupRequest } from "redux/modules/group"
+import GroupDetail from "components/Groups/GroupDetail"
 
 class GroupDetailContainer extends Component {
   render() {
     return (
-      <GroupDetailNew {...this.props} />
-    );
+      <GroupDetail {...this.props} />
+    )
   }
 }
 
@@ -19,8 +18,8 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     like: state.GroupLike.status.like,
     Count: state.GroupDetail.status.Count
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -48,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
     DeleteGroupRequest: (id, token) => {
       return dispatch(DeleteGroupRequest(id, token))
     }
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailContainer)
