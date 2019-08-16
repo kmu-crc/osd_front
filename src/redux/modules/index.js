@@ -1,24 +1,23 @@
-import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 
-// import { reducer as form } from 'redux-form'
+import Authentication from "./auth"
+import Account from "./account"
+import Category from "./category"
+import { Design, DesignCard, DesignComment, DesignList } from "./design"
+import { Designer } from "./designer"
+import { Group, GroupList } from "./group"
+import Search from "./search"
+import Personal from "./personal"
+import Message from "./message"
 
-import category from "./category"
-import topdesign from "./topdesign"
-import designlist from "./designlist"
-//...new reducers import here
-
+import { combineReducers } from "redux"
 
 export default combineReducers({
-    // form,
-    category,
-    designlist,
-    topdesign
+    form: formReducer,
+    Account, Authentication,
+    Category,
+    Design, DesignCard, DesignComment, DesignList,
+    Designer,
+    Group, GroupList,
+    Search, Personal, Message
 })
-
-//import { TopDesignList } from "reducers/Designs/TopDesignList"
-//import { DesignList } from "reducers/Designs/DesignList"
-//import { Category } from "reducers/Category/Category"
-//import { combineReducers } from 'redux'
-//import { reducer as formReducer } from 'redux-form'
-//
-//export default combineReducers({ Category, DesignList, TopDesignList, form: formReducer, })

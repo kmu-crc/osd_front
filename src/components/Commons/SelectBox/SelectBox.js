@@ -2,30 +2,31 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const SelectBoxContainer = styled.div`
-.select-box--container {
+  .select-box--container {
     z-index: 950;
-    border: 1px solid red;
     position: relative;
     border: 1px solid #EFEFEF;
-    height: 29.92px;
     margin: 0px;
     padding: 0px;
-    width: 90%;
+    width: 100%;
+    height: 100%;
     font-family: Noto Sans KR;
     font-weight: 300;
     font-size: 20px;
     line-height: 29px;
     color: #707070;
+    background-color: #EFEFEF;
   }
   
   .select-box--box {
     background: #EFEFEF;
-    width: 90%;
+    width: 100%;
     margin-top: 10.04px;
-    margin-left: 27px;
+    /*margin-left: 27px;*/
   }
   
   .select-box--arrow {
+    position: absolute;
     width: 28.82px;
     height: 29.92px;
     margin: 0px;
@@ -35,8 +36,9 @@ const SelectBoxContainer = styled.div`
     background: #EFEFEF;
   }
   .select-box--arrow-down {
-    width: 0; 
-    height: 0; 
+    position: absolute;
+    left: 25%;
+    top: 35%;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 10px solid #707070;
@@ -45,25 +47,25 @@ const SelectBoxContainer = styled.div`
   .select-box--selected-item {
     display: inline-block;
     height: 100%;
-    width: 100%;
-    padding: 4px 12px;
+    width: 92%;
     vertical-align: middle;
+    padding-left: 12px;
   }
   
   .select-box--items {
-    background-color: #EFEFEF;
+    background-color:  #EFEFEF;
+    font-size: 20px;
   }
   
   .select-box--items div {
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    padding: 6px;
-    padding-left: 20px;
+    padding: 12px;
   }
   
   .select-box--items div.selected {
-    background-color: #EFEFEF;
+    background-color: #FFFFFF;
     background-image: url('/check.png');
     background-size: 16px;
     background-repeat: no-repeat;
@@ -71,9 +73,10 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--items div:hover {
-    background-color: #FFF;
+    background-color: #000;
+    color:white;
+    opacity: 0.3;
   }
-  
   
 `
 class SelectBox extends Component {
@@ -89,40 +92,43 @@ class SelectBox extends Component {
   selectItem = (item) => {
     this.setState({ selectedItem: item, showItems: false, })
   }
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside)
+  clicked = () => {
+    if (this.state.showItems === false) {
+      document.addEventListener("mousedown", this.handleClickOutside)
+      // document.addEventListener("mousemove", this.handleSelection)
+      // document.addEventListener("mouseup", this.handleSelection)
+    }
   }
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside)
+  handleSelection = () => {
+    if (document.selection) {
+      // document.selection.empty()
+    } else {
+      // window.getSelection().removeAllRanges()
+    }
   }
   myRef = React.createRef()
   handleClickOutside = e => {
     if (this.myRef.current === null) return
     if (!this.myRef.current.contains(e.target)) {
       this.setState({ showItems: false })
+      document.removeEventListener("mousedown", this.handleClickOutside)
+      // document.addEventListener("mousemove", this.handleSelection)
+      // document.addEventListener("mouseup", this.handleSelection)
     }
   }
   render() {
-    console.log(this.props.width)
     return <>
-      <SelectBoxContainer ref={this.myRef} >
-        <div className="select-box--box" width={this.props.width}>
+      <SelectBoxContainer onClick={this.clicked} ref={this.myRef} >
+        <div className="select-box--box">
           <div className="select-box--container" onClick={this.dropDown}>
-            <div className="select-box--selected-item">
-              {this.state.selectedItem.value}
-            </div>
+            <div className="select-box--selected-item" width={this.props.width + "px"}>
+              {this.state.selectedItem.value}</div>
             <div className="select-box--arrow">
               <span className={`${this.state.showItems ? 'select-box--arrow-up' : 'select-box--arrow-down'}`} /></div>
           </div>
-          <div className="select-box--items"
-            style={{ display: this.state.showItems ? 'block' : 'none' }}
-          >
-            {
-              this.state.items.map(item => <div
-                key={item.id} onClick={() => this.selectItem(item)}
-                className={this.state.selectedItem === item ? 'selected' : ''}
-              > {item.value}</div>)
-            }
+          <div className="select-box--items" style={{ display: this.state.showItems ? 'block' : 'none' }}>
+            {this.state.items.map(item =>
+              <div key={item.id} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.value}</div>)}
           </div>
         </div>
         <input type="hidden" name={this.state.name} value={this.state.selectedItem.id} />
