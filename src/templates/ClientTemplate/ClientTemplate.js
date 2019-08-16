@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import HeaderContainer from "containers/Commons/HeaderContainer"
+import HeaderContainer from "containers/Header/HeaderContainer"
 import Footer from "components/Header/Footer"
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
@@ -23,58 +23,65 @@ const ContentContainer = styled.div`
 `
 
 class ClientTemplate extends Component {
-    state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
-    checkIsOutScroll = (obj) => {
-        this.setState({ scroll: true })
-        setTimeout(() => { this.setState({ scroll: false }) }, 100)
+  componentDidMount() {
+    console.log("isActive", this.props.isActive)
+  }
+  onClose = e => {
+    if (this.props.isActive !== "INIT") {
+      this.props.SetActive("INIT")
     }
-    checkScrollUp = (obj) => {
-        const currentScrollPos = obj.scrollTop
-        const prevScrollPos = this.state.prevScroll
-        const { hidemenu, whensmall } = this.state
+  }
+  state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
+  checkIsOutScroll = (obj) => {
+    this.setState({ scroll: true })
+    setTimeout(() => { this.setState({ scroll: false }) }, 100)
+  }
+  checkScrollUp = (obj) => {
+    const currentScrollPos = obj.scrollTop
+    const prevScrollPos = this.state.prevScroll
+    const { hidemenu, whensmall } = this.state
 
-        if (hidemenu === false) {
-            if (currentScrollPos > 25) {
-                this.setState({ larger: true })
-            }
-            else {
-                this.setState({ larger: false })
-            }
-            if (currentScrollPos > whensmall * 2) {
-                if (prevScrollPos < currentScrollPos) { // console.log("hide")
-                    this.setState({ hidemenu: true })
-                }
-            }
-        } else {
-            if (prevScrollPos > currentScrollPos) { // console.log("show")
-                this.setState({ hidemenu: false })
-            }
+    if (hidemenu === false) {
+      if (currentScrollPos > 25) {
+        this.setState({ larger: true })
+      }
+      else {
+        this.setState({ larger: false })
+      }
+      if (currentScrollPos > whensmall * 2) {
+        if (prevScrollPos < currentScrollPos) { // console.log("hide")
+          this.setState({ hidemenu: true })
         }
-        this.setState({ prevScroll: currentScrollPos })
+      }
+    } else {
+      if (prevScrollPos > currentScrollPos) { // console.log("show")
+        this.setState({ hidemenu: false })
+      }
     }
-    handleScroll = (e) => {
-        // console.log(e)
-        const obj = e.target
-        this.checkScrollUp(obj)
-        this.checkIsOutScroll(obj)
-    }
-    render() {
-        const { scroll, hidemenu, larger } = this.state
-        const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
-        const hidemenu_style = (hidemenu ? "hidemenu " : "")
-        const larger_style = (larger ? "larger " : "")
-        return (<MenuContext.Provider value={{ hidemenu, larger }}>
-            <HeaderContainer />
-            <ContentContainer className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+    this.setState({ prevScroll: currentScrollPos })
+  }
+  handleScroll = (e) => {
+    const obj = e.target
+    this.checkScrollUp(obj)
+    this.checkIsOutScroll(obj)
+  }
+  render() {
+    const { scroll, hidemenu, larger } = this.state
+    const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
+    const hidemenu_style = (hidemenu ? "hidemenu " : "")
+    const larger_style = (larger ? "larger " : "")
+    return (<MenuContext.Provider value={{ hidemenu, larger }}>
+      <HeaderContainer />
+      <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
 
-                <div style={{ width: "1920px" }}>
-                    {this.props.children}
-                    <Footer />
-                </div>
+        <div style={{ width: "1920px" }}>
+          {this.props.children}
+          <Footer />
+        </div>
 
-            </ContentContainer>
-        </MenuContext.Provider>)
-    }
+      </ContentContainer>
+    </MenuContext.Provider>)
+  }
 }
 
 export default ClientTemplate

@@ -1,4 +1,4 @@
-import ClientTemplate from "./ClientTemplate"
-import CheckAuth from "containers/Commons/CheckAuth"
+import ClientTemplates from "./ClientTemplate";
+import CheckAuth from "containers/Commons/CheckAuth";
 
-export default CheckAuth(ClientTemplate)
+export default CheckAuth(ClientTemplates);

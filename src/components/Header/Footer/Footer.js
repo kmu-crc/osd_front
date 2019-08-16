@@ -5,12 +5,13 @@ import React, { Component } from 'react'
 class Footer extends Component {
     render() {
         return (
-            <div style={{ height: "22px", marginBottom: "20px", 
-            fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white", 
-            display: "flex", fontSize: "15px", lineHeight: "22px", textAlign: "center", 
-            fontWeight: "500" }}>
+            <div style={{
+                height: "22px", marginBottom: "20px", fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white",
+                display: "flex", fontSize: "15px", lineHeight: "22px", textAlign: "center",
+                fontWeight: "500"
+            }}>
                 <div style={{ marginLeft: "15px", float: "left" }}>copyright @ 2019 Open Design Inc.</div>
-                <div style={{ marginLeft: "auto", marginRight: "17px"}}>이용약관</div>
+                <div style={{ marginLeft: "auto", marginRight: "17px" }}>이용약관</div>
                 <div style={{ marginRight: "13px" }}>개인 정보 보호 방책</div>
             </div>
         )

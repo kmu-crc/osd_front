@@ -8,4 +8,5 @@ if (process.env.REACT_APP_TYPE === "local") {
     host = process.env.REACT_APP_DEV_URL
 } else;
 
+console.log("HOST:", host)
 export default host

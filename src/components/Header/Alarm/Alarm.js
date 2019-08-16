@@ -1,7 +1,5 @@
 import React, { Component } from "react"
-import { Icon } from "semantic-ui-react"
 import styled from "styled-components"
-import osd_style from "opendesign_style"
 
 const AlarmList = styled.div`
   display: ${props => props.display};

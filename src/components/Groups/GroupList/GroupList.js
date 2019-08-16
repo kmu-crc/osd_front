@@ -15,7 +15,7 @@ class GroupList extends Component {
         await this.setState({ page: 0 })
         const keyword = this.props.search
         const sort = this.props.this_order.keyword
-        this.props.GetGroupListCountRequest()
+        this.props.GetGroupTotalCountRequest()
             .then(() => { this.props.updateGroupCount(this.props.Count) })
             .then(() => { this.props.GetGroupListRequest(0, sort, keyword) })
     }
@@ -24,7 +24,7 @@ class GroupList extends Component {
         const keyword = this.props.search
         const sort = this.props.this_order.keyword
         const page = this.state.page
-        return this.props.GetGroupListCountRequest()
+        return this.props.GetGroupTotalCountRequest()
             .then(() => { this.props.updateGroupCount(this.props.Count) })
             .then(() => { this.props.GetGroupListRequest(page, sort, keyword) })
     }
@@ -34,14 +34,14 @@ class GroupList extends Component {
         }
     }
     render() {
-        const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = this.props
+        const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataList, dataListAdded } = this.props
         return (
             <>
                 {this.props.status === "INIT" ?
                     <Loading /> :
                     <ScrollList cols={2}
                         width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast}
-                        page={this.state.page} ListComponent={Group} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
+                        page={this.state.page} ListComponent={Group} dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
             </>
         )
     }

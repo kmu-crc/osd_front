@@ -1,64 +1,82 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React, { Component } from "react"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
 
 // pages
-import MainPage from "pages/Main"
-import TourPage from "pages/Tour"
-import DesignListPage from "pages/DesignList"
-import GroupListPage from "pages/GroupList"
-import DesignerListPage from "pages/DesignerList"
-import CreateDesignPage from "pages/CreateDesign"
-import DesignDetailPage from "pages/DesignDetail"
-import DesignerDetailPage from "pages/DesignerDetail"
-import CreateGroupPage from "pages/CreateGroup"
-import GroupDetailPage from "pages/GroupDetail"
-import MessagesPage from "pages/Messages"
-import MyInfoModifyPage from "pages/MyInfoModifyPage"
-import MyPage from "pages/MyPage"
-import SignUpPage from "pages/SignUp"
-import SearchPage from "pages/Search"
-import NotFoundPage from "pages/NotFound"
+// +main
+import MainPage from "pages/MainPage"
+import TourPage from "pages/TourPage"
+import SignUpPage from "pages/SignUpPage"
+import InsertUserDetailPage from "pages/InsertUserDetailPage"
+import SignInPage from "pages/SignInPage"
+import MyDetailPage from "pages/MyDetailPage"
+import MyDetailModifyPage from "pages/MyDetailModifyPage"
+import SearchPage from "pages/SearchPage"
+import MessagePage from "pages/MessagePage"
 
-// template
+// +design
+import DesignListPage, { DesignDetailPage } from "pages/DesignPage"
+import CreateDesignPage from "pages/CreateDesignPage"
+import ModifyDesignPage from "pages/ModifyDesignPage"
+
+// +group
+import GroupListPage, { GroupDetailPage } from "pages/GroupPage"
+import CreateGroupPage from "pages/CreateGroupPage"
+import ModifyGroupPage from "pages/ModifyGroupPage"
+
+// +designer
+import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage"
+
+// +etc.
+import RequiresAuth from "containers/Commons/RequiresAuth"
+import ResetPwPage from "pages/ResetPwPage"
+import NotFoundPage from "pages/NotFoundPage"
+
+
 import ClientTemplate from "templates/ClientTemplate"
 
-// temporary
-import host from "./config"
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <ClientTemplate>
+          <Switch>
+            {/* GROUP A - main */}
+            <Route exact path="/" component={MainPage} />
+            <Route path="/tour" component={TourPage} />
+            <Route path="/signup" component={SignUpPage} />
+            <Route path="/signin" component={SignInPage} />
+            <Route path="/insertUserDetail" component={RequiresAuth(InsertUserDetailPage)} />
+            <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)} />
+            <Route path="/myPage" component={RequiresAuth(MyDetailPage)} />
+            <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)} />
+            <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
+            <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
 
-function App() {
-  console.log("backend: ", host)
-  console.log("process.env: ", process.env)
+            {/* GROUP B - design */}
+            <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage} />
+            <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
+            <Route path="/designDetail/:id" component={DesignDetailPage} />
+            <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
 
-  return (
-    <BrowserRouter>
-      <ClientTemplate>
-        <Switch>
-          {/* index */}
-          <Route exact path="/" component={MainPage} />
-          <Route path="/tour" component={TourPage} />
-          {/* design */}
-          <Route path="/design" component={DesignListPage} />
-          <Route path="/createDesign" component={CreateDesignPage} />
-          <Route path="/designDetail" component={DesignDetailPage} />
-          {/* designer */}
-          <Route path="/designer" component={DesignerListPage} />
-          <Route path="/designerDetail" component={DesignerDetailPage} />
-          {/* group */}
-          <Route path="/group" component={GroupListPage} />
-          <Route path="/createGroup" component={CreateGroupPage} />
-          <Route path="/groupDetail" component={GroupDetailPage} />
-          {/* personal */}
-          <Route path="/messages" component={MessagesPage} />
-          <Route path="/mypage" component={MyPage} />
-          <Route path="/myinfomodify" component={MyInfoModifyPage} />
-          <Route path="/signup" component={SignUpPage} />
-          {/* etc. */}
-          <Route path="/search" component={SearchPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </ClientTemplate>
-    </BrowserRouter>
-  )
+            {/* GROUP C - group */}
+            <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
+            <Route path="/groupDetail/:id/modify" component={RequiresAuth(ModifyGroupPage)} />
+            <Route path="/groupDetail/:id/:sorting?" component={GroupDetailPage} />
+            <Route path="/group/:sorting?" component={GroupListPage} />
+
+            {/* GROUP D - designer */}
+            <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
+            <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
+
+            {/* GROUP E - etc. */}
+            <Route path="/resetPw" component={ResetPwPage} />
+            <Route component={NotFoundPage} />
+
+          </Switch>
+        </ClientTemplate>
+      </BrowserRouter>
+    )
+  }
 }
 
 export default App
