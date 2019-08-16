@@ -7,7 +7,6 @@ class MyPage extends Component {
             <>
                 <MypageHeader/>
                 <MypageBody />
-                <a href="/myinfomodify">내 정보 수정하기</a>
             </>
         )
     }

@@ -87,7 +87,6 @@ class SignNav extends Component {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
         // console.log(this.props) 
-        console.log("isSignedIn:", this.props)
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>

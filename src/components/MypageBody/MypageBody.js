@@ -30,8 +30,6 @@ const MypageBodyComp = styled.div`
         position:relative;
         font-size:20px;
         color:#707070;
-        font-weight:Medium;
-        padding-left:67px;
         padding-top:56px;
 
     }
@@ -123,11 +121,13 @@ class MypageBody extends Component{
                     </div>
 
                 </div>
-
                 }
                 {this.state.cateIndex === 2 &&
                 <div className="compWrapper">
-                    <div className="interested" >관심있는 디자인</div>
+                    <div className="interested" style={{display:"flex", justifyContent: "space-start"}}>
+                        <div style={{paddingLeft:"67px", fontWeight:"Medium"}}>관심있는 디자인</div>
+                        <div style={{paddingLeft:"1600px", fontWeight:"300"}}>모두 보기</div>
+                    </div>
                     <div style={{display:"flex", justifyContent: "space-start", paddingTop:"45px"}}>
                         <div style={{paddingLeft:"10px"}}><Design /></div>
                         <div style={{paddingLeft:"63px"}}><Design /></div>

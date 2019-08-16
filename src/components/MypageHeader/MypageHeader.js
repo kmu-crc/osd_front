@@ -29,6 +29,7 @@ const MypageHeaderElement = styled.div`
         color:#FF0000;
         padding-top:15px;
         padding-left:190px;
+        text-align:left;
         
     }
     .reviseInformation{
@@ -62,29 +63,41 @@ const MypageHeaderElement = styled.div`
     
     
 `;
+const defaultMyInfo = {
+    nick_name:"닉네임",
+    categoryName:"분류",
+    about_me:["",""],
 
-const textData = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et' +
-    ' dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores'
+
+}
+let about_me = ["",""];
+let descriptionLengthCheck = "";
+
 class MypageHeader extends Component{
-    state = {data : this.props.data};
     render(){
-        const MypageHeaderData = this.state.data;
+        const MypageInfo = this.props.MyDetail;
+        if(MypageInfo.about_me != undefined){
+            about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
+            descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
+            about_me[1] = MypageInfo.about_me.length < 199 ? "" :  MypageInfo.about_me.slice(200, 399)+descriptionLengthCheck;
+        }
+
         return(
             <>
                 <MypageHeaderElement>
                     <div style={{display:'flex', justifyContent: "space-start", paddingTop:'32px', paddingLeft:'115px'}}>
-                        <div className="MynameBox">진아진아진아</div>
-                        <div className="Category">패션패션패션</div>
+                        <div className="MynameBox">{MypageInfo.nick_name}</div>
+                        <div className="Category">{MypageInfo.categoryName}</div>{/*왼쪽정렬*/}
                         <div className="reviseInformation">정보 수정하기</div>
                         <div><img alt="icon" src={iEdit} style={{paddingLeft:"15px"}}/></div>
                     </div>
                     <div className="ImageBox"></div>
                     <div className="Descriptions" style={{display:'flex', justifyContent: "space-start", paddingTop:'12px', paddingLeft:"419px"}}>
                         <div className="inputBox" style={{position:'relative',width:"480px", height:"150px", fontSize:'20px', fontWeight:'100', lineHeight:'35PX'}}>
-                            {textData}
+                            {about_me[0]}
                         </div>
                         <div className="inputBox" style={{position:'relative',width:"480px", height:"150px", left:"80px", fontSize:'20px', fontWeight:'100', lineHeight:'35PX'}}>
-                            {textData}
+                            {about_me[1]}
                         </div>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-start", paddingTop:'35px', paddingLeft:'300px'}}>
