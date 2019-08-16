@@ -66,7 +66,7 @@ class SignNav extends Component {
                 this.props.SignOutRequest()
                 this.setState({ sign_modal: false, user_popup: null })
             })
-        this.setState({ user_popup: null, is_signed: false })
+        this.setState({ user_popup: null })
     }
     gotoMyPage = () => {
         this.setState({ user_popup: null })
@@ -85,9 +85,9 @@ class SignNav extends Component {
 
     render() {
         const info = this.props.userInfo || userinfo
-        const { isSignedIn } = this.props
+        const { isLoggedIn } = this.props
         // console.log(this.props) 
-        // console.log(this.props.isSigned + " : is signed")
+        console.log("isSignedIn:", this.props)
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>
@@ -95,7 +95,7 @@ class SignNav extends Component {
                     <UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem>
                 </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
-            {isSignedIn
+            {info && isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
                     <UserThumbnail url={info.thumbnail.s_img} />
                     {info.nickName}</div>)
