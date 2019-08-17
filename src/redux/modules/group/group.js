@@ -641,8 +641,10 @@ export function GetGroupInGroupRequest(id, page, sort) {
   }
 }
 export function GetDesignInGroupRequest(id, page, sort) {
+  const query = `${host}/group/groupDetail/` + id + "/design/" + page + "/" + sort
+  console.log(query, "!!!!!")
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/` + id + "/design/" + page + "/" + sort, {
+    return fetch(query, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

@@ -59,10 +59,10 @@ class App extends Component {
             <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
 
             {/* GROUP C - group */}
-            <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
-            <Route path="/groupDetail/:id/modify" component={RequiresAuth(ModifyGroupPage)} />
-            <Route path="/groupDetail/:id/:sorting?" component={GroupDetailPage} />
             <Route path="/group/:sorting?" component={GroupListPage} />
+            <Route path="/groupDetail/:id/:sorting?" component={GroupDetailPage} /> {/* groupDetail/:id/:sorting */}
+            <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
+            <Route path="/groupDetail/:id/modify" component={RequiresAuth(ModifyGroupPage)} /> {/* groupDetail/:id/modify */}
 
             {/* GROUP D - designer */}
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />

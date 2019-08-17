@@ -52,6 +52,7 @@ class ScrollList extends Component {
   myRef = React.createRef()
   render() {
     const { ListComponent, cols, dataListAdded, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = this.props
+    console.log(this.props, "PROPS")
     return (<>
       {dataListAdded && dataListAdded.length > 0 &&
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>

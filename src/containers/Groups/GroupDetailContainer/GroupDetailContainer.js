@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { DesignInGroupClear, GroupInGroupClear, GetGroupDetailRequest, GetGroupCountRequest, GetLikeGroupRequest, LikeGroupRequest, UnlikeGroupRequest, DeleteGroupRequest } from "redux/modules/group"
+import {
+  DesignInGroupClear, GroupInGroupClear,
+  GetGroupDetailRequest, GetGroupCountRequest,
+  GetLikeGroupRequest, LikeGroupRequest,
+  UnlikeGroupRequest, DeleteGroupRequest,
+  GetDesignInGroupRequest, GetGroupInGroupRequest,
+} from "redux/modules/group"
 import GroupDetail from "components/Groups/GroupDetail"
 
 class GroupDetailContainer extends Component {
+  componentDidMount() {
+    this.props.GetGroupDetailRequest(this.props.id)
+  }
+
   render() {
     return (
       <GroupDetail {...this.props} />
@@ -13,11 +23,15 @@ class GroupDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    GroupDetail: state.GroupDetail.status.GroupDetail,
+    GroupDetail: state.Group.status.GroupDetail,
+    GroupList: state.Group.status.GroupInGroup,
+    GroupListAdded: state.Group.status.GroupInGroupAdded,
+    DesignList: state.Group.status.DesignInGroup,
+    DesignListAdded: state.Group.status.DesignInGroupAdded,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
-    like: state.GroupLike.status.like,
-    Count: state.GroupDetail.status.Count
+    like: state.Group.status.like,
+    Count: state.Group.status.Count
   }
 }
 
@@ -46,6 +60,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     DeleteGroupRequest: (id, token) => {
       return dispatch(DeleteGroupRequest(id, token))
+    },
+    GetGroupInGroupRequest: (id, page, sort) => {
+      return dispatch(GetGroupInGroupRequest(id, page, sort))
+    },
+    GetDesignInGroupRequest: (id, page, sort) => {
+      return dispatch(GetDesignInGroupRequest(id, page, sort))
     }
   }
 }
