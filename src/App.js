@@ -30,8 +30,6 @@ import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage"
 import RequiresAuth from "containers/Commons/RequiresAuth"
 import ResetPwPage from "pages/ResetPwPage"
 import NotFoundPage from "pages/NotFoundPage"
-
-
 import ClientTemplate from "templates/ClientTemplate"
 
 class App extends Component {
@@ -60,9 +58,9 @@ class App extends Component {
 
             {/* GROUP C - group */}
             <Route path="/group/:sorting?" component={GroupListPage} />
-            <Route path="/groupDetail/:id/:sorting?" component={GroupDetailPage} /> {/* groupDetail/:id/:sorting */}
+            <Route path="/groupDetail/:id/:sorting?" component={GroupDetailPage} /> 
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
-            <Route path="/groupDetail/:id/modify" component={RequiresAuth(ModifyGroupPage)} /> {/* groupDetail/:id/modify */}
+            <Route path="/groupDetail/:id/modify" component={RequiresAuth(ModifyGroupPage)} /> 
 
             {/* GROUP D - designer */}
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
