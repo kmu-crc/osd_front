@@ -75,9 +75,7 @@ class Header extends Component {
                     <li style={{ minWidth: "97px", lineHeight: "29px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
-                        <SignNav {...this.props} />
-                        {/* <SignNavContainer /> */}
-                    </li>
+                        <SignNav {...this.props} /></li> {/* <SignNavContainer /> */}
                 </ul>
             </Menu>
         )

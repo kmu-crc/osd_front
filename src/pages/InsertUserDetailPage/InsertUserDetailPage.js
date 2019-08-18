@@ -6,9 +6,7 @@ class InsertUserDetailPage extends Component {
   render() {
     return (
       <>
-        <>
           <UserDetailFormContainer history={this.props.history} />
-        </>
       </>
     );
   }
