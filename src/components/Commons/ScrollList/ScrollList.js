@@ -18,7 +18,7 @@ const FlexBox = styled.div`
   display: inline-block;
 `
 class ScrollList extends Component {
-  state = { hasMore: true, loading: false }
+  state = { hasMore: true, loading: false, callCount:0}
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll, true)
   }
@@ -26,9 +26,14 @@ class ScrollList extends Component {
     window.removeEventListener("scroll", this.handleScroll, true)
   }
   checkAndGetData = () => {
-    const { hasMore, loading } = this.state
-    if (this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false) {
-      this.getLoadData()
+    const { hasMore, loading, callCount } = this.state;
+
+    if(callCount < 2){
+      this.setState({callCount:callCount+1});
+      this.getLoadData();
+    }
+    if ((this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false)) {
+      this.setState({callCount:0});
     }
   }
   handleScroll = (e) => {
@@ -36,7 +41,7 @@ class ScrollList extends Component {
   }
   getLoadData = () => {
     if (this.state.hasMore === false) return
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     this.props.getListRequest()
       .then(() => {
         this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
@@ -52,15 +57,16 @@ class ScrollList extends Component {
   }
   myRef = React.createRef()
   render() {
-    const { ListComponent, cols, dataListAdded, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = this.props
-    console.log(this.props, "PROPS")
+    const ListComponent = this.props.ListComponent;
+    const { cols } = this.props;
     return (<>
-      {dataListAdded && dataListAdded.length > 0 &&
+      {this.props.dataListAdded && this.props.dataListAdded.length > 0 &&
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
-          {dataListAdded.map((item, i) => {
-            const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : ""
-            const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : ""
-            return (<FlexBox width={width} height={height} marginRight={marginRight} marginRightLast={marginRightLast} marginBottom={marginBottom} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+          {this.props.dataListAdded.map((item, i) => {
+            const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
+            const bottom = (this.props.dataListAdded.length - cols) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : "";
+            return (<FlexBox width={this.props.width} height={this.props.height} marginRight={this.props.marginRight} marginBottom={this.props.marginBottom} marginRightLast={this.props.marginRightLast} marginBottomLast={this.props.marginBottomLast} key={i} className={`${last} ${bottom}`}>
+
               <ListComponent data={item} />
             </FlexBox>)
           })}

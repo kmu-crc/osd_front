@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Designer from "components/Designers/Designer/Designer";
 import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designerlist"
-import { GetCategoryAllRequest } from "redux/modules/category"
+import { GetCategoryListRequest } from "redux/modules/category"
 
 import styled from 'styled-components'
 import Category from "components/Commons/Category"
@@ -48,8 +48,8 @@ class DesignerListPage extends Component {
         checkDataLength:0,
     }
     componentDidMount() {
-        this.props.GetCategoryListRequest()
-            .then(() => { this.props.GetDesignerListCountRequest() });
+         this.props.GetCategoryListRequest()
+             .then(() => { this.props.GetDesignerListCountRequest() });
         this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
     }
     handleChangeCategory = async (category) => {
@@ -131,7 +131,7 @@ const mapDispatchToProps = (dispatch) => {
             return dispatch(GetDesignerListCountRequest(cate1, cate2))
         },
         GetCategoryListRequest: () => {
-            return dispatch(GetCategoryAllRequest())
+            return dispatch(GetCategoryListRequest())
         },
     }
 }

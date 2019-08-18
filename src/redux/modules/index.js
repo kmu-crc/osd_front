@@ -1,5 +1,11 @@
 import { reducer as formReducer } from 'redux-form'
 
+// import { reducer as form } from 'redux-form'
+import auth from "./auth"
+import category from "./category"
+import designlist from "./designlist"
+import designerlist from "./designerlist"
+//...new reducers import here
 import Authentication from "./auth"
 import Account from "./account"
 import Category from "./category"
@@ -13,6 +19,11 @@ import Message from "./message"
 import { combineReducers } from "redux"
 
 export default combineReducers({
+    // form,
+    auth,
+    category,
+    designlist,
+    designerlist,
     form: formReducer,
     Account, Authentication,
     Category,
