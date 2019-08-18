@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import CreateDesign from "components/Designs/CreateDesign";
+import CreateDesignContainer from "containers/Designs/CreateDesignContainer"
 
 class CreateDesignPage extends Component {
   render() {
     return(
-        <CreateDesign />
+        <CreateDesignContainer />
     );
   }
 }
