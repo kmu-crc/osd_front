@@ -51,6 +51,7 @@ class ScrollList extends Component {
   }
   componentWillReceiveProps(newProps) {
     if (newProps.page === 0) {
+      console.log("is more")
       this.setState({ hasMore: true })
     }
   }
