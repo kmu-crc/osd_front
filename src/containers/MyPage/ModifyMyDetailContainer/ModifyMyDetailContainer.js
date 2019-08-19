@@ -12,7 +12,7 @@ class ModifyMyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyDetail: state.MyDetail.status.MyDetail,
+    MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
     category1: state.Category.status.level1,
     category2: state.Category.status.level2

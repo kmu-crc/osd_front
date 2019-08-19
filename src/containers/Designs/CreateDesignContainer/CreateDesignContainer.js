@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import CreateDesignForm from "components/Designs/CreateDesignForm";
+import CreateDesign from "components/Designs/CreateDesign";
 import { CreateDesignRequest } from "redux/modules/design";
 import { SearchMemberRequest } from "redux/modules/search";
 import { GetCategoryLevel2Request } from "redux/modules/category";
@@ -19,9 +19,9 @@ class CreateDesignFormContainer extends Component {
     return(
       <div>{
         this.props.userInfo.is_designer === 1 ? (
-          <CreateDesignForm {...this.props}/>
+          <CreateDesign {...this.props}/>
         ) : (
-          <p style={{color:"#FFF"}}> 권한을 확인 중입니다.</p>
+          <p style={{color:"#000"}}> 권한을 확인 중입니다.</p>
         )
       }</div>
     )
@@ -34,8 +34,8 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     members: state.Search.status.members,
     userInfo: state.Authentication.status.userInfo,
-    cate1: state.Categorys.status.level1,
-    cate2: state.Categorys.status.level2
+    cate1: state.Category.status.level1,
+    cate2: state.Category.status.level2
   };
 };
 

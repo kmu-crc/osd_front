@@ -237,7 +237,7 @@ class ModifyMyDetail extends Component {
           </div>
         </div>
         {/* form */}
-        <div style={{ width: "1422px", height: "1619px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
+        <div style={{ width: "1422px", marginLeft:"45px", height: "1619px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
           <form onSubmit={this.submit}>
             <SectionBasics />
             <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
