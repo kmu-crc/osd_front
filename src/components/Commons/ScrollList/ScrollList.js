@@ -18,7 +18,7 @@ const FlexBox = styled.div`
   display: inline-block;
 `
 class ScrollList extends Component {
-  state = { hasMore: true, loading: false, callCount:0}
+  state = { hasMore: true, loading: false, callCount: 0 }
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll, true)
   }
@@ -28,12 +28,12 @@ class ScrollList extends Component {
   checkAndGetData = () => {
     const { hasMore, loading, callCount } = this.state;
 
-    if(callCount < 2){
-      this.setState({callCount:callCount+1});
+    if (callCount < 2) {
+      this.setState({ callCount: callCount + 1 });
       this.getLoadData();
     }
     if ((this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false)) {
-      this.setState({callCount:0});
+      this.setState({ callCount: 0 });
     }
   }
   handleScroll = (e) => {
@@ -64,9 +64,8 @@ class ScrollList extends Component {
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
           {this.props.dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
-            const bottom = (this.props.dataListAdded.length - cols) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : "";
+            const bottom = (this.props.dataListAdded.length - (this.props.dataListAdded.length % cols)) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : "";
             return (<FlexBox width={this.props.width} height={this.props.height} marginRight={this.props.marginRight} marginBottom={this.props.marginBottom} marginRightLast={this.props.marginRightLast} marginBottomLast={this.props.marginBottomLast} key={i} className={`${last} ${bottom}`}>
-
               <ListComponent data={item} />
             </FlexBox>)
           })}

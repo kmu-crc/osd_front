@@ -81,6 +81,7 @@ export default function Category(state, action) {
 
 
 export function GetCategoryAllRequest() {
+  console.log("GetAllCate")
   return (dispatch) => {
     dispatch(GetCategoryAll())
     return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
@@ -98,6 +99,7 @@ export function GetCategoryAllRequest() {
           return (arr)
         })
         category2.unshift([{ text: "전체", value: 0 }])
+        console.log("cate1:", category1, "cate2:", category2)
         return dispatch(GetCategoryAllSuccess(category1, category2))
       }).catch((error) => {
         console.log(error)
