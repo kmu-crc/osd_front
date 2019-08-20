@@ -8,14 +8,15 @@ const UserMenu = styled.div`
     display: ${props => props.display};
     position: absolute;
     pointer-events: auto;
-    top: ${props => props.top + "px"};
-    left: ${props => props.left + "px"};
+    top: 50.5px;
+    left: 1712px;
     z-index: 904;
-    height: 154px;
-    width: 150px;
+    height: 153px;
+    width: 179px;
     border-radius: 15px;
-    border: 1px solid #FF0000;
-    background-color: #FFFFFF;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    border-radius: 5px;
     color: #707070;
     font-size: 20px;
     font-weight: 500;
@@ -24,9 +25,8 @@ const UserMenu = styled.div`
 const UserMenuItem = styled.div`
     cursor: pointer;
     width: 100%;
-    padding-top: 5px;
-    padding-bottom: 32px;
-    padding-left: 13px;
+    padding-top:11.5px;
+    padding-left: 5px;
     padding-right: 13px;
     line-height: 30px;
     text-align: left;
@@ -90,8 +90,9 @@ class SignNav extends Component {
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>
-                    <UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem>
-                    <UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem>
+                    <div style={{paddingBottom:"5px"}}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr style={{position:"relative",left:'-10px'}} width="166px" noshade/>
+                    <div><UserMenuItem  onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {info && isLoggedIn
