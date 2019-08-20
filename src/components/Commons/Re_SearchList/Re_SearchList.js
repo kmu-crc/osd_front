@@ -1,28 +1,37 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import zoom from "source/zoom.svg";
+import OrderOption from "components/Commons/OrderOption"
+
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
+
 import Category from "components/Commons/Category"
 
 const SearchForm = styled.div`
-    display:flex;
     font-family: Noto Sans KR;
-    justify-content: space-start;
     position:relative;
-    padding-top:105px;
-    left: 580px;
-    width: 762px;
-    height: 49px;
-    border-bottom: 1.5px solid black;
-    width:760px;
+    height:1100px;
+    .inputBox{
+        justify-content: space-start;
+        position:relative;
+        padding-top:105px;
+        left: 580px;
+        width: 762px;
+        height: 49px;
+        border-bottom: 1.5px solid black;
+        width:760px;
+    }
+    
     .zoomImg{
         position:relative;
         bottom: 45px;
     }
     .searchInput{
         position:relative;
-        bottom:45px;
+        bottom:80px;
         min-height:30px;
-        left:43px;
+        left:80px;
         text-align: left;
         font-size:23px;
         color: #707070;
@@ -34,16 +43,17 @@ const SearchForm = styled.div`
         outline: none;
     }
     .cateUI{
-        position:relative;
+        position:absolute;
         display:flex;
         justify-content:space-start;
-        
-        top:125px;
+        padding-top:125px;
+        padding-left:635px;
 
+        font-weight: 300;
         text-align: left;
-        font: Light 20px/29px Noto Sans KR;
+        font-size:20px;
         letter-spacing: 0;
-        color: #FF0000;
+        color: #707070;
         opacity: 1;
     }
     
@@ -51,6 +61,10 @@ const SearchForm = styled.div`
     
 `;
 class Re_SearchList extends Component{
+    state = {
+        mainCate:['디자인', '그룹','디자이너'],
+        this_order: { text: "등록순", keyword: "update" },
+    }
     getSearchValue = (e) => {
         const target = e.target;
         const value = target.value;
@@ -82,8 +96,8 @@ class Re_SearchList extends Component{
 
     render(){
         return(
-            <>
-                <SearchForm>
+            <SearchForm>
+                <div className="inputBox">
                     <div className="zoomImg"><img src={zoom} style={{width:"33px", height:"33px"}}/></div>
                     <input className="searchInput"
                            placeholder="검색어를 입력하세요"
@@ -91,17 +105,27 @@ class Re_SearchList extends Component{
                            onKeyDown={this.submitEnter}
 
                     />
-                    {/*x box position*/}
+                </div>
+                {/*x box position*/}
+                <div style={{display:"flex", justifyContent:"space-start"}}>
+
+                    <div style={{minWidth:"110px",paddingTop:"60px", paddingLeft:"300px"}}><Dropdown options={this.state.mainCate} value={this.state.mainCate[0]} placeholder="Select an option" /></div>
+
                     <div className="cateUI">
-                        <div>새부카테고리</div>
-                        <div>새부카테고리</div>
-                        <div>새부카테고리</div>
-                        <div>새부카테고리</div>
-                        <div>새부카테고리</div>
-                        <div>새부카테고리</div>
+                        <div style={{color:"red"}}>세부카테고리</div>
+                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
                     </div>
-                </SearchForm>
-            </>
+                    <div style={{paddingLeft:"1310px", paddingTop:"70px"}}><OrderOption order_clicked = {this.handleChangeOrderOps} selected = {this.state.this_order}/></div>
+
+
+                </div>
+
+            </SearchForm>
+
+
 
         )
     }
