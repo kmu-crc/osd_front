@@ -49,9 +49,13 @@ const DesignCreateBtn = styled.div`
     height: 100%;
     color: red;
     border-bottom: 1.5px solid red;
+    cursor: pointer;
 `
 class Header extends Component {
     static contextType = MenuContext
+    gotoCreateDesignPage(){
+        window.location.href = "/createDesign"
+    }
     render() {
         return (
             <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
@@ -73,7 +77,7 @@ class Header extends Component {
                     <li style={{ width: "34px", height: "34px", marginRight: "50px", marginTop: "10px" }}>
                         <AlarmContainer {...this.props} /></li>
                     <li style={{ minWidth: "97px", lineHeight: "29px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
-                        <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
+                        <DesignCreateBtn onClick={this.gotoCreateDesignPage}>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
                         <SignNav {...this.props} /></li> {/* <SignNavContainer /> */}
                 </ul>
