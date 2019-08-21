@@ -9,24 +9,24 @@ const AlarmList = styled.div`
   top: ${props => props.top + "px"};
   left: ${props => props.left + "px"};
   z-index: 904;
-  height: 634px;
-  width: 424px;
-  border-radius: 25px;
-  border: 2px solid #FF0000;
+  height: 550px;
+  width: 365px;
+  border-radius: 15px;
   background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
   font-family: Noto Sans KR;
   .list {
-      margin-top: 36px;
-      padding-left: 36px;
+      padding-left: 15px;
       padding-right: 36px;
       padding-bottom: 5px;
-      height: 520px;
+      height: 490px;
       overflow-y: hidden;
     &:hover{
         overflow-y: scroll;
-        }
     }
-`
+
+    
+}`;
 const ListItem = styled.div`
     opacity: ${props => props.confirm ? 0.5 : 1};
     width: 351px;
@@ -248,16 +248,18 @@ class Alarm extends Component {
         return (
             <>{this.state.active &&
                 <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
-                    <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
-                        <div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: "#FFFFFF" }}>
-                            <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
-                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF" }}>
-                            <div style={{ marginTop: "13px", marginLeft: "28px" }} ></div></div>
+                    <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070" , fontWeight:"300" }}>
+                        {/*<div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: "#FFFFFF" }}>*/}
+                            {/*<div style={{ marginTop: "5px", marginLeft: "33px", fontSize:"17px", fontWeight:"300" }} >모두 읽음으로 표시하기</div></div>*/}
+                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>
+                            모두 읽음으로 표시하기
+                        </div>
                     </div>
                     <div className="list">
                         {alarms.list.map(item => {
                             const alarmtype = this.showButton(item)
-                            return (<ListItem confirm={item.confirm} key={item.uid}>
+                            return (
+                            <ListItem confirm={item.confirm} key={item.uid}>
                                 <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "15%" }} />
                                 <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
                                     <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{this.getMessageText(item)}</div>
