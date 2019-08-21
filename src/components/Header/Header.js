@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Socket from "modules/Socket"
 import MenuContext from "Global/Context/GlobalContext"
 
 // import Notification from "components/Commons/Notification"
@@ -54,7 +53,7 @@ const DesignCreateBtn = styled.div`
     cursor: pointer;
 `
 class Header extends Component {
-    state = {noti: {},}
+    state = { noti: {}, }
     static contextType = MenuContext
     gotoCreateDesignPage() {
         window.location.href = "/createDesign"
