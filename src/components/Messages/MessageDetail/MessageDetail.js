@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Socket from "modules/Socket"
+
 import thumbnail from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
@@ -8,7 +10,7 @@ const MsgSectionBoard=styled.div`
 position:relative;
 width: 1259px;
 height: 602.5px;
-flex-direction:column;
+flex-direction:column-reverse;
 justify-content:flex-end;
 overflow:hidden;
 &:hover {
@@ -24,12 +26,12 @@ const MsgReceivedBubbleText = {width:"526px",
 const MsgReceivedTimeText={position:"absolute",width:"150px",height:"25px",left:"593px",bottom:"0px",
                             fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"100",textAlign:"left"}
 
-const MsgSentBox ={position:"relative",width:"100%",marginBottom:"32px",textAlign:"right"}
+const MsgSentBox ={position:"relative",width:"100%",marginBottom:"32px",}
 const MsgSentBubble ={display:"inline-block",width:"571px",padding:"16px 25px 10px 20px",
-                         borderRadius:"20px",backgroundColor:"#FFFFFF"}
+                         borderRadius:"20px",backgroundColor:"#FFFFFF",marginLeft:"675px"}
 const MsgSentBubbleText = {width:"526px",
                         fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"500",textAlign:"left",lineHeight:"25px"}
-const MsgSentTimeText={position:"absolute",width:"80px",height:"25px",display:"inline-block",right:"593px",bottom:"0px",
+const MsgSentTimeText={position:"absolute",width:"80px",height:"25px",display:"inline-block",marginLeft:"579px",bottom:"0px",
                             fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"100",textAlign:"right"}
      
 function CheckedTime(date){
@@ -54,7 +56,6 @@ function CheckedTime(date){
 
   const dateTime = ampm+updateHourT+":"+updateMinT;
 
-  console.log(updateT+","+today);
 
   if (diffHour < 1) {
     return `${dateTime}`;
@@ -104,8 +105,6 @@ function MsgSendBox(props)
 
 function LoadMessage(props)
 {
-  console.log("LoadMessage****************");
-  console.log(props);
   if(props.isMyMsg==true)
   {
     return(<MsgSendBox msgText={props.msgText} updateTime={props.updateTime}/>);
@@ -120,21 +119,43 @@ class MessageDetail extends Component {
   constructor(props)
   {
     super(props);
-    this.handleLog = this.handleLog.bind(this);
-    this.state={render:true}
+    this.state={render:true};
+    this.ScrollDown = this.ScrollDown.bind(this);
   }
   componentDidMount() {
-     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+    this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+      // if (this.props.userInfo) {
+      // try {
+      //     Socket.on("getNoti", noti => {
+      //     console.log("메시지도착");
+      //     noti.countMsg>0 && this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+      //   })
+      // } catch (err) {
+      //   console.log(err)
+      // }
+    //}
+    
   }
 
   componentWillUnmount() {
     this.props.GetMyMessageDetailClear();
   }
-  handleLog()
+  ScrollDown()
   {
-    console.log(this.props);
-    //this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+    document.getElementById("MsgBox").scrollTo(0,document.getElementById("MsgBox").scrollHeight);
   }
+
+  shouldComponentUpdate(nextProps)
+  {
+    setTimeout(() => {
+      console.log("123456778");
+      //this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
+      this.ScrollDown();
+    }, 100);
+    return true;
+  }
+
+
 
   render() {
     const list = this.props.MessageDetail;
@@ -151,9 +172,11 @@ class MessageDetail extends Component {
     })
 
     return (
-      <MsgSectionBoard onClick = {this.handleLog}>
+      <React.Fragment>
+      <MsgSectionBoard id = "MsgBox" onClick={this.ScrollDown}>
         {arrMsg}
       </MsgSectionBoard>
+      </React.Fragment>
     );
   }
 }

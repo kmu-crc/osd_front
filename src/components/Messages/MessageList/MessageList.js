@@ -3,9 +3,11 @@ import plusImg from "source/plus_cross_gray.png";
 import SummaryIcon from "source/jina.png";
 import styled from "styled-components";
 
+import SearchMemverContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import FormDataToJson from "modules/FormDataToJson"
 import Socket from "modules/Socket"
+import { Modal } from 'semantic-ui-react';
 
 
 const SummaryList = styled.div`
@@ -106,22 +108,33 @@ class Messages extends React.Component
         this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
         this.handleClickSend = this.handleClickSend.bind(this);
         this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
-        this.state={msgValue:'',msgId:-1,selectId:null,selectName:null,openMember:false,friendList:[],render:true};
+        this.handleOpenMember=this.handleOpenMember.bind(this);
+        this.initMsgValue = this.initMsgValue.bind(this);
+        this.state={msgValue:'',msgId:-1,selectId:null,selectName:null,openMember:false,showSearch:false,friendList:[],render:true};
         this.getValue = this.getValue.bind(this);
     }        
     handleChangeMsgValue(event)
     {
       this.setState({msgValue:event.target.value})
     }
+
+    initMsgValue()
+    {
+      this.setState({msgValue:""})
+    }
     handleClickSend()
     {      
       console.log(this.props);
     }
     handleSelectMsgSummary(select_id,select_name,msgID)
-    {
+    {      
       this.setState(state=>({selectId:select_id,selectName:select_name,msgId:msgID}));
     }
-
+    handleOpenMember()
+    {
+      const isOpen=this.state.showSearch;
+      this.setState(state=>({showSearch:!isOpen}));
+    }
     async componentDidMount() {
       
       await this.props.GetMyMsgListRequest(this.props.token)
@@ -142,7 +155,7 @@ class Messages extends React.Component
           uid: id
         })
         Socket.on("reload_msglist", () => {
-          console.log("giveit")
+          //console.log("giveit")
           this.setState({ render: true })
         })
       }
@@ -233,6 +246,7 @@ class Messages extends React.Component
         await this.props.GetMyMsgListRequest(this.props.token)
         this.setState({ render: true })
       }, 250)
+      this.props.MsgDetailScrollDown();
     }
   
     onSubmitForm = async (data) => {
@@ -253,7 +267,9 @@ class Messages extends React.Component
             render: true
           });
           this.props.history.replace("/message");
-        })
+        });   
+        this.initMsgValue();   
+         
     }
                 
     render()
@@ -261,8 +277,6 @@ class Messages extends React.Component
       let arrSummaryList=[];
       if(this.props.MessageList.length>0)
       { 
-        console.log("------------------");
-        console.log(this.props.MessageList);
         arrSummaryList = this.props.MessageList.map((item,index)=>{  
           let SelectedItem = false;
           if(this.state.selectId == item.friend_id)   SelectedItem=true;       
@@ -276,6 +290,7 @@ class Messages extends React.Component
           )
       });}
 
+
      
         return(
             <React.Fragment>
@@ -286,8 +301,14 @@ class Messages extends React.Component
                     <div style={MessageAside}>
                         <div style={MessageAsideHeader}>
                             <div style={MessageAsideHeaderTitle}>받은 메세지함</div>
-                            <div style={MessageAsideHeaderIcon}></div>
+                            <div style={MessageAsideHeaderIcon} onClick={this.handleOpenMember}>                              
+                            </div>                           
                         </div>
+                        {this.state.showSearch&&(
+                        <React.Fragment>
+                          <SearchMemverContainer/>
+                        </React.Fragment>)
+                        }
                         <SummaryList> 
                                  {arrSummaryList}         
                         </SummaryList>
@@ -302,7 +323,7 @@ class Messages extends React.Component
                             }
                             <div style={MessageDivisionLine}></div>
                             <div style={MessageSectionSend}>
-                                <input type="textarea" onChange={this.handleChangeMsgValue} style={MessageSectionTextArea}/>                                
+                                <input type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} style={MessageSectionTextArea}/>                                
                                 <div onClick={this.onSubmitForm} style={MessageSectionSendBtn}>전송하기</div>
                             </div>
                     </div>
