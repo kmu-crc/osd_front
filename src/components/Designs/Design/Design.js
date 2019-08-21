@@ -49,13 +49,16 @@ const DesignEmpty = {
 }
 
 class Design extends Component {
+  gotoDetailPage = () => {
+    window.location.href = "/designDetail/" + this.props.data.uid
+  }
   state = { data: this.props.data || DesignEmpty }
   render() {
     const data = this.state.data
     const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design;
-      return (
-      <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
+    return (
+      <DesignElement onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
         <div className="cover" />
         {isForked && <div className="forked" />}
         <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>

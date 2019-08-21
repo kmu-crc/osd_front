@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import Socket from "modules/Socket"
 import MenuContext from "Global/Context/GlobalContext"
 
 // import Notification from "components/Commons/Notification"
@@ -53,8 +53,21 @@ const DesignCreateBtn = styled.div`
 `
 class Header extends Component {
     static contextType = MenuContext
-    gotoCreateDesignPage(){
+    gotoCreateDesignPage() {
         window.location.href = "/createDesign"
+    }
+    componentDidMount() {
+        if (this.props.valid) {
+            try {
+                Socket.emit("INIT", this.props.userInfo.uid)
+                Socket.on("getNoti", noti => {
+                    this.setState({ noti: noti })
+                    console.log(noti, "noti")
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
     render() {
         return (

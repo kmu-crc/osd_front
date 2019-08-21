@@ -14,6 +14,7 @@ class HeaderContainer extends Component {
 }
 const mapStateTopProps = (state) => {
     return {
+        valid: state.Authentication.status.valid,
         userInfo: state.Authentication.status.userInfo,
         isLoggedIn: state.Authentication.status.isLoggedIn
     }
