@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Re_SearchList from "components/Commons/Re_SearchList";
+import SearchListRe from "components/Commons/SearchListRe";
 // import { GetCategoryLevel2Request } from "actions/Categorys";
 
 class SearchContainer extends Component {
   render() {
     return(
-      <Re_SearchList {...this.props}/>
+      <SearchListRe {...this.props}/>
     );
   }
 }

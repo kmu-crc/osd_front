@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
+import noface from "source/noimg.png"
 // import jina from "source/jina.png"
 
 const UserMenu = styled.div`
@@ -35,7 +36,7 @@ const UserMenuItem = styled.div`
 const UserThumbnail = styled.div`
     margin-right: 10px;
     border-radius: 50%;
-    background-position: center cetner;
+    background-position: center center;
     background-size: cover;
     background-color: #D6D6D6;
     width: 30px;
@@ -86,18 +87,20 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
-        //console.log("isLoggedIn:", isLoggedIn)
+
+        const profile = (info && info.thumbnail && info.thumbnail.s_img) || noface
+
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>
-                    <div style={{paddingBottom:"5px"}}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr style={{position:"relative",left:'-10px'}} width="166px" noshade/>
-                    <div><UserMenuItem  onClick={this.signout}>로그아웃</UserMenuItem></div>
+                    <div style={{ paddingBottom: "5px" }}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr style={{ position: "relative", left: '-10px' }} width="166px" noshade />
+                    <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
-                    {/* <UserThumbnail url={""||info.thumbnail.s_img} /> */}
+                    <UserThumbnail url={profile} />
                     {info.nickName}</div>)
                 : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>
                     로그인</div>)}
