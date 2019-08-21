@@ -244,7 +244,7 @@ class Alarm extends Component {
     }
 
     render() {
-        console.log(this.props, "props")
+
         const alarms = this.props.alarm
         return (
             <>{this.state.active &&

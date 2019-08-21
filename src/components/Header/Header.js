@@ -10,6 +10,8 @@ import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
 // import SignNavContainer from "containers/Header/SignNavContainer"
+import Socket from "modules/Socket"
+import host from "config"
 
 class Message extends Component {
     gotoMessagePage() {
@@ -51,7 +53,44 @@ const DesignCreateBtn = styled.div`
     border-bottom: 1.5px solid red;
 `
 class Header extends Component {
-    static contextType = MenuContext
+    static contextType = MenuContext;
+
+    state = {
+        profile: false,
+        active: false,
+        keyword: null,
+        noti: {},
+        notification: null,
+        msg: null
+      }
+      _getNotification = () => {
+        return fetch(`${host}/common/notice`, { headers: { "Content-Type": "application/json" }, method: "get" })
+          .then((response) => { return response.json() })
+          .then((data) => {
+            if (data) {
+              this.setState({ notification: data })
+            }
+          })//.catch(err => console.log(err))
+      }
+      componentDidMount() {
+          if (this.props.valid) {
+              try {
+                  Socket.emit("INIT", this.props.userInfo.uid)
+                  Socket.on("getNoti", noti => {
+                    console.log("getnoti!",this.props.valid);
+              this.setState({ noti: noti })
+            })
+          } catch (err) {
+            console.log(err)
+          }
+        }
+        this._getNotification()
+      }
+      // shouldComponentUpdate(nextProps, nextState) {
+      // return this.state.notification != nextState.notification;
+      // }
+      
+
     render() {
         return (
             <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>

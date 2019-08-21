@@ -16,7 +16,7 @@ class AlarmContainer extends Component {
                 Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
-                    console.log("alarm", this.state.alarm)
+                    //console.log("alarm", this.state.alarm)
                 })
             } catch (err) {
                 //TODO v2: doesn't meaning in client, so! report administrator e-mail
