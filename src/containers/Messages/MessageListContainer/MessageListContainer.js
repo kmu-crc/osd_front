@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     MessageList: state.Message.status.MsgList,
     userInfo: state.Authentication.status.userInfo,
-    members: state.Search.status.members
+    members: state.Search.status.members,
   };
 };
 

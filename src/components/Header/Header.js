@@ -10,6 +10,8 @@ import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
 // import SignNavContainer from "containers/Header/SignNavContainer"
+import Socket from "modules/Socket"
+import host from "config"
 
 class Message extends Component {
     gotoMessagePage() {
@@ -52,6 +54,7 @@ const DesignCreateBtn = styled.div`
     cursor: pointer;
 `
 class Header extends Component {
+    state = {noti: {},}
     static contextType = MenuContext
     gotoCreateDesignPage() {
         window.location.href = "/createDesign"

@@ -97,7 +97,7 @@ class SignNav extends Component {
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
-                    <UserThumbnail url={info.thumbnail.s_img} />
+                    {/* <UserThumbnail url={""||info.thumbnail.s_img} /> */}
                     {info.nickName}</div>)
                 : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>
                     로그인</div>)}
