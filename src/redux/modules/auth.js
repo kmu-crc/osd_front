@@ -156,14 +156,14 @@ export function SignInRequest(data) {
     dispatch(SignIn())
     return fetch(`${host}/users/signIn`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
-        console.log("res", res)
         return res.json()
       })
       .then(function (res) {
+        console.log("res", res)
         if (res.isMember && res.isPassword) {
           SetSession("opendesign_token", res.token)
-          console.log("success")
-          return dispatch(SignInSuccess())
+          console.log("success", res)
+          return dispatch(SignInSuccess(res.token))
         } else {
           if (!res.isMember) {
             return dispatch(SignInIsNotMember())

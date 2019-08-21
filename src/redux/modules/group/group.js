@@ -618,8 +618,10 @@ export function CreateNewGroupRequest(data, token) {
   }
 }
 export function GetGroupInGroupRequest(id, page, sort) {
+  const url = `${host}/group/groupDetail/` + id + "/group/" + page + "/" + sort
+  console.log(url,"GetGroupInGroup")
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/` + id + "/group/" + page + "/" + sort, {
+    return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
@@ -641,8 +643,10 @@ export function GetGroupInGroupRequest(id, page, sort) {
   }
 }
 export function GetDesignInGroupRequest(id, page, sort) {
+  const query = `${host}/group/groupDetail/` + id + "/design/" + page + "/" + sort
+  console.log(query, "!!!!!")
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/` + id + "/design/" + page + "/" + sort, {
+    return fetch(query, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

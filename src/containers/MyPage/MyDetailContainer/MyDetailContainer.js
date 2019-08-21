@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+
+import MypageHeader from 'components/MypageHeader';
+import MypageBody from 'components/MypageBody';
+
 import { GetMyDetailRequest, GetMyDesignListRequest } from "redux/modules/personal"
-import MyDetail from "components/Users/MyDetail"
 
 class MyDetailContainer extends Component {
   componentWillMount() {
@@ -10,7 +13,10 @@ class MyDetailContainer extends Component {
 
   render() {
     return (
-      <MyDetail {...this.props} />
+      <>
+        <MypageHeader {...this.props}/>
+        <MypageBody />
+      </>
     )
   }
 }

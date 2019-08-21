@@ -8,14 +8,15 @@ const UserMenu = styled.div`
     display: ${props => props.display};
     position: absolute;
     pointer-events: auto;
-    top: ${props => props.top + "px"};
-    left: ${props => props.left + "px"};
+    top: 50.5px;
+    left: 1712px;
     z-index: 904;
-    height: 154px;
-    width: 150px;
+    height: 153px;
+    width: 179px;
     border-radius: 15px;
-    border: 1px solid #FF0000;
-    background-color: #FFFFFF;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    border-radius: 5px;
     color: #707070;
     font-size: 20px;
     font-weight: 500;
@@ -24,9 +25,8 @@ const UserMenu = styled.div`
 const UserMenuItem = styled.div`
     cursor: pointer;
     width: 100%;
-    padding-top: 5px;
-    padding-bottom: 32px;
-    padding-left: 13px;
+    padding-top:11.5px;
+    padding-left: 5px;
     padding-right: 13px;
     line-height: 30px;
     text-align: left;
@@ -45,7 +45,7 @@ const UserThumbnail = styled.div`
 
 const userinfo = { nickName: "닉네임", thumbnail: "" }
 class SignNav extends Component {
-    state = { signin_modal: false, user_popup: null }
+    state = { signin_modal: false, user_popup: null, isLoggedIn: false }
     openModal = () => { this.setState({ signin_modal: true }) }
     openUserMenu = (event) => {
         document.addEventListener("mousedown", this.handleClickOutside)
@@ -56,7 +56,7 @@ class SignNav extends Component {
     closeModal = () => { this.setState({ signin_modal: false }) }
     signin = () => {
         this.closeModal()
-        this.setState({ signin_modal: false, user_popup: null })
+        this.setState({ signin_modal: false, user_popup: null, isLoggedIn: true })
         window.location.reload()
     }
     signout = () => {
@@ -86,16 +86,16 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
-        // console.log(this.props) 
-        console.log("isSignedIn:", this.props)
+        console.log("isLoggedIn:", isLoggedIn)
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>
-                    <UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem>
-                    <UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem>
+                    <div style={{paddingBottom:"5px"}}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr style={{position:"relative",left:'-10px'}} width="166px" noshade/>
+                    <div><UserMenuItem  onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
-            {info && isLoggedIn
+            {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
                     {/* <UserThumbnail url={""||info.thumbnail.s_img} /> */}
                     {info.nickName}</div>)

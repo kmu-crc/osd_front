@@ -19,6 +19,7 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--box {
+    z-index: 950;
     background: #EFEFEF;
     width: 100%;
     margin-top: 10.04px;
@@ -26,6 +27,7 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--arrow {
+    z-index: 950;
     position: absolute;
     width: 28.82px;
     height: 29.92px;
@@ -36,6 +38,7 @@ const SelectBoxContainer = styled.div`
     background: #EFEFEF;
   }
   .select-box--arrow-down {
+    z-index: 950;
     position: absolute;
     left: 25%;
     top: 35%;
@@ -45,6 +48,7 @@ const SelectBoxContainer = styled.div`
   }
 
   .select-box--selected-item {
+    z-index: 950;
     display: inline-block;
     height: 100%;
     width: 92%;
@@ -53,11 +57,13 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--items {
+    z-index: 950;
     background-color:  #EFEFEF;
     font-size: 20px;
   }
   
   .select-box--items div {
+    z-index: 950;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
@@ -65,6 +71,7 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--items div.selected {
+    z-index: 950;
     background-color: #FFFFFF;
     background-image: url('/check.png');
     background-size: 16px;
@@ -73,6 +80,7 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--items div:hover {
+    z-index: 950;
     background-color: #000;
     color:white;
     opacity: 0.3;
@@ -83,7 +91,7 @@ class SelectBox extends Component {
   state = {
     ...this.props,
     items: this.props.items || [],
-    selectedItem: this.props.items[0] || this.props.selectedItem,
+    selectedItem: this.props.default || this.props.items[0] || this.props.selectedItem,
     showItems: false,
   }
   dropDown = () => {
@@ -91,19 +99,11 @@ class SelectBox extends Component {
   }
   selectItem = (item) => {
     this.setState({ selectedItem: item, showItems: false, })
+    this.props.onSelectedItem(item)
   }
   clicked = () => {
     if (this.state.showItems === false) {
       document.addEventListener("mousedown", this.handleClickOutside)
-      // document.addEventListener("mousemove", this.handleSelection)
-      // document.addEventListener("mouseup", this.handleSelection)
-    }
-  }
-  handleSelection = () => {
-    if (document.selection) {
-      // document.selection.empty()
-    } else {
-      // window.getSelection().removeAllRanges()
     }
   }
   myRef = React.createRef()
@@ -112,8 +112,6 @@ class SelectBox extends Component {
     if (!this.myRef.current.contains(e.target)) {
       this.setState({ showItems: false })
       document.removeEventListener("mousedown", this.handleClickOutside)
-      // document.addEventListener("mousemove", this.handleSelection)
-      // document.addEventListener("mouseup", this.handleSelection)
     }
   }
   render() {
@@ -122,13 +120,13 @@ class SelectBox extends Component {
         <div className="select-box--box">
           <div className="select-box--container" onClick={this.dropDown}>
             <div className="select-box--selected-item" width={this.props.width + "px"}>
-              {this.state.selectedItem.value}</div>
+              {this.state.selectedItem.text}</div>
             <div className="select-box--arrow">
               <span className={`${this.state.showItems ? 'select-box--arrow-up' : 'select-box--arrow-down'}`} /></div>
           </div>
           <div className="select-box--items" style={{ display: this.state.showItems ? 'block' : 'none' }}>
             {this.state.items.map(item =>
-              <div key={item.id} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.value}</div>)}
+              <div key={item.value} value={item.value} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.text}</div>)}
           </div>
         </div>
         <input type="hidden" name={this.state.name} value={this.state.selectedItem.id} />

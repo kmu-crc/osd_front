@@ -10,7 +10,7 @@ export default function RequiresAuth(Component) {
       if (this.props.token != null) {
         SetSession("opendesign_token", this.props.token)
       }
-      GetSession("opendesign_token").then( token => {
+      GetSession("opendesign_token").then(token => {
         this.props.CheckTokenRequest(token).then((data) => {
           if (data.type === "AUTH_CHECK_TOKEN_FAILURE") {
             // SetSession("opendesign_token", null)
@@ -19,15 +19,19 @@ export default function RequiresAuth(Component) {
           return this._checkAndRedirect()
         })
       })
-      .catch( data => {
-        this._checkAndRedirect()
-      })
+        .catch(data => {
+          this._checkAndRedirect()
+        })
     }
-
+    componentWillReceiveProps(nextProps) {
+      return this._checkAndRedirect()
+    }
     _checkAndRedirect() {
       if (!this.props.valid) {
         alert("로그인 후 이용이 가능합니다.")
-        this.props.history.push("/signin")
+        // this.props.history.push(-1)
+        window.history.go(-1)
+        // this.props.history.push("/signin")
       }
     }
 

@@ -2,29 +2,41 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import DesignDetail from "components/Designs/DesignDetail"
-import { ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest, 
-  DeleteDesignRequest, GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, 
-  GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "redux/modules/design"
+import {
+  ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest,
+  DeleteDesignRequest, GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
+  GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest, DESIGN_NOT_FOUND
+} from "redux/modules/design"
+import Loading from "components/Commons/Loading";
 
 class DesignDetailContainer extends Component {
+  componentDidMount() {
+    this.props.GetDesignDetailRequest(this.props.id)
+  }
+  goBack() {
+    alert("wrong access")
+    window.history.go(-1)
+  }
   render() {
-    return (
-      <DesignDetail {...this.props} />
-    )
+    console.log(this.props.status, "status")
+    return (<>{this.props.status === "INIT" ? <Loading /> :
+      this.props.status === DESIGN_NOT_FOUND ? this.goBack() :
+        <DesignDetail {...this.props} />}</>)
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignForked: state.DesignForked.status.DesignForked,
-    new_design_id: state.DesignForked.status.new_design_id,
-    forked_list: state.DesignForked.status.list,
-    DesignDetail: state.DesignDetail.status.DesignDetail,
-    Count: state.DesignDetail.status.Count,
+    DesignForked: state.Design.status.DesignForked,
+    status: state.Design.DesignDetail.status,
+    new_design_id: state.Design.status.new_design_id,
+    forked_list: state.Design.status.list,
+    DesignDetail: state.Design.status.DesignDetail,
+    Count: state.Design.status.Count,
     userInfo: state.Authentication.status.userInfo,
     valid: state.Authentication.status.valid,
     token: state.Authentication.status.token,
-    like: state.DesignLike.status.like
+    like: state.Design.status.like
   }
 }
 

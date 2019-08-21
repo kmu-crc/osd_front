@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import Socket from "modules/Socket"
 import MenuContext from "Global/Context/GlobalContext"
 
 // import Notification from "components/Commons/Notification"
@@ -51,46 +51,27 @@ const DesignCreateBtn = styled.div`
     height: 100%;
     color: red;
     border-bottom: 1.5px solid red;
+    cursor: pointer;
 `
 class Header extends Component {
-    static contextType = MenuContext;
-
-    state = {
-        profile: false,
-        active: false,
-        keyword: null,
-        noti: {},
-        notification: null,
-        msg: null
-      }
-      _getNotification = () => {
-        return fetch(`${host}/common/notice`, { headers: { "Content-Type": "application/json" }, method: "get" })
-          .then((response) => { return response.json() })
-          .then((data) => {
-            if (data) {
-              this.setState({ notification: data })
+    state = {noti: {},}
+    static contextType = MenuContext
+    gotoCreateDesignPage() {
+        window.location.href = "/createDesign"
+    }
+    componentDidMount() {
+        if (this.props.valid) {
+            try {
+                Socket.emit("INIT", this.props.userInfo.uid)
+                Socket.on("getNoti", noti => {
+                    this.setState({ noti: noti })
+                    console.log(noti, "noti")
+                })
+            } catch (err) {
+                console.log(err)
             }
-          })//.catch(err => console.log(err))
-      }
-      componentDidMount() {
-          if (this.props.valid) {
-              try {
-                  Socket.emit("INIT", this.props.userInfo.uid)
-                  Socket.on("getNoti", noti => {
-                    console.log("getnoti!",this.props.valid);
-              this.setState({ noti: noti })
-            })
-          } catch (err) {
-            console.log(err)
-          }
         }
-        this._getNotification()
-      }
-      // shouldComponentUpdate(nextProps, nextState) {
-      // return this.state.notification != nextState.notification;
-      // }
-      
-
+    }
     render() {
         return (
             <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
@@ -112,11 +93,9 @@ class Header extends Component {
                     <li style={{ width: "34px", height: "34px", marginRight: "50px", marginTop: "10px" }}>
                         <AlarmContainer {...this.props} /></li>
                     <li style={{ minWidth: "97px", lineHeight: "29px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
-                        <DesignCreateBtn>디자인 등록</DesignCreateBtn></li>
+                        <DesignCreateBtn onClick={this.gotoCreateDesignPage}>디자인 등록</DesignCreateBtn></li>
                     <li style={{ minWidth: "55px", height: "29px", marginRight: "17px", marginTop: "11px" }}>
-                        <SignNav {...this.props} />
-                        {/* <SignNavContainer /> */}
-                    </li>
+                        <SignNav {...this.props} /></li> {/* <SignNavContainer /> */}
                 </ul>
             </Menu>
         )

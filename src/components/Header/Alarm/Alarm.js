@@ -42,11 +42,8 @@ const ListItem = styled.div`
 
 class Alarm extends Component {
     state = {
-        profile: false,
-        active: false,
-        keyword: null,
-        msg: null,
-        top: 0, left: 0
+        profile: false, active: false, keyword: null,
+        msg: null, top: 0, left: 0
     }
     myRef = React.createRef()
     openAlarmList = (e) => {
@@ -244,10 +241,9 @@ class Alarm extends Component {
     }
 
     render() {
-
         const alarms = this.props.alarm
         return (
-            <>{this.state.active &&
+            <>{this.state.active && alarms &&
                 <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
                     <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
                         <div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: "#FFFFFF" }}>
