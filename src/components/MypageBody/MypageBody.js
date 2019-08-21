@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
 
-import ScrollList from "components/Commons/ScrollList"
+// import ScrollList from "components/Commons/ScrollList"
 
 //component
 import Design from "components/Designs/Design"

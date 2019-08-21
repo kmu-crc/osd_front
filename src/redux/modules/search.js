@@ -7,6 +7,7 @@ const GET_SEARCH_MEMBER_SUCCESS = "GET_SEARCH_MEMBER_SUCCESS"
 const GET_SEARCH_MEMBER_FAILURE = "GET_SEARCH_MEMBER_FAILURE"
 
 
+
 const SearchMember = () => ({ type: GET_SEARCH_MEMBER })
 const SearchMemberSuccess = (members) => ({ type: GET_SEARCH_MEMBER_SUCCESS, members })
 const SearchMemberFailure = () => ({ type: GET_SEARCH_MEMBER_FAILURE })
@@ -47,27 +48,27 @@ export default function Search(state, action) {
           members: { $set: [] }
         }
       });
+        
     default:
       return state;
   }
 }
 
 
-export function SearchMemberRequest(id, data, token) {
+export function SearchMemberRequest (id, data, token) {
   return (dispatch) => {
-    dispatch(SearchMember())
-    console.log(data)
-    console.log(id)
-
-    return fetch(`${host}/search/members/${id}`, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
+    dispatch(SearchMember());
+    console.log(id, data);
+    const url = `${host}/search/members/${id}`
+    return fetch(url, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
-        return res.json()
+        return res.json();
       })
       .then(function (res) {
         console.log(res);
-        return dispatch(SearchMemberSuccess(res.members))
+        return dispatch(SearchMemberSuccess(res.members));
       }).catch((error) => {
-        return dispatch(SearchMemberFailure())
-      })
-  }
-}
+        return dispatch(SearchMemberFailure());
+      });
+  };
+};

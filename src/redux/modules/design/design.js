@@ -3,6 +3,7 @@ import update from "react-addons-update"
 
 
 const GET_DESIGN_DETAIL = "GET_DESIGN_DETAIL"
+export const DESIGN_NOT_FOUND = "DESIGN_NOT_FOUND"
 const GET_DESIGN_COUNT = "GET_DESIGN_COUNT"
 const DESIGN_DETAIL_RESET = "DESIGN_DETAIL_RESET"
 const GET_DESIGN_DETAIL_VIEW = "GET_DESIGN_DETAIL_VIEW"
@@ -59,6 +60,7 @@ const initialState = {
 
 
 const CreateDesign = () => ({ type: CREATE_DESIGN })
+const DesignNotFound = () => ({ type: DESIGN_NOT_FOUND, DesignDetail: { status: DESIGN_NOT_FOUND } })
 const CreateDesignSuccess = (res) => ({ type: CREATE_DESIGN_SUCCESS, success: res.success, design_id: res.design_id })
 const CreateDesignFailure = (error) => ({ type: CREATE_DESIGN_FAILURE, success: error.success })
 const DeleteDesign = () => ({ type: DELETE_DESIGN })
@@ -112,6 +114,10 @@ export function Design(state, action) {
         state = initialState
 
     switch (action.type) {
+        case DESIGN_NOT_FOUND:
+            return update(state, {
+                DesignDetail: { status: { $set: DESIGN_NOT_FOUND } },
+            })
         case GET_WAITING_LIST:
             return update(state, {
                 WaitingList: { status: { $set: "WAITING" } }
@@ -140,6 +146,7 @@ export function Design(state, action) {
             })
         case GET_DESIGN_DETAIL:
             return update(state, {
+                DesignDetail: { status: { $set: action.type } },
                 status: { DesignDetail: { $set: action.DesignDetail } }
             })
         case DESIGN_DETAIL_RESET:
@@ -253,6 +260,7 @@ export function DesignDetailResetRequest() {
         dispatch(DesignDetailReset())
     }
 }
+
 export function GetDesignDetailRequest(id, token) {
     return (dispatch) => {
         if (token == null) {
@@ -267,10 +275,11 @@ export function GetDesignDetailRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            // console.log("design Detail data >>", data)
-            if (!data) {
-                // console.log("no data")
+            console.log("design Detail data >>", data)
+            if (!data || (Object.entries(data).length === 0 && data.constructor === Object)) {
+                console.log("no data")
                 data = []
+                return dispatch(DesignNotFound())
             }
             return dispatch(GetDesignDetail(data))
         }).catch((error) => {

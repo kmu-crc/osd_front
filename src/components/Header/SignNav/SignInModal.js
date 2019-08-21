@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { SetSession } from "modules/Sessions"
+// import { SetSession } from "modules/Sessions"
 // import close from "source/close_white.png"
 
 const CustomModal = styled(Modal)`
@@ -29,9 +29,10 @@ class SignInModal extends Component {
         const { email, password } = this.state
         this.props.signinrequest({ email: email, password: password })
             .then(res => {
-                if (res.success) {
-                    SetSession("opendesign_token", res.token)
-                    this.props.signin(res.success)
+                console.log("cap", res)
+                if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
+                    // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
+                    this.props.signin()
                 }
                 else {
                     alert('로그인에 실패하였습니다')

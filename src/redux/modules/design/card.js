@@ -2,6 +2,9 @@ import host from "config"
 import update from "react-addons-update"
 
 
+const BRING_ALL_DATA = "BRING_ALL_DATA"
+const BRING_ALL_DATA_SUCCESS = "BRING_ALL_DATA_SUCCESS"
+const BRING_ALL_DATA_FAILURE = "BRING_ALL_DATA_FAILURE"
 const CREATE_BOARD = "CREATE_BOARD"
 const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS"
 const CREATE_BOARD_FAILURE = "CREATE_BOARD_FAILURE"
@@ -14,7 +17,6 @@ const DELETE_BOARD_FAILURE = "DELETE_BOARD_FAILURE"
 const GET_BOARD = "GET_BOARD"
 const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS"
 const GET_BOARD_FAILURE = "GET_BOARD_FAILURE"
-
 
 const CREATE_CARD = "CREATE_CARD"
 const CREATE_CARD_SUCCESS = "CREATE_CARD_SUCCESS"
@@ -52,7 +54,9 @@ const GET_DESIGN_SOURCE_SUCCESS = "GET_DESIGN_SOURCE_SUCCESS"
 const GET_DESIGN_SOURCE_FAILURE = "GET_DESIGN_SOURCE_FAILURE"
 
 
-
+const BringAllData = () => ({ type: BRING_ALL_DATA })
+const BringAllDataSuccess = (res) => ({ type: BRING_ALL_DATA_SUCCESS, success: res.success, all: res.all })
+const BringAllDataFailure = (error) => ({ type: BRING_ALL_DATA_FAILURE, success: error.success })
 const CreateBoard = () => ({ type: CREATE_BOARD })
 const CreateBoardSuccess = (res) => ({ type: CREATE_BOARD_SUCCESS, success: res.success })
 const CreateBoardFailure = (error) => ({ type: CREATE_BOARD_FAILURE, success: error.success })
@@ -99,9 +103,10 @@ const DesignSourceReset = () => ({ type: DESIGN_SOURCE_RESET, data: [] })
 
 
 const initialState = {
+    BringAllData: { status: "INIT" },
     DesignDetailStep: { status: "INIT" },
     UpdateDesignFile: { status: "INIT" },
-    status: { DesignDetailStep: [] }
+    status: { DesignDetailStep: [], allData: null }
 }
 
 
@@ -110,12 +115,14 @@ export function DesignCard(state, action) {
         state = initialState;
 
     switch (action.type) {
+        case BRING_ALL_DATA_SUCCESS:
+            return update(state, { BringAllData: { status: { $set: action.type } }, status: { allData: { $set: action.all } } })
+        case BRING_ALL_DATA_FAILURE:
+            return update(state, { BringAllData: { status: { $set: action.type } }, status: { allData: { $set: [] } } })
+        // case BRING_ALL_DATA_CLEAR:
+        // return update(state, { BringAllData: { status: { $set: action.type } }, status: { allData: { $set: [] } } })
         case UPDATE_DESIGN_FILE:
-            return update(state, {
-                UpdateDesignFile: {
-                    status: { $set: "WATTING" }
-                }
-            })
+            return update(state, { UpdateDesignFile: { status: { $set: "WATTING" } } })
         case UPDATE_DESIGN_FILE_SUCCESS:
             return update(state, {
                 UpdateDesignFile: {
@@ -161,6 +168,12 @@ export function DesignCard(state, action) {
     }
 }
 
+export const BringAllDataRequest = design_id => {
+    return dispatch => {
+        return fetch(`${host}/design/designDetail/bringAllData/${design_id}`, { method: "GET" })
+        // .then(functi)
+    }
+}
 export function DesignSourceResetRequest() {
     return (dispatch) => {
         dispatch(DesignSourceReset())
@@ -265,14 +278,16 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
     };
 }
 export const GetDesignBoardRequest = (id) => {
+    console.log("::res::", id);
     return (dispatch) => {
         dispatch(GetBoard());
         return fetch(`${host}/design/designDetail/${id}/getBoardList`, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
             .then(function (res) {
+                console.log("::res::", res);
                 return res.json();
             })
             .then(function (res) {
-                console.log(res);
+                console.log("::res::", res);
                 return dispatch(GetBoardSuccess(res));
             }).catch((error) => {
                 console.log("insert detail err", error);
