@@ -86,7 +86,7 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
-        console.log("isLoggedIn:", isLoggedIn)
+        //console.log("isLoggedIn:", isLoggedIn)
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>

@@ -14,6 +14,8 @@ const GET_MY_MSG_DETAIL_SUCCESS = "GET_MY_MSG_DETAIL_SUCCESS"
 const GET_MY_MSG_DETAIL_FAILURE = "GET_MY_MSG_DETAIL_FAILURE"
 const GET_MY_MSG_DETAIL_CLEAR = "GET_MY_MSG_DETAIL_CLEAR"
 
+const MSG_DETAIL_SCROLL_WAIT="MSG_DETAIL_SCROLL_WAIT";
+const MSG_DETAIL_SCROLL_DOWN="MSG_DETAIL_SCROLL_DOWN";
 
 //
 const GetMyMsgList = () => ({ type: GET_MY_MSG_LIST })
@@ -27,6 +29,8 @@ const SendMessage = () => ({ type: SEND_MESSAGE })
 const SendMessageSuccess = (data) => ({ type: SEND_MESSAGE_SUCCESS, data })
 const SendMessageFailure = () => ({ type: SEND_MESSAGE_FAILURE })
 
+const GetMsgDetailScrollWait = ()=>({type:MSG_DETAIL_SCROLL_WAIT});
+const GetMsgDetailScrollDown = ()=>({type:MSG_DETAIL_SCROLL_DOWN});
 
 //
 const initialState = {
@@ -34,6 +38,7 @@ const initialState = {
     SendMessage: { status: "INIT" },
     GetMsgDetail: { status: "INIT", },
     GetMsgList: { status: "INIT" },
+    scrollMove:false,
 }
 
 
@@ -107,14 +112,29 @@ export default function Message(state, action) {
                 MsgDetail: { $set: action.MsgDetail }
               }
             });
-            
-        default:
+          case MSG_DETAIL_SCROLL_WAIT:
+              return update(state,{
+                  scrollMove:{$set:false}
+              });
+          case MSG_DETAIL_SCROLL_DOWN:
+                    return update(state,{
+                        scrollMove:{$set:true}
+                    });
+                default:
             return state
     }
 }
 
 
 //
+export function MsgDetailScrollDown()
+{
+    return (dispatch)=>{dispatch(GetMsgDetailScrollDown())};
+}
+export function MsgDetailScrollWait()
+{
+    return (dispatch)=>{dispatch(GetMsgDetailScrollWait())};
+}
 export function SendMessageRequest(token, data, id) {
     return (dispatch) => {
         dispatch(SendMessage())
@@ -165,8 +185,6 @@ export function GetMyMsgListRequest(token) {
     }
 }
 export function GetMyMsgDetailRequest(token, id) {
-    console.log("!!!!!!!!!!!!@@@@@@@@@@!!!!!!!!!!!!");
-
     return (dispatch) => {
       dispatch(GetMyMsgDetail());
       return fetch(`${host}/users/msgDetail/${id}`, {

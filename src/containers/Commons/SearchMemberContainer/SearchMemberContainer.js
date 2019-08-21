@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import SearchMember from "components/Commons/SearchMember";
 import { connect } from "react-redux";
-import { SearchMemberRequest } from "actions/Commons/Search";
+import { SearchMemberRequest } from "redux/modules/search";
 
 class SearchMemberContainer extends Component {
   render() {
+    console.log("this.props:",this.props)
     return(
+
       <SearchMember {...this.props}/>
     );
   }
@@ -20,8 +22,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    SearchMemberRequest: (data, token) => {
-      return dispatch(SearchMemberRequest(data, token));
+    SearchMemberRequest: (id, data, token) => {
+      return dispatch(SearchMemberRequest(id, data, token));
     }
   };
 };

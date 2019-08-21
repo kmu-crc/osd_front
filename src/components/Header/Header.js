@@ -10,7 +10,6 @@ import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
 // import SignNavContainer from "containers/Header/SignNavContainer"
-import Socket from "modules/Socket"
 import host from "config"
 
 class Message extends Component {
@@ -65,7 +64,6 @@ class Header extends Component {
                 Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", noti => {
                     this.setState({ noti: noti })
-                    console.log(noti, "noti")
                 })
             } catch (err) {
                 console.log(err)

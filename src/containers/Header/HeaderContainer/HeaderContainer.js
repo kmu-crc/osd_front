@@ -6,7 +6,7 @@ import { SignInRequest, SignOutRequest } from "redux/modules/auth"
 
 class HeaderContainer extends Component {
     render() {
-        console.log("HC:", this.props)
+        //console.log("HC:", this.props)
         return (
             <Header {...this.props} />
         )
