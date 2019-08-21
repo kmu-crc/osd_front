@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
 import noface from "source/noimg.png"
-// import jina from "source/jina.png"
 
 const UserMenu = styled.div`
     display: ${props => props.display};
     position: absolute;
     pointer-events: auto;
     top: 50.5px;
-    left: 1712px;
+    left: ${props => props.left + "px"};
     z-index: 904;
     height: 153px;
     width: 179px;
@@ -44,9 +43,13 @@ const UserThumbnail = styled.div`
     background-image: url(${prop => prop.url}) 
 `
 
-const userinfo = { nickName: "닉네임", thumbnail: "" }
+const userinfo = {
+    nickName: "닉네임",
+    thumbnail: "",
+    userMenuLeft:"1751px",
+}
 class SignNav extends Component {
-    state = { signin_modal: false, user_popup: null, isLoggedIn: false }
+    state = { signin_modal: false, user_popup: null , userMenuLeft: userinfo.userMenuLeft};
     openModal = () => { this.setState({ signin_modal: true }) }
     openUserMenu = (event) => {
         document.addEventListener("mousedown", this.handleClickOutside)
@@ -92,11 +95,11 @@ class SignNav extends Component {
 
         return (<>
             {this.state.user_popup &&
-                <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={this.state.user_popup.left}>
-                    <div style={{ paddingBottom: "5px" }}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr style={{ position: "relative", left: '-10px' }} width="166px" noshade />
-                    <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
-                </UserMenu>}
+                <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
+                    <div style={{paddingBottom:"5px"}}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr style={{position:"relative",left:'-10px'}} width="166px" noshade="none"/>
+                    <div><UserMenuItem  onClick={this.signout}>로그아웃</UserMenuItem></div>
+                </UserMenu>
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
