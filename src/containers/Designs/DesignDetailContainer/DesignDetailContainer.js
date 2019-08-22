@@ -14,7 +14,7 @@ class DesignDetailContainer extends Component {
     this.props.GetDesignDetailRequest(this.props.id)
   }
   goBack() {
-    alert("wrong access")
+    alert("잘못된 접근입니다. 이전페이지로 돌아갑니다.")
     window.history.go(-1)
   }
   render() {

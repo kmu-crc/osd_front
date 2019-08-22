@@ -7,11 +7,8 @@ import DateFormat from "modules/DateFormat"
 import forked from "source/forked.svg"
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer"
 
-class DesignDetail extends Component {
-  state = {}
-  componentDidMount() { }
-  componentWillUnmount() { }
 
+class DesignDetail extends Component {
   render() {
     const designDetail = this.props.DesignDetail
     const count = this.props.Count
@@ -61,8 +58,10 @@ class DesignDetail extends Component {
 
       {/* design detail */}
       <div style={{ marginTop: "65px" }}>
-        <DesignDetailStepContainer id={designDetail.uid} />
+        <DesignDetailStepContainer test={designDetail} id={designDetail.uid} />
       </div>
+      {/* background-image: linear-gradient(rgba(0,0,0, 0), rgba(64,64,64, 0.4)); */}
+      {/* background: ; */}
     </>)
   }
 }
