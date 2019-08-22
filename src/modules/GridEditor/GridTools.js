@@ -29,13 +29,13 @@ export const TipDiv = (props) => {
 export const StepCard = (props) => {
     return (<div onClick={props.onClick}
         style={{
-            marginBottom: props.marginBottom || "0px",
-            marginRight: props.marginRight,
             cursor: "pointer",
             display: "flex",
             width: "200px", height: "77px",
             borderRadius: "15px", border: "2px solid #707070",
-            marginTop: "24px",
+            marginTop: props.marginTop || "24px",
+            marginRight: props.marginRight,
+            marginBottom: props.marginBottom || "0px",
             backgroundClip: "padding-box"
         }}>
         <div style={{
@@ -48,15 +48,17 @@ export const StepCard = (props) => {
     </div>)
 }
 export const ContentCard = (props) => {
+    // console.log("props", props, props.marginRight)
     return (<div onClick={props.onClick}
         style={{
-            marginRight: props.marginRight,
             cursor: "pointer",
             width: "200px", height: "200px",
             backgroundColor: "rgba(112, 112, 112, 0.15)",
             borderRadius: "15px", border: "2px solid #707070",
+            marginRight: props.marginRight,
+            marginBottom: props.marginBottom,
             backgroundClip: "padding-box"
         }}>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.step}생성하기</div>
+        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.txt}</div>
     </div>)
 }

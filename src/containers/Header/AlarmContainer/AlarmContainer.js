@@ -41,7 +41,7 @@ class AlarmContainer extends Component {
 const mapDisaptchToProps = (dispatch) => {
     return {
         // AcceptDesignRequest: (design_id, member_id, token) => {
-            // return dispatch(AcceptDesignRequest(design_id, member_id, token))
+        // return dispatch(AcceptDesignRequest(design_id, member_id, token))
         // },
         // UpdateDesignInGroupRequest: (id, design_id) => {
         //     return dispatch(UpdateDesignInGroupRequest(id, design_id))
