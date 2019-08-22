@@ -36,7 +36,6 @@ const ListItem = styled.div`
     width: 340px;
     display: flex;
     height: 118px;
-    margin-bottom: 15px;
     border-bottom: 1px solid #B7B7B7;
     &:hover {
         background-color: #EFEFEF;
@@ -153,7 +152,7 @@ class Alarm extends Component {
 
     showButton = (item) => {
         const type = item.type, kinds = item.kinds, confirm = item.confirm
-        if (confirm === 0) return false
+        if (confirm === 1) return false
         return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP" || kinds === "JOIN"))
     }
 
@@ -251,12 +250,12 @@ class Alarm extends Component {
     }
 
     render() {
-        const alarms = this.props.alarm
-
+        const alarms = this.props.alarm;
+        console.log(alarms);
         return (
             <>{this.state.active &&
                 <AlarmList  display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
-                    <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070" , fontWeight:"300" }}>
+                    <div style={{ zIndex: "999", display: "flex", lineHeight: "25px",marginBottom:"11.5px" ,fontSize: "17px", color: "#707070" , fontWeight:"300" }}>
                         <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>
                             모두 읽음으로 표시하기
                         </div>
@@ -264,7 +263,10 @@ class Alarm extends Component {
                     <div className="list">
                         {alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
+                            const alarmKind = item.kinds;
+
                             console.log(item);
+
                             return (
                             <ListItem confirm={item.confirm} key={item.uid}>
                                 <div style={{ fontSize: "17px", fontWeight: "300", paddingTop:"16.5px" , width:"325px", position:"relative"}}><TextFormat txt={this.getMessageText(item)}/></div>
@@ -281,9 +283,18 @@ class Alarm extends Component {
                                                     </div>
                                                 </>)
                                                 :
-                                                (<>
-                                                    <div style={{paddingLeft:"15px",paddingTop:"12.5px",opacity:"1", fontSize:"17px", fontWeight:'500', width:"225px"}}><TextFormat txt={item.title} /></div>
-                                                </>)
+                                                (
+                                                    alarmKind != "COMMENT" ?
+                                                        (
+                                                            <>
+                                                                <div style={{paddingLeft:"15px",paddingTop:"12.5px", fontSize:"17px", fontWeight:'500', width:"225px"}}><TextFormat txt={item.title} /></div>
+                                                            </>
+                                                        ):
+                                                        (
+                                                            <div style={{paddingLeft:"15px",paddingTop:"12.5px", fontSize: "17px", fontWeight: "300",  width:"240px"}}><TextFormat txt={item.reply_preview} /></div>
+                                                        )
+
+                                                )
                                             }
                                         </div>
 
