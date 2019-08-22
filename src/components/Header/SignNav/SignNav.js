@@ -46,10 +46,10 @@ const UserThumbnail = styled.div`
 const userinfo = {
     nickName: "닉네임",
     thumbnail: "",
-    userMenuLeft:"1751px",
+    userMenuLeft: "1751px",
 }
 class SignNav extends Component {
-    state = { signin_modal: false, user_popup: null , userMenuLeft: userinfo.userMenuLeft};
+    state = { signin_modal: false, user_popup: null, userMenuLeft: userinfo.userMenuLeft };
     openModal = () => { this.setState({ signin_modal: true }) }
     openUserMenu = (event) => {
         document.addEventListener("mousedown", this.handleClickOutside)
@@ -96,10 +96,10 @@ class SignNav extends Component {
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
-                    <div style={{paddingBottom:"5px"}}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr style={{position:"relative",left:'-10px'}} width="166px" noshade="none"/>
-                    <div><UserMenuItem  onClick={this.signout}>로그아웃</UserMenuItem></div>
-                </UserMenu>
+                    <div style={{ paddingBottom: "5px" }}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr style={{ position: "relative", left: '-10px' }} width="166px" noshade="none" />
+                    <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
+                </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>

@@ -8,8 +8,7 @@ import logo from "source/logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
-// import SignNavContainer from "containers/Header/SignNavContainer"
-import host from "config"
+import Socket from "modules/Socket"
 
 class Message extends Component {
     gotoMessagePage() {
