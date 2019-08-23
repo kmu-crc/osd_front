@@ -1,49 +1,68 @@
 import React, { Component } from "react"
 import styled from "styled-components"
 
+import TextFormat from 'modules/formats/TextFormat'
+
 const AlarmList = styled.div`
-  display: ${props => props.display};
-  z-index: 999;
-  position: absolute;
-  pointer-events: auto;
-  top: ${props => props.top + "px"};
-  left: ${props => props.left + "px"};
-  z-index: 904;
-  height: 634px;
-  width: 424px;
-  border-radius: 25px;
-  border: 2px solid #FF0000;
-  background-color: #FFFFFF;
-  font-family: Noto Sans KR;
+    display: ${props => props.display};
+    z-index: 999;
+    position: absolute;
+    pointer-events: auto;
+    top: 50.5px;
+    left: ${props => props.left + "px"};
+    z-index: 904;
+    height: 550px;
+    width: 365px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    font-family: Noto Sans KR;
+    
+    .list::-webkit-scrollbar {
+        position: absolute;
+        width: 3.9px;
+    }
+    .list::-webkit-scrollbar-thumb {
+    background: rgba(112, 112, 112, 0.45) !important;
+    }
+    
+    
   .list {
-      margin-top: 36px;
-      padding-left: 36px;
+      padding-left: 15px;
       padding-right: 36px;
       padding-bottom: 5px;
-      height: 520px;
+      height: 490px;
       overflow-y: hidden;
     &:hover{
         overflow-y: scroll;
-        }
     }
-`
+
+    
+}`;
 const ListItem = styled.div`
+    display:flex;
+    flex-direction:column;
     opacity: ${props => props.confirm ? 0.5 : 1};
-    width: 351px;
+    width: 340px;
     display: flex;
-    height: 70px;
-    margin-bottom: 15px;
+    height: 118px;
     border-bottom: 1px solid #B7B7B7;
     &:hover {
         background-color: #EFEFEF;
         opacity: 0.95;
     }
 `
-
+const userinfo = {
+    alarmLeft:"1512px",
+}
 class Alarm extends Component {
     state = {
-        profile: false, active: false, keyword: null,
-        msg: null, top: 0, left: 0
+        profile: false,
+        active: false,
+        keyword: null,
+        msg: null,
+        top: 0, left: 0,
+        alarmLeft:userinfo.alarmLeft,
     }
     myRef = React.createRef()
     openAlarmList = (e) => {
@@ -113,7 +132,7 @@ class Alarm extends Component {
             } else if (item.kinds === "INVITE_REJECT") {
                 msg = `${from}님이 초대를 거절하였습니다.`
             } else if (item.kinds === "LIKE") {
-                msg = `${from}님이 이 디자인을 좋아합니다.`
+                msg = `${from}님께서 디자인을 좋아합니다.`
             } else if (item.kinds === "COMMENT") {
                 msg = `${from}님이 디자인에 댓글을 달았습니다.`
             } else if (item.kinds === "CARD_COMMENT") {
@@ -144,7 +163,7 @@ class Alarm extends Component {
     showButton = (item) => {
         const type = item.type, kinds = item.kinds, confirm = item.confirm
         if (confirm === 1) return false
-        return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP"))
+        return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP" || kinds === "JOIN"))
     }
 
     accept = (e, item) => {
@@ -239,36 +258,82 @@ class Alarm extends Component {
             }
         }
     }
+    getLikeCount = (item, alarms)=>{
+        let count=0, returnType="";
+        alarms.list.map(alarmItem => {
+            if((item.content_id === alarmItem.content_id) && (item.type === "DESIGN")){
+                count++;
+                returnType = "DESIGN"
+            }
+            else if((item.content_id === alarmItem.content_id) && (item.type==="GROUP")){
+                count++;
+                returnType = "GROUP"
+            }
+        })
+        return [returnType, count];
+    };
 
     render() {
-        const alarms = this.props.alarm
+        const alarms = this.props.alarm;
+        console.log(alarms);
         return (
-            <>{this.state.active && alarms &&
-                <AlarmList ref={this.myRef} top={this.state.top} left={this.state.left}>
-                    <div style={{ zIndex: "999", display: "flex", height: "58px", fontSize: "17px", color: "#707070", fontWeight: "500" }}>
-                        <div style={{ zIndex: "999", cursor: "pointer", width: "210px", borderRadius: "25px 0 0 0", backgroundColor: "#FFFFFF" }}>
-                            <div style={{ marginTop: "13px", marginLeft: "33px" }} >알림</div></div>
-                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF" }}>
-                            <div style={{ marginTop: "13px", marginLeft: "28px" }} ></div></div>
+            <>{this.state.active &&
+                <AlarmList  display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
+                    <div style={{ zIndex: "999", display: "flex", lineHeight: "25px",marginBottom:"11.5px" ,fontSize: "17px", color: "#707070" , fontWeight:"300" }}>
+                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>
+                            모두 읽음으로 표시하기
+                        </div>
                     </div>
                     <div className="list">
                         {alarms.list.map(item => {
-                            const alarmtype = this.showButton(item)
-                            return (<ListItem confirm={item.confirm} key={item.uid}>
-                                <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "45px", height: "45px", borderRadius: "15%" }} />
-                                <div style={{ height: "19px", width: "290px", lineHeight: "16px", marginLeft: "22px" }}>
-                                    <div style={{ fontSize: "16px", fontWeight: "500" }}>{item.from}{this.getMessageText(item)}</div>
-                                    <div style={{ width: "100%", float: "right", marginTop: "16px", fontSize: "13px", fontWeight: "300", display: "flex", justifyContent: "space-between" }}>
-                                        <div>{item.create_time}</div>
+                            const alarmtype = this.showButton(item);
+                            const alarmKind = item.kinds;
+                            let designCount =0, groupCount =0, countObj, msg;
+
+                            msg = this.getMessageText(item);
+                            if(item.kinds === "LIKE"){
+                                countObj = this.getLikeCount(item, alarms);
+                                countObj[0] === "DESIGN" ? designCount = countObj[1] : groupCount = countObj[1];
+                                console.log(countObj[1]);
+                                if(designCount != 0){
+                                    msg = designCount == 1 ? `${item.from}님께서 디자인을 좋아합니다.` :`${item.from}님 외에${designCount-1}명이 디자인을 좋아합니다.`;
+                                }
+                                else{
+                                    msg = groupCount == 1 ? `${item.from}님께서 그룹을 좋아합니다.` :`${item.from}님 외에${groupCount-1}명이 디자인을 좋아합니다.`;
+                                }
+                            }
+
+                            return (
+                            <ListItem confirm={item.confirm} key={item.uid}>
+                                <div style={{ fontSize: "17px", fontWeight: "300", paddingTop:"16.5px" , width:"325px", position:"relative"}}><TextFormat txt={msg}/></div>
+                                <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position:"relative" }}>
+                                    <div style={{display:"flex", justifyContent:"space-start"}}>
+                                        <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
                                         <div style={{ display: "flex" }}>
-                                            {/* {item.quest && !item.confirm ? */}
                                             {alarmtype ?
                                                 (<>
-                                                    <div style={{ cursor: "pointer", margin: "auto 0", color: "#FF0000", borderBottom: "1px solid red" }}>승인</div>
-                                                    <div style={{ cursor: "pointer", marginLeft: "10px", borderBottom: "1px solid #707070" }}>거절</div>
-                                                </>) : (<></>)
+                                                    <div style={{paddingLeft:"15px",paddingTop:"12.5px",opacity:"1", fontSize:"17px", fontWeight:'500', width:"190px"}}><TextFormat txt={item.title} /></div>
+                                                    <div style={{display:"flex", justifyContent:"space-start", position:"absolute", paddingLeft:"200px",paddingTop:"25px", fontSize:"17px", fontWeight:"500"}}>
+                                                        <div style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
+                                                        <div style={{ cursor: "pointer", marginLeft: "10px"}}>거절</div>
+                                                    </div>
+                                                </>)
+                                                :
+                                                (
+                                                    alarmKind != "COMMENT" ?
+                                                        (
+                                                            <>
+                                                                <div style={{paddingLeft:"15px",paddingTop:"12.5px", fontSize:"17px", fontWeight:'500', width:"225px"}}><TextFormat txt={item.title} /></div>
+                                                            </>
+                                                        ):
+                                                        (
+                                                            <div style={{paddingLeft:"15px",paddingTop:"12.5px", fontSize: "17px", fontWeight: "300",  width:"240px"}}><TextFormat txt={item.reply_preview} /></div>
+                                                        )
+
+                                                )
                                             }
                                         </div>
+
                                     </div>
                                 </div>
                             </ListItem>)
