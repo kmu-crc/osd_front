@@ -7,7 +7,7 @@ import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import { Link } from "react-router-dom";
 import FormDataToJson from "modules/FormDataToJson";
-import eximg from "source/topDesign.png";
+import eximg from "source/noimg.png";
 import StyleGuide from "StyleGuide";
 
 // css styling

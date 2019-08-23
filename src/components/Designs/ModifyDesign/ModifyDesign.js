@@ -3,7 +3,7 @@ import ModifyDesignFormContainer from "containers/Designs/ModifyDesignFormContai
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
+import mainSlide from "source/noimg.png";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -57,7 +57,7 @@ class ModifyDesign extends Component {
           <Title><h1>디자인 수정</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <ModifyDesignFormContainer history={this.props.history} id={this.props.id}/>
+          <ModifyDesignFormContainer history={this.props.history} id={this.props.id} />
         </Wrapper>
       </div>
     );
