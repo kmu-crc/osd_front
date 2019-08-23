@@ -16,6 +16,7 @@ class AlarmContainer extends Component {
                 Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
+                    console.log("getNoti", alarm)
                 })
             } catch (err) {
                 //TODO v2: doesn't meaning in client, so! report administrator e-mail
@@ -41,7 +42,7 @@ class AlarmContainer extends Component {
 const mapDisaptchToProps = (dispatch) => {
     return {
         // AcceptDesignRequest: (design_id, member_id, token) => {
-            // return dispatch(AcceptDesignRequest(design_id, member_id, token))
+        // return dispatch(AcceptDesignRequest(design_id, member_id, token))
         // },
         // UpdateDesignInGroupRequest: (id, design_id) => {
         //     return dispatch(UpdateDesignInGroupRequest(id, design_id))

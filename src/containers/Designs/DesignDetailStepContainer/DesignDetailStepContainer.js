@@ -1,24 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
-import DetailStep from "components/Designs/DetailStep";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design"
+import DetailStep from "components/Designs/DetailStep"
+import GridEditor from "modules/GridEditor"
 
 class DesignDetailStepContainer extends Component {
+  componentDidMount() {
+    this.props.GetDesignBoardRequest(this.props.id)
+  }
   render() {
-    return (
-      <div>
-        <DetailStep {...this.props} />
-      </div>
-    );
+    console.log(this.props.test, this.props.DesignDetailStep, this.props.isTeam)
+    return (<GridEditor {...this.props} />)
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignDetailStep: state.DesignDetailStep.status.DesignDetailStep,
-    isTeam: state.DesignDetail.status.DesignDetail.is_team
-  };
-};
+    DesignDetailStep: state.DesignCard.status.DesignDetailStep,
+    isTeam: state.Design.status.DesignDetail.is_team
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -26,9 +27,9 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(GetDesignBoardRequest(id))
     },
     UpdateDesignTime: (id, token) => {
-      return dispatch(UpdateDesignTime(id, token));
+      return dispatch(UpdateDesignTime(id, token))
     }
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesignDetailStepContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DesignDetailStepContainer)

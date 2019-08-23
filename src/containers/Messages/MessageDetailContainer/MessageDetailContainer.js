@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageDetail from "components/Messages/MessageDetail";
-import { GetMyMsgDetailRequest, GetMyMessageDetailClear } from "redux/modules/message";
+import { MessageScrollDown,GetMyMsgDetailRequest, GetMyMessageDetailClear,MsgDetailScrollWait,MsgDetailScrollDown } from "redux/modules/message";
+
+const MessageDetailBox = `
+width: 1259px;
+height: 602.5px;
+`
 
 class MessageDetailContainer extends Component {
+  
   render() {
-    return(
-      <div>
-        {this.props.id === -1 ?
-        <p>메시지 내용이 없습니다.</p>
-        :
+    console.log("------------------------",this.props);
+    return(                
         <MessageDetail {...this.props}/>
-        }
-      </div>
+        
     );
   }
 }
@@ -20,9 +22,10 @@ class MessageDetailContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    MessageDetail: state.MessageDetail.status.MsgDetail,
-    userInfo: state.Authentication.status.userInfo
-  };
+    MessageDetail: state.Message.status.MsgDetail,
+    userInfo: state.Authentication.status.userInfo,
+    scrollMove:state.Message.scrollMove,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -32,6 +35,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetMyMessageDetailClear: () => {
       return dispatch(GetMyMessageDetailClear());
+    },
+    MsgDetailScrollWait: () => {
+      return dispatch(MsgDetailScrollWait());
+    },
+    MsgDetailScrollDown: () => {
+      return dispatch(MsgDetailScrollDown());
     }
   };
 };

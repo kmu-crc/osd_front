@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
-import noimg from "source/noimg.png";
-
-// import jina from "source/jina.png"
+import noimg from "source/thumbnail.png";
 
 const UserMenu = styled.div`
     display: ${props => props.display};
@@ -37,7 +35,7 @@ const UserMenuItem = styled.div`
 const UserThumbnail = styled.div`
     margin-right: 10px;
     border-radius: 50%;
-    background-position: center cetner;
+    background-position: center center;
     background-size: cover;
     background-color: #D6D6D6;
     width: 30px;
@@ -48,10 +46,10 @@ const UserThumbnail = styled.div`
 const userinfo = {
     nickName: "닉네임",
     thumbnail: "",
-    userMenuLeft:"1751px",
+    userMenuLeft: "1751px",
 }
 class SignNav extends Component {
-    state = { signin_modal: false, user_popup: null , userMenuLeft: userinfo.userMenuLeft};
+    state = { signin_modal: false, user_popup: null, userMenuLeft: userinfo.userMenuLeft };
     openModal = () => { this.setState({ signin_modal: true }) }
     openUserMenu = (event) => {
         document.addEventListener("mousedown", this.handleClickOutside)
@@ -62,7 +60,7 @@ class SignNav extends Component {
     closeModal = () => { this.setState({ signin_modal: false }) }
     signin = () => {
         this.closeModal()
-        this.setState({ signin_modal: false, user_popup: null })
+        this.setState({ signin_modal: false, user_popup: null, isLoggedIn: true })
         window.location.reload()
     }
     signout = () => {
@@ -92,19 +90,17 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
-        const profile = info.thumbnail && info.thumbnail.s_img || noimg;
-        // console.log(this.props) 
+        const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
+        
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
-                    <div style={{paddingBottom:"5px"}}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr style={{position:"relative",left:'-10px'}} width="166px" noshade="none"/>
-                    <div><UserMenuItem  onClick={this.signout}>로그아웃</UserMenuItem></div>
-                </UserMenu>
-
-            }
+                    <div style={{ paddingBottom: "5px" }}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr style={{ position: "relative", left: '-10px' }} width="166px" noshade="none" />
+                    <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
+                </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
-            {info && isLoggedIn
+            {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
                     <UserThumbnail url={profile} />
                     {info.nickName}</div>)
