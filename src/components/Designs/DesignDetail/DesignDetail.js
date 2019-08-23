@@ -57,9 +57,7 @@ class DesignDetail extends Component {
       </div>
 
       {/* design detail */}
-      <div style={{ marginTop: "65px" }}>
-        <DesignDetailStepContainer test={designDetail} id={designDetail.uid} />
-      </div>
+      <DesignDetailStepContainer test={designDetail} id={designDetail.uid} />
       {/* background-image: linear-gradient(rgba(0,0,0, 0), rgba(64,64,64, 0.4)); */}
       {/* background: ; */}
     </>)
