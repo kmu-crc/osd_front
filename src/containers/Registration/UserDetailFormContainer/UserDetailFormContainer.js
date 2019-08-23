@@ -16,8 +16,8 @@ class UpdateUserInfoContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    category1: state.Categorys.status.level1,
-    category2: state.Categorys.status.level2
+    category1: state.Category.status.level1,
+    category2: state.Category.status.level2
   };
 };
 

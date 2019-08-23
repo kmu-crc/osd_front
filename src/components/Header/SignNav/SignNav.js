@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
-import noface from "source/noimg.png"
+import noimg from "source/thumbnail.png";
 
 const UserMenu = styled.div`
     display: ${props => props.display};
@@ -90,9 +90,8 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
-
-        const profile = (info && info.thumbnail && info.thumbnail.s_img) || noface
-
+        const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
+        
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
