@@ -4,19 +4,29 @@ import styled from "styled-components"
 import TextFormat from 'modules/formats/TextFormat'
 
 const AlarmList = styled.div`
-  display: ${props => props.display};
-  z-index: 999;
-  position: absolute;
-  pointer-events: auto;
-  top: 50.5px;
-  left: ${props => props.left + "px"};
-  z-index: 904;
-  height: 550px;
-  width: 365px;
-  border-radius: 15px;
-  background-color: #FFFFFF;
-  box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-  font-family: Noto Sans KR;
+    display: ${props => props.display};
+    z-index: 999;
+    position: absolute;
+    pointer-events: auto;
+    top: 50.5px;
+    left: ${props => props.left + "px"};
+    z-index: 904;
+    height: 550px;
+    width: 365px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    font-family: Noto Sans KR;
+    
+    .list::-webkit-scrollbar {
+        position: absolute;
+        width: 3.9px;
+    }
+    .list::-webkit-scrollbar-thumb {
+    background: rgba(112, 112, 112, 0.45) !important;
+    }
+    
+    
   .list {
       padding-left: 15px;
       padding-right: 36px;
@@ -122,7 +132,7 @@ class Alarm extends Component {
             } else if (item.kinds === "INVITE_REJECT") {
                 msg = `${from}님이 초대를 거절하였습니다.`
             } else if (item.kinds === "LIKE") {
-                msg = `${from}님이 이 디자인을 좋아합니다.`
+                msg = `${from}님께서 디자인을 좋아합니다.`
             } else if (item.kinds === "COMMENT") {
                 msg = `${from}님이 디자인에 댓글을 달았습니다.`
             } else if (item.kinds === "CARD_COMMENT") {
@@ -248,6 +258,20 @@ class Alarm extends Component {
             }
         }
     }
+    getLikeCount = (item, alarms)=>{
+        let count=0, returnType="";
+        alarms.list.map(alarmItem => {
+            if((item.content_id === alarmItem.content_id) && (item.type === "DESIGN")){
+                count++;
+                returnType = "DESIGN"
+            }
+            else if((item.content_id === alarmItem.content_id) && (item.type==="GROUP")){
+                count++;
+                returnType = "GROUP"
+            }
+        })
+        return [returnType, count];
+    };
 
     render() {
         const alarms = this.props.alarm;
@@ -264,12 +288,24 @@ class Alarm extends Component {
                         {alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
+                            let designCount =0, groupCount =0, countObj, msg;
 
-                            console.log(item);
+                            msg = this.getMessageText(item);
+                            if(item.kinds === "LIKE"){
+                                countObj = this.getLikeCount(item, alarms);
+                                countObj[0] === "DESIGN" ? designCount = countObj[1] : groupCount = countObj[1];
+                                console.log(countObj[1]);
+                                if(designCount != 0){
+                                    msg = designCount == 1 ? `${item.from}님께서 디자인을 좋아합니다.` :`${item.from}님 외에${designCount-1}명이 디자인을 좋아합니다.`;
+                                }
+                                else{
+                                    msg = groupCount == 1 ? `${item.from}님께서 그룹을 좋아합니다.` :`${item.from}님 외에${groupCount-1}명이 디자인을 좋아합니다.`;
+                                }
+                            }
 
                             return (
                             <ListItem confirm={item.confirm} key={item.uid}>
-                                <div style={{ fontSize: "17px", fontWeight: "300", paddingTop:"16.5px" , width:"325px", position:"relative"}}><TextFormat txt={this.getMessageText(item)}/></div>
+                                <div style={{ fontSize: "17px", fontWeight: "300", paddingTop:"16.5px" , width:"325px", position:"relative"}}><TextFormat txt={msg}/></div>
                                 <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position:"relative" }}>
                                     <div style={{display:"flex", justifyContent:"space-start"}}>
                                         <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />

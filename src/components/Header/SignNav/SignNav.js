@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
+import noimg from "source/noimg.png";
 
 // import jina from "source/jina.png"
 
@@ -91,6 +92,7 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
+        const profile = info.thumbnail && info.thumbnail.s_img || noimg;
         // console.log(this.props) 
         return (<>
             {this.state.user_popup &&
@@ -104,7 +106,7 @@ class SignNav extends Component {
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {info && isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
-                    <UserThumbnail url={info.thumbnail.s_img} />
+                    <UserThumbnail url={profile} />
                     {info.nickName}</div>)
                 : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>
                     로그인</div>)}
