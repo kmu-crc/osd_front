@@ -3,6 +3,8 @@ import { CreateCard, CreateStep, StepCard, ContentCard, TipDiv } from "./GridToo
 import styled from 'styled-components'
 import arrow from "source/arrow.svg"
 
+import { Modal } from 'semantic-ui-react'
+
 const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};
     margin-top: ${props => props.marginTop + "px" || "0px"};
@@ -20,12 +22,77 @@ class CardModal extends Component {
     }
 }
 
+const NewStepDialog = styled(Modal)`
+    width: 849px;
+    height: 295px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 6px #FF0000;
+    .modal-title {
+        font-family: Noto Sans KR;
+        font-size: 20px;
+        margin-top: 43.5px;
+        margin-left: 109.5px;
+        font-weight: 500;
+        text-align: left;
+        color: #707070;
+    }
+    .modal-content {
+        font-family: Noto Sans KR;
+        font-size: 20px;
+        color: #707070;
+        display: flex;
+        margin-top: 40px;
+        margin-left: 109.5px;
+        .subtitle {
+            font-weight: 500;
+            margin-right: 34px;
+        }
+    }
+`
+class NewStepModal extends Component {
+    state = { title: "" }
+    onChange = (event) => {
+        const target = event.target
+    }
+    handleClickedCreateButton = () => {
+
+    }
+    onClose = () => {
+        this.props.close()
+    }
+    render() {
+        return (<NewStepDialog open={this.props.open} onClose={this.onClose}>
+            <div className="modal-title">새 단계</div>
+            <div className="modal-content">
+                <div className="subtitle">제목</div>
+                <div style={{ width: "505.5px", height: "56px", borderRadius: "5px", backgroundColor: "#EFEFEF" }}>
+                    <input style={{
+                        width: "100%", height: "100%",
+                        paddingBottom: "16px", paddingLeft: "10px", paddingTop: "16px",
+                        border: "none", backgroundColor: "transparent"
+                    }} />
+                </div>
+            </div>
+            <div style={{
+                cursor: "pointer",
+                height: "29px", width: "74px",
+                marginTop: "38px", marginLeft: "auto", marginRight: "250px",
+                borderBottom: "1.5px solid red",
+                paddingBottom: "1.5px",
+                fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", textAlign: "left", color: "#FF0000", opacity: "1"
+            }}>생성하기</div>
+        </NewStepDialog>)
+    }
+}
 class GridEditor extends Component {
     constructor(props) {
         super(props);
     }
     state = {
-        card_loading: false, card: false,
+        card_loading: false,
+        card: false,
+        newstep: false,
         title: null,
         w: 1920, ws: { left: 271, top: 270, height: 1890 },
         movableRight: true, movableLeft: true
@@ -47,29 +114,7 @@ class GridEditor extends Component {
         // request card detail
         // this.props.GetDesignCardDetailRequest
         this.setState({ title: data.title, card: true })
-
     }
-    // scrollRight(objA, objB) {
-    //     if (objA) {
-    //         objA.scrollLeft += 250;
-    //         if (objA.scrollLeft >= 0) {
-    //             // this.setState({ movableLeft: false })
-    //         }
-    //         if (objA.scrollRight > objA.offsetWidth) {
-    //             // this.setState({ movableRight: true })
-    //         }
-    //     }
-    //     if (objB) {
-    //         objB.scrollLeft += 250;
-    //         if (objB.scrollLeft >= 0) {
-    //             // this.setState({ movableLeft: false })
-    //         }
-    //         if (objB.scrollRight > objB.offsetWidth) {
-    //             // this.setState({ movableRight: true })
-    //         }
-    //     }
-    // }
-
     componentDidMount() {
         window.addEventListener("resize", () => { this.setState({ w: window.innerWidth }) }, true)
         if (this.item) {
@@ -77,26 +122,37 @@ class GridEditor extends Component {
             console.log(this.state.ws, "ws")
         }
     }
+    CloseNewStep = () => {
+        this.setState({ newstep: false })
+    }
+    OpenNewStep = () => {
+        this.setState({ newstep: true })
+    }
+    NewStep() {
+
+    }
     render() {
         const { DesignDetailStep } = this.props
-        const { w, ws, card } = this.state
+        const { w, ws, card, newstep } = this.state
         // temp code //
         // const items = DesignDetailStep.map(step => { return step.cards.length })
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
-        const itemlist = ['BOX1', 'BOX2', 'BOX3', 'BOX4', 'BOX5', 'BOX6', 'BOX7', 'BOX8', 'BOX9', 'BOX10']
+        const itemlist = ['BOX1', 'BOX2', 'BOX3']//, 'BOX4', 'BOX5', 'BOX6', 'BOX7', 'BOX8', 'BOX9', 'BOX10']
         console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
         return (<>
             {/* card modal component */}
             {card && <CardModal title={this.state.title || "로딩중"} card={this.props.cardDetail} />}
+            {newstep && <NewStepModal open={newstep} modalTitle={this.state.title || "로딩중"} newStep={this.NewStep} close={this.CloseNewStep} />}
 
             {/* grid editor component */}
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", marginBottom: "150px" }}>
                 {/* 왼쪽 */}
                 <div style={{ display: "flex" }}>
                     <div style={{ marginTop: "290px" }}>
                         {itemlist && itemlist.map(item => {
                             return <StepCard marginBottom={190} title={item} />
                         })}
+                        <CreateStep onClick={this.OpenNewStep} step={"단계"} />
                     </div>
                 </div>
                 {/* 오른쪽 */}
@@ -109,7 +165,7 @@ class GridEditor extends Component {
                                 <AsBelowArrow marginTop={25} marginRight={0} marginBottom={0} marginLeft={85} />
                             </div>
                         })}
-                        <CreateStep onClick={()=>alert("단계를 추가합니다.")}step={"단계"} />
+                        <CreateStep onClick={this.OpenNewStep} step={"단계"} />
                     </div>
                     {/* 하 */}
                     <div style={{ overflow: "hidden" }}>
