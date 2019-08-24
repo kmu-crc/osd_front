@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { CreateCard, CreateStep, StepCard, ContentCard, TipDiv } from "./GridTools"
 import styled from 'styled-components'
 import arrow from "source/arrow.svg"
-
+import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
 
 const AsBelowArrow = styled.div`
@@ -16,73 +16,83 @@ const AsBelowArrow = styled.div`
     border-right: 15.5px solid transparent;
     border-top: 27px solid #707070
 `
+const CardDialog = styled(Modal)`
+    width: 1530px;
+    height: 889px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #000000;
+    border: 1px solid #EFEFEF;
+    border-radius: 10px;
+    opacity: 1;
+`
 class CardModal extends Component {
+    onSubmit = () => { }
+    onClose = () => { this.props.close() }
     render() {
-        return (<div>{this.props.title}</div>)
+        const card = this.props.cardDetail || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
+        const SideDialog = (props) => {
+            return <div></div>
+        }
+        return (<><SideDialog direction="left" />
+            <CardDialog open={this.props.open} onClose={this.onClose}>
+                <div>{card.title}</div>
+                <div>{card.userName}</div>
+                <div>card_content</div>
+                <div><hr /></div>
+                <div>comment</div>
+            </CardDialog>
+            <SideDialog direction="right" /></>)
     }
 }
 
 const NewStepDialog = styled(Modal)`
-    width: 849px;
-    height: 295px;
-    border-radius: 5px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 3px 6px #FF0000;
-    .modal-title {
-        font-family: Noto Sans KR;
-        font-size: 20px;
-        margin-top: 43.5px;
-        margin-left: 109.5px;
-        font-weight: 500;
-        text-align: left;
-        color: #707070;
-    }
-    .modal-content {
-        font-family: Noto Sans KR;
-        font-size: 20px;
-        color: #707070;
-        display: flex;
-        margin-top: 40px;
-        margin-left: 109.5px;
-        .subtitle {
-            font-weight: 500;
-            margin-right: 34px;
-        }
-    }
+  max-width: 849px;
+  height: 295px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px #FF0000;
 `
+
 class NewStepModal extends Component {
-    state = { title: "" }
+    state = {
+        title: ""
+    }
     onChange = (event) => {
         const target = event.target
+        this.setState({ [target.name]: target.value })
     }
-    handleClickedCreateButton = () => {
-
+    onSubmit = () => {
+        if (!this.state.title) {
+            return;
+        }
+        let data = this.state
+        data.order = this.props.DesignDetailStep[this.props.DesignDetailStep.length - 1].order + 1
+        console.log("DDSC, data:", data, this.props.id, this.props.token)
+        this.props.newStep(data)
+        // .then(this.props.close())
     }
     onClose = () => {
         this.props.close()
     }
     render() {
         return (<NewStepDialog open={this.props.open} onClose={this.onClose}>
-            <div className="modal-title">새 단계</div>
-            <div className="modal-content">
-                <div className="subtitle">제목</div>
-                <div style={{ width: "505.5px", height: "56px", borderRadius: "5px", backgroundColor: "#EFEFEF" }}>
-                    <input style={{
-                        width: "100%", height: "100%",
-                        paddingBottom: "16px", paddingLeft: "10px", paddingTop: "16px",
-                        border: "none", backgroundColor: "transparent"
-                    }} />
-                </div>
+            <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+                <Cross angle={45} color={"#FFFFFF"} weight={2} width={32.36} height={32.36} />
             </div>
-            <div style={{
-                cursor: "pointer",
-                height: "29px", width: "74px",
-                marginTop: "38px", marginLeft: "auto", marginRight: "250px",
-                borderBottom: "1.5px solid red",
-                paddingBottom: "1.5px",
-                fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", textAlign: "left", color: "#FF0000", opacity: "1"
-            }}>생성하기</div>
-        </NewStepDialog>)
+            <form /*onSubmit={this.onSubmit}*/ ref={ref => (this.form = ref)}>
+                <div
+                    style={{ width: "62px", height: "29px", lineHeight: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "43.5px", marginLeft: "109.5px" }}>새 단계</div>
+                <div style={{ display: "flex", width: "575.5px", marginTop: "40px", marginLeft: "109.5px" }}>
+                    <div style={{ width: "40px", height: "29px", lineHeight: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left" }}>제목</div>
+                    <div style={{ width: "505.5px", height: "56px", borderRadius: "5px", marginLeft: "34px", backgroundColor: "#EFEFEF" }}>
+                        <input name="title" onChange={this.onChange} style={{ width: "100%", height: "100%", paddingTop: "16px", paddingRight: "10px", paddingBottom: "16px", paddingLeft: "10px", border: "none", backgroundColor: "transparent" }} value={this.state.title || ""} />
+                    </div>
+                </div>
+                <div style={{ display: "flex", width: "576px", marginLeft: "109.5px", marginTop: "38px" }}>
+                    <div onClick={this.onSubmit} style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "29px", borderBottom: "1.5px solid #FF0000", cursor: "pointer" }}>생성하기</div>
+                </div>
+            </form>
+        </NewStepDialog >)
     }
 }
 class GridEditor extends Component {
@@ -90,10 +100,8 @@ class GridEditor extends Component {
         super(props);
     }
     state = {
-        card_loading: false,
-        card: false,
-        newstep: false,
-        title: null,
+        card_loading: false, card: false,
+        newstep: false, title: null,
         w: 1920, ws: { left: 271, top: 270, height: 1890 },
         movableRight: true, movableLeft: true
     }
@@ -128,7 +136,14 @@ class GridEditor extends Component {
     OpenNewStep = () => {
         this.setState({ newstep: true })
     }
-    NewStep() {
+    NewStep = (data) => {
+        this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
+            .then(this.props.GetDesignBoardRequest(this.props.design.uid))
+            .then(this.props.UpdateDesignTime(this.props.design.uid, this.props.token))
+            .then(this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token))
+        this.CloseNewStep()
+    }
+    NewItem = (data) => {
 
     }
     render() {
@@ -138,11 +153,12 @@ class GridEditor extends Component {
         // const items = DesignDetailStep.map(step => { return step.cards.length })
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
         const itemlist = ['BOX1', 'BOX2', 'BOX3']//, 'BOX4', 'BOX5', 'BOX6', 'BOX7', 'BOX8', 'BOX9', 'BOX10']
-        console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
+        // console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
+        console.log(this.props.design, DesignDetailStep)
         return (<>
             {/* card modal component */}
-            {card && <CardModal title={this.state.title || "로딩중"} card={this.props.cardDetail} />}
-            {newstep && <NewStepModal open={newstep} modalTitle={this.state.title || "로딩중"} newStep={this.NewStep} close={this.CloseNewStep} />}
+            {card && <CardModal open={card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.props.cardDetail} />}
+            {newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
 
             {/* grid editor component */}
             <div style={{ display: "flex", marginBottom: "150px" }}>
@@ -150,7 +166,7 @@ class GridEditor extends Component {
                 <div style={{ display: "flex" }}>
                     <div style={{ marginTop: "290px" }}>
                         {itemlist && itemlist.map(item => {
-                            return <StepCard marginBottom={190} title={item} />
+                            return <StepCard key={item} marginBottom={190} title={item} />
                         })}
                         <CreateStep onClick={this.OpenNewStep} step={"단계"} />
                     </div>
@@ -159,8 +175,8 @@ class GridEditor extends Component {
                 <div style={{ width: `${window.innerWidth}px`, paddingLeft: "73.5px" }}>
                     {/* 상 */}
                     <div style={{ display: "flex", marginTop: "90px" }}>
-                        {DesignDetailStep && DesignDetailStep.map(step => {
-                            return <div style={{ marginRight: "74px" }}>
+                        {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
+                            return <div key={step_index + step.title} style={{ marginRight: "74px" }}>
                                 <StepCard title={step.title} />
                                 <AsBelowArrow marginTop={25} marginRight={0} marginBottom={0} marginLeft={85} />
                             </div>
@@ -170,11 +186,11 @@ class GridEditor extends Component {
                     {/* 하 */}
                     <div style={{ overflow: "hidden" }}>
                         {itemlist && itemlist.map((item, item_index) => {
-                            return <div key={item} style={{ width: "10000px", marginTop: "70.5px", display: "flex" }}>
+                            return <div key={item_index} style={{ width: "10000px", marginTop: "70.5px", display: "flex" }}>
                                 {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
                                     return (step.cards.length > item_index)
-                                        ? <ContentCard key={item + item_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, step.cards[item_index])} title={step.cards[item_index].title} />
-                                        : <ContentCard key={item + item_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, null)} title={""} />
+                                        ? <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, step.cards[item_index])} title={step.cards[item_index].title} />
+                                        : <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, null)} title={""} />
                                 })}
                             </div>
                         })}
@@ -186,16 +202,3 @@ class GridEditor extends Component {
 }
 
 export default GridEditor
-//<div style={{ width: `${w}px`, border: "3px dashed blue" }} ref={ref => (this.editor = ref)}>
-//{this.state.movableLeft && <div style={{ zIndex: "601", border: "1px dashed red", position: "absolute", left: "335px", width: "178px", height: `${(this.editor && this.editor.offsetHeight) || 1680}px`, backgroundImage: "linear-gradient(-90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1))" }} />}
-//{this.state.movableRight && <div style={{ zIndex: "601", border: "1px dashed red", position: "absolute", left: `${(this.editor && this.editor.offsetLeft - this.editor.offsetWidth) || 1920}px`, width: "178px", height: `${(this.editor && this.editor.offsetHeight) || 1680}px`, backgroundImage: "linear-gradient( 90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1))" }} />}
-//{this.state.movableLeft && <div onClick={() => this.scrollLeft(this.header, this.grid)}><img style={{ cursor: "pointer", zIndex: "602", position: "fixed", marginTop: "50px", marginLeft: "320px" }} src={arrow} alt="arrow" /></div>}
-//{this.state.movableRight && <div onClick={() => this.scrollRight(this.header, this.grid)}><img style={{ cursor: "pointer", zIndex: "602", position: "fixed", marginTop: "50px", marginLeft: "95%", transform: "rotate(180deg)" }} src={arrow} alt="arrow" /></div>}
-//<div style={{ display: "flex", marginTop: "71.5px" }}>
-////  <div style={{ width: `${w}px`, border: "1px dashed purple", overflow: "hidden" }} ref={ref => (this.grid = ref)}>
-//</div>
-//})}
-//</div>
-//</div>
-//</div>
-//

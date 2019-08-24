@@ -51,3 +51,7 @@ code {
 .partial-scroll-on::-webkit-scrollbar-thumb {
   background: rgba(255, 0, 0, 0.45) !important;
 }
+
+/* div { */
+  /* border: 1px dashed cornflowerblue; */
+/* } */
