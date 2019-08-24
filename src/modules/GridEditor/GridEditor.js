@@ -138,29 +138,27 @@ class GridEditor extends Component {
     }
     NewStep = (data) => {
         this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
-            .then(this.props.GetDesignBoardRequest(this.props.design.uid))
-            .then(this.props.UpdateDesignTime(this.props.design.uid, this.props.token))
-            .then(this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token))
+            .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
+            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid) })
+            .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
         this.CloseNewStep()
     }
-    NewItem = (data) => {
-
-    }
+    NewItem = (data) => { }
     render() {
-        const { DesignDetailStep } = this.props
+        const { editor, DesignDetailStep } = this.props
         const { w, ws, card, newstep } = this.state
         // temp code //
         // const items = DesignDetailStep.map(step => { return step.cards.length })
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
         const itemlist = ['BOX1', 'BOX2', 'BOX3']//, 'BOX4', 'BOX5', 'BOX6', 'BOX7', 'BOX8', 'BOX9', 'BOX10']
         // console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
-        console.log(this.props.design, DesignDetailStep)
+        console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
         return (<>
-            {/* card modal component */}
+            {/* ------------- card modal component */}
             {card && <CardModal open={card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.props.cardDetail} />}
-            {newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
+            {editor && newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
 
-            {/* grid editor component */}
+            {/* ------------- grid editor component */}
             <div style={{ display: "flex", marginBottom: "150px" }}>
                 {/* 왼쪽 */}
                 <div style={{ display: "flex" }}>
@@ -168,7 +166,7 @@ class GridEditor extends Component {
                         {itemlist && itemlist.map(item => {
                             return <StepCard key={item} marginBottom={190} title={item} />
                         })}
-                        <CreateStep onClick={this.OpenNewStep} step={"단계"} />
+                        {editor && <CreateStep onClick={this.OpenNewStep} step={"단계"} />}
                     </div>
                 </div>
                 {/* 오른쪽 */}
@@ -181,7 +179,7 @@ class GridEditor extends Component {
                                 <AsBelowArrow marginTop={25} marginRight={0} marginBottom={0} marginLeft={85} />
                             </div>
                         })}
-                        <CreateStep onClick={this.OpenNewStep} step={"단계"} />
+                        {editor && <CreateStep onClick={this.OpenNewStep} step={"단계"} />}
                     </div>
                     {/* 하 */}
                     <div style={{ overflow: "hidden" }}>
@@ -190,7 +188,9 @@ class GridEditor extends Component {
                                 {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
                                     return (step.cards.length > item_index)
                                         ? <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, step.cards[item_index])} title={step.cards[item_index].title} />
-                                        : <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, null)} title={""} />
+                                        : editor
+                                        ? <CreateCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null)} title={""} />
+                                        : <ContentCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null)} title={""} />
                                 })}
                             </div>
                         })}

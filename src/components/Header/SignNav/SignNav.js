@@ -69,6 +69,7 @@ class SignNav extends Component {
                 // console.log("data:", data)
                 this.props.SignOutRequest()
                 this.setState({ sign_modal: false, user_popup: null })
+                window.location.reload()
             })
         this.setState({ user_popup: null })
     }
@@ -91,7 +92,7 @@ class SignNav extends Component {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
         const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
-        
+
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >

@@ -53,7 +53,7 @@ const ListItem = styled.div`
     }
 `
 const userinfo = {
-    alarmLeft:"1512px",
+    alarmLeft: "1512px",
 }
 class Alarm extends Component {
     state = {
@@ -62,7 +62,7 @@ class Alarm extends Component {
         keyword: null,
         msg: null,
         top: 0, left: 0,
-        alarmLeft:userinfo.alarmLeft,
+        alarmLeft: userinfo.alarmLeft,
     }
     myRef = React.createRef()
     openAlarmList = (e) => {
@@ -258,14 +258,14 @@ class Alarm extends Component {
             }
         }
     }
-    getLikeCount = (item, alarms)=>{
-        let count=0, returnType="";
+    getLikeCount = (item, alarms) => {
+        let count = 0, returnType = "";
         alarms.list.map(alarmItem => {
-            if((item.content_id === alarmItem.content_id) && (item.type === "DESIGN")){
+            if ((item.content_id === alarmItem.content_id) && (item.type === "DESIGN")) {
                 count++;
                 returnType = "DESIGN"
             }
-            else if((item.content_id === alarmItem.content_id) && (item.type==="GROUP")){
+            else if ((item.content_id === alarmItem.content_id) && (item.type === "GROUP")) {
                 count++;
                 returnType = "GROUP"
             }
@@ -278,8 +278,8 @@ class Alarm extends Component {
         console.log(alarms);
         return (
             <>{this.state.active &&
-                <AlarmList  display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
-                    <div style={{ zIndex: "999", display: "flex", lineHeight: "25px",marginBottom:"11.5px" ,fontSize: "17px", color: "#707070" , fontWeight:"300" }}>
+                <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
+                    <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
                         <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>
                             모두 읽음으로 표시하기
                         </div>
@@ -288,55 +288,46 @@ class Alarm extends Component {
                         {alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
-                            let designCount =0, groupCount =0, countObj, msg;
+                            let designCount = 0, groupCount = 0, countObj, msg;
 
                             msg = this.getMessageText(item);
-                            if(item.kinds === "LIKE"){
+                            if (item.kinds === "LIKE") {
                                 countObj = this.getLikeCount(item, alarms);
                                 countObj[0] === "DESIGN" ? designCount = countObj[1] : groupCount = countObj[1];
                                 console.log(countObj[1]);
-                                if(designCount != 0){
-                                    msg = designCount == 1 ? `${item.from}님께서 디자인을 좋아합니다.` :`${item.from}님 외에${designCount-1}명이 디자인을 좋아합니다.`;
+                                if (designCount !== 0) {
+                                    msg = designCount === 1 ? `${item.from}님께서 디자인을 좋아합니다.` : `${item.from}님 외에${designCount - 1}명이 디자인을 좋아합니다.`;
                                 }
-                                else{
-                                    msg = groupCount == 1 ? `${item.from}님께서 그룹을 좋아합니다.` :`${item.from}님 외에${groupCount-1}명이 디자인을 좋아합니다.`;
+                                else {
+                                    msg = groupCount === 1 ? `${item.from}님께서 그룹을 좋아합니다.` : `${item.from}님 외에${groupCount - 1}명이 디자인을 좋아합니다.`;
                                 }
                             }
 
                             return (
-                            <ListItem confirm={item.confirm} key={item.uid}>
-                                <div style={{ fontSize: "17px", fontWeight: "300", paddingTop:"16.5px" , width:"325px", position:"relative"}}><TextFormat txt={msg}/></div>
-                                <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position:"relative" }}>
-                                    <div style={{display:"flex", justifyContent:"space-start"}}>
-                                        <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
-                                        <div style={{ display: "flex" }}>
-                                            {alarmtype ?
-                                                (<>
-                                                    <div style={{paddingLeft:"15px",paddingTop:"12.5px",opacity:"1", fontSize:"17px", fontWeight:'500', width:"190px"}}><TextFormat txt={item.title} /></div>
-                                                    <div style={{display:"flex", justifyContent:"space-start", position:"absolute", paddingLeft:"200px",paddingTop:"25px", fontSize:"17px", fontWeight:"500"}}>
-                                                        <div style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
-                                                        <div style={{ cursor: "pointer", marginLeft: "10px"}}>거절</div>
-                                                    </div>
-                                                </>)
-                                                :
-                                                (
-                                                    alarmKind != "COMMENT" ?
-                                                        (
-                                                            <>
-                                                                <div style={{paddingLeft:"15px",paddingTop:"12.5px", fontSize:"17px", fontWeight:'500', width:"225px"}}><TextFormat txt={item.title} /></div>
-                                                            </>
-                                                        ):
-                                                        (
-                                                            <div style={{paddingLeft:"15px",paddingTop:"12.5px", fontSize: "17px", fontWeight: "300",  width:"240px"}}><TextFormat txt={item.reply_preview} /></div>
-                                                        )
-
-                                                )
-                                            }
+                                <ListItem confirm={item.confirm} key={item.uid}>
+                                    <div style={{ fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}><TextFormat txt={msg} /></div>
+                                    <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
+                                        <div style={{ display: "flex", justifyContent: "space-start" }}>
+                                            <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
+                                            <div style={{ display: "flex" }}>
+                                                {alarmtype ?
+                                                    (<>
+                                                        <div style={{ paddingLeft: "15px", paddingTop: "12.5px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}><TextFormat txt={item.title} /></div>
+                                                        <div style={{ display: "flex", justifyContent: "space-start", position: "absolute", paddingLeft: "200px", paddingTop: "25px", fontSize: "17px", fontWeight: "500" }}>
+                                                            <div style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
+                                                            <div style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
+                                                        </div>
+                                                    </>)
+                                                    :
+                                                    (alarmKind !== "COMMENT"
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', width: "225px" }}><TextFormat txt={item.title} /></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                    )
+                                                }
+                                            </div>
                                         </div>
-
                                     </div>
-                                </div>
-                            </ListItem>)
+                                </ListItem>)
                         })}
                     </div>
                 </AlarmList>}

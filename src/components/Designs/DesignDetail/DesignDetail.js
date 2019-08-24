@@ -9,7 +9,7 @@ class DesignDetail extends Component {
       {/* design info */}
       <DesignInfo Count={this.props.Count} DesignDetail={DesignDetail} />
       {/* design detail */}
-      <DesignDetailStepContainer design={DesignDetail} id={DesignDetail.uid} />
+      <DesignDetailStepContainer design={DesignDetail}/>
     </>)
   }
 }

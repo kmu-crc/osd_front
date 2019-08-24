@@ -270,19 +270,16 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
     };
 }
 export const GetDesignBoardRequest = (id) => {
-    console.log("::res::", id);
+    const url = `${host}/design/designDetail/${id}/getBoardList`
     return (dispatch) => {
         dispatch(GetBoard());
-        return fetch(`${host}/design/designDetail/${id}/getBoardList`, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
+        return fetch(url, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
             .then(function (res) {
-                console.log("::res::", res);
                 return res.json();
             })
             .then(function (res) {
-                console.log("::res::", res);
                 return dispatch(GetBoardSuccess(res));
             }).catch((error) => {
-                console.log("insert detail err", error);
                 return dispatch(GetBoardFailure(error));
             });
     };

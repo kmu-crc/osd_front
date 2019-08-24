@@ -32,7 +32,7 @@ class AlarmContainer extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.isLoggedIn === true) {
-            this.getAlarm()
+            // this.getAlarm()
         }
     }
     render() {

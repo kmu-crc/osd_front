@@ -16,7 +16,7 @@ export const CreateStep = (props) => {
 }
 export const CreateCard = (props) => {
     return (<div onClick={props.onClick} style={{ marginRight: props.marginRight, cursor: "pointer", width: "200px", height: "200px", borderRadius: "15px", border: "2px solid rgba(112,112,112, 0.5)", backgroundClip: "padding-box" /* for IE9+, Firefox 4+, Opera, Chrome */ }}>
-        <div style={{ marginTop: "38.58px", marginLeft: "66.59px" }}><Cross width={66.68} height={66.68} disabled={false} /></div>
+        <div style={{ marginTop: "38.58px", marginLeft: "66.59px" }}><Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
         <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.step}생성하기</div>
     </div>)
 }

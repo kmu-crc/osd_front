@@ -6,19 +6,25 @@ import { GetDesignDetailRequest, CreateDesignBoardRequest, UpdateDesignTime, Get
 
 class DesignDetailStepContainer extends Component {
   componentDidMount() {
-    this.props.GetDesignBoardRequest(this.props.id)
+    this.props.GetDesignBoardRequest(this.props.design.uid)
+  }
+  checkEditorPermission() {
+    return (
+      this.props.userInfo &&
+      this.props.design &&
+      this.props.design.member.find(peer => { return peer.user_id === this.props.userInfo.uid }))
   }
   render() {
-    console.log("DDSC:", this.props)
-    return (<GridEditor {...this.props} />)
+    console.log("DDSC:", this.props, this.checkEditorPermission())
+    return (<GridEditor {...this.props} editor={this.checkEditorPermission()} />)
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
     DesignDetailStep: state.DesignCard.status.DesignDetailStep,
-    isTeam: state.Design.status.DesignDetail.is_team
   }
 }
 

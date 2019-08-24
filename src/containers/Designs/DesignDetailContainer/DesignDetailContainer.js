@@ -7,6 +7,7 @@ import {
   DeleteDesignRequest, GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest, DESIGN_NOT_FOUND
 } from "redux/modules/design"
+
 import Loading from "components/Commons/Loading";
 
 class DesignDetailContainer extends Component {
