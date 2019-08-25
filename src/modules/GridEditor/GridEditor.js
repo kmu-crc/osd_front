@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import arrow from "source/arrow.svg"
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
+import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 
 const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};
@@ -17,7 +18,7 @@ const AsBelowArrow = styled.div`
     border-top: 27px solid #707070
 `
 const CardDialog = styled(Modal)`
-    width: 1530px;
+    min-width: 1530px;
     height: 889px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
@@ -25,23 +26,31 @@ const CardDialog = styled(Modal)`
     border-radius: 10px;
     opacity: 1;
 `
+
 class CardModal extends Component {
     onSubmit = () => { }
     onClose = () => { this.props.close() }
     render() {
         const card = this.props.cardDetail || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
-        const SideDialog = (props) => {
-            return <div></div>
-        }
-        return (<><SideDialog direction="left" />
+        const movablePrev = this.props.row > 1
+        const movableNext = this.props.row < this.props.maxRow
+        return (
             <CardDialog open={this.props.open} onClose={this.onClose}>
-                <div>{card.title}</div>
-                <div>{card.userName}</div>
-                <div>card_content</div>
-                <div><hr /></div>
-                <div>comment</div>
-            </CardDialog>
-            <SideDialog direction="right" /></>)
+                <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "-32.07px", marginLeft: "111.85px" }}>
+                    <Cross angle={45} color={"#707070"} weight={3} width={22.33} height={22.33} />
+                </div>
+                { <div style={{width: "115px", height: "813.28px", position: "absolute", left:"0%", marginLeft: "-195px", marginTop:"75.7px", borderRadius: "0px 10px 10px 0px", backgroundColor: "#FFFFFF"}}/>}
+                { <div style={{position:"absolute", left:"0%", marginTop:"409.81px", marginLeft:"-47px", width: "14px", height: "47px", backgroundImage:`url(${arrow})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}></div>}
+                { <div style={{width: "115px", height: "813.28px", position: "absolute", left:"100%", marginLeft: "80px", marginTop:"75.7px", borderRadius: "10px 0px 0px 10px", backgroundColor: "#FFFFFF"}}/>}
+                { <div style={{position:"absolute", left:"100%", marginTop:"409.81px", marginLeft:"33px", width: "14px", height: "47px", backgroundImage:`url(${arrow})`, webkitTransform: "rotate(180deg)", transform: "rotate(180deg)", backgroundRepeat:"no-repeat",backgroundSize:"cover"}}></div>}
+                    <div style={{width:"1000px", height:"29px", fontFamily:"Noto Sans KR", fontSize:"20px", color:"#707070",fontWeight:"500", lineHeight:"29px", marginLeft:"52px", marginTop:"29.78px"}}>{card.title}</div>
+                    <div style={{width:"200px", height:"29px", fontFamily:"Noto Sans KR", fontSize:"20px", color:"#707070", fontWeight:"300",lineHeight:"29px", marginLeft:"52px", marginTop:"30px"}}>{card.userName}</div>
+                    <div style={{width:"100%", overflowY:"scroll",overflowX:"hidden"}}>
+                        <CardSourceDetailContainer/>
+                        <div style={{width:"100%", height:"29px", fontFamily:"Noto Sans KR", fontSize:"20px", color:"#707070", fontWeight:"500",lineHeight:"29px", marginLeft:"52px", marginTop:"30.5px", paddingRight:"25px", borderBottom:"1px solid #707070"}}></div>
+                        <div style={{width:"100px", height:"29px", fontFamily:"Noto Sans KR", fontSize:"20px", color:"#707070", fontWeight:"500",lineHeight:"29px", marginLeft:"52px", marginTop:"43.5px"}}>comment</div>
+                    </div>
+            </CardDialog>)
     }
 }
 
@@ -100,7 +109,7 @@ class GridEditor extends Component {
         super(props);
     }
     state = {
-        card_loading: false, card: false,
+        card_loading: false, card: false, row:null, col:null,
         newstep: false, title: null,
         w: 1920, ws: { left: 271, top: 270, height: 1890 },
         movableRight: true, movableLeft: true
@@ -113,7 +122,9 @@ class GridEditor extends Component {
     createNewCard(row, col) {
         alert(`(${row},${col}) 0 4 ing...?!"`)
     }
-    takeOutCard(row, col, data) {
+    takeOutCard(row, col, data, maxRow) {
+        console.log("DEBUG", maxRow, row, col)
+        this.setState({ title: data.title, row:row, col:col,maxRow: maxRow, card: true })
         if (data === null) {
             alert("새로운 카드를 만듭니다. ")
             this.createNewCard(row, col)
@@ -121,7 +132,6 @@ class GridEditor extends Component {
         }
         // request card detail
         // this.props.GetDesignCardDetailRequest
-        this.setState({ title: data.title, card: true })
     }
     componentDidMount() {
         window.addEventListener("resize", () => { this.setState({ w: window.innerWidth }) }, true)
@@ -146,7 +156,7 @@ class GridEditor extends Component {
     NewItem = (data) => { }
     render() {
         const { editor, DesignDetailStep } = this.props
-        const { w, ws, card, newstep } = this.state
+        const { w, ws, row, col, maxRow, card, newstep } = this.state
         // temp code //
         // const items = DesignDetailStep.map(step => { return step.cards.length })
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
@@ -155,7 +165,7 @@ class GridEditor extends Component {
         console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
         return (<>
             {/* ------------- card modal component */}
-            {card && <CardModal open={card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.props.cardDetail} />}
+            {card && <CardModal open={card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.props.cardDetail} col={col} row={row} maxRow={maxRow}/>}
             {editor && newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
 
             {/* ------------- grid editor component */}
@@ -187,10 +197,10 @@ class GridEditor extends Component {
                             return <div key={item_index} style={{ width: "10000px", marginTop: "70.5px", display: "flex" }}>
                                 {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
                                     return (step.cards.length > item_index)
-                                        ? <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, step.cards[item_index])} title={step.cards[item_index].title} />
+                                        ? <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, step.cards[item_index], step.cards.length)} title={step.cards[item_index].title} />
                                         : editor
-                                        ? <CreateCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null)} title={""} />
-                                        : <ContentCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null)} title={""} />
+                                        ? <CreateCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null, step.cards.length)} title={""} />
+                                        : <ContentCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null, step.cards.length)} title={""} />
                                 })}
                             </div>
                         })}
