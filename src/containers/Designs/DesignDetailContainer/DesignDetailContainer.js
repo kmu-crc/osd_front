@@ -7,6 +7,7 @@ import {
   DeleteDesignRequest, GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest, DESIGN_NOT_FOUND
 } from "redux/modules/design"
+
 import Loading from "components/Commons/Loading";
 
 class DesignDetailContainer extends Component {
@@ -18,11 +19,9 @@ class DesignDetailContainer extends Component {
     window.history.go(-1)
   }
   render() {
-    console.log("PROPS_DESIGNDETAIL")
-    console.log(this.props)
     return (<>{this.props.status === "INIT" ? <Loading /> :
-      this.props.status === DESIGN_NOT_FOUND ? this.goBack() :
-        <DesignDetail {...this.props} />}</>)
+      // this.props.status === DESIGN_NOT_FOUND ? this.goBack() :
+      <DesignDetail {...this.props} />}</>)
   }
 }
 

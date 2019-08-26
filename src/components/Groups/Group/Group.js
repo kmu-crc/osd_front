@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import noimg from "source/noimg.png"
 import IconView from 'source/IconView'
+import host from "config"
 
 class Group extends Component {
     handleGotoDetail = (where) => {
-        window.location.href = `groupDetail/${where}`
+        let href = window.location.href.substring(0, window.location.href.search(`groupDetail`)) + `groupDetail/${where}`
+        window.location.href = href
     }
     render() {
-        const defaultVal = {title: "타이틀", nick_name:"닉네임"};
+        const defaultVal = { title: "타이틀", nick_name: "닉네임" };
         const group = this.props.data;
-        if(group.title === ""){
+        if (group.title === "") {
             group.title = defaultVal.title;
         }
-        if(group.nick_name === undefined){
+        if (group.nick_name === undefined) {
             group.nick_name = defaultVal.nick_name;
         }
         var four_child = [null, null, null, null];
