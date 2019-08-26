@@ -140,7 +140,7 @@ const NewCardDialog = styled(Modal)`
     box-shadow: 0px 3px 6px #000000;
     border-radius: 5px;
     opacity: 1;
-    `
+`
 class NewCardModal extends Component {
     state = { scroll: false }
     onClose = () => {
@@ -166,7 +166,7 @@ class NewCardModal extends Component {
                     <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
                         <input style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} /></div></div>
                 <div style={{ display: "flex", marginTop: "123px", marginLeft: "200.5px" }}><div style={{ width: "38px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>내용</div>
-                    <div className="card-detail-scroll" style={{ width: "100%", overflowX: "hidden", overflowY: "scroll", marginLeft: "90px", width: "1248.5px", height: "526px", backgroundColor: "#EFEFEF", borderRadius: "5px", border: "5px solid #EFEFEF" }}>
+                    <div className="card-detail-scroll" style={{ width: "100%", overflow: "hidden scroll", marginLeft: "90px", width: "1248.5px", height: "526px", backgroundColor: "#EFEFEF", borderRadius: "5px", border: "5px solid #EFEFEF" }}>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <div style={{ width: "116px", height: "29px", marginTop: "24px", lineHeight: "29px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>파일 첨부하기</div>
                             <div style={{ width: "134px", height: "29px", marginLeft: "67px", marginTop: "24px", lineHeight: "29px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>텍스트 첨부하기</div>
@@ -181,12 +181,12 @@ class NewCardModal extends Component {
     }
 }
 const NewStepDialog = styled(Modal)`
-          max-width: 849px;
-          height: 295px;
-          border-radius: 5px;
-          background-color: #FFFFFF;
-          box-shadow: 0px 3px 6px #FF0000;
-        `
+    max-width: 849px;
+    height: 295px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 6px #FF0000;
+`
 class NewStepModal extends Component {
     state = {
         title: ""
@@ -201,7 +201,7 @@ class NewStepModal extends Component {
         }
         let data = this.state
         data.order = this.props.DesignDetailStep[this.props.DesignDetailStep.length - 1].order + 1
-        console.log("DDSC, data:", data, this.props.id, this.props.token)
+        // console.log("DDSC, data:", data, this.props.id, this.props.token)
         this.props.newStep(data)
         // .then(this.props.close())
     }
@@ -234,9 +234,7 @@ class GridEditor extends Component {
     }
     state = {
         card_loading: false, card: false, newcard: false, row: null, col: null,
-        newstep: false, title: null,
-        w: 1920, ws: { left: 271, top: 270, height: 1890 },
-        movableRight: true, movableLeft: true
+        newstep: false, title: null, w: 1920, ws: { left: 271, top: 270, height: 1890 }, movableRight: true, movableLeft: true
     }
     getHeight(obj) {
         console.log(`${obj.offsetHeight}px`)
@@ -244,7 +242,7 @@ class GridEditor extends Component {
         // return `${obj && obj.offsetHeight}px`
     }
     createNewCard(row, col) {
-        this.setState({ newcard: true })// alert(`(${row},${col}) 0 4 ing...?!"`)
+        this.setState({ newcard: true }) // alert(`(${row},${col}) 0 4 ing...?!"`)
     }
     takeOutCard(row, col, data, maxRow) {
         console.log("DEBUG", maxRow, row, col)
@@ -285,10 +283,10 @@ class GridEditor extends Component {
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
         const itemlist = ['STEP1', 'STEP2', 'STEP3', 'STEP4', 'STEP5', 'STEP6', 'STEP7', 'STEP8', 'STEP9', 'STEP10']
         // console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
-        console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
+        // console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
         return (<>
             {/* ------------- card modal component */}
-            {!card && <CardModal open={!card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.props.cardDetail} col={col} row={row} maxRow={maxRow} />}
+            {card && <CardModal open={card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.props.cardDetail} col={col} row={row} maxRow={maxRow} />}
             {editor && newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
             {editor && newcard && <NewCardModal open={newcard} close={() => this.setState({ newcard: false })} />}
 
