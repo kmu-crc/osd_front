@@ -1,22 +1,28 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { GetDesignerDetailRequest, GetDesignerCountRequest, GetLikeDesignerRequest, LikeDesignerRequest, UnlikeDesignerRequest } from "redux/modules/designer"
-// import DesignerDetail from "components/Designers/"
 
-class GroupDetailContainer extends Component {
+import DesignerPageHeader from "components/Designers/DesignerPageHeader"
+import DesignerPageBody from "components/Designers/DesignerPageBody"
+class DesignerDetailContainer extends Component {
   render() {
-    return <></>
-    // return <DesignerDetail {...this.props}/>
-  }
+     // return <DesignerDetail {...this.props}/>
+    return (
+      <React.Fragment>
+        <DesignerPageHeader {...this.props}/>
+        <DesignerPageBody {...this.props}/>
+      </React.Fragment>
+    );
+    }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignerDetail: state.DesignerDetail.status.DesignerDetail,
+    DesignerDetail: state.Designer.status.DesignerDetail,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
-    like: state.DesignerLike.status.like,
-    Count: state.DesignerDetail.status.Count
+    like: state.Designer.status.like,
+    //Count: state.Designer.status.Count
   };
 };
 
@@ -40,4 +46,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DesignerDetailContainer);

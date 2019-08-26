@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageDetail from "components/Messages/MessageDetail";
-import { MessageScrollDown,GetMyMsgDetailRequest, GetMyMessageDetailClear,MsgDetailScrollWait,MsgDetailScrollDown } from "redux/modules/message";
+import { MessageScrollDown,GetMyMsgDetailRequest, GetMyMessageDetailClear} from "redux/modules/message";
 
 const MessageDetailBox = `
 width: 1259px;
@@ -9,7 +9,6 @@ height: 602.5px;
 `
 
 class MessageDetailContainer extends Component {
-  
   render() {
     console.log("------------------------",this.props);
     return(                
@@ -24,7 +23,6 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     MessageDetail: state.Message.status.MsgDetail,
     userInfo: state.Authentication.status.userInfo,
-    scrollMove:state.Message.scrollMove,
     };
 };
 
@@ -36,12 +34,6 @@ const mapDispatchToProps = (dispatch) => {
     GetMyMessageDetailClear: () => {
       return dispatch(GetMyMessageDetailClear());
     },
-    MsgDetailScrollWait: () => {
-      return dispatch(MsgDetailScrollWait());
-    },
-    MsgDetailScrollDown: () => {
-      return dispatch(MsgDetailScrollDown());
-    }
   };
 };
 

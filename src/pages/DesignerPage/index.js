@@ -1,2 +1,1 @@
-export { default } from "./DesignerListPage";
-export { DesignerDetailPage } from "./DesignerDetailPage";
+export { default } from "./DesignerPage"

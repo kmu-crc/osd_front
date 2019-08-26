@@ -1,6 +1,7 @@
 import React from'react';
 import plusImg from "source/plus_cross_gray.png";
 import SummaryIcon from "source/jina.png";
+import noImage from "source/noimg.png"
 import styled from "styled-components";
 
 import SearchMemverContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
@@ -109,32 +110,12 @@ class Messages extends React.Component
         this.handleClickSend = this.handleClickSend.bind(this);
         this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
         this.handleOpenMember=this.handleOpenMember.bind(this);
+        this.handleClickSearchMemberItem=this.handleClickSearchMemberItem.bind(this); 
         this.initMsgValue = this.initMsgValue.bind(this);
         this.state={msgValue:'',msgId:-1,selectId:null,selectName:null,openMember:false,showSearch:false,friendList:[],render:true};
         this.getValue = this.getValue.bind(this);
     }        
-    handleChangeMsgValue(event)
-    {
-      this.setState({msgValue:event.target.value})
-    }
 
-    initMsgValue()
-    {
-      this.setState({msgValue:""})
-    }
-    handleClickSend()
-    {      
-      console.log(this.props);
-    }
-    handleSelectMsgSummary(select_id,select_name,msgID)
-    {      
-      this.setState(state=>({selectId:select_id,selectName:select_name,msgId:msgID}));
-    }
-    handleOpenMember()
-    {
-      const isOpen=this.state.showSearch;
-      this.setState(state=>({showSearch:!isOpen}));
-    }
     async componentDidMount() {
       
       await this.props.GetMyMsgListRequest(this.props.token)
@@ -246,7 +227,6 @@ class Messages extends React.Component
         await this.props.GetMyMsgListRequest(this.props.token)
         this.setState({ render: true })
       }, 250)
-      this.props.MsgDetailScrollDown();
     }
   
     onSubmitForm = async (data) => {
@@ -271,7 +251,33 @@ class Messages extends React.Component
         this.initMsgValue();   
          
     }
-                
+    handleChangeMsgValue(event)
+    {
+      this.setState({msgValue:event.target.value})
+    }
+
+    initMsgValue()
+    {
+      this.setState({msgValue:""})
+    }
+    handleClickSend()
+    {      
+      console.log(this.props);
+    }
+    handleSelectMsgSummary(select_id,select_name,msgID)
+    {      
+      this.setState(state=>({selectId:select_id,selectName:select_name,msgId:msgID}));
+    }
+    handleOpenMember()
+    {
+      const isOpen=this.state.showSearch;
+      this.setState(state=>({showSearch:!isOpen}));
+    }
+    handleClickSearchMemberItem(id,name)
+    {
+      this.setMsgId(-1,id,name);
+
+    }     
     render()
     {
       let arrSummaryList=[];
@@ -282,14 +288,11 @@ class Messages extends React.Component
           if(this.state.selectId == item.friend_id)   SelectedItem=true;       
           return(
             <div key={index} onClick={()=>this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
-               <SummaryItem s_img={item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem}/>
+               <SummaryItem  s_img={item.s_img==null?noImage:item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem}/>
            </div>
-          // <div key={index} onClick={()=>this.handleSelectMsgSummary(item.friend_id,item.friend_name,item.uid)}>
-          //     <SummaryItem s_img={item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem}/>
-          // </div>
           )
       });}
-
+      arrSummaryList.reverse();
 
      
         return(
@@ -306,7 +309,7 @@ class Messages extends React.Component
                         </div>
                         {this.state.showSearch&&(
                         <React.Fragment>
-                          <SearchMemverContainer/>
+                          <SearchMemverContainer addMemberItem = {this.handleClickSearchMemberItem}/>
                         </React.Fragment>)
                         }
                         <SummaryList> 
@@ -315,7 +318,7 @@ class Messages extends React.Component
                     </div>
                     <div style={MessageSection}>
                             <div style={MessageTitle}>
-                                <div style={MessageTitleName}>{this.props.userInfo.nickName}</div>
+                                <div style={MessageTitleName}>{this.state.selectName}</div>
                             </div>
                             
                             {this.state.render&&
