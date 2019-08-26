@@ -5,9 +5,10 @@ import IconView from "source/IconView"
 import DateFormat from "modules/DateFormat"
 import forked from "source/forked.svg"
 import noimg from "source/noimg.png"
+import Cross from "components/Commons/Cross"
 
 class DesignInfo extends Component {
-    state = { tmpLike: false, likeDialog: false, forkDialog: false }
+    state = { tmpLike: false, likeDialog: false, forkDialog: 0 }
     like() {
         if (this.state.tmpLike) { //dislike
             this.setState({ tmpLike: !this.state.tmpLike })
@@ -18,7 +19,17 @@ class DesignInfo extends Component {
         }
     }
     fork() {
-        this.setState({ forkDialog: true })
+        this.setState({ forkDialog: 1 })
+    }
+    doFork() {
+        this.setState({ forkDialog: 2 })
+        setTimeout(() => { this.closeFork() }, 1500)
+    }
+    closeFork() {
+        this.setState({ forkDialog: 0 })
+    }
+    sendMessage(user_id) {
+        window.location.href = window.location.href.substring(0, window.location.href.search('designDetail')) + `message/${user_id}`
     }
     render() {
         const { DesignDetail, Count, like } = this.props
@@ -26,15 +37,24 @@ class DesignInfo extends Component {
 
         return (
             <>
-                {this.state.forkDialog && <div style={{ position: "absolute", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
-                    <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", font: "Medium 20px/40px Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1" }}>
-                        {DesignDetail.userName}님의 디자인 / {DesignDetail.title}<br />
-                        파생 디자인을 생성하시겠습니까?
-                    </div>
-                    <div style={{ width: "120px", height: "29px", textAlign: "center", font: "Medium 20px/40px Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }}>
-                        네, 생성합니다.
-                    </div>
-                </div>}
+                {this.state.forkDialog > 0 &&
+                    <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
+                        {this.state.forkDialog === 1 && <>
+                            <div onClick={() => this.closeFork()} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+                                <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+                            </div>
+                            <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1" }}>
+                                {DesignDetail.userName.slice(0, 8)}님의 디자인 / {DesignDetail.title.slice(0, 8)}<br />
+                                파생 디자인을 생성하시겠습니까?</div>
+                            <div onClick={() => this.doFork()} style={{ cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px", textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000" }}>
+                                네, 생성합니다.</div></>}
+                        {this.state.forkDialog === 2 && <>
+                            <div style={{ marginTop: "39.5px", marginLeft: "149.5px", width: "278px", height: "149px", textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1" }}>
+                                파생 디자인 생성중입니다.
+                                <p style={{ color: "#FF0000" }}>디자인 수정 페이지로 이동합니다.</p>
+                                추가 정보를 입력해 주세요!</div>
+                        </>}
+                    </div>}
                 {this.state.likeDialog && <div style={{
                     position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
                     background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"
@@ -68,7 +88,7 @@ class DesignInfo extends Component {
                             <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>관심 디자인 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
                             <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${thumbup})`, opacity: this.state.tmpLike ? "1" : "0.45", backgroundSize: "cover", backgroundPosition: "center center", }}></div>
                         </div>
-                        <div style={{ height: "45px", display: "flex", marginTop: "15px", marginLeft: "auto" }}>
+                        <div style={{ height: "45px", display: "flex", marginTop: "15px", marginLeft: "auto", cursor: "pointer" }} onClick={() => this.sendMessage(DesignDetail.user_id)}>
                             <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", marginLeft: "auto", fontWeight: "300", color: "#707070", textAlign: "right" }}>메시지 보내기</div>
                             <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${email})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
                         </div>

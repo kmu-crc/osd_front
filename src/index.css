@@ -52,6 +52,10 @@ code {
   background: rgba(255, 0, 0, 0.45) !important;
 }
 
-/* div { */
-  /* border: 1px dashed cornflowerblue; */
-/* } */
+.card-detail-scroll::-webkit-scrollbar {
+  position: absolute;
+  width: 3px;
+}
+.card-detail-scroll::-webkit-scrollbar-thumb {
+  background: #707070 !important;
+}
