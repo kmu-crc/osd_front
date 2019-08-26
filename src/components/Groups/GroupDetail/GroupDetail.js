@@ -58,7 +58,6 @@ class GroupDetail extends Component {
     const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"}
     const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"}
     const { currentTab } = this.state
-    console.log("~!!!!props:", this.props.GroupDetail, this.props.DesignList, this.props.DesignListAdded)
 
     return (
       <>

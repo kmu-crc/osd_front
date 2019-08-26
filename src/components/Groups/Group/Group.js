@@ -4,7 +4,7 @@ import IconView from 'source/IconView'
 
 class Group extends Component {
     handleGotoDetail = (where) => {
-        window.location.href = `groupDetail/${where}`
+        window.location.href = `http://localhost:3000/groupDetail/${where}`
     }
     render() {
         const defaultVal = {title: "타이틀", nick_name:"닉네임"};
