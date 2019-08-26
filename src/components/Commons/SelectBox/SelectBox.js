@@ -115,6 +115,8 @@ class SelectBox extends Component {
     }
   }
   render() {
+    console.log(this.props.default);
+    console.log(this.state);
     return <>
       <SelectBoxContainer onClick={this.clicked} ref={this.myRef} >
         <div className="select-box--box">

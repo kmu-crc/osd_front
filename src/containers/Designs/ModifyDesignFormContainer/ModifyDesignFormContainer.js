@@ -32,7 +32,7 @@ class ModifyDesignFormContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    DesignDetail: state.DesignDetail.status.DesignDetail,
+    DesignDetail: state.Design.status.DesignDetail,
     userInfo: state.Authentication.status.userInfo
   };
 };

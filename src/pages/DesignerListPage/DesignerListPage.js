@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Designer from "components/Designers/Designer/Designer";
+import Designer from "components/Designers/Designer";
 import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designerlist"
 import { GetCategoryListRequest } from "redux/modules/category"
 

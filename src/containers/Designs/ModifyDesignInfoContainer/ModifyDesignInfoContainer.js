@@ -1,45 +1,56 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import ModifyDesignInfo from "components/Designs/ModifyDesignInfo";
-import { GetDesignDetailRequest, UpdateDesignInfoRequest } from "redux/modules/design";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "redux/modules/category";
-import { SearchMemberRequest } from "redux/modules/search";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import ModifyDesign from "components/Designs/ModifyDesign"
+import { GetDesignDetailRequest,UpdateDesignInfoRequest } from "redux/modules/design"
+import { SearchMemberRequest } from "redux/modules/search"
+import { GetCategoryAllRequest } from "redux/modules/category"
 
 class ModifyDesignInfoContainer extends Component {
+
+  componentDidMount() {
+    // if (this.props.userInfo.is_designer === 0) {
+    //   alert("해당 디자인 게시글에 권한이 없습니다.")
+    //   this.props.history.push("/myModify")
+    // }
+    this.props.GetCategoryAllRequest();
+    this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
+  }
   render() {
-    return (
-      <ModifyDesignInfo {...this.props} />
-    );
+    console.log("ModifyDesignContainers:", this.props)
+    return (<>
+      {this.props.userInfo.is_designer === 1 ? <ModifyDesign {...this.props} /> : <p style={{ color: "#000" }}> 권한을 확인 중입니다.</p>}
+    </>)
   }
 }
+
+
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    DesignDetail: state.DesignDetail.status.DesignDetail,
-    category1: state.Categorys.status.level1,
-    category2: state.Categorys.status.level2,
-    members: state.Search.status.members
+    members: state.Search.status.members,
+    userInfo: state.Authentication.status.userInfo,
+    DesignDetail: state.Design.status.DesignDetail,
+    cate1: state.Category.status.category1,
+    cate2: state.Category.status.category2
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailRequest: (id, token) => {
-      return dispatch(GetDesignDetailRequest(id, token))
+      return dispatch(GetDesignDetailRequest(id, token));
     },
-    GetCategoryLevel1Request: () => {
-      return dispatch(GetCategoryLevel1Request());
+    UpdateDesignInfoRequest: (id, token) => {
+      return dispatch(UpdateDesignInfoRequest());
     },
-    GetCategoryLevel2Request: (id) => {
-      return dispatch(GetCategoryLevel2Request(id));
+    SearchMemberRequest: (id, data, token) => {
+      return dispatch(SearchMemberRequest(id, data, token));
     },
-    UpdateDesignInfoRequest: (data, id, token) => {
-      return dispatch(UpdateDesignInfoRequest(data, id, token));
-    },
-    SearchMemberRequest: (data, token) => {
-      return dispatch(SearchMemberRequest(data, token));
+    GetCategoryAllRequest: () => {
+      return dispatch(GetCategoryAllRequest());
     }
+
   };
 };
 

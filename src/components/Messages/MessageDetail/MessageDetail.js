@@ -123,7 +123,8 @@ class MessageDetail extends Component {
     this.ScrollDown = this.ScrollDown.bind(this);
   }
   componentDidMount() {
-    this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+      console.log("messagID",this.props.id);
+      this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
       // if (this.props.userInfo) {
       // try {
       //     Socket.on("getNoti", noti => {
@@ -148,7 +149,6 @@ class MessageDetail extends Component {
   shouldComponentUpdate(nextProps)
   {
     setTimeout(() => {
-      console.log("123456778");
       //this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
       this.ScrollDown();
     }, 100);
@@ -160,7 +160,6 @@ class MessageDetail extends Component {
   render() {
     const list = this.props.MessageDetail;
     const myId = this.props.userInfo.uid;
-
     const arrMsg = list.map(item=>{
       let isMyMsg=true;
       if(item.from_user_id!=myId)isMyMsg = false;

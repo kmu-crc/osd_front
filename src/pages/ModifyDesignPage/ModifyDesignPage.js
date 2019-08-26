@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import ModifyDesign from "components/Designs/ModifyDesign";
+import ModifyDesignContainer from "containers/Designs/ModifyDesignInfoContainer/ModifyDesignInfoContainer";
 
 class ModifyDesignPage extends Component {
+  
+  
   render() {
+    console.log("thisModifyDesign",this.props);    
     return(
-        <ModifyDesign id={this.props.match.params.id} history={this.props.history}/>
+        <ModifyDesignContainer/>
     );
   }
 }
