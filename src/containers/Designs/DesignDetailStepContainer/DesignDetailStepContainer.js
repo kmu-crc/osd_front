@@ -9,7 +9,7 @@ class DesignDetailStepContainer extends Component {
     this.props.GetDesignBoardRequest(this.props.id)
   }
   render() {
-    console.log(this.props.DesignDetailStep, this.props.isTeam)
+    console.log(this.props.test, this.props.DesignDetailStep, this.props.isTeam)
     return (<GridEditor {...this.props} />)
   }
 }

@@ -51,6 +51,7 @@ const MypageHeaderElement = styled.div`
         background-color: #D6D6D6;
         border-radius: 50%;
         position: absolute;
+        background-position: center center;
         background-size:cover;
         & img {
           width: 100%;

@@ -13,6 +13,7 @@ const SearchForm = styled.div`
     position:relative;
     height:1100px;
     .inputBox{
+        z-index:500;
         justify-content: space-start;
         position:relative;
         padding-top:105px;
@@ -24,10 +25,12 @@ const SearchForm = styled.div`
     }
     
     .zoomImg{
+        z-index:500;
         position:relative;
         bottom: 45px;
     }
     .searchInput{
+        z-index:500;
         position:relative;
         bottom:80px;
         min-height:30px;
@@ -43,6 +46,7 @@ const SearchForm = styled.div`
         outline: none;
     }
     .cateUI{
+        z-index:500;
         position:absolute;
         display:flex;
         justify-content:space-start;
@@ -109,7 +113,7 @@ class Re_SearchList extends Component{
                 {/*x box position*/}
                 <div style={{display:"flex", justifyContent:"space-start"}}>
 
-                    <div style={{minWidth:"110px",paddingTop:"60px", paddingLeft:"300px"}}><Dropdown options={this.state.mainCate} value={this.state.mainCate[0]} placeholder="Select an option" /></div>
+                    <div style={{minWidth:"110px",paddingTop:"60px", paddingLeft:"300px", zIndex:"501"}}><Dropdown options={this.state.mainCate} value={this.state.mainCate[0]} placeholder="Select an option" /></div>
 
                     <div className="cateUI">
                         <div style={{color:"red"}}>세부카테고리</div>

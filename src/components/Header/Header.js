@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Socket from "modules/Socket"
 import MenuContext from "Global/Context/GlobalContext"
 
 // import Notification from "components/Commons/Notification"
@@ -9,8 +8,7 @@ import logo from "source/logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
-// import SignNavContainer from "containers/Header/SignNavContainer"
-import host from "config"
+import Socket from "modules/Socket"
 
 class Message extends Component {
     gotoMessagePage() {
@@ -18,6 +16,7 @@ class Message extends Component {
     }
     render() {
         return (<div style={{ cursor: "pointer" }} onClick={this.gotoMessagePage}>
+            {this.props.countMsg > 0 && <div style={{ zIndex: "998", position: "absolute", marginLeft: "29px", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
             <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons">email</i>
         </div>)
     }
@@ -53,7 +52,7 @@ const DesignCreateBtn = styled.div`
     cursor: pointer;
 `
 class Header extends Component {
-    state = {noti: {},}
+    state = { noti: {}, }
     static contextType = MenuContext
     gotoCreateDesignPage() {
         window.location.href = "/createDesign"
