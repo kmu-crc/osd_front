@@ -8,7 +8,7 @@ import Category from "components/Commons/Category"
 import OrderOption from "components/Commons/OrderOption"
 import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 
 const TextWrapper = styled.div`
@@ -45,7 +45,7 @@ class DesignerListPage extends Component {
         sub_category: { text: null, value: null },
         main_category: { text: null, value: null },
         this_order: { text: "등록순", keyword: "update" },
-        checkDataLength:0,
+        checkDataLength: 0,
     }
     componentDidMount() {
         this.props.GetCategoryListRequest()
@@ -85,24 +85,24 @@ class DesignerListPage extends Component {
 
 
     render() {
-        const { this_category, sub_category, page, this_order } = this.state
+        const { this_category, main_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
         return (
             <>
                 <Category
                     subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                    category1={category1} category2={category2[this_category.value]} sub_selected={sub_category} />
+                    category1={category1} category2={category2[this_category.value]} main_selected={main_category} sub_selected={sub_category} />
 
-                <OrderOption order_clicked = {this.handleChangeOrderOps} selected = {this_order}/>
-                <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count || "-"})</TextWrapper>
-                <div style = {{position:"relative"}}><JoinDesigner onClick = {()=>this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
+                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+                <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
+                <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
                 <div style={{ paddingTop: "100px", paddingBottom: "68px" }}>
                     {status === "INIT"
                         ? <Loading />
                         : <ScrollList cols={3} width={width} height={height}
-                                      marginRight={marginRight} marginRightLast={marginRightLast} marginBottom={marginBottom} marginBottomLast={marginBottomLast}
-                                      page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
+                            marginRight={marginRight} marginRightLast={marginRightLast} marginBottom={marginBottom} marginBottomLast={marginBottomLast}
+                            page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
                 </div>
             </>
         )

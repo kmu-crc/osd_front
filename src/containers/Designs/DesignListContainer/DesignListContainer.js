@@ -77,7 +77,7 @@ class DesignListContainer extends Component {
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
       {/* </div> */}
 
-      <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count || "-"})</TextWrapper>
+      <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</TextWrapper>
       <div style={{ paddingTop: "128px", paddingBottom: "68px" }}>
         {status === "INIT"
           ? <Loading />

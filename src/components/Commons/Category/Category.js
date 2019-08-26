@@ -96,7 +96,7 @@ class Category extends Component {
         return (<Container className={`${hidemenu}${larger}`} >
             <MainCategory>
                 {main.map(element => {
-                    return element.value > 0 && <MainCateElement className={main_selected.value === element.value ? "selected" : ""} onClick={() => this.clickedMainCategory(element)} key={element.value}>{element.text}</MainCateElement>
+                    return element.value > 0 && <MainCateElement className={main_selected && main_selected.value === element.value ? "selected" : ""} onClick={() => this.clickedMainCategory(element)} key={element.value}>{element.text}</MainCateElement>
                 })}</MainCategory>
             <SubCategory>
                 {sub && sub.length > 0 && sub.map(element => {
