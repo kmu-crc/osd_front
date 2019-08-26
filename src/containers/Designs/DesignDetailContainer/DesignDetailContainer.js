@@ -19,8 +19,6 @@ class DesignDetailContainer extends Component {
     window.history.go(-1)
   }
   render() {
-    console.log(this.props.status, "status")
-    console.log(this.props.DesignDetail, "DD")
     return (<>{this.props.status === "INIT" ? <Loading /> :
       // this.props.status === DESIGN_NOT_FOUND ? this.goBack() :
       <DesignDetail {...this.props} />}</>)

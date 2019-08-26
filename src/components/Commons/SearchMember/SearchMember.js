@@ -76,22 +76,24 @@ class SearchMember extends Component {
   }
 
   addMember = async (data) => {
-    let is_only = true;
-    if(this.state.member.length > 0) {
-      for( let item of this.state.member){
-        if(item.uid === data.uid){
-          is_only = await false;
-          break;
-        }
-      }
-    }
-    if(is_only){
-      this.setState({
-        member: [...this.state.member, data],
-        open: false
-      });
-      this.returnData();
-    }
+    console.log("ADDMEMBER:",data)
+    this.props.addMemberItem && this.props.addMemberItem(data.uid,data.nick_name);
+    //let is_only = true;
+    // if(this.state.member.length > 0) {
+    //   for( let item of this.state.member){
+    //     if(item.uid === data.uid){
+    //       is_only = await false;
+    //       break;
+    //     }
+    //   }
+    // }
+    // if(is_only){
+    //   this.setState({
+    //     member: [...this.state.member, data],
+    //     open: false
+    //   });
+    //   this.returnData();
+    // }
   }
   closeList = () => {
     console.log("close")
