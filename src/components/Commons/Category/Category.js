@@ -40,6 +40,9 @@ const MainCateElement = styled.div`
     color: #FF0000;
     margin-right: 30px;    
     cursor: pointer;
+    &.selected {
+        font-weight: 500;
+    }
 `
 const SubCategory = styled.div`
     z-index: 810;
@@ -84,7 +87,7 @@ class Category extends Component {
         this.props.subcategory_clicked(parent, category)
     }
     render() {
-        const { category1, category2, sub_selected } = this.props
+        const { category1, category2, main_selected, sub_selected } = this.props
         const main = category1
         const sub = category2
         const selected = sub_selected && sub_selected.value
@@ -93,7 +96,7 @@ class Category extends Component {
         return (<Container className={`${hidemenu}${larger}`} >
             <MainCategory>
                 {main.map(element => {
-                    return element.value > 0 && <MainCateElement onClick={() => this.clickedMainCategory(element)} key={element.value}>{element.text}</MainCateElement>
+                    return element.value > 0 && <MainCateElement className={main_selected.value === element.value ? "selected" : ""} onClick={() => this.clickedMainCategory(element)} key={element.value}>{element.text}</MainCateElement>
                 })}</MainCategory>
             <SubCategory>
                 {sub && sub.length > 0 && sub.map(element => {
