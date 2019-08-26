@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Designer from "components/Designers/Designer/Designer";
-import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designer"
+import { GetDesignerListRequest, GetDesignerTotalCountRequest } from "redux/modules/designer"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
 import styled from 'styled-components'
@@ -49,19 +49,19 @@ class DesignerListPage extends Component {
     }
     componentDidMount() {
         this.props.GetCategoryListRequest()
-            .then(() => { this.props.GetDesignerListCountRequest() });
+            .then(() => { this.props.GetDesignerTotalCountRequest() });
         this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
     }
     handleChangeCategory = async (category) => {
         await this.setState({ page: 0, main_category: category, this_category: category, sub_category: { text: null, value: null } })
         //console.log("category.value:", category.value)
-        this.props.GetDesignerListCountRequest(category.value || null)
+        this.props.GetDesignerTotalCountRequest(category.value || null)
         this.reloadData()
     }
     handleChangeSubCategory = async (parent, category) => {
         // console.log(this.props.category1[parent], parent)
         await this.setState({ page: 0, main_category: this.props.category1[parent], this_category: this.props.category1[parent], sub_category: category })
-        this.props.GetDesignerListCountRequest(this.state.main_category.value, category.value)
+        this.props.GetDesignerTotalCountRequest(this.state.main_category.value, category.value)
         this.reloadData()
     }
     handleChangeOrderOps = async (order) => {
@@ -88,6 +88,7 @@ class DesignerListPage extends Component {
         const { this_category, main_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
+        console.log("!", this.props.dataList, "?", this.props.dataListAdded)
         return (
             <>
                 <Category
@@ -114,12 +115,12 @@ class DesignerListPage extends Component {
 const mapStateToProps = (state) => {
     // console.log("designerlist:", state)
     return {
-        dataList: state.designerlist.status.DesignerList,
-        dataListAdded: state.designerlist.status.DesignerListAdded,
-        category1: state.category.status.category1,
-        category2: state.category.status.category2,
-        Count: state.designerlist.status.Count,
-        status: state.designerlist.status
+        dataList: state.DesignerList.status.DesignerList,
+        dataListAdded: state.DesignerList.status.DesignerListAdded,
+        category1: state.Category.status.category1,
+        category2: state.Category.status.category2,
+        Count: state.DesignerList.status.Count,
+        status: state.DesignerList.status
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -127,8 +128,8 @@ const mapDispatchToProps = (dispatch) => {
         GetDesignerListRequest: (page, sort, cate1, cate2, keyword) => {
             return dispatch(GetDesignerListRequest(page, sort, cate1, cate2, keyword))
         },
-        GetDesignerListCountRequest: (cate1, cate2) => {
-            return dispatch(GetDesignerListCountRequest(cate1, cate2))
+        GetDesignerTotalCountRequest: (cate1, cate2) => {
+            return dispatch(GetDesignerTotalCountRequest(cate1, cate2))
         },
         GetCategoryListRequest: () => {
             return dispatch(GetCategoryAllRequest())

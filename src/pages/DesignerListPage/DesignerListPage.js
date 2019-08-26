@@ -88,6 +88,7 @@ class DesignerListPage extends Component {
         const { this_category, main_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
+        console.log("DesignerListPage:", this.props.dataList, this.props.dataListAdded)
         return (
             <>
                 <Category
