@@ -22,7 +22,7 @@ const initialState = {
 }
 
 // reducer
-export default function Designerlist(state, action) {
+export function DesignerList(state, action) {
     if (typeof state === "undefined")
         state = initialState;
 

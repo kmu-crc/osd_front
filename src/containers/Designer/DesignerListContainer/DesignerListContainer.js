@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Designer from "components/Designers/Designer/Designer";
-import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designerlist"
+import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designer"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
 import styled from 'styled-components'

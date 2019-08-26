@@ -25,7 +25,7 @@ import ModifyGroupPage from "pages/ModifyGroupPage"
 
 // + designer
 import DesignerListPage from "pages/DesignerListPage"
-import DesignerPage from "pages/DesignerPage"
+import DesignerPage from "containers/Designer/DesignerDetailContainer"
 
 // + etc.
 import RequiresAuth from "containers/Commons/RequiresAuth"

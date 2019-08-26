@@ -9,6 +9,8 @@ import ScrollList from "components/Commons/ScrollList"
 
 const Tabs = styled.div`
   display: flex;
+  margin-top: 65px;
+  padding-left: 70px;
 `
 const Tab = styled.div`
   &.selected { 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Designer from "components/Designers/Designer";
-import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designerlist"
-import { GetCategoryListRequest } from "redux/modules/category"
+import { GetDesignerListRequest, GetDesignerListCountRequest } from "redux/modules/designer"
+import { GetCategoryAllRequest } from "redux/modules/category"
 
 import styled from 'styled-components'
 import Category from "components/Commons/Category"
@@ -48,7 +48,7 @@ class DesignerListPage extends Component {
         checkDataLength: 0,
     }
     componentDidMount() {
-        this.props.GetCategoryListRequest()
+        this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignerListCountRequest() });
         this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
     }
@@ -114,12 +114,12 @@ class DesignerListPage extends Component {
 const mapStateToProps = (state) => {
     // console.log("designerlist:", state)
     return {
-        dataList: state.designerlist.status.DesignerList,
-        dataListAdded: state.designerlist.status.DesignerListAdded,
-        category1: state.category.status.category1,
-        category2: state.category.status.category2,
-        Count: state.designerlist.status.Count,
-        status: state.designerlist.status
+        dataList: state.DesignerList.status.DesignerList,
+        dataListAdded: state.DesignerList.status.DesignerListAdded,
+        category1: state.Category.status.category1,
+        category2: state.Category.status.category2,
+        Count: state.DesignerList.status.Count,
+        status: state.DesignerList.status
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -130,9 +130,9 @@ const mapDispatchToProps = (dispatch) => {
         GetDesignerListCountRequest: (cate1, cate2) => {
             return dispatch(GetDesignerListCountRequest(cate1, cate2))
         },
-        GetCategoryListRequest: () => {
-            return dispatch(GetCategoryListRequest())
-        },
+        GetCategoryAllRequest: () => {
+            return dispatch(GetCategoryAllRequest())
+        }
     }
 }
 
