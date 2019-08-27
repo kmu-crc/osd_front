@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import iDelete from "source/deleteItem.png"
 
 import BasicInfo from "components/Designs/ModifyDesign/BasicInfo/ModifyDesignSection01"
 import AdditionalInfo from "components/Designs/ModifyDesign/AdditionalInfo/ModifyDesignSection02"
 import DesignEditor from "components/Designs/ModifyDesign/DesignEditor/ModifyDesignSection03"
+import { Modal } from "semantic-ui-react";
 
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }, { txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
 
@@ -22,11 +24,12 @@ class ModifyDesign extends Component {
   constructor(props)
   {
     super(props);
-    this.state = {thumbnail:"",designTitle:"",designExplain:"", loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
+    this.state = {isDelete:false,deleteDialog:false,thumbnail:"",designTitle:"",designExplain:"", loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
      selectedCate2: null, cate1: null,cate2: null}
     this.handleInputDesignExplain = this.handleInputDesignExplain.bind(this);
     this.handleInputDesignTitle = this.handleInputDesignTitle.bind(this);
     this.handleChangeThumbnail=this.handleChangeThumbnail.bind(this);
+    this.handleOnClickDeleteDesign = this.handleOnClickDeleteDesign.bind(this);
   }
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
   componentDidMount()
@@ -40,6 +43,18 @@ class ModifyDesign extends Component {
       if(this.props.DesignDetail.img!=nextProps.DesignDetail.img) this.setState({thumbnail:nextProps.DesignDetail.img.m_img});
     
       return true;
+  }
+  handleOnClickDeleteDesign()
+  {
+      if(this.state.isDelete == true)
+      {
+        this.setState({ isDelete: !this.state.isDelete,deleteDialog:false })
+      }
+      else
+      {
+        this.setState({ isDelete: !this.state.isDelete, deleteDialog: true })     
+      }
+    
   }
   handleInputDesignTitle(title)
   {
@@ -89,8 +104,47 @@ class ModifyDesign extends Component {
     const SectionContentEditor = () => {
      
     }
-    const { step } = this.state
+    const { step } = this.state;
+    const DeleteDesignModal = ()=>
+    {
+      return(
+        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"200px",textAlign:"center",top:"283px"}}>
+        <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>{this.props.DesignDetail.title}<br/>삭제하시겠습니까?</div>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 삭제합니다</div>
+        <div onClick = {this.handleOnClickDeleteDesign} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+                    backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+        </div>
+      </Modal>
+      );
+    }
+    const DeleteWariningModal = ()=>
+    {
+      return(
+        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
+          사용자 매뉴얼 디자인 등록 01을 삭제하지 못했습니다.</div>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"none",color:"#FF0000"}}>
+          컨텐츠의 개설자만 삭제할 권한이 주어집니다.</div>
+      </Modal>
+      );
+    }
+    const DeleteCompleteModal = ()=>
+    {
+      return(
+        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
+          사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"underline",color:"#FF0000"}}>
+          되돌리기</div>
+        <div onClick = {this.handleOnClickDeleteDesign} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+                    backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+        </div>
+      </Modal>
+      );
+    }
     return (<>
+
+      <DeleteDesignModal/>
 
       <div style={modify_Main_Banner}>
         <div style={modify_Main_Banner_text}>디자인 등록하기</div>
@@ -108,7 +162,7 @@ class ModifyDesign extends Component {
                     })}
                   </div>
               </div>
-              <div style={modify_Menu_Delete}>디자인 삭제하기</div>
+              <div onClick = {this.handleOnClickDeleteDesign} style={modify_Menu_Delete}>디자인 삭제하기</div>
         </div>
         {/* form */}
         <div style={{ width: "1422px", height: "871px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>

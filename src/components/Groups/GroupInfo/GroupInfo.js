@@ -4,11 +4,37 @@ import iEdit from "source/edit.png"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
 import noimg from "source/noimg.png"
 import DateFormat from "modules/DateFormat"
+import iDelete from "source/deleteItem.png"
+
+import { Modal } from "semantic-ui-react";
+
 
 const GroupInfoData = { title: "TITLE", url: "URL", category: "CATEGORY", designer: "DESIGNER", view: 0, like: 0, design: 0, description: "Description" }
 class GroupInfoComponent extends Component {
+    constructor(props)
+    {
+        super(props);
+        this.state={isJoin:false,showPopup:false,joinDialog:false,joinCancelDialog:false};
+        this.handleRequestJoinGroup = this.handleRequestJoinGroup.bind(this);
+    }
+
     handleRequestJoinGroup() {
-        alert("JOIN!")
+        if(this.state.showPopup == false) // 팝업띄우기
+        {
+          if(this.state.isJoin==false) // 가입 신청
+          {
+            this.setState({ showPopup:!this.state.showPopup,joinDialog:true,joinCancelDialog:false })
+          }
+          else // 가입 취소
+          {
+            this.setState({ showPopup:!this.state.showPopup,joinDialog:false,joinCancelDialog:true })
+          }
+            
+        }
+        else // 팝업 닫기
+        {
+          this.setState({ showPopup:!this.state.showPopup,joinDialog: false,joinCancelDialog:false})     
+        }
     }
     handleMoreViewDescription = (description) => {
         alert(description)
@@ -20,6 +46,7 @@ class GroupInfoComponent extends Component {
         window.location.href = href+ 'modifygroup/'+this.props.GroupInfo.uid;
     }
     render() {
+
 
         
 
@@ -120,10 +147,39 @@ class GroupInfoComponent extends Component {
                     </div>
                 </div>)
         }
+        const JoinModal=()=>
+        {
+            return(
+                <Modal open={this.state.showPopup} style={{boxShadow:"0px 3px 6px #000000",position:"relative",width:"576px",height:"200px",textAlign:"center",bottom:"318px"}}>
+                <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>{this.props.GroupInfo.title}<br/>가입 신청을 하시겠습니까?</div>
+                <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 신청합니다</div>
+                <div onClick = {this.handleRequestJoinGroup} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+                            backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+                </div>
+                </Modal>
+            );
+        }
+        const JoinCancelModal=()=>
+        {
+            return(
+                <Modal open={this.state.showPopup} style={{boxShadow:"0px 3px 6px #000000",position:"relative",width:"576px",height:"200px",textAlign:"center",bottom:"318px"}}>
+                <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>{this.props.GroupInfo.title}<br/>가입 신청을 취소하시겠습니까?</div>
+                <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 취소합니다</div>
+                <div onClick = {this.handleRequestJoinGroup} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+                            backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+                </div>
+                </Modal>
+
+            );
+        }
         const info = this.props.GroupInfo
-        return (<div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
+        return (
+          <React.Fragment>
+          {this.state.isJoin==false?<JoinModal/>:<JoinCancelModal/>}
+        <div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
             {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
-        </div >)
+        </div >
+        </React.Fragment>)
     }
 }
 
