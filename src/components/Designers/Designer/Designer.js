@@ -85,10 +85,9 @@ class Designer extends Component{
     state = {data : this.props.data};
 
     gotoDesignerDetailPage = () => {
-        window.location.href = "/designerDetail"
+        window.location.href = "/designerDetail/"
     }
     render(){
-        console.log("this.props:",this.props);
 
         const designer = this.state.data;
         return(
