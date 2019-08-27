@@ -16,12 +16,12 @@ const modify_Btn_Back = { position:"absolute",right:"54px",bottom:"35px",border:
 const modify_Btn_text ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
 const modify_Btn_Next ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
 
-class ModifyDesign extends Component {
+class ModifyGroup extends Component {
 
   constructor(props)
   {
     super(props);
-    this.state = {thumbnail:"",designTitle:"",designExplain:"", loading: false, isPossibleNextStep: false, step: 1, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
+    this.state = {thumbnail:"",designTitle:"",designExplain:"", loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
      selectedCate2: null, cate1: null,cate2: null}
     this.handleInputDesignExplain = this.handleInputDesignExplain.bind(this);
     this.handleInputDesignTitle = this.handleInputDesignTitle.bind(this);
@@ -136,4 +136,4 @@ class ModifyDesign extends Component {
   }
 }
 
-export default ModifyDesign;
+export default ModifyGroup;
