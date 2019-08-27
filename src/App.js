@@ -64,7 +64,7 @@ class App extends Component {
             <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} /> 
 
             {/* GROUP D - designer */}
-            <Route path="/designerDetail/:id/:type?" component={DesignerPage} />
+            <Route path="/designerDetail/" component={DesignerPage} />
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
 
 

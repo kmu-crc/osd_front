@@ -41,21 +41,6 @@ class ModifyDesignSection02 extends Component
         super(props);
     }    
 
-    // shouldComponentUpdate(nextProps)
-    // {
-    //     if(this.props.DesignDetail!=nextProps.DesignDetail)
-    //     {
-    //         if(this.props.DesignDetail.category_level1!=nextProps.DesignDetail.category_level1)
-    //         {
-    //             this.setState({categoryLevel1:{text:this.props.DesignDetail.categoryName,value:this.props.DesignDetail.category_level1}})
-    //         }
-    //         else if(this.props.DesignDetail.category_level2!=nextProps.DesignDetail.category_level2)
-    //         {
-
-    //         }
-    //     }
-    //     return true;
-    // }
     selectedCate1 = (cate1) => {
 
         const cate2 = this.props.cate2[cate1.value]

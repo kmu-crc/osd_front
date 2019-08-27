@@ -28,13 +28,13 @@ const Summary_Forked_Icon = {display:"inline-block",width:"15px",height:"15px",o
                         background:`url(${iForked})`,backgroundSize: "cover", backgroundPosition: "center center"}
 const Summary_Forked = {marginLeft:"5px",display:"inline-block",width:"54px",height:"21px",}
 
-const interestDesignerBox = {position:"absolute",width:"224px",height:"45px",top:"104px",right:"72px"}
+const interestDesignerBox = {position:"absolute",width:"250px",height:"45px",top:"90px",right:"72px",textAlign:"right"}
 const interestDesignerTitle = {display:"inline-block",width:"164px",height:"25px",
                                 color:"#707070",fontFamily:"Noto Sans KR",fontSize:"17px",fontWeight:"200",textAlign:"right" }
-const interestDesignerImg = {display:"inline-block",width:"45px",height:"45px",marginLeft:"15px",marginBottom:"-5px",
+const interestDesignerImg = {display:"inline-block",width:"45px",height:"40px",marginLeft:"15px",marginBottom:"-7px",
                             backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center",opacity:"0.55"}
 
-const sendMessageBox = {overflow:"hidden",position:"absolute",width:"224px",height:"45px",top:"168px",right:"72px",}
+const sendMessageBox = {overflow:"hidden",position:"absolute",width:"250px",height:"45px",top:"168px",right:"72px",textAlign:"right"}
 const sendMessagTitle = {display:"inline-block",width:"164px",height:"45px",
                                 color:"#707070",fontFamily:"Noto Sans KR",fontSize:"17px",fontWeight:"200",textAlign:"right" }
 const sendMessageImg = {display:"inline-block",width:"45px",height:"45px",marginLeft:"15px",marginBottom:"-15px",
