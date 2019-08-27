@@ -27,7 +27,7 @@ class DesignDetail extends Component {
     }
   }
   gotoModifyPage = () => {
-    window.location.href = "/designModify/" + this.props.id
+    window.location.href = "/groupDetail/" + this.props.id+"/modify"
   }
 
   render() {
