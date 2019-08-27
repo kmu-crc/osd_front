@@ -116,21 +116,21 @@ class SearchMember extends Component {
   }
   render() {
     return (
-      <SearchWrap style={{display:"inline-block"}}>
-        <FormInput type="text" style={{border:"none",width:"353px",height:"30px",fontSize:"18px",marginLeft:"50px",}} name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
-        <MemberList style={this.state.open ? {display: "block"} : {display: "none"}}>
+      <SearchWrap className = "searchRect" style={{display:"inline-block"}}>
+        <FormInput  className = "searchRect" type="text" style={{border:"none",width:"353px",height:"30px",fontSize:"18px",marginLeft:"50px",}} name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
+        <MemberList  className = "searchRect" style={this.state.open ? {display: "block"} : {display: "none"}}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
         </MemberList>
-        <MemberWrap>
+        <MemberWrap  className = "searchRect">
           {this.state.member.map((data, index) => {
             console.log(data);
-            return (<MemberItem key={index}>
+            return (<MemberItem  className = "searchRect" key={index}>
               {data.nick_name}
               <span>
-                <DeleteBtn type="button" onClick={() => this.deleteMember(index)}>
-                  <Icon name="remove" />
+                <DeleteBtn  className = "searchRect" type="button" onClick={() => this.deleteMember(index)}>
+                  <Icon  className = "searchRect" name="remove" />
                 </DeleteBtn>
               </span>
             </MemberItem>)
