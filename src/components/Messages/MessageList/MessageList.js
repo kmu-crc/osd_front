@@ -105,16 +105,18 @@ class Messages extends React.Component
 {
     constructor(props)
     {
-        super(props);
+      super(props);
+      this.state={msgValue:'',msgId:-1,selectId:null,selectName:null,openMember:false,showSearch:false,friendList:[],render:true};
         this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
         this.handleClickSend = this.handleClickSend.bind(this);
         this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
         this.handleOpenMember=this.handleOpenMember.bind(this);
         this.handleClickSearchMemberItem=this.handleClickSearchMemberItem.bind(this); 
         this.initMsgValue = this.initMsgValue.bind(this);
-        this.state={msgValue:'',msgId:-1,selectId:null,selectName:null,openMember:false,showSearch:false,friendList:[],render:true};
+        this.handleCloseMember = this.handleCloseMember.bind(this);
         this.getValue = this.getValue.bind(this);
     }        
+
 
     async componentDidMount() {
       
@@ -268,7 +270,7 @@ class Messages extends React.Component
     {      
       this.setState(state=>({selectId:select_id,selectName:select_name,msgId:msgID}));
     }
-    handleOpenMember()
+    handleOpenMember(event)
     {
       const isOpen=this.state.showSearch;
       this.setState(state=>({showSearch:!isOpen}));
@@ -278,6 +280,15 @@ class Messages extends React.Component
       this.setMsgId(-1,id,name);
 
     }     
+    handleCloseMember(event)
+    {
+      if(event.target.className!="searchRect")
+      {
+        this.setState({showSearch:false})
+      }
+      // if(event.target)
+      // this.setState({showSearch:false});
+    }
     render()
     {
       let arrSummaryList=[];
@@ -296,23 +307,28 @@ class Messages extends React.Component
 
      
         return(
-            <React.Fragment>
+            <div onClick = {this.handleCloseMember}>
                 <div style={Banner}>
                     <div style={BannerText}>메시지함</div>
                 </div>
-                <div style={MessageBox}>
-                    <div style={MessageAside}>
-                        <div style={MessageAsideHeader}>
-                            <div style={MessageAsideHeaderTitle}>받은 메세지함</div>
-                            <div style={MessageAsideHeaderIcon} onClick={this.handleOpenMember}>                              
+                <div  className = "searchRect" style={MessageBox}>
+                    <div  className = "searchRect" style={MessageAside}>
+                        <div  className = "searchRect" style={MessageAsideHeader}>
+                            <div  className = "searchRect" style={MessageAsideHeaderTitle}>받은 메세지함</div>
+                            <div  className = "searchRect" style={MessageAsideHeaderIcon} onClick={this.handleOpenMember}>                              
                             </div>                           
                         </div>
                         {this.state.showSearch&&(
                         <React.Fragment>
-                          <SearchMemverContainer addMemberItem = {this.handleClickSearchMemberItem}/>
+                          {
+                            this.state.hideSearch == true?
+                            null:
+                            <SearchMemverContainer  className = "searchRect" addMemberItem = {this.handleClickSearchMemberItem}/>
+                          }
+                          
                         </React.Fragment>)
                         }
-                        <SummaryList> 
+                        <SummaryList  className = "searchRect"> 
                                  {arrSummaryList}         
                         </SummaryList>
                     </div>
@@ -333,7 +349,7 @@ class Messages extends React.Component
                 </div>
 
 
-            </React.Fragment>
+            </div>
         );
     }
 }
