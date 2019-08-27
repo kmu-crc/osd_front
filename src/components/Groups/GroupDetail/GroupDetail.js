@@ -9,6 +9,8 @@ import ScrollList from "components/Commons/ScrollList"
 
 const Tabs = styled.div`
   display: flex;
+  margin-top: 65px;
+  padding-left: 70px;
 `
 const Tab = styled.div`
   &.selected { 
@@ -17,10 +19,10 @@ const Tab = styled.div`
 `
 class GroupDetail extends Component {
   state = { page: 0, uid: undefined, currentTab: "design" }
-  switchTab = async(tab) => { 
+  switchTab = async (tab) => {
     await this.setState({ currentTab: tab, page: 0 })
     this.getInitData()
-   }
+  }
 
   componentDidMount() {
     this.getInitData()
@@ -39,14 +41,14 @@ class GroupDetail extends Component {
     await this.setState({ page: isInit ? 0 : this.state.page + 1 })
     this.props.GetDesignInGroupRequest(this.state.uid, this.state.page, "update")
   }
-  getGroupList = async (isInit)=>{
-    if(!this.state.uid){
+  getGroupList = async (isInit) => {
+    if (!this.state.uid) {
       return;
     }
     await this.setState({ page: isInit ? 0 : this.state.page + 1 })
     this.props.GetGroupInGroupRequest(this.state.uid, this.state.page, "update")
   }
-  componentWillReceiveProps =async(nextProps)=> {
+  componentWillReceiveProps = async (nextProps) => {
     if (nextProps.GroupDetail.uid !== this.props.GroupDetail.uid) {
       await this.setState({ uid: nextProps.GroupDetail.uid })
       this.getInitData()
@@ -55,10 +57,9 @@ class GroupDetail extends Component {
 
   render() {
     const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded } = this.props
-    const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"}
-    const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"}
+    const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px" }
+    const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px" }
     const { currentTab } = this.state
-    console.log("~!!!!props:", this.props.GroupDetail, this.props.DesignList, this.props.DesignListAdded)
 
     return (
       <>
@@ -67,7 +68,7 @@ class GroupDetail extends Component {
           <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
           <Tab onClick={() => this.switchTab("group")} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
         </Tabs>
-         {GroupDetail && currentTab === "group" &&
+        {GroupDetail && currentTab === "group" &&
           <>
             {this.props.status === "INIT" ?
               <Loading /> :

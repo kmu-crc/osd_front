@@ -64,20 +64,19 @@ class CreateBoard extends Component {
     await ValidationGroup(this.state, true)
       .then(data => {
         data.order = this.props.order;
-        this.props.CreateDesignBoardRequest(data,this.props.designId, this.props.token)
-        .then(() => { this.props.GetDesignBoardRequest(this.props.designId);})
-        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
-        .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
+        this.props.CreateDesignBoardRequest(data, this.props.designId, this.props.token)
+          .then(() => { this.props.GetDesignBoardRequest(this.props.designId); })
+          .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
         this.setState({ active: false });
       })
-      .catch(err => console.log(err,"실패"));
+      .catch(err => console.log(err, "실패"));
   };
   handelClose = (e) => {
-    if(e.type === "blur" && !this.form.contains(
+    if (e.type === "blur" && !this.form.contains(
       e.relatedTarget
-    )){
+    )) {
       this.setState({ active: false });
-    } else if(e.type === "click") {
+    } else if (e.type === "click") {
       this.setState({ active: false });
     }
   };
@@ -104,8 +103,8 @@ class CreateBoard extends Component {
             </ButtonWrap>
           </form>
         ) : (
-          <Title onClick={this.formActive}>단계 추가 +</Title>
-        )}
+            <Title onClick={this.formActive}>단계 추가 +</Title>
+          )}
       </Board>
     );
   }

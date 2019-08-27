@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Modal, Icon } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import eximg from "source/topDesign.png";
+import eximg from "source/noimg.png";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";

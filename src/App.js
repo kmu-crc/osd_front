@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 
 // pages
-// +main
+// + main
 import MainPage from "pages/MainPage"
 import TourPage from "pages/TourPage"
 import SignUpPage from "pages/SignUpPage"
@@ -13,21 +13,21 @@ import MyDetailModifyPage from "pages/MyDetailModifyPage"
 import SearchPage from "pages/SearchPage"
 import MessagePage from "pages/MessagePage"
 
-// +design
+// + design
 import DesignListPage, { DesignDetailPage } from "pages/DesignPage"
 import CreateDesignPage from "pages/CreateDesignPage"
 import ModifyDesignPage from "pages/ModifyDesignPage"
 
-// +group
+// + group
 import GroupListPage, { GroupDetailPage } from "pages/GroupPage"
 import CreateGroupPage from "pages/CreateGroupPage"
 import ModifyGroupPage from "pages/ModifyGroupPage"
 
-// +designer
-import DesignerListPage from "containers/Designer/DesignerListContainer"
+// + designer
+import DesignerListPage from "containers/Designer/DesignerListContainer"//"pages/DesignerListPage"
 import DesignerPage from "containers/Designer/DesignerDetailContainer"
 
-// +etc.
+// + etc.
 import RequiresAuth from "containers/Commons/RequiresAuth"
 import ResetPwPage from "pages/ResetPwPage"
 import NotFoundPage from "pages/NotFoundPage"
@@ -59,9 +59,10 @@ class App extends Component {
 
             {/* GROUP C - group */}
             <Route path="/group/:sorting?" component={GroupListPage} />
-            <Route path="/groupDetail/:id/:sorting?" component={GroupDetailPage} /> 
+            <Route path="/groupDetail/:id/" component={GroupDetailPage} />
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
             <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} /> 
+
 
             {/* GROUP D - designer */}
             <Route path="/designerDetail/" component={DesignerPage} />

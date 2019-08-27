@@ -65,19 +65,19 @@ class DesignListContainer extends Component {
     console.log(this.state)
   }
   render() {
-    const { this_category, sub_category, page, this_order } = this.state
+    const { this_category, main_category, sub_category, page, this_order } = this.state
     const { category1, category2, Count, status } = this.props
     const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin
     return (<>
       <Category
         subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-        category1={category1} category2={category2[this_category.value]} sub_selected={sub_category} />
+        category1={category1} category2={category2[this_category.value]} main_selected={main_category} sub_selected={sub_category} />
 
       {/* <div style={{ height: "29px", zIndex: "999", transform: "translateY(-50%)" }}> */}
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
       {/* </div> */}
 
-      <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count || "-"})</TextWrapper>
+      <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</TextWrapper>
       <div style={{ paddingTop: "128px", paddingBottom: "68px" }}>
         {status === "INIT"
           ? <Loading />
