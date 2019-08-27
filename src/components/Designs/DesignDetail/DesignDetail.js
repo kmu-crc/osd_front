@@ -24,10 +24,11 @@ class DesignDetail extends Component {
     window.location.href = "/groupDetail/" + this.props.id+"/modify"
   }
   render() {
-    const DesignDetail = this.props.DesignDetail
+    const DesignDetail = this.props.DesignDetail;
+    const UserInfo = this.props.userInfo;
     return (<>
       {/* design info */}
-      <DesignInfo Count={this.props.Count} DesignDetail={DesignDetail} />
+      <DesignInfo Count={this.props.Count} DesignDetail={DesignDetail} UserInfo = {UserInfo} />
       {/* design detail */}
       <DesignDetailStepContainer design={DesignDetail}/>
     </>)
