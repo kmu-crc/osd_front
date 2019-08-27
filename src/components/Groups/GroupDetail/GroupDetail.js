@@ -10,13 +10,25 @@ import ScrollList from "components/Commons/ScrollList"
 const Tabs = styled.div`
   display: flex;
   margin-top: 65px;
+  margin-bottom: 15px;
   padding-left: 70px;
 `
 const Tab = styled.div`
+  font-family: Noto Sans KR;
+  font-weight: 500;
+  font-size: 20px;
+  margin-right: ${props => props.marginRight}px;
+  width: ${props => props.width}px;
+  height: 29px;
+  line-height: 29px;
+  text-align: left;
+  color: #707070;
+  opacity: 0.5;
   &.selected { 
-    color:red; 
+    opacity: 1.0;
   }
 `
+
 class GroupDetail extends Component {
   state = { page: 0, uid: undefined, currentTab: "design" }
   switchTab = async (tab) => {
@@ -60,13 +72,12 @@ class GroupDetail extends Component {
     const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px" }
     const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px" }
     const { currentTab } = this.state
-
     return (
       <>
         <GroupInfo GroupInfo={GroupDetail} userInfo={userInfo} />
         <Tabs >
-          <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
-          <Tab onClick={() => this.switchTab("group")} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
+          <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
+          <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
         </Tabs>
         {GroupDetail && currentTab === "group" &&
           <>

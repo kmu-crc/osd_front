@@ -9,9 +9,11 @@ import iThumbUp from "source/thumbup_icon_white.png"
 import IconView from "source/IconView"
 import noimg from "source/noimg.png"
 
+
+import DateFormat from "modules/DateFormat"
 // CSS 
 const DesignElement = styled.div`
-border: 1px solid #FFFFFF;
+  border: 1px solid #FFFFFF;
   position: relative;
   z-index:700;
   width: 330px;
@@ -25,6 +27,7 @@ border: 1px solid #FFFFFF;
   font-size: 20px;
   font-family: "Noto Sans KR";
   .cover {
+    cursor: pointer;
     z-index: 701;
     position: absolute;
     border-radius: 15px;
@@ -58,12 +61,19 @@ class Design extends Component {
     const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design;
     return (
-      <DesignElement onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
-        <div className="cover" />
+      <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
+        <div className="cover" onClick={this.gotoDetailPage} />
         {isForked && <div className="forked" />}
         <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
         <div style={{ zIndex: "703", position: "absolute", width: "274.08px", color: "#FFF", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
-          <div style={{ fontSize: "20px", fontWeight: "700" }}>{data.title.substr(0, 16)}</div>
+          <div style={{ fontSize: "20px", fontWeight: "700", display: "flex", justifyContent: "space-between" }}>
+            <div style={{ width: "225px" }}>
+              {data.title.substr(0, 12)}{data.title.length > 12 && "..."}
+            </div>
+            <div style={{ marginTop: "5px",  fontWeight: "300", width: "55px", height: "25px", fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR" }}>
+              {DateFormat(data.update_time)}
+            </div>
+          </div>
           <div style={{ fontSize: "20px", fontWeight: "300" }}>{data.userName}</div>
         </div>
         <div style={{ zIndex: "703", marginLeft: "24.92px", marginTop: "280px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>

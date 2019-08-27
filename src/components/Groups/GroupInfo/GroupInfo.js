@@ -12,6 +12,9 @@ class GroupInfoComponent extends Component {
     handleMoreViewDescription = (description) => {
         alert(description)
     }
+    componentWillReceiveProps(nextProps) {
+        return nextProps.GroupInfo.uid !== this.props.GroupInfo.uid
+    }
     render() {
         const GroupInfo = (props) => {
             const info = props.GroupInfo || GroupInfoData

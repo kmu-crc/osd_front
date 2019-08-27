@@ -93,7 +93,7 @@ class ModifyDesign extends Component {
     return (<>
 
       <div style={modify_Main_Banner}>
-        <div style={modify_Main_Banner_text}>디자인 등록하기</div>
+        <div style={modify_Main_Banner_text}>디자인 수정하기</div>
       </div>
 
       <div style={modify_Main_Section}>

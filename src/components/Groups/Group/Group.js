@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import noimg from "source/noimg.png"
 import IconView from 'source/IconView'
-import host from "config"
+import DateFormat from "modules/DateFormat"
 
 class Group extends Component {
     handleGotoDetail = (where) => {
@@ -37,7 +37,7 @@ class Group extends Component {
                 <div onClick={() => { this.handleGotoDetail(group.uid) }} style={{ cursor: "pointer", height: "230px", width: "230px", borderRadius: "15px", backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: group.thumbnailUrl && group.thumbnailUrl.m_img ? `url(${group.thumbnailUrl.m_img})` : `url(${noimg})` }} />
                 <div>
                     <div style={{ marginTop: "19px", width: "655px", marginLeft: "17px", fontFamily: "Noto Sans KR" }}>
-                        <div style={{ lineHeight: "40px", textAlign: "left", fontWeight: "700", fontSize: "20px", display: "flex", justifyContent: "space-between" }}>{group.title.substring(0, 32)}<p style={{ width: "75px", textAlign: "left", fontSize: "15px", fontWeight: "300", color: "#707070" }}>{group.child_update_time.substring(0, 5)}</p></div>
+                        <div style={{ lineHeight: "40px", textAlign: "left", fontWeight: "700", fontSize: "20px", display: "flex", justifyContent: "space-between" }}>{group.title.substring(0, 32)}<p style={{ width: "75px", textAlign: "left", fontSize: "15px", fontWeight: "300", color: "#707070" }}>{DateFormat(group.child_update_time)}</p></div>
                         <div style={{ lineHeight: "35px", height: "69px", textAlign: "left", fontWeight: "100", fontSize: "20px", width: "516px", whiteSpace: "pre-wrap" }}>{group.explanation || "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore"}</div>
                         <div style={{ lineHeight: "40px", textAlign: "left", fontWeight: "300", fontSize: "20px" }}>{group.nick_name}님의 그룹</div>
                     </div>

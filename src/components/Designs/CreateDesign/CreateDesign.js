@@ -7,6 +7,7 @@ const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정
 
 class CreateDesign extends Component {
   state = {
+    file: null,
     loading: false, isPossibleNextStep: false, step: 2, /* 0: basics, 1: additional, 2: contents*/
     selectedCate1: null, selectedCate2: null,
     /* cate1: null, */ cate2: null
@@ -47,6 +48,9 @@ class CreateDesign extends Component {
   completed = () => {
     this.setState({ isPossibleNextStep: true })
   }
+  fileHandler = (event) => {
+
+  }
   render() {
     // const myInfo = this.props.MyDetail
     const SectionBasics = () => {
@@ -56,7 +60,7 @@ class CreateDesign extends Component {
           <div style={{ width: "1200px" }}>
             <div style={{ display: "flex" }}>
               <div style={{ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }}>섬네일 사진
-              <input hidden type="file" value={null} />
+              <input hidden type="file" name="file" onChange={this.fileHandler} value={this.state.file || ""} />
               </div>
               <div style={{ marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", backgroundColor: "#EFEFEF" }} />
               <div style={{ marginLeft: "54.5px", marginTop: "100px" }}>

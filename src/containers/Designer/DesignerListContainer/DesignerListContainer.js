@@ -34,7 +34,6 @@ const JoinDesigner = styled.div`
     border-bottom: 1.5px solid red;
 `;
 
-
 const margin = { width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
 
 class DesignerListPage extends Component {
@@ -55,7 +54,7 @@ class DesignerListPage extends Component {
     handleChangeCategory = async (category) => {
         await this.setState({ page: 0, main_category: category, this_category: category, sub_category: { text: null, value: null } })
         //console.log("category.value:", category.value)
-        this.props.GetDesignerTotalCountRequest(category.value || null)
+        this.props.GetDesignerTotalCountRequest(category.value, null)
         this.reloadData()
     }
     handleChangeSubCategory = async (parent, category) => {
@@ -82,19 +81,15 @@ class DesignerListPage extends Component {
         this.handleChangeCategory(category)
     }
 
-
-
     render() {
         const { this_category, main_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
-        console.log("!", this.props.dataList, "?", this.props.dataListAdded)
+
         return (
             <>
-                <Category
-                    subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+                <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
                     category1={category1} category2={category2[this_category.value]} main_selected={main_category} sub_selected={sub_category} />
-
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
                 <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
                 <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
@@ -111,9 +106,7 @@ class DesignerListPage extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
-    // console.log("designerlist:", state)
     return {
         dataList: state.DesignerList.status.DesignerList,
         dataListAdded: state.DesignerList.status.DesignerListAdded,
