@@ -23,6 +23,7 @@ const Tab = styled.div`
   line-height: 29px;
   text-align: left;
   color: #707070;
+  cursor: pointer;
   opacity: 0.5;
   &.selected { 
     opacity: 1.0;
