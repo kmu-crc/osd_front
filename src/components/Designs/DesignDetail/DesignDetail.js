@@ -24,6 +24,7 @@ class DesignDetail extends Component {
     window.location.href = "/groupDetail/" + this.props.id+"/modify"
   }
   render() {
+    console.log("userinfo",this.props.userInfo)
     const DesignDetail = this.props.DesignDetail;
     const UserInfo = this.props.userInfo;
     return (<>
