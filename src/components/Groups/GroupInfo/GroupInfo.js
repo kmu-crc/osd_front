@@ -14,10 +14,18 @@ class GroupInfoComponent extends Component {
     constructor(props)
     {
         super(props);
-        this.state={isJoin:false,showPopup:false,joinDialog:false,joinCancelDialog:false};
+        this.state={isJoin:false,showPopup:false,joinDialog:false,joinCancelDialog:false,tmpLike: false, likeDialog: false, forkDialog: 0};
         this.handleRequestJoinGroup = this.handleRequestJoinGroup.bind(this);
     }
-
+    like() {
+        if (this.state.tmpLike) { //dislike
+            this.setState({ tmpLike: !this.state.tmpLike })
+        } else {
+            this.setState({ tmpLike: !this.state.tmpLike, likeDialog: true })
+            // request like design
+            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+        }
+    }
     handleRequestJoinGroup() {
         if(this.state.showPopup == false) // 팝업띄우기
         {
@@ -108,9 +116,9 @@ class GroupInfoComponent extends Component {
                     :// 그룹 수정 권한 없음
                     <div style={{ marginLeft: "auto", marginRight: "72px", order: "2", fontFamily: "Noto Sans KR" }}>
                         <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000" }} onClick={this.handleRequestJoinGroup}>가입 신청</div>
-                        <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", width: "183px", height: "45px", display: "flex" }}>
-                            <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 등록하기</div>
-                            <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: ".55", background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                        <div onClick={this.props.userInfo==null? null:() => this.like() } style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", width: "183px", height: "45px", display: "flex" }}>
+                            <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
+                            <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: this.state.tmpLike ? "1" : "0.45",  background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                         </div>
                         <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "43px", width: "147px", height: "55px", fontWeight: "300", fontSize: "17px", lineHeight: "30px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0", textAlign: "right" }}>
                             최근 업데이트 {info && DateFormat(info.child_update_time)}<br />
@@ -175,6 +183,14 @@ class GroupInfoComponent extends Component {
         const info = this.props.GroupInfo
         return (
           <React.Fragment>
+          {this.state.likeDialog && 
+                <div style={{
+                    position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
+                    background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"}}>
+                    <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR",
+                 fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070" }}>관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
+                 </div>
+                 </div>}
           {this.state.isJoin==false?<JoinModal/>:<JoinCancelModal/>}
         <div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
             {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}

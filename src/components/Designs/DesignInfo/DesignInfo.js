@@ -41,7 +41,9 @@ class DesignInfo extends Component {
         const { DesignDetail,UserInfo, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
-        const isMyDesign = this.props.DesignDetail.user_id == this.props.UserInfo.uid?true:false;
+        console.log(this.props)
+
+        const isMyDesign = this.props.DesignDetail&&this.props.DesignDetail.user_id == this.props.UserInfo&&this.props.UserInfo.uid?true:false;
         console.log("DesignInfo:",this.props);
         return (
             <>
@@ -99,7 +101,7 @@ class DesignInfo extends Component {
                             <div style={{ marginLeft: "15px", width: "45px", height: "40px", background: `url(${iEdit})`,  backgroundSize: "cover", backgroundPosition: "center center", }}></div>
                         </div>                   
                         :
-                        <div style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} onClick={() => this.like()}>
+                        <div onClick={this.props.userInfo==null? null:() => this.like() } style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
                             <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>관심 디자인 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
                             <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${thumbup})`, opacity: this.state.tmpLike ? "1" : "0.45", backgroundSize: "cover", backgroundPosition: "center center", }}></div>
                         </div>
