@@ -9,8 +9,9 @@ import iThumbUp from "source/thumbup_icon_white.png"
 import IconView from "source/IconView"
 import noimg from "source/noimg.png"
 
-
 import DateFormat from "modules/DateFormat"
+import TextFormat from "modules/TextFormat"
+
 // CSS 
 const DesignElement = styled.div`
   border: 1px solid #FFFFFF;
@@ -64,25 +65,28 @@ class Design extends Component {
       <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
         <div className="cover" onClick={this.gotoDetailPage} />
         {isForked && <div className="forked" />}
-        <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000" }}>{data.categoryName}</div>
+        <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000", cursor: "default" }}>{data.categoryName}</div>
         <div style={{ zIndex: "703", position: "absolute", width: "274.08px", color: "#FFF", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
           <div style={{ fontSize: "20px", fontWeight: "700", display: "flex", justifyContent: "space-between" }}>
-            <div style={{ width: "225px" }}>
-              {data.title.substr(0, 12)}{data.title.length > 12 && "..."}
-            </div>
-            <div style={{ marginTop: "5px",  fontWeight: "300", width: "55px", height: "25px", fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR" }}>
-              {DateFormat(data.update_time)}
+            <div style={{ width: "100%" }}>
+              <TextFormat width="100%" txt={data.title} />
+              {/* {data.title.substr(0, 16)}{data.title.length > 16 && "..."} */}
             </div>
           </div>
-          <div style={{ fontSize: "20px", fontWeight: "300" }}>{data.userName}</div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ fontSize: "20px", fontWeight: "300", cursor: "pointer" }}>
+              {data.userName}</div>
+            <div style={{ marginTop: "5px", fontWeight: "300", width: "65px", height: "25px", fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR", cursor: "default" }} >
+              {DateFormat(data.update_time)}</div>
+          </div>
         </div>
         <div style={{ zIndex: "703", marginLeft: "24.92px", marginTop: "280px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
           <div style={{ zIndex: "703", marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
-          <div style={{ zIndex: "703", marginRight: "6px" }}>{data.view_count}</div>
+          <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{data.view_count}</div>
           <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "11px", height: "11px" }} src={iThumbUp} /></div>
-          <div style={{ zIndex: "703", marginRight: "6px" }}>{data.like_count}</div>
+          <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{data.like_count}</div>
           <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "22px", height: "11px" }} src={iForked} /></div>
-          <div style={{ zIndex: "703", marginRight: "0px" }}>{data.children_count || 0}</div>
+          <div style={{ zIndex: "703", marginRight: "0px", cursor: "default" }}>{data.children_count || 0}</div>
         </div>
       </DesignElement>
     )

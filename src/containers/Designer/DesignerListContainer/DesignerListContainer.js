@@ -59,7 +59,7 @@ class DesignerListPage extends Component {
     }
     handleChangeSubCategory = async (parent, category) => {
         // console.log(this.props.category1[parent], parent)
-        await this.setState({ page: 0, main_category: this.props.category1[parent], this_category: this.props.category1[parent], sub_category: category })
+        await this.setState({ page: 0, main_category: this.props.category1[parent], this_category: category, sub_category: category })
         this.props.GetDesignerTotalCountRequest(this.state.main_category.value, category.value)
         this.reloadData()
     }
@@ -78,6 +78,9 @@ class DesignerListPage extends Component {
 
     };
     changeCategory = (category) => {
+        if (this.state.this_category === category) {
+            return;
+        }
         this.handleChangeCategory(category)
     }
 
@@ -89,7 +92,7 @@ class DesignerListPage extends Component {
         return (
             <>
                 <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                    category1={category1} category2={category2[this_category.value]} main_selected={main_category} sub_selected={sub_category} />
+                    category1={category1} category2={category2[main_category.value]} main_selected={main_category} sub_selected={sub_category} />
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
                 <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
                 <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
