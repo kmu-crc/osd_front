@@ -5,6 +5,7 @@ import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
 import noimg from "source/noimg.png"
 import DateFormat from "modules/DateFormat"
 import iDelete from "source/deleteItem.png"
+import Cross from "components/Commons/Cross"
 
 import { Modal } from "semantic-ui-react";
 
@@ -14,8 +15,8 @@ class GroupInfoComponent extends Component {
     constructor(props)
     {
         super(props);
-        this.state={isJoin:false,showPopup:false,joinDialog:false,joinCancelDialog:false,tmpLike: false, likeDialog: false, forkDialog: 0};
-        this.handleRequestJoinGroup = this.handleRequestJoinGroup.bind(this);
+        this.state={isJoin:false,showPopup:-1,tmpLike: false, likeDialog: false, forkDialog: 0};
+        this.handleShowPopup = this.handleShowPopup.bind(this);
     }
     like() {
         if (this.state.tmpLike) { //dislike
@@ -26,23 +27,11 @@ class GroupInfoComponent extends Component {
             setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
         }
     }
-    handleRequestJoinGroup() {
-        if(this.state.showPopup == false) // 팝업띄우기
-        {
-          if(this.state.isJoin==false) // 가입 신청
-          {
-            this.setState({ showPopup:!this.state.showPopup,joinDialog:true,joinCancelDialog:false })
-          }
-          else // 가입 취소
-          {
-            this.setState({ showPopup:!this.state.showPopup,joinDialog:false,joinCancelDialog:true })
-          }
-            
-        }
-        else // 팝업 닫기
-        {
-          this.setState({ showPopup:!this.state.showPopup,joinDialog: false,joinCancelDialog:false})     
-        }
+
+    handleShowPopup(nPopup) {
+        /** -1:닫기 1:가입신청 2:가입취소 */
+        this.setState({ showPopup:nPopup})
+
     }
     handleMoreViewDescription = (description) => {
         alert(description)
@@ -53,7 +42,6 @@ class GroupInfoComponent extends Component {
         window.location.href = href+ 'modifygroup/'+this.props.GroupInfo.uid;
     }
     render() {
-        console.log("GroupProps",this.props)
         const group_user_id = this.props.GroupInfo&&this.props.GroupInfo.user_id;
         const user_id = this.props.userInfo&&this.props.userInfo.uid;
 
@@ -110,7 +98,7 @@ class GroupInfoComponent extends Component {
                     </div>
                     :// 그룹 수정 권한 없음
                     <div style={{ marginLeft: "auto", marginRight: "72px", order: "2", fontFamily: "Noto Sans KR" }}>
-                        <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000" }} onClick={this.handleRequestJoinGroup}>가입 신청</div>
+                        <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000" }} onClick={()=>this.handleShowPopup(this.state.isJoin==false?1:2)}>가입 신청</div>
                         <div onClick={this.props.userInfo==null? null:() => this.like() } style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", width: "183px", height: "45px", display: "flex" }}>
                             <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
                             <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: this.state.tmpLike ? "1" : "0.45",  background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
@@ -152,27 +140,44 @@ class GroupInfoComponent extends Component {
         }
         const JoinModal=()=>
         {
+            const title = this.props.GroupInfo&&this.props.GroupInfo.title;
+            
             return(
-                <Modal open={this.state.showPopup} style={{boxShadow:"0px 3px 6px #000000",position:"relative",width:"576px",height:"200px",textAlign:"center",bottom:"318px"}}>
-                <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>{this.props.GroupInfo.title}<br/>가입 신청을 하시겠습니까?</div>
-                <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 신청합니다</div>
-                <div onClick = {this.handleRequestJoinGroup} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
-                            backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+                this.state.showPopup==1&&
+                <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
+                            <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+                                <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+                            </div>
+                            <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500", 
+                                        fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1" }}>
+                                {title&&title.slice(0, 20)}<br />
+                                가입 신청을 하시겠습니까?</div>
+                            <div onClick={() => this.handleShowPopup(-1)} style={{ cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px", 
+                                                            textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0", 
+                                                            color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000" }}>
+                                네, 가입합니다.</div>
                 </div>
-                </Modal>
+
             );
         }
         const JoinCancelModal=()=>
         {
+            const title = this.props.GroupInfo.title;
             return(
-                <Modal open={this.state.showPopup} style={{boxShadow:"0px 3px 6px #000000",position:"relative",width:"576px",height:"200px",textAlign:"center",bottom:"318px"}}>
-                <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>{this.props.GroupInfo.title}<br/>가입 신청을 취소하시겠습니까?</div>
-                <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 취소합니다</div>
-                <div onClick = {this.handleRequestJoinGroup} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
-                            backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+                this.state.showPopup==2&&
+                <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
+                            <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+                                <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+                            </div>
+                            <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500", 
+                                        fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1" }}>
+                                {title&&title.slice(0, 20)}<br />
+                                가입 신청을 취소 하시겠습니까?</div>
+                            <div onClick={() => this.handleShowPopup(-1)} style={{ cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px", 
+                                                            textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0", 
+                                                            color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000" }}>
+                                네, 취소합니다.</div>
                 </div>
-                </Modal>
-
             );
         }
         const info = this.props.GroupInfo
