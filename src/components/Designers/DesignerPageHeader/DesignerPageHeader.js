@@ -55,6 +55,22 @@ let descriptionLengthCheck = "";
 const TestExplain="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
 
 class DesignerPageHeader extends Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = { tmpLike: false, likeDialog: false, forkDialog: 0 };
+        this.like = this.like.bind(this);
+    }
+
+    like() {
+        if (this.state.tmpLike) { //dislike
+            this.setState({ tmpLike: !this.state.tmpLike })
+        } else {
+            this.setState({ tmpLike: !this.state.tmpLike, likeDialog: true })
+            // request like design
+            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+        }
+    }
     render() {
         const MypageInfo = this.props.DesignerDetail;
 
@@ -66,9 +82,11 @@ class DesignerPageHeader extends Component {
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
-
+        
         return (
-            <div style={BackgroundBox}>
+            <React.Fragment>
+
+           <div style={BackgroundBox}>
                 <div style = {Name}>진아진아진아</div>
                 <div style = {ProfileBox}></div>
                 <div style ={Title}>패션패션패션</div>
@@ -82,9 +100,10 @@ class DesignerPageHeader extends Component {
                     <div style = {Summary_Forked_Icon}></div>
                     <div style = {Summary_Forked}>2000</div>
                 </div>
-                <div style={interestDesignerBox}>
-                    <div style={interestDesignerTitle}>관심 디자이너 등록하기</div>
-                    <div style = {interestDesignerImg}></div>
+                <div onClick = {this.props.userInfo==null? null:() => this.like() } style={interestDesignerBox}>
+                    <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
+                    <div style = {{display:"inline-block",height:"40px",marginLeft:"15px",marginBottom:"-7px",opacity: this.state.tmpLike ? "1" : "0.45",
+                            backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center"}}></div>
                 </div>
                 <div style={sendMessageBox}>
                     <div style={sendMessagTitle}>메세지 보내기</div>
@@ -92,7 +111,15 @@ class DesignerPageHeader extends Component {
                 </div>
                 <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
 
+                 {this.state.likeDialog == false? null:
+                 <div style={{position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
+                    background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"}}>
+                        <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR",
+                        fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070" }}>관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
+                        </div>
+                 </div>}
             </div>
+            </React.Fragment>
         );
 
     };
