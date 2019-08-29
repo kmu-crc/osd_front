@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import arrow from "source/arrow.svg"
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
-import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
+// import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 
 const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};

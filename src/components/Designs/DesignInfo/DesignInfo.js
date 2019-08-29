@@ -19,10 +19,9 @@ class DesignInfo extends Component {
             setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
         }
     }
-    gotoDesignModify=()=>
-    {
-        let href = window.location.href.substring(0,window.location.href.search("designDetail"))
-        window.location.href = href+ 'designModify/'+this.props.DesignDetail.uid;
+    gotoDesignModify = () => {
+        let href = window.location.href.substring(0, window.location.href.search("designDetail"))
+        window.location.href = href + 'designModify/' + this.props.DesignDetail.uid;
     }
     fork() {
         this.setState({ forkDialog: 1 })
@@ -38,13 +37,10 @@ class DesignInfo extends Component {
         window.location.href = window.location.href.substring(0, window.location.href.search('designDetail')) + `message/${user_id}`
     }
     render() {
-        const { DesignDetail,UserInfo, Count, like } = this.props
+        const { DesignDetail, UserInfo, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
-
-        console.log(this.props)
-
-        const isMyDesign = this.props.DesignDetail&&this.props.DesignDetail.user_id == this.props.UserInfo&&this.props.UserInfo.uid?true:false;
-        console.log("DesignInfo:",this.props);
+        const isMyDesign = this.props.DesignDetail && this.props.UserInfo && this.props.DesignDetail.user_id === this.props.UserInfo.uid ? true : false;
+        // console.log("DesignInfo:", this.props);
         return (
             <>
                 {this.state.forkDialog > 0 &&
@@ -84,7 +80,7 @@ class DesignInfo extends Component {
                             <div style={{ marginTop: "auto", marginLeft: "6px", width: "34px" }}>{Count.like_count}</div>
                         </div>
                     </div>
-                    <div style={{marginTop: "19px", marginLeft: "65px" }}>
+                    <div style={{ marginTop: "19px", marginLeft: "65px" }}>
                         <div style={{ width: "100px", height: "25px", color: "#FF0000", fontSize: "17px", fontFamily: "Noto Sans KR", lineHeight: "25px", fontWeight: "300", textAlign: "left" }}>{DesignDetail.categoryName}</div>
                         <div style={{ width: "423px", height: "158px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation ? DesignDetail.explanation.slice(0, 150) : DesignDetail.userName + "님의 " + DesignDetail.title + "디자인입니다."}</div>
                     </div>
@@ -92,28 +88,28 @@ class DesignInfo extends Component {
                         <div style={{ width: "100px", height: "25px", color: "#FF0000", fontSize: "17px", fontFamily: "Noto Sans KR", lineHeight: "25px", fontWeight: "300", textAlign: "left" }}></div>
                         <div style={{ width: "423px", height: "158px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation && DesignDetail.explanation.slice(150, 300 - 3)}{(DesignDetail.explanation.length > 300 - 3) ? "..." : ""}</div>
                     </div>
-                    <div style={{position:"relative", marginTop: "19px", marginLeft: "auto", marginRight: "72px" }}>
+                    <div style={{ position: "relative", marginTop: "19px", marginLeft: "auto", marginRight: "72px" }}>
                         <div style={{ marginTop: "0px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#FF0000", textAlign: "right", marginLeft: "auto", fontWeight: "500", cursor: "pointer" }} onClick={() => this.fork()}>파생 디자인 생성</div>
-                        
-                        {isMyDesign==true?
-                        <div onClick = {this.gotoDesignModify} style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
-                            <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>디자인 수정하기 </div>
-                            <div style={{ marginLeft: "15px", width: "45px", height: "40px", background: `url(${iEdit})`,  backgroundSize: "cover", backgroundPosition: "center center", }}></div>
-                        </div>                   
-                        :
-                        <div onClick={this.props.userInfo==null? null:() => this.like() } style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
-                            <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>관심 디자인 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
-                            <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${thumbup})`, opacity: this.state.tmpLike ? "1" : "0.45", backgroundSize: "cover", backgroundPosition: "center center", }}></div>
-                        </div>
+
+                        {isMyDesign === true ?
+                            <div onClick={this.gotoDesignModify} style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
+                                <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>디자인 수정하기 </div>
+                                <div style={{ marginLeft: "15px", width: "45px", height: "40px", background: `url(${iEdit})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
+                            </div>
+                            :
+                            <div onClick={this.props.userInfo === null ? null : () => this.like()} style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
+                                <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>관심 디자인 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
+                                <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${thumbup})`, opacity: this.state.tmpLike ? "1" : "0.45", backgroundSize: "cover", backgroundPosition: "center center", }}></div>
+                            </div>
                         }
-                        {isMyDesign == true?
-                        null:
-                        <div style={{ height: "45px", display: "flex", marginTop: "15px", marginLeft: "auto", cursor: "pointer" }} onClick={() => this.sendMessage(DesignDetail.user_id)}>
-                            <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", marginLeft: "auto", fontWeight: "300", color: "#707070", textAlign: "right" }}>메시지 보내기</div>
-                            <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${email})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
-                        </div>
+                        {isMyDesign === true ?
+                            null :
+                            <div style={{ height: "45px", display: "flex", marginTop: "15px", marginLeft: "auto", cursor: "pointer" }} onClick={() => this.sendMessage(DesignDetail.user_id)}>
+                                <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", marginLeft: "auto", fontWeight: "300", color: "#707070", textAlign: "right" }}>메시지 보내기</div>
+                                <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${email})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
+                            </div>
                         }
-                        <div style={{position:"absolute",bottom:"18px",  height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", lineHeight: "40px", textAlign: "right", marginLeft: "auto", fontWeight: "300" }}>최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                        <div style={{ position: "absolute", bottom: "18px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", lineHeight: "40px", textAlign: "right", marginLeft: "auto", fontWeight: "300" }}>최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
                     </div>
                 </div>
             </>
