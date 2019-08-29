@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import SelectBox from "components/Commons/SelectBox"
-
+import showPw from "source/show_password.svg";
+import styled from "styled-components";
 const category1 = [
   { id: 0, value: "대분류를 선택해 주세요" }, { id: 1, value: "패션" }, { id: 2, value: "제품" },
   { id: 3, value: "커뮤니케이션" }, { id: 4, value: "공간" }, { id: 5, value: "엔터테인먼트" },
@@ -11,6 +12,7 @@ const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }
 ]
 
+const colorSwich = ['#FFFFFF', '#FF0000'];
 class ModifyMyDetail extends Component {
   state = {
     change_password: false,
@@ -22,8 +24,7 @@ class ModifyMyDetail extends Component {
   }
   handleScroll = () => {
     let sections = document.querySelectorAll("section")
-    console.log(sections)
-    sections.forEach(item => { console.log(item) })
+
   }
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
@@ -119,6 +120,15 @@ class ModifyMyDetail extends Component {
       this.props.SecessionRequest(this.props.token);
     }
   }
+  isDesignerCheck = ()=>{
+    var checkDiv = document.getElementById("isDesignerCheckbox");
+    if(checkDiv.style.backgroundColor === "rgb(255, 255, 255)"){
+      checkDiv.style.backgroundColor = "#FF0000"
+    }
+    else{
+      checkDiv.style.backgroundColor = "#FFFFFF";
+    }
+  }
 
   render() {
     // const myInfo = this.props.MyDetail;
@@ -174,7 +184,7 @@ class ModifyMyDetail extends Component {
           <div style={{ display: "flex" }}>
             <div style={{ width: "75px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>비밀번호</div>
             <div style={{
-              marginLeft: "98px", marginTop: "9px",
+              marginLeft: "98px",
               width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
               fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
             }} >
@@ -186,12 +196,13 @@ class ModifyMyDetail extends Component {
                   color: "#707070", backgroundColor: "#EFEFEF"
                 }} placeholder="비밀번호를 입력하세요." />
             </div>
+            <div style={{marginLeft:"18px", marginTop:"18px"}}><img src={showPw}/></div>
           </div>
           {/* pw verify */}
           <div style={{ marginTop: "55px", display: "flex" }}>
             <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>비밀번호 확인</div>
             <div style={{
-              marginLeft: "60px", marginTop: "9px",
+              marginLeft: "60px",
               width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
               fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
             }} >
@@ -219,7 +230,48 @@ class ModifyMyDetail extends Component {
           </div>
         </section>
       )
+    };
+
+
+    const SectionBuziness = () => {
+      let description = [];
+      description[0] = "디자이너로서 디자인과 그룹을 만들고 수정할 수 있으며"
+      description[1] = "디자이너 리스트에 올라가게 됩니다."
+      description[2] = "추후에 직업에 대한 부가적인 정보를 입력하여 많은 사람들과 소통하게 됩니다."
+      return (
+          <>
+              <div style = {{display:"flex", justifyContent:"space-start",paddingLeft:"95.5px"}}>
+              <div style={{ fontSize:"20px", color:"#707070",fontWeight: "500" }}>디자이너 활동 여부</div>
+              <div id="isDesignerCheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: "#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
+                onClick={this.isDesignerCheck}
+              ></div>
+                <div style={{color:"#FF0000", fontSize:"17px", textAlign:"left", marginLeft:"420px", width:"27px", height:"25px"}}>TIP</div>
+              </div>
+              <div className="description" style={{marginTop:"5px",marginLeft:"708px", color:"#707070", fontSize:"17px", fontWeight: "100", width:"540px", height:"75px"}}>{description[0]}<br />{description[1]}<br />{description[2]}</div>
+
+              <div style={{display:"flex",position:"relative",marginTop:"66px" ,justifyContent:"space-start"}}>
+                  <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>팀</div>
+                  <div style={{ marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
+              </div>
+            <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
+              <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>경력</div>
+              <div style={{ marginLeft: "18px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
+            </div>
+            <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
+              <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>위치</div>
+              <div style={{ marginLeft: "18px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
+            </div>
+            <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
+              <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>연락</div>
+              <div style={{ marginLeft: "18px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
+            </div>
+
+            <div style={{display:"table-cell",position:"relative", left:"1264.5px",width:"104.5px", height:"44px", borderRadius: "5px", backgroundColor:"#FF0000",color:"#FFFFFF", fontSize:"20px",fontWeight:"500"
+            ,textAlign:"center",verticalAlign:"middle"}}>등록하기</div>
+          </>
+      )
     }
+
     return (<>
       <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
         <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
@@ -237,19 +289,15 @@ class ModifyMyDetail extends Component {
           </div>
         </div>
         {/* form */}
-        <div style={{ width: "1422px", marginLeft:"45px", height: "1619px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
+        <div style={{ width: "1422px", marginLeft:"45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" ,fontFamily:"Noto Sans KR"}}>
           <form onSubmit={this.submit}>
             <SectionBasics />
             <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
             <SectionSecurity />
             <div style={{ marginTop: "101.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
             <SectionAdditional />
-            {/* submit */}
-            <div style={{ marginTop: "200px", justifyContent: "flex-end", display: "flex" }}>
-              <div style={{ width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-                <p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>등록하기</p>
-              </div>
-            </div>
+            <div style={{ marginTop: "102.5px", marginBottom: "41.5px", borderBottom: "5px solid #F5F4F4" }} />
+            <SectionBuziness />
           </form>
         </div>
       </div>
@@ -259,6 +307,7 @@ class ModifyMyDetail extends Component {
 
 export default ModifyMyDetail;
 
+//<p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>등록하기</p>
 
 //            <div style={{ width: "1920px", display: "block", height: "48px", marginTop: "8px", backgroundColor: "#EFEFEF" }}>
 //                <div style={{
