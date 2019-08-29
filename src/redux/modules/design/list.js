@@ -74,6 +74,7 @@ export function DesignList(state, action) {
                 }
             })
         case DESIGN_LIST_CLEAR:
+            console.log(action.DesignList);
             return update(state, {
                 status: {
                     DesignList: { $set: action.DesignList },
@@ -137,7 +138,9 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
             return response.json()
         }).then((data) => {
             if (!data) data = []
-            if (page === 0) dispatch(DesignListClear(data))
+            if (page === 0){
+                dispatch(DesignListClear(data));
+            }
             dispatch(GetDesignList(data))
         }).catch((error) => {
             dispatch(DesignListFail())

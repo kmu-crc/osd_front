@@ -70,7 +70,8 @@ class DesignListContainer extends Component {
   render() {
     const { this_category, main_category, sub_category, page, this_order } = this.state
     const { category1, category2, Count, status } = this.props
-    const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin
+    const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
+    console.log(this_order);
     return (<>
       <Category
         subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
