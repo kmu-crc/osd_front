@@ -6,31 +6,31 @@ import noimg from "source/thumbnail.png";
 
 const UserMenu = styled.div`
     display: ${props => props.display};
+    padding-top:10px;
     position: absolute;
     pointer-events: auto;
     top: 50.5px;
-    left: ${props => props.left + "px"};
+    right: 5px;
     z-index: 904;
-    height: 153px;
+    height: 115px;
     width: 179px;
     border-radius: 15px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-    border-radius: 5px;
+    border-radius: 10px;
     color: #707070;
     font-size: 20px;
-    font-weight: 500;
-    padding: 15px;
-`
+    font-weight: 500;    
+   `
 const UserMenuItem = styled.div`
+    margin-top:5px;
     cursor: pointer;
     width: 100%;
-    padding-top:11.5px;
-    padding-left: 5px;
-    padding-right: 13px;
     line-height: 30px;
-    text-align: left;
-    &:hover {}
+    text-align: center;
+    &:hover {
+        color:#FF0000;
+    }
 `
 const UserThumbnail = styled.div`
     margin-right: 10px;
@@ -96,8 +96,8 @@ class SignNav extends Component {
         return (<>
             {this.state.user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
-                    <div style={{ paddingBottom: "5px" }}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr style={{ position: "relative", left: '-10px' }} width="166px" noshade="none" />
+                    <div><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr color = "#EFEFEF" width="166px" noshade="none" />
                     <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
             {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
