@@ -35,6 +35,7 @@ class GroupList extends Component {
     }
     render() {
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataList, dataListAdded } = this.props
+        console.log("group:", dataList, dataListAdded)
         return (
             <>
                 {this.props.status === "INIT" ?

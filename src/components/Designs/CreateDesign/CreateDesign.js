@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import deleteItem from "source/deleteItem.png"
 import SelectBox from "components/Commons/SelectBox"
+import { CreateStep, CreateCard, TipDiv } from "modules/GridEditor"
 const emptyCategory = [{ value: 0, text: "" }]
-const scrollmenu = [
-  { txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }, { txt: "단계/컨텐츠 정보", tag: "#contenteditor" }
-]
+const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }, { txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
+
 class CreateDesign extends Component {
   state = {
+    file: null,
     loading: false, isPossibleNextStep: false, step: 2, /* 0: basics, 1: additional, 2: contents*/
     selectedCate1: null, selectedCate2: null,
     /* cate1: null, */ cate2: null
@@ -47,6 +48,9 @@ class CreateDesign extends Component {
   completed = () => {
     this.setState({ isPossibleNextStep: true })
   }
+  fileHandler = (event) => {
+
+  }
   render() {
     // const myInfo = this.props.MyDetail
     const SectionBasics = () => {
@@ -56,7 +60,7 @@ class CreateDesign extends Component {
           <div style={{ width: "1200px" }}>
             <div style={{ display: "flex" }}>
               <div style={{ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }}>섬네일 사진
-              <input hidden type="file" value={null} />
+              <input hidden type="file" name="file" onChange={this.fileHandler} value={this.state.file || ""} />
               </div>
               <div style={{ marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", backgroundColor: "#EFEFEF" }} />
               <div style={{ marginLeft: "54.5px", marginTop: "100px" }}>
@@ -93,7 +97,7 @@ class CreateDesign extends Component {
       return (<div style={{ display: "flex", marginRight: "50px" }}>
         <div style={{ backgroundImage: `url(${this.state.url})`, backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
         <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "112px", height: "29px" }}>진아진아진아</div>
-        <img src={deleteItem} style={{ marginTop: "7.34px", marginLeft: "13.86px", width: "16px", height: "16px" }} />
+        <img alt={"delete"} src={deleteItem} style={{ marginTop: "7.34px", marginLeft: "13.86px", width: "16px", height: "16px" }} />
       </div>)
     }
     const SectionAdditional = () => {
@@ -130,24 +134,6 @@ class CreateDesign extends Component {
             : <p>카테고리를 가져오고 있습니다.</p>}
         </>
       )
-    }
-    const CreateStep = (props) => {
-      return (<div onClick={props.onClick} style={{ marginRight: props.marginRight, cursor: "pointer", display: "flex", width: "200px", height: "77px", borderRadius: "15px", border: "2px solid rgba(112,112,112, 0.5)", backgroundClip: "padding-box" /* for IE9+, Firefox 4+, Opera, Chrome */ }}>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", width: "33px", height: "33px", marginTop: "22.5px", marginLeft: "19.5px" }}>+</div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "left", lineHeight: "29px" }}>{props.step} 생성하기</div>
-      </div>)
-    }
-    const CreateCard = (props) => {
-      return (<div onClick={props.onClick} style={{ marginRight: props.marginRight, cursor: "pointer", width: "200px", height: "200px", borderRadius: "15px", border: "2px solid rgba(112,112,112, 0.5)", backgroundClip: "padding-box" /* for IE9+, Firefox 4+, Opera, Chrome */ }}>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", width: "66.68px", height: "66.68px", marginTop: "38.58px", marginLeft: "66.59px", border: "1px dashed gray" }}>+</div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.step}생성하기</div>
-      </div>)
-    }
-    const TipDiv = (props) => {
-      return (<div>
-        <div style={{ color: "#FF0000" }}>TIP</div>
-        <div style={{ color: "#707070", fontSize: "17px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
-      </div>)
     }
     const SectionContentEditor = () => {
       return (

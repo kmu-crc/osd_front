@@ -6,7 +6,7 @@ import { SignInRequest, SignOutRequest } from "redux/modules/auth"
 
 class HeaderContainer extends Component {
     render() {
-        console.log("HC:", this.props)
+        //console.log("HC:", this.props)
         return (
             <Header {...this.props} />
         )
@@ -14,6 +14,7 @@ class HeaderContainer extends Component {
 }
 const mapStateTopProps = (state) => {
     return {
+        valid: state.Authentication.status.valid,
         userInfo: state.Authentication.status.userInfo,
         isLoggedIn: state.Authentication.status.isLoggedIn
     }

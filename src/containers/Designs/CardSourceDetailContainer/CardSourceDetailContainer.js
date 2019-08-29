@@ -22,9 +22,9 @@ class CardSourceDetailContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    content: state.DesignSourceDetail.status.content,
-    status: state.DesignSourceDetail.DesignSourceDetail.status,
-    editStatus: state.DesignSourceDetail.DesignSourceEdit.status
+    content: state.DesignCard.status.content,
+    status: state.DesignCard.DesignSourceDetail.status,
+    editStatus: state.DesignCard.DesignSourceEdit.status
   };
 };
 

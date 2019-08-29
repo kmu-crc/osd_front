@@ -1,8 +1,9 @@
 import host from "config"
 import update from "react-addons-update"
 
-
+// action types
 const GET_DESIGN_DETAIL = "GET_DESIGN_DETAIL"
+export const DESIGN_NOT_FOUND = "DESIGN_NOT_FOUND"
 const GET_DESIGN_COUNT = "GET_DESIGN_COUNT"
 const DESIGN_DETAIL_RESET = "DESIGN_DETAIL_RESET"
 const GET_DESIGN_DETAIL_VIEW = "GET_DESIGN_DETAIL_VIEW"
@@ -50,15 +51,16 @@ const DELETE_DESIGN = "DELETE_DESIGN"
 const DELETE_DESIGN_SUCCESS = "DELETE_DESIGN_SUCCESS"
 const DELETE_DESIGN_FAILURE = "DELETE_DESIGN_FAILURE"
 
-
+// initial state
 const initialState = {
     DesignDetail: { status: "INIT" },
     UpdateDesignInfo: { status: "INIT" },
     status: { DesignDetail: [], Count: { like_count: 0, member_count: 0, card_count: 0, view_count: 0 } }
 }
 
-
+// action creator
 const CreateDesign = () => ({ type: CREATE_DESIGN })
+const DesignNotFound = () => ({ type: DESIGN_NOT_FOUND, DesignDetail: { status: DESIGN_NOT_FOUND } })
 const CreateDesignSuccess = (res) => ({ type: CREATE_DESIGN_SUCCESS, success: res.success, design_id: res.design_id })
 const CreateDesignFailure = (error) => ({ type: CREATE_DESIGN_FAILURE, success: error.success })
 const DeleteDesign = () => ({ type: DELETE_DESIGN })
@@ -106,12 +108,16 @@ const GetDesignDetailView = (data) => ({ type: GET_DESIGN_DETAIL_VIEW, DesignDet
 const DesignDetailViewReset = () => ({ type: DESIGN_DETAIL_VIEW_RESET, DesignDetailView: [] })
 const GetDesignDetailStep = (data) => ({ type: GET_DESIGN_DETAIL_STEP, DesignDetailStep: data })
 
-
+// reducer
 export function Design(state, action) {
     if (typeof state === "undefined")
         state = initialState
 
     switch (action.type) {
+        case DESIGN_NOT_FOUND:
+            return update(state, {
+                DesignDetail: { status: { $set: DESIGN_NOT_FOUND } },
+            })
         case GET_WAITING_LIST:
             return update(state, {
                 WaitingList: { status: { $set: "WAITING" } }
@@ -140,6 +146,7 @@ export function Design(state, action) {
             })
         case GET_DESIGN_DETAIL:
             return update(state, {
+                DesignDetail: { status: { $set: action.type } },
                 status: { DesignDetail: { $set: action.DesignDetail } }
             })
         case DESIGN_DETAIL_RESET:
@@ -155,7 +162,7 @@ export function Design(state, action) {
     }
 }
 
-
+// API
 export function GetDesignDetailStepCardRequest(id, card_id) {
     return (dispatch) => {
         return fetch(`${host}/design/designDetail/` + id + "/cardDetail/" + card_id, {
@@ -236,10 +243,7 @@ export function GetDesignCountRequest(id) {
             if (!data) {
                 console.log("no data")
                 data = {
-                    like_count: 0,
-                    member_count: 0,
-                    card_count: 0,
-                    view_count: 0
+                    like_count: 0, member_count: 0, card_count: 0, view_count: 0
                 }
             }
             dispatch(GetDesignCount(data))
@@ -255,22 +259,20 @@ export function DesignDetailResetRequest() {
 }
 export function GetDesignDetailRequest(id, token) {
     return (dispatch) => {
-        if (token == null) {
+        if (token === null || token === undefined) {
             token = ""
         }
-        return fetch(`${host}/design/designDetail/` + id, {
-            headers: {
-                "Content-Type": "application/json",
-                "x-access-token": token
-            },
-            method: "get"
+        const url = `${host}/design/designDetail/${id}`
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token }, method: "get"
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            // console.log("design Detail data >>", data)
-            if (!data) {
-                // console.log("no data")
+            console.log("design Detail data >>", data)
+            if (!data || (Object.entries(data).length === 0 && data.constructor === Object)) {
+                console.log("no data")
                 data = []
+                return dispatch(DesignNotFound())
             }
             return dispatch(GetDesignDetail(data))
         }).catch((error) => {
@@ -541,10 +543,10 @@ export function UpdateDesignInfoRequest(data, id, token) {
     }
 }
 export function UpdateDesignTime(id, token) {
-    console.log("UPDATE DESIGN TIME");
+    const url = `${host}/design/updateDesignTime/${id}`
     return dispatch => {
         dispatch(UpdateDesignInfo());
-        return fetch(`${host}/design/updateDesignTime/${id}`, {
+        return fetch(url, {
             headers: { "x-access-token": token, "Content-Type": "application/json" },
             method: "POST"
         })
@@ -578,4 +580,3 @@ export function DeleteDesignRequest(id, token) {
         });
     }
 }
-

@@ -43,7 +43,7 @@ class DesignListContainer extends Component {
   }
   handleChangeSubCategory = async (parent, category) => {
     console.log(this.props.category1[parent], parent)
-    await this.setState({ page: 0, main_category: this.props.category1[parent], this_category: this.props.category1[parent], sub_category: category })
+    await this.setState({ page: 0, main_category: this.props.category1[parent], this_category: category, sub_category: category })
     this.props.GetDesignListCountRequest(this.state.main_category.value, category.value)
     this.reloadData()
   }
@@ -61,23 +61,26 @@ class DesignListContainer extends Component {
     return this.props.GetDesignListRequest(page, order, main_category.value, sub_category.value, keyword)
   }
   changeCategory = (category) => {
+    if (this.state.this_category === category) {
+      return;
+    }
     this.handleChangeCategory(category)
-    console.log(this.state)
+    // console.log(this.state)
   }
   render() {
-    const { this_category, sub_category, page, this_order } = this.state
+    const { this_category, main_category, sub_category, page, this_order } = this.state
     const { category1, category2, Count, status } = this.props
     const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin
     return (<>
       <Category
         subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-        category1={category1} category2={category2[this_category.value]} sub_selected={sub_category} />
+        category1={category1} category2={category2[main_category.value]} main_selected={main_category} sub_selected={sub_category} />
 
       {/* <div style={{ height: "29px", zIndex: "999", transform: "translateY(-50%)" }}> */}
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
       {/* </div> */}
 
-      <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count || "-"})</TextWrapper>
+      <TextWrapper onClick={() => this.changeCategory(main_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</TextWrapper>
       <div style={{ paddingTop: "128px", paddingBottom: "68px" }}>
         {status === "INIT"
           ? <Loading />

@@ -1,34 +1,48 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
-import DetailStep from "components/Designs/DetailStep";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+// import DetailStep from "components/Designs/DetailStep"
+import GridEditor from "modules/GridEditor"
+import { GetDesignDetailRequest, CreateDesignBoardRequest, UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
 
 class DesignDetailStepContainer extends Component {
-  render() {
+  componentDidMount() {
+    this.props.GetDesignBoardRequest(this.props.design.uid)
+  }
+  checkEditorPermission() {
     return (
-      <div>
-        <DetailStep {...this.props} />
-      </div>
-    );
+      this.props.userInfo &&
+      this.props.design &&
+      this.props.design.member.find(peer => { return peer.user_id === this.props.userInfo.uid }))
+  }
+  render() {
+    console.log("DDSC:", this.props, this.checkEditorPermission())
+    return (<GridEditor {...this.props} editor={this.checkEditorPermission()} />)
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignDetailStep: state.DesignDetailStep.status.DesignDetailStep,
-    isTeam: state.DesignDetail.status.DesignDetail.is_team
-  };
-};
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    DesignDetailStep: state.DesignCard.status.DesignDetailStep,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignBoardRequest: (id) => {
-      return dispatch(GetDesignBoardRequest(id))
+    CreateDesignBoardRequest: (data, design_id, token) => {
+      return dispatch(CreateDesignBoardRequest(data, design_id, token));
     },
-    UpdateDesignTime: (id, token) => {
-      return dispatch(UpdateDesignTime(id, token));
+    GetDesignDetailRequest: (id, token) => {
+      return dispatch(GetDesignDetailRequest(id, token));
+    },
+    GetDesignBoardRequest: (id) => {
+      return dispatch(GetDesignBoardRequest(id));
+    },
+    UpdateDesignTime: (design_id, token) => {
+      return dispatch(UpdateDesignTime(design_id, token));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesignDetailStepContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DesignDetailStepContainer)

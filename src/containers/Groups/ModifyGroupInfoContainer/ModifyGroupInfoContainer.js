@@ -8,7 +8,8 @@ class ModifyGroupInfoContainer extends Component {
     isAuthor: false
   }
   componentDidMount() {
-    this.props.GetGroupDetailRequest(this.props.id, this.props.token)
+    console.log("권한:",this.props)
+    this.props.GetGroupDetailRequest(this.props.id)
       .then(() => {
         if (this.props.userInfo.uid !== this.props.GroupDetail.user_id) {
           alert("이 그룹에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.")
@@ -20,11 +21,12 @@ class ModifyGroupInfoContainer extends Component {
   render() {
     return (
       <div>
-        {this.state.isAuthor ? (
+        {/* {this.state.isAuthor ? (
           <ModifyGroupInfo {...this.props} />
         ) : (
             <p style={{ color: "#FFF" }}>수정권한을 확인 중 입니다.</p>
-          )}
+          )} */}
+    <ModifyGroupInfo {...this.props}/>
       </div>
     )
   }
@@ -34,7 +36,7 @@ class ModifyGroupInfoContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    GroupDetail: state.GroupDetail.status.GroupDetail,
+    GroupDetail: state.Group.status.GroupDetail,
     userInfo: state.Authentication.status.userInfo
   }
 }

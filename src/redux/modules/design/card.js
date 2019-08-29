@@ -2,6 +2,7 @@ import host from "config"
 import update from "react-addons-update"
 
 
+
 const CREATE_BOARD = "CREATE_BOARD"
 const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS"
 const CREATE_BOARD_FAILURE = "CREATE_BOARD_FAILURE"
@@ -14,7 +15,6 @@ const DELETE_BOARD_FAILURE = "DELETE_BOARD_FAILURE"
 const GET_BOARD = "GET_BOARD"
 const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS"
 const GET_BOARD_FAILURE = "GET_BOARD_FAILURE"
-
 
 const CREATE_CARD = "CREATE_CARD"
 const CREATE_CARD_SUCCESS = "CREATE_CARD_SUCCESS"
@@ -50,7 +50,6 @@ const DESIGN_SOURCE_RESET = "DESIGN_SOURCE_RESET"
 const GET_DESIGN_SOURCE = "GET_DESIGN_SOURCE"
 const GET_DESIGN_SOURCE_SUCCESS = "GET_DESIGN_SOURCE_SUCCESS"
 const GET_DESIGN_SOURCE_FAILURE = "GET_DESIGN_SOURCE_FAILURE"
-
 
 
 const CreateBoard = () => ({ type: CREATE_BOARD })
@@ -101,7 +100,7 @@ const DesignSourceReset = () => ({ type: DESIGN_SOURCE_RESET, data: [] })
 const initialState = {
     DesignDetailStep: { status: "INIT" },
     UpdateDesignFile: { status: "INIT" },
-    status: { DesignDetailStep: [] }
+    status: { DesignDetailStep: [], allData: null }
 }
 
 
@@ -161,6 +160,12 @@ export function DesignCard(state, action) {
     }
 }
 
+export const BringAllDataRequest = design_id => {
+    return dispatch => {
+        return fetch(`${host}/design/designDetail/bringAllData/${design_id}`, { method: "GET" })
+        // .then(functi)
+    }
+}
 export function DesignSourceResetRequest() {
     return (dispatch) => {
         dispatch(DesignSourceReset())
@@ -265,17 +270,16 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
     };
 }
 export const GetDesignBoardRequest = (id) => {
+    const url = `${host}/design/designDetail/${id}/getBoardList`
     return (dispatch) => {
         dispatch(GetBoard());
-        return fetch(`${host}/design/designDetail/${id}/getBoardList`, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
+        return fetch(url, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
             .then(function (res) {
                 return res.json();
             })
             .then(function (res) {
-                console.log(res);
                 return dispatch(GetBoardSuccess(res));
             }).catch((error) => {
-                console.log("insert detail err", error);
                 return dispatch(GetBoardFailure(error));
             });
     };

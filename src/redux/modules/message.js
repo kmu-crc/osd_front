@@ -6,15 +6,16 @@ import update from "react-addons-update"
 const GET_MY_MSG_LIST = "GET_MY_MSG_LIST"
 const GET_MY_MSG_LIST_SUCCESS = "GET_MY_MSG_LIST_SUCCESS"
 const GET_MY_MSG_LIST_FAILURE = "GET_MY_MSG_LIST_FAILURE"
+const SEND_MESSAGE = "SEND_MESSAGE"
+const SEND_MESSAGE_SUCCESS = "SEND_MESSAGE_SUCCESS"
+const SEND_MESSAGE_FAILURE = "SEND_MESSAGE_FAILURE"
 const GET_MY_MSG_DETAIL = "GET_MY_MSG_DETAIL"
 const GET_MY_MSG_DETAIL_SUCCESS = "GET_MY_MSG_DETAIL_SUCCESS"
 const GET_MY_MSG_DETAIL_FAILURE = "GET_MY_MSG_DETAIL_FAILURE"
 const GET_MY_MSG_DETAIL_CLEAR = "GET_MY_MSG_DETAIL_CLEAR"
-const SEND_MESSAGE = "SEND_MESSAGE"
-const SEND_MESSAGE_SUCCESS = "SEND_MESSAGE_SUCCESS"
-const SEND_MESSAGE_FAILURE = "SEND_MESSAGE_FAILURE"
 
 
+const ADD_MSG_MEMBER = "ADD_MSG_MEMBER"
 //
 const GetMyMsgList = () => ({ type: GET_MY_MSG_LIST })
 const GetMyMsgListSuccess = (data) => ({ type: GET_MY_MSG_LIST_SUCCESS, MsgList: data })
@@ -28,19 +29,23 @@ const SendMessageSuccess = (data) => ({ type: SEND_MESSAGE_SUCCESS, data })
 const SendMessageFailure = () => ({ type: SEND_MESSAGE_FAILURE })
 
 
+const AddMsgMember=()=>({type:ADD_MSG_MEMBER});
+
 //
 const initialState = {
+    status: { MsgDetail: [],MsgList: [] },
     SendMessage: { status: "INIT" },
-    GetMsgDetail: { status: "INIT" },
+    GetMsgDetail: { status: "INIT", },
     GetMsgList: { status: "INIT" },
-    status: { MsgList: [], MsgDetail: [] }
 }
 
 
 //
 export default function Message(state, action) {
+    
     if (typeof state === "undefined")
-        state = initialState
+        state = initialState;
+        
 
     switch (action.type) {
         case SEND_MESSAGE:
@@ -68,6 +73,7 @@ export default function Message(state, action) {
                 }
             })
         case GET_MY_MSG_LIST_SUCCESS:
+            
             return update(state, {
                 GetMsgList: {
                     status: { $set: "SUCCESS" }
@@ -79,28 +85,37 @@ export default function Message(state, action) {
             })
         case GET_MY_MSG_DETAIL:
             return update(state, {
-                GetMsgDetail: { status: { $set: "WATTING" } }
-            })
-        case GET_MY_MSG_DETAIL_SUCCESS:
+              GetMsgDetail: {
+                status: { $set: "WATTING" }
+              }
+            });
+          case GET_MY_MSG_DETAIL_SUCCESS:
             return update(state, {
-                GetMsgDetail: { status: { $set: "SUCCESS" } },
-                status: { MsgDetail: { $set: action.MsgDetail } }
-            })
-        case GET_MY_MSG_DETAIL_FAILURE:
+              GetMsgDetail: {
+                status: { $set: "SUCCESS" }
+              },
+              status: {
+                MsgDetail: { $set: action.MsgDetail }
+              }
+            });
+          case GET_MY_MSG_DETAIL_FAILURE:
             return update(state, {
-                GetMsgDetail: { status: { $set: "FAILURE" } }
-            })
-        case GET_MY_MSG_DETAIL_CLEAR:
+              GetMsgDetail: {
+                status: { $set: "FAILURE" }
+              }
+            });
+          case GET_MY_MSG_DETAIL_CLEAR:
             return update(state, {
-                status: { MsgDetail: { $set: action.MsgDetail } }
-            })
-        default:
+              status: {
+                MsgDetail: { $set: action.MsgDetail }
+              }
+            });
+                default:
             return state
     }
 }
 
 
-//
 export function SendMessageRequest(token, data, id) {
     return (dispatch) => {
         dispatch(SendMessage())
@@ -150,27 +165,28 @@ export function GetMyMsgListRequest(token) {
         })
     }
 }
+
 export function GetMyMsgDetailRequest(token, id) {
     return (dispatch) => {
-        dispatch(GetMyMsgDetail())
-        return fetch(`${host}/users/msgDetail/${id}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "x-access-token": token
-            },
-            method: "get"
-        }).then((response) => {
-            return response.json()
+      dispatch(GetMyMsgDetail());
+      return fetch(`${host}/users/msgDetail/${id}`, {
+        headers: { 
+          "Content-Type": "application/json",
+          "x-access-token": token
+        },
+        method: "get"
+      }).then((response) => {
+          return response.json();
         }).then((data) => {
-            console.log("message detail data >>", data)
-            if (!data) {
-                console.log("no detail message")
-                data = []
-            }
-            return dispatch(GetMyMsgDetailSuccess(data))
+          console.log("message detail data >>", data);
+          if (!data) {
+            console.log("no detail message");
+            data = [];
+          }
+          return dispatch(GetMyMsgDetailSuccess(data));
         }).catch((error) => {
-            dispatch(GetMyMsgDetailFailure())
-            console.log("err", error)
-        })
+          dispatch(GetMyMsgDetailFailure());
+          console.log("err", error);
+        });
     }
-}
+  };

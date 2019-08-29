@@ -83,13 +83,17 @@ const DesignerComp = styled.div`
 
 class Designer extends Component{
     state = {data : this.props.data};
+
+    gotoDesignerDetailPage = () => {
+        window.location.href = "/designerDetail/"
+    }
     render(){
 
         const designer = this.state.data;
         return(
             <>
                 <DesignerComp>
-                    <div className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
+                    <div onClick = {this.gotoDesignerDetailPage} className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
                     <div className="TextBox">
                         <div className="userName">{designer.nick_name}</div>
                         <div className="description"><TextFormat txt={designer.about_me}/></div>

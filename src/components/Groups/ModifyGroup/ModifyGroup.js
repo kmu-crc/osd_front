@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
+import mainSlide from "source/noimg.png";
 import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer";
 
 // css styling

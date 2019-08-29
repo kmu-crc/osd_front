@@ -9,19 +9,33 @@ import ScrollList from "components/Commons/ScrollList"
 
 const Tabs = styled.div`
   display: flex;
+  margin-top: 65px;
+  margin-bottom: 15px;
+  padding-left: 70px;
 `
 const Tab = styled.div`
+  font-family: Noto Sans KR;
+  font-weight: 500;
+  font-size: 20px;
+  margin-right: ${props => props.marginRight}px;
+  width: ${props => props.width}px;
+  height: 29px;
+  line-height: 29px;
+  text-align: left;
+  color: #707070;
+  cursor: pointer;
+  opacity: 0.5;
   &.selected { 
-    color:red; 
+    opacity: 1.0;
   }
 `;
 
 class GroupDetail extends Component {
   state = { page: 0, uid: undefined, currentTab: "design" }
-  switchTab = async(tab) => { 
+  switchTab = async (tab) => {
     await this.setState({ currentTab: tab, page: 0 })
     this.getInitData()
-   }
+  }
 
   componentDidMount() {
     this.getInitData()
@@ -41,14 +55,14 @@ class GroupDetail extends Component {
     await this.setState({ page: isInit ? 0 : this.state.page + 1 })
     this.props.GetDesignInGroupRequest(this.state.uid, this.state.page, "update")
   }
-  getGroupList = async (isInit)=>{
-    if(!this.state.uid){
+  getGroupList = async (isInit) => {
+    if (!this.state.uid) {
       return;
     }
     await this.setState({ page: isInit ? 0 : this.state.page + 1 })
     this.props.GetGroupInGroupRequest(this.state.uid, this.state.page, "update")
   }
-  componentWillReceiveProps =async(nextProps)=> {
+  componentWillReceiveProps = async (nextProps) => {
     if (nextProps.GroupDetail.uid !== this.props.GroupDetail.uid) {
       await this.setState({ uid: nextProps.GroupDetail.uid })
       this.getInitData()
@@ -64,10 +78,10 @@ class GroupDetail extends Component {
       <>
         <GroupInfo GroupInfo={GroupDetail} userInfo={userInfo} count={Count}/>
         <Tabs >
-          <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
-          <Tab onClick={() => this.switchTab("group")} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
+          <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
+          <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
         </Tabs>
-         {GroupDetail && currentTab === "group" &&
+        {GroupDetail && currentTab === "group" &&
           <>
             {this.props.status === "INIT" ?
               <Loading /> :
