@@ -28,7 +28,7 @@ const Tab = styled.div`
   &.selected { 
     opacity: 1.0;
   }
-`
+`;
 
 class GroupDetail extends Component {
   state = { page: 0, uid: undefined, currentTab: "design" }
@@ -40,6 +40,7 @@ class GroupDetail extends Component {
   componentDidMount() {
     this.getInitData()
   }
+
   getInitData() {
     if (this.state.currentTab === "design") {
       this.getDesignList(true)
@@ -69,13 +70,13 @@ class GroupDetail extends Component {
   }
 
   render() {
-    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded } = this.props
-    const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px" }
-    const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px" }
+    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded, Count} = this.props;
+    const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"}
+    const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"}
     const { currentTab } = this.state
     return (
       <>
-        <GroupInfo GroupInfo={GroupDetail} userInfo={userInfo} />
+        <GroupInfo GroupInfo={GroupDetail} userInfo={userInfo} count={Count}/>
         <Tabs >
           <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
           <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>

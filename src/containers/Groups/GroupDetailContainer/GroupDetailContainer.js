@@ -8,15 +8,17 @@ import {
   GetDesignInGroupRequest, GetGroupInGroupRequest,
 } from "redux/modules/group"
 import GroupDetail from "components/Groups/GroupDetail"
-
 class GroupDetailContainer extends Component {
   componentDidMount() {
-    this.props.GetGroupDetailRequest(this.props.id)
+    this.props.GetGroupDetailRequest(this.props.id);
+    this.props.GetGroupCountRequest(this.props.id);
   }
+
+
 
   render() {
     return (
-      <GroupDetail {...this.props} />
+      <GroupDetail {...this.props}/>
     )
   }
 }

@@ -1,16 +1,55 @@
 import React, { Component } from 'react'
+import styled from 'styled-components';
 import IconView from "source/IconView"
 import iEdit from "source/edit.png"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
+
+import dots from "source/baseline_more_vert_black_48dp.png";
 import noimg from "source/noimg.png"
 import DateFormat from "modules/DateFormat"
+import TextFormat from "modules/TextFormat"
 import iDelete from "source/deleteItem.png"
 import Cross from "components/Commons/Cross"
 
 import { Modal } from "semantic-ui-react";
 
 
-const GroupInfoData = { title: "TITLE", url: "URL", category: "CATEGORY", designer: "DESIGNER", view: 0, like: 0, design: 0, description: "Description" }
+
+const GroupInfoData = {
+    userName:"name",
+    child_update_time:"0",
+    create_time:"0",
+    img:{l_img:noimg},
+    title: "title",
+    parentName:"parent",
+    parentId:"",
+    grand_parentTitle:"grand_parent",
+    grand_parentGroup:"grand_group",
+    url: "URL",
+    category: "CATEGORY",
+    designer: "DESIGNER",
+    view: 0,
+    like: 0,
+    design: 0,
+    description: "Description"
+
+};
+
+const Arrow = styled.div`
+    width: 12px;
+    height: 14px;
+    bacgkground: #707070;
+    opacity: 0.55;
+    border-left: 14px solid #707070;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+`;
+let counts = {
+    like:0,
+    group:0,
+    design:0,
+};
+
 class GroupInfoComponent extends Component {
     constructor(props)
     {
@@ -46,19 +85,52 @@ class GroupInfoComponent extends Component {
         const user_id = this.props.userInfo&&this.props.userInfo.uid;
 
         const GroupInfo = (props) => {
-            const info = props.GroupInfo || GroupInfoData
+            let info = GroupInfoData;
+            let parentName = null;
+            if(props.GroupInfo != 0){
+                info = props.GroupInfo;
+                if(info.parentName != null){
+                    parentName = info.parentName && info.parentName.slice(0, 14);
+                    parentName += info.parentName && info.parentName.length > 14 ? "..." : "";
+                }
+            }
             return (
-                <div style={{ marginLeft: "65px", display: "flex", width: "100%" }}>
-                    <div>
-                        <div style={{ marginTop: "15px", width: "220px", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>{info.title && info.title.slice(0, 14)}{info.title && info.title.length > 14 ? "..." : ""}</div>
-                        <div style={{
-                            marginLeft: "14px", marginTop: "9px", width: "170px", height: "170px", borderRadius: "15px",
-                            backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center",
-                            backgroundImage: info && info.img && info.img.l_img ? `url(${info.img.l_img})` : `url(${noimg})`
-                        }} />
+                <div style={{marginLeft: "65px", display: "flex", width: "100%" ,fontFamily: "Noto Sans KR"}}>
+                    <div style={{display:"flex"}}>
+                        {info.parentName ?
+                            info.grand_parentTitle ?
+                                <>
+                                    <div><img src={dots} style={{height:"15px", width:"15px",transform: "rotate(90deg)", marginTop:"22px", opacity:"0.55" }}/></div>
+                                    <Arrow style={{marginLeft:"10px", marginTop:"22px"}}/>
+                                    <div style={{marginLeft:"10px",marginTop:"17px", fontSize:"20px", fontWeight:"300", color:"#707070", width: "max-content"}}>{parentName}</div>
+                                    <Arrow style={{marginLeft:"10px", marginTop:"22px"}}/>
+                                </>
+                                :
+                                <>
+                                    <div style={{marginTop:"17px", fontSize:"20px", fontWeight:"300", color:"#707070", width: "max-content"}}>{parentName}</div>
+                                    <Arrow style={{marginLeft:"10px", marginTop:"22px"}}/>
+                                </>
+                            :
+                            <></>
+                        }
+                        <div style={{marginLeft:"10px"}}>
+                            <div style={{ marginTop: "15px", width: "600px", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}><TextFormat txt={info.title} width={600}/></div>
+
+                            <div style={{
+                                marginLeft: "14px", marginTop: "9px", width: "170px", height: "170px", borderRadius: "15px",
+                                backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center",
+                                backgroundImage: info && info.img && info.img.l_img ? `url(${info.img.l_img})` : `url(${noimg})`
+                            }} />
+                        </div>
                     </div>
-                    <div style={{ marginLeft: "51px" }}>
-                        <div style={{ marginTop: "15px", width: "95px", height: "25px", color: "#FF0000", lineHeight: "25px", fontSize: "17px", textAlign: "left", fontWeight: "300" }}>{/*info.category*/}</div>
+
+
+
+
+
+
+                    <div style={{ marginLeft: "-350px", position:"relative"}}>
+                        <div style={{ marginTop: "15px", width: "95px", height: "25px", color: "#FF0000", lineHeight: "25px", fontSize: "17px", textAlign: "left", fontWeight: "300" }}>{info.category}</div>
                         <div style={{ marginTop: "15px", width: "273px", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "20px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 16)}</div>
                         <div style={{ marginTop: "11px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
                             <div style={{ width: "621px" }}>
@@ -74,21 +146,21 @@ class GroupInfoComponent extends Component {
                             <div style={{ marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                                 <div style={{ display: "flex", marginRight: "22px" }}>
                                     <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
-                                    <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{info.view}</div>
+                                    <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{this.props.count.view}</div>
                                 </div>
                                 <div style={{ display: "flex", marginRight: "0px" }}>
                                     <div><i style={{ color: "#707070", fontSize: "14px" }} className="material-icons">thumb_up</i></div>
-                                    <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{info.like}</div>
+                                    <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{this.props.count.like}</div>
                                 </div>
                                 <div style={{ display: "flex" }}>
                                     <div><i style={{ color: "#707070", fontSize: "17px" }} className="material-icons">library_books</i></div>
-                                    <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{info.design}</div>
+                                    <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{this.props.count.design + this.props.count.group}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {group_user_id == user_id ? // 그룹 수정 권한 있음
-                    <div style={{ position:"relative",width:"160px",height:"100%", marginLeft:"100px",order: "2", fontFamily: "Noto Sans KR" }}>
+                    <div style={{position:"absolute", marginLeft:"1600px",width:"160px",height:"100%", order: "2", fontFamily: "Noto Sans KR" }}>
                             <div style={{ position:"absolute",width: "98px", height: "25px", top:"40px",fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>그룹 수정하기</div>
                             <div onClick = {this.gotoGroupModify} style={{ position:"absolute",height: "30px", width: "40px", top:"40px",left:"113px",opacity: ".55", background: `transparent url(${iEdit})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                          <div style={{ position:"absolute",top:"169px", height: "55px", fontWeight: "300", fontSize: "17px", lineHeight: "30px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0", textAlign: "right" }}>
@@ -97,8 +169,11 @@ class GroupInfoComponent extends Component {
                         </div>
                     </div>
                     :// 그룹 수정 권한 없음
+
                     <div style={{ marginLeft: "auto", marginRight: "72px", order: "2", fontFamily: "Noto Sans KR" }}>
                         <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000" }} onClick={()=>this.handleShowPopup(this.state.isJoin==false?1:2)}>가입 신청</div>
+
+
                         <div onClick={this.props.userInfo==null? null:() => this.like() } style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", width: "183px", height: "45px", display: "flex" }}>
                             <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
                             <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: this.state.tmpLike ? "1" : "0.45",  background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
