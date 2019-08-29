@@ -45,6 +45,7 @@ class DesignerListPage extends Component {
         main_category: { text: null, value: null },
         this_order: { text: "등록순", keyword: "update" },
         checkDataLength: 0,
+        test:0,
     }
     componentDidMount() {
         this.props.GetCategoryListRequest()
@@ -73,13 +74,14 @@ class DesignerListPage extends Component {
         this.reloadData()
     }
     reloadData = () => {
-        this.props.GetDesignerListRequest(this.state.page, this.state.this_order.keyword, this.state.main_category.value || null, this.state.sub_category.value || null, this.state.search)
+        this.props.GetDesignerListRequest(this.state.page, this.state.this_order.keyword, this.state.main_category.value || null, this.state.sub_category.value || null, this.state.search);
     }
     getList = async () => {
         await this.setState({ page: this.state.page + 1 });
         const { page, main_category, sub_category, keyword, order } = this.state;
 
         return this.props.GetDesignerListRequest(page, order, main_category.value, sub_category.value, keyword);
+
 
     };
     changeCategory = (category) => {
@@ -93,7 +95,6 @@ class DesignerListPage extends Component {
         const { this_category, main_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
         const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
-
         return (
             <>
                 <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}

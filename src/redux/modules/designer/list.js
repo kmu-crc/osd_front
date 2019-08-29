@@ -31,10 +31,10 @@ const initialState = {
           }
         });
       case DESIGNER_LIST_CLEAR:
-        return update(state, {
+          return update(state, {
           status: {
-            DesignerList: { $set: action.DesignerList },
-            DesignerListAdded: { $set: action.DesignerList }
+            DesignerList: { $set: []},
+            DesignerListAdded: { $set: [] }
           }
         });
       case DESIGNER_LIST_FAIL:
@@ -65,7 +65,6 @@ const initialState = {
 
 export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
     return (dispatch) => {
-        console.log(keyword);
         return fetch(`${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
             headers: { "Content-Type": "application/json" },
             method: "get"
@@ -79,7 +78,6 @@ export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
             }
             if (page === 0) {
                 dispatch(DesignerListClear(data));
-                return;
             }
             dispatch(GetDesignerList(data));
         }).catch((error) => {
@@ -99,7 +97,7 @@ export function GetDesignerList(data) {
 export function DesignerListClear(data) {
     return {
         type: DESIGNER_LIST_CLEAR,
-        DesignerList: data,
+        DesignerList: [],
         DesignerListAdded: []
     }
 };
