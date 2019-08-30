@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
 import noimg from "source/thumbnail.png";
+import TextFormat from 'modules/formats/TextFormat';
 
 const UserMenu = styled.div`
     display: ${props => props.display};
@@ -91,22 +92,20 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
+        const { user_popup, signin_modal } = this.state
         const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
 
         return (<>
-            {this.state.user_popup &&
-                <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
+            {user_popup &&
+                <UserMenu ref={this.myRef} display={"block"} top={user_popup.top} left={userinfo.userMenuLeft} >
                     <div><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr color = "#EFEFEF" width="166px" noshade="none" />
+                    <hr color="#EFEFEF" width="166px" noshade="none" />
                     <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
-            {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
+            {signin_modal && <SignInModal open={signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {isLoggedIn
-                ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
-                    <UserThumbnail url={profile} />
-                    {info.nickName}</div>)
-                : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>
-                    로그인</div>)}
+                ? (<div onClick={this.openUserMenu} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer", display: "flex" }}><UserThumbnail url={profile} /><TextFormat chars={9} txt={info.nickName} /></div>)
+                : (<div onClick={this.openModal} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer" }}>로그인</div>)}
         </>)
     }
 }

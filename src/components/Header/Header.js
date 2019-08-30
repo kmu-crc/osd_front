@@ -3,24 +3,14 @@ import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
 // import Notification from "components/Commons/Notification"
-// import Message from "components/Header/Message"
+import Message from "components/Header/Message"
 import logo from "source/logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
 import Socket from "modules/Socket"
 
-class Message extends Component {
-    gotoMessagePage() {
-        window.location.href = '/message'
-    }
-    render() {
-        return (<div style={{ cursor: "pointer" }} onClick={this.gotoMessagePage}>
-            {this.props.countMsg > 0 && <div style={{ zIndex: "998", position: "absolute", marginLeft: "29px", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
-            <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons">email</i>
-        </div>)
-    }
-}
+
 // CSS
 const Menu = styled.div`
     z-index: 900;
