@@ -50,7 +50,7 @@ let counts = {
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { isJoin: false, showPopup: -1, tmpLike: false, likeDialog: false, forkDialog: 0 };
+        this.state = { isJoin: false, showPopup: -1, tmpLike: false, likeDialog: false, forkDialog: 0, manager: false };
         this.handleShowPopup = this.handleShowPopup.bind(this);
     }
     like() {
@@ -76,7 +76,9 @@ class GroupInfoComponent extends Component {
         window.location.href = href + 'modifygroup/' + this.props.GroupInfo.uid;
     }
     changeEditMode = () => {
-        alert("바꿔보자!")
+        // alert("click");
+        this.setState({ manager: !this.state.manager })
+        this.props.handleSwitchMode()
     }
     render() {
         const group_user_id = this.props.GroupInfo && this.props.GroupInfo.user_id;
@@ -166,12 +168,13 @@ class GroupInfoComponent extends Component {
                     parentName += info.parentName && info.parentName.length > 14 ? "..." : "";
                 }
             }
-            const isEditor = group_user_id === user_id
+            const { manager } = this.state;
+            const isEditor = group_user_id === user_id;
             return (
                 <div style={{ paddingLeft: "65px", width: "100%", display: "flex" }}>
                     <div style={{ width: "max-content" }}>
                         {parentName &&
-                            <div style={{ display: "flex" }}>
+                            <div style={{ display: "flex", cursor: "default" }}>
                                 {info.grand_parentTitle && <><img src={dots} title={info.grand_parentTitle} style={{ height: "15px", width: "15px", transform: "rotate(90deg)", marginTop: "22px", opacity: "0.55" }} /><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
                                 {info.parentName && <><div style={{ marginLeft: "10px", marginTop: "17px", fontSize: "20px", fontWeight: "300", color: "#707070", width: "max-content" }}>{parentName}</div><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
                             </div>}
@@ -187,8 +190,8 @@ class GroupInfoComponent extends Component {
                                     backgroundImage: info && info.img && info.img.l_img ? `url(${info.img.l_img})` : `url(${noimg})`
                                 }} />
                                 <div style={{ marginLeft: "50px" }}>
-                                    <div style={{ marginTop: "5px", fontSize: "15px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "20px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
-                                    <div style={{ marginTop: "11px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
+                                    <div style={{ marginTop: "5px", fontSize: "15px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
+                                    <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
                                         <div style={{ width: "621px" }}>
                                             {info.description ? info.description.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
                                         </div>
@@ -221,13 +224,13 @@ class GroupInfoComponent extends Component {
                     <div style={{ marginLeft: "auto", marginRight: "72px" }}>
                         {isEditor ?
                             <>
-                                <div style={{ display: "flex", marginTop: "25px" }}>
-                                    <div style={{ width: "150px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "right", lineHeight: "40px", color: "#707070" }}>그룹 정보 수정하기</div>
-                                    <div onClick={this.gotoGroupModify} style={{ height: "30px", width: "40px", opacity: "1", background: `transparent url(${iEdit})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                                <div style={{ display: "flex", marginTop: "25px", cursor: "pointer" }} onClick={this.gotoGroupModify}>
+                                    <div style={{ marginLeft: "auto", width: "150px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "right", lineHeight: "40px", color: "#707070" }}>그룹 정보 수정하기</div>
+                                    <div style={{ height: "30px", width: "40px", opacity: "1", background: `transparent url(${iEdit})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                                 </div>
-                                <div style={{ display: "flex", marginTop: "35px" }}>
-                                    <div style={{ marginLeft: "auto", width: "98px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>그룹 관리하기</div>
-                                    <div onClick={this.changeEditMode} style={{ height: "30px", width: "40px", opacity: ".6", background: `transparent url(${iINOUT})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                                <div style={{ display: "flex", marginTop: "35px", cursor: "pointer" }} onClick={this.changeEditMode}>
+                                    <div style={{ marginLeft: "auto", width: "98px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: manager ? "#FF0000" : "#707070" }}>{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                    <div style={{ height: "30px", width: "40px", opacity: manager ? "0.1" : ".6", background: `transparent url(${iINOUT})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                                 </div>
                             </>
                             :
