@@ -3,22 +3,81 @@ import { FormControl, ValidationGroup } from "modules/FormControl";
 import SelectBox from "components/Commons/SelectBox"
 import showPw from "source/show_password.svg";
 import styled from "styled-components";
-const category1 = [
-  { id: 0, value: "대분류를 선택해 주세요" }, { id: 1, value: "패션" }, { id: 2, value: "제품" },
-  { id: 3, value: "커뮤니케이션" }, { id: 4, value: "공간" }, { id: 5, value: "엔터테인먼트" },
-  { id: 6, value: "소프트웨어" }, { id: 7, value: "새분야" }
-]
+
+import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
+import SectionSecurity from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionSecurity"
+import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
+import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
+
 const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }
 ]
 
 const colorSwich = ['#FFFFFF', '#FF0000'];
 class ModifyMyDetail extends Component {
-  state = {
-    change_password: false,
-    nick: true, selected: 0,
-    loading: false
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      change_password: false, selected: 0, loading: false,
+      thumbnail: "", nick_name: "", about_me: "",
+      password: "", passwordCheck: "",
+      category_level1: 0, category_level2: 0,
+      is_designer: false, team: "", career: "", location: "", contact: "",
+    }
+    this.updateNickName = this.updateNickName.bind(this);
+    this.updateIntroduce = this.updateIntroduce.bind(this);
+    this.updateThumbnail = this.updateThumbnail.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
+    this.updatePasswordCheck = this.updatePasswordCheck.bind(this);
+    this.updateCategory1 = this.updateCategory1.bind(this);
+    this.updateCategory2 = this.updateCategory2.bind(this);
+    this.updateIsDesigner = this.updateIsDesigner.bind(this);
+    this.updateTeam = this.updateTeam.bind(this);
+    this.updateCareer = this.updateCareer.bind(this);
+    this.updateLocation = this.updateLocation.bind(this);
+    this.updateContact = this.updateContact.bind(this);
+
   }
+
+  /**UPDATE */
+  updateNickName(modifyvalue) {
+    this.setState({ nick_name: modifyvalue })
+  }
+  updateIntroduce(modifyvalue) {
+    this.setState({ about_me: modifyvalue })
+  }
+  updateThumbnail(modifyvalue) {
+    this.setState({ thumbnail: modifyvalue });
+  }
+  updatePassword(modifyvalue) {
+    this.setState({ password: modifyvalue });
+  }
+  updatePasswordCheck(modifyvalue) {
+    this.setState({ passwordCheck: modifyvalue })
+  }
+  updateCategory1(modifyvalue) {
+    this.setState({ category_level1: modifyvalue });
+  }
+  updateCategory2(modifyvalue) {
+    this.setState({ category_level2: modifyvalue });
+  }
+  updateIsDesigner(modifyvalue) {
+    this.setState({ is_designer: modifyvalue });
+  }
+  updateTeam(modifyvalue) {
+    this.setState({ team: modifyvalue });
+  }
+  updateCareer(modifyvalue) {
+    this.setState({ career: modifyvalue });
+  }
+  updateLocation(modifyvalue) {
+    this.setState({ location: modifyvalue });
+  }
+  updateContact(modifyvalue) {
+    this.setState({ contact: modifyvalue });
+  }
+
   componentDidMount() {
     document.addEventListener("scroll", this.handleScroll, true)
   }
@@ -33,10 +92,6 @@ class ModifyMyDetail extends Component {
 
   componentWillMount() {
     document.removeEventListener("scroll", this.handleScroll, true)
-    this.props.GetMyDetailRequest(this.props.token)
-      .then(data => {
-        this.props.GetCategoryLevel2Request(data.MyDetail.category_level1);
-      });
   }
 
   onChangeValue = async data => {
@@ -70,43 +125,43 @@ class ModifyMyDetail extends Component {
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
-    if (this.state.change_password) {
+
+    if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
         alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
         return false;
       }
-      if (formData.password.value !== formData.password2.value) {
+      if (this.state.password !== this.state.passwordCheck) {
         alert("비밀번호 확인을 다시 해주십시오");
         return false;
       }
-      delete formData.password2;
+      delete formData.passwordCheck;
     }
-    ValidationGroup(formData, false).then(async data => {
-      console.log("성공", data);
-      // return
-      await this.setState({
-        loading: true
-      });
-      this.props.UpdateUserDetailRequest(data, this.props.token)
-        .then(res => {
-          if (res.success) {
-            alert("정보가 수정되었습니다.");
-            this.props.history.push(`/`);
-          } else {
-            alert("다시 시도해주세요");
-            this.setState({
-              loading: false
-            });
-          }
+
+    //ValidationGroup(formData, false).then(async data => {
+    // console.log("성공", {...this.state});
+    // return
+    await this.setState({ loading: true });
+    this.props.UpdateUserDetailRequest(formData, this.props.token)
+      .then(res => {
+        if (res.success) {
+          alert("정보가 수정되었습니다.");
+          this.props.history.push(`/`);
+        } else {
+          alert("다시 시도해주세요");
+          this.setState({
+            loading: false
+          });
+        }
+      })
+      .catch(e => {
+        console.log("실패", e);
+        alert("다시 시도해주세요");
+        this.setState({
+          loading: false
         });
-    }).catch(e => {
-      console.log("실패", e);
-      alert("다시 시도해주세요");
-      this.setState({
-        loading: false
       });
-    });
   };
   onCancal = () => {
     this.props.history.push('/myPage')
@@ -120,157 +175,12 @@ class ModifyMyDetail extends Component {
       this.props.SecessionRequest(this.props.token);
     }
   }
-  isDesignerCheck = ()=>{
-    var checkDiv = document.getElementById("isDesignerCheckbox");
-    if(checkDiv.style.backgroundColor === "rgb(255, 255, 255)"){
-      checkDiv.style.backgroundColor = "#FF0000"
-    }
-    else{
-      checkDiv.style.backgroundColor = "#FFFFFF";
-    }
-  }
+
 
   render() {
     // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
     const { selected } = this.state
-    const SectionBasics = () => {
-      return (
-        <section id="basic" style={{ paddingLeft: "95.5px" }} >
-          {/* thumbnail */}
-          <div style={{ width: "1200px" }}>
-            <div style={{ display: "flex" }}>
-              <div style={{ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }}>프로필 사진</div>
-              <div style={{ marginLeft: "67px", width: "200px", height: "200px", borderRadius: "50%", backgroundColor: "#EFEFEF" }} />
-              <div style={{ marginLeft: "65px", marginTop: "100px" }}>
-                <div style={{ width: "63px", height: "25px", cursor: "pointer" }}>
-                  <div style={{ fontWeight: "500", fontSize: "17px", borderBottom: "1.5px solid #FF0000", lineHeight: "25px", textAlign: "left", color: "#FF0000" }}>찾아보기</div></div>
-                <div style={{ width: "341px", height: "45px", marginTop: "11px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", textAlign: "left", color: "#707070" }}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG 파일을 등록 가능합니다.</div>
-              </div>
-            </div>
-          </div>
-          {/* nick */}
-          <div style={{ marginTop: "86px", width: "1544px" }}>
-            <div style={{ display: "flex" }}>
-              <div style={{ marginRight: "117px", width: "56px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>닉네임</div>
-              <div style={{
-                width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
-                fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
-              }} >
-                <input type="text" style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 입력하세요." />
-              </div>
-              <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }}>
-                {this.state.nick ? <div>사용 가능한 닉네임입니다.</div> : <div style={{ color: "#FF0000" }}>사용 하실 수 없는 닉네임입니다.</div>}
-              </div>
-            </div>
-          </div>
-          {/* introduction */}
-          <div style={{ marginTop: "50px", display: "flex" }}>
-            <div style={{ width: "75px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>자기소개</div>
-            <div style={{ width: "717.5px", height: "244px", marginLeft: "98px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
-              <textarea style={{
-                width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px",
-                textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px"
-              }} placeholder="자기소개를 입력하세요." />
-            </div>
-          </div>
-        </section>
-      )
-    }
-    const SectionSecurity = () => {
-      return (
-        <section id="security" style={{ paddingLeft: "95.5px" }} >
-          {/* pw */}
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "75px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>비밀번호</div>
-            <div style={{
-              marginLeft: "98px",
-              width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
-              fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
-            }} >
-              <input type="password"
-                style={{
-                  outline: "none", border: "none",
-                  marginLeft: "12px", marginTop: "13px",
-                  width: "481.5px", height: "29px", lineHeight: "29px",
-                  color: "#707070", backgroundColor: "#EFEFEF"
-                }} placeholder="비밀번호를 입력하세요." />
-            </div>
-            <div style={{marginLeft:"18px", marginTop:"18px"}}><img src={showPw}/></div>
-          </div>
-          {/* pw verify */}
-          <div style={{ marginTop: "55px", display: "flex" }}>
-            <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>비밀번호 확인</div>
-            <div style={{
-              marginLeft: "60px",
-              width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
-              fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
-            }} >
-              <input type="password" style={{
-                outline: "none", border: "none",
-                marginLeft: "12px", marginTop: "13px",
-                width: "481.5px", height: "29px", lineHeight: "29px",
-                color: "#707070", backgroundColor: "#EFEFEF"
-              }} placeholder="비밀번호를 입력하세요." />
-            </div>
-          </div>
-        </section>
-      )
-    }
-    const SectionAdditional = () => {
-      return (
-        <section id="additional" style={{ paddingLeft: "95.5px" }} >
-          {/* category */}
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
-            <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-              <SelectBox items={category1} width="410" /></div>
-            <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-              <SelectBox items={category1} width="410" /></div>
-          </div>
-        </section>
-      )
-    };
-
-
-    const SectionBuziness = () => {
-      let description = [];
-      description[0] = "디자이너로서 디자인과 그룹을 만들고 수정할 수 있으며"
-      description[1] = "디자이너 리스트에 올라가게 됩니다."
-      description[2] = "추후에 직업에 대한 부가적인 정보를 입력하여 많은 사람들과 소통하게 됩니다."
-      return (
-          <>
-              <div style = {{display:"flex", justifyContent:"space-start",paddingLeft:"95.5px"}}>
-              <div style={{ fontSize:"20px", color:"#707070",fontWeight: "500" }}>디자이너 활동 여부</div>
-              <div id="isDesignerCheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: "#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
-                onClick={this.isDesignerCheck}
-              ></div>
-                <div style={{color:"#FF0000", fontSize:"17px", textAlign:"left", marginLeft:"420px", width:"27px", height:"25px"}}>TIP</div>
-              </div>
-              <div className="description" style={{marginTop:"5px",marginLeft:"708px", color:"#707070", fontSize:"17px", fontWeight: "100", width:"540px", height:"75px"}}>{description[0]}<br />{description[1]}<br />{description[2]}</div>
-
-              <div style={{display:"flex",position:"relative",marginTop:"66px" ,justifyContent:"space-start"}}>
-                  <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>팀</div>
-                  <div style={{ marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
-              </div>
-            <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
-              <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>경력</div>
-              <div style={{ marginLeft: "18px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
-            </div>
-            <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
-              <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>위치</div>
-              <div style={{ marginLeft: "18px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
-            </div>
-            <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
-              <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>연락</div>
-              <div style={{ marginLeft: "18px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}></div>
-            </div>
-
-            <div style={{display:"table-cell",position:"relative", left:"1264.5px",width:"104.5px", height:"44px", borderRadius: "5px", backgroundColor:"#FF0000",color:"#FFFFFF", fontSize:"20px",fontWeight:"500"
-            ,textAlign:"center",verticalAlign:"middle"}}>등록하기</div>
-          </>
-      )
-    }
 
     return (<>
       <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
@@ -289,16 +199,23 @@ class ModifyMyDetail extends Component {
           </div>
         </div>
         {/* form */}
-        <div style={{ width: "1422px", marginLeft:"45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" ,fontFamily:"Noto Sans KR"}}>
-          <form onSubmit={this.submit}>
-            <SectionBasics />
+        <div style={{ width: "1422px", marginLeft: "45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px", fontFamily: "Noto Sans KR" }}>
+          <form>
+            <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
             <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionSecurity />
+            <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
             <div style={{ marginTop: "101.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionAdditional />
+            <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
+              updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
             <div style={{ marginTop: "102.5px", marginBottom: "41.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionBuziness />
+            <SectionBuziness MyDetail={this.props.MyDetail}
+              updateIsDesigner={this.updateIsDesigner}
+              updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
           </form>
+          <div onClick={this.onSubmit} style={{
+            cursor: "pointer", display: "table-cell", position: "relative", left: "1264.5px", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", color: "#FFFFFF", fontSize: "20px", fontWeight: "500"
+            , textAlign: "center", verticalAlign: "middle"
+          }}>등록하기</div>
         </div>
       </div>
     </>)
@@ -306,12 +223,3 @@ class ModifyMyDetail extends Component {
 }
 
 export default ModifyMyDetail;
-
-//<p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>등록하기</p>
-
-//            <div style={{ width: "1920px", display: "block", height: "48px", marginTop: "8px", backgroundColor: "#EFEFEF" }}>
-//                <div style={{
-//                    display: "inline-block", marginLeft: "65px", marginTop: "9px", width: "92px", height: "29px",
-//                    fontFamily: "Noto Sans KR", fontWeight: "500", textAlign: "left", lineHeight: "29px", color: "#707070", fontSize: "20px"
-//                }}>마이페이지</div>
-//            </div>

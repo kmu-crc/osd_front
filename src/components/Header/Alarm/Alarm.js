@@ -8,7 +8,8 @@ const AlarmList = styled.div`
     z-index: 999;
     position: absolute;
     pointer-events: auto;
-    top: 50.5px;
+    top: 60px;
+    right:300px;
     left: ${props => props.left + "px"};
     z-index: 904;
     height: 550px;
@@ -28,11 +29,11 @@ const AlarmList = styled.div`
     
     
   .list {
-      padding-left: 15px;
       padding-right: 36px;
       padding-bottom: 5px;
       height: 490px;
       overflow-y: hidden;
+      overflow-x: hidden;
     &:hover{
         overflow-y: scroll;
     }
@@ -40,12 +41,14 @@ const AlarmList = styled.div`
     
 }`;
 const ListItem = styled.div`
+    
     display:flex;
+    padding-left:15px;
     flex-direction:column;
     opacity: ${props => props.confirm ? 0.5 : 1};
-    width: 340px;
-    display: flex;
+    width: 380px;
     height: 118px;
+    display: flex;
     border-bottom: 1px solid #B7B7B7;
     &:hover {
         background-color: #EFEFEF;
@@ -317,7 +320,7 @@ class Alarm extends Component {
                                                             <div style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
                                                         </div>
-                                                    </>)
+                                                        Alarm                         </>)
                                                     :
                                                     (alarmKind !== "COMMENT"
                                                         ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', width: "225px" }}><TextFormat txt={item.title} /></div>

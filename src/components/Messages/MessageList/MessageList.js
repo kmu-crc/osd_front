@@ -1,7 +1,7 @@
 import React from'react';
 import plusImg from "source/plus_cross_gray.png";
 import SummaryIcon from "source/jina.png";
-import noImage from "source/noimg.png"
+import noImage from "source/thumbnail.png"
 import styled from "styled-components";
 
 import SearchMemverContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"

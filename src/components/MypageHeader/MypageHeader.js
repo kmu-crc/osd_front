@@ -80,13 +80,18 @@ let about_me = ["", ""];
 let descriptionLengthCheck = "";
 
 class MypageHeader extends Component {
+    gotoMyModify = () => {
+        let href = window.location.href.substring(0, window.location.href.search("mypage"))
+        window.location.href = href + 'mymodify';
+    }
     render() {
         const MypageInfo = this.props.MyDetail;
 
         const countInfo = MypageInfo.count || defaultCount;
         const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
 
-        if (MypageInfo.about_me !== undefined) {
+        if (MypageInfo&&MypageInfo.about_me !=undefined ) {
+            
             about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
@@ -98,8 +103,8 @@ class MypageHeader extends Component {
                     <div style={{ display: 'flex', justifyContent: "space-start", paddingTop: '32px', paddingLeft: '115px' }}>
                         <div className="MynameBox">{MypageInfo.nick_name}</div>
                         <div className="Category">{MypageInfo.categoryName}</div>{/*왼쪽정렬*/}
-                        <div className="reviseInformation">정보 수정하기</div>
-                        <div><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
+                        <div style={{cursor:"pointer"}}onClick = {this.gotoMyModify} className="reviseInformation">정보 수정하기</div>
+                        <div style={{cursor:"pointer"}}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
                     </div>
                     <div className="ImageBox" style={{ backgroundImage: `url(${thumbnailInfo})` }}></div>
                     <div className="Descriptions" style={{ display: 'flex', justifyContent: "space-start", paddingTop: '12px', paddingLeft: "419px" }}>
