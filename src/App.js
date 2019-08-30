@@ -65,7 +65,7 @@ class App extends Component {
 
 
             {/* GROUP D - designer */}
-            <Route path="/designerDetail/" component={DesignerPage} />
+            <Route path="/designerDetail/:id" component={DesignerPage} />
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
 
 

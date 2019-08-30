@@ -45,7 +45,7 @@ class DesignerListPage extends Component {
         main_category: { text: null, value: null },
         this_order: { text: "등록순", keyword: "update" },
         checkDataLength: 0,
-        test:0,
+        orderSwitch:1,
     }
     componentDidMount() {
         this.props.GetCategoryListRequest()
@@ -65,8 +65,9 @@ class DesignerListPage extends Component {
         this.reloadData()
     }
     handleChangeOrderOps = async (order) => {
-        await this.setState({ page: 0, this_order: order })
+        await this.setState({ page: 0, this_order: order , orderSwitch: this.state.orderSwitch*-1});
         this.reloadData()
+
     }
     reloadData = () => {
         this.props.GetDesignerListRequest(this.state.page, this.state.this_order.keyword, this.state.main_category.value || null, this.state.sub_category.value || null, this.state.search);
@@ -102,7 +103,7 @@ class DesignerListPage extends Component {
                         ? <Loading />
                         : <ScrollList cols={3} width={width} height={height}
                             marginRight={marginRight} marginRightLast={marginRightLast} marginBottom={marginBottom} marginBottomLast={marginBottomLast}
-                            page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
+                            page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} orderSwitch={this.state.orderSwitch} />}
                 </div>
             </>
         )

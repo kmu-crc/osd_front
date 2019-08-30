@@ -27,14 +27,16 @@ class ScrollList extends Component {
   }
   checkAndGetData = () => {
     const { hasMore, loading, callCount } = this.state;
-    console.log(this.props.dataListAdded.length);
-    if (this.props.dataListAdded.length <= 10) {
+
+    if (callCount < 2) {
+      this.setState({ callCount: callCount + 1 });
       this.getLoadData();
+
     }
     if ((this.myRef.current && this.myRef.current.getBoundingClientRect().bottom - window.innerHeight <= 150 && hasMore && loading === false)) {
       this.setState({ callCount: 0 });
     }
-  };
+  }
   handleScroll = (e) => {
     this.checkAndGetData()
   }

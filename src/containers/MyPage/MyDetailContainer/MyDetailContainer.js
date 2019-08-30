@@ -4,18 +4,22 @@ import { connect } from 'react-redux'
 import MypageHeader from 'components/MypageHeader';
 import MypageBody from 'components/MypageBody';
 
-import { GetMyDetailRequest, GetMyDesignListRequest } from "redux/modules/personal"
+import { GetMyDetailRequest, GetMyDesignListRequest, GetMyLikeDesignRequest,
+  GetMyLikeDesignerRequest, GetMyGroupListRequest} from "redux/modules/personal"
+
 
 class MyDetailContainer extends Component {
+
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token)
   }
 
+
   render() {
-    return (
+    return (//수정 요망
       <>
         <MypageHeader {...this.props}/>
-        <MypageBody />
+        <MypageBody {...this.props}/>
       </>
     )
   }
@@ -23,7 +27,16 @@ class MyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyDetail: state.Personal.status.MyDetail
+    MyDetail: state.Personal.status.MyDetail,
+    MyLikeDesign:state.Personal.status.MyLikeDesign,
+    MyLikeDesigner:state.Personal.status.MyLikeDesigner,
+    MyLikeDesignAdded:state.Personal.status.MyLikeDesignAdded,
+    MyLikeDesignerAdded:state.Personal.status.MyLikeDesignerAdded,
+
+    MyGroup:state.Personal.status.MyGroup,
+    MyGroupAdded:state.Personal.status.MyGroupAdded,
+    MyDesign:state.Personal.status.MyDesign,
+    MyDesignAdded:state.Personal.status.MyDesignAdded,
   }
 }
 
@@ -34,7 +47,16 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetMyDesignListRequest: (token, page) => {
       return dispatch(GetMyDesignListRequest(token, page))
-    }
+    },
+    GetMyLikeDesignRequest:(token, page)=>{
+      return dispatch(GetMyLikeDesignRequest(token, page))
+    },
+    GetMyLikeDesignerRequest:(token, page)=>{
+      return dispatch(GetMyLikeDesignerRequest(token, page))
+    },
+    GetMyGroupListRequest:(token, page)=>{
+      return dispatch(GetMyGroupListRequest(token, page))
+    },
   }
 }
 
