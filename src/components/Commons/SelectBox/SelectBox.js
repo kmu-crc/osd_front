@@ -114,9 +114,15 @@ class SelectBox extends Component {
       document.removeEventListener("mousedown", this.handleClickOutside)
     }
   }
+  componentWillReceiveProps(nextProps)
+  {
+    if(this.props.items!=nextProps.items)
+    {
+      this.setState({items:nextProps.items});
+    }
+  }
   render() {
-    console.log(this.props.default);
-    console.log(this.state);
+    console.log(this.props.items);
     return <>
       <SelectBoxContainer onClick={this.clicked} ref={this.myRef} >
         <div className="select-box--box">
@@ -127,8 +133,8 @@ class SelectBox extends Component {
               <span className={`${this.state.showItems ? 'select-box--arrow-up' : 'select-box--arrow-down'}`} /></div>
           </div>
           <div className="select-box--items" style={{ display: this.state.showItems ? 'block' : 'none' }}>
-            {this.state.items.map(item =>
-              <div key={item.value} value={item.value} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.text}</div>)}
+            {this.state.items.map((item,index) =>
+              <div key={index} value={item.value} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.text}</div>)}
           </div>
         </div>
         <input type="hidden" name={this.state.name} value={this.state.selectedItem.id} />
