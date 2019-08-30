@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "redux/modules/category"
+import { GetCategoryAllRequest } from "redux/modules/category"
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
 
 class ModifyMyDetailContainer extends Component {
+componentDidMount()
+{
+  this.props.GetCategoryAllRequest();
+  this.props.GetMyDetailRequest(this.props.token);
+}
   render() {
+    console.log("what",this.props);
     return (<ModifyMyDetail {...this.props} />)
   }
 }
@@ -14,8 +20,8 @@ const mapStateToProps = (state) => {
   return {
     MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
-    category1: state.Category.status.level1,
-    category2: state.Category.status.level2
+    category1: state.Category.status.category1,
+    category2: state.Category.status.category2
   }
 }
 
@@ -24,11 +30,8 @@ const mapDispatchToProps = (dispatch) => {
     GetMyDetailRequest: (token) => {
       return dispatch(GetMyDetailRequest(token))
     },
-    GetCategoryLevel1Request: () => {
-      return dispatch(GetCategoryLevel1Request())
-    },
-    GetCategoryLevel2Request: (id) => {
-      return dispatch(GetCategoryLevel2Request(id))
+    GetCategoryAllRequest: () => {
+      return dispatch(GetCategoryAllRequest())
     },
     UpdateUserDetailRequest: (data, token) => {
       return dispatch(UpdateUserDetailRequest(data, token))
