@@ -25,10 +25,6 @@ const DesignerComp = styled.div`
         position: absolute;
         background-size:cover;
         border: 1.5px solid #EFEFEF;
-        & img {
-          width: 100%;
-          height: 100%;
-        }
         z-index:1;
     }
     .TextBox{

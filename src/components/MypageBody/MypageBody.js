@@ -45,33 +45,42 @@ class MypageBody extends Component{
         selectCate:"unSelectedCate",
         cateIndex:0,
         page: 0,
+        groupPage:0,
         uid: undefined,
 
     }
     componentDidMount() {
-        var selectedCate = document.getElementById(0);
+        var selectedCate = document.getElementById("0");
         selectedCate.className = selectedCate.className.replace("unSelectedCate", "selectedCate");
+    }
+    componentWillMount() {
         this.getInitData()
     }
 
     getInitData() {
+        this.getLikeGroupList(true);
         this.getLikeDesignList(true);
         this.getLikeDesignerList(true);
+
         this.getMyDesignListRequest(true);
         this.getMyGroupListRequest(true);
+
     }
 
     getLikeDesignList = async (isInit) => {
-        console.log(1);
         await this.setState({ page: isInit ? 0 : this.state.page + 1 });
         this.props.GetMyLikeDesignRequest(this.props.token, this.state.page);
     };
 
     getLikeDesignerList = async (isInit) =>{
+
         await this.setState({page:isInit ? 0 : this.state.page + 1});
         this.props.GetMyLikeDesignerRequest(this.props.token, this.state.page);
     }
-
+    getLikeGroupList = async (isInit)=>{
+        await this.setState({page:isInit ? 0 : this.state.page+1});
+        this.props.GetMyLikeGroupRequest(this.props.token, this.state.page);
+    };
 
     getMyGroupListRequest = async (isInit) =>{
         await this.setState({page:isInit ? 0 : this.state.page + 1});
@@ -101,9 +110,10 @@ class MypageBody extends Component{
     }
 
     render(){
-        const {MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded,MyGroup,MyGroupAdded, MyDesign,MyDesignAdded } = this.props;
+        const {MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded,MyGroup,MyGroupAdded, MyDesign,MyDesignAdded,MyLikeGroup, MyLikeGroupAdded } = this.props;
         const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"};
-        const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"};
+        const GroupProps = { cols: 2, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"};
+        const DesignerProps = {cols:3, width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
 
         const catePadding = ['70px', '55px', '60px'];
         return(
@@ -131,9 +141,9 @@ class MypageBody extends Component{
                     <>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList cols={DesignProps.cols}
-                                        width={DesignProps.width} height={DesignProps.height} marginRight={DesignProps.marginRight} marginBottom={DesignProps.marginBottom} marginRightLast={DesignProps.marginRightLast} marginBottomLast={DesignProps.marginBottomLast}
-                                        page={this.state.page} ListComponent={Design} dataList={MyGroup} dataListAdded={MyGroupAdded} getListRequest={this.getMyGroupListRequest} />}
+                            <ScrollList cols={GroupProps.cols}
+                                        width={GroupProps.width} height={GroupProps.height} marginRight={GroupProps.marginRight} marginBottom={GroupProps.marginBottom} marginRightLast={GroupProps.marginRightLast} marginBottomLast={GroupProps.marginBottomLast}
+                                        page={this.state.page} ListComponent={Group} dataList={MyGroup} dataListAdded={MyGroupAdded} getListRequest={this.getMyGroupListRequest} />}
                     </>
                 </div>
                 }
@@ -150,30 +160,21 @@ class MypageBody extends Component{
                                         width={DesignProps.width} height={DesignProps.height} marginRight={DesignProps.marginRight} marginBottom={DesignProps.marginBottom} marginRightLast={DesignProps.marginRightLast} marginBottomLast={DesignProps.marginBottomLast}
                                         page={this.state.page} ListComponent={Design} dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
                     </div>
-                    <div className="interested" style={{paddingLeft:"67px",paddingTop:"75px"}}>관심있는 그룹</div>
-                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'25px'}}>
-                        <div style={{paddingLeft:"10px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
-                        <div style={{paddingLeft:"95px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
-
-                    </div>
-                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'60px'}}>
-                        <div style={{paddingLeft:"10px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
-                        <div style={{paddingLeft:"95px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
-
-                    </div>
-
-                    <div style={{display:"flex", justifyContent: "space-start", paddingTop:'67px'}}>
-                        <div style={{paddingLeft:"10px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
-                        <div style={{paddingLeft:"95px"}}><Group data={{children:{m_img:null}, title:"", child_update_time:""}}/></div>
-
-                    </div>
+                    <div className="interested" style={{paddingLeft:"67px",paddingTop:"75px", marginBottom:"25px"}}>관심있는 그룹</div>
+                    <>
+                        {this.props.status === "INIT" ?
+                            <Loading /> :
+                            <ScrollList cols={GroupProps.cols}
+                                        width={GroupProps.width} height={GroupProps.height} marginRight={GroupProps.marginRight} marginBottom={GroupProps.marginBottom} marginRightLast={GroupProps.marginRightLast} marginBottomLast={GroupProps.marginBottomLast}
+                                        page={this.state.page} ListComponent={Group} dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
+                    </>
                     <div className="interested" style={{paddingLeft:"67px",paddingTop:"67px"}}>관심있는 디자이너</div>
                     <>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList cols={DesignProps.cols}
-                                        width={DesignProps.width} height={DesignProps.height} marginRight={DesignProps.marginRight} marginBottom={DesignProps.marginBottom} marginRightLast={DesignProps.marginRightLast} marginBottomLast={DesignProps.marginBottomLast}
-                                        page={this.state.page} ListComponent={Design} dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
+                            <ScrollList cols={DesignerProps.cols}
+                                        width={DesignerProps.width} height={DesignerProps.height} marginRight={DesignerProps.marginRight} marginBottom={DesignerProps.marginBottom} marginRightLast={DesignerProps.marginRightLast} marginBottomLast={DesignerProps.marginBottomLast}
+                                        page={this.state.page} ListComponent={Designer} dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
                     </>
                 </div>
 

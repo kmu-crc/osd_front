@@ -29,7 +29,7 @@ const INSERT_USER_DETAIL_FAILURE = "INSERT_USER_DETAIL_FAILURE"
 const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
 const UPDATE_USER_DETAIL_SUCCESS = "UPDATE_USER_DETAIL_SUCCESS"
 const UPDATE_USER_DETAIL_FAILURE = "UPDATE_USER_DETAIL_FAILURE"
-
+const MY_LIKE_GROUP_FAIL = "MY_LIKE_GROUP_FAIL";
 
 const GetMyDetail = (data) => ({ type: GET_MY_DETAIL, MyDetail: data })
 const GetMyDesignList = (data) => ({ type: GET_MY_DESIGN, MyDesign: data })
@@ -42,7 +42,8 @@ const GetMyLikeDesign = (data) => ({ type: GET_MY_LIKE_DESIGN, MyLikeDesign: dat
 const MyLikeDesignClear = (data) => ({ type: GET_MY_LIKE_DESIGN_CLEAR, MyLikeDesign: data, MyLikeDesignAdded: [] })
 const MyLikeDesignFail = () => ({ type: MY_LIKE_DESIGN_FAIL, MyLikeDesign: [], MyLikeDesignAdded: [] })
 const GetMyLikeGroup = (data) => ({type:GET_MY_LIKE_GROUP, MyLikeGroup:data})
-const GetMyLikeGroupClear = (data) => ({type:GET_MY_LIKE_GROUP_CLEAR, MyLikeGroup:data, MyLikeGroupAdded:[]})
+const MyLikeGroupClear = (data) => ({type:GET_MY_LIKE_GROUP_CLEAR, MyLikeGroup:data, MyLikeGroupAdded:[]})
+const MyLikeGroupFail = () => ({type:MY_LIKE_GROUP_FAIL, MyLikeGroup:[], MyLikeGroupAdded:[]});
 
 const GetMyLikeDesigner = (data) => ({ type: GET_MY_LIKE_DESIGNER, MyLikeDesigner: data })
 const MyLikeDesignerClear = (data) => ({ type: GET_MY_LIKE_DESIGNER_CLEAR, MyLikeDesigner: data, MyLikeDesigneRAdded: [] })
@@ -200,6 +201,20 @@ export default function Personal(state, action) {
                     MyLikeDesignAdded: { $set: action.MyLikeDesignAdded }
                 }
             })
+        case GET_MY_LIKE_GROUP:
+            return update(state, {
+                status:{
+                    MyLikeGroup: { $set: action.MyLikeGroup },
+                    MyLikeGroupAdded: { $push: action.MyLikeGroup }
+                }
+            })
+        case GET_MY_LIKE_GROUP_CLEAR:
+            return update(state, {
+                status:{
+                    MyLikeGroup: { $set: action.MyLikeGroup },
+                    MyLikeGroupAdded: { $push: action.MyLikeGroup }
+                }
+            })
         case GET_MY_LIKE_DESIGNER:
             return update(state, {
                 status: {
@@ -323,6 +338,7 @@ export function GetMyGroupListRequest(token, page) {
 }
 // 내 좋아요 디자인 불러오기
 export function GetMyLikeDesignRequest(token, page) {
+    console.log("designer"+page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesign/${page}`, {
             headers: {
@@ -342,7 +358,6 @@ export function GetMyLikeDesignRequest(token, page) {
                 dispatch(MyLikeDesignClear(data))
                 return
             }
-            console.log(`${host}/users/myPage/likeDesign/${page}`);
             dispatch(GetMyLikeDesign(data))
         }).catch((error) => {
             dispatch(MyLikeDesignFail())
@@ -353,26 +368,25 @@ export function GetMyLikeDesignRequest(token, page) {
 
 export function GetMyLikeGroupRequest(token, page) {
     return (dispatch) => {
-        return fetch(`${host}/users/myPage/likeDesign/${page}`, {
+        return fetch(`${host}/users/myPage/likeGroup/${page}`, {
             headers: {
                 "Content-Type": "application/json",
                 "x-access-token": token
             },
             method: "get"
         }).then(response => {
-
             return response.json()
         }).then((data) => {
+            console.log(data, page);
             if (!data) {
                 console.log("no data")
                 data = []
             }
             if (page === 0) {
-                //dispatch(MyLikeGroupClear(data))
+                dispatch(MyLikeGroupClear(data))
                 return
             }
-            console.log(`${host}/users/myPage/likeDesign/${page}`);
-            dispatch(GetMyLikeDesign(data))
+            dispatch(GetMyLikeGroup(data))
         }).catch((error) => {
             dispatch(MyLikeDesignFail())
             console.log("err", error)
@@ -383,6 +397,7 @@ export function GetMyLikeGroupRequest(token, page) {
 
 // 내 좋아요 디자이너 불러오기
 export function GetMyLikeDesignerRequest(token, page) {
+    console.log("designer"+page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesigner/${page}`, {
             headers: {
@@ -401,7 +416,6 @@ export function GetMyLikeDesignerRequest(token, page) {
                 dispatch(MyLikeDesignerClear(data))
                 return
             }
-            console.log(data);
             dispatch(GetMyLikeDesigner(data))
         }).catch((error) => {
             dispatch(MyLikeDesignerFail())
@@ -409,6 +423,7 @@ export function GetMyLikeDesignerRequest(token, page) {
         })
     }
 }
+
 // 내가 받은 초대 리스트 가져오기
 export function GetMyInvitedListRequest(token) {
     return (dispatch) => {

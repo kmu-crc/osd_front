@@ -23,6 +23,17 @@ const GET_LIKE_IN_DESIGNER = "GET_LIKE_IN_DESIGNER"
 const GET_LIKE_IN_DESIGNER_CLEAR = "GET_LIKE_IN_DESIGNER_CLEAR"
 const LIKE_IN_DESIGNER_FAIL = "LIKE_IN_DESIGNER_FAIL"
 
+const GET_LIKE_GROUP_IN_DESIGNER = "GET_LIKE_GROUP_IN_DESIGNER";
+const GET_LIKE_GROUP_IN_DESIGNER_CLEAR = "GET_LIKE_GROUP_IN_DESIGNER_CLEAR";
+const GET_LIKE_GROUP_IN_DESIGNER_FAIL = "GET_LIKE_GROUP_IN_DESIGNER_FAIL";
+
+const GET_LIKE_DESIGNER_IN_DESIGNER = "GET_LIKE_DESIGNER_IN_DESIGNER";
+const GET_LIKE_DESIGNER_IN_DESIGNER_CLEAR = "GET_LIKE_DESIGNER_IN_DESIGNER";
+const GET_LIKE_DESIGNER_IN_DESIGNER_FAIL = "GET_LIKE_DESIGNER_IN_DESIGNER_FAIL";
+
+const GET_GROUP_IN_DESIGNER = "GET_GROUP_IN_DESIGNER"
+const GET_GROUP_IN_DESIGNER_CLEAR = "GET_GROUP_IN_DESIGNER_CLEAR";
+const GET_GROUP_IN_DESIGNER_FAIL = "GET_GROUP_IN_DESIGNER_FAIL"
 // action creator
 
 const GetDesignerDetail = (data) => ({ type: GET_DESIGNER_DETAIL, DesignerDetail: data })
@@ -45,6 +56,17 @@ const LikeDesignerFailure = () => ({ type: LIKE_DESIGNER_FAILURE })
 const UnlikeDesigner = () => ({ type: UNLIKE_DESIGNER })
 const UnlikeDesignerSuccess = () => ({ type: UNLIKE_DESIGNER_SUCCESS })
 const UnlikeDesignerFailure = () => ({ type: UNLIKE_DESIGNER_FAILURE })
+const GetLikeDesignerInDesigner=(data)=>({type:GET_LIKE_DESIGNER_IN_DESIGNER, LikeDesignerInDesigner: data});
+const GetLikeDesignerInDesignerClear = (data) => ({type:GET_LIKE_DESIGNER_IN_DESIGNER_CLEAR, LikeDesignerInDesigner:data, LikeDesignerInDesignerAdded: []});
+const GetLikeDesignerInDesignerFail = () => ({type:GET_LIKE_DESIGNER_IN_DESIGNER_FAIL, LikeDesignerInDesigner:[], LikeDesignerInDesignerAdded: []});
+const GetLikeGroupInDesigner = (data)=>({type:GET_LIKE_GROUP_IN_DESIGNER, LikeGroupInDesigner:data});
+const GetLikeGroupInDesignerClear = (data) => ({type:GET_LIKE_GROUP_IN_DESIGNER_CLEAR, LikeGroupInDesigner:data, LikeGroupInDesignerAdded:[]});
+const GetLikeGroupInDesignerFail = () => ({type:GET_LIKE_GROUP_IN_DESIGNER_FAIL, LikeGroupInDesigner:[], LikeGroupInDesignerAdded:[]});
+const GetGroupInDesigner = (data) => ({type:GET_GROUP_IN_DESIGNER, GroupInDesigner: data});
+const GetGroupInDesignerClear = (data) => ({type:GET_GROUP_IN_DESIGNER_CLEAR, GroupInDesigner: data, GroupInGroupAdded:[]});
+const GetGroupInDesignerFail = () => ({type:GET_GROUP_IN_DESIGNER_FAIL, GroupInDesigner: [], GroupInGroupAdded:[]});
+
+
 
 const initialState = {
     DesignerDetail: { status: "INIT" },
@@ -62,7 +84,13 @@ const initialState = {
         LikeInDesignerAdded: [],
         DesignerList: [],
         DesignerListAdded: [],
-        DesignerCount: 0
+        DesignerCount: 0,
+        LikeGroupInDesigner:[],
+        LikeGroupInDesignerAdded:[],
+        LikeDesignerInDesigner:[],
+        LikeDesignerInDesignerAdded:[],
+        GroupInDesigner:[],
+        GroupInDesignerAdded:[],
     }
 }
 

@@ -68,7 +68,6 @@ class ScrollList extends Component {
   }
   componentWillReceiveProps(newProps) {
     if (newProps.page === 0) {
-      console.log("is more")
       this.setState({ hasMore: true })
     }
   }
@@ -77,7 +76,6 @@ class ScrollList extends Component {
     const ListComponent = this.props.ListComponent;
     const { handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { loading, hasMore } = this.state;
-    console.log("len:", dataListAdded.length)
     return (<>
       {dataListAdded && dataListAdded.length > 0 ?
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
