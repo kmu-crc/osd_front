@@ -68,6 +68,7 @@ class Re_SearchList extends Component{
     state = {
         mainCate:['디자인', '그룹','디자이너'],
         this_order: { text: "등록순", keyword: "update" },
+        selectedCate:"디자인",
     }
     getSearchValue = (e) => {
         const target = e.target;
@@ -97,6 +98,11 @@ class Re_SearchList extends Component{
             this.changeState();
         }
     }
+    onChangeDropBox(event)
+    {
+        console.log(event.target.value);
+        //alert(event.target.selected);
+    }
 
     render(){
         return(
@@ -113,14 +119,21 @@ class Re_SearchList extends Component{
                 {/*x box position*/}
                 <div style={{display:"flex", justifyContent:"space-start"}}>
 
-                    <div style={{minWidth:"110px",paddingTop:"60px", paddingLeft:"300px", zIndex:"501"}}><Dropdown options={this.state.mainCate} value={this.state.mainCate[0]} placeholder="Select an option" /></div>
+                    <div style={{minWidth:"110px",paddingTop:"60px", paddingLeft:"300px", zIndex:"501"}}>
+                        <Dropdown id = "dropbox" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.mainCate[0]} placeholder="Select an option" >
+                        </Dropdown>
+                    </div>
 
                     <div className="cateUI">
-                        <div style={{color:"red"}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                    <React.Fragment>
+                                                <div style={{color:"red"}}>세부카테고리</div>
+                                                <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                                                <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                                                <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                                                <div style={{paddingLeft:'20px'}}>세부카테고리</div>
+                    </React.Fragment>
+                    }
+
                     </div>
                     <div style={{paddingLeft:"1310px", paddingTop:"70px"}}><OrderOption order_clicked = {this.handleChangeOrderOps} selected = {this.state.this_order}/></div>
 

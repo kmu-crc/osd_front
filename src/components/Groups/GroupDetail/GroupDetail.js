@@ -1,11 +1,14 @@
-import React, { Component } from "react"
-import styled from 'styled-components'
-import GroupInfo from "components/Groups/GroupInfo"
-import Design from "components/Designs/Design"
-import Group from "components/Groups/Group"
-// import { GeneralScrollList } from "components/Commons/ScrollList"
-import Loading from 'components/Commons/Loading'
-import ScrollList from "components/Commons/ScrollList"
+import React, { Component } from "react";
+import styled from 'styled-components';
+
+import Design from "components/Designs/Design";
+import GroupInfo from "components/Groups/GroupInfo";
+import Group from "components/Groups/Group";
+import GroupManager from "components/Groups/GroupManager";
+
+import Loading from 'components/Commons/Loading';
+import ScrollList from "components/Commons/ScrollList";
+import osdstyle from "opendesign_style";
 
 const Tabs = styled.div`
   display: flex;
@@ -31,13 +34,17 @@ const Tab = styled.div`
 `;
 
 class GroupDetail extends Component {
-  state = { page: 0, uid: undefined, currentTab: "design" }
+  state = { page: 0, uid: undefined, currentTab: "design", manager: false }
   switchTab = async (tab) => {
     await this.setState({ currentTab: tab, page: 0 })
     this.getInitData()
   }
-
+  switchMode = () => {
+    this.setState({ manager: !this.state.manager })
+    // alert(this.state.manager ? "관리모드" : "관리모드 해제")
+  }
   componentDidMount() {
+    this.props.GetGroupDetailRequest(this.props.id);
     this.getInitData()
   }
 
@@ -70,38 +77,37 @@ class GroupDetail extends Component {
   }
 
   render() {
-    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded, Count} = this.props;
-    const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"}
-    const GroupProps = { cols: 3, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"}
-    const { currentTab } = this.state
-    return (
-      <>
-        <GroupInfo GroupInfo={GroupDetail} userInfo={userInfo} count={Count}/>
-        <Tabs >
-          <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
-          <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
-        </Tabs>
-        {GroupDetail && currentTab === "group" &&
-          <>
-            {this.props.status === "INIT" ?
-              <Loading /> :
-              <ScrollList cols={GroupProps.cols}
-                width={GroupProps.width} height={GroupProps.height} marginRight={GroupProps.marginRight} marginBottom={GroupProps.marginBottom} marginRightLast={GroupProps.marginRightLast} marginBottomLast={GroupProps.marginBottomLast}
-                page={this.state.page} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}
-          </>
-        }       {GroupDetail && currentTab === "design" &&
-          <>
-            {this.props.status === "INIT" ?
-              <Loading /> :
-              <ScrollList cols={DesignProps.cols}
-                width={DesignProps.width} height={DesignProps.height} marginRight={DesignProps.marginRight} marginBottom={DesignProps.marginBottom} marginRightLast={DesignProps.marginRightLast} marginBottomLast={DesignProps.marginBottomLast}
-                page={this.state.page} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}
-          </>
-        }
-        {/* <GeneralScrollList {...DesignProps} page={this.state.page} getListRequest={this.getDesignList} /}*/}
-      </>
-    )
+    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
+    const DesignProps = { ...osdstyle.design_margin }
+    const GroupProps = { ...osdstyle.group_margin }
+    const { currentTab, manager } = this.state
+    return (<>
+      <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} userInfo={userInfo} count={Count} />
+      {manager ?
+        <>
+          <div style={{ marginTop: "32px" }}>
+            <GroupManager id={this.props.id} sort={this.props.update} />
+          </div>
+        </> :
+        <>
+          <Tabs>
+            <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
+            <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
+          </Tabs>
+          {GroupDetail && currentTab === "group" && <>
+            {this.props.status === "INIT"
+              ? <Loading />
+              : <ScrollList cols={GroupProps.cols} {...osdstyle.group_margin} page={this.state.page} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</>}
+          {GroupDetail && currentTab === "design" && <>
+            {this.props.status === "INIT"
+              ? <Loading />
+              : <ScrollList cols={DesignProps.cols} {...osdstyle.design_margin} page={this.state.page} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</>}
+        </>}
+
+    </>)
+
   }
 }
 
 export default GroupDetail
+/* <GeneralScrollList {...DesignProps} page={this.state.page} getListRequest={this.getDesignList} /}*/

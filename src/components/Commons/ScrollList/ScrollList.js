@@ -7,16 +7,27 @@ const FlexContainer = styled.div`
   padding: 0;
   margin-left: 10px;
   list-style: none;
-`
+`;
 const FlexBox = styled.div`
-  width: ${props => props.width || "330px"};
-  height:${props => props.height || "330px"};
-  margin-right: ${props => props.marginRight || "63px"};
-  margin-bottom: ${props => props.marginBottom || "80px"};
-  &.right-last { margin-right: ${props => props.marginRightLast || "8px"}; }
-  &.bottom-last { margin-bottom: ${props => props.marginBottomLast || "26px"}; }
+  width: ${props => props.width};
+  height:${props => props.height};
+  margin-right: ${props => props.marginRight};
+  margin-bottom: ${props => props.marginBottom};
+  &.right-last { margin-right: ${props => props.marginRightLast}; }
+  &.bottom-last { margin-bottom: ${props => props.marginBottomLast}; }
   display: inline-block;
-`
+`;
+const OutBtn = styled.button`
+  position: absolute;
+  top: 0;
+  right: 10px;
+`;
+const AcceptBtn = styled.button`
+  position: relative;
+  top: 0;
+  right: 80px;
+`;
+
 class ScrollList extends Component {
   state = { hasMore: true, loading: false, callCount: 0 }
   componentDidMount() {
@@ -43,12 +54,17 @@ class ScrollList extends Component {
   getLoadData = () => {
     if (this.state.hasMore === false) return
     this.setState({ loading: true });
-    this.props.getListRequest()
-      .then(() => {
-        this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
-      }).catch(err => {
-        this.setState({ hasMore: false, loading: false }) // console.log(err)
-      })
+    if (this.props.getListRequest) {
+      this.props.getListRequest()
+        .then(() => {
+          this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: false })
+        }).catch(err => {
+          this.setState({ hasMore: false, loading: false }) // console.log(err)
+        })
+    }
+    else {
+      this.setState({ hasMore: false, loading: false })
+    }
   }
   componentWillReceiveProps(newProps) {
     if (newProps.page === 0) {
@@ -59,20 +75,25 @@ class ScrollList extends Component {
   myRef = React.createRef()
   render() {
     const ListComponent = this.props.ListComponent;
-    const { cols } = this.props;
+    const { handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
+    const { loading, hasMore } = this.state;
+    console.log("len:", dataListAdded.length)
     return (<>
-      {this.props.dataListAdded && this.props.dataListAdded.length > 0 &&
+      {dataListAdded && dataListAdded.length > 0 ?
         <FlexContainer onLoad={this.checkAndGetData} ref={this.myRef}>
-          {this.props.dataListAdded.map((item, i) => {
+          {dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
-            const bottom = (this.props.dataListAdded.length - (this.props.dataListAdded.length % cols)) - 1 < i || this.props.dataListAdded.length - cols === 0 ? "bottom-last" : "";
-            return (<FlexBox width={this.props.width} height={this.props.height} marginRight={this.props.marginRight} marginBottom={this.props.marginBottom} marginRightLast={this.props.marginRightLast} marginBottomLast={this.props.marginBottomLast} key={i} className={`${last} ${bottom}`}>
+            const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
+            return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+              {handleAccept && <AcceptBtn className="ui button black" onClick={() => this.props.handleAccept(item.uid)}>가입승인</AcceptBtn>}
+              {handleReject && <OutBtn className="ui button black" onClick={() => this.props.handleReject(item.uid)}>삭제</OutBtn>}
               <ListComponent data={item} />
             </FlexBox>)
           })}
-          {this.state.loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "32px", textAlign: "center", width: "100%", transform: "translateY(-25px)" }}>목록을 가져오고 있습니다.</p>}
-          {this.state.hasMore && <i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i>}
-        </FlexContainer>}
+          {loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "32px", textAlign: "center", width: "100%", transform: "translateY(-25px)" }}>목록을 가져오고 있습니다.</p>}
+          {hasMore && <i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i>}
+        </FlexContainer>
+        : <div>데이터가 없습니다.</div>}
     </>)
   }
 }

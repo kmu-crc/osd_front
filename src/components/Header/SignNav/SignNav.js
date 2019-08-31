@@ -3,34 +3,35 @@ import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
 import noimg from "source/thumbnail.png";
+import TextFormat from 'modules/formats/TextFormat';
 
 const UserMenu = styled.div`
     display: ${props => props.display};
+    padding-top:10px;
     position: absolute;
     pointer-events: auto;
     top: 50.5px;
-    left: ${props => props.left + "px"};
+    right: 5px;
     z-index: 904;
-    height: 153px;
+    height: 115px;
     width: 179px;
     border-radius: 15px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-    border-radius: 5px;
+    border-radius: 10px;
     color: #707070;
     font-size: 20px;
-    font-weight: 500;
-    padding: 15px;
-`
+    font-weight: 500;    
+   `
 const UserMenuItem = styled.div`
+    margin-top:5px;
     cursor: pointer;
     width: 100%;
-    padding-top:11.5px;
-    padding-left: 5px;
-    padding-right: 13px;
     line-height: 30px;
-    text-align: left;
-    &:hover {}
+    text-align: center;
+    &:hover {
+        color:#FF0000;
+    }
 `
 const UserThumbnail = styled.div`
     margin-right: 10px;
@@ -91,22 +92,20 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
+        const { user_popup, signin_modal } = this.state
         const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
 
         return (<>
-            {this.state.user_popup &&
-                <UserMenu ref={this.myRef} display={"block"} top={this.state.user_popup.top} left={userinfo.userMenuLeft} >
-                    <div style={{ paddingBottom: "5px" }}><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
-                    <hr style={{ position: "relative", left: '-10px' }} width="166px" noshade="none" />
+            {user_popup &&
+                <UserMenu ref={this.myRef} display={"block"} top={user_popup.top} left={userinfo.userMenuLeft} >
+                    <div><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <hr color="#EFEFEF" width="166px" noshade="none" />
                     <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
-            {this.state.signin_modal && <SignInModal open={this.state.signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
+            {signin_modal && <SignInModal open={signin_modal} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />}
             {isLoggedIn
-                ? (<div onClick={this.openUserMenu} style={{ margin: "0", padding: "0", cursor: "pointer", display: "flex" }}>
-                    <UserThumbnail url={profile} />
-                    {info.nickName}</div>)
-                : (<div onClick={this.openModal} style={{ margin: "0", padding: "0", cursor: "pointer" }}>
-                    로그인</div>)}
+                ? (<div onClick={this.openUserMenu} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer", display: "flex" }}><UserThumbnail url={profile} /><TextFormat chars={9} txt={info.nickName} /></div>)
+                : (<div onClick={this.openModal} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer" }}>로그인</div>)}
         </>)
     }
 }

@@ -26,6 +26,7 @@ import ModifyGroupPage from "pages/ModifyGroupPage"
 // + designer
 import DesignerListPage from "containers/Designer/DesignerListContainer"//"pages/DesignerListPage"
 import DesignerPage from "containers/Designer/DesignerDetailContainer"
+import CreateDesigner from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer"
 
 // + etc.
 import RequiresAuth from "containers/Commons/RequiresAuth"
@@ -67,7 +68,7 @@ class App extends Component {
             {/* GROUP D - designer */}
             <Route path="/designerDetail/:id" component={DesignerPage} />
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
-
+            <Route path="/createdesigner" component={CreateDesigner} />
 
             {/* GROUP E - etc. */}
             <Route path="/resetPw" component={ResetPwPage} />

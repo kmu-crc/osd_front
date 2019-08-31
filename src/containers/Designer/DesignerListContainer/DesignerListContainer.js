@@ -52,6 +52,11 @@ class DesignerListPage extends Component {
             .then(() => { this.props.GetDesignerTotalCountRequest() });
         this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
     }
+    handleCreateDesigner()
+    {
+        let href = window.location.href.substring(0, window.location.href.search("designer"))
+        window.location.href = href + 'createdesigner';
+    }
     handleChangeCategory = async (category) => {
         await this.setState({ page: 0, main_category: category, this_category: category, sub_category: { text: null, value: null } })
         //console.log("category.value:", category.value)
@@ -97,7 +102,7 @@ class DesignerListPage extends Component {
                     category1={category1} category2={category2[main_category.value]} main_selected={main_category} sub_selected={sub_category} />
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
                 <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
-                <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
+                <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner></div>
                 <div style={{ paddingTop: "100px", paddingBottom: "68px" }}>
                     {status === "INIT"
                         ? <Loading />

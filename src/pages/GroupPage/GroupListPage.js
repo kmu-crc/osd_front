@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import GroupListContainer from "containers/Groups/GroupListContainer"
 import styled from 'styled-components'
 import OrderOption from "components/Commons/OrderOption"
+import osdstyle from "opendesign_style"
 
 const TextWrapper = styled.div`
     position: relative;
@@ -29,7 +30,6 @@ const JoinGroup = styled.div`
     border-bottom: 1.5px solid red;
     
 `
-const margin = { width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px" }
 class GroupListPage extends Component {
     state = { search: null, count: 0, this_order: { text: "등록순", keyword: "update" } }
     handleClickJoin = () => {
@@ -49,7 +49,7 @@ class GroupListPage extends Component {
                 <TextWrapper>그룹({count})</TextWrapper>
                 <div style={{ position: "relative" }}><JoinGroup onClick={() => this.handleClickJoin()}>그룹 등록하기</JoinGroup></div>
                 <div style={{ position: "relative", paddingTop: "100px" }}>
-                    <GroupListContainer {...this.state} updateGroupCount={this.handleChangedTotalCount} {...margin} />
+                    <GroupListContainer {...this.state} updateGroupCount={this.handleChangedTotalCount} {...osdstyle.group_margin} />
                 </div>
             </>
         )

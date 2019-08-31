@@ -8,7 +8,8 @@ const AlarmList = styled.div`
     z-index: 999;
     position: absolute;
     pointer-events: auto;
-    top: 50.5px;
+    top: 60px;
+    right:300px;
     left: ${props => props.left + "px"};
     z-index: 904;
     height: 550px;
@@ -22,30 +23,29 @@ const AlarmList = styled.div`
         position: absolute;
         width: 3.9px;
     }
+
     .list::-webkit-scrollbar-thumb {
-    background: rgba(112, 112, 112, 0.45) !important;
+        background: rgba(112, 112, 112, 0.45) !important;
     }
-    
-    
   .list {
-      padding-left: 15px;
       padding-right: 36px;
       padding-bottom: 5px;
       height: 490px;
       overflow-y: hidden;
+      overflow-x: hidden;
     &:hover{
         overflow-y: scroll;
     }
-
-    
-}`;
+`;
 const ListItem = styled.div`
+    
     display:flex;
+    padding-left:15px;
     flex-direction:column;
     opacity: ${props => props.confirm ? 0.5 : 1};
-    width: 340px;
-    display: flex;
+    width: 380px;
     height: 118px;
+    display: flex;
     border-bottom: 1px solid #B7B7B7;
     &:hover {
         background-color: #EFEFEF;
@@ -87,8 +87,9 @@ class Alarm extends Component {
     //     this.setState({ active: !this.state.active });
     // }
 
-    alarmConfirm = (uid, alarmID) => {
-        this.props.handleAlarmConfirm(uid, alarmID)
+    alarmConfirm = (userID, alarmID) => {
+        console.log("alarm-confirm:", userID, ",", alarmID)
+        this.props.handleAlarmConfirm(userID, alarmID)
     }
 
     allAlarmConfirm = () => {
@@ -174,8 +175,8 @@ class Alarm extends Component {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
                             if (res.data && res.data.success) {
-                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락되었습니다.");
-                                this.alarmConfirm(item.uid)
+                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                                this.alarmConfirm(item.user_id, item.uid)
                             } else {
                                 alert("다시 시도해주세요.");
                             }
@@ -190,7 +191,7 @@ class Alarm extends Component {
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             if (res.data && res.data.success) {
-                                this.alarmConfirm(item.uid)
+                                this.alarmConfirm(item.user_id, item.uid)
                                 alert("승인되었습니다. 해당페이지로 이동합니다.")
                                 this.props.history.push(this.getLink(item))
                             } else { alert("다시 시도해주세요.") }
@@ -208,6 +209,7 @@ class Alarm extends Component {
                 }
             }
         }
+        window.location.reload()
     }
 
     reject = (e, item) => {
@@ -220,7 +222,7 @@ class Alarm extends Component {
                         .then(res => {
                             if (res.data && res.data.success) {
                                 alert(item.kinds === "REQUEST" ? "요청을 거절하였습니다." : "초대를 거절하였습니다.");
-                                this.alarmConfirm(item.uid)
+                                this.alarmConfirm(item.user_id, item.uid)
                             } else {
                                 alert("다시 시도해주세요.");
                             }
@@ -234,7 +236,7 @@ class Alarm extends Component {
                     this.props.DeleteDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             if (res.data && res.data.success) {
-                                this.alarmConfirm(item.uid)
+                                this.alarmConfirm(item.user_id, item.uid)
                                 alert(`거절하셨습니다.`)
                             } else {
                                 alert(`다시 시도해주세요.`)
@@ -247,7 +249,7 @@ class Alarm extends Component {
                     this.props.DeleteGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             if (res.data && res.data.success) {
-                                this.alarmConfirm(item.uid)
+                                this.alarmConfirm(item.user_id, item.uid)
                                 alert(`거절하셨습니다.`)
                             } else {
                                 alert(`다시 시도해주세요.`)
@@ -257,6 +259,7 @@ class Alarm extends Component {
                 }
             }
         }
+        window.location.reload()
     }
     getLikeCount = (item, alarms) => {
         let count = 0, returnType = "";
@@ -271,21 +274,22 @@ class Alarm extends Component {
             }
         })
         return [returnType, count];
-    };
+    }
 
     render() {
         const alarms = this.props.alarm;
+        // const alarms = this.GetAlarmMergedLike(this.props.alarm);
         console.log(alarms);
         return (
             <>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
                     <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
-                        <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>
-                            모두 읽음으로 표시하기
-                        </div>
+                        {alarms && alarms.count > 0 ?
+                            <div onClick={this.allAlarmConfirm} style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>모두 읽음으로 표시하기</div>
+                            : <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />}
                     </div>
                     <div className="list">
-                        {alarms.list.map(item => {
+                        {alarms ? alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
                             let designCount = 0, groupCount = 0, countObj, msg;
@@ -314,26 +318,26 @@ class Alarm extends Component {
                                                     (<>
                                                         <div style={{ paddingLeft: "15px", paddingTop: "12.5px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}><TextFormat txt={item.title} /></div>
                                                         <div style={{ display: "flex", justifyContent: "space-start", position: "absolute", paddingLeft: "200px", paddingTop: "25px", fontSize: "17px", fontWeight: "500" }}>
-                                                            <div style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
-                                                            <div style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
+                                                            <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
+                                                            <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
                                                         </div>
-                                                    </>)
+                                                        Alarm                         </>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', width: "225px" }}><TextFormat txt={item.title} /></div>
-                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }
                                             </div>
                                         </div>
                                     </div>
                                 </ListItem>)
-                        })}
+                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
                     </div>
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
-                        {alarms && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
+                        {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
                     </div>
                 </div>

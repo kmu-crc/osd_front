@@ -465,7 +465,9 @@ export function GetoutDesignRequest(id, memberId, token, refuse) {
 export function AcceptDesignRequest(id, memberId, token) {
     return (dispatch) => {
         dispatch(AcceptDesign());
-        return fetch(`${host}/Design/designDetail/${id}/acceptDesign/${memberId}`, {
+        const url = `${host}/Design/designDetail/${id}/acceptDesign/${memberId}`
+        console.log(url, token)
+        return fetch(url, {
             headers: { "Content-Type": "application/json", 'x-access-token': token },
             method: "post"
         }).then((response) => {

@@ -477,6 +477,7 @@ export function InsertUserDetailRequest(data, token) {
     }
 }
 export function UpdateUserDetailRequest(data, token) {
+    console.log("UpdateUserDetailRequest",data);
     return (dispatch) => {
         dispatch(UpdateUserDetail())
         return fetch(`${host}/users/modifyDetail`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {
