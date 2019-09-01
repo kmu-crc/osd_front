@@ -12,6 +12,8 @@ const MY_GROUP_FAIL = "MY_GROUP_FAIL"
 const GET_MY_LIKE_DESIGN = "GET_MY_LIKE_DESIGN"
 const GET_MY_LIKE_DESIGN_CLEAR = "GET_MY_LIKE_DESIGN_CLEAR"
 const MY_LIKE_DESIGN_FAIL = "MY_LIKE_DESIGN_FAIL"
+const GET_MY_LIKE_GROUP = "GET_MY_LIKE_GROUP"
+const GET_MY_LIKE_GROUP_CLEAR = "GET_MY_LIKE_GROUP_CLEAR"
 const GET_MY_LIKE_DESIGNER = "GET_MY_LIKE_DESIGNER"
 const GET_MY_LIKE_DESIGNER_CLEAR = "GET_MY_LIKE_DESIGNER_CLEAR"
 const MY_LIKE_DESIGNER_FAIL = "MY_LIKE_DESIGNER_FAIL"
@@ -27,7 +29,7 @@ const INSERT_USER_DETAIL_FAILURE = "INSERT_USER_DETAIL_FAILURE"
 const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
 const UPDATE_USER_DETAIL_SUCCESS = "UPDATE_USER_DETAIL_SUCCESS"
 const UPDATE_USER_DETAIL_FAILURE = "UPDATE_USER_DETAIL_FAILURE"
-
+const MY_LIKE_GROUP_FAIL = "MY_LIKE_GROUP_FAIL";
 
 const GetMyDetail = (data) => ({ type: GET_MY_DETAIL, MyDetail: data })
 const GetMyDesignList = (data) => ({ type: GET_MY_DESIGN, MyDesign: data })
@@ -39,6 +41,10 @@ const MyGroupListFail = () => ({ type: MY_GROUP_FAIL, MyGroup: [], MyGroupAdded:
 const GetMyLikeDesign = (data) => ({ type: GET_MY_LIKE_DESIGN, MyLikeDesign: data })
 const MyLikeDesignClear = (data) => ({ type: GET_MY_LIKE_DESIGN_CLEAR, MyLikeDesign: data, MyLikeDesignAdded: [] })
 const MyLikeDesignFail = () => ({ type: MY_LIKE_DESIGN_FAIL, MyLikeDesign: [], MyLikeDesignAdded: [] })
+const GetMyLikeGroup = (data) => ({type:GET_MY_LIKE_GROUP, MyLikeGroup:data})
+const MyLikeGroupClear = (data) => ({type:GET_MY_LIKE_GROUP_CLEAR, MyLikeGroup:data, MyLikeGroupAdded:[]})
+const MyLikeGroupFail = () => ({type:MY_LIKE_GROUP_FAIL, MyLikeGroup:[], MyLikeGroupAdded:[]});
+
 const GetMyLikeDesigner = (data) => ({ type: GET_MY_LIKE_DESIGNER, MyLikeDesigner: data })
 const MyLikeDesignerClear = (data) => ({ type: GET_MY_LIKE_DESIGNER_CLEAR, MyLikeDesigner: data, MyLikeDesigneRAdded: [] })
 const MyLikeDesignerFail = () => ({ type: MY_LIKE_DESIGNER_FAIL, MyLikeDesigner: [], MyLikeDesigneRAdded: [] })
@@ -54,7 +60,6 @@ const UpdateUserDetail = () => ({ type: UPDATE_USER_DETAIL })
 const UpdateUserDetailSuccess = () => ({ type: UPDATE_USER_DETAIL_SUCCESS, success: true })
 const UpdateUserDetailFailure = () => ({ type: UPDATE_USER_DETAIL_FAILURE, success: false })
 const GetMyInvitingListFailure = () => ({ type: GET_MY_INVITING_LIST_FAILURE, list: [] })
-
 
 export default function Personal(state, action) {
     if (typeof state === "undefined")
@@ -196,6 +201,20 @@ export default function Personal(state, action) {
                     MyLikeDesignAdded: { $set: action.MyLikeDesignAdded }
                 }
             })
+        case GET_MY_LIKE_GROUP:
+            return update(state, {
+                status:{
+                    MyLikeGroup: { $set: action.MyLikeGroup },
+                    MyLikeGroupAdded: { $push: action.MyLikeGroup }
+                }
+            })
+        case GET_MY_LIKE_GROUP_CLEAR:
+            return update(state, {
+                status:{
+                    MyLikeGroup: { $set: action.MyLikeGroup },
+                    MyLikeGroupAdded: { $push: action.MyLikeGroup }
+                }
+            })
         case GET_MY_LIKE_DESIGNER:
             return update(state, {
                 status: {
@@ -234,7 +253,8 @@ const initialState = {
         MyDesign: [], MyDesignAdded: [],
         MyGroup: [], MyGroupAdded: [],
         MyLikeDesign: [], MyLikeDesignAdded: [],
-        MyLikeDesigner: [], MyLikeDesignerAdded: []
+        MyLikeDesigner: [], MyLikeDesignerAdded: [],
+        MyLikeGroup:[], MyLikeGroupAdded: [],
     }
 }
 
@@ -251,7 +271,6 @@ export function GetMyDetailRequest(token) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my detail info data >>", data)
             if (!data) {
                 console.log("no data")
                 data = []
@@ -274,7 +293,6 @@ export function GetMyDesignListRequest(token, page) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my design list data >>", data)
             if (!data) {
                 console.log("no data")
                 data = []
@@ -320,6 +338,7 @@ export function GetMyGroupListRequest(token, page) {
 }
 // 내 좋아요 디자인 불러오기
 export function GetMyLikeDesignRequest(token, page) {
+    console.log("designer"+page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesign/${page}`, {
             headers: {
@@ -328,9 +347,9 @@ export function GetMyLikeDesignRequest(token, page) {
             },
             method: "get"
         }).then(response => {
+
             return response.json()
         }).then((data) => {
-            console.log("my like list data >>", data)
             if (!data) {
                 console.log("no data")
                 data = []
@@ -346,8 +365,39 @@ export function GetMyLikeDesignRequest(token, page) {
         })
     }
 }
+
+export function GetMyLikeGroupRequest(token, page) {
+    return (dispatch) => {
+        return fetch(`${host}/users/myPage/likeGroup/${page}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": token
+            },
+            method: "get"
+        }).then(response => {
+            return response.json()
+        }).then((data) => {
+            console.log(data, page);
+            if (!data) {
+                console.log("no data")
+                data = []
+            }
+            if (page === 0) {
+                dispatch(MyLikeGroupClear(data))
+                return
+            }
+            dispatch(GetMyLikeGroup(data))
+        }).catch((error) => {
+            dispatch(MyLikeDesignFail())
+            console.log("err", error)
+        })
+    }
+}
+
+
 // 내 좋아요 디자이너 불러오기
 export function GetMyLikeDesignerRequest(token, page) {
+    console.log("designer"+page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesigner/${page}`, {
             headers: {
@@ -358,7 +408,6 @@ export function GetMyLikeDesignerRequest(token, page) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my like list data >>", data)
             if (!data) {
                 console.log("no data")
                 data = []
@@ -374,6 +423,7 @@ export function GetMyLikeDesignerRequest(token, page) {
         })
     }
 }
+
 // 내가 받은 초대 리스트 가져오기
 export function GetMyInvitedListRequest(token) {
     return (dispatch) => {
