@@ -12,13 +12,11 @@ import DesignerDetailBody from "components/Designers/DesignerDetailBody"
 class DesignerDetailContainer extends Component {
 
   componentWillMount() {
-    console.log(this.props.id);
     this.props.GetDesignerDetailRequest(this.props.id);
     this.props.GetDesignerCountRequest(this.props.id);
   }
 
   render() {
-     // return <DesignerDetail {...this.props}/>
     return (
       <React.Fragment>
         <DesignerDetailHeader {...this.props}/>

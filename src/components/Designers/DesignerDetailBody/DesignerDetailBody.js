@@ -56,9 +56,13 @@ class DesignerPageBody extends Component{
     }
     getInitData() {
         this.getMyDesignInDesignerRequest(true);
-        this.getLikeDesignerRequest(true);
         this.getGroupInDesignerRequest(true);
 
+
+
+        this.getLikeInDesignerRequest(true);
+        this.getLikeGroupInDesignerRequest(true);
+        this.getLikeDesignerInDesignerRequest(true);
     }
 
 
@@ -66,14 +70,32 @@ class DesignerPageBody extends Component{
         await this.setState({ page: isInit ? 0 : this.state.page + 1 });
         this.props.GetMyDesignInDesignerRequest(this.props.id, this.state.page);
     }
-    getLikeDesignerRequest = async (isInit)=>{
-        await this.setState({ page: isInit ? 0 : this.state.page + 1 });
-        this.props.GetLikeInDesignerRequest(this.props.id, this.state.page);
-    }
+
     getGroupInDesignerRequest = async (isInit)=>{
         await this.setState({ page: isInit ? 0 : this.state.page + 1 });
         this.props.GetGroupInDesignerRequest(this.props.id, this.state.page);
     }
+
+
+
+
+    getLikeInDesignerRequest = async (isInit)=>{
+        await this.setState({ page: isInit ? 0 : this.state.page + 1 });
+        this.props.GetLikeInDesignerRequest(this.props.id, this.state.page);
+    }
+
+    getLikeGroupInDesignerRequest = async (isInit)=>{
+        console.log("++++++++++++++++++++++++++"+this.state.page);
+        await this.setState({ page: isInit ? 0 : this.state.page + 1 });
+        this.props.GetLikeGroupInDesignerRequest(this.props.id, this.state.page);
+    }
+    getLikeDesignerInDesignerRequest = async (isInit)=>{
+        await this.setState({ page: isInit ? 0 : this.state.page + 1 });
+        this.props.GetLikeDesignerInDesignerRequest(this.props.id, this.state.page);
+    }
+
+
+
 
 
     changeCategory = (index)=>{
@@ -93,7 +115,8 @@ class DesignerPageBody extends Component{
         this.setState({cateIndex:index});
     }
     render(){
-        const {MyDesignInDesigner, MyDesignInDesignerAdded,LikeInDesigner,LikeInDesignerAdded,GroupInDesigner,GroupInDesignerAdded} = this.props;
+        const {MyDesignInDesigner, MyDesignInDesignerAdded,LikeInDesigner,LikeInDesignerAdded,GroupInDesigner,GroupInDesignerAdded,
+            LikeGroupInDesigner,LikeGroupInDesignerAdded, LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
         const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"};
         const GroupProps = { cols: 2, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"};
         const DesignerProps = {cols:3, width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
@@ -142,7 +165,7 @@ class DesignerPageBody extends Component{
                             <Loading /> :
                             <ScrollList cols={DesignProps.cols}
                                         width={DesignProps.width} height={DesignProps.height} marginRight={DesignProps.marginRight} marginBottom={DesignProps.marginBottom} marginRightLast={DesignProps.marginRightLast} marginBottomLast={DesignProps.marginBottomLast}
-                                        page={this.state.page} ListComponent={Design} dataList={LikeInDesigner} dataListAdded={LikeInDesigner} getListRequest={this.getLikeDesignList} />}
+                                        page={this.state.page} ListComponent={Design} dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeDesignList} />}
                     </div>
                     <div className="interested" style={{paddingLeft:"67px",paddingTop:"75px", marginBottom:"25px"}}>관심있는 그룹</div>
                     <>
@@ -150,7 +173,7 @@ class DesignerPageBody extends Component{
                             <Loading /> :
                             <ScrollList cols={GroupProps.cols}
                                         width={GroupProps.width} height={GroupProps.height} marginRight={GroupProps.marginRight} marginBottom={GroupProps.marginBottom} marginRightLast={GroupProps.marginRightLast} marginBottomLast={GroupProps.marginBottomLast}
-                                        page={this.state.page} ListComponent={Group} dataList={LikeInDesigner} dataListAdded={LikeInDesigner} getListRequest={this.getLikeGroupList} />}
+                                        page={this.state.page} ListComponent={Group} dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupList} />}
                     </>
                     <div className="interested" style={{paddingLeft:"67px",paddingTop:"67px"}}>관심있는 디자이너</div>
                     <>
@@ -158,7 +181,7 @@ class DesignerPageBody extends Component{
                             <Loading /> :
                             <ScrollList cols={DesignerProps.cols}
                                         width={DesignerProps.width} height={DesignerProps.height} marginRight={DesignerProps.marginRight} marginBottom={DesignerProps.marginBottom} marginRightLast={DesignerProps.marginRightLast} marginBottomLast={DesignerProps.marginBottomLast}
-                                        page={this.state.page} ListComponent={Designer} dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeDesignerList} />}
+                                        page={this.state.page} ListComponent={Designer} dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
                     </>
                 </div>
 
