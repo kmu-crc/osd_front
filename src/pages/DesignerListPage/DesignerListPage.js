@@ -9,6 +9,7 @@ import OrderOption from "components/Commons/OrderOption"
 import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
+import osdstyle from 'opendesign_style';
 
 
 const TextWrapper = styled.div`
@@ -34,8 +35,6 @@ const JoinDesigner = styled.div`
     border-bottom: 1.5px solid red;
 `;
 
-
-const margin = { width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
 
 class DesignerListPage extends Component {
     state = {
@@ -82,12 +81,9 @@ class DesignerListPage extends Component {
         this.handleChangeCategory(category)
     }
 
-
-
     render() {
         const { this_category, main_category, sub_category, page, this_order } = this.state
         const { category1, category2, Count, status } = this.props
-        const { width, height, marginRight, marginRightLast, marginBottom, marginBottomLast } = margin;
         console.log("DesignerListPage:", this.props.dataList, this.props.dataListAdded)
         return (
             <>
@@ -101,8 +97,8 @@ class DesignerListPage extends Component {
                 <div style={{ paddingTop: "100px", paddingBottom: "68px" }}>
                     {status === "INIT"
                         ? <Loading />
-                        : <ScrollList cols={3} width={width} height={height}
-                            marginRight={marginRight} marginRightLast={marginRightLast} marginBottom={marginBottom} marginBottomLast={marginBottomLast}
+                        : <ScrollList
+                            {...osdstyle.designer_margin}
                             page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
                 </div>
             </>

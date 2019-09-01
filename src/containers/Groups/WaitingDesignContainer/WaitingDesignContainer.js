@@ -10,6 +10,7 @@ import osdstyle from 'opendesign_style';
 const DesignBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
+    margin-left: 1rem;
     padding-bottom: 1rem;
     font-size: ${StyleGuide.font.size.heading4};
   }
@@ -33,14 +34,10 @@ class WaitingDesignContainer extends Component {
 
   setAccept = (id) => {
     this.props.UpdateDesignInGroupRequest(this.props.id, id)
-      .then(res => {
-        if (res.data.success === true) {
-          this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
-            .then(this.props.GetDesignInGroupRequest(this.props.id, null, null));
-        }
-      }).catch(err => {
-        console.log(err);
-      });
+      .then(res => { return res.data.success === true })
+      .then(() => this.props.GetWaitingDesignRequest(this.props.id, this.props.sort))
+      .then(this.props.GetDesignInGroupRequest(this.props.id, 0, null))
+      .catch(err => { console.log(err) });
   }
 
   render() {
@@ -48,11 +45,13 @@ class WaitingDesignContainer extends Component {
       <DesignBox>
         <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
         <ScrollList
+          manual
           {...osdstyle.design_margin}
           ListComponent={Design}
           dataListAdded={this.props.waitingDesign}
           getListRequest={null}
-          handleReject={this.setOut} handleAccept={this.setAccept} />
+          handleReject={this.setOut} 
+          handleAccept={this.setAccept} />
       </DesignBox>
     );
   }

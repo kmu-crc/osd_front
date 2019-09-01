@@ -4,23 +4,21 @@ import { GetTopDesignListRequest } from "redux/modules/design"
 import ScrollList from "components/Commons/ScrollList"
 import Design from "components/Designs/Design"
 import Loading from "components/Commons/Loading"
+import opendesign_style from 'opendesign_style';
 
 class TopDesignListContainer extends Component {
-    state = { page: 0 }
     componentDidMount() {
         this.props.GetTopDesignListRequest(0)
     }
-    getList = async () => {
-        await this.setState({ page: this.state.page + 1 })
-        return this.props.GetTopDesignListRequest(this.state.page)
+    getList = async (page) => {
+        return this.props.GetTopDesignListRequest(page);
     }
 
     render() {
         return (<>{this.props.status === "INIT" ?
             <Loading /> :
-            <ScrollList 
-                cols={5}
-                width="330px" height="330px" marginRight="63px" marginBottom="80px" marginRightLast="8px" marginBottomLast="26px"
+            <ScrollList
+                {...opendesign_style.design_margin}
                 ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
         }</>)
     }
