@@ -7,7 +7,6 @@ import SignUp from "components/Registration/SignUp"
 
 class SignUpContainer extends Component {
   render() {
-    console.log("SIGNUP:",this.props)
     return (
       <SignUp {...this.props} />
     );

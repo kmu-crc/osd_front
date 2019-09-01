@@ -5,11 +5,12 @@ import iEdit from "source/edit.png"
 import iINOUT from "source/inout.svg"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
 
+import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import dots from "source/baseline_more_vert_black_48dp.png";
-import noimg from "source/noimg.png"
-import DateFormat from "modules/DateFormat"
-import TextFormat from "modules/TextFormat"
-import NumberFormat from "modules/NumberFormat"
+import noimg from "source/noimg.png";
+import DateFormat from "modules/DateFormat";
+import TextFormat from "modules/TextFormat";
+import NumberFormat from "modules/NumberFormat";
 
 import Cross from "components/Commons/Cross"
 
@@ -40,58 +41,49 @@ const Arrow = styled.div`
     border-bottom: 6px solid transparent;
     border-top: 6px solid transparent;
 `;
-let counts = {
-    group: 0,
-    design: 0,
-};
 
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { isJoin: false, showPopup: -1, likeDialog: false, forkDialog: 0, manager: false };
-        this.handleShowPopup = this.handleShowPopup.bind(this);
+        this.state = { joinDialog: false, likeDialog: false, forkDialog: 0, manager: false };
+        this.needLogin = this.needLogin.bind(this);
+        this.joinGroup = this.joinGroup.bind(this);
+        this.like = this.like.bind(this);
     }
     needLogin() {
         alert("로그인을 해주세요.");
     }
-    like = async () => {
+    async like() {
         if (!this.props.userInfo) {
             this.needLogin();
             return;
         }
         if (this.props.like) { //dislike
-            //     // request dislike group
             this.props.UnlikeGroupRequest(this.props.id, this.props.token)
                 .then(() => { this.props.GetGroupDetailRequest(this.props.id) })
                 .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
-        } else {
-            //     console.log(this.props.like);
+        } else { // like
             await this.setState({ likeDialog: true })
-            //     // request like design
             this.props.LikeGroupRequest(this.props.id, this.props.token)
                 .then(() => { this.props.GetGroupDetailRequest(this.props.id) })
                 .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
-            this.setState({ likeDialog: false })
+            setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
         }
     }
-    joinGroup() {
+    async joinGroup() {
+        // await this.setState({  })
+    }
 
-    }
-    handleShowPopup(nPopup) {
-        /** -1:닫기 1:가입신청 2:가입취소 */
-        this.setState({ showPopup: nPopup })
-    }
     handleMoreViewDescription = (description) => {
-        alert(description)
+        alert(description);
     }
     gotoGroupModify = () => {
-        let href = window.location.href.substring(0, window.location.href.search("groupDetail"))
+        let href = window.location.href.substring(0, window.location.href.search("groupDetail"));
         window.location.href = href + 'modifygroup/' + this.props.GroupInfo.uid;
     }
     changeEditMode = () => {
-        // alert("click");
-        this.setState({ manager: !this.state.manager })
-        this.props.handleSwitchMode()
+        this.setState({ manager: !this.state.manager });
+        this.props.handleSwitchMode();
     }
     render() {
         console.log(this.props.GroupInfo);
@@ -249,7 +241,13 @@ class GroupInfoComponent extends Component {
                             </>
                             :
                             <>
-                                <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000", cursor: "pointer" }} onClick={() => this.joinGroup()}>가입 신청</div>
+                                <div style={{
+                                    marginLeft: "auto", marginRight: "0px", marginTop: "15px",
+                                    width: "79px", height: "29px",
+                                    fontSize: "20px", color: "#FF0000", cursor: "pointer"
+                                }}>
+                                    <JoinGroupContainer />
+                                </div>
                                 <div onClick={this.like} style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", marginBottom: "43px", width: "183px", height: "45px", display: "flex", cursor: "pointer" }}>
                                     <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {like ? "취소하기" : "등록하기"}</div>
                                     <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: like ? "1" : "0.45", background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
@@ -280,7 +278,7 @@ class GroupInfoComponent extends Component {
                  </div>
                     </div>
                 }
-                {this.state.isJoin == false ? <JoinModal /> : <JoinCancelModal />}
+                {this.state.joinDialog == false ? <JoinModal /> : <JoinCancelModal />}
                 <div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
                     {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
                 </div >

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
- import { Modal } from "semantic-ui-react";
- import styled from "styled-components";
- // import close from "source/close_white.png"
+import { Modal } from "semantic-ui-react";
+import styled from "styled-components";
+// import close from "source/close_white.png"
 
 const CustomModal = styled(Modal)`
     min-width: 1200px;
@@ -76,31 +76,28 @@ const CheckboxContainer = styled.label`
 
 class SignUpModal extends Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
-        this.state = { term_use: false, checked: false, open_term: false, success_signup: false ,
-                        email:"",password:"",password2:"",nick_name:""}
-        this.onChangeId=this.onChangeId.bind(this);
-        this.onChangePass=this.onChangePass.bind(this);
-        this.onChangePassCheck=this.onChangePassCheck.bind(this);
-        this.onChangeNickname=this.onChangeNickname.bind(this);
+        this.state = {
+            term_use: false, checked: false, open_term: false, success_signup: false,
+            email: "", password: "", password2: "", nick_name: ""
+        }
+        this.onChangeId = this.onChangeId.bind(this);
+        this.onChangePass = this.onChangePass.bind(this);
+        this.onChangePassCheck = this.onChangePassCheck.bind(this);
+        this.onChangeNickname = this.onChangeNickname.bind(this);
     }
-    onChangeId(event)
-    {
-        this.setState({email:event.target.value})
+    onChangeId(event) {
+        this.setState({ email: event.target.value })
     }
-    onChangePass(event)
-    {
-        this.setState({password:event.target.value})
+    onChangePass(event) {
+        this.setState({ password: event.target.value })
     }
-    onChangePassCheck(event)
-    {
-        this.setState({password2:event.target.value})
+    onChangePassCheck(event) {
+        this.setState({ password2: event.target.value })
     }
-    onChangeNickname(event)
-    {
-        this.setState({nick_name:event.target.value})
+    onChangeNickname(event) {
+        this.setState({ nick_name: event.target.value })
     }
     openterm = () => {
         this.setState({ open_term: true })
@@ -122,8 +119,8 @@ class SignUpModal extends Component {
     }
     onSubmit = async e => {
         e.preventDefault();
-        let formData = {email:this.state.email,password:this.state.password,nick_name:this.state.nick_name};
-    
+        let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
+
         // if (this.state.password) {
         //   var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
         //   if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
@@ -137,34 +134,34 @@ class SignUpModal extends Component {
         //   delete formData.passwordCheck;
         // }
         await this.setState({ loading: true });
-        console.log("signupformdata",formData);
+        console.log("signupformdata", formData);
         this.props.SignUpRequest(formData)
-          .then(res => {
-              console.log(res);
-            if (res) {
-              alert("회원 가입 되었습니다.");     
-              this.setState({ success_signup: true })
+            .then(res => {
+                console.log(res);
+                if (res) {
+                    alert("회원 가입 되었습니다.");
+                    this.setState({ success_signup: true })
 
-              let href = window.location.href.substring(0, window.location.href.search("signup"))
-              window.location.href = href + 'insertUserDetail';
+                    let href = window.location.href.substring(0, window.location.href.search("signup"))
+                    window.location.href = href + 'insertUserDetail';
 
-              this.props.history.push(`/`);
-            } else {
-                console.log("this!");
-              alert("다시 시도해주세요");
-              this.setState({
-                loading: false
-              });
-            }
-          })
-          .catch(e => {
-            console.log("실패", e);
-            alert("다시 시도해주세요");
-            this.setState({
-              loading: false
+                    this.props.history.push(`/`);
+                } else {
+                    console.log("this!");
+                    alert("다시 시도해주세요");
+                    this.setState({
+                        loading: false
+                    });
+                }
+            })
+            .catch(e => {
+                console.log("실패", e);
+                alert("다시 시도해주세요");
+                this.setState({
+                    loading: false
+                });
             });
-          });
-      };
+    };
     render() {
         const { open } = this.props
         return (
@@ -202,14 +199,14 @@ class SignUpModal extends Component {
                                     }} onClick={this.agree}>동의하고 닫기</div>
                                 </div>}
                             <Modal.Content>
-                                <div className="title">OPEN SOURCE DESIGN, OPEN DESIGN</div>
+                                <div className="title">OPEN SOURCE DESIGN</div>
                                 <form style={{ marginTop: "49px", marginLeft: "225px" }} >
                                     <div style={{
                                         marginLeft: "0px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px",
                                         textAlign: "left", width: "56px", height: "29px"
                                     }}>아이디</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange ={this.onChangeId}style={{
+                                        <input onChange={this.onChangeId} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070",
                                             fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." /></div>
@@ -218,7 +215,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "74px", height: "29px"
                                     }}>비밀번호</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange ={this.onChangePass} style={{
+                                        <input onChange={this.onChangePass} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="비밀번호를 입력하세요." /></div>
@@ -227,7 +224,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>비밀번호 확인</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange ={this.onChangePassCheck} style={{
+                                        <input onChange={this.onChangePassCheck} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="비밀번호를 입력하세요." /></div>
@@ -236,7 +233,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>닉네임</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange ={this.onChangeNickname} style={{
+                                        <input onChange={this.onChangeNickname} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="" /></div>

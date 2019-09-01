@@ -18,30 +18,33 @@ const DesignBox = styled.div`
 
 class WaitingDesignContainer extends Component {
   state = { reload: false };
-  handleReload() {
+  componentWillMount() {
+    this.props.GetWaitingDesignRequest(this.props.id, null);
+  }
+  handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
-  componentWillMount() {
-    this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
-  }
-
   setOut = (id) => {
     this.props.DeleteDesignInGroupRequest(this.props.id, id)
       .then(res => {
         if (res.data.success === true) {
-          this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
+          this.props.GetWaitingDesignRequest(this.props.id, null)
+            .then(() => { this.handleReload(); })
         }
       }).catch(err => {
         console.log(err);
       });
   }
-
   setAccept = (id) => {
     this.props.UpdateDesignInGroupRequest(this.props.id, id)
-      .then(res => { return res.data.success === true })
-      .then(() => this.props.GetWaitingDesignRequest(this.props.id, this.props.sort))
-      .then(this.props.GetDesignInGroupRequest(this.props.id, 0, null))
-      .catch(err => { console.log(err) });
+      .then(res => {
+        if (res.data.success === true) {
+          this.props.GetWaitingDesignRequest(this.props.id, null)
+            .then(() => { this.handleReload(); })
+        }
+      }).then((data) => { console.log(data) }).catch(err => {
+        console.log(err);
+      });
   }
 
   render() {

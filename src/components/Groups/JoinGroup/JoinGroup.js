@@ -64,7 +64,7 @@ class JoinGroup extends Component {
   handleCloseModal = () => {
     this.setState({ open: false, active: "design" });
     // alert(this.props.handleReload())
-    this.props.handleReload()
+    // this.props.handleReload()
   };
 
   handleChangeTab = tab => {
@@ -74,9 +74,9 @@ class JoinGroup extends Component {
     const { open, active } = this.state;
     return (
       <JoinGroupWrap>
-        <ModalBtn color="Solid" onClick={this.handleModal}>
+        <div onClick={this.handleModal}>
           가입 신청
-        </ModalBtn>
+        </div>
         <Modal
           open={open}
           closeOnEscape={true}

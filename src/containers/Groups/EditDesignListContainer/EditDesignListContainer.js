@@ -17,33 +17,28 @@ const DesignBox = styled.div`
 `;
 
 class EditDesignListContainer extends Component {
+  state = { reload: false };
   componentWillMount() {
     this.props.GetDesignInGroupRequest(this.props.id, null, null);
   }
-  state = { page: 0 }
+  handleReload = () => {
+    this.setState({ reload: !this.state.reload });
+  }
   setOut = async (id) => {
     console.log(id)
-    this.props.GetDesignInGroupRequest(this.props.id, null, null);
     this.props.DeleteDesignInGroupRequest(this.props.id, id)
-    //  .then(res => {
-    //    if (res.data.success === true) {
-    //      console.log(res.data, "result")
-    //      this.props.GetDesignInGroupRequest(this.props.id, null, null)
-    //      // this.props.DesignInGroupClear(this.props.EditDesignList)
-    //    }
-    //  }).catch(err => {
-    //    console.log(err);
-    //  });
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.EditDesignList.length !== this.props.EditDesignList.length) {
-      console.log("reload")
-      return true;
-    }
+      .then(res => {
+        if (res.data.success === true) {
+          this.props.GetDesignInGroupRequest(this.props.id, null, null)
+            .then(() => { this.handleReload(); })
+        }
+      }).catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
-    console.log("redner")
+    const { reload } = this.state;
     return (
       <DesignBox>
         <div className="boxTitle">등록된 디자인 ({this.props.EditDesignList.length})</div>
@@ -51,11 +46,12 @@ class EditDesignListContainer extends Component {
           <Loading /> :
           <ScrollList
             {...osdstyle.design_margin}
+            reload={reload}
+            handleReload={this.handleReload}
             ListComponent={Design}
             dataListAdded={this.props.EditDesignList}
             getListRequest={null}
-            handleReject={this.setOut} />
-        }
+            handleReject={this.setOut} />}
       </DesignBox>
     );
   }

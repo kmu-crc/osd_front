@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import SignUpContainer from "containers/Registration/SignUpContainer";
-import open_bg from "source/noimg.png";
 
 const SignUpContent = styled.div`
   width: 100%;
@@ -12,8 +11,6 @@ const SignUpContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f2;
-  background-image: url(${open_bg});
   background-size: cover;
   background-position: center;
   &::before {
@@ -21,7 +18,6 @@ const SignUpContent = styled.div`
     content: "";
     position: absolute;
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.7);
     top: 0;
     bottom: 0;
     left: 0;
@@ -29,23 +25,12 @@ const SignUpContent = styled.div`
   }
 `;
 
-const InsertDetail = styled.div`
-  position: relative;
-  z-index: 2;
-  width: 400px;
-  padding: 30px 20px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 5px;
-`;
-
 class SignUpPage extends Component {
   render() {
     return (
-        <SignUpContent>
-          <InsertDetail>
-            <SignUpContainer onSubmit={this.handleFormSubmit} />
-          </InsertDetail>
-        </SignUpContent>
+      <SignUpContent>
+        <SignUpContainer onSubmit={this.handleFormSubmit} />
+      </SignUpContent>
     )
   }
 }

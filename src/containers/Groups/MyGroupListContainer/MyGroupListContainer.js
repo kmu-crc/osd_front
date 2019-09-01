@@ -15,7 +15,7 @@ class MyGroupListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    groupList: state.MyList.status.MyGroupList
+    groupList: state.Group.status.MyGroupList
   };
 };
 

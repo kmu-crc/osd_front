@@ -84,17 +84,16 @@ const type = [
     { key: "group", value: "그룹", text: "그룹" },
     { key: "designer", value: "디자이너", text: "디자이너" }
 ];
-class Re_SearchList extends Component{
-    constructor(props)
-    {
+class Re_SearchList extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            mainCate:[{ value: 0, text: "디자인" }, { value: 1, text: "그룹" }, { value: 2, text: "디자이너" }],
-            selectCate:0,
+            mainCate: [{ value: 0, text: "디자인" }, { value: 1, text: "그룹" }, { value: 2, text: "디자이너" }],
+            selectCate: 0,
             this_order: { text: "등록순", keyword: "update" },
-            selectedCate:"디자인",
+            selectedCate: "디자인",
         }
-      this.onChangeDropBox=this.onChangeDropBox.bind(this);
+        this.onChangeDropBox = this.onChangeDropBox.bind(this);
     }
 
     getSearchValue = (e) => {
@@ -133,9 +132,8 @@ class Re_SearchList extends Component{
             this.changeState();
         }
     }
-    onChangeDropBox(event,{value})
-    {
-        this.setState({selectCate:{value}.value});
+    onChangeDropBox(event, { value }) {
+        this.setState({ selectCate: { value }.value });
     }
     typeChange = (e, { value }) => {
         this.props.history.replace(`/search/${value}/${this.props.sort}/${this.props.keyword}`);
@@ -148,61 +146,54 @@ class Re_SearchList extends Component{
         this.changeState();
     }
 
-    render(){
-        const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"};
-        const GroupProps = { cols: 2, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"};
-        const DesignerProps = {cols:3, width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
+    render() {
+        return (
+            <div style={{ position: "relative", overflow: "hidden" }}>
+                <SearchForm>
+                    <div className="inputBox">
+                        <div className="zoomImg"><img src={zoom} style={{ width: "33px", height: "33px" }} /></div>
+                        <input className="searchInput" id="searchInput"
+                            placeholder="검색어를 입력하세요"
+                            onChange={this.getSearchValue}
+                            onKeyDown={this.submitEnter}
 
-        return(
-            <div style={{position:"relative",overflow:"hidden"}}>
-            <SearchForm>
-                <div className="inputBox">
-                    <div className="zoomImg"><img src={zoom} style={{width:"33px", height:"33px"}}/></div>
-                    <input className="searchInput" id="searchInput"
-                           placeholder="검색어를 입력하세요"
-                           onChange={this.getSearchValue}
-                           onKeyDown={this.submitEnter}
-
-                    />
-                </div>
-                {/*x box position*/}
-                <div style={{display:"flex", justifyContent:"space-start"}}>
-
-                    <div style={{position:"absolute",top:"250px",left:"44px",zIndex:"501"}}>
-                        <Dropdown id = "dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
+                        />
                     </div>
+                    {/*x box position*/}
+                    <div style={{ display: "flex", justifyContent: "space-start" }}>
 
-                    <div className="cateUI">
-                    {this.state.selectCate!=1&&
+                        <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "501" }}>
+                            <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
+                        </div>
 
-                    
-                    <React.Fragment>
-                        <div style={{color:"red"}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                        <div style={{paddingLeft:'20px'}}>세부카테고리</div>
-                    </React.Fragment>
-                    }
+                        <div className="cateUI">
+                            {this.state.selectCate != 1 &&
+
+
+                                <React.Fragment>
+                                    <div style={{ color: "red" }}>세부카테고리</div>
+                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
+                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
+                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
+                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
+                                </React.Fragment>
+                            }
+
+                        </div>
+
+                        <div style={{ border: "1xp solid red", position: "absolute", top: "200px", right: "0px" }}>
+                            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
+                        </div>
 
                     </div>
-
-                    <div style={{border:"1xp solid red",position:"absolute",top:"200px",right:"0px"}}>
-                        <OrderOption order_clicked = {this.handleChangeOrderOps} selected = {this.state.this_order}/>
-                    </div>
-
-                </div>
-                <Wrapper>
-                    {this.props.type === "designer"
-                        ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-                        : this.props.type === "group"
-                            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-                            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-                    }
-                </Wrapper>
+                    <Wrapper>
+                        {this.props.type === "designer" && <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />}
+                        {this.props.type === "group" && <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />}
+                        {this.props.type === "design" && <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />}
+                    </Wrapper>
 
 
-            </SearchForm>
+                </SearchForm>
             </div>
 
 
