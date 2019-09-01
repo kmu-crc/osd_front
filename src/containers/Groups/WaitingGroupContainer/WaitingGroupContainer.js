@@ -10,6 +10,7 @@ import osdstyle from "opendesign_style";
 const GroupBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
+    margin-left: 1rem;
     padding-bottom: 1rem;
     font-size: ${StyleGuide.font.size.heading4};
   }

@@ -127,35 +127,37 @@ class Alarm extends Component {
             } else if (item.kinds === "REQUEST_TRUE") {
                 msg = `${to}님이 이 디자인의 멤버가 되었습니다.`
             } else if (item.kinds === "GETOUT") {
-                msg = `${title}에서 탈퇴되셨습니다.`
+                msg = `${title}에서 탈퇴되셨습니다.`;
             } else if (item.kinds === "REFUSE") {
-                msg = `${from}님이 가입요청을 거절하였습니다.`
+                msg = `${from}님이 가입요청을 거절하였습니다.`;
             } else if (item.kinds === "INVITE_REJECT") {
-                msg = `${from}님이 초대를 거절하였습니다.`
+                msg = `${from}님이 초대를 거절하였습니다.`;
             } else if (item.kinds === "LIKE") {
-                msg = `${from}님께서 디자인을 좋아합니다.`
+                msg = `${from}님께서 디자인을 좋아합니다.`;
             } else if (item.kinds === "COMMENT") {
-                msg = `${from}님이 디자인에 댓글을 달았습니다.`
+                msg = `${from}님이 디자인에 댓글을 달았습니다.`;
             } else if (item.kinds === "CARD_COMMENT") {
-                msg = `${from}님이 디자인 카드에 댓글을 달았습니다.`
+                msg = `${from}님이 디자인 카드에 댓글을 달았습니다.`;
             } else if (item.kinds === "COMMENT_COMMENT") {
-                msg = `${to}님의 디자인 댓글에 답변이 달렸습니다.`
+                msg = `${to}님의 디자인 댓글에 답변이 달렸습니다.`;
             }
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`
+                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
             } else if (item.kinds === "JOIN_withDESIGN") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`
+                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
             } else if (item.kinds === "JOIN_withGROUP") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`
+                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
             } else if (item.kinds === "JOINSUCCESS") {
-                msg = `${to}님이 그룹에 가입되었습니다.`
+                msg = `${to}님이 그룹에 가입되었습니다.`;
             } else if (item.kinds === "JOINREFUSE") {
-                msg = `${to}님의 그룹가입요청이 거절되었습니다.`
+                msg = `${to}님의 그룹가입요청이 거절되었습니다.`;
             } else if (item.kinds === "GROUP_GETOUT") {
-                msg = `${to}님께서 그룹에서 탈퇴되셨습니다.`
+                msg = `${to}님께서 그룹에서 활동이 중단되셨습니다.`;
             } else if (item.kinds === "LIKE") {
-                msg = `${from}님의 이 그룹을 좋아합니다.`
+                msg = `${from}님의 이 그룹을 좋아합니다.`;
+            } else if (item.kinds === "GROUP_DESIGN_OUT") {
+                msg = `${title.slice(0, 8)}그룹으로부터 디자인이 분리되었습니다.`;
             }
         }
         return msg;
@@ -306,7 +308,7 @@ class Alarm extends Component {
                                     msg = groupCount === 1 ? `${item.from}님께서 그룹을 좋아합니다.` : `${item.from}님 외에${groupCount - 1}명이 디자인을 좋아합니다.`;
                                 }
                             }
-
+                            console.log("item:", item, "msg:", msg);
                             return (
                                 <ListItem confirm={item.confirm} key={item.uid}>
                                     <div style={{ fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}><TextFormat txt={msg} /></div>

@@ -619,7 +619,7 @@ export function CreateNewGroupRequest(data, token) {
 }
 export function GetGroupInGroupRequest(id, page, sort) {
   const url = `${host}/group/groupDetail/` + id + "/group/" + page + "/" + sort
-  console.log(url,"GetGroupInGroup")
+  console.log(url, "GetGroupInGroup")
   return (dispatch) => {
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
@@ -658,8 +658,7 @@ export function GetDesignInGroupRequest(id, page, sort) {
         data = []
       }
       if (page === 0) {
-        dispatch(DesignInGroupClear(data))
-        return
+        return dispatch(DesignInGroupClear(data))
       }
       return dispatch(GetDesignInGroup(data))
     }).catch((error) => {

@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import Design from "components/Designs/Design";
 import GroupInfo from "components/Groups/GroupInfo";
 import Group from "components/Groups/Group";
-import GroupManager from "components/Groups/GroupManager";
+
+import WaitingDesignContainer from "containers/Groups/WaitingDesignContainer";
+import WaitingGroupContainer from "containers/Groups/WaitingGroupContainer";
+import EditGroupListContainer from "containers/Groups/EditGroupListContainer";
+import EditDesignListContainer from "containers/Groups/EditDesignListContainer";
 
 import Loading from 'components/Commons/Loading';
 import ScrollList from "components/Commons/ScrollList";
@@ -34,40 +38,40 @@ const Tab = styled.div`
 `;
 
 class GroupDetail extends Component {
-  state = { page: 0, uid: undefined, currentTab: "design", manager: false }
+  state = { reload: false, uid: undefined, currentTab: "design", manager: false }
   switchTab = async (tab) => {
-    await this.setState({ currentTab: tab, page: 0 })
+    await this.setState({ currentTab: tab, reload: true })
     this.getInitData()
   }
   switchMode = () => {
     this.setState({ manager: !this.state.manager })
-    // alert(this.state.manager ? "관리모드" : "관리모드 해제")
   }
   componentDidMount() {
-    this.props.GetGroupDetailRequest(this.props.id);
+    this.props.GetGroupDetailRequest(this.props.id)
+      .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
     this.getInitData()
   }
-
+  handleReload = () => {
+    this.setState({ reload: false })
+  }
   getInitData() {
     if (this.state.currentTab === "design") {
-      this.getDesignList(true)
+      this.getDesignList(0)
     } else {
-      this.getGroupList(true)
+      this.getGroupList(0)
     }
   }
-  getDesignList = async (isInit) => {
+  getDesignList = async (page) => {
     if (!this.state.uid) {
       return;
     }
-    await this.setState({ page: isInit ? 0 : this.state.page + 1 })
-    this.props.GetDesignInGroupRequest(this.state.uid, this.state.page, "update")
+    this.props.GetDesignInGroupRequest(this.state.uid, page, "update")
   }
-  getGroupList = async (isInit) => {
+  getGroupList = async (page) => {
     if (!this.state.uid) {
       return;
     }
-    await this.setState({ page: isInit ? 0 : this.state.page + 1 })
-    this.props.GetGroupInGroupRequest(this.state.uid, this.state.page, "update")
+    this.props.GetGroupInGroupRequest(this.state.uid, page, "update")
   }
   componentWillReceiveProps = async (nextProps) => {
     if (nextProps.GroupDetail.uid !== this.props.GroupDetail.uid) {
@@ -77,18 +81,19 @@ class GroupDetail extends Component {
   }
 
   render() {
-    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
-    const DesignProps = { ...osdstyle.design_margin }
-    const GroupProps = { ...osdstyle.group_margin }
-    const { currentTab, manager } = this.state
+    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, like, GroupListAdded, Count } = this.props;
+    const { currentTab, manager, reload } = this.state
+    console.log("reload:", reload)
     return (<>
-      <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} userInfo={userInfo} count={Count} />
+      <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} {...this.props} />
       {manager ?
-        <>
-          <div style={{ marginTop: "32px" }}>
-            <GroupManager id={this.props.id} sort={this.props.update} />
-          </div>
-        </> :
+        <div style={{ marginTop: "32px" }}>
+          <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />
+          <WaitingDesignContainer id={this.props.id} sort={this.props.sort} />
+          <EditDesignListContainer id={this.props.id} sort={this.props.sort} />
+          <EditGroupListContainer id={this.props.id} sort={this.props.sort} />
+        </div>
+        :
         <>
           <Tabs>
             <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
@@ -97,11 +102,11 @@ class GroupDetail extends Component {
           {GroupDetail && currentTab === "group" && <>
             {this.props.status === "INIT"
               ? <Loading />
-              : <ScrollList cols={GroupProps.cols} {...osdstyle.group_margin} page={this.state.page} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</>}
+              : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</>}
           {GroupDetail && currentTab === "design" && <>
             {this.props.status === "INIT"
               ? <Loading />
-              : <ScrollList cols={DesignProps.cols} {...osdstyle.design_margin} page={this.state.page} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</>}
+              : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</>}
         </>}
 
     </>)
@@ -110,4 +115,3 @@ class GroupDetail extends Component {
 }
 
 export default GroupDetail
-/* <GeneralScrollList {...DesignProps} page={this.state.page} getListRequest={this.getDesignList} /}*/
