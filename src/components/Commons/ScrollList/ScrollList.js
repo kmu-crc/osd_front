@@ -188,7 +188,6 @@ class ScrollList extends Component {
     const ListComponent = this.props.ListComponent;
     const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, dataList } = this.props;
     const { hasMore, loading } = this.state;
-    console.log(this.props.dataListAdded);
     return (<>
       {dataListAdded && dataListAdded.length > 0 ?
         <FlexContainer ref={this.myRef} onLoad={() => { this.setState({ hasMore: this.checkHasMore(dataList) }) }} >

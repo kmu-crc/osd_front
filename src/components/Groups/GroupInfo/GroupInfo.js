@@ -27,7 +27,6 @@ const GroupInfoData = {
     category: "CATEGORY",
     designer: "DESIGNER",
     view: 0,
-    like: 0,
     design: 0,
     description: "Description"
 };
@@ -42,7 +41,6 @@ const Arrow = styled.div`
     border-top: 6px solid transparent;
 `;
 let counts = {
-    like: 0,
     group: 0,
     design: 0,
 };
@@ -50,23 +48,38 @@ let counts = {
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { isJoin: false, showPopup: -1, tmpLike: false, likeDialog: false, forkDialog: 0, manager: false };
+        this.state = { isJoin: false, showPopup: -1, likeDialog: false, forkDialog: 0, manager: false };
         this.handleShowPopup = this.handleShowPopup.bind(this);
     }
-    like() {
-        if (this.state.tmpLike) { //dislike
-            this.setState({ tmpLike: !this.state.tmpLike })
+    needLogin() {
+        alert("로그인을 해주세요.");
+    }
+    like = async () => {
+        if (!this.props.userInfo) {
+            this.needLogin();
+            return;
+        }
+        if (this.props.like) { //dislike
+            //     // request dislike group
+            this.props.UnlikeGroupRequest(this.props.id, this.props.token)
+                .then(() => { this.props.GetGroupDetailRequest(this.props.id) })
+                .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
         } else {
-            this.setState({ tmpLike: !this.state.tmpLike, likeDialog: true })
-            // request like design
-            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+            //     console.log(this.props.like);
+            await this.setState({ likeDialog: true })
+            //     // request like design
+            this.props.LikeGroupRequest(this.props.id, this.props.token)
+                .then(() => { this.props.GetGroupDetailRequest(this.props.id) })
+                .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
+            this.setState({ likeDialog: false })
         }
     }
+    joinGroup() {
 
+    }
     handleShowPopup(nPopup) {
         /** -1:닫기 1:가입신청 2:가입취소 */
         this.setState({ showPopup: nPopup })
-
     }
     handleMoreViewDescription = (description) => {
         alert(description)
@@ -81,6 +94,7 @@ class GroupInfoComponent extends Component {
         this.props.handleSwitchMode()
     }
     render() {
+        console.log(this.props.GroupInfo);
         const group_user_id = this.props.GroupInfo && this.props.GroupInfo.user_id;
         const user_id = this.props.userInfo && this.props.userInfo.uid;
 
@@ -170,7 +184,8 @@ class GroupInfoComponent extends Component {
             }
             const { manager } = this.state;
             const isEditor = group_user_id === user_id;
-            console.log(info);
+            const { like } = this.props;
+
             return (
                 <div style={{ paddingLeft: "65px", width: "100%", display: "flex" }}>
                     <div style={{ width: "max-content" }}>
@@ -204,7 +219,7 @@ class GroupInfoComponent extends Component {
                                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                                         <div id="count-view" style={{ display: "flex", marginRight: "22px", cursor: "default" }}>
                                             <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
-                                            <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.view || 0)}</div>
+                                            <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "max-content", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.view || 0)}</div>
                                         </div>
                                         <div id="count-like" style={{ display: "flex", marginRight: "0px", cursor: "default" }}>
                                             <div><i style={{ color: "#707070", fontSize: "14px" }} className="material-icons">thumb_up</i></div>
@@ -234,14 +249,14 @@ class GroupInfoComponent extends Component {
                             </>
                             :
                             <>
-                                <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000" }} onClick={() => this.handleShowPopup(this.state.isJoin == false ? 1 : 2)}>가입 신청</div>
-                                <div onClick={this.props.userInfo == null ? null : () => this.like()} style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", marginBottom: "43px", width: "183px", height: "45px", display: "flex" }}>
-                                    <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
-                                    <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: this.state.tmpLike ? "1" : "0.45", background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                                <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "79px", height: "29px", fontSize: "20px", color: "#FF0000", cursor: "pointer" }} onClick={() => this.joinGroup()}>가입 신청</div>
+                                <div onClick={this.like} style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", marginBottom: "43px", width: "183px", height: "45px", display: "flex", cursor: "pointer" }}>
+                                    <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                    <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: like ? "1" : "0.45", background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                                 </div>
                             </>
                         }
-                        <div style={{ marginTop: "46px", marginLeft: "auto", marginRight: "0px", width: "147px", height: "55px", textAlign: "right", lineHeight: "30px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0" }}>
+                        <div style={{ marginTop: "46px", marginLeft: "auto", marginRight: "0px", width: "max-content", height: "55px", textAlign: "right", lineHeight: "30px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0" }}>
                             <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
                             <div>{info && DateFormat(info.create_time)} 등록</div>
                         </div>

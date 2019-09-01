@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import noimg from "source/noimg.png"
-import IconView from 'source/IconView'
-import DateFormat from "modules/DateFormat"
-import TextFormat from "modules/TextFormat"
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import noimg from "source/noimg.png";
+import IconView from 'source/IconView';
+import DateFormat from "modules/DateFormat";
+import TextFormat from "modules/TextFormat";
+import NumberFormat from "modules/NumberFormat";
+import styled from 'styled-components';
 
 const GroupElement = styled.div`
     display: flex;
@@ -59,15 +60,15 @@ class Group extends Component {
                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                         <div id="count-view" style={{ display: "flex", marginRight: "22px", cursor: "default" }}>
                             <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
-                            <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{group.view || 0}</div>
+                            <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(group.view || 0)}</div>
                         </div>
                         <div id="count-like" style={{ display: "flex", marginRight: "0px", cursor: "default" }}>
                             <div><i style={{ color: "#707070", fontSize: "14px" }} className="material-icons">thumb_up</i></div>
-                            <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{group.like || 0}</div>
+                            <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(group.like || 0)}</div>
                         </div>
                         <div id="count-childs" style={{ display: "flex", cursor: "default" }}>
                             <div><i style={{ color: "#707070", fontSize: "17px" }} className="material-icons">library_books</i></div>
-                            <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{group.design || 0 + group.group || 0}</div>
+                            <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(group.design || 0 + group.group || 0)}</div>
                         </div>
                     </div>
                 </div>

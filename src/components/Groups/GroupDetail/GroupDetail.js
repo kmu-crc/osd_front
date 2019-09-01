@@ -47,7 +47,8 @@ class GroupDetail extends Component {
     this.setState({ manager: !this.state.manager })
   }
   componentDidMount() {
-    this.props.GetGroupDetailRequest(this.props.id);
+    this.props.GetGroupDetailRequest(this.props.id)
+      .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
     this.getInitData()
   }
   handleReload = () => {
@@ -80,11 +81,11 @@ class GroupDetail extends Component {
   }
 
   render() {
-    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
+    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, like, GroupListAdded, Count } = this.props;
     const { currentTab, manager, reload } = this.state
     console.log("reload:", reload)
     return (<>
-      <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} userInfo={userInfo} count={Count} />
+      <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} {...this.props} />
       {manager ?
         <div style={{ marginTop: "32px" }}>
           <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />

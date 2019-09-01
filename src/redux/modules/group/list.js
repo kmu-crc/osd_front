@@ -32,21 +32,21 @@ export function GroupList(state, action) {
     case GET_GROUP_LIST:
       return update(state, {
         status: {
-          GroupList: { $set: action.GroupList }, 
+          GroupList: { $set: action.GroupList },
           GroupListAdded: { $push: action.GroupList }
         }
       })
     case GROUP_LIST_CLEAR:
       return update(state, {
         status: {
-          GroupList: { $set: action.GroupList }, 
+          GroupList: { $set: action.GroupList },
           GroupListAdded: { $set: action.GroupList }
         }
       })
     case GROUP_LIST_FAIL:
       return update(state, {
         status: {
-          GroupList: { $set: action.GroupList }, 
+          GroupList: { $set: action.GroupList },
           GroupListAdded: { $set: action.GroupListAdded }
         }
       })
@@ -70,6 +70,7 @@ export function GroupList(state, action) {
 
 export function GetGroupListRequest(page = 0, sort = null, keyword = null) {
   const url = `${host}/group/topGroupList/${page}/${sort}/${keyword}`
+  console.log("url:", url);
   return (dispatch) => {
     return fetch(url, {
       headers: { 'Content-Type': 'application/json' },

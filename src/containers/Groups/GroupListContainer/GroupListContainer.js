@@ -38,7 +38,7 @@ class GroupListContainer extends Component {
     reload: false,
     search: null,
     count: 0,
-    this_order: { text: "등록순", keyword: "update" }
+    this_order: { text: "최신순", keyword: "update" }
   }
   componentDidMount() {
     this.getList(0);
@@ -49,8 +49,8 @@ class GroupListContainer extends Component {
   createGroup = () => {
     window.location.href = "/createGroup"
   }
-  changeOrderOps = (order) => {
-    this.setState({ this_order: order });
+  changeOrderOps = async (order) => {
+    await this.setState({ this_order: order });
     this.handleReload();
     this.getList(0);
   }
