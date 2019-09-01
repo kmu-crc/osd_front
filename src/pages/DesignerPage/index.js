@@ -1,0 +1,1 @@
+export { DesignerDetailPage } from "./DesignerDetailPage";

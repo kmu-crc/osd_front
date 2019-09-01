@@ -11,7 +11,16 @@ import IconView from "source/IconView"
 //CSS
 
 const BackgroundBox = {position:"relative",overFlow:"hidden",width:"1920px",height:"336px",marginTop:"36px",background:"#EFEFEF"}
-const ProfileBox = {position:"absolute",width:"200px",height:"200px",top:"90px",left:"115px",borderRadius:"200px",background:"#D6D6D6"}
+const ProfileBox = styled.div`
+    position:absolute;
+    width:200px;
+    height:200px;
+    top:90px;
+    left:115px;
+    border-radius:200px;
+    background:#D6D6D6;
+    background-image: url(${props => props.img});
+`
 const Name = {position:"absolute",width:"200px",height:"29px",top:"41px",left:"115px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500",textAlign:"center"}
 const Title = {position:"absolute",width:"479px",height:"29px",top:"41px",left:"418px",color:"#FF0000",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"200",textAlign:"left"}
 const ExplainBox01 ={position:"absolute",overflow:"hidden",width:"479px",height:"149px",top:"90px",left:"418px",
@@ -73,32 +82,29 @@ class DesignerPageHeader extends Component {
     }
     render() {
         const MypageInfo = this.props.DesignerDetail;
-
-        const countInfo = MypageInfo.count || defaultCount;
-        const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
-
+        const countInfo = this.props.Count || defaultCount;
+        const thumbnailInfo = MypageInfo.thumbnail ? MypageInfo.thumbnailUrl : noimg;
         if (MypageInfo.about_me !== undefined) {
             about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
-        
         return (
             <React.Fragment>
 
            <div style={BackgroundBox}>
-                <div style = {Name}>진아진아진아</div>
-                <div style = {ProfileBox}></div>
-                <div style ={Title}>패션패션패션</div>
-                <div style ={ExplainBox01}>{TestExplain}</div>
-                <div style ={ExplainBox02}>{TestExplain}</div>
+                <div style = {Name}>{MypageInfo.nick_name}</div>
+                <ProfileBox img={thumbnailInfo.s_img}/>
+                <div style ={Title}>{MypageInfo.categoryName}</div>
+                <div style ={ExplainBox01}>{about_me[0]}</div>
+                <div style ={ExplainBox02}>{about_me[1]}</div>
                 <div style={SummaryIconBox}>
                     <div style={Summary_View_Icon}><IconView width="17px" height="13px" fill="#707070"/></div>
-                    <div style = {Summary_View}>2200</div>
+                    <div style = {Summary_View}>{countInfo.total_view}</div>
                     <div style = {Summary_ThumbUp_Icon}></div>
-                    <div style = {Summary_ThumbUp}>2000</div>
+                    <div style = {Summary_ThumbUp}>{countInfo.total_like}</div>
                     <div style = {Summary_Forked_Icon}></div>
-                    <div style = {Summary_Forked}>2000</div>
+                    <div style = {Summary_Forked}>{countInfo.total_group + countInfo.total_design}</div>
                 </div>
                 <div onClick = {this.props.userInfo==null? null:() => this.like() } style={interestDesignerBox}>
                     <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
