@@ -1,1 +1,1 @@
-export { default } from "./ModifyDesignSection02";
+export { default } from "./GroupAdditionalInfo"

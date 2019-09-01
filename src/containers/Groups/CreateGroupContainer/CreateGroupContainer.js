@@ -6,6 +6,8 @@ import { CreateNewGroupRequest } from "redux/modules/group";
 
 class CreateGroupContainer extends Component {
   render() {
+    console.log("INFORMa",this.props);
+
     return (
       <CreateGroup {...this.props} />
     );
@@ -14,7 +16,8 @@ class CreateGroupContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.Authentication.status.token
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
   };
 };
 
