@@ -94,7 +94,7 @@ class ScrollList extends Component {
             </FlexBox>)
           })}
           {loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "32px", textAlign: "center", width: "100%", transform: "translateY(-25px)" }}>목록을 가져오고 있습니다.</p>}
-          {!manual && hasMore && <div style={{ cursor: "default", textAlign: "center", color: "#707070", fontWeight: "500" }} onMouseOver={this.getLoadData}>더보기<i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i></div>}
+          {!manual && hasMore && <div style={{ cursor: "default", textAlign: "center", color: "#707070", fontWeight: "500" }} onMouseOver={this.getLoadData}>스크롤<i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i></div>}
           {manual && hasMore && <div><MoreBtn className="ui button red" onClick={() => this.getLoadData()}>더보기</MoreBtn></div>}
         </FlexContainer>
         : <div style={{ fontSize: "16px", textAlign: "center" }}>데이터가 없습니다.</div>}
