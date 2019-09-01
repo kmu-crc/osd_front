@@ -840,9 +840,10 @@ export function GetWaitingDesignRequest(id, sort) {
   }
 }
 export function GetWaitingGroupRequest(id, sort) {
-  console.log("hw")
+  const url = `${host}/group/groupDetail/${id}/waitingGroup/${sort}`
+  console.log("url:", url);
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/${id}/waitingGroup/${sort}`, {
+    return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

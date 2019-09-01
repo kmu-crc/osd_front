@@ -83,7 +83,7 @@ class ScrollList extends Component {
     const { hasMore, loading } = this.state;
     return (<>
       {dataListAdded && dataListAdded.length > 0 ?
-        <FlexContainer ref={this.myRef} onLoad={() => { this.setState({ hasMore: this.checkHasMore(dataList) }) }} >
+        <FlexContainer ref={this.myRef} >
           {dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
             const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";

@@ -45,6 +45,7 @@ class GroupDetail extends Component {
   }
   switchMode = () => {
     this.setState({ manager: !this.state.manager })
+    this.getInitData();
   }
   componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id)
@@ -76,7 +77,7 @@ class GroupDetail extends Component {
   componentWillReceiveProps = async (nextProps) => {
     if (nextProps.GroupDetail.uid !== this.props.GroupDetail.uid) {
       await this.setState({ uid: nextProps.GroupDetail.uid })
-      this.getInitData()
+      this.getInitData();
     }
   }
 
@@ -108,7 +109,6 @@ class GroupDetail extends Component {
               ? <Loading />
               : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</>}
         </>}
-
     </>)
 
   }
