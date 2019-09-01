@@ -19,14 +19,11 @@ class ModifyGroupInfoContainer extends Component {
   }
 
   render() {
+    console.log("ModifyGroupInfo",this.props)
     return (
       <div>
-        {/* {this.state.isAuthor ? (
-          <ModifyGroupInfo {...this.props} />
-        ) : (
-            <p style={{ color: "#FFF" }}>수정권한을 확인 중 입니다.</p>
-          )} */}
-    <ModifyGroupInfo {...this.props}/>
+        
+         <ModifyGroupInfo {...this.props}/>
       </div>
     )
   }

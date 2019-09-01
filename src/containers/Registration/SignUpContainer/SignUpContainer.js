@@ -1,14 +1,15 @@
 import React, { Component } from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
-import SignUpForm from "components/Registration/SignUpForm"
 import { SignUpRequest } from "redux/modules/account"
 import { CheckEmailRequest, CheckNickNameRequest } from "redux/modules/auth"
+import SignUp from "components/Registration/SignUp"
 
 class SignUpContainer extends Component {
   render() {
+    console.log("SIGNUP:",this.props)
     return (
-      <SignUpForm {...this.props} />
+      <SignUp {...this.props} />
     );
   }
 }

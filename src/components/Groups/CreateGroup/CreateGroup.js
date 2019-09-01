@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import noimg from "source/noimg.png"
 
 import BasicInfo from "components/Groups/CreateGroup/BasicInfo"
 import AdditionalInfo from "components/Groups/CreateGroup/AdditionalInfo"
+import { userInfo } from "os";
 
-const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }]
+// const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }]
 
-
+const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
 
 
 const Main_Banner ={ width: "1920px", display: "flex", justifyContent: "center" }
@@ -21,11 +23,14 @@ class CreateGroup extends Component {
   constructor(props)
   {
     super(props);
-    this.state = {thumbnail:"",designTitle:"",designExplain:"", loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
+    this.state = {
+      groupThumbnail:noimg,groupTitle:"",groupExplain:"", groupThumbnailURL:"",groupThumbnailName:"",
+      loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
      selectedCate2: null, cate1: null,cate2: null}
     this.handleInputDesignExplain = this.handleInputDesignExplain.bind(this);
     this.handleInputDesignTitle = this.handleInputDesignTitle.bind(this);
     this.handleChangeThumbnail=this.handleChangeThumbnail.bind(this);
+    this.handleChangeThumbnailURL=this.handleChangeThumbnailURL.bind(this);
   }
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
   componentDidMount()
@@ -42,22 +47,26 @@ class CreateGroup extends Component {
   handleInputDesignTitle(title)
   {
     console.log("titleinput");
-    this.setState(state=>({designTitle:title}))
+    this.setState(state=>({groupTitle:title}))
   }
   handleInputDesignExplain(explain)
   {
-    this.setState(state=>({designExplain:explain}))
+    this.setState(state=>({groupExplain:explain}))
   }
-  handleChangeThumbnail(imgurl)
+  handleChangeThumbnail(imgInfo,imgName)
   {
-    this.setState(state=>({thumbnail:imgurl}));
+    this.setState(state=>({groupThumbnail:imgInfo,groupThumbnailName:imgName}));
   }
-  
+
+  handleChangeThumbnailURL(imgurl)
+  {
+    this.setState(state=>({groupThumbnailURL:imgurl}));
+    }
   checkIsPossibleToGoNextStep = (step) => {
 
   }
 
-  gotoStep=(menu,index)=>
+  gotoStep=(index)=>
   {
     this.setState({ step: index });
   }
@@ -74,19 +83,55 @@ class CreateGroup extends Component {
     this.submit();
   }
   submit = () => {
-    console.log("!!!");
   }
 
   completed = () => {
     this.setState({ isPossibleNextStep: true })
   }
+
+  onSubmit = async e => {
+    e.preventDefault();
+
+    const data = {user_id:this.props.userInfo.uid,title:this.state.groupTitle,explanation:this.state.groupExplain,files:[]};
+    let file = {
+      value: this.state.groupThumbnail,
+      name: this.state.groupThumbnailName,
+      key: 0
+    };
+    console.log("THUMBNAIL:::::::::",this.state.groupThumbnailURL,this.state.groupThumbnail,this.state.groupThumbnailName)
+     data.files.push(file);
+
+      this.props.CreateNewGroupRequest(data, this.props.token)
+      .then(res => {
+        this.props.history.push(`/groupDetail/${res.id}`);
+      }).catch(e => {
+      console.log("실패", e);
+      this.setState({
+        loading: false
+      });
+    });
+    // e.preventDefault();
+    // ValidationGroup(this.state, false).then(async data => {
+    //   console.log("성공", data);
+    //   await this.setState({
+    //     loading: true
+    //   });
+    //   this.props.CreateNewGroupRequest(data, this.props.token)
+    //   .then(res => {
+    //     this.props.history.push(`/groupDetail/${res.id}`);
+    //   });
+    // }).catch(e => {
+    //   console.log("실패", e);
+    //   this.setState({
+    //     loading: false
+    //   });
+    // });
+  };
   render() {
     // const myInfo = this.props.MyDetail
 
 
-    const SectionContentEditor = () => {
-     
-    }
+
     const { step } = this.state
     return (<>
 
@@ -98,9 +143,9 @@ class CreateGroup extends Component {
         {/* scroll - menu */}
         <div style={{width:"433px"}}>
               <div style={{ width: "325px", marginLeft: "64px" }}>
-                  <div style={{ position: "fixed", top: "197px", width: "325px", height: "127px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+                  <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
                     {scrollmenu.map((menu, index) => {
-                      return (<div onClick={() => this.gotoStep(menu, index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
+                      return (<div onClick={() => this.gotoStep(index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
                         <div style={{ color: this.state.step === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
                       </div>)
                     })}
@@ -111,20 +156,22 @@ class CreateGroup extends Component {
         <div style={{position:"relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
           <form>
              
-             {step ===0 && <BasicInfo 
-             onChangeExplain={this.handleInputDesignExplain} onChangeTitle = {this.handleInputDesignTitle} onChangeThumbnail = {this.handleChangeThumbnail}
-             designExplain={this.state.designExplain} designTitle ={this.state.designTitle} designThumbnail = {this.state.thumbnail} {...this.props}/> }
-             {step ===1 &&<AdditionalInfo {...this.props}/>}
+             {step ===0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail}
+             onChangeExplain={this.handleInputDesignExplain} onChangeTitle = {this.handleInputDesignTitle} onChangeThumbnailURL={this.handleChangeThumbnailURL} onChangeThumbnail = {this.handleChangeThumbnail}
+             designExplain={this.state.groupExplain} designTitle ={this.state.groupTitle} thumbnail = {this.state.groupThumbnail} {...this.props}/> }
+             {/* {step ===1 &&<AdditionalInfo {...this.props}/>} */}
             {/* buttons*/}
             <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
 
-            {step === 1? 
+            <div onClick={this.onSubmit} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
+            <p style={Btn_text}>완료</p></div>
+            {/* {step === 1? 
             <div onClick={this.state.isPossibleNextStep ? this.completeCreateDesign : null} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
             <p style={Btn_text}>완료</p></div>
-            : <div onClick={this.state.isPossibleNextStep ? this.gotoNextStep : null} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
+            : <div onClick={() => this.gotoStep(1)} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
             <p style={Btn_text}>다음</p>
             </div>
-            }
+            } */}
 
 
             </div>
