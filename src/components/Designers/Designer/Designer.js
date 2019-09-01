@@ -96,16 +96,23 @@ const DesignerComp = styled.div`
     }
 `;
 
+//handleGotoDetail = (where, event) => {
+//         const id = event.target.id
+//         if (id === "") {
+//             let href = window.location.href.substring(0, window.location.href.search(`groupDetail`)) + `groupDetail/${where}`
+//             window.location.href = href
+//         }
+//     }
 class Designer extends Component {
     state = { data: this.props.data };
-    gotoDesignerDetailPage = (event) => {
-        const id = event.target.id
-        if (id) {
-            window.location.href = "/designerDetail/"
-        }
+
+    gotoDesignerDetailPage = (where,event) => {
+        window.location.href = "/designerDetail/"+ this.state.data.uid;
+
     }
     render() {
         const designer = this.state.data;
+
         return (
             <DesignerComp onClick={(event) => this.gotoDesignerDetailPage(event)}>
                 <div id="designer-face" className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
