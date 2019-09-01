@@ -197,7 +197,7 @@ export function Designer(state, action) {
             return update(state, {
                 status:{
                     GroupInDesigner:{$set:action.GroupInDesigner},
-                    GroupInDesignerAdded:{$set:action.GroupInDesigner},
+                    GroupInDesignerAdded:{$push:action.GroupInDesigner},
                 }
             })
 
@@ -234,6 +234,56 @@ export function Designer(state, action) {
                 status: {
                     LikeInDesigner: { $set: action.LikeInDesigner },
                     LikeInDesignerAdded: { $set: action.LikeInDesignerAdded }
+                }
+            })
+
+        case GET_LIKE_GROUP_IN_DESIGNER:
+            return update(state, {
+                status:{
+                    LikeGroupInDesigner:{$set:action.LikeGroupInDesigner},
+                    LikeGroupInDesignerAdded:{$push:action.LikeGroupInDesigner},
+
+                }
+            })
+        case GET_LIKE_GROUP_IN_DESIGNER_CLEAR:
+            return update(state, {
+                status:{
+                    LikeGroupInDesigner:{$set:action.LikeGroupInDesigner},
+                    LikeGroupInDesignerAdded:{$set:action.LikeGroupInDesigner},
+
+                }
+            })
+        case GET_LIKE_GROUP_IN_DESIGNER_FAIL:
+            return update(state, {
+                status:{
+                    LikeGroupInDesigner:{$set:action.LikeGroupInDesigner},
+                    LikeGroupInDesignerAdded:{$set:action.LikeGroupInDesignerAdded},
+
+                }
+            })
+
+        case GET_LIKE_DESIGNER_IN_DESIGNER:
+            return update(state, {
+                status:{
+                    LikeDesignerInDesigner:{$set:action.LikeDesignerInDesigner},
+                    LikeDesignerInDesignerAdded:{$push:action.LikeDesignerInDesigner}
+
+                }
+            })
+        case GET_LIKE_DESIGNER_IN_DESIGNER_CLEAR:
+            return update(state, {
+                status:{
+                    LikeDesignerInDesigner:{$set:action.LikeDesignerInDesigner},
+                    LikeDesignerInDesignerAdded:{$set:action.LikeDesignerInDesigner}
+
+                }
+            })
+        case GET_LIKE_DESIGNER_IN_DESIGNER_FAIL:
+            return update(state, {
+                status:{
+                    LikeDesignerInDesigner:{$set:action.LikeDesignerInDesigner},
+                    LikeDesignerInDesignerAdded:{$set:action.LikeDesignerInDesignerAdded}
+
                 }
             })
         case GET_MY_DESIGN_IN_DESIGNER:
@@ -348,13 +398,17 @@ export function GetLikeGroupInDesignerRequest(id, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
+                console.log(`${host}/designer/designerDetail/` + id + "/likeGroup/" + page + "1111");
+
                 console.log("no data")
                 data = []
             }
             if (page === 0) {
+                console.log(`${host}/designer/designerDetail/` + id + "/likeGroup/" + page + "2222");
                 dispatch(GetLikeGroupInDesignerClear(data))
                 return
             }
+
             dispatch(GetLikeGroupInDesigner(data))
         }).catch((error) => {
             dispatch(GetLikeGroupInDesignerFail())
@@ -371,6 +425,7 @@ export function GetLikeDesignerInDesignerRequest(id, page) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
+            console.log(`${host}/designer/designerDetail/` + id + "/likeDesigner/" + page);
             if (!data) {
                 console.log("no data")
                 data = []
@@ -506,7 +561,6 @@ export function GetDesignerCountRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("designer count >>", data)
             if (!data) {
                 console.log("no data")
                 data = { total_like: 0, total_design: 0, total_group: 0, total_view: 0 }
