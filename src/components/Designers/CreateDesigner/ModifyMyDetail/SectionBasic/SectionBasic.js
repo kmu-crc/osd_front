@@ -24,7 +24,15 @@ class SectionBasic extends Component
         this.handleInputIntroduce = this.handleInputIntroduce.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     }
-
+    componentDidMount()
+    {
+      this.setState({nickname:this.props.MyDetail.nick_name,
+      introduce:this.props.MyDetail.about_me,
+      thumbnail:this.props.MyDetail.profileImg==null?null:this.props.MyDetail.profileImg.m_img});
+      this.props.updateThumbnail(this.props.MyDetail.profileImg==null?null:this.props.MyDetail.profileImg.m_img);
+      this.props.updateIntroduce(this.props.MyDetail.about_me);
+      this.props.updateNickName(this.props.MyDetail.nick_name);
+    }
     shouldComponentUpdate(nextProps)
     {
       if(this.props.MyDetail !=nextProps.MyDetail)
@@ -32,8 +40,8 @@ class SectionBasic extends Component
         console.log("MYDETAIL",nextProps.MyDetail.nick_name);
         this.setState({nickname:nextProps.MyDetail.nick_name==null?"":nextProps.MyDetail.nick_name,
                       introduce:nextProps.MyDetail.about_me==null?"":nextProps.MyDetail.about_me,
-                      thumbnail:nextProps.MyDetail.profileImg==null?noimg:nextProps.MyDetail.profileImg.m_img});
-        this.props.updateThumbnail(nextProps.MyDetail.profileImg==null?noimg:nextProps.MyDetail.profileImg.m_img);
+                      thumbnail:nextProps.MyDetail.profileImg.m_img==null?"":nextProps.MyDetail.profileImg.m_img});
+        this.props.updateThumbnail(nextProps.MyDetail.profileImg.m_img==null?"":nextProps.MyDetail.profileImg.m_img);
         this.props.updateIntroduce(nextProps.MyDetail.about_me==null?"":nextProps.MyDetail.about_me);
         this.props.updateNickName(nextProps.MyDetail.nick_name==null?"":nextProps.MyDetail.nick_name);
 

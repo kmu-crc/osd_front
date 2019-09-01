@@ -18,11 +18,12 @@ const BasicSec_explain_Input ={  width: "717.5px", height: "244px", backgroundCo
                                 paddingBottom: "34px", paddingRight: "32.5px"}
 
 
-class ModifyDesignSection01 extends Component
+class GroupBasicInfo extends Component
 {
     constructor(props)
     {
         super(props);
+        this.state={groupTitle:"",groupExplain:"",groupThumbnail:noimg,groupThumbnailURL:"",groupThumbnailName:""}
         this.handleOnChangeTitle=this.handleOnChangeTitle.bind(this);
         this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -34,23 +35,59 @@ class ModifyDesignSection01 extends Component
         // if(this.props.DesignDetail.img!=nextProps.DesignDetail.img) this.setState({thumbnail:nextProps.DesignDetail.img.m_img})
         return true;
     }
+    componentDidMount()
+    {
+        this.setState({
+            groupTitle:this.props.groupTitle,
+            groupExplain:this.props.groupExplain,
+            groupThumbnail:this.props.groupThumbnail
+        })
+    }
     handleOnChangeTitle(event)
     {
+        this.setState({groupTitle:event.target.value});
         this.props.onChangeTitle (event.target.value);
     }
     handleOnChangeExplain(event)
     {
+        this.setState({groupExplain:event.target.value});
         this.props.onChangeExplain (event.target.value);
     }
+
     handleOnChangeThumbnail(event)
     {
+        // const readUploadedFileAsText = inputFile => {
+        //     const temporaryFileReader = new FileReader();
+      
+        //     return new Promise((resolve, reject) => {
+        //       temporaryFileReader.onerror = () => {
+        //         temporaryFileReader.abort();
+        //         reject(new DOMException("Problem parsing input file."));
+        //       };
+      
+        //       temporaryFileReader.onload = () => {
+        //         resolve(temporaryFileReader.result);
+        //       };
+        //       temporaryFileReader.readAsDataURL(inputFile);
+        //       this.setState({groupThumbnail:temporaryFileReader.result,groupThumbnailName:inputFile.name});
+        //       this.props.onChangeThumbnail(temporaryFileReader.result,inputFile.name);
+        //     });
+        //   };
+        //   const imgURL = readUploadedFileAsText(event.target.files[0]);
+        //   this.setState({groupThumbnailURL:imgURL});
+        //   this.props.onChangeThumbnailURL(imgURL);
         event.preventDefault();
         const reader = new FileReader();
         const file =event.target.files[0];
         reader.onloadend = ()=>{
-            this.props.onChangeThumbnail(reader.result);
+            this.setState({groupThumbnail:reader.result,groupThumbnailName:file.name})
+            this.props.onChangeThumbnail(reader.result,file.name);
         }
-        let url = reader.readAsDataURL(file);
+         let imgurl =  reader.readAsDataURL(file)
+         this.setState({groupThumbnailURL:imgurl});
+         this.props.onChangeThumbnail(imgurl);
+         console.log("file===",imgurl);
+
     }
 
     render()
@@ -65,7 +102,7 @@ class ModifyDesignSection01 extends Component
                     {/* <input hidden type="file" value={null} /> */}
                     </div>
                     <div style={{marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", 
-                    backgroundImage: `url(${noimg})`,backgroundSize: "cover", backgroundPosition: "center center"}} ></div>
+                    backgroundImage: `url(${this.state.groupThumbnail})`,backgroundSize: "cover", backgroundPosition: "center center"}} ></div>
                     <div style={BasicSec_thumb_ExplainBox}>
                     <div style={BasicSec_thumb_FindBox}>
                         <label for="file" onClick = {this.handleFileUploadModal}style={BasicSec_thumb_FindTitle}>찾아보기</label>
@@ -78,14 +115,14 @@ class ModifyDesignSection01 extends Component
                 <div style={BasicSec_title_Box}>
                     <div style={BasicSecTitle}>제목</div>
                     <div style={BasicSec_title_InputBox} >
-                    <input type="text" style={BasicSec_title_Input} onChange = {this.handleOnChangeTitle} value = {this.props.designTitle}/>
+                    <input type="text" style={BasicSec_title_Input} onChange = {this.handleOnChangeTitle} value = {this.state.groupTitle}/>
                     </div>
                 </div>
                 {/* description */}
                 <div style={BasicSec_explain_Box}>
                 <div style={BasicSecTitle}>그룹 설명</div>
                 <div style={BasicSec_explain_InputBox}>
-                    <textarea style={BasicSec_explain_Input} placeholder="디자인에 대한 설명을 입력하세요." onChange = {this.handleOnChangeExplain} value={this.props.designExplain}/>
+                    <textarea style={BasicSec_explain_Input} placeholder="디자인에 대한 설명을 입력하세요." onChange = {this.handleOnChangeExplain} value={this.props.groupExplain}/>
                 </div>
                 </div>
             </section>
@@ -93,4 +130,4 @@ class ModifyDesignSection01 extends Component
         );
     }
 }
-export default ModifyDesignSection01;
+export default GroupBasicInfo;

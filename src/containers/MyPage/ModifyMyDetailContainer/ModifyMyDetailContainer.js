@@ -11,7 +11,6 @@ componentDidMount()
   this.props.GetMyDetailRequest(this.props.token);
 }
   render() {
-    console.log("what",this.props);
     return (<ModifyMyDetail {...this.props} />)
   }
 }

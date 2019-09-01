@@ -138,6 +138,7 @@ export function SignUpRequest(data) {
                 }
                 return dispatch(SignUpSuccess())
             }).catch((error) => {
+                console.log("ERROR:"+error);
                 return dispatch(SignUpFailure())
             })
     }
