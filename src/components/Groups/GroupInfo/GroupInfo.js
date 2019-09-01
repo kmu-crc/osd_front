@@ -170,6 +170,7 @@ class GroupInfoComponent extends Component {
             }
             const { manager } = this.state;
             const isEditor = group_user_id === user_id;
+            console.log(info);
             return (
                 <div style={{ paddingLeft: "65px", width: "100%", display: "flex" }}>
                     <div style={{ width: "max-content" }}>
@@ -200,20 +201,18 @@ class GroupInfoComponent extends Component {
                                             {info.description && info.description.length > 400 && <>...</>}
                                         </div>
                                     </div>
-                                    <div style={{ marginTop: "17px", width: "250px", height: "25px" }}>
-                                        <div style={{ marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-                                            <div style={{ display: "flex", marginRight: "22px" }}>
-                                                <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
-                                                <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(this.props.count.view)}</div>
-                                            </div>
-                                            <div style={{ display: "flex", marginRight: "0px" }}>
-                                                <div><i style={{ color: "#707070", fontSize: "14px" }} className="material-icons">thumb_up</i></div>
-                                                <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(this.props.count.like)}</div>
-                                            </div>
-                                            <div style={{ display: "flex" }}>
-                                                <div><i style={{ color: "#707070", fontSize: "17px" }} className="material-icons">library_books</i></div>
-                                                <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(this.props.count.design + this.props.count.group)}</div>
-                                            </div>
+                                    <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+                                        <div id="count-view" style={{ display: "flex", marginRight: "22px", cursor: "default" }}>
+                                            <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
+                                            <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.view || 0)}</div>
+                                        </div>
+                                        <div id="count-like" style={{ display: "flex", marginRight: "0px", cursor: "default" }}>
+                                            <div><i style={{ color: "#707070", fontSize: "14px" }} className="material-icons">thumb_up</i></div>
+                                            <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.like || 0)}</div>
+                                        </div>
+                                        <div id="count-childs" style={{ display: "flex", cursor: "default" }}>
+                                            <div><i style={{ color: "#707070", fontSize: "17px" }} className="material-icons">library_books</i></div>
+                                            <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -247,13 +246,14 @@ class GroupInfoComponent extends Component {
                             <div>{info && DateFormat(info.create_time)} 등록</div>
                         </div>
                     </div>
-                </div>
+                </div >
             )
         }
         const info = this.props.GroupInfo
         return (
             <React.Fragment>
-                {this.state.likeDialog &&
+                {
+                    this.state.likeDialog &&
                     <div style={{
                         position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
                         background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"
@@ -263,12 +263,13 @@ class GroupInfoComponent extends Component {
                             fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070"
                         }}>관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
                  </div>
-                    </div>}
+                    </div>
+                }
                 {this.state.isJoin == false ? <JoinModal /> : <JoinCancelModal />}
                 <div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
                     {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
                 </div >
-            </React.Fragment>)
+            </React.Fragment >)
     }
 }
 

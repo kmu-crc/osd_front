@@ -17,6 +17,10 @@ const DesignBox = styled.div`
 `
 
 class WaitingDesignContainer extends Component {
+  state = { reload: false };
+  handleReload() {
+    this.setState({ reload: !this.state.reload });
+  }
   componentWillMount() {
     this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
   }
@@ -45,12 +49,13 @@ class WaitingDesignContainer extends Component {
       <DesignBox>
         <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
         <ScrollList
-          manual
+          reload={this.state.reload}
+          handleReload={this.handleReload}
           {...osdstyle.design_margin}
           ListComponent={Design}
           dataListAdded={this.props.waitingDesign}
           getListRequest={null}
-          handleReject={this.setOut} 
+          handleReject={this.setOut}
           handleAccept={this.setAccept} />
       </DesignBox>
     );

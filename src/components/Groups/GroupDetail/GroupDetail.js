@@ -10,7 +10,6 @@ import WaitingGroupContainer from "containers/Groups/WaitingGroupContainer";
 import EditGroupListContainer from "containers/Groups/EditGroupListContainer";
 import EditDesignListContainer from "containers/Groups/EditDesignListContainer";
 
-
 import Loading from 'components/Commons/Loading';
 import ScrollList from "components/Commons/ScrollList";
 import osdstyle from "opendesign_style";
