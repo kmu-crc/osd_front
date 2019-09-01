@@ -123,6 +123,7 @@ export function Designer(state, action) {
                     like: { $set: action.like }
                 }
             })
+
         case LIKE_DESIGNER:
             return update(state, {
                 LikeDesigner: {
@@ -190,6 +191,28 @@ export function Designer(state, action) {
                 status: {
                     DesignInDesigner: { $set: action.DesignInDesigner },
                     DesignInDesignerAdded: { $set: action.DesignInDesignerAdded }
+                }
+            })
+        case GET_GROUP_IN_DESIGNER:
+            return update(state, {
+                status:{
+                    GroupInDesigner:{$set:action.GroupInDesigner},
+                    GroupInDesignerAdded:{$set:action.GroupInDesigner},
+                }
+            })
+
+        case GET_GROUP_IN_DESIGNER_CLEAR:
+            return update(state, {
+                status:{
+                    GroupInDesigner:{$set:action.GroupInDesigner},
+                    GroupInDesignerAdded:{$set:action.GroupInDesigner},
+                }
+            })
+        case GET_GROUP_IN_DESIGNER_FAIL:
+            return update(state, {
+                status:{
+                    GroupInDesigner:{$set:action.GroupInDesigner},
+                    GroupInDesignerAdded:{$set:action.GroupInDesignerAdded},
                 }
             })
         case GET_LIKE_IN_DESIGNER:
@@ -290,6 +313,81 @@ export function GetDesignInDesignerRequest(id, page) {
         })
     }
 }
+// 디자이너가 속한 그룹 가져오기
+export function GetGroupInDesignerRequest(id, page) {
+    return (dispatch) => {
+        return fetch(`${host}/designer/designerDetail/` + id + "/inGroup/" + page, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log(data);
+            if (!data) {
+                console.log("no data")
+                data = []
+            }
+            if (page === 0) {
+                dispatch(GetGroupInDesignerClear(data))
+                return
+            }
+            dispatch(GetGroupInDesigner(data))
+        }).catch((error) => {
+            dispatch(GetGroupInDesignerFail())
+            console.log("err", error)
+        })
+    }
+}
+//디자이너가 좋아요 누른 그룹 가졍기
+export function GetLikeGroupInDesignerRequest(id, page) {
+    return (dispatch) => {
+        return fetch(`${host}/designer/designerDetail/` + id + "/likeGroup/" + page, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            if (!data) {
+                console.log("no data")
+                data = []
+            }
+            if (page === 0) {
+                dispatch(GetLikeGroupInDesignerClear(data))
+                return
+            }
+            dispatch(GetLikeGroupInDesigner(data))
+        }).catch((error) => {
+            dispatch(GetLikeGroupInDesignerFail())
+            console.log("err", error)
+        })
+    }
+}
+//디자이너가 좋아요 누른 디자이너 가져오기
+export function GetLikeDesignerInDesignerRequest(id, page) {
+    return (dispatch) => {
+        return fetch(`${host}/designer/designerDetail/` + id + "/likeDesigner/" + page, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            if (!data) {
+                console.log("no data")
+                data = []
+            }
+            if (page === 0) {
+                dispatch(GetLikeDesignerInDesignerClear(data))
+                return
+            }
+            dispatch(GetLikeDesignerInDesigner(data))
+        }).catch((error) => {
+            dispatch(GetLikeDesignerInDesignerFail())
+            console.log("err", error)
+        })
+    }
+}
+
+
 // 디자이너의 디자인 리스트 가져오기
 export function GetMyDesignInDesignerRequest(id, page) {
     return (dispatch) => {

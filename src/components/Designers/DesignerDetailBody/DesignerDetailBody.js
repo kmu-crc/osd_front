@@ -57,6 +57,7 @@ class DesignerPageBody extends Component{
     getInitData() {
         this.getMyDesignInDesignerRequest(true);
         this.getLikeDesignerRequest(true);
+        this.getGroupInDesignerRequest(true);
 
     }
 
@@ -69,7 +70,10 @@ class DesignerPageBody extends Component{
         await this.setState({ page: isInit ? 0 : this.state.page + 1 });
         this.props.GetLikeInDesignerRequest(this.props.id, this.state.page);
     }
-
+    getGroupInDesignerRequest = async (isInit)=>{
+        await this.setState({ page: isInit ? 0 : this.state.page + 1 });
+        this.props.GetGroupInDesignerRequest(this.props.id, this.state.page);
+    }
 
 
     changeCategory = (index)=>{
@@ -89,7 +93,7 @@ class DesignerPageBody extends Component{
         this.setState({cateIndex:index});
     }
     render(){
-        const {MyDesignInDesigner, MyDesignInDesignerAdded,LikeInDesigner,LikeInDesignerAdded } = this.props;
+        const {MyDesignInDesigner, MyDesignInDesignerAdded,LikeInDesigner,LikeInDesignerAdded,GroupInDesigner,GroupInDesignerAdded} = this.props;
         const DesignProps = { cols: 5, width: "330px", height: "330px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "26px"};
         const GroupProps = { cols: 2, width: "902", height: "230px", marginRight: "94px", marginBottom: "60px", marginRightLast: "11px", marginBottomLast: "179px"};
         const DesignerProps = {cols:3, width: "590px", height: "150px", marginRight: "63px", marginBottom: "80px", marginRightLast: "8px", marginBottomLast: "68px" }
@@ -123,7 +127,7 @@ class DesignerPageBody extends Component{
                             <Loading /> :
                             <ScrollList cols={GroupProps.cols}
                                         width={GroupProps.width} height={GroupProps.height} marginRight={GroupProps.marginRight} marginBottom={GroupProps.marginBottom} marginRightLast={GroupProps.marginRightLast} marginBottomLast={GroupProps.marginBottomLast}
-                                        page={this.state.page} ListComponent={Group} dataList={LikeInDesigner} dataListAdded={LikeInDesigner} getListRequest={this.getMyGroupListRequest} />}
+                                        page={this.state.page} ListComponent={Group} dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
                     </>
                 </div>
                 }
