@@ -10,6 +10,7 @@ import NumberFormat from "modules/NumberFormat";
 import Cross from "components/Commons/Cross";
 import styled from "styled-components";
 import TextFormat from 'modules/TextFormat';
+import { geturl } from "config";
 
 const DesignInfoComp = styled.div`
     marginTop: 21px;
@@ -167,14 +168,16 @@ class DesignInfo extends Component {
     sendMessage(user_id) {
         window.location.href = window.location.href.substring(0, window.location.href.search('designDetail')) + `message/${user_id}`
     }
+    goParentDesign = (parent) => {
+        window.location.href = geturl() + `/designDetail/${parent}`
+    }
     render() {
         const { DesignDetail, userInfo, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
         const isMyDesign = DesignDetail && userInfo && DesignDetail.user_id === userInfo.uid ? true : false;
-        console.log("DesignInfo:", this.props.Count);
+        console.log("DesignInfo:", DesignDetail, this.props.Count);
         return (
             <>
-
                 {this.state.forkDialog > 0 &&
                     <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
                         {this.state.forkDialog === 1 && <>
@@ -203,7 +206,7 @@ class DesignInfo extends Component {
                     <div style={{ marginTop: "19px", marginLeft: "42px", }}>
                         <div style={{ position: "absolute", width: "max-content", height: "29px", marginTop: "0px", marginLeft: "0px", fontSize: "20px", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "29px", cursor: "pointer" }} title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
                         <div style={{ marginTop: "25px" }}>
-                            {DesignDetail.parent_design && <div style={{ width: "165px", height: "25px", marginTop: "9px", marginLeft: "0px", fontSize: "17px", color: "#707070", fontWeight: "300", textAlign: "left", lineHeight: "25px", cursor: "pointer", color: "#FF0000" }} title={DesignDetail.parent_title}>{DesignDetail.parent_title.slice(0, 4)}{DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>}
+                            {DesignDetail.parent_design && <div onClick={() => this.goParentDesign(DesignDetail.parent_design)} style={{ width: "165px", height: "25px", marginTop: "9px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "300", textAlign: "left", lineHeight: "25px", cursor: "pointer" }} title={DesignDetail.parent_title}>{DesignDetail.parent_title.slice(0, 4)}{DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>}
                             <div style={{ width: "170px", height: "29px", marginTop: DesignDetail.parent_design ? "8px" : "13px", marginLeft: "0px", fontSize: "20px", color: "#707070", fontWeight: "300", textAlign: "left", lineHeight: "29px", cursor: "pointer" }}>{DesignDetail.userName.slice(0, 8)} {(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
                             <button onClick={this.getForkDesignList} ref={ref => (this.forkDesignRef = ref)} onBlur={this.onForkListHandler} style={{ outline: "none", background: "none", border: "none", width: "165px", height: "29px", marginTop: DesignDetail.parent_design ? "40px" : "69px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "500", textAlign: "left", lineHeight: "29px", display: "flex", alignItems: "bottom" }}>{DesignDetail.is_parent && "파생된 디자인 "}{DesignDetail.is_parent && <div style={{ marginLeft: "10px" }}>{DesignDetail.children_count["count(*)"]}</div>}
                                 {this.state.forkDesignList &&
@@ -232,8 +235,8 @@ class DesignInfo extends Component {
                             </div>
                         </div>
                     </div>
-                    <div style={{ marginTop: "19px", marginLeft: "65px" }}>
-                        <div style={{ width: "100px", height: "25px", marginLeft: "auto", color: "#FF0000", fontSize: "17px", fontFamily: "Noto Sans KR", lineHeight: "25px", fontWeight: "300", textAlign: "left" }}>{DesignDetail.categoryName}</div>
+                    <div style={{ marginTop: "65px", marginLeft: "65px" }}>
+                        <div style={{ width: "120px", height: "25px", color: "#FF0000", fontSize: "17px", fontFamily: "Noto Sans KR", lineHeight: "25px", fontWeight: "300", textAlign: "left" }}>{DesignDetail.categoryName}</div>
                         <div style={{ width: "423px", height: "158px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation ? DesignDetail.explanation.slice(0, 150) : DesignDetail.userName + "님의 " + DesignDetail.title + "디자인입니다."}</div>
                     </div>
                     <div style={{ marginTop: "19px", marginLeft: "65px" }}>
