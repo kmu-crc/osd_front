@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SearchMember from "components/Commons/SearchMember";
+import SearchMember from "components/Commons/SearchDesignMember";
 import { connect } from "react-redux";
 import { SearchMemberRequest } from "redux/modules/search";
 
@@ -10,6 +10,7 @@ class SearchMemberContainer extends Component {
     this.state = {addMemberItem:null}
   }
   render() {
+    console.log("search.props:",this.props)
     return(
 
       <SearchMember {...this.props}/>

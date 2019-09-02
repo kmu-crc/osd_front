@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const Cross = styled.div`
+    z-index:20;
     opacity: ${props => props.disabled ? "0.5" : "1.0"};
     width: ${props => props.width}px;
     height: ${props => props.height}px;

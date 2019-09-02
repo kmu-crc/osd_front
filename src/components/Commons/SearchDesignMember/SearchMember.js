@@ -40,13 +40,14 @@ const MemberList = styled.ul`
   overflow-Y: scroll;
   box-sizing: border-box;
   border: 1px solid #707070;
+  background:#EFEFEF;
   border-radius: 3px;
+  z-index:999;
 `
 
 const MemberListItem = styled.li`
   width: 100%;
   padding: 10px;
-  border: 1px solid #707070;
   border-radius: 3px;
   margin-bottom: 5px;
 `
@@ -54,7 +55,8 @@ const MemberListItem = styled.li`
 class SearchMember extends Component {
   state = {
     member: [],
-    open: false
+    open: false,
+    listOpen:false,
   }
 
   componentDidMount() {
@@ -66,7 +68,6 @@ class SearchMember extends Component {
   }
 
   getValue = (value) => {
-    console.log("get", value);
     this.setState({open: true});
     if(!value) {
       this.setState({open: false});
@@ -78,30 +79,17 @@ class SearchMember extends Component {
   }
 
   addMember = async (data) => {
-    console.log("ADDMEMBER:",data)
-    this.props.addMemberItem && this.props.addMemberItem(data.uid,data.nick_name);
-    //let is_only = true;
-    // if(this.state.member.length > 0) {
-    //   for( let item of this.state.member){
-    //     if(item.uid === data.uid){
-    //       is_only = await false;
-    //       break;
-    //     }
-    //   }
-    // }
-    // if(is_only){
-    //   this.setState({
-    //     member: [...this.state.member, data],
-    //     open: false
-    //   });
-    //   this.returnData();
-    // }
+    this.getValue("");
+    this.props.addMember&& this.props.addMember(data.email,data.s_img,data.nick_name,data.uid);
   }
   closeList = () => {
     console.log("close")
     this.setState({open: false});
   }
-
+  onChangeInput()
+  {
+    this.setState({listOpen:true});
+  }
   deleteMember = (index) => {
     let newArray = [...this.state.member];
     newArray.splice(index, 1);
@@ -119,7 +107,7 @@ class SearchMember extends Component {
   render() {
     return (
       <SearchWrap className = "searchRect" style={{display:"inline-block"}}>
-        <FormInput  className = "searchRect" type="text" style={{border:"none",width:"353px",height:"30px",fontSize:"18px",marginLeft:"50px",}} name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
+        <FormInput className = "searchRect" type="text" style={{background:"#EFEFEF",border:"none",width:"550px",height:"30px",fontSize:"18px",marginTop:"15px",marginLeft:"50px",}} name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
         <MemberList  className = "searchRect" style={this.state.open ? {display: "block"} : {display: "none"}}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
