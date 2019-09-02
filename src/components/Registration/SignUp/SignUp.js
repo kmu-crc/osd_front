@@ -79,6 +79,7 @@ class SignUpModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading:false,
             term_use: false, checked: false, open_term: false, success_signup: false,
             email: "", password: "", password2: "", nick_name: ""
         }
@@ -120,7 +121,28 @@ class SignUpModal extends Component {
     onSubmit = async e => {
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
+        let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        let error_code=-1;
 
+        if(checkedMail.test(this.state.email)==false)
+        {
+            alert("이메일 형식이 올바르지 않습니다");
+            return;
+        }        
+        else if(this.state.password !== this.state.password2)
+        {
+            alert("패스워드가 일치하지 않습니다");
+            return;
+        }
+        else if(this.state.nick_name==null)
+        {
+            alert("닉네임을 입력해주세요!")
+            return;
+        }
+
+        
+        
+        
         // if (this.state.password) {
         //   var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
         //   if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
@@ -140,12 +162,14 @@ class SignUpModal extends Component {
                 console.log(res);
                 if (res) {
                     alert("회원 가입 되었습니다.");
-                    this.setState({ success_signup: true })
+                    this.setState({ success_signup: true ,loading:true});  
+                    let href = window.location.href.substring(0, window.location.href.search("signup"))       
+                    setTimeout(() => {
+                        this.props.history.push(`/`);
+                        window.location.href = href + 'insertUserDetail'
+                    }, 2000);
+         
 
-                    let href = window.location.href.substring(0, window.location.href.search("signup"))
-                    window.location.href = href + 'insertUserDetail';
-
-                    this.props.history.push(`/`);
                 } else {
                     console.log("this!");
                     alert("다시 시도해주세요");
@@ -162,11 +186,16 @@ class SignUpModal extends Component {
                 });
             });
     };
+
     render() {
         const { open } = this.props
+
+        
+        //window.location.href = href + 'insertUserDetail'
         return (
             <>
-                {this.state.success_signup ? (
+
+                {this.state.success_signup ?(
                     <CustomModal open={this.state.success_signup} onClose={this.onClose} onClick={this.tmp_goto_mydetail}>
                         <div style={{ marginLeft: "54px", display: "flex" }}>
                             <div style={{ width: "259px", marginTop: "170px" }}><div style={{ marginTop: "14px", borderBottom: "2px solid red" }} /></div>
@@ -180,7 +209,12 @@ class SignUpModal extends Component {
                                 fontSize: "20px", textAlign: "center", lineHeight: "45px"
                             }}>
                                 더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 마이페이지로 이동합니다<br /><br /><br /><br /> 이동 중...</div></div>
-                    </CustomModal>) : (
+
+                    </CustomModal>)
+                    
+                    : 
+                    
+                    (
                         <CustomModal open={open} onClose={this.onClose}>
                             {this.state.open_term &&
                                 <div style={{ position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
@@ -242,7 +276,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>이용약관</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
-                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input type="checkbox" checked={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
+                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input type="checkbox" value={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
                                         <div style={{ marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div></div>
                                     <div style={{
                                         marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",
@@ -252,6 +286,8 @@ class SignUpModal extends Component {
                             </Modal.Content>
                         </CustomModal >
                     )}
+
+                    
             </>
         )
     }
