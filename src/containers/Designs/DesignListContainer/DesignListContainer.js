@@ -31,35 +31,38 @@ class DesignListContainer extends Component {
     this_order: { text: "등록순", keyword: "update" }
   }
   componentDidMount() {
-    this.props.GetCategoryAllRequest()
+    // this.props.GetCategoryAllRequest()
     this.getList(0);
+    this.props.GetCategoryAllRequest()
+    .then(() => { this.props.GetDesignListCountRequest() });
+    this.props.GetDesignListCountRequest(0, this.state.this_order.keyword)
   }
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
   handleChangeCategory = async (category) => {
     await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
-    this.props.GetDesignListCountRequest(this.state.main_category.value, this.state.sub_category.value);
+    this.props.GetDesignListCountRequest(category.value, null);
     this.handleReload();
     this.getList(0);
-  }
-  handleChangeSubCategory = async (parent, category) => {
+}
+handleChangeSubCategory = async (parent, category) => {
     await this.setState({ main_category: this.props.category1[parent], this_category: category, sub_category: category })
-    this.props.GetDesignListCountRequest(this.state.main_category.value, this.state.sub_category.value)
+    this.props.GetDesignListCountRequest(this.state.main_category.value, category.value)
     this.handleReload();
     this.getList(0);
-  }
+}
+
   handleChangeOrderOps = async (order) => {
     await this.setState({ this_order: order })
     this.handleReload();
     this.getList(0);
   }
+
   getList = async (page) => {
-    const { main_category, sub_category, keyword, this_order } = this.state
-    this.props.GetDesignListCountRequest().then(() => {
-      this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword)
-    })
-  }
+    const { main_category, sub_category, keyword, this_order } = this.state;
+    this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
+};
   changeCategory = (category) => {
     if (this.state.this_category === category) {
       return;
