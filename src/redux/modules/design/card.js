@@ -100,15 +100,58 @@ const DesignSourceReset = () => ({ type: DESIGN_SOURCE_RESET, data: [] })
 const initialState = {
     DesignDetailStep: { status: "INIT" },
     UpdateDesignFile: { status: "INIT" },
-    status: { DesignDetailStep: [], allData: null }
+    DesignSourceDetail: { status: "INIT" },
+    DesignSourceEdit: { status: "INIT" },
+    status: { DesignDetailStep: [], allData: null, content: [] }
 }
-
 
 export function DesignCard(state, action) {
     if (typeof state === "undefined")
         state = initialState;
 
     switch (action.type) {
+        case UPDATE_DESIGN_SOURCE:
+            return update(state, {
+                DesignSourceEdit: {
+                    status: { $set: "WATTING" }
+                }
+            });
+        case UPDATE_DESIGN_SOURCE_SUCCESS:
+            return update(state, {
+                DesignSourceEdit: {
+                    status: { $set: "SUCCESS" }
+                }
+            });
+        case UPDATE_DESIGN_SOURCE_FAILURE:
+            return update(state, {
+                DesignSourceEdit: {
+                    status: { $set: "FAILURE" }
+                }
+            });
+        case GET_DESIGN_SOURCE:
+            return update(state, {
+                DesignSourceDetail: {
+                    status: { $set: "WATTING" }
+                }
+            });
+        case GET_DESIGN_SOURCE_SUCCESS:
+            return update(state, {
+                DesignSourceDetail: {
+                    status: { $set: "SUCCESS" }
+                },
+                status: {
+                    content: { $set: action.data }
+                }
+            });
+        case GET_DESIGN_SOURCE_FAILURE:
+            return update(state, {
+                DesignSourceDetail: {
+                    status: { $set: "FAILURE" }
+                },
+                status: {
+                    content: { $set: [] }
+                }
+            });
         case UPDATE_DESIGN_FILE:
             return update(state, {
                 UpdateDesignFile: {
