@@ -11,6 +11,8 @@ import noimg from "source/noimg.png"
 
 import DateFormat from "modules/DateFormat"
 import TextFormat from "modules/TextFormat"
+import NumberFormat from "modules/formats/NumberFormat"
+
 
 // CSS 
 const DesignElement = styled.div`
@@ -76,17 +78,17 @@ class Design extends Component {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ fontSize: "20px", fontWeight: "300", cursor: "pointer" }}>
               {data.userName}</div>
-            <div style={{ marginTop: "5px", fontWeight: "300", width: "65px", height: "25px", fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR", cursor: "default" }} >
+            <div style={{ marginTop: "5px", fontWeight: "300", width: "80px", height: "25px", fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR", cursor: "default" }} >
               {DateFormat(data.update_time)}</div>
           </div>
         </div>
         <div style={{ zIndex: "703", marginLeft: "24.92px", marginTop: "280px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
           <div style={{ zIndex: "703", marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
-          <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{data.view_count}</div>
+          <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{NumberFormat(data.view_count)}</div>
           <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "11px", height: "11px" }} src={iThumbUp} /></div>
-          <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{data.like_count}</div>
+          <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{NumberFormat(data.like_count)}</div>
           <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "22px", height: "11px" }} src={iForked} /></div>
-          <div style={{ zIndex: "703", marginRight: "0px", cursor: "default" }}>{data.children_count || 0}</div>
+          <div style={{ zIndex: "703", marginRight: "0px", cursor: "default" }}>{NumberFormat(data.children_count) || 0}</div>
         </div>
       </DesignElement>
     )
