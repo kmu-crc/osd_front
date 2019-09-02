@@ -26,7 +26,6 @@ const SearchForm = styled.div`
         border-bottom: 1.5px solid black;
         width:760px;
     }
-    
     .zoomImg{
         z-index:500;
         position:relative;
@@ -65,36 +64,19 @@ const SearchForm = styled.div`
         color: #707070;
         opacity: 1;
     }
-    
-    
-    
 `;
-const Wrapper = styled.div`
-  width: 100%;
-  margin-bottom: 50px;
-  margin-top:40px;
-  margin-left:100px
-  & ul {
-    margin-top: 30px;
-    
-  }
-`;
-const type = [
-    { key: "design", value: "디자인", text: "디자인" },
-    { key: "group", value: "그룹", text: "그룹" },
-    { key: "designer", value: "디자이너", text: "디자이너" }
-];
-class Re_SearchList extends Component {
+class SearchListRe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mainCate: [{ value: 0, text: "디자인" }, { value: 1, text: "그룹" }, { value: 2, text: "디자이너" }],
-            selectCate: 0,
-            this_order: { text: "등록순", keyword: "update" },
-            selectedCate: "디자인",
+            type: [{ value: 0, text: "디자인", type: "design" }, { value: 1, text: "그룹", type: "group" }, { value: 2, text: "디자이너", type: "designer" }],
+            order: [{ text: "인기순", keyword: "like" }, { text: "최신순", keyword: "update" }],
+            selectedType: this.props.type || this.state.type[0],
+            this_order: this.props.sort || this.state.order[1],
+            keyword: this.props.keyword || ""
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
-    }
+    };
 
     getSearchValue = (e) => {
         const target = e.target;
@@ -114,15 +96,11 @@ class Re_SearchList extends Component {
         if (e.keyCode === 13) {
             this.onSearchSubmit(this.state.keyword);
         }
-    }
+    };
     changeState = async () => { // 리렌더링을 위한 state값 변경
-        await this.setState({
-            rendering: false
-        });
-        await this.setState({
-            rendering: true
-        });
-    }
+        await this.setState({ rendering: false });
+        await this.setState({ rendering: true });
+    };
     onSearchSubmit = (data) => {
         if (this.state.keyword === null || this.state.keyword === "") {
             alert("키워드를 입력해주세요");
@@ -131,20 +109,18 @@ class Re_SearchList extends Component {
             console.log(this.props.history);
             this.changeState();
         }
-    }
+    };
     onChangeDropBox(event, { value }) {
-        this.setState({ selectCate: { value }.value });
-    }
+        console.log(value);
+        // this.setState({ selectCate: { value }.value });
+    };
     typeChange = (e, { value }) => {
         this.props.history.replace(`/search/${value}/${this.props.sort}/${this.props.keyword}`);
-    }
-
-
-
+    };
     sortChange = (e, { value }) => {
         this.props.history.replace(`/search/${this.props.type}/${value}/${this.props.keyword}`);
         this.changeState();
-    }
+    };
 
     render() {
         return (
@@ -156,49 +132,26 @@ class Re_SearchList extends Component {
                             placeholder="검색어를 입력하세요"
                             onChange={this.getSearchValue}
                             onKeyDown={this.submitEnter}
-
                         />
                     </div>
                     {/*x box position*/}
                     <div style={{ display: "flex", justifyContent: "space-start" }}>
-
                         <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "501" }}>
-                            <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
+                            <Dropdown id="dropbox" selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.type} value={this.state.selectedType} />
                         </div>
-
-                        <div className="cateUI">
-                            {this.state.selectCate != 1 &&
-
-
-                                <React.Fragment>
-                                    <div style={{ color: "red" }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                </React.Fragment>
-                            }
-
-                        </div>
-
+                        {/* <div className="cateUI">{this.state.selectCate != 1 &&<React.Fragment><div style={{ color: "red" }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div></React.Fragment>}</div> */}
                         <div style={{ border: "1xp solid red", position: "absolute", top: "200px", right: "0px" }}>
-                            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
+                            {/* <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} /> */}
                         </div>
-
                     </div>
-                    <Wrapper>
+                    <div>
                         {this.props.type === "designer" && <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />}
                         {this.props.type === "group" && <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />}
                         {this.props.type === "design" && <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />}
-                    </Wrapper>
-
-
+                    </div>
                 </SearchForm>
             </div>
-
-
-
         )
     }
 }
-export default Re_SearchList;
+export default SearchListRe;

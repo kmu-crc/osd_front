@@ -11,6 +11,7 @@ import noimg from "source/noimg.png"
 
 import DateFormat from "modules/DateFormat"
 import TextFormat from "modules/TextFormat"
+import { geturl } from "config"
 
 // CSS 
 const DesignElement = styled.div`
@@ -54,7 +55,7 @@ const DesignEmpty = {
 
 class Design extends Component {
   gotoDetailPage = () => {
-    window.location.href = "/designDetail/" + this.props.data.uid
+    window.location.href = geturl() + "/designDetail/" + this.props.data.uid
   }
   state = { data: this.props.data || DesignEmpty }
   render() {

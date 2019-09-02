@@ -31,21 +31,31 @@ const SearchContainer = styled.div`
     }
 `
 class SearchForm extends Component {
-    _search = () => { }
-    _handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            // console.log('Enter')
-            window.location.href = '/search'
+    state = { keyword: "" }
+    getType = () => {
+        const href = window.location.href
+        let type = (href.search("design") !== -1 || href.search("designDetail") !== -1) && "design";
+        type = (href.search("group") !== -1 || href.search("groupDetail") !== -1) ? "group" : (href.search("designer") !== -1 || href.search("designerDetail") !== -1) ? "designer" : "design";
+        return type;
+    }
+    handleKeyDown = (e) => {
+        if (e.key === 'Enter' && this.state.keyword !== "") {
+            window.location.href = '/search/' + this.getType() + "/update/" + this.state.keyword
         }
     }
     goSearch = () => {
-        window.location.href = '/search'
+        if (this.state.keyword)
+            window.location.href = '/search/' + this.getType() + "/update/" + this.state.keyword
+    }
+    getvalue = (event) => {
+        this.setState({ keyword: event.target.value })
     }
     render() {
+        console.log(this.state.keyword);
         return (
-            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
+            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search..." onChange={(event) => this.getvalue(event)} />
             </SearchContainer>)
     }
 }
