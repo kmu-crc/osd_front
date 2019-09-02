@@ -9,14 +9,13 @@ class DesignDetailStepContainer extends Component {
     this.props.GetDesignBoardRequest(this.props.design.uid)
   }
   checkEditorPermission() {
-    return (
-      this.props.userInfo &&
-      this.props.design &&
-      this.props.design.member.find(peer => { return peer.user_id === this.props.userInfo.uid }))
+    return (this.props.userInfo && this.props.design && this.props.design.member && this.props.design.member.find(peer => { return peer.user_id === this.props.userInfo.uid }))
   }
   render() {
-    console.log("DDSC:", this.props, this.checkEditorPermission())
-    return (<GridEditor {...this.props} editor={this.checkEditorPermission()} />)
+    return (<>
+      <GridEditor {...this.props} editor={this.checkEditorPermission()} />
+    </>
+    )
   }
 }
 

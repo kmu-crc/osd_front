@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { CreateStep, CreateCard, TipDiv } from "modules/GridEditor";
 import { FormInput, FormTextArea } from "components/Commons/FormItem";
 import { FormControl, ValidationGroup } from "modules/FormControl";
-import { FormThumbnailEx, AsyncInputEx } from "components/Commons/FormItems";
+import { FormThumbnailEx } from "components/Commons/FormItems";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import { Dropdown } from "semantic-ui-react";
@@ -144,12 +144,12 @@ class CreateDesign extends Component {
                 <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>맴버 초대하기</div>
                 <div style={{ marginLeft: "52px", width: "645px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
                   {/* <input type="text" style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 검색해 주세요" /> */}
-                  <AsyncInputEx style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }}
+                  {/* <AsyncInputEx style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }}
                     name="member"
                     getValue={this.onChangeValue}
                     asyncFn={this.getMember}
                     list={this.props.members}
-                  />
+                  /> */}
                 </div>
                 <div style={{ marginLeft: "20px", width: "27px", height: "25px", fontSize: "17px", lineHeight: "25px", fontWeight: "500", color: "#FF0000", textAlign: "left" }}>TIP</div>
                 <div style={{ marginLeft: "17px", width: "457px", height: "75px", fontSize: "17px", lineHeight: "25px", fontWeight: "100", color: "#707070", textAlign: "left" }}>함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
