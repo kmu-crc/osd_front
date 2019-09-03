@@ -51,7 +51,10 @@ class SectionBasic extends Component
             this.props.updateThumbnail(reader.result);
             this.setState({thumbnail:reader.result})
         }
+        if(event.target.files[0])
+      {
         let url = reader.readAsDataURL(file);
+      }
         
     }
     handleInputIntroduce(event)
@@ -92,7 +95,7 @@ class SectionBasic extends Component
                   width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
                   fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
                 }} >
-                  <input type="text" onChange = {this.handleInputNickName} value={this.state.nickname} style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", 
+                  <input type="text" maxLength="50" onChange = {this.handleInputNickName} value={this.state.nickname} style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", 
                   border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 입력하세요." />
                 </div>
                 <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }}>
@@ -104,7 +107,7 @@ class SectionBasic extends Component
             <div style={{ marginTop: "50px", display: "flex" }}>
               <div style={{ width: "75px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>자기소개</div>
               <div style={{ width: "717.5px", height: "244px", marginLeft: "98px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
-                <textarea onChange = {this.handleInputIntroduce} value ={this.state.introduce} style={{
+                <textarea onChange = {this.handleInputIntroduce} maxLength="300" value ={this.state.introduce} style={{
                   width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px",
                   textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px"
                 }} placeholder="자기소개를 입력하세요." />

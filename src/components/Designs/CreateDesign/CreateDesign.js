@@ -26,7 +26,7 @@ class CreateDesign extends Component {
     super(props);
     this. state = {
       basic: false, additional: false, content: false,showSearch:false,
-      step: 1, selectedCate1: null, selectedCate2: null, cate2: null,
+      step: 0, selectedCate1: null, selectedCate2: null, cate2: null,
       members: []
     }
     this.addMember = this.addMember.bind(this);

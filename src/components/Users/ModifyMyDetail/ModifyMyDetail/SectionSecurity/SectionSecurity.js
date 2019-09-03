@@ -43,7 +43,7 @@ class SectionSecurity extends Component
                 width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
                 fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
               }} >
-                <input type={this.state.showPass==true?"text":"password"} onChange = {this.onChangePassword} value={this.state.password}
+                <input type={this.state.showPass==true?"text":"password"}  maxLength="50" onChange = {this.onChangePassword} value={this.state.password}
                   style={{
                     outline: "none", border: "none",
                     marginLeft: "12px", marginTop: "13px",
@@ -61,7 +61,7 @@ class SectionSecurity extends Component
                 width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
                 fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
               }} >
-                <input type="password" onChange = {this.onChangeCheckedPassword} value={this.state.passwordcheck}
+                <input type="password"  maxLength="50" onChange = {this.onChangeCheckedPassword} value={this.state.passwordcheck}
                  style={{
                   outline: "none", border: "none",
                   marginLeft: "12px", marginTop: "13px",
