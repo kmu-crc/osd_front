@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-// import DetailStep from "components/Designs/DetailStep"
 import GridEditor from "modules/GridEditor"
 import { GetDesignDetailRequest, CreateDesignBoardRequest, UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
 
@@ -8,12 +7,9 @@ class DesignDetailStepContainer extends Component {
   componentDidMount() {
     this.props.GetDesignBoardRequest(this.props.design.uid)
   }
-  checkEditorPermission() {
-    return (this.props.userInfo && this.props.design && this.props.design.member && this.props.design.member.find(peer => { return peer.user_id === this.props.userInfo.uid }))
-  }
   render() {
     return (<>
-      <GridEditor {...this.props} editor={this.checkEditorPermission()} />
+      <GridEditor {...this.props} />
     </>
     )
   }

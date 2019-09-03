@@ -44,8 +44,8 @@ class SearchForm extends Component {
         }
     }
     goSearch = () => {
-        if (this.state.keyword)
-            window.location.href = '/search/' + this.getType() + "/update/" + this.state.keyword
+        // if (this.state.keyword)
+        window.location.href = '/search/' + this.getType() + "/update/" + this.state.keyword
     }
     getvalue = (event) => {
         this.setState({ keyword: event.target.value })

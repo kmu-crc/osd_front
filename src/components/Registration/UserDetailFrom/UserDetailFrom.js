@@ -141,6 +141,7 @@ class ModifyMyDetail extends Component {
           alert("정보가 수정되었습니다.");
           this.props.history.push(`/`);
         } else {
+          console.log("form-data", formData, "token:", this.props.token);
           alert("다시 시도해주세요");
           this.setState({
             loading: false
@@ -173,7 +174,7 @@ class ModifyMyDetail extends Component {
     // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
     const { selected } = this.state
-
+    console.log(this.props, "MyDetail");
     return (<>
       <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
         <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
@@ -193,6 +194,7 @@ class ModifyMyDetail extends Component {
         {/* form */}
         <div style={{ width: "1422px", marginLeft: "45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px", fontFamily: "Noto Sans KR" }}>
           <form>
+            {/* <input type="hidden" id="user_id" value={} /> */}
             <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
             <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
             <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
@@ -202,10 +204,9 @@ class ModifyMyDetail extends Component {
               updateIsDesigner={this.updateIsDesigner}
               updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
           </form>
-          <div onClick={this.onSubmit} style={{
-            cursor: "pointer", display: "table-cell", position: "relative", left: "1264.5px", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", color: "#FFFFFF", fontSize: "20px", fontWeight: "500"
-            , textAlign: "center", verticalAlign: "middle"
-          }}>등록하기</div>
+          <div onClick={this.onSubmit} style={{ cursor: "pointer", display: "table-cell", position: "relative", left: "1264.5px", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", color: "#FFFFFF", fontSize: "20px", fontWeight: "500", textAlign: "center", verticalAlign: "middle" }}>
+            등록하기
+          </div>
         </div>
       </div>
     </>)
@@ -278,7 +279,7 @@ export default ModifyMyDetail;
 
 //   render() {
 //     return (
-      
+
 //     );
 //   }
 // }

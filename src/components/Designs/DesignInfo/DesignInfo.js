@@ -171,11 +171,11 @@ class DesignInfo extends Component {
     goParentDesign = (parent) => {
         window.location.href = geturl() + `/designDetail/${parent}`
     }
+
     render() {
-        const { DesignDetail, userInfo, Count, like } = this.props
+        const { isMyDesign, editor, DesignDetail, userInfo, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
-        const isMyDesign = DesignDetail && userInfo && DesignDetail.user_id === userInfo.uid ? true : false;
-        console.log("DesignInfo:", DesignDetail, this.props.Count);
+        console.log("DesignInfo:", DesignDetail, this.props);
         return (
             <>
                 {this.state.forkDialog > 0 &&
@@ -245,10 +245,9 @@ class DesignInfo extends Component {
                     </div>
                     <div style={{ position: "relative", marginTop: "10px", marginLeft: "auto", marginRight: "72px" }}>
                         <div style={{ marginTop: "0px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#FF0000", textAlign: "right", marginLeft: "auto", fontWeight: "500", cursor: "pointer" }} onClick={() => this.forkDesign()}>파생 디자인 생성</div>
-                        {isMyDesign === true ?
-                            null :
-                            <div style={{ height: "25px", display: "flex", marginTop: "10px", marginLeft: "auto", cursor: "pointer" }} onClick={this.joinMember}>
-                                <div style={{ height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#FF0000", textAlign: "right", marginLeft: "auto", fontWeight: "300" }}>가입 신청</div>
+                        {isMyDesign === false &&
+                            <div style={{ height: "25px", display: "flex", marginTop: "10px", marginLeft: "auto" }}>
+                                {editor === false && <div onClick={this.joinMember} style={{ height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#FF0000", textAlign: "right", marginLeft: "auto", fontWeight: "300", cursor: "pointer" }}>가입 신청</div>}
                             </div>
                         }
                         {isMyDesign === true ?
