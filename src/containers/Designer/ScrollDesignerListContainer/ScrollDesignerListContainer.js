@@ -17,7 +17,8 @@ class ScrollDesignerListContainer extends Component {
 
   render() {
     return (
-      <ScrollList getListRequest={this.getList}
+      <ScrollList
+        getListRequest={this.getList}
         ListComponent={Designer}
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
         {...opendesign_style.designer_margin}

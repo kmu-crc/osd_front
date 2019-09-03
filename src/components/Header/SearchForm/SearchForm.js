@@ -70,11 +70,14 @@ class SearchForm extends Component {
             }
         window.location.href = '/search'+thisCate;
         }
+
     render() {
+        console.log(this.state.keyword);
         return (
-            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
+            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
                 <input type="text" placeholder="Search..." maxLength = "100" />
+
             </SearchContainer>)
     }
 }

@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { GetGroupListRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import Group from "components/Groups/Group";
+import opendesign_style from "opendesign_style";
 
 class ScrollGroupListContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetGroupListRequest(0, this.props.sort, this.props.keyword);
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
@@ -15,13 +16,11 @@ class ScrollGroupListContainer extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
         <ScrollList getListRequest={this.getList}
-                    ListComponent={Group}
-                    type="Group"
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
+          {...opendesign_style.group_margin} ListComponent={Group}
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
       </div>
     );
   }
@@ -36,9 +35,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetGroupListRequest: (page, sort, keyword) => {
-        return dispatch(GetGroupListRequest(page, sort, keyword))
-      }
+    GetGroupListRequest: (page, sort, keyword) => {
+      return dispatch(GetGroupListRequest(page, sort, keyword))
+    }
   };
 };
 
