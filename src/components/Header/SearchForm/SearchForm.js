@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import zoom from "source/zoom.svg"
+import { all } from 'q';
 
 const SearchContainer = styled.div`
     display: ${props => props.visible};
@@ -34,18 +35,46 @@ class SearchForm extends Component {
     _search = () => { }
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            // console.log('Enter')
-            window.location.href = '/search'
-        }
+            const addrText = window.location.href.toString();
+            let thisCate = "#all";
+                if(addrText.indexOf('/group')!=-1)
+                {
+                    thisCate="#group"
+                }
+                else if(addrText.indexOf('/designer')!=-1)
+                {
+                    thisCate="#designer"
+                }
+                else if(this.addrText.indexOf('/design')!=-1)
+                {                
+                    thisCate="#design"
+                }
+            window.location.href = '/search'+thisCate;
+            }
+        
     }
     goSearch = () => {
-        window.location.href = '/search'
-    }
+        const addrText = window.location.href.toString();
+        let thisCate = "#all";
+            if(addrText.indexOf('/group')!=-1)
+            {
+                thisCate="#group"
+            }
+            else if(addrText.indexOf('/designer')!=-1)
+            {
+                thisCate="#designer"
+            }
+            else if(this.addrText.indexOf('/design')!=-1)
+            {                
+                thisCate="#design"
+            }
+        window.location.href = '/search'+thisCate;
+        }
     render() {
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search..." maxLength = "100" />
             </SearchContainer>)
     }
 }

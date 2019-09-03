@@ -11,9 +11,9 @@ class TextFormat extends Component {
                  style=
                      {lines ?
                          // multi-lines
-                         { padding: "0 0 0 0", cursor: "pointer", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: lines, WebkitBoxOrient: "vertical", wordWrap: "break-word" }
+                         { padding: "1px", cursor: "pointer", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: lines, WebkitBoxOrient: "vertical", wordWrap: "break-word" }
                          // single-line
-                         : { padding: "0 0 0 0", cursor: "pointer", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }
+                         : { padding: "1px", cursor: "pointer", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }
                      }>
                 {chars ? (txt.length < chars ? txt : txt.slice(0, chars - 3) + "...") : txt}
             </div>

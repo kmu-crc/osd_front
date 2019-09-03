@@ -88,12 +88,21 @@ class Re_SearchList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mainCate: [{ value: 0, text: "디자인" }, { value: 1, text: "그룹" }, { value: 2, text: "디자이너" }],
+            mainCate: [{ value: 0, text: "전체" },{ value: 1, text: "디자인" }, { value: 2, text: "그룹" }, { value: 3, text: "디자이너" }],
             selectCate: 0,
             this_order: { text: "등록순", keyword: "update" },
-            selectedCate: "디자인",
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
+    }
+
+    componentDidMount()
+    {        
+
+        const addrText = window.location.href.toString();
+        if(addrText.indexOf('#group')!=-1){this.setState({selectCate:1})}
+        else if(addrText.indexOf('#designer')!=-1){this.setState({selectCate:2})}
+        else if(addrText.indexOf('#design')!=-1){this.setState({selectCate:3})}
+        else {this.setState({selectCate:0})}
     }
 
     getSearchValue = (e) => {
@@ -147,16 +156,17 @@ class Re_SearchList extends Component {
     }
 
     render() {
+
         return (
             <div style={{ position: "relative", overflow: "hidden" }}>
                 <SearchForm>
                     <div className="inputBox">
                         <div className="zoomImg"><img src={zoom} style={{ width: "33px", height: "33px" }} /></div>
-                        <input className="searchInput" id="searchInput"
+                        <input style={{width:"600px"}} className="searchInput" id="searchInput"
                             placeholder="검색어를 입력하세요"
                             onChange={this.getSearchValue}
                             onKeyDown={this.submitEnter}
-
+                            maxLength = "100"
                         />
                     </div>
                     {/*x box position*/}
@@ -167,7 +177,7 @@ class Re_SearchList extends Component {
                         </div>
 
                         <div className="cateUI">
-                            {this.state.selectCate != 1 &&
+                            {this.state.selectCate != 2 &&
 
 
                                 <React.Fragment>
