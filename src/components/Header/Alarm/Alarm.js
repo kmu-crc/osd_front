@@ -291,6 +291,7 @@ class Alarm extends Component {
                             : <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />}
                     </div>
                     <div className="list">
+
                         {alarms ? alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
@@ -334,7 +335,7 @@ class Alarm extends Component {
                                         </div>
                                     </div>
                                 </ListItem>)
-                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
+                        }) :  <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
                     </div>
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >

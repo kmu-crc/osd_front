@@ -173,6 +173,7 @@ class SearchList extends Component {
                    placeholder="검색어를 입력하세요"
                    onChange={this.getSearchValue}
                    onKeyDown={this.submitEnter}
+                   maxLength = "100"
                    />
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>
