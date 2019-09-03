@@ -89,7 +89,8 @@ class Re_SearchList extends Component{
         this_order: { text: "등록순", keyword: "update" },
         selectedCate:"디자인",
         rendering: true,
-        keyword: ""
+        keyword: "",
+        currentType:"",
     }
     getSearchValue = (e) => {
         const target = e.target;
@@ -134,6 +135,7 @@ class Re_SearchList extends Component{
     }
     typeChange = (e, { value }) => {
         this.props.history.replace(`/search/${value}/${this.props.sort}/${this.props.keyword}`);
+
     }
 
 

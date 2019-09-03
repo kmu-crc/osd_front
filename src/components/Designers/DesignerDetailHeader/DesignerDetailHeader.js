@@ -4,7 +4,8 @@ import styled from 'styled-components';
 //img
 import noimg from "source/noimg.png"
 import iForked from "source/baseline_library_books_black_48dp.png"
-import iThumbUp from "source/thumbup_icon_black.png"
+import iThumbUp from "source/baseline_thumb_up_black_48dp_2x.png"
+
 import iEdit from 'source/sharp_edit_black_48dp.png';
 import iMessage from 'source/email.png'
 import IconView from "source/IconView"
@@ -37,11 +38,14 @@ const Summary_Forked_Icon = {display:"inline-block",width:"15px",height:"15px",o
                         background:`url(${iForked})`,backgroundSize: "cover", backgroundPosition: "center center"}
 const Summary_Forked = {marginLeft:"5px",display:"inline-block",width:"54px",height:"21px",}
 
-const interestDesignerBox = {position:"absolute",width:"250px",height:"45px",top:"90px",right:"72px",textAlign:"right"}
-const interestDesignerTitle = {display:"inline-block",width:"164px",height:"25px",
+const interestDesignerBox = {position:"absolute",width:"250px",height:"45px",top:"90px",right:"45px",textAlign:"right", display:"flex"}
+const interestDesignerTitle = {display:"inline-block",width:"164px",height:"25px",marginTop:"15px",
                                 color:"#707070",fontFamily:"Noto Sans KR",fontSize:"17px",fontWeight:"200",textAlign:"right" }
-const interestDesignerImg = {display:"inline-block",width:"45px",height:"40px",marginLeft:"15px",marginBottom:"-7px",
+const interestDesignerImg = {display:"inline-block",width:"45px",height:"40px",marginLeft:"15px",marginTop:"0px",
                             backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center",opacity:"0.55"}
+
+const interestDesignerImgLike = {display:"inline-block",width:"45px",height:"40px",marginLeft:"15px",marginBottom:"0px",
+    backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center",opacity:"1"}
 
 const sendMessageBox = {overflow:"hidden",position:"absolute",width:"250px",height:"45px",top:"168px",right:"72px",textAlign:"right"}
 const sendMessagTitle = {display:"inline-block",width:"164px",height:"45px",
@@ -108,8 +112,9 @@ class DesignerPageHeader extends Component {
                 </div>
                 <div onClick = {this.props.userInfo==null? null:() => this.like() } style={interestDesignerBox}>
                     <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
-                    <div style = {{display:"inline-block",height:"40px",marginLeft:"15px",marginBottom:"-7px",opacity: this.state.tmpLike ? "1" : "0.45",
-                            backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center"}}></div>
+                    {this.state.tmpLike == true ? <div style={interestDesignerImgLike}></div> : <div style={interestDesignerImg}></div>
+                    }
+
                 </div>
                 <div style={sendMessageBox}>
                     <div style={sendMessagTitle}>메세지 보내기</div>

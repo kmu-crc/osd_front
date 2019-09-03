@@ -29,14 +29,23 @@ const SearchContainer = styled.div`
         height:36px;
         cursor: pointer;
     }
-`
+`;
+let val = "";
 class SearchForm extends Component {
-    _search = () => { }
+    state = {
+        searchKeyword:"",
+    };
+    _search = () => { };
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             // console.log('Enter')
-            window.location.href = '/search'
+            window.location.href = '/search/design/null/'+this.state.searchKeyword;
         }
+    }
+    onInput = (e)=>{
+        this.setState({
+            searchKeyword:e.target.value,
+        })
     }
     goSearch = () => {
         window.location.href = '/search'
@@ -45,7 +54,7 @@ class SearchForm extends Component {
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this._handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search..." value={this.state.searchKeyword} onChange={this.onInput}/>
             </SearchContainer>)
     }
 }
