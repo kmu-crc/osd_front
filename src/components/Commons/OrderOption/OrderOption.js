@@ -35,6 +35,7 @@ class OrderOption extends Component {
             { text: "최신순", keyword: "update", marginRight: "44px" }]
     }
     handleClicked = (order) => {
+        console.log(order);
         this.props.order_clicked(order)
     }
     render() {

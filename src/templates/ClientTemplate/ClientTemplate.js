@@ -41,13 +41,12 @@ class ClientTemplate extends Component {
     const prevScrollPos = this.state.prevScroll
     const { hidemenu, whensmall } = this.state
 
-      if(window.location.pathname == "/message")
-      {
-        this.setState({ larger: true });
-        this.setState({ hidemenu: false });
-        return;
-      }
-      if (hidemenu === false) {
+    if (window.location.pathname == "/message") {
+      this.setState({ larger: true });
+      this.setState({ hidemenu: false });
+      return;
+    }
+    if (hidemenu === false) {
       if (currentScrollPos > 25) {
         this.setState({ larger: true })
       }

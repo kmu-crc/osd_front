@@ -2,12 +2,12 @@
 // import PropTypes from "prop-types";
 // import styled from "styled-components";
 // import StyleGuide from "StyleGuide";
-//
+// 
 // const InputWrap = styled.div`
 //   position: relative;
 //   margin-bottom: 2.5rem;
 // `
-//
+// 
 // const Message = styled.div`
 //   display: block;
 //   position: absolute;
@@ -15,7 +15,7 @@
 //   left: 0;
 //   bottom: -1.5rem;
 // `
-//
+// 
 // const Input = styled.input`
 //   width: 100%;
 //   margin: 0;
@@ -31,89 +31,89 @@
 //   box-shadow: 0 0 0 0 transparent inset;
 //   transition: color 0.1s ease, border-color 0.1s ease;
 //   &::placeholder {
-//     color: ${StyleGuide.color.geyScale.scale5};
+    // color: ${StyleGuide.color.geyScale.scale5};
 //   }
 //   &:focus {
-//     &::placeholder {
-//       color: ${StyleGuide.color.geyScale.scale7};
-//     }
-//     border-color: #85b7d9;
-//     box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
+    // &::placeholder {
+    //   color: ${StyleGuide.color.geyScale.scale7};
+    // }
+    // border-color: #85b7d9;
+    // box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
 //   }
 //   &.error {
-//     border: 1px solid ${StyleGuide.color.main.basic};
-//     color: ${StyleGuide.color.main.basic};
-//     &::placeholder {
-//       color: ${StyleGuide.color.main.basic};
-//     }
+    // border: 1px solid ${StyleGuide.color.main.basic};
+    // color: ${StyleGuide.color.main.basic};
+    // &::placeholder {
+    //   color: ${StyleGuide.color.main.basic};
+    // }
 //   }
 // `;
-//
+// 
 // export class FormInput extends Component {
 //   state = {
-//     value: "",
-//     target: null,
-//     validates: []
+    // value: "",
+    // target: null,
+    // validates: []
 //   };
-//
+// 
 //   componentDidMount(){
-//     if(this.props.validates){
-//       this.setState({ validates: this.props.validates });
-//     }
-//     if(this.props.value){
-//       this.setState({ value: this.props.value });
-//     }
-//     this.init();
+    // if(this.props.validates){
+    //   this.setState({ validates: this.props.validates });
+    // }
+    // if(this.props.value){
+    //   this.setState({ value: this.props.value });
+    // }
+    // this.init();
 //   }
-//
+// 
 //   init = async () => {
-//     await this.setState({target: this.input._reactInternalFiber.child.stateNode})
-//     this.returnData();
+    // await this.setState({target: this.input._reactInternalFiber.child.stateNode})
+    // this.returnData();
 //   }
-//
+// 
 //   onChangeValue = async e => {
-//     const event = { ...e };
-//     const target = event.currentTarget;
-//     await this.setState({ value: target.value, target });
-//     this.returnData();
+    // const event = { ...e };
+    // const target = event.currentTarget;
+    // await this.setState({ value: target.value, target });
+    // this.returnData();
 //   };
-//
+// 
 //   returnData = async (e) => {
-//     let event = null;
-//     if(e && this.props.prevent) {
-//       if(e.key === "Enter"){
-//         e.preventDefault();
-//       }
-//     }
-//     event = {...e};
-//     if(this.props.getValue) await this.props.getValue(this.state, event);
-//     if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
+    // let event = null;
+    // if(e && this.props.prevent) {
+    //   if(e.key === "Enter"){
+        // e.preventDefault();
+    //   }
+    // }
+    // event = {...e};
+    // if(this.props.getValue) await this.props.getValue(this.state, event);
+    // if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
 //   }
 //   render() {
-//     const { type, minLength, maxLength,name, placeholder, style, id } = this.props;
-//     return (
-//       <InputWrap>
-//         <Input
-//           type={type ? type : "text"}
-//           name={name && name}
-//           maxLength = {maxLength ? maxLength : false}
-//           minLength = {minLength ? minLength : false}
-//           placeholder={placeholder && placeholder}
-//           style={style && style}
-//           id={id ? id : name}
-//           value={this.state.value}
-//           onChange={this.onChangeValue}
-//           ref={ref => (this.input = ref)}
-//           className=""
-//           onBlur={this.returnData}
-//           onKeyPress={this.returnData}
-//         />
-//         <Message></Message>
-//       </InputWrap>
-//     );
+    // const { type, minLength, maxLength,name, placeholder, style, id } = this.props;
+    // return (
+    //   <InputWrap>
+        {/* <Input */}
+        //   type={type ? type : "text"}
+        //   name={name && name}
+        //   maxLength = {maxLength ? maxLength : false}
+        //   minLength = {minLength ? minLength : false}
+        //   placeholder={placeholder && placeholder}
+        //   style={style && style}
+        //   id={id ? id : name}
+        //   value={this.state.value}
+        //   onChange={this.onChangeValue}
+        //   ref={ref => (this.input = ref)}
+        //   className=""
+        //   onBlur={this.returnData}
+        //   onKeyPress={this.returnData}
+        // />
+        {/* <Message></Message> */}
+      {/* </InputWrap> */}
+    // );
 //   }
 // }
-//
+// 
 // FormInput.propTypes = {
 //   name: PropTypes.string.isRequired,
 //   placeholder: PropTypes.string,

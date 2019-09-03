@@ -19,7 +19,7 @@ const Additional_category_Box ={width:"100%",display: "flex" }
 const Additional_category_one={ marginLeft: "34px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }
 const Additional_category_two={ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }
 
-const Additional_invite_Box = {marginTop: "120px", width:"100%",height:"186Wpx"}
+const Additional_invite_Box = {marginTop: "0px", width:"100%",height:"186Wpx"}
 const Additional_Search_Box = { display: "flex" }
 const Additional_Search = { marginLeft: "27px", width: "645px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", 
                                   lineHeight: "29px", fontWeight: "500", color: "#707070" }
@@ -34,27 +34,12 @@ const Additional_AddContents_list_Box = { width:"100%",height:"74px",marginTop: 
 const Additional_AddContents_list_Title = {width:"160px",height:"29px",marginBottom:"15px",lineHeight:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070"}
 const Additional_AddContents_list_itemBox = { display: "flex", marginBottom: "34px" }
 
-class ModifyDesignSection02 extends Component
+class GroupAdditionalInfo extends Component
 {
     constructor(props)
     {
         super(props);
     }    
-
-    selectedCate1 = (cate1) => {
-
-        const cate2 = this.props.cate2[cate1.value]
-        this.setState({ cate2: cate2, selectedCate2: cate2[0], selectedCate1: this.props.cate1[cate1.value] })
-        console.log(cate1);
-      }
-      selectedCate2 = (cate2) => {
-        if (cate2 === 0) {
-          this.setState({ selectedCate2: null })
-        }
-        else {
-          this.setState({ selectedCate2: cate2 })
-        }
-    }
 
     
     render()
@@ -82,12 +67,6 @@ class ModifyDesignSection02 extends Component
           return(
         
             <section style={AdditionalBox} >
-            {/* category */}
-            <div style={Additional_category_Box}>
-                  <div style={AdditionalTitle}>카테고리</div>    
-                  <div style={Additional_category_one}><SelectBox onSelectedItem={this.selectedCate1}  items={emptyCategory} width="410" /></div>
-                  <div style={Additional_category_two}><SelectBox onSelectedItem={this.selectedCate2}  items={emptyCategory} width="410" /></div>
-            </div>
             {/* invite member*/}
             <div style={Additional_invite_Box}>
               <div style={Additional_Search_Box}>
@@ -130,4 +109,4 @@ class ModifyDesignSection02 extends Component
           );
     }
 }
-export default ModifyDesignSection02;
+export default GroupAdditionalInfo;

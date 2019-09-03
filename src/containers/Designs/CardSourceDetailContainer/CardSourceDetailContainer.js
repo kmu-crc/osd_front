@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {UpdateDesignTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest} from "redux/modules/design";
+import { UpdateDesignTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest } from "redux/modules/design";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
 
 class CardSourceDetailContainer extends Component {
@@ -13,8 +13,8 @@ class CardSourceDetailContainer extends Component {
 
   render() {
     console.log("TEST", this.props)
-    return(
-      <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest}/>
+    return (
+      <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
     );
   }
 }
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     DesignSourceResetRequest: () => {
       return dispatch(DesignSourceResetRequest());
     },
-    UpdateDesignTime: (design_id, token)=>{
+    UpdateDesignTime: (design_id, token) => {
       return dispatch(UpdateDesignTime(design_id, token))
     }
   }

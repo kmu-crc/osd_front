@@ -12,13 +12,13 @@ const GET_TOP_DESIGN_LIST_FAILURE = "GET_TOP_DESIGN_LIST_FAILURE"
 const GET_TOP_DESIGN_LIST_CLEAR = "GET_TOP_DESIGN_LIST_CLEAR"
 
 const GetDesignList = (data) => ({ type: GET_DESIGN_LIST, DesignList: data })
-const DesignListClear = (data) => ({ type: DESIGN_LIST_CLEAR, DesignList: [], DesignListAdded: [] })
+const DesignListClear = (data) => ({ type: DESIGN_LIST_CLEAR, DesignList: [], DesignListAdded: data })
 const DesignListFail = () => ({ type: DESIGN_LIST_FAIL, DesignList: [], DesignListAdded: [] })
 const GetDesignTotalCount = (data) => ({ type: GET_DESIGN_TOTAL_COUNT, Count: data })
 const DesignTotalCountFail = () => ({ type: GET_DESIGN_TOTAL_COUNT_FAIL, Count: 0 })
 const GetTopDesignListSuccess = (data) => ({ type: GET_TOP_DESIGN_LIST_SUCCESS, TopList: data })
 const GetTopDesignListFailure = () => ({ type: GET_TOP_DESIGN_LIST_FAILURE, TopList: [], TopListAdded: [] })
-const GetTopDesignListClear = (data) => ({ type: GET_TOP_DESIGN_LIST_CLEAR, TopList: data, TopListAdded: [] })
+const GetTopDesignListClear = (data) => ({ type: GET_TOP_DESIGN_LIST_CLEAR, TopList: [], TopListAdded: data })
 
 
 const initialState = {
@@ -121,48 +121,76 @@ export function GetTopDesignListRequest(page) {
             }
             if (page === 0) {
                 dispatch(GetTopDesignListClear(data))
-                return;
             }
             dispatch(GetTopDesignListSuccess(data))
         }).catch((error) => {
-            dispatch(GetTopDesignListFailure())
             console.log("err", error)
+            dispatch(GetTopDesignListFailure())
         })
     }
 }
 export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 = null, keyword = null) {
+    const url = `${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
+    console.log("url:", url);
     return (dispatch) => {
-        return fetch(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
+        return fetch(url, {
             headers: { "Content-Type": "application/json" }, method: "get"
         }).then((response) => {
             return response.json()
         }).then((data) => {
             if (!data) data = []
-            if (page === 0){
+            if (page === 0) {
                 dispatch(DesignListClear(data));
             }
             dispatch(GetDesignList(data))
         }).catch((error) => {
-            dispatch(DesignListFail())
             console.log("err", error)
+            dispatch(DesignListFail())
         })
     }
 }
-export function GetDesignListCountRequest(cate1 = null, cate2 = null) {
+// export function GetDesignListCountRequest(cate1, cate2) {
+//     return (dispatch) => {
+//         return fetch(`${host}/design/designCount/${cate1}/${cate2}`, {
+//             headers: { "Content-Type": "application/json" },
+//             method: "get"
+//         }).then((response) => {
+//             return response.json()
+//         }).then((data) => {
+//             if (!data) 
+//             {
+//                 data = 0
+            
+//             }    
+//             else 
+//             {
+//                 data = data["count(*)"]
+//             }
+//             dispatch(GetDesignTotalCount(data))
+//         }).catch((error) => {
+//             dispatch(DesignTotalCountFail())
+//             console.log("err", error);
+//         })
+//     }
+// }
+export function GetDesignListCountRequest(cate1, cate2) {
     return (dispatch) => {
-        return fetch(`${host}/design/designCount/${cate1}/${cate2}`, {
-            headers: { "Content-Type": "application/json" }, method: "get"
-        }).then((response) => {
-            return response.json()
-        }).then((data) => {
-            if (!data) data = 0
-            else data = data["count(*)"]
-
-            dispatch(GetDesignTotalCount(data))
-        }).catch((error) => {
-            dispatch(DesignTotalCountFail())
-            console.log("err", error);
-        })
+      return fetch(`${host}/design/designCount/${cate1}/${cate2}`, {
+        headers: { "Content-Type": "application/json" },
+        method: "get"
+      }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (!data) {
+          console.log("no data");
+          data = 0;
+        } else {
+          data = data["count(*)"];
+        }
+        dispatch(GetDesignTotalCount(data));
+      }).catch((error) => {
+        dispatch(DesignTotalCountFail());
+        console.log("err", error);
+      })
     }
-}
-
+  };

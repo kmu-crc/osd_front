@@ -10,7 +10,6 @@ class SearchMemberContainer extends Component {
     this.state = {addMemberItem:null}
   }
   render() {
-    console.log("search.props:",this.props)
     return(
 
       <SearchMember {...this.props}/>

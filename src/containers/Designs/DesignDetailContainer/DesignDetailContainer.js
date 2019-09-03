@@ -5,32 +5,20 @@ import DesignDetail from "components/Designs/DesignDetail"
 import {
   ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest,
   DeleteDesignRequest, GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
-  GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest, DESIGN_NOT_FOUND
+  GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
 } from "redux/modules/design"
 
-import Loading from "components/Commons/Loading";
-
 class DesignDetailContainer extends Component {
-  componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id)
-  }
-  goBack() {
-    alert("잘못된 접근입니다. 이전페이지로 돌아갑니다.")
-    window.history.go(-1)
-  }
   render() {
-    return (<>{this.props.status === "INIT" ? <Loading /> :
-      // this.props.status === DESIGN_NOT_FOUND ? this.goBack() :
-      <DesignDetail {...this.props} />}</>)
+    return (<DesignDetail {...this.props} />)
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     DesignForked: state.Design.status.DesignForked,
     status: state.Design.DesignDetail.status,
     new_design_id: state.Design.status.new_design_id,
-    forked_list: state.Design.status.list,
+    forkDesignList: state.Design.status.list,
     DesignDetail: state.Design.status.DesignDetail,
     Count: state.Design.status.Count,
     userInfo: state.Authentication.status.userInfo,

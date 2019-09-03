@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const SelectBoxContainer = styled.div`
+   div{z-index: 950;}
   .select-box--container {
-    z-index: 950;
     position: relative;
     border: 1px solid #EFEFEF;
     margin: 0px;
@@ -114,15 +114,12 @@ class SelectBox extends Component {
       document.removeEventListener("mousedown", this.handleClickOutside)
     }
   }
-  componentWillReceiveProps(nextProps)
-  {
-    if(this.props.items!=nextProps.items)
-    {
-      this.setState({items:nextProps.items});
+  componentWillReceiveProps(nextProps) {
+    if (this.props.items != nextProps.items) {
+      this.setState({ items: nextProps.items });
     }
   }
   render() {
-    console.log(this.props.items);
     return <>
       <SelectBoxContainer onClick={this.clicked} ref={this.myRef} >
         <div className="select-box--box">
@@ -133,11 +130,11 @@ class SelectBox extends Component {
               <span className={`${this.state.showItems ? 'select-box--arrow-up' : 'select-box--arrow-down'}`} /></div>
           </div>
           <div className="select-box--items" style={{ display: this.state.showItems ? 'block' : 'none' }}>
-            {this.state.items.map((item,index) =>
+            {this.state.items.map((item, index) =>
               <div key={index} value={item.value} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.text}</div>)}
           </div>
         </div>
-        <input type="hidden" name={this.state.name} value={this.state.selectedItem.id} />
+        <input type="hidden" name={this.props.name} value={this.state.selectedItem.id} />
       </SelectBoxContainer>
     </>
   }

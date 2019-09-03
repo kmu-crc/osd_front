@@ -15,7 +15,7 @@ class MyDesignListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    designList: state.MyList.status.MyDesignList
+    designList: state.Group.status.MyDesignList
   }
 }
 

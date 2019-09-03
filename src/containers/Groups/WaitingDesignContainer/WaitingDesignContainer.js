@@ -10,35 +10,39 @@ import osdstyle from 'opendesign_style';
 const DesignBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
+    margin-left: 1rem;
     padding-bottom: 1rem;
     font-size: ${StyleGuide.font.size.heading4};
   }
 `
 
 class WaitingDesignContainer extends Component {
+  state = { reload: false };
   componentWillMount() {
-    this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
+    this.props.GetWaitingDesignRequest(this.props.id, null);
   }
-
+  handleReload = () => {
+    this.setState({ reload: !this.state.reload });
+  }
   setOut = (id) => {
     this.props.DeleteDesignInGroupRequest(this.props.id, id)
       .then(res => {
         if (res.data.success === true) {
-          this.props.GetWaitingDesignRequest(this.props.id, this.props.sort);
+          this.props.GetWaitingDesignRequest(this.props.id, null)
+            .then(() => { this.handleReload(); })
         }
       }).catch(err => {
         console.log(err);
       });
   }
-
   setAccept = (id) => {
     this.props.UpdateDesignInGroupRequest(this.props.id, id)
       .then(res => {
         if (res.data.success === true) {
-          this.props.GetWaitingDesignRequest(this.props.id, this.props.sort)
-            .then(this.props.GetDesignInGroupRequest(this.props.id, null, null));
+          this.props.GetWaitingDesignRequest(this.props.id, null)
+            .then(() => { this.handleReload(); })
         }
-      }).catch(err => {
+      }).then((data) => { console.log(data) }).catch(err => {
         console.log(err);
       });
   }
@@ -48,11 +52,14 @@ class WaitingDesignContainer extends Component {
       <DesignBox>
         <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
         <ScrollList
+          reload={this.state.reload}
+          handleReload={this.handleReload}
           {...osdstyle.design_margin}
           ListComponent={Design}
           dataListAdded={this.props.waitingDesign}
           getListRequest={null}
-          handleReject={this.setOut} handleAccept={this.setAccept} />
+          handleReject={this.setOut}
+          handleAccept={this.setAccept} />
       </DesignBox>
     );
   }

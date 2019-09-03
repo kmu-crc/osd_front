@@ -6,20 +6,25 @@ import StyleGuide from 'StyleGuide';
 import styled from 'styled-components';
 import Group from "components/Groups/Group";
 import osdstyle from "opendesign_style";
+import Loading from 'components/Commons/Loading';
 
 const GroupBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
+    margin-left: 1rem;
     padding-bottom: 1rem;
     font-size: ${StyleGuide.font.size.heading4};
   }
 `;
 
 class EditGroupListContainer extends Component {
+  state = { reload: false };
   componentWillMount() {
     this.props.GetGroupInGroupRequest(this.props.id, null, null);
   }
-
+  handleReload = () => {
+    this.setState({ reload: !this.state.reload });
+  }
   setOut = (id) => {
     this.props.DeleteGroupInGroupRequest(this.props.id, id)
       .then(res => {
@@ -30,17 +35,20 @@ class EditGroupListContainer extends Component {
         console.log(err);
       });
   }
-
   render() {
+    const { reload } = this.state;
     return (
       <GroupBox>
         <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
-        <ScrollList
+        {this.props.status === "INIT" ?
+          <Loading /> :        <ScrollList
           {...osdstyle.group_margin}
+          reload={reload}
+          handleReload={this.handleReload}
           ListComponent={Group}
           dataListAdded={this.props.EditGroupList}
           getListRequest={null}
-          handleReject={this.setOut} />
+          handleReject={this.setOut} />}
       </GroupBox>
     );
   }

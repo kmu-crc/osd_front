@@ -619,7 +619,7 @@ export function CreateNewGroupRequest(data, token) {
 }
 export function GetGroupInGroupRequest(id, page, sort) {
   const url = `${host}/group/groupDetail/` + id + "/group/" + page + "/" + sort
-  console.log(url,"GetGroupInGroup")
+  console.log(url, "GetGroupInGroup")
   return (dispatch) => {
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
@@ -658,8 +658,7 @@ export function GetDesignInGroupRequest(id, page, sort) {
         data = []
       }
       if (page === 0) {
-        dispatch(DesignInGroupClear(data))
-        return
+        return dispatch(DesignInGroupClear(data))
       }
       return dispatch(GetDesignInGroup(data))
     }).catch((error) => {
@@ -841,9 +840,10 @@ export function GetWaitingDesignRequest(id, sort) {
   }
 }
 export function GetWaitingGroupRequest(id, sort) {
-  console.log("hw")
+  const url = `${host}/group/groupDetail/${id}/waitingGroup/${sort}`
+  console.log("url:", url);
   return (dispatch) => {
-    return fetch(`${host}/group/groupDetail/${id}/waitingGroup/${sort}`, {
+    return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserDetailForm from "components/Registration/UserDetailFrom";
-import { InsertUserDetailRequest } from "redux/modules/personal";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "redux/modules/category";
+import { InsertUserDetailRequest,GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
+import { GetCategoryAllRequest } from "redux/modules/category"
 
 class UpdateUserInfoContainer extends Component {
+
+  componentDidMount()
+{
+  this.props.GetCategoryAllRequest();
+  this.props.GetMyDetailRequest(this.props.token);
+}
   render() {
+    console.log("this.props:upaderUserIfno",this.props)
     return (
       <UserDetailForm {...this.props} />
     );
@@ -15,10 +22,11 @@ class UpdateUserInfoContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
-    category1: state.Category.status.level1,
-    category2: state.Category.status.level2
-  };
+    category1: state.Category.status.category1,
+    category2: state.Category.status.category2
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,11 +34,14 @@ const mapDispatchToProps = (dispatch) => {
     InsertUserDetailRequest: (data, token) => {
       return dispatch(InsertUserDetailRequest(data, token));
     },
-    GetCategoryLevel1Request: () => {
-      return dispatch(GetCategoryLevel1Request());
+    GetMyDetailRequest: (token) => {
+      return dispatch(GetMyDetailRequest(token))
     },
-    GetCategoryLevel2Request: (id) => {
-      return dispatch(GetCategoryLevel2Request(id));
+    GetCategoryAllRequest: () => {
+      return dispatch(GetCategoryAllRequest())
+    },
+    UpdateUserDetailRequest: (data, token) => {
+      return dispatch(UpdateUserDetailRequest(data, token))
     }
   };
 };

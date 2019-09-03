@@ -32,8 +32,8 @@ class SectionBasic extends Component
         console.log("MYDETAIL",nextProps.MyDetail.nick_name);
         this.setState({nickname:nextProps.MyDetail.nick_name==null?"":nextProps.MyDetail.nick_name,
                       introduce:nextProps.MyDetail.about_me==null?"":nextProps.MyDetail.about_me,
-                      thumbnail:nextProps.MyDetail.profileImg.m_img==null?"":nextProps.MyDetail.profileImg.m_img});
-        this.props.updateThumbnail(nextProps.MyDetail.profileImg.m_img==null?"":nextProps.MyDetail.profileImg.m_img);
+                      thumbnail:nextProps.MyDetail.profileImg==null?noimg:nextProps.MyDetail.profileImg.m_img});
+        this.props.updateThumbnail(nextProps.MyDetail.profileImg==null?noimg:nextProps.MyDetail.profileImg.m_img);
         this.props.updateIntroduce(nextProps.MyDetail.about_me==null?"":nextProps.MyDetail.about_me);
         this.props.updateNickName(nextProps.MyDetail.nick_name==null?"":nextProps.MyDetail.nick_name);
 

@@ -80,13 +80,22 @@ const opendesign_style = {
     marginBottomLast: "179px"
   },
   design_margin: {
-    cols: 3,
+    cols: 5,
     width: "330px",
     height: "330px",
     marginRight: "63px",
     marginBottom: "80px",
     marginRightLast: "8px",
     marginBottomLast: "26px"
+  },
+  designer_margin: {
+    cols: 3,
+    width: "590px",
+    height: "150px",
+    marginRight: "63px",
+    marginBottom: "80px",
+    marginRightLast: "8px",
+    marginBottomLast: "68px"
   }
 }
 

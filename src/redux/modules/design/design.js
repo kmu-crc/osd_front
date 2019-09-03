@@ -55,7 +55,9 @@ const DELETE_DESIGN_FAILURE = "DELETE_DESIGN_FAILURE"
 const initialState = {
     DesignDetail: { status: "INIT" },
     UpdateDesignInfo: { status: "INIT" },
-    status: { DesignDetail: [], Count: { like_count: 0, member_count: 0, card_count: 0, view_count: 0 } }
+    LikeDesign: { status: "INIT" },
+    DesignForked: { status: "INIT" },
+    status: { DesignForked: [], new_design_id: null, list: null, Message: "", DesignDetail: [], like: false, Count: { like_count: 0, member_count: 0, card_count: 0, view_count: 0 } }
 }
 
 // action creator
@@ -114,6 +116,78 @@ export function Design(state, action) {
         state = initialState
 
     switch (action.type) {
+        case FORK_DESIGN:
+            return update(state, { status: { DesignForked: { $set: "WAIT_FORK" } } })
+        case FORK_DESIGN_SUCCESS:
+            return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK" }, new_design_id: { $set: action.new_design_id }, Message: { $set: action.message } } })
+        case FORK_DESIGN_FAILURE:
+            return update(state, { status: { DesignForked: { $set: "FAILURE_FORK" } } })
+        case FORK_DESIGN_LIST:
+            return update(state, { status: { DesignForked: { $set: "WAIT_FORK_LIST" } } })
+        case FORK_DESIGN_LIST_SUCCESS:
+            return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK_LIST" }, list: { $set: action.list }, Message: { $set: action.message } } })
+        case FORK_DESIGN_LIST_FAILURE:
+            return update(state, { status: { DesignForked: { $set: "FAILURE_FORK_LIST" } } })
+        case GET_LIKE_DESIGN:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "WATTING" }
+                }
+            });
+        case GET_LIKE_DESIGN_SUCCESS:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "SUCCESS" }
+                },
+                status: {
+                    like: { $set: action.like }
+                }
+            });
+        case GET_LIKE_DESIGN_FAILURE:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "FAILURE" }
+                },
+                status: {
+                    like: { $set: action.like }
+                }
+            });
+        case LIKE_DESIGN:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "WATING" }
+                }
+            });
+        case LIKE_DESIGN_SUCCESS:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "SUCCESS" }
+                }
+            });
+        case LIKE_DESIGN_FAILURE:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "FAILURE" }
+                }
+            });
+        case UNLIKE_DESIGN:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "WATING" }
+                }
+            });
+        case UNLIKE_DESIGN_SUCCESS:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "SUCCESS" }
+                }
+            });
+        case UNLIKE_DESIGN_FAILURE:
+            return update(state, {
+                LikeDesign: {
+                    status: { $set: "FAILURE" }
+                }
+            });
         case DESIGN_NOT_FOUND:
             return update(state, {
                 DesignDetail: { status: { $set: DESIGN_NOT_FOUND } },
@@ -397,10 +471,10 @@ export function DesignWaitingListRequest(id, token) {
             if (!data) {
                 console.log("no data")
             }
-            return dispatch(DesignWaitingListSuccess(data.data))
+            dispatch(DesignWaitingListSuccess(data.data))
         }).catch((error) => {
             console.log("err", error)
-            return DesignWaitingListFailure(error)
+            dispatch(DesignWaitingListFailure(error))
         })
     }
 }
@@ -418,27 +492,27 @@ export function JoinDesignRequest(id, data, flag, token) {
             if (!data) {
                 console.log("no data");
             }
-            return dispatch(JoinDesignSuccess(data));
+            dispatch(JoinDesignSuccess(data));
+            return data;
         }).catch((error) => {
             console.log("err", error);
-            return JoinDesignFailure(error);
+            dispatch(JoinDesignFailure(error));
         });
     }
 }
 export function CreateDesignRequest(data, token) {
     return (dispatch) => {
         dispatch(CreateDesign());
-
         return fetch(`${host}/design/createDesign`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
             .then(function (res) {
                 return res.json();
             })
             .then(function (res) {
                 console.log("insert detail", res.desing_id);
-                return dispatch(CreateDesignSuccess(res));
+                dispatch(CreateDesignSuccess(res));
             }).catch((error) => {
                 console.log("insert detail err", error);
-                return dispatch(CreateDesignFailure(error));
+                dispatch(CreateDesignFailure(error));
             })
     }
 }
@@ -455,10 +529,10 @@ export function GetoutDesignRequest(id, memberId, token, refuse) {
             if (!data) {
                 console.log("no data");
             }
-            return dispatch(GetoutDesignSuccess(data));
+            dispatch(GetoutDesignSuccess(data));
         }).catch((error) => {
             console.log("err", error);
-            return GetoutDesignFailure(error);
+            dispatch(GetoutDesignFailure(error));
         });
     }
 }

@@ -83,12 +83,12 @@ class DetailStep extends Component {
           this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
             .child.stateNode
         ).width
-      ,10);
+        , 10);
       // console.log("width", width)
       await this.setState({
         right: false
       });
-      if(nextProps.isTeam) {
+      if (nextProps.isTeam) {
         await this.setState({
           boardWidth: nextProps.DesignDetailStep.length * 264 + 250
         });
@@ -141,11 +141,12 @@ class DetailStep extends Component {
   }
   async componentDidMount() {
     let width = parseInt(
-      window.getComputedStyle(
-        this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
-          .child.stateNode
-      ).width
-    ,10);
+      // window.getComputedStyle(
+      // this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
+      // .child.stateNode
+      // ).width
+      500
+      , 10);
     await this.setState({
       right: false
     });
@@ -202,13 +203,13 @@ class DetailStep extends Component {
     this.setState({ activeBoard: id });
   };
   listPosition = value => {
-    let scroll = this.boardMask._reactInternalFiber.child.stateNode.scrollLeft;
+    let scroll = 0; //this.boardMask._reactInternalFiber.child.stateNode.scrollLeft;
     if (value) {
       scroll -= 264;
     } else {
       scroll += 264;
     }
-    this.boardMask._reactInternalFiber.child.stateNode.scrollLeft = scroll;
+    // this.boardMask._reactInternalFiber.child.stateNode.scrollLeft = scroll;
 
     if (value) {
       if (scroll > 0) {
@@ -219,12 +220,12 @@ class DetailStep extends Component {
     } else {
       // console.log(this.state.boardWidth, scroll)
       if (
-        this.state.boardWidth - parseInt(
-          window.getComputedStyle(
-            this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
-              .child.stateNode
-          ).width
-        ,10) <= scroll
+        this.state.boardWidth - parseInt(500
+          // window.getComputedStyle(
+          //   this.ContentBox._reactInternalFiber.child.stateNode._reactInternalFiber
+          //     .child.stateNode
+          // ).width
+          , 10) <= scroll
       ) {
         this.setState({ right: false, left: true });
       } else {
