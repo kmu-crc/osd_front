@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const MemberItem = styled.div`
   display: inline-block;
-  padding: 5px 10px;
+  padding: 10px 10px;
   background-color: #4d5256;
   color: #f8fafb;
   border-radius: 3px;
@@ -39,15 +39,17 @@ const MemberList = styled.ul`
   max-height: 300px;
   overflow-Y: scroll;
   box-sizing: border-box;
-  border: 1px solid #707070;
-  border-radius: 3px;
+  background: white;
+  border-radius: 10px;
+  box-shadow:0px 2px 10px 2px rgba(0,0,0,0.1);
 `
 
 const MemberListItem = styled.li`
   width: 100%;
   padding: 10px;
-  border: 1px solid #707070;
-  border-radius: 3px;
+  background:#EFEFEF;
+  color:#707070;
+  border-radius: 10px;
   margin-bottom: 5px;
 `
 
@@ -119,7 +121,9 @@ class SearchMember extends Component {
   render() {
     return (
       <SearchWrap className = "searchRect" style={{display:"inline-block"}}>
-        <FormInput  className = "searchRect" type="text" style={{border:"none",width:"353px",height:"30px",fontSize:"18px",marginLeft:"50px",}} name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
+        <FormInput  className = "searchRect" type="text" 
+        style={{boxShadow:"0px 2px 10px 2px rgba(0,0,0,0.1)",borderRadius:"10px",paddingLeft:"10px" ,outline:"none",border:"none",width:"353px",height:"40px",fontSize:"18px",marginLeft:"50px",}} 
+        name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
         <MemberList  className = "searchRect" style={this.state.open ? {display: "block"} : {display: "none"}}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);

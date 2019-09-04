@@ -87,6 +87,7 @@ class SignUpModal extends Component {
         this.onChangePass = this.onChangePass.bind(this);
         this.onChangePassCheck = this.onChangePassCheck.bind(this);
         this.onChangeNickname = this.onChangeNickname.bind(this);
+        this.onChecked = this.onChecked.bind(this);
     }
     onChangeId(event) {
         this.setState({ email: event.target.value })
@@ -99,6 +100,10 @@ class SignUpModal extends Component {
     }
     onChangeNickname(event) {
         this.setState({ nick_name: event.target.value })
+    }
+    onChecked(event)
+    {
+        this.setState({checked:!this.state.checked});
     }
     openterm = () => {
         this.setState({ open_term: true })
@@ -139,22 +144,14 @@ class SignUpModal extends Component {
             alert("닉네임을 입력해주세요!")
             return;
         }
+        else if(this.state.checked == false)
+        {
+            alert("이용약관에 동의해주세요")
+            return;
+        }
+
 
         
-        
-        
-        // if (this.state.password) {
-        //   var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
-        //   if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-        //     alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
-        //     return false;
-        //   }
-        //   if (this.state.password !== this.state.passwordCheck) {
-        //     alert("비밀번호 확인을 다시 해주십시오");
-        //     return false;
-        //   }
-        //   delete formData.passwordCheck;
-        // }
         await this.setState({ loading: true });
         console.log("signupformdata", formData);
         this.props.SignUpRequest(formData)
@@ -276,7 +273,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>이용약관</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
-                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input type="checkbox" value={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
+                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input onClick={this.onChecked} type="checkbox" value={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
                                         <div style={{ marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div></div>
                                     <div style={{
                                         marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",

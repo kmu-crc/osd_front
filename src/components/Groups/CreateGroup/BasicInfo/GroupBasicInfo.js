@@ -80,10 +80,13 @@ class GroupBasicInfo extends Component
             this.setState({groupThumbnail:reader.result,groupThumbnailName:file.name})
             this.props.onChangeThumbnail(reader.result,file.name);
         }
-         let imgurl =  reader.readAsDataURL(file)
-         this.setState({groupThumbnailURL:imgurl});
-         this.props.onChangeThumbnail(imgurl);
-         console.log("file===",imgurl);
+        if(event.target.files[0])
+        {
+            let imgurl =  reader.readAsDataURL(file)
+            this.setState({groupThumbnailURL:imgurl});
+            this.props.onChangeThumbnail(imgurl);
+            console.log("file===",imgurl);
+        }
 
     }
 
@@ -112,14 +115,14 @@ class GroupBasicInfo extends Component
                 <div style={BasicSec_title_Box}>
                     <div style={BasicSecTitle}>제목</div>
                     <div style={BasicSec_title_InputBox} >
-                    <input type="text" style={BasicSec_title_Input} onChange = {this.handleOnChangeTitle} value = {this.props.groupTitle}/>
+                    <input maxLength="50" type="text" style={BasicSec_title_Input} onChange = {this.handleOnChangeTitle} value = {this.props.groupTitle}/>
                     </div>
                 </div>
                 {/* description */}
                 <div style={BasicSec_explain_Box}>
                 <div style={BasicSecTitle}>그룹 설명</div>
                 <div style={BasicSec_explain_InputBox}>
-                    <textarea style={BasicSec_explain_Input} placeholder="디자인에 대한 설명을 입력하세요." onChange = {this.handleOnChangeExplain} value={this.props.groupExplain}/>
+                    <textarea maxLength="300" style={BasicSec_explain_Input} placeholder="디자인에 대한 설명을 입력하세요." onChange = {this.handleOnChangeExplain} value={this.props.groupExplain}/>
                 </div>
                 </div>
             </section>

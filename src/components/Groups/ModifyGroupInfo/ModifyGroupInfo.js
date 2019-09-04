@@ -4,6 +4,8 @@ import noimg from "source/noimg.png"
 import BasicInfo from "components/Groups/CreateGroup/BasicInfo"
 import AdditionalInfo from "components/Groups/CreateGroup/AdditionalInfo"
 import { userInfo } from "os";
+import { Modal } from "semantic-ui-react";
+import iDelete from "source/deleteItem.png"
 
 // const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }]
 
@@ -17,6 +19,8 @@ const Menu_Delete={position:"fixed", top:"349px",left:"100px",width:"150px",heig
 const Btn_Back = { position:"absolute",right:"54px",bottom:"35px",border:"1px solid black",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px"}
 const Btn_text ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
 const Btn_Next ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
+const modify_Menu_Delete = { position: "fixed", top: "280px", left: "100px", width: "150px", height: "29px", cursor:"pointer",
+                            fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
 
 class CreateGroup extends Component {
 
@@ -24,6 +28,7 @@ class CreateGroup extends Component {
   {
     super(props);
     this.state = {
+      deleteDialog:false,isDelete:false,
       groupThumbnail:noimg,groupTitle:"",groupExplain:"", groupThumbnailURL:"",groupThumbnailName:"",
       loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
      selectedCate2: null, cate1: null,cate2: null}
@@ -31,10 +36,13 @@ class CreateGroup extends Component {
     this.handleInputDesignTitle = this.handleInputDesignTitle.bind(this);
     this.handleChangeThumbnail=this.handleChangeThumbnail.bind(this);
     this.handleChangeThumbnailURL=this.handleChangeThumbnailURL.bind(this);
+    this.handleOnClickDeleteDesign = this.handleOnClickDeleteDesign.bind(this);
+
   }
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
   componentDidMount()
   {
+
   }
   shouldComponentUpdate(nextProps)
   {
@@ -94,6 +102,14 @@ class CreateGroup extends Component {
   completed = () => {
     this.setState({ isPossibleNextStep: true })
   }
+  deleteGroup = () => {
+
+      this.props.DeleteGroupRequest(this.props.id, this.props.token)
+        .then(data => {
+          this.props.history.push("/group");
+        });
+    
+  }
   
   onSubmit = async e => {
     e.preventDefault();
@@ -116,61 +132,72 @@ class CreateGroup extends Component {
           });
         }
       });
-    // }).catch(e => {
-    //   console.log("실패", e);
-    //   // this.setState({
-    //   //   loading: false
-    //   // });
-    // });
-  //};
-
-  // onSubmit = async e => {
-  //   e.preventDefault();
-
-  //   const data = {title:this.state.groupTitle,explanation:this.state.groupExplain};
-  //   let file = {
-  //     value: this.state.groupThumbnail,
-  //     name: this.state.groupThumbnailName,
-  //     key: 0
-  //   };
-  //    //data.files.push(file);
-
-  //     this.props.UpdateGroupRequest(this.props.GroupDetail.uid,data, this.props.token)
-  //     .then(res => {
-  //       this.props.history.push(`/groupDetail/${res.id}`);
-  //     }).catch(e => {
-  //     console.log("실패", e);
-  //     this.setState({
-  //       loading: false
-  //     });
-  //   });
-    // e.preventDefault();
-    // ValidationGroup(this.state, false).then(async data => {
-    //   console.log("성공", data);
-    //   await this.setState({
-    //     loading: true
-    //   });
-    //   this.props.CreateNewGroupRequest(data, this.props.token)
-    //   .then(res => {
-    //     this.props.history.push(`/groupDetail/${res.id}`);
-    //   });
-    // }).catch(e => {
-    //   console.log("실패", e);
-    //   this.setState({
-    //     loading: false
-    //   });
-    // });
   };
+  handleOnClickDeleteDesign()
+  {
+      if(this.state.isDelete == true)
+      {
+        this.setState({ isDelete: !this.state.isDelete })
+      }
+      else
+      {
+        this.setState({ isDelete: !this.state.isDelete})     
+      }
+
+   }
+  //  handleYesDelete()
+  //  {
+
+  //  }
   render() {
     // const myInfo = this.props.MyDetail
 
 
 
     const { step } = this.state
+
+    const DeleteWariningModal = ()=>
+    {
+      return(
+        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
+          그룹 캡스톤 디자인 2019를 삭제하지 못했습니다.</div>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"none",color:"#FF0000"}}>
+          그룹의 개설자만 삭제할 권한이 주어집니다.</div>
+      </Modal>
+      );
+    }
+    const DeleteGroupModal=()=>
+    {
+      return(
+        <Modal open={this.state.isDelete} style={{boxShadow:"0px 3px 6px #000000",position:"relative",width:"576px",height:"200px",textAlign:"center",bottom:"318px"}}>
+        <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>그룹 캡스톤 디자인 2019를<br/>삭제하시겠습니까?</div>
+        <div onClick = {this.deleteGroup}  style = {{cursor:"pointer",width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 삭제합니다</div>
+        <div onClick = {this.handleOnClickDeleteDesign} style={{cursor:"pointer",position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+                    backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+        </div>
+      </Modal>
+      );
+    }
+    const DeleteGroupComplete = ()=>
+    {
+      return(
+        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
+          사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
+        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"underline",color:"#FF0000"}}>
+          되돌리기</div>
+        <div onClick = {this.handleOnClickDeleteDesign} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+                    backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+        </div>
+      </Modal>
+      );
+    }
+
     return (<>
 
       <div style={Main_Banner}>
-        <div style={Main_Banner_text}>그룹 등록하기</div>
+        <div style={Main_Banner_text}>그룹 수정하기</div>
       </div>
 
       <div style={Main_Section}>
@@ -185,6 +212,7 @@ class CreateGroup extends Component {
                     })}
                   </div>
               </div>
+              <div onClick = {this.handleOnClickDeleteDesign} style={modify_Menu_Delete}>그룹 삭제하기</div>
         </div>
         {/* form */}
         <div style={{position:"relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
@@ -211,7 +239,11 @@ class CreateGroup extends Component {
             </div>
           </form>
         </div>
+        <DeleteGroupModal/>
       </div>
+
+
+
     </>)
   }
 }

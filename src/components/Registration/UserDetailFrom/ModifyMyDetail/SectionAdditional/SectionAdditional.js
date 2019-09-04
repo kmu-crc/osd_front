@@ -23,9 +23,9 @@ class SectionAdditional extends Component
       if(this.props.MyDetail!=nextProps.MyDetail)
       {
         this.setState({categoryLevel1:nextProps.MyDetail.category_level1,
-                        categoryLevel2:nextProps.MyDetail.categoryLevel2==null?0:nextProps.MyDetail.categoryLevel2});
+                        categoryLevel2:nextProps.MyDetail.category_level2==null?0:nextProps.MyDetail.category_level2});
         this.props.updateCategory1(nextProps.MyDetail.category_level1);
-        this.props.updateCategory2(nextProps.MyDetail.categoryLevel2==null?0:nextProps.MyDetail.categoryLevel2);
+        this.props.updateCategory2(nextProps.MyDetail.category_level2==null?0:nextProps.MyDetail.category_level2);
 
 
       }

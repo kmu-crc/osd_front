@@ -142,18 +142,20 @@ class Messages extends React.Component
           this.setState({ render: true })
         })
       }
+      // if (this.props.userInfo) {
 
-        if (this.props.userInfo) {
+      //   try {
+      //     Socket.emit("INIT", this.props.userInfo.uid)
+      //     Socket.on("getNoti", noti => {
+      //       //console.log("this!noti!");
+      //       this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+      //       //this.setState({ render: true })
+      //     })
+      //   } catch (err) {
+      //     console.log(err)
+      //   }        
+      // }
 
-          try {
-            Socket.emit("INIT", this.props.userInfo.uid)
-            Socket.on("getNoti", noti => {
-              this.setState({ render: true })
-            })
-          } catch (err) {
-            console.log(err)
-          }        
-        }
     }
     
     shouldComponentUpdate(nextProps) {

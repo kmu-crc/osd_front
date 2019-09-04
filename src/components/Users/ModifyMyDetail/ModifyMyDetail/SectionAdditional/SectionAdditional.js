@@ -23,9 +23,9 @@ class SectionAdditional extends Component
       if(this.props.MyDetail!=nextProps.MyDetail)
       {
         this.setState({categoryLevel1:nextProps.MyDetail.category_level1,
-                        categoryLevel2:nextProps.MyDetail.categoryLevel2==null?0:nextProps.MyDetail.categoryLevel2});
+                        categoryLevel2:nextProps.MyDetail.category_level2==null?0:nextProps.MyDetail.category_level2});
         this.props.updateCategory1(nextProps.MyDetail.category_level1);
-        this.props.updateCategory2(nextProps.MyDetail.categoryLevel2==null?0:nextProps.MyDetail.categoryLevel2);
+        this.props.updateCategory2(nextProps.MyDetail.category_level2==null?0:nextProps.MyDetail.category_level2);
 
 
       }
@@ -44,6 +44,7 @@ class SectionAdditional extends Component
 
     render()
     {
+
         return(
             <section id="additional" style={{ paddingLeft: "95.5px" }} >
             {/* category */}
@@ -54,8 +55,8 @@ class SectionAdditional extends Component
                       options={this.props.category1} selection name="cate1" ref="dropdown1" value = {this.state.categoryLevel1}  />
               </div>
               <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-                      <Dropdown onChange = {this.onChangeCategory2} style={{width:"410px",height:"56px", backgroundColor: "#EFEFEF", borderRadius: "5px",fontSize:"20px"}}
-                       options={this.state.categoryLevel1==0?emptyCategory:this.props.category2[this.state.categoryLevel1]} selection  name="cate2" ref="dropdown2" value = {this.state.categoryLevel2} />
+                      <Dropdown onChange = {this.onChangeCategory2} value = {this.state.categoryLevel2} style={{width:"410px",height:"56px", backgroundColor: "#EFEFEF", borderRadius: "5px",fontSize:"20px"}}
+                       options={this.state.categoryLevel1==0?emptyCategory:this.props.category2[this.state.categoryLevel1]} selection  name="cate2" ref="dropdown2"  />
               </div> 
    
             </div>

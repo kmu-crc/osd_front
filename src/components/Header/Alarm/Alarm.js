@@ -281,7 +281,8 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         // const alarms = this.GetAlarmMergedLike(this.props.alarm);
-        console.log(alarms);
+
+        console.log("???alarm???",alarms);
         return (
             <>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
@@ -291,6 +292,7 @@ class Alarm extends Component {
                             : <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />}
                     </div>
                     <div className="list">
+
                         {alarms ? alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
@@ -334,12 +336,13 @@ class Alarm extends Component {
                                         </div>
                                     </div>
                                 </ListItem>)
-                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
+                        }) :  <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
                     </div>
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
-                        {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
+                        {console.log("ALARM:::::::::::",alarms)}
+                        {alarms && alarms>0&& <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
                     </div>
                 </div>

@@ -29,35 +29,61 @@ const SearchContainer = styled.div`
         height:36px;
         cursor: pointer;
     }
-`
+`;
+let val = "";
 class SearchForm extends Component {
-    state = { keyword: "" }
-    getType = () => {
-        const href = window.location.href
-        let type = (href.search("design") !== -1 || href.search("designDetail") !== -1) && "design";
-        type = (href.search("group") !== -1 || href.search("groupDetail") !== -1) ? "group" : (href.search("designer") !== -1 || href.search("designerDetail") !== -1) ? "designer" : "design";
-        return type;
-    }
-    handleKeyDown = (e) => {
-        if (e.key === 'Enter' && this.state.keyword !== "") {
-            window.location.href = '/search/' + this.getType() + "/update/" + this.state.keyword
+    state = {
+        searchKeyword:"",
+    };
+    _search = () => { };
+    _handleKeyDown = (e) => {
+        const addrText = window.location.href.toString();
+        let thisCate = "#all";
+        if(addrText.indexOf('/group')!=-1)
+        {
+            thisCate="#group"
         }
+        else if(addrText.indexOf('/designer')!=-1)
+        {
+            thisCate="#designer"
+        }
+        else if(this.addrText.indexOf('/design')!=-1)
+        {
+            thisCate="#design"
+        }
+        window.location.href = '/search'+thisCate;
     }
+
     goSearch = () => {
-        // if (this.state.keyword)
-        window.location.href = '/search/' + this.getType() + "/update/" + this.state.keyword
+        const addrText = window.location.href.toString();
+        let thisCate = "#all";
+        if(addrText.indexOf('/group')!=-1)
+        {
+            thisCate="#group"
+        }
+        else if(addrText.indexOf('/designer')!=-1)
+        {
+            thisCate="#designer"
+        }
+        else if(this.addrText.indexOf('/design')!=-1)
+        {
+            thisCate="#design"
+        }
+        window.location.href = '/search'+thisCate;
     }
-    getvalue = (event) => {
-        this.setState({ keyword: event.target.value })
-    }
+
     render() {
         console.log(this.state.keyword);
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder="Search..." onChange={(event) => this.getvalue(event)} />
+
+                <input type="text" placeholder="Search..." maxLength = "100" />
+
             </SearchContainer>)
     }
+
 }
+
 
 export default SearchForm

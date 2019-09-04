@@ -4,7 +4,8 @@ import styled from 'styled-components';
 //img
 import noimg from "source/noimg.png"
 import iForked from "source/baseline_library_books_black_48dp.png"
-import iThumbUp from "source/thumbup_icon_black.png"
+import iThumbUp from "source/baseline_thumb_up_black_48dp_2x.png"
+
 import iEdit from 'source/sharp_edit_black_48dp.png';
 import iMessage from 'source/email.png'
 import IconView from "source/IconView"
@@ -48,25 +49,22 @@ const Summary_Forked_Icon = {
 }
 const Summary_Forked = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
 
-const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "90px", right: "72px", textAlign: "right" }
-const interestDesignerTitle = {
-    display: "inline-block", width: "164px", height: "25px",
-    color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-}
-const interestDesignerImg = {
-    display: "inline-block", width: "45px", height: "40px", marginLeft: "15px", marginBottom: "-7px",
-    backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center", opacity: "0.55"
-}
 
-const sendMessageBox = { overflow: "hidden", position: "absolute", width: "250px", height: "45px", top: "168px", right: "72px", textAlign: "right" }
-const sendMessagTitle = {
-    display: "inline-block", width: "164px", height: "45px",
-    color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-}
-const sendMessageImg = {
-    display: "inline-block", width: "45px", height: "45px", marginLeft: "15px", marginBottom: "-15px",
-    backgroundImage: `url(${iMessage})`, backgroundSize: "cover", backgroundPosition: "center center"
-}
+const interestDesignerBox = {position:"absolute",width:"250px",height:"45px",top:"90px",right:"45px",textAlign:"right", display:"flex"}
+const interestDesignerTitle = {display:"inline-block",width:"164px",height:"25px",marginTop:"15px",
+                                color:"#707070",fontFamily:"Noto Sans KR",fontSize:"17px",fontWeight:"200",textAlign:"right" }
+const interestDesignerImg = {display:"inline-block",width:"45px",height:"40px",marginLeft:"15px",marginTop:"0px",
+                            backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center",opacity:"0.55"}
+
+const interestDesignerImgLike = {display:"inline-block",width:"45px",height:"40px",marginLeft:"15px",marginBottom:"0px",
+    backgroundImage:`url(${iThumbUp})`,backgroundSize: "cover", backgroundPosition: "center center",opacity:"1"}
+
+const sendMessageBox = {overflow:"hidden",position:"absolute",width:"250px",height:"45px",top:"168px",right:"72px",textAlign:"right"}
+const sendMessagTitle = {display:"inline-block",width:"164px",height:"45px",
+                                color:"#707070",fontFamily:"Noto Sans KR",fontSize:"17px",fontWeight:"200",textAlign:"right" }
+const sendMessageImg = {display:"inline-block",width:"45px",height:"45px",marginLeft:"15px",marginBottom:"-15px",
+                            backgroundImage:`url(${iMessage})`,backgroundSize: "cover", backgroundPosition: "center center"}
+
 
 const UpdateTimeBox = {
     position: "absolute", width: "146px", height: "25px", top: "273px", right: "72px",
@@ -83,22 +81,44 @@ let about_me = ["", ""];
 let descriptionLengthCheck = "";
 
 const TestExplain = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
-
 class DesignerPageHeader extends Component {
     constructor(props) {
         super(props);
-        this.state = { tmpLike: false, likeDialog: false, forkDialog: 0 };
+        this.state = { joinDialog: false, likeDialog: false, forkDialog: 0, manager: false ,tmpLike:false, reRender:1};
+        this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
     }
-
-    like() {
-        if (this.state.tmpLike) { //dislike
-            this.setState({ tmpLike: !this.state.tmpLike })
-        } else {
-            this.setState({ tmpLike: !this.state.tmpLike, likeDialog: true })
-            // request like design
-            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+    async componentWillMount () {
+        await this.props.GetLikeDesignerRequest(this.props.id, this.props.token);
+        if(this.props.like === true){
+            this.setState({tmpLike:true});
         }
+        else{
+            this.setState({reRender:0});
+        }
+    }
+
+    async like() {
+        if (!this.props.userInfo) {
+            this.needLogin();
+            return;
+        }
+        if (this.props.like) { //dislike
+            await this.setState({likeDialog: false ,tmpLike:false});
+            this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
+                .then(() => { this.props.GetDesignerDetailRequest(this.props.id) })
+                .then(() => {
+                    this.props.GetLikeDesignerRequest(this.props.id, this.props.token)})
+        } else { // like
+            await this.setState({ likeDialog: true , tmpLike:true})
+            this.props.LikeDesignerRequest(this.props.id, this.props.token)
+                .then(() => { this.props.GetDesignerDetailRequest(this.props.id) })
+                .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
+            setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
+        }
+    }
+    needLogin() {
+        alert("로그인을 해주세요.");
     }
     render() {
         const MypageInfo = this.props.DesignerDetail;
@@ -111,35 +131,32 @@ class DesignerPageHeader extends Component {
         }
         return (
             <React.Fragment>
+           <div style={BackgroundBox}>
+                <div style = {Name}>{MypageInfo.nick_name}</div>
+                <ProfileBox img={thumbnailInfo.s_img}/>
+                <div style ={Title}>{MypageInfo.categoryName}</div>
+                <div style ={ExplainBox01}>{about_me[0]}</div>
+                <div style ={ExplainBox02}>{about_me[1]}</div>
+                <div style={SummaryIconBox}>
+                    <div style={Summary_View_Icon}><IconView width="17px" height="13px" fill="#707070"/></div>
+                    <div style = {Summary_View}>{countInfo.total_view}</div>
+                    <div style = {Summary_ThumbUp_Icon}></div>
+                    <div style = {Summary_ThumbUp}>{countInfo.total_like}</div>
+                    <div style = {Summary_Forked_Icon}></div>
+                    <div style = {Summary_Forked}>{countInfo.total_group + countInfo.total_design}</div>
+                </div>
+                <div onClick = {this.props.userInfo==null? null:() => this.like() } style={interestDesignerBox}>
+                    <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
+                    {this.state.tmpLike == true ? <div style={interestDesignerImgLike}></div> : <div style={interestDesignerImg}></div>
+                    }
 
-                <div style={BackgroundBox}>
-                    <div style={Name}>{MypageInfo.nick_name}</div>
-                    <ProfileBox img={thumbnailInfo.m_img} />
-                    <div style={Title}>{MypageInfo.categoryName}</div>
-                    <div style={ExplainBox01}>{about_me[0]}</div>
-                    <div style={ExplainBox02}>{about_me[1]}</div>
-                    <div style={SummaryIconBox}>
-                        <div style={Summary_View_Icon}><IconView width="17px" height="13px" fill="#707070" /></div>
-                        <div style={Summary_View}>{countInfo.total_view}</div>
-                        <div style={Summary_ThumbUp_Icon}></div>
-                        <div style={Summary_ThumbUp}>{countInfo.total_like}</div>
-                        <div style={Summary_Forked_Icon}></div>
-                        <div style={Summary_Forked}>{countInfo.total_group + countInfo.total_design}</div>
-                    </div>
-                    <div onClick={this.props.userInfo == null ? null : () => this.like()} style={interestDesignerBox}>
-                        <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
-                        <div style={{
-                            display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px", opacity: this.state.tmpLike ? "1" : "0.45",
-                            backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
-                        }}></div>
-                    </div>
-                    <div style={sendMessageBox}>
-                        <div style={sendMessagTitle}>메세지 보내기</div>
-                        <div style={sendMessageImg}></div>
-                    </div>
-                    <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
-
-                    {this.state.likeDialog == false ? null :
+                </div>
+                <div style={sendMessageBox}>
+                    <div style={sendMessagTitle}>메세지 보내기</div>
+                    <div style = {sendMessageImg}></div>
+                </div>
+                <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
+                     {this.state.likeDialog == false ? null :
                         <div style={{
                             position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
                             background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"
