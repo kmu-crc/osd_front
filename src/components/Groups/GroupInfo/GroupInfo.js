@@ -201,11 +201,11 @@ class GroupInfoComponent extends Component {
                                     <div style={{ marginTop: "5px", fontSize: "15px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                     <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
                                         <div style={{ width: "621px" }}>
-                                            {info.description ? info.description.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
+                                            {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
                                         </div>
                                         <div style={{ marginLeft: "41px", width: "max-content" }}>
-                                            {info.description && info.description.slice(200, 400)}
-                                            {info.description && info.description.length > 400 && <>...</>}
+                                            {info.explanation && info.explanation.slice(200, 400)}
+                                            {info.explanation && info.explanation.length > 400 && <>...</>}
                                         </div>
                                     </div>
                                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>

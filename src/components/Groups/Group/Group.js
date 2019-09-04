@@ -7,6 +7,7 @@ import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
 import styled from 'styled-components';
+import { geturl } from "config";
 
 const GroupElement = styled.div`
     cursor:pointer;
@@ -21,8 +22,7 @@ class Group extends Component {
     handleGotoDetail = (where, event) => {
         const id = event.target.id
         if (id === "") {
-            let href = window.location.href.substring(0, window.location.href.search(`groupDetail`)) + `groupDetail/${where}`
-            window.location.href = href
+            window.location.href = geturl() + `/groupDetail/${where}`;
         }
     }
     render() {

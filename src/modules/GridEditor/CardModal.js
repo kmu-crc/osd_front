@@ -5,6 +5,7 @@ import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import DateFormat from "modules/DateFormat";
+import CardSourceDetail from 'components/Designs/CardSourceDetail';
 
 
 const CardDialog = styled(Modal)`
@@ -23,22 +24,21 @@ const CardDialog = styled(Modal)`
         background: rgba(112, 112, 112, 0.45) !important;
     } 
     .content{
-        padding: 25px;
+        padding: 45px;
         line-height: 17px;
+        border: 1px dashed red;
     }
 `
 class CardModal extends Component {
     constructor(props) {
         super(props);
         this.state = { sroll: false };
-        this.moveCard = this.moveCard.bind(this);
+        // this.moveCard = this.moveCard.bind(this);
     }
     componentDidMount() {
         document.getElementsByTagName("body")[0].style.overflow = "hidden";
     }
-    moveCard() {
-        // this.props.
-    }
+
     onSubmit = () => { }
     onClose = () => { this.props.close() }
     render() {
@@ -56,18 +56,16 @@ class CardModal extends Component {
                     <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "-32.07px", marginLeft: "111.85px" }}>
                         <Cross angle={45} color={"#707070"} weight={3} width={22.33} height={22.33} />
                     </div>
-                    <div style={{ width: "1000px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "29.78px" }}>{card.title}</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", width: "1000px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "29.78px" }}>
+                        <div>{card.title}</div>
+                        <div style={{ marginRight: "75px" }}>{this.props.editor ? "수정" : ""}</div>
+                    </div>
                     <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "300", lineHeight: "29px", paddingLeft: "52px", marginTop: "30px" }}>
                         <div>{card.nick_name}</div><div style={{ marginRight: "75px" }}>({DateFormat(card.update_time)})</div>
                     </div>
                     <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
                     <div className="content" >
-                        <CardSourceDetailContainer
-                            uid={card.uid}
-                            isTeam={this.props.isTeam}
-                            edit={this.state.edit}
-                            closeEdit={this.onCloseEditMode}
-                            openEdit={this.onChangeEditMode} />
+                        <CardSourceDetailContainer uid={card.uid} />
                     </div>
                     {/* <div className="card-content" onMouseOut={() => { this.setState({ scroll: false }) }} onMouseOver={() => { this.setState({ scroll: true }) }} style={{ width: "100%", overflowY: this.state.scroll ? "scroll" : "hidden", overflowX: "hidden" }}> */}
                     <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
