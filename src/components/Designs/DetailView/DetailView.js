@@ -106,12 +106,12 @@ class DetailView extends Component {
       .then(this.props.UpdateDesignTime(this.props.id, this.props.token))
       .then(async res => {
         if (res.data.success === true) {
-          this.props.GetCardCommentRequest(this.props.id,this.props.DesignDetailView.uid)
+          this.props.GetCardCommentRequest(this.props.id, this.props.DesignDetailView.uid)
         }
-        await this.setState({render: false})
-        this.setState({render: true})
+        await this.setState({ render: false })
+        this.setState({ render: true })
       })
-      
+
   }
 
 
@@ -129,22 +129,24 @@ class DetailView extends Component {
   }
   render() {
     const view = this.props.DesignDetailView;
+    console.log(view, "view");
     const len = Object.keys(view).length;
     return (
       <div>
-        <BtnWrap>
-          {this.props.isTeam ? (
-            <Button type="button" size="small" onClick={this.onPreviewMode}>
-              {this.state.edit ? "미리보기" : "편집하기"}
-            </Button>
-          ) : null}
-          {this.props.token &&
-            this.props.userInfo.uid === view.user_id && (
-              <GoStepBtn onClick={this.onActiveStep} size="small">
-                단계 추가
-              </GoStepBtn>
-            )}
-        </BtnWrap>
+        <div style={{ position: "relative", marginTop: "35px" }}>
+          <BtnWrap>
+            {/* {this.props.isTeam ? (
+              <Button type="button" size="small" onClick={this.onPreviewMode}>
+                {this.state.edit ? "미리보기" : "편집하기"}
+              </Button>
+            ) : null} */}
+            {this.props.token &&
+              this.props.userInfo.uid === view.user_id && (
+                <GoStepBtn onClick={this.onActiveStep} size="small">
+                  디자인 형식 변경</GoStepBtn>
+              )}
+          </BtnWrap>
+        </div>
 
         {len > 0 ? (
           <ViewWrapper>

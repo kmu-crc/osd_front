@@ -61,15 +61,11 @@ const Nodata = styled.div`
 
 class CardSourceDetail extends Component {
   state = {
-    edit: false,
-    content: [],
-    deleteContent: [],
-    loading: false
+    edit: false, content: [], deleteContent: [], loading: false
   };
-
   componentDidMount() {
     this.props.GetDesignSourceRequest(this.props.uid);
-  }
+  };
 
   async shouldComponentUpdate(nextProps) {
     if (
@@ -190,7 +186,6 @@ class CardSourceDetail extends Component {
     const { /*edit,*/ content } = this.state;
     return (
       <CardSrcWrap>
-
         {this.props.edit ? (
           <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (
@@ -198,60 +193,27 @@ class CardSourceDetail extends Component {
                 {content.map((item, index) => {
                   return (
                     <div key={index}>
-                      <AddController
-                        type="INIT"
-                        order={index}
-                        name={`add${index}`}
-                        getValue={this.onAddValue}
-                      />
-                      <Controller
-                        type={item.type}
-                        item={item}
-                        order={index}
-                        deleteItem={this.deleteItem}
-                        name={`content${index}`}
-                        getValue={this.onChangValue}
-                      />
+                      <AddController type="INIT" order={index} name={`add${index}`} getValue={this.onAddValue} />
+                      <Controller type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />
                     </div>
                   );
                 })}
-                <AddController
-                  type="INIT"
-                  order={content.length}
-                  name="addBasic"
-                  getValue={this.onAddValue}
-                />
+                <AddController type="INIT" order={content.length} name="addBasic" getValue={this.onAddValue} />
               </div>
-            ) : (
-                <AddController
-                  type="INIT"
-                  order={0}
-                  name="addBasic"
-                  getValue={this.onAddValue}
-                />
-              )}
-            <Button type="button" onClick={this.onSubmit}>
-              저장
-            </Button>
+            ) : (<AddController type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />)}
+            <Button type="button" onClick={this.onSubmit}> 저장 </Button>
             {
               this.props.isCancel ? (
-                <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (
-                  <Button type="button" onClick={this.props.closeEdit}>취소</Button>)
+                <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (<Button type="button" onClick={this.props.closeEdit}>취소</Button>)
             }
           </form>
         ) : content.length > 0 ? (
           <ViewContent>
-            {/* {this.props.isTeam === 1 &&
-              <Button round={true} size="small" className="goEdit"
-                      onClick={() => this.setState({ edit: !this.state.edit })}>
-                컨텐츠 수정
-              </Button>
-            } */}
+            {this.props.isTeam === 1 &&
+              <Button round={true} size="small" className="goEdit" onClick={() => this.setState({ edit: !this.state.edit })}> 컨텐츠 수정 </Button>}
             {content.map((item, index) => {
               return item.type === "FILE" && item.data_type === "image" ? (
-                <div className="imgContent" key={index}>
-                  <img key={index} src={item.content} alt="이미지" download={item.file_name} />
-                </div>
+                <div className="imgContent" key={index}> <img key={index} src={item.content} alt="이미지" download={item.file_name} /> </div>
               ) : item.type === "FILE" && item.data_type === "video" ? (
                 <span>
                   <span className="LinkFileName">{item.file_name}</span>
@@ -265,11 +227,7 @@ class CardSourceDetail extends Component {
                   <span className="LinkFileName">{item.file_name}</span>
                 </a>
               ) : item.type === "TEXT" ? (
-                <div
-                  className="textWrap"
-                  key={index}
-                  dangerouslySetInnerHTML={{ __html: `${item.content}` }}
-                />
+                <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
               ) : null;
             })}
           </ViewContent>
@@ -281,7 +239,6 @@ class CardSourceDetail extends Component {
             </Button>
             :
           } */}
-                <div>등록된 컨텐츠가 없습니다.</div>
                 <div>{/*등록된 컨텐츠가 없습니다.*/}</div>
               </Nodata>
             )}

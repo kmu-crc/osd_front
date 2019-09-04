@@ -16,6 +16,7 @@ class ScrollDesignListContainer extends Component {
   }
 
   render() {
+    console.log("scroll-design-list-container:",this.props.dataListAdded);
     return (
       <ScrollList getListRequest={this.getList}
         ListComponent={Design}

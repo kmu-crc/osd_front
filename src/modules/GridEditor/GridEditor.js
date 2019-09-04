@@ -19,14 +19,15 @@ const AsBelowArrow = styled.div`
 const GridEditorWrapper = styled.div`
     display: flex;
     margin-bottom: 150px;
-    div{border:1px dashed red;}
 `;
+
 class GridEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             card_loading: false, card: false, newcard: false, row: null, col: null,
-            newstep: false, cardDetail: null, title: null, w: 1920, ws: { left: 271, top: 270, height: 1890 }, movableRight: true, movableLeft: true
+            newstep: false, cardDetail: null, title: null,
+            w: 1920, ws: { left: 271, top: 270, height: 1890 }, movableRight: true, movableLeft: true
         }
     }
     getHeight(obj) {
@@ -70,8 +71,8 @@ class GridEditor extends Component {
     }
     NewItem = (data) => { }
     render() {
-        const { editor, DesignDetailStep } = this.props
-        const { w, ws, row, col, maxRow, card, newcard, newstep } = this.state
+        const { editor, DesignDetailStep, userInfo } = this.props
+        const { w, ws, row, col, maxRow, card, newcard, newstep, cardDetail, title } = this.state
         // temp code //
         // const items = DesignDetailStep.map(step => { return step.cards.length })
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
@@ -79,9 +80,10 @@ class GridEditor extends Component {
         // console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
         // console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
         console.log(this.props, "card:");
+        console.log(this.state, "state-card:");
         return (<>
             {/* ------------- card modal component */}
-            {card && <CardModal open={card} close={() => this.setState({ card: false })} title={this.state.title || "로딩중"} card={this.state.cardDetail} col={col} row={row} maxRow={maxRow} />}
+            {card && <CardModal editor={cardDetail && userInfo && cardDetail.user_id === userInfo.uid} open={card} close={() => this.setState({ card: false })} title={title || "로딩중"} card={cardDetail} col={col} row={row} maxRow={maxRow} />}
             {editor && newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
             {editor && newcard && <NewCardModal open={newcard} close={() => this.setState({ newcard: false })} />}
 
@@ -95,7 +97,7 @@ class GridEditor extends Component {
                     </div>
                 </div> */}
                 {/* 오른쪽 */}
-                <div style={{ width: `${window.innerWidth}px`, paddingLeft: "73.5px" }}>
+                <div style={{ width: `max-content`, paddingLeft: "73.5px" }}>
                     {/* 상 */}
                     <div style={{ display: "flex", marginTop: "90px" }}>
                         {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
@@ -107,7 +109,7 @@ class GridEditor extends Component {
                         {editor && <CreateStep onClick={this.OpenNewStep} step={"단계"} />}
                     </div>
                     {/* 하 */}
-                    <div style={{ overflow: "hidden", display: "flex" }}>
+                    <div style={{ overflow: "hidden", marginTop: "70.5px", display: "flex" }}>
                         {/* {itemlist && itemlist.map((item, item_index) => { */}
                         {/* return <div key={item_index} style={{ width: "10000px", marginTop: "70.5px", display: "flex" }}> */}
                         {/* {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
@@ -124,9 +126,9 @@ class GridEditor extends Component {
                                     step.cards.map((card, card_index) => {
                                         return <ContentCard
                                             key={step.uid + card.uid + step_index + card_index + card.title}
-                                            marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}
+                                            marginTop="0px" marginRight="74px" marginBottom="37px" marginLeft="0px"
                                             onClick={() => this.takeOutCard(card_index, step_index, step.cards[card_index], step.cards.length)}
-                                            title={step.cards[card_index].title} />
+                                            card={step.cards[card_index]} />
                                     })}
                                 {editor &&
                                     <CreateCard

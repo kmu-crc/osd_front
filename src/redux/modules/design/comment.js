@@ -11,6 +11,7 @@ const CREATE_DESIGN_COMMENT_FAILURE = "CREATE_DESIGN_COMMENT_FAILURE"
 const DELETE_DESIGN_COMMENT = "DELETE_DESIGN_COMMENT"
 const DELETE_DESIGN_COMMENT_SUCCESS = "DELETE_DESIGN_COMMENT_SUCCESS"
 const DELETE_DESIGN_COMMENT_FAILURE = "DELETE_DESIGN_COMMENT_FAILURE"
+
 const GET_CARD_COMMENT = "GET_CARD_COMMENT"
 const GET_CARD_COMMENT_SUCCESS = "GET_CARD_COMMENT_SUCCESS"
 const GET_CARD_COMMENT_FAILURE = "GET_CARD_COMMENT_FAILURE"
@@ -32,9 +33,11 @@ const DeleteCardCommentSuccess = res => ({ type: DELETE_CARD_COMMENT_SUCCESS, da
 const DeleteCardCommentFailure = error => ({ type: DELETE_CARD_COMMENT_FAILURE })
 
 const initialState = {
-    DesignList: { status: 'INIT' },
-    status: { DesignList: [], DesignListAdded: [], Count: 0 }
-}
+    GetCardComment: { status: "INIT" },
+    CreateCardComment: { status: "INIT" },
+    DeleteCardComment: { status: "INIT" },
+    status: { Comment: [] }
+};
 
 export function DesignComment(state, action) {
     if (typeof state === "undefined")
