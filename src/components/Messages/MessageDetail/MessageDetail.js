@@ -73,7 +73,8 @@ function CheckedTime(date){
       return `${year.toFixed(1)}년 전`;
   } 
 }
-                            
+
+
 function MsgReceiveBox(props)
 {
     return(
@@ -126,15 +127,18 @@ class MessageDetail extends Component {
       console.log("messagID",this.props.id);
       this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
       // if (this.props.userInfo) {
-      // try {
+
+      //   try {
+      //     Socket.emit("INIT", this.props.userInfo.uid)
       //     Socket.on("getNoti", noti => {
-      //     console.log("메시지도착");
-      //     noti.countMsg>0 && this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-      //   })
-      // } catch (err) {
-      //   console.log(err)
-      // }
-    //}
+      //       //console.log("this!noti!");
+      //       this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+      //       //this.setState({ render: true })
+      //     })
+      //   } catch (err) {
+      //     console.log(err)
+      //   }        
+      //}
     
   }
 

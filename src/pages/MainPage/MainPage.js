@@ -8,6 +8,7 @@ import TopDesignListContainer from "containers/Designs/TopDesignListContainer"
 const BannerWrapper = styled.div`
     background: url(${ banner});
     background-repeat: no-repeat;
+
     background-size: 100% 349.5px;
     margin-top: 15px;
     width: 100%;
@@ -42,9 +43,9 @@ const LinkWrapper = styled.div`
 function Banner() {
   return (<BannerWrapper>
     <Context />
-    <LinkWrapper>
+    {/* <LinkWrapper>
       <a href="/tour">이용 가이드 보러가기</a>
-    </LinkWrapper>
+    </LinkWrapper> */}
   </BannerWrapper>)
 }
 

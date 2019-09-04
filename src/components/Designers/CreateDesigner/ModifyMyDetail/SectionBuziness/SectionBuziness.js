@@ -88,25 +88,25 @@ class SectionBuziness extends Component
 
             <div style={{display:"flex",position:"relative",marginTop:"66px" ,justifyContent:"space-start"}}>
                 <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>팀</div>
-                  <input onChange = {this.onChangeTeam} type="text" value={this.state.team}
+                  <input onChange = {this.onChangeTeam} type="text" maxLength="100" value={this.state.team}
                   style={{ border:"none", outline:"none",fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"500",
                    paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
             </div>
           <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
             <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>경력</div>
-                  <input onChange = {this.onChangeCareer} type="text" value={this.state.career}
+                  <input onChange = {this.onChangeCareer} type="text" maxLength="100" value={this.state.career}
                         style={{ border:"none", outline:"none",fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"500",
                         paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
           </div>
           <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
             <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>위치</div>
-                  <input onChange = {this.onChangeLocation} type="text" value={this.state.location}
+                  <input onChange = {this.onChangeLocation} type="text" maxLength="100" value={this.state.location}
                         style={{ border:"none", outline:"none",fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"500",
                         paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
           </div>
           <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
             <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>연락</div>
-                  <input onChange = {this.onChangeContact} type="text" value={this.state.contact}
+                  <input onChange = {this.onChangeContact} type="text" maxLength="100" value={this.state.contact}
                         style={{ border:"none", outline:"none",fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"500",
                         paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
           </div>

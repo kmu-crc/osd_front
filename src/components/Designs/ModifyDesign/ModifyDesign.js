@@ -11,7 +11,7 @@ const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정
 const modify_Main_Banner = { width: "1920px", display: "flex", justifyContent: "center" }
 const modify_Main_Banner_text = { marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }
 const modify_Main_Section = { display: "flex", marginTop: "60px", marginBottom: "111px" }
-const modify_Menu_Delete = { position: "fixed", top: "429px", left: "100px", width: "150px", height: "29px", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
+const modify_Menu_Delete = { cursor:"pointer",position: "fixed", top: "429px", left: "100px", width: "150px", height: "29px", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
 const modify_Btn_Back = { cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }
 const modify_Btn_Back_text = { width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
 const modify_Btn_Next = { width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
@@ -42,10 +42,10 @@ class ModifyDesign extends Component {
   }
   handleOnClickDeleteDesign() {
     if (this.state.isDelete == true) {
-      this.setState({ isDelete: !this.state.isDelete, deleteDialog: false })
+      this.setState({ isDelete: !this.state.isDelete})
     }
     else {
-      this.setState({ isDelete: !this.state.isDelete, deleteDialog: true })
+      this.setState({ isDelete: !this.state.isDelete})
     }
 
   }
@@ -90,6 +90,12 @@ class ModifyDesign extends Component {
       event.preventDefault()
     }
   }
+  deleteDesign = () => {
+      this.props
+        .DeleteDesignRequest(this.props.DesignDetail.uid, this.props.token)
+        .then(this.props.history.push("/design"));
+
+  }
   render() {
     // const myInfo = this.props.MyDetail
     const SectionContentEditor = () => {
@@ -97,11 +103,11 @@ class ModifyDesign extends Component {
     const { step } = this.state;
     const DeleteDesignModal = () => {
       return (
-        <Modal open={this.state.deleteDialog} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "200px", textAlign: "center", top: "283px" }}>
+        <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "200px", textAlign: "center", top: "283px" }}>
           <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.props.DesignDetail.title}<br />삭제하시겠습니까?</div>
-          <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
+          <div onClick={this.deleteDesign} style={{cursor:"pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
           <div onClick={this.handleOnClickDeleteDesign} style={{
-            position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px",
+            cursor:"pointer",position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px",
             backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center",
           }}>
           </div>
