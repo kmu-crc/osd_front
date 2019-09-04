@@ -61,7 +61,7 @@ class CardModal extends Component {
                     {movableNext && <div style={{ width: "115px", height: "813.28px", position: "absolute", left: "100%", marginLeft: "80px", marginTop: "75.7px", borderRadius: "10px 0px 0px 10px", backgroundColor: "#FFFFFF" }} />}
                     {movableNext && <div style={{ width: "14px", height: "47px", position: "absolute", left: "100%", marginTop: "409.81px", marginLeft: "33px", backgroundImage: `url(${arrow})`, WebkitTransform: "rotate(180deg)", transform: "rotate(180deg)", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}></div>}
                     <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "-32.07px", marginLeft: "111.85px" }}>
-                        <Cross angle={45} color={"#707070"} weight={3} width={22.33} height={22.33} />
+                        <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
                     </div>
                     <div style={{ position: "relative" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", height: "29px", marginLeft: "52px", marginTop: "29.78px" }}>
