@@ -90,7 +90,8 @@ position: relative;
 `
 
 const FormDropBox = styled(Dropdown) `
-  width: 100%;
+  width: 97%;
+  height: 95%;
 `
 
 const UploaderButton = styled.label`

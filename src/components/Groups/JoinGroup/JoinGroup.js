@@ -5,9 +5,10 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
+import Cross from "components/Commons/Cross";
+
 
 const ModalContent = styled.div`
-  padding: 30px;
   & .icon.close {
     position: absolute;
     top: 10px;
@@ -24,7 +25,9 @@ const JoinGroupWrap = styled.div`
 `;
 
 const Title = styled.h2`
-  margin-bottom: 2rem;
+  padding-left:20px;
+  width:100%;
+  height:30px;
 `;
 
 const JoinTab = styled.div`
@@ -38,8 +41,9 @@ const JoinTab = styled.div`
 `;
 
 const TabItem = styled.button`
-  padding: 1rem 2.5rem;
+  padding:20px;
   border: 0;
+  font-size:20px;
   background-color: transparent;
   &.active {
     color: #eb3324;
@@ -85,11 +89,14 @@ class JoinGroup extends Component {
         >
           <Modal.Content>
             <ModalContent>
-              <Icon name="close" size="big" onClick={this.handleCloseModal} />
+              <div onClick={this.handleCloseModal} style={{position:"absolute",top:"20px",right:"20px"}}>
+                <Cross angle={45} color={"#707070"} weight={3} width={25} height={25} />
+              </div>
               <Title>그룹 가입 신청</Title>
               <JoinTab>
                 <TabItem
                   className={active === "design" && "active"}
+                  style={{}}
                   onClick={() => this.handleChangeTab("design")}
                 >
                   디자인

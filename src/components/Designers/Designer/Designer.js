@@ -17,8 +17,10 @@ const DesignerComp = styled.div`
     font-family: Noto Sans KR;
     height: 150px;
     width: 587px;
+    cursor:pointer;
 
     .ImageBox{
+        cursor:pointer;
         width: 150px;
         height: 150px;
         background-color: #D6D6D6;
