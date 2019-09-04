@@ -103,12 +103,14 @@ class SignUpModal extends Component {
     }
     onChecked(event)
     {
-        this.setState({checked:!this.state.checked});
+        this.setState({checked:!this.state.checked,open_term:false});
     }
     openterm = () => {
         this.setState({ open_term: true })
     }
     agree = () => {
+        
+        document.getElementById("agree").checked=true;
         this.setState({ open_term: false, checked: true })
     }
     sign = () => {
@@ -123,7 +125,41 @@ class SignUpModal extends Component {
     tmp_goto_mydetail = () => {
 
     }
+    async checkEmail()
+    {
+        const data = {email:this.state.email}
+        let returnvalue = true;
+        await this.props.CheckEmailRequest(data).then(
+            (res)=>{
+                console.log(res, data);
+                if(res.checkEmail==false)
+                {                   
+                    returnvalue = false;
+                }
+            }
+        );
+        console.log("qwer",returnvalue);
+        return returnvalue;
+    }
+
+    async checkNickname()
+    {
+        const data = {nick_name:this.state.nick_name}
+        let returnvalue = true;
+        await this.props.CheckNickNameRequest(data).then(
+            (res)=>{
+                console.log(res, data);
+                if(res.checkNickName==false)
+                {                   
+                    returnvalue = false;
+                }
+            }
+        );
+        console.log("qwer",returnvalue);
+        return returnvalue;
+    }
     onSubmit = async e => {
+        
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -149,9 +185,18 @@ class SignUpModal extends Component {
             alert("이용약관에 동의해주세요")
             return;
         }
+        //닉네임 중복 체크
+        if(await this.checkEmail()==false)
+        {      
+            alert("중복된 이메일입니다");      
+            return;
+        }
+        if(await this.checkNickname()==false)
+        {
+            alert("중복된 닉네임입니다");
+            return;
+        }
 
-
-        
         await this.setState({ loading: true });
         console.log("signupformdata", formData);
         this.props.SignUpRequest(formData)
@@ -273,8 +318,13 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>이용약관</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
-                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input onClick={this.onChecked} type="checkbox" value={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
-                                        <div style={{ marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div></div>
+                                        <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
+                                        {console.log(this.state.checked)}
+                                        <input id="agree" style={{background: this.state.checked==true?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box"}}onClick={this.onChecked} type="checkbox" value={this.state.checked} />
+                                        <span className="checkmark" />
+                                        </CheckboxContainer>
+                                        <div style={{cursor:"pointer", marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div>
+                                        </div>
                                     <div style={{
                                         marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",
                                         color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "29px", textAlign: "left"

@@ -89,9 +89,10 @@ class DesignerPageHeader extends Component {
         super(props);
         this.state = { tmpLike: false, likeDialog: false, forkDialog: 0 };
         this.like = this.like.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
     }
     gotoMyModify = () => {
-        let href = window.location.href.substring(0, window.location.href.search("mypage"))
+        let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'mymodify';
     }
     like() {
@@ -102,6 +103,11 @@ class DesignerPageHeader extends Component {
             // request like design
             setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
         }
+    }
+    sendMessage()
+    {
+       let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
+       window.location.href = href + 'message/'+this.props.DesignerDetail.uid+'/'+this.props.DesignerDetail.nick_name;
     }
     render() {
         const MypageInfo = this.props.DesignerDetail;
@@ -142,8 +148,8 @@ class DesignerPageHeader extends Component {
                             backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
                         }}></div>
                     </div>
-                    <div style={sendMessageBox}>
-                        <div style={sendMessagTitle}>메세지 보내기</div>
+                    <div onClick={this.sendMessage} style={sendMessageBox}>
+                        <div  style={sendMessagTitle}>메세지 보내기</div>
                         <div style={sendMessageImg}></div>
                     </div>
                     </React.Fragment>
