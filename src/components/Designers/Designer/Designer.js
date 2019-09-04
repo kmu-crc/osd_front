@@ -111,24 +111,24 @@ class Designer extends Component {
 
         return (
             <DesignerComp onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
-                <div className="ImageBox" style={designer.imgURL ? { backgroundImage: `url(${designer.imgURL.m_img})` } : { backgroundImage: `url(${noimg})` }}></div>
+                <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL && designer.imgURL.m_img || noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
                 <div className="TextBox">
                     <div className="userName">{designer.nick_name}</div>
-                    <div className="description"><TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"}  /></div>
+                    <div className="description"><TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
                     <div className="update">{DateFormat(designer.update_time)}</div>
                     <div className="cate">{designer.categoryName || "전체"}</div>
                     <div className="counter">
-                        <div className="view" style={{ display: "flex",marginRight:"10px" }}>
+                        <div className="view" style={{ display: "flex", marginRight: "10px" }}>
                             <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_view==null?0:designer.total_view)}</div>
+                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
                         </div>
                         <div className="like" style={{ display: "flex", marginRight: "10px" }}>
                             <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_like==null?0:designer.total_like)}</div>
+                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
                         </div>
                         <div className="child" style={{ display: "flex" }}>
                             <div><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_group==null?0:designer.total_group)}</div>
+                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_group == null ? 0 : designer.total_group)}</div>
                         </div>
                     </div>
                 </div>
