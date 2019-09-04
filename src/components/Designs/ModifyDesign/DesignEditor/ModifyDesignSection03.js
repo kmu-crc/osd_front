@@ -1,5 +1,5 @@
 import React,{ Component } from "react";
-import { CreateStep, CreateCard, TipDiv } from "modules/GridEditor"
+import { CreateStep, CreateCard, TipDiv } from "components/Designs/GridEditor"
 
 const DesignEditorBox ={ paddingLeft: "51px", marginBottom: "204px" }
 const DesignEditor_content_Box ={ display: "flex",width:"100%" }

@@ -128,7 +128,8 @@ class GridEditor extends Component {
                                             key={step.uid + card.uid + step_index + card_index + card.title}
                                             marginTop="0px" marginRight="74px" marginBottom="37px" marginLeft="0px"
                                             onClick={() => this.takeOutCard(card_index, step_index, step.cards[card_index], step.cards.length)}
-                                            card={step.cards[card_index]} />
+                                            card={step.cards[card_index]}
+                                            design_id={this.props.design.uid} />
                                     })}
                                 {editor &&
                                     <CreateCard

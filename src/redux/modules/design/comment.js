@@ -23,7 +23,7 @@ const DELETE_CARD_COMMENT_SUCCESS = "DELETE_CARD_COMMENT_SUCCESS"
 const DELETE_CARD_COMMENT_FAILURE = "DELETE_CARD_COMMENT_FAILURE"
 
 const GetCardComment = () => ({ type: GET_CARD_COMMENT })
-const GetCardCommentSuccess = data => ({ type: GET_CARD_COMMENT_SUCCESS, Comment: data })
+const GetCardCommentSuccess = data => ({ type: GET_CARD_COMMENT_SUCCESS, CardComment: data })
 const GetCardCommentFailure = error => ({ type: GET_CARD_COMMENT_FAILURE })
 const CreateCardComment = () => ({ type: CREATE_CARD_COMMENT })
 const CreateCardCommentSuccess = res => ({ type: CREATE_CARD_COMMENT_SUCCESS, data: res })
@@ -32,11 +32,21 @@ const DeleteCardComment = () => ({ type: DELETE_CARD_COMMENT })
 const DeleteCardCommentSuccess = res => ({ type: DELETE_CARD_COMMENT_SUCCESS, data: res })
 const DeleteCardCommentFailure = error => ({ type: DELETE_CARD_COMMENT_FAILURE })
 
+const GetDesignComment = () => ({ type: GET_DESIGN_COMMENT })
+const GetDesignCommentSuccess = data => ({ type: GET_DESIGN_COMMENT_SUCCESS, Comment: data })
+const GetDesignCommentFailure = error => ({ type: GET_DESIGN_COMMENT_FAILURE })
+const DeleteDesignComment = () => ({ type: DELETE_DESIGN_COMMENT })
+const DeleteDesignCommentSuccess = res => ({ type: DELETE_DESIGN_COMMENT_SUCCESS, data: res })
+const DeleteDesignCommentFailure = error => ({ type: DELETE_DESIGN_COMMENT_FAILURE })
+const CreateDesignComment = () => ({ type: CREATE_DESIGN_COMMENT })
+const CreateDesignCommentSuccess = res => ({ type: CREATE_DESIGN_COMMENT_SUCCESS, data: res })
+const CreateDesignCommentFailure = error => ({ type: CREATE_DESIGN_COMMENT_FAILURE })
+
 const initialState = {
     GetCardComment: { status: "INIT" },
     CreateCardComment: { status: "INIT" },
     DeleteCardComment: { status: "INIT" },
-    status: { Comment: [] }
+    status: { Comment: [], CardComment: [] }
 };
 
 export function DesignComment(state, action) {
@@ -82,6 +92,18 @@ export function DesignComment(state, action) {
             return update(state, {
                 DeleteDesignComment: { status: { $set: "FAILURE" } }
             })
+        case GET_CARD_COMMENT:
+            return update(state, {
+                CreateCardComment: { status: { $set: "WATTING" } }
+            });
+        case GET_CARD_COMMENT_SUCCESS:
+            return update(state, {
+                CreateCardComment: { status: { $set: "SUCCESS" } }, status: { CardComment: { $set: action.CardComment } }
+            });
+        case GET_CARD_COMMENT_FAILURE:
+            return update(state, { CreateCardComment: { status: { $set: "FAILURE" } } });
+        case CREATE_CARD_COMMENT:
+            return update(state, { CreateCardComment: { status: { $set: "WATTING" } } });
         default:
             return state
     }
@@ -104,6 +126,7 @@ export const GetCardCommentRequest = (design_id, card_id) => {
                 return res.json();
             })
             .then(res => {
+                console.log("card-data:", res);
                 return dispatch(GetCardCommentSuccess(res.data));
             })
             .catch(error => {
@@ -193,16 +216,6 @@ export const GetDesignCommentRequest = (design_id) => {
             });
     };
 }
-
-const GetDesignComment = () => ({ type: GET_DESIGN_COMMENT })
-const GetDesignCommentSuccess = data => ({ type: GET_DESIGN_COMMENT_SUCCESS, Comment: data })
-const GetDesignCommentFailure = error => ({ type: GET_DESIGN_COMMENT_FAILURE })
-const DeleteDesignComment = () => ({ type: DELETE_DESIGN_COMMENT })
-const DeleteDesignCommentSuccess = res => ({ type: DELETE_DESIGN_COMMENT_SUCCESS, data: res })
-const DeleteDesignCommentFailure = error => ({ type: DELETE_DESIGN_COMMENT_FAILURE })
-const CreateDesignComment = () => ({ type: CREATE_DESIGN_COMMENT })
-const CreateDesignCommentSuccess = res => ({ type: CREATE_DESIGN_COMMENT_SUCCESS, data: res })
-const CreateDesignCommentFailure = error => ({ type: CREATE_DESIGN_COMMENT_FAILURE })
 
 
 export const DeleteDesignCommentRequest = (design_id, comment_id, token) => {

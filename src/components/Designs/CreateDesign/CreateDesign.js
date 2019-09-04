@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CreateStep, CreateCard, TipDiv } from "modules/GridEditor";
+import { CreateStep, CreateCard, TipDiv } from "components/Designs/GridEditor";
 import { FormInput, FormTextArea } from "components/Commons/FormItem";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";

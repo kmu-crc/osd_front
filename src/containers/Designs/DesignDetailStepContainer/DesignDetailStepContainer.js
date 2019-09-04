@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import GridEditor from "modules/GridEditor"
+import GridEditor from "components/Designs/GridEditor"
 import { GetDesignDetailRequest, CreateDesignBoardRequest, UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
 
 class DesignDetailStepContainer extends Component {
