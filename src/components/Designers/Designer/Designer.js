@@ -108,7 +108,6 @@ class Designer extends Component {
     }
     render() {
         const designer = this.state.data;
-
         return (
             <DesignerComp onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
                 <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL && designer.imgURL.m_img || noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>

@@ -83,7 +83,7 @@ class Design extends Component {
               {DateFormat(data.update_time)}</div>
           </div>
         </div>
-        <div style={{ border:"1px solid black",zIndex: "703", marginLeft: "24.92px", marginTop: "286px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+        <div style={{zIndex: "703", marginLeft: "24.92px", marginTop: "286px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
           <div style={{ zIndex: "703", marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
           <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{NumberFormat(data.view_count)}</div>
           <div style={{ zIndex: "703", marginRight: "4px" }}><img alt="icon" style={{ width: "13px", height: "13px" }} src={iThumbUp} /></div>
