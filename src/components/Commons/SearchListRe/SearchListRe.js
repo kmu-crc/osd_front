@@ -115,22 +115,20 @@ class SearchListRe extends Component {
             alert("키워드를 입력해주세요");
         } else {
             this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`);
-            console.log(this.props.history);
             this.changeState();
         }
     };
-    onChangeDropBox(event, { value }) {
-        console.log(value);
-        // this.setState({ selectCate: { value }.value });
-    };
-    typeChange = (e, { value }) => {
-        this.props.history.replace(`/search/${value}/${this.props.sort}/${this.props.keyword}`);
-    };
-    sortChange = (e, { value }) => {
-        this.props.history.replace(`/search/${this.props.type}/${value}/${this.props.keyword}`);
+    onChangeDropBox = async (event, { value }) => {
+        console.log(this.state.type[value]);
+        await this.setState({ selectType: this.state.type[value] });
+        this.props.history.replace(`/search/${this.state.selectedType.type}/${this.state.this_order.keyword}/${this.props.keyword}`);
         this.changeState();
     };
-
+    handleChangeOrderOps = (order) => {
+        this.setState({ this_order: order })
+        this.props.history.replace(`/search/${this.props.type}/${order.keyword}/${this.props.keyword}`);
+        this.changeState();
+    }
     render() {
 
         return (
@@ -153,8 +151,6 @@ class SearchListRe extends Component {
 
                         <div className="cateUI">
                             {this.state.selectCate != 2 &&
-
-
                                 <React.Fragment>
                                     <div style={{ color: "red" }}>세부카테고리</div>
                                     <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
@@ -163,18 +159,16 @@ class SearchListRe extends Component {
                                     <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
                                 </React.Fragment>
                             }
-
-
                         </div>
                         {/* <div className="cateUI">{this.state.selectCate != 1 &&<React.Fragment><div style={{ color: "red" }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div></React.Fragment>}</div> */}
-                        <div style={{ border: "1xp solid red", position: "absolute", top: "200px", right: "0px" }}>
-                            {/* <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} /> */}
-                        </div>
+                        {/* <div style={{ position: "absolute", top: "200px", right: "0px" }}> */}
+                        <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
+                        {/* </div> */}
                     </div>
                     <div>
-                        {this.props.type === "designer" && <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />}
-                        {this.props.type === "group" && <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />}
-                        {this.props.type === "design" && <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />}
+                        {/* {this.props.type === "designer" && <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />} */}
+                        {/* {this.props.type === "group" && <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />} */}
+                        {/* {this.props.type === "design" && <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />} */}
                     </div>
                 </SearchForm>
             </div>

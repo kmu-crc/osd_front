@@ -26,7 +26,8 @@ class GridEditor extends Component {
         super(props);
         this.state = {
             card_loading: false, card: false, newcard: false, row: null, col: null,
-            newstep: false, cardDetail: null, title: null, w: 1920, ws: { left: 271, top: 270, height: 1890 }, movableRight: true, movableLeft: true
+            newstep: false, cardDetail: null, title: null, 
+            w: 1920, ws: { left: 271, top: 270, height: 1890 }, movableRight: true, movableLeft: true
         }
     }
     getHeight(obj) {

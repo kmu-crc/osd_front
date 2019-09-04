@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import zoom from "source/zoom.svg"
-import { all } from 'q';
 
 const SearchContainer = styled.div`
     display: ${props => props.visible};

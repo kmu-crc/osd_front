@@ -16,7 +16,7 @@ class ModifyDesignFileContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    DesignDetailView: state.DesignDetailView.status.DesignDetailView
+    DesignDetailView: state.Design.status.DesignDetailView
   };
 };
 
