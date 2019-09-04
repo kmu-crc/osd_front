@@ -500,7 +500,7 @@ export function LikeDesignerRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("like >>>", data)
+            console.log("like >>>", data);
             if (!data) {
                 console.log("no data")
             }

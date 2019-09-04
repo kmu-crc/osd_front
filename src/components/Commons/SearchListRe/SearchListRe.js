@@ -65,6 +65,7 @@ const SearchForm = styled.div`
         opacity: 1;
     }
 `;
+
 class SearchListRe extends Component {
     constructor(props) {
         super(props);
