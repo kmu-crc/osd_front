@@ -49,7 +49,7 @@ const Summary_Forked_Icon = {
 const Summary_Forked = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
 
 const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "90px", right: "72px", textAlign: "right" }
-const interestDesignerTitle = {
+const interestDesignerTitle = {cursor:"pointer",
     display: "inline-block", width: "164px", height: "25px",
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
 }
@@ -58,7 +58,7 @@ const interestDesignerImg = {
     backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center", opacity: "0.55"
 }
 
-const sendMessageBox = { overflow: "hidden", position: "absolute", width: "250px", height: "45px", top: "168px", right: "72px", textAlign: "right" }
+const sendMessageBox = { cursor:"pointer",overflow: "hidden", position: "absolute", width: "250px", height: "45px", top: "168px", right: "72px", textAlign: "right" }
 const sendMessagTitle = {
     display: "inline-block", width: "164px", height: "45px",
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
@@ -90,7 +90,10 @@ class DesignerPageHeader extends Component {
         this.state = { tmpLike: false, likeDialog: false, forkDialog: 0 };
         this.like = this.like.bind(this);
     }
-
+    gotoMyModify = () => {
+        let href = window.location.href.substring(0, window.location.href.search("mypage"))
+        window.location.href = href + 'mymodify';
+    }
     like() {
         if (this.state.tmpLike) { //dislike
             this.setState({ tmpLike: !this.state.tmpLike })
@@ -103,18 +106,21 @@ class DesignerPageHeader extends Component {
     render() {
         const MypageInfo = this.props.DesignerDetail;
         const countInfo = this.props.Count || defaultCount;
-        const thumbnailInfo = MypageInfo.thumbnail ? MypageInfo.thumbnailUrl : noimg;
+        const thumbnailInfo = MypageInfo.thumbnail ? MypageInfo.thumbnailUrl.m_img : noimg;
         if (MypageInfo.about_me !== undefined) {
             about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
+        const isMyProfile = this.props.userInfo&& this.props.DesignerDetail&& this.props.userInfo.uid == this.props.DesignerDetail.uid ?true:false;
+
+
         return (
             <React.Fragment>
 
                 <div style={BackgroundBox}>
                     <div style={Name}>{MypageInfo.nick_name}</div>
-                    <ProfileBox img={thumbnailInfo.m_img} />
+                    <ProfileBox img={thumbnailInfo} />
                     <div style={Title}>{MypageInfo.categoryName}</div>
                     <div style={ExplainBox01}>{about_me[0]}</div>
                     <div style={ExplainBox02}>{about_me[1]}</div>
@@ -126,10 +132,13 @@ class DesignerPageHeader extends Component {
                         <div style={Summary_Forked_Icon}></div>
                         <div style={Summary_Forked}>{countInfo.total_group + countInfo.total_design}</div>
                     </div>
+                   
+                   { isMyProfile==false?
+                    <React.Fragment>
                     <div onClick={this.props.userInfo == null ? null : () => this.like()} style={interestDesignerBox}>
                         <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
-                        <div style={{
-                            display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px", opacity: this.state.tmpLike ? "1" : "0.45",
+                        <div style={{ width:"40px",
+                            display: "inline-block", height: "35px", marginLeft: "15px", marginBottom: "-7px", opacity: this.state.tmpLike ? "1" : "0.45",
                             backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
                         }}></div>
                     </div>
@@ -137,6 +146,19 @@ class DesignerPageHeader extends Component {
                         <div style={sendMessagTitle}>메세지 보내기</div>
                         <div style={sendMessageImg}></div>
                     </div>
+                    </React.Fragment>
+                    :
+                    <div onClick = {this.gotoMyModify}  style={interestDesignerBox
+                    }>
+                    <div style={interestDesignerTitle}>정보 수정하기</div>
+                    <div style={{cursor:"pointer",display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px", 
+                            backgroundSize: "cover", backgroundPosition: "center center"}}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
+                    </div>
+                    // <div style={{display: 'flex', justifyContent: "space-start", paddingTop: '32px', paddingLeft: '115px' }}>
+                    // <div style={{cursor:"pointer"}}onClick = {this.gotoMyModify} className="reviseInformation">정보 수정하기</div>
+                    // <div style={{cursor:"pointer"}}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
+                    // </div>
+                   }
                     <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
 
                     {this.state.likeDialog == false ? null :
