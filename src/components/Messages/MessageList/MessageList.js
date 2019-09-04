@@ -11,6 +11,7 @@ import Socket from "modules/Socket"
 import { Modal } from 'semantic-ui-react';
 
 
+
 const SummaryList = styled.div`
 height:794px;
 margin-top:14px;
@@ -119,7 +120,6 @@ class Messages extends React.Component
 
 
     async componentDidMount() {
-      
       await this.props.GetMyMsgListRequest(this.props.token)
         .then(async (res) => {
           if (res.MsgList && res.MsgList.length > 0) {
@@ -142,6 +142,11 @@ class Messages extends React.Component
           this.setState({ render: true })
         })
       }
+      if(this.props.id&&this.props.name)
+      {
+        this.setMsgId(-1,this.props.id,this.props.name)
+      }
+      // if(this.props.match)
       // if (this.props.userInfo) {
 
       //   try {
