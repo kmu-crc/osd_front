@@ -97,9 +97,8 @@ class DesignInfo extends Component {
         } else if (this.props.DesignDetail.waitingStatus === 1) {
             alert("가입 대기중인 디자인입니다.");
         } else {
-            const confirm = window.confirm("해당 디자인에 가입 신청하시겠습니까?");
             const data = [{ uid: this.props.userInfo.uid }];
-            if (confirm) {
+            if (window.confirm("해당 디자인에 가입 신청하시겠습니까?")) {
                 this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
                     .then(res => {
                         if (res && res.success) {
@@ -135,7 +134,7 @@ class DesignInfo extends Component {
                 .then(() => { this.props.GetDesignDetailRequest(this.props.id) })
                 .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token) })
         } else {
-            this.setState({ likeDialog: true })
+            await this.setState({ likeDialog: true })
             this.props.LikeDesignRequest(this.props.id, this.props.token)
                 .then(() => { this.props.GetDesignDetailRequest(this.props.id) })
                 .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token) })
@@ -171,7 +170,12 @@ class DesignInfo extends Component {
     goParentDesign = (parent) => {
         window.location.href = geturl() + `/designDetail/${parent}`
     }
-
+    componentWillReceiveProps = async (nextProps) => {
+        if (nextProps.DesignDetail.Count !== this.props.DesignDetail.Count) {
+            console.log("reload");
+            return true;
+        }
+    }
     render() {
         const { isMyDesign, editor, DesignDetail, userInfo, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg

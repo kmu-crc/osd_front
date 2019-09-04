@@ -47,7 +47,6 @@ class GroupInfoComponent extends Component {
         super(props);
         this.state = { joinDialog: false, likeDialog: false, forkDialog: 0, manager: false };
         this.needLogin = this.needLogin.bind(this);
-        this.joinGroup = this.joinGroup.bind(this);
         this.like = this.like.bind(this);
     }
     needLogin() {
@@ -69,9 +68,6 @@ class GroupInfoComponent extends Component {
                 .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
             setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
         }
-    }
-    async joinGroup() {
-        // await this.setState({  })
     }
 
     handleMoreViewDescription = (description) => {
@@ -144,7 +140,7 @@ class GroupInfoComponent extends Component {
         const JoinCancelModal = () => {
             const title = this.props.GroupInfo.title;
             return (
-                this.state.showPopup == 2 &&
+                this.state.showPopup === 2 &&
                 <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
                     <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
                         <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
@@ -152,15 +148,12 @@ class GroupInfoComponent extends Component {
                     <div style={{
                         marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
                         fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-                    }}>
-                        {title && title.slice(0, 20)}<br />
-                        가입 신청을 취소 하시겠습니까?</div>
+                    }}>{title && title.slice(0, 20)}<br />가입 신청을 취소 하시겠습니까?</div>
                     <div onClick={() => this.handleShowPopup(-1)} style={{
                         cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
                         textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
                         color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-                    }}>
-                        네, 취소합니다.</div>
+                    }}>네, 취소합니다.</div>
                 </div>
             );
         }

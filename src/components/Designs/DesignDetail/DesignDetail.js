@@ -30,7 +30,7 @@ class DesignDetail extends Component {
   }
   // componentWillReceiveProps = async (nextProps) => {
   //   if (nextProps.DesignDetail !== this.props.DesignDetail) {
-  //     console.log("reload", nextProps);
+  //     console.log("reload", nextProps.Count);
   //     return true;
   //   }
   // }
