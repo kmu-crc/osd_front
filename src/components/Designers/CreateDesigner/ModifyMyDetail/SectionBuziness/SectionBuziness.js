@@ -15,6 +15,7 @@ class SectionBuziness extends Component
         this.onChangeIsDesigner = this.onChangeIsDesigner.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeTeam = this.onChangeTeam.bind(this);
+        this.isDesignerCheck = this.isDesignerCheck.bind(this);
     }
     shouldComponentUpdate(nextProps)
     {
@@ -27,11 +28,12 @@ class SectionBuziness extends Component
         this.props.updateIsDesigner(nextProps.MyDetail.is_designer);
         this.props.updateLocation(nextProps.MyDetail.location);
         this.props.updateContact(nextProps.MyDetail.contact);
+
       }
       return true;
     }
-    isDesignerCheck = ()=>{
-      var checkDiv = document.getElementById("isDesignerCheckbox");
+    isDesignerCheck(){
+      var checkDiv = document.getElementById("designercheckbox");
       if(checkDiv.style.backgroundColor === "rgb(255, 255, 255)"){
         checkDiv.style.backgroundColor = "#FF0000"
       }
@@ -75,12 +77,11 @@ class SectionBuziness extends Component
         description[1] = "디자이너 리스트에 올라가게 됩니다."
         description[2] = "추후에 직업에 대한 부가적인 정보를 입력하여 많은 사람들과 소통하게 됩니다."
 
-        console.log("checkbox",this.state.isDesigner);
         return(
             <>
             <div style = {{display:"flex", justifyContent:"space-start",paddingLeft:"95.5px"}}>
             <div style={{ fontSize:"20px", color:"#707070",fontWeight: "500" }}>디자이너 활동 여부</div>
-            <checkbox id="isDesignerCheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: this.state.isDesigner==1?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
+            <checkbox id="designercheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: this.state.isDesigner==1?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
               onClick={this.isDesignerCheck}/>
               <div style={{color:"#FF0000", fontSize:"17px", textAlign:"left", marginLeft:"420px", width:"27px", height:"25px"}}>TIP</div>
             </div>
@@ -90,7 +91,7 @@ class SectionBuziness extends Component
                 <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>팀</div>
                   <input onChange = {this.onChangeTeam} type="text" maxLength="100" value={this.state.team}
                   style={{ border:"none", outline:"none",fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"500",
-                   paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
+                   paddingLeft:"15px",marginLeft: "57px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
             </div>
           <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
             <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>경력</div>

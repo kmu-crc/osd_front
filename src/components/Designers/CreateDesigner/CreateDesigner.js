@@ -40,6 +40,19 @@ class ModifyMyDetail extends Component {
     this.handleClickModifyMyProfile = this.handleClickModifyMyProfile.bind(this);
 
   }
+  shouldComponentUpdate(nextProps)
+  {
+    if(this.props.MyDetail&&this.props.MyDetail!=nextProps.MyDetail)
+    {
+      this.setState({
+        thumbnail: nextProps.MyDetail.profileImg.m_img==null?"":nextProps.MyDetail.profileImg.m_img,
+        nick_name: nextProps.MyDetail.nick_name==null?"":nextProps.MyDetail.nick_name,
+        about_me: nextProps.MyDetail.about_me==null?"":nextProps.MyDetail.about_me,
+        password: "", passwordCheck: "",
+      });
+    }
+    return true;
+  }
   handleClickModifyMyProfile()
   {
     this.setState({isClickModify:!this.state.isClickModify});
@@ -128,6 +141,7 @@ class ModifyMyDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
+
     let formData = this.state;
 
     if (this.state.password) {

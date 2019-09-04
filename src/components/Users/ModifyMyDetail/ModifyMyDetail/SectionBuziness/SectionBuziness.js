@@ -90,7 +90,7 @@ class SectionBuziness extends Component
                 <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>팀</div>
                   <input onChange = {this.onChangeTeam} maxLength="100" type="text" value={this.state.team}
                   style={{ border:"none", outline:"none",fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"500",
-                   paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
+                   paddingLeft:"15px",marginLeft: "57px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
             </div>
           <div style={{display:"flex",position:"relative",marginTop:"46px" ,justifyContent:"space-start"}}>
             <div style={{marginLeft:"265px", color:"#707070",fontSize:"20px",opacity:"0.5"}}>경력</div>

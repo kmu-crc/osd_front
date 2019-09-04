@@ -94,8 +94,8 @@ export class OverlapField extends Component {
     return (
       <div>
         <Form.Field>
-          <label>{label}</label>
-          <input status={this.state[name].status} value={this.state[name].value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+          <label >{label}</label>
+          <input  status={this.state[name].status} value={this.state[name].value} name={name} type={type} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
           {this.state[name].status == null ? <span>{this.state[name].message}</span> : null}
         </Form.Field>
         <Form.Field>
@@ -116,8 +116,8 @@ export class FormField extends Component {
     delete newProps.RenderComponent;
     return (
       <Field>
-        <label>{label}</label>
-        <RenderComponent {...newProps}/>
+        <label style={{width:"95%",fontSize:"17px",marginBottom:"20px"}}>{label}</label>
+        <RenderComponent  {...newProps}/>
       </Field>
     );
   }
