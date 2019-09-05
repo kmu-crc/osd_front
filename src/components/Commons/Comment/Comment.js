@@ -14,8 +14,16 @@ class Comment extends Component {
     undoReply = () => { this.setState({ reply: false, this_reply: "" }); };
     undoComment = () => { this.setState({ this_comment: "" }); };
     requestReply = (data) => { this.props.reply(data); };
-    remove = (commentId) => { 
-        this.props.remove(commentId);
+    requestComment = (data) => { this.props.comment(data); };
+    removeReply = (commentId) => { this.props.removeReply(commentId); };
+    removeComment = (commentId) => {
+        const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
+        if (comm.replies && comm.replies > 0) {
+            alert("답변이 있는 댓글은 삭제할 수 없습니다.");
+        }
+        else {
+            this.props.removeComment(commentId);
+        }
     };
 
     render() {
@@ -33,7 +41,7 @@ class Comment extends Component {
                         <div style={{ marginLeft: "26px", marginTop: "41px", display: "flex" }}>
                             <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(item.create_time)}</div>
                             {!reply && <div onClick={this.reply} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>답글 달기</div>}
-                            {mine && <div onClick={() => this.remove(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                            {mine && <div onClick={() => this.removeComment(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
                         </div>
                     </div>
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
@@ -46,7 +54,7 @@ class Comment extends Component {
                                 <div style={{ marginLeft: "55px", display: "flex" }}>
                                     <div style={{ marginTop: "8px", fontSize: "20px", fontWeight: "300", fontFamily: "Noto Sans KR" }}>{repli.comment}</div>
                                     <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(repli.create_time)}</div>
-                                    {mine && <div onClick={() => this.remove(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                                    {mine && <div onClick={() => this.removeReply(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
                                 </div>
                             </div>
                         )
