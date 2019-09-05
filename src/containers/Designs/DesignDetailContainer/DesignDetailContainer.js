@@ -10,6 +10,7 @@ import {
 
 class DesignDetailContainer extends Component {
   render() {
+    console.log("count:",this.props.Count);
     return (<DesignDetail {...this.props} />)
   }
 }

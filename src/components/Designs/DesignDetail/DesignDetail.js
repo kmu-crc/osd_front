@@ -11,7 +11,7 @@ class DesignDetail extends Component {
   }
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token).
-      then(() => {
+      then(async() => {
         if (this.props.userInfo === null) this.setState({ isMyDesign: false });
         else if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
           this.setState({ isMyDesign: true });
@@ -19,21 +19,15 @@ class DesignDetail extends Component {
         else {
           this.setState({ isMyDesign: false });
         }
-        this.setState({ editor: this.checkEditorPermission() });
+        await this.setState({ editor: this.checkEditorPermission() });
       }); // 디자인에 대한 정보
     this.props.UpdateDesignViewRequest(this.props.id)
       .then(this.props.GetDesignCountRequest(this.props.id)); // 디자인 조회수 업데이트 후 카운트 정보 가져옴
     if (this.props.token) {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
     } // 로그인 한 경우 좋아요 했는지 여부 가져오기
-
   }
-  // componentWillReceiveProps = async (nextProps) => {
-  //   if (nextProps.DesignDetail !== this.props.DesignDetail) {
-  //     console.log("reload", nextProps.Count);
-  //     return true;
-  //   }
-  // }
+
   gotoModifyPage = () => {
     window.location.href = "/groupDetail/" + this.props.id + "/modify"
   }
@@ -47,16 +41,15 @@ class DesignDetail extends Component {
   render() {
     console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
-    const { isMyDesign, editor } = this.state;
     return (<>
       {DesignDetail && DesignDetail.uid ? <>
         {/* design info */}
-        <DesignInfo {...this.props} editor={this.state.editor} />
+        <DesignInfo {...this.props} {...this.state} />
         {/* design detail */}
         {DesignDetail && DesignDetail.is_project === 1 ? (
-          <DesignDetailStepContainer design={DesignDetail} editor={editor} />
+          <DesignDetailStepContainer design={DesignDetail} {...this.state}/>
         ) : (
-            <DesignDetailViewContainer id={this.props.id} editor={editor} history={this.props.history} />
+            <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />
           )}
       </> : <Loading />}
     </>)
