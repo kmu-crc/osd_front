@@ -3,9 +3,15 @@ import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 
 class Footer extends Component {
+    
+    constructor(props)
+    {
+        super(props);
+    }
+
     render() {
         return (
-            <div style={{
+            <div style={{ width:"100%",
                 height: "22px", marginBottom: "20px", fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white",
                 display: "flex", fontSize: "15px", lineHeight: "22px", textAlign: "center",
                 fontWeight: "500"

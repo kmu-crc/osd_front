@@ -66,7 +66,9 @@ class CreateDesign extends Component {
     }
   }
   submit = () => {
-    console.log("!!!");
+
+    
+
   }
   onChangeCategory1 = (event, { value }) => {
     const cate2 = this.props.cate2[value];
@@ -178,7 +180,7 @@ class CreateDesign extends Component {
                   <div style={{ display: "flex" }}>
                     <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
                     <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-                      <Dropdown name="category1" onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
+                      <Dropdown name="category1" placeholder="카테고리를 선택해주세요" onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
                         options={this.props.cate1} selection ref="dropdown1" value={this.state.selectedCate1} />
                     </div>
                     <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>

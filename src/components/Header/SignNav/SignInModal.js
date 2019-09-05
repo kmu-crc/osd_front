@@ -66,6 +66,22 @@ class SignInModal extends Component {
                 }
             })
     }
+    async checkEmail()
+    {
+        const data = {email:this.state.email}
+        let returnvalue = true;
+        await this.props.CheckEmailRequest(data).then(
+            (res)=>{
+                console.log(res, data);
+                if(res.checkEmail==false)
+                {                   
+                    returnvalue = false;
+                }
+            }
+        );
+        console.log("qwer",returnvalue);
+        return returnvalue;
+    }
     findIDPW()
     {
         this.setState({findPW:true});
@@ -88,9 +104,14 @@ class SignInModal extends Component {
             alert("아이디를 입력해주세요!");
             return;
         }
-        else if(checkedMail.test(this.state.email))
+        else if(checkedMail.test(this.state.email)==false)
         {
             alert("올바른 양식이 아닙니다!");
+            return;
+        }
+        else if(await this.checkEmail()==true)
+        {      
+            alert("등록되지 않은 아이디입니다.");
             return;
         }
 
@@ -133,6 +154,7 @@ class SignInModal extends Component {
                 </Modal.Content>
             </CustomModal>
             :
+            //< ================  비밀번호 찾기 ===================== >
             <CustomModal style={{height:"700px"}} open={open} onClose={this.onClose}>
             <Modal.Content>
                 <div className="title" style = {{marginTop:"100px"}} >OPEN SOURCE DESIGN, OPEN DESIGN</div>

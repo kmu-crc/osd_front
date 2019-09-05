@@ -73,7 +73,7 @@ class SearchForm extends Component {
     }
 
     render() {
-        console.log(this.state.keyword);
+        //console.log(this.state.keyword);
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />

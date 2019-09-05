@@ -37,7 +37,7 @@ class ModifyMyDetail extends Component {
     this.updateCareer = this.updateCareer.bind(this);
     this.updateLocation = this.updateLocation.bind(this);
     this.updateContact = this.updateContact.bind(this);
-
+    
   }
 
   /**UPDATE */
@@ -121,11 +121,40 @@ class ModifyMyDetail extends Component {
       validates: this.state.password2.validates
     });
   }
+  async checkNickname()
+  {
+      const data = {nick_name:this.state.nick_name}
+      let returnvalue = true;
+      await this.props.CheckNickNameRequest(data).then(
+          (res)=>{
+              console.log(res, data);
+              if(res.checkNickName==false)
+              {                   
+                  returnvalue = false;
+              }
+          }
+      );
+      console.log("qwer",returnvalue);
+      return returnvalue;
+  }
 
   onSubmit = async e => {
     e.preventDefault();
     let formData = this.state;
 
+    if(this.state.nick_name!=this.props.MyDetail.nick_name)
+    {
+      if(await this.checkNickname()==false)
+      {
+          alert("중복된 닉네임입니다");
+          return;
+      }
+    }
+    if(this.state.nick_name=="")
+    {
+          alert("닉네임을 입력해주세요");
+          return;
+    }
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
@@ -147,7 +176,8 @@ class ModifyMyDetail extends Component {
       .then(res => {
         if (res.success) {
           alert("정보가 수정되었습니다.");
-          this.props.history.push(`/`);
+          //this.props.history.push(`/`);
+          window.location.href="/"
         } else {
           alert("다시 시도해주세요");
           this.setState({

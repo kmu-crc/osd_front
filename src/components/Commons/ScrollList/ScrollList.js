@@ -53,6 +53,7 @@ class ScrollList extends Component {
   getLoadData = async (page) => {
     const { dataList } = this.props;
     if (!this.props.getListRequest) return;
+
     await this.setState({ loading: true, page: this.state.page + 1 }, () => {
       this.props.getListRequest(this.state.page)
         .then(() => {
@@ -61,16 +62,17 @@ class ScrollList extends Component {
           console.log(err); this.setState({ loading: false, hasMore: false });
         });
     })
+
   };
   checkHasMore = (list) => {
-    return list === null || list && list.length < 10 ? false : true;
+    return list == null || list && list.length < 10 ? false : true;
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.reload) {
       this.setState({ hasMore: true, loading: false, page: 0 });
       this.props.handleReload && this.props.handleReload();
 
-      if (nextProps.dataListAdded.length !== this.props.dataListAdded.length) {
+     if (nextProps.dataListAdded.length != this.props.dataListAdded.length) {
         console.log("got changed");
         return true;
       }

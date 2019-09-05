@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
+import {  CheckNickNameRequest } from "redux/modules/auth"
+
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
 
 class ModifyMyDetailContainer extends Component {
@@ -21,7 +23,9 @@ const mapStateToProps = (state) => {
     MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
     category1: state.Category.status.category1,
-    category2: state.Category.status.category2
+    category2: state.Category.status.category2,
+    CheckNickName: state.Authentication.checkStatus.checkNickName
+
   }
 }
 
@@ -35,6 +39,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateUserDetailRequest: (data, token) => {
       return dispatch(UpdateUserDetailRequest(data, token))
+    },
+    CheckNickNameRequest: (NickName) => {
+      return dispatch(CheckNickNameRequest(NickName))
     }
   }
 }

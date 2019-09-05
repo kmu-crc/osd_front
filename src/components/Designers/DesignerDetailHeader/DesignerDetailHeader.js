@@ -7,6 +7,7 @@ import iForked from "source/baseline_library_books_black_48dp.png";
 import iThumbUp from "source/baseline_thumb_up_black_48dp_2x.png";
 import iMessage from 'source/email.png';
 import IconView from "source/IconView";
+import iEdit from 'source/sharp_edit_black_48dp.png';
 
 import NumberFormat from "modules/NumberFormat";
 //CSS
@@ -87,7 +88,7 @@ class DesignerPageHeader extends Component {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'mymodify';
     }
-    like() {
+    async like() {
         if (this.state.tmpLike) { //dislike
             this.setState({ tmpLike: !this.state.tmpLike })
         } else {
