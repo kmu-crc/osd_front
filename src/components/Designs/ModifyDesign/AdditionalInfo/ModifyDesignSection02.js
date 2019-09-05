@@ -35,9 +35,9 @@ const Additional_ExplainBox = {
 }
 
 class ModifyDesignSection02 extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   // shouldComponentUpdate(nextProps)
   // {

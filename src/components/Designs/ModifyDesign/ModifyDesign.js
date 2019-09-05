@@ -34,14 +34,14 @@ class ModifyDesign extends Component {
   }
   shouldComponentUpdate(nextProps) {
     console.log("TEST", nextProps.DesignDetail.title);
-    if (this.props.DesignDetail.title != nextProps.DesignDetail.title) this.setState({ designTitle: nextProps.DesignDetail.title });
-    if (this.props.DesignDetail.explanation != nextProps.DesignDetail.explanation) this.setState({ designExplain: nextProps.DesignDetail.explanation });
-    if (this.props.DesignDetail.img != nextProps.DesignDetail.img) this.setState({ thumbnail: nextProps.DesignDetail.img.m_img });
+    if (this.props.DesignDetail.title !== nextProps.DesignDetail.title) this.setState({ designTitle: nextProps.DesignDetail.title });
+    if (this.props.DesignDetail.explanation !== nextProps.DesignDetail.explanation) this.setState({ designExplain: nextProps.DesignDetail.explanation });
+    if (this.props.DesignDetail.img !== nextProps.DesignDetail.img) this.setState({ thumbnail: nextProps.DesignDetail.img.m_img });
 
     return true;
   }
   handleOnClickDeleteDesign() {
-    if (this.state.isDelete == true) {
+    if (this.state.isDelete === true) {
       this.setState({ isDelete: !this.state.isDelete})
     }
     else {
@@ -98,14 +98,14 @@ class ModifyDesign extends Component {
   }
   render() {
     // const myInfo = this.props.MyDetail
-    const SectionContentEditor = () => {
-    }
+    // const SectionContentEditor = () => {
+    // }
     const { step } = this.state;
     const DeleteDesignModal = () => {
       return (
         <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "200px", textAlign: "center", top: "283px" }}>
           <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.props.DesignDetail.title}<br />삭제하시겠습니까?</div>
-          <div onClick={this.deleteDesign} style={{cursor:"pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
+          <div onClick={this.deleteDesign} style={{cursor:"pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px",  textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
           <div onClick={this.handleOnClickDeleteDesign} style={{
             cursor:"pointer",position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px",
             backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center",
@@ -114,31 +114,31 @@ class ModifyDesign extends Component {
         </Modal>
       );
     }
-    const DeleteWariningModal = () => {
-      return (
-        <Modal open={this.state.deleteDialog} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "160px", textAlign: "center", top: "40px" }}>
-          <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "29px", marginTop: "40px", marginBottom: "10px" }}>
-            사용자 매뉴얼 디자인 등록 01을 삭제하지 못했습니다.</div>
-          <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "none", color: "#FF0000" }}>
-            컨텐츠의 개설자만 삭제할 권한이 주어집니다.</div>
-        </Modal>
-      );
-    }
-    const DeleteCompleteModal = () => {
-      return (
-        <Modal open={this.state.deleteDialog} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "160px", textAlign: "center", top: "40px" }}>
-          <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "29px", marginTop: "40px", marginBottom: "10px" }}>
-            사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
-          <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>
-            되돌리기</div>
-          <div onClick={this.handleOnClickDeleteDesign} style={{
-            position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px",
-            backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center",
-          }}>
-          </div>
-        </Modal>
-      );
-    }
+    // const DeleteWariningModal = () => {
+    //   return (
+    //     <Modal open={this.state.deleteDialog} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "160px", textAlign: "center", top: "40px" }}>
+    //       <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "29px", marginTop: "40px", marginBottom: "10px" }}>
+    //         사용자 매뉴얼 디자인 등록 01을 삭제하지 못했습니다.</div>
+    //       <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "none", color: "#FF0000" }}>
+    //         컨텐츠의 개설자만 삭제할 권한이 주어집니다.</div>
+    //     </Modal>
+    //   );
+    // }
+    // const DeleteCompleteModal = () => {
+    //   return (
+    //     <Modal open={this.state.deleteDialog} style={{ boxShadow: "0px 3px 6px #000000", position: "fixed", width: "576px", height: "160px", textAlign: "center", top: "40px" }}>
+    //       <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "29px", marginTop: "40px", marginBottom: "10px" }}>
+    //         사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
+    //       <div style={{ width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>
+    //         되돌리기</div>
+    //       <div onClick={this.handleOnClickDeleteDesign} style={{
+    //         position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px",
+    //         backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center",
+    //       }}>
+    //       </div>
+    //     </Modal>
+    //   );
+    // }
     return (<>
 
       <DeleteDesignModal />

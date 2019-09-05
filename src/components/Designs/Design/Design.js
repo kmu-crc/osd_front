@@ -17,7 +17,6 @@ import NumberFormat from "modules/formats/NumberFormat"
 
 // CSS 
 const DesignElement = styled.div`
-  border: 1px solid #FFFFFF;
   position: relative;
   z-index:700;
   width: 330px;
@@ -35,13 +34,13 @@ const DesignElement = styled.div`
     z-index: 701;
     position: absolute;
     border-radius: 15px;
-    background-image: linear-gradient(rgba(0,0,0, 0), rgba(64,64,64, 0.4), rgba(32,32,32, 1));
+    background-image: linear-gradient(180deg, rgba(255,255,255,0), rgba(32,32,32, 1)); 
     width: 330px;
     height: 330px;
   }
   .forked {
     position: absolute;
-    margin-left: 266px;
+    margin-left: 276px;
     margin-top: 0px;
     width: 32.63px;
     height: 70.48px;
@@ -68,22 +67,27 @@ class Design extends Component {
       <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
         <div className="cover" onClick={this.gotoDetailPage} />
         {isForked && <div className="forked" />}
-        <div style={{ zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px", width: "120px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000", cursor: "default" }}>{data.categoryName}</div>
-        <div style={{ zIndex: "703", position: "absolute", width: "274.08px", color: "#FFF", lineHeight: "40px", height: "69px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
+        <div style={{zIndex: "703", position: "absolute", textAlign: "right", marginLeft: "180px", marginTop: "285px",
+                      width: "130px", height: "40px", fontSize: "20px", fontWeight: "300", color: "#FF0000", cursor: "default" }}>{data.categoryName}</div>
+        <div style={{ zIndex: "703", position: "absolute", width: "274.08px", color: "#FFF",
+         lineHeight: "40px", height: "35px", fontFamily: "Noto Sans KR", marginLeft: "25px", marginTop: "201px" }}>
           <div style={{ fontSize: "20px", fontWeight: "700", display: "flex", justifyContent: "space-between" }}>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%",textOverflow:"ellipsis" }}>
               <TextFormat width="100%" txt={data.title} />
               {/* {data.title.substr(0, 16)}{data.title.length > 16 && "..."} */}
             </div>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{width:"285px", display: "flex", justifyContent: "space-between" }}>
             <div style={{ fontSize: "20px", fontWeight: "300", cursor: "pointer" }}>
-              {data.userName}</div>
-            <div style={{ marginTop: "5px", fontWeight: "300", width: "80px", height: "25px", fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR", cursor: "default" }} >
+            <TextFormat width="100%" txt={data.userName} /></div>
+            <div style={{ marginTop: "5px", fontWeight: "300", width: "80px", height: "25px",
+             fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR", cursor: "default" }} >
               {DateFormat(data.update_time)}</div>
           </div>
         </div>
-        <div style={{ zIndex: "703", marginLeft: "24.92px", marginTop: "286px", display: "flex", justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+        <div style={{ zIndex: "703", position:"absolute",left: "24.92px", top: "286px", display: "flex",
+         justifyContent: "space-start", width: "291px", height: "22px", textAlign: "left", lineHeight: "40px", 
+         fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
 
           <div style={{ zIndex: "703", marginRight: "4.25px" }}><IconView width="22px" height="11px" fill="white" /></div>
           <div style={{ zIndex: "703", marginRight: "6px", cursor: "default" }}>{NumberFormat(data.view_count)}</div>

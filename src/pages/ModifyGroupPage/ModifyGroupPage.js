@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ModifyGroup from "components/Groups/ModifyGroup";
+// import ModifyGroup from "components/Groups/ModifyGroup";
 import ModifyGroupContainer from "containers/Groups/ModifyGroupInfoContainer"
 
 class ModifyGroupPage extends Component {

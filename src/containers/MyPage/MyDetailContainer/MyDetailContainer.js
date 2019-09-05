@@ -16,6 +16,7 @@ class MyDetailContainer extends Component {
 
 
   render() {
+    console.log("mydetail===",this.props)
     return (//수정 요망
       <>
         <MypageHeader {...this.props}/>

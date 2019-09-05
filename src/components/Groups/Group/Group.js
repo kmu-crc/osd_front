@@ -44,7 +44,7 @@ class Group extends Component {
         return (
             <GroupElement >
                     {/**클릭 이벤트 */}
-                    <div style ={{cursor:"pointer"}} onClick={(event) => { this.handleGotoDetail(group.uid, event) }} style={{position:"absolute",width:"100%",height:"100%",zIndex:"100"}}></div>
+                    <div onClick={(event) => { this.handleGotoDetail(group.uid, event) }} style={{cursor:"pointer",position:"absolute",width:"100%",height:"100%",zIndex:"100"}}></div>
                    
                    
                     <div id="children" style={{ position: "absolute", display: "flex", marginLeft: "587px", marginTop: "137px", width: "295px" }}>
@@ -57,7 +57,8 @@ class Group extends Component {
                 <div  style={{  border: "2px solid #EFEFEF", height: "230px", width: "230px", borderRadius: "15px", backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: group.thumbnailUrl && group.thumbnailUrl.m_img ? `url(${group.thumbnailUrl.m_img})` : `url(${noimg})` }} />
                 <div >
                     <div style={{marginTop: "19px", width: "655px", marginLeft: "17px", fontFamily: "Noto Sans KR" }}>
-                        <div style={{ height:"40px",lineHeight: "40px", width:"100%",textAlign: "left", fontWeight: "700", fontSize: "20px", display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ height:"40px",lineHeight: "40px", width:"100%",
+                        color:"#707070",textAlign: "left", fontWeight: "700", fontSize: "20px", display: "flex", justifyContent: "space-between" }}>
                             <TextFormat  id="title" backgroundColor="#EFEFEF" txt={group.title} />
                             <div id="update" style={{ backgroundColor: "#EFEFEF", width: "150px", textAlign: "right", paddingRight: "27px", fontSize: "15px", fontWeight: "300", color: "#707070" }}>{DateFormat(group.child_update_time)}</div>
                         </div>
@@ -67,15 +68,15 @@ class Group extends Component {
                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                         <div className="view" style={{ display: "flex",marginRight:"20px" }}>
                             <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(group.view || 0)}</div>
+                            <div style={{color:"#707070", marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(group.view || 0)}</div>
                         </div>
                         <div className="like" style={{ display: "flex", marginRight: "20px" }}>
                             <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(group.like || 0)}</div>
+                            <div style={{ color:"#707070",marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(group.like || 0)}</div>
                         </div>
                         <div className="child" style={{ display: "flex" }}>
-                            <div style={{marginTop:"5px"}}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(group.design || 0 + group.group || 0)}</div>
+                            <div style={{marginTop:"5px"}}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55",marginTop:"10px" }} /></div>
+                            <div style={{color:"#707070", marginLeft: "5px", width: "40px", fontSize: '15px',marginTop:"4px" }}>{NumberFormat(group.design || 0 + group.group || 0)}</div>
                         </div>
                     </div>
                 </div>

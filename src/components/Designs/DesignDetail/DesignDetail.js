@@ -10,8 +10,8 @@ class DesignDetail extends Component {
     this.state = { isMyDesign: false, editor: false };
   }
   componentDidMount() {
-    this.props.GetDesignDetailRequest(this.props.id, this.props.token).
-      then(async() => {
+    this.props.GetDesignDetailRequest(this.props.id, this.props.token)
+    .then(async() => {
         if (this.props.userInfo === null) this.setState({ isMyDesign: false });
         else if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
           this.setState({ isMyDesign: true });
@@ -41,6 +41,7 @@ class DesignDetail extends Component {
   render() {
     console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
+    const { editor } = this.state;
     return (<>
       {DesignDetail && DesignDetail.uid ? <>
         {/* design info */}

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import SelectBox from "components/Commons/SelectBox"
-import showPw from "source/show_password.svg";
-import styled from "styled-components";
+import { FormControl } from "modules/FormControl";
+// import { FormControl, ValidationGroup } from "modules/FormControl";
+// import SelectBox from "components/Commons/SelectBox"
+// import showPw from "source/show_password.svg";
+// import styled from "styled-components";
 
 import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
 import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
@@ -12,7 +13,7 @@ const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
 ]
 
-const colorSwich = ['#FFFFFF', '#FF0000'];
+//const colorSwich = ['#FFFFFF', '#FF0000'];
 class ModifyMyDetail extends Component {
 
   constructor(props) {
@@ -74,8 +75,8 @@ class ModifyMyDetail extends Component {
     document.addEventListener("scroll", this.handleScroll, true)
   }
   handleScroll = () => {
-    let sections = document.querySelectorAll("section")
-
+    // let sections = document.querySelectorAll("section")
+    document.querySelectorAll("section")
   }
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })

@@ -53,6 +53,7 @@ class ScrollList extends Component {
   getLoadData = async (page) => {
     const { dataList } = this.props;
     if (!this.props.getListRequest) return;
+
     await this.setState({ loading: true, page: this.state.page + 1 }, () => {
       this.props.getListRequest(this.state.page)
         .then(() => {
@@ -61,16 +62,18 @@ class ScrollList extends Component {
           console.log(err); this.setState({ loading: false, hasMore: false });
         });
     })
+
   };
   checkHasMore = (list) => {
-    return list === null || list && list.length < 10 ? false : true;
+    if(list==null)return false;
+    return list && list.length < 10 ? false : true;
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.reload) {
       this.setState({ hasMore: true, loading: false, page: 0 });
       this.props.handleReload && this.props.handleReload();
 
-      if (nextProps.dataListAdded.length !== this.props.dataListAdded.length) {
+     if (nextProps.dataListAdded.length !== this.props.dataListAdded.length) {
         console.log("got changed");
         return true;
       }
@@ -79,7 +82,8 @@ class ScrollList extends Component {
   myRef = React.createRef();
   render() {
     const ListComponent = this.props.ListComponent;
-    const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, dataList } = this.props;
+    const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
+    // const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, dataList } = this.props;
     const { hasMore, loading } = this.state;
     return (<>
       {dataListAdded && dataListAdded.length > 0 ?
@@ -87,7 +91,7 @@ class ScrollList extends Component {
           {dataListAdded.map((item, i) => {
             const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
             const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
-            return (<FlexBox key={item.uid + i} width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+            return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
               {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
               {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>삭제</OutBtn>}
               <ListComponent data={item} />
@@ -97,7 +101,7 @@ class ScrollList extends Component {
           {!manual && hasMore && <div style={{ cursor: "default", textAlign: "center", color: "#707070", fontWeight: "500" }} onMouseOver={this.getLoadData}>스크롤<i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i></div>}
           {manual && hasMore && <div><MoreBtn className="ui button red" onClick={() => this.getLoadData()}>더보기</MoreBtn></div>}
         </FlexContainer>
-        : <div style={{ fontSize: "16px", textAlign: "center" }}>데이터가 없습니다.</div>}
+        : <div style={{ paddingTop:"160px",width:"100%",height:"330px",fontSize: "16px", textAlign: "center",}}>데이터가 없습니다.</div>}
     </>)
   }
 }

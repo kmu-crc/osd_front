@@ -41,7 +41,7 @@ class ClientTemplate extends Component {
     const prevScrollPos = this.state.prevScroll
     const { hidemenu, whensmall } = this.state
 
-    if (window.location.pathname == "/message") {
+    if (window.location.pathname === "/message") {
       this.setState({ larger: true });
       this.setState({ hidemenu: false });
       return;
@@ -88,5 +88,5 @@ class ClientTemplate extends Component {
     </MenuContext.Provider>)
   }
 }
-
+//margin:"0 auto",
 export default ClientTemplate
