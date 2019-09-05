@@ -2,23 +2,25 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ModifyDesignMember from "components/Designs/ModifyDesignMember";
-import { GetDesignDetailRequest, GetDesignCountRequest } from "redux/modules/design";
+import {
+  AcceptDesignRequest, DesignWaitingListRequest, JoinDesignRequest,
+  GetoutDesignRequest, GetDesignDetailRequest, GetDesignCountRequest
+} from "redux/modules/design";
 import { SearchMemberRequest } from "redux/modules/search";
-import { JoinDesignRequest, AcceptDesignRequest, GetoutDesignRequest, DesignWaitingListRequest } from "redux/modules/design";
 
 class DesignMemberContainer extends Component {
   render() {
-    return(
-      <ModifyDesignMember {...this.props}/>
+    return (
+      <ModifyDesignMember {...this.props} />
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    DesignDetail: state.DesignDetail.status.DesignDetail,
+    DesignDetail: state.Design.status.DesignDetail,
     members: state.Search.status.members,
-    WaitingList: state.DesignWaitingList.status.WaitingList
+    WaitingList: state.Design.status.WaitingList
   };
 };
 

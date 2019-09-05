@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import thumbup from "source/thumbup.png";
 import email from "source/email.png";
-import IconView from "source/IconView";
 import iEdit from "source/edit.png";
 import forked from "source/forked.svg";
 import noimg from "source/noimg.png";
-import DateFormat from "modules/DateFormat";
-import NumberFormat from "modules/NumberFormat";
+import noface from "source/thumbnail.png";
+import IconView from "source/IconView";
 import Cross from "components/Commons/Cross";
 import styled from "styled-components";
 import TextFormat from 'modules/TextFormat';
+import DateFormat from "modules/DateFormat";
+import NumberFormat from "modules/NumberFormat";
 import { geturl } from "config";
+import { Modal } from "semantic-ui-react";
+import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 
 const DesignInfoComp = styled.div`
     marginTop: 21px;
@@ -24,10 +27,11 @@ const DesignList = styled.div`
     z-index: 999;
     position: absolute;
     pointer-events: auto;
-    top: ${props => props.top + "px"};
+    top: ${props => props.top - 10 + "px"};
     left: ${props => props.left + "px"};
     z-index: 904;
-    height: 550px;
+    height: 250px;
+    max-height: 550px;
     width: 365px;
     border-radius: 15px;
     background-color: #FFFFFF;
@@ -36,21 +40,21 @@ const DesignList = styled.div`
     overflow-y: hidden;
     overflow-x: hidden;
     
-    .list::-webkit-scrollbar {
+    &.list::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
     }
 
-    .list::-webkit-scrollbar-thumb {
+    &.list::-webkit-scrollbar-thumb {
         background: rgba(112, 112, 112, 0.45) !important;
     }
-    .list {
+    &.list {
       padding-right: 36px;
       padding-bottom: 5px;
       height: 490px;
-    &:hover{
-        overflow-y: auto;
-        overflow-x: hidden;
+        &:hover{
+            overflow-y: auto;
+            overflow-x: hidden;
     }
 `;
 const ListItem = styled.div`
@@ -67,17 +71,20 @@ const ListItem = styled.div`
         background-color: #EFEFEF;
         opacity: 0.90;
     }
-`
+`;
+
 class DesignInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { likeDialog: false, forkDialog: 0, forkDesignList: false };
+        this.state = { likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);
         this.getForkDesignList = this.getForkDesignList.bind(this);
         this.onForkListHandler = this.onForkListHandler.bind(this);
         this.joinMember = this.joinMember.bind(this);
+        this.getMemberList = this.getMemberList.bind(this);
+        this.onMemberListHandler = this.onMemberListHandler.bind(this);
     }
     needLogin() {
         alert("로그인 해주세요.");
@@ -101,14 +108,13 @@ class DesignInfo extends Component {
             if (window.confirm("해당 디자인에 가입 신청하시겠습니까?")) {
                 this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
                     .then(res => {
+                        console.log("res:", res);
                         if (res && res.success) {
                             alert("가입 신청이 완료되었습니다.");
                         } else {
                             alert("다시 시도해주세요");
                         }
                     });
-            } else {
-                return;
             }
         }
     }
@@ -131,16 +137,16 @@ class DesignInfo extends Component {
         }
         if (this.props.like) { //dislike
             this.props.UnlikeDesignRequest(this.props.id, this.props.token)
-                .then(() => { this.props.GetDesignDetailRequest(this.props.id)})
-                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token)})
-                .then(() => { this.props.GetDesignCountRequest(this.props.id)})
+                .then(() => { this.props.GetDesignDetailRequest(this.props.id) })
+                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token) })
+                .then(() => { this.props.GetDesignCountRequest(this.props.id) })
         } else {
-            await this.setState({likeDialog: true})
+            await this.setState({ likeDialog: true })
             this.props.LikeDesignRequest(this.props.id, this.props.token)
-                .then(() => { this.props.GetDesignDetailRequest(this.props.id)})
-                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token)})
-                .then(() => { this.props.GetDesignCountRequest(this.props.id)})
-            setTimeout(() => { this.setState({likeDialog: false })}, 1500)
+                .then(() => { this.props.GetDesignDetailRequest(this.props.id) })
+                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token) })
+                .then(() => { this.props.GetDesignCountRequest(this.props.id) })
+            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
         }
     }
     gotoDesignModify = () => {
@@ -176,15 +182,30 @@ class DesignInfo extends Component {
         window.location.href = geturl() + `/designDetail/${parent}`
     }
     componentWillReceiveProps = async (nextProps) => {
-        if (nextProps!== this.props) {
+        if (nextProps !== this.props) {
             console.log("reload");
             return true;
         }
     }
+    getMemberList() {
+        this.setState({ memberList: true });
+    }
+    onMemberListHandler() {
+        this.setState({ memberList: false });
+    }
     render() {
         const { isMyDesign, editor, DesignDetail,  Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
-        // console.log("DesignInfo:", DesignDetail, this.props);
+        const MemberModal = () => {
+            return (
+                <Modal open={this.state.memberList} closeOnDimmerClick={false} onClose={this.onMemberListHandler}>
+                    <div onClick={this.onMemberListHandler} style={{ position: "absolute", left: "100%", marginTop: "0px", marginLeft: "34.32px" }}>
+                        <Cross angle={45} color={"#FFFFFF"} weight={3} width={45} height={45} />
+                    </div>
+                    <DesignMemberContainer mine={isMyDesign} DesignDetail={DesignDetail} />
+                </Modal>
+            )
+        }
         console.log("DesignInfo:", isMyDesign, this.props);
         return (
             <>
@@ -209,7 +230,6 @@ class DesignInfo extends Component {
                 {this.state.likeDialog &&
                     <div style={{ position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
                         <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070" }}>관심 디자인으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></div>}
-
                 <DesignInfoComp >
                     {DesignDetail.parent_design && <div style={{ position: "absolute", marginTop: "19px", marginLeft: "220px", width: "20px", height: "42px", backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
                     <div style={{ marginTop: "19px", marginLeft: "65px", background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: `url${thumbnail}`, backgroundColor: "#D6D6D6", borderRadius: "15px", width: "200px", height: "200px", backgroundRepeat: "no-repeat" }}></div>
@@ -217,11 +237,27 @@ class DesignInfo extends Component {
                         <div style={{ position: "absolute", width: "max-content", height: "29px", marginTop: "0px", marginLeft: "0px", fontSize: "20px", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "29px", cursor: "pointer" }} title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
                         <div style={{ marginTop: "25px" }}>
                             {DesignDetail.parent_design && <div onClick={() => this.goParentDesign(DesignDetail.parent_design)} style={{ width: "165px", height: "25px", marginTop: "9px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "300", textAlign: "left", lineHeight: "25px", cursor: "pointer" }} title={DesignDetail.parent_title}>{DesignDetail.parent_title.slice(0, 4)}{DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>}
-                            <div style={{ width: "170px", height: "29px", marginTop: DesignDetail.parent_design ? "8px" : "13px", marginLeft: "0px", fontSize: "20px", color: "#707070", fontWeight: "300", textAlign: "left", lineHeight: "29px", cursor: "pointer" }}>{DesignDetail.userName.slice(0, 8)} {(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
+                            <button onClick={this.getMemberList} ref={ref => (this.memberlist = ref)} onBlur={!isMyDesign && this.onMemberListHandler} style={{ outline: "none", background: "none", border: "none", width: "170px", height: "29px", marginTop: DesignDetail.parent_design ? "8px" : "13px", marginLeft: "0px", fontSize: "17px", color: "#707070", fontWeight: "300", textAlign: "left", lineHeight: "29px", cursor: "pointer" }}>{DesignDetail.userName.slice(0, 8)} {(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</button>
+                            {!isMyDesign && this.state.memberList &&
+                                <DesignList top={this.memberlist.getBoundingClientRect().top} left={this.memberlist.getBoundingClientRect().left}>
+                                    <div className="list" style={{ padding: "15px" }}>
+                                        {DesignDetail.member && DesignDetail.member.length > 0 &&
+                                            DesignDetail.member.map((mem, i) =>
+                                                <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
+                                                    <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
+                                                    <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
+                                                    {DesignDetail.user_id === mem.user_id &&
+                                                        <div title={"팀장"} style={{ display: "flex", justifyContent: "center", width: "20px", height: "20px", borderRadius: "50%", backgroundColor: "none" }}><i className="star icon" style={{ marginLeft: "auto", marginRight: "auto", color: "#707070" }} /></div>}
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </DesignList>
+                            }
                             <button onClick={this.getForkDesignList} ref={ref => (this.forkDesignRef = ref)} onBlur={this.onForkListHandler} style={{ outline: "none", background: "none", border: "none", width: "165px", height: "29px", marginTop: DesignDetail.parent_design ? "40px" : "69px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "500", textAlign: "left", lineHeight: "29px", display: "flex", alignItems: "bottom" }}>{DesignDetail.is_parent && "파생된 디자인 "}{DesignDetail.is_parent && <div style={{ marginLeft: "10px" }}>{DesignDetail.children_count["count(*)"]}</div>}
                                 {this.state.forkDesignList &&
                                     <DesignList top={this.forkDesignRef.getBoundingClientRect().top} left={this.forkDesignRef.getBoundingClientRect().left}>
-                                        <div className="list" style={{ marginTop: "17px" }}>
+                                        <div className="list" style={{ padding: "7", marginTop: "10px" }}>
                                             {this.props.forkDesignList &&
                                                 this.props.forkDesignList.map((item, idx) => {
                                                     return (<ListItem key={item + idx}>
@@ -261,13 +297,10 @@ class DesignInfo extends Component {
                             </div>
                         }
                         {isMyDesign === true ?
-                            <div onClick={this.gotoDesignModify} style={{ width:"max-content", height: "45px", display: "flex", marginTop: "10px", marginLeft: "auto", cursor: "pointer" }} >
+                            <div onClick={this.gotoDesignModify} style={{ width: "max-content", height: "45px", display: "flex", marginTop: "10px", marginLeft: "auto", cursor: "pointer" }} >
                                 <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>디자인 수정하기 </div>
-                                <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${iEdit})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat:"no-repeat" }}></div>
-                                <div style={{
-                                cursor: "pointer", display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px",
-                                backgroundSize: "cover", backgroundPosition: "center center"
-                            }}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
+                                <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${iEdit})`, backgroundSize: "45px 45px", backgroundPosition: "center center", backgroundRepeat: "no-repeat" }} />
+                                {/* <div style={{ cursor: "pointer", display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px", backgroundSize: "cover", backgroundPosition: "center center" }}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div> */}
                             </div>
                             :
                             <div onClick={this.like} style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
@@ -284,9 +317,12 @@ class DesignInfo extends Component {
                         }
                         <div style={{ height: "45px", fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", lineHeight: "45px", textAlign: "right", marginLeft: "auto", fontWeight: "300" }}>최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
                     </div>
+                    {isMyDesign && <MemberModal />}
+
                 </DesignInfoComp>
             </>
         )
     }
-}
-export default DesignInfo
+};
+
+export default DesignInfo;

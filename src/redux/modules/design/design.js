@@ -58,9 +58,10 @@ const initialState = {
     DesignDetail: { status: "INIT" },
     UpdateDesignInfo: { status: "INIT" },
     DesignDetailView: { status: "INIT" },
+    WaitingList: { status: 'INIT' },
     status: {
         Message: "", list: null, like: false, new_design_id: null,
-        DesignDetail: [], DesignDetailView: [], DesignForked: [],
+        WaitingList: [], DesignDetail: [], DesignDetailView: [], DesignForked: [],
         Count: { like_count: 0, member_count: 0, card_count: 0, view_count: 0 }
     }
 }
@@ -223,7 +224,7 @@ export function GetDesignDetailStepCardRequest(id, card_id) {
                 console.log("no data")
                 return
             } else {
-                dispatch(GetDesignDetailStepCard(data))
+                return dispatch(GetDesignDetailStepCard(data))
             }
         }).catch((error) => {
             console.log("err", error)
@@ -444,10 +445,10 @@ export function DesignWaitingListRequest(id, token) {
             if (!data) {
                 console.log("no data")
             }
-            dispatch(DesignWaitingListSuccess(data.data))
+            return dispatch(DesignWaitingListSuccess(data.data))
         }).catch((error) => {
             console.log("err", error)
-            dispatch(DesignWaitingListFailure(error))
+            return dispatch(DesignWaitingListFailure(error))
         })
     }
 }
@@ -469,7 +470,7 @@ export function JoinDesignRequest(id, data, flag, token) {
             return data;
         }).catch((error) => {
             console.log("err", error);
-            dispatch(JoinDesignFailure(error));
+            return dispatch(JoinDesignFailure(error));
         });
     }
 }
@@ -482,10 +483,10 @@ export function CreateDesignRequest(data, token) {
             })
             .then(function (res) {
                 console.log("insert detail", res.desing_id);
-                dispatch(CreateDesignSuccess(res));
+                return dispatch(CreateDesignSuccess(res));
             }).catch((error) => {
                 console.log("insert detail err", error);
-                dispatch(CreateDesignFailure(error));
+                return dispatch(CreateDesignFailure(error));
             })
     }
 }
@@ -502,10 +503,10 @@ export function GetoutDesignRequest(id, memberId, token, refuse) {
             if (!data) {
                 console.log("no data");
             }
-            dispatch(GetoutDesignSuccess(data));
+            return dispatch(GetoutDesignSuccess(data));
         }).catch((error) => {
             console.log("err", error);
-            dispatch(GetoutDesignFailure(error));
+            return dispatch(GetoutDesignFailure(error));
         });
     }
 }
@@ -527,7 +528,7 @@ export function AcceptDesignRequest(id, memberId, token) {
             return dispatch(AcceptDesignSuccess(data));
         }).catch((error) => {
             console.log("err", error);
-            return AcceptDesignFailure(error);
+            return dispatch(AcceptDesignFailure(error));
         });
     }
 }
@@ -544,7 +545,7 @@ export function ForkDesignRequest(design_id, user_id, token) {
                 return dispatch(ForkDesignSuccess(data.new_design_id))
                 // return ForkDesignFailure(data)
             }
-            dispatch(ForkDesignFailure())
+            return dispatch(ForkDesignFailure())
         }).catch((error) => {
             console.log("err", error)
             return ForkDesignFailure()

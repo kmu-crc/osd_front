@@ -7,9 +7,9 @@ import arrow from "source/arrow.svg";
 import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import {
-    GetDesignBoardRequest, GetCardCommentRequest, GetCardDetailRequest,
+    GetDesignBoardRequest, GetCardDetailRequest,
     UpdateCardTitleRequest, UpdateCardContentRequest, UpdateCardImagesRequest, UpdateCardSourcesRequest,
-    CreateCardCommentRequest, DeleteDesignCardRequest, DeleteCardCommentRequest
+    DeleteDesignCardRequest
 } from "redux/modules/design";
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import CardComment from './CardComment';
@@ -43,7 +43,6 @@ class CardModal extends Component {
     }
     componentDidMount() {
         document.getElementsByTagName("body")[0].style.overflow = "hidden";
-        this.props.GetCardCommentRequest(this.props.design_id, this.props.card.uid);
     }
 
     onSubmit = () => { }
@@ -84,7 +83,7 @@ class CardModal extends Component {
                         <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
                         <div style={{ marginLeft: "45px" }}><h3>댓글</h3></div>
                         <div style={{ width: "1400px", border: "1px solid red", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "15px" }}>
-                            <CardComment comment={this.props.Comment} />
+                            <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
                         </div>
                         <div style={{ marginTop: "75px" }}></div>
                     </div>
@@ -97,9 +96,9 @@ class CardModal extends Component {
 
 const mapStateToProps = state => {
     return {
+        userInfo: state.Authentication.status.userInfo,
         token: state.Authentication.status.token,
         detail: state.DesignCard.status.DesignDetailStepCard,
-        Comment: state.DesignComment.status.CardComment,
     };
 };
 
@@ -125,15 +124,6 @@ const mapDispatchToProps = dispatch => {
         },
         GetCardDetailRequest: id => {
             return dispatch(GetCardDetailRequest(id));
-        },
-        GetCardCommentRequest: (design_id, card_id) => {
-            return dispatch(GetCardCommentRequest(design_id, card_id));
-        },
-        CreateCardCommentRequest: (data, design_id, card_id, token) => {
-            return dispatch(CreateCardCommentRequest(data, design_id, card_id, token));
-        },
-        DeleteCardCommentRequest: (design_id, card_id, comment_id, token) => {
-            return dispatch(DeleteCardCommentRequest(design_id, card_id, comment_id, token));
         }
     };
 };

@@ -30,10 +30,10 @@ const SearchContainer = styled.div`
         cursor: pointer;
     }
 `;
-//let val = "";
+
 class SearchForm extends Component {
     state = {
-        searchKeyword:"",
+        searchKeyword: "",
     };
     _search = () => { };
     _handleKeyDown = (e) => {
@@ -51,7 +51,7 @@ class SearchForm extends Component {
         {
             thisCate="#design"
         }
-        window.location.href = '/search'+thisCate;
+        window.location.href = '/search' + thisCate;
     }
 
     goSearch = () => {
@@ -69,16 +69,15 @@ class SearchForm extends Component {
         {
             thisCate="#design"
         }
-        window.location.href = '/search'+thisCate;
+        window.location.href = '/search' + thisCate;
     }
 
     render() {
-        //console.log(this.state.keyword);
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
 
-                <input type="text" placeholder="Search..." maxLength = "100" />
+                <input type="text" placeholder="Search..." maxLength="100" />
 
             </SearchContainer>)
     }
