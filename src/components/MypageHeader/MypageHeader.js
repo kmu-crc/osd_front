@@ -10,7 +10,7 @@ import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
 import iEdit from 'source/edit_1.png';
 //CSS
-const BackgroundBox = { position: "relative", overFlow: "hidden", width: "1920px", height: "336px", marginTop: "36px", background: "#EFEFEF" }
+const BackgroundBox = { position: "relative", overFlow: "hidden", width: "1920px", height: "336px", marginTop: "36px", background: "#EFEFEF" };
 const ProfileBox = styled.div`
     position: absolute;
     width: 200px;
@@ -23,7 +23,7 @@ const ProfileBox = styled.div`
     background-position: 50%;
     background-size: cover;
     background-image: url(${props => props.img});
-
+`;
     const Name = { position: "absolute", width: "200px", height: "29px", top: "41px", left: "70px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "center" }
     const Title = { position: "absolute", width: "479px", height: "29px", top: "41px", left: "418px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "200", textAlign: "left" }
     const ExplainBox01 = {wordWrap:"break-word",
@@ -48,14 +48,6 @@ const ProfileBox = styled.div`
     }
     const Summary_Forked = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
 
-    const interestDesignerBox = { position: "absolute", width: "170px", height: "45px", top: "26px", right: "72px", textAlign: "right" }
-    const interestDesignerTitle = {cursor:"pointer",display: "inline-block", width: "98px",
-        color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-    }
-    const UpdateTimeBox = {
-        position: "absolute", width: "170px", height: "25px", top: "273px", right: "72px",
-        color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-    }
 const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "90px", right: "72px", textAlign: "right" }
 const interestDesignerTitle = {
     cursor: "pointer",
