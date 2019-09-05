@@ -2,7 +2,7 @@ const DateFormat = (date) => {
   let update = new Date(date).getTime();
   let today = new Date();
   today = (process.env.REACT_APP_TYPE === "local" || process.env.REACT_APP_TYPE === "aws_dev") ? today.getTime() + 32400000 : today.getTime();
-  console.log((process.env.REACT_APP_TYPE === "local" || process.env.REACT_APP_TYPE === "aws_dev") ? "SEOUL!" : "UTC");
+  // console.log((process.env.REACT_APP_TYPE === "local" || process.env.REACT_APP_TYPE === "aws_dev") ? "SEOUL!" : "UTC");
   // today = today.getTime();
 
   const m = 30;

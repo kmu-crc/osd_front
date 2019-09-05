@@ -131,14 +131,16 @@ class DesignInfo extends Component {
         }
         if (this.props.like) { //dislike
             this.props.UnlikeDesignRequest(this.props.id, this.props.token)
-                .then(() => { this.props.GetDesignDetailRequest(this.props.id) })
-                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token) })
+                .then(() => { this.props.GetDesignDetailRequest(this.props.id)})
+                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token)})
+                .then(() => { this.props.GetDesignCountRequest(this.props.id)})
         } else {
-            await this.setState({ likeDialog: true })
+            await this.setState({likeDialog: true})
             this.props.LikeDesignRequest(this.props.id, this.props.token)
-                .then(() => { this.props.GetDesignDetailRequest(this.props.id) })
-                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token) })
-            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+                .then(() => { this.props.GetDesignDetailRequest(this.props.id)})
+                .then(() => { this.props.GetLikeDesignRequest(this.props.id, this.props.token)})
+                .then(() => { this.props.GetDesignCountRequest(this.props.id)})
+            setTimeout(() => { this.setState({likeDialog: false })}, 1500)
         }
     }
     gotoDesignModify = () => {
@@ -171,7 +173,7 @@ class DesignInfo extends Component {
         window.location.href = geturl() + `/designDetail/${parent}`
     }
     componentWillReceiveProps = async (nextProps) => {
-        if (nextProps.DesignDetail.Count !== this.props.DesignDetail.Count) {
+        if (nextProps!== this.props) {
             console.log("reload");
             return true;
         }
@@ -179,7 +181,8 @@ class DesignInfo extends Component {
     render() {
         const { isMyDesign, editor, DesignDetail, userInfo, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
-        console.log("DesignInfo:", DesignDetail, this.props);
+        // console.log("DesignInfo:", DesignDetail, this.props);
+        console.log("DesignInfo:", isMyDesign, this.props);
         return (
             <>
                 {this.state.forkDialog > 0 &&
@@ -255,9 +258,13 @@ class DesignInfo extends Component {
                             </div>
                         }
                         {isMyDesign === true ?
-                            <div onClick={this.gotoDesignModify} style={{ height: "45px", display: "flex", marginTop: "10px", marginLeft: "auto", cursor: "pointer" }} >
+                            <div onClick={this.gotoDesignModify} style={{ width:"max-content", height: "45px", display: "flex", marginTop: "10px", marginLeft: "auto", cursor: "pointer" }} >
                                 <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "300", color: "#707070", textAlign: "right" }}>디자인 수정하기 </div>
-                                <div style={{ marginLeft: "15px", width: "45px", height: "40px", background: `url(${iEdit})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
+                                <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${iEdit})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat:"no-repeat" }}></div>
+                                <div style={{
+                                cursor: "pointer", display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px",
+                                backgroundSize: "cover", backgroundPosition: "center center"
+                            }}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
                             </div>
                             :
                             <div onClick={this.like} style={{ height: "45px", display: "flex", marginTop: "17px", marginLeft: "auto", cursor: "pointer" }} >
