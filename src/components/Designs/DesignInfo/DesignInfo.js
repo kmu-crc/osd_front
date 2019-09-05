@@ -180,7 +180,7 @@ class DesignInfo extends Component {
         }
     }
     render() {
-        const { isMyDesign, editor, DesignDetail, userInfo, Count, like } = this.props
+        const { isMyDesign, editor, DesignDetail,  Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
         console.log("DesignInfo:", DesignDetail, this.props);
         return (

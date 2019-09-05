@@ -72,11 +72,12 @@ class GridEditor extends Component {
     NewItem = (data) => { }
     render() {
         const { editor, DesignDetailStep, userInfo } = this.props
-        const { w, ws, row, col, maxRow, card, newcard, newstep, cardDetail, title } = this.state
+        const { row, col, maxRow, card, newcard, newstep, cardDetail, title } = this.state
+        // const { w, ws, row, col, maxRow, card, newcard, newstep, cardDetail, title } = this.state
         // temp code //
         // const items = DesignDetailStep.map(step => { return step.cards.length })
         // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
-        const itemlist = ['STEP1', 'STEP2', 'STEP3', 'STEP4', 'STEP5', 'STEP6', 'STEP7', 'STEP8', 'STEP9', 'STEP10']
+        //const itemlist = ['STEP1', 'STEP2', 'STEP3', 'STEP4', 'STEP5', 'STEP6', 'STEP7', 'STEP8', 'STEP9', 'STEP10']
         // console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
         // console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
         console.log(this.props, "card:");

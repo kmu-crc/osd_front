@@ -44,7 +44,7 @@ class Group extends Component {
         return (
             <GroupElement >
                     {/**클릭 이벤트 */}
-                    <div style ={{cursor:"pointer"}} onClick={(event) => { this.handleGotoDetail(group.uid, event) }} style={{position:"absolute",width:"100%",height:"100%",zIndex:"100"}}></div>
+                    <div onClick={(event) => { this.handleGotoDetail(group.uid, event) }} style={{cursor:"pointer",position:"absolute",width:"100%",height:"100%",zIndex:"100"}}></div>
                    
                    
                     <div id="children" style={{ position: "absolute", display: "flex", marginLeft: "587px", marginTop: "137px", width: "295px" }}>

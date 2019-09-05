@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { CreateStep, CreateCard, TipDiv } from "modules/GridEditor";
 import { FormInput, FormTextArea } from "components/Commons/FormItem";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+// import { FormControl, ValidationGroup } from "modules/FormControl";
+import { FormControl } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
@@ -24,7 +25,7 @@ function Peer(props)
 class CreateDesign extends Component {
   constructor(props) {
     super(props);
-    this. state = {
+    this.state = {
       basic: false, additional: false, content: false,showSearch:false,
       step: 0, selectedCate1: null, selectedCate2: null, cate2: null,
       members: []
@@ -101,8 +102,8 @@ class CreateDesign extends Component {
     if(this.state.members.length>0)
     { 
       arrSummaryList = this.state.members.map((item,index)=>{  
-        let SelectedItem = false;
-        if(this.state.selectId == item.friend_id)   SelectedItem=true;       
+        // let SelectedItem = false;
+        // if(this.state.selectId === item.friend_id)   SelectedItem=true;       
         return(
           <div onClick = {()=>this.removeMember(index)} key={index}>
              <Peer  s_img={item.s_img==null?noface:item.s_img} nick_name={item.nick_name}/>
@@ -242,7 +243,7 @@ class CreateDesign extends Component {
             {/* buttons*/}
             <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
               {step === 0 && <>
-                <div onClick={this.state.step == 0 ? this.gotoNextStep : null} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
+                <div onClick={this.state.step === 0 ? this.gotoNextStep : null} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
               </>}
               {step === 1 && <>
                 <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>

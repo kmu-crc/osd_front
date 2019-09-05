@@ -112,7 +112,7 @@ class Designer extends Component {
         const designer = this.state.data;
         return (
             <DesignerComp onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
-                <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL && designer.imgURL.m_img || noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
+                <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL !=null ?designer.imgURL.m_img : noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
                 <div className="TextBox">
                     <div className="userName">{designer.nick_name}</div>
                     <div className="description"><TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>

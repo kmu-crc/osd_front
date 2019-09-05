@@ -5,10 +5,12 @@ import { Modal } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { CreateDesignCardRequest, GetDesignBoardRequest, GetDesignDetailRequest, UpdateDesignTime } from "redux/modules/design";
 // import CreateCard from "components/Designs/CreateCard";
-import { FormInput, FormTextArea } from "components/Commons/FormItem";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+//import { FormInput, FormTextArea } from "components/Commons/FormItem";
+import { FormInput} from "components/Commons/FormItem";
+
+// import { FormControl, ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
-import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
+// import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 
 const NewCardDialog = styled(Modal)`
     min-width: 1777px;
@@ -48,7 +50,7 @@ class NewCardModal extends Component {
                 </div>
                 <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
                     <div style={{ width: "38px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>내용</div>
-                    <div className="card-detail-scroll" style={{ fontSize: "24px", width: "100%", overflow: "hidden scroll", marginLeft: "90px", width: "1248.5px", height: "526px", backgroundColor: "#EFEFEF", borderRadius: "5px", border: "5px solid #EFEFEF" }}>
+                    <div className="card-detail-scroll" style={{ fontSize: "24px", overflow: "hidden scroll", marginLeft: "90px", width: "1248.5px", height: "526px", backgroundColor: "#EFEFEF", borderRadius: "5px", border: "5px solid #EFEFEF" }}>
                         {/* <CardSourceDetailContainer /> */}
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <div style={{ width: "116px", height: "29px", marginTop: "24px", lineHeight: "29px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>파일 첨부하기</div>

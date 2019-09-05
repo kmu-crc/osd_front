@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Socket from "modules/Socket"
+// import Socket from "modules/Socket"
 
-import thumbnail from "source/thumbnail.png";
-import DateFormat from "modules/DateFormat";
-import TextFormat from "modules/TextFormat";
+// import thumbnail from "source/thumbnail.png";
+// import DateFormat from "modules/DateFormat";
+// import TextFormat from "modules/TextFormat";
 
 const MsgSectionBoard=styled.div`
 position:relative;
@@ -41,7 +41,7 @@ function CheckedTime(date){
    const diff = today - updateT;
 
   const m = 30;
-  const diffMin = parseInt((diff / 1000) / 3600 * 60, 10); // N분 전
+  //const diffMin = parseInt((diff / 1000) / 3600 * 60, 10); // N분 전
   const diffHour = parseInt((diff / 1000) / 3600, 10); // N시간 전
   const diffDay = parseInt(diffHour / 24, 10); // N일 전
   const diffMon = parseInt(diffDay/m, 10);
@@ -106,7 +106,7 @@ function MsgSendBox(props)
 
 function LoadMessage(props)
 {
-  if(props.isMyMsg==true)
+  if(props.isMyMsg===true)
   {
     return(<MsgSendBox msgText={props.msgText} updateTime={props.updateTime}/>);
   }
@@ -166,7 +166,7 @@ class MessageDetail extends Component {
     const myId = this.props.userInfo.uid;
     const arrMsg = list.map(item=>{
       let isMyMsg=true;
-      if(item.from_user_id!=myId)isMyMsg = false;
+      if(item.from_user_id!==myId)isMyMsg = false;
       return(
           <React.Fragment key={item.uid}>
           <LoadMessage isMyMsg={isMyMsg} msgText={item.message} updateTime={CheckedTime(item.create_time)}/>

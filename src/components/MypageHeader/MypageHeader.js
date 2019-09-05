@@ -125,9 +125,6 @@ const defaultCount = {
 let about_me = ["", ""];
 let descriptionLengthCheck = "";
 
-const TestExplain = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
-
-
 class MypageHeader extends Component {
     constructor(props) {
         super(props);
@@ -143,7 +140,7 @@ class MypageHeader extends Component {
         const countInfo = MypageInfo.count || defaultCount;
         const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
 
-        if (MypageInfo&&MypageInfo.about_me !=undefined ) {
+        if (MypageInfo&&MypageInfo.about_me !=null ) {
             
             about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
@@ -177,7 +174,7 @@ class MypageHeader extends Component {
                    
                     <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
 
-                    {this.state.likeDialog == false ? null :
+                    {this.state.likeDialog === false ? null :
                         <div style={{
                             position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
                             background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"

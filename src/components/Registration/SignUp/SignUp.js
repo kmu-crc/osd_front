@@ -132,7 +132,7 @@ class SignUpModal extends Component {
         await this.props.CheckEmailRequest(data).then(
             (res)=>{
                 console.log(res, data);
-                if(res.checkEmail==false)
+                if(res.checkEmail===false)
                 {                   
                     returnvalue = false;
                 }
@@ -149,7 +149,7 @@ class SignUpModal extends Component {
         await this.props.CheckEmailRequest(data).then(
             (res)=>{
                 console.log(res, data);
-                if(res.checkNickName==false)
+                if(res.checkNickName===false)
                 {                   
                     returnvalue = false;
                 }
@@ -163,9 +163,9 @@ class SignUpModal extends Component {
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        let error_code=-1;
 
-        if(checkedMail.test(this.state.email)==false)
+
+        if(checkedMail.test(this.state.email)===false)
         {
             alert("이메일 형식이 올바르지 않습니다");
             return;
@@ -180,18 +180,18 @@ class SignUpModal extends Component {
             alert("닉네임을 입력해주세요!")
             return;
         }
-        else if(this.state.checked == false)
+        else if(this.state.checked === false)
         {
             alert("이용약관에 동의해주세요")
             return;
         }
         //닉네임 중복 체크
-        if(await this.checkEmail()==false)
+        if(await this.checkEmail()===false)
         {      
             alert("중복된 이메일입니다");      
             return;
         }
-        if(await this.checkNickname()==false)
+        if(await this.checkNickname()===false)
         {
             alert("중복된 닉네임입니다");
             return;
@@ -320,7 +320,7 @@ class SignUpModal extends Component {
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
                                         <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
                                         {console.log(this.state.checked)}
-                                        <input id="agree" style={{background: this.state.checked==true?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box"}}onClick={this.onChecked} type="checkbox" value={this.state.checked} />
+                                        <input id="agree" style={{background: this.state.checked===true?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box"}}onClick={this.onChecked} type="checkbox" value={this.state.checked} />
                                         <span className="checkmark" />
                                         </CheckboxContainer>
                                         <div style={{cursor:"pointer", marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div>

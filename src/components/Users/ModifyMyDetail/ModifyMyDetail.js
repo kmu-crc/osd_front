@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import SelectBox from "components/Commons/SelectBox"
-import showPw from "source/show_password.svg";
-import styled from "styled-components";
+import { FormControl } from "modules/FormControl";
+//import { FormControl, ValidationGroup } from "modules/FormControl";
+// import SelectBox from "components/Commons/SelectBox"
+// import showPw from "source/show_password.svg";
+// import styled from "styled-components";
 
 import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
 import SectionSecurity from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionSecurity"
@@ -13,7 +14,7 @@ const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }
 ]
 
-const colorSwich = ['#FFFFFF', '#FF0000'];
+//const colorSwich = ['#FFFFFF', '#FF0000'];
 class ModifyMyDetail extends Component {
 
   constructor(props) {
@@ -82,8 +83,8 @@ class ModifyMyDetail extends Component {
     document.addEventListener("scroll", this.handleScroll, true)
   }
   handleScroll = () => {
-    let sections = document.querySelectorAll("section")
-
+   // let sections = document.querySelectorAll("section")
+    document.querySelectorAll("section")
   }
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
@@ -128,7 +129,7 @@ class ModifyMyDetail extends Component {
       await this.props.CheckNickNameRequest(data).then(
           (res)=>{
               console.log(res, data);
-              if(res.checkNickName==false)
+              if(res.checkNickName===false)
               {                   
                   returnvalue = false;
               }
@@ -142,15 +143,15 @@ class ModifyMyDetail extends Component {
     e.preventDefault();
     let formData = this.state;
 
-    if(this.state.nick_name!=this.props.MyDetail.nick_name)
+    if(this.state.nick_name!==this.props.MyDetail.nick_name)
     {
-      if(await this.checkNickname()==false)
+      if(await this.checkNickname()===false)
       {
           alert("중복된 닉네임입니다");
           return;
       }
     }
-    if(this.state.nick_name=="")
+    if(this.state.nick_name==="")
     {
           alert("닉네임을 입력해주세요");
           return;

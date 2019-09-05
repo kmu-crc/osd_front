@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Modal, Icon } from "semantic-ui-react";
-import Button from "components/Commons/Button";
+// import { Modal, Icon } from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
+// import Button from "components/Commons/Button";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
@@ -18,7 +19,7 @@ const ModalContent = styled.div`
   }
 `;
 
-const ModalBtn = styled(Button)``;
+//const ModalBtn = styled(Button)``;
 
 const JoinGroupWrap = styled.div`
   display: inline-block;

@@ -1,14 +1,14 @@
 import React from'react';
 import plusImg from "source/plus_cross_gray.png";
-import SummaryIcon from "source/jina.png";
+// import SummaryIcon from "source/jina.png";
 import noImage from "source/thumbnail.png"
 import styled from "styled-components";
 
 import SearchMemverContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
-import FormDataToJson from "modules/FormDataToJson"
+// import FormDataToJson from "modules/FormDataToJson"
 import Socket from "modules/Socket"
-import { Modal } from 'semantic-ui-react';
+// import { Modal } from 'semantic-ui-react';
 
 
 
@@ -19,17 +19,17 @@ padding-left:54px;
 &:hover {
 overflow-y: scroll;
 }`
-const MsgSectionBoard=styled.div`
-position:relative;
-width: 1259px;
-height: 602.5px;
-flex-direction:column;
-justify-content:flex-end;
-overflow:hidden;
-&:hover {
-overflow-y: scroll;
+// const MsgSectionBoard=styled.div`
+// position:relative;
+// width: 1259px;
+// height: 602.5px;
+// flex-direction:column;
+// justify-content:flex-end;
+// overflow:hidden;
+// &:hover {
+// overflow-y: scroll;
 
-}`
+// }`
 
 const Banner ={width:"100%",height:"48px",marginTop:"8px",backgroundColor:"#EFEFEF"};
 const BannerText = {display:"inline-block",width:"74px",height:"29px",marginTop:"9px",marginLeft:"65px",
@@ -48,8 +48,8 @@ const MessageAsideHeaderIcon={position:"absolute",width:"51px",height:"51px",rig
 
 const MsgSummaryItem = {position:"relative",overflow:"hidden",width:"336px",height:"70px",marginBottom:"30px",opacity:"0.5"};
 const MsgSummarySelectItem = {position:"relative",overflow:"hidden",width:"336px",height:"70px",marginBottom:"30px"};
-const MsgSummaryIcon = {position:"absolute",width:"70px",height:"70px",left:"0px",top:"0px",background:`url(${SummaryIcon})`,
-                        backgroundSize:"cover",backgroundPosition:"center center"}
+// const MsgSummaryIcon = {position:"absolute",width:"70px",height:"70px",left:"0px",top:"0px",background:`url(${SummaryIcon})`,
+                        // backgroundSize:"cover",backgroundPosition:"center center"}
 const MsgSummaryName = {position:"absolute", width:"244px",height:"29px",left:"92px",
                         fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"500",textAlign:"left",lineHeight:"29px"}
 const MsgSummaryBoard = {position:"absolute", width:"244px",height:"28px",left:"92px",bottom:"3px",
@@ -60,7 +60,7 @@ const MsgSummaryBoard = {position:"absolute", width:"244px",height:"28px",left:"
 const MessageTitle = {overflow:"hidden",position:"relative",height:"69px"}
 const MessageTitleName = {position:"absolute",width:"244px",height:"29px",bottom:"5px",
                            fontSize:"20px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"500",lineHeight:"29px"}
-const MessageSection = {display:"flex",overflow:"hidden",display:"inline-block",width:"1298px",height:"100%",paddingLeft:"26px",paddingRight:"23px",
+const MessageSection = {overflow:"hidden",display:"inline-block",width:"1298px",height:"100%",paddingLeft:"26px",paddingRight:"23px",
                         borderRadius:"0px 25px 25px 0px",backgroundColor:"#EFEFEF"}
 
 
@@ -81,7 +81,7 @@ const MessageSectionSendBtn={position:"absolute",width:"117px",height:"170px",ri
 function SummaryItem(props)
 {
     let SummaryStyle = MsgSummaryItem;
-    if(props.opacityON == true) SummaryStyle = MsgSummarySelectItem;
+    if(props.opacityON === true) SummaryStyle = MsgSummarySelectItem;
    return(
     <div style={SummaryStyle}>
     <div style={{position:"absolute",borderRadius:"50px",width:"70px",height:"70px",left:"0px",top:"0px",background:`url(${props.s_img})`,backgroundSize:"cover",backgroundPosition:"center center"}}></div>    
@@ -89,15 +89,15 @@ function SummaryItem(props)
     <div style={MsgSummaryBoard}>{props.message}</div>         
     </div>);
 }
-function SummarySelectItem(props)
-{
-  return(
-    <div style={MsgSummarySelectItem}>
-    <div style={{position:"absolute",borderRadius:"50px",width:"70px",height:"70px",left:"0px",top:"0px",background:`url(${props.s_img})`,backgroundSize:"cover",backgroundPosition:"center center"}}></div>    
-    <div style={MsgSummaryName}>{props.friend_name}</div>  
-    <div style={MsgSummaryBoard}>{props.message}</div>         
-    </div>);
-}
+// function SummarySelectItem(props)
+// {
+//   return(
+//     <div style={MsgSummarySelectItem}>
+//     <div style={{position:"absolute",borderRadius:"50px",width:"70px",height:"70px",left:"0px",top:"0px",background:`url(${props.s_img})`,backgroundSize:"cover",backgroundPosition:"center center"}}></div>    
+//     <div style={MsgSummaryName}>{props.friend_name}</div>  
+//     <div style={MsgSummaryBoard}>{props.message}</div>         
+//     </div>);
+// }
 
 
 
@@ -274,7 +274,7 @@ class Messages extends React.Component
     }     
     handleCloseMember(event)
     {
-      if(event.target.className!="searchRect")
+      if(event.target.className!=="searchRect")
       {
         this.setState({showSearch:false})
       }
@@ -288,7 +288,7 @@ class Messages extends React.Component
       { 
         arrSummaryList = this.props.MessageList.map((item,index)=>{  
           let SelectedItem = false;
-          if(this.state.selectId == item.friend_id)   SelectedItem=true;       
+          if(this.state.selectId === item.friend_id)   SelectedItem=true;       
           return(
             <div key={index} style={{cursor:"pointer"}} onClick={()=>this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
                <SummaryItem  s_img={item.s_img==null?noImage:item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem}/>
@@ -313,7 +313,7 @@ class Messages extends React.Component
                         {this.state.showSearch&&(
                         <React.Fragment>
                           {
-                            this.state.hideSearch == true?
+                            this.state.hideSearch === true?
                             null:
                             <SearchMemverContainer  className = "searchRect" addMemberItem = {this.handleClickSearchMemberItem}/>
                           }

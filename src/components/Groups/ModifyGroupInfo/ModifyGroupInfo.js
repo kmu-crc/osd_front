@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import noimg from "source/noimg.png"
 
 import BasicInfo from "components/Groups/CreateGroup/BasicInfo"
-import AdditionalInfo from "components/Groups/CreateGroup/AdditionalInfo"
-import { userInfo } from "os";
+// import AdditionalInfo from "components/Groups/CreateGroup/AdditionalInfo"
+// import { userInfo } from "os";
 import { Modal } from "semantic-ui-react";
 import iDelete from "source/deleteItem.png"
 
@@ -15,10 +15,10 @@ const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
 const Main_Banner ={ width: "1920px", display: "flex", justifyContent: "center" }
 const Main_Banner_text = { marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }
 const Main_Section = {display: "flex", marginTop: "60px", marginBottom: "111px" }
-const Menu_Delete={position:"fixed", top:"349px",left:"100px",width:"150px",height:"29px",fontFamily: "Noto Sans KR",fontWeight:"500",fontSize:"20px",color:"#FF0000"}
-const Btn_Back = { position:"absolute",right:"54px",bottom:"35px",border:"1px solid black",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px"}
+//const Menu_Delete={position:"fixed", top:"349px",left:"100px",width:"150px",height:"29px",fontFamily: "Noto Sans KR",fontWeight:"500",fontSize:"20px",color:"#FF0000"}
+//const Btn_Back = { position:"absolute",right:"54px",bottom:"35px",border:"1px solid black",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px"}
 const Btn_text ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
-const Btn_Next ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
+//const Btn_Next ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
 const modify_Menu_Delete = { position: "fixed", top: "280px", left: "100px", width: "150px", height: "29px", cursor:"pointer",
                             fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
 
@@ -47,7 +47,7 @@ class CreateGroup extends Component {
   shouldComponentUpdate(nextProps)
   {
     
-      if(this.props.GroupDetail!=nextProps.GroupDetail)
+      if(this.props.GroupDetail!==nextProps.GroupDetail)
       {
         console.log("nextprops",nextProps)
 
@@ -135,7 +135,7 @@ class CreateGroup extends Component {
   };
   handleOnClickDeleteDesign()
   {
-      if(this.state.isDelete == true)
+      if(this.state.isDelete === true)
       {
         this.setState({ isDelete: !this.state.isDelete })
       }
@@ -156,43 +156,43 @@ class CreateGroup extends Component {
 
     const { step } = this.state
 
-    const DeleteWariningModal = ()=>
-    {
-      return(
-        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
-        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
-          그룹 캡스톤 디자인 2019를 삭제하지 못했습니다.</div>
-        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"none",color:"#FF0000"}}>
-          그룹의 개설자만 삭제할 권한이 주어집니다.</div>
-      </Modal>
-      );
-    }
+    // const DeleteWariningModal = ()=>
+    // {
+    //   return(
+    //     <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
+    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
+    //       그룹 캡스톤 디자인 2019를 삭제하지 못했습니다.</div>
+    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"none",color:"#FF0000"}}>
+    //       그룹의 개설자만 삭제할 권한이 주어집니다.</div>
+    //   </Modal>
+    //   );
+    // }
     const DeleteGroupModal=()=>
     {
       return(
         <Modal open={this.state.isDelete} style={{boxShadow:"0px 3px 6px #000000",position:"relative",width:"576px",height:"200px",textAlign:"center",bottom:"318px"}}>
         <div style = {{width:"100%",height:"69px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"40px",marginTop:"35px",marginBottom:"31px"}}>그룹 캡스톤 디자인 2019를<br/>삭제하시겠습니까?</div>
-        <div onClick = {this.deleteGroup}  style = {{cursor:"pointer",width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",textDecoration:"underline",color:"#FF0000"}}>네, 삭제합니다</div>
+        <div onClick = {this.deleteGroup}  style = {{cursor:"pointer",width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"underline",color:"#FF0000"}}>네, 삭제합니다</div>
         <div onClick = {this.handleOnClickDeleteDesign} style={{cursor:"pointer",position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
                     backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
         </div>
       </Modal>
       );
     }
-    const DeleteGroupComplete = ()=>
-    {
-      return(
-        <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
-        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
-          사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
-        <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"underline",color:"#FF0000"}}>
-          되돌리기</div>
-        <div onClick = {this.handleOnClickDeleteDesign} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
-                    backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
-        </div>
-      </Modal>
-      );
-    }
+    // const DeleteGroupComplete = ()=>
+    // {
+    //   return(
+    //     <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
+    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
+    //       사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
+    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"underline",color:"#FF0000"}}>
+    //       되돌리기</div>
+    //     <div onClick = {this.handleOnClickDeleteDesign} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
+    //                 backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
+    //     </div>
+    //   </Modal>
+    //   );
+    // }
 
     return (<>
 

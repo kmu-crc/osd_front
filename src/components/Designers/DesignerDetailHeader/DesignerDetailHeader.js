@@ -58,10 +58,10 @@ const modifyMyDetailTitle = {cursor:"pointer",display: "inline-block", width: "9
 const interestDesignerTitle = {cursor:"pointer",display: "inline-block", width: "180px",
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
 }
-const interestDesignerImg = {
-    display: "inline-block", width: "45px", height: "40px", marginLeft: "15px", marginTop: "0px",
-    backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center", opacity: "0.55"
-}
+// const interestDesignerImg = {
+//     display: "inline-block", width: "45px", height: "40px", marginLeft: "15px", marginTop: "0px",
+//     backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center", opacity: "0.55"
+// }
 
 const sendMessageBox = { cursor:"pointer",overflow: "hidden", position: "absolute", width: "250px", height: "45px", top: "168px", right: "72px", textAlign: "right" }
 
@@ -84,7 +84,7 @@ const defaultCount = { total_like: 0, total_group: 0, total_design: 0, total_vie
 let about_me = ["", ""];
 let descriptionLengthCheck = "";
 
-const TestExplain = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
+// const TestExplain = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
 class DesignerPageHeader extends Component {
     constructor(props) {
         super(props);
@@ -137,7 +137,7 @@ class DesignerPageHeader extends Component {
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
-        const isMyProfile = this.props.userInfo&& this.props.DesignerDetail&& this.props.userInfo.uid == this.props.DesignerDetail.uid ?true:false;
+        const isMyProfile = this.props.userInfo&& this.props.DesignerDetail&& this.props.userInfo.uid === this.props.DesignerDetail.uid ?true:false;
 
 
         return (
@@ -157,7 +157,7 @@ class DesignerPageHeader extends Component {
                         <div style={Summary_Forked}>{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
                     </div>
                    
-                   { isMyProfile==false?
+                   { isMyProfile===false?
                     <React.Fragment>
                     <div onClick={this.props.userInfo == null ? null : () => this.like()} style={interestDesignerBox}>
                         <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
@@ -181,7 +181,7 @@ class DesignerPageHeader extends Component {
                     </div>
                    }
                     <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
-                    {this.state.likeDialog == false ? null :
+                    {this.state.likeDialog === false ? null :
                         <div style={{
                             position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
                             background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"

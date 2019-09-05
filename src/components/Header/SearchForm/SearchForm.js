@@ -30,7 +30,7 @@ const SearchContainer = styled.div`
         cursor: pointer;
     }
 `;
-let val = "";
+//let val = "";
 class SearchForm extends Component {
     state = {
         searchKeyword:"",
@@ -39,15 +39,15 @@ class SearchForm extends Component {
     _handleKeyDown = (e) => {
         const addrText = window.location.href.toString();
         let thisCate = "#all";
-        if(addrText.indexOf('/group')!=-1)
+        if(addrText.indexOf('/group')!==-1)
         {
             thisCate="#group"
         }
-        else if(addrText.indexOf('/designer')!=-1)
+        else if(addrText.indexOf('/designer')!==-1)
         {
             thisCate="#designer"
         }
-        else if(this.addrText.indexOf('/design')!=-1)
+        else if(this.addrText.indexOf('/design')!==-1)
         {
             thisCate="#design"
         }
@@ -57,15 +57,15 @@ class SearchForm extends Component {
     goSearch = () => {
         const addrText = window.location.href.toString();
         let thisCate = "#all";
-        if(addrText.indexOf('/group')!=-1)
+        if(addrText.indexOf('/group')!==-1)
         {
             thisCate="#group"
         }
-        else if(addrText.indexOf('/designer')!=-1)
+        else if(addrText.indexOf('/designer')!==-1)
         {
             thisCate="#designer"
         }
-        else if(this.addrText.indexOf('/design')!=-1)
+        else if(this.addrText.indexOf('/design')!==-1)
         {
             thisCate="#design"
         }

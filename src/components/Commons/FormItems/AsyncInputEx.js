@@ -205,7 +205,7 @@ export class AsyncInputEx extends Component {
   };
 
   SearchList = async () => {
-    const body = window.document.body.offsetHeight;
+    //const body = window.document.body.offsetHeight;
     if (this.props.asyncFn && (this.state.textValue.length >= 1)) this.props.asyncFn(this.state.textValue);
     console.log(this.state.target);
     // if (body < this.state.target.getBoundingClientRect().y + 350) {

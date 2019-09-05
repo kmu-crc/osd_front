@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+// import { FormControl, ValidationGroup } from "modules/FormControl";
 import { Dropdown } from "semantic-ui-react";
 
 const emptyCategory = [{ value: 0, text: "" }]
@@ -11,7 +11,7 @@ class SectionAdditional extends Component {
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
   }
   shouldComponentUpdate(nextProps) {
-    if (this.props.MyDetail != nextProps.MyDetail) {
+    if (this.props.MyDetail !== nextProps.MyDetail) {
       this.setState({
         categoryLevel1: nextProps.MyDetail.category_level1,
         categoryLevel2: nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2
@@ -45,7 +45,7 @@ class SectionAdditional extends Component {
           </div>
           <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
             <Dropdown onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-              options={this.state.categoryLevel1 == 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
+              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
           </div>
 
         </div>

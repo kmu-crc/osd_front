@@ -4,13 +4,13 @@ import zoom from "source/zoom.svg";
 import OrderOption from "components/Commons/OrderOption"
 
 
-import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
-import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
-import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
+// import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
+// import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
+// import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css'
 
-import Category from "components/Commons/Category"
+//import Category from "components/Commons/Category"
 
 const SearchForm = styled.div`
     font-family: Noto Sans KR;
@@ -81,9 +81,9 @@ class SearchListRe extends Component {
     {        
 
         const addrText = window.location.href.toString();
-        if(addrText.indexOf('#group')!=-1){this.setState({selectCate:1})}
-        else if(addrText.indexOf('#designer')!=-1){this.setState({selectCate:2})}
-        else if(addrText.indexOf('#design')!=-1){this.setState({selectCate:3})}
+        if(addrText.indexOf('#group')!==-1){this.setState({selectCate:1})}
+        else if(addrText.indexOf('#designer')!==-1){this.setState({selectCate:2})}
+        else if(addrText.indexOf('#design')!==-1){this.setState({selectCate:3})}
         else {this.setState({selectCate:0})}
     }
 
@@ -135,7 +135,7 @@ class SearchListRe extends Component {
             <div style={{ position: "relative", overflow: "hidden" }}>
                 <SearchForm>
                     <div className="inputBox">
-                        <div className="zoomImg"><img src={zoom} style={{ width: "33px", height: "33px" }} /></div>
+                        <div className="zoomImg"><img src={zoom} alt="" style={{ width: "33px", height: "33px" }} /></div>
                         <input style={{width:"600px"}} className="searchInput" id="searchInput"
                             placeholder="검색어를 입력하세요"
                             onChange={this.getSearchValue}
@@ -146,11 +146,11 @@ class SearchListRe extends Component {
                     {/*x box position*/}
                     <div style={{ display: "flex", justifyContent: "space-start" }}>
                         <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "501" }}>
-                            <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
+                            <Dropdown id="dropbox" selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
                         </div>
 
                         <div className="cateUI">
-                            {this.state.selectCate != 2 &&
+                            {this.state.selectCate !== 2 &&
                                 <React.Fragment>
                                     <div style={{ color: "red" }}>세부카테고리</div>
                                     <div style={{ paddingLeft: '20px' }}>세부카테고리</div>

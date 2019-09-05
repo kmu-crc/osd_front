@@ -24,21 +24,21 @@ const Context = styled.div`
     width: 504px;
     height: 196px;
 `
-const LinkWrapper = styled.div`
-    margin: auto;
-    top: 85px;
-    position: relative;
-    width: 175px;
-    height: 29px;
-    border-bottom: solid 1.5px #F00;
-    a {
-        color: #F00;
-        font-size: 20px;
-        line-height: 29px;
-        font-family: "Noto Sans KR";
-        font-weight: 500;
-    }
-`
+// const LinkWrapper = styled.div`
+//     margin: auto;
+//     top: 85px;
+//     position: relative;
+//     width: 175px;
+//     height: 29px;
+//     border-bottom: solid 1.5px #F00;
+//     a {
+//         color: #F00;
+//         font-size: 20px;
+//         line-height: 29px;
+//         font-family: "Noto Sans KR";
+//         font-weight: 500;
+//     }
+// `
 const Textwrapper = styled.div`
     float:center;
     margin-top: 60.5px;
