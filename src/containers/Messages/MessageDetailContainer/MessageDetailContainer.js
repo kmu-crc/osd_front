@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageDetail from "components/Messages/MessageDetail";
-import { MessageScrollDown,GetMyMsgDetailRequest, GetMyMessageDetailClear} from "redux/modules/message";
-
-const MessageDetailBox = `
-width: 1259px;
-height: 602.5px;
-`
+//import { MessageScrollDown,GetMyMsgDetailRequest, GetMyMessageDetailClear} from "redux/modules/message";
+import { GetMyMsgDetailRequest, GetMyMessageDetailClear} from "redux/modules/message";
+// const MessageDetailBox = `
+// width: 1259px;
+// height: 602.5px;
+// `
 
 class MessageDetailContainer extends Component {
   render() {

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { CreateStep, CreateCard, TipDiv } from "components/Designs/GridEditor";
 import { FormInput, FormTextArea } from "components/Commons/FormItem";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+// import { FormControl, ValidationGroup } from "modules/FormControl";
+import { FormControl } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
@@ -64,7 +65,9 @@ class CreateDesign extends Component {
     }
   }
   submit = () => {
-    console.log("!!!");
+
+    
+
   }
   onChangeCategory1 = (event, { value }) => {
     const cate2 = this.props.cate2[value];
@@ -85,32 +88,19 @@ class CreateDesign extends Component {
 
   render() {
     // const myInfo = this.props.MyDetail
-    // const Peer = (props) => {
-    //   return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px" }}>
-    //     <div style={{ backgroundSize: "cover", backgroundPosition: "center", backgroundImage: `url(${this.props.url || noface})`, backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
-    //     <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "112px", height: "29px" }}>진아진아진아</div>
-    //     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
-    //   </div>)
-    // }
-    let arrSummaryList = [];
-    if (this.state.members.length > 0) {
-      arrSummaryList = this.state.members.map((item, index) => {
-        let SelectedItem = false;
-        if (this.state.selectId == item.friend_id) SelectedItem = true;
-        return (
-          <div onClick={() => this.removeMember(index)} key={index}>
-            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
-          </div>
+    let arrSummaryList=[];
+    if(this.state.members.length>0)
+    { 
+      arrSummaryList = this.state.members.map((item,index)=>{  
+        // let SelectedItem = false;
+        // if(this.state.selectId === item.friend_id)   SelectedItem=true;       
+        return(
+          <div onClick = {()=>this.removeMember(index)} key={index}>
+             <Peer  s_img={item.s_img==null?noface:item.s_img} nick_name={item.nick_name}/>
+         </div>
         )
       });
     }
-
-    // const Peer = this.state.members.map((item, index) => {
-    //   console.log(item)
-    //         return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px" }}>
-    //      </div>)
-    // });
-
 
     const { step } = this.state
     return (<>
@@ -248,6 +238,7 @@ class CreateDesign extends Component {
             </form>
           </div>
         </div></div>
+
     </>)
   }
 }

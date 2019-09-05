@@ -15,7 +15,7 @@ const GET_MY_MSG_DETAIL_FAILURE = "GET_MY_MSG_DETAIL_FAILURE"
 const GET_MY_MSG_DETAIL_CLEAR = "GET_MY_MSG_DETAIL_CLEAR"
 
 
-const ADD_MSG_MEMBER = "ADD_MSG_MEMBER"
+//const ADD_MSG_MEMBER = "ADD_MSG_MEMBER"
 //
 const GetMyMsgList = () => ({ type: GET_MY_MSG_LIST })
 const GetMyMsgListSuccess = (data) => ({ type: GET_MY_MSG_LIST_SUCCESS, MsgList: data })
@@ -29,7 +29,7 @@ const SendMessageSuccess = (data) => ({ type: SEND_MESSAGE_SUCCESS, data })
 const SendMessageFailure = () => ({ type: SEND_MESSAGE_FAILURE })
 
 
-const AddMsgMember=()=>({type:ADD_MSG_MEMBER});
+//const AddMsgMember=()=>({type:ADD_MSG_MEMBER});
 
 //
 const initialState = {

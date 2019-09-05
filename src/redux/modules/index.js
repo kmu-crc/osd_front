@@ -15,8 +15,6 @@ import { combineReducers } from "redux"
 
 export default combineReducers({
     // form,
-    Authentication,
-    Category,
     DesignerList,
     form: formReducer,
     Account, Authentication,

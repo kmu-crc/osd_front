@@ -38,9 +38,11 @@ const MyDesignListFail = () => ({ type: MY_DESIGN_FAIL, MyDesign: [], MyDesignAd
 const GetMyGroupList = (data) => ({ type: GET_MY_GROUP, MyGroup: data })
 const MyGroupListClear = (data) => ({ type: GET_MY_GROUP_CLEAR, MyGroup: data, MyGroupAdded: [] })
 const MyGroupListFail = () => ({ type: MY_GROUP_FAIL, MyGroup: [], MyGroupAdded: [] })
+
 const GetMyLikeDesign = (data) => ({ type: GET_MY_LIKE_DESIGN, MyLikeDesign: data })
 const MyLikeDesignClear = (data) => ({ type: GET_MY_LIKE_DESIGN_CLEAR, MyLikeDesign: data, MyLikeDesignAdded: [] })
 const MyLikeDesignFail = () => ({ type: MY_LIKE_DESIGN_FAIL, MyLikeDesign: [], MyLikeDesignAdded: [] })
+
 const GetMyLikeGroup = (data) => ({type:GET_MY_LIKE_GROUP, MyLikeGroup:data})
 const MyLikeGroupClear = (data) => ({type:GET_MY_LIKE_GROUP_CLEAR, MyLikeGroup:data, MyLikeGroupAdded:[]})
 const MyLikeGroupFail = () => ({type:MY_LIKE_GROUP_FAIL, MyLikeGroup:[], MyLikeGroupAdded:[]});
@@ -212,7 +214,14 @@ export default function Personal(state, action) {
             return update(state, {
                 status:{
                     MyLikeGroup: { $set: action.MyLikeGroup },
-                    MyLikeGroupAdded: { $push: action.MyLikeGroup }
+                    MyLikeGroupAdded: { $set: action.MyLikeGroup }
+                }
+            })
+        case MY_LIKE_GROUP_FAIL:
+            return update(state, {
+                status: {
+                    MyLikeGroup: { $set: action.MyLikeGroup },
+                    MyLikeGroupAdded: { $set: action.MyLikeGroupAdded }
                 }
             })
         case GET_MY_LIKE_DESIGNER:
@@ -365,6 +374,7 @@ export function GetMyLikeDesignRequest(token, page) {
 }
 
 export function GetMyLikeGroupRequest(token, page) {
+    console.log("group"+page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeGroup/${page}`, {
             headers: {
@@ -386,7 +396,7 @@ export function GetMyLikeGroupRequest(token, page) {
             }
             dispatch(GetMyLikeGroup(data))
         }).catch((error) => {
-            dispatch(MyLikeDesignFail())
+            dispatch(MyLikeGroupFail())
             console.log("err", error)
         })
     }

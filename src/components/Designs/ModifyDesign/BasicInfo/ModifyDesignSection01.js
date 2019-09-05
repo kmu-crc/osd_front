@@ -28,9 +28,9 @@ class ModifyDesignSection01 extends Component
     }
     shouldComponentUpdate(nextProps)
     {
-        if(this.props.DesignDetail.title!=nextProps.DesignDetail.title) this.props.onChangeTitle(nextProps.DesignDetail.title);
-        if(this.props.DesignDetail.explanation!=nextProps.DesignDetail.explanation) this.setState({explain:nextProps.DesignDetail.explanation})
-        if(this.props.DesignDetail.img!=nextProps.DesignDetail.img) this.setState({thumbnail:nextProps.DesignDetail.img.m_img})
+        if(this.props.DesignDetail.title!==nextProps.DesignDetail.title) this.props.onChangeTitle(nextProps.DesignDetail.title);
+        if(this.props.DesignDetail.explanation!==nextProps.DesignDetail.explanation) this.setState({explain:nextProps.DesignDetail.explanation})
+        if(this.props.DesignDetail.img!==nextProps.DesignDetail.img) this.setState({thumbnail:nextProps.DesignDetail.img.m_img})
         return true;
     }
     handleOnChangeTitle(event)
@@ -49,7 +49,7 @@ class ModifyDesignSection01 extends Component
         reader.onloadend = ()=>{
             this.props.onChangeThumbnail(reader.result);
         }
-        let url = reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
     }
 
     render()

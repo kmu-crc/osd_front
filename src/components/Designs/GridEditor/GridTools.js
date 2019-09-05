@@ -1,6 +1,6 @@
 import React from 'react';
 import Cross from "components/Commons/Cross";
-import TextFormat from "modules/TextFormat";
+//import TextFormat from "modules/TextFormat";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import styled from "styled-components";

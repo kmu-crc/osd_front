@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import SelectBox from "components/Commons/SelectBox"
+// import { FormControl, ValidationGroup } from "modules/FormControl";
+// import SelectBox from "components/Commons/SelectBox"
 
 
 
@@ -18,7 +18,7 @@ class SectionBuziness extends Component
     }
     shouldComponentUpdate(nextProps)
     {
-      if(this.props.MyDetail!=nextProps.MyDetail)
+      if(this.props.MyDetail!==nextProps.MyDetail)
       {
         this.setState({isDesigner:nextProps.MyDetail.is_designer,team:nextProps.MyDetail.team,career:nextProps.MyDetail.career,
           contact:nextProps.MyDetail.contact,location:nextProps.MyDetail.location})
@@ -80,7 +80,7 @@ class SectionBuziness extends Component
             <>
             <div style = {{display:"flex", justifyContent:"space-start",paddingLeft:"95.5px"}}>
             <div style={{ fontSize:"20px", color:"#707070",fontWeight: "500" }}>디자이너 활동 여부</div>
-            <checkbox id="isDesignerCheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: this.state.isDesigner==1?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
+            <checkbox id="isDesignerCheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: this.state.isDesigner===1?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
               onClick={this.isDesignerCheck}/>
               <div style={{color:"#FF0000", fontSize:"17px", textAlign:"left", marginLeft:"420px", width:"27px", height:"25px"}}>TIP</div>
             </div>

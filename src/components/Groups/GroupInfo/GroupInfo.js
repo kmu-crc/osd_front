@@ -116,7 +116,7 @@ class GroupInfoComponent extends Component {
             const title = this.props.GroupInfo && this.props.GroupInfo.title;
 
             return (
-                this.state.showPopup == 1 &&
+                this.state.showPopup === 1 &&
                 <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
                     <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
                         <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
@@ -176,7 +176,7 @@ class GroupInfoComponent extends Component {
                     <div style={{ width: "max-content" }}>
                         {parentName &&
                             <div style={{ display: "flex", cursor: "default" }}>
-                                {info.grand_parentTitle && <><img src={dots} title={info.grand_parentTitle} style={{ height: "15px", width: "15px", transform: "rotate(90deg)", marginTop: "22px", opacity: "0.55" }} /><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
+                                {info.grand_parentTitle && <><img src={dots} alt={dots} title={info.grand_parentTitle} style={{ height: "15px", width: "15px", transform: "rotate(90deg)", marginTop: "22px", opacity: "0.55" }} /><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
                                 {info.parentName && <><div style={{ marginLeft: "10px", marginTop: "17px", fontSize: "20px", fontWeight: "300", color: "#707070", width: "max-content" }}>{parentName}</div><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
                             </div>}
                     </div>
@@ -191,7 +191,7 @@ class GroupInfoComponent extends Component {
                                     backgroundImage: info && info.img && info.img.l_img ? `url(${info.img.l_img})` : `url(${noimg})`
                                 }} />
                                 <div style={{ marginLeft: "50px" }}>
-                                    <div style={{ marginTop: "5px", fontSize: "15px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
+                                    <div style={{ marginTop: "5px",  width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                     <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
                                         <div style={{ width: "621px" }}>
                                             {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
@@ -271,7 +271,7 @@ class GroupInfoComponent extends Component {
                  </div>
                     </div>
                 }
-                {this.state.joinDialog == false ? <JoinModal /> : <JoinCancelModal />}
+                {this.state.joinDialog === false ? <JoinModal /> : <JoinCancelModal />}
                 <div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
                     {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
                 </div >

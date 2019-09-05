@@ -24,22 +24,32 @@ const Context = styled.div`
     width: 504px;
     height: 196px;
 `
-const LinkWrapper = styled.div`
-    margin: auto;
-    top: 85px;
-    position: relative;
-    width: 175px;
-    height: 29px;
-    border-bottom: solid 1.5px #F00;
-    a {
-        color: #F00;
-        font-size: 20px;
-        line-height: 29px;
-        font-family: "Noto Sans KR";
-        font-weight: 500;
-    }
+// const LinkWrapper = styled.div`
+//     margin: auto;
+//     top: 85px;
+//     position: relative;
+//     width: 175px;
+//     height: 29px;
+//     border-bottom: solid 1.5px #F00;
+//     a {
+//         color: #F00;
+//         font-size: 20px;
+//         line-height: 29px;
+//         font-family: "Noto Sans KR";
+//         font-weight: 500;
+//     }
+// `
+const Textwrapper = styled.div`
+    float:center;
+    margin-top: 60.5px;
+    margin-bottom: 60px;
+    text-align: center;
+    font-size: 25px;
+    font-family: "Noto Sans KR";
+    line-height: 37px;
+    font-weight: 700;
+    color: #F00;
 `
-
 function Banner() {
   return (<BannerWrapper>
     <Context />
@@ -49,16 +59,7 @@ function Banner() {
   </BannerWrapper>)
 }
 
-const Textwrapper = styled.div`
-    margin-top: 60.5px;
-    padding-bottom: 60px;
-    text-align: center;
-    font-size: 25px;
-    font-family: "Noto Sans KR";
-    line-height: 37px;
-    font-weight: 700;
-    color: #F00;
-`
+
 class MainPage extends Component {
   render() {
     return (<>
