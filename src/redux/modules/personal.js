@@ -241,7 +241,6 @@ export default function Personal(state, action) {
     }
 }
 
-
 const initialState = {
     MyJoin: { status: "INIT" },
     userInfo: { status: "INIT" },
@@ -257,7 +256,6 @@ const initialState = {
         MyLikeGroup:[], MyLikeGroupAdded: [],
     }
 }
-
 
 // 내 기본 정보 불러오기
 export function GetMyDetailRequest(token) {
