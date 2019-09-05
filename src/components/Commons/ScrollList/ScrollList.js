@@ -99,7 +99,7 @@ class ScrollList extends Component {
           {!manual && hasMore && <div style={{ cursor: "default", textAlign: "center", color: "#707070", fontWeight: "500" }} onMouseOver={this.getLoadData}>스크롤<i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i></div>}
           {manual && hasMore && <div><MoreBtn className="ui button red" onClick={() => this.getLoadData()}>더보기</MoreBtn></div>}
         </FlexContainer>
-        : <div style={{ fontSize: "16px", textAlign: "center" }}>데이터가 없습니다.</div>}
+        : <div style={{ paddingTop:"160px",width:"100%",height:"330px",fontSize: "16px", textAlign: "center",}}>데이터가 없습니다.</div>}
     </>)
   }
 }

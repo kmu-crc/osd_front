@@ -162,10 +162,13 @@ class DesignInfo extends Component {
     moveDegisnForked = () => {
         if (this.props.new_design_id) {
             this.props.history.push("/designModify/" + this.props.new_design_id)
+
+            
         }
     }
-    sendMessage(user_id) {
-        window.location.href = window.location.href.substring(0, window.location.href.search('designDetail')) + `message/${user_id}`
+    sendMessage(user_id,nick_name) {
+        let href = window.location.href.substring(0, window.location.href.search("designDetail"))
+        window.location.href = href + 'message/'+user_id+'/'+nick_name;
     }
     goParentDesign = (parent) => {
         window.location.href = geturl() + `/designDetail/${parent}`
@@ -267,7 +270,7 @@ class DesignInfo extends Component {
                         }
                         {isMyDesign === true ?
                             null :
-                            <div style={{ height: "45px", display: "flex", marginTop: "15px", marginLeft: "auto", cursor: "pointer" }} onClick={() => this.sendMessage(DesignDetail.user_id)}>
+                            <div style={{ height: "45px", display: "flex", marginTop: "15px", marginLeft: "auto", cursor: "pointer" }} onClick={() => this.sendMessage(DesignDetail.user_id,DesignDetail.userName)}>
                                 <div style={{ marginTop: "16px", height: "25px", fontFamily: "Noto Sans KR", fontSize: "17px", marginLeft: "auto", fontWeight: "300", color: "#707070", textAlign: "right" }}>메시지 보내기</div>
                                 <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${email})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
                             </div>

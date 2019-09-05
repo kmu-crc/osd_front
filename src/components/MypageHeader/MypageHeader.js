@@ -6,7 +6,7 @@ import noimg from "source/noimg.png"
 import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"
-import iEdit from 'source/sharp_edit_black_48dp.png';
+import iEdit from 'source/edit_1.png';
 //CSS
 const BackgroundBox = { position: "relative", overFlow: "hidden", width: "1920px", height: "336px", marginTop: "36px", background: "#EFEFEF" }
 const ProfileBox = styled.div`
@@ -14,7 +14,7 @@ const ProfileBox = styled.div`
     width: 200px;
     height: 200px;
     top: 90px;
-    left: 115px;
+    left: 70px;
     border-radius: 200px;
     background: #D6D6D6;
     background-repeat: no-repeat;
@@ -22,7 +22,7 @@ const ProfileBox = styled.div`
     background-size: cover;
     background-image: url(${props => props.img});
 `
-    const Name = { position: "absolute", width: "200px", height: "29px", top: "41px", left: "115px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "center" }
+    const Name = { position: "absolute", width: "200px", height: "29px", top: "41px", left: "70px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "center" }
     const Title = { position: "absolute", width: "479px", height: "29px", top: "41px", left: "418px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "200", textAlign: "left" }
     const ExplainBox01 = {wordWrap:"break-word",
         position: "absolute", overflow: "hidden", width: "479px", height: "149px", top: "90px", left: "418px",
@@ -32,27 +32,26 @@ const ProfileBox = styled.div`
         position: "absolute", overflow: "hidden", width: "479px", height: "149px", top: "90px", left: "976px",
         color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "200", textAlign: "left", lineHeight: "35px"
     }
-    const SummaryIconBox = { position: "absolute", width: "479px", height: "22px", bottom: "50px", left: "418px" }
-    const Summary_View_Icon = { display: "inline-block", width: "17px", height: "12px" }
+    const SummaryIconBox = {position: "absolute", width: "479px", height: "22px", bottom: "50px", left: "418px" }
+    const Summary_View_Icon = { display: "inline-block", width: "17px", height: "17px" }
     const Summary_View = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px" }
     const Summary_ThumbUp_Icon = {
-        display: "inline-block", width: "14px", height: "14px", opacity: "0.55",
+        display: "inline-block", width: "13px", height: "13px", opacity: "0.55",
         background: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
     }
     const Summary_ThumbUp = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
     const Summary_Forked_Icon = {
-        display: "inline-block", width: "15px", height: "15px", opacity: "0.55",
+        display: "inline-block", width: "15px", height: "15px", opacity: "0.55",marginTop:"3px",marginBottom:"-3px",
         background: `url(${iForked})`, backgroundSize: "cover", backgroundPosition: "center center"
     }
     const Summary_Forked = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
 
-    const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "90px", right: "72px", textAlign: "right" }
-    const interestDesignerTitle = {cursor:"pointer",
-        display: "inline-block", width: "164px", height: "25px",
+    const interestDesignerBox = { position: "absolute", width: "170px", height: "45px", top: "26px", right: "72px", textAlign: "right" }
+    const interestDesignerTitle = {cursor:"pointer",display: "inline-block", width: "98px",
         color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
     }
     const UpdateTimeBox = {
-        position: "absolute", width: "146px", height: "25px", top: "273px", right: "72px",
+        position: "absolute", width: "170px", height: "25px", top: "273px", right: "72px",
         color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
     }
 // const MypageHeaderElement = styled.div`
@@ -153,7 +152,8 @@ class MypageHeader extends Component {
 
         return (
             <React.Fragment>
-                                <div style={BackgroundBox}>
+                    <div style={BackgroundBox}>
+                        
                     <div style={Name}>{MypageInfo.nick_name}</div>
                     <ProfileBox img={thumbnailInfo} />
                     <div style={Title}>{MypageInfo.categoryName}</div>
@@ -171,8 +171,8 @@ class MypageHeader extends Component {
                     <div onClick = {this.gotoMyModify}  style={interestDesignerBox
                     }>
                     <div style={interestDesignerTitle}>정보 수정하기</div>
-                    <div style={{cursor:"pointer",display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px", 
-                            backgroundSize: "cover", backgroundPosition: "center center"}}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
+                    <div style={{cursor:"pointer",display: "inline-block", height: "36px",width:"36px",marginLeft:"15px",background:`url("${iEdit}")`,backgroundRepeat:"no-repeat",
+                            backgroundSize: "cover", backgroundPosition: "center center"}}></div>
                     </div>
                    
                     <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>

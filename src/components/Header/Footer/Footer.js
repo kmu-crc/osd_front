@@ -11,7 +11,7 @@ class Footer extends Component {
 
     render() {
         return (
-            <div style={{ width:"100%",
+            <div style={{ width:"100%",marginHeight:"100%",position:"absolute",padding:"20px",
                 height: "22px", marginBottom: "20px", fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white",
                 display: "flex", fontSize: "15px", lineHeight: "22px", textAlign: "center",
                 fontWeight: "500"

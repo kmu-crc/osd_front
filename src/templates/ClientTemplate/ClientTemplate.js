@@ -88,5 +88,5 @@ class ClientTemplate extends Component {
     </MenuContext.Provider>)
   }
 }
-
+//margin:"0 auto",
 export default ClientTemplate

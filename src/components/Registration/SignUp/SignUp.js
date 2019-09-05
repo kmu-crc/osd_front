@@ -259,7 +259,7 @@ class SignUpModal extends Component {
                     (
                         <CustomModal open={open} onClose={this.onClose}>
                             {this.state.open_term &&
-                                <div style={{ position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
+                                <div style={{  position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
                                     <div style={{ marginTop: "44px", marginLeft: "46px", width: "450px", height: "754px", fontFamily: "Noto Sans KR", fontWeight: "300", fontSize: "20px", lineHeight: "35px", textAlign: "left", color: "#707070" }}>
                                         [차례]<br />
                                         제1장<br />
@@ -274,7 +274,7 @@ class SignUpModal extends Component {
                                         color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "35px", textAlign: "left"
                                     }} onClick={this.agree}>동의하고 닫기</div>
                                 </div>}
-                            <Modal.Content>
+                            <Modal.Content >
                                 <div className="title">OPEN SOURCE DESIGN</div>
                                 <form style={{ marginTop: "49px", marginLeft: "225px" }} >
                                     <div style={{

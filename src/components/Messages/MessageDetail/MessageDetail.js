@@ -23,7 +23,7 @@ const MsgReceivedBubble ={display:"inline-block",width:"571px",padding:"13px 25p
                          borderRadius:"20px",backgroundColor:"#FFFFFF"}
 const MsgReceivedBubbleText = {width:"526px",
                         fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"500",textAlign:"left",lineHeight:"25px"}
-const MsgReceivedTimeText={position:"absolute",width:"150px",height:"25px",left:"593px",bottom:"0px",
+const MsgReceivedTimeText={position:"absolute",width:"150px",height:"25px",left:"593px",bottom:"0px",font:"Noto Sans KR",
                             fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"100",textAlign:"left"}
 
 const MsgSentBox ={position:"relative",width:"100%",marginBottom:"32px",}
@@ -49,7 +49,7 @@ function CheckedTime(date){
   let updateMin = updateT.getMinutes();
   let updateHour = updateT.getHours();
 
-  const ampm = updateHour<12?"오전":"오후";
+  const ampm = updateHour<12?"오전 ":"오후 ";
   updateHour = updateHour%12;
   const updateMinT = updateMin<10?"0"+updateMin.toString():updateMin.toString();
   const updateHourT = updateHour<10?"0"+updateHour.toString():updateHour.toString();

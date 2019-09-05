@@ -146,21 +146,6 @@ class Messages extends React.Component
       {
         this.setMsgId(-1,this.props.id,this.props.name)
       }
-      // if(this.props.match)
-      // if (this.props.userInfo) {
-
-      //   try {
-      //     Socket.emit("INIT", this.props.userInfo.uid)
-      //     Socket.on("getNoti", noti => {
-      //       //console.log("this!noti!");
-      //       this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-      //       //this.setState({ render: true })
-      //     })
-      //   } catch (err) {
-      //     console.log(err)
-      //   }        
-      // }
-
     }
     
     shouldComponentUpdate(nextProps) {
@@ -305,7 +290,7 @@ class Messages extends React.Component
           let SelectedItem = false;
           if(this.state.selectId == item.friend_id)   SelectedItem=true;       
           return(
-            <div key={index} onClick={()=>this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
+            <div key={index} style={{cursor:"pointer"}} onClick={()=>this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
                <SummaryItem  s_img={item.s_img==null?noImage:item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem}/>
            </div>
           )
@@ -314,7 +299,7 @@ class Messages extends React.Component
 
      
         return(
-            <div onClick = {this.handleCloseMember}>
+            <div style = {{cursor:"pointer"}} onClick = {this.handleCloseMember}>
                 <div style={Banner}>
                     <div style={BannerText}>메시지함</div>
                 </div>
