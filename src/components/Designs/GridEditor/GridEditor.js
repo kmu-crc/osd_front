@@ -3,7 +3,9 @@ import { CreateCard, CreateStep, StepCard, ContentCard } from "./GridTools";
 import styled from 'styled-components';
 import CardModal from "./CardModal";
 import NewStepModal from "./NewStepModal";
+import EditStepModal from "./EditStepModal";
 import NewCardModal from "./NewCardModal";
+import { thisExpression } from '@babel/types';
 
 const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};
@@ -26,28 +28,23 @@ class GridEditor extends Component {
         super(props);
         this.state = {
             card_loading: false, card: false, newcard: false, row: null, col: null,
-            newstep: false, cardDetail: null, title: null,
+            newstep: false, editstep: false, cardDetail: null, title: null, where: null,
             w: 1920, ws: { left: 271, top: 270, height: 1890 }, movableRight: true, movableLeft: true
         }
     }
     getHeight(obj) {
         console.log(`${obj.offsetHeight}px`)
         return `${obj.offsetHeight}px`
-        // return `${obj && obj.offsetHeight}px`
     }
     createNewCard(row, col) {
-        this.setState({ newcard: true }) // alert(`(${row},${col}) 0 4 ing...?!"`)
+        this.setState({ newcard: true });
     }
     takeOutCard(row, col, data, maxRow) {
-        console.log("DEBUG", maxRow, row, col)
         if (data === null) {
             this.createNewCard(row, col)
             return;
         }
         this.setState({ cardDetail: data, title: data.title, row: row, col: col, maxRow: maxRow, card: true })
-        // request card detail
-        console.log("card-data:", data)
-        // this.props.GetDesignCardDetailRequest
     }
     componentDidMount() {
         window.addEventListener("resize", () => { this.setState({ w: window.innerWidth }) }, true)
@@ -59,8 +56,21 @@ class GridEditor extends Component {
     CloseNewStep = () => {
         this.setState({ newstep: false })
     }
+    CloseEditStep = () => {
+        this.setState({ editstep: false })
+    }
     OpenNewStep = () => {
         this.setState({ newstep: true })
+    }
+    OpenEditStep = (title, where) => {
+        this.setState({ editstep: true, title: title, where: where })
+    }
+    EditStep = (data) => {
+        this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
+            .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
+            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid) })
+            .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) });
+        this.setState({ editstep: false });
     }
     NewStep = (data) => {
         this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
@@ -72,55 +82,33 @@ class GridEditor extends Component {
     NewItem = (data) => { }
     render() {
         const { editor, DesignDetailStep, userInfo } = this.props
-        const { row, col, maxRow, card, newcard, newstep, cardDetail, title } = this.state
-        // const { w, ws, row, col, maxRow, card, newcard, newstep, cardDetail, title } = this.state
-        // temp code //
-        // const items = DesignDetailStep.map(step => { return step.cards.length })
-        // const maxItems = Math.max.apply(Math, items.map(tem => { return tem }))
-        //const itemlist = ['STEP1', 'STEP2', 'STEP3', 'STEP4', 'STEP5', 'STEP6', 'STEP7', 'STEP8', 'STEP9', 'STEP10']
-        // console.log(DesignDetailStep && DesignDetailStep.map(step => { return step.title }), "!")
-        // console.log("DDSC / GE /> ", this.props.design, DesignDetailStep, editor)
+        const { row, col, maxRow, card, newcard, newstep, editstep, cardDetail, title, where } = this.state
         console.log(this.props, "card:");
         console.log(this.state, "state-card:");
         return (<>
             {/* ------------- card modal component */}
-            {card && <CardModal editor={cardDetail && userInfo && cardDetail.user_id === userInfo.uid} open={card} close={() => this.setState({ card: false })} title={title || "로딩중"} card={cardDetail} col={col} row={row} maxRow={maxRow} />}
-            {editor && newstep && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
-            {editor && newcard && <NewCardModal open={newcard} close={() => this.setState({ newcard: false })} />}
-
+            {card && <CardModal
+                isTeam={editor} edit={userInfo.uid === cardDetail.user_id}
+                open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
+                title={title || "로딩중"} card={cardDetail} />}
+            {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
+            {editor && <EditStepModal open={editstep} title={title} where={where} EditStep={this.EditStep} close={this.CloseEditStep} />}
+            {editor && newcard && <NewCardModal isTeam={editor} open={newcard} close={() => this.setState({ newcard: false })} />}
             {/* ------------- grid editor component */}
             <GridEditorWrapper>
-                {/* 왼쪽 */}
-                {/* <div style={{ display: "flex" }}>
-                    <div style={{ marginTop: "290px" }}>
-                    {itemlist && itemlist.map(item => { return <StepCard key={item} marginBottom={190} title={item} /> })}
-                    {editor && <CreateStep onClick={this.OpenNewStep} step={"단계"} />}
-                    </div>
-                </div> */}
-                {/* 오른쪽 */}
                 <div style={{ width: `max-content`, paddingLeft: "73.5px" }}>
                     {/* 상 */}
                     <div style={{ display: "flex", marginTop: "90px" }}>
                         {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
                             return <div key={step_index + step.title} style={{ marginRight: "74px" }}>
-                                <StepCard title={step.title} />
+                                <StepCard title={step.title} onClick={() => editor ? this.OpenEditStep(step.title, step.uid) : undefined} />
                                 <AsBelowArrow marginTop={25} marginRight={0} marginBottom={0} marginLeft={85} />
                             </div>
                         })}
                         {editor && <CreateStep onClick={this.OpenNewStep} step={"단계"} />}
                     </div>
                     {/* 하 */}
-                    <div style={{ overflow: "hidden", marginTop: "70.5px", display: "flex" }}>
-                        {/* {itemlist && itemlist.map((item, item_index) => { */}
-                        {/* return <div key={item_index} style={{ width: "10000px", marginTop: "70.5px", display: "flex" }}> */}
-                        {/* {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
-                            return (step.cards.length > item_index)
-                            ? <ContentCard key={item + item_index + step_index} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => this.takeOutCard(item_index, step_index, step.cards[item_index], step.cards.length)} title={step.cards[item_index].title} />
-                            : editor
-                            ? <CreateCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null, step.cards.length)} title={""} />
-                            : <ContentCard key={item + item_index + step_index} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} onClick={() => editor && this.takeOutCard(item_index, step_index, null, step.cards.length)} title={""} />
-                        })} */}
-                        {/* </div> */}
+                    <div style={{ overflow: "hidden", marginTop: "25px", display: "flex" }}>
                         {DesignDetailStep && DesignDetailStep.map((step, step_index) => {
                             return (<div key={step.uid + step_index + step.title}>
                                 {step.cards && step.cards.length > 0 &&

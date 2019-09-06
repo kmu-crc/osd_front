@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import Comment from 'components/Commons/Comment'
-import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/"
+import Comment from 'components/Commons/Comment';
+import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/modules/design";
 
 class DesignComment extends Component {
     componentDidMount() {
@@ -13,20 +12,19 @@ class DesignComment extends Component {
         this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.cardId, this.props.token);
     }
     render() {
+        console.log(this.props.Comment);
         return (<>
-            <Comment comment={this.comment} reply={this.reply} my={this.props.my} comments={this.props.Comment} />
+            <Comment comment={this.comment} reply={this.reply} my={this.props.userInfo} comments={this.props.Comment} />
         </>)
     }
-}
-
-
+};
 const mapStateToProps = state => {
     return {
         Comment: state.DesignComment.status.Comment,
-        token: state.Authenification.status.token,
+        token: state.Authentication.status.token,
+        userInfo: state.Authentication.status.userInfo,
     };
 };
-
 const mapDispatchToProps = dispatch => {
     return {
         GetDesignCommentRequest: (design_id) => {
@@ -39,6 +37,5 @@ const mapDispatchToProps = dispatch => {
             return dispatch(DeleteDesignCommentRequest(design_id, comment_id, token));
         }
     }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DesignComment));
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DesignComment);

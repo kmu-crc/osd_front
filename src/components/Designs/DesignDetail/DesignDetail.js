@@ -11,7 +11,7 @@ class DesignDetail extends Component {
   }
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token)
-    .then(async() => {
+      .then(async () => {
         if (this.props.userInfo === null) this.setState({ isMyDesign: false });
         else if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
           this.setState({ isMyDesign: true });
@@ -27,7 +27,12 @@ class DesignDetail extends Component {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
     } // 로그인 한 경우 좋아요 했는지 여부 가져오기
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (this.props.DesignDetail !== nextProps.DesignDetail) {
+      console.log("???");
+      return true;
+    }
+  }
   gotoModifyPage = () => {
     window.location.href = "/groupDetail/" + this.props.id + "/modify"
   }
@@ -41,14 +46,13 @@ class DesignDetail extends Component {
   render() {
     console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
-    //const { editor } = this.state;
     return (<>
       {DesignDetail && DesignDetail.uid ? <>
         {/* design info */}
         <DesignInfo {...this.props} {...this.state} />
         {/* design detail */}
         {DesignDetail && DesignDetail.is_project === 1 ? (
-          <DesignDetailStepContainer design={DesignDetail} {...this.state}/>
+          <DesignDetailStepContainer design={DesignDetail} {...this.state} />
         ) : (
             <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />
           )}
