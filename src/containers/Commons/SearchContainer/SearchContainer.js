@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchListRe from "components/Commons/SearchListRe";
-// import { GetCategoryLevel2Request } from "actions/Categorys";
+import { GetDesignListCountRequest} from "redux/modules/design";
+
+import { GetCategoryAllRequest } from "redux/modules/category"
 
 class SearchContainer extends Component {
   render() {
@@ -13,15 +15,19 @@ class SearchContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    category1: state.Category.status.category1,
+    category2: state.Category.status.category2,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // GetCategoryLevel2Request: (id) => {
-    //   return dispatch(GetCategoryLevel2Request(id));
-    // }
+    GetCategoryAllRequest: () => {
+      return dispatch(GetCategoryAllRequest());
+    },
+    GetDesignListCountRequest : (cate1, cate2)=>{
+      return dispatch(GetDesignListCountRequest(cate1,cate2));
+    }
   };
 };
 

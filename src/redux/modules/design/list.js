@@ -74,11 +74,10 @@ export function DesignList(state, action) {
                 }
             })
         case DESIGN_LIST_CLEAR:
-            console.log(action.DesignList);
             return update(state, {
                 status: {
-                    DesignList: { $set: action.DesignList },
-                    DesignListAdded: { $set: action.DesignList }
+                    DesignList: { $set: [] },
+                    DesignListAdded: { $set: [] }
                 }
             })
         case DESIGN_LIST_FAIL:
@@ -130,7 +129,7 @@ export function GetTopDesignListRequest(page) {
     }
 }
 export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 = null, keyword = null) {
-    const url = `${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
+    const url = `${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
     console.log("url:", url);
     return (dispatch) => {
         return fetch(url, {
@@ -144,7 +143,7 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
             }
             dispatch(GetDesignList(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.log("err", error);
             dispatch(DesignListFail())
         })
     }

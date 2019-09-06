@@ -61,7 +61,6 @@ export function DesignerList(state, action) {
   }
 };
 
-
 export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
   const sql = `${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
   console.log("sql:", sql)
@@ -80,6 +79,7 @@ export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
       if (page === 0) {
         dispatch(DesignerListClear(data));
       }
+      console.log(data);
       dispatch(GetDesignerList(data));
     }).catch((error) => {
       dispatch(DesignerListFail());
