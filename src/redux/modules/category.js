@@ -91,7 +91,12 @@ export function GetCategoryAllRequest() {
         let category1 = res.data.category1.map(data => {
           return { text: data.name, value: data.uid }
         })
-        category1.unshift({ text: "전체", value: 0 })
+        // category1.unshift({ text: "전체", value: 0 })
+        // category1.push({ text: "기타", value: 0 })
+        category1.shift();
+console.log("1",category1)
+        category1.push({ text: "기타", value: 0 })
+console.log("2",category1)
         let category2 = []
         category2 = res.data.category2.map(data => {
           let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })

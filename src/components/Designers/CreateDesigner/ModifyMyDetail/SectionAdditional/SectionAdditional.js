@@ -41,10 +41,10 @@ class SectionAdditional extends Component {
           <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
           <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
             <Dropdown onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-              options={this.props.category1} selection name="cate1" ref="dropdown1" value={this.state.categoryLevel1} />
+              options={this.props.category1} selection name="cate1" ref="dropdown1" value={this.state.categoryLevel1}  placeholder = "카테고리를 선택해주세요" />
           </div>
           <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-            <Dropdown onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
+            <Dropdown id="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
               options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
           </div>
 

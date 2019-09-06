@@ -291,7 +291,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "74px", height: "29px"
                                     }}>비밀번호</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange={this.onChangePass} style={{
+                                        <input type="password" onChange={this.onChangePass} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="비밀번호를 입력하세요." /></div>
@@ -300,7 +300,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>비밀번호 확인</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange={this.onChangePassCheck} style={{
+                                        <input type="password" onChange={this.onChangePassCheck} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="비밀번호를 입력하세요." /></div>

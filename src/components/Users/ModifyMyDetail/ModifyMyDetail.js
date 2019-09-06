@@ -21,7 +21,7 @@ class ModifyMyDetail extends Component {
     super(props);
     this.state = {
       change_password: false, selected: 0, loading: false,
-      thumbnail: "", nick_name: "", about_me: "",
+      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
@@ -48,8 +48,9 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(modifyvalue) {
-    this.setState({ thumbnail: modifyvalue });
+  updateThumbnail(imgInfo,imgName)
+  {
+    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
   }
   updatePassword(modifyvalue) {
     this.setState({ password: modifyvalue });
@@ -141,7 +142,15 @@ class ModifyMyDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    let formData = this.state;
+
+    let formData = {...this.state,files:[]};
+
+    let file = {
+      value: this.state.thumbnail,
+      name: this.state.thumbnail_name,
+      key: 0
+    };
+    formData.files.push(file);
 
     if(this.state.nick_name!==this.props.MyDetail.nick_name)
     {
@@ -156,6 +165,7 @@ class ModifyMyDetail extends Component {
           alert("닉네임을 입력해주세요");
           return;
     }
+
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
@@ -167,6 +177,12 @@ class ModifyMyDetail extends Component {
         return false;
       }
       delete formData.passwordCheck;
+    }
+
+    if(this.state.category_level1 ===-1)
+    {
+      alert("카테고리를 선택해주세요!");
+      return;
     }
 
     //ValidationGroup(formData, false).then(async data => {

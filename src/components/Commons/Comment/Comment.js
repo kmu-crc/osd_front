@@ -48,7 +48,7 @@ class Comment extends Component {
                         return (
                             <div key={repli.uid + repli_index} style={{ marginLeft: "80px" }}>
                                 <div style={{ display: "flex" }}>
-                                    <div style={{ width: "40px", height: "40px", backgroundImage: `url(${repli.thumbnail && repli.thumbnail.s_img || noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
+                                    <div style={{ width: "40px", height: "40px", backgroundImage: `url(${repli.thumbnail ==null? repli.thumbnail.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
                                     <div style={{ marginLeft: "24px", marginTop: "3px" }}><div style={{ fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{repli.nick_name}</div></div>
                                 </div>
                                 <div style={{ marginLeft: "55px", display: "flex" }}>
@@ -62,7 +62,7 @@ class Comment extends Component {
                     {reply && item.uid === this.state.targetId && <>
                         <div style={{ marginLeft: "80px", marginBottom: "30px" }}>
                             <div style={{ display: "flex" }}>
-                                <div style={{ width: "40px", height: "40px", backgroundImage: `url(${my.thumbnail && my.thumbnail.s_img || noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
+                                <div style={{ width: "40px", height: "40px", backgroundImage: `url(${my.thumbnail ==null? my.thumbnail.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
                                 <div style={{ marginLeft: "24px", marginTop: "3px" }}><div style={{ fontSize: "15px", lineHeight: "22px", color: "#707070", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{this.state.ing ? "답글 다는 중..." : my.nickName}</div></div>
                             </div>
                             <div style={{ marginLeft: "55px", display: "flex" }}>
@@ -80,7 +80,7 @@ class Comment extends Component {
                 </Fragment>)
             })}
             <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${my.thumbnail && my.thumbnail.s_img || noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
+                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${my.thumbnail ==null? my.thumbnail.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
                 <div style={{ marginLeft: "24px" }}>
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment"
                         style={{
