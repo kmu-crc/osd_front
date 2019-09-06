@@ -21,7 +21,7 @@ class ModifyMyDetail extends Component {
     super(props);
     this.state = {
       change_password: false, selected: 0, loading: false, isClickModify: false,
-      thumbnail: "", nick_name: "", about_me: "",
+      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
@@ -63,8 +63,9 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(modifyvalue) {
-    this.setState({ thumbnail: modifyvalue });
+  updateThumbnail(imgInfo,imgName)
+  {
+    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
   }
   updatePassword(modifyvalue) {
     this.setState({ password: modifyvalue });
@@ -137,11 +138,50 @@ class ModifyMyDetail extends Component {
       validates: this.state.password2.validates
     });
   }
-
+  async checkNickname()
+  {
+      const data = {nick_name:this.state.nick_name}
+      let returnvalue = true;
+      await this.props.CheckNickNameRequest(data).then(
+          (res)=>{
+              console.log(res, data);
+              if(res.checkNickName===false)
+              {                   
+                  returnvalue = false;
+              }
+          }
+      );
+      console.log("qwer",returnvalue);
+      return returnvalue;
+  }
   onSubmit = async e => {
+    
     e.preventDefault();
 
-    let formData = this.state;
+    let formData = {...this.state,files:[]};
+
+    let file = {
+      value: this.state.thumbnail,
+      name: this.state.thumbnail_name,
+      key: 0
+    };
+    formData.files.push(file);
+
+
+    if(this.state.nick_name!==this.props.MyDetail.nick_name)
+    {
+      if(await this.checkNickname()===false)
+      {
+          alert("중복된 닉네임입니다");
+          return;
+      }
+    }
+    if(this.state.nick_name==="")
+    {
+          alert("닉네임을 입력해주세요");
+          return;
+    }
+
 
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
@@ -156,6 +196,14 @@ class ModifyMyDetail extends Component {
       delete formData.passwordCheck;
     }
 
+    if(this.state.category_level1 ===-1)
+    {
+      alert("카테고리를 선택해주세요!");
+      return;
+    }
+
+    // console.log("=========="+this.state.thumbnail);
+    // return;
     //ValidationGroup(formData, false).then(async data => {
     // console.log("성공", {...this.state});
     // return

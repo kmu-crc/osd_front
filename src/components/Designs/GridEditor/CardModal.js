@@ -70,7 +70,7 @@ class CardModal extends Component {
                         {card.first_img &&
                             <div style={{ marginLeft: "52px", marginTop: "29.78px" }}>
                                 <div style={{ fontFamily: "Noto Sans KR", fontSize: "16px", color: "#707070", fontWeight: "500" }}>썸네일</div>
-                                <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "250px", height: "250px" }} src={card.first_img.m_img} alt="first-image" /></div>
+                                <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "250px", height: "250px" }} src={card.first_img.m_img} alt="" /></div>
                             </div>}
                         <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "29px", paddingLeft: "52px", marginTop: "30px" }}>
                             <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "300", lineHeight: "29px" }}>{card.nick_name}</div>

@@ -8,6 +8,7 @@ import iThumbUp from "source/thumbup_icon_black.png"
 import iMessage from 'source/email.png';
 import IconView from "source/IconView";
 import iEdit from 'source/edit_1.png';
+import DateFormat from 'modules/DateFormat';
 
 import NumberFormat from "modules/NumberFormat";
 //CSS
@@ -129,6 +130,7 @@ class DesignerPageHeader extends Component {
     }
     render() {
         const MypageInfo = this.props.DesignerDetail;
+        {console.log("MypageInfo::",MypageInfo)}
         const countInfo = this.props.Count || defaultCount;
         const thumbnailInfo = MypageInfo.thumbnail ? MypageInfo.thumbnailUrl.m_img : noimg;
         if (MypageInfo.about_me !== undefined) {
@@ -179,7 +181,7 @@ class DesignerPageHeader extends Component {
                             backgroundRepeat:"no-repeat",backgroundSize: "cover", backgroundPosition: "center center"}}></div>
                     </div>
                    }
-                    <div style={UpdateTimeBox}>최근 업데이트 3일 전</div>
+                     {/* <div style={UpdateTimeBox}>최근 업데이트 {DateFormat(MypageInfo.update_time)}</div> */}
                     {this.state.likeDialog === false ? null :
                         <div style={{
                             position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",

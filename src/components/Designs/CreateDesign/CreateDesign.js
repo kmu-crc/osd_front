@@ -25,11 +25,14 @@ class CreateDesign extends Component {
     super(props);
     this.state = {
       basic: false, additional: false, content: false, showSearch: false,
-      step: 0, selectedCate1: null, selectedCate2: null, cate2: null,
-      members: []
+      step: 1, selectedCate1: null, selectedCate2: null, cate2: null,
+      members: [],license1:false,license2:false,license3:false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
+    this.onCheckedLicense01 = this.onCheckedLicense01.bind(this);
+    this.onCheckedLicense02 = this.onCheckedLicense02.bind(this);
+    this.onCheckedLicense03 = this.onCheckedLicense03.bind(this);
   }
 
   onChangeValue = async data => {
@@ -76,6 +79,18 @@ class CreateDesign extends Component {
   onChangeCategory2 = (event, { value }) => {
     this.setState({ selectedCate2: value });
   }
+  onCheckedLicense01()
+  {
+    this.setState({license1:!this.state.license1});
+  } 
+  onCheckedLicense02()
+  {
+    this.setState({license1:!this.state.license2});
+  } 
+  onCheckedLicense03()
+  {
+    this.setState({license1:!this.state.license3});
+  } 
   addMember(email, s_img, nick_name, uid) {
     let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
     this.setState({ members: this.state.members.concat(member) });
@@ -122,7 +137,7 @@ class CreateDesign extends Component {
           </div>
 
           {/* form */}
-          <div style={{ width: "1422px", marginLeft: "45px", height: "871px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
+          <div style={{ width: "1422px", marginLeft: "45px", height: "920px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
             <form ref={(ref) => this.form = ref}>
               <section style={{ display: step === 0 ? "block" : "none", paddingLeft: "55.5px" }} >
                 {/* thumbnail */}
@@ -177,7 +192,7 @@ class CreateDesign extends Component {
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* invite member*/}
                 <div style={{ marginTop: "107px", display: "flex" }}>
-                  <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>맴버 초대하기</div>
+                  <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>멤버 초대하기</div>
                   <div style={{ marginLeft: "52px", width: "645px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
                     {/* <input type="text" style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 검색해 주세요" />  */}
                     <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
@@ -191,8 +206,33 @@ class CreateDesign extends Component {
                     {arrSummaryList}
                   </div>
                 </div>
-                {/* hr line */}
+
                 <div style={{ width: "1318px", marginTop: "122.5px", border: "2.5px solid #EFEFEF" }} />
+
+                {/* license*/}
+                <div style={{ marginTop: "22px", display: "flex" }}>
+                    <div style={{ width: "115px", height: "29px", 
+                                  fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>라이센스</div>
+                    <div style={{ width:"645px", height: "143px"}}>
+                        <div style={{width:"100%",paddingLeft:"52px"}}>
+                            <div style={{marginBottom:"30px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500"}}>
+                            <input onChange={this.onCheckedLicense01} type="checkbox" style={{width:"25px",height:"25px",marginRight:"17px",paddingBottom:"10px"}}/><span style={{verticalAlign:"top"}}>상업적으로 이용이 가능합니다</span></div>
+                            <div style={{marginBottom:"30px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500"}}>
+                            <input onChange={this.onCheckedLicense02} type="checkbox" style={{width:"25px",height:"25px",marginRight:"17px",paddingBottom:"10px"}}/><span style={{verticalAlign:"top"}}>원작자를 표시합니다</span></div>
+                            <div style={{marginBottom:"30px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500"}}>
+                            <input onChange={this.onCheckedLicense03} type="checkbox" style={{width:"25px",height:"25px",marginRight:"17px",paddingBottom:"10px"}}/><span style={{verticalAlign:"top"}}>추후에 수정이 가능합니다</span></div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div style={{ display:"inline-block",width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>라이센스</div>
+                <div style={{ display:"inline-block",marginTop: "107px",width:"100%" }}>
+                  <div style={{width:"100%"}}>
+                    <input type="checkbox" style={{width:"25px",height:"25px",marginLeft:"52px",outline:"none",border:"2px solid #707070"}} />
+                    <label style={{border:"1px solid black"}}> 상업적으로 이용이 가능합니다. </label>
+                  </div>
+                </div> */}
+                
+                {/* hr line */}
                 <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div>
               </section>
               <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
@@ -224,7 +264,7 @@ class CreateDesign extends Component {
               {/* buttons*/}
               <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
                 {step === 0 && <>
-                  <div onClick={this.state.step == 0 ? this.gotoNextStep : null} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
+                  <div onClick={this.state.step === 0 ? this.gotoNextStep : null} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
                 </>}
                 {step === 1 && <>
                   <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>

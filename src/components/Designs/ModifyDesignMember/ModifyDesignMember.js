@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Modal } from "semantic-ui-react";
-import Button from "components/Commons/Button";
+//import Button from "components/Commons/Button";
 import StyleGuide from "StyleGuide";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";

@@ -8,17 +8,24 @@ class Footer extends Component {
     // {
     //     super(props);
     // }
-
+    gotoPrivacy()
+    {
+        window.location.href="/footerPrivacy";
+    }
+    gotoTerm()
+    {
+        window.location.href="/footerPara";
+    }
     render() {
         return (
             <div style={{ width:"100%",marginHeight:"100%",position:"absolute",padding:"20px",
-                height: "22px", marginBottom: "20px", fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white",
+                height: "22px", marginBottom: "30px", fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white",
                 display: "flex", fontSize: "15px", lineHeight: "22px", textAlign: "center",
                 fontWeight: "500"
             }}>
                 <div style={{ marginLeft: "15px", float: "left" }}>copyright @ 2019 Open Design Inc.</div>
-                <div style={{ marginLeft: "auto", marginRight: "17px" }}>이용약관</div>
-                <div style={{ marginRight: "13px" }}>개인 정보 보호 방책</div>
+                <div onClick = {this.gotoTerm} style={{ cursor:"pointer", marginLeft: "auto", marginRight: "17px" }}>이용약관</div>
+                <div onClick = {this.gotoPrivacy} style={{cursor:"pointer", marginRight: "13px" }}>개인 정보 보호 방책</div>
             </div>
         )
     }

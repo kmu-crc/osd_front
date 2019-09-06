@@ -41,7 +41,7 @@ class DesignDetail extends Component {
   render() {
     console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
-    const { editor } = this.state;
+    //const { editor } = this.state;
     return (<>
       {DesignDetail && DesignDetail.uid ? <>
         {/* design info */}

@@ -19,7 +19,7 @@ class SectionBasic extends Component
     constructor(props)
     {
         super(props);
-        this.state = {nick:true,nickname:"",introduce:"",thumbnail:noimg}
+        this.state = {nick:true,nickname:"",introduce:"",thumbnail:noimg,tnumbnail_name:""}
         this.handleInputNickName = this.handleInputNickName.bind(this);
         this.handleInputIntroduce = this.handleInputIntroduce.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -44,16 +44,16 @@ class SectionBasic extends Component
     }
     handleOnChangeThumbnail(event)
     {
-        event.preventDefault();
-        const reader = new FileReader();
-        const file =event.target.files[0];
-        reader.onloadend = ()=>{
-            this.props.updateThumbnail(reader.result);
-            this.setState({thumbnail:reader.result})
-        }
-        if(event.target.files[0])
+      event.preventDefault();
+      const reader = new FileReader();
+      const file =event.target.files[0];
+      reader.onloadend = ()=>{
+        this.setState({thumbnail:reader.result,thumbnail_name:file.name})
+          this.props.updateThumbnail(reader.result,file.name);
+      }
+      if(event.target.files[0])
       {
-         reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
       }
         
     }
