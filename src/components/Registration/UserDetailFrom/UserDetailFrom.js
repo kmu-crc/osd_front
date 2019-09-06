@@ -20,7 +20,7 @@ class ModifyMyDetail extends Component {
     super(props);
     this.state = {
       change_password: false, selected: 0, loading: false,
-      thumbnail: "", nick_name: "", about_me: "",
+      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
@@ -46,8 +46,9 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(modifyvalue) {
-    this.setState({ thumbnail: modifyvalue });
+  updateThumbnail(imgInfo,imgName)
+  {
+    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
   }
   updateCategory1(modifyvalue) {
     this.setState({ category_level1: modifyvalue });

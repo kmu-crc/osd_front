@@ -48,14 +48,14 @@ const ProfileBox = styled.div`
     }
     const Summary_Forked = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
 
-const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "90px", right: "72px", textAlign: "right" }
+const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "26px", right: "72px", textAlign: "right" }
 const interestDesignerTitle = {
     cursor: "pointer",
     display: "inline-block", width: "164px", height: "25px",
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
 }
 const UpdateTimeBox = {
-    position: "absolute", width: "146px", height: "25px", top: "273px", right: "72px",
+    position: "absolute", width: "200px", height: "25px", top: "273px", right: "72px",
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
 }
 const defaultCount = {
@@ -106,14 +106,11 @@ class MypageHeader extends Component {
                         <div style={Summary_Forked}>{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
                     </div>
 
-                    <div onClick={this.gotoMyModify} style={interestDesignerBox
+                    <div onClick = {this.gotoMyModify}  style={interestDesignerBox
                     }>
-                        <div style={interestDesignerTitle}>정보 수정하기</div>
-                        <div style={{
-                            cursor: "pointer", display: "inline-block", height: "40px", marginLeft: "15px", marginBottom: "-7px",
-                            backgroundSize: "cover", backgroundPosition: "center center"
-                        }}><img alt="icon" src={iEdit} style={{ paddingLeft: "15px" }} /></div>
-
+                    <div style={interestDesignerTitle}>정보 수정하기</div>
+                    <div style={{cursor:"pointer",display: "inline-block", height: "36px",width:"36px",marginLeft:"15px",background:`url("${iEdit}")`,
+                            backgroundRepeat:"no-repeat",backgroundSize: "cover", backgroundPosition: "center center"}}></div>
                     </div>
 
                     <div style={UpdateTimeBox}>최근 업데이트 {DateFormat(MypageInfo.update_time)}</div>

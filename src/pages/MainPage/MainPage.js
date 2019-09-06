@@ -40,6 +40,7 @@ const Context = styled.div`
 //     }
 // `
 const Textwrapper = styled.div`
+    cursor:default;
     float:center;
     margin-top: 60.5px;
     margin-bottom: 60px;

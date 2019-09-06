@@ -175,7 +175,7 @@ class DesignerPageBody extends Component{
                                         width={GroupProps.width} height={GroupProps.height} marginRight={GroupProps.marginRight} marginBottom={GroupProps.marginBottom} marginRightLast={GroupProps.marginRightLast} marginBottomLast={GroupProps.marginBottomLast}
                                         page={this.state.page} ListComponent={Group} dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupList} />}
                     </>
-                    <div className="interested" style={{paddingLeft:"67px",paddingTop:"67px"}}>관심있는 디자이너</div>
+                    <div className="interested" style={{paddingLeft:"67px",paddingTop:"67px",marginBottom:"30px"}}>관심있는 디자이너</div>
                     <>
                         {this.props.status === "INIT" ?
                             <Loading /> :

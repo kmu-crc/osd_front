@@ -183,7 +183,7 @@ class GroupInfoComponent extends Component {
 
                     <div >
                         <div style={{ marginLeft: "10px" }}>
-                            <div style={{ marginTop: "15px", width: "max-content", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}><TextFormat txt={info.title} /></div>
+                            <div style={{marginTop: "15px", width: "max-content", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}><TextFormat txt={info.title } /></div>
                             <div style={{ display: "flex" }}>
                                 <div style={{
                                     marginLeft: "14px", marginTop: "9px", width: "170px", height: "170px", borderRadius: "15px",
