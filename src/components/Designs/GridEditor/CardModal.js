@@ -32,24 +32,25 @@ const CardDialog = styled(Modal)`
     .content{
         padding: 45px;
         line-height: 17px;
-        border: 1px dashed red;
     }
 `
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false };
+        this.state = { sroll: false, edit: false };
         // this.moveCard = this.moveCard.bind(this);
     }
     componentDidMount() {
         document.getElementsByTagName("body")[0].style.overflow = "hidden";
     }
-
+    onCloseEditMode = () => { this.setState({ edit: false }) };
+    onChangeEditMode = () => { this.setState({ edit: this.state.edit }) };
     onSubmit = () => { }
     onClose = () => { this.props.close() }
     render() {
         console.log("card-data:", this.props)
         const card = this.props.card || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
+        const { isTeam, edit } = this.props;
         const movablePrev = this.props.row > 0
         const movableNext = this.props.row < this.props.maxRow - 1
         return (
@@ -70,15 +71,16 @@ class CardModal extends Component {
                         {card.first_img &&
                             <div style={{ marginLeft: "52px", marginTop: "29.78px" }}>
                                 <div style={{ fontFamily: "Noto Sans KR", fontSize: "16px", color: "#707070", fontWeight: "500" }}>썸네일</div>
-                                <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "250px", height: "250px" }} src={card.first_img.m_img} alt="first-image" /></div>
+                                <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "200px", height: "200px" }} src={card.first_img.m_img} alt="first-image" /></div>
                             </div>}
                         <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "29px", paddingLeft: "52px", marginTop: "30px" }}>
                             <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "300", lineHeight: "29px" }}>{card.nick_name}</div>
                             <div style={{ fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", fontWeight: "300", lineHeight: "29px", marginRight: "75px" }}>업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)}</div>
                         </div>
                         <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
-                        <div className="content" >
-                            <CardSourceDetailContainer edit={this.props.edit} uid={card.uid} />
+                        <div style={{ marginLeft: "auto" }} className="content" >
+                            <CardSourceDetailContainer uid={card.uid} isTeam={isTeam} edit={edit && this.state.edit}
+                                isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
                         <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
                         <div style={{ marginLeft: "45px" }}><h3>댓글</h3></div>

@@ -81,8 +81,8 @@ class AddController extends Component {
     return (
       <ControllerWrap>
         <div style={{ height: "45px", listStyle: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <NewController onClick={() => this.addContent("FILE")} width="116px" height="29px">파일 첨부하기</NewController>
-          <NewController onClick={() => this.addContent("TEXT")} width="134px" height="29px">텍스트 첨부하기</NewController>
+          <NewController onClick={() => this.addContent("FILE")} width="116px" height="29px">파일 등록하기</NewController>
+          <NewController onClick={() => this.addContent("TEXT")} width="134px" height="29px">텍스트 등록하기</NewController>
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>

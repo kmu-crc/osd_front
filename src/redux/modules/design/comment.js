@@ -1,16 +1,15 @@
 import host from "config"
 import update from 'react-addons-update'
 
-
-const GET_DESIGN_COMMENT = "GET_DESIGN_COMMENT"
-const GET_DESIGN_COMMENT_SUCCESS = "GET_DESIGN_COMMENT_SUCCESS"
-const GET_DESIGN_COMMENT_FAILURE = "GET_DESIGN_COMMENT_FAILURE"
-const CREATE_DESIGN_COMMENT = "CREATE_DESIGN_COMMENT"
-const CREATE_DESIGN_COMMENT_SUCCESS = "CREATE_DESIGN_COMMENT_SUCCESS"
-const CREATE_DESIGN_COMMENT_FAILURE = "CREATE_DESIGN_COMMENT_FAILURE"
-const DELETE_DESIGN_COMMENT = "DELETE_DESIGN_COMMENT"
-const DELETE_DESIGN_COMMENT_SUCCESS = "DELETE_DESIGN_COMMENT_SUCCESS"
-const DELETE_DESIGN_COMMENT_FAILURE = "DELETE_DESIGN_COMMENT_FAILURE"
+const GET_DESIGN_COMMENT = "GET_DESIGN_COMMENT";
+const GET_DESIGN_COMMENT_SUCCESS = "GET_DESIGN_COMMENT_SUCCESS";
+const GET_DESIGN_COMMENT_FAILURE = "GET_DESIGN_COMMENT_FAILURE";
+const CREATE_DESIGN_COMMENT = "CREATE_DESIGN_COMMENT";
+const CREATE_DESIGN_COMMENT_SUCCESS = "CREATE_DESIGN_COMMENT_SUCCESS";
+const CREATE_DESIGN_COMMENT_FAILURE = "CREATE_DESIGN_COMMENT_FAILURE";
+const DELETE_DESIGN_COMMENT = "DELETE_DESIGN_COMMENT";
+const DELETE_DESIGN_COMMENT_SUCCESS = "DELETE_DESIGN_COMMENT_SUCCESS";
+const DELETE_DESIGN_COMMENT_FAILURE = "DELETE_DESIGN_COMMENT_FAILURE";
 
 const GET_CARD_COMMENT = "GET_CARD_COMMENT"
 const GET_CARD_COMMENT_SUCCESS = "GET_CARD_COMMENT_SUCCESS"
@@ -31,21 +30,23 @@ const CreateCardCommentFailure = error => ({ type: CREATE_CARD_COMMENT_FAILURE }
 const DeleteCardComment = () => ({ type: DELETE_CARD_COMMENT })
 const DeleteCardCommentSuccess = res => ({ type: DELETE_CARD_COMMENT_SUCCESS, data: res })
 const DeleteCardCommentFailure = error => ({ type: DELETE_CARD_COMMENT_FAILURE })
-
-const GetDesignComment = () => ({ type: GET_DESIGN_COMMENT })
-const GetDesignCommentSuccess = data => ({ type: GET_DESIGN_COMMENT_SUCCESS, Comment: data })
-const GetDesignCommentFailure = error => ({ type: GET_DESIGN_COMMENT_FAILURE })
-const DeleteDesignComment = () => ({ type: DELETE_DESIGN_COMMENT })
-const DeleteDesignCommentSuccess = res => ({ type: DELETE_DESIGN_COMMENT_SUCCESS, data: res })
-const DeleteDesignCommentFailure = error => ({ type: DELETE_DESIGN_COMMENT_FAILURE })
-const CreateDesignComment = () => ({ type: CREATE_DESIGN_COMMENT })
-const CreateDesignCommentSuccess = res => ({ type: CREATE_DESIGN_COMMENT_SUCCESS, data: res })
-const CreateDesignCommentFailure = error => ({ type: CREATE_DESIGN_COMMENT_FAILURE })
+const GetDesignComment = () => { return { type: GET_DESIGN_COMMENT }; };
+const GetDesignCommentSuccess = data => { return { type: GET_DESIGN_COMMENT_SUCCESS, Comment: data }; };
+const GetDesignCommentFailure = error => { return { type: GET_DESIGN_COMMENT_FAILURE }; };
+const CreateDesignComment = () => { return { type: CREATE_DESIGN_COMMENT }; };
+const CreateDesignCommentSuccess = res => { return { type: CREATE_DESIGN_COMMENT_SUCCESS, data: res }; };
+const CreateDesignCommentFailure = error => { return { type: CREATE_DESIGN_COMMENT_FAILURE }; };
+const DeleteDesignComment = () => { return { type: DELETE_DESIGN_COMMENT }; };
+const DeleteDesignCommentSuccess = res => { return { type: DELETE_DESIGN_COMMENT_SUCCESS, data: res }; };
+const DeleteDesignCommentFailure = error => { return { type: DELETE_DESIGN_COMMENT_FAILURE }; };
 
 const initialState = {
     GetCardComment: { status: "INIT" },
     CreateCardComment: { status: "INIT" },
     DeleteCardComment: { status: "INIT" },
+    GetDesignComment: { status: "INIT" },
+    CreateDesignComment: { status: "INIT" },
+    DeleteDesignComment: { status: "INIT" },
     status: { Comment: [], CardComment: [] }
 };
 
@@ -58,32 +59,46 @@ export function DesignComment(state, action) {
                 CreateDesignComment: {
                     status: { $set: "WATTING" }
                 }
-            })
+            });
         case GET_DESIGN_COMMENT_SUCCESS:
             return update(state, {
-                CreateDesignComment: { status: { $set: "SUCCESS" } },
-                status: { Comment: { $set: action.Comment } }
-            })
+                CreateDesignComment: {
+                    status: { $set: "SUCCESS" }
+                },
+                status: {
+                    Comment: { $set: action.Comment }
+                }
+            });
         case GET_DESIGN_COMMENT_FAILURE:
             return update(state, {
-                CreateDesignComment: { status: { $set: "FAILURE" } }
-            })
+                CreateDesignComment: {
+                    status: { $set: "FAILURE" }
+                }
+            });
         case CREATE_DESIGN_COMMENT:
             return update(state, {
-                CreateDesignComment: { status: { $set: "WATTING" } }
-            })
+                CreateDesignComment: {
+                    status: { $set: "WATTING" }
+                }
+            });
         case CREATE_DESIGN_COMMENT_SUCCESS:
             return update(state, {
-                CreateDesignComment: { status: { $set: "SUCCESS" } }
-            })
+                CreateDesignComment: {
+                    status: { $set: "SUCCESS" }
+                }
+            });
         case CREATE_DESIGN_COMMENT_FAILURE:
             return update(state, {
-                CreateDesignComment: { status: { $set: "FAILURE" } }
-            })
+                CreateDesignComment: {
+                    status: { $set: "FAILURE" }
+                }
+            });
         case DELETE_DESIGN_COMMENT:
             return update(state, {
-                DeleteDesignComment: { status: { $set: "WATTING" } }
-            })
+                DeleteDesignComment: {
+                    status: { $set: "WATTING" }
+                }
+            });
         case DELETE_CARD_COMMENT_SUCCESS:
             return update(state, {
                 DeleteDesignComment: { status: { $set: "SUCCESS" } }
@@ -107,9 +122,65 @@ export function DesignComment(state, action) {
         default:
             return state
     }
-}
+};
 
 
+export const CreateDesignCommentRequest = (data, design_id, token) => {
+    return dispatch => {
+        dispatch(CreateDesignComment());
+        console.log("request", data);
+        return fetch(
+            `${host}/design/designDetail/${design_id}/createDetailComment`,
+            {
+                headers: {
+                    "x-access-token": token,
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify(data)
+            }
+        )
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (res) {
+                return dispatch(CreateDesignCommentSuccess(res));
+            })
+            .catch(error => {
+                console.log("insert issue err", error);
+                return dispatch(CreateDesignCommentFailure(error));
+            });
+    };
+};
+export const DeleteDesignCommentRequest = (
+    design_id,
+    comment_id,
+    token
+) => {
+    return dispatch => {
+        dispatch(DeleteDesignComment());
+        return fetch(
+            `${host}/design/designDetail/${design_id}/deleteDetailComment/${comment_id}`,
+            {
+                headers: {
+                    "x-access-token": token,
+                    "Content-Type": "application/json"
+                },
+                method: "DELETE"
+            }
+        )
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (res) {
+                return dispatch(DeleteDesignCommentSuccess(res));
+            })
+            .catch(error => {
+                console.log("insert issue err", error);
+                return dispatch(DeleteDesignCommentFailure(error));
+            });
+    };
+};
 export const GetCardCommentRequest = (design_id, card_id) => {
     return dispatch => {
         dispatch(GetCardComment());
@@ -215,58 +286,4 @@ export const GetDesignCommentRequest = (design_id) => {
                 return dispatch(GetDesignCommentFailure(error));
             });
     };
-}
-
-
-export const DeleteDesignCommentRequest = (design_id, comment_id, token) => {
-    return dispatch => {
-        dispatch(DeleteDesignComment());
-        return fetch(
-            `${host}/design/designDetail/${design_id}/deleteDetailComment/${comment_id}`,
-            {
-                headers: {
-                    "x-access-token": token,
-                    "Content-Type": "application/json"
-                },
-                method: "DELETE"
-            }
-        )
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (res) {
-                return dispatch(DeleteDesignCommentSuccess(res));
-            })
-            .catch(error => {
-                console.log("insert issue err", error);
-                return dispatch(DeleteDesignCommentFailure(error));
-            })
-    }
-}
-export const CreateDesignCommentRequest = (data, design_id, token) => {
-    return dispatch => {
-        dispatch(CreateDesignComment());
-        console.log("request", data);
-        return fetch(
-            `${host}/design/designDetail/${design_id}/createDetailComment`,
-            {
-                headers: {
-                    "x-access-token": token,
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(data)
-            }
-        )
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (res) {
-                return dispatch(CreateDesignCommentSuccess(res));
-            })
-            .catch(error => {
-                console.log("insert issue err", error);
-                return dispatch(CreateDesignCommentFailure(error));
-            });
-    };
-}
+};

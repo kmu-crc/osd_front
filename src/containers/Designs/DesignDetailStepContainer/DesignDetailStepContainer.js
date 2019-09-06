@@ -1,17 +1,14 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import GridEditor from "components/Designs/GridEditor"
-import { GetDesignDetailRequest, CreateDesignBoardRequest, UpdateDesignTime, GetDesignBoardRequest } from "redux/modules/design";
+import { CreateDesignBoardRequest, GetDesignDetailRequest, UpdateCardTitleRequest, GetDesignCardRequest, UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest, UpdateDesignTime } from "redux/modules/design";
 
 class DesignDetailStepContainer extends Component {
   componentDidMount() {
-    this.props.GetDesignBoardRequest(this.props.design.uid)
+    this.props.GetDesignBoardRequest(this.props.design.uid);
   }
   render() {
-    return (<>
-      <GridEditor {...this.props} />
-    </>
-    )
+    return (<GridEditor {...this.props} />)
   }
 }
 
@@ -36,6 +33,18 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateDesignTime: (design_id, token) => {
       return dispatch(UpdateDesignTime(design_id, token));
+    },
+    UpdateCardTitleRequest: (data, token, id) => {
+      return dispatch(UpdateCardTitleRequest(data, token, id));
+    },
+    GetDesignCardRequest: (id, board_id) => {
+      return dispatch(GetDesignCardRequest(id, board_id));
+    },
+    UpdateDesignBoardRequest: (id, token, data) => {
+      return dispatch(UpdateDesignBoardRequest(id, token, data));
+    },
+    DeleteDesignBoardRequest: (id, board_id, token) => {
+      return dispatch(DeleteDesignBoardRequest(id, board_id, token))
     }
   };
 };

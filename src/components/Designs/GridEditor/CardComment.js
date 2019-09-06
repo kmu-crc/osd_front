@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import Comment from 'components/Commons/Comment';
-import { CreateCardCommentRequest, GetCardCommentRequest, DeleteCardCommentRequest } from "redux/modules/design";
+import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "redux/modules/design";
 
 class CardComment extends Component {
     componentDidMount() {
@@ -18,15 +17,13 @@ class CardComment extends Component {
             <Comment comment={this.comment} reply={this.reply} my={this.props.my} comments={this.props.Comment} />
         </>)
     }
-}
+};
 const mapStateToProps = state => {
     return {
         Comment: state.DesignComment.status.CardComment,
-        token: state.Authenification.status.token,
-    };
+        token: state.Authentication.status.token,
+    }
 };
-
-
 const mapDispatchToProps = dispatch => {
     return {
         GetCardCommentRequest: (design_id, card_id) => {
@@ -39,6 +36,5 @@ const mapDispatchToProps = dispatch => {
             return dispatch(DeleteCardCommentRequest(design_id, card_id, comment_id, token));
         }
     }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CardComment));
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CardComment);
