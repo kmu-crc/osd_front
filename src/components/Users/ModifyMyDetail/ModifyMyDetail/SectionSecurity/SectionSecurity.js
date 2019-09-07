@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import SelectBox from "components/Commons/SelectBox"
+// import { FormControl, ValidationGroup } from "modules/FormControl";
+// import SelectBox from "components/Commons/SelectBox"
 import showPw from "source/show_password.svg";
-import styled from "styled-components";
+// import styled from "styled-components";
 
 class SectionSecurity extends Component
 {
@@ -43,7 +43,7 @@ class SectionSecurity extends Component
                 width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
                 fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
               }} >
-                <input type={this.state.showPass==true?"text":"password"} onChange = {this.onChangePassword} value={this.state.password}
+                <input type={this.state.showPass===true?"text":"password"}  maxLength="50" onChange = {this.onChangePassword} value={this.state.password}
                   style={{
                     outline: "none", border: "none",
                     marginLeft: "12px", marginTop: "13px",
@@ -51,7 +51,7 @@ class SectionSecurity extends Component
                     color: "#707070", backgroundColor: "#EFEFEF"
                   }} placeholder="비밀번호를 입력하세요." />
               </div>
-              <div onClick={this.onClickShowPassword} style={{marginLeft:"18px", marginTop:"18px"}}><img src={showPw}/></div>
+              <div onClick={this.onClickShowPassword} style={{marginLeft:"18px", marginTop:"18px"}}><img alt="" src={showPw}/></div>
             </div>
             {/* pw verify */}
             <div style={{ marginTop: "55px", display: "flex" }}>
@@ -61,7 +61,7 @@ class SectionSecurity extends Component
                 width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
                 fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
               }} >
-                <input type="password" onChange = {this.onChangeCheckedPassword} value={this.state.passwordcheck}
+                <input type="password"  maxLength="50" onChange = {this.onChangeCheckedPassword} value={this.state.passwordcheck}
                  style={{
                   outline: "none", border: "none",
                   marginLeft: "12px", marginTop: "13px",

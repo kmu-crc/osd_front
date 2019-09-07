@@ -93,7 +93,7 @@
     // const { type, minLength, maxLength,name, placeholder, style, id } = this.props;
     // return (
     //   <InputWrap>
-        {/* <Input */}
+       //  <Input 
         //   type={type ? type : "text"}
         //   name={name && name}
         //   maxLength = {maxLength ? maxLength : false}
@@ -108,8 +108,8 @@
         //   onBlur={this.returnData}
         //   onKeyPress={this.returnData}
         // />
-        {/* <Message></Message> */}
-      {/* </InputWrap> */}
+      //   <Message></Message> 
+      // </InputWrap> 
     // );
 //   }
 // }

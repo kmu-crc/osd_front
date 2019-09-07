@@ -115,7 +115,7 @@ class SelectBox extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.items != nextProps.items) {
+    if (this.props.items !== nextProps.items) {
       this.setState({ items: nextProps.items });
     }
   }

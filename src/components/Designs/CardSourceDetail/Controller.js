@@ -8,20 +8,11 @@ import EmbController from "./EmbController";
 // css styling
 const ControllerWrap = styled.div`
   position: relative;
-  border: 1px dashed white;
   &:hover {
+    border: 1px dashed ${StyleGuide.color.geyScale.scale3};
+    background-color: ${StyleGuide.color.geyScale.scale0};
     .editBtn {
       display: block;
-    }
-    // border: 2px dashed ${StyleGuide.color.geyScale.scale6};
-    border: 1px dashed ${StyleGuide.color.geyScale.scale5};
-    & .initWrap {
-      & > ul {
-        display: flex;
-      }
-      & > span {
-        color: ${StyleGuide.color.geyScale.scale6};
-      }
     }
   }
   &::after {
@@ -31,7 +22,7 @@ const ControllerWrap = styled.div`
   }
 `;
 
-const EditBtn = styled.button`
+const DelBtn = styled.button`
   display: none;
   position: absolute;
   top: 0;
@@ -39,13 +30,13 @@ const EditBtn = styled.button`
   transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
-  width: 25px;
-  height: 25px;
+  width: 45px;
+  height: 45px;
   border-radius: 25px;
   line-height: 25px;
   box-sizing: border-box;
   font-size: 12px;
-  background-color: ${StyleGuide.color.sub.bule.basic};
+  background-color: ${StyleGuide.color.main.basic};
   color: white;
   text-align: center;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -58,36 +49,6 @@ const EditBtn = styled.button`
   }
 `;
 
-const SubMenu = styled.ul`
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  outline: 0;
-  transform: translate(-20px, 140%);
-  background-color: ${StyleGuide.color.geyScale.scale7};
-  width: 9rem;
-  border-radius: 3px;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  &::before {
-    display: block;
-    content: "";
-    top: -5px;
-    left: 25px;
-    position: absolute;
-    transform: rotate(135deg);
-    border-top: 7.5px solid transparent;
-    border-right: 7.5px solid transparent;
-    border-left: 7.5px solid ${StyleGuide.color.geyScale.scale7};
-    border-bottom: 7.5px solid ${StyleGuide.color.geyScale.scale7};
-    border-radius: 3px;
-  }
-  li {
-    line-height: 30px;
-    color: ${StyleGuide.color.geyScale.scale0};
-    text-align: center;
-  }
-`;
 
 export class Controller extends Component {
   state = {
@@ -113,7 +74,11 @@ export class Controller extends Component {
   };
 
   deleteItem = async => {
-    if (this.props.deleteItem) this.props.deleteItem(this.props.item.order);
+    if (this.props.deleteItem) {
+      if (window.confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
+        this.props.deleteItem(this.props.item.order)
+      }
+    }
   };
 
   returnDate = async e => {
@@ -126,33 +91,15 @@ export class Controller extends Component {
     return (
       <ControllerWrap>
         <div className="contentWrap">
-            {item.type === "FILE" ? (
-              <FileController
-                item={item}
-                setController={this.setController}
-                initClick={this.state.click}
-                name="source"
-                getValue={this.onChangeValue}
-                deleteItem={this.deleteItem}
-              />
-            ) : item.type === "TEXT" ? (
-              <TextController
-                item={item}
-                name={name}
-                getValue={this.onChangeValue}
-                initClick={this.state.click}
-                deleteItem={this.deleteItem}
-              />
-            ) : item.type === "EMBED" ? (
-              <EmbController />
-            ) : null}
-          </div>
-          <EditBtn type="button" className="editBtn">
-            <i className="pencil alternate icon" />
-            <SubMenu className="subMenu">
-              <li onClick={this.deleteItem}>삭제</li>
-            </SubMenu>
-          </EditBtn>
+          {item.type === "FILE" ? (
+            <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
+          ) : item.type === "TEXT" ? (
+            <TextController item={item} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
+          ) : item.type === "EMBED" ? (<EmbController />) : null}
+        </div>
+        <DelBtn type="button" className="editBtn" onClick={this.deleteItem}>
+          <i className="trash alternate icon large" />
+        </DelBtn>
       </ControllerWrap>
     );
   }

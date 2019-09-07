@@ -5,6 +5,7 @@ import { GetDesignDetailViewRequest, UpdateDesignTime, ChangeToProjectRequest, D
 
 class DesignDetailViewContainer extends Component {
   render() {
+    console.log("Detail view");
     return (
       <DetailView {...this.props} />
     )
@@ -13,11 +14,11 @@ class DesignDetailViewContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    DesignDetailView: state.DesignDetailView.status.DesignDetailView,
+    DesignDetailView: state.Design.status.DesignDetailView,
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
-    Comment: state.DesignCardComment.status.Comment,
-    isTeam: state.DesignDetail.status.DesignDetail.is_team
+    Comment: state.DesignComment.status.Comment,
+    isTeam: state.Design.status.DesignDetail.is_team
   };
 };
 

@@ -8,6 +8,7 @@ import TopDesignListContainer from "containers/Designs/TopDesignListContainer"
 const BannerWrapper = styled.div`
     background: url(${ banner});
     background-repeat: no-repeat;
+
     background-size: 100% 349.5px;
     margin-top: 15px;
     width: 100%;
@@ -23,34 +24,26 @@ const Context = styled.div`
     width: 504px;
     height: 196px;
 `
-const LinkWrapper = styled.div`
-    margin: auto;
-    top: 85px;
-    position: relative;
-    width: 175px;
-    height: 29px;
-    border-bottom: solid 1.5px #F00;
-    a {
-        color: #F00;
-        font-size: 20px;
-        line-height: 29px;
-        font-family: "Noto Sans KR";
-        font-weight: 500;
-    }
-`
-
-function Banner() {
-  return (<BannerWrapper>
-    <Context />
-    <LinkWrapper>
-      <a href="/tour">이용 가이드 보러가기</a>
-    </LinkWrapper>
-  </BannerWrapper>)
-}
-
+// const LinkWrapper = styled.div`
+//     margin: auto;
+//     top: 85px;
+//     position: relative;
+//     width: 175px;
+//     height: 29px;
+//     border-bottom: solid 1.5px #F00;
+//     a {
+//         color: #F00;
+//         font-size: 20px;
+//         line-height: 29px;
+//         font-family: "Noto Sans KR";
+//         font-weight: 500;
+//     }
+// `
 const Textwrapper = styled.div`
+    cursor:default;
+    float:center;
     margin-top: 60.5px;
-    padding-bottom: 60px;
+    margin-bottom: 60px;
     text-align: center;
     font-size: 25px;
     font-family: "Noto Sans KR";
@@ -58,6 +51,16 @@ const Textwrapper = styled.div`
     font-weight: 700;
     color: #F00;
 `
+function Banner() {
+  return (<BannerWrapper>
+    <Context />
+    {/* <LinkWrapper>
+      <a href="/tour">이용 가이드 보러가기</a>
+    </LinkWrapper> */}
+  </BannerWrapper>)
+}
+
+
 class MainPage extends Component {
   render() {
     return (<>

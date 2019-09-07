@@ -44,7 +44,7 @@ class DesignerListContainer extends Component {
         this_category: { text: null, value: null },
         sub_category: { text: null, value: null },
         main_category: { text: null, value: null },
-        this_order: { text: "등록순", keyword: "update" },
+        this_order: { text: "최신순", keyword: "update" },
     }
     componentDidMount() {
         this.props.GetCategoryAllRequest()

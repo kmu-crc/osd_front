@@ -1,8 +1,8 @@
 import React,{ Component } from "react";
 import deleteItem from "source/deleteItem.png"
-import SelectBox from "components/Commons/SelectBox"
+// import SelectBox from "components/Commons/SelectBox"
 
-const emptyCategory = [{ value: 0, text: "" }]
+// const emptyCategory = [{ value: 0, text: "" }]
 
 const PeerBox = { display: "flex", marginRight: "50px" }
 const Peer_Name = { marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", 
@@ -15,9 +15,9 @@ const Contents_DeleteBtn = { marginTop: "7.34px",  width: "16px", height: "16px"
 
 const AdditionalBox = { marginBottom: "16px", paddingLeft: "51px" }
 const AdditionalTitle={ width: "140px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
-const Additional_category_Box ={width:"100%",display: "flex" }
-const Additional_category_one={ marginLeft: "34px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }
-const Additional_category_two={ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }
+// const Additional_category_Box ={width:"100%",display: "flex" }
+// const Additional_category_one={ marginLeft: "34px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }
+// const Additional_category_two={ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }
 
 const Additional_invite_Box = {marginTop: "0px", width:"100%",height:"186Wpx"}
 const Additional_Search_Box = { display: "flex" }
@@ -36,10 +36,10 @@ const Additional_AddContents_list_itemBox = { display: "flex", marginBottom: "34
 
 class GroupAdditionalInfo extends Component
 {
-    constructor(props)
-    {
-        super(props);
-    }    
+    // constructor(props)
+    // {
+    //     super(props);
+    // }    
 
     
     render()

@@ -55,21 +55,19 @@ const ViewContent = styled.div`
   }
 `;
 
-const Nodata = styled.div`
-  text-align: center;
-`;
-
 class CardSourceDetail extends Component {
-  state = {
-    edit: false,
-    content: [],
-    deleteContent: [],
-    loading: false
-  };
-
+  state = { top: 650, left: 1250, edit: false, content: [], deleteContent: [], loading: false };
   componentDidMount() {
-    this.props.GetDesignSourceRequest(this.props.uid);
-  }
+    document.addEventListener("scroll", (event) => {
+      if (this.cardwrap) {
+        const top = event.target.scrollTop + 650;
+        const left = this.cardwrap.getBoundingClientRect().width - this.cardwrap.getBoundingClientRect().left;
+        console.log(top, this.cardwrap.getBoundingClientRect().top, event.target.scrollTop);
+        this.setState({ top: top, left: left });
+      }
+    }, true);
+    if (this.props.uid) { this.props.GetDesignSourceRequest(this.props.uid); }
+  };
 
   async shouldComponentUpdate(nextProps) {
     if (
@@ -185,73 +183,55 @@ class CardSourceDetail extends Component {
       .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
   }
 
+  onCancel = () => {
+    this.setState({ edit: false });
+    this.props.cancel && this.props.cancel();
+  }
 
   render() {
+    console.log("inCardSourceDetail", this.props);
     const { /*edit,*/ content } = this.state;
-    return (
-      <CardSrcWrap>
-
-        {this.props.edit ? (
+    return (<>
+      <div style={{ marginBottom: "35px" }}>
+        {this.state.edit &&
+          <div style={{ width: "max-content", padding: "25px", boxShadow: "0px 2px 10px 2px rgba(0,0,0,0.25)", background: "#FFFFFF", borderRadius: "25px", top: this.state.top, left: this.state.left, position: "absolute", zIndex: "907" }}>
+            <button onClick={this.onSubmit} style={{ marginLeft: "00px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon outline save " />저장</button>
+            <button onClick={this.onCancel} style={{ marginLeft: "25px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid #707070", color: "#707070", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon trash" />취소</button>
+          </div>
+        }
+        {this.state.edit === false && this.props.isTeam && (
+          content.length > 0 ? (
+            <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", }} >
+              <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} >컨텐츠 수정</button>
+            </div>) : (
+              <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", }} >
+                {/* <div>컨텐츠가 없습니다. </div> */}
+                <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} >컨텐츠 추가</button>
+              </div>))}
+      </div>
+      <CardSrcWrap ref={(ref) => this.cardwrap = ref}>
+        {this.state.edit &&
           <form onSubmit={this.onSubmit}>
             {content.length > 0 ? (
               <div>
                 {content.map((item, index) => {
                   return (
                     <div key={index}>
-                      <AddController
-                        type="INIT"
-                        order={index}
-                        name={`add${index}`}
-                        getValue={this.onAddValue}
-                      />
-                      <Controller
-                        type={item.type}
-                        item={item}
-                        order={index}
-                        deleteItem={this.deleteItem}
-                        name={`content${index}`}
-                        getValue={this.onChangValue}
-                      />
+                      <AddController type="INIT" order={index} name={`add${index}`} getValue={this.onAddValue} />
+                      <Controller type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />
                     </div>
                   );
                 })}
-                <AddController
-                  type="INIT"
-                  order={content.length}
-                  name="addBasic"
-                  getValue={this.onAddValue}
-                />
+                <AddController type="INIT" order={content.length} name="addBasic" getValue={this.onAddValue} />
               </div>
-            ) : (
-                <AddController
-                  type="INIT"
-                  order={0}
-                  name="addBasic"
-                  getValue={this.onAddValue}
-                />
-              )}
-            <Button type="button" onClick={this.onSubmit}>
-              저장
-            </Button>
-            {
-              // this.props.isCancel ? (
-              // <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (
-              // <Button type="button" onClick={this.props.closeEdit}>취소</Button>)
-            }
+            ) : (<AddController type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />)}
           </form>
-        ) : content.length > 0 ? (
+        }
+        {!this.state.edit && content.length > 0 &&
           <ViewContent>
-            {/* {this.props.isTeam === 1 &&
-              <Button round={true} size="small" className="goEdit"
-                      onClick={() => this.setState({ edit: !this.state.edit })}>
-                컨텐츠 수정
-              </Button>
-            } */}
             {content.map((item, index) => {
               return item.type === "FILE" && item.data_type === "image" ? (
-                <div className="imgContent" key={index}>
-                  <img key={index} src={item.content} alt="이미지" download={item.file_name} />
-                </div>
+                <div className="imgContent" key={index}> <img key={index} src={item.content} alt="이미지" download={item.file_name} /> </div>
               ) : item.type === "FILE" && item.data_type === "video" ? (
                 <span>
                   <span className="LinkFileName">{item.file_name}</span>
@@ -265,28 +245,13 @@ class CardSourceDetail extends Component {
                   <span className="LinkFileName">{item.file_name}</span>
                 </a>
               ) : item.type === "TEXT" ? (
-                <div
-                  className="textWrap"
-                  key={index}
-                  dangerouslySetInnerHTML={{ __html: `${item.content}` }}
-                />
+                <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
               ) : null;
             })}
-          </ViewContent>
-        ) : (
-              <Nodata>
-                {/* {this.props.isTeam === 1 ?
-            <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>
-              업로드
-            </Button>
-            :
-          } */}
-                <div>등록된 컨텐츠가 없습니다.</div>
-                <div>{/*등록된 컨텐츠가 없습니다.*/}</div>
-              </Nodata>
-            )}
+          </ViewContent>}
         {this.state.loading && <Loading />}
       </CardSrcWrap>
+    </>
     );
   }
 }

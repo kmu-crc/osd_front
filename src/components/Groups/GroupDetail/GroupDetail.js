@@ -82,7 +82,8 @@ class GroupDetail extends Component {
   }
 
   render() {
-    const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, like, GroupListAdded, Count } = this.props;
+    // const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, like, GroupListAdded, Count } = this.props;
+    const { GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded } = this.props;
     const { currentTab, manager, reload } = this.state
     console.log("reload:", reload)
     return (<>

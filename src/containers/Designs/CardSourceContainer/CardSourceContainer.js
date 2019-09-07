@@ -14,8 +14,8 @@ class CardSourceContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    status: state.DesignDetailStepCard.status,
-    view: state.DesignDetailView.status.DesignDetailView
+    status: state.DesignCard.DesignDetailStepCard.status,
+    view: state.Design.status.DesignDetailView
   };
 };
 

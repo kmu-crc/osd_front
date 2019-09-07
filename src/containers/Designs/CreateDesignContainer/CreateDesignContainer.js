@@ -7,7 +7,11 @@ import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
 class CreateDesignFormContainer extends Component {
-
+  constructor(props)
+  {
+    super(props);
+    this.gotoMyModify = this.gotoMyModify.bind(this);
+  }
   componentDidMount() {
     if (this.props.userInfo.is_designer === 0) {
       alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
@@ -15,10 +19,19 @@ class CreateDesignFormContainer extends Component {
     }
     this.props.GetCategoryAllRequest()
   }
+  gotoMyModify()
+  {
+    alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
+    this.props.history.push("/myModify")
+  }
   render() {
     console.log("props:", this.props.userInfo)
     return (<>
-      {this.props.userInfo.is_designer === 1 ? <CreateDesign {...this.props} /> : <p style={{ color: "#000" }}> 권한을 확인 중입니다.</p>}
+      {
+        this.props.userInfo.is_designer === 1 ? 
+        <CreateDesign {...this.props} /> 
+        :this.gotoMyModify()
+      }
     </>)
   }
 }

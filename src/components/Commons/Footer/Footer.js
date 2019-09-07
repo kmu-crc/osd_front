@@ -7,6 +7,7 @@ import TextFormat from "modules/TextFormat"
 // css styling
 
 const Foot = styled.footer`
+  bottom:0px; 
   background-color: #191919;
   position: fixed;
   z-index: 100;

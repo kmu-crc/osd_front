@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import ModifyDesign from "components/Designs/ModifyDesign"
-import { GetDesignDetailRequest,UpdateDesignInfoRequest } from "redux/modules/design"
+import { GetDesignDetailRequest,UpdateDesignInfoRequest,DeleteDesignRequest } from "redux/modules/design"
 import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
@@ -49,6 +49,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetCategoryAllRequest: () => {
       return dispatch(GetCategoryAllRequest());
+    },
+    DeleteDesignRequest:(id,token) => {
+      return dispatch(DeleteDesignRequest(id,token));
     }
 
   };

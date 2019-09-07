@@ -83,10 +83,14 @@ class GroupBasicInfo extends Component
             this.setState({groupThumbnail:reader.result,groupThumbnailName:file.name})
             this.props.onChangeThumbnail(reader.result,file.name);
         }
-         let imgurl =  reader.readAsDataURL(file)
-         this.setState({groupThumbnailURL:imgurl});
-         this.props.onChangeThumbnail(imgurl);
-         console.log("file===",imgurl);
+        if(event.target.files[0])
+        {
+            let imgurl =  reader.readAsDataURL(file)
+            this.setState({groupThumbnailURL:imgurl});
+            this.props.onChangeThumbnail(imgurl);
+            console.log("file===",imgurl);
+              
+        }
 
     }
 

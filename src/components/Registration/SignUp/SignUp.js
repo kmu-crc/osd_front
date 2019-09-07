@@ -87,6 +87,7 @@ class SignUpModal extends Component {
         this.onChangePass = this.onChangePass.bind(this);
         this.onChangePassCheck = this.onChangePassCheck.bind(this);
         this.onChangeNickname = this.onChangeNickname.bind(this);
+        this.onChecked = this.onChecked.bind(this);
     }
     onChangeId(event) {
         this.setState({ email: event.target.value })
@@ -100,10 +101,16 @@ class SignUpModal extends Component {
     onChangeNickname(event) {
         this.setState({ nick_name: event.target.value })
     }
+    onChecked(event)
+    {
+        this.setState({checked:!this.state.checked,open_term:false});
+    }
     openterm = () => {
         this.setState({ open_term: true })
     }
     agree = () => {
+        
+        document.getElementById("agree").checked=true;
         this.setState({ open_term: false, checked: true })
     }
     sign = () => {
@@ -118,13 +125,47 @@ class SignUpModal extends Component {
     tmp_goto_mydetail = () => {
 
     }
+    async checkEmail()
+    {
+        const data = {email:this.state.email}
+        let returnvalue = true;
+        await this.props.CheckEmailRequest(data).then(
+            (res)=>{
+                console.log(res, data);
+                if(res.checkEmail===false)
+                {                   
+                    returnvalue = false;
+                }
+            }
+        );
+        console.log("qwer",returnvalue);
+        return returnvalue;
+    }
+
+    async checkNickname()
+    {
+        const data = {nick_name:this.state.nick_name}
+        let returnvalue = true;
+        await this.props.CheckEmailRequest(data).then(
+            (res)=>{
+                console.log(res, data);
+                if(res.checkNickName===false)
+                {                   
+                    returnvalue = false;
+                }
+            }
+        );
+        console.log("qwer",returnvalue);
+        return returnvalue;
+    }
     onSubmit = async e => {
+        
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        let error_code=-1;
 
-        if(checkedMail.test(this.state.email)==false)
+
+        if(checkedMail.test(this.state.email)===false)
         {
             alert("이메일 형식이 올바르지 않습니다");
             return;
@@ -139,22 +180,23 @@ class SignUpModal extends Component {
             alert("닉네임을 입력해주세요!")
             return;
         }
+        else if(this.state.checked === false)
+        {
+            alert("이용약관에 동의해주세요")
+            return;
+        }
+        //닉네임 중복 체크
+        if(await this.checkEmail()===false)
+        {      
+            alert("중복된 이메일입니다");      
+            return;
+        }
+        if(await this.checkNickname()===false)
+        {
+            alert("중복된 닉네임입니다");
+            return;
+        }
 
-        
-        
-        
-        // if (this.state.password) {
-        //   var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
-        //   if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-        //     alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
-        //     return false;
-        //   }
-        //   if (this.state.password !== this.state.passwordCheck) {
-        //     alert("비밀번호 확인을 다시 해주십시오");
-        //     return false;
-        //   }
-        //   delete formData.passwordCheck;
-        // }
         await this.setState({ loading: true });
         console.log("signupformdata", formData);
         this.props.SignUpRequest(formData)
@@ -217,7 +259,7 @@ class SignUpModal extends Component {
                     (
                         <CustomModal open={open} onClose={this.onClose}>
                             {this.state.open_term &&
-                                <div style={{ position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
+                                <div style={{  position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
                                     <div style={{ marginTop: "44px", marginLeft: "46px", width: "450px", height: "754px", fontFamily: "Noto Sans KR", fontWeight: "300", fontSize: "20px", lineHeight: "35px", textAlign: "left", color: "#707070" }}>
                                         [차례]<br />
                                         제1장<br />
@@ -232,7 +274,7 @@ class SignUpModal extends Component {
                                         color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "35px", textAlign: "left"
                                     }} onClick={this.agree}>동의하고 닫기</div>
                                 </div>}
-                            <Modal.Content>
+                            <Modal.Content >
                                 <div className="title">OPEN SOURCE DESIGN</div>
                                 <form style={{ marginTop: "49px", marginLeft: "225px" }} >
                                     <div style={{
@@ -249,7 +291,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "74px", height: "29px"
                                     }}>비밀번호</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange={this.onChangePass} style={{
+                                        <input type="password" onChange={this.onChangePass} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="비밀번호를 입력하세요." /></div>
@@ -258,7 +300,7 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>비밀번호 확인</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange={this.onChangePassCheck} style={{
+                                        <input type="password" onChange={this.onChangePassCheck} style={{
                                             outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
                                             fontWeight: "300", backgroundColor: "#EFEFEF"
                                         }} placeholder="비밀번호를 입력하세요." /></div>
@@ -276,8 +318,13 @@ class SignUpModal extends Component {
                                         textAlign: "left", width: "115px", height: "29px"
                                     }}>이용약관</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
-                                        <CheckboxContainer ><div className="label-text">이용약관에 동의하시나요?</div><input type="checkbox" value={this.state.checked} /><span className="checkmark" /></CheckboxContainer>
-                                        <div style={{ marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div></div>
+                                        <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
+                                        {console.log(this.state.checked)}
+                                        <input id="agree" style={{background: this.state.checked===true?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box"}}onClick={this.onChecked} type="checkbox" value={this.state.checked} />
+                                        <span className="checkmark" />
+                                        </CheckboxContainer>
+                                        <div style={{cursor:"pointer", marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div>
+                                        </div>
                                     <div style={{
                                         marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",
                                         color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "29px", textAlign: "left"

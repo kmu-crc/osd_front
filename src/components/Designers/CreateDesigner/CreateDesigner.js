@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import SelectBox from "components/Commons/SelectBox"
-import showPw from "source/show_password.svg";
-import styled from "styled-components";
+import { FormControl } from "modules/FormControl";
+
+// import { FormControl, ValidationGroup } from "modules/FormControl";
+// import SelectBox from "components/Commons/SelectBox"
+// import showPw from "source/show_password.svg";
+// import styled from "styled-components";
 
 import SectionBasic from "components/Designers/CreateDesigner/ModifyMyDetail/SectionBasic"
 import SectionAdditional from "components/Designers/CreateDesigner/ModifyMyDetail/SectionAdditional"
@@ -12,14 +14,14 @@ const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
 ]
 
-const colorSwich = ['#FFFFFF', '#FF0000'];  
+//const colorSwich = ['#FFFFFF', '#FF0000'];
 class ModifyMyDetail extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      change_password: false, selected: 0, loading: false,isClickModify:false,
-      thumbnail: "", nick_name: "", about_me: "",
+      change_password: false, selected: 0, loading: false, isClickModify: false,
+      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
@@ -40,9 +42,19 @@ class ModifyMyDetail extends Component {
     this.handleClickModifyMyProfile = this.handleClickModifyMyProfile.bind(this);
 
   }
-  handleClickModifyMyProfile()
-  {
-    this.setState({isClickModify:!this.state.isClickModify});
+  shouldComponentUpdate(nextProps) {
+    if (this.props.MyDetail && this.props.MyDetail !== nextProps.MyDetail) {
+      this.setState({
+        thumbnail: nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img == null ? "" : nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img,
+        nick_name: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
+        about_me: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
+        password: "", passwordCheck: "",
+      });
+    }
+    return true;
+  }
+  handleClickModifyMyProfile() {
+    this.setState({ isClickModify: !this.state.isClickModify });
   }
   /**UPDATE */
   updateNickName(modifyvalue) {
@@ -51,8 +63,9 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(modifyvalue) {
-    this.setState({ thumbnail: modifyvalue });
+  updateThumbnail(imgInfo,imgName)
+  {
+    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
   }
   updatePassword(modifyvalue) {
     this.setState({ password: modifyvalue });
@@ -86,8 +99,8 @@ class ModifyMyDetail extends Component {
     document.addEventListener("scroll", this.handleScroll, true)
   }
   handleScroll = () => {
-    let sections = document.querySelectorAll("section")
-
+    //let sections = document.querySelectorAll("section")
+    document.querySelectorAll("section")
   }
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
@@ -125,10 +138,50 @@ class ModifyMyDetail extends Component {
       validates: this.state.password2.validates
     });
   }
-
+  async checkNickname()
+  {
+      const data = {nick_name:this.state.nick_name}
+      let returnvalue = true;
+      await this.props.CheckNickNameRequest(data).then(
+          (res)=>{
+              console.log(res, data);
+              if(res.checkNickName===false)
+              {                   
+                  returnvalue = false;
+              }
+          }
+      );
+      console.log("qwer",returnvalue);
+      return returnvalue;
+  }
   onSubmit = async e => {
+    
     e.preventDefault();
-    let formData = this.state;
+
+    let formData = {...this.state,files:[]};
+
+    let file = {
+      value: this.state.thumbnail,
+      name: this.state.thumbnail_name,
+      key: 0
+    };
+    formData.files.push(file);
+
+
+    if(this.state.nick_name!==this.props.MyDetail.nick_name)
+    {
+      if(await this.checkNickname()===false)
+      {
+          alert("중복된 닉네임입니다");
+          return;
+      }
+    }
+    if(this.state.nick_name==="")
+    {
+          alert("닉네임을 입력해주세요");
+          return;
+    }
+
 
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
@@ -143,6 +196,14 @@ class ModifyMyDetail extends Component {
       delete formData.passwordCheck;
     }
 
+    if(this.state.category_level1 ===-1)
+    {
+      alert("카테고리를 선택해주세요!");
+      return;
+    }
+
+    // console.log("=========="+this.state.thumbnail);
+    // return;
     //ValidationGroup(formData, false).then(async data => {
     // console.log("성공", {...this.state});
     // return
@@ -151,7 +212,8 @@ class ModifyMyDetail extends Component {
       .then(res => {
         if (res.success) {
           alert("정보가 수정되었습니다.");
-          this.props.history.push(`/`);
+          //this.props.history.push(`/`);
+          window.location.href = "/";
         } else {
           alert("다시 시도해주세요");
           this.setState({
@@ -194,31 +256,31 @@ class ModifyMyDetail extends Component {
       <div style={{ display: "flex", marginTop: "60px", marginBottom: "111px" }}>
         {/* scroll - menu */}
         <div style={{ width: "325px", marginLeft: "64px" }}>
-        <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
-            <div onClick = {this.handleClickModifyMyProfile} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", paddingTop: "18px", paddingLeft: "36px",backgroundColor: this.state.isClickModify === true ?"#707070":"#F5F4F4", borderRadius: "5px" }}>
-            <div style={{ color: this.state.isClickModify === true ? "#FFFFFF" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>
-              내 프로필 수정하기      {this.state.isClickModify==true?<span style={{marginLeft:"70px",fontSize:"15px"}}>▼</span>:<span style={{marginLeft:"70px",fontSize:"15px"}}>▲</span>}
+          <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+            <div onClick={this.handleClickModifyMyProfile} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", paddingTop: "18px", paddingLeft: "36px", backgroundColor: this.state.isClickModify === true ? "#707070" : "#F5F4F4", borderRadius: "5px" }}>
+              <div style={{ color: this.state.isClickModify === true ? "#FFFFFF" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>
+                내 프로필 수정하기      {this.state.isClickModify === true ? <span style={{ marginLeft: "70px", fontSize: "15px" }}>▼</span> : <span style={{ marginLeft: "70px", fontSize: "15px" }}>▲</span>}
               </div>
             </div>
-        </div>
-        { this.state.isClickModify&&
-          <div style={{ position: "fixed", top: "261px", width: "325px", height: "126px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
-            {scrollmenu.map((menu, index) => {
-              return (<div onClick={() => this.scrollMove(menu, index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                <div style={{ color: selected === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
-              </div>)
-            })}
           </div>
-        }
+          {this.state.isClickModify &&
+            <div style={{ position: "fixed", top: "261px", width: "325px", height: "126px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+              {scrollmenu.map((menu, index) => {
+                return (<div onClick={() => this.scrollMove(menu, index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
+                  <div style={{ color: selected === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
+                </div>)
+              })}
+            </div>
+          }
         </div>
         {/* form */}
         <div style={{ width: "1422px", marginLeft: "45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px", fontFamily: "Noto Sans KR" }}>
           <form>
-            {this.state.isClickModify&&
-                          <React.Fragment>
-                          <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
-                          <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
-                          </React.Fragment>
+            {this.state.isClickModify &&
+              <React.Fragment>
+                <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
+                <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
+              </React.Fragment>
             }
 
             <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}

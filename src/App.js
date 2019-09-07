@@ -34,6 +34,9 @@ import ResetPwPage from "pages/ResetPwPage"
 import NotFoundPage from "pages/NotFoundPage"
 import ClientTemplate from "templates/ClientTemplate"
 
+import FooterPrivacy from "components/Commons/FooterPrivacy"
+import FooterPara from "components/Commons/FooterTerm"
+
 class App extends Component {
   render() {
     return (
@@ -72,8 +75,11 @@ class App extends Component {
 
             {/* GROUP E - etc. */}
             <Route path="/resetPw" component={ResetPwPage} />
-            <Route component={NotFoundPage} />
+            
+            <Route path="/footerPrivacy" component={FooterPrivacy} />
+            <Route path="/footerPara" component={FooterPara} />
 
+            <Route component={NotFoundPage} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>

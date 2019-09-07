@@ -281,7 +281,7 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         // const alarms = this.GetAlarmMergedLike(this.props.alarm);
-        console.log(alarms);
+
         return (
             <>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
@@ -340,7 +340,7 @@ class Alarm extends Component {
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
-                        {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
+                        {alarms && alarms>0&& <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
                     </div>
                 </div>

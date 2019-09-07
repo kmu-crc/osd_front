@@ -17,6 +17,7 @@ class DesignerDetailContainer extends Component {
   }
 
   render() {
+    console.log("DESIGN DETAIL::",this.props)
     return (
       <React.Fragment>
         <DesignerDetailHeader {...this.props}/>

@@ -6,6 +6,8 @@ import StyleGuide from "StyleGuide"
 import FooterPara from "./FooterPara"
 
 const FromFieldCard = styled.div`
+  border:3px solid #EFEFEF;  
+  margin-left:0.7rem;
   margin-top: 2rem;
   margin-bottom: 5rem;
   width: 100%;
@@ -36,7 +38,7 @@ const FormHeader = styled(Header) `
 class FooterTerm extends Component {
   render() {
     return(
-      <ContentBox>
+      <div style={{width:"83%"}}>
         <FromFieldCard>
           <Grid>
             <Grid.Column width={4}>
@@ -47,7 +49,7 @@ class FooterTerm extends Component {
             </Grid.Column>
           </Grid>
         </FromFieldCard>
-      </ContentBox>
+      </div>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetGroupDetailRequest, UpdateGroupRequest } from "redux/modules/group";
+import { DeleteGroupRequest,GetGroupDetailRequest, UpdateGroupRequest } from "redux/modules/group";
 import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
 
 class ModifyGroupInfoContainer extends Component {
@@ -45,6 +45,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateGroupRequest: (id, data, token) => {
       return dispatch(UpdateGroupRequest(id, data, token))
+    },
+    DeleteGroupRequest: (id, token) => {
+      return dispatch(DeleteGroupRequest(id, token))
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid, Form } from "semantic-ui-react";
+// import { Grid, Form } from "semantic-ui-react";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 
 // css styling
@@ -54,22 +54,16 @@ class CardSource extends Component {
     return (
       <FormWrapper>
         <FromFieldCard>
-          <Grid>
-            <Grid.Column mobile={16} computer={16}>
-              <Form.Group widths="equal">
-                <CardSourceDetailContainer
-                  design_id={view.design_id}
-                  uid={view.uid}
-                  isTeam={view.is_team}
-                  edit={this.props.edit}
-                  closeEdit={this.props.closeEdit}
-                  openEdit={this.props.openEdit}
-                  isCancel={this.props.isCancel}
-                  onCancel={this.props.onCancel}
-                />
-              </Form.Group>
-            </Grid.Column>
-          </Grid>
+          <CardSourceDetailContainer
+            design_id={view.design_id}
+            uid={view.uid}
+            isTeam={view.is_team}
+            edit={this.props.edit}
+            closeEdit={this.props.closeEdit}
+            openEdit={this.props.openEdit}
+            isCancel={this.props.isCancel}
+            onCancel={this.props.onCancel}
+          />
         </FromFieldCard>
       </FormWrapper>
     );

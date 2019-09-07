@@ -72,7 +72,7 @@ const opendesign_style = {
   },
   group_margin: {
     cols: 2,
-    width: 902,
+    width: "902px",
     height: "230px",
     marginRight: "94px",
     marginBottom: "60px",
