@@ -34,6 +34,7 @@ class Comment extends Component {
     render() {
         const { reply, this_comment, this_reply } = this.state;
         const { comments, my } = this.props;
+        const myface = my && my.thumbnail && my.thumbnail.s_img !== null ?my.thumbnail.s_img  : noface
         console.log("my:", my, this.props, this.state);
         return (<>
             {comments && comments.length > 0 && comments.map((item, index) => {
@@ -86,11 +87,11 @@ class Comment extends Component {
                 </Fragment>)
             })}
             <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${my&& my.s_img !== null ? my.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
+                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${myface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
                 <div style={{ marginLeft: "24px" }}>
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment"
                         style={{
-                            minWidth: "950px", height: "58px", padding: "7px", outline: "none", border: "none", resize: "none",
+                            minWidth: "950px",width:"1200px", height: "58px", padding: "7px", outline: "none", border: "none", resize: "none",
                             color: "#707070", fontWeight: "300", fontFamily: "Noto Sans KR", lineHeight: "22px",
                             background: "#EFEFEF", backgroundRepeat: "no-repeat", borderRadius: "5px"
                         }} />

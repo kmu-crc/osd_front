@@ -36,15 +36,15 @@ class GridEditor extends Component {
         console.log(`${obj.offsetHeight}px`)
         return `${obj.offsetHeight}px`
     }
-    createNewCard(row, col) {
-        this.setState({ newcard: true });
+    createNewCard(row, boardId) {
+      this.setState({ row: row, boardId: boardId, newcard: true });
     }
-    takeOutCard(row, col, data, maxRow) {
+    takeOutCard(row, boardId, data, maxRow) {
         if (data === null) {
-            this.createNewCard(row, col)
+            this.createNewCard(row, boardId)
             return;
         }
-        this.setState({ cardDetail: data, title: data.title, row: row, col: col, maxRow: maxRow, card: true })
+        this.setState({ cardDetail: data, title: data.title, row: row, col: boardId, maxRow: maxRow, card: true })
     }
     componentDidMount() {
         window.addEventListener("resize", () => { this.setState({ w: window.innerWidth }) }, true)
@@ -82,7 +82,7 @@ class GridEditor extends Component {
     NewItem = (data) => { }
     render() {
         const { editor, DesignDetailStep, userInfo } = this.props
-        const { row, col, maxRow, card, newcard, newstep, editstep, cardDetail, title, where } = this.state
+        const { row, col, boardId, maxRow, card, newcard, newstep, editstep, cardDetail, title, where } = this.state
         console.log(this.props, "card:");
         console.log(this.state, "state-card:");
         return (<>
@@ -90,10 +90,10 @@ class GridEditor extends Component {
             {card && <CardModal
                 isTeam={editor} edit={userInfo.uid === cardDetail.user_id}
                 open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
-                title={title || "로딩중"} card={cardDetail} />}
+                title={title || "로딩중"} designId={this.props.design.uid} card={cardDetail} />}
             {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
             {editor && <EditStepModal open={editstep} title={title} where={where} EditStep={this.EditStep} close={this.CloseEditStep} />}
-            {editor && newcard && <NewCardModal isTeam={editor} open={newcard} close={() => this.setState({ newcard: false })} />}
+            {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={row} open={newcard} close={() => this.setState({ newcard: false })} />}
             {/* ------------- grid editor component */}
             <GridEditorWrapper>
                 <div style={{ width: `max-content`, paddingLeft: "73.5px" }}>
@@ -123,7 +123,7 @@ class GridEditor extends Component {
                                 {editor &&
                                     <CreateCard
                                         title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}
-                                        onClick={() => this.takeOutCard(step.cards.length - 1, step_index, null, step.cards.length)} />}
+                                        onClick={() => this.takeOutCard(step.cards.length>0?step.cards.length - 1:0, step.uid, null, step.cards.length)} />}
                             </div>)
                         })}
                     </div>
