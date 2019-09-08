@@ -38,7 +38,6 @@ const AlarmList = styled.div`
     }
 `;
 const ListItem = styled.div`
-    
     display:flex;
     padding-left:15px;
     flex-direction:column;
@@ -170,19 +169,21 @@ class Alarm extends Component {
     }
 
     accept = (e, item) => {
+        let confirm = false;
         e.stopPropagation()
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
-                if (window.confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?")) {
-                    this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
+            confirm = window.confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?");
+                if (confirm) {
+                  this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
-                            if (res.data && res.data.success) {
-                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
-                                this.alarmConfirm(item.user_id, item.uid)
-                            } else {
-                                alert("다시 시도해주세요.");
-                            }
-                        })
+                  alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                  this.alarmConfirm(item.user_id, item.uid)
+                //       if (res.data && res.data.success) {
+                //           } else {
+                //               alert("다시 시도해주세요.");
+                //           }
+                       })
                         .catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
             }
@@ -192,21 +193,21 @@ class Alarm extends Component {
                 if (window.confirm("가입을 승인하시겠습니까?")) {
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
-                            if (res.data && res.data.success) {
+                //     if (res.data && res.data.success) {
                                 this.alarmConfirm(item.user_id, item.uid)
                                 alert("승인되었습니다. 해당페이지로 이동합니다.")
                                 this.props.history.push(this.getLink(item))
-                            } else { alert("다시 시도해주세요.") }
+                //           } else { alert("다시 시도해주세요.") }
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
             } else if (item.kinds === "JOIN_withGROUP") {
                 if (window.confirm("가입을 승인하시겠습니까?")) {
                     this.props.UpdateGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
-                            if (res.data && res.data.success) {
+                //if (res.data && res.data.success) {
                                 alert("승인되었습니다.")
                                 this.alarmConfirm(item.uid)
-                            } else { alert("다시 시도해주세요.") }
+                //} else { alert("다시 시도해주세요.") }
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
             }
@@ -222,12 +223,12 @@ class Alarm extends Component {
                     this.props.GetoutDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token,
                         item.kinds === "REQUEST" ? "DesignRefuse" : "DesignInviteReject")
                         .then(res => {
-                            if (res.data && res.data.success) {
+                // if (res.data && res.data.success) {
                                 alert(item.kinds === "REQUEST" ? "요청을 거절하였습니다." : "초대를 거절하였습니다.");
                                 this.alarmConfirm(item.user_id, item.uid)
-                            } else {
-                                alert("다시 시도해주세요.");
-                            }
+                //           } else {
+                //               alert("다시 시도해주세요.");
+                //           }
                         })
                         .catch((err) => alert(err + `와 같은 이유로 거절하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.`))
                 }
@@ -237,12 +238,12 @@ class Alarm extends Component {
                 if (window.confirm("가입요청을 거절하시겠습니까?")) {
                     this.props.DeleteDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
-                            if (res.data && res.data.success) {
+                //           if (res.data && res.data.success) {
                                 this.alarmConfirm(item.user_id, item.uid)
                                 alert(`거절하셨습니다.`)
-                            } else {
-                                alert(`다시 시도해주세요.`)
-                            }
+                //            } else {
+                //               alert(`다시 시도해주세요.`)
+                //           }
                         })
                         .catch((err) => alert(err + `와 같은 이유로 거절하는 데 실패하였습니다. 관리자에게 문의하시기 바랍니다.`))
                 }
@@ -250,12 +251,12 @@ class Alarm extends Component {
                 if (window.confirm("가입요청을 거절하시겠습니까?")) {
                     this.props.DeleteGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
-                            if (res.data && res.data.success) {
+                //         if (res.data && res.data.success) {
                                 this.alarmConfirm(item.user_id, item.uid)
                                 alert(`거절하셨습니다.`)
-                            } else {
-                                alert(`다시 시도해주세요.`)
-                            }
+                //           } else {
+                //               alert(`다시 시도해주세요.`)
+                //           }
                         })
                         .catch((err) => alert(err + `와 같은 이유로 거절하는 데 실패하였습니다. 관리자에게 문의하시기 바랍니다.`))
                 }
@@ -280,7 +281,6 @@ class Alarm extends Component {
 
     render() {
         const alarms = this.props.alarm;
-        // const alarms = this.GetAlarmMergedLike(this.props.alarm);
 
         return (
             <>{this.state.active &&
@@ -291,8 +291,7 @@ class Alarm extends Component {
                             : <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />}
                     </div>
                     <div className="list">
-
-                        {alarms ? alarms.list.map(item => {
+                        {alarms && alarms.list ? alarms.list.map(item => {
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
                             let designCount = 0, groupCount = 0, countObj, msg;
@@ -327,8 +326,8 @@ class Alarm extends Component {
                                                         Alarm                         </>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
-                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                  ? <div onClick={()=>this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
+                  : <div onClick={()=>this.alarmConfirm(item.user_id, item.uid)}  style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }
                                             </div>
@@ -340,7 +339,7 @@ class Alarm extends Component {
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
-                        {alarms && alarms>0&& <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
+                        {alarms && alarms.count>0&& <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
                     </div>
                 </div>

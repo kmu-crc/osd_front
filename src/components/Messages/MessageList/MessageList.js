@@ -11,26 +11,25 @@ import Socket from "modules/Socket"
 import { Modal } from 'semantic-ui-react';
 
 
-
 const SummaryList = styled.div`
-height:794px;
-margin-top:14px;
-padding-left:54px;
-&:hover {
-overflow-y: scroll;
-}`
+  height:794px;
+  margin-top:14px;
+  padding-left:54px;
+  &:hover {
+    overflow-y: scroll;
+  }
+`;
 const MsgSectionBoard = styled.div`
-position:relative;
-width: 1259px;
-height: 602.5px;
-flex-direction:column;
-justify-content:flex-end;
-overflow:hidden;
-&:hover {
-overflow-y: scroll;
-
-}`
-
+  position:relative;
+  width: 1259px;
+  height: 602.5px;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:hidden;
+  &:hover {
+    overflow-y: scroll;
+  }
+`;
 const Banner = { width: "100%", height: "48px", marginTop: "8px", backgroundColor: "#EFEFEF" };
 const BannerText = {
   display: "inline-block", width: "74px", height: "29px", marginTop: "9px", marginLeft: "65px",
@@ -38,8 +37,6 @@ const BannerText = {
   textAlign: "center", lineHeight: "29px"
 };
 const MessageBox = { width: "1750px", height: "869px", margin: "26px 0px 27px 65px" }
-
-
 const MessageAside = {
   display: "inline-block", width: "445px", height: "100%", marginRight: "7px", overflow: "hidden",
   borderRadius: "25px 0 0 25px", backgroundColor: "#EFEFEF",
@@ -79,10 +76,6 @@ const MessageSection = {
   display: "flex", overflow: "hidden", display: "inline-block", width: "1298px", height: "100%", paddingLeft: "26px", paddingRight: "23px",
   borderRadius: "0px 25px 25px 0px", backgroundColor: "#EFEFEF"
 }
-
-
-
-
 const MessageDivisionLine = { borderTop: "1px solid #707070" }
 const MessageSectionSend = { overflow: "hidden", position: "relative", height: "197.5px" }
 const MessageSectionTextArea = {
@@ -96,13 +89,14 @@ const MessageSectionSendBtn = {
   fontSize: "18px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "center", lineHeight: "170px",
 };
 
-
 function SummaryItem(props) {
   let SummaryStyle = MsgSummaryItem;
   if (props.opacityON == true) SummaryStyle = MsgSummarySelectItem;
   return (
     <div style={SummaryStyle}>
-      <div style={{ position: "absolute", borderRadius: "50px", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${props.s_img})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
+      <div style={{ position: "absolute", borderRadius: "50px", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${props.s_img})`, backgroundSize: "cover", backgroundPosition: "center center" }}>
+    {props.noti?<div style={{width:"10px",height:"10px",backgroundColor:"#FF0000",borderRadius:"50%"}}/>:undefined}
+      </div>
       <div style={MsgSummaryName}>{props.friend_name}</div>
       <div style={MsgSummaryBoard}>{props.message}</div>
     </div>);
@@ -110,13 +104,13 @@ function SummaryItem(props) {
 function SummarySelectItem(props) {
   return (
     <div style={MsgSummarySelectItem}>
-      <div style={{ position: "absolute", borderRadius: "50px", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${props.s_img})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
+      <div style={{ position: "absolute", borderRadius: "50px", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${props.s_img})`, backgroundSize: "cover", backgroundPosition: "center center" }}>
+      
+      </div>
       <div style={MsgSummaryName}>{props.friend_name}</div>
       <div style={MsgSummaryBoard}>{props.message}</div>
     </div>);
 }
-
-
 
 
 class Messages extends React.Component {
@@ -297,12 +291,13 @@ class Messages extends React.Component {
   render() {
     let arrSummaryList = [];
     if (this.props.MessageList.length > 0) {
+      console.log("message-list",this.props.MessageList);
       arrSummaryList = this.props.MessageList.map((item, index) => {
         let SelectedItem = false;
         if (this.state.selectId == item.friend_id) SelectedItem = true;
         return (
           <div key={index} onClick={() => this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
-            <SummaryItem s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
+            <SummaryItem noti={item.noti&&item.noti>0} s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
           </div>
         )
       });

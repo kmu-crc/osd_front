@@ -6,23 +6,7 @@ import Alarm from "components/Header/Alarm"
 import Socket from "modules/Socket"
 
 class AlarmContainer extends Component {
-    state = { alarm: null }
     componentDidMount() {
-        this.getAlarm()
-    }
-    getAlarm() {
-        if (this.props.isLoggedIn) {
-            try {
-                Socket.emit("INIT", this.props.userInfo.uid)
-                Socket.on("getNoti", alarm => {
-                    this.setState({ alarm: alarm })
-                    console.log("getNoti", alarm)
-                })
-            } catch (err) {
-                //TODO v2: doesn't meaning in client, so! report administrator e-mail
-                console.log(err)
-            }
-        }
     }
     handleAlarmConfirm = (userID, alarmID) => {
         Socket.emit("confirm", { user_id: userID, alarmId: alarmID });
@@ -31,7 +15,7 @@ class AlarmContainer extends Component {
         Socket.emit("allConfirm", { user_id: this.props.userInfo.uid })
     }
     render() {
-        return <Alarm handleAllAlarmConfirm={this.handleAllAlarmConfirm} handleAlarmConfirm={this.handleAlarmConfirm}{...this.state}{...this.props} />
+        return <Alarm handleAllAlarmConfirm={this.handleAllAlarmConfirm} handleAlarmConfirm={this.handleAlarmConfirm} {...this.props} />
     }
 }
 const mapDisaptchToProps = (dispatch) => {
