@@ -30,55 +30,43 @@ const SearchContainer = styled.div`
         cursor: pointer;
     }
 `;
-
 class SearchForm extends Component {
     state = {
         searchKeyword: "",
     };
-    _search = () => { };
-    _handleKeyDown = (e) => {
-        const addrText = window.location.href.toString();
-        let thisCate = "#all";
-        if(addrText.indexOf('/group')!==-1)
-        {
-            thisCate="#group"
-        }
-        else if(addrText.indexOf('/designer')!==-1)
-        {
-            thisCate="#designer"
-        }
-        else if(this.addrText.indexOf('/design')!==-1)
-        {
-            thisCate="#design"
-        }
-        window.location.href = '/search' + thisCate;
-    }
-
     goSearch = () => {
         const addrText = window.location.href.toString();
         let thisCate = "#all";
         if(addrText.indexOf('/group')!==-1)
         {
-            thisCate="#group"
+            thisCate="/group"
         }
         else if(addrText.indexOf('/designer')!==-1)
         {
-            thisCate="#designer"
+            thisCate="/designer"
         }
-        else if(this.addrText.indexOf('/design')!==-1)
+        else if(addrText.indexOf('/design')!==-1)
         {
-            thisCate="#design"
+            thisCate="/design"
         }
-        window.location.href = '/search' + thisCate;
-    }
+        window.location.href = '/search'+thisCate+'/null/'+this.state.searchKeyword;
+    };
 
+    handleChange = (e)=>{
+        this.setState({searchKeyword:e.target.value});
+        console.log(this.state.searchKeyword);
+    }
+    handleKeyDown = (e)=>{
+        if(e.keyCode === 13){
+            this.goSearch();
+        }
+
+    }
     render() {
         return (
             <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
                 <div className="shadow_button" onClick={this.goSearch} />
-
-                <input type="text" placeholder="Search..." maxLength="100" />
-
+                <input type="text" placeholder="Search..." maxLength = "100" onChange={this.handleChange} value={this.state.searchKeyword}/>
             </SearchContainer>)
     }
 
