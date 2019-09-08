@@ -72,7 +72,8 @@ handleChangeSubCategory = async (parent, category) => {
   }
   render() {
     const { this_category, main_category, sub_category, reload, this_order } = this.state
-    const { category1, category2, Count, status } = this.props
+    const { category1, category2, Count, status } = this.props;
+
     return (<>
       <Category
         subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}

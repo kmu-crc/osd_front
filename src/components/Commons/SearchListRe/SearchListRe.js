@@ -9,13 +9,11 @@ import OrderOption from "components/Commons/OrderOption"
 // import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css'
-
-<<<<<<< HEAD
 import Category from "components/Commons/Category"
 import {GetDesignListCountRequest} from "../../../redux/modules/design";
-=======
-//import Category from "components/Commons/Category"
->>>>>>> 1db583f755bb9a44f5c56764780864f91885f910
+import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"
+import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer"
+import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
 
 const SearchForm = styled.div`
     font-family: Noto Sans KR;
@@ -124,7 +122,6 @@ class SearchListRe extends Component {
             alert("키워드를 입력해주세요");
         } else {
             this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`);
-<<<<<<< HEAD
             window.location.href = `/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`;
         }
     };
@@ -155,38 +152,18 @@ class SearchListRe extends Component {
         this.handleChangeCategory(category)
     }
 
+//    this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
     handleChangeCategory = async (category) => {
         await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
-        this.props.GetDesignListCountRequest(category.value, null);
-        this.getList(0);
     }
     handleChangeSubCategory = async (parent, category) => {
         await this.setState({ main_category: this.props.category1[parent], this_category: category, sub_category: category })
-        this.props.GetDesignListCountRequest(this.state.main_category.value, category.value)
-        this.getList(0);
     }
     handleChangeOrderOps = async (order) => {
         await this.setState({ this_order: order })
-        this.getList(0);
+        console.log(this.state.this_order);
     }
 
-
-=======
-            this.changeState();
-        }
-    };
-    onChangeDropBox = async (event, { value }) => {
-        console.log(this.state.type[value]);
-        await this.setState({ selectType: this.state.type[value] });
-        this.props.history.replace(`/search/${this.state.selectedType.type}/${this.state.this_order.keyword}/${this.props.keyword}`);
-        this.changeState();
-    };
-    handleChangeOrderOps = (order) => {
-        this.setState({ this_order: order })
-        this.props.history.replace(`/search/${this.props.type}/${order.keyword}/${this.props.keyword}`);
-        this.changeState();
-    }
->>>>>>> 1db583f755bb9a44f5c56764780864f91885f910
     render() {
         const { category1, category2} = this.props
         const {  main_category, sub_category} = this.state
@@ -208,7 +185,6 @@ class SearchListRe extends Component {
                     </div>
                     {/*x box position*/}
                     <div style={{ display: "flex", justifyContent: "space-start" }}>
-<<<<<<< HEAD
                         <div style={{position:"relative", display:"flex", justify:"space-start"}}>
                             <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "10001" }}>
                                 <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
@@ -219,36 +195,14 @@ class SearchListRe extends Component {
                         </div>
                         {/* <div className="cateUI">{this.state.selectCate != 1 &&<React.Fragment><div style={{ color: "red" }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div></React.Fragment>}</div> */}
                     </div>
-                    <div style={{position:"relative", paddingTop:"270px"}}>
-                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />}
-                        {this.state.urlCate === "group" && <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />}
-                        {this.state.urlCate === "design" && <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />}
-=======
-                        <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "501" }}>
-                            <Dropdown id="dropbox" selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
-                        </div>
+                    <div style={{position:"relative", marginTop:"270px"}}>
+                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer
+                            sort={this.props.sort} keyword={this.props.keyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order}/>}
+                        {this.state.urlCate === "group" && <ScrollGroupListContainer
+                            sort={this.props.sort} keyword={this.props.keyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order}/>}
+                        {this.state.urlCate === "design" && <ScrollDesignListContainer
+                            sort={this.props.sort} keyword={this.props.keyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}
 
-                        <div className="cateUI">
-                            {this.state.selectCate !== 2 &&
-                                <React.Fragment>
-                                    <div style={{ color: "red" }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                    <div style={{ paddingLeft: '20px' }}>세부카테고리</div>
-                                </React.Fragment>
-                            }
-                        </div>
-                        {/* <div className="cateUI">{this.state.selectCate != 1 &&<React.Fragment><div style={{ color: "red" }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div><div style={{ paddingLeft: '20px' }}>세부카테고리</div></React.Fragment>}</div> */}
-                        {/* <div style={{ position: "absolute", top: "200px", right: "0px" }}> */}
-                        <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
-                        {/* </div> */}
-                    </div>
-                    <div>
-                        {/* {this.props.type === "designer" && <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />} */}
-                        {/* {this.props.type === "group" && <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />} */}
-                        {/* {this.props.type === "design" && <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />} */}
->>>>>>> 1db583f755bb9a44f5c56764780864f91885f910
                     </div>
                 </SearchForm>
             </div>

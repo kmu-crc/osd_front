@@ -9,10 +9,12 @@ import opendesign_style from 'opendesign_style';
 import Loading from "../../Designer/DesignerListContainer/DesignerListContainer";
 import Designer from "../../../components/Designers/Designer";
 
-
 class ScrollDesignListContainer extends Component {
   state = {
     reload: false,
+    category1:0,
+    category2:0,
+    orderOption:"update"
   }
 
   componentDidMount() {
@@ -20,12 +22,26 @@ class ScrollDesignListContainer extends Component {
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
   getList = async (page) => {
-    this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+    this.props.GetDesignListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.keyword);
   };
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
   render() {
+    const {cate1, cate2, orderOption} = this.props;
+    if(cate1 !== undefined || cate2 !== undefined){
+      if(this.state.category1 !== cate1){
+        this.getList(0);
+        this.setState({category1:cate1});
+      }
+    }
+    console.log(orderOption);
+    if(orderOption !== undefined){
+      if(this.state.orderOption !== orderOption){
+        this.getList(0);
+        this.setState({orderOption:orderOption})
+      }
+    }
     return (
         <div>
           {this.props.status  === "INIT" ?
