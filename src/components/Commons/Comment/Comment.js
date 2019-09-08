@@ -10,30 +10,36 @@ class Comment extends Component {
         this.setState({ [name]: value, ing: true });
         setTimeout(() => { this.setState({ ing: false }) }, 750);
     };
+  reset =()=> {
+    this.setState({ reply: false, targetId: undefined, this_comment: "", this_reply: "", ing: false });
+  }
     reply = (itemId) => { this.setState({ reply: true, targetId: itemId }); };
     undoReply = () => { this.setState({ reply: false, this_reply: "" }); };
     undoComment = () => { this.setState({ this_comment: "" }); };
-    requestReply = (data) => { this.props.reply(data); };
-    requestComment = (data) => { this.props.comment(data); };
-    removeReply = (commentId) => { this.props.removeReply(commentId); };
+  requestReply = (where) => { this.props.comment({ comment: this.state.this_reply, d_flag: where });this.reset(); };
+  requestComment = () => { if (this.state.this_comment.length > 0) this.props.comment({ comment: this.state.this_comment, d_flag: null });this.reset(); };
     removeComment = (commentId) => {
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
-        if (comm.replies && comm.replies > 0) {
+        if (comm.replies && comm.replies.length > 0) {
             alert("답변이 있는 댓글은 삭제할 수 없습니다.");
         }
         else {
             this.props.removeComment(commentId);
         }
     };
+  removeReply= (commentId) => { 
+    this.props.removeComment(commentId); 
+  };
 
     render() {
         const { reply, this_comment, this_reply } = this.state;
         const { comments, my } = this.props;
+        console.log("my:", my, this.props, this.state);
         return (<>
             {comments && comments.length > 0 && comments.map((item, index) => {
                 return (<Fragment key={item.nick_name + index}>
                     <div style={{ display: "flex", marginBottom: "30px" }}>
-                        <div style={{ width: "58px", height: "58px", backgroundImage: `url(${item.s_img || noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
+                        <div style={{ width: "58px", height: "58px", backgroundImage: `url(${item && item.s_img || noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
                         <div style={{ marginLeft: "24px" }}>
                             <div style={{ fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{item.nick_name}</div>
                             <div style={{ marginTop: "8px", fontSize: "20px", fontWeight: "300", fontFamily: "Noto Sans KR" }}>{item.comment}</div>
@@ -48,13 +54,13 @@ class Comment extends Component {
                         return (
                             <div key={repli.uid + repli_index} style={{ marginLeft: "80px" }}>
                                 <div style={{ display: "flex" }}>
-                                    <div style={{ width: "40px", height: "40px", backgroundImage: `url(${repli.thumbnail ==null? repli.thumbnail.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
+                                    <div style={{ width: "40px", height: "40px", backgroundImage: `url(${repli&&repli.s_img !== null ? repli.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
                                     <div style={{ marginLeft: "24px", marginTop: "3px" }}><div style={{ fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{repli.nick_name}</div></div>
                                 </div>
                                 <div style={{ marginLeft: "55px", display: "flex" }}>
                                     <div style={{ marginTop: "8px", fontSize: "20px", fontWeight: "300", fontFamily: "Noto Sans KR" }}>{repli.comment}</div>
                                     <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(repli.create_time)}</div>
-                                    {repli.user_id === my.uid && <div onClick={() => this.removeReply(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                                    {repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
                                 </div>
                             </div>
                         )
@@ -62,7 +68,7 @@ class Comment extends Component {
                     {reply && item.uid === this.state.targetId && <>
                         <div style={{ marginLeft: "80px", marginBottom: "30px" }}>
                             <div style={{ display: "flex" }}>
-                                <div style={{ width: "40px", height: "40px", backgroundImage: `url(${my.thumbnail ==null? my.thumbnail.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
+                                <div style={{ width: "40px", height: "40px", backgroundImage: `url(${my&&my.s_img !== null ? my.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
                                 <div style={{ marginLeft: "24px", marginTop: "3px" }}><div style={{ fontSize: "15px", lineHeight: "22px", color: "#707070", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{this.state.ing ? "답글 다는 중..." : my.nickName}</div></div>
                             </div>
                             <div style={{ marginLeft: "55px", display: "flex" }}>
@@ -72,7 +78,7 @@ class Comment extends Component {
                                         color: "#707070", fontWeight: "300", fontFamily: "Noto Sans KR", lineHeight: "22px",
                                         background: "#EFEFEF", backgroundRepeat: "no-repeat", borderRadius: "5px"
                                     }} />
-                                <div onClick={this.requestReply} style={{ marginLeft: "18px", letterSpacing: "0", width: "28px", height: "22px", fontSize: "15px", fontWeight: "500", textAlign: "left", color: "#707070", cursor: "pointer" }}>게시</div>
+                                <div onClick={() => this.requestReply(item.uid)} style={{ marginLeft: "18px", letterSpacing: "0", width: "28px", height: "22px", fontSize: "15px", fontWeight: "500", textAlign: "left", color: "#707070", cursor: "pointer" }}>게시</div>
                                 <div onClick={this.undoReply} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>취소</div>
                             </div>
                         </div>
@@ -80,11 +86,11 @@ class Comment extends Component {
                 </Fragment>)
             })}
             <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${my.thumbnail ==null? my.thumbnail.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
+                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${my&& my.s_img !== null ? my.s_img : noface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
                 <div style={{ marginLeft: "24px" }}>
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment"
                         style={{
-                            minWidth: "750px", height: "58px", padding: "7px", outline: "none", border: "none", resize: "none",
+                            minWidth: "950px", height: "58px", padding: "7px", outline: "none", border: "none", resize: "none",
                             color: "#707070", fontWeight: "300", fontFamily: "Noto Sans KR", lineHeight: "22px",
                             background: "#EFEFEF", backgroundRepeat: "no-repeat", borderRadius: "5px"
                         }} />

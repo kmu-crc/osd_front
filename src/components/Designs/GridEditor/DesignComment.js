@@ -7,14 +7,28 @@ class DesignComment extends Component {
     componentDidMount() {
         this.props.GetDesignCommentRequest(this.props.designId);
     }
-    reply = () => { }
     comment = (data) => {
-        this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.cardId, this.props.token);
+        this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.token)
+            .then(res => {
+                this.props.GetDesignCommentRequest(this.props.designId);
+            })
+    }
+    removeComment = (commentId) => {
+        this.props.DeleteDesignCommentRequest(this.props.designId, commentId, this.props.token)
+            .then(res => {
+                this.props.GetDesignCommentRequest(this.props.designId);
+            })
     }
     render() {
         console.log(this.props.Comment);
+        let parentComments = this.props.Comment.filter(item => item.d_flag === null);
+        let comments = parentComments.map(parent => {
+            let replies = this.props.Comment.filter(item => item.d_flag === parent.uid);
+            return { ...parent, replies };
+        })
+        console.log(comments);
         return (<>
-            <Comment comment={this.comment} reply={this.reply} my={this.props.userInfo} comments={this.props.Comment} />
+          <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
         </>)
     }
 };

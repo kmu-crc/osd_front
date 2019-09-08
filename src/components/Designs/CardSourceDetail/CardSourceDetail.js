@@ -43,6 +43,7 @@ const ViewContent = styled.div`
   }
   .textWrap{
     margin-bottom: 2rem;
+    color: inherit;
   }
   & .goEdit {
     display: none;
