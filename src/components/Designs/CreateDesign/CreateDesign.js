@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { CreateStep, CreateCard, TipDiv } from "components/Designs/GridEditor";
-import { FormInput, FormTextArea } from "components/Commons/FormItem";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
-import { FormControl } from "modules/FormControl";
-import { FormThumbnailEx } from "components/Commons/FormItems";
-import noface from "source/thumbnail.png";
-import Cross from "components/Commons/Cross";
 import { Dropdown } from "semantic-ui-react";
+import Cross from "components/Commons/Cross";
+import noimg from "source/noimg.png"
+import noface from "source/thumbnail.png";
+import GridEditor from "components/Designs/GridEditor";
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer"
+import Loading from "components/Commons/Loading";
+import { geturl } from "config";
 
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
@@ -19,83 +18,149 @@ function Peer(props) {
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
   </div>)
 }
+const BasicSecTitle = { width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
+const BasicSec_thumb_Box = { display: "flex", width: "1200px", }
+const BasicSec_thumb_ExplainBox = { marginLeft: "54.5px", marginTop: "100px" }
+const BasicSec_thumb_FindBox = { width: "63px", height: "25px", cursor: "pointer" }
+const BasicSec_thumb_FindTitle = { cursor: "pointer", fontWeight: "500", fontSize: "17px", borderBottom: "1.5px solid #FF0000", lineHeight: "25px", textAlign: "left", color: "#FF0000" }
+const BasicSec_thumb_FindExplain = { width: "341px", height: "45px", marginTop: "11px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", textAlign: "left", color: "#707070" }
 
 class CreateDesign extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      basic: false, additional: false, content: false, showSearch: false,
-      step: 1, selectedCate1: null, selectedCate2: null, cate2: null,
-      members: [],license1:false,license2:false,license3:false,
+      loading: false, designId: null, isMyDesign: false, editor: false,
+      basic: false, additional: false, content: false, step: 0,
+      showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], license1: false, license2: false, license3: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
     this.onCheckedLicense01 = this.onCheckedLicense01.bind(this);
     this.onCheckedLicense02 = this.onCheckedLicense02.bind(this);
     this.onCheckedLicense03 = this.onCheckedLicense03.bind(this);
+    this.onChangeCategory1 = this.onChangeCategory1.bind(this);
+    this.onChangeCategory2 = this.onChangeCategory2.bind(this);
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
   }
 
-  onChangeValue = async data => {
+  handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(file);
+    }
+  }
+  onChangeValueThumbnail = async data => {
     let obj = {};
-    if (data.target) { obj[data.target.name] = data; }
-    await this.setState(obj);
+    if (data.target) {
+      obj[data.target.name] = data;
+      await this.setState(obj);
+      console.log("thumbnail:", this.state);
+    }
     this.checkFinishBasic();
   };
-  liveCheck = (target) => { FormControl(this.state[target]); };
-  gotoPrevStep = () => {
-    if (this.state.step === 0) {
-      window.history.go(-1);
+  onChangeValueTitle = async event => {
+    if (event.target) {
+      await this.setState({ title: event.target.value });
     }
+    this.checkFinishBasic();
+  };
+  onChangeValueExplanation = async event => {
+    if (event.target) {
+      await this.setState({ explanation: event.target.value });
+    }
+    this.checkFinishBasic();
+  };
+  onKeyPress = () => {
+    this.checkFinishBasic();
+  }
+  gotoPrevStep = () => {
     this.setState({ step: this.state.step - 1 });
   }
   gotoNextStep = () => {
-    this.setState({ step: this.state.step + 1 });
+    if (this.state.step === 1) {
+      let designId = null;
+      console.log(this.state);
+      // create design and next stage, next state will be load new design via grid editor
+      const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
+      let data = {
+        is_project: 1,
+        category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
+        files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
+        is_commercial: license1, is_display_creater: license2, is_modify: license3, member: JSON.stringify(members), title: title
+      };
+      console.log(data);
+      this.setState({ loading: true });
+      this.props.CreateDesignRequest(data, this.props.token)
+        .then(async (res) => {
+          if (res.success) {
+            designId = res.design_id;
+            this.props.GetDesignDetailRequest(designId, this.props.token)
+              .then(() => {
+                this.props.GetDesignBoardRequest(designId)
+              })
+            await this.setState({ content: true, designId: designId, grid: true, loading: false });
+            await this.setState({ step: this.state.step + 1 });
+          }
+        })
+        .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
+    }
   }
   gotoStep = (menu) => {
-    // if (this.state.basic) {
-
-    // }
     this.setState({ step: menu.step });
   }
-  checkFinishBasic = () => {
-    const title = document.getElementsByName("title");
-    const thumbnail = document.getElementsByName("thumbnail[]");
-    const explanation = document.getElementsByName("explanation");
-    if (title[0].value.length > 0 && thumbnail[0].value.length > 0 && explanation[0].value.length > 0) {
-      this.setState({ basic: true });
+  checkFinishBasic = async () => {
+    const { title, thumbnail, explanation } = this.state;
+    if (title && title.length > 0 && thumbnail && thumbnail.img && explanation && explanation.length > 0) {
+      await this.setState({ basic: true });
     } else {
-      this.setState({ basic: false });
+      await this.setState({ basic: false });
+    }
+  }
+  checkFinishAdditional = async () => {
+    const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
+    console.log("checkFinishAdditional", categoryLevel1, ((alone && members.length === 0) || (!alone && members.length > 0)), license1, license2, license3);
+    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
+      await this.setState({ additional: true });
+    } else {
+      await this.setState({ additional: false });
     }
   }
   submit = () => {
-
-    
-
+    window.location.href = geturl() + `/designDetail/` + this.state.designId;
   }
-  onChangeCategory1 = (event, { value }) => {
-    const cate2 = this.props.cate2[value];
-    this.setState({ cate2: cate2, selectedCate2: cate2[0], selectedCate1: this.props.cate1[value].value });
+  onChangeCategory1(event, { value }) {
+    this.setState({ categoryLevel1: { value }.value });
   }
-  onChangeCategory2 = (event, { value }) => {
-    this.setState({ selectedCate2: value });
+  onChangeCategory2(event, { value }) {
+    this.setState({ categoryLevel2: { value }.value })
   }
-  onCheckedLicense01()
-  {
-    this.setState({license1:!this.state.license1});
-  } 
-  onCheckedLicense02()
-  {
-    this.setState({license1:!this.state.license2});
-  } 
-  onCheckedLicense03()
-  {
-    this.setState({license1:!this.state.license3});
-  } 
-  addMember(email, s_img, nick_name, uid) {
+  onCheckedLicense01 = async () => {
+    await this.setState({ license1: !this.state.license1 });
+    this.checkFinishAdditional();
+  }
+  onCheckedLicense02 = async () => {
+    await this.setState({ license2: !this.state.license2 });
+    this.checkFinishAdditional();
+  }
+  onCheckedLicense03 = async () => {
+    await this.setState({ license3: !this.state.license3 });
+    this.checkFinishAdditional();
+  }
+  LeaveMeAlone = async () => {
+    await this.setState({ alone: !this.state.alone, members: [] });
+    this.checkFinishAdditional();
+  }
+  addMember = async (email, s_img, nick_name, uid) => {
     let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
-    this.setState({ members: this.state.members.concat(member) });
-
+    await this.setState({ members: this.state.members.concat(member) });
     console.log("members[]====", this.state.members);
+    this.checkFinishAdditional();
   }
   removeMember(index) {
     this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
@@ -103,22 +168,24 @@ class CreateDesign extends Component {
 
   render() {
     // const myInfo = this.props.MyDetail
-    let arrSummaryList=[];
-    if(this.state.members.length>0)
-    { 
-      arrSummaryList = this.state.members.map((item,index)=>{  
+    let arrSummaryList = [];
+    if (this.state.members.length > 0) {
+      arrSummaryList = this.state.members.map((item, index) => {
         // let SelectedItem = false;
         // if(this.state.selectId === item.friend_id)   SelectedItem=true;       
-        return(
-          <div onClick = {()=>this.removeMember(index)} key={index}>
-             <Peer  s_img={item.s_img==null?noface:item.s_img} nick_name={item.nick_name}/>
-         </div>
+        return (
+          <div onClick={() => this.removeMember(index)} key={index}>
+            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+          </div>
         )
       });
     }
 
-    const { step } = this.state
+    const { step } = this.state;
+    const thumbnailURL = this.state.thumbnail;
+    console.log("new:", this.props)
     return (<>
+      {this.state.loading ? <Loading /> : null}
       <div onClick={this.handleCloseMember}>
         <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
           <div style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>디자인 등록하기</div>
@@ -137,145 +204,133 @@ class CreateDesign extends Component {
           </div>
 
           {/* form */}
-          <div style={{ width: "1422px", marginLeft: "45px", height: "920px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
-            <form ref={(ref) => this.form = ref}>
-              <section style={{ display: step === 0 ? "block" : "none", paddingLeft: "55.5px" }} >
-                {/* thumbnail */}
-                <div style={{ width: "1200px" }}>
-                  <div style={{ display: "flex" }}>
-                    <div style={{ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }}>섬네일 사진
-                  </div>
-                    <FormThumbnailEx
-                      name="thumbnail"
-                      style={{ marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
-                      placeholder="썸네일 등록" getValue={this.onChangeValue} onChange={() => { this.liveCheck("thumbnail") }} validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
-                    />
-                  </div>
-                </div>
-                {/* title */}
-                <div style={{ marginTop: "86px", width: "1544px" }}>
-                  <div style={{ display: "flex" }}>
-                    <div style={{ width: "37px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>제목</div>
-                    <div style={{ marginLeft: "130px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
-                      <FormInput
-                        style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }}
-                        name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" getValue={this.onChangeValue} validates={["Required"]} />
+          <div style={{ width: "1422px", marginLeft: "45px", height: "max-content", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
+            {/* <form ref={(ref) => this.form = ref}> */}
+            <section style={{ display: step === 0 ? "block" : "none", paddingLeft: "55.5px" }} >
+              {/* thumbnail */}
+              <div style={BasicSec_thumb_Box}>
+                <div style={BasicSecTitle}>프로필 사진
                     </div>
-                    <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }} />
+                <div style={{
+                  marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px",
+                  backgroundImage: `url(${thumbnailURL == null ? noimg : thumbnailURL})`, backgroundSize: "cover", backgroundPosition: "center center"
+                }} ></div>
+                <div style={BasicSec_thumb_ExplainBox}>
+                  <div style={BasicSec_thumb_FindBox}>
+                    <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>
+                    <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                   </div>
+                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG 파일을 등록 가능합니다.</div>
                 </div>
-                {/* explanation */}
-                <div style={{ marginTop: "50px", display: "flex" }}>
-                  <div style={{ width: "97px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>디자인 설명</div>
-                  <div style={{ width: "717.5px", height: "244px", marginLeft: "70px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
-                    <FormTextArea style={{ width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px", textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px" }}
-                      name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" getValue={this.onChangeValue} />
+              </div>
+
+              {/* title */}
+              <div style={{ marginTop: "86px", width: "1544px" }}>
+                <div style={{ display: "flex" }}>
+                  <div style={{ width: "37px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>제목</div>
+                  <div style={{ marginLeft: "130px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
+                    <input
+                      style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }}
+                      name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" onBlur={this.checkFinishBasic} onChange={this.onChangeValueTitle} />
                   </div>
+                  <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }} />
                 </div>
-              </section>
-              <section style={{ display: step === 1 ? "block" : "none", marginBottom: "16px", paddingLeft: "52px" }} >
-                {this.props.cate1.length > 0 ?
-                  <>
-                    {/* category */}
-                    <div style={{ display: "flex" }}>
-                      <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
-                      <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-                        <Dropdown name="category1" onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-                          options={this.props.cate1} selection ref="dropdown1" value={this.state.selectedCate1} />
-                      </div>
-                      <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-                        <Dropdown name="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-                          options={this.state.cate2 || emptyCategory} selection ref="dropdown2" value={this.state.selectedCate2} />
-                      </div>
+              </div>
+              {/* explanation */}
+              <div style={{ marginTop: "50px", display: "flex" }}>
+                <div style={{ width: "97px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>디자인 설명</div>
+                <div style={{ width: "717.5px", height: "244px", marginLeft: "70px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
+                  <textarea style={{ width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px", textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px" }}
+                    name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" onBlur={this.checkFinishBasic} onChange={this.onChangeValueExplanation} />
+                </div>
+              </div>
+            </section>
+
+
+
+            <section style={{ display: step === 1 ? "block" : "none", marginBottom: "16px", paddingLeft: "52px" }} >
+              {this.props.category1.length > 0 ?
+                <>
+                  {/* category */}
+                  <div style={{ display: "flex" }}>
+                    <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
+                    <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
+                      <Dropdown onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
+                        options={this.props.category1} selection name="category1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
                     </div>
-                  </>
-                  : <p>카테고리를 가져오고 있습니다.</p>}
-                {/* invite member*/}
-                <div style={{ marginTop: "107px", display: "flex" }}>
-                  <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>멤버 초대하기</div>
-                  <div style={{ marginLeft: "52px", width: "645px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
-                    {/* <input type="text" style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 검색해 주세요" />  */}
-                    <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
+                    <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
+                      <Dropdown id="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
+                        options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 + 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
+                    </div>
                   </div>
-                  <div style={{ marginLeft: "20px", width: "27px", height: "25px", fontSize: "17px", lineHeight: "25px", fontWeight: "500", color: "#FF0000", textAlign: "left" }}>TIP</div>
-                  <div style={{ marginLeft: "17px", width: "457px", height: "75px", fontSize: "17px", lineHeight: "25px", fontWeight: "100", color: "#707070", textAlign: "left" }}>함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
+                </>
+                : <p>카테고리를 가져오고 있습니다.</p>}
+              {/* invite member*/}
+              <div style={{ marginTop: "107px", display: "flex" }}>
+                <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>멤버 초대하기</div>
+                <div style={{ marginLeft: "52px", width: "645px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
+                  {/* <input type="text" style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 검색해 주세요" />  */}
+                  {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
                 </div>
+                <div style={{ marginLeft: "20px", width: "27px", height: "25px", fontSize: "17px", lineHeight: "25px", fontWeight: "500", color: "#FF0000", textAlign: "left" }}>TIP</div>
+                <div style={{ marginLeft: "17px", width: "457px", height: "75px", fontSize: "17px", lineHeight: "25px", fontWeight: "100", color: "#707070", textAlign: "left" }}>함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
+              </div>
+              <div>
                 {/* invited member*/}
                 <div style={{ marginTop: "20px", marginLeft: "167px" }}>
                   <div style={{ width: "1000px", display: "flex", flexWrap: "wrap", flexDirection: "row", marginBottom: "34px" }}>
                     {arrSummaryList}
                   </div>
                 </div>
-
-                <div style={{ width: "1318px", marginTop: "122.5px", border: "2.5px solid #EFEFEF" }} />
-
-                {/* license*/}
-                <div style={{ marginTop: "22px", display: "flex" }}>
-                    <div style={{ width: "115px", height: "29px", 
-                                  fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>라이센스</div>
-                    <div style={{ width:"645px", height: "143px"}}>
-                        <div style={{width:"100%",paddingLeft:"52px"}}>
-                            <div style={{marginBottom:"30px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500"}}>
-                            <input onChange={this.onCheckedLicense01} type="checkbox" style={{width:"25px",height:"25px",marginRight:"17px",paddingBottom:"10px"}}/><span style={{verticalAlign:"top"}}>상업적으로 이용이 가능합니다</span></div>
-                            <div style={{marginBottom:"30px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500"}}>
-                            <input onChange={this.onCheckedLicense02} type="checkbox" style={{width:"25px",height:"25px",marginRight:"17px",paddingBottom:"10px"}}/><span style={{verticalAlign:"top"}}>원작자를 표시합니다</span></div>
-                            <div style={{marginBottom:"30px",color:"#707070",fontFamily:"Noto Sans KR",fontSize:"20px",fontWeight:"500"}}>
-                            <input onChange={this.onCheckedLicense03} type="checkbox" style={{width:"25px",height:"25px",marginRight:"17px",paddingBottom:"10px"}}/><span style={{verticalAlign:"top"}}>추후에 수정이 가능합니다</span></div>
-                        </div>
-                    </div>
-                </div>
-                {/* <div style={{ display:"inline-block",width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>라이센스</div>
-                <div style={{ display:"inline-block",marginTop: "107px",width:"100%" }}>
-                  <div style={{width:"100%"}}>
-                    <input type="checkbox" style={{width:"25px",height:"25px",marginLeft:"52px",outline:"none",border:"2px solid #707070"}} />
-                    <label style={{border:"1px solid black"}}> 상업적으로 이용이 가능합니다. </label>
-                  </div>
-                </div> */}
-                
-                {/* hr line */}
-                <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div>
-              </section>
-              <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
-                <div style={{ display: "flex" }}>
-                  <div style={{ width: "200px", marginRight: "75px" }}></div>
-                  <div style={{ display: "flex" }}>
-                    <CreateStep marginRight="73px" onClick={() => { alert("??") }} step={"단계"} />
-                    <CreateStep marginRight="48px" disabled onClick={() => { alert("??") }} step={"단계"} />
-                    <TipDiv txt="디자인을 등록 후에도 단계 / 컨텐츠를 수정할 수 있습니다." />
-                  </div>
-                </div>
-                <div style={{ marginTop: "25px", marginBottom: "69.5px" }}>
-                  <div style={{ marginLeft: "358px", width: "31px", height: "27px", border: "1px dashed purple" }}>
-                    <i style={{ color: "#707070", fontSize: "25px" }} className="material-icons">arrow_drop_down</i>
-                  </div>
-                </div>
-                <div style={{ display: "flex" }}>
-                  <div><CreateStep marginRight="73px" onClick={() => { alert("??") }} step={"단계"} /></div>
-                  <div><CreateCard marginRight="321px" onClick={this.completed} step={"카드"} /></div>
-                  <TipDiv txt="단계 없이 카드 하나만으로도 등록이 가능합니다." />
-                </div>
-                <div style={{ display: "flex" }}>
-                  <div><CreateStep marginRight="73px" disabled onClick={() => { alert("??") }} step={"단계"} /></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              </section>
-
-              {/* buttons*/}
-              <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
-                {step === 0 && <>
-                  <div onClick={this.state.step === 0 ? this.gotoNextStep : null} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
-                </>}
-                {step === 1 && <>
-                  <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
-                  <div onClick={this.gotoNextStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
-                </>}
-                {step === 2 && <>
-                  <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
-                  <div onClick={this.submit} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.content ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>완료</p></div>
-                </>}
+                {/* LEAVE ME ALONE */}
+                <div style={{ marginLeft: "185px", marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}><input onChange={this.LeaveMeAlone} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>맴버를 초대하지 않습니다.</span></div>
               </div>
-            </form>
+              <div style={{ width: "1318px", marginTop: "122.5px", border: "2.5px solid #EFEFEF" }} />
+
+              {/* license*/}
+              <div style={{ marginTop: "22px", display: "flex" }}>
+                <div style={{
+                  width: "115px", height: "29px",
+                  fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left"
+                }}>라이센스</div>
+                <div style={{ width: "645px", height: "143px" }}>
+                  <div style={{ width: "100%", paddingLeft: "52px" }}>
+                    <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
+                      <input onChange={this.onCheckedLicense01} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>상업적으로 이용이 가능합니다</span></div>
+                    <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
+                      <input onChange={this.onCheckedLicense02} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>원작자를 표시합니다</span></div>
+                    <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
+                      <input onChange={this.onCheckedLicense03} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>추후에 수정이 가능합니다</span></div>
+                  </div>
+                </div>
+              </div>
+              {/* hr line */}
+              <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div>
+            </section>
+
+
+
+            <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
+              <div>
+                {this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> : <div>단계/컨텐츠 에디터를 가져오고 있습니다.</div>}
+              </div>
+            </section>
+
+            {/* buttons*/}
+            <div style={{ marginTop: "20.54px", marginBottom: "35px", justifyContent: "flex-end", display: "flex" }}>
+              {step === 0 && <>
+                <div onClick={this.state.basic ? this.gotoNextStep : undefined} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
+              </>}
+              {step === 1 && <>
+                <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
+                <div onClick={this.state.additional ? this.gotoNextStep : undefined} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.additional ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
+              </>}
+              {step === 2 && <>
+                <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
+                <div onClick={this.state.content ? this.submit : undefined} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.content ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>완료</p></div>
+              </>}
+            </div>
+            {/* </form> */}
           </div>
         </div></div>
 

@@ -12,7 +12,6 @@ class SearchMemberContainer extends Component {
   render() {
     console.log("search.props:",this.props)
     return(
-
       <SearchMember {...this.props}/>
     );
   }
