@@ -140,12 +140,6 @@ class SearchListRe extends Component {
         }
         this.props.history.replace(`/search/${this.state.urlCate}/${this.props.sort}/${this.props.keyword}`);
     };
-    changeCategory = (category) => {
-        if (this.state.this_category === category) {
-            return;
-        }
-        this.handleChangeCategory(category)
-    }
 
     //    this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
     handleChangeCategory = async (category) => {
@@ -165,9 +159,9 @@ class SearchListRe extends Component {
 
         return (
             <div style={{ position: "relative", overflow: "hidden" }}>
-                <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                    category1={category1} category2={category2[main_category.value + 1]} main_selected={main_category} sub_selected={sub_category} />
-
+                {this.state.urlCate !== "group" ?
+                    <Category  subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+                               category1={category1} category2={category2[main_category.value + 1]} main_selected={main_category} sub_selected={sub_category} /> : <></>}
                 <SearchForm>
                     <div className="inputBox">
                         <div className="zoomImg"><img src={zoom} alt="" style={{ width: "33px", height: "33px" }} /></div>
