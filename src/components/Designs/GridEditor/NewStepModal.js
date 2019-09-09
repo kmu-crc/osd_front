@@ -23,11 +23,16 @@ class NewStepModal extends Component {
         if (!this.state.title) {
             return;
         }
-        let data = this.state
-        data.order = this.props.DesignDetailStep[this.props.DesignDetailStep.length - 1].order + 1
-        // console.log("DDSC, data:", data, this.props.id, this.props.token)
+        let data = this.state;
+        const step = this.props.DesignDetailStep;
+        console.log("STEP:", step);
+        if (step == null || step.order == null) {
+            data.order = 0;
+        } else {
+            data.order = step[step.length - 1].order + 1
+        }
         this.props.newStep(data)
-        // .then(this.props.close())
+
     }
     onClose = () => {
         this.props.close()

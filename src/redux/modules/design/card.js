@@ -65,7 +65,7 @@ const DeleteBoard = () => ({ type: DELETE_BOARD })
 const DeleteBoardSuccess = (res) => ({ type: DELETE_BOARD_SUCCESS, success: res.success })
 const DeleteBoardFailure = (error) => ({ type: DELETE_BOARD_FAILURE, success: error.success })
 const CreateCard = () => ({ type: CREATE_CARD })
-const CreateCardSuccess = res => ({ type: CREATE_CARD_SUCCESS, success: res.success })
+const CreateCardSuccess = res => ({ type: CREATE_CARD_SUCCESS, success: res.success, card: res.card_id })
 const CreateCardFailure = error => ({ type: CREATE_CARD_FAILURE, success: error.success })
 const GetCard = id => ({ type: GET_CARD, id })
 const GetCardSuccess = (res, id) => ({ type: GET_CARD_SUCCESS, success: res.success, list: res.list, id })
@@ -366,7 +366,7 @@ export const CreateDesignCardRequest = (data, design_id, board_id, token) => {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res.desing_id);
+                console.log("insert detail", res);
                 return dispatch(CreateCardSuccess(res));
             })
             .catch(error => {
