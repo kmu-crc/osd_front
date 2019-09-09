@@ -89,7 +89,7 @@ class DesignerListPage extends Component {
             <>
                 <Category
                     subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                    category1={category1} category2={category2[this_category.value]} main_selected={main_category} sub_selected={sub_category} />
+                    category1={category1} category2={category2[this_category.value + 1]} main_selected={main_category} sub_selected={sub_category} />
 
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
                 <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>

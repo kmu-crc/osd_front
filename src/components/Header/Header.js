@@ -44,7 +44,7 @@ const DesignCreateBtn = styled.div`
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { noti: {}, selectCate: -1 };
+        this.state = { alarm: {}, selectCate: -1 };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
 
     }
@@ -53,10 +53,12 @@ class Header extends Component {
         if (this.props.valid) {
             try {
                 Socket.emit("INIT", this.props.userInfo.uid)
-                Socket.on("getNoti", noti => {
-                    this.setState({ noti: noti })
+                Socket.on("getNoti", alarm => {
+                    this.setState({ alarm: alarm })
+                    console.log("getNoti", alarm)
                 })
             } catch (err) {
+                //TODO v2: doesn't meaning in client, so! report administrator e-mail
                 console.log(err)
             }
         }
@@ -84,10 +86,10 @@ class Header extends Component {
                     <li style={{ minWidth: "327px", height: "36px", marginRight: "50px", marginTop: "9px", border: "none" }}>
                         <SearchForm searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
                     <li style={{ width: "34px", height: "34px", marginRight: "50px", marginTop: "10px" }}>
-                        {this.props.userInfo != null && <Message noti={this.state.noti} />}
+                        {this.props.userInfo != null && <Message noti={this.state.alarm} />}
                     </li>
                     <li style={{ width: "34px", height: "34px", marginRight: "50px", marginTop: "10px" }}>
-                        {this.props.userInfo != null && <AlarmContainer {...this.props} />}
+                        {this.props.userInfo != null && <AlarmContainer {...this.props} alarm={this.state.alarm} />}
                     </li>
                     <li style={{ minWidth: "97px", lineHeight: "29px", height: "29px", marginRight: "50px", marginTop: "11px" }}>
                         <DesignCreateBtn onClick={this.gotoCreateDesignPage}>디자인 등록</DesignCreateBtn></li>

@@ -26,12 +26,8 @@ const CustomModal = styled(Modal)`
 `;
 const CommentContainer = styled.div`
   max-width:"100%";
-  &.ui.comment{
-
-  }
-  $ h4 {
-    font-size: ${StyleGuide.font.size.heading4};
-  }
+  &.ui.comment{}
+  $ h4 {font-size: ${StyleGuide.font.size.heading4};}
 `;
 class DesignComment extends React.Component {
   state = {
@@ -236,15 +232,13 @@ class DesignComment extends React.Component {
       </CustomModal>
     );
   }
-}
-
+};
 const mapStateToProps = (state) => {
   return {
     comment: state.DesignDetailComment.status.Comment,
     userInfo: state.Authentication.status.userInfo
   }
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignCommentRequest: (id) => {
@@ -257,6 +251,5 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(DeleteDesignCommentRequest(data, design_id, token))
     }
   }
-}
-
+};
 export default connect(mapStateToProps, mapDispatchToProps)(DesignComment);

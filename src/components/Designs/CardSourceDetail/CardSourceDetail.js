@@ -43,6 +43,7 @@ const ViewContent = styled.div`
   }
   .textWrap{
     margin-bottom: 2rem;
+    color: inherit;
   }
   & .goEdit {
     display: none;
@@ -56,13 +57,13 @@ const ViewContent = styled.div`
 `;
 
 class CardSourceDetail extends Component {
-  state = { top: 650, left: 1250, edit: false, content: [], deleteContent: [], loading: false };
+  state = { top: 250, left: 1250, edit: false, content: [], deleteContent: [], loading: false };
   componentDidMount() {
     document.addEventListener("scroll", (event) => {
-      if (this.cardwrap) {
-        const top = event.target.scrollTop + 650;
+      if (this.cardwrap && event.target.contains(this.cardwrap)) {
+        const top = event.target.scrollTop + 250;
         const left = this.cardwrap.getBoundingClientRect().width - this.cardwrap.getBoundingClientRect().left;
-        console.log(top, this.cardwrap.getBoundingClientRect().top, event.target.scrollTop);
+        //console.log(top, this.cardwrap.getBoundingClientRect().top, event.target.scrollTop);
         this.setState({ top: top, left: left });
       }
     }, true);
@@ -179,8 +180,14 @@ class CardSourceDetail extends Component {
     await this.setState({ loading: true });
     await setTimeout(() => { }, 500);
 
+    //edit
+    if(this.props.uid){
     this.props.upDateRequest(formData, this.props.uid, this.props.token)
       .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+    } else { //new
+      this.props.upDateRequest(formData);
+      await this.setState({loading:false});
+    }
   }
 
   onCancel = () => {

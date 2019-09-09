@@ -516,15 +516,17 @@ export function AcceptDesignRequest(id, memberId, token) {
         const url = `${host}/Design/designDetail/${id}/acceptDesign/${memberId}`
         console.log(url, token)
         return fetch(url, {
-            headers: { "Content-Type": "application/json", 'x-access-token': token },
-            method: "post"
+          headers: { 
+            "Content-Type": "application/json", 
+            'x-access-token': token 
+          }, method: "post"
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log("가입승낙 >>>", data);
             if (!data) {
                 console.log("no data");
             }
+            console.log("가입승낙 >>>", data);
             return dispatch(AcceptDesignSuccess(data));
         }).catch((error) => {
             console.log("err", error);

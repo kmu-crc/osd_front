@@ -8,6 +8,7 @@ class DesignDetailStepContainer extends Component {
     this.props.GetDesignBoardRequest(this.props.design.uid);
   }
   render() {
+    console.log("view:", this.props)
     return (<GridEditor {...this.props} />)
   }
 }
