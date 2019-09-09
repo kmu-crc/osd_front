@@ -68,7 +68,7 @@ class SearchListRe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mainCate: [{ value: 0, text: "전체" }, { value: 1, text: "디자인" }, { value: 2, text: "그룹" }, { value: 3, text: "디자이너" }],
+            mainCate: [{ value: 1, text: "디자인" }, { value: 2, text: "그룹" }, { value: 3, text: "디자이너" }],
             selectCate: 0,
             this_order: { text: "등록순", keyword: "update" },
             urlCate: "design",
@@ -86,10 +86,10 @@ class SearchListRe extends Component {
         this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignListCountRequest() });
         const addrText = window.location.href.toString();
-        if (addrText.indexOf('#group') !== -1) { this.setState({ selectCate: 1 }) }
-        else if (addrText.indexOf('#designer') !== -1) { this.setState({ selectCate: 2 }) }
-        else if (addrText.indexOf('#design') !== -1) { this.setState({ selectCate: 3 }) }
-        else { this.setState({ selectCate: 0 }) }
+        if (addrText.indexOf('group') !== -1) { this.setState({ selectCate: 2 ,urlCate:"group"}) }
+        else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3,urlCate:"designer"}) }
+        else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1,urlCate:"design" }) }
+        else { this.setState({ selectCate: 1 })}
     }
 
     getSearchValue = (e) => {

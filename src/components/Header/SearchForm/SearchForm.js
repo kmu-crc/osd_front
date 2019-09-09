@@ -36,7 +36,7 @@ class SearchForm extends Component {
     };
     goSearch = () => {
         const addrText = window.location.href.toString();
-        let thisCate = "#all";
+        let thisCate = "/design";
         if(addrText.indexOf('/group')!==-1)
         {
             thisCate="/group"
@@ -52,21 +52,36 @@ class SearchForm extends Component {
         window.location.href = '/search'+thisCate+'/null/'+this.state.searchKeyword;
     };
 
-    handleChange = (e)=>{
-        this.setState({searchKeyword:e.target.value});
-        console.log(this.state.searchKeyword);
-    }
+    submitEnter = (e) => {
+        if (e.keyCode === 13) {
+            this.goSearch();
+        }
+    };
     handleKeyDown = (e)=>{
         if(e.keyCode === 13){
             this.goSearch();
         }
+        const target = e.target;
+        const value = target.value;
+        console.log(e.keyCode);
+        let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
+        if (!value.match(regExp)) {
+            alert("특수문자는 사용할 수 없습니다.");
+            target.value = "";
+            return;
+        } else {
+            this.setState({
+                searchKeyword: value
+            });
+        }
+
 
     }
     render() {
         return (
-            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} onKeyDown={this.handleKeyDown}>
+            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} >
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder="Search..." maxLength = "100" onChange={this.handleChange} value={this.state.searchKeyword}/>
+                <input type="text" placeholder="Search..." maxLength = "100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword}/>
             </SearchContainer>)
     }
 
