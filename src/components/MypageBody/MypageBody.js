@@ -58,36 +58,36 @@ class MypageBody extends Component{
     }
 
     getInitData() {
-        this.getLikeGroupList(true);
-        this.getLikeDesignList(true);
-        this.getLikeDesignerList(true);
+        this.getLikeGroupList(0);
+        this.getLikeDesignList(0);
+        this.getLikeDesignerList(0);
 
-        this.getMyDesignListRequest(true);
-        this.getMyGroupListRequest(true);
+        this.getMyDesignListRequest(0);
+        this.getMyGroupListRequest(0);
 
     }
 
     getLikeDesignList = async (isInit) => {
-        await this.setState({ page: isInit ? 0 : this.state.page + 1 });
+        await this.setState({ page: isInit ===0? 0 : isInit+1});
         this.props.GetMyLikeDesignRequest(this.props.token, this.state.page);
     };
 
     getLikeDesignerList = async (isInit) =>{
 
-        await this.setState({page:isInit ? 0 : this.state.page + 1});
+        await this.setState({page:isInit===0 ? 0 : isInit+1});
         this.props.GetMyLikeDesignerRequest(this.props.token, this.state.page);
     }
     getLikeGroupList = async (isInit)=>{
-        await this.setState({page:isInit ? 0 : this.state.page+1});
+        await this.setState({page:isInit===0 ? 0 : isInit+1});
         this.props.GetMyLikeGroupRequest(this.props.token, this.state.page);
     };
 
     getMyGroupListRequest = async (isInit) =>{
-        await this.setState({page:isInit ? 0 : this.state.page + 1});
+        await this.setState({page:isInit===0 ? 0 : isInit+1});
         this.props.GetMyGroupListRequest(this.props.token, this.state.page);
     }
     getMyDesignListRequest = async (isInit)=>{
-        await this.setState({page:isInit ? 0 : this.state.page + 1});
+        await this.setState({page:isInit === 0? 0 : isInit+1});
         this.props.GetMyDesignListRequest(this.props.token, this.state.page)
     }
 
