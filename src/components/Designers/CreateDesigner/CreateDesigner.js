@@ -158,7 +158,12 @@ class ModifyMyDetail extends Component {
     
     e.preventDefault();
 
-    let formData = {...this.state,files:[]};
+    let formData = {change_password: this.change_password,
+      nick_name: this.state.nick_name, about_me:this.state.about_me,
+      password: this.state.password, 
+      category_level1: this.state.category_level1, category_level2: this.state.category_level2,
+      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career, 
+      location: this.state.location, contact:this.state.contact,files:[]};
 
     let file = {
       value: this.state.thumbnail,
@@ -166,8 +171,8 @@ class ModifyMyDetail extends Component {
       key: 0
     };
     formData.files.push(file);
-
-
+    if(formData.files.length<=0||
+      formData.files[0].value === this.props.MyDetail.profileImg.m_img)delete formData.files;
     if(this.state.nick_name!==this.props.MyDetail.nick_name)
     {
       if(await this.checkNickname()===false)
@@ -176,11 +181,13 @@ class ModifyMyDetail extends Component {
           return;
       }
     }
-    if(this.state.nick_name==="")
+
+    if(this.state.nick_name=="")
     {
           alert("닉네임을 입력해주세요");
           return;
     }
+
 
 
     if (this.state.password) {

@@ -194,10 +194,10 @@ class GroupInfoComponent extends Component {
                                 <div style={{ marginLeft: "50px" }}>
                                     <div style={{ marginTop: "5px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                     <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
-                                        <div style={{ width: "621px" }}>
+                                        <div style={{ width: "500px",wordWrap:"break-word",overflow:"hidden" }}>
                                             {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
                                         </div>
-                                        <div style={{ marginLeft: "41px", width: "max-content" }}>
+                                        <div style={{wordWrap:"break-word",marginLeft: "41px", width: "500px",overflow:"hidden" }}>
                                             {info.explanation && info.explanation.slice(200, 400)}
                                             {info.explanation && info.explanation.length > 400 && <>...</>}
                                         </div>

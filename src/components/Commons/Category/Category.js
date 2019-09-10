@@ -84,7 +84,8 @@ class Category extends Component {
         this.setState({ parent: category.value })
     }
     clickedSubCategory = (parent, category) => {
-        this.props.subcategory_clicked(parent, category)
+        console.log("clicksubcate",parent,category);
+        this.props.subcategory_clicked(parent-1, category)
     }
     render() {
         const { category1, category2, main_selected, sub_selected } = this.props

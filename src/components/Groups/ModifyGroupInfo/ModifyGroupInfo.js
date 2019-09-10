@@ -39,24 +39,28 @@ class CreateGroup extends Component {
 
   }
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
-  componentDidMount() {
-
+  componentDidMount()
+  {
+    this.setState({groupTitle:this.props.GroupDetail.title,
+      groupThumbnail:this.props.GroupDetail.img==null?noimg:this.props.GroupDetail.img.m_img,
+      groupExplain:this.props.GroupDetail.explanation});
   }
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps)
+  {
+    
+      if(this.props.GroupDetail!==nextProps.GroupDetail)
+      {
+        console.log("nextprops",nextProps)
 
-    if (this.props.GroupDetail !== nextProps.GroupDetail) {
-      console.log("nextprops", nextProps)
-
-      this.setState({
-        groupTitle: nextProps.GroupDetail.title,
-        groupThumbnail: nextProps.GroupDetail.img == null ? noimg : nextProps.GroupDetail.img.m_img,
-        groupExplain: nextProps.GroupDetail.explanation
-      });
-    }
-
-    return true;
+          this.setState({groupTitle:nextProps.GroupDetail.title,
+            groupThumbnail:nextProps.GroupDetail.img==null?noimg:nextProps.GroupDetail.img.m_img,
+            groupExplain:nextProps.GroupDetail.explanation});
+      }
+    
+      return true;
   }
-  handleInputDesignTitle(title) {
+  handleInputDesignTitle(title)
+  {
     console.log("titleinput");
     this.setState(state => ({ groupTitle: title }))
   }
@@ -105,15 +109,21 @@ class CreateGroup extends Component {
   }
 
   onSubmit = async e => {
+    // console.log("this.props",this.props);return;
     e.preventDefault();
-    const data = { user_id: this.props.userInfo.uid, title: this.state.groupTitle, explanation: this.state.groupExplain, files: [] };
-    let file = {
-      value: this.state.groupThumbnail,
-      name: this.state.groupThumbnailName,
-      key: 0
-    };
-    data.files.push(file);
-    this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
+    let data = {user_id:this.props.userInfo.uid,uid:this.props.GroupDetail.uid,
+      title:this.state.groupTitle,explanation:this.state.groupExplain,files:[]};
+      let file = {
+        value: this.state.groupThumbnail,
+        name: this.state.groupThumbnailName,
+        key: 0
+      };
+      data.files.push(file);
+
+      if(data.files.length<=0||
+        data.files[0].value === this.props.GroupDetail.img.m_img)delete data.files;
+        
+      this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
       .then(res => {
         if (res.data && res.data.success === true) {
           alert("정보가 수정되었습니다.");

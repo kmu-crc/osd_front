@@ -12,8 +12,10 @@ import DesignerDetailBody from "components/Designers/DesignerDetailBody"
 class DesignerDetailContainer extends Component {
 
   componentWillMount() {
-    this.props.GetDesignerDetailRequest(this.props.id);
+    this.props.GetDesignerDetailRequest(this.props.id)
+    .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
     this.props.GetDesignerCountRequest(this.props.id);
+    
   }
 
   render() {

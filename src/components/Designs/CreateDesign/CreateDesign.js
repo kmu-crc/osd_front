@@ -85,7 +85,7 @@ class CreateDesign extends Component {
   gotoNextStep = async () => {
     if (this.state.step === 1 && this.state.designId == null) {
       let designId = null;
-      console.log(this.state);
+      console.log(this.props);
       // create design and next stage, next state will be load new design via grid editor
       const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
       let data = {
