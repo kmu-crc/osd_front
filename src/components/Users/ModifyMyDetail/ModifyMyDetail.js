@@ -142,8 +142,17 @@ class ModifyMyDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-
-    let formData = {...this.state,files:[]};
+    console.log(this.props);
+    let formData = {uid:this.props.uid,nick_name:this.state.nick_name,
+                    about_me:this.state.about_me,
+                    password:this.state.password,
+                    category_level1:this.state.category_level1,
+                    category_level2:this.state.category_level2,
+                    is_designer:this.state.is_designer,
+                    team:this.state.team,career:this.state.career,
+                    location:this.state.location,contact:this.state.contact,
+                    change_password:this.state.change_password,
+                    files:[]};
 
     let file = {
       value: this.state.thumbnail,
@@ -151,7 +160,9 @@ class ModifyMyDetail extends Component {
       key: 0
     };
     formData.files.push(file);
-
+    
+    if(formData.files.length<=0||
+      formData.files[0].value === this.props.MyDetail.profileImg.m_img)delete formData.files;
     if(this.state.nick_name!==this.props.MyDetail.nick_name)
     {
       if(await this.checkNickname()===false)
@@ -160,7 +171,7 @@ class ModifyMyDetail extends Component {
           return;
       }
     }
-    if(this.state.nick_name==="")
+    if(this.state.nick_name=="")
     {
           alert("닉네임을 입력해주세요");
           return;
@@ -191,6 +202,7 @@ class ModifyMyDetail extends Component {
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
       .then(res => {
+        console.log(res);
         if (res.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);

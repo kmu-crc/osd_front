@@ -62,7 +62,8 @@ class Group extends Component {
                             <TextFormat  id="title" backgroundColor="#EFEFEF" txt={group.title} />
                             <div id="update" style={{ backgroundColor: "#EFEFEF", width: "150px", textAlign: "right", paddingRight: "27px", fontSize: "15px", fontWeight: "300", color: "#707070" }}>{DateFormat(group.child_update_time)}</div>
                         </div>
-                        <div id="description" style={{ backgroundColor: "#EFEFEF", lineHeight: "35px", height: "69px", textAlign: "left", fontWeight: "100", fontSize: "20px", width: "516px", whiteSpace: "pre-wrap" }}>{group.explanation}</div>
+                        <div id="description" style={{ backgroundColor: "#EFEFEF", lineHeight: "35px", height: "69px", textAlign: "left", fontWeight: "100", fontSize: "20px", width: "516px", 
+                               wordWrap:"break-word",overflow:"hidden", whiteSpace: "pre-wrap",textOverflow:"ellipsis" }}>{group.explanation}</div>
                         <div id="whosgroup" style={{ backgroundColor: "#EFEFEF", width: "max-content", maxWidth: "275px", lineHeight: "40px", textAlign: "left", fontWeight: "300", fontSize: "20px", cursor: "default", display: "flex" }}><TextFormat chars={32} txt={group.nick_name} id="userName" />님의 그룹</div>
                     </div>
                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>

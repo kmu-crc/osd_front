@@ -18,8 +18,12 @@ import thunk from 'redux-thunk'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
+ReactDOM.render(
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'))
+    <Provider store={store}>
+    
+    <App />
+    </Provider>, document.getElementById('root'))
 // ReactDOM.render(<App />, document.getElementById('root'))
 serviceWorker.register()
 // serviceWorker.unregister()

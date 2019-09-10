@@ -5,6 +5,7 @@ import Loading from "components/Commons/Loading";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
 class DesignDetail extends Component {
+  
   constructor(props) {
     super(props);
     this.state = { isMyDesign: false, editor: false };
