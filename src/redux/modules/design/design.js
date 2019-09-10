@@ -466,8 +466,7 @@ export function JoinDesignRequest(id, data, flag, token) {
             if (!data) {
                 console.log("no data");
             }
-            dispatch(JoinDesignSuccess(data));
-            return data;
+            return dispatch(JoinDesignSuccess(data));
         }).catch((error) => {
             console.log("err", error);
             return dispatch(JoinDesignFailure(error));
@@ -516,10 +515,10 @@ export function AcceptDesignRequest(id, memberId, token) {
         const url = `${host}/Design/designDetail/${id}/acceptDesign/${memberId}`
         console.log(url, token)
         return fetch(url, {
-          headers: { 
-            "Content-Type": "application/json", 
-            'x-access-token': token 
-          }, method: "post"
+            headers: {
+                "Content-Type": "application/json",
+                'x-access-token': token
+            }, method: "post"
         }).then((response) => {
             return response.json();
         }).then((data) => {

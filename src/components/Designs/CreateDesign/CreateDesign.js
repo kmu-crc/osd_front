@@ -82,8 +82,8 @@ class CreateDesign extends Component {
   gotoPrevStep = () => {
     this.setState({ step: this.state.step - 1 });
   }
-  gotoNextStep = () => {
-    if (this.state.step === 1) {
+  gotoNextStep = async () => {
+    if (this.state.step === 1 && this.state.designId == null) {
       let designId = null;
       console.log(this.state);
       // create design and next stage, next state will be load new design via grid editor
@@ -105,18 +105,18 @@ class CreateDesign extends Component {
                 this.props.GetDesignBoardRequest(designId)
               })
             await this.setState({ content: true, designId: designId, grid: true, loading: false });
-            await this.setState({ step: this.state.step + 1 });
           }
         })
         .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
     }
+    await this.setState({ step: this.state.step + 1 });
   }
   gotoStep = (menu) => {
     this.setState({ step: menu.step });
   }
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
-    if (title && title.length > 0 && thumbnail && thumbnail.img && explanation && explanation.length > 0) {
+    if (title && thumbnail && explanation) {
       await this.setState({ basic: true });
     } else {
       await this.setState({ basic: false });
@@ -162,8 +162,9 @@ class CreateDesign extends Component {
     console.log("members[]====", this.state.members);
     this.checkFinishAdditional();
   }
-  removeMember(index) {
-    this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
+  async removeMember(index) {
+    await this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
+    this.checkFinishAdditional();
   }
 
   render() {
@@ -231,7 +232,7 @@ class CreateDesign extends Component {
                   <div style={{ marginLeft: "130px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
                     <input
                       style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }}
-                      name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" onBlur={this.checkFinishBasic} onChange={this.onChangeValueTitle} />
+                      name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" onChange={this.onChangeValueTitle} />
                   </div>
                   <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }} />
                 </div>
@@ -241,7 +242,7 @@ class CreateDesign extends Component {
                 <div style={{ width: "97px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>디자인 설명</div>
                 <div style={{ width: "717.5px", height: "244px", marginLeft: "70px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
                   <textarea style={{ width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px", textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px" }}
-                    name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" onBlur={this.checkFinishBasic} onChange={this.onChangeValueExplanation} />
+                    name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" onChange={this.onChangeValueExplanation} />
                 </div>
               </div>
             </section>
