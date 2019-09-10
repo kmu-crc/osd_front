@@ -44,12 +44,15 @@ class SectionBasic extends Component
     }
     handleOnChangeThumbnail(event)
     {
+      
+
       event.preventDefault();
       const reader = new FileReader();
       const file =event.target.files[0];
       reader.onloadend = ()=>{
         this.setState({thumbnail:reader.result,thumbnail_name:file.name})
           this.props.updateThumbnail(reader.result,file.name);
+          console.log("?",reader.result);
       }
       if(event.target.files[0])
       {

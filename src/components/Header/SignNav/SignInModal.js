@@ -29,6 +29,7 @@ class SignInModal extends Component {
         super(props);
         this.state = { email: "", password: "" ,findPW:false}
         this.findIDPW = this.findIDPW.bind(this);
+        this.handlesubmitEnter=this.handlesubmitEnter.bind(this);
     }
     signin = () => {
 
@@ -88,6 +89,12 @@ class SignInModal extends Component {
     }
     onClose = () => { this.props.close() }
 
+    handlesubmitEnter = (e) => {
+        if (e.keyCode === 13) {
+          this.signin();
+        }
+    }
+    
     handeEmailChange = (e) => {
         this.setState({ email: e.target.value })
     }
@@ -136,13 +143,13 @@ class SignInModal extends Component {
                         <div style={{ marginLeft: "0px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left", width: "56px", height: "29px" }}>
                             아이디</div>
                         <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                            <input name='email' type='text' value={email || ""} onChange={this.handeEmailChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
+                            <input onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""} onChange={this.handeEmailChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
                         </div>
                         <div style={{ marginTop: "53px", marginLeft: "7px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left", width: "74px", height: "29px" }}>
                             비밀번호</div>
                         {/* <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px" }}><input style={{ textIndent: "35px", width: "708px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", borderRadius: "15px", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요" /></div> */}
                         <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                            <input name='password' type='password' value={password || ""} onChange={this.handlePasswordChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요." />
+                            <input onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""} onChange={this.handlePasswordChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요." />
                         </div>
                         <div style={{ marginTop: "65px", marginLeft: "653px", width: "56px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer", color: "#FF0000", fontWeight: "700", fontSize: "20px", lineHeight: "29px", textAlign: "left" }} onClick={this.signin}>
                             로그인</div>

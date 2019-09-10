@@ -42,7 +42,9 @@ class CreateGroup extends Component {
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
   componentDidMount()
   {
-
+    this.setState({groupTitle:this.props.GroupDetail.title,
+      groupThumbnail:this.props.GroupDetail.img==null?noimg:this.props.GroupDetail.img.m_img,
+      groupExplain:this.props.GroupDetail.explanation});
   }
   shouldComponentUpdate(nextProps)
   {
@@ -112,14 +114,20 @@ class CreateGroup extends Component {
   }
   
   onSubmit = async e => {
+    // console.log("this.props",this.props);return;
     e.preventDefault();
-    const data = {user_id:this.props.userInfo.uid,title:this.state.groupTitle,explanation:this.state.groupExplain,files:[]};
-    let file = {
-      value: this.state.groupThumbnail,
-      name: this.state.groupThumbnailName,
-      key: 0
-    };
-     data.files.push(file);
+    let data = {user_id:this.props.userInfo.uid,uid:this.props.GroupDetail.uid,
+      title:this.state.groupTitle,explanation:this.state.groupExplain,files:[]};
+      let file = {
+        value: this.state.groupThumbnail,
+        name: this.state.groupThumbnailName,
+        key: 0
+      };
+      data.files.push(file);
+
+      if(data.files.length<=0||
+        data.files[0].value === this.props.GroupDetail.img.m_img)delete data.files;
+        
       this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
       .then(res => {
         if (res.data && res.data.success === true) {

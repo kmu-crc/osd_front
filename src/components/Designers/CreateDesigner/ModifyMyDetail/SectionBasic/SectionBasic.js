@@ -84,7 +84,7 @@ class SectionBasic extends Component
              <div style={BasicSec_thumb_Box}>
                     <div style={BasicSecTitle}>프로필 사진
                     </div>
-                    <div style={{marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", 
+                    <div style={{marginLeft: "67px", width: "210px", height: "210px", borderRadius: "50%", 
                     backgroundImage: `url(${thumbnailURL==null?noimg:thumbnailURL})`,backgroundSize: "cover", backgroundPosition: "center center"}} ></div>
                     <div style={BasicSec_thumb_ExplainBox}>
                     <div style={BasicSec_thumb_FindBox}>
@@ -106,7 +106,7 @@ class SectionBasic extends Component
                   border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 입력하세요." />
                 </div>
                 <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }}>
-                  {this.state.nick ? <div>사용 가능한 닉네임입니다.</div> : <div style={{ color: "#FF0000" }}>사용 하실 수 없는 닉네임입니다.</div>}
+                  {/* {this.state.nick ? <div>사용 가능한 닉네임입니다.</div> : <div style={{ color: "#FF0000" }}>사용 하실 수 없는 닉네임입니다.</div>} */}
                 </div>
               </div>
             </div>
