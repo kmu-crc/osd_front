@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom"
 import DesignDetail from "components/Designs/DesignDetail"
 import {
   ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest,
-  DeleteDesignRequest, GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
+  GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
 } from "redux/modules/design"
 
@@ -50,9 +50,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateDesignViewRequest: (id) => {
       return dispatch(UpdateDesignViewRequest(id))
-    },
-    DeleteDesignRequest: (id, token) => {
-      return dispatch(DeleteDesignRequest(id, token))
     },
     JoinDesignRequest: (id, data, flag, token) => {
       return dispatch(JoinDesignRequest(id, data, flag, token))

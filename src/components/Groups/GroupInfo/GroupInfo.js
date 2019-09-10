@@ -171,6 +171,7 @@ class GroupInfoComponent extends Component {
             const isEditor = group_user_id === user_id;
             const { like } = this.props;
 
+            console.log("info:", info);
             return (
                 <div style={{ paddingLeft: "65px", width: "100%", display: "flex" }}>
                     <div style={{ width: "max-content" }}>
@@ -183,7 +184,7 @@ class GroupInfoComponent extends Component {
 
                     <div >
                         <div style={{ marginLeft: "10px" }}>
-                            <div style={{marginTop: "15px", width: "max-content", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}><TextFormat txt={info.title } /></div>
+                            <div style={{ marginTop: "15px", width: "max-content", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}><TextFormat txt={info.title} /></div>
                             <div style={{ display: "flex" }}>
                                 <div style={{
                                     marginLeft: "14px", marginTop: "9px", width: "170px", height: "170px", borderRadius: "15px",
@@ -191,7 +192,7 @@ class GroupInfoComponent extends Component {
                                     backgroundImage: info && info.img && info.img.l_img ? `url(${info.img.l_img})` : `url(${noimg})`
                                 }} />
                                 <div style={{ marginLeft: "50px" }}>
-                                    <div style={{ marginTop: "5px",  width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
+                                    <div style={{ marginTop: "5px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                     <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
                                         <div style={{ width: "500px",wordWrap:"break-word",overflow:"hidden" }}>
                                             {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}

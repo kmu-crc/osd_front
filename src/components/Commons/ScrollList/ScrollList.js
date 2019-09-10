@@ -45,27 +45,26 @@ class ScrollList extends Component {
   componentWillUnmount() {
     !this.props.manual && window.removeEventListener("scroll", this.handleScroll, true);
   };
-
   handleScroll = (e) => {
     const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
     reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
   };
-  getLoadData = async (page) => {
+  getLoadData = async () => {
     const { dataList } = this.props;
     if (!this.props.getListRequest) return;
-
     await this.setState({ loading: true, page: this.state.page + 1 }, () => {
       this.props.getListRequest(this.state.page)
         .then(() => {
           this.setState({ hasMore: this.checkHasMore(dataList), loading: false });
         }).catch((err) => {
-          console.log(err); this.setState({ loading: false, hasMore: false });
+          console.log(err);
+          this.setState({ loading: false, hasMore: false });
         });
     })
 
   };
   checkHasMore = (list) => {
-    if(list==null)return false;
+    if (list == null) return false;
     return list && list.length < 10 ? false : true;
   }
   componentWillReceiveProps(nextProps) {
@@ -73,7 +72,7 @@ class ScrollList extends Component {
       this.setState({ hasMore: true, loading: false, page: 0 });
       this.props.handleReload && this.props.handleReload();
 
-     if (nextProps.dataListAdded.length !== this.props.dataListAdded.length) {
+      if (nextProps.dataListAdded.length !== this.props.dataListAdded.length) {
         console.log("got changed");
         return true;
       }
@@ -83,7 +82,6 @@ class ScrollList extends Component {
   render() {
     const ListComponent = this.props.ListComponent;
     const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
-    // const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, dataList } = this.props;
     const { hasMore, loading } = this.state;
     return (<>
       {dataListAdded && dataListAdded.length > 0 ?
@@ -99,9 +97,9 @@ class ScrollList extends Component {
           })}
           {loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "32px", textAlign: "center", width: "100%", transform: "translateY(-25px)" }}>목록을 가져오고 있습니다.</p>}
           {!manual && hasMore && <div style={{ cursor: "default", textAlign: "center", color: "#707070", fontWeight: "500" }} onMouseOver={this.getLoadData}>스크롤<i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i></div>}
-          {manual && hasMore && <div><MoreBtn className="ui button red" onClick={() => this.getLoadData()}>더보기</MoreBtn></div>}
+          {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
         </FlexContainer>
-        : <div style={{ paddingTop:"160px",width:"100%",height:"330px",fontSize: "16px", textAlign: "center",}}>데이터가 없습니다.</div>}
+        : <div style={{ paddingTop: "160px", width: "100%", height: "330px", fontSize: "16px", textAlign: "center", }}>데이터가 없습니다.</div>}
     </>)
   }
 }

@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import ModifyDesign from "components/Designs/ModifyDesign"
 import {
+  DeleteDesignRequest,
   CreateDesignBoardRequest, UpdateDesignTime, UpdateCardTitleRequest, GetDesignCardRequest, UpdateDesignBoardRequest, DeleteDesignBoardRequest,
   CreateDesignRequest, GetDesignDetailRequest, GetDesignBoardRequest
 } from "redux/modules/design"
@@ -75,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateDesignBoardRequest: (id, token, data) => {
       return dispatch(UpdateDesignBoardRequest(id, token, data));
+    },
+    DeleteDesignRequest: (id, token) => {
+      return dispatch(DeleteDesignRequest(id, token))
     },
     DeleteDesignBoardRequest: (id, board_id, token) => {
       return dispatch(DeleteDesignBoardRequest(id, board_id, token))
