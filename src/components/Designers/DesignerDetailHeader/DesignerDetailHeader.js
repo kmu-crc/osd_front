@@ -140,7 +140,7 @@ class DesignerPageHeader extends Component {
         }
         const isMyProfile = this.props.userInfo&& this.props.DesignerDetail&& this.props.userInfo.uid === this.props.DesignerDetail.uid ?true:false;
 
-
+        console.log(NumberFormat(countInfo.total_group + countInfo.total_design));
         return (
             <React.Fragment>
                 <div style={BackgroundBox}>
