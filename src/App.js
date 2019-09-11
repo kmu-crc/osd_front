@@ -39,6 +39,7 @@ import FooterPara from "components/Commons/FooterTerm"
 
 class App extends Component {
   render() {
+
     return (
       <BrowserRouter>
         <ClientTemplate>

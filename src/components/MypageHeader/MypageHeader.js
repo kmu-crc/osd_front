@@ -9,6 +9,8 @@ import IconView from "source/IconView"
 import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
 import iEdit from 'source/edit_1.png';
+import { geturl } from "config"
+
 //CSS
 const BackgroundBox = { position: "relative", overFlow: "hidden", width: "1920px", height: "336px", marginTop: "36px", background: "#EFEFEF" };
 const ProfileBox = styled.div`
@@ -59,10 +61,10 @@ const UpdateTimeBox = {
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
 }
 const defaultCount = {
-    total_like: 1,
-    total_group: 1,
-    total_design: 1,
-    total_view: 1,
+    total_like: 0,
+    total_group: 0,
+    total_design: 0,
+    total_view: 0,
 }
 let about_me = ["", ""];
 let descriptionLengthCheck = "";
@@ -73,8 +75,7 @@ class MypageHeader extends Component {
         this.state = { tmpLike: false, likeDialog: false, forkDialog: 0 };
     }
     gotoMyModify = () => {
-        let href = window.location.href.substring(0, window.location.href.search("mypage"))
-        window.location.href = href + 'mymodify';
+        window.location.href = geturl() + '/mymodify';
     }
     render() {
         const MypageInfo = this.props.MyDetail;
@@ -88,7 +89,7 @@ class MypageHeader extends Component {
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
 
-        console.log("date", this.props);
+        //console.log("updatetime==", DateFormat(MypageInfo.update_time));
         return (
             <React.Fragment>
                     <div style={BackgroundBox}>
@@ -113,7 +114,7 @@ class MypageHeader extends Component {
                             backgroundRepeat:"no-repeat",backgroundSize: "cover", backgroundPosition: "center center"}}></div>
                     </div>
 
-                    <div style={UpdateTimeBox}>최근 업데이트 {DateFormat(MypageInfo.update_time)}</div>
+                    <div style={UpdateTimeBox}>최근 업데이트 {DateFormat(this.props.MyDetail&&this.props.MyDetail.update_time)}</div>
 
                     {this.state.likeDialog === false ? null :
                         <div style={{

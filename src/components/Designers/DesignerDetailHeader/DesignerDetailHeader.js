@@ -98,29 +98,47 @@ class DesignerPageHeader extends Component {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'mymodify';
     }
+    // async like() {
+    //     if (this.props.like) { //dislike
+    //         this.setState({ tmpLike: !this.state.tmpLike })
+    //     } else {
+    //         this.setState({ tmpLike: !this.state.tmpLike, likeDialog: true })
+    //         // request like design
+    //         setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+    //     }
+    //     if (this.props.like) { //dislike
+    //         await this.setState({ likeDialog: false, tmpLike: false });
+    //         this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
+    //             .then(() => { this.props.GetDesignerDetailRequest(this.props.id) })
+    //             .then(() => {
+    //                 this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+    //             })
+    //     } else { // like
+    //         await this.setState({ likeDialog: true, tmpLike: true })
+    //         this.props.LikeDesignerRequest(this.props.id, this.props.token)
+    //             .then(() => { this.props.GetDesignerDetailRequest(this.props.id) })
+    //             .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
+    //         setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
+    //     }
+    // }
     async like() {
-        if (this.state.tmpLike) { //dislike
-            this.setState({ tmpLike: !this.state.tmpLike })
-        } else {
-            this.setState({ tmpLike: !this.state.tmpLike, likeDialog: true })
-            // request like design
-            setTimeout(() => { this.setState({ likeDialog: false }) }, 1500)
+        if (!this.props.userInfo) {
+            this.needLogin();
+            return;
         }
         if (this.props.like) { //dislike
-            await this.setState({ likeDialog: false, tmpLike: false });
-            this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
+            this.props.LikeDesignerRequest(this.props.id, this.props.token)
                 .then(() => { this.props.GetDesignerDetailRequest(this.props.id) })
-                .then(() => {
-                    this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
-                })
+                .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
         } else { // like
-            await this.setState({ likeDialog: true, tmpLike: true })
+            await this.setState({ likeDialog: true })
             this.props.LikeDesignerRequest(this.props.id, this.props.token)
                 .then(() => { this.props.GetDesignerDetailRequest(this.props.id) })
                 .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
             setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
         }
     }
+
     needLogin() {
         alert("로그인을 해주세요.");
     }
@@ -139,8 +157,9 @@ class DesignerPageHeader extends Component {
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
         const isMyProfile = this.props.userInfo&& this.props.DesignerDetail&& this.props.userInfo.uid === this.props.DesignerDetail.uid ?true:false;
-
         console.log(NumberFormat(countInfo.total_group + countInfo.total_design));
+        const { like } = this.props;
+
         return (
             <React.Fragment>
                 <div style={BackgroundBox}>
@@ -161,9 +180,9 @@ class DesignerPageHeader extends Component {
                    { isMyProfile===false?
                     <React.Fragment>
                     <div onClick={this.props.userInfo == null ? null : () => this.like()} style={interestDesignerBox}>
-                        <div style={interestDesignerTitle}>관심 디자이너 {this.state.tmpLike ? "취소하기" : "등록하기"}</div>
+                        <div style={interestDesignerTitle}>관심 디자이너 {like ? "취소하기" : "등록하기"}</div>
                         <div style={{ width:"40px",
-                            display: "inline-block", height: "35px", marginLeft: "15px", marginBottom: "-7px", opacity: this.state.tmpLike ? "1" : "0.45",
+                            display: "inline-block", height: "35px", marginLeft: "15px", marginBottom: "-7px", opacity: like ? "1" : "0.45",
                             backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
                         }}></div>
 

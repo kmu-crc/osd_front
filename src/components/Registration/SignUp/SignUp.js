@@ -169,13 +169,18 @@ class SignUpModal extends Component {
         {
             alert("이메일 형식이 올바르지 않습니다");
             return;
+        }
+        else if(this.state.password == "")
+        {
+            alert("패스워드를 입력해주세요!");
+            return;
         }        
         else if(this.state.password !== this.state.password2)
         {
             alert("패스워드가 일치하지 않습니다");
             return;
         }
-        else if(this.state.nick_name==null)
+        else if(this.state.nick_name=="")
         {
             alert("닉네임을 입력해주세요!")
             return;

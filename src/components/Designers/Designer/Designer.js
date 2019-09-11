@@ -112,7 +112,7 @@ class Designer extends Component {
         const designer = this.state.data;
         return (
             <DesignerComp onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
-                <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL !=null ?designer.imgURL.m_img : noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
+                <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL != null ? designer.imgURL.m_img : noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
                 <div className="TextBox">
                     <div className="userName">{designer.nick_name}</div>
                     <div className="description"><TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
@@ -129,7 +129,7 @@ class Designer extends Component {
                         </div>
                         <div className="child" style={{ display: "flex" }}>
                             <div><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_group == null ? 0 : designer.total_group)}</div>
+                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
                         </div>
                     </div>
                 </div>

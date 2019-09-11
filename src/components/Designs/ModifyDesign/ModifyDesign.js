@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 import noimg from "source/noimg.png"
 import noface from "source/thumbnail.png";
@@ -7,6 +7,7 @@ import GridEditor from "components/Designs/GridEditor";
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer"
 import Loading from "components/Commons/Loading";
 import { geturl } from "config";
+import iDelete from "source/deleteItem.png"
 
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
@@ -24,11 +25,13 @@ const BasicSec_thumb_ExplainBox = { marginLeft: "54.5px", marginTop: "100px" }
 const BasicSec_thumb_FindBox = { width: "63px", height: "25px", cursor: "pointer" }
 const BasicSec_thumb_FindTitle = { cursor: "pointer", fontWeight: "500", fontSize: "17px", borderBottom: "1.5px solid #FF0000", lineHeight: "25px", textAlign: "left", color: "#FF0000" }
 const BasicSec_thumb_FindExplain = { width: "341px", height: "45px", marginTop: "11px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", textAlign: "left", color: "#707070" }
+const modify_Menu_Delete = { position: "fixed", top: "400px", left: "100px", width: "150px", height: "29px", cursor: "pointer", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
 
 class ModifyDesign extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      deleteModal: false,
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
@@ -51,7 +54,7 @@ class ModifyDesign extends Component {
         explanation: nextProps.DesignDetail.explanation,
         categoryLevel1: nextProps.DesignDetail.category_level1,
         categoryLevel2: nextProps.DesignDetail.category_level2,
-        members: nextProps.DesignDetail.member.filter((mem) => { return mem.user_id !== this.props.userInfo.uid }),
+        members: nextProps.DesignDetail.member && nextProps.DesignDetail.member.filter((mem) => { return mem.user_id !== this.props.userInfo.uid }),
         license1: nextProps.DesignDetail.is_commercial,
         license2: nextProps.DesignDetail.is_display_creater,
         license3: nextProps.DesignDetail.is_modify
@@ -109,6 +112,7 @@ class ModifyDesign extends Component {
     this.setState({ step: this.state.step + 1 });
   }
   gotoStep = (menu) => {
+    
     this.setState({ step: menu.step });
   }
   checkFinishBasic = async () => {
@@ -162,7 +166,13 @@ class ModifyDesign extends Component {
   removeMember(index) {
     this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
   }
-
+  deleteDesign = () => {
+    this.props.DeleteDesignRequest(this.props.id, this.props.token)
+      .then(() => {
+        window.location.href = geturl() + `/design`;
+      })
+  }
+  deleteDialog = () => { this.setState({ deleteModal: !this.state.deleteModal }) }
   render() {
     // const myInfo = this.props.MyDetail
     let arrSummaryList = [];
@@ -177,13 +187,23 @@ class ModifyDesign extends Component {
         )
       });
     }
-
-    const { step } = this.state;
+    const DeleteDesignModal = () => {
+      return (<Modal open={this.state.deleteModal} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
+        <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.title}를<br />삭제하시겠습니까?</div>
+        <div onClick={this.deleteDesign} style={{ fontWeight: "500", cursor: "pointer", width: "100%", height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
+        <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div>
+        <div onClick={this.deleteDialog} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center", }}>
+        </div>
+      </Modal>
+      )
+    }
+    const { step, loading, deleteModal } = this.state;
     const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
     console.log("new:", this.props)
     return (<>
-      {this.state.loading ? <Loading /> : null}
+      {loading ? <Loading /> : null}
+      {deleteModal ? <DeleteDesignModal /> : null}
       <div onClick={this.handleCloseMember}>
         <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
           <div style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>디자인 수정하기</div>
@@ -200,6 +220,7 @@ class ModifyDesign extends Component {
               })}
             </div>
           </div>
+          <div onClick={this.deleteDialog} style={modify_Menu_Delete}>디자인 삭제하기</div>
 
           {/* form */}
           <div style={{ width: "1422px", marginLeft: "45px", height: "max-content", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>

@@ -118,7 +118,21 @@ class ModifyMyDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    let formData = this.state;
+
+    let formData = {
+      change_password: this.state.change_password, 
+      nick_name: this.state.nick_name, about_me: this.state.about_me,
+      password: this.state.password, 
+      category_level1: this.state.category_level1, category_level2: this.state.category_level2,
+      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career, location:this.state.location, contact: this.state.contact,
+      files:[]
+    };    
+    let file = {
+      value: this.state.thumbnail,
+      name: this.state.thumbnail_name,
+      key: 0
+    };
+    formData.files.push(file);
 
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
@@ -141,7 +155,7 @@ class ModifyMyDetail extends Component {
       .then(res => {
         if (res.success) {
           alert("정보가 수정되었습니다.");
-          this.props.history.push(`/`);
+          window.location.href = "/";
         } else {
           console.log("form-data", formData, "token:", this.props.token);
           alert("다시 시도해주세요");
