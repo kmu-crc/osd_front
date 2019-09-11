@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import ModifyDesign from "components/Designs/ModifyDesign"
 import {
-  DeleteDesignRequest,
+  DeleteDesignRequest, UpdateDesignInfoRequest,
   CreateDesignBoardRequest, UpdateDesignTime, UpdateCardTitleRequest, GetDesignCardRequest, UpdateDesignBoardRequest, DeleteDesignBoardRequest,
   CreateDesignRequest, GetDesignDetailRequest, GetDesignBoardRequest
 } from "redux/modules/design"
@@ -31,13 +31,13 @@ class ModifyDesignInfoContainer extends Component {
   }
   render() {
     console.log("props:", this.props)
-    return (<>
+    return (<React.Fragment>
       {
         this.props.userInfo.is_designer === 1 ?
           <ModifyDesign {...this.props} />
           : this.gotoMyModify()
       }
-    </>)
+    </React.Fragment>)
   }
 }
 
@@ -91,8 +91,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     SearchMemberRequest: (id, data, token) => {
       return dispatch(SearchMemberRequest(id, data, token));
+    },
+    UpdateDesignInfoRequest: (data, id, token) => {
+      return dispatch(UpdateDesignInfoRequest(data, id, token));
     }
   };
 };
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyDesignInfoContainer));

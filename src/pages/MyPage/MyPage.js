@@ -4,10 +4,10 @@ import MypageBody from 'components/MypageBody';
 class MyPage extends Component {
     render(){
         return(
-            <>
+            <React.Fragment>
                 <MypageHeader/>
                 <MypageBody />
-            </>
+            </React.Fragment>
         )
     }
 }

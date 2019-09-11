@@ -47,8 +47,8 @@ class DesignDetail extends Component {
   render() {
     console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
-    return (<>
-      {DesignDetail && DesignDetail.uid ? <>
+    return (<React.Fragment>
+      {DesignDetail && DesignDetail.uid ? <React.Fragment>
         {/* design info */}
         <DesignInfo {...this.props} {...this.state} />
         {/* design detail */}
@@ -57,8 +57,8 @@ class DesignDetail extends Component {
         ) : (
             <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />
           )}
-      </> : <Loading />}
-    </>)
+      </React.Fragment> : <Loading />}
+    </React.Fragment>)
   }
 }
 

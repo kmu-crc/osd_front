@@ -49,7 +49,7 @@ class DesignerListPage extends Component {
     componentDidMount() {
         this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignerListCountRequest() });
-        this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
+        this.props.GetDesignerListRequest(null, null);
     }
     handleChangeCategory = async (category) => {
         await this.setState({ page: 0, main_category: category, this_category: category, sub_category: { text: null, value: null } })
@@ -86,10 +86,10 @@ class DesignerListPage extends Component {
         const { category1, category2, Count, status } = this.props
         console.log("DesignerListPage:", this.props.dataList, this.props.dataListAdded)
         return (
-            <>
+            <React.Fragment>
                 <Category
                     subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                    category1={category1} category2={category2[this_category.value + 1]} main_selected={main_category} sub_selected={sub_category} />
+                    category1={category1} category2={category2[this_category]} main_selected={main_category} sub_selected={sub_category} />
 
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
                 <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
@@ -101,7 +101,7 @@ class DesignerListPage extends Component {
                             {...osdstyle.designer_margin}
                             page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
                 </div>
-            </>
+            </React.Fragment>
         )
 
     }

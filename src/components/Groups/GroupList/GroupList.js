@@ -21,12 +21,12 @@ class GroupList extends Component {
     render() {
         const { dataList, dataListAdded } = this.props
         return (
-            <>
+            <React.Fragment>
                 {this.props.status === "INIT" ?
                     <Loading /> :
                     <ScrollList {...osdstyle.group_margin} ListComponent={Group}
                         dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
-            </>
+            </React.Fragment>
         )
     }
 }

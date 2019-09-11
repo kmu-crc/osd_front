@@ -43,9 +43,9 @@ const GetMyLikeDesign = (data) => ({ type: GET_MY_LIKE_DESIGN, MyLikeDesign: dat
 const MyLikeDesignClear = (data) => ({ type: GET_MY_LIKE_DESIGN_CLEAR, MyLikeDesign: data, MyLikeDesignAdded: [] })
 const MyLikeDesignFail = () => ({ type: MY_LIKE_DESIGN_FAIL, MyLikeDesign: [], MyLikeDesignAdded: [] })
 
-const GetMyLikeGroup = (data) => ({type:GET_MY_LIKE_GROUP, MyLikeGroup:data})
-const MyLikeGroupClear = (data) => ({type:GET_MY_LIKE_GROUP_CLEAR, MyLikeGroup:data, MyLikeGroupAdded:[]})
-const MyLikeGroupFail = () => ({type:MY_LIKE_GROUP_FAIL, MyLikeGroup:[], MyLikeGroupAdded:[]});
+const GetMyLikeGroup = (data) => ({ type: GET_MY_LIKE_GROUP, MyLikeGroup: data })
+const MyLikeGroupClear = (data) => ({ type: GET_MY_LIKE_GROUP_CLEAR, MyLikeGroup: data, MyLikeGroupAdded: [] })
+const MyLikeGroupFail = () => ({ type: MY_LIKE_GROUP_FAIL, MyLikeGroup: [], MyLikeGroupAdded: [] });
 
 const GetMyLikeDesigner = (data) => ({ type: GET_MY_LIKE_DESIGNER, MyLikeDesigner: data })
 const MyLikeDesignerClear = (data) => ({ type: GET_MY_LIKE_DESIGNER_CLEAR, MyLikeDesigner: data, MyLikeDesigneRAdded: [] })
@@ -205,14 +205,14 @@ export default function Personal(state, action) {
             })
         case GET_MY_LIKE_GROUP:
             return update(state, {
-                status:{
+                status: {
                     MyLikeGroup: { $set: action.MyLikeGroup },
                     MyLikeGroupAdded: { $push: action.MyLikeGroup }
                 }
             })
         case GET_MY_LIKE_GROUP_CLEAR:
             return update(state, {
-                status:{
+                status: {
                     MyLikeGroup: { $set: action.MyLikeGroup },
                     MyLikeGroupAdded: { $set: action.MyLikeGroup }
                 }
@@ -262,7 +262,7 @@ const initialState = {
         MyGroup: [], MyGroupAdded: [],
         MyLikeDesign: [], MyLikeDesignAdded: [],
         MyLikeDesigner: [], MyLikeDesignerAdded: [],
-        MyLikeGroup:[], MyLikeGroupAdded: [],
+        MyLikeGroup: [], MyLikeGroupAdded: [],
     }
 }
 
@@ -345,7 +345,7 @@ export function GetMyGroupListRequest(token, page) {
 }
 // 내 좋아요 디자인 불러오기
 export function GetMyLikeDesignRequest(token, page) {
-    console.log("designer"+page);
+    console.log("designer" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesign/${page}`, {
             headers: {
@@ -374,7 +374,7 @@ export function GetMyLikeDesignRequest(token, page) {
 }
 
 export function GetMyLikeGroupRequest(token, page) {
-    console.log("group"+page);
+    console.log("group" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeGroup/${page}`, {
             headers: {
@@ -402,17 +402,12 @@ export function GetMyLikeGroupRequest(token, page) {
     }
 }
 
-
 // 내 좋아요 디자이너 불러오기
 export function GetMyLikeDesignerRequest(token, page) {
-    console.log("designer"+page);
+    console.log("designer" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesigner/${page}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "x-access-token": token
-            },
-            method: "get"
+            headers: { "Content-Type": "application/json", "x-access-token": token }, method: "get"
         }).then(response => {
             return response.json()
         }).then((data) => {
@@ -500,7 +495,7 @@ export function InsertUserDetailRequest(data, token) {
     }
 }
 export function UpdateUserDetailRequest(data, token) {
-    console.log("UpdateUserDetailRequest",data);
+    console.log("UpdateUserDetailRequest", data);
     return (dispatch) => {
         dispatch(UpdateUserDetail())
         return fetch(`${host}/users/modifyDetail`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {

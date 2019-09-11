@@ -86,10 +86,10 @@ class SearchListRe extends Component {
         this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignListCountRequest() });
         const addrText = window.location.href.toString();
-        if (addrText.indexOf('group') !== -1) { this.setState({ selectCate: 2 ,urlCate:"group"}) }
-        else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3,urlCate:"designer"}) }
-        else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1,urlCate:"design" }) }
-        else { this.setState({ selectCate: 1 })}
+        if (addrText.indexOf('group') !== -1) { this.setState({ selectCate: 2, urlCate: "group" }) }
+        else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3, urlCate: "designer" }) }
+        else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
+        else { this.setState({ selectCate: 1 }) }
     }
 
     getSearchValue = (e) => {
@@ -160,8 +160,8 @@ class SearchListRe extends Component {
         return (
             <div style={{ position: "relative", overflow: "hidden" }}>
                 {this.state.urlCate !== "group" ?
-                    <Category  subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                               category1={category1} category2={category2[main_category.value + 1]} main_selected={main_category} sub_selected={sub_category} /> : <></>}
+                    <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+                        category1={category1} category2={category2[main_category.value]} main_selected={main_category} sub_selected={sub_category} /> : <React.Fragment></React.Fragment>}
                 <SearchForm>
                     <div className="inputBox">
                         <div className="zoomImg"><img src={zoom} alt="" style={{ width: "33px", height: "33px" }} /></div>

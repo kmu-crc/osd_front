@@ -48,6 +48,9 @@ class GroupInfoComponent extends Component {
         this.state = { joinDialog: false, likeDialog: false, forkDialog: 0, manager: false };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
+        this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
+        this.gotoGroupModify = this.gotoGroupModify.bind(this);
+        this.changeEditMode = this.changeEditMode.bind(this);
     }
     needLogin() {
         alert("로그인을 해주세요.");
@@ -69,15 +72,14 @@ class GroupInfoComponent extends Component {
             setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
         }
     }
-
-    handleMoreViewDescription = (description) => {
+    handleMoreViewDescription(description) {
         alert(description);
     }
-    gotoGroupModify = () => {
+    gotoGroupModify() {
         let href = window.location.href.substring(0, window.location.href.search("groupDetail"));
         window.location.href = href + 'modifygroup/' + this.props.GroupInfo.uid;
     }
-    changeEditMode = () => {
+    changeEditMode() {
         this.setState({ manager: !this.state.manager });
         this.props.handleSwitchMode();
     }
@@ -177,8 +179,8 @@ class GroupInfoComponent extends Component {
                     <div style={{ width: "max-content" }}>
                         {parentName &&
                             <div style={{ display: "flex", cursor: "default" }}>
-                                {info.grand_parentTitle && <><img src={dots} alt={dots} title={info.grand_parentTitle} style={{ height: "15px", width: "15px", transform: "rotate(90deg)", marginTop: "22px", opacity: "0.55" }} /><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
-                                {info.parentName && <><div style={{ marginLeft: "10px", marginTop: "17px", fontSize: "20px", fontWeight: "300", color: "#707070", width: "max-content" }}>{parentName}</div><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></>}
+                                {info.grand_parentTitle && <React.Fragment><img src={dots} alt={dots} title={info.grand_parentTitle} style={{ height: "15px", width: "15px", transform: "rotate(90deg)", marginTop: "22px", opacity: "0.55" }} /><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></React.Fragment>}
+                                {info.parentName && <React.Fragment><div style={{ marginLeft: "10px", marginTop: "17px", fontSize: "20px", fontWeight: "300", color: "#707070", width: "max-content" }}>{parentName}</div><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></React.Fragment>}
                             </div>}
                     </div>
 
@@ -194,12 +196,12 @@ class GroupInfoComponent extends Component {
                                 <div style={{ marginLeft: "50px" }}>
                                     <div style={{ marginTop: "5px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                     <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
-                                        <div style={{ width: "500px",wordWrap:"break-word",overflow:"hidden" }}>
+                                        <div style={{ width: "500px", wordWrap: "break-word", overflow: "hidden" }}>
                                             {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
                                         </div>
-                                        <div style={{wordWrap:"break-word",marginLeft: "41px", width: "500px",overflow:"hidden" }}>
+                                        <div style={{ wordWrap: "break-word", marginLeft: "41px", width: "500px", overflow: "hidden" }}>
                                             {info.explanation && info.explanation.slice(200, 400)}
-                                            {info.explanation && info.explanation.length > 400 && <>...</>}
+                                            {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
                                         </div>
                                     </div>
                                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
@@ -223,7 +225,7 @@ class GroupInfoComponent extends Component {
 
                     <div style={{ marginLeft: "auto", marginRight: "72px" }}>
                         {isEditor ?
-                            <>
+                            <React.Fragment>
                                 <div style={{ display: "flex", marginTop: "25px", cursor: "pointer" }} onClick={this.gotoGroupModify}>
                                     <div style={{ marginLeft: "auto", width: "150px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "right", lineHeight: "40px", color: "#707070" }}>그룹 정보 수정하기</div>
                                     <div style={{ height: "30px", width: "40px", opacity: "1", background: `transparent url(${iEdit})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
@@ -232,9 +234,9 @@ class GroupInfoComponent extends Component {
                                     <div style={{ marginLeft: "auto", width: "98px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: manager ? "#FF0000" : "#707070" }}>{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
                                     <div style={{ height: "30px", width: "40px", opacity: manager ? "0.1" : ".6", background: `transparent url(${iINOUT})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                                 </div>
-                            </>
+                            </React.Fragment>
                             :
-                            <>
+                            <React.Fragment>
                                 <div style={{
                                     marginLeft: "auto", marginRight: "0px", marginTop: "15px",
                                     width: "79px", height: "29px",
@@ -246,7 +248,7 @@ class GroupInfoComponent extends Component {
                                     <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {like ? "취소하기" : "등록하기"}</div>
                                     <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: like ? "1" : "0.45", background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
                                 </div>
-                            </>
+                            </React.Fragment>
                         }
                         <div style={{ marginTop: "46px", marginLeft: "auto", marginRight: "0px", width: "max-content", height: "55px", textAlign: "right", lineHeight: "30px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0" }}>
                             <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
@@ -280,4 +282,4 @@ class GroupInfoComponent extends Component {
     }
 }
 
-export default GroupInfoComponent
+export default GroupInfoComponent;

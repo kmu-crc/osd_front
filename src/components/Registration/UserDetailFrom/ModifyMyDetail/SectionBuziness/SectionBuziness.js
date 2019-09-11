@@ -77,7 +77,7 @@ class SectionBuziness extends Component
 
         console.log("checkbox",this.state.isDesigner);
         return(
-            <>
+            <React.Fragment>
             <div style = {{display:"flex", justifyContent:"space-start",paddingLeft:"95.5px"}}>
             <div style={{ fontSize:"20px", color:"#707070",fontWeight: "500" }}>디자이너 활동 여부</div>
             <checkbox id="isDesignerCheckbox" style={{marginLeft:"10px", width:"25px",height:"25px",background: this.state.isDesigner==1?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box", border: "1px solid #707070", borderRadius: "5px", }}
@@ -111,7 +111,7 @@ class SectionBuziness extends Component
                         paddingLeft:"15px",marginLeft: "37px",opacity:"0.5" , width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}/>
           </div>
 
-        </>
+        </React.Fragment>
         );
     }
 }

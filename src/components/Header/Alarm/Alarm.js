@@ -283,7 +283,7 @@ class Alarm extends Component {
         const alarms = this.props.alarm;
 
         return (
-            <>{this.state.active &&
+            <React.Fragment>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
                     <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
                         {alarms && alarms.count > 0 ?
@@ -317,13 +317,13 @@ class Alarm extends Component {
                                             <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
                                             <div style={{ display: "flex" }}>
                                                 {alarmtype ?
-                                                    (<>
+                                                    (<React.Fragment>
                                                         <div style={{ paddingLeft: "15px", paddingTop: "12.5px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}><TextFormat txt={item.title} /></div>
                                                         <div style={{ display: "flex", justifyContent: "space-start", position: "absolute", paddingLeft: "200px", paddingTop: "25px", fontSize: "17px", fontWeight: "500" }}>
                                                             <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
                                                         </div>
-                                                        Alarm                         </>)
+                                                        Alarm                         </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
                   ? <div onClick={()=>this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
@@ -343,7 +343,7 @@ class Alarm extends Component {
                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
                     </div>
                 </div>
-            </>
+            </React.Fragment>
         )
     }
 }

@@ -10,9 +10,9 @@ class MyDetail extends Component {
     let MyInfo = this.props.MyDetail
     console.log(MyInfo, "MyInfo")
     return (
-      <>
+      <React.Fragment>
 
-      </>
+      </React.Fragment>
     )
   }
 }

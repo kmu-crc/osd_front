@@ -312,7 +312,7 @@ class Messages extends React.Component {
         <div className="searchRect" style={MessageBox}>
           <div className="searchRect" style={MessageAside}>
             <div className="searchRect" style={MessageAsideHeader}>
-              <div className="searchRect" style={MessageAsideHeaderTitle}>받은 메세지함</div>
+              <div className="searchRect" style={MessageAsideHeaderTitle}>받은 메시지함</div>
               <div className="searchRect" style={MessageAsideHeaderIcon} onClick={this.handleOpenMember}>
               </div>
             </div>

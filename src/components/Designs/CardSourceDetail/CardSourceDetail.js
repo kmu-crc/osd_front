@@ -198,7 +198,7 @@ class CardSourceDetail extends Component {
   render() {
     console.log("inCardSourceDetail", this.props);
     const { /*edit,*/ content } = this.state;
-    return (<>
+    return (<React.Fragment>
       <div style={{ marginBottom: "35px" }}>
         {this.state.edit &&
           <div style={{ width: "max-content", padding: "25px", boxShadow: "0px 2px 10px 2px rgba(0,0,0,0.25)", background: "#FFFFFF", borderRadius: "25px", top: this.state.top, left: this.state.left, position: "absolute", zIndex: "907" }}>
@@ -258,7 +258,7 @@ class CardSourceDetail extends Component {
           </ViewContent>}
         {this.state.loading && <Loading />}
       </CardSrcWrap>
-    </>
+    </React.Fragment>
     );
   }
 }

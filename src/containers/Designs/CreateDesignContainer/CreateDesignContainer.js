@@ -27,13 +27,13 @@ class CreateDesignFormContainer extends Component {
   }
   render() {
     console.log("props:", this.props)
-    return (<>
+    return (<React.Fragment>
       {
         this.props.userInfo.is_designer === 1 ?
           <CreateDesign {...this.props} />
           : this.gotoMyModify()
       }
-    </>)
+    </React.Fragment>)
   }
 }
 

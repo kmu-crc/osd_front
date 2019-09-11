@@ -62,6 +62,13 @@ class ModifyDesign extends Component {
     }
     return true;
   }
+  componentDidMount() {
+    this.props.GetDesignDetailRequest(this.props.id, this.props.token)
+      .then(() => {
+        this.props.GetDesignBoardRequest(this.props.id)
+      })
+    this.setState({ content: true, designId: this.props.id, grid: true, loading: false });
+  }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
@@ -101,18 +108,10 @@ class ModifyDesign extends Component {
     this.setState({ step: this.state.step - 1 });
   }
   gotoNextStep = () => {
-    if (this.state.step === 1) {
-      console.log("!!!", this.state);
-      this.props.GetDesignDetailRequest(this.props.id, this.props.token)
-        .then(() => {
-          this.props.GetDesignBoardRequest(this.props.id)
-        })
-      this.setState({ content: true, designId: this.props.id, grid: true, loading: false });
-    }
     this.setState({ step: this.state.step + 1 });
   }
   gotoStep = (menu) => {
-    
+    if (this.state.basic) { };
     this.setState({ step: menu.step });
   }
   checkFinishBasic = async () => {
@@ -133,7 +132,34 @@ class ModifyDesign extends Component {
     }
   }
   submit = () => {
-    window.location.href = geturl() + `/designDetail/` + this.state.designId;
+
+    const data = {
+      category_level1: this.state.categoryLevel1, category_level2: this.state.categoryLevel2,
+      title: this.state.title, explanation: this.state.explanation,
+      files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name, key: "thumbnail[]" }],
+      members: this.state.members,
+      is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0
+    };
+    if (data.files.length <= 0 || data.files[0].value === this.props.DesignDetail.img.m_img) {
+      console.log("--------------------------------------------------------)");
+      delete data.files;
+    }
+
+    console.log(data);
+    this.setState({ loading: true });
+    this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
+      .then((data) => {
+        console.log(data);
+        if (data.res && data.res.success) {
+          alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.");
+          window.location.href = geturl() + '/designDetail/' + this.props.DesignDetail.uid;
+        } else {
+          alert("디자인 정보 수정에 실패하였습니다.");
+        }
+      })
+    this.setState({ loading: false });
+
+    // window.location.href = geturl() + `/designDetail/` + this.state.designId;
   }
   onChangeCategory1(event, { value }) {
     this.setState({ categoryLevel1: { value }.value });
@@ -197,11 +223,10 @@ class ModifyDesign extends Component {
       </Modal>
       )
     }
-    const { step, loading, deleteModal } = this.state;
-    const { DesignDetail } = this.props;
+    const { step, loading, deleteModal } = this.state; // const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
     console.log("new:", this.props)
-    return (<>
+    return (<React.Fragment>
       {loading ? <Loading /> : null}
       {deleteModal ? <DeleteDesignModal /> : null}
       <div onClick={this.handleCloseMember}>
@@ -270,7 +295,7 @@ class ModifyDesign extends Component {
 
             <section style={{ display: step === 1 ? "block" : "none", marginBottom: "16px", paddingLeft: "52px" }} >
               {this.props.category1.length > 0 ?
-                <>
+                <React.Fragment>
                   {/* category */}
                   <div style={{ display: "flex" }}>
                     <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
@@ -283,7 +308,7 @@ class ModifyDesign extends Component {
                         options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 + 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
                     </div>
                   </div>
-                </>
+                </React.Fragment>
                 : <p>카테고리를 가져오고 있습니다.</p>}
               {/* invite member*/}
               <div style={{ marginTop: "107px", display: "flex" }}>
@@ -316,11 +341,11 @@ class ModifyDesign extends Component {
                 <div style={{ width: "645px", height: "143px" }}>
                   <div style={{ width: "100%", paddingLeft: "52px" }}>
                     <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
-                      <input onChange={this.onCheckedLicense01} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>상업적으로 이용이 가능합니다</span></div>
+                      <input onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>상업적으로 이용이 가능합니다</span></div>
                     <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
-                      <input onChange={this.onCheckedLicense02} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>원작자를 표시합니다</span></div>
+                      <input onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>원작자를 표시합니다</span></div>
                     <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
-                      <input onChange={this.onCheckedLicense03} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>추후에 수정이 가능합니다</span></div>
+                      <input onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>추후에 수정이 가능합니다</span></div>
                   </div>
                 </div>
               </div>
@@ -338,23 +363,23 @@ class ModifyDesign extends Component {
 
             {/* buttons*/}
             <div style={{ marginTop: "20.54px", marginBottom: "35px", justifyContent: "flex-end", display: "flex" }}>
-              {step === 0 && <>
+              {step === 0 && <React.Fragment>
                 <div onClick={this.gotoNextStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
-              </>}
-              {step === 1 && <>
+              </React.Fragment>}
+              {step === 1 && <React.Fragment>
                 <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
                 <div onClick={this.gotoNextStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
-              </>}
-              {step === 2 && <>
+              </React.Fragment>}
+              {step === 2 && <React.Fragment>
                 <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
                 <div onClick={this.submit} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>완료</p></div>
-              </>}
+              </React.Fragment>}
             </div>
             {/* </form> */}
           </div>
         </div></div>
 
-    </>)
+    </React.Fragment>)
   }
 }
 

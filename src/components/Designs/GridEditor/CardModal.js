@@ -104,7 +104,7 @@ class CardModal extends Component {
         const movablePrev = this.props.row > 0
         const movableNext = this.props.row < this.props.maxRow - 1
         return (
-            <>
+            <React.Fragment>
                 <CardDialog open={this.props.open} onClose={this.onClose}>
                     {movablePrev && <div style={{ width: "115px", height: "813.28px", position: "absolute", left: "0%", marginLeft: "-195px", marginTop: "75.7px", borderRadius: "0px 10px 10px 0px", backgroundColor: "#FFFFFF" }} />}
                     {movablePrev && <div style={{ width: "14px", height: "47px", position: "absolute", left: "0%", marginTop: "409.81px", marginLeft: "-47px", backgroundImage: `url(${arrow})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}></div>}
@@ -115,7 +115,7 @@ class CardModal extends Component {
                     </div>
                     <div style={{ position: "relative" }}>
                         {this.state.edit === false
-                            ? <>
+                            ? <React.Fragment>
                                 <div style={{ display: "flex", justifyContent: "space-between", height: "29px", marginLeft: "52px", marginTop: "29.78px" }}>
                                     <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px" }}>{card.title}</div>
                                     <div style={{ fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", fontWeight: "900", lineHeight: "29px", marginRight: "75px" }}>
@@ -140,8 +140,8 @@ class CardModal extends Component {
                                     <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "300", lineHeight: "29px" }}>{card.nick_name}</div>
                                     <div style={{ fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", fontWeight: "300", lineHeight: "29px", marginRight: "75px" }}>업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)}</div>
                                 </div>
-                            </>
-                            : <>
+                            </React.Fragment>
+                            : <React.Fragment>
                                 <div style={{ display: "flex", marginTop: "35.5px", marginLeft: "125.5px" }}><div style={{ width: "max-content", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>카드정보 수정</div></div>
                                 <div style={{ display: "flex", marginTop: "56px", marginLeft: "200.5px" }}>
                                     <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>썸네일 사진</div>
@@ -172,7 +172,7 @@ class CardModal extends Component {
                                     <button onClick={this.handleHeaderSubmit} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>적용하기</button>
                                     <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>취소</button>
                                 </div>
-                            </>}
+                            </React.Fragment>}
 
                         <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
                         <div style={{ marginLeft: "auto" }} className="content" >
@@ -189,7 +189,7 @@ class CardModal extends Component {
                     {/* </div> */}
                 </CardDialog>
                 <div style={{ width: "250px", height: "250px", backgroundColor: "white", borderRadius: "15px" }}></div>
-            </>)
+            </React.Fragment>)
     }
 }
 
