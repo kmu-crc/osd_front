@@ -240,7 +240,7 @@ class SignUpModal extends Component {
         
         //window.location.href = href + 'insertUserDetail'
         return (
-            <>
+            <React.Fragment>
 
                 {this.state.success_signup ?(
                     <CustomModal open={this.state.success_signup} onClose={this.onClose} onClick={this.tmp_goto_mydetail}>
@@ -340,7 +340,7 @@ class SignUpModal extends Component {
                     )}
 
                     
-            </>
+            </React.Fragment>
         )
     }
 }
@@ -350,9 +350,9 @@ class SignUp extends Component {
     state = { is_signed: false, }
     render() {
         return (
-            <>
+            <React.Fragment>
                 {<SignUpModal {...this.props} open={!this.state.is_signed} close={this.closeModal} />}
-            </>
+            </React.Fragment>
         )
     }
 }

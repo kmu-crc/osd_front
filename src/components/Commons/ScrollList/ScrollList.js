@@ -83,7 +83,7 @@ class ScrollList extends Component {
     const ListComponent = this.props.ListComponent;
     const { manual, handleAccept, handleReject, cols, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { hasMore, loading } = this.state;
-    return (<>
+    return (<React.Fragment>
       {dataListAdded && dataListAdded.length > 0 ?
         <FlexContainer ref={this.myRef} >
           {dataListAdded.map((item, i) => {
@@ -100,7 +100,7 @@ class ScrollList extends Component {
           {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
         </FlexContainer>
         : <div style={{ paddingTop: "160px", width: "100%", height: "330px", fontSize: "16px", textAlign: "center", }}>데이터가 없습니다.</div>}
-    </>)
+    </React.Fragment>)
   }
 }
 

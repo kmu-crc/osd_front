@@ -66,7 +66,7 @@ class GroupListContainer extends Component {
     const { this_order, count, reload } = this.state;
     const { dataList, dataListAdded } = this.props
     return (
-      <>
+      <React.Fragment>
         <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
 
         <TextWrapper>그룹({count})</TextWrapper>
@@ -79,7 +79,7 @@ class GroupListContainer extends Component {
             <ScrollList{...osdstyle.group_margin} ListComponent={Group} reload={reload} handleReload={this.handleReload}
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
         </div>
-      </>
+      </React.Fragment>
     )
   }
 }

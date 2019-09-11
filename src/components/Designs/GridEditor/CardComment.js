@@ -28,9 +28,9 @@ class CardComment extends Component {
         })
         console.log(comments);
  
-        return (<>
+        return (<React.Fragment>
             <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment}/>
-        </>)
+        </React.Fragment>)
     }
 };
 const mapStateToProps = state => {

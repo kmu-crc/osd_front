@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { GetDesignerDetailRequest, GetDesignerCountRequest,
-    GetLikeDesignerRequest, LikeDesignerRequest,
-    UnlikeDesignerRequest, GetLikeInDesignerRequest,
-    GetMyDesignInDesignerRequest,GetGroupInDesignerRequest,
-    GetLikeGroupInDesignerRequest,GetLikeDesignerInDesignerRequest,
+import {
+  GetDesignerDetailRequest, GetDesignerCountRequest,
+  GetLikeDesignerRequest, LikeDesignerRequest,
+  UnlikeDesignerRequest, GetLikeInDesignerRequest,
+  GetMyDesignInDesignerRequest, GetGroupInDesignerRequest,
+  GetLikeGroupInDesignerRequest, GetLikeDesignerInDesignerRequest,
 } from "redux/modules/designer"
 
 import DesignerDetailHeader from "components/Designers/DesignerDetailHeader"
@@ -13,20 +14,18 @@ class DesignerDetailContainer extends Component {
 
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id)
-    .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
-    this.props.GetDesignerCountRequest(this.props.id);
-    
+      .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
+      .then(() => { this.props.GetDesignerCountRequest(this.props.id) })
   }
-
   render() {
-    console.log("DESIGN DETAIL::",this.props)
+    console.log("DESIGNER DETAIL::", this.props)
     return (
       <React.Fragment>
-        <DesignerDetailHeader {...this.props}/>
-        <DesignerDetailBody {...this.props}/>
+        <DesignerDetailHeader {...this.props} />
+        <DesignerDetailBody {...this.props} />
       </React.Fragment>
     );
-    }
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -36,17 +35,16 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     like: state.Designer.status.like,
     Count: state.Designer.status.Count,
-
-    MyDesignInDesigner:state.Designer.status.MyDesignInDesigner,
-    MyDesignInDesignerAdded:state.Designer.status.MyDesignInDesignerAdded,
-    LikeInDesigner:state.Designer.status.LikeInDesigner,
-    LikeInDesignerAdded:state.Designer.status.LikeInDesignerAdded,
-    LikeGroupInDesigner:state.Designer.status.LikeGroupInDesigner,
-    LikeGroupInDesignerAdded:state.Designer.status.LikeGroupInDesignerAdded,
-    LikeDesignerInDesigner:state.Designer.status.LikeDesignerInDesigner,
-    LikeDesignerInDesignerAdded:state.Designer.status.LikeDesignerInDesignerAdded,
-    GroupInDesigner:state.Designer.status.GroupInDesigner,
-    GroupInDesignerAdded:state.Designer.status.GroupInDesignerAdded,
+    MyDesignInDesigner: state.Designer.status.MyDesignInDesigner,
+    MyDesignInDesignerAdded: state.Designer.status.MyDesignInDesignerAdded,
+    LikeInDesigner: state.Designer.status.LikeInDesigner,
+    LikeInDesignerAdded: state.Designer.status.LikeInDesignerAdded,
+    LikeGroupInDesigner: state.Designer.status.LikeGroupInDesigner,
+    LikeGroupInDesignerAdded: state.Designer.status.LikeGroupInDesignerAdded,
+    LikeDesignerInDesigner: state.Designer.status.LikeDesignerInDesigner,
+    LikeDesignerInDesignerAdded: state.Designer.status.LikeDesignerInDesignerAdded,
+    GroupInDesigner: state.Designer.status.GroupInDesigner,
+    GroupInDesignerAdded: state.Designer.status.GroupInDesignerAdded,
   };
 };
 
@@ -67,19 +65,19 @@ const mapDispatchToProps = (dispatch) => {
     GetDesignerCountRequest: (id) => {
       return dispatch(GetDesignerCountRequest(id))
     },
-    GetLikeInDesignerRequest:(id, page)=>{
+    GetLikeInDesignerRequest: (id, page) => {
       return dispatch(GetLikeInDesignerRequest(id, page));
     },
-    GetMyDesignInDesignerRequest : (id, page)=>{
+    GetMyDesignInDesignerRequest: (id, page) => {
       return dispatch(GetMyDesignInDesignerRequest(id, page));
     },
-    GetGroupInDesignerRequest:(id, page)=>{
+    GetGroupInDesignerRequest: (id, page) => {
       return dispatch(GetGroupInDesignerRequest(id, page));
     },
-    GetLikeGroupInDesignerRequest:(id, page)=>{
+    GetLikeGroupInDesignerRequest: (id, page) => {
       return dispatch(GetLikeGroupInDesignerRequest(id, page));
     },
-    GetLikeDesignerInDesignerRequest:(id, page)=>{//디자이너가 관심있는 디자이너
+    GetLikeDesignerInDesignerRequest: (id, page) => {//디자이너가 관심있는 디자이너
       return dispatch(GetLikeDesignerInDesignerRequest(id, page));
     }
 

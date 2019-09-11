@@ -186,7 +186,7 @@ class CreateGroup extends Component {
     //   );
     // }
 
-    return (<>
+    return (<React.Fragment>
 
       <div style={Main_Banner}>
         <div style={Main_Banner_text}>그룹 수정하기</div>
@@ -236,7 +236,7 @@ class CreateGroup extends Component {
 
 
 
-    </>)
+    </React.Fragment>)
   }
 }
 

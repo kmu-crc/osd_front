@@ -48,7 +48,7 @@ class Messages extends React.Component
                 <div style={MessageBox}>
                     <div style={MessageAside}>
                         <div style={MessageAsideHeader}>
-                            <div style={MessageAsideHeaderTitle}>받은 메세지함</div>
+                            <div style={MessageAsideHeaderTitle}>받은 메시지함</div>
                             <div style={MessageAsideHeaderIcon}></div>
                         </div>
                         <div style={MessageAsideSection}>

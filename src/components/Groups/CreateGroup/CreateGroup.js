@@ -133,7 +133,7 @@ class CreateGroup extends Component {
 
 
     const { step } = this.state
-    return (<>
+    return (<React.Fragment>
 
       <div style={Main_Banner}>
         <div style={Main_Banner_text}>그룹 등록하기</div>
@@ -178,7 +178,7 @@ class CreateGroup extends Component {
           </form>
         </div>
       </div>
-    </>)
+    </React.Fragment>)
   }
 }
 

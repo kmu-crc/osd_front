@@ -1,19 +1,15 @@
 import React from 'react';
 import Cross from "components/Commons/Cross";
-//import TextFormat from "modules/TextFormat";
 import DateFormat from "modules/DateFormat";
-import NumberFormat from "modules/NumberFormat";
 import styled from "styled-components";
 
 export const CreateStep = (props) => {
     return (<div onClick={props.onClick}
         style={{
-            marginRight: props.marginRight,
-            cursor: "pointer",
-            display: "flex",
             width: "200px", height: "77px",
-            borderRadius: "15px", border: "2px solid rgba(112,112,112, 0.5)",
-            backgroundClip: "padding-box"
+            marginRight: props.marginRight, display: "flex",
+            borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
+            cursor: "pointer"
         }}>
         <div style={{ marginTop: "22.5px", marginLeft: "19.5px", marginRight: "15px" }}><Cross angle={90} width={33} height={33} disabled={false} /></div>
         <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "left", lineHeight: "29px" }}>{props.step} 생성하기</div>
@@ -79,7 +75,7 @@ export const ContentCard = (props) => {
             <CardContainer onClick={props.onClick} marginTop={marginTop} marginLeft={marginLeft} marginRight={marginRight} marginBottom={marginBottom} first_img={card.first_img}>
                 {
                     card.first_img ?
-                        <>
+                        <React.Fragment>
                             <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", borderRadius: "15px", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} />
                             <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                                 {card.title.slice(0, 10)}
@@ -92,8 +88,8 @@ export const ContentCard = (props) => {
                                     {DateFormat(card.update_time)}
                                 </div>
                             </div>
-                        </> :
-                        <>
+                        </React.Fragment> :
+                        <React.Fragment>
                             <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                                 {card.title.slice(0, 10)}
                             </div>
@@ -105,7 +101,7 @@ export const ContentCard = (props) => {
                                     {DateFormat(card.update_time)}
                                 </div>
                             </div>
-                        </>}
+                        </React.Fragment>}
                 {/*
         <div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "15px", borderRadius: "5px", width: "175px", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }} title={card.title||""}>{card.title && card.title.slice(0, 7)}{card.title && card.title.length > 8 ? "..." : ""}</div>
         <div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "75px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "17px", textAlign: "center", lineHeight: "29px" }} title={card.nick_name}>{card.nick_name.slice(0, 12)}</div>
@@ -115,6 +111,6 @@ export const ContentCard = (props) => {
         </div>
          */}
             </CardContainer >
-            : <><CardContainer /></>
+            : <React.Fragment><CardContainer /></React.Fragment>
     )
 }

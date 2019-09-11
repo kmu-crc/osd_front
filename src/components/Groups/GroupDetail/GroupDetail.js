@@ -86,7 +86,7 @@ class GroupDetail extends Component {
     const { GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded } = this.props;
     const { currentTab, manager, reload } = this.state
     console.log("reload:", reload)
-    return (<>
+    return (<React.Fragment>
       <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} {...this.props} />
       {manager ?
         <div style={{ marginTop: "32px" }}>
@@ -96,21 +96,21 @@ class GroupDetail extends Component {
           <EditGroupListContainer id={this.props.id} sort={this.props.sort} />
         </div>
         :
-        <>
+        <React.Fragment>
           <Tabs>
             <Tab onClick={() => this.switchTab("design")} marginRight={54} width={56} className={currentTab === "design" ? "selected" : ""}>디자인</Tab>
             <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
           </Tabs>
-          {GroupDetail && currentTab === "group" && <>
+          {GroupDetail && currentTab === "group" && <React.Fragment>
             {this.props.status === "INIT"
               ? <Loading />
-              : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</>}
-          {GroupDetail && currentTab === "design" && <>
+              : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</React.Fragment>}
+          {GroupDetail && currentTab === "design" && <React.Fragment>
             {this.props.status === "INIT"
               ? <Loading />
-              : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</>}
-        </>}
-    </>)
+              : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</React.Fragment>}
+        </React.Fragment>}
+    </React.Fragment>)
 
   }
 }
