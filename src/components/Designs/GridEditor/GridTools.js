@@ -6,18 +6,25 @@ import styled from "styled-components";
 export const CreateStep = (props) => {
     return (<div onClick={props.onClick}
         style={{
-            width: "200px", height: "77px",
-            marginRight: props.marginRight, display: "flex",
+            position: "relative",
+            width: "200px", height: "77px", marginRight: props.marginRight, display: "flex",
             borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
             cursor: "pointer"
         }}>
-        <div style={{ marginTop: "22.5px", marginLeft: "19.5px", marginRight: "15px" }}><Cross angle={90} width={33} height={33} disabled={false} /></div>
+        <div style={{ poistion: "relative", marginTop: "22.5px", marginLeft: "19.5px", marginRight: "15px" }}>
+            <Cross angle={90} width={33} height={33} disabled={false} /></div>
         <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "left", lineHeight: "29px" }}>{props.step} 생성하기</div>
     </div>)
 }
 export const CreateCard = (props) => {
-    return (<div onClick={props.onClick} style={{ marginRight: props.marginRight, cursor: "pointer", width: "200px", height: "200px", borderRadius: "15px", border: "2px solid rgba(112,112,112, 0.5)", backgroundClip: "padding-box" /* for IE9+, Firefox 4+, Opera, Chrome */ }}>
-        <div style={{ marginTop: "38.58px", marginLeft: "66.59px" }}><Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
+    return (<div onClick={props.onClick}
+        style={{
+            width: "200px", height: "200px", marginRight: props.marginRight,
+            borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
+            cursor: "pointer"
+        }}>
+        <div style={{ position: "relative", marginTop: "38.58px", marginLeft: "66.59px" }}>
+            <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
         <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.step}생성하기</div>
     </div>)
 }
@@ -68,7 +75,7 @@ const CardContainer = styled.div`
 }}>
 `;
 export const ContentCard = (props) => {
-    console.log("props", props)
+    // console.log("props", props)
     const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (
         card ?
@@ -102,15 +109,15 @@ export const ContentCard = (props) => {
                                 </div>
                             </div>
                         </React.Fragment>}
-                {/*
-        <div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "15px", borderRadius: "5px", width: "175px", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }} title={card.title||""}>{card.title && card.title.slice(0, 7)}{card.title && card.title.length > 8 ? "..." : ""}</div>
-        <div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "75px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "17px", textAlign: "center", lineHeight: "29px" }} title={card.nick_name}>{card.nick_name.slice(0, 12)}</div>
-        <div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "5px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", display: "flex", justifyContent: "flex-end", alignItems: "center", padding: "5px", color: "#FFF" }}>
-            <div style={{ marginRight: "15px" }} ><i style={{ opacity: "0.5" }} className="comment icon" />{card.comment_count ? NumberFormat(card.comment_count) : 0}</div>
-            <div><i style={{ opacity: "0.5" }} className="clock icon" />{DateFormat(card.update_time)}</div>
-        </div>
-         */}
             </CardContainer >
             : <React.Fragment><CardContainer /></React.Fragment>
     )
 }
+        /*
+<div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "15px", borderRadius: "5px", width: "175px", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }} title={card.title||""}>{card.title && card.title.slice(0, 7)}{card.title && card.title.length > 8 ? "..." : ""}</div>
+<div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "75px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "17px", textAlign: "center", lineHeight: "29px" }} title={card.nick_name}>{card.nick_name.slice(0, 12)}</div>
+<div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "5px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", display: "flex", justifyContent: "flex-end", alignItems: "center", padding: "5px", color: "#FFF" }}>
+<div style={{ marginRight: "15px" }} ><i style={{ opacity: "0.5" }} className="comment icon" />{card.comment_count ? NumberFormat(card.comment_count) : 0}</div>
+<div><i style={{ opacity: "0.5" }} className="clock icon" />{DateFormat(card.update_time)}</div>
+</div>
+*/
