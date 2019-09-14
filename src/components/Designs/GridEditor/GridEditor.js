@@ -127,7 +127,7 @@ class GridEditor extends Component {
                 </React.Fragment> : undefined} */}
                 {/* ------------- card modal component -------------  */}
                 {card && <CardModal
-                    isTeam={editor} edit={userInfo.uid === cardDetail.user_id}
+                    isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
                     open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
                     title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
                 {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
