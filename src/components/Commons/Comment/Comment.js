@@ -3,22 +3,53 @@ import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 
 class Comment extends Component {
-    state = { reply: false, targetId: undefined, this_comment: "", this_reply: "", ing: false };
-    onChangeValue = (event) => {
+    constructor(props) {
+        super(props);
+        this.state = { reply: false, targetId: undefined, this_comment: "", this_reply: "", ing: false };
+        this.onChangeValue = this.onChangeValue.bind(this);
+        this.reset = this.reset.bind(this);
+        this.checkPermission = this.checkPermission.bind(this);
+        this.reply = this.reply.bind(this);
+        this.undoReply = this.undoReply.bind(this);
+        this.undoComment = this.undoComment.bind(this);
+        this.requestReply = this.requestReply.bind(this);
+        this.requestComment = this.requestComment.bind(this);
+        this.removeComment = this.removeComment.bind(this);
+        this.removeReply = this.removeReply.bind(this);
+    }
+    onChangeValue(event) {
         const name = event.target.name;
         const value = event.target.value;
         this.setState({ [name]: value, ing: true });
         setTimeout(() => { this.setState({ ing: false }) }, 750);
     };
-    reset = () => {
+    reset() {
         this.setState({ reply: false, targetId: undefined, this_comment: "", this_reply: "", ing: false });
     }
-    reply = (itemId) => { this.setState({ reply: true, targetId: itemId }); };
-    undoReply = () => { this.setState({ reply: false, this_reply: "" }); };
-    undoComment = () => { this.setState({ this_comment: "" }); };
-    requestReply = (where) => { this.props.comment({ comment: this.state.this_reply, d_flag: where }); this.reset(); };
-    requestComment = () => { if (this.state.this_comment.length > 0) this.props.comment({ comment: this.state.this_comment, d_flag: null }); this.reset(); };
-    removeComment = (commentId) => {
+    checkPermission() {
+        if (this.props.my == null) {
+            alert("로그인 해주세요.");
+            return false;
+        }
+        return true
+    }
+    reply(itemId) { this.setState({ reply: true, targetId: itemId }); };
+    undoReply() { this.setState({ reply: false, this_reply: "" }); };
+    undoComment() { this.setState({ this_comment: "" }); };
+    requestReply(where) {
+        if (this.checkPermission() === false)
+            return;
+        this.props.comment({ comment: this.state.this_reply, d_flag: where });
+        this.reset();
+    };
+    requestComment() {
+        if (this.checkPermission() === false)
+            return;
+        if (this.state.this_comment.length > 0)
+            this.props.comment({ comment: this.state.this_comment, d_flag: null });
+        this.reset();
+    };
+    removeComment(commentId) {
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
         if (comm.replies && comm.replies.length > 0) {
             alert("답변이 있는 댓글은 삭제할 수 없습니다.");
@@ -27,7 +58,7 @@ class Comment extends Component {
             this.props.removeComment(commentId);
         }
     };
-    removeReply = (commentId) => {
+    removeReply(commentId) {
         this.props.removeComment(commentId);
     };
 

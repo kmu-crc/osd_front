@@ -52,7 +52,7 @@ class EditStepModal extends Component {
         }
     }
     render() {
-        console.log("edit modal:", this.state, this.props);
+        // console.log("edit modal:", this.state, this.props);
         return (<EditStepDialog open={this.props.open} closeOnDimmerClick={false} onClose={this.onClose}>
             <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
                 <Cross angle={45} color={"#FFFFFF"} weight={2} width={32.36} height={32.36} />

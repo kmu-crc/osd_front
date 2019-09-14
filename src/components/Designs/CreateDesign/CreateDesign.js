@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Dropdown } from "semantic-ui-react";
-import Cross from "components/Commons/Cross";
+
+import GridEditor from "components/Designs/GridEditor";
+import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
+import { geturl } from "config";
+
 import noimg from "source/noimg.png"
 import noface from "source/thumbnail.png";
-import GridEditor from "components/Designs/GridEditor";
-import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer"
+import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
-import { geturl } from "config";
+import { Dropdown } from "semantic-ui-react";
 
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
@@ -264,7 +266,7 @@ class CreateDesign extends Component {
                     </div>
                     <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
                       <Dropdown id="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-                        options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
+                        options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
                     </div>
                   </div>
                 </React.Fragment>
