@@ -21,7 +21,7 @@ class ModifyMyDetail extends Component {
     super(props);
     this.state = {
       change_password: false, selected: 0, loading: false,
-      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
+      thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
@@ -38,7 +38,7 @@ class ModifyMyDetail extends Component {
     this.updateCareer = this.updateCareer.bind(this);
     this.updateLocation = this.updateLocation.bind(this);
     this.updateContact = this.updateContact.bind(this);
-    
+
   }
 
   /**UPDATE */
@@ -48,9 +48,8 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(imgInfo,imgName)
-  {
-    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
+  updateThumbnail(imgInfo, imgName) {
+    this.setState(state => ({ thumbnail: imgInfo, thumbnail_name: imgName }));
   }
   updatePassword(modifyvalue) {
     this.setState({ password: modifyvalue });
@@ -84,7 +83,7 @@ class ModifyMyDetail extends Component {
     document.addEventListener("scroll", this.handleScroll, true)
   }
   handleScroll = () => {
-   // let sections = document.querySelectorAll("section")
+    // let sections = document.querySelectorAll("section")
     document.querySelectorAll("section")
   }
   scrollMove = (menu, selected) => {
@@ -123,36 +122,36 @@ class ModifyMyDetail extends Component {
       validates: this.state.password2.validates
     });
   }
-  async checkNickname()
-  {
-      const data = {nick_name:this.state.nick_name}
-      let returnvalue = true;
-      await this.props.CheckNickNameRequest(data).then(
-          (res)=>{
-              console.log(res, data);
-              if(res.checkNickName===false)
-              {                   
-                  returnvalue = false;
-              }
-          }
-      );
-      console.log("qwer",returnvalue);
-      return returnvalue;
+  async checkNickname() {
+    const data = { nick_name: this.state.nick_name }
+    let returnvalue = true;
+    await this.props.CheckNickNameRequest(data).then(
+      (res) => {
+        console.log(res, data);
+        if (res.checkNickName === false) {
+          returnvalue = false;
+        }
+      }
+    );
+    console.log("qwer", returnvalue);
+    return returnvalue;
   }
 
   onSubmit = async e => {
     e.preventDefault();
     console.log(this.props);
-    let formData = {uid:this.props.uid,nick_name:this.state.nick_name,
-                    about_me:this.state.about_me,
-                    password:this.state.password,
-                    category_level1:this.state.category_level1,
-                    category_level2:this.state.category_level2,
-                    is_designer:this.state.is_designer,
-                    team:this.state.team,career:this.state.career,
-                    location:this.state.location,contact:this.state.contact,
-                    change_password:this.state.change_password,
-                    files:[]};
+    let formData = {
+      uid: this.props.uid, nick_name: this.state.nick_name,
+      about_me: this.state.about_me,
+      password: this.state.password,
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      is_designer: this.state.is_designer,
+      team: this.state.team, career: this.state.career,
+      location: this.state.location, contact: this.state.contact,
+      change_password: this.state.change_password,
+      files: []
+    };
 
     let file = {
       value: this.state.thumbnail,
@@ -160,21 +159,18 @@ class ModifyMyDetail extends Component {
       key: 0
     };
     formData.files.push(file);
-    
-    if(formData.files.length<=0||
-      formData.files[0].value === this.props.MyDetail.profileImg.m_img)delete formData.files;
-    if(this.state.nick_name!==this.props.MyDetail.nick_name)
-    {
-      if(await this.checkNickname()===false)
-      {
-          alert("중복된 닉네임입니다");
-          return;
+
+    if (formData.files.length <= 0 ||
+      formData.files[0].value === this.props.MyDetail.profileImg.m_img) delete formData.files;
+    if (this.state.nick_name !== this.props.MyDetail.nick_name) {
+      if (await this.checkNickname() === false) {
+        alert("중복된 닉네임입니다");
+        return;
       }
     }
-    if(this.state.nick_name=="")
-    {
-          alert("닉네임을 입력해주세요");
-          return;
+    if (this.state.nick_name === "") {
+      alert("닉네임을 입력해주세요");
+      return;
     }
 
     if (this.state.password) {
@@ -190,8 +186,7 @@ class ModifyMyDetail extends Component {
       delete formData.passwordCheck;
     }
 
-    if(this.state.category_level1 ===-1)
-    {
+    if (this.state.category_level1 === -1) {
       alert("카테고리를 선택해주세요!");
       return;
     }
@@ -206,7 +201,7 @@ class ModifyMyDetail extends Component {
         if (res.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
-          window.location.href="/"
+          window.location.href = "/"
         } else {
           alert("다시 시도해주세요");
           this.setState({

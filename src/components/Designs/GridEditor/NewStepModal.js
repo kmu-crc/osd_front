@@ -29,12 +29,12 @@ class NewStepModal extends Component {
         }
         let data = this.state;
         const step = this.props.DesignDetailStep;
-        if (step == null || step && step.length === 0) {
-            data.order = 0;
+        if (step && step.length > 0) {
+            data.order = step.length;
         } else {
-            data.order = step.length - 1;
+            data.order = 0;
         }
-        this.props.newStep(data)
+        this.props.newStep(data);
         this.onClose();
     }
     onClose() {

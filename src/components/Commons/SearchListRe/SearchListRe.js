@@ -2,15 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import zoom from "source/zoom.svg";
 import OrderOption from "components/Commons/OrderOption"
-
-
-// import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
-// import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
-// import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css'
 import Category from "components/Commons/Category"
-import { GetDesignListCountRequest } from "../../../redux/modules/design";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer"
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
@@ -176,7 +170,7 @@ class SearchListRe extends Component {
                     <div style={{ display: "flex", justifyContent: "space-start" }}>
                         <div style={{ position: "relative", display: "flex", justify: "space-start" }}>
                             <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "10001" }}>
-                                <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} options={this.state.mainCate} value={this.state.selectCate} />
+                                <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} value={this.state.selectCate} />
                             </div>
                             <div style={{ border: "1xp solid red", position: "relative", top: "220px", left: "1736px" }}>
                                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />

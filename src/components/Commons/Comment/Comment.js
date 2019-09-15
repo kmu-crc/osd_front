@@ -33,7 +33,12 @@ class Comment extends Component {
         }
         return true
     }
-    reply(itemId) { this.setState({ reply: true, targetId: itemId }); };
+    reply(itemId) {
+        if (this.checkPermission() === false) {
+            return;
+        }
+        this.setState({ reply: true, targetId: itemId });
+    };
     undoReply() { this.setState({ reply: false, this_reply: "" }); };
     undoComment() { this.setState({ this_comment: "" }); };
     requestReply(where) {
@@ -66,10 +71,10 @@ class Comment extends Component {
         const { reply, this_comment, this_reply } = this.state;
         const { comments, my } = this.props;
         const myface = my && my.thumbnail && my.thumbnail.s_img !== null ? my.thumbnail.s_img : noface
-        console.log("my:", my, this.props, this.state);
-        return (<React.Fragment>
+        console.log("my:", comments, my, this.props, this.state);
+        return (<Fragment>
             {comments && comments.length > 0 && comments.map((item, index) => {
-                const face = item && item.s_img || noface
+                const face = item && item.s_img ? item.s_img : noface
                 return (<Fragment key={item.nick_name + index}>
                     <div style={{ display: "flex", marginBottom: "30px" }}>
                         <div style={{ width: "58px", height: "58px", backgroundImage: `url(${face})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
@@ -80,7 +85,7 @@ class Comment extends Component {
                         <div style={{ marginLeft: "26px", marginTop: "41px", display: "flex" }}>
                             <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(item.create_time)}</div>
                             {!reply && <div onClick={() => this.reply(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>답글 달기</div>}
-                            {item.user_id === my.uid && <div onClick={() => this.removeComment(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                            {my && item.user_id === my.uid && <div onClick={() => this.removeComment(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
                         </div>
                     </div>
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
@@ -94,7 +99,7 @@ class Comment extends Component {
                                 <div style={{ marginLeft: "55px", display: "flex" }}>
                                     <div style={{ marginTop: "8px", fontSize: "20px", fontWeight: "300", fontFamily: "Noto Sans KR" }}>{repli.comment}</div>
                                     <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(repli.create_time)}</div>
-                                    {repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                                    {my && repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
                                 </div>
                             </div>)
                     })}
@@ -133,7 +138,7 @@ class Comment extends Component {
                     <div onClick={this.undoComment} style={{ marginLeft: "18px", width: "max-content", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>취소</div>
                 </div>
             </div>
-        </React.Fragment>)
+        </Fragment>)
     }
 }
 
