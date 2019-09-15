@@ -13,6 +13,7 @@ const EditStepDialog = styled(Modal)`
 `;
 class EditStepModal extends Component {
     state = { title: "", where: null }
+
     onChange = (event) => {
         const target = event.target
         this.setState({ [target.name]: target.value })

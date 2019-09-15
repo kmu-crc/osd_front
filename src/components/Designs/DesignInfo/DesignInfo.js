@@ -22,6 +22,7 @@ const DesignInfoComp = styled.div`
     background-color: #EFEFEF;
     width: 1920px;
     height: 237px;
+  div{border:1px solid red;}
 `;
 const DesignList = styled.div`
     display: ${props => props.display};
