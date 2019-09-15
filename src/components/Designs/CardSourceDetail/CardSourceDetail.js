@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Controller } from "./Controller";
-import Button from "components/Commons/Button";
 import AddController from "./AddController";
 import ContentForm from "./ContentForm";
 import FileIcon from "components/Commons/FileIcon";

@@ -15,8 +15,7 @@ import {
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
-import { FormInput } from "components/Commons/FormItem";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+import { ValidationGroup } from "modules/FormControl";
 
 const CardDialog = styled(Modal)`
     min-width: 1530px;
@@ -134,7 +133,7 @@ class CardModal extends Component {
                                 {card.first_img &&
                                     <div style={{ marginLeft: "52px", marginTop: "29.78px" }}>
                                         <div style={{ fontFamily: "Noto Sans KR", fontSize: "16px", color: "#707070", fontWeight: "500" }}>썸네일</div>
-                                        <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "200px", height: "200px" }} src={card.first_img.m_img} alt="first-image" /></div>
+                                        <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "200px", height: "200px" }} src={card.first_img.m_img} alt="firstimage" /></div>
                                     </div>}
                                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "29px", paddingLeft: "52px", marginTop: "30px" }}>
                                     <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "300", lineHeight: "29px" }}>{card.nick_name}</div>
@@ -157,7 +156,7 @@ class CardModal extends Component {
                                         컨텐츠 제목
                     </div>
                                     <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                                        <input name="title" onChange={this.onChangeTitle} value={this.state.title} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} name="title" maxLength="20" placeholder="제목을 입력해주세요." />
+                                        <input name="title" onChange={this.onChangeTitle} value={this.state.title} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
                                     </div>
                                 </div>
                                 <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
@@ -165,7 +164,7 @@ class CardModal extends Component {
                                         컨텐츠 설명
                     </div>
                                     <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                                        <input name="content" onChange={this.onChangeContent} value={this.state.content} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} name="title" maxLength="20" placeholder="제목을 입력해주세요." />
+                                        <input name="content" onChange={this.onChangeContent} value={this.state.content} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
                                     </div>
                                 </div>
                                 <div style={{ marginLeft: "auto", marginRight: "75pd" }}>

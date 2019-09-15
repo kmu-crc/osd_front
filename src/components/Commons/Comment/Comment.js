@@ -69,7 +69,7 @@ class Comment extends Component {
         console.log("my:", my, this.props, this.state);
         return (<React.Fragment>
             {comments && comments.length > 0 && comments.map((item, index) => {
-                const face = item && item.s_img || noface
+                const face = item && item.s_img ? item.s_img : noface
                 return (<Fragment key={item.nick_name + index}>
                     <div style={{ display: "flex", marginBottom: "30px" }}>
                         <div style={{ width: "58px", height: "58px", backgroundImage: `url(${face})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />

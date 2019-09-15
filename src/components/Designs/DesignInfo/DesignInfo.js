@@ -275,9 +275,9 @@ class DesignInfo extends Component {
                                     </div>
                                 </DesignList>
                             }
-                            <div onClick={this.getDesignComment} style={{ display: "flex", cursor: "pointer", marginTop: "10px", color: "#FF0000", fontFamily: "Noto Sans KR", fontWeight: "500" }}>
+                            <div onClick={this.getDesignComment} style={{ display: "flex", cursor: "pointer", marginTop: "10px", color: "#FF0000", fontFamily: "Noto Sans KR", fontWeight: "300" }}>
                                 <div style={{ fontSize: "17px" }}>댓글</div>
-                                <div style={{ marginLeft: "10px", fontSize: "15px" }}>{NumberFormat(Count && Count.comment_count || 0)}</div>
+                                <div style={{ marginLeft: "10px", fontSize: "15px" }}>{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                             </div>
                             <button onClick={DesignDetail.is_parent ? this.getForkDesignList : undefined} ref={ref => (this.forkDesignRef = ref)} onBlur={this.onForkListHandler} style={{ outline: "none", background: "none", border: "none", width: "165px", height: "29px", marginTop: DesignDetail.parent_design ? "5px" : "15px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "500", textAlign: "left", lineHeight: "29px", display: "flex", alignItems: "bottom" }}>{DesignDetail.is_parent && "파생된 디자인 "}{DesignDetail.is_parent && <div style={{ marginLeft: "10px" }}>{DesignDetail.children_count["count(*)"]}</div>}
                                 {this.state.forkDesignList &&
