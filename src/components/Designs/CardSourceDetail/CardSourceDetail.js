@@ -180,12 +180,12 @@ class CardSourceDetail extends Component {
     await setTimeout(() => { }, 500);
 
     //edit
-    if(this.props.uid){
-    this.props.upDateRequest(formData, this.props.uid, this.props.token)
-      .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+    if (this.props.uid) {
+      this.props.upDateRequest(formData, this.props.uid, this.props.token)
+        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
     } else { //new
       this.props.upDateRequest(formData);
-      await this.setState({loading:false});
+      await this.setState({ loading: false });
     }
   }
 
@@ -195,7 +195,7 @@ class CardSourceDetail extends Component {
   }
 
   render() {
-    console.log("inCardSourceDetail", this.props);
+    // console.log("inCardSourceDetail", this.props);
     const { /*edit,*/ content } = this.state;
     return (<React.Fragment>
       <div style={{ marginBottom: "35px" }}>
