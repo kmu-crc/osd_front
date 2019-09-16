@@ -160,7 +160,7 @@ class ModifyMyDetail extends Component {
     };
     formData.files.push(file);
 
-    if (formData.files.length <= 0 ||
+    if (formData.files.length <= 0 ||this.props.MyDetail.profileImg==null||
       formData.files[0].value === this.props.MyDetail.profileImg.m_img) delete formData.files;
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
