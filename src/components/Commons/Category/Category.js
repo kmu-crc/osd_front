@@ -74,38 +74,41 @@ const SubCateElement = styled.div`
 `
 class Category extends Component {
     static contextType = MenuContext
-    state = { parent: null }
-
-    clickedMainCategory = (category) => {
-        // console.log("!!!")
+    constructor(props) {
+        super(props);
+        this.clickedMainCategory = this.clickedMainCategory.bind(this);
+        this.clickedSubCategory = this.clickedSubCategory.bind(this);
+    }
+    clickedMainCategory(category) {
         this.props.category_clicked(category)
-        // handleChangeSubCategory = async (parent, category) => {
-        // handleChangeCategory = async (category) => {
         this.setState({ parent: category.value })
     }
-    clickedSubCategory = (parent, category) => {
-        console.log("clicksubcate",parent,category);
-        this.props.subcategory_clicked(parent-1, category)
+    clickedSubCategory(category) {
+        this.props.subcategory_clicked(this.props.main_selected, category)
     }
     render() {
-        const { category1, category2, main_selected, sub_selected } = this.props
-        const main = category1
-        const sub = category2
-        const selected = sub_selected && sub_selected.value
-        const hidemenu = this.context.hidemenu ? "hidemenu " : ""
-        const larger = this.context.larger ? "larger " : ""
+        const { category1, category2, main_selected, sub_selected } = this.props;
+        const selected = sub_selected && sub_selected.value;
+        const hidemenu = this.context.hidemenu ? "hidemenu " : "";
+        const larger = this.context.larger ? "larger " : "";
         return (<Container className={`${hidemenu}${larger}`} >
             <MainCategory>
-                {main.map(element => {
-                    return <MainCateElement className={main_selected && main_selected.value === element.value ? "selected" : ""} onClick={() => this.clickedMainCategory(element)} key={element.value}>{element.text}</MainCateElement>
+                {category1.map(element => {
+                    return <MainCateElement
+                        className={main_selected && main_selected.value === element.value ? "selected" : ""}
+                        onClick={() => this.clickedMainCategory(element)}
+                        key={element.value}>{element.text}</MainCateElement>
                 })}</MainCategory>
             <SubCategory>
-                {sub && sub.length > 0 && sub.map(element => {
+                {category2 && category2.length > 0 && category2.map(element => {
                     const style = element.value === selected ? "selected " : ""
-                    return element.value > 0 && <SubCateElement onClick={() => this.clickedSubCategory(this.state.parent, element)} key={element.value} className={`${style}`}>{element.text}</SubCateElement>
+                    return <SubCateElement
+                        className={`${style}`}
+                        onClick={() => this.clickedSubCategory(element)}
+                        key={element.value}>{element.text}</SubCateElement>
                 })}</SubCategory>
         </Container>)
     }
 }
 
-export default Category
+export default Category;

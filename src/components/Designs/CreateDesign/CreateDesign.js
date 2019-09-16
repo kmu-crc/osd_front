@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Dropdown } from "semantic-ui-react";
-import Cross from "components/Commons/Cross";
+
+import GridEditor from "components/Designs/GridEditor";
+import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
+import { geturl } from "config";
+
 import noimg from "source/noimg.png"
 import noface from "source/thumbnail.png";
-import GridEditor from "components/Designs/GridEditor";
-import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer"
+import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
-import { geturl } from "config";
+import { Dropdown } from "semantic-ui-react";
 
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
@@ -43,7 +45,6 @@ class CreateDesign extends Component {
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
   }
-
   handleOnChangeThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
@@ -63,19 +64,19 @@ class CreateDesign extends Component {
       console.log("thumbnail:", this.state);
     }
     this.checkFinishBasic();
-  };
+  }
   onChangeValueTitle = async event => {
     if (event.target) {
       await this.setState({ title: event.target.value });
     }
     this.checkFinishBasic();
-  };
+  }
   onChangeValueExplanation = async event => {
     if (event.target) {
       await this.setState({ explanation: event.target.value });
     }
     this.checkFinishBasic();
-  };
+  }
   onKeyPress = () => {
     this.checkFinishBasic();
   }
@@ -112,6 +113,14 @@ class CreateDesign extends Component {
     await this.setState({ step: this.state.step + 1 });
   }
   gotoStep = (menu) => {
+    if (!this.state.basic && menu.step > 0) {
+      alert("디자인 기본정보를 모두 작성하셔야 이동하실 수 있습니다.");
+      return;
+    }
+    if (!this.state.additional && menu.step > 1) {
+      alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
+      return;
+    }
     this.setState({ step: menu.step });
   }
   checkFinishBasic = async () => {
@@ -168,12 +177,9 @@ class CreateDesign extends Component {
   }
 
   render() {
-    // const myInfo = this.props.MyDetail
     let arrSummaryList = [];
     if (this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
-        // let SelectedItem = false;
-        // if(this.state.selectId === item.friend_id)   SelectedItem=true;       
         return (
           <div onClick={() => this.removeMember(index)} key={index}>
             <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
@@ -184,8 +190,7 @@ class CreateDesign extends Component {
 
     const { step } = this.state;
     const thumbnailURL = this.state.thumbnail;
-    console.log("new:", this.props)
-    return (<>
+    return (<React.Fragment>
       {this.state.loading ? <Loading /> : null}
       <div onClick={this.handleCloseMember}>
         <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
@@ -251,7 +256,7 @@ class CreateDesign extends Component {
 
             <section style={{ display: step === 1 ? "block" : "none", marginBottom: "16px", paddingLeft: "52px" }} >
               {this.props.category1.length > 0 ?
-                <>
+                <React.Fragment>
                   {/* category */}
                   <div style={{ display: "flex" }}>
                     <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
@@ -261,10 +266,10 @@ class CreateDesign extends Component {
                     </div>
                     <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
                       <Dropdown id="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-                        options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 + 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
+                        options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
                     </div>
                   </div>
-                </>
+                </React.Fragment>
                 : <p>카테고리를 가져오고 있습니다.</p>}
               {/* invite member*/}
               <div style={{ marginTop: "107px", display: "flex" }}>
@@ -319,23 +324,23 @@ class CreateDesign extends Component {
 
             {/* buttons*/}
             <div style={{ marginTop: "20.54px", marginBottom: "35px", justifyContent: "flex-end", display: "flex" }}>
-              {step === 0 && <>
+              {step === 0 && <React.Fragment>
                 <div onClick={this.state.basic ? this.gotoNextStep : undefined} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.basic ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
-              </>}
-              {step === 1 && <>
+              </React.Fragment>}
+              {step === 1 && <React.Fragment>
                 <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
                 <div onClick={this.state.additional ? this.gotoNextStep : undefined} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.additional ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
-              </>}
-              {step === 2 && <>
+              </React.Fragment>}
+              {step === 2 && <React.Fragment>
                 <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
                 <div onClick={this.state.content ? this.submit : undefined} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.content ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>완료</p></div>
-              </>}
+              </React.Fragment>}
             </div>
             {/* </form> */}
           </div>
         </div></div>
 
-    </>)
+    </React.Fragment>)
   }
 }
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Controller } from "./Controller";
-import Button from "components/Commons/Button";
 import AddController from "./AddController";
 import ContentForm from "./ContentForm";
 import FileIcon from "components/Commons/FileIcon";
@@ -181,12 +180,12 @@ class CardSourceDetail extends Component {
     await setTimeout(() => { }, 500);
 
     //edit
-    if(this.props.uid){
-    this.props.upDateRequest(formData, this.props.uid, this.props.token)
-      .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+    if (this.props.uid) {
+      this.props.upDateRequest(formData, this.props.uid, this.props.token)
+        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
     } else { //new
       this.props.upDateRequest(formData);
-      await this.setState({loading:false});
+      await this.setState({ loading: false });
     }
   }
 
@@ -196,9 +195,9 @@ class CardSourceDetail extends Component {
   }
 
   render() {
-    console.log("inCardSourceDetail", this.props);
+    // console.log("inCardSourceDetail", this.props);
     const { /*edit,*/ content } = this.state;
-    return (<>
+    return (<React.Fragment>
       <div style={{ marginBottom: "35px" }}>
         {this.state.edit &&
           <div style={{ width: "max-content", padding: "25px", boxShadow: "0px 2px 10px 2px rgba(0,0,0,0.25)", background: "#FFFFFF", borderRadius: "25px", top: this.state.top, left: this.state.left, position: "absolute", zIndex: "907" }}>
@@ -258,7 +257,7 @@ class CardSourceDetail extends Component {
           </ViewContent>}
         {this.state.loading && <Loading />}
       </CardSrcWrap>
-    </>
+    </React.Fragment>
     );
   }
 }

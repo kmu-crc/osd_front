@@ -20,63 +20,66 @@ const TextWrapper = styled.div`
     font-weight: 700;
     color: red;
     cursor: pointer;
-`
+`;
+
 class DesignListContainer extends Component {
-  state = {
-    reload: false,
-    search: null,
-    this_category: { text: null, value: null },
-    sub_category: { text: null, value: null },
-    main_category: { text: null, value: null },
-    this_order: { text: "등록순", keyword: "update" }
+  constructor(props) {
+    super(props);
+    this.state = {
+      reload: false,
+      this_order: { text: "등록순", keyword: "update" },
+      this_category: { text: null, value: null },
+      main_category: { text: null, value: null }, sub_category: { text: null, value: null },
+    };
+    this.handleReload = this.handleReload.bind(this);
+    this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    this.handleChangeSubCategory = this.handleChangeSubCategory.bind(this);
+    this.handleChangeOrderOps = this.handleChangeOrderOps.bind(this);
+    this.getList = this.getList.bind(this);
+    this.changeCategory = this.changeCategory.bind(this);
   }
   componentDidMount() {
-    // this.props.GetCategoryAllRequest()
-    this.getList(0);
     this.props.GetCategoryAllRequest()
-      .then(() => { this.props.GetDesignListCountRequest() });
-    this.props.GetDesignListCountRequest(0, this.state.this_order.keyword)
+      .then(() => { this.props.GetDesignListCountRequest(null, null) });
+    this.getList(0);
   }
-  handleReload = () => {
+  handleReload() {
     this.setState({ reload: !this.state.reload });
   }
-  handleChangeCategory = async (category) => {
+  async handleChangeCategory(category) {
     await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
     this.props.GetDesignListCountRequest(category.value, null);
     this.handleReload();
     this.getList(0);
   }
-  handleChangeSubCategory = async (parent, category) => {
-    await this.setState({ main_category: this.props.category1[parent], this_category: category, sub_category: category })
-    this.props.GetDesignListCountRequest(this.state.main_category.value, category.value)
+  async handleChangeSubCategory(parent, category) {
+    await this.setState({ main_category: parent, this_category: category, sub_category: category });
+    this.props.GetDesignListCountRequest(this.state.main_category.value, category.value);
     this.handleReload();
     this.getList(0);
   }
-
-  handleChangeOrderOps = async (order) => {
+  async handleChangeOrderOps(order) {
     await this.setState({ this_order: order })
     this.handleReload();
     this.getList(0);
   }
-
-  getList = async (page) => {
+  async getList(page) {
     const { main_category, sub_category, keyword, this_order } = this.state;
     this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
-  };
-  changeCategory = (category) => {
+  }
+  changeCategory(category) {
     if (this.state.this_category === category) {
       return;
     }
     this.handleChangeCategory(category);
-    // console.log(this.state)
   }
+
   render() {
     const { this_category, main_category, sub_category, reload, this_order } = this.state
     const { category1, category2, Count, status } = this.props
-    return (<>
-      <Category
-        subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-        category1={category1} category2={category2[main_category.value + 1]} main_selected={main_category} sub_selected={sub_category} />
+    return (<React.Fragment>
+      <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+        category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
 
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
 
@@ -87,7 +90,7 @@ class DesignListContainer extends Component {
           : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
             ListComponent={Design} dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
       </div>
-    </>)
+    </React.Fragment>)
   }
 }
 
@@ -98,7 +101,8 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     category1: state.Category.status.category1,
     category2: state.Category.status.category2,
-    Count: state.DesignList.status.Count
+    Count: state.DesignList.status.Count,
+    status: state.DesignList.status
   }
 }
 

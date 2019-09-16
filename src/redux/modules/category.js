@@ -93,17 +93,17 @@ export function GetCategoryAllRequest() {
         })
         // category1.unshift({ text: "전체", value: 0 })
         // category1.push({ text: "기타", value: 0 })
-        category1.shift();
-console.log("1",category1)
-        category1.push({ text: "기타", value: 0 })
-console.log("2",category1)
+        // category1.shift();
+        // console.log("1",category1)
+        // category1.push({ text: "기타", value: 0 })
+        // console.log("2",category1)
         let category2 = []
         category2 = res.data.category2.map(data => {
           let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
-          arr.unshift({ text: "전체", value: 0 })
+          // arr.unshift({ text: "전체", value: 0 })
           return (arr)
         })
-        category2.unshift([{ text: "전체", value: 0 }])
+        // category2.unshift([{ text: "전체", value: 0 }])
         console.log("cate1:", category1, "cate2:", category2)
         return dispatch(GetCategoryAllSuccess(category1, category2))
       }).catch((error) => {

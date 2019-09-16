@@ -53,11 +53,11 @@ const CheckboxContainer = styled.label`
 `
 class CheckBox extends Component {
     render() {
-        return (<>
+        return (<React.Fragment>
             <CheckboxContainer>
                 <div className="label-text">{this.props.txt}</div><input type="checkbox" checked={this.props.checked} /><span className="checkmark" />
             </CheckboxContainer>
-        </>)
+        </React.Fragment>)
     }
 }
 export default CheckBox

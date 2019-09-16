@@ -91,7 +91,7 @@ class NewCardModal extends Component {
                     컨텐츠 제목
                     </div>
                 <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                    <input name="title" onChange={this.onChangeTitle} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} name="title" maxLength="20" placeholder="제목을 입력해주세요." />
+                    <input name="title" onChange={this.onChangeTitle} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
                 </div>
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
@@ -99,7 +99,7 @@ class NewCardModal extends Component {
                     컨텐츠 설명
                     </div>
                 <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                    <input name="content" onChange={this.onChangeContent} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} name="title" maxLength="20" placeholder="제목을 입력해주세요." />
+                    <input name="content" onChange={this.onChangeContent} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
                 </div>
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>

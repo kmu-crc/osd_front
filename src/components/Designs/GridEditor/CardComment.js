@@ -8,29 +8,29 @@ class CardComment extends Component {
         this.props.GetCardCommentRequest(this.props.designId, this.props.cardId);
     }
     comment = (data) => {
+
         this.props.CreateCardCommentRequest(data, this.props.designId, this.props.cardId, this.props.token)
-        .then(res=>{
-          this.props.GetCardCommentRequest(this.props.designId, this.props.cardId);
-        })
+            .then(res => {
+                this.props.GetCardCommentRequest(this.props.designId, this.props.cardId);
+            })
     }
-  removeComment = (commentId) => {
-    this.props.DeleteCardCommentRequest(this.props.designId, this.props.cardId, commentId, this.props.token)
-      .then(res=>{
-          this.props.GetCardCommentRequest(this.props.designId, this.props.cardId);
-      })
-  }
+    removeComment = (commentId) => {
+        this.props.DeleteCardCommentRequest(this.props.designId, this.props.cardId, commentId, this.props.token)
+            .then(res => {
+                this.props.GetCardCommentRequest(this.props.designId, this.props.cardId);
+            })
+    }
     render() {
-        console.log(this.props.Comment);
+        // console.log(this.props.Comment);
         let parentComments = this.props.Comment.filter(item => item.d_flag === null);
         let comments = parentComments.map(parent => {
             let replies = this.props.Comment.filter(item => item.d_flag === parent.uid);
             return { ...parent, replies };
         })
-        console.log(comments);
- 
-        return (<>
-            <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment}/>
-        </>)
+        // console.log(comments);
+        return (<React.Fragment>
+            <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
+        </React.Fragment>)
     }
 };
 const mapStateToProps = state => {

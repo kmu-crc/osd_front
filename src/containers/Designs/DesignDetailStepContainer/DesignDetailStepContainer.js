@@ -1,7 +1,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import GridEditor from "components/Designs/GridEditor"
-import { CreateDesignBoardRequest, GetDesignDetailRequest, UpdateCardTitleRequest, GetDesignCardRequest, UpdateDesignBoardRequest, GetDesignBoardRequest, DeleteDesignBoardRequest, UpdateDesignTime } from "redux/modules/design";
+import {
+  CreateDesignBoardRequest, DeleteDesignBoardRequest,
+  GetDesignDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
+  UpdateCardTitleRequest, UpdateDesignBoardRequest, UpdateDesignTime
+} from "redux/modules/design";
 
 class DesignDetailStepContainer extends Component {
   componentDidMount() {

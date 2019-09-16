@@ -45,7 +45,7 @@ class SectionAdditional extends Component {
           </div>
           <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
             <Dropdown id="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 + 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
+              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
           </div>
         </div>
       </section>

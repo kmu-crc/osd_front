@@ -134,7 +134,7 @@ class ModifyDesignMember extends Component {
         {currentDesign.length === 0 ?
           <div></div>
           :
-          <>
+          <React.Fragment>
             <h2>멤버 관리</h2>
             <form>
               <Label>현재 멤버</Label>
@@ -171,7 +171,7 @@ class ModifyDesignMember extends Component {
             <form widths="equal" className="newMember">
               <Label>새 멤버 초대</Label>
               <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
-              {this.state.members && this.state.members.length > 0 && <>
+              {this.state.members && this.state.members.length > 0 && <React.Fragment>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                   {this.state.members.map((mem, i) =>
                     <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
@@ -180,10 +180,10 @@ class ModifyDesignMember extends Component {
                       <div title={"취소하기"} onClick={() => this.removeMember(i)} style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={5} width={16} height={16} /></div>
                     </div>
                   )}
-                </div></>}
+                </div></React.Fragment>}
               <div style={{ paddingBottom: "2px", borderBottom: "1.5px solid red", width: "max-content", cursor: "pointer", marginLeft: "auto", marginRight: "65px", fontWeight: "500", fontSize: "23px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }} onClick={this.joinMember}>초대</div>
             </form>
-          </>
+          </React.Fragment>
         }
       </ModalContent>
     );

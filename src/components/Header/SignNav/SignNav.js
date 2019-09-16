@@ -97,7 +97,7 @@ class SignNav extends Component {
         const { user_popup, signin_modal } = this.state
         const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
 
-        return (<>
+        return (<React.Fragment>
             {user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={user_popup.top} left={userinfo.userMenuLeft} >
                     <div><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
@@ -108,7 +108,7 @@ class SignNav extends Component {
             {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer", display: "flex" }}><UserThumbnail url={profile} /><TextFormat chars={9} txt={info.nickName} /></div>)
                 : (<div onClick={this.openModal} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer" }}>로그인</div>)}
-        </>)
+        </React.Fragment>)
     }
 }
 

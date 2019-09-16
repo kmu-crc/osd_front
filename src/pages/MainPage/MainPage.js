@@ -63,11 +63,11 @@ function Banner() {
 
 class MainPage extends Component {
   render() {
-    return (<>
+    return (<React.Fragment>
       <Banner />
       <Textwrapper>인기 디자인</Textwrapper>
       <TopDesignListContainer />
-    </>)
+    </React.Fragment>)
   }
 }
 

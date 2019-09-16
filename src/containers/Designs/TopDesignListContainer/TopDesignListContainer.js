@@ -15,12 +15,12 @@ class TopDesignListContainer extends Component {
     }
 
     render() {
-        return (<>{this.props.status === "INIT" ?
+        return (<React.Fragment>{this.props.status === "INIT" ?
             <Loading /> :
             <ScrollList
                 {...opendesign_style.design_margin}
                 ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
-        }</>)
+        }</React.Fragment>)
     }
 }
 

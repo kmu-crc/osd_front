@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Header, Grid } from "semantic-ui-react";
-import ContentBox from "components/Commons/ContentBox";
-import StyleGuide from "StyleGuide"
-import FooterPara from "./FooterPara"
+import StyleGuide from "StyleGuide";
+import FooterPara from "./FooterPara";
 
 const FromFieldCard = styled.div`
   border:3px solid #EFEFEF;  

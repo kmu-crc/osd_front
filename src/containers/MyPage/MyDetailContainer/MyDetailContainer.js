@@ -17,10 +17,10 @@ class MyDetailContainer extends Component {
 
   render() {
     return (//수정 요망 - 내용기술할것! 이러면몰라요ㅠ
-      <>
+      <React.Fragment>
         <MypageHeader {...this.props} />
         <MypageBody {...this.props} />
-      </>
+      </React.Fragment>
     )
   }
 }

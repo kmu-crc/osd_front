@@ -221,16 +221,18 @@ class DesignInfo extends Component {
                     </div>
                     <Modal.Content>
                         <div style={{ marginLeft: "15px", marginBottom: "15px" }}><h3>댓글</h3></div>
-                        <DesignComment designId={parseInt(this.props.id, 10)} />
+                        <div style={{ width: "600px" }}>
+                            <DesignComment designId={parseInt(this.props.id, 10)} />
+                        </div>
                     </Modal.Content>
                 </Modal>)
         }
         console.log("DesignInfo:", isMyDesign, this.state, this.props);
         return (
-            <>
+            <React.Fragment>
                 {this.state.forkDialog > 0 &&
                     <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
-                        {this.state.forkDialog === 1 && <>
+                        {this.state.forkDialog === 1 && <React.Fragment>
                             <div onClick={() => this.closeFork()} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
                                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
                             </div>
@@ -238,25 +240,37 @@ class DesignInfo extends Component {
                                 {DesignDetail.userName.slice(0, 12)}님의 디자인 <br />"{DesignDetail.title.slice(0, 16)}{DesignDetail.title.length > 16 && "..."}"<br />
                                 파생 디자인을 생성하시겠습니까?</div>
                             <div onClick={() => this.doFork()} style={{ cursor: "pointer", marginTop: "45px", marginLeft: "200px", width: "130px", height: "29px", textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000" }}>
-                                네, 생성합니다.</div></>}
-                        {this.state.forkDialog === 2 && <>
+                                네, 생성합니다.</div></React.Fragment>}
+                        {this.state.forkDialog === 2 && <React.Fragment>
                             <div style={{ marginTop: "39.5px", marginLeft: "149.5px", width: "278px", height: "149px", textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1" }}>
                                 파생 디자인 생성중입니다.
                                 <p style={{ color: "#FF0000" }}>디자인 수정 페이지로 이동합니다.</p>
                                 추가 정보를 입력해 주세요!</div>
-                        </>}
+                        </React.Fragment>}
                     </div>}
                 {this.state.likeDialog &&
                     <div style={{ position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
                         <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070" }}>관심 디자인으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></div>}
                 <DesignInfoComp >
-                    {DesignDetail.parent_design && <div style={{ position: "absolute", marginTop: "19px", marginLeft: "220px", width: "20px", height: "42px", backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
+                    {DesignDetail.parent_design && <div style={{ position: "absolute", marginTop: "19px",marginLeft: "220px", width: "32px", height: "70px", backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
                     <div style={{ marginTop: "19px", marginLeft: "65px", background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: `url${thumbnail}`, backgroundColor: "#D6D6D6", borderRadius: "15px", width: "200px", height: "200px", backgroundRepeat: "no-repeat" }}></div>
                     <div style={{ marginTop: "19px", marginLeft: "42px", }}>
                         <div style={{ position: "absolute", width: "max-content", height: "29px", marginTop: "0px", marginLeft: "0px", fontSize: "20px", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "29px", cursor: "pointer" }} title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
                         <div style={{ marginTop: "25px" }}>
                             {DesignDetail.parent_design && <div onClick={() => this.goParentDesign(DesignDetail.parent_design)} style={{ width: "165px", height: "25px", marginTop: "9px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "300", textAlign: "left", lineHeight: "25px", cursor: "pointer" }} title={DesignDetail.parent_title}>{DesignDetail.parent_title.slice(0, 4)}{DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>}
-                            <button onClick={this.getMemberList} ref={ref => (this.memberlist = ref)} onBlur={!isMyDesign ? this.onMemberListHandler : undefined} style={{ outline: "none", background: "none", border: "none", width: "170px", height: "29px", marginTop: DesignDetail.parent_design ? "8px" : "13px", marginLeft: "0px", fontSize: "17px", color: "#707070", fontWeight: "300", textAlign: "left", lineHeight: "29px", cursor: "pointer" }}>{DesignDetail.userName.slice(0, 8)} {(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</button>
+                            <button 
+                                onClick={this.getMemberList} 
+                                ref={ref => (this.memberlist = ref)} 
+                                onBlur={!isMyDesign ? this.onMemberListHandler : undefined} 
+                                style={{ 
+                                    outline: "none", background: "none", border: "none", width: "170px", height: "29px", 
+                                    marginTop: DesignDetail.parent_design ? "8px" : "13px", marginLeft: "-8px", 
+                                    fontSize: "17px", color: "#707070", fontWeight: "300", textAlign: "left", 
+                                    lineHeight: "29px", cursor: "pointer" }}>
+                                    {DesignDetail.userName.slice(0, 8)}
+                                    {(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + 
+                                    (DesignDetail.member.length - 1).toString() + "명"}
+                            </button>
                             {!isMyDesign && this.state.memberList &&
                                 <DesignList top={this.memberlist.getBoundingClientRect().top} left={this.memberlist.getBoundingClientRect().left}>
                                     <div className="list" style={{ padding: "15px" }}>
@@ -273,11 +287,22 @@ class DesignInfo extends Component {
                                     </div>
                                 </DesignList>
                             }
-                            <div onClick={this.getDesignComment} style={{ display: "flex", cursor: "pointer", marginTop: "10px", color: "#FF0000", fontFamily: "Noto Sans KR", fontWeight: "500" }}>
+                            <div onClick={this.getDesignComment} style={{ display: "flex", cursor: "pointer", marginTop: "10px", color: "#FF0000", fontFamily: "Noto Sans KR", fontWeight: "300" }}>
                                 <div style={{ fontSize: "17px" }}>댓글</div>
-                                <div style={{ marginLeft: "10px", fontSize: "15px" }}>{NumberFormat(Count && Count.comment_count || 0)}</div>
+                                <div style={{ marginLeft: "10px", fontSize: "15px" }}>{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                             </div>
-                            <button onClick={DesignDetail.is_parent ? this.getForkDesignList : undefined} ref={ref => (this.forkDesignRef = ref)} onBlur={this.onForkListHandler} style={{ outline: "none", background: "none", border: "none", width: "165px", height: "29px", marginTop: DesignDetail.parent_design ? "5px" : "15px", marginLeft: "0px", fontSize: "17px", color: "#FF0000", fontWeight: "500", textAlign: "left", lineHeight: "29px", display: "flex", alignItems: "bottom" }}>{DesignDetail.is_parent && "파생된 디자인 "}{DesignDetail.is_parent && <div style={{ marginLeft: "10px" }}>{DesignDetail.children_count["count(*)"]}</div>}
+                            <button 
+                                onClick={DesignDetail.is_parent ? this.getForkDesignList : undefined} 
+                                ref={ref => (this.forkDesignRef = ref)} 
+                                onBlur={this.onForkListHandler} 
+                                style={{ 
+                                    outline: "none", background: "none", border: "none", width: "165px", height: "29px", 
+                                    marginTop: DesignDetail.parent_design ? "5px" : "15px", marginLeft: "-8px", 
+                                    fontSize: "17px", color: "#FF0000", fontWeight: "500", textAlign: "left", 
+                                    lineHeight: "29px", display: "flex", alignItems: "bottom" }}>
+                                    {DesignDetail.is_parent && "파생된 디자인 "}
+                                    {DesignDetail.is_parent && <div style={{ marginLeft: "10px" }}>
+                                    {DesignDetail.children_count["count(*)"]}</div>}
                                 {this.state.forkDesignList &&
                                     <DesignList top={this.forkDesignRef.getBoundingClientRect().top} left={this.forkDesignRef.getBoundingClientRect().left}>
                                         <div className="list" style={{ padding: "7", marginTop: "10px" }}>
@@ -306,11 +331,11 @@ class DesignInfo extends Component {
                     </div>
                     <div style={{ marginTop: "65px", marginLeft: "65px" }}>
                         <div style={{ width: "120px", height: "25px", color: "#FF0000", fontSize: "17px", fontFamily: "Noto Sans KR", lineHeight: "25px", fontWeight: "300", textAlign: "left" }}>{DesignDetail.categoryName}</div>
-                        <div style={{ width: "423px", height: "158px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation ? DesignDetail.explanation.slice(0, 150) : DesignDetail.userName + "님의 " + DesignDetail.title + "디자인입니다."}</div>
+                        <div style={{ wordWrap: "break-word", width: "423px", height: "125px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation ? DesignDetail.explanation.slice(0, 150) : DesignDetail.userName + "님의 " + DesignDetail.title + "디자인입니다."}</div>
                     </div>
                     <div style={{ marginTop: "19px", marginLeft: "65px" }}>
                         <div style={{ width: "100px", height: "25px", color: "#FF0000", fontSize: "17px", fontFamily: "Noto Sans KR", lineHeight: "25px", fontWeight: "300", textAlign: "left" }}></div>
-                        <div style={{ width: "423px", height: "158px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation && DesignDetail.explanation.slice(150, 300 - 3)}{(DesignDetail.explanation.length > 300 - 3) ? "..." : ""}</div>
+                        <div style={{ wordWrap: "break-word", width: "423px", height: "158px", marginTop: "17px", color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", lineHeight: "29px", fontWeight: "300" }}>{DesignDetail.explanation && DesignDetail.explanation.slice(150, 300 - 3)}{(DesignDetail.explanation.length > 300 - 3) ? "..." : ""}</div>
                     </div>
                     <div style={{ position: "relative", marginTop: "10px", marginLeft: "auto", marginRight: "72px" }}>
                         <div style={{ marginTop: "0px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#FF0000", textAlign: "right", marginLeft: "auto", fontWeight: "500", cursor: "pointer" }} onClick={() => this.forkDesign()}>파생 디자인 생성</div>
@@ -348,7 +373,7 @@ class DesignInfo extends Component {
 
                 <MemberModal />
                 <DesignCommentModal />
-            </>
+            </React.Fragment>
         )
     }
 };

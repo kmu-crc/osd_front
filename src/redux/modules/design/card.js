@@ -317,6 +317,7 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
 }
 export const GetDesignBoardRequest = (id) => {
     const url = `${host}/design/designDetail/${id}/getBoardList`
+    console.log(url);
     return (dispatch) => {
         dispatch(GetBoard());
         return fetch(url, { headers: { 'Content-Type': 'application/json' }, method: "GET" })

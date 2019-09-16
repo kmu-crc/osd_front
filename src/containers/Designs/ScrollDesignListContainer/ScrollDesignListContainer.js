@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "redux/modules/design";
-import Category from "components/Commons/Category"
 
 import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 import opendesign_style from 'opendesign_style';
 import Loading from "../../Designer/DesignerListContainer/DesignerListContainer";
-import Designer from "../../../components/Designers/Designer";
 
 class ScrollDesignListContainer extends Component {
   state = {

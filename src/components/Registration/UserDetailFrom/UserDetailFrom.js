@@ -135,7 +135,7 @@ class ModifyMyDetail extends Component {
     formData.files.push(file);
 
     if (this.state.password) {
-      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
+      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
         alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
         return false;
@@ -191,7 +191,7 @@ class ModifyMyDetail extends Component {
     const scrollmenu = scrollmenu_data
     const { selected } = this.state
     console.log(this.props, "MyDetail");
-    return (<>
+    return (<React.Fragment>
       <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
         <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
       </div>
@@ -225,7 +225,7 @@ class ModifyMyDetail extends Component {
           </div>
         </div>
       </div>
-    </>)
+    </React.Fragment>)
   }
 }
 

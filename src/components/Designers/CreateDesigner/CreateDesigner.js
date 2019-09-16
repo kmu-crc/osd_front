@@ -21,7 +21,7 @@ class ModifyMyDetail extends Component {
     super(props);
     this.state = {
       change_password: false, selected: 0, loading: false, isClickModify: false,
-      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
+      thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
@@ -63,9 +63,8 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(imgInfo,imgName)
-  {
-    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
+  updateThumbnail(imgInfo, imgName) {
+    this.setState(state => ({ thumbnail: imgInfo, thumbnail_name: imgName }));
   }
   updatePassword(modifyvalue) {
     this.setState({ password: modifyvalue });
@@ -138,32 +137,32 @@ class ModifyMyDetail extends Component {
       validates: this.state.password2.validates
     });
   }
-  async checkNickname()
-  {
-      const data = {nick_name:this.state.nick_name}
-      let returnvalue = true;
-      await this.props.CheckNickNameRequest(data).then(
-          (res)=>{
-              console.log(res, data);
-              if(res.checkNickName===false)
-              {                   
-                  returnvalue = false;
-              }
-          }
-      );
-      console.log("qwer",returnvalue);
-      return returnvalue;
+  async checkNickname() {
+    const data = { nick_name: this.state.nick_name }
+    let returnvalue = true;
+    await this.props.CheckNickNameRequest(data).then(
+      (res) => {
+        console.log(res, data);
+        if (res.checkNickName === false) {
+          returnvalue = false;
+        }
+      }
+    );
+    console.log("qwer", returnvalue);
+    return returnvalue;
   }
   onSubmit = async e => {
-    
+
     e.preventDefault();
 
-    let formData = {change_password: this.change_password,
-      nick_name: this.state.nick_name, about_me:this.state.about_me,
-      password: this.state.password, 
+    let formData = {
+      change_password: this.change_password,
+      nick_name: this.state.nick_name, about_me: this.state.about_me,
+      password: this.state.password,
       category_level1: this.state.category_level1, category_level2: this.state.category_level2,
-      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career, 
-      location: this.state.location, contact:this.state.contact,files:[]};
+      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career,
+      location: this.state.location, contact: this.state.contact, files: []
+    };
 
     let file = {
       value: this.state.thumbnail,
@@ -171,27 +170,24 @@ class ModifyMyDetail extends Component {
       key: 0
     };
     formData.files.push(file);
-    if(formData.files.length<=0||
-      formData.files[0].value === this.props.MyDetail.profileImg.m_img)delete formData.files;
-    if(this.state.nick_name!==this.props.MyDetail.nick_name)
-    {
-      if(await this.checkNickname()===false)
-      {
-          alert("중복된 닉네임입니다");
-          return;
+    if (formData.files.length <= 0 ||
+      formData.files[0].value === this.props.MyDetail.profileImg.m_img) delete formData.files;
+    if (this.state.nick_name !== this.props.MyDetail.nick_name) {
+      if (await this.checkNickname() === false) {
+        alert("중복된 닉네임입니다");
+        return;
       }
     }
 
-    if(this.state.nick_name=="")
-    {
-          alert("닉네임을 입력해주세요");
-          return;
+    if (this.state.nick_name === "") {
+      alert("닉네임을 입력해주세요");
+      return;
     }
 
 
 
     if (this.state.password) {
-      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
+      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
         alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
         return false;
@@ -203,8 +199,7 @@ class ModifyMyDetail extends Component {
       delete formData.passwordCheck;
     }
 
-    if(this.state.category_level1 ===-1)
-    {
+    if (this.state.category_level1 === -1) {
       alert("카테고리를 선택해주세요!");
       return;
     }
@@ -255,7 +250,7 @@ class ModifyMyDetail extends Component {
     const scrollmenu = scrollmenu_data
     const { selected } = this.state
 
-    return (<>
+    return (<React.Fragment>
       <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
         <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
       </div>
@@ -303,7 +298,7 @@ class ModifyMyDetail extends Component {
           }}>등록하기</div>
         </div>
       </div>
-    </>)
+    </React.Fragment>)
   }
 }
 

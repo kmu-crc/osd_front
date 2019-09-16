@@ -120,7 +120,7 @@ class SelectBox extends Component {
     }
   }
   render() {
-    return <>
+    return <React.Fragment>
       <SelectBoxContainer onClick={this.clicked} ref={this.myRef} >
         <div className="select-box--box">
           <div className="select-box--container" onClick={this.dropDown}>
@@ -136,7 +136,7 @@ class SelectBox extends Component {
         </div>
         <input type="hidden" name={this.props.name} value={this.state.selectedItem.id} />
       </SelectBoxContainer>
-    </>
+    </React.Fragment>
   }
 }
 

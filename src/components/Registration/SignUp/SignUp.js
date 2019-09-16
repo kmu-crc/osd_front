@@ -79,7 +79,7 @@ class SignUpModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading:false,
+            loading: false,
             term_use: false, checked: false, open_term: false, success_signup: false,
             email: "", password: "", password2: "", nick_name: ""
         }
@@ -101,16 +101,15 @@ class SignUpModal extends Component {
     onChangeNickname(event) {
         this.setState({ nick_name: event.target.value })
     }
-    onChecked(event)
-    {
-        this.setState({checked:!this.state.checked,open_term:false});
+    onChecked(event) {
+        this.setState({ checked: !this.state.checked, open_term: false });
     }
     openterm = () => {
         this.setState({ open_term: true })
     }
     agree = () => {
-        
-        document.getElementById("agree").checked=true;
+
+        document.getElementById("agree").checked = true;
         this.setState({ open_term: false, checked: true })
     }
     sign = () => {
@@ -125,79 +124,68 @@ class SignUpModal extends Component {
     tmp_goto_mydetail = () => {
 
     }
-    async checkEmail()
-    {
-        const data = {email:this.state.email}
+    async checkEmail() {
+        const data = { email: this.state.email }
         let returnvalue = true;
         await this.props.CheckEmailRequest(data).then(
-            (res)=>{
+            (res) => {
                 console.log(res, data);
-                if(res.checkEmail===false)
-                {                   
+                if (res.checkEmail === false) {
                     returnvalue = false;
                 }
             }
         );
-        console.log("qwer",returnvalue);
+        console.log("qwer", returnvalue);
         return returnvalue;
     }
 
-    async checkNickname()
-    {
-        const data = {nick_name:this.state.nick_name}
+    async checkNickname() {
+        const data = { nick_name: this.state.nick_name }
         let returnvalue = true;
-        await this.props.CheckEmailRequest(data).then(
-            (res)=>{
+        await this.props.CheckNickNameRequest(data).then(
+            (res) => {
                 console.log(res, data);
-                if(res.checkNickName===false)
-                {                   
+                if (res.checkNickName === false) {
                     returnvalue = false;
                 }
             }
         );
-        console.log("qwer",returnvalue);
+        console.log("qwer", returnvalue);
         return returnvalue;
     }
     onSubmit = async e => {
-        
+
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 
-        if(checkedMail.test(this.state.email)===false)
-        {
+        if (checkedMail.test(this.state.email) === false) {
             alert("이메일 형식이 올바르지 않습니다");
             return;
         }
-        else if(this.state.password == "")
-        {
+        else if (this.state.password === "") {
             alert("패스워드를 입력해주세요!");
             return;
-        }        
-        else if(this.state.password !== this.state.password2)
-        {
+        }
+        else if (this.state.password !== this.state.password2) {
             alert("패스워드가 일치하지 않습니다");
             return;
         }
-        else if(this.state.nick_name=="")
-        {
+        else if (this.state.nick_name === "") {
             alert("닉네임을 입력해주세요!")
             return;
         }
-        else if(this.state.checked === false)
-        {
+        else if (this.state.checked === false) {
             alert("이용약관에 동의해주세요")
             return;
         }
         //닉네임 중복 체크
-        if(await this.checkEmail()===false)
-        {      
-            alert("중복된 이메일입니다");      
+        if (await this.checkEmail() === false) {
+            alert("중복된 이메일입니다");
             return;
         }
-        if(await this.checkNickname()===false)
-        {
+        if (await this.checkNickname() === false) {
             alert("중복된 닉네임입니다");
             return;
         }
@@ -209,13 +197,13 @@ class SignUpModal extends Component {
                 console.log(res);
                 if (res) {
                     alert("회원 가입 되었습니다.");
-                    this.setState({ success_signup: true ,loading:true});  
-                    let href = window.location.href.substring(0, window.location.href.search("signup"))       
+                    this.setState({ success_signup: true, loading: true });
+                    let href = window.location.href.substring(0, window.location.href.search("signup"))
                     setTimeout(() => {
                         this.props.history.push(`/`);
                         window.location.href = href + 'insertUserDetail'
                     }, 2000);
-         
+
 
                 } else {
                     console.log("this!");
@@ -237,12 +225,12 @@ class SignUpModal extends Component {
     render() {
         const { open } = this.props
 
-        
+
         //window.location.href = href + 'insertUserDetail'
         return (
-            <>
+            <React.Fragment>
 
-                {this.state.success_signup ?(
+                {this.state.success_signup ? (
                     <CustomModal open={this.state.success_signup} onClose={this.onClose} onClick={this.tmp_goto_mydetail}>
                         <div style={{ marginLeft: "54px", display: "flex" }}>
                             <div style={{ width: "259px", marginTop: "170px" }}><div style={{ marginTop: "14px", borderBottom: "2px solid red" }} /></div>
@@ -258,13 +246,13 @@ class SignUpModal extends Component {
                                 더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 마이페이지로 이동합니다<br /><br /><br /><br /> 이동 중...</div></div>
 
                     </CustomModal>)
-                    
-                    : 
-                    
+
+                    :
+
                     (
                         <CustomModal open={open} onClose={this.onClose}>
                             {this.state.open_term &&
-                                <div style={{  position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
+                                <div style={{ position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
                                     <div style={{ marginTop: "44px", marginLeft: "46px", width: "450px", height: "754px", fontFamily: "Noto Sans KR", fontWeight: "300", fontSize: "20px", lineHeight: "35px", textAlign: "left", color: "#707070" }}>
                                         [차례]<br />
                                         제1장<br />
@@ -324,12 +312,12 @@ class SignUpModal extends Component {
                                     }}>이용약관</div>
                                     <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
                                         <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
-                                        {console.log(this.state.checked)}
-                                        <input id="agree" style={{background: this.state.checked===true?"#FF0000  0% 0% no-repeat padding-box":"#FFFFFF 0% 0% no-repeat padding-box"}}onClick={this.onChecked} type="checkbox" value={this.state.checked} />
-                                        <span className="checkmark" />
+                                            {console.log(this.state.checked)}
+                                            <input id="agree" style={{ background: this.state.checked === true ? "#FF0000  0% 0% no-repeat padding-box" : "#FFFFFF 0% 0% no-repeat padding-box" }} onClick={this.onChecked} type="checkbox" value={this.state.checked} />
+                                            <span className="checkmark" />
                                         </CheckboxContainer>
-                                        <div style={{cursor:"pointer", marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div>
-                                        </div>
+                                        <div style={{ cursor: "pointer", marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div>
+                                    </div>
                                     <div style={{
                                         marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",
                                         color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "29px", textAlign: "left"
@@ -339,8 +327,8 @@ class SignUpModal extends Component {
                         </CustomModal >
                     )}
 
-                    
-            </>
+
+            </React.Fragment>
         )
     }
 }
@@ -350,9 +338,9 @@ class SignUp extends Component {
     state = { is_signed: false, }
     render() {
         return (
-            <>
+            <React.Fragment>
                 {<SignUpModal {...this.props} open={!this.state.is_signed} close={this.closeModal} />}
-            </>
+            </React.Fragment>
         )
     }
 }

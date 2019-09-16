@@ -56,15 +56,15 @@ const LikeDesignerFailure = () => ({ type: LIKE_DESIGNER_FAILURE })
 const UnlikeDesigner = () => ({ type: UNLIKE_DESIGNER })
 const UnlikeDesignerSuccess = () => ({ type: UNLIKE_DESIGNER_SUCCESS })
 const UnlikeDesignerFailure = () => ({ type: UNLIKE_DESIGNER_FAILURE })
-const GetLikeDesignerInDesigner=(data)=>({type:GET_LIKE_DESIGNER_IN_DESIGNER, LikeDesignerInDesigner: data});
-const GetLikeDesignerInDesignerClear = (data) => ({type:GET_LIKE_DESIGNER_IN_DESIGNER_CLEAR, LikeDesignerInDesigner:data, LikeDesignerInDesignerAdded: []});
-const GetLikeDesignerInDesignerFail = () => ({type:GET_LIKE_DESIGNER_IN_DESIGNER_FAIL, LikeDesignerInDesigner:[], LikeDesignerInDesignerAdded: []});
-const GetLikeGroupInDesigner = (data)=>({type:GET_LIKE_GROUP_IN_DESIGNER, LikeGroupInDesigner:data});
-const GetLikeGroupInDesignerClear = (data) => ({type:GET_LIKE_GROUP_IN_DESIGNER_CLEAR, LikeGroupInDesigner:data, LikeGroupInDesignerAdded:[]});
-const GetLikeGroupInDesignerFail = () => ({type:GET_LIKE_GROUP_IN_DESIGNER_FAIL, LikeGroupInDesigner:[], LikeGroupInDesignerAdded:[]});
-const GetGroupInDesigner = (data) => ({type:GET_GROUP_IN_DESIGNER, GroupInDesigner: data});
-const GetGroupInDesignerClear = (data) => ({type:GET_GROUP_IN_DESIGNER_CLEAR, GroupInDesigner: data, GroupInGroupAdded:[]});
-const GetGroupInDesignerFail = () => ({type:GET_GROUP_IN_DESIGNER_FAIL, GroupInDesigner: [], GroupInGroupAdded:[]});
+const GetLikeDesignerInDesigner = (data) => ({ type: GET_LIKE_DESIGNER_IN_DESIGNER, LikeDesignerInDesigner: data });
+const GetLikeDesignerInDesignerClear = (data) => ({ type: GET_LIKE_DESIGNER_IN_DESIGNER_CLEAR, LikeDesignerInDesigner: data, LikeDesignerInDesignerAdded: [] });
+const GetLikeDesignerInDesignerFail = () => ({ type: GET_LIKE_DESIGNER_IN_DESIGNER_FAIL, LikeDesignerInDesigner: [], LikeDesignerInDesignerAdded: [] });
+const GetLikeGroupInDesigner = (data) => ({ type: GET_LIKE_GROUP_IN_DESIGNER, LikeGroupInDesigner: data });
+const GetLikeGroupInDesignerClear = (data) => ({ type: GET_LIKE_GROUP_IN_DESIGNER_CLEAR, LikeGroupInDesigner: data, LikeGroupInDesignerAdded: [] });
+const GetLikeGroupInDesignerFail = () => ({ type: GET_LIKE_GROUP_IN_DESIGNER_FAIL, LikeGroupInDesigner: [], LikeGroupInDesignerAdded: [] });
+const GetGroupInDesigner = (data) => ({ type: GET_GROUP_IN_DESIGNER, GroupInDesigner: data });
+const GetGroupInDesignerClear = (data) => ({ type: GET_GROUP_IN_DESIGNER_CLEAR, GroupInDesigner: data, GroupInGroupAdded: [] });
+const GetGroupInDesignerFail = () => ({ type: GET_GROUP_IN_DESIGNER_FAIL, GroupInDesigner: [], GroupInGroupAdded: [] });
 
 
 
@@ -85,12 +85,12 @@ const initialState = {
         DesignerList: [],
         DesignerListAdded: [],
         DesignerCount: 0,
-        LikeGroupInDesigner:[],
-        LikeGroupInDesignerAdded:[],
-        LikeDesignerInDesigner:[],
-        LikeDesignerInDesignerAdded:[],
-        GroupInDesigner:[],
-        GroupInDesignerAdded:[],
+        LikeGroupInDesigner: [],
+        LikeGroupInDesignerAdded: [],
+        LikeDesignerInDesigner: [],
+        LikeDesignerInDesignerAdded: [],
+        GroupInDesigner: [],
+        GroupInDesignerAdded: [],
     }
 }
 
@@ -195,24 +195,24 @@ export function Designer(state, action) {
             })
         case GET_GROUP_IN_DESIGNER:
             return update(state, {
-                status:{
-                    GroupInDesigner:{$set:action.GroupInDesigner},
-                    GroupInDesignerAdded:{$push:action.GroupInDesigner},
+                status: {
+                    GroupInDesigner: { $set: action.GroupInDesigner },
+                    GroupInDesignerAdded: { $push: action.GroupInDesigner },
                 }
             })
 
         case GET_GROUP_IN_DESIGNER_CLEAR:
             return update(state, {
-                status:{
-                    GroupInDesigner:{$set:action.GroupInDesigner},
-                    GroupInDesignerAdded:{$set:action.GroupInDesigner},
+                status: {
+                    GroupInDesigner: { $set: action.GroupInDesigner },
+                    GroupInDesignerAdded: { $set: action.GroupInDesigner },
                 }
             })
         case GET_GROUP_IN_DESIGNER_FAIL:
             return update(state, {
-                status:{
-                    GroupInDesigner:{$set:action.GroupInDesigner},
-                    GroupInDesignerAdded:{$set:action.GroupInDesignerAdded},
+                status: {
+                    GroupInDesigner: { $set: action.GroupInDesigner },
+                    GroupInDesignerAdded: { $set: action.GroupInDesignerAdded },
                 }
             })
         case GET_LIKE_IN_DESIGNER:
@@ -239,50 +239,50 @@ export function Designer(state, action) {
 
         case GET_LIKE_GROUP_IN_DESIGNER:
             return update(state, {
-                status:{
-                    LikeGroupInDesigner:{$set:action.LikeGroupInDesigner},
-                    LikeGroupInDesignerAdded:{$push:action.LikeGroupInDesigner},
+                status: {
+                    LikeGroupInDesigner: { $set: action.LikeGroupInDesigner },
+                    LikeGroupInDesignerAdded: { $push: action.LikeGroupInDesigner },
 
                 }
             })
         case GET_LIKE_GROUP_IN_DESIGNER_CLEAR:
             return update(state, {
-                status:{
-                    LikeGroupInDesigner:{$set:action.LikeGroupInDesigner},
-                    LikeGroupInDesignerAdded:{$set:action.LikeGroupInDesigner},
+                status: {
+                    LikeGroupInDesigner: { $set: action.LikeGroupInDesigner },
+                    LikeGroupInDesignerAdded: { $set: action.LikeGroupInDesigner },
 
                 }
             })
         case GET_LIKE_GROUP_IN_DESIGNER_FAIL:
             return update(state, {
-                status:{
-                    LikeGroupInDesigner:{$set:action.LikeGroupInDesigner},
-                    LikeGroupInDesignerAdded:{$set:action.LikeGroupInDesignerAdded},
+                status: {
+                    LikeGroupInDesigner: { $set: action.LikeGroupInDesigner },
+                    LikeGroupInDesignerAdded: { $set: action.LikeGroupInDesignerAdded },
 
                 }
             })
 
         case GET_LIKE_DESIGNER_IN_DESIGNER:
             return update(state, {
-                status:{
-                    LikeDesignerInDesigner:{$set:action.LikeDesignerInDesigner},
-                    LikeDesignerInDesignerAdded:{$push:action.LikeDesignerInDesigner}
+                status: {
+                    LikeDesignerInDesigner: { $set: action.LikeDesignerInDesigner },
+                    LikeDesignerInDesignerAdded: { $push: action.LikeDesignerInDesigner }
 
                 }
             })
         case GET_LIKE_DESIGNER_IN_DESIGNER_CLEAR:
             return update(state, {
-                status:{
-                    LikeDesignerInDesigner:{$set:action.LikeDesignerInDesigner},
-                    LikeDesignerInDesignerAdded:{$set:action.LikeDesignerInDesigner}
+                status: {
+                    LikeDesignerInDesigner: { $set: action.LikeDesignerInDesigner },
+                    LikeDesignerInDesignerAdded: { $set: action.LikeDesignerInDesigner }
 
                 }
             })
         case GET_LIKE_DESIGNER_IN_DESIGNER_FAIL:
             return update(state, {
-                status:{
-                    LikeDesignerInDesigner:{$set:action.LikeDesignerInDesigner},
-                    LikeDesignerInDesignerAdded:{$set:action.LikeDesignerInDesignerAdded}
+                status: {
+                    LikeDesignerInDesigner: { $set: action.LikeDesignerInDesigner },
+                    LikeDesignerInDesignerAdded: { $set: action.LikeDesignerInDesignerAdded }
 
                 }
             })
