@@ -142,7 +142,7 @@ class SignUpModal extends Component {
     async checkNickname() {
         const data = { nick_name: this.state.nick_name }
         let returnvalue = true;
-        await this.props.CheckEmailRequest(data).then(
+        await this.props.CheckNickNameRequest(data).then(
             (res) => {
                 console.log(res, data);
                 if (res.checkNickName === false) {
