@@ -77,15 +77,6 @@ class Alarm extends Component {
             document.removeEventListener("mousedown", this.checkClickOutside)
         }
     }
-    // onAlarmHandler = e => {
-    //     if (e.type === "blur" && !this.alarm.contains(e.relatedTarget)) {
-    //         this.setState({ active: false });
-    //     }
-    // }
-    // openAlarmHandler = e => {
-    //     this.setState({ active: !this.state.active });
-    // }
-
     alarmConfirm = (userID, alarmID) => {
         console.log("alarm-confirm:", userID, ",", alarmID)
         this.props.handleAlarmConfirm(userID, alarmID)
@@ -132,7 +123,8 @@ class Alarm extends Component {
             } else if (item.kinds === "INVITE_REJECT") {
                 msg = `${from}님이 초대를 거절하였습니다.`;
             } else if (item.kinds === "LIKE") {
-                msg = `${from}님께서 디자인을 좋아합니다.`;
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 디자인을 좋아합니다.`;
+                else msg = `${from}님께서 디자인을 좋아합니다.`;
             } else if (item.kinds === "COMMENT") {
                 msg = `${from}님이 디자인에 댓글을 달았습니다.`;
             } else if (item.kinds === "CARD_COMMENT") {
@@ -154,9 +146,15 @@ class Alarm extends Component {
             } else if (item.kinds === "GROUP_GETOUT") {
                 msg = `${to}님께서 그룹에서 활동이 중단되셨습니다.`;
             } else if (item.kinds === "LIKE") {
-                msg = `${from}님의 이 그룹을 좋아합니다.`;
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 그룹을 좋아합니다.`;
+                else msg = `${from}님의 이 그룹을 좋아합니다.`;
             } else if (item.kinds === "GROUP_DESIGN_OUT") {
                 msg = `${title.slice(0, 8)}그룹으로부터 디자인이 분리되었습니다.`;
+            }
+        } else if (item.type === "DESIGNER") {
+            if (item.kinds === "LIKE") {
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 ${to}님을 좋아합니다.`;
+                else msg = `${from}님의 ${to}님을 좋아합니다.`;
             }
         }
         return msg;
@@ -191,6 +189,9 @@ class Alarm extends Component {
         else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
                 if (window.confirm("가입을 승인하시겠습니까?")) {
+
+                    console.log(item, item.content_id, item.sub_content_id, item.user_id, item.uid);
+                    // return;
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //     if (res.data && res.data.success) {
@@ -278,10 +279,52 @@ class Alarm extends Component {
         })
         return [returnType, count];
     }
-
+    frequency = (arr) => {
+        if (arr == null || arr.length === 0) return null;
+        if (arr[0]) arr[0].count = 1;
+        var a = [arr[0]], prev = arr[0];
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].content_id !== prev.content_id) {
+                arr[i].count = 1;
+                a.push(arr[i]);
+            } else {
+                a[a.length - 1].count++;
+            }
+            prev = arr[i];
+        }
+        return a;
+    }
+    combine = (alarms) => {
+        if (alarms == null || alarms.length === 0) return null;
+        let list = [];
+        let rst = [];
+        //get like design
+        alarms.sort((a, b) => (a.create_time > b.create_time) ? 1 : -1);
+        list = alarms.filter(alarm => { return alarm.type === "DESIGN" && alarm.kinds === "LIKE" });
+        list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
+        list = this.frequency(list);
+        rst = [...rst, ...list];
+        //get like group
+        list = alarms.filter(alarm => { return alarm.type === "GROUP" && alarm.kinds === "LIKE" });
+        list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
+        list = this.frequency(list);
+        rst = [...rst, ...list];
+        //get like designer
+        list = alarms.filter(alarm => { return alarm.type === "DESIGNER" && alarm.kinds === "LIKE" });
+        list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
+        list = this.frequency(list);
+        rst = [...rst, ...list];
+        //add normal alarm
+        list = alarms.filter(alarm => { return alarm.kinds !== "LIKE" });
+        rst = [...rst, ...list];
+        //sort by create_time
+        rst.sort((a, b) => (a.confirm < b.confirm) ? 1 : (a.create_time < b.create_time ? 1 : -1));
+        return rst;
+    }
     render() {
         const alarms = this.props.alarm;
-
+        const alarmscombined = this.combine(alarms && alarms.list);
+        console.log("combine:result:", alarmscombined);
         return (
             <React.Fragment>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
@@ -297,18 +340,7 @@ class Alarm extends Component {
                             let designCount = 0, groupCount = 0, countObj, msg;
 
                             msg = this.getMessageText(item);
-                            if (item.kinds === "LIKE") {
-                                countObj = this.getLikeCount(item, alarms);
-                                countObj[0] === "DESIGN" ? designCount = countObj[1] : groupCount = countObj[1];
-                                console.log(countObj[1]);
-                                if (designCount !== 0) {
-                                    msg = designCount === 1 ? `${item.from}님께서 디자인을 좋아합니다.` : `${item.from}님 외에${designCount - 1}명이 디자인을 좋아합니다.`;
-                                }
-                                else {
-                                    msg = groupCount === 1 ? `${item.from}님께서 그룹을 좋아합니다.` : `${item.from}님 외에${groupCount - 1}명이 디자인을 좋아합니다.`;
-                                }
-                            }
-                            console.log("item:", item, "msg:", msg);
+
                             return (
                                 <ListItem confirm={item.confirm} key={item.uid}>
                                     <div style={{ fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}><TextFormat txt={msg} /></div>
@@ -323,7 +355,7 @@ class Alarm extends Component {
                                                             <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
                                                         </div>
-                                                        Alarm                         </React.Fragment>)
+                                                    </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
                                                         ? <div onClick={() => this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
