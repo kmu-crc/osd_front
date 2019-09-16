@@ -33,10 +33,10 @@ class EditStepModal extends Component {
     onClose = () => {
         this.props.close()
     }
-    removeStep = (event) => {
+    removeStep = (event, steps, where) => {
         event.stopPropagation();
-        const step = this.props.steps.find(step => { return (step.uid === this.props.where) });
-        if (step.cards && step.cards.length > 0) {
+        const step = steps.find(step => { return (step.uid === parseInt(where, 10)) });
+        if (step && step.cards && step.cards.length > 0) {
             alert("카드가 존재하는 단계는 삭제할 수 없습니다.");
             return;
         }
@@ -67,7 +67,7 @@ class EditStepModal extends Component {
             </div>
             <div style={{ display: "flex", width: "576px", marginLeft: "auto", marginRight: "75px", marginTop: "38px" }}>
                 <div onClick={this.onSubmit} style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "29px", borderBottom: "1.5px solid #FF0000", cursor: "pointer" }}>수정하기</div>
-                <div onClick={(event) => this.removeStep(event)} style={{ marginLeft: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>삭제</div>
+                <div onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} style={{ marginLeft: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>삭제</div>
             </div>
         </EditStepDialog >)
     }
