@@ -22,7 +22,7 @@ const DesignInfoComp = styled.div`
     background-color: #EFEFEF;
     width: 1920px;
     height: 237px;
-  div{border:1px solid red;}
+  }
 `;
 const DesignList = styled.div`
     display: ${props => props.display};
@@ -253,7 +253,7 @@ class DesignInfo extends Component {
                     <div style={{ position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
                         <div style={{ marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070" }}>관심 디자인으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></div>}
                 <DesignInfoComp >
-                    {DesignDetail.parent_design && <div style={{ position: "absolute", marginTop: "19px", marginLeft: "220px", width: "20px", height: "42px", backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
+                    {DesignDetail.parent_design && <div style={{ position: "absolute", marginTop: "19px",marginLeft: "220px", width: "32px", height: "70px", backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
                     <div style={{ marginTop: "19px", marginLeft: "65px", background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: `url${thumbnail}`, backgroundColor: "#D6D6D6", borderRadius: "15px", width: "200px", height: "200px", backgroundRepeat: "no-repeat" }}></div>
                     <div style={{ marginTop: "19px", marginLeft: "42px", }}>
                         <div style={{ position: "absolute", width: "max-content", height: "29px", marginTop: "0px", marginLeft: "0px", fontSize: "20px", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "29px", cursor: "pointer" }} title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
