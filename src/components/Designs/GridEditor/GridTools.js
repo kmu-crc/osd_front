@@ -114,12 +114,6 @@ const CardContainer = styled.div`
     }
 }}>
 `;
-// export const StepCard = (props) => {
-//     return (<StepCardStyle onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
-//         <div className="icon-area">{props.children}</div>
-//         <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
-//     </StepCardStyle >)
-// }
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
