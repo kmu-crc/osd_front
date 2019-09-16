@@ -10,10 +10,7 @@ import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 
 //todo
-//1) open-card
-//2) reorder card
-//3) create-card
-//4) scroll
+//4) scroll(align cards)
 
 // DND
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
@@ -22,12 +19,11 @@ const DragHandle = SortableHandle(() => <Icon style={{ fontSize: "25px" }} name=
 
 const margin = { marginTop: "25px", marginRight: "74px", marginBottom: "37px", marginLeft: "-40px" };
 const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id }) => (
-    /* onClick={() => this.takeOutCard(card_index, step_index, step.cards[card_index], step.cards.length)} /> */
-    <ContentCard onClick={()=>openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} design_id={design_id} >
+    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} design_id={design_id} >
         {editor ? <DragHandle /> : null}
     </ContentCard>
 ));
-const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCard, reorder }) => (
+const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCard, createCard, reorder }) => (
     <div>
         <StepCard title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={74} marginBottom={0} marginLef={0} >
             {editor ? <DragHandle /> : null}
@@ -35,7 +31,7 @@ const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCa
         {step.cards && step.cards.length > 0 &&
             <Fragment>
                 <div style={{ marginTop: "25px" }}>
-                    <AsBelowArrow percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
+                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
                 </div>
                 <div>
                     <SortableDesignCards editor={editor} boardId={boardId} items={step.cards} design_id={design_id} openCard={openCard} reorder={reorder} />
@@ -43,7 +39,7 @@ const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCa
             </Fragment>}
         {editor &&
             <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
-                <CreateCard title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}
+                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}
                 /*this.takeOutCard(step.cards.length > 0 ? step.cards.length - 1 : 0, step.uid, null, step.cards.length)*/
                 />
             </div>}
@@ -66,32 +62,17 @@ class SortableDesignCards extends Component {
         }
         return false;
     }
-    //shouldCancelStart = (e) => {
-    //    var targetEle = e;
-    //    if (!targetEle.id) {
-    //        targetEle = e.target;
-    //    }
-    //    if (targetEle.id === 'contentcard' || targetEle.parentNode.id === 'contentcard') {
-    //        const target = targetEle.id === 'contentcard' ? targetEle : targetEle.parentNode;
-    //        alert("??");
-    //        console.log(target.id, target.getAttribute('uid'), target);
-    //        //this.props.openCard()
-    //        // const title = targetEle.getAttribute('title');
-    //        // const uid = targetEle.getAttribute('uid');
-    //        // this.props.editStep(title, uid);
-    //    }
-    //}
+
     render() {
         const { items } = this.state;
-        const { editor, design_id, openCard, boardId } = this.props;
+        const { editor, design_id, openCard, createCard, boardId } = this.props;
         return (<Container
             axis="y"
             pressThreshold={5}
             onSortEnd={this.onSortEnd}
             onSortStart={(_, event) => event.preventDefault()}
-            //shouldCancelStart={this.shouldCancelStart}
             useDragHandle>
-            {items.map((item, index) => (<SortableCard openCard={openCard} boardId={boardId} design_id={design_id} editor={editor} key={`step-${index}`} index={index} card={item} />))}
+            {items.map((item, index) => (<SortableCard createCard={createCard} openCard={openCard} boardId={boardId} design_id={design_id} editor={editor} key={`step-${index}`} index={index} card={item} />))}
         </Container>)
     }
 }
@@ -126,7 +107,7 @@ class SortableDesignSteps extends Component {
     }
     render() {
         const { items } = this.state;
-        const { editor, design_id, cardReorder, openCard } = this.props;
+        const { editor, design_id, cardReorder, createCard, openCard } = this.props;
         return (<Container
             axis="x"
             pressThreshold={5}
@@ -136,7 +117,7 @@ class SortableDesignSteps extends Component {
             useDragHandle>
             <div style={{ display: "flex" }}>
                 {items.map((item, index) => (
-                    <SortableStep boardId={item.uid} openCard={openCard} reorder={cardReorder} design_id={design_id} disabled={!editor} editor={editor} key={`step-${index}`} index={index} step={item} />
+                    <SortableStep boardId={item.uid} createCard={createCard} openCard={openCard} reorder={cardReorder} design_id={design_id} disabled={!editor} editor={editor} key={`step-${index}`} index={index} step={item} />
                 ))}
             </div>
         </Container >)
@@ -153,6 +134,7 @@ const AsBelowArrow = styled.div`
     border-top: ${props => props.percent * 65}px solid #707070;
     border-left: ${props => props.percent * 50}px solid transparent;
     border-right:${props => props.percent * 50}px solid transparent;
+    transform: rotate(${props => props.angle}deg);
 `;
 const GridEditorWrapper = styled.div`
     width: 1925px;
@@ -209,6 +191,7 @@ class GridEditor extends Component {
         this.EditStep = this.EditStep.bind(this);
         this.NewStep = this.NewStep.bind(this);
         this.requestReorder = this.requestReorder.bind(this);
+        this.requestCardReorder = this.requestCardReorder.bind(this);
     };
     componentWillUnmount() {
         this.temp && this.temp.current.removeEventListener("scroll", this.handleScroll, true);
@@ -231,10 +214,10 @@ class GridEditor extends Component {
     createNewCard(row, boardId) {
         this.setState({ row: row, boardId: boardId, newcard: true });
     }
-    openCard = (card, row, boardId) =>{
-        console.log(card,row,boardId);
+    openCard = (card, row, boardId) => {
+        console.log(card, row, boardId);
         // return;
-        this.setState({cardDetail:card, title:card.title, row:row,boardId:boardId, card:true});
+        this.setState({ cardDetail: card, title: card.title, row: row, boardId: boardId, card: true });
     }
     takeOutCard(row, boardId, data, maxRow) {
         if (data === null) {
@@ -296,7 +279,17 @@ class GridEditor extends Component {
         }
     }
     async requestCardReorder(items) {
-        console.log("dnd:cards", items);
+        const jobs = [];
+        let promiseAry = [];
+        items.forEach((element, index) => {
+            if (element.order !== index) jobs.push({ uid: element.uid, neworder: index });
+        });
+        if (jobs.length === 0) return;
+        promiseAry = jobs.map(job => {
+            return this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid);
+        })
+        await Promise.all(promiseAry)
+            .then(this.props.GetDesignBoardRequest(this.props.design.uid))
     }
     async requestReorder(items) {
         const jobs = [];
@@ -359,7 +352,7 @@ class GridEditor extends Component {
                             <div ref={(ref) => this.grid = ref} style={{ display: "flex", marginTop: "90px" }}>
                                 {/* ------------단계 ------------*/}
                                 {DesignDetailStep && DesignDetailStep.length > 0 &&
-                                    <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} openCard={this.openCard} reorder={this.requestReorder} />}
+                                    <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
                                 {editor && <CreateStep onClick={this.OpenNewStep} step={"단계"} />}
                             </div>
                         </div>
