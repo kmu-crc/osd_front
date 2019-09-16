@@ -8,6 +8,8 @@ import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberCo
 import Loading from "components/Commons/Loading";
 import { geturl } from "config";
 import iDelete from "source/deleteItem.png"
+import forked from "source/forked.svg";
+
 
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
@@ -255,10 +257,15 @@ class ModifyDesign extends Component {
               <div style={BasicSec_thumb_Box}>
                 <div style={BasicSecTitle}>프로필 사진
                     </div>
-                <div style={{
+                <div style={{ position:"relative",
                   marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px",
                   backgroundImage: `url(${thumbnailURL})`, backgroundSize: "cover", backgroundPosition: "center center"
-                }} ></div>
+                }} >
+                  {this.props.DesignDetail&&this.props.DesignDetail.parent_design && 
+                  <div style={{ position: "absolute",right:"21px", width: "32px", height: "70px", 
+                  backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
+
+                </div>
                 <div style={BasicSec_thumb_ExplainBox}>
                   <div style={BasicSec_thumb_FindBox}>
                     <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>

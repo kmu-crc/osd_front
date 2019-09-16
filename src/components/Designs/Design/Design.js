@@ -89,7 +89,7 @@ class Design extends Component {
           </div>
           <div style={{ width: "285px", display: "flex", justifyContent: "space-between" }}>
             <div style={{ fontSize: "20px", fontWeight: "300", cursor: "pointer" }}>
-              <TextFormat width="100%" txt={data.userName} /></div>
+              <TextFormat width="200px" txt={data.userName} /></div>
             <div style={{
               marginTop: "5px", fontWeight: "300", width: "80px", height: "25px",
               fontSize: "17px", lineHeight: "25px", textAlign: "right", fontFamily: "Noto Sans KR", cursor: "default"
