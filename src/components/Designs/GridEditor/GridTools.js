@@ -42,10 +42,10 @@ const StepCardStyle = styled.div`
     height: 77px;
     border-radius: 15px;
     border: 2px solid #707070;
-    margin-top: ${props => props.marginTop || "0px"};
-    margin-left: ${props => props.marginLeft || "0px"};
-    margin-right: ${props => props.marginRight || "0px"};
-    margin-bottom: ${props => props.marginBottom || "0px"};
+    margin-top: ${props => props.marginTop}px;
+    margin-left: ${props => props.marginLeft}px;
+    margin-right: ${props => props.marginRight}px;
+    margin-bottom: ${props => props.marginBottom}px;
     background-clip: padding-box;
     background-color: white;
     .text-area{
@@ -73,7 +73,7 @@ const StepCardStyle = styled.div`
     }
 `;
 export const StepCard = (props) => {
-    return (<StepCardStyle onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
+    return (<StepCardStyle marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
         <div className="icon-area">{props.children}</div>
         <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
     </StepCardStyle >)
