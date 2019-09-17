@@ -98,7 +98,7 @@ class ModifyDesign extends Component {
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
-      console.log("img",nextProps.DesignDetail.img);
+      console.log("img", nextProps.DesignDetail.img);
       this.setState({
         thumbnail: nextProps.DesignDetail.img == null ? noimg : nextProps.DesignDetail.img.m_img,
         title: nextProps.DesignDetail.title,
@@ -181,7 +181,6 @@ class ModifyDesign extends Component {
       await this.setState({ additional: false });
     }
   }
-
   submit = () => {
     const data = {
       user_id: this.props.DesignDetail.user_id,
@@ -192,15 +191,12 @@ class ModifyDesign extends Component {
       is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0
     };
     if (data.files.length <= 0 || data.files[0].value === this.props.DesignDetail.img.m_img) {
-      // console.log("--------------------------------------------------------)");
       delete data.files;
     }
-
-    // console.log("sending-data:", this.props, data);
     this.setState({ loading: true });
     this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
       .then((data) => {
-        // console.log(data);
+        console.log(data, data.res && data.res.success);
         if (data.res && data.res.success) {
           alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.");
           window.location.href = geturl() + '/designDetail/' + this.props.DesignDetail.uid;
@@ -209,13 +205,15 @@ class ModifyDesign extends Component {
         }
       })
     this.setState({ loading: false });
-    window.location.href = geturl() + `/designDetail/` + this.state.designId;
+    // window.location.href = geturl() + `/designDetail/` + this.state.designId;
   }
   onChangeCategory1(event, { value }) {
     this.setState({ categoryLevel1: { value }.value });
+    this.checkFinishAdditional();
   }
   onChangeCategory2(event, { value }) {
     this.setState({ categoryLevel2: { value }.value })
+    this.checkFinishAdditional();
   }
   onCheckedLicense01 = async () => {
     await this.setState({ license1: !this.state.license1 });
@@ -235,14 +233,22 @@ class ModifyDesign extends Component {
   }
   addMember = async (email, s_img, nick_name, uid) => {
     let member = { email: email, s_img: s_img, nick_name: nick_name, user_id: uid, uid: uid };
-    await this.setState({ members: this.state.members.concat(member), addmem: this.state.addmem.concat(member) });
-    console.log("members[]====", this.state.members, this.state.addmem);
+    await this.setState({
+      members: this.state.members.concat(member),
+      addmem: this.state.addmem.concat(member)
+    });
+    // console.log("members[]====", this.state.members, this.state.addmem);
     this.checkFinishAdditional();
   }
-  removeMember = async (index) => {
-    await this.setState({ delmem: this.state.delmem.concat(this.state.members.filter((member, memberindex) => { return index === memberindex })) });
-    await this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
-    console.log("members====", this.state.members, this.state.delmem);
+  removeMember = async (user_id) => {
+    // remove from addmem
+    if (this.state.addmem.find(mem => { return mem.user_id === user_id })) {
+      await this.setState({ addmem: this.state.addmem.filter(member => { return member.user_id !== user_id }) });
+    } else { // remove if not in addmem
+      await this.setState({ delmem: this.state.delmem.concat(this.state.members.filter((member) => { return user_id === member.user_id })) });
+    }
+    // display member list
+    await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
   }
   deleteDesign = () => {
     this.props.DeleteDesignRequest(this.props.id, this.props.token)
@@ -255,10 +261,10 @@ class ModifyDesign extends Component {
   }
   render() {
     let arrSummaryList = [];
-    if (this.state.members!=null&&this.state.members.length > 0) {
+    if (this.state.members != null && this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
         return (
-          <div onClick={() => this.removeMember(index)} key={index}>
+          <div onClick={() => this.removeMember(item.user_id)} key={index}>
             <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
           </div>
         )
@@ -276,7 +282,7 @@ class ModifyDesign extends Component {
     }
     const { step, loading, deleteModal } = this.state; // const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
-    console.log("new:", this.props)
+    // console.log("new:", this.props)
     return (<React.Fragment>
       {loading ? <Loading /> : null}
       {deleteModal ? <DeleteDesignModal /> : null}
