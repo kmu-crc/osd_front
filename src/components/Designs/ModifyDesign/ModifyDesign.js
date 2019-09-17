@@ -98,6 +98,7 @@ class ModifyDesign extends Component {
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
+      console.log("img",nextProps.DesignDetail.img);
       this.setState({
         thumbnail: nextProps.DesignDetail.img == null ? noimg : nextProps.DesignDetail.img.m_img,
         title: nextProps.DesignDetail.title,
@@ -254,7 +255,7 @@ class ModifyDesign extends Component {
   }
   render() {
     let arrSummaryList = [];
-    if (this.state.members.length > 0) {
+    if (this.state.members!=null&&this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
         return (
           <div onClick={() => this.removeMember(index)} key={index}>

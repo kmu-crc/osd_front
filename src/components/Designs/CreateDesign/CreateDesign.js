@@ -121,11 +121,40 @@ class CreateDesign extends Component {
       alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
       return;
     }
+    if (this.state.basic && this.state.additional && menu.step <=2)
+    {
+      if (this.state.step === 1 && this.state.designId == null) {
+        let designId = null;
+        console.log(this.props);
+        // create design and next stage, next state will be load new design via grid editor
+        const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
+        let data = {
+          is_project: 1,
+          category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
+          files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
+          is_commercial: license1, is_display_creater: license2, is_modify: license3, member: JSON.stringify(members), title: title
+        };
+        console.log(data);
+        this.setState({ loading: true });
+        this.props.CreateDesignRequest(data, this.props.token)
+          .then(async (res) => {
+            if (res.success) {
+              designId = res.design_id;
+              this.props.GetDesignDetailRequest(designId, this.props.token)
+                .then(() => {
+                  this.props.GetDesignBoardRequest(designId)
+                })
+              await this.setState({ content: true, designId: designId, grid: true, loading: false });
+            }
+          })
+          .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
+      }
+    }
     this.setState({ step: menu.step });
   }
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
-    if (title && thumbnail && explanation) {
+    if (title && thumbnail!==noimg && explanation) {
       await this.setState({ basic: true });
     } else {
       await this.setState({ basic: false });
@@ -226,7 +255,7 @@ class CreateDesign extends Component {
                     <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>
                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                   </div>
-                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG 파일을 등록 가능합니다.</div>
+                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                 </div>
               </div>
 

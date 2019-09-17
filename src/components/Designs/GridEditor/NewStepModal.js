@@ -7,7 +7,7 @@ import { Modal } from 'semantic-ui-react'
 const NewStepDialog = styled(Modal)`
     max-width: 849px;
     height: 295px;
-    border-radius: 5px;
+    border-radius: 100px;
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px #FF0000;
 `
