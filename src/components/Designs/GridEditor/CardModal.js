@@ -98,6 +98,10 @@ class CardModal extends Component {
     };
     onClose = () => { this.props.close() }
     render() {
+
+        console.log("this.props.cardmodal",this.props);
+        const imgURL = this.props.card&& this.props.card.first_img ==null?null:this.props.card.first_img.s_img;
+
         const card = this.props.card || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
         const { isTeam, edit } = this.props;
         const movablePrev = this.props.row > 0
@@ -146,7 +150,7 @@ class CardModal extends Component {
                                     <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>썸네일 사진</div>
                                     <div></div>
                                     <FormThumbnailEx
-                                        name="thumbnail"
+                                        name="thumbnail" image = {imgURL}
                                         style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }}
                                         placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
                                     />
@@ -167,9 +171,11 @@ class CardModal extends Component {
                                         <input name="content" onChange={this.onChangeContent} value={this.state.content} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
                                     </div>
                                 </div>
-                                <div style={{ marginLeft: "auto", marginRight: "75pd" }}>
-                                    <button onClick={this.handleHeaderSubmit} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>적용하기</button>
-                                    <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>취소</button>
+                                <div style={{ paddingLeft:"1305px"}}>
+                                    <button onClick={this.handleHeaderSubmit} style={{ border: "none", background: "none", width: "max-content", height: "40px", 
+                                    lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px",
+                                     fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>적용하기</button>
+                                    <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ marginLeft:"10px",border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>취소</button>
                                 </div>
                             </React.Fragment>}
 
