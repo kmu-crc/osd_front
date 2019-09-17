@@ -112,7 +112,7 @@ class GroupBasicInfo extends Component
                         <label for="file" onClick = {this.handleFileUploadModal}style={BasicSec_thumb_FindTitle}>찾아보기</label>
                         <input hidden onChange = {this.handleOnChangeThumbnail} id="file" type="file" value ={null} />
                     </div>
-                    <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG 파일을 등록 가능합니다.</div>
+                    <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                 </div>
                 {/* title */}

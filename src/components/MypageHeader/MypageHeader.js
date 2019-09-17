@@ -99,10 +99,10 @@ class MypageHeader extends Component {
                     <div style={ExplainBox01}>{about_me[0]}</div>
                     <div style={ExplainBox02}>{about_me[1]}</div>
                     <div style={SummaryIconBox}>
-                        <div style={Summary_View_Icon}><IconView width="17px" height="13px" fill="#707070" /></div>
-                        <div style={Summary_View}>{NumberFormat(countInfo.total_view)}</div>
+                        <div style={Summary_View_Icon}><IconView width="17px" height="13px" fill="#707070" /></div>                        
+                        <div style={Summary_View}>{NumberFormat(countInfo.total_view==null?0:countInfo.total_view)}</div>
                         <div style={Summary_ThumbUp_Icon}></div>
-                        <div style={Summary_ThumbUp}>{NumberFormat(countInfo.total_like)}</div>
+                        <div style={Summary_ThumbUp}>{NumberFormat(countInfo.total_like==null?0:countInfo.total_like)}</div>
                         <div style={Summary_Forked_Icon}></div>
                         <div style={Summary_Forked}>{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
                     </div>

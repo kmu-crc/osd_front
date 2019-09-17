@@ -113,10 +113,15 @@ class ModifyDesignMember extends Component {
   joinMember = () => {
     const data = this.state.members;
     console.log("data:", data);
+    if(data.length<=0||data==null)
+    {
+      alert("초대할 멤버를 선택해주세요!");
+      return;
+    }
     // return;
     this.props.JoinDesignRequest(this.props.match.params.id, data, 1, this.props.token)
       .then(res => {
-        console.log("joinMember:", res);
+        console.log("joinMember:", res.data);
         if (res.data && res.data.success) {
           alert("가입 요청을 보냈습니다.");
           this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token);

@@ -50,6 +50,7 @@ class ModifyDesign extends Component {
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
+      console.log("img",nextProps.DesignDetail.img);
       this.setState({
         thumbnail: nextProps.DesignDetail.img == null ? noimg : nextProps.DesignDetail.img.m_img,
         title: nextProps.DesignDetail.title,
@@ -204,7 +205,7 @@ class ModifyDesign extends Component {
   render() {
     // const myInfo = this.props.MyDetail
     let arrSummaryList = [];
-    if (this.state.members.length > 0) {
+    if (this.state.members!=null&&this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
         // let SelectedItem = false;
         // if(this.state.selectId === item.friend_id)   SelectedItem=true;       
@@ -271,7 +272,7 @@ class ModifyDesign extends Component {
                     <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>
                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                   </div>
-                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG 파일을 등록 가능합니다.</div>
+                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                 </div>
               </div>
 

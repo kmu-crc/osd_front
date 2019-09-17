@@ -89,7 +89,7 @@ class SearchListRe extends Component {
     getSearchValue = (e) => {
         const target = e.target;
         const value = target.value;
-        let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
+        let regExp =/^[a-zA-Zㄱ-힣0-9"_-]*$/i;
         if (!value.match(regExp)) {
             alert("특수문자는 사용할 수 없습니다.");
             target.value = "";
@@ -170,7 +170,7 @@ class SearchListRe extends Component {
                     <div style={{ display: "flex", justifyContent: "space-start" }}>
                         <div style={{ position: "relative", display: "flex", justify: "space-start" }}>
                             <div style={{ position: "absolute", top: "250px", left: "44px", zIndex: "10001" }}>
-                                <Dropdown  id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} value={this.state.selectCate} />
+                                <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} value={this.state.selectCate} />
                             </div>
                             <div style={{ border: "1xp solid red", position: "relative", top: "220px", left: "1736px" }}>
                                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />

@@ -38,8 +38,8 @@ const DesignList = styled.div`
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
     font-family: Noto Sans KR;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-y:scroll;
+    overflow-x:hidden;
     
     &.list::-webkit-scrollbar {
         position: absolute;
@@ -126,6 +126,8 @@ class DesignInfo extends Component {
         }
     }
     async forkDesign() {
+
+
         if (this.props.userInfo === null) {
             return this.needLogin();
         }
@@ -174,6 +176,7 @@ class DesignInfo extends Component {
         await this.setState({ forkDialog: 0 })
     }
     moveDegisnForked = () => {
+        //alert(this.props.new_design_id);
         if (this.props.new_design_id) {
             this.props.history.push("/designModify/" + this.props.new_design_id)
         }
@@ -198,6 +201,7 @@ class DesignInfo extends Component {
         this.setState({ memberList: true });
     }
     render() {
+
         const { isMyDesign, editor, DesignDetail, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
