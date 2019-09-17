@@ -1,14 +1,11 @@
 import React from 'react';
 import plusImg from "source/plus_cross_gray.png";
-import SummaryIcon from "source/jina.png";
 import noImage from "source/thumbnail.png"
 import styled from "styled-components";
 
 import SearchMemverContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
-import FormDataToJson from "modules/FormDataToJson"
 import Socket from "modules/Socket"
-import { Modal } from 'semantic-ui-react';
 
 
 const SummaryList = styled.div`
@@ -19,17 +16,7 @@ const SummaryList = styled.div`
     overflow-y: scroll;
   }
 `;
-const MsgSectionBoard = styled.div`
-  position:relative;
-  width: 1259px;
-  height: 602.5px;
-  flex-direction:column;
-  justify-content:flex-end;
-  overflow:hidden;
-  &:hover {
-    overflow-y: scroll;
-  }
-`;
+
 const Banner = { width: "100%", height: "48px", marginTop: "8px", backgroundColor: "#EFEFEF" };
 const BannerText = {
   display: "inline-block", width: "74px", height: "29px", marginTop: "9px", marginLeft: "65px",
@@ -53,10 +40,6 @@ const MessageAsideHeaderIcon = {
 
 const MsgSummaryItem = { position: "relative", overflow: "hidden", width: "336px", height: "70px", marginBottom: "30px", opacity: "0.5" };
 const MsgSummarySelectItem = { position: "relative", overflow: "hidden", width: "336px", height: "70px", marginBottom: "30px" };
-const MsgSummaryIcon = {
-  position: "absolute", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${SummaryIcon})`,
-  backgroundSize: "cover", backgroundPosition: "center center"
-}
 const MsgSummaryName = {
   position: "absolute", width: "244px", height: "29px", left: "92px",
   fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "29px"

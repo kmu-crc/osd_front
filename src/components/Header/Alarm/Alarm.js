@@ -301,7 +301,9 @@ class Alarm extends Component {
         //get like group
         list = alarms.filter(alarm => { return alarm.type === "GROUP" && alarm.kinds === "LIKE" });
         list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
+        console.log("1",list);
         list = this.frequency(list);
+        console.log("",list);
         rst = [...rst, ...list];
         //get like designer
         list = alarms.filter(alarm => { return alarm.type === "DESIGNER" && alarm.kinds === "LIKE" });
@@ -318,6 +320,9 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         const alarmscombined = this.combine(alarms && alarms.list);
+
+
+
         console.log("combine:result:", alarmscombined);
         return (
             <React.Fragment>{this.state.active &&
