@@ -90,8 +90,8 @@ class MypageBody extends Component {
 
     render() {
         const { MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded } = this.props;
-
         const catePadding = ['70px', '55px', '60px'];
+        console.log("mypage:", this.props);
         return (
             <MypageBodyComp>
                 <div className="MypageCategory">

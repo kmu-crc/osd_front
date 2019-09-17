@@ -10,6 +10,8 @@ import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
 import { Dropdown } from "semantic-ui-react";
 
+import styled from "styled-components";
+
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
 
@@ -20,12 +22,47 @@ function Peer(props) {
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
   </div>)
 }
-const BasicSecTitle = { width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
-const BasicSec_thumb_Box = { display: "flex", width: "1200px", }
-const BasicSec_thumb_ExplainBox = { marginLeft: "54.5px", marginTop: "100px" }
-const BasicSec_thumb_FindBox = { width: "63px", height: "25px", cursor: "pointer" }
-const BasicSec_thumb_FindTitle = { cursor: "pointer", fontWeight: "500", fontSize: "17px", borderBottom: "1.5px solid #FF0000", lineHeight: "25px", textAlign: "left", color: "#FF0000" }
-const BasicSec_thumb_FindExplain = { width: "341px", height: "45px", marginTop: "11px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", textAlign: "left", color: "#707070" }
+const BasicSecTitle = styled.div`
+  width: 100px;
+  height: 29px;
+  line-height: 29px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #707070;
+  text-align: left;
+`;
+const BasicSecthumbBox = styled.div`
+  display: flex;
+  width: 1200px;
+`;
+const BasicSecthumbExplainBox = styled.div`
+  margin-left: 54.5px;
+  margin-top: 100px;
+`;
+const BasicSecthumbFindBox = styled.div`
+  width: 63px;
+  height: 25px;
+  cursor: pointer;
+`;
+const BasicSecthumbFindTitle = styled.label`
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 17px;
+  border-bottom: 1.5px solid #FF0000;
+  line-height: 25px;
+  text-align: left;
+  color: #FF0000;
+`;
+const BasicSecthumbFindExplain = styled.div`
+  width: 341px;
+  height: 45px;
+  margin-top: 11px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  color: #707070;
+`;
 
 class CreateDesign extends Component {
   constructor(props) {
@@ -34,7 +71,7 @@ class CreateDesign extends Component {
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], license1: false, license2: false, license3: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: false, license2: false, license3: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -90,12 +127,14 @@ class CreateDesign extends Component {
       // create design and next stage, next state will be load new design via grid editor
       const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
       let data = {
-        is_project: 1,
+        is_project: 1, uid: this.props.userInfo.uid,
         category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
         files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
-        is_commercial: license1, is_display_creater: license2, is_modify: license3, member: JSON.stringify(members), title: title
+        is_commercial: license1, is_display_creater: license2, is_modify: license3,
+        members: { add: this.state.addmem, del: this.state.delmem },
+        title: title
       };
-      console.log(data);
+      // console.log(data);
       this.setState({ loading: true });
       this.props.CreateDesignRequest(data, this.props.token)
         .then(async (res) => {
@@ -121,8 +160,7 @@ class CreateDesign extends Component {
       alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
       return;
     }
-    if (this.state.basic && this.state.additional && menu.step <=2)
-    {
+    if (this.state.basic && this.state.additional && menu.step <= 2) {
       if (this.state.step === 1 && this.state.designId == null) {
         let designId = null;
         console.log(this.props);
@@ -154,7 +192,7 @@ class CreateDesign extends Component {
   }
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
-    if (title && thumbnail!==noimg && explanation) {
+    if (title && thumbnail !== noimg && explanation) {
       await this.setState({ basic: true });
     } else {
       await this.setState({ basic: false });
@@ -174,9 +212,11 @@ class CreateDesign extends Component {
   }
   onChangeCategory1(event, { value }) {
     this.setState({ categoryLevel1: { value }.value });
+    this.checkFinishAdditional();
   }
   onChangeCategory2(event, { value }) {
     this.setState({ categoryLevel2: { value }.value })
+    this.checkFinishAdditional();
   }
   onCheckedLicense01 = async () => {
     await this.setState({ license1: !this.state.license1 });
@@ -195,13 +235,24 @@ class CreateDesign extends Component {
     this.checkFinishAdditional();
   }
   addMember = async (email, s_img, nick_name, uid) => {
-    let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
-    await this.setState({ members: this.state.members.concat(member) });
-    console.log("members[]====", this.state.members);
+    let member = { email: email, s_img: s_img, nick_name: nick_name, user_id: uid, uid: uid };
+    await this.setState({
+      members: this.state.members.concat(member),
+      addmem: this.state.addmem.concat(member)
+    });
+    // console.log("members[]====", this.state.members);
     this.checkFinishAdditional();
   }
-  async removeMember(index) {
-    await this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
+  async removeMember(user_id) {
+    // remove from addmem
+    if (this.state.addmem.find(mem => { return mem.user_id === user_id })) {
+      await this.setState({ addmem: this.state.addmem.filter(member => { return member.user_id !== user_id }) });
+    } else { // remove if not in addmem
+      await this.setState({ delmem: this.state.delmem.concat(this.state.members.filter((member) => { return user_id === member.user_id })) });
+    }
+    // display member list
+    await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
+
     this.checkFinishAdditional();
   }
 
@@ -210,7 +261,7 @@ class CreateDesign extends Component {
     if (this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
         return (
-          <div onClick={() => this.removeMember(index)} key={index}>
+          <div onClick={() => this.removeMember(item.user_id)} key={index}>
             <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
           </div>
         )
@@ -243,21 +294,17 @@ class CreateDesign extends Component {
             {/* <form ref={(ref) => this.form = ref}> */}
             <section style={{ display: step === 0 ? "block" : "none", paddingLeft: "55.5px" }} >
               {/* thumbnail */}
-              <div style={BasicSec_thumb_Box}>
-                <div style={BasicSecTitle}>프로필 사진
-                    </div>
-                <div style={{
-                  marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px",
-                  backgroundImage: `url(${thumbnailURL == null ? noimg : thumbnailURL})`, backgroundSize: "cover", backgroundPosition: "center center"
-                }} ></div>
-                <div style={BasicSec_thumb_ExplainBox}>
-                  <div style={BasicSec_thumb_FindBox}>
-                    <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>
+              <BasicSecthumbBox>
+                <BasicSecTitle>프로필 사진</BasicSecTitle>
+                <div style={{ marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", backgroundImage: `url(${thumbnailURL == null ? noimg : thumbnailURL})`, backgroundSize: "cover", backgroundPosition: "center center" }} ></div>
+                <BasicSecthumbExplainBox>
+                  <BasicSecthumbFindBox>
+                    <BasicSecthumbFindTitle htmlFor="file">찾아보기</BasicSecthumbFindTitle>
                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-                  </div>
-                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-                </div>
-              </div>
+                  </BasicSecthumbFindBox>
+                  <BasicSecthumbFindExplain>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</BasicSecthumbFindExplain>
+                </BasicSecthumbExplainBox>
+              </BasicSecthumbBox>
 
               {/* title */}
               <div style={{ marginTop: "86px", width: "1544px" }}>
