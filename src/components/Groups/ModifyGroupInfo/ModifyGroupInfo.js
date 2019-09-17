@@ -27,7 +27,7 @@ class CreateGroup extends Component {
     super(props);
     this.state = {
       deleteDialog: false, isDelete: false,
-      groupThumbnail: noimg, groupTitle: "", groupExplain: "", groupThumbnailURL: "", groupThumbnailName: "",
+      groupThumbnail: "", groupTitle: "", groupExplain: "", groupThumbnailURL: "", groupThumbnailName: "",
       loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
       selectedCate2: null, cate1: null, cate2: null
     }
@@ -109,6 +109,22 @@ class CreateGroup extends Component {
   }
 
   onSubmit = async e => {
+
+    if(this.state.groupThumbnail=="")
+    {
+      alert("그룹의 섬네일을 지정해주세요.");
+      return;
+    }
+    else if(this.state.groupTitle=="")
+    {
+      alert("그룹 이름을 작성해주세요!");
+      return;
+    }
+    else if(this.state.explanation=="")
+    {
+      alert("그룹 설명을 작성해주세요!");
+      return;
+    }
     // console.log("this.props",this.props);return;
     e.preventDefault();
     let data = {user_id:this.props.userInfo.uid,uid:this.props.GroupDetail.uid,
@@ -210,9 +226,9 @@ class CreateGroup extends Component {
         <div style={{ position: "relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
           <form>
 
-            {step === 0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail}
+            {step === 0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail==""?noimg:this.state.groupThumbnail}
               onChangeExplain={this.handleInputDesignExplain} onChangeTitle={this.handleInputDesignTitle} onChangeThumbnailURL={this.handleChangeThumbnailURL} onChangeThumbnail={this.handleChangeThumbnail}
-              designExplain={this.state.groupExplain} designTitle={this.state.groupTitle} thumbnail={this.state.groupThumbnail} {...this.props} />}
+              designExplain={this.state.groupExplain} designTitle={this.state.groupTitle} thumbnail={this.state.groupThumbnail==""?noimg:this.state.groupThumbnail} {...this.props} />}
             {/* {step ===1 &&<AdditionalInfo {...this.props}/>} */}
             {/* buttons*/}
             <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
