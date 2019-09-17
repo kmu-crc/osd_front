@@ -173,7 +173,7 @@ const GridEditorWrapper = styled.div`
         padding-right: 250px;
         overflow: hidden;
         white-space: nowrap;
-        width: ${props => props.width}px; 
+        width: max-content; 
         display: flex;
         margin-top: 90px;
     }
@@ -187,7 +187,7 @@ class GridEditor extends Component {
             left: false, right: false, h: 0,
             card_loading: false, card: false, newcard: false, row: null, col: null, boardId: null,
             newstep: false, editstep: false, cardDetail: null, title: null, where: null,
-            w: 1920, arrow_top: 0, tmp: null,
+            w: 1920 - 65, arrow_top: 0, tmp: null,
         };
         this.handleScroll = this.handleScroll.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -292,6 +292,7 @@ class GridEditor extends Component {
         })
         await Promise.all(promiseAry)
             .then(this.props.GetDesignBoardRequest(this.props.design.uid))
+            .then(this.props.GetDesignCardRequest(this.props.design.uid, this.state.boardId));
     }
     async requestReorder(items) {
         const jobs = [];
