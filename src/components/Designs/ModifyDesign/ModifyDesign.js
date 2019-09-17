@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { Dropdown, Modal } from "semantic-ui-react";
-import Cross from "components/Commons/Cross";
-import noimg from "source/noimg.png"
-import noface from "source/thumbnail.png";
 import GridEditor from "components/Designs/GridEditor";
-import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer"
-import Loading from "components/Commons/Loading";
+import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
+
+import styled from "styled-components";
 import { geturl } from "config";
-import iDelete from "source/deleteItem.png"
+import noimg from "source/noimg.png"
 import forked from "source/forked.svg";
+import noface from "source/thumbnail.png";
+import iDelete from "source/deleteItem.png"
+import Cross from "components/Commons/Cross";
+import Loading from "components/Commons/Loading";
+import { Dropdown, Modal } from "semantic-ui-react";
 
 
 const emptyCategory = [{ value: 0, text: "" }]
@@ -21,13 +23,59 @@ function Peer(props) {
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
   </div>)
 }
-const BasicSecTitle = { width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
-const BasicSec_thumb_Box = { display: "flex", width: "1200px", }
-const BasicSec_thumb_ExplainBox = { marginLeft: "54.5px", marginTop: "100px" }
-const BasicSec_thumb_FindBox = { width: "63px", height: "25px", cursor: "pointer" }
-const BasicSec_thumb_FindTitle = { cursor: "pointer", fontWeight: "500", fontSize: "17px", borderBottom: "1.5px solid #FF0000", lineHeight: "25px", textAlign: "left", color: "#FF0000" }
-const BasicSec_thumb_FindExplain = { width: "341px", height: "45px", marginTop: "11px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", textAlign: "left", color: "#707070" }
-const modify_Menu_Delete = { position: "fixed", top: "400px", left: "100px", width: "150px", height: "29px", cursor: "pointer", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
+const BasicSecTitle = styled.div`
+    width: 100px;
+    height: 29px;
+    line-height: 29px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #707070;
+    text-align: left;
+`;
+const BasicSecthumbBox = styled.div`
+  display: flex;
+  width: 1200px;
+`;
+const BasicSecthumbExplainBox = styled.div`
+  margin-left: 54.5px;
+  margin-top: 100px;
+`;
+const BasicSecthumbFindBox = styled.div`
+  cursor: pointer;
+  width: 63px;
+  height: 25px;
+`;
+const BasicSecthumbFindTitle = styled.label`
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 17px;
+  border-bottom: 1.5px solid #FF0000;
+  line-height: 25px;
+  text-align: left;
+  color: #FF0000;
+`;
+const BasicSecthumbFindExplain = styled.div`
+  width: 341px;
+  height: 45px;
+  margin-top: 11px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  color: #707070;
+`;
+const ModifyMenuDelete = styled.div`
+  position: fixed;
+  top: 400px;
+  left: 100px;
+  width: 150px;
+  height: 29px;
+  cursor: pointer;
+  font-family: Noto Sans KR;
+  font-weight: 500;
+  font-size: 20px;
+  color: #FF0000;
+`;
 
 class ModifyDesign extends Component {
   constructor(props) {
@@ -37,7 +85,7 @@ class ModifyDesign extends Component {
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], license1: false, license2: false, license3: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: false, license2: false, license3: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -126,32 +174,32 @@ class ModifyDesign extends Component {
   }
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
-    console.log("checkFinishAdditional", categoryLevel1, ((alone && members.length === 0) || (!alone && members.length > 0)), license1, license2, license3);
     if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
       await this.setState({ additional: true });
     } else {
       await this.setState({ additional: false });
     }
   }
-  submit = () => {
 
+  submit = () => {
     const data = {
+      user_id: this.props.DesignDetail.user_id,
       category_level1: this.state.categoryLevel1, category_level2: this.state.categoryLevel2,
       title: this.state.title, explanation: this.state.explanation,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name, key: "thumbnail[]" }],
-      members: this.state.members,
+      members: { add: this.state.addmem, del: this.state.delmem },
       is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0
     };
     if (data.files.length <= 0 || data.files[0].value === this.props.DesignDetail.img.m_img) {
-      console.log("--------------------------------------------------------)");
+      // console.log("--------------------------------------------------------)");
       delete data.files;
     }
 
-    console.log(data);
+    // console.log("sending-data:", this.props, data);
     this.setState({ loading: true });
     this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.res && data.res.success) {
           alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.");
           window.location.href = geturl() + '/designDetail/' + this.props.DesignDetail.uid;
@@ -160,8 +208,7 @@ class ModifyDesign extends Component {
         }
       })
     this.setState({ loading: false });
-
-    // window.location.href = geturl() + `/designDetail/` + this.state.designId;
+    window.location.href = geturl() + `/designDetail/` + this.state.designId;
   }
   onChangeCategory1(event, { value }) {
     this.setState({ categoryLevel1: { value }.value });
@@ -186,13 +233,15 @@ class ModifyDesign extends Component {
     this.checkFinishAdditional();
   }
   addMember = async (email, s_img, nick_name, uid) => {
-    let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
-    await this.setState({ members: this.state.members.concat(member) });
-    console.log("members[]====", this.state.members);
+    let member = { email: email, s_img: s_img, nick_name: nick_name, user_id: uid, uid: uid };
+    await this.setState({ members: this.state.members.concat(member), addmem: this.state.addmem.concat(member) });
+    console.log("members[]====", this.state.members, this.state.addmem);
     this.checkFinishAdditional();
   }
-  removeMember(index) {
-    this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
+  removeMember = async (index) => {
+    await this.setState({ delmem: this.state.delmem.concat(this.state.members.filter((member, memberindex) => { return index === memberindex })) });
+    await this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
+    console.log("members====", this.state.members, this.state.delmem);
   }
   deleteDesign = () => {
     this.props.DeleteDesignRequest(this.props.id, this.props.token)
@@ -200,14 +249,13 @@ class ModifyDesign extends Component {
         window.location.href = geturl() + `/design`;
       })
   }
-  deleteDialog = () => { this.setState({ deleteModal: !this.state.deleteModal }) }
+  deleteDialog = () => {
+    this.setState({ deleteModal: !this.state.deleteModal })
+  }
   render() {
-    // const myInfo = this.props.MyDetail
     let arrSummaryList = [];
     if (this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
-        // let SelectedItem = false;
-        // if(this.state.selectId === item.friend_id)   SelectedItem=true;       
         return (
           <div onClick={() => this.removeMember(index)} key={index}>
             <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
@@ -247,33 +295,35 @@ class ModifyDesign extends Component {
               })}
             </div>
           </div>
-          <div onClick={this.deleteDialog} style={modify_Menu_Delete}>디자인 삭제하기</div>
+          <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete>
 
           {/* form */}
           <div style={{ width: "1422px", marginLeft: "45px", height: "max-content", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
             {/* <form ref={(ref) => this.form = ref}> */}
             <section style={{ display: step === 0 ? "block" : "none", paddingLeft: "55.5px" }} >
               {/* thumbnail */}
-              <div style={BasicSec_thumb_Box}>
-                <div style={BasicSecTitle}>프로필 사진
-                    </div>
-                <div style={{ position:"relative",
+              <BasicSecthumbBox>
+                <BasicSecTitle>프로필 사진</BasicSecTitle>
+                <div style={{
+                  position: "relative",
                   marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px",
                   backgroundImage: `url(${thumbnailURL})`, backgroundSize: "cover", backgroundPosition: "center center"
                 }} >
-                  {this.props.DesignDetail&&this.props.DesignDetail.parent_design && 
-                  <div style={{ position: "absolute",right:"21px", width: "32px", height: "70px", 
-                  backgroundImage: `url(${forked})`, backgroundSize: "cover" }} />}
+                  {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
+                    <div style={{
+                      position: "absolute", right: "21px", width: "32px", height: "70px",
+                      backgroundImage: `url(${forked})`, backgroundSize: "cover"
+                    }} />}
 
                 </div>
-                <div style={BasicSec_thumb_ExplainBox}>
-                  <div style={BasicSec_thumb_FindBox}>
-                    <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>
+                <BasicSecthumbExplainBox>
+                  <BasicSecthumbFindBox>
+                    <BasicSecthumbFindTitle htmlFor="file">찾아보기</BasicSecthumbFindTitle>
                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-                  </div>
-                  <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG 파일을 등록 가능합니다.</div>
-                </div>
-              </div>
+                  </BasicSecthumbFindBox>
+                  <BasicSecthumbFindExplain>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</BasicSecthumbFindExplain>
+                </BasicSecthumbExplainBox>
+              </BasicSecthumbBox>
 
               {/* title */}
               <div style={{ marginTop: "86px", width: "1544px" }}>

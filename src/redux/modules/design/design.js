@@ -575,7 +575,7 @@ export function ForkDesignListRequest(design_id, token) {
 export function UpdateDesignInfoRequest(data, id, token) {
     return dispatch => {
         dispatch(UpdateDesignInfo());
-        return fetch(`${host}/design/updateDesignInfo/${id}`, {
+        return fetch(`${host}/design/updateDesignInfo/${id}/${data.user_id}`, {
             headers: { "x-access-token": token, "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify(data)
