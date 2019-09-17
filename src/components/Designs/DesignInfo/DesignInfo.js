@@ -61,11 +61,11 @@ const DesignList = styled.div`
 const ListItem = styled.div`
     display:flex;
     padding-left:15px;
+    padding-top: 15px;
     flex-direction: column;
     width: 365px;
     height: 85px;
     display: flex;
-    margin-top: 10px;
     border-bottom: 1px solid #B7B7B7;
     color: #707070;
     &:hover {
@@ -87,6 +87,11 @@ class DesignInfo extends Component {
         this.joinMember = this.joinMember.bind(this);
         this.getMemberList = this.getMemberList.bind(this);
         this.getDesignComment = this.getDesignComment.bind(this);
+        this.onMoveForkDesign = this.onMoveForkDesign.bind(this);
+    }
+    onMoveForkDesign(designID)
+    {
+        window.location.href="/designDetail/"+designID;
     }
     needLogin() {
         alert("로그인 해주세요.");
@@ -202,6 +207,8 @@ class DesignInfo extends Component {
     }
     render() {
 
+        console.log("forklist",this.props.forkDesignList);
+
         const { isMyDesign, editor, DesignDetail, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
@@ -307,13 +314,14 @@ class DesignInfo extends Component {
                                     {DesignDetail.is_parent && "파생된 디자인 "}
                                     {DesignDetail.is_parent && <div style={{ marginLeft: "10px" }}>
                                     {DesignDetail.children_count["count(*)"]}</div>}
+
                                 {this.state.forkDesignList &&
                                     <DesignList top={this.forkDesignRef.getBoundingClientRect().top} left={this.forkDesignRef.getBoundingClientRect().left}>
                                         <div className="list" style={{ padding: "7", marginTop: "10px" }}>
                                             {this.props.forkDesignList &&
                                                 this.props.forkDesignList.map((item, idx) => {
                                                     return (<ListItem key={item + idx}>
-                                                        <div style={{ display: "flex" }}>
+                                                        <div onClick={()=>this.onMoveForkDesign(item.uid)}style={{cursor:"pointer", display: "flex" }}>
                                                             <div style={{ width: "50px", height: "50px", borderRadius: "5px", backgroundImage: `url(${item.p_s_img})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                                                             <div style={{ marginLeft: "16px", fontSize: "17px" }} >
                                                                 <TextFormat txt={item.title} chars={23} />
@@ -324,7 +332,9 @@ class DesignInfo extends Component {
                                                 })}
                                         </div>
                                     </DesignList>
-                                }</button>
+                                }
+                                
+                                </button>
                             <div style={{ width: "165px", height: "29px", marginTop: DesignDetail.parent_design ? "0px" : "7px", marginLeft: "0px", fontSize: "15px", color: "#707070", fontWeight: "500", textAlign: "left", display: "flex" }}>
                                 <div style={{ marginTop: "auto" }}><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
                                 <div style={{ marginTop: "auto", marginLeft: "5.85px", width: "34px" }}>{NumberFormat(Count.view_count)}</div>

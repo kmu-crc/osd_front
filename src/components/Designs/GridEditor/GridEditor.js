@@ -167,6 +167,7 @@ const GridEditorWrapper = styled.div`
     // width: 1920px;
     // width: ${props => props.width}px; 
     display: flex;
+    margin-left:65px;
     margin-bottom: 75px;
     .Editor{
         padding-right: 250px;
@@ -319,7 +320,7 @@ class GridEditor extends Component {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const { h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const scroll_width = DesignDetailStep && DesignDetailStep.length > 0 && DesignDetailStep.length * (200 + 75);
-        return (<Fragment>
+        return (<Fragment >
             {design.uid ? <Fragment>
                 {/* ------------- scroll tool component-------------  */}
                 {left ? <React.Fragment>
