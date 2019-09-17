@@ -50,6 +50,7 @@ const SubCategory = styled.div`
     width: 1920px;
     top: 70px;
     padding-top: 17px;
+    height:70px;
     display: flex;
     justify-content: center;
     background-color: #FFFFFF;
@@ -106,7 +107,8 @@ class Category extends Component {
                         className={`${style}`}
                         onClick={() => this.clickedSubCategory(element)}
                         key={element.value}>{element.text}</SubCateElement>
-                })}</SubCategory>
+                })}
+                </SubCategory>
         </Container>)
     }
 }
