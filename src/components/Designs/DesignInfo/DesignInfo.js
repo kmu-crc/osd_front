@@ -381,7 +381,8 @@ class DesignInfo extends Component {
                                 <div style={{ marginLeft: "15px", width: "45px", height: "45px", background: `url(${email})`, backgroundSize: "cover", backgroundPosition: "center center", }}></div>
                             </div>
                         }
-                        <div style={{ height: "45px", fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", lineHeight: "45px", textAlign: "right", marginLeft: "auto", fontWeight: "300" }}>최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                        <div style={{ position:"absolute",right:"3px",bottom:"18px", height: "25px", width:"200px", fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", 
+                                    textAlign: "right", fontWeight: "300" }}>최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
                     </div>
                 </DesignInfoComp>
 
