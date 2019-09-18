@@ -23,10 +23,11 @@ const BasicSec_explain_Input = {
 class GroupBasicInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { groupTitle: "", groupExplain: "", groupThumbnail: noimg, groupThumbnailURL: "", groupThumbnailName: "" }
+        this.state = { groupTitle: null, groupExplain: null, groupThumbnail: noimg, groupThumbnailURL: null, groupThumbnailName: null };
         this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this);
         this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+        this.checkisfinished = this.checkisfinished.bind(this);
     }
     shouldComponentUpdate(nextProps) {
         return true;
@@ -38,55 +39,42 @@ class GroupBasicInfo extends Component {
             groupThumbnail: this.props.groupThumbnail
         })
     }
-    handleOnChangeTitle(event) {
-        this.setState({ groupTitle: event.target.value });
-        this.props.onChangeTitle(event.target.value);
+    async handleOnChangeTitle(event) {
+        const { value } = event.target;
+        await this.setState({ groupTitle: value });
+        this.props.onChangeTitle(value);
+        this.checkisfinished();
     }
-    handleOnChangeExplain(event) {
-        this.setState({ groupExplain: event.target.value });
-        this.props.onChangeExplain(event.target.value);
+    async handleOnChangeExplain(event) {
+        const { value } = event.target;
+        await this.setState({ groupExplain: value });
+        this.props.onChangeExplain(value);
+        this.checkisfinished();
     }
-
-    handleOnChangeThumbnail(event) {
-        // const readUploadedFileAsText = inputFile => {
-        //     const temporaryFileReader = new FileReader();
-
-        //     return new Promise((resolve, reject) => {
-        //       temporaryFileReader.onerror = () => {
-        //         temporaryFileReader.abort();
-        //         reject(new DOMException("Problem parsing input file."));
-        //       };
-
-        //       temporaryFileReader.onload = () => {
-        //         resolve(temporaryFileReader.result);
-        //       };
-        //       temporaryFileReader.readAsDataURL(inputFile);
-        //       this.setState({groupThumbnail:temporaryFileReader.result,groupThumbnailName:inputFile.name});
-        //       this.props.onChangeThumbnail(temporaryFileReader.result,inputFile.name);
-        //     });
-        //   };
-        //   const imgURL = readUploadedFileAsText(event.target.files[0]);
-        //   this.setState({groupThumbnailURL:imgURL});
-        //   this.props.onChangeThumbnailURL(imgURL);
+    async handleOnChangeThumbnail(event) {
         event.preventDefault();
         const reader = new FileReader();
         const file = event.target.files[0];
-        reader.onloadend = () => {
-            this.setState({ groupThumbnail: reader.result, groupThumbnailName: file.name })
-            this.props.onChangeThumbnail(reader.result, file.name);
+        reader.onloadend = async () => {
+            await this.setState({ groupThumbnail: reader.result, groupThumbnailName: file.name })
+            await this.props.onChangeThumbnail(reader.result, file.name);
         }
         if (event.target.files[0]) {
             let imgurl = reader.readAsDataURL(file)
-            this.setState({ groupThumbnailURL: imgurl });
-            this.props.onChangeThumbnail(imgurl);
-            console.log("file===", imgurl);
+            await this.setState({ groupThumbnailURL: imgurl });
+            await this.props.onChangeThumbnail(imgurl);
         }
-
+        this.checkisfinished();
     }
-
+    checkisfinished() {
+        const { groupTitle, groupExplain, groupThumbnailName } = this.state;
+        if (groupTitle != null && groupTitle.length > 0 && groupExplain != null && groupExplain.length > 0 && groupThumbnailName != null && groupThumbnailName.length > 0) {
+            this.props.completed && this.props.completed(true);
+        } else {
+            this.props.completed && this.props.completed(false);
+        }
+    }
     render() {
-        console.log("THUMBNAIL", this.props);
-        //const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
         return (
             <section style={BasicSecBox} >
                 {/* thumbnail */}
@@ -110,7 +98,7 @@ class GroupBasicInfo extends Component {
                 <div style={BasicSec_title_Box}>
                     <div style={BasicSecTitle}>제목</div>
                     <div style={BasicSec_title_InputBox} >
-                        <input maxLength="50" type="text" style={BasicSec_title_Input} onChange={this.handleOnChangeTitle} value={this.props.groupTitle} />
+                        <input maxLength="50" type="text" style={BasicSec_title_Input} onChange={this.handleOnChangeTitle} value={this.props.groupTitle || ""} />
                     </div>
                 </div>
                 {/* description */}
@@ -121,7 +109,6 @@ class GroupBasicInfo extends Component {
                     </div>
                 </div>
             </section>
-
         );
     }
 }

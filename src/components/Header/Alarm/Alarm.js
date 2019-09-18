@@ -301,9 +301,7 @@ class Alarm extends Component {
         //get like group
         list = alarms.filter(alarm => { return alarm.type === "GROUP" && alarm.kinds === "LIKE" });
         list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
-        console.log("1",list);
         list = this.frequency(list);
-        console.log("",list);
         rst = [...rst, ...list];
         //get like designer
         list = alarms.filter(alarm => { return alarm.type === "DESIGNER" && alarm.kinds === "LIKE" });
@@ -320,9 +318,6 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         const alarmscombined = this.combine(alarms && alarms.list);
-
-
-
         console.log("combine:result:", alarmscombined);
         return (
             <React.Fragment>{this.state.active &&
@@ -341,7 +336,7 @@ class Alarm extends Component {
                             let msg = this.getMessageText(item);
 
                             return (
-                                <ListItem confirm={item.confirm} key={item.uid}>
+                                <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
                                     <div style={{ fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}><TextFormat txt={msg} /></div>
                                     <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                         <div style={{ display: "flex", justifyContent: "space-start" }}>
@@ -357,8 +352,8 @@ class Alarm extends Component {
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div onClick={() => this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
-                                                        : <div onClick={() => this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }
                                             </div>
