@@ -137,8 +137,10 @@ const AsBelowArrow = styled.div`
 `;
 
 const WhitePane = styled.div`
+    border:1px solid black;
     z-index: 830;
     position: absolute;
+    right: ${props => props.right};
     left: ${props => props.left};
     width: ${props => props.width};
     height: ${props => props.height}px;
@@ -322,19 +324,12 @@ class GridEditor extends Component {
         const { h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const scroll_width = DesignDetailStep && DesignDetailStep.length > 0 && DesignDetailStep.length * (200 + 75);
         return (<Fragment >
-            {design.uid ? <Fragment>
+            {design.uid ? <div style={{ postion: "relative", border: "1px solid red" }}>
                 {/* ------------- scroll tool component-------------  */}
-                {left ? <React.Fragment>
-                    <WhitePane left="0px" width="178px" height={h}
-                        background="transparent linear-gradient(90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                        <Arrow id="arrow" angle="0deg" gap={this.state.arrow_top} onClick={this.ScrollLeft} />
-                    </WhitePane>
-                </React.Fragment> : undefined}
-                {right ? <React.Fragment>
-                    <WhitePane left="1699px" width="178px" height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                        <Arrow angle="180deg" gap={this.state.arrow_top} onClick={this.ScrollRight} /></WhitePane>
-                    <WhitePane left="1877px" width="72px" height={h} background="transparent linear-gradient(0deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 100%)" />
-                </React.Fragment> : undefined}
+                <div style={{ position: "absolute", right: "500px", width: "250px", height: `${h}px`, backgroundColor: "#EFEFEF", border: "1px dashed blue" }}>
+                    {/* <WhitePane width="178px" height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)"> */}
+                    {/* <Arrow angle="180deg" gap={this.state.arrow_top} onClick={this.ScrollRight} /></WhitePane> */}
+                </div>
 
                 {/* ------------- card modal component -------------  */}
                 {card && <CardModal
@@ -357,7 +352,7 @@ class GridEditor extends Component {
                         {/* </div> */}
                     </GridEditorWrapper>
                 </ReactHeight>
-            </Fragment> : <div>디자인정보를 가져오고 있습니다.</div>
+            </div> : <div>디자인정보를 가져오고 있습니다.</div>
             }
         </Fragment>)
     }

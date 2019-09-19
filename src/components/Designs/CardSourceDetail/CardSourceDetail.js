@@ -201,7 +201,7 @@ class CardSourceDetail extends Component {
       <div style={{ marginBottom: "35px" }}>
         {this.state.edit &&
           <div style={{ width: "max-content", padding: "25px", boxShadow: "0px 2px 10px 2px rgba(0,0,0,0.25)", background: "#FFFFFF", borderRadius: "25px", top: this.state.top, left: this.state.left, position: "absolute", zIndex: "907" }}>
-            <button onClick={this.onSubmit} style={{ marginLeft: "00px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon outline save " />저장</button>
+            <button onClick={this.onSubmit} style={{ marginLeft: "00px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon outline save " />등록</button>
             <button onClick={this.onCancel} style={{ marginLeft: "25px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid #707070", color: "#707070", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon trash" />취소</button>
           </div>
         }
