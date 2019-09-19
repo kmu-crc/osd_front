@@ -25,6 +25,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, monospace, 
   "Courier New", Consolas;
 }
+
+
 .partial-scroll-on{
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
@@ -32,6 +34,8 @@ code {
   -o-transition: all 0.5s;
   transition: all 0.5s
 }
+
+
 .partical-scroll-none::-webkit-scrollbar {
   position: block;
   width: 0px;
@@ -60,3 +64,32 @@ code {
 .card-detail-scroll::-webkit-scrollbar-thumb {
   background: #707070 !important;
 }
+
+/* .partical-scroll-none::-webkit-scrollbar {
+  position: absolute;
+  width: 0px;
+}
+.partical-scroll-none::-webkit-scrollbar * {
+  background: transparent; 
+}
+.partical-scroll-none::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.partial-scroll-on::-webkit-scrollbar {
+  position: absolute;
+  width: 3.9px;
+}
+.partial-scroll-on::-webkit-scrollbar * {
+  background: transparent;
+}
+.partial-scroll-on::-webkit-scrollbar-thumb {
+  background: rgba(255, 0, 0, 0.45) !important;
+}
+
+.card-detail-scroll::-webkit-scrollbar {
+  position: absolute;
+  width: 3px;
+}
+.card-detail-scroll::-webkit-scrollbar-thumb {
+  background: #707070 !important;
+} */
