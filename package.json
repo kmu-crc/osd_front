@@ -83,7 +83,7 @@
     "yarn": "^1.17.3"
   },
   "scripts": {
-    "start": "REACT_APP_TYPE=local node scripts/start.js",
+    "start": "REACT_APP_TYPE=aws node scripts/start.js",
     "local_test": "REACT_APP_TYPE=local node scripts/start.js",
     "dev": "REACT_APP_TYPE=aws_dev node scripts/start.js",
     "build": "REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",

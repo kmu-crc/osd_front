@@ -41,7 +41,7 @@ class DesignListContainer extends Component {
   componentDidMount() {
     this.props.GetCategoryAllRequest()
       .then(() => { this.props.GetDesignListCountRequest(null, null) });
-    this.getList(0);
+    this.props.GetDesignListRequest(0, null, null, null, null);
   }
   handleReload() {
     this.setState({ reload: !this.state.reload });
@@ -65,7 +65,7 @@ class DesignListContainer extends Component {
   }
   async getList(page) {
     const { main_category, sub_category, keyword, this_order } = this.state;
-    this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
+    return this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
   }
   changeCategory(category) {
     if (this.state.this_category === category) {

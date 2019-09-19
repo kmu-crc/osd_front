@@ -41,7 +41,9 @@ class GroupListContainer extends Component {
     this_order: { text: "최신순", keyword: "update" }
   }
   componentDidMount() {
-    this.getList(0);
+    this.props.GetGroupTotalCountRequest()
+      .then(() => { this.setState({ count: this.props.Count }) })
+      .then(() => { this.props.GetGroupListRequest(0, null, null) })
   }
   handleReload = () => {
     this.setState({ reload: !this.state.reload });

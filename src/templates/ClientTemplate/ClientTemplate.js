@@ -79,7 +79,7 @@ class ClientTemplate extends Component {
       <HeaderContainer />
       <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
 
-        <div style={{ width: "1920px" }}>
+        <div style={{ marginLeft:"auto", marginRight:"auto", width: "1920px" }}>
           {this.props.children}
           <Footer />
         </div>

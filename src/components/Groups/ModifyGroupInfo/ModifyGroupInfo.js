@@ -39,28 +39,28 @@ class CreateGroup extends Component {
 
   }
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
-  componentDidMount()
-  {
-    this.setState({groupTitle:this.props.GroupDetail.title,
-      groupThumbnail:this.props.GroupDetail.img==null?noimg:this.props.GroupDetail.img.m_img,
-      groupExplain:this.props.GroupDetail.explanation});
+  componentDidMount() {
+    this.setState({
+      groupTitle: this.props.GroupDetail.title,
+      groupThumbnail: this.props.GroupDetail.img == null ? noimg : this.props.GroupDetail.img.m_img,
+      groupExplain: this.props.GroupDetail.explanation
+    });
   }
-  shouldComponentUpdate(nextProps)
-  {
-    
-      if(this.props.GroupDetail!==nextProps.GroupDetail)
-      {
-        console.log("nextprops",nextProps)
+  shouldComponentUpdate(nextProps) {
 
-          this.setState({groupTitle:nextProps.GroupDetail.title,
-            groupThumbnail:nextProps.GroupDetail.img==null?noimg:nextProps.GroupDetail.img.m_img,
-            groupExplain:nextProps.GroupDetail.explanation});
-      }
-    
-      return true;
+    if (this.props.GroupDetail !== nextProps.GroupDetail) {
+      console.log("nextprops", nextProps)
+
+      this.setState({
+        groupTitle: nextProps.GroupDetail.title,
+        groupThumbnail: nextProps.GroupDetail.img == null ? noimg : nextProps.GroupDetail.img.m_img,
+        groupExplain: nextProps.GroupDetail.explanation
+      });
+    }
+
+    return true;
   }
-  handleInputDesignTitle(title)
-  {
+  handleInputDesignTitle(title) {
     console.log("titleinput");
     this.setState(state => ({ groupTitle: title }))
   }
@@ -110,36 +110,35 @@ class CreateGroup extends Component {
 
   onSubmit = async e => {
 
-    if(this.state.groupThumbnail=="")
-    {
+    if (this.state.groupThumbnail == "") {
       alert("그룹의 섬네일을 지정해주세요.");
       return;
     }
-    else if(this.state.groupTitle=="")
-    {
+    else if (this.state.groupTitle == "") {
       alert("그룹 이름을 작성해주세요!");
       return;
     }
-    else if(this.state.explanation=="")
-    {
+    else if (this.state.explanation == "") {
       alert("그룹 설명을 작성해주세요!");
       return;
     }
     // console.log("this.props",this.props);return;
     e.preventDefault();
-    let data = {user_id:this.props.userInfo.uid,uid:this.props.GroupDetail.uid,
-      title:this.state.groupTitle,explanation:this.state.groupExplain,files:[]};
-      let file = {
-        value: this.state.groupThumbnail,
-        name: this.state.groupThumbnailName,
-        key: 0
-      };
-      data.files.push(file);
+    let data = {
+      user_id: this.props.userInfo.uid, uid: this.props.GroupDetail.uid,
+      title: this.state.groupTitle, explanation: this.state.groupExplain, files: []
+    };
+    let file = {
+      value: this.state.groupThumbnail,
+      name: this.state.groupThumbnailName,
+      key: 0
+    };
+    data.files.push(file);
 
-      if(data.files.length<=0||
-        data.files[0].value === this.props.GroupDetail.img.m_img)delete data.files;
-        
-      this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
+    if (data.files.length <= 0 ||
+      data.files[0].value === this.props.GroupDetail.img.m_img) delete data.files;
+
+    this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
       .then(res => {
         if (res.data && res.data.success === true) {
           alert("정보가 수정되었습니다.");
@@ -179,11 +178,7 @@ class CreateGroup extends Component {
         <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
           <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.groupTitle}를<br />삭제하시겠습니까?</div>
           <div onClick={this.deleteGroup} style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
-          <div onClick={this.handleOnClickDeleteDesign} style={{
-            cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px",
-            backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center",
-          }}>
-          </div>
+          <div onClick={this.handleOnClickDeleteDesign} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
         </Modal>
       );
     }
@@ -226,9 +221,9 @@ class CreateGroup extends Component {
         <div style={{ position: "relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
           <form>
 
-            {step === 0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail==""?noimg:this.state.groupThumbnail}
+            {step === 0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
               onChangeExplain={this.handleInputDesignExplain} onChangeTitle={this.handleInputDesignTitle} onChangeThumbnailURL={this.handleChangeThumbnailURL} onChangeThumbnail={this.handleChangeThumbnail}
-              designExplain={this.state.groupExplain} designTitle={this.state.groupTitle} thumbnail={this.state.groupThumbnail==""?noimg:this.state.groupThumbnail} {...this.props} />}
+              designExplain={this.state.groupExplain} designTitle={this.state.groupTitle} thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
             {/* {step ===1 &&<AdditionalInfo {...this.props}/>} */}
             {/* buttons*/}
             <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>

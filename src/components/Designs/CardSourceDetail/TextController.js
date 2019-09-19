@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import StyleGuide from 'StyleGuide';
 import middle from "source/middle.png";
@@ -194,7 +194,7 @@ class TextController extends Component {
     delete nextProps.item.target;
     if (JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)) {
       this.edit.innerHTML = nextProps.item.content;
-      if(!nextProps.item.uid) this.setState({uid: null});
+      if (!nextProps.item.uid) this.setState({ uid: null });
       if (nextProps.item.initClick) this.edit.focus();
     }
     return true;
@@ -203,13 +203,13 @@ class TextController extends Component {
   // 드래그 한 부분이 있는지 검증
   isSelection = () => {
     if (window.getSelection()
-        && window.getSelection().rangeCount > 0
-        && window.getSelection().getRangeAt(0)
-        && window.getSelection().getRangeAt(0).toString() !== "") {
-        return true;
-      } else {
-        return false;
-      }
+      && window.getSelection().rangeCount > 0
+      && window.getSelection().getRangeAt(0)
+      && window.getSelection().getRangeAt(0).toString() !== "") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // 사이즈 변경
@@ -223,7 +223,7 @@ class TextController extends Component {
 
       if (childList && childList.length === 0) { // 긁은 부분이 텍스트만 있을때
         const p = window.getSelection().focusNode.parentElement;
-        if (p.classList.contains("valContainer")){ // 맨 앞이 최상위 태그이면 새로운 태그 추가
+        if (p.classList.contains("valContainer")) { // 맨 앞이 최상위 태그이면 새로운 태그 추가
           let newNode = window.document.createElement("span");
           newNode.innerHTML = text;
           newNode.style.fontSize = size;
@@ -241,17 +241,17 @@ class TextController extends Component {
           }
         }
       } else { // 긁은 부분에 텍스트와 태그가 같이 있을 때
-        if (parentEl.textContent === text){ // 전체 텍스트를 다 드래그
-            childList.forEach(element => {
-              if (element.nodeName === "#text") {
-                let newNode = window.document.createElement("span");
-                newNode.innerHTML = element.textContent;
-                parentEl.replaceChild(newNode, element);
-              }
-            });
-            childList.forEach(element => {
-              element.style.fontSize = size;
-            });
+        if (parentEl.textContent === text) { // 전체 텍스트를 다 드래그
+          childList.forEach(element => {
+            if (element.nodeName === "#text") {
+              let newNode = window.document.createElement("span");
+              newNode.innerHTML = element.textContent;
+              parentEl.replaceChild(newNode, element);
+            }
+          });
+          childList.forEach(element => {
+            element.style.fontSize = size;
+          });
         } else { // 일부 텍스트만 드래그했을 때
           childList.forEach(item => {
             if (window.getSelection().containsNode(item, true)) {
@@ -290,7 +290,7 @@ class TextController extends Component {
 
       if (childList && childList.length === 0) { // 긁은 부분이 텍스트만 있을때
         const p = window.getSelection().focusNode.parentElement;
-        if (p.classList.contains("valContainer")){ // 맨 앞이 최상위 태그이면 새로운 태그 추가
+        if (p.classList.contains("valContainer")) { // 맨 앞이 최상위 태그이면 새로운 태그 추가
           let newNode = window.document.createElement("span");
           newNode.innerHTML = text;
           newNode.style.color = color;
@@ -308,17 +308,17 @@ class TextController extends Component {
           }
         }
       } else { // 긁은 부분에 텍스트와 태그가 같이 있을 때
-        if (parentEl.textContent === text){ // 전체 텍스트를 다 드래그
-            childList.forEach(element => {
-              if (element.nodeName === "#text") {
-                let newNode = window.document.createElement("span");
-                newNode.innerHTML = element.textContent;
-                parentEl.replaceChild(newNode, element);
-              }
-            });
-            childList.forEach(element => {
-              element.style.color = color;
-            });
+        if (parentEl.textContent === text) { // 전체 텍스트를 다 드래그
+          childList.forEach(element => {
+            if (element.nodeName === "#text") {
+              let newNode = window.document.createElement("span");
+              newNode.innerHTML = element.textContent;
+              parentEl.replaceChild(newNode, element);
+            }
+          });
+          childList.forEach(element => {
+            element.style.color = color;
+          });
         } else { // 일부 텍스트만 드래그했을 때
           childList.forEach(item => {
             if (window.getSelection().containsNode(item, true)) {
@@ -337,7 +337,7 @@ class TextController extends Component {
       await this.setState({
         content: this.edit.innerHTML
       });
-        // await this.onCursorOut();
+      // await this.onCursorOut();
       this.returnData();
     } else {
       console.log("noSelection");
@@ -368,15 +368,11 @@ class TextController extends Component {
       });
     } else if (e && e.type === "blur") { // 포커스가 빠졌을 경우
       if (e && // 다른 클릭 이벤트 실행시 && 사이즈||컬러 창을 열었을 경우
-        (e.relatedTarget &&
-          this.textWrap._reactInternalFiber.child.stateNode.contains(
-            e.relatedTarget
-          ))
+        e.relatedTarget
       ) {
+        this.textWrap._reactInternalFiber && this.textWrap._reactInternalFiber.child.stateNode.contains(e.relatedTarget)
       } else { // 텍스트 에디터에서 포커스가 빠져나간 경우
-          this.setState({
-            openMenu: false
-          });
+        this.setState({ openMenu: false});
         if (!this.edit.textContent) {
           if (this.props.deleteItem) this.props.deleteItem();
         } else {
@@ -389,7 +385,7 @@ class TextController extends Component {
 
   // 상위 컴포넌트로 데이터 넘겨주기
   returnData = async () => {
-    if(this.props.getValue) this.props.getValue(this.state);
+    if (this.props.getValue) this.props.getValue(this.state);
   }
 
   // 사이즈 설정 모달창 열기/닫기
@@ -434,7 +430,7 @@ class TextController extends Component {
 
   render() {
     const colorSelection = [
-      { key: "#fff" , value: "#fff" },
+      { key: "#fff", value: "#fff" },
       { key: "#000", value: "#000" },
       { key: "#79A2BF", value: "#79A2BF" },
       { key: "#4F83AA", value: "#4F83AA" },
@@ -474,31 +470,31 @@ class TextController extends Component {
       <TextEditWrap tabindex="0" onBlur={this.onSave} ref={ref => (this.textWrap = ref)}>
         {this.state.openMenu &&
           <NaviMenu>
-            <input type="button" value="B" onClick={this.getBold} style={{backgroundImage:`url(${bold})`}}/>
-            <input type="button" value="I" onClick={this.getItalic} style={{backgroundImage:`url(${italic})`}}/>
-            <input type="button" value="U" onClick={this.getUnderline} style={{backgroundImage:`url(${underline})`}}/>
+            <input type="button" value="B" onClick={this.getBold} style={{ backgroundImage: `url(${bold})` }} />
+            <input type="button" value="I" onClick={this.getItalic} style={{ backgroundImage: `url(${italic})` }} />
+            <input type="button" value="U" onClick={this.getUnderline} style={{ backgroundImage: `url(${underline})` }} />
             <input type="button" value="L" className="align"
-                   onClick={this.getJustifyleft}
-                   style={{backgroundImage:`url(${left})`}}/>
+              onClick={this.getJustifyleft}
+              style={{ backgroundImage: `url(${left})` }} />
             <input type="button" value="M" className="align"
-                   onClick={this.getJustifycenter}
-                   style={{backgroundImage:`url(${middle})`}}/>
+              onClick={this.getJustifycenter}
+              style={{ backgroundImage: `url(${middle})` }} />
             <input type="button" value="R" className="align"
-                   onClick={this.getJustifyright}
-                   style={{backgroundImage:`url(${right})`}}/>
+              onClick={this.getJustifyright}
+              style={{ backgroundImage: `url(${right})` }} />
 
             <span className="optWrap" tabIndex="0" onBlur={this.onBlurSize} ref={ref => (this.menuWrap = ref)}>
-              <input type="button" value="size" onClick={this.setOpenSize}/>
+              <input type="button" value="size" onClick={this.setOpenSize} />
               {this.state.openSize &&
                 <SizeMenu>
                   {sizeSelection.map((size, i) => (
-                    <input key={i} value={size.value} type="button" onClick={()=>this.onChangeSize(size.value)}/>
+                    <input key={i} value={size.value} type="button" onClick={() => this.onChangeSize(size.value)} />
                   ))}
                 </SizeMenu>
               }
             </span>
             <span className="optWrap" tabIndex="0" onBlur={this.onBlurColor} ref={ref => (this.menuColWrap = ref)}>
-              <ColorSel type="button" value="A" onClick={this.setOpenColor}/>
+              <ColorSel type="button" value="A" onClick={this.setOpenColor} />
               {this.state.openColor &&
                 <ColorMenu>
                   <div className="selHead">
@@ -507,9 +503,9 @@ class TextController extends Component {
                   </div>
                   {colorSelection.map((item, i) => (
                     <input key={i} type="button"
-                           style={{backgroundColor: item.key}}
-                           onClick={()=>this.onChangeColor(item.value)}
-                           onMouseDown={()=>this.setState({selectedColor:item.value})}/>
+                      style={{ backgroundColor: item.key }}
+                      onClick={() => this.onChangeColor(item.value)}
+                      onMouseDown={() => this.setState({ selectedColor: item.value })} />
                   ))}
                 </ColorMenu>
               }
@@ -524,7 +520,7 @@ class TextController extends Component {
             className="valContainer"
             onBlur={this.onSave}
             onKeyDown={this.onSave}
-            onFocus={()=>this.setState({openMenu: true})}
+            onFocus={() => this.setState({ openMenu: true })}
           />
         </TextSection>
       </TextEditWrap>

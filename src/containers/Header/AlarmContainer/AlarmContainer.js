@@ -6,8 +6,6 @@ import Alarm from "components/Header/Alarm"
 import Socket from "modules/Socket"
 
 class AlarmContainer extends Component {
-    componentDidMount() {
-    }
     handleAlarmConfirm = (userID, alarmID) => {
         Socket.emit("confirm", { user_id: userID, alarmId: alarmID });
     }

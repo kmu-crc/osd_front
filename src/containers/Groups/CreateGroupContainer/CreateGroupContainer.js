@@ -6,8 +6,6 @@ import { CreateNewGroupRequest } from "redux/modules/group";
 
 class CreateGroupContainer extends Component {
   render() {
-    console.log("INFORMa",this.props);
-
     return (
       <CreateGroup {...this.props} />
     );

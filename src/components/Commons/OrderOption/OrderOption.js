@@ -19,7 +19,7 @@ const OrderElement = styled.div`
     line-height: 29px;
     font-size: 20px;
     cursor: pointer;
-    z-index:1000;
+    z-index: 800;
 
     &.selected {
         color: #FF0000;
