@@ -65,7 +65,6 @@ export class Controller extends Component {
   InitClick = async () => {
     await this.setState({ click: true });
   };
-
   onChangeValue = async data => {
     let newObj = { ...data };
     console.log("newObj", newObj);

@@ -137,22 +137,24 @@ const AsBelowArrow = styled.div`
 `;
 
 const WhitePane = styled.div`
-    border:1px solid black;
     z-index: 830;
-    position: absolute;
-    right: ${props => props.right};
-    left: ${props => props.left};
     width: ${props => props.width};
     height: ${props => props.height}px;
+    position: absolute;
+    left: ${props => props.left};
+    right: ${props => props.right};
     background: ${props => props.background};
     backgroundRepeat: no-repeat;
 `;
 const Arrow = styled.div`
     z-index: 831;
-    position: relative;
-    margin-top: ${props => props.gap + 105}px;
-    margin-left: auto;
-    margin-right: 29px;
+    position: absolute;
+    top:105px;
+    left: ${props => props.left};
+    right: ${props => props.right};
+    // margin-top: ${props => props.gap + 105}px;
+    // margin-left: auto;
+    // margin-right: 29px;
     width: 17px;
     height: 48px;
     border: none;
@@ -244,22 +246,22 @@ class GridEditor extends Component {
         await this.setState({ editstep: true, title: title, where: where });
     }
     async RemoveStep(data) {
-        this.props.DeleteDesignBoardRequest(this.props.design.uid, data, this.props.token)
+        await this.props.DeleteDesignBoardRequest(this.props.design.uid, data, this.props.token)
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid) })
+            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid);console.log("1",this.props.DesignDetailStep) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
     }
     async EditStep(data) {
-        this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
+        await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid) })
+            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid);console.log("2",this.props.DesignDetailStep) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) });
         this.setState({ editstep: false });
     }
     async NewStep(data) {
-        this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
+        await this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid) })
+            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid);console.log("3",this.props.DesignDetailStep) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
         this.CloseNewStep();
@@ -321,27 +323,35 @@ class GridEditor extends Component {
     }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
+
+        console.log("rendertag",DesignDetailStep)
+
         const { h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const scroll_width = DesignDetailStep && DesignDetailStep.length > 0 && DesignDetailStep.length * (200 + 75);
-        return (<Fragment >
-            {design.uid ? <div style={{ postion: "relative", border: "1px solid red" }}>
-                {/* ------------- scroll tool component-------------  */}
-                <div style={{ position: "absolute", right: "500px", width: "250px", height: `${h}px`, backgroundColor: "#EFEFEF", border: "1px dashed blue" }}>
-                    {/* <WhitePane width="178px" height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)"> */}
-                    {/* <Arrow angle="180deg" gap={this.state.arrow_top} onClick={this.ScrollRight} /></WhitePane> */}
-                </div>
+        return (
+            <div style={{position:"relative"}}>
+                {design.uid ? 
+                    <div>
+                    
 
-                {/* ------------- card modal component -------------  */}
-                {card && <CardModal
+                    <WhitePane width="178px" height={h} left={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                    <Arrow angle="0deg" left={50} gap={this.state.arrow_top} onClick={this.ScrollRight} />
+                    </WhitePane>
+                    
+                    <WhitePane width="178px" height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                    <Arrow angle="180deg" right={0} gap={this.state.arrow_top} onClick={this.ScrollRight} />
+                    </WhitePane>
+
+
+                    {card && <CardModal
                     isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
                     open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
                     title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
-                {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
-                {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
-                {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={row} open={newcard} close={() => this.setState({ newcard: false })} />}
-
-                {/* ------------- grid editor component  ------------- */}
-                <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
+                    {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
+                    {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
+                    {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={row} open={newcard} close={() => this.setState({ newcard: false })} />}
+                
+                    <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                     <GridEditorWrapper width={scroll_width.toString()}>
                         <div className="Editor" ref={this.temp}>
                             {/* ------------단계 ------------*/}
@@ -351,12 +361,18 @@ class GridEditor extends Component {
                         </div>
                         {/* </div> */}
                     </GridEditorWrapper>
-                </ReactHeight>
-            </div> : <div>디자인정보를 가져오고 있습니다.</div>
+                    </ReactHeight>
+                    </div>
+
+                
+                : <div>디자인정보를 가져오고 있습니다.</div>
             }
-        </Fragment>)
+            </div>
+        )
     }
 
 }
 
 export default GridEditor;
+
+
