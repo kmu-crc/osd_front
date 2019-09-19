@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Modal } from "semantic-ui-react";
 // import Button from "components/Commons/Button";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 import Cross from "components/Commons/Cross";
@@ -14,7 +14,7 @@ const ModalContent = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
-    color: ${StyleGuide.color.geyScale.scale9};
+    color: ${opendesign_style.color.grayScale.scale9};
     cursor: pointer;
   }
 `;

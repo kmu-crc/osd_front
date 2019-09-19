@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal, Icon } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import styled from "styled-components";
 import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
@@ -17,7 +17,7 @@ const CustomModal = styled(Modal)`
     position: absolute;
     top: 10px;
     right: 10px;
-    color: ${StyleGuide.color.geyScale.scale9};
+    color: ${opendesign_style.color.grayScale.scale9};
     cursor: pointer;
   }
   & .ui.form textarea:not([rows]) {
@@ -27,7 +27,7 @@ const CustomModal = styled(Modal)`
 const CommentContainer = styled.div`
   max-width:"100%";
   &.ui.comment{}
-  $ h4 {font-size: ${StyleGuide.font.size.heading4};}
+  $ h4 {font-size: ${opendesign_style.font.size.heading4};}
 `;
 class DesignComment extends React.Component {
   state = {

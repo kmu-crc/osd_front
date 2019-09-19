@@ -6,7 +6,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormInput, FormTextArea } from "components/Commons/FormItem";
 import { FormField } from "components/Commons/FormField";
 import FormDataToJson from "modules/FormDataToJson";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Link } from "react-router-dom";
 
 // css styling

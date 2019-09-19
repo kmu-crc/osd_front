@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Header, Grid } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const FromFieldCard = styled.div`  
   border:3px solid #EFEFEF;  
@@ -13,8 +13,8 @@ const FromFieldCard = styled.div`
   box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
   padding: 40px;
   & .para {
-    font-size: ${StyleGuide.font.size.paragraph};
-    color: ${StyleGuide.color.geyScale.scale7};
+    font-size: ${opendesign_style.font.size.paragraph};
+    color: ${opendesign_style.color.grayScale.scale7};
   }
 `;
 

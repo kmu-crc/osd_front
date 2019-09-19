@@ -23,6 +23,7 @@ const ContentContainer = styled.div`
 `
 
 class ClientTemplate extends Component {
+  state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
   componentDidMount() {
     console.log("isActive", this.props.isActive)
   }
@@ -31,7 +32,6 @@ class ClientTemplate extends Component {
       this.props.SetActive("INIT")
     }
   }
-  state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
   checkIsOutScroll = (obj) => {
     this.setState({ scroll: true })
     setTimeout(() => { this.setState({ scroll: false }) }, 100)
@@ -78,15 +78,12 @@ class ClientTemplate extends Component {
     return (<MenuContext.Provider value={{ hidemenu, larger }}>
       <HeaderContainer />
       <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-
-        <div style={{ marginLeft:"auto", marginRight:"auto", width: "1920px" }}>
-          {this.props.children}
-          <Footer />
-        </div>
-
+        <div style={{ marginLeft: "auto", marginRight: "auto", width: "1920px" }}>
+          {this.props.children}</div>
+        <Footer />
       </ContentContainer>
     </MenuContext.Provider>)
   }
 }
-//margin:"0 auto",
-export default ClientTemplate
+
+export default ClientTemplate;

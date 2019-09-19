@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const InputWrap = styled.div`
   position: relative;
@@ -11,7 +11,7 @@ const InputWrap = styled.div`
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${StyleGuide.color.main.basic};
+  color: ${opendesign_style.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `
@@ -26,26 +26,26 @@ const Input = styled.textarea`
   padding: 0.67857143em 1em;
   font-size: 1em;
   background: #fff;
-  border: 1px solid ${StyleGuide.color.geyScale.scale2};
-  color: ${StyleGuide.color.geyScale.scale7};
+  border: 1px solid ${opendesign_style.color.grayScale.scale2};
+  color: ${opendesign_style.color.grayScale.scale7};
   border-radius: 0.28571429rem;
   box-shadow: 0 0 0 0 transparent inset;
   transition: color 0.1s ease, border-color 0.1s ease;
   &::placeholder {
-    color: ${StyleGuide.color.geyScale.scale5};
+    color: ${opendesign_style.color.grayScale.scale5};
   }
   &:focus {
     &::placeholder {
-      color: ${StyleGuide.color.geyScale.scale7};
+      color: ${opendesign_style.color.grayScale.scale7};
     }
     border-color: #85b7d9;
     box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
   }
   &.error {
-    border: 1px solid ${StyleGuide.color.main.basic};
-    color: ${StyleGuide.color.main.basic};
+    border: 1px solid ${opendesign_style.color.main.basic};
+    color: ${opendesign_style.color.main.basic};
     &::placeholder {
-      color: ${StyleGuide.color.main.basic};
+      color: ${opendesign_style.color.main.basic};
     }
   }
 `;

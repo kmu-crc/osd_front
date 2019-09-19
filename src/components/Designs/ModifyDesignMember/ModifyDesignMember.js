@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Modal } from "semantic-ui-react";
 //import Button from "components/Commons/Button";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
@@ -33,7 +33,7 @@ const Label = styled.div`
   margin: 0 0 0.8rem 0;
   display: block;
   color: rgba(0,0,0,.87);
-  font-size: ${StyleGuide.font.size.paragraph};
+  font-size: ${opendesign_style.font.size.paragraph};
   font-weight: 700;
   text-transform: none;
 `;

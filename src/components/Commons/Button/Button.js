@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Icon } from "semantic-ui-react";
 
 const Btn = styled.button`
@@ -17,35 +17,35 @@ const Btn = styled.button`
   color: white;
   margin-right: 0.5rem;
   background-color: ${props => props.color === "Danger"
-                      ? StyleGuide.color.sub.purple.basic
+                      ? opendesign_style.color.sub.purple.basic
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.bule.basic
+                      ? opendesign_style.color.sub.bule.basic
                       : props.color === "Solid"
-                      ? StyleGuide.color.main.basic
-                      : StyleGuide.color.geyScale.scale5 };
+                      ? opendesign_style.color.main.basic
+                      : opendesign_style.color.grayScale.scale5 };
   border: 1px solid ${props => props.color === "Danger"
-                      ? StyleGuide.color.sub.purple.basic
+                      ? opendesign_style.color.sub.purple.basic
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.bule.basic
+                      ? opendesign_style.color.sub.bule.basic
                       : props.color === "Solid"
-                      ? StyleGuide.color.main.basic
-                      : StyleGuide.color.geyScale.scale5 };
+                      ? opendesign_style.color.main.basic
+                      : opendesign_style.color.grayScale.scale5 };
 
   &:hover{
     background-color: ${props => props.color === "Danger"
-                      ? StyleGuide.color.sub.purple.dark
+                      ? opendesign_style.color.sub.purple.dark
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.bule.dark
+                      ? opendesign_style.color.sub.bule.dark
                       : props.color === "Solid"
-                      ? StyleGuide.color.main.dark
-                      : StyleGuide.color.geyScale.scale7 };
+                      ? opendesign_style.color.main.dark
+                      : opendesign_style.color.grayScale.scale7 };
     border: 1px solid ${props => props.color === "Danger"
-                      ? StyleGuide.color.sub.purple.dark
+                      ? opendesign_style.color.sub.purple.dark
                       : props.color === "Primary"
-                      ? StyleGuide.color.sub.bule.dark
+                      ? opendesign_style.color.sub.bule.dark
                       : props.color === "Solid"
-                      ? StyleGuide.color.main.dark
-                      : StyleGuide.color.geyScale.scale7 };
+                      ? opendesign_style.color.main.dark
+                      : opendesign_style.color.grayScale.scale7 };
   }
 `
 
