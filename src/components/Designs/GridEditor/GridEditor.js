@@ -324,8 +324,7 @@ class GridEditor extends Component {
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
 
-        console.log("rendertag",DesignDetailStep)
-
+        const rightArrowPos = window.innerWidth<1920?1920-window.innerWidth:0;
         const { h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const scroll_width = DesignDetailStep && DesignDetailStep.length > 0 && DesignDetailStep.length * (200 + 75);
         return (
@@ -338,7 +337,7 @@ class GridEditor extends Component {
                     <Arrow angle="0deg" left={50} gap={this.state.arrow_top} onClick={this.ScrollRight} />
                     </WhitePane>
                     
-                    <WhitePane width="178px" height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                    <WhitePane width="178px" height={h} right={rightArrowPos+"px"} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                     <Arrow angle="180deg" right={0} gap={this.state.arrow_top} onClick={this.ScrollRight} />
                     </WhitePane>
 
