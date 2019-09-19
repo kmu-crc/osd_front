@@ -5,7 +5,7 @@ import Button from "components/Commons/Button";
 import { FormInput } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl"
 import SignUpModal from "./SignUpModal"
-import StyleGuide from "StyleGuide"
+import opendesign_style from "opendesign_style"
 import FooterPara from "components/Commons/FooterTerm/FooterPara";
 
 const SignUpBtn = styled(Button)`
@@ -40,7 +40,7 @@ const CustomModal = styled(Modal)`
     position: absolute;
     top: 10px;
     right: 10px;
-    color: ${StyleGuide.color.geyScale.scale9};
+    color: ${opendesign_style.color.grayScale.scale9};
     cursor: pointer;
   }
   & .ui.form textarea:not([rows]) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DesignInGroupClear, GetDesignInGroupRequest, DeleteDesignInGroupRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import Design from "components/Designs/Design";
 import osdstyle from "opendesign_style";
@@ -12,7 +12,7 @@ const DesignBox = styled.div`
   & .boxTitle {
     margin-left: 1rem;
     padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
 `;
 

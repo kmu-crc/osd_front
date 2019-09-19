@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import FileController from "./FileController";
 
 const ControllerWrap = styled.div`
@@ -9,14 +9,14 @@ const ControllerWrap = styled.div`
   position: relative;
   text-align: center;
 
-  border: 1px dashed ${StyleGuide.color.geyScale.scale6};
+  border: 1px dashed ${opendesign_style.color.grayScale.scale6};
   & .initWrap {
     & > ul {
       display: flex;
       // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
     }
     & > span {
-      color: ${StyleGuide.color.geyScale.scale6};
+      color: ${opendesign_style.color.grayScale.scale6};
     }
   }
   &:hover {
@@ -26,7 +26,7 @@ const ControllerWrap = styled.div`
         display: flex;
       }
       & > span {
-        color: ${StyleGuide.color.geyScale.scale6};
+        color: ${opendesign_style.color.grayScale.scale6};
       }
     }
   }

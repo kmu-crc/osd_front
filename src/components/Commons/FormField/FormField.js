@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
 import Validates from "modules/Validates";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const Field = styled(Form.Field)`
   label {
-    /* font-size: ${StyleGuide.font.size.paragraph} !important; */
+    /* font-size: ${opendesign_style.font.size.paragraph} !important; */
   }
 `
 

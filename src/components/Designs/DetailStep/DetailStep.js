@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Grid, Icon } from "semantic-ui-react";
 import DesignBoardContainer from "containers/Designs/DesignBoardContainer";
 import CreateDesignBoardContainer from "containers/Designs/CreateDesignBoardContainer";
@@ -43,7 +43,7 @@ const BtnBox = styled.div`
 `;
 const BoardController = styled.button`
   position: absolute;
-  background-color: ${StyleGuide.color.geyScale.scale4};
+  background-color: ${opendesign_style.color.grayScale.scale4};
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   border: 0;
   height: 50px;

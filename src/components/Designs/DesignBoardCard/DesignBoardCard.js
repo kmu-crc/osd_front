@@ -7,7 +7,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
 import DateFormat from "modules/DateFormat";
@@ -32,16 +32,16 @@ const BoardCard = styled.li`
   }
   & .cardTitle {
     width: 100%;
-    font-size: ${StyleGuide.font.size.paragraph};
-    color: ${StyleGuide.color.geyScale.scale8};
+    font-size: ${opendesign_style.font.size.paragraph};
+    color: ${opendesign_style.color.grayScale.scale8};
     margin-bottom: 5px;
   }
   & .cardInfo {
-    font-size: ${StyleGuide.font.size.small};
-    color: ${StyleGuide.color.geyScale.scale8};
+    font-size: ${opendesign_style.font.size.small};
+    color: ${opendesign_style.color.grayScale.scale8};
     width: 100%;
     & .cardAuthor{
-      color: ${StyleGuide.color.geyScale.scale7};
+      color: ${opendesign_style.color.grayScale.scale7};
       display: inline-block;
       text-align: left;
       padding-right: 5px;
@@ -67,7 +67,7 @@ const CustomModal = styled(Modal)`
     position: absolute;
     top: 10px;
     right: 10px;
-    color: ${StyleGuide.color.geyScale.scale9};
+    color: ${opendesign_style.color.grayScale.scale9};
     cursor: pointer;
   }
   & .ui.form textarea:not([rows]) {
@@ -76,7 +76,7 @@ const CustomModal = styled(Modal)`
 `;
 
 const CardUpdateDate = styled.span`
-  font-size: ${StyleGuide.font.size.small};
+  font-size: ${opendesign_style.font.size.small};
 `;
 
 const CommentContainer = styled.div`
@@ -92,14 +92,14 @@ const CommentContainer = styled.div`
     }
   }
   & h4 {
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
   & .ui.button.primary {
-    background: ${StyleGuide.color.sub.bule.basic};
+    background: ${opendesign_style.color.sub.bule.basic};
     font-size: 12px;
     &:hover {
       border: 0;
-      background: ${StyleGuide.color.sub.bule.dark};
+      background: ${opendesign_style.color.sub.bule.dark};
     }
   }
   & p {

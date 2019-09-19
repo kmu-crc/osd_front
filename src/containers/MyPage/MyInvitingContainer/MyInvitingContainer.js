@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Link } from "react-router-dom";
 import Button from "components/Commons/Button";
 import eximg from "source/myPage.jpeg";
@@ -16,7 +16,7 @@ const List = styled.li`
   margin: 1rem 0;
   cursor: pointer;
   &:hover, &:focus {
-    background-color: ${StyleGuide.color.geyScale.scale1};
+    background-color: ${opendesign_style.color.grayScale.scale1};
   }
 `;
 
@@ -48,7 +48,7 @@ const ButtonWrap = styled.div`
 
 const TextPart = styled.div`
   padding: 0 20px;
-  font-size: ${StyleGuide.font.size.paragraph};
+  font-size: ${opendesign_style.font.size.paragraph};
   float: left;
   width: 50%;
   & .title {
@@ -58,21 +58,21 @@ const TextPart = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: ${StyleGuide.color.geyScale.scale7};
+    color: ${opendesign_style.color.grayScale.scale7};
     font-size: 16px;
   }
   & .userName {
     line-height: 1.35;
     margin: 5px 0;
-    color: ${StyleGuide.color.geyScale.scale6};
+    color: ${opendesign_style.color.grayScale.scale6};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & .cate {
-    color: ${StyleGuide.color.main.basic};
+    color: ${opendesign_style.color.main.basic};
     font-weight: 300;
-    font-size: ${StyleGuide.font.size.small};
+    font-size: ${opendesign_style.font.size.small};
   }
 `;
 

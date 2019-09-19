@@ -4,14 +4,14 @@ import { GetDesignInGroupRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 import styled from 'styled-components';
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 import NumberFormat from "modules/NumberFormat";
 
 const DesignBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
     padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
 `;
 

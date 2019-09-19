@@ -5,7 +5,7 @@ import Sorting from "components/Commons/Sorting";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import NumberFormat from "modules/NumberFormat";
 
 // css styling
@@ -40,7 +40,7 @@ const MenuContainer = styled(Grid)`
 const MenuWrap = styled.div`
   background-color: white;
   border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
+  box-shadow: 0 1px 1px 1px ${opendesign_style.color.grayScale.scale3};
   position: fixed;
   top: 60px;
   left: 0;
@@ -51,7 +51,7 @@ const MenuWrap = styled.div`
 const Head = styled.div`
   padding-top: 80px;
   padding-bottom: 2rem;
-  font-size: ${StyleGuide.font.size.paragraph};
+  font-size: ${opendesign_style.font.size.paragraph};
 
   & .Sorting{
     float: right;

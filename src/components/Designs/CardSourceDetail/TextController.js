@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 import middle from "source/middle.png";
 import right from "source/right.png";
 import left from "source/left.png";
@@ -10,11 +10,10 @@ import underline from "source/underline.png";
 
 const TextEditWrap = styled.div`
   width: 100%;
-  border: 1px solid ${StyleGuide.color.geyScale.scale1};
+  border: 1px solid ${opendesign_style.color.grayScale.scale1};
 `;
-
 const NaviMenu = styled.div`
-  border-bottom: 1px solid ${StyleGuide.color.geyScale.scale1};
+  border-bottom: 1px solid ${opendesign_style.color.grayScale.scale1};
   padding: 0.2rem 0;
   & > input {
     line-height: 30px;
@@ -26,7 +25,7 @@ const NaviMenu = styled.div`
     background-size: 14px;
     color: transparent;
     &:hover {
-      background-color: ${StyleGuide.color.geyScale.scale1};
+      background-color: ${opendesign_style.color.grayScale.scale1};
     }
   }
   & > input[value="B"] {
@@ -49,7 +48,7 @@ const NaviMenu = styled.div`
       }
     }
     & > input[value="size"]:hover {
-      background-color: ${StyleGuide.color.geyScale.scale1};
+      background-color: ${opendesign_style.color.grayScale.scale1};
     }
   }
   & .align {
@@ -63,13 +62,12 @@ const NaviMenu = styled.div`
     background-position-y: 41%;
   }
 `;
-
 const SizeMenu = styled.div`
   position: absolute;
   z-index: 10;
   top: 25px;
   left: 0;
-  border: 1px solid ${StyleGuide.color.geyScale.scale4};
+  border: 1px solid ${opendesign_style.color.grayScale.scale4};
   border-radius: 3px;
   & > input {
     border: none;
@@ -78,30 +76,28 @@ const SizeMenu = styled.div`
     cursor: pointer;
   }
   & > input:hover {
-    background-color: ${StyleGuide.color.geyScale.scale1};
+    background-color: ${opendesign_style.color.grayScale.scale1};
   }
 `;
-
 const ColorSel = styled.input`
-  color: ${StyleGuide.color.main.basic};
+  color: ${opendesign_style.color.main.basic};
   padding: 0;
-  font-size: ${StyleGuide.font.size.paragraph};
+  font-size: ${opendesign_style.font.size.paragraph};
   width: 40px;
   text-align: center;
   font-weight: bold;
   text-decoration: underline;
   &:hover {
-    background-color: ${StyleGuide.color.geyScale.scale1};
+    background-color: ${opendesign_style.color.grayScale.scale1};
   }
 `;
-
 const ColorMenu = styled.div`
   position: absolute;
   z-index: 10;
   top: 25px;
   left: 0;
   width: 170px;
-  background-color: ${StyleGuide.color.geyScale.scale7};
+  background-color: ${opendesign_style.color.grayScale.scale7};
   border-radius: 3px;
   padding: 0.5rem;
   cursor: initial;
@@ -111,11 +107,11 @@ const ColorMenu = styled.div`
     height: 20px;
     width: 20px;
     cursor: pointer;
-    border: 1px solid ${StyleGuide.color.geyScale.scale6};
+    border: 1px solid ${opendesign_style.color.grayScale.scale6};
   }
   & .selHead {
     margin-bottom: 0.3rem;
-    color: ${StyleGuide.color.geyScale.scale6};
+    color: ${opendesign_style.color.grayScale.scale6};
     padding: 0 .4rem;
     & > span {
       float: left;
@@ -126,7 +122,7 @@ const ColorMenu = styled.div`
     & > span.selectedColor {
       min-width: 50%;
       height: 19px;
-      border: 1px solid ${StyleGuide.color.geyScale.scale6};
+      border: 1px solid ${opendesign_style.color.grayScale.scale6};
       line-height: 1.3;
       text-align: center;
     }
@@ -137,7 +133,6 @@ const ColorMenu = styled.div`
     }
   }
 `;
-
 const TextSection = styled.div`
   & .valContainer {
     min-height: 60px;

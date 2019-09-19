@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Header, Icon } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Link } from "react-router-dom";
 import Button from "components/Commons/Button";
 import ValidateForm from "components/Commons/ValidateForm";

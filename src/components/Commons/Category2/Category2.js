@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 
 const CateColumn = styled(Grid.Column)`
   @media only screen and (max-width: 1200px) {
@@ -19,7 +19,7 @@ const CateColumn = styled(Grid.Column)`
       padding-top: 1rem;
       padding-bottom: 1rem;
       &:hover {
-        color: ${StyleGuide.color.main.basic};
+        color: ${opendesign_style.color.main.basic};
         &:hover ul.subCateUl {
           display: block;
         }
@@ -27,7 +27,7 @@ const CateColumn = styled(Grid.Column)`
     }
     & li.active {
       font-weight: bold;
-      color: ${StyleGuide.color.main.basic};
+      color: ${opendesign_style.color.main.basic};
     }
     &::after {
       content: "";
@@ -41,10 +41,10 @@ const CateColumn = styled(Grid.Column)`
     z-index: 2;
     top: 40px;
     left: 0;
-    background-color: ${StyleGuide.color.geyScale.scale0};
-    border: 1px solid ${StyleGuide.color.geyScale.scale2};
-    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
-    color: ${StyleGuide.color.geyScale.scale6};
+    background-color: ${opendesign_style.color.grayScale.scale0};
+    border: 1px solid ${opendesign_style.color.grayScale.scale2};
+    box-shadow: 1px 0px 3px ${opendesign_style.color.grayScale.scale2};
+    color: ${opendesign_style.color.grayScale.scale6};
     font-weight: normal;
     &:hover {
       display: block;
@@ -53,7 +53,7 @@ const CateColumn = styled(Grid.Column)`
       width: 120px;
       padding: .7rem 1rem;
       &:hover {
-        background-color: ${StyleGuide.color.geyScale.scale2};
+        background-color: ${opendesign_style.color.grayScale.scale2};
       }
     }
   }

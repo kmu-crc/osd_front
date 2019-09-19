@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import FormDataToJson from "modules/FormDataToJson";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import Loading from "components/Commons/Loading";
 import CardSourceContainer from "containers/Designs/CardSourceContainer";
 
@@ -15,7 +15,7 @@ const ViewWrapper = styled(Grid)`
     padding-bottom: 60px;
     width: 100%;
     padding-top: 30px;
-    font-size: ${StyleGuide.font.size.paragraph};
+    font-size: ${opendesign_style.font.size.paragraph};
   }
   & .date {
     color: #a4a4a4;
@@ -23,7 +23,7 @@ const ViewWrapper = styled(Grid)`
     margin-bottom: 10px;
   }
   & h4 {
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
   & .imageInfo {
     width: 100%;

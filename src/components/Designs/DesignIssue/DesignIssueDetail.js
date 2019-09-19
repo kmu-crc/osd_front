@@ -8,24 +8,24 @@ import { FormTextArea } from "components/Commons/FormItem";
 import { Link } from "react-router-dom";
 import FormDataToJson from "modules/FormDataToJson";
 import eximg from "source/noimg.png";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 // css styling
 
 const IssueWrapper = styled(Grid)`
-  font-size: ${StyleGuide.font.size.paragraph};
+  font-size: ${opendesign_style.font.size.paragraph};
   &.ui.grid > .row {
     padding-bottom: 0;
   }
   & .detailRow {
-    border-bottom: 1px solid ${StyleGuide.color.geyScale.scale2};
+    border-bottom: 1px solid ${opendesign_style.color.grayScale.scale2};
     & h2 {
-      color: ${StyleGuide.color.geyScale.scale7};
-      font-size: ${StyleGuide.font.size.heading4};
+      color: ${opendesign_style.color.grayScale.scale7};
+      font-size: ${opendesign_style.font.size.heading4};
     }
     & .userInfo {
       padding: .5rem;
-      color: ${StyleGuide.color.geyScale.scale5};
+      color: ${opendesign_style.color.grayScale.scale5};
       text-align: right;
       & > span {
         margin-right: 20px;
@@ -37,7 +37,7 @@ const IssueWrapper = styled(Grid)`
   }
   &.ui.grid .row.textArea {
     padding: 1.5rem 1rem;
-    color: ${StyleGuide.color.geyScale.scale7};
+    color: ${opendesign_style.color.grayScale.scale7};
   }
 `;
 
@@ -49,7 +49,7 @@ const BtnWrapper = styled.div`
 `;
 
 const CommentContainer = styled.div`
-  color: ${StyleGuide.color.geyScale.scale7};
+  color: ${opendesign_style.color.grayScale.scale7};
   &.ui.comments {
     max-width: 100%;
     margin: 3rem 0;
@@ -64,11 +64,11 @@ const CommentContainer = styled.div`
     text-align: center;
   }
   & .ui.button {
-    font-size: ${StyleGuide.font.size.small};
-    background: ${StyleGuide.color.sub.bule.basic};
+    font-size: ${opendesign_style.font.size.small};
+    background: ${opendesign_style.color.sub.bule.basic};
     &:hover {
       border: 0;
-      background: ${StyleGuide.color.sub.bule.dark};
+      background: ${opendesign_style.color.sub.bule.dark};
     }
   }
   & .ui.form .field {

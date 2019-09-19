@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Link } from "react-router-dom";
 import DesignIssueListContainer from "containers/Designs/DesignIssueListContainer";
 import DesignIssueDetailContainer from "containers/Designs/DesignIssueDetailContainer";

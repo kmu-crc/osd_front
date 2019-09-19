@@ -11,7 +11,7 @@ const FlexContainer = styled.div`
 `;
 const FlexBox = styled.div`
   width: ${props => props.width};
-  height:${props => props.height};
+  height: ${props => props.height};
   margin-right: ${props => props.marginRight};
   margin-bottom: ${props => props.marginBottom};
   &.right-last { margin-right: ${props => props.marginRightLast}; }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 // import { NavLink } from 'react-router-dom'
-// import StyleGuide from "opendesign_style"
+// import opendesign_style from "opendesign_style"
 
 import forked from "source/forked.svg"
 import iForked from "source/forked_icon_white.png"

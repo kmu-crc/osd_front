@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Icon } from "semantic-ui-react";
 
 const DeleteImg = styled.div`
@@ -15,7 +15,7 @@ const DeleteImg = styled.div`
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${StyleGuide.color.main.basic};
+  color: ${opendesign_style.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `
