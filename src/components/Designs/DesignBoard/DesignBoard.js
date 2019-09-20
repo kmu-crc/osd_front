@@ -4,20 +4,20 @@ import { Modal, Icon } from "semantic-ui-react";
 import CreateDesignCardContainer from "containers/Designs/CreateDesignCardContainer";
 import DesignBoardCardContainer from "containers/Designs/DesignBoardCardContainer";
 import BoardUpdate from "components/Designs/DesignBoard/BoardUpdate";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
 import TextFormat from "modules/TextFormat";
 
 const CustomModal = styled(Modal)`
   border: "1px solid";
-  border-color: ${StyleGuide.color.main.dark};
+  border-color: ${opendesign_style.color.main.dark};
   padding: 20px;
   width: 250px;
   & .icon.close{
     position: absolute;
     top: 10px;
     right: 10px;
-    color: ${StyleGuide.color.geyScale.scale9};
+    color: ${opendesign_style.color.grayScale.scale9};
     cursor: pointer;
   }
 `;
@@ -38,8 +38,8 @@ const Title = styled.div`
   font-weight: 600;
   padding: 0.3em 10px;
   position: relative;
-  background-color: ${StyleGuide.color.sub.bule.basic};
-  color: ${StyleGuide.color.geyScale.scale0};
+  background-color: ${opendesign_style.color.sub.bule.basic};
+  color: ${opendesign_style.color.grayScale.scale0};
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   span {
@@ -64,10 +64,10 @@ const MenuIcon = styled.button`
   vertical-align: middle;
   border-radius: 3px;
   &:hover {
-    background-color: ${StyleGuide.color.sub.bule.dark};
+    background-color: ${opendesign_style.color.sub.bule.dark};
   }
   i.icon {
-    color: ${StyleGuide.color.geyScale.scale0};
+    color: ${opendesign_style.color.grayScale.scale0};
     margin: 0;
   }
 `;
@@ -76,7 +76,7 @@ const Menu = styled.ul`
   position: absolute;
   right: 10px;
   width: 130px;
-  background-color: ${StyleGuide.color.geyScale.scale0};
+  background-color: ${opendesign_style.color.grayScale.scale0};
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: 3px;
@@ -86,13 +86,13 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
   box-sizing: border-box;
   font-size: 9pt;
-  color: ${StyleGuide.color.geyScale.scale6};
-  border-bottom: 1px solid ${StyleGuide.color.geyScale.scale3};
+  color: ${opendesign_style.color.grayScale.scale6};
+  border-bottom: 1px solid ${opendesign_style.color.grayScale.scale3};
   &:last-child {
     border-bottom: 0;
   }
   &:hover {
-    background-color: ${StyleGuide.color.geyScale.scale3};
+    background-color: ${opendesign_style.color.grayScale.scale3};
   }
   button {
     background-color: transparent;

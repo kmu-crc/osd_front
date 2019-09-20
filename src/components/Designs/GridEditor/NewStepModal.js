@@ -58,7 +58,7 @@ class NewStepModal extends Component {
                     <div onClick={this.onSubmit} style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "29px", borderBottom: "1.5px solid #FF0000", cursor: "pointer" }}>생성하기</div>
                 </div>
             </form>
-        </NewStepDialog >)
+        </NewStepDialog>)
     }
 }
 

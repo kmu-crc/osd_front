@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/noimg.png";
 import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer";
@@ -37,8 +37,8 @@ const Title = styled.div`
   z-index: 2;
   transform: translateY(-50%);
   h1 {
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading2};
+    color: ${opendesign_style.color.grayScale.scale0};
+    font-size: ${opendesign_style.font.size.heading2};
     font-weight: bold;
   }
 `;

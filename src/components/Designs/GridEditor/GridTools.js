@@ -2,6 +2,7 @@ import React from 'react';
 import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
+import PxtoRem from "modules/PxtoRem";
 
 export const CreateStep = (props) => {
     return (<div onClick={props.onClick}
@@ -85,8 +86,10 @@ const CardContainer = styled.div`
     position: relative;
     z-index: 700;
     cursor: pointer;
-    width: 200px;
-    height: 200px;
+    // width: 200px;
+    // height: 200px;
+    width: ${PxtoRem(200)};
+    height: ${PxtoRem(200)};
     border-radius: 15px;
     overflow:hidden;
     border: 2px solid rgba(112, 112, 112, 1);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { FormFile } from "./FormFile";
 import ThumbnailDefault from "source/thumbnail.png";
 
@@ -25,7 +25,7 @@ const ThumbnailImg = styled.label`
 const UploaderButton = styled.label`
   display: block;
   width: 200px;
-  background-color: ${StyleGuide.color.sub.bule.basic};
+  background-color: ${opendesign_style.color.sub.bule.basic};
   color: white;
   border-radius: 3px;
   padding: 0.7em 2em;

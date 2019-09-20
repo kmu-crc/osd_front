@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import ContentBox from "components/Commons/ContentBox";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import ScrollTopDesignContainer from "containers/Commons/ScrollTopDesignContainer";
 import MainSlide from "./Slide";
 
@@ -29,8 +29,8 @@ const Wrapper = styled.div`
 `;
 
 const Head = styled.div`
-  color: ${StyleGuide.color.geyScale.scale7};
-  font-size: ${StyleGuide.font.size.heading3};
+  color: ${opendesign_style.color.grayScale.scale7};
+  font-size: ${opendesign_style.font.size.heading3};
   text-align: center;
   margin-bottom: 1rem;
 `;
