@@ -194,38 +194,40 @@ class GridEditor extends Component {
     }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
-        console.log("rendertag", DesignDetailStep)
+        const rightArrowPos = window.innerWidth<1920?1920-window.innerWidth:0;
+
         const { h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const scroll_width = DesignDetailStep && DesignDetailStep.length > 0 && DesignDetailStep.length * (200 + 75);
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
                     <div>
-                        {left ? <WhitePane width="150px" height={h} left={0}>
+                        {left ?  <WhitePane width="178px" height={h} left={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" left={50} gap={this.state.arrow_top} onClick={this.ScrollLeft} />
                         </WhitePane> : null}
-                        {right ? <WhitePane width="150px" height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                        {right ? <WhitePane width="178px" height={h} right={rightArrowPos+"px"} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                             <Arrow angle="180deg" right={0} gap={this.state.arrow_top} onClick={this.ScrollRight} />
                         </WhitePane> : null}
-                        {card && <CardModal
-                            isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
-                            open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
-                            title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
-                        {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
-                        {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
-                        {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={row} open={newcard} close={() => this.setState({ newcard: false })} />}
 
-                        <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
-                            <GridEditorWrapper width={scroll_width.toString()}>
-                                <div className="Editor" ref={this.temp}>
-                                    {/* ------------단계 ------------*/}
-                                    {DesignDetailStep && DesignDetailStep.length > 0 &&
-                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
-                                    {editor && <div style={{ display: "flex" }}>
-                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "200px" }}></div></div>}
-                                </div>
-                            </GridEditorWrapper>
-                        </ReactHeight>
+                    {card && <CardModal
+                    isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
+                    open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
+                    title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
+                    {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
+                    {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
+                    {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={row} open={newcard} close={() => this.setState({ newcard: false })} />}
+                
+                    <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
+                    <GridEditorWrapper width={scroll_width.toString()}>
+                        <div className="Editor" ref={this.temp}>
+                            {/* ------------단계 ------------*/}
+                            {DesignDetailStep && DesignDetailStep.length > 0 &&
+                                <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
+                            {editor && <div style={{ display: "flex" }}><CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "200px" }}></div></div>}
+                        </div>
+                        {/* </div> */}
+                    </GridEditorWrapper>
+                    </ReactHeight>
                     </div>
                     : <div>디자인정보를 가져오고 있습니다.</div>
                 }</div>)

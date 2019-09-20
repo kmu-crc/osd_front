@@ -1,10 +1,112 @@
 import React, { Component } from "react";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
-// import SelectBox from "components/Commons/SelectBox"
-// import showPw from "source/show_password.svg";
-// import styled from "styled-components";
+import styled from "styled-components";
 import noimg from "source/noimg.png"
 
+const ContentsBox = styled.div`
+    padding-left:47px;
+    .title{
+        width:100px;
+        height:29px;
+        text-align:left;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+    }
+`
+const ImageBox=styled.div`
+    margin-left:67px;
+    width:210px;
+    height:210px;
+    border-radius:10px;
+    background: ${props => `url(${props.imageURL})`};
+    background-size:cover;
+    background-position:center center;
+`
+const ThumbnailBox = styled.div`
+    display:flex;
+    width:1200px;
+    .explainBox{
+        margin-left:54px;
+        margin-top:100px;
+    }
+    .findThumbnailBtn{
+        width:63px;
+        height:25px;
+        cursor:pointer;
+    }
+    .findThumbnailText{
+        font-family:Noto Sans KR;
+        font-size:17px;
+        font-weight:500;
+        text-align:left;
+        line-height:25px;
+        color:#FF0000;
+        border-bottom:1.5px solid #FF000;
+        cursor:pointer;
+    }
+    .findThumbnailBox{
+        margin-left:54px;
+        margin-top:100px;
+    .thumbnailExplainText{
+        width:341px;
+        height:45px;
+        margin-top:11px;
+        font-weight:300;
+        font-size:14px;
+        color:#707070;
+        line-height:20px;
+        text-align:left;
+        }
+    }
+`
+const TitleBox = styled.div`
+        width:1200px;
+        display:flex;
+        margin-top:96px;
+
+
+        .inputText{
+            width:505px;
+            height:56px;
+            margin-left:67px;
+            padding-left:22px;
+            padding-right:22px;
+            font-size:20px;
+            font-weight:300;
+            font-family:Noto Sans KR;
+            line-height:29px;
+            color:#707070;
+            border:none;
+            border-radius:5px;
+            outline:none;
+            background-color:#EFEFEF;
+        
+        }
+`
+const ExplainBox = styled.div`
+
+        width:1200px;
+        margin-top:103px;
+        display:flex;
+        .inputTextareaBox{
+            width:717.5px;
+            height:244px;
+            margin-left:70px;
+            padding:22px 26px 34px 32px;
+            font-family:Noto Sans KR;
+            font-size:20px;
+            font-weight:300;
+            color:#707070;
+            line-height:35px;
+            text-align:left;
+            outline:none;
+            border:none;
+            border-radius:5px;
+            resize:none;
+            background-color:#EFEFEF;
+        }
+`
 //const BasicSecBox = {paddingLeft:"47px"}
 const BasicSecTitle={ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
 const BasicSec_thumb_Box = { display: "flex",width:"1200px", }
@@ -79,48 +181,32 @@ class SectionBasic extends Component
     {
         const thumbnailURL = this.state.thumbnail;
         return(
-            <section id="basic" style={{ paddingLeft: "95.5px" }} >
+            <ContentsBox>
             {/* thumbnail */}
-             <div style={BasicSec_thumb_Box}>
-                    <div style={BasicSecTitle}>프로필 사진
-                    </div>
-                    <div style={{marginLeft: "67px", width: "210px", height: "210px", borderRadius: "50%", 
-                    backgroundImage: `url(${thumbnailURL==null?noimg:thumbnailURL})`,backgroundSize: "cover", backgroundPosition: "center center"}} ></div>
-                    <div style={BasicSec_thumb_ExplainBox}>
-                    <div style={BasicSec_thumb_FindBox}>
-                        <label htmlFor="file" style={BasicSec_thumb_FindTitle}>찾아보기</label>
+             <ThumbnailBox>
+                    <div className="title">프로필 사진</div>
+                    <ImageBox imageURL={thumbnailURL==null?noimg:thumbnailURL}/>
+                    <div className="findThumbnailBox">
+                    <div className="findThumbnailBtn">
+                        <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                         <input hidden onChange = {this.handleOnChangeThumbnail} id="file" type="file"/>
                     </div>
-                    <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
-            </div>
+            </ThumbnailBox>
             {/* nick */}
-            <div style={{ marginTop: "86px", width: "1544px" }}>
-              <div style={{ display: "flex" }}>
-                <div style={{ marginRight: "117px", width: "56px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>닉네임</div>
-                <div style={{
-                  width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px",
-                  fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070"
-                }} >
-                  <input type="text" onChange = {this.handleInputNickName} maxLength="50" value={this.state.nickname} style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", 
-                  border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 입력하세요." />
-                </div>
-                <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }}>
-                  {/* {this.state.nick ? <div>사용 가능한 닉네임입니다.</div> : <div style={{ color: "#FF0000" }}>사용 하실 수 없는 닉네임입니다.</div>} */}
-                </div>
-              </div>
-            </div>
+            <TitleBox>
+                <div className="title">닉네임</div>
+                  <input type="text" className="inputText"  placeholder="닉네임을 입력하세요." onChange = {this.handleInputNickName}  
+                        value={this.state.nickname} maxLength="50"/>
+            </TitleBox>
             {/* introduction */}
-            <div style={{ marginTop: "50px", display: "flex" }}>
-              <div style={{ width: "75px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>자기소개</div>
-              <div style={{ width: "717.5px", height: "244px", marginLeft: "98px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
-                <textarea onChange = {this.handleInputIntroduce} value ={this.state.introduce} maxLength="300" style={{
-                  width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px",
-                  textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px"
-                }} placeholder="자기소개를 입력하세요." />
-              </div>
-            </div>
-          </section>
+            <ExplainBox>
+              <div className="title">자기소개</div>
+                <textarea className="inputTextareaBox"  onChange = {this.handleInputIntroduce} value ={this.state.introduce} 
+                          placeholder="자기소개를 입력하세요." maxLength="400"  />
+            </ExplainBox>
+          </ContentsBox>
         );
     }
 }

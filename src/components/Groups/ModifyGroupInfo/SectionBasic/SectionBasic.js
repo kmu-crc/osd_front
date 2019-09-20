@@ -1,5 +1,114 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import noimg from "source/noimg.png"
+
+const ContentsBox = styled.div`
+    padding-left:47px;
+    .title{
+        width:100px;
+        height:29px;
+        text-align:left;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+    }
+`
+const ImageBox=styled.div`
+    margin-left:67px;
+    width:210px;
+    height:210px;
+    border-radius:10px;
+    background: ${props => `url(${props.imageURL})`};
+    background-size:cover;
+    background-position:center center;
+`
+const ThumbnailBox = styled.div`
+    display:flex;
+    width:1200px;
+    .explainBox{
+        margin-left:54px;
+        margin-top:100px;
+    }
+    .findThumbnailBtn{
+        width:63px;
+        height:25px;
+        cursor:pointer;
+    }
+    .findThumbnailText{
+        font-family:Noto Sans KR;
+        font-size:17px;
+        font-weight:500;
+        text-align:left;
+        line-height:25px;
+        color:#FF0000;
+        border-bottom:1.5px solid #FF000;
+        cursor:pointer;
+    }
+    .findThumbnailBox{
+        margin-left:54px;
+        margin-top:100px;
+
+    }
+    .thumbnailExplainText{
+        width:341px;
+        height:45px;
+        margin-top:11px;
+        font-weight:300;
+        font-size:14px;
+        color:#707070;
+        line-height:20px;
+        text-align:left;
+    }
+`
+const TitleBox = styled.div`
+        width:1200px;
+        display:flex;
+        margin-top:96px;
+
+
+        .inputText{
+            width:505px;
+            height:56px;
+            margin-left:67px;
+            padding-left:22px;
+            padding-right:22px;
+            font-size:20px;
+            font-weight:300;
+            font-family:Noto Sans KR;
+            line-height:29px;
+            color:#707070;
+            border:none;
+            border-radius:5px;
+            outline:none;
+            background-color:#EFEFEF;
+        
+        }
+`
+const ExplainBox = styled.div`
+
+        width:1200px;
+        margin-top:103px;
+        display:flex;
+        .inputTextareaBox{
+            width:717.5px;
+            height:244px;
+            margin-left:70px;
+            padding:22px 26px 34px 32px;
+            font-family:Noto Sans KR;
+            font-size:20px;
+            font-weight:300;
+            color:#707070;
+            line-height:35px;
+            text-align:left;
+            outline:none;
+            border:none;
+            border-radius:5px;
+            resize:none;
+            background-color:#EFEFEF;
+        }
+`
+
 
 const BasicSecBox = {paddingLeft:"47px"}
 const BasicSecTitle={ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
@@ -99,37 +208,30 @@ class GroupBasicInfo extends Component
         console.log("THUMBNAIL",this.props);
         //const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
         return(
-            <section style={BasicSecBox} >
+            <ContentsBox>
             {/* thumbnail */}
-                <div style={BasicSec_thumb_Box}>
-                    <div style={BasicSecTitle}>섬네일 사진
-                    {/* <input hidden type="file" value={null} /> */}
-                    </div>
-                    <div style={{marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", 
-                    backgroundImage: `url(${this.state.groupThumbnail})`,backgroundSize: "cover", backgroundPosition: "center center"}} ></div>
-                    <div style={BasicSec_thumb_ExplainBox}>
-                    <div style={BasicSec_thumb_FindBox}>
-                        <label for="file" onClick = {this.handleFileUploadModal}style={BasicSec_thumb_FindTitle}>찾아보기</label>
+                <ThumbnailBox>
+                    <div className="title">섬네일 사진</div>
+                    <ImageBox imageURL={this.props.groupThumbnail} ></ImageBox>
+                    <div className="findThumbnailBox">
+                    <div className="findThumbnailBtn">
+                        <label for="file" className="findThumbnailText"  onClick = {this.handleFileUploadModal}>찾아보기</label>
                         <input hidden onChange = {this.handleOnChangeThumbnail} id="file" type="file" value ={null} />
                     </div>
-                    <div style={BasicSec_thumb_FindExplain}>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
-                </div>
-                {/* title */}
-                <div style={BasicSec_title_Box}>
-                    <div style={BasicSecTitle}>제목</div>
-                    <div style={BasicSec_title_InputBox} >
-                    <input type="text" style={BasicSec_title_Input} onChange = {this.handleOnChangeTitle} value = {this.state.groupTitle}/>
-                    </div>
-                </div>
+                </ThumbnailBox>
+            {/* title */}
+                <TitleBox>
+                    <div className="title">제목</div>
+                    <input type="text" className="inputText" onChange = {this.handleOnChangeTitle} value = {this.props.groupTitle}/>
+                </TitleBox>
                 {/* description */}
-                <div style={BasicSec_explain_Box}>
-                <div style={BasicSecTitle}>그룹 설명</div>
-                <div style={BasicSec_explain_InputBox}>
-                    <textarea style={BasicSec_explain_Input} placeholder="디자인에 대한 설명을 입력하세요." onChange = {this.handleOnChangeExplain} value={this.props.groupExplain}/>
-                </div>
-                </div>
-            </section>
+                <ExplainBox>
+                    <div className="title">그룹 설명</div>
+                    <textarea className = "inputTextareaBox" placeholder="디자인에 대한 설명을 입력하세요." onChange = {this.handleOnChangeExplain} value={this.props.groupExplain}/>
+                </ExplainBox>
+            </ContentsBox>
 
         );
     }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
-import BasicInfo from "components/Groups/CreateGroup/BasicInfo";
+import SectionBasic from "components/Groups/CreateGroup/SectionBasic";
 import Loading from "components/Commons/Loading";
 
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
@@ -10,30 +10,71 @@ const MainBanner = styled.div`
   width: 1920px;
   display: flex;
   justify-content: center;
+  .title{
+    width: 196px;
+    height: 37px;
+    margin-top: 45px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
+  }
 `;
-const MainBannertext = styled.div`
-  margin-top: 45px;
-  width: 196px;
-  height: 37px;
-  font-family: Noto Sans KR;
-  font-size: 25px;
-  font-weight: 700;
-  line-height: 37px;
-  text-align: center;
-  color: #707070;
-`;
+
 const MainSection = styled.div`
   display: flex;
   margin-top: 60px;
   margin-bottom: 111px;
-  .FONT-TEST{
-    color: ${props=>props.color};
-    font-size: ${props=>props.fz}px;
-    font-family: Noto Sans KR;
-    font-weight: 300;
-    text-align: left;
-  };
 `;
+
+const NavMenu = styled.div`
+  width: 433px;
+
+  .menuBox{
+    width:325px;
+    height:62px;
+    position: fixed;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
+  }
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom?"none" : "2px solid #FFFFFF"};
+    cursor:pointer;
+
+  }
+    .menuText{
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:300;
+      text-align:left;
+      color: ${props => props.selected?"#707070":"#FF0000"};
+      border-bottom:${props => props.borderBottom};
+    }
+`;
+
+const InputBoard = styled.div`
+      width:1422px;
+      height:925px;
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justifyContent: flex-end;
+      }
+`;
+
 const BtnText = styled.p`
   width: 74px;
   padding: 0px;
@@ -43,6 +84,20 @@ const BtnText = styled.p`
   text-align: center;
   font-size: 20px;
   color: #FFFFFF;
+`;
+
+const CompleteButton = styled.div`
+  position:absolute;
+  right:9px;
+  bottom:35px;
+  cursor:pointer;
+  width:104.5px;
+  height:44px;
+  border-radius:5px;
+  background-color:${props=>props.isComplete?"#FF0000":"#707070"};
+  padding-top:6px;
+  padding-left:15px;
+  margin-right:53px;
 `;
 
 class CreateGroup extends Component {
@@ -121,41 +176,51 @@ class CreateGroup extends Component {
     return (<React.Fragment>
       {loading ? <Loading /> : null}
       <MainBanner>
-        <MainBannertext>그룹 등록하기</MainBannertext>
+        <div className="title">그룹 등록하기</div>
       </MainBanner>
 
       <MainSection>
         {/* scroll - menu */}
-        <div style={{ width: "433px" }}>
-          <div style={{ width: "325px", marginLeft: "64px" }}>
-            <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+        <NavMenu>
+          <div className = "menuBox">
               {scrollmenu.map((menu, index) => {
-                return (<div onClick={() => this.gotoStep(index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                  <div className="FONT-TEST" fz={100} color={this.state.step === index ? "#FF0000" : "#707070"} >{menu.txt}</div>
+                return (
+                <div className = "menuItem" 
+                     onClick={() => this.gotoStep(index)}
+                     borderBottom={ index + 1 === scrollmenu.length} key={menu.txt}>
+                <div className="menuText" selcted={this.state.step === index}>{menu.txt}</div>
                 </div>)
               })}
-            </div>
           </div>
-        </div>
+        </NavMenu>
 
         {/* form */}
-        <div style={{ position: "relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
+        <InputBoard >
           <form>
             {step === 0 &&
-              <BasicInfo completed={this.completed}
-                groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
-                onChangeExplain={this.handleInputDesignExplain} onChangeTitle={this.handleInputDesignTitle} onChangeThumbnailURL={this.handleChangeThumbnailURL} onChangeThumbnail={this.handleChangeThumbnail}
-                designExplain={this.state.groupExplain} designTitle={this.state.groupTitle} thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
-            <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
-              <div onClick={this.state.isPossibleNextStep ? this.onSubmit : ()=>alert("아직 그룹 등록에 필요한 정보가 입력되지 않았습니다.")} style={{ position: "absolute", right: "9px", bottom: "35px", cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
+              <SectionBasic completed={this.completed}
+                groupTitle={this.state.groupTitle} 
+                groupExplain={this.state.groupExplain} 
+                groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
+                onChangeExplain={this.handleInputDesignExplain} 
+                onChangeTitle={this.handleInputDesignTitle} 
+                onChangeThumbnailURL={this.handleChangeThumbnailURL} 
+                onChangeThumbnail={this.handleChangeThumbnail}
+                designExplain={this.state.groupExplain} 
+                designTitle={this.state.groupTitle} 
+                thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
+            <div className = "buttonBox">
+                <CompleteButton isComplete = {this.state.isPossibleNextStep}
+                     onClick={this.state.isPossibleNextStep ? this.onSubmit : ()=>alert("아직 그룹 등록에 필요한 정보가 입력되지 않았습니다.")} >
                 <BtnText>완료</BtnText>
-              </div>
+              </CompleteButton>
             </div>
           </form>
-        </div>
+        </InputBoard>
       </MainSection>
     </React.Fragment>)
   }
 }
 
 export default CreateGroup;
+

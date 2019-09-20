@@ -1,25 +1,148 @@
 import React, { Component } from "react";
 import noimg from "source/noimg.png"
-
-import BasicInfo from "components/Groups/CreateGroup/BasicInfo"
-// import AdditionalInfo from "components/Groups/CreateGroup/AdditionalInfo"
-// import { userInfo } from "os";
+import styled from "styled-components";
+import SectionBasic from "components/Groups/ModifyGroupInfo/SectionBasic"
 import { Modal } from "semantic-ui-react";
 import iDelete from "source/deleteItem.png"
 
-// const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }]
-
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
 
+const MainBanner = styled.div`
+  width: 1920px;
+  display: flex;
+  justify-content: center;
+  .title{
+    width: 196px;
+    height: 37px;
+    margin-top: 45px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
+  }
+`
+const MainSection = styled.div`
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 111px;
+`
 
-const Main_Banner = { width: "1920px", display: "flex", justifyContent: "center" }
-const Main_Banner_text = { marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }
-const Main_Section = { display: "flex", marginTop: "60px", marginBottom: "111px" }
-//const Menu_Delete={position:"fixed", top:"349px",left:"100px",width:"150px",height:"29px",fontFamily: "Noto Sans KR",fontWeight:"500",fontSize:"20px",color:"#FF0000"}
-//const Btn_Back = { position:"absolute",right:"54px",bottom:"35px",border:"1px solid black",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px"}
-//const Btn_Next ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
-const Btn_text = { width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
-const modify_Menu_Delete = { position: "fixed", top: "280px", left: "100px", width: "150px", height: "29px", cursor: "pointer", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", color: "#FF0000" }
+const NavMenu = styled.div`
+  width: 433px;
+  .menuBox{
+    width:325px;
+    height:62px;
+    position: fixed;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
+  }
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom?"none" : "2px solid #FFFFFF"};
+    cursor:pointer;
+
+  }
+    .menuText{
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:300;
+      text-align:left;
+      color: ${props => props.selected?"#707070":"#FF0000"};
+      border-bottom:${props => props.borderBottom};
+    }
+    .deleteText{
+      font-family:Noto Sans KR;
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:500;
+      text-align:left;
+      color:#FF0000;
+      border-bottom:${props => props.borderBottom};
+    }
+`
+const InputBoard = styled.div`
+      width:1422px;
+      height:925px;
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justifyContent: flex-end;
+      .completeBtn{
+        position:absolute;
+        right:9px;
+        bottom:35px;
+        cursor:pointer;
+        width:104.5px;
+        height:44px;
+        border-radius:5px;
+        background-color:#FF0000;
+        padding-top:6px;
+        padding-left:15px;
+        margin-right:53px;
+      }
+      }
+`
+const BtnText = styled.p`
+  width: 74px;
+  padding: 0px;
+  font-familty: Noto Sans KR;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
+  font-size: 20px;
+  color: #FFFFFF;
+`;
+
+const CheckModal = styled(Modal)`
+      box-shadow:0px 3px 6px #000000;
+      position:relative;
+      width:576px;
+      height:200px;
+      text-align:center;
+      bottom:318px;
+      .messageText{
+        width:100%;
+        height:69px;
+        font-family:Noto Sans KR;
+        font-size:20px;
+        color:#707070;
+        line-height:40px;
+        margin-top:35px;
+        margin-bottom:31px;
+      }
+      .okButton{
+        cursor:pointer;
+        width:100%;
+        height:29px;
+        font-family:Noto Sans KR;
+        font-size:20px;
+        text-decoration:underline;
+        color:#FF0000;
+      }
+      .closeButton{
+        cursor:pointer;
+        position:absolute;
+        right:-50px;
+        top:0px;
+        width:22px;
+        height:22px;
+        background-image:${iDelete};
+        background-size:cover;
+        background-position:center center;
+      }
+`
 
 class CreateGroup extends Component {
 
@@ -162,17 +285,7 @@ class CreateGroup extends Component {
   }
   render() {
     const { step } = this.state
-    // const DeleteWariningModal = ()=>
-    // {
-    //   return(
-    //     <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
-    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
-    //       그룹 캡스톤 디자인 2019를 삭제하지 못했습니다.</div>
-    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"none",color:"#FF0000"}}>
-    //       그룹의 개설자만 삭제할 권한이 주어집니다.</div>
-    //   </Modal>
-    //   );
-    // }
+
     const DeleteGroupModal = () => {
       return (
         <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
@@ -182,68 +295,57 @@ class CreateGroup extends Component {
         </Modal>
       );
     }
-    // const DeleteGroupComplete = ()=>
-    // {
-    //   return(
-    //     <Modal open={this.state.deleteDialog} style={{boxShadow:"0px 3px 6px #000000",position:"fixed",width:"576px",height:"160px",textAlign:"center",top:"40px"}}>
-    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",color:"#707070",lineHeight:"29px",marginTop:"40px",marginBottom:"10px"}}>
-    //       사용자 매뉴얼 디자인 등록01을 삭제했습니다.</div>
-    //     <div style = {{width:"100%",height:"29px",fontFamily:"Noto Sans KR",fontSize:"20px",textDecoration:"underline",color:"#FF0000"}}>
-    //       되돌리기</div>
-    //     <div onClick = {this.handleOnClickDeleteDesign} style={{position:"absolute",right:"-50px",top:"0px",width:"22px",height:"22px",
-    //                 backgroundImage: `url(${iDelete})`,backgroundSize: "cover", backgroundPosition: "center center",}}>
-    //     </div>
-    //   </Modal>
-    //   );
-    // }
 
     return (<React.Fragment>
 
-      <div style={Main_Banner}>
-        <div style={Main_Banner_text}>그룹 수정하기</div>
-      </div>
+      <MainBanner>
+        <div className="title">그룹 수정하기</div>
+      </MainBanner>
 
-      <div style={Main_Section}>
+      <MainSection>
         {/* scroll - menu */}
-        <div style={{ width: "433px" }}>
-          <div style={{ width: "325px", marginLeft: "64px" }}>
-            <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+        <NavMenu>
+          <div className="menuBox">
               {scrollmenu.map((menu, index) => {
-                return (<div onClick={() => this.gotoStep(index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                  <div style={{ color: this.state.step === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
+                return (
+                <div className="menuItem" 
+                    onClick={() => this.gotoStep(index)} 
+                    borderBottom={index+1===scrollmenu.length} key={menu.txt}>
+                  <div className="menuText" selected={this.state.step === index}>{menu.txt}</div>
                 </div>)
               })}
-            </div>
+          <div className="menuItem" onClick={this.handleOnClickDeleteDesign}>
+            <div className="deleteText">그룹 삭제하기</div>
           </div>
-          <div onClick={this.handleOnClickDeleteDesign} style={modify_Menu_Delete}>그룹 삭제하기</div>
-        </div>
+          </div>
+        </NavMenu>
         {/* form */}
-        <div style={{ position: "relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
+        <InputBoard>
           <form>
 
-            {step === 0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
-              onChangeExplain={this.handleInputDesignExplain} onChangeTitle={this.handleInputDesignTitle} onChangeThumbnailURL={this.handleChangeThumbnailURL} onChangeThumbnail={this.handleChangeThumbnail}
-              designExplain={this.state.groupExplain} designTitle={this.state.groupTitle} thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
-            {/* {step ===1 &&<AdditionalInfo {...this.props}/>} */}
+            {step === 0 && 
+              <SectionBasic 
+              groupTitle={this.state.groupTitle} 
+              groupExplain={this.state.groupExplain} 
+              groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
+              onChangeExplain={this.handleInputDesignExplain} 
+              onChangeTitle={this.handleInputDesignTitle} 
+              onChangeThumbnailURL={this.handleChangeThumbnailURL} 
+              onChangeThumbnail={this.handleChangeThumbnail}
+              designExplain={this.state.groupExplain} 
+              designTitle={this.state.groupTitle} 
+              thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
             {/* buttons*/}
-            <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
-
-              <div onClick={this.onSubmit} style={{ position: "absolute", right: "9px", bottom: "35px", cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-                <p style={Btn_text}>완료</p></div>
-              {/* {step === 1? 
-            <div onClick={this.state.isPossibleNextStep ? this.completeCreateDesign : null} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-            <p style={Btn_text}>완료</p></div>
-            : <div onClick={() => this.gotoStep(1)} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-            <p style={Btn_text}>다음</p>
-            </div>
-            } */}
-
-
+            <div className="buttonBox">
+              <div className="completeBtn" 
+                    onClick={this.onSubmit} >
+                <BtnText>완료</BtnText>
+              </div>
             </div>
           </form>
-        </div>
+        </InputBoard>
         <DeleteGroupModal />
-      </div>
+      </MainSection>
 
 
 
