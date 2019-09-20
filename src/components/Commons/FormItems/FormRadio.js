@@ -6,6 +6,9 @@ import opendesign_style from "opendesign_style";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
+  input {
+    display: none;
+  }
 `
 
 const Message = styled.div`
@@ -92,7 +95,6 @@ export class FormRadio extends Component {
           type="radio"
           id={id ? id+value : name+value}
           name={name && name}
-          style={{display: "none"}}
           defaultValue={value && value}
           ref={ref => (this.input = ref)}
           onBlur={this.returnData}/>

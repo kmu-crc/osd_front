@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import styled from "styled-components";
 import opendesign_style from "opendesign_style";
-import { Link } from "react-router-dom";
 import Button from "components/Commons/Button";
 import eximg from "source/myPage.jpeg";
 import { GetoutDesignRequest } from "actions/Designs/JoinDesign";
@@ -10,33 +9,34 @@ import { GetMyInvitingListRequest } from "actions/Users/MyDetail";
 
 // css styling
 const List = styled.li`
-  height: 80px;
-  width: 100%;
+width: 100%;
   position: relative;
+  height: 80px;
   margin: 1rem 0;
-  cursor: pointer;
   &:hover, &:focus {
     background-color: ${opendesign_style.color.grayScale.scale1};
   }
+  cursor: pointer;
 `;
 
 const BoxWrap = styled.div`
-  height: 100%;
   width: 100%;
-  & .img {
-    width: 25%;
-    height: 100%;
-    overflow: hidden;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    float: left;
-  }
+  height: 100%;
   &::after {
     content: "";
     display: block;
     clear: both;
   }
+  `;
+const BoxImg = styled.div`
+  width: 25%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url(${props => props.img});
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  float: left;
 `;
 
 const ButtonWrap = styled.div`
@@ -47,10 +47,10 @@ const ButtonWrap = styled.div`
 `;
 
 const TextPart = styled.div`
+  width: 50%;
   padding: 0 20px;
   font-size: ${opendesign_style.font.size.paragraph};
   float: left;
-  width: 50%;
   & .title {
     font-weight: bold;
     line-height: 20px;
@@ -81,7 +81,7 @@ const Nodata = styled.p`
 `;
 
 class MyInvitingContainer extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.GetMyInvitingListRequest(this.props.token);
   }
 
@@ -90,14 +90,14 @@ class MyInvitingContainer extends Component {
     const confirm = window.confirm("가입 신청을 취소하시겠습니까?");
     if (confirm) {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token)
-      .then(res => {
-        if (res.data && res.data.success) {
-          alert("가입 신청이 취소되었습니다.");
-          this.props.GetMyInvitingListRequest(this.props.token);
-        } else {
-          alert("다시 시도해주세요.");
-        }
-      });
+        .then(res => {
+          if (res.data && res.data.success) {
+            alert("가입 신청이 취소되었습니다.");
+            this.props.GetMyInvitingListRequest(this.props.token);
+          } else {
+            alert("다시 시도해주세요.");
+          }
+        });
     } else {
       return;
     }
@@ -107,22 +107,22 @@ class MyInvitingContainer extends Component {
     this.props.history.push(`/designDetail/${id}`);
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
-        {this.props.list.length > 0?
+        {this.props.list.length > 0 ?
           <ul>
             {this.props.list.map((design, i) => (
               <List onClick={() => this.goLink(design.uid)} key={i}>
                 <BoxWrap>
-                  <div className="img" style={design.thumbnailUrl? {backgroundImage: `url(${design.thumbnailUrl.m_img})`} : {backgroundImage: `url(${eximg})`}}></div>
+                  <BoxImg img={design.thumbnailUrl ? design.thumbnailUrl.m_img : eximg} />
                   <TextPart>
                     <div className="title">{design.title}</div>
-                      {design.is_project === 1
+                    {design.is_project === 1
                       ? <div className="userName">{design.userName}님의 프로젝트</div>
                       : <div className="userName">{design.userName}님의 작품</div>
-                      }
-                    <div className="cate">{design.categoryName? design.categoryName : "전체"}</div>
+                    }
+                    <div className="cate">{design.categoryName ? design.categoryName : "전체"}</div>
                   </TextPart>
                 </BoxWrap>
                 <ButtonWrap>
@@ -131,9 +131,7 @@ class MyInvitingContainer extends Component {
               </List>
             ))}
           </ul>
-        : <Nodata>
-          가입 신청한 내역이 없습니다.
-          </Nodata>
+          : <Nodata>가입 신청한 내역이 없습니다.</Nodata>
         }
       </div>
     );

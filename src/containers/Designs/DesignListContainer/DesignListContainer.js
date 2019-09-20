@@ -21,6 +21,10 @@ const TextWrapper = styled.div`
     color: red;
     cursor: pointer;
 `;
+const ScrollListContainer = styled.div`
+    padding-top: 128px;
+    padding-bottom: 68px;
+`;
 
 class DesignListContainer extends Component {
   constructor(props) {
@@ -84,12 +88,12 @@ class DesignListContainer extends Component {
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
 
       <TextWrapper onClick={() => this.changeCategory(main_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</TextWrapper>
-      <div style={{ paddingTop: "128px", paddingBottom: "68px" }}>
+      <ScrollListContainer>
         {status === "INIT"
           ? <Loading />
           : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
             ListComponent={Design} dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
-      </div>
+      </ScrollListContainer>
     </React.Fragment>)
   }
 }

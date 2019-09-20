@@ -41,14 +41,14 @@ class EditGroupListContainer extends Component {
       <GroupBox>
         <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
         {this.props.status === "INIT" ?
-          <Loading /> :        <ScrollList
-          {...osdstyle.group_margin}
-          reload={reload}
-          handleReload={this.handleReload}
-          ListComponent={Group}
-          dataListAdded={this.props.EditGroupList}
-          getListRequest={null}
-          handleReject={this.setOut} />}
+          <Loading /> : <ScrollList
+            {...osdstyle.group_margin}
+            reload={reload}
+            handleReload={this.handleReload}
+            ListComponent={Group}
+            dataListAdded={this.props.EditGroupList}
+            getListRequest={null}
+            handleReject={this.setOut} />}
       </GroupBox>
     );
   }

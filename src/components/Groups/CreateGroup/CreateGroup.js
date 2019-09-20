@@ -26,6 +26,13 @@ const MainSection = styled.div`
   display: flex;
   margin-top: 60px;
   margin-bottom: 111px;
+  .FONT-TEST{
+    color: ${props=>props.color};
+    font-size: ${props=>props.fz}px;
+    font-family: Noto Sans KR;
+    font-weight: 300;
+    text-align: left;
+  };
 `;
 const BtnText = styled.p`
   width: 74px;
@@ -124,7 +131,7 @@ class CreateGroup extends Component {
             <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
               {scrollmenu.map((menu, index) => {
                 return (<div onClick={() => this.gotoStep(index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                  <div style={{ color: this.state.step === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
+                  <div className="FONT-TEST" fz={100} color={this.state.step === index ? "#FF0000" : "#707070"} >{menu.txt}</div>
                 </div>)
               })}
             </div>

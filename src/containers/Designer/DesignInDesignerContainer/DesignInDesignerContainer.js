@@ -14,12 +14,12 @@ class DesignInDesignerContainer extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
         <ScrollList getListRequest={this.getList}
-                    ListComponent={Design}
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
+          ListComponent={Design}
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+          mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
       </div>
     );
   }
@@ -35,8 +35,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignInDesignerRequest: (id, page) => {
-        return dispatch(GetDesignInDesignerRequest(id, page))
-      }
+      return dispatch(GetDesignInDesignerRequest(id, page))
+    }
   };
 };
 

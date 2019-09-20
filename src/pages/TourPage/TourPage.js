@@ -1,8 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+const TourContainer = styled.div`
+    margin-top: 125px;
+    text-align: center;
+    color: #707070;
+    font-size: 36px;
+    font-family: Noto Sans KR;
+    font-weight: 500;
+`;
 class TourPage extends Component {
     render() {
         return (
-            <div style={{ marginTop: "125px", textAlign: "center", fontSize: "36px", color: "#707070", fontFamily: "Noto Sans KR", fontWeight: "500" }}>Coming Soon...</div>
+            <TourContainer>Coming Soon...</TourContainer>
         )
     }
 }

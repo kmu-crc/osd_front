@@ -1,7 +1,251 @@
 import React, { Component, Fragment } from 'react';
 import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
+import styled from "styled-components";
 
+const CommentContainer = styled.div`
+    display: flex; 
+    margin-bottom: 30px;
+    .face{
+        width: 58px;
+        height: 58px;
+        background-image: url(${ props => props.face});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        background-color: #D6D6D6;
+        margin-top: 8px;
+        border-radius: 50%;
+    }
+    .text-wrapper{
+        margin-left: 24px;
+    }
+    .nick{
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+    }
+    .comment{
+        margin-top: 8px;
+        font-size: 20px;
+        font-weight: 300;
+        font-family: Noto Sans KR;
+    }
+    .button-wrapper{
+        margin-left: 26px;
+        margin-top: 41px;
+        display: flex;
+    }
+    .create-time{
+        height: 22px;
+        font-size: 15px;
+        font-weight: 300;
+        text-align: left;
+        color: #707070;
+    }
+    .reply{
+        margin-left: 18px;
+        height: 22px;
+        font-size: 15px;
+        font-weight: 300;
+        text-align: left;
+        color: #707070;
+        cursor: pointer;
+    }
+    .del{
+        margin-left: 18px;
+        height: 22px;
+        font-size: 15px;
+        font-weight: 300;
+        text-align: left;
+        color: #707070;
+        cursor: pointer;
+    }
+`;
+const RepliesContainer = styled.div`
+    margin-left: 80px;
+    .wrapper {
+        display: flex;
+    }
+    .reply-face {
+        width: 40px;
+        height: 40px;
+        background-image: url(${props => props.face});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        background-color: #D6D6D6;
+        margin-top: 8px;
+        border-radius: 50%;
+    }
+    .reply-nick-wrapper{
+        margin-left: 24px;
+        margin-top: 3px;
+    }
+    .reply-nick {
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+    }
+    .wrapper-another {
+        margin-left: 55px
+        display: flex;
+    }
+    .reply-comment {
+        margin-top: 8px;
+        font-size: 20px;
+        font-weight: 300;
+        font-family: Noto Sans KR;
+    }
+    .reply-create-time {
+        height: 22px;
+        font-size: 15px;
+        font-weight: 300;
+        text-align: left;
+        color: #707070;
+    }
+    .reply-del {
+        margin-left: 18px;
+        height: 22px;
+        font-size: 15px;
+        font-weight: 300;
+        text-align: left;
+        color: #707070;
+        cursor: pointer;
+    }
+`;
+const RepliesInputTextContainer = styled.div`
+    width: max-content;
+    margin-left: 80px;
+    margin-bottom: 30px;
+    .wrapper {
+        display: flex;
+        .face {
+            width: 40px;
+            height: 40px;
+            margin-top: 8px;
+            border-radius: 50%;
+            background-image: url(${props => props.face});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50%;
+            background-color: #D6D6D6;
+        }
+        .writing-wrapper {
+            margin-left: 24px;
+            margin-top: 3px;
+        }
+        .writing {
+            font-size: 15px;
+            line-height: 22px;
+            color: #707070;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+        }
+    }
+    .another-wrapper {
+        margin-left: 55px;
+        margin-bottom: 15px;
+        display: flex;
+        textarea{
+            min-width: 450px;
+            width: 650px;
+            height: 29px;
+            padding: 7px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            color: #707070;
+            font-weight: 300;
+            font-family: Noto Sans KR;
+            line-height: 22px;
+            background: #EFEFEF;
+            background-repeat: no-repeat;
+            resize: none;
+        }
+        .sumbit{
+            width: max-content;
+            height: 22px;
+            margin-left: 18px;
+            color: #707070;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            letter-spacing: 0;
+        }
+        .cancel{
+            width: max-content;
+            height: 22px;
+            margin-left: 18px;
+            color: #707070;
+            font-size: 15px;
+            font-weight: 300;
+            text-align: left;
+            cursor: pointer;
+        }
+    }
+`;
+const CommentInputTextContainer = styled.div`
+    width: max-content;
+    display: flex;
+    margin-bottom: 30px;
+    .face {
+        width: 58px;
+        height: 58px;
+        background-image: url(${props => props.face});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        background-color: #D6D6D6;
+        border-radius: 50%;
+    }
+    .wrapper {
+        margin-left: 24px;
+        textarea {
+            min-width: 650px;
+            width: 750px;
+            height: 58px;
+            padding: 7px;
+            outline: none;
+            border: none;
+            resize: none;
+            color: #707070;
+            font-weight: 300;
+            font-family: Noto Sans KR;
+            line-height: 22px;
+            background: #EFEFEF;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+        }
+    }
+    .another-wrapper { 
+        margin-left: 26px;
+        margin-top: 41px;
+        display: flex;
+        .submit {
+            width: max-content;
+            height: 22px;
+            margin-left: 18px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            color: #707070;
+            cursor: pointer;
+            letter-spacing: 0;
+        }
+        .cancel{
+            width: max-content;
+            height: 22px;
+            margin-left: 18px;
+            font-size: 15px;
+            font-weight: 300;
+            text-align: left;
+            color: #707070;
+            cursor: pointer;
+        }
+    }
+`;
 class Comment extends Component {
     constructor(props) {
         super(props);
@@ -76,68 +320,61 @@ class Comment extends Component {
             {comments && comments.length > 0 && comments.map((item, index) => {
                 const face = item && item.s_img ? item.s_img : noface
                 return (<Fragment key={item.nick_name + index}>
-                    <div style={{ display: "flex", marginBottom: "30px" }}>
-                        <div style={{ width: "58px", height: "58px", backgroundImage: `url(${face})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
-                        <div style={{ marginLeft: "24px" }}>
-                            <div style={{ fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{item.nick_name}</div>
-                            <div style={{ marginTop: "8px", fontSize: "20px", fontWeight: "300", fontFamily: "Noto Sans KR" }}>{item.comment}</div>
+                    <CommentContainer face={face}>
+                        <div className="face" />
+                        <div className="text-wrapper">
+                            <div className="nick">{item.nick_name}</div>
+                            <div className="comment">{item.comment}</div>
                         </div>
-                        <div style={{ marginLeft: "26px", marginTop: "41px", display: "flex" }}>
-                            <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(item.create_time)}</div>
-                            {!reply && <div onClick={() => this.reply(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>답글 달기</div>}
-                            {my && item.user_id === my.uid && <div onClick={() => this.removeComment(item.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                        <div className="button-wrapper">
+                            <div className="create-time">{DateFormat(item.create_time)}</div>
+                            {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글 달기</div>}
+                            {my && item.user_id === my.uid && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
                         </div>
-                    </div>
+                    </CommentContainer>
+
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
                         const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
                         return (
-                            <div key={repli.uid + repli_index} style={{ marginLeft: "80px" }}>
-                                <div style={{ display: "flex" }}>
-                                    <div style={{ width: "40px", height: "40px", backgroundImage: `url(${repli_face})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
-                                    <div style={{ marginLeft: "24px", marginTop: "3px" }}><div style={{ fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{repli.nick_name}</div></div>
+                            <RepliesContainer key={repli.uid + repli_index} face={repli_face}>
+                                <div className="wrapper">
+                                    <div className="reply-face" />
+                                    <div className="reply-nick-wrapper">
+                                        <div className="reply-nick">{repli.nick_name}</div></div>
                                 </div>
-                                <div style={{ marginLeft: "55px", display: "flex" }}>
-                                    <div style={{ marginTop: "8px", fontSize: "20px", fontWeight: "300", fontFamily: "Noto Sans KR" }}>{repli.comment}</div>
-                                    <div style={{ height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070" }}>{DateFormat(repli.create_time)}</div>
-                                    {my && repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} style={{ marginLeft: "18px", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>삭제하기</div>}
+                                <div className="wrapper-another" >
+                                    <div className="reply-comment" >{repli.comment}</div>
+                                    <div className="reply-create-time" >{DateFormat(repli.create_time)}</div>
+                                    {my && repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} className="reply-del">삭제하기</div>}
                                 </div>
-                            </div>)
+                            </RepliesContainer>)
                     })}
                     {reply && item.uid === this.state.targetId && <React.Fragment>
-                        <div style={{ width: "max-content", marginLeft: "80px", marginBottom: "30px" }}>
-                            <div style={{ display: "flex" }}>
-                                <div style={{ width: "40px", height: "40px", backgroundImage: `url(${myface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", marginTop: "8px", borderRadius: "50%" }} />
-                                <div style={{ marginLeft: "24px", marginTop: "3px" }}><div style={{ fontSize: "15px", lineHeight: "22px", color: "#707070", fontWeight: "500", fontFamily: "Noto Sans KR" }}>{this.state.ing ? "답글 다는 중..." : my.nickName}</div></div>
+                        <RepliesInputTextContainer face={myface}>
+                            <div className="wrapper">
+                                <div className="face" />
+                                <div className="writing-wrapper"><div className="writing" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div></div>
                             </div>
-                            <div style={{ marginLeft: "55px", marginBottom: "15px", display: "flex" }}>
-                                <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply"
-                                    style={{
-                                        minWidth: "450px", width: "650px", height: "29px", padding: "7px", outline: "none", border: "none", resize: "none",
-                                        color: "#707070", fontWeight: "300", fontFamily: "Noto Sans KR", lineHeight: "22px",
-                                        background: "#EFEFEF", backgroundRepeat: "no-repeat", borderRadius: "5px"
-                                    }} />
-                                <div onClick={() => this.requestReply(item.uid)} style={{ marginLeft: "18px", width: "max-content", height: "22px", fontSize: "15px", fontWeight: "500", textAlign: "left", color: "#707070", cursor: "pointer", letterSpacing: "0" }}>게시</div>
-                                <div onClick={this.undoReply} style={{ marginLeft: "18px", width: "max-content", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>취소</div>
+                            <div className="another-wrapper">
+                                <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
+                                <div className="submit" onClick={() => this.requestReply(item.uid)} >게시</div>
+                                <div className="cancel" onClick={this.undoReply} >취소</div>
                             </div>
-                        </div>
+                        </RepliesInputTextContainer>
                     </React.Fragment>}
                 </Fragment>)
             })}
-            <div style={{ width: "max-content", display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "58px", height: "58px", backgroundImage: `url(${myface})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "50%", backgroundColor: "#D6D6D6", borderRadius: "50%" }} />
-                <div style={{ marginLeft: "24px" }}>
-                    <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment"
-                        style={{
-                            minWidth: "650px", width: "750px", height: "58px", padding: "7px", outline: "none", border: "none", resize: "none",
-                            color: "#707070", fontWeight: "300", fontFamily: "Noto Sans KR", lineHeight: "22px",
-                            background: "#EFEFEF", backgroundRepeat: "no-repeat", borderRadius: "5px"
-                        }} />
+
+            <CommentInputTextContainer face={myface}>
+                <div className="face" />
+                <div className="wrapper">
+                    <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
                 </div>
-                <div style={{ marginLeft: "26px", marginTop: "41px", display: "flex" }}>
-                    <div onClick={this.requestComment} style={{ marginLeft: "18px", width: "max-content", height: "22px", fontSize: "15px", fontWeight: "500", textAlign: "left", color: "#707070", cursor: "pointer", letterSpacing: "0" }}>게시</div>
-                    <div onClick={this.undoComment} style={{ marginLeft: "18px", width: "max-content", height: "22px", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#707070", cursor: "pointer" }}>취소</div>
+                <div className="another-wrapper">
+                    <div className="submit" onClick={this.requestComment}>게시</div>
+                    <div className="cancel" onClick={this.undoComment}>취소</div>
                 </div>
-            </div>
+            </CommentInputTextContainer>
         </Fragment>)
     }
 }

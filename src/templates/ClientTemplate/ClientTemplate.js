@@ -20,17 +20,12 @@ const ContentContainer = styled.div`
     -ms-transition: all 0.45s;
     -o-transition: all 0.45s;
     transition: all 0.45s;
-
-    // -ms-overflow-style: none;
-    // &::-webkit-scrollbar{
-    //   display:none !important;
-    // }
-
 `
-const BodyContainer = styled.div`
-    width:1920px;
-    margin:0 auto;
-`
+const ChildrenContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 1920px;
+`;
 
 class ClientTemplate extends Component {
   state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
@@ -90,8 +85,9 @@ class ClientTemplate extends Component {
       <MenuContext.Provider value={{ hidemenu, larger }}>
         <HeaderContainer />
         <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-          <div style={{ marginLeft: "auto", marginRight: "auto", width: "1920px" }}>
-            {this.props.children}</div>
+          <ChildrenContainer>
+            {this.props.children}
+          </ChildrenContainer>
           <Footer />
         </ContentContainer>
       </MenuContext.Provider>
