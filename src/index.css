@@ -18,9 +18,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-div { 
-  border: 1px solid black;
-}
+/* div {  */
+/* border: 1px solid black; */
+/* } */
 code {
   font-family: source-code-pro, Menlo, Monaco, monospace, 
   "Courier New", Consolas;

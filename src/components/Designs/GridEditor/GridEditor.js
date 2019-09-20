@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { CreateStep } from "./GridTools";
 import styled from 'styled-components';
 import CardModal from "./CardModal";
@@ -16,7 +16,7 @@ const WhitePane = styled.div`
     position: absolute;
     left: ${props => props.left};
     right: ${props => props.right};
-    background: ${props => props.background};
+    background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)
     backgroundRepeat: no-repeat;
 `;
 const Arrow = styled.div`
@@ -61,10 +61,8 @@ class GridEditor extends Component {
         this.temp = React.createRef();
         this.grid = React.createRef();
         this.state = {
-            left: false, right: false, h: 0,
-            card_loading: false, card: false, newcard: false, row: null, col: null, boardId: null,
-            newstep: false, editstep: false, cardDetail: null, title: null, where: null,
-            w: 1920 - 65, arrow_top: 0, tmp: null,
+            h: 0, w: 1920 - 65, left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
+            boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, arrow_top: 0, tmp: null,
         };
         this.handleScroll = this.handleScroll.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -203,12 +201,12 @@ class GridEditor extends Component {
             <div style={{ position: "relative" }}>
                 {design.uid ?
                     <div>
-                        <WhitePane width="178px" height={h} left={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" left={50} gap={this.state.arrow_top} onClick={this.ScrollRight} />
-                        </WhitePane>
-                        <WhitePane width="178px" height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                        {left ? <WhitePane width="150px" height={h} left={0}>
+                            <Arrow angle="0deg" left={50} gap={this.state.arrow_top} onClick={this.ScrollLeft} />
+                        </WhitePane> : null}
+                        {right ? <WhitePane width="150px" height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                             <Arrow angle="180deg" right={0} gap={this.state.arrow_top} onClick={this.ScrollRight} />
-                        </WhitePane>
+                        </WhitePane> : null}
                         {card && <CardModal
                             isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
                             open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}

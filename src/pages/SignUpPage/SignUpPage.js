@@ -5,23 +5,23 @@ import SignUpContainer from "containers/Registration/SignUpContainer";
 const SignUpContent = styled.div`
   width: 100%;
   height: 100vh;
-  padding: 20px 0;
   position: relative;
-  box-sizing: border-box;
   display: flex;
+  padding: 20px 0;
   justify-content: center;
   align-items: center;
   background-size: cover;
   background-position: center;
+  box-sizing: border-box;
   &::before {
-    display: block;
-    content: "";
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    bottom: 0;
     left: 0;
     right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    display: block;
+    content: "";
+    z-index: 1;
   }
 `;
 
@@ -29,7 +29,7 @@ class SignUpPage extends Component {
   render() {
     return (
       <SignUpContent>
-        <SignUpContainer onSubmit={this.handleFormSubmit} />
+        <SignUpContainer/>
       </SignUpContent>
     )
   }

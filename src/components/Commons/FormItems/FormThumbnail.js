@@ -17,7 +17,7 @@ const ThumbnailImg = styled.label`
   margin-bottom: 10px;
   background-position: center;
   background-size: cover;
-  background-image: url(${ThumbnailDefault});
+  background-image: url(${props => props.bg});
   cursor: pointer;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
 `;
@@ -48,7 +48,7 @@ export class FormThumbnail extends Component {
     }
     if (this.props.image) {
       console.log(this.props.image);
-      this.setState({imageUrl: this.props.image})
+      this.setState({ imageUrl: this.props.image })
     }
     this.init();
   }
@@ -100,25 +100,9 @@ export class FormThumbnail extends Component {
     const { name, placeholder, id, validates } = this.props;
     return (
       <InputWrap>
-        <ThumbnailImg
-          htmlFor={id ? id : name}
-          style={
-            this.state.imageUrl
-              ? { backgroundImage: `url(${this.state.imageUrl})` }
-              : null
-          }
-        />
-        <UploaderButton htmlFor={id ? id : name}><i className="file alternate icon"/>{placeholder}</UploaderButton>
-        <FormFile
-          name={name}
-          id={id ? id : name}
-          placeholder={placeholder && placeholder}
-          onChange={this.onChangeValue}
-          getValue={this.onChangeValue}
-          hidden={true}
-          validates={validates}
-          onlyImage={true}
-        />
+        <ThumbnailImg bg={this.state.imageUrl ? this.state.imageUrl : null} htmlFor={id ? id : name} />
+        <UploaderButton htmlFor={id ? id : name}><i className="file alternate icon" />{placeholder}</UploaderButton>
+        <FormFile name={name} id={id ? id : name} placeholder={placeholder && placeholder} onChange={this.onChangeValue} getValue={this.onChangeValue} hidden={true} validates={validates} onlyImage={true} />
       </InputWrap>
     );
   }
