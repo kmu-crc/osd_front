@@ -3,7 +3,6 @@ import ModifyDesignContainer from "containers/Designs/ModifyDesignInfoContainer/
 
 class ModifyDesignPage extends Component {
   render() {
-    console.log("thisModifyDesign", this.props);
     return (
       <ModifyDesignContainer id={this.props.match.params.id} />
     );

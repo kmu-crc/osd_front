@@ -14,6 +14,9 @@ const InputWrap = styled.div`
     display: block;
     clear: both;
   }
+  select{
+    display: none;
+  }
 `;
 
 const Message = styled.div`
@@ -103,7 +106,6 @@ export class FormSelect extends Component {
           />
         ) : null}
         <select
-          style={{ display: "none" }}
           readOnly
           value={this.state.value}
           id={id ? id + value : name + value}

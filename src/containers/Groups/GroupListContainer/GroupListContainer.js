@@ -19,18 +19,25 @@ const TextWrapper = styled.div`
     color: red;
     cursor: pointer;
 `;
+const JoinGroupContainer = styled.div`
+    position: relative;
+`;
 const JoinGroup = styled.div`
     position: relative;
-    left:1761px;
-    width:115px;
+    left: 1761px;
+    width: 115px;
     text-align: left;
     font-size: 20px;
     cursor: pointer;
     font-family: Noto Sans KR;
-    font-weight:500;
+    font-weight: 500;
     color: red;
     line-height: 29px;
     border-bottom: 1.5px solid red;
+`;
+const ScrollListContainer = styled.div`
+    position: relative;
+    padding-top: 100px;
 `;
 
 class GroupListContainer extends Component {
@@ -73,14 +80,14 @@ class GroupListContainer extends Component {
 
         <TextWrapper>그룹({count})</TextWrapper>
 
-        <div style={{ position: "relative" }}><JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup></div>
+        <JoinGroupContainer><JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup></JoinGroupContainer>
 
-        <div id="list" style={{ position: "relative", paddingTop: "100px" }}>
+        <ScrollListContainer id="list">
           {this.props.status === "INIT" ?
             <Loading /> :
-            <ScrollList{...osdstyle.group_margin} ListComponent={Group} reload={reload} handleReload={this.handleReload}
+            <ScrollList {...osdstyle.group_margin} ListComponent={Group} reload={reload} handleReload={this.handleReload}
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
-        </div>
+        </ScrollListContainer>
       </React.Fragment>
     )
   }

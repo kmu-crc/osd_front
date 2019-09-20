@@ -5,7 +5,7 @@ import ScrollList from "components/Commons/ScrollList";
 import Designer from "components/Designers/Designer";
 
 class MyLikeDesignerContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetMyLikeDesignerRequest(this.props.token, 0);
   }
 
@@ -14,12 +14,12 @@ class MyLikeDesignerContainer extends Component {
   }
 
   render() {
-    return(
+    return (
       <ScrollList getListRequest={this.getList}
-                  ListComponent={Designer}
-                  type="Designer"
-                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                  mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
+        ListComponent={Designer}
+        type="Designer"
+        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+        mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
     );
   }
 }

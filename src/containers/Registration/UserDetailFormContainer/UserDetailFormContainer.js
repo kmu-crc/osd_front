@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserDetailForm from "components/Registration/UserDetailFrom";
-import { InsertUserDetailRequest,GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
+import { InsertUserDetailRequest, GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
 class UpdateUserInfoContainer extends Component {
 
-  componentDidMount()
-{
-  this.props.GetCategoryAllRequest();
-  this.props.GetMyDetailRequest(this.props.token);
-}
+  componentDidMount() {
+    this.props.GetCategoryAllRequest();
+    this.props.GetMyDetailRequest(this.props.token);
+  }
   render() {
-    console.log("this.props:upaderUserIfno",this.props)
+    console.log("this.props:upaderUserIfno", this.props)
     return (
       <UserDetailForm {...this.props} />
     );

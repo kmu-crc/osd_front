@@ -75,6 +75,8 @@ const List = styled.div`
   width: 100%;
   min-height: 50px;
   max-height: 200px;
+  top: ${props => props.top};
+  overflow-y: ${props => props.overflowY};
   border: 1px solid ${opendesign_style.color.grayScale.scale4};
   background-color: ${opendesign_style.color.grayScale.scale0};
   border-radius: 3px;
@@ -297,19 +299,9 @@ export class AsyncInputEx extends Component {
             <Icon name="search" />
           </SearchBtn>
           {this.state.render && (
-            <List
-              style={{
-                overflowY: this.state.members.length > 3 ? "scroll" : "hidden",
-                top: this.state.top
-                  ? this.state.members.length > 3
-                    ? "-201px"
-                    : this.state.members.length === 0
-                      ? "-51px"
-                      : `-${this.state.members.length * 4.5}em`
-                  : "inherit"
-              }}
-              ref={ref => (this.listBox = ref)}
-            >
+            <List overflowY={this.state.members.length > 3 ? "scroll" : "hidden"}
+              top={this.state.top ? this.state.members.length > 3 ? "-201px" : this.state.members.length === 0 ? "-51px" : `-${this.state.members.length * 4.5}em` : "inherit"}
+              ref={ref => (this.listBox = ref)}>
               {this.state.members &&
                 (this.state.members.length > 0 ? (
                   this.state.members.map((item, index) => {
@@ -328,29 +320,13 @@ export class AsyncInputEx extends Component {
                   ))}
             </List>
           )}
-          <input
-            name="listInput"
-            type="text"
-            ref={ref => (this.listInput = ref)}
-            onBlur={this.ListBlur}
-            className="hidden"
-          />
+          <input name="listInput" type="text" ref={ref => (this.listInput = ref)} onBlur={this.ListBlur} className="hidden" />
         </SearchBox>
         <AddList>
           {this.state.value.constructor.name === "Array" &&
             this.state.value.length > 0 &&
             this.state.value.map((item, index) => {
-              return (
-                <AddItem key={`additem${index}`}>
-                  {item.nick_name}
-                  <DeleteBtn
-                    type="button"
-                    onClick={() => this.deleteItem(item, index)}
-                  >
-                    <Icon name="close" />
-                  </DeleteBtn>
-                </AddItem>
-              );
+              return (<AddItem key={`additem${index}`}>{item.nick_name}<DeleteBtn type="button" onClick={() => this.deleteItem(item, index)}><Icon name="close" /></DeleteBtn></AddItem>);
             })}
         </AddList>
       </InputWrap>
