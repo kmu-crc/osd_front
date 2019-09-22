@@ -11,8 +11,8 @@ import noimg from "source/noimg.png"
 
 import DateFormat from "modules/DateFormat"
 import TextFormat from "modules/TextFormat"
+import NumberFormat from "modules/NumberFormat"
 import { geturl } from "config"
-import NumberFormat from "modules/formats/NumberFormat"
 
 
 // CSS 

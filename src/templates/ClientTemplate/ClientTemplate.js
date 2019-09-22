@@ -5,21 +5,21 @@ import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
 const ContentContainer = styled.div`
-    top: 55px;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    overflow-y:overlay;
-    overflow-x: hidden;
-    &.hidemenu {
-        top: 0px;
-    }
-    -webkit-transition: all 0.45s;
-    -moz-transition: all 0.45s;
-    -ms-transition: all 0.45s;
-    -o-transition: all 0.45s;
-    transition: all 0.45s;
+  position: absolute;
+  top: 55px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  &.hidemenu {
+    top: 0px;
+  }
+  -webkit-transition: all 0.45s;
+  -moz-transition: all 0.45s;
+  -ms-transition: all 0.45s;
+  -o-transition: all 0.45s;
+  transition: all 0.45s;
 `
 const ChildrenContainer = styled.div`
   margin-left: auto;
@@ -28,7 +28,7 @@ const ChildrenContainer = styled.div`
 `;
 
 class ClientTemplate extends Component {
-  state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
+  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0 }
   componentDidMount() {
     console.log("isActive", this.props.isActive)
   }
@@ -45,7 +45,6 @@ class ClientTemplate extends Component {
     const currentScrollPos = obj.scrollTop
     const prevScrollPos = this.state.prevScroll
     const { hidemenu, whensmall } = this.state
-
     if (window.location.pathname === "/message") {
       this.setState({ larger: true });
       this.setState({ hidemenu: false });
@@ -58,7 +57,7 @@ class ClientTemplate extends Component {
       else {
         this.setState({ larger: false })
       }
-      if (currentScrollPos > whensmall * 2) {
+      if (currentScrollPos > whensmall) {
         if (prevScrollPos < currentScrollPos) { // console.log("hide")
           this.setState({ hidemenu: true })
         }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
 import noimg from "source/thumbnail.png";
-import TextFormat from 'modules/formats/TextFormat';
+import TextFormat from 'modules/TextFormat';
 import { geturl } from "config"
 
 
@@ -78,7 +78,7 @@ class SignNav extends Component {
     }
     gotoMyPage = () => {
         this.setState({ user_popup: null })
-        window.location.href = geturl()+"/mypage"
+        window.location.href = geturl() + "/mypage"
     }
 
     myRef = React.createRef()
