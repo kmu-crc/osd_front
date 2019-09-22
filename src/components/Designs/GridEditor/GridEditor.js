@@ -10,24 +10,21 @@ import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 
 const WhitePane = styled.div`
-    z-index: 830;
-    width: ${props => props.width};
-    height: ${props => props.height}px;
     position: absolute;
-    left: ${props => props.left};
-    right: ${props => props.right};
-    background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)
+    z-index: 830;
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    left: ${props => props.left}px;
+    right: ${props => props.right}px;
+    background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
     backgroundRepeat: no-repeat;
 `;
 const Arrow = styled.div`
+    position: absolute;
     z-index: 831;
-    position: fixed; //absolute;
-    top:${props => props.gap + 420}px;
+    top: ${props => props.gap + 105}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
-    // margin-top: ${props => props.gap + 105}px;
-    // margin-left: auto;
-    // margin-right: 29px;
     width: 17px;
     height: 48px;
     border: none;
@@ -46,7 +43,7 @@ const GridEditorWrapper = styled.div`
     display: flex;
     margin-left:65px;
     margin-bottom: 75px;
-    width: ${window.innerWidth}; 
+    width: ${window.innerWidth < 1920 ? window.innerWidth : 1920}; 
     .Editor{
         padding-right: 250px;
         overflow: hidden;
@@ -62,8 +59,8 @@ class GridEditor extends Component {
         this.grid = React.createRef();
         this.state = {
             h: 0, w: window.innerWidth < 1920 ? window.innerWidth : 1920, left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
-            boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, arrow_top: 0, tmp: null,
-            scroll_flag: false,
+            boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
+            gap: null,
         };
         this.handleScroll = this.handleScroll.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -81,14 +78,20 @@ class GridEditor extends Component {
         this.requestCardReorder = this.requestCardReorder.bind(this);
     };
     componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize, true);
         window.removeEventListener("scroll", this.handleScroll, true);
-        window.removeEventListener("resize", this.handleScroll, true);
     }
     componentDidMount() {
         window.addEventListener("resize", this.handleResize, true);
+        window.addEventListener("scroll", this.handleScroll, true);
+    }
+    handleScroll(event) {
+        if (this.grid && event.target.scrollTop !== 0) {
+            this.setState({ gap: event.target.scrollTop });
+        }
     }
     handleResize() {
-        this.setState({ w: window.innerWidth });
+        this.setState({ w: window.innerWidth < 1920 ? window.innerWidth : 1920 });
         if (this.temp) {
             if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
                 this.setState({ right: false });
@@ -96,12 +99,6 @@ class GridEditor extends Component {
                 this.setState({ right: true });
             }
             if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
-        }
-    }
-    handleScroll(event) {
-        if (this.grid) {
-            this.setState({ arrow_top: event.target.scrollTop });
-            console.log("scroll:", event.target.scrollTop, event.target.scrollLeft);
         }
     }
     createNewCard(row, boardId) {
@@ -129,12 +126,14 @@ class GridEditor extends Component {
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
             .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("1", this.props.DesignDetailStep) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
+            .catch((err) => { console.error(err) });
     }
     async EditStep(data) {
         await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
             .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("2", this.props.DesignDetailStep) })
-            .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) });
+            .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
+            .catch((err) => { console.error(err) });
         this.setState({ editstep: false });
     }
     async NewStep(data) {
@@ -158,11 +157,9 @@ class GridEditor extends Component {
             }
         }
     }
-    ScrollRight(event) {
+    ScrollRight() {
         if (this.temp) {
             this.temp.current.scrollLeft += 275;
-            event.stopPropagation();
-            event.preventDefault();
 
             if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w) {
                 this.setState({ right: false });
@@ -180,9 +177,8 @@ class GridEditor extends Component {
             if (element.order !== index) jobs.push({ uid: element.uid, neworder: index });
         });
         if (jobs.length === 0) return;
-        promiseAry = jobs.map(job => {
-            return this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid);
-        })
+        promiseAry = jobs.map(job => { this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid) });
+
         await Promise.all(promiseAry)
             .then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
             .then(() => this.props.GetDesignCardRequest(this.props.design.uid, this.state.boardId));
@@ -205,11 +201,6 @@ class GridEditor extends Component {
             if (nextProps.DesignDetailStep.length) {
                 if (nextProps.DesignDetailStep.length * 275 > this.state.w) {
                     this.setState({ right: true });
-
-                    if (!this.state.scroll_flag) {
-                        // window.addEventListener("scroll", this.handleScroll, true);
-                        this.setState({ scroll_flag: true });
-                    }
                 }
             }
         }
@@ -217,23 +208,23 @@ class GridEditor extends Component {
     }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
-        const rightArrowPos = window.innerWidth < 1920 ? 1920 - window.innerWidth : 0;
+        const rightArrowPos = window.innerWidth <= 1920 ? 1920 - window.innerWidth : 0;
+        console.log("pos:", rightArrowPos);
 
-        const { h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const { gap, h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
-                    <div>
-                        {left ? <WhitePane width="178px" height={h} left={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" left={50} gap={this.state.arrow_top} onClick={this.ScrollLeft} />
-                        </WhitePane> : null}
-                        {right ? <WhitePane width="178px" height={h} right={rightArrowPos + "px"} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" right={50} gap={this.state.arrow_top} onClick={this.ScrollRight} />
-                        </WhitePane> : null}
+                    <>
+                        {left ? <WhitePane width={178} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} /></WhitePane> : null}
+
+                        {right ? <WhitePane width={178} height={h} right={rightArrowPos} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} /></WhitePane> : null}
 
                         {card && <CardModal
                             isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
-                            open={card} close={() => this.setState({ card: false })} //col={col} row={row} maxRow={maxRow}
+                            open={card} close={() => this.setState({ card: false })}
                             title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
                         {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
@@ -250,7 +241,7 @@ class GridEditor extends Component {
                                 {/* </div> */}
                             </GridEditorWrapper>
                         </ReactHeight>
-                    </div>
+                    </>
                     : <div>디자인정보를 가져오고 있습니다.</div>
                 }</div>)
     }
