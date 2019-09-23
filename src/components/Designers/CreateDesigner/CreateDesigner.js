@@ -45,7 +45,7 @@ const NavMenu = styled.div`
     padding-left:36px;
     padding-top:18px;
     lineHeight:29px;
-    border-bottom:${props => props.borderBottom?"none" : "2px solid #FFFFFF"};
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
 
   }
@@ -65,16 +65,16 @@ const MenuText = styled.div`
   font-family:Noto Sans KR;
   font-weight:300;
   text-align:left;
-  color: ${props => props.selected?"#FF0000":"#707070"};
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
   border-bottom:${props => props.borderBottom};
 `
-const Arrow=styled.span`
+const Arrow = styled.span`
     margin-left:70px;
     font-size:15px;
 `
 const InputBoard = styled.div`
       width:1422px;
-      height:${props=>props.isModifyAnother===true?"1750px":"925px"};
+      height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
       position:relative;
       padding-top:45px;
       border-radius:5px;
@@ -87,7 +87,7 @@ const InputBoard = styled.div`
       }
 
 `
-  const CompleteButton = styled.div`
+const CompleteButton = styled.div`
       position:absolute;
       right:9px;
       bottom:35px;
@@ -95,12 +95,12 @@ const InputBoard = styled.div`
       width:104.5px;
       height:44px;
       border-radius:5px;
-      background-color:${props=>props.isComplete?"#FF0000":"#707070"};
+      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
       padding-top:6px;
       padding-left:15px;
       margin-right:53px;
   `
-  const HRline = styled.div`
+const HRline = styled.div`
 
     margin-top:100px;
     margin-bottom:67px;
@@ -108,7 +108,7 @@ const InputBoard = styled.div`
 
   `
 
-  const BtnText = styled.p`
+const BtnText = styled.p`
   width: 74px;
   padding: 0px;
   font-familty: Noto Sans KR;
@@ -148,7 +148,8 @@ class ModifyMyDetail extends Component {
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail && this.props.MyDetail !== nextProps.MyDetail) {
-      this.setState({ step:0,
+      this.setState({
+        step: 0,
         thumbnail: nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img == null ? "" : nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img,
         nick_name: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         about_me: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
@@ -268,14 +269,12 @@ class ModifyMyDetail extends Component {
       location: this.state.location, contact: this.state.contact, files: []
     };
 
-    let file = {
-      value: this.state.thumbnail,
-      name: this.state.thumbnail_name,
-      key: 0
-    };
+    let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+
     formData.files.push(file);
-    if (formData.files.length <= 0 ||
-      formData.files[0].value === this.props.MyDetail.profileImg.m_img) delete formData.files;
+    if (formData.files.length <= 0 || formData.files[0].value === this.props.MyDetail.profileImg.m_img) {
+      delete formData.files;
+    }
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
         alert("중복된 닉네임입니다");
@@ -358,55 +357,55 @@ class ModifyMyDetail extends Component {
         {/* scroll - menu */}
         <NavMenu>
           <div className="menuBox">
-            <div className ="menuItem" onClick={this.handleClickModifyMyProfile} >
+            <div className="menuItem" onClick={this.handleClickModifyMyProfile} >
               <MenuText>
-                내 프로필 수정하기      
+                내 프로필 수정하기
                 {this.state.isClickModify === true ? <Arrow>▼</Arrow> : <Arrow>▲</Arrow>}
               </MenuText>
             </div>
-          {this.state.isClickModify &&
-            <React.Fragment>
-              {scrollmenu.map((menu, index) => {
-                return (
-                  <div onClick={() => this.scrollMove(menu, index)} 
-                    className="menuItem"
-                    borderBottom={index+1===scrollmenu.length} 
-                    key={menu.txt}>
-                    <MenuText selected={this.state.selected===index}>{menu.txt}</MenuText>
-                  </div>)
-              })}
-            </React.Fragment>
-          }
+            {this.state.isClickModify &&
+              <React.Fragment>
+                {scrollmenu.map((menu, index) => {
+                  return (
+                    <div onClick={() => this.scrollMove(menu, index)}
+                      className="menuItem"
+                      borderBottom={index + 1 === scrollmenu.length}
+                      key={menu.txt}>
+                      <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
+                    </div>)
+                })}
+              </React.Fragment>
+            }
           </div>
-          </NavMenu>
+        </NavMenu>
         {/* form */}
         <InputBoard isModifyAnother={this.state.isClickModify}>
           <form>
             {this.state.isClickModify &&
               <React.Fragment>
-                <SectionBasic 
-                updateThumbnail={this.updateThumbnail} 
-                updateNickName={this.updateNickName} 
-                updateIntroduce={this.updateIntroduce} 
-                MyDetail={this.props.MyDetail} />
-                <HRline/>
+                <SectionBasic
+                  updateThumbnail={this.updateThumbnail}
+                  updateNickName={this.updateNickName}
+                  updateIntroduce={this.updateIntroduce}
+                  MyDetail={this.props.MyDetail} />
+                <HRline />
               </React.Fragment>
             }
 
-            <SectionAdditional 
-                MyDetail={this.props.MyDetail} 
-                category1={this.props.category1} 
-                category2={this.props.category2}
-                updateCategory1={this.updateCategory1} 
-                updateCategory2={this.updateCategory2} />
-            <HRline/>
-            <SectionBuziness 
-                MyDetail={this.props.MyDetail}
-                updateIsDesigner={this.updateIsDesigner}
-                updateTeam={this.updateTeam} 
-                updateCareer={this.updateCareer} 
-                updateLocation={this.updateLocation} 
-                updateContact={this.updateContact} />
+            <SectionAdditional
+              MyDetail={this.props.MyDetail}
+              category1={this.props.category1}
+              category2={this.props.category2}
+              updateCategory1={this.updateCategory1}
+              updateCategory2={this.updateCategory2} />
+            <HRline />
+            <SectionBuziness
+              MyDetail={this.props.MyDetail}
+              updateIsDesigner={this.updateIsDesigner}
+              updateTeam={this.updateTeam}
+              updateCareer={this.updateCareer}
+              updateLocation={this.updateLocation}
+              updateContact={this.updateContact} />
           </form>
           <div className="buttonBox">
             <CompleteButton isComplete={true} onClick={this.onSubmit}>

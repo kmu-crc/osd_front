@@ -45,7 +45,7 @@ const NavMenu = styled.div`
     padding-left:36px;
     padding-top:18px;
     lineHeight:29px;
-    border-bottom:${props => props.borderBottom?"none" : "2px solid #FFFFFF"};
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
 
   }
@@ -54,7 +54,7 @@ const NavMenu = styled.div`
       font-family:Noto Sans KR;
       font-weight:300;
       text-align:left;
-      color: ${props => props.selected?"#707070":"#FF0000"};
+      color: ${props => props.selected ? "#707070" : "#FF0000"};
       border-bottom:${props => props.borderBottom};
     }
     .deleteText{
@@ -105,44 +105,45 @@ const BtnText = styled.p`
   color: #FFFFFF;
 `;
 
-const CheckModal = styled(Modal)`
-      box-shadow:0px 3px 6px #000000;
-      position:relative;
-      width:576px;
-      height:200px;
-      text-align:center;
-      bottom:318px;
-      .messageText{
-        width:100%;
-        height:69px;
-        font-family:Noto Sans KR;
-        font-size:20px;
-        color:#707070;
-        line-height:40px;
-        margin-top:35px;
-        margin-bottom:31px;
-      }
-      .okButton{
-        cursor:pointer;
-        width:100%;
-        height:29px;
-        font-family:Noto Sans KR;
-        font-size:20px;
-        text-decoration:underline;
-        color:#FF0000;
-      }
-      .closeButton{
-        cursor:pointer;
-        position:absolute;
-        right:-50px;
-        top:0px;
-        width:22px;
-        height:22px;
-        background-image:${iDelete};
-        background-size:cover;
-        background-position:center center;
-      }
-`
+// warning : never used
+//const CheckModal = styled(Modal)`
+//      box-shadow:0px 3px 6px #000000;
+//      position:relative;
+//      width:576px;
+//      height:200px;
+//      text-align:center;
+//      bottom:318px;
+//      .messageText{
+//        width:100%;
+//        height:69px;
+//        font-family:Noto Sans KR;
+//        font-size:20px;
+//        color:#707070;
+//        line-height:40px;
+//        margin-top:35px;
+//        margin-bottom:31px;
+//      }
+//      .okButton{
+//        cursor:pointer;
+//        width:100%;
+//        height:29px;
+//        font-family:Noto Sans KR;
+//        font-size:20px;
+//        text-decoration:underline;
+//        color:#FF0000;
+//      }
+//      .closeButton{
+//        cursor:pointer;
+//        position:absolute;
+//        right:-50px;
+//        top:0px;
+//        width:22px;
+//        height:22px;
+//        background-image:${iDelete};
+//        background-size:cover;
+//        background-position:center center;
+//      }
+//`
 
 class CreateGroup extends Component {
 
@@ -232,7 +233,6 @@ class CreateGroup extends Component {
   }
 
   onSubmit = async e => {
-
     if (this.state.groupThumbnail == "") {
       alert("그룹의 섬네일을 지정해주세요.");
       return;
@@ -306,39 +306,39 @@ class CreateGroup extends Component {
         {/* scroll - menu */}
         <NavMenu>
           <div className="menuBox">
-              {scrollmenu.map((menu, index) => {
-                return (
-                <div className="menuItem" 
-                    onClick={() => this.gotoStep(index)} 
-                    borderBottom={index+1===scrollmenu.length} key={menu.txt}>
+            {scrollmenu.map((menu, index) => {
+              return (
+                <div className="menuItem"
+                  onClick={() => this.gotoStep(index)}
+                  borderBottom={index + 1 === scrollmenu.length} key={menu.txt}>
                   <div className="menuText" selected={this.state.step === index}>{menu.txt}</div>
                 </div>)
-              })}
-          <div className="menuItem" onClick={this.handleOnClickDeleteDesign}>
-            <div className="deleteText">그룹 삭제하기</div>
-          </div>
+            })}
+            <div className="menuItem" onClick={this.handleOnClickDeleteDesign}>
+              <div className="deleteText">그룹 삭제하기</div>
+            </div>
           </div>
         </NavMenu>
         {/* form */}
         <InputBoard>
           <form>
 
-            {step === 0 && 
-              <SectionBasic 
-              groupTitle={this.state.groupTitle} 
-              groupExplain={this.state.groupExplain} 
-              groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
-              onChangeExplain={this.handleInputDesignExplain} 
-              onChangeTitle={this.handleInputDesignTitle} 
-              onChangeThumbnailURL={this.handleChangeThumbnailURL} 
-              onChangeThumbnail={this.handleChangeThumbnail}
-              designExplain={this.state.groupExplain} 
-              designTitle={this.state.groupTitle} 
-              thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
+            {step === 0 &&
+              <SectionBasic
+                groupTitle={this.state.groupTitle}
+                groupExplain={this.state.groupExplain}
+                groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
+                onChangeExplain={this.handleInputDesignExplain}
+                onChangeTitle={this.handleInputDesignTitle}
+                onChangeThumbnailURL={this.handleChangeThumbnailURL}
+                onChangeThumbnail={this.handleChangeThumbnail}
+                designExplain={this.state.groupExplain}
+                designTitle={this.state.groupTitle}
+                thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
             {/* buttons*/}
             <div className="buttonBox">
-              <div className="completeBtn" 
-                    onClick={this.onSubmit} >
+              <div className="completeBtn"
+                onClick={this.onSubmit} >
                 <BtnText>완료</BtnText>
               </div>
             </div>

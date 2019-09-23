@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import styled from "styled-components"
 import noimg from "source/noimg.png"
-import TextFormat from 'modules/formats/TextFormat'
+import TextFormat from 'modules/TextFormat'
 
 const AlarmList = styled.div`
     display: ${props => props.display};

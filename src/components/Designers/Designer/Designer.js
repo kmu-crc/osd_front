@@ -7,8 +7,8 @@ import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"
 
 //formats
-import NumberFormat from "modules/formats/NumberFormat"
-import TextFormat from "modules/formats/TextFormat"
+import NumberFormat from "modules/NumberFormat"
+import TextFormat from "modules/TextFormat"
 import DateFormat from "modules/DateFormat"
 
 import { geturl } from "config"
