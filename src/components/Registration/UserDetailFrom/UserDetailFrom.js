@@ -3,11 +3,122 @@ import { FormControl } from "modules/FormControl";
 // import { FormControl, ValidationGroup } from "modules/FormControl";
 // import SelectBox from "components/Commons/SelectBox"
 // import showPw from "source/show_password.svg";
-// import styled from "styled-components";
+import styled from "styled-components";
 
 import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
 import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
+
+
+const MainBanner = styled.div`
+  width: 1920px;
+  display: flex;
+  justify-content: center;
+  .title{
+    width: 196px;
+    height: 37px;
+    margin-top: 45px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
+  }
+`
+const MainSection = styled.div`
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 111px;
+`
+const NavMenu = styled.div`
+  width: 433px;
+  .menuBox{
+    width:325px;
+    position: fixed;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
+  }
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+    cursor:pointer;
+
+  }
+
+    .deleteText{
+      font-family:Noto Sans KR;
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:500;
+      text-align:left;
+      color:#FF0000;
+      border-bottom:${props => props.borderBottom};
+    }
+`
+const MenuText = styled.div`
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:300;
+  text-align:left;
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
+  border-bottom:${props => props.borderBottom};
+`
+const Arrow = styled.span`
+    margin-left:70px;
+    font-size:15px;
+`
+const InputBoard = styled.div`
+      width:1422px;
+      height:${props => props.isModifyAnother === true ? "1850px" : "925px"};
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justifyContent: flex-end;
+      }
+
+`
+const CompleteButton = styled.div`
+      position:absolute;
+      right:9px;
+      bottom:35px;
+      cursor:pointer;
+      width:104.5px;
+      height:44px;
+      border-radius:5px;
+      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top:6px;
+      padding-left:15px;
+      margin-right:53px;
+  `
+const HRline = styled.div`
+
+    margin-top:100px;
+    margin-bottom:67px;
+    border-bottom:5px solid #F5F4F4;
+
+  `
+
+const BtnText = styled.p`
+  width: 74px;
+  padding: 0px;
+  font-familty: Noto Sans KR;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
+  font-size: 20px;
+  color: #FFFFFF;
+`;
 
 const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
@@ -192,112 +303,42 @@ class ModifyMyDetail extends Component {
     const { selected } = this.state
     console.log(this.props, "MyDetail");
     return (<React.Fragment>
-      <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
-        <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
-      </div>
+      <MainBanner>
+        <div className="title">내 프로필 수정하기</div>
+      </MainBanner>
 
-      <div style={{ display: "flex", marginTop: "60px", marginBottom: "111px" }}>
+      <MainSection id="basic">
         {/* scroll - menu */}
-        <div style={{ width: "325px", marginLeft: "64px" }}>
-          <div style={{ position: "fixed", top: "197px", width: "325px", height: "126px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+        <NavMenu>
+          <div className="menuBox">
             {scrollmenu.map((menu, index) => {
-              return (<div onClick={() => this.scrollMove(menu, index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                <div style={{ color: selected === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
+              return (<div onClick={() => this.scrollMove(menu, index)} 
+                           className="menuItem"
+                           borderBottom={index+1===scrollmenu.length}
+                           key={menu.txt}>
+                <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
               </div>)
             })}
           </div>
-        </div>
+        </NavMenu>
         {/* form */}
-        <div style={{ width: "1422px", marginLeft: "45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px", fontFamily: "Noto Sans KR" }}>
+        <InputBoard isModifyAnother={true}>
           <form>
             {/* <input type="hidden" id="user_id" value={} /> */}
-            <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
-            <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
+            <SectionBasic  updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
+            <HRline/>
+            <SectionAdditional  MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
               updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
-            <div style={{ marginTop: "102.5px", marginBottom: "41.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionBuziness MyDetail={this.props.MyDetail}
+            <HRline/>
+            <SectionBuziness  MyDetail={this.props.MyDetail}
               updateIsDesigner={this.updateIsDesigner}
               updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
           </form>
-          <div onClick={this.onSubmit} style={{ cursor: "pointer", display: "table-cell", position: "relative", left: "1264.5px", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", color: "#FFFFFF", fontSize: "20px", fontWeight: "500", textAlign: "center", verticalAlign: "middle" }}>
-            등록하기
-          </div>
-        </div>
-      </div>
+          <CompleteButton id="additional" isComplete  ={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
+        </InputBoard>
+      </MainSection>
     </React.Fragment>)
   }
 }
 
 export default ModifyMyDetail;
-
-// import React, { Component } from "react";
-// import { Form, Grid } from "semantic-ui-react";
-// import styled from "styled-components";
-// import Button from "components/Commons/Button";
-// import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
-// import Loading from "components/Commons/Loading";
-
-// const Label = styled.div`
-//   margin: 0 0 0.8rem 0;
-//   display: block;
-//   color: rgba(0,0,0,.87);
-//   font-size: .92857143em;
-//   font-weight: 700;
-//   text-transform: none;
-// `;
-
-// class UserDetailFrom extends Component {
-//   state = {
-//     loading: false
-//   }
-
-//   onChangeValue = async data => {
-//     let obj = {};
-//     if(data.target){
-//       obj[data.target.name] = data;
-//     }
-//     await this.setState(obj);
-//     console.log(this.state);
-//   };
-
-//   liveCheck = (target) => {
-//     FormControl(this.state[target]);
-//   };
-
-//   onSubmit = async e => {
-//     console.log(this.state);
-//     e.preventDefault();
-//     ValidationGroup(this.state).then(async data => {
-//       console.log("성공", data);
-//       await this.setState({
-//         loading: true
-//       });
-//       this.props.InsertUserDetailRequest(data, this.props.token)
-//       .then(data => {
-//         if (data.res && data.res.success) {
-//           this.props.history.push(`/`);
-//         } else {
-//           alert("다시 시도해주세요");
-//           this.setState({
-//             loading: false
-//           });
-//         }
-//       });
-//     }).catch(e => {
-//       console.log("실패", e);
-//       this.setState({
-//         loading: false
-//       });
-//     });
-//   };
-
-//   render() {
-//     return (
-
-//     );
-//   }
-// }
-
-// export default UserDetailFrom;

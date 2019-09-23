@@ -3,7 +3,7 @@ import showPw from "source/show_password.svg";
 import styled from "styled-components";
 
 const SectionSecurityContainer = styled.section`
-  padding-left: 95.5px;
+padding-left:47px;
   .pw {
     display: flex;
     .text-label {

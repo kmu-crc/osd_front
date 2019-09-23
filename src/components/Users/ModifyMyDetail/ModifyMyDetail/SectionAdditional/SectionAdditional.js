@@ -1,14 +1,35 @@
 import React, { Component } from "react";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
-// import SelectBox from "components/Commons/SelectBox"
 import { Dropdown } from "semantic-ui-react";
+import styled from "styled-components";
 
-// const category1 = [
-//   { value: 0, text: "대분류를 선택해 주세요" }, { value: 1, text: "패션" }, { value: 2, text: "제품" },
-//   { value: 3, text: "커뮤니케이션" }, { value: 4, text: "공간" }, { value: 5, text: "엔터테인먼트" },
-//   { value: 6, text: "소프트웨어" }, { value: 7, text: "새분야" }
-// ]
+
 const emptyCategory = [{ value: 0, text: "" }]
+
+const ContentsBox = styled.div`
+    padding-left:47px;
+    .title{
+        width:167px;
+        height:29px;
+        text-align:left;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+    }
+`
+const CategoryBox = styled.div`
+        display:flex;
+        width:1200px;
+`
+const CategoryDropDown = styled(Dropdown)`
+      width:410px;
+      height:56px;     
+      border-radius:5px;
+      font-size:20px;
+      background-color:#EFEFEF !important;
+      margin-right:30px;
+`
+
 class SectionAdditional extends Component {
   constructor(props) {
     super(props);
@@ -41,21 +62,18 @@ class SectionAdditional extends Component {
   render() {
 
     return (
-      <section id="additional" style={{ paddingLeft: "95.5px" }} >
+      <ContentsBox>
         {/* category */}
-        <div style={{ display: "flex" }}>
-          <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
-          <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-            <Dropdown onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-              options={this.props.category1} selection name="cate1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-          </div>
-          <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-            <Dropdown onChange={this.onChangeCategory2} value={this.state.categoryLevel2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
-              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" />
-          </div>
-
-        </div>
-      </section>
+          <CategoryBox>
+          <div className="title">카테고리</div>
+            <CategoryDropDown onChange={this.onChangeCategory1} 
+              options={this.props.category1} selection 
+              name="cate1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
+            <CategoryDropDown onChange={this.onChangeCategory2} 
+              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection
+              ref="dropdown2" value={this.state.categoryLevel2} />
+          </CategoryBox>
+      </ContentsBox>
     );
   }
 }

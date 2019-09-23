@@ -242,7 +242,7 @@ class GridEditor extends Component {
                             </GridEditorWrapper>
                         </ReactHeight>
                     </>
-                    : <div>디자인정보를 가져오고 있습니다.</div>
+                    : null//<div>디자인정보를 가져오고 있습니다.</div>
                 }</div>)
     }
 }

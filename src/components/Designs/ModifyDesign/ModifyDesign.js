@@ -11,7 +11,461 @@ import iDelete from "source/deleteItem.png"
 import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
 import { Dropdown, Modal } from "semantic-ui-react";
+import Logo from "source/logo.png"
 
+const MainBanner = styled.div`
+  width: 1920px;
+  display: flex;
+  justify-content: center;
+  .title{
+    width: 196px;
+    height: 37px;
+    margin-top: 45px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
+  }
+`
+const MainSection = styled.div`
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 111px;
+`
+
+const NavMenu = styled.div`
+  width: 433px;
+  .menuBox{
+    width:325px;
+    position: fixed;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
+  }
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+    cursor:pointer;
+
+  }
+
+    .deleteText{
+      font-family:Noto Sans KR;
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:500;
+      text-align:left;
+      color:#FF0000;
+      border-bottom:${props => props.borderBottom};
+    }
+`
+const MenuText = styled.div`
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:300;
+  text-align:left;
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
+  border-bottom:${props => props.borderBottom};
+`
+const Arrow = styled.span`
+    margin-left:70px;
+    font-size:15px;
+`
+const InputBoard = styled.div`
+      width:1422px;
+      height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justify-content: flex-end;
+      }
+
+
+`
+const BackButton = styled.div`
+      position:absolute;
+      right:120px;
+      bottom:35px;
+      cursor:pointer;
+      width:104.5px;
+      height:44px;
+      border-radius:5px;
+      background-color:#FF0000;
+      padding-top:6px;
+      padding-left:15px;
+      margin-right:53px;
+`
+const CompleteButton = styled.div`
+      position:absolute;
+      right:9px;
+      bottom:35px;
+      cursor:pointer;
+      width:104.5px;
+      height:44px;
+      border-radius:5px;
+      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top:6px;
+      padding-left:15px;
+      margin-right:53px;
+  `
+const HRline = styled.div`
+
+    width:95%;
+    margin-top:60px;
+    margin-bottom:67px;
+    border-bottom:5px solid #F5F4F4;
+
+  `
+
+const BtnText = styled.p`
+  width: 74px;
+  padding: 0px;
+  font-familty: Noto Sans KR;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
+  font-size: 20px;
+  color: #FFFFFF;
+`;
+
+const PeerBox = styled.div`
+  display:flex;
+  margin-right:50px;
+  .nameLabel{
+    width:112px;
+    height:29px;
+    margin-top:1px;
+    margin-left:10px;
+    font-size:20px;
+    font-weight:500;
+    font-family:Noto Sans KR;
+    color:#707070;
+    text-align:left;
+    line-height:29px;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .closeButton{
+    margin-top:7px;
+    margin-left:14px;
+  }
+`
+const PeerIcon = styled.div`
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background: ${props => `url(${props.imageURL})`};
+  background-size:cover;
+  background-position:center center;
+  background-color:#D6D6D6;
+`
+//---sectionbasic---//
+const ContentsBox = styled.div`
+    padding-left:47px;
+    .title{
+        width:167px;
+        height:29px;
+        text-align:left;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+    }
+`
+const ImageBox=styled.div`
+    width:210px;
+    height:210px;
+    border-radius:5px;
+    background: ${props => `url(${props.imageURL})`};
+    background-size:cover;
+    background-position:center center;
+    .forkedImg{
+      width:32px;
+      height:70px;
+      position:absolute;
+      right:21px;
+      background-image:${forked};
+      background-size:cover;
+    }
+`
+const ThumbnailBox = styled.div`
+    display:flex;
+    width:1200px;
+    .explainBox{
+        margin-left:54px;
+        margin-top:100px;
+    }
+    .findThumbnailBtn{
+        width:63px;
+        height:25px;
+        cursor:pointer;
+    }
+    .findThumbnailText{
+        font-family:Noto Sans KR;
+        font-size:17px;
+        font-weight:500;
+        text-align:left;
+        line-height:25px;
+        color:#FF0000;
+        border-bottom:1.5px solid #FF000;
+        cursor:pointer;
+    }
+    .findThumbnailBox{
+        margin-left:54px;
+        margin-top:100px;
+    .thumbnailExplainText{
+        width:341px;
+        height:45px;
+        margin-top:11px;
+        font-weight:300;
+        font-size:14px;
+        color:#707070;
+        line-height:20px;
+        text-align:left;
+        }
+    }
+`
+const TitleBox = styled.div`
+        width:1200px;
+        display:flex;
+        margin-top:96px;
+
+
+        .inputText{
+            width:505px;
+            height:56px;
+            padding-left:22px;
+            padding-right:22px;
+            font-size:20px;
+            font-weight:300;
+            font-family:Noto Sans KR;
+            line-height:29px;
+            color:#707070;
+            border:none;
+            border-radius:5px;
+            outline:none;
+            background-color:#EFEFEF;
+        
+        }
+`
+const ExplainBox = styled.div`
+
+        width:1200px;
+        margin-top:103px;
+        display:flex;
+        .inputTextareaBox{
+            width:717.5px;
+            height:244px;
+            padding:22px 26px 34px 32px;
+            font-family:Noto Sans KR;
+            font-size:20px;
+            font-weight:300;
+            color:#707070;
+            line-height:35px;
+            text-align:left;
+            outline:none;
+            border:none;
+            border-radius:5px;
+            resize:none;
+            background-color:#EFEFEF;
+        }
+`
+//---additional--//
+const CategoryBox = styled.div`
+        display:flex;
+        width:1200px;
+`
+const CategoryDropDown = styled(Dropdown)`
+      width:410px;
+      height:56px;     
+      border-radius:5px;
+      font-size:20px;
+      background-color:#EFEFEF !important;
+      margin-right:30px;
+`
+const InviteMemberBox = styled.div`
+      display:flex;
+      margin-top:120px;
+      .searchBox{
+        width:645px;
+        height:56px;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+        border-radius:5px;
+        background-color:#EFEFEF;
+      }
+      .tipTitle{
+        width:27px;
+        height:25px;
+        margin-left:20px;
+        font-size:17px;
+        font-weight:500;
+        line-height:25px;
+        text-align:left;
+        color:#FF0000;
+      }
+      .tipDescription{  
+        margin-left:17px;
+        font-size:16px;
+        font-weight:100;
+        font-family:Noto Sans KR;
+        text-align:left;
+        line-height:25px;
+        color:#707070;
+      }      
+`
+const InviteMemberListBox = styled.div`
+      margin-top:20px;
+      margin-left:207px;
+      .memberList{
+        display:flex;
+        flex-wrap:wrap;
+        flex-direction:row;
+        margin-bottom:34px;
+      }
+`
+const NoInviteMemberBox=styled.div`
+      margin-left:167px;
+      margin-top:30px;
+      font-size:20px;
+      font-weight:500;
+      font-family:Noto Sans KR;
+      color:#707070;
+      .textLabel{
+        vertical-align:top;
+      }
+      
+`
+const CheckBox = styled.input.attrs({type:'checkbox'})`
+      width:25px;
+      height:25px;
+      margin-right:17px;
+      background-color:#EFEFEF !important;
+      border:1px solid #707070 !important;
+      border-radius:5px !important;  
+`
+
+const LicenseBox = styled.div`
+      display:flex;
+      margin-top:22px;
+      .licenseList{
+        width:645px;
+        height:143px;
+        .licenseItem{
+          margin-bottom:30px;
+          color:#707070;
+          font-size:20px;
+          font-weight:500;
+          font-family:Noto Sans KR;
+        }
+        .textLabel{
+          vertical-align:top;
+        }
+      }
+`
+const LoadingBox=styled.div`
+      padding-top:200px;
+      .IconBox{
+        width:100px;
+        height:100px;
+        margin:0 auto;
+      }
+      .loadingText{
+        margin-top:20px;
+        width:100%;
+        font-family:Noto Sans KR;
+        font-size:20px;
+        text-align:center;
+      }
+
+`
+const LoadingIconBox= styled.div`
+        width:100px;
+        height:100px;
+        margin:0 auto;
+        background: ${props => `url(${props.imageURL})`};
+        background-position:center center;
+        background-repeat:no-repeat;
+
+          -webkit-animation: jello-horizontal 0.9s infinite both;
+                  animation: jello-horizontal 0.9s infinite both;
+        
+        @-webkit-keyframes jello-horizontal {
+          0% {
+            -webkit-transform: scale3d(1, 1, 1);
+                    transform: scale3d(1, 1, 1);
+          }
+          30% {
+            -webkit-transform: scale3d(1.25, 0.75, 1);
+                    transform: scale3d(1.25, 0.75, 1);
+          }
+          40% {
+            -webkit-transform: scale3d(0.75, 1.25, 1);
+                    transform: scale3d(0.75, 1.25, 1);
+          }
+          50% {
+            -webkit-transform: scale3d(1.15, 0.85, 1);
+                    transform: scale3d(1.15, 0.85, 1);
+          }
+          65% {
+            -webkit-transform: scale3d(0.95, 1.05, 1);
+                    transform: scale3d(0.95, 1.05, 1);
+          }
+          75% {
+            -webkit-transform: scale3d(1.05, 0.95, 1);
+                    transform: scale3d(1.05, 0.95, 1);
+          }
+          100% {
+            -webkit-transform: scale3d(1, 1, 1);
+                    transform: scale3d(1, 1, 1);
+          }
+        }
+        @keyframes jello-horizontal {
+          0% {
+            -webkit-transform: scale3d(1, 1, 1);
+                    transform: scale3d(1, 1, 1);
+          }
+          30% {
+            -webkit-transform: scale3d(1.25, 0.75, 1);
+                    transform: scale3d(1.25, 0.75, 1);
+          }
+          40% {
+            -webkit-transform: scale3d(0.75, 1.25, 1);
+                    transform: scale3d(0.75, 1.25, 1);
+          }
+          50% {
+            -webkit-transform: scale3d(1.15, 0.85, 1);
+                    transform: scale3d(1.15, 0.85, 1);
+          }
+          65% {
+            -webkit-transform: scale3d(0.95, 1.05, 1);
+                    transform: scale3d(0.95, 1.05, 1);
+          }
+          75% {
+            -webkit-transform: scale3d(1.05, 0.95, 1);
+                    transform: scale3d(1.05, 0.95, 1);
+          }
+          100% {
+            -webkit-transform: scale3d(1, 1, 1);
+                    transform: scale3d(1, 1, 1);
+          }
+        }
+      }
+`
 
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
@@ -23,60 +477,6 @@ function Peer(props) {
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
   </div>)
 }
-const BasicSecTitle = styled.div`
-    width: 100px;
-    height: 29px;
-    line-height: 29px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #707070;
-    text-align: left;
-`;
-const BasicSecthumbBox = styled.div`
-  display: flex;
-  width: 1200px;
-`;
-const BasicSecthumbExplainBox = styled.div`
-  margin-left: 54.5px;
-  margin-top: 100px;
-`;
-const BasicSecthumbFindBox = styled.div`
-  cursor: pointer;
-  width: 63px;
-  height: 25px;
-`;
-const BasicSecthumbFindTitle = styled.label`
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 17px;
-  border-bottom: 1.5px solid #FF0000;
-  line-height: 25px;
-  text-align: left;
-  color: #FF0000;
-`;
-const BasicSecthumbFindExplain = styled.div`
-  width: 341px;
-  height: 45px;
-  margin-top: 11px;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: left;
-  color: #707070;
-`;
-const ModifyMenuDelete = styled.div`
-  position: fixed;
-  top: 400px;
-  left: 100px;
-  width: 150px;
-  height: 29px;
-  cursor: pointer;
-  font-family: Noto Sans KR;
-  font-weight: 500;
-  font-size: 20px;
-  color: #FF0000;
-`;
-
 class ModifyDesign extends Component {
   constructor(props) {
     super(props);
@@ -283,165 +683,163 @@ class ModifyDesign extends Component {
     const { step, loading, deleteModal } = this.state; // const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
     // console.log("new:", this.props)
-    return (<React.Fragment>
+    return (
+    
+    <React.Fragment>
       {loading ? <Loading /> : null}
       {deleteModal ? <DeleteDesignModal /> : null}
       <div onClick={this.handleCloseMember}>
-        <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
-          <div style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>디자인 수정하기</div>
-        </div>
-        <div style={{ display: "flex", marginTop: "60px", marginBottom: "111px" }}>
+        <MainBanner>
+          <div className="title">디자인 수정하기</div>
+        </MainBanner>
+        <MainSection>
 
           {/* scroll - menu */}
-          <div style={{ width: "325px", marginLeft: "64px" }}>
-            <div style={{ position: "fixed", top: "197px", width: "325px", height: "190px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+          <NavMenu>
+            <div className="menuBox">
               {scrollmenu.map((menu, index) => {
-                return (<div onClick={() => this.gotoStep(menu)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                  <div style={{ color: this.state.step === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
+                return (
+                  <div onClick={() => this.gotoStep(menu)} 
+                     className="menuItem"
+                     borderBottom={ index + 1 === scrollmenu.length} 
+                     key={menu.txt}>
+                  <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
                 </div>)
               })}
             </div>
-          </div>
-          <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete>
+          </NavMenu>
+          {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
 
           {/* form */}
-          <div style={{ width: "1422px", marginLeft: "45px", height: "max-content", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px" }}>
+          <InputBoard>
             {/* <form ref={(ref) => this.form = ref}> */}
-            <section style={{ display: step === 0 ? "block" : "none", paddingLeft: "55.5px" }} >
+            <section style={{ display: step === 0 ? "block" : "none"}} >
               {/* thumbnail */}
-              <BasicSecthumbBox>
-                <BasicSecTitle>프로필 사진</BasicSecTitle>
-                <div style={{
-                  position: "relative",
-                  marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px",
-                  backgroundImage: `url(${thumbnailURL})`, backgroundSize: "cover", backgroundPosition: "center center"
-                }} >
+              <ContentsBox>
+                <ThumbnailBox>
+                <div className="title">프로필 사진</div>
+                <ImageBox imageURL={thumbnailURL==null?noimg:thumbnailURL}/>
                   {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
-                    <div style={{
-                      position: "absolute", right: "21px", width: "32px", height: "70px",
-                      backgroundImage: `url(${forked})`, backgroundSize: "cover"
-                    }} />}
+                    <div className="forkedImg"/>}
 
-                </div>
-                <BasicSecthumbExplainBox>
-                  <BasicSecthumbFindBox>
-                    <BasicSecthumbFindTitle htmlFor="file">찾아보기</BasicSecthumbFindTitle>
+                <div className="findThumbnailBox">
+                  <div className="findThumbnailBtn">
+                    <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-                  </BasicSecthumbFindBox>
-                  <BasicSecthumbFindExplain>프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</BasicSecthumbFindExplain>
-                </BasicSecthumbExplainBox>
-              </BasicSecthumbBox>
+                  </div>
+                  <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                </div>
+                </ThumbnailBox>
 
               {/* title */}
-              <div style={{ marginTop: "86px", width: "1544px" }}>
-                <div style={{ display: "flex" }}>
-                  <div style={{ width: "37px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>제목</div>
-                  <div style={{ marginLeft: "130px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
-                    <input
-                      style={{ outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }}
-                      name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
-                      onBlur={this.checkFinishBasic} onChange={this.onChangeValueTitle} />
-                  </div>
-                  <div style={{ marginTop: "16px", marginLeft: "27.5px", fontSize: "17px", fontWeight: "300", lineHeight: "25px", color: "#707070", width: "230px", height: "25px" }} />
-                </div>
-              </div>
+              <TitleBox>
+                  <div className="title">제목</div>
+                    <input onChange={this.onChangeValueTitle}
+                      className="inputText" name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
+                      onBlur={this.checkFinishBasic} />
+              </TitleBox>
               {/* explanation */}
-              <div style={{ marginTop: "50px", display: "flex" }}>
-                <div style={{ width: "97px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>디자인 설명</div>
-                <div style={{ width: "717.5px", height: "244px", marginLeft: "70px", backgroundColor: "#EFEFEF", borderRadius: "5px", marginTop: "14px", }}>
-                  <textarea style={{ width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", resize: "none", lineHeight: "35px", textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", paddingBottom: "34px", paddingRight: "32.5px" }}
-                    name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" value={this.state.explanation} onBlur={this.checkFinishBasic} onChange={this.onChangeValueExplanation} />
-                </div>
-              </div>
+              <ExplainBox>
+                <div className="title">디자인 설명</div>
+                  <textarea className="inputTextareaBox" onChange={this.onChangeValueExplanation} 
+                    name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" 
+                    value={this.state.explanation} onBlur={this.checkFinishBasic} />
+              </ExplainBox>
+              </ContentsBox>
             </section>
 
 
 
-            <section style={{ display: step === 1 ? "block" : "none", marginBottom: "16px", paddingLeft: "52px" }} >
+            <section style={{ display: step === 1 ? "block" : "none"}} >
+            <ContentsBox>
               {this.props.category1.length > 0 ?
-                <React.Fragment>
+                <CategoryBox>
                   {/* category */}
-                  <div style={{ display: "flex" }}>
-                    <div style={{ width: "74px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }}>카테고리</div>
-                    <div style={{ marginLeft: "98px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-                      <Dropdown onChange={this.onChangeCategory1} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
+                    <div className="title">카테고리</div>
+                      <CategoryDropDown onChange={this.onChangeCategory1}
                         options={this.props.category1} selection name="category1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-                    </div>
-                    <div style={{ marginLeft: "30px", marginTop: "4px", width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px" }}>
-                      <Dropdown id="category2" onChange={this.onChangeCategory2} style={{ width: "410px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px" }}
+                      <CategoryDropDown id="category2" onChange={this.onChangeCategory2}
                         options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
-                    </div>
-                  </div>
-                </React.Fragment>
+                </CategoryBox>
                 : <p>카테고리를 가져오고 있습니다.</p>}
               {/* invite member*/}
-              <div style={{ marginTop: "107px", display: "flex" }}>
-                <div style={{ width: "115px", height: "29px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left" }}>멤버 초대하기</div>
-                <div style={{ marginLeft: "52px", width: "645px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070" }} >
-                  {/* <input type="text" style={{ zIndex: "900", outline: "none", marginLeft: "27px", marginTop: "12px", height: "29px", lineHeight: "29px", width: "451.5px", border: "none", color: "#707070", backgroundColor: "#EFEFEF" }} placeholder="닉네임을 검색해 주세요" />  */}
+              <InviteMemberBox>
+                <div className="title">멤버 초대하기</div>
+                <div className="searchBox" >
                   {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
                 </div>
-                <div style={{ marginLeft: "20px", width: "27px", height: "25px", fontSize: "17px", lineHeight: "25px", fontWeight: "500", color: "#FF0000", textAlign: "left" }}>TIP</div>
-                <div style={{ marginLeft: "17px", width: "457px", height: "75px", fontSize: "17px", lineHeight: "25px", fontWeight: "100", color: "#707070", textAlign: "left" }}>함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
-              </div>
-              <div>
+                <div className="tipTitle">TIP</div>
+                <div className="tipDescription">
+                  함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
+                  초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
+                  디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
+                </InviteMemberBox>
+                <div>
                 {/* invited member*/}
-                <div style={{ marginTop: "20px", marginLeft: "167px" }}>
-                  <div style={{ width: "1000px", display: "flex", flexWrap: "wrap", flexDirection: "row", marginBottom: "34px" }}>
+                <InviteMemberListBox>
+                  <div className="memberList">
                     {arrSummaryList}
                   </div>
-                </div>
+                </InviteMemberListBox>
                 {/* LEAVE ME ALONE */}
-                <div style={{ marginLeft: "185px", marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}><input onChange={this.LeaveMeAlone} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>맴버를 초대하지 않습니다.</span></div>
+                <NoInviteMemberBox>
+                  <CheckBox onChange={this.LeaveMeAlone} type="checkbox"/>
+                  <span className="textLabel">맴버를 초대하지 않습니다.</span>
+                </NoInviteMemberBox>
               </div>
-              <div style={{ width: "1318px", marginTop: "122.5px", border: "2.5px solid #EFEFEF" }} />
+              <HRline/>
 
               {/* license*/}
-              <div style={{ marginTop: "22px", display: "flex" }}>
-                <div style={{
-                  width: "115px", height: "29px",
-                  fontSize: "20px", lineHeight: "29px", fontWeight: "500", color: "#707070", textAlign: "left"
-                }}>라이센스</div>
-                <div style={{ width: "645px", height: "143px" }}>
-                  <div style={{ width: "100%", paddingLeft: "52px" }}>
-                    <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
-                      <input onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>상업적으로 이용이 가능합니다</span></div>
-                    <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
-                      <input onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>원작자를 표시합니다</span></div>
-                    <div style={{ marginBottom: "30px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500" }}>
-                      <input onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" style={{ width: "25px", height: "25px", marginRight: "17px", paddingBottom: "10px" }} /><span style={{ verticalAlign: "top" }}>추후에 수정이 가능합니다</span></div>
-                  </div>
+              <LicenseBox>
+                <div className="title">라이센스</div>
+                <div className="licenseList">
+                    <div className="licenseItem">
+                      <CheckBox onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" />
+                      <span className="textLabel">상업적으로 이용이 가능합니다</span></div>
+                    <div className="licenseItem">
+                      <CheckBox onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" />
+                      <span className="textLabel">원작자를 표시합니다</span></div>
+                    <div className="licenseItem">
+                      <CheckBox onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox"/>
+                      <span className="textLabel">추후에 수정이 가능합니다</span></div>
                 </div>
-              </div>
+              </LicenseBox>
               {/* hr line */}
-              <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div>
+              {/* <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div> */}
+              </ContentsBox>
             </section>
 
 
 
             <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
               <div>
-                {this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> : <div>단계/컨텐츠 에디터를 가져오고 있습니다.</div>}
+                {this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> : 
+                 <LoadingBox>
+                 <LoadingIconBox imageURL={Logo}/>
+                 <div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div>
+                 </LoadingBox>
+                }
               </div>
             </section>
 
             {/* buttons*/}
-            <div style={{ marginTop: "20.54px", marginBottom: "35px", justifyContent: "flex-end", display: "flex" }}>
+            <div className="buttonBox">
               {step === 0 && <React.Fragment>
-                <div onClick={this.gotoNextStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
+                <CompleteButton onClick={this.gotoNextStep}><BtnText>다음</BtnText></CompleteButton>
               </React.Fragment>}
               {step === 1 && <React.Fragment>
-                <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
-                <div onClick={this.gotoNextStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>다음</p></div>
+                <BackButton onClick={this.gotoPrevStep} ><BtnText>뒤로</BtnText></BackButton>
+                <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
               </React.Fragment>}
               {step === 2 && <React.Fragment>
-                <div onClick={this.gotoPrevStep} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "15px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>뒤로</p></div>
-                <div onClick={this.submit} style={{ cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}><p style={{ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }}>완료</p></div>
+                <BackButton onClick={this.gotoPrevStep}><BtnText>뒤로</BtnText></BackButton>
+                <CompleteButton onClick={this.submit} ><BtnText>완료</BtnText></CompleteButton>
               </React.Fragment>}
             </div>
             {/* </form> */}
-          </div>
-        </div></div>
+          </InputBoard>
+        </MainSection>
+        </div>
 
     </React.Fragment>)
   }
