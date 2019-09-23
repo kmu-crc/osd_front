@@ -1,144 +1,92 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const IsDesignerContainer = styled.div`
-  display: flex;
-  justify-content: space-start;
-  padding-left: 95.5px;
-  .text-label {
-    color: #707070;
-    font-size: 20px;
-    font-weight: 500;
-  }
-  checkbox {
-    width: 25px;
-    height: 25px;
-    margin-left: 10px;
-    border-radius: 5px;
-    border: 1px solid #707070;
-    background: ${props => props.bg} 
-  }
-  .tip{
-    width: 27px;
-    height: 25px;
-    margin-left: 420px;
-    color: #FF0000;
-    font-size: 17px;
-    text-align: left;
-  }
-`;
-const Description = styled.div`
-  width: 540px;
-  height: 75px;
-  margin-top: 5px;
-  margin-left: 708px;
-  color: #707070;
-  font-size: 17px;
-  font-weight: 100;
-`;
-const TeamContainer = styled.div`
-    display: flex;
-    position: relative;
-    margin-top: 66px;
-    justifyContent: space-start;
-    .text-label {
-      margin-left: 265px;
-      color: #707070;
-      font-size: 20px;
-      opacity: 0.5;
+const ContentsBox = styled.div`
+    padding-left:47px;
+    .title{
+        width:100px;
+        height:29px;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        text-align:left;
+        color:#707070;
     }
-    input {
-      width: 505.5px;
-      height: 56px;
-      margin-left: 57px;
-      padding-left: 15px;
-      border: none;
-      outline: none;
-      borderRadius: 5px;
-      font-size: 20px;
-      font-family: Noto Sans KR;
-      font-weight: 500;
-      background-color: #EFEFEF;
-      opacity: 0.5;
-`;
-const CareerContainer = styled.div`
-  position: relative;
-  display: flex;
-  margin-top: 46px;
-  justify-content: space-start;
-  .text-label {
-    margin-left: 265px;
-    color: #707070;
-    font-size: 20px;
-    opacity: 0.5;
-  };
-  input {
-    width: 505.5px;
-    height: 56px;
-    padding-left: 15px;
-    margin-left: 37px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    background-color: #EFEFEF;
-    opacity: 0.5;
-  }
-`; 
-const LocationContainer = styled.div`
-  display: flex;
-  position: relative;
-  margin-top: 46px;
-  justify-content: space-start;
-  .text-label { 
-    margin-left: 265px;
-    color: #707070;
-    font-size: 20px;
-    opacity: 0.5;
-  }
-  input {
-    width: 505.5px;
-    height: 56px;
-    margin-left: 37px;
-    padding-left: 15px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    background-color: #EFEFEF;
-    opacity: 0.5;
-  }
-`; 
-const ContactContainer = styled.div`
-  display: flex;
-  position: relative;
-  margin-top: 46px;
-  justify-content: space-start;
-  .text-label {
-    margin-left: 265px;
-    color: #707070;
-    font-size: 20px;
-    opacity: 0.5;
-  }
-  input {
-    width: 505.5px;
-    height: 56px;
-    padding-left: 15px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    margin-left: 37px;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Noto Sans KR;
-    background-color: #EFEFEF;
-    opacity: 0.5;
-  }
-`;
+    .tipTitle{
+      width:27px;
+      height:25px;
+      margin-left:420px;
+      font-size:17px;
+      color:#FF0000;
+      text-align:left;
+    }
+    .tipDescription{
+      width:540px;
+      height:75px;
+      margin-top:5px;
+      margin-left:608px;
+      font-size:17px;
+      font-weight:200;
+      font-family:Noto Sans KR;
+      color:#707070;
+      line-height:25px;
+
+    }
+`
+const IsDesignerBox = styled.div`
+      display:flex;
+      width:1200px;
+    .isDesignerText{
+      font-size:20px;
+      font-weight:500
+      color:#707070;
+    }
+
+`
+const CheckBox = styled.input.attrs({type:'checkbox'})`
+      width:25px;
+      height:25px;
+      margin-left:10px;
+      background-color:#EFEFEF !important;
+      border:1px solid #707070 !important;
+      border-radius:5px !important;  
+`
+
+const DesignerInfoBox=styled.div`
+      margin-left:20px;
+
+      .itemBox{
+        display:flex;
+        position:relative;
+        margin-top:46px;
+        justify-content:space-start;
+        .designerInfoTitle{
+          width:47px;
+          margin-left:150px;
+          font-size:20px;
+          font-weight:500;
+          font-family:Noto Sans KR;
+          color:#707070;
+          text-align:left;
+          opacity:0.5;
+        }
+      }
+
+`
+const InputText = styled.input.attrs({type:'text',maxLength:100})`
+      width:505px;
+      height:56px;
+      padding-left:15px;
+      font-size:20px;
+      font-weight:500;
+      font-family:Noto Sans KR;
+      opacity:0.5;
+      background-color:#EFEFEF;
+      border:none;
+      border-radius:5px;
+      outline:none;
+`
+
 
 class SectionBuziness extends Component {
   constructor(props) {
@@ -205,36 +153,39 @@ class SectionBuziness extends Component {
 
     console.log("checkbox", this.state.isDesigner);
     return (
-      <React.Fragment>
+        <ContentsBox>
 
-        <IsDesignerContainer checkbg={this.state.isDesigner === 1 ? "#FF0000  0% 0% no-repeat padding-box" : "#FFFFFF 0% 0% no-repeat padding-box"}>
-          <div className="text-label">디자이너 활동 여부</div>
-          <checkbox id="isDesignerCheckbox" onClick={this.isDesignerCheck} />
-          <div className="tip">TIP</div>
-        </IsDesignerContainer>
-        <Description>{description[0]}<br />{description[1]}<br />{description[2]}</Description>
+        <IsDesignerBox>
+          <div className="isDesignerText">디자이너 활동 여부</div>
+          <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
+                     onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
+          <div className="tipTitle">TIP</div>
+        </IsDesignerBox>
+        <div className="tipDescription">{description[0]}<br />{description[1]}<br />{description[2]}</div>
 
-        <TeamContainer>
-          <div className="text-label">팀</div>
-          <input onChange={this.onChangeTeam} maxLength="100" type="text" value={this.state.team} />
-        </TeamContainer>
+        <DesignerInfoBox>
+        <div className="itemBox">
+          <div className="designerInfoTitle">팀</div>
+          <InputText onChange={this.onChangeTeam} value={this.state.team==null?"":this.state.team} />
+        </div>
 
-        <CareerContainer>
-          <div className="text-label">경력</div>
-          <input onChange={this.onChangeCareer} maxLength="100" type="text" value={this.state.career} />
-        </CareerContainer>
+        <div className="itemBox">
+          <div className="designerInfoTitle">경력</div>
+          <InputText onChange={this.onChangeCareer} value={this.state.career==null?"":this.state.career} />
+        </div>
 
-        <LocationContainer>
-          <div className="text-label">위치</div>
-          <input onChange={this.onChangeLocation} maxLength="100" type="text" value={this.state.location} />
-        </LocationContainer>
+        <div className="itemBox">
+          <div className="designerInfoTitle">위치</div>
+          <InputText onChange={this.onChangeLocation}  value={this.state.location==null?"":this.state.location} />
+        </div>
 
-        <ContactContainer>
-          <div className="text-label">연락</div>
-          <input onChange={this.onChangeContact} maxLength="100" type="text" value={this.state.contact} />
-        </ContactContainer>
-      </React.Fragment>
-    );
+        <div className="itemBox">
+          <div className="designerInfoTitle">연락</div>
+          <InputText onChange={this.onChangeContact} value={this.state.contact==null?"":this.state.contact} />
+        </div>
+        </DesignerInfoBox>
+        </ContentsBox>
+       );
   }
 }
 export default SectionBuziness;

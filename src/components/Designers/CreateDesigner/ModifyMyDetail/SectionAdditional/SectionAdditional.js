@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
 import { Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 

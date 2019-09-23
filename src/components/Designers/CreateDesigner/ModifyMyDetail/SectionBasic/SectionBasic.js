@@ -18,7 +18,7 @@ const ImageBox=styled.div`
     margin-left:67px;
     width:210px;
     height:210px;
-    border-radius:10px;
+    border-radius:50%;
     background: ${props => `url(${props.imageURL})`};
     background-size:cover;
     background-position:center center;
@@ -107,14 +107,6 @@ const ExplainBox = styled.div`
             background-color:#EFEFEF;
         }
 `
-//const BasicSecBox = {paddingLeft:"47px"}
-const BasicSecTitle={ width: "100px", height: "29px", lineHeight: "29px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }
-const BasicSec_thumb_Box = { display: "flex",width:"1200px", }
-const BasicSec_thumb_ExplainBox={ marginLeft: "54.5px", marginTop: "100px"}
-const BasicSec_thumb_FindBox ={width: "63px", height: "25px", cursor: "pointer" }
-const BasicSec_thumb_FindTitle = {cursor: "pointer",fontWeight: "500", fontSize: "17px", borderBottom: "1.5px solid #FF0000", lineHeight: "25px", textAlign: "left", color: "#FF0000" }
-const BasicSec_thumb_FindExplain ={ width: "341px", height: "45px", marginTop: "11px", fontWeight: "300", fontSize: "14px", lineHeight: "20px", textAlign: "left", color: "#707070" }
-
 
 class SectionBasic extends Component
 {

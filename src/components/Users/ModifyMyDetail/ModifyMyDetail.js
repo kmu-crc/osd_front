@@ -7,94 +7,116 @@ import SectionSecurity from "components/Users/ModifyMyDetail/ModifyMyDetail/Sect
 import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
 
-const MyDetailTitle = styled.div`
-  display: flex;
+const MainBanner = styled.div`
   width: 1920px;
+  display: flex;
   justify-content: center;
-  .title {
-    margin-top: 45px;
+  .title{
     width: 196px;
     height: 37px;
-    font-family: Noto Sans KR;
+    margin-top: 45px;
     font-size: 25px;
-    font-weight: 700;
-    line-height: 37px;
-    text-align: center;
+    font-family: Noto Sans KR;
     color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
   }
-`;
-const MyDetailFormContainer = styled.div`
+`
+const MainSection = styled.div`
   display: flex;
   margin-top: 60px;
   margin-bottom: 111px;
-`;
-const MyDetailFormMenu = styled.div`
-  width: 325px;
-  margin-left: 64px;
-  .menu-container { 
+`
+const NavMenu = styled.div`
+  width: 433px;
+  .menuBox{
+    width:325px;
     position: fixed;
-    top: 197px;
-    width: 325px;
-    height: 190px;
-    background-color: #F5F4F4;
-    border-radius: 5px;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
   }
-`;
-const MenuElement = styled.div`
-  cursor: pointer;
-  height: 62px;
-  line-height: 29px;
-  border-bottom: ${props => props.borderBottom};
-  padding-top: 18px; 
-  padding-left: 36px;
-  .menu-element-text {
-    color: ${props => props.color};
-    font-size: 20px;
-    font-family: Noto Sans KR;
-    font-weight: 300;
-    text-align: left;
-  }
-`;
-const MyDetailForm = styled.div`
-  height: 2104px;
-  width: 1422px;
-  margin-left: 45px;
-  font-family: Noto Sans KR;
-  border-radius: 5px;
-  padding-top: 46px;
-  border: 8px solid #F5F4F4;
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+    cursor:pointer;
 
-  .border-list-basic {
-    margin-top: 100.5px;
-    margin-bottom: 67.5px;
-    border-bottom: 5px solid #F5F4F4;
   }
-  .border-list-security {
-    margin-top: 101.5px;
-    margin-bottom: 67.5px;
-    border-bottom: 5px solid #F5F4F4;
-  }
-  .border-list-additional {
-    margin-top: 102.5px;
-    margin-bottom: 41.5px;
-    border-bottom: 5px solid #F5F4F4;
-  }
-  .submit-button {
-    width: 104.5px;
-    height: 44px;
-    cursor: pointer;
-    display: table-cell;
-    position: relative;
-    left: 1264.5px;
-    border-radius: 5px;
-    backgroundColor: #FF0000;
-    color: #FFFFFF;
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-    vertical-align: middle;
-  }
+
+    .deleteText{
+      font-family:Noto Sans KR;
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:500;
+      text-align:left;
+      color:#FF0000;
+      border-bottom:${props => props.borderBottom};
+    }
+`
+const MenuText = styled.div`
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:300;
+  text-align:left;
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
+  border-bottom:${props => props.borderBottom};
+`
+const Arrow = styled.span`
+    margin-left:70px;
+    font-size:15px;
+`
+const InputBoard = styled.div`
+      width:1422px;
+      height:${props => props.isModifyAnother === true ? "2150px" : "925px"};
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justifyContent: flex-end;
+      }
+
+`
+const CompleteButton = styled.div`
+      position:absolute;
+      right:9px;
+      bottom:35px;
+      cursor:pointer;
+      width:104.5px;
+      height:44px;
+      border-radius:5px;
+      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top:6px;
+      padding-left:15px;
+      margin-right:53px;
+  `
+const HRline = styled.div`
+
+    margin-top:100px;
+    margin-bottom:67px;
+    border-bottom:5px solid #F5F4F4;
+
+  `
+
+const BtnText = styled.p`
+  width: 74px;
+  padding: 0px;
+  font-familty: Noto Sans KR;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
+  font-size: 20px;
+  color: #FFFFFF;
 `;
+
 const scrollmenu_data = [{ txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }];
 
 class ModifyMyDetail extends Component {
@@ -317,35 +339,38 @@ class ModifyMyDetail extends Component {
     const { selected } = this.state
 
     return (<React.Fragment>
-      <MyDetailTitle>
-        <div id="basic" className="title">내 프로필 수정하기</div>
-      </MyDetailTitle>
+      <MainBanner>
+        <div className="title">내 프로필 수정하기</div>
+      </MainBanner>
 
-      <MyDetailFormContainer>
+      <MainSection id="basic">
         {/* scroll - menu */}
-        <MyDetailFormMenu>
-          <div className="menu-container">
+        <NavMenu>
+          <div className="menuBox">
             {scrollmenu.map((menu, index) => {
-              return (<MenuElement onClick={() => this.scrollMove(menu, index)} key={menu.txt} color={selected === index ? "#FF0000" : "#707070"} borderBottom={index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF"}>
-                <div className="menu-element-text">{menu.txt}</div>
-              </MenuElement>)
+              return (<div onClick={() => this.scrollMove(menu, index)} 
+                                   className="menuItem"
+                                   borderBottom={index + 1 === scrollmenu.length}
+                                   key={menu.txt}>
+                      <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
+                      </div>)
             })}
           </div>
-        </MyDetailFormMenu>
+        </NavMenu>
 
         {/* form */}
-        <MyDetailForm>
+        <InputBoard isModifyAnother={true}>
           <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
-          <div className="border-list-basic" />
+          <HRline/>
           <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
-          <div className="border-list-security" />
+          <HRline/>
           <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
             updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
-          <div className="border-list-additional" />
+          <HRline/>
           <SectionBuziness MyDetail={this.props.MyDetail} updateIsDesigner={this.updateIsDesigner} updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
-          <div onClick={this.onSubmit} className="submit-button">등록하기</div>
-        </MyDetailForm>
-      </MyDetailFormContainer>
+          <CompleteButton id="additional"  isComplete  ={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
+        </InputBoard>
+      </MainSection>
     </React.Fragment>)
   }
 }

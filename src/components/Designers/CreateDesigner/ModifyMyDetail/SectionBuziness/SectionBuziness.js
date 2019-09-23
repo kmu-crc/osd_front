@@ -64,6 +64,7 @@ const DesignerInfoBox=styled.div`
           width:47px;
           margin-left:150px;
           font-size:20px;
+          font-weight:500;
           font-family:Noto Sans KR;
           color:#707070;
           text-align:left;
