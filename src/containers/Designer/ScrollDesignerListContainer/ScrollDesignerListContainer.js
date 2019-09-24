@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignerListRequest } from "redux/modules/designer";
 import ScrollList from "components/Commons/ScrollList";
-import Designer from "components/Designers/Designer";
 import opendesign_style from "opendesign_style";
 
 class ScrollDesignerListContainer extends Component {
@@ -43,7 +42,7 @@ class ScrollDesignerListContainer extends Component {
       
       <ScrollList
         getListRequest={this.getList}
-        ListComponent={Designer}
+        type="designer"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
         {...opendesign_style.designer_margin}
       />

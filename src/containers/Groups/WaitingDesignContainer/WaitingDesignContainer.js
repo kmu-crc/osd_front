@@ -55,7 +55,7 @@ class WaitingDesignContainer extends Component {
           reload={this.state.reload}
           handleReload={this.handleReload}
           {...osdstyle.design_margin}
-          ListComponent={Design}
+          type="design"
           dataListAdded={this.props.waitingDesign}
           getListRequest={null}
           handleReject={this.setOut}

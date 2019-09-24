@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetDesignInDesignerRequest } from "redux/modules/designer";
 import ScrollList from "components/Commons/ScrollList";
-import Design from "components/Designs/Design";
 
 class MemberDesignContainer extends Component {
   componentWillMount() {
@@ -17,7 +16,7 @@ class MemberDesignContainer extends Component {
     return (
       <div>
         <ScrollList getListRequest={this.getList}
-          ListComponent={Design}
+          type="design"
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
           mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
       </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ScrollList from "components/Commons/ScrollList";
 import Loading from "components/Commons/Loading";
-import Group from "components/Groups/Group";
 import osdstyle from "opendesign_style";
 
 class GroupList extends Component {
@@ -24,7 +23,7 @@ class GroupList extends Component {
             <React.Fragment>
                 {this.props.status === "INIT" ?
                     <Loading /> :
-                    <ScrollList {...osdstyle.group_margin} ListComponent={Group}
+                    <ScrollList type="group" {...osdstyle.group_margin}
                         dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
             </React.Fragment>
         )
