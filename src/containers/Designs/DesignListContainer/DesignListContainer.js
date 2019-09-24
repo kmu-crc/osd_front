@@ -1,13 +1,12 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { GetDesignListRequest, GetDesignListCountRequest } from "redux/modules/design"
-import { GetCategoryAllRequest } from "redux/modules/category"
-import Category from "components/Commons/Category"
-import OrderOption from "components/Commons/OrderOption"
-import ScrollList from "components/Commons/ScrollList"
-import Loading from "components/Commons/Loading"
-import Design from "components/Designs/Design"
-import styled from 'styled-components'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { GetDesignListRequest, GetDesignListCountRequest } from "redux/modules/design";
+import { GetCategoryAllRequest } from "redux/modules/category";
+import Category from "components/Commons/Category";
+import OrderOption from "components/Commons/OrderOption";
+import ScrollList from "components/Commons/ScrollList";
+import Loading from "components/Commons/Loading";
+import styled from 'styled-components';
 import opendesign_style from "opendesign_style";
 
 const TextWrapper = styled.div`
@@ -92,7 +91,7 @@ class DesignListContainer extends Component {
         {status === "INIT"
           ? <Loading />
           : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
-            ListComponent={Design} dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
+            type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
       </ScrollListContainer>
     </React.Fragment>)
   }

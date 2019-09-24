@@ -57,7 +57,7 @@ class ScrollDesignListContainer extends Component {
         <div>
           {this.props.status  === "INIT" ?
               <Loading /> :
-              <ScrollList {...opendesign_style.design_margin} getListRequest={this.getList} reload={this.state.reload} ListComponent={Design} handleReload={this.handleReload}  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />}
+              <ScrollList {...opendesign_style.design_margin} getListRequest={this.getList} reload={this.state.reload} type="design" handleReload={this.handleReload}  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />}
         </div>
     )
   }

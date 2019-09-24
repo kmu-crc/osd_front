@@ -45,7 +45,7 @@ class EditGroupListContainer extends Component {
             {...osdstyle.group_margin}
             reload={reload}
             handleReload={this.handleReload}
-            ListComponent={Group}
+            type="group"
             dataListAdded={this.props.EditGroupList}
             getListRequest={null}
             handleReject={this.setOut} />}

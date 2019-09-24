@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 
-// import ScrollList from "components/Commons/ScrollList"
-
 //component
-import Design from "components/Designs/Design"
-import Group from "components/Groups/Group";
-import Designer from "components/Designers/Designer"
 import ScrollList from "components/Commons/ScrollList"
 import Loading from 'components/Commons/Loading'
-
 //
 import opendesign_style from "opendesign_style";
 
@@ -131,7 +125,7 @@ class DesignerPageBody extends Component {
                         {this.props.status === "INIT" ?
                             <Loading /> :
                             <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
-                                ListComponent={Design} dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
+                                type="design" dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
                     </div>}
 
                 {this.state.cateIndex === 1 &&
@@ -139,30 +133,29 @@ class DesignerPageBody extends Component {
                         {this.props.status === "INIT" ?
                             <Loading /> :
                             <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
-                                ListComponent={Group} dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
+                                type="group" dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
                     </div>
                 }
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper">
                         <div className="interested" style={{ display: "flex", justifyContent: "space-start" }}>
                             <div style={{ paddingLeft: "67px", fontWeight: "Medium" }}>관심있는 디자인</div>
-                            {/* <div style={{ paddingLeft: "1600px", fontWeight: "300" }}>모두 보기</div> */}
                         </div>
                         <div style={{ paddingTop: '25px' }}>
                             {this.props.status === "INIT" ?
                                 <Loading /> :
                                 <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
-                                    manual ListComponent={Design} dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}</div>
+                                    manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}</div>
                         <div className="interested" style={{ paddingLeft: "67px", paddingTop: "75px", marginBottom: "25px" }}>관심있는 그룹</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
                             <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
-                                manual ListComponent={Group} dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+                                manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
                         <div className="interested" style={{ paddingLeft: "67px", paddingTop: "67px", marginBottom: "30px" }}>관심있는 디자이너</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
                             <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
-                                manual ListComponent={Designer} dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
+                                manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
                     </div>
                 }
             </DesignerDetailBody>

@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 
-// import ScrollList from "components/Commons/ScrollList"
-
 //component
-import Design from "components/Designs/Design"
-import Group from "components/Groups/Group";
-import Designer from "components/Designers/Designer"
 import ScrollList from "components/Commons/ScrollList"
 import Loading from 'components/Commons/Loading'
 import opendesign_style from 'opendesign_style';
@@ -105,14 +100,14 @@ class MypageBody extends Component {
                     <div className="compWrapper" style={{ paddingTop: "35px" }}>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList {...opendesign_style.design_margin} ListComponent={Design} dataList={MyDesign} dataListAdded={MyDesignAdded} getListRequest={this.getMyDesignListRequest} />}
+                            <ScrollList {...opendesign_style.design_margin} type="design" dataList={MyDesign} dataListAdded={MyDesignAdded} getListRequest={this.getMyDesignListRequest} />}
                     </div>}
 
                 {this.state.cateIndex === 1 &&
                     <div className="compWrapper" style={{ paddingTop: "35px" }}>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList {...opendesign_style.group_margin} ListComponent={Group} dataList={MyGroup} dataListAdded={MyGroupAdded} getListRequest={this.getMyGroupListRequest} />}
+                            <ScrollList {...opendesign_style.group_margin} type="group" dataList={MyGroup} dataListAdded={MyGroupAdded} getListRequest={this.getMyGroupListRequest} />}
                     </div>
                 }
                 {this.state.cateIndex === 2 &&
@@ -124,16 +119,16 @@ class MypageBody extends Component {
                         <div style={{ paddingTop: '25px' }}>
                             {this.props.status === "INIT" ?
                                 <Loading /> :
-                                <ScrollList manual {...opendesign_style.design_margin} ListComponent={Design} dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
+                                <ScrollList manual {...opendesign_style.design_margin} type="design" dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
                         </div>
                         <div className="interested" style={{ paddingLeft: "67px", paddingTop: "75px", marginBottom: "25px" }}>관심있는 그룹</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList manual {...opendesign_style.group_margin} ListComponent={Group} dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
+                            <ScrollList manual {...opendesign_style.group_margin} type="group" dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
                         <div className="interested" style={{ paddingLeft: "67px", paddingTop: "0px", marginBottom: "30px" }}>관심있는 디자이너</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList manual {...opendesign_style.designer_margin} ListComponent={Designer} dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
+                            <ScrollList manual {...opendesign_style.designer_margin} type="designer" dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
                     </div>
 
 

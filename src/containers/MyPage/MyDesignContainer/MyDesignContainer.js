@@ -16,7 +16,7 @@ class MyDesignContainer extends Component {
   render() {
     return (
       <ScrollList getListRequest={this.getList}
-        ListComponent={Design}
+        type="design"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
         mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
     );

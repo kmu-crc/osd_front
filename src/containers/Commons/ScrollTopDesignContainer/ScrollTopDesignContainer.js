@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetTopDesignListRequest } from "actions/Commons/TopList";
 import ScrollList from "components/Commons/ScrollList";
-import Design from "components/Design";
 import Loading from "components/Commons/Loading";
 
 class ScrollTopDesignContainer extends Component {
@@ -21,7 +20,7 @@ class ScrollTopDesignContainer extends Component {
         <Loading/>
         :
         <ScrollList getListRequest={this.getList}
-                    ListComponent={Design}
+                    type="design"
                     dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                     mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
         }

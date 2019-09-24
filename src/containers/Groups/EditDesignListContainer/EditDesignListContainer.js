@@ -48,7 +48,7 @@ class EditDesignListContainer extends Component {
             {...osdstyle.design_margin}
             reload={reload}
             handleReload={this.handleReload}
-            ListComponent={Design}
+            type="design"
             dataListAdded={this.props.EditDesignList}
             getListRequest={null}
             handleReject={this.setOut} />}
