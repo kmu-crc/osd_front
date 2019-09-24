@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Designer from "components/Designers/Designer/Designer";
 import { GetDesignerListRequest, GetDesignerTotalCountRequest } from "redux/modules/designer"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
@@ -10,7 +9,6 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
-
 
 const TextWrapper = styled.div`
     position: relative;
@@ -114,7 +112,7 @@ class DesignerListContainer extends Component {
                 {status === "INIT"
                     ? <Loading />
                     : <ScrollList {...opendesign_style.designer_margin} reload={reload} handleReload={this.handleReload}
-                        ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
+                        type="designer" dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
             </ScrollListContainer>
         </React.Fragment>)
     }

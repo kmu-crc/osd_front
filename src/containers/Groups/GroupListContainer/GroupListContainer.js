@@ -5,7 +5,6 @@ import OrderOption from "components/Commons/OrderOption";
 import styled from 'styled-components';
 import ScrollList from "components/Commons/ScrollList";
 import Loading from "components/Commons/Loading";
-import Group from "components/Groups/Group";
 import osdstyle from "opendesign_style";
 
 const TextWrapper = styled.div`
@@ -85,7 +84,7 @@ class GroupListContainer extends Component {
         <ScrollListContainer id="list">
           {this.props.status === "INIT" ?
             <Loading /> :
-            <ScrollList {...osdstyle.group_margin} ListComponent={Group} reload={reload} handleReload={this.handleReload}
+            <ScrollList {...osdstyle.group_margin} type="group" reload={reload} handleReload={this.handleReload}
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
         </ScrollListContainer>
       </React.Fragment>

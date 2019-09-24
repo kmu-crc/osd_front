@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { GetTopDesignListRequest } from "redux/modules/design"
 import ScrollList from "components/Commons/ScrollList"
-import Design from "components/Designs/Design"
 import Loading from "components/Commons/Loading"
 import opendesign_style from 'opendesign_style';
 
@@ -18,8 +17,9 @@ class TopDesignListContainer extends Component {
         return (<React.Fragment>{this.props.status === "INIT" ?
             <Loading /> :
             <ScrollList
+                type="design"
                 {...opendesign_style.design_margin}
-                ListComponent={Design} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
+                dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
         }</React.Fragment>)
     }
 }

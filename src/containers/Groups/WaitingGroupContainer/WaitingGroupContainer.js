@@ -60,7 +60,7 @@ class WaitingGroupContainer extends Component {
             {...osdstyle.group_margin}
             reload={reload}
             handleReload={this.handleReload}
-            ListComponent={Group}
+            type="group"
             dataListAdded={this.props.waitingGroup}
             getListRequest={null}
             handleReject={this.setOut} handleAccept={this.setAccept} />

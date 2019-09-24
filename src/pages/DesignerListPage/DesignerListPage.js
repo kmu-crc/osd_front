@@ -106,7 +106,7 @@ class DesignerListPage extends Component {
                     {status === "INIT"
                         ? <Loading />
                         : <ScrollList
-                            {...osdstyle.designer_margin} page={page} ListComponent={Designer} 
+                            {...osdstyle.designer_margin} page={page} type="designer"
                             getListRequest={this.getList} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />}
                 </DesignerListContainer>
             </React.Fragment>
