@@ -11,8 +11,7 @@ import NumberFormat from "modules/NumberFormat";
 import iEdit from 'source/edit_1.png';
 import { geturl } from "config"
 
-//CSS
-const BackgroundBox = { position: "relative", overFlow: "hidden", width: "1920px", height: "336px", marginTop: "36px", background: "#EFEFEF" };
+
 const ProfileBox = styled.div`
     position: absolute;
     width: 200px;
@@ -26,36 +25,172 @@ const ProfileBox = styled.div`
     background-size: cover;
     background-image: url(${props => props.img});
 `;
-    const Name = { position: "absolute", width: "200px", height: "29px", top: "41px", left: "70px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "center" }
-    const Title = { position: "absolute", width: "479px", height: "29px", top: "41px", left: "418px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "200", textAlign: "left" }
-    const ExplainBox01 = {wordWrap:"break-word",
-        position: "absolute", overflow: "hidden", width: "479px", height: "149px", top: "90px", left: "418px",
-        color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "200", textAlign: "left", lineHeight: "35px"
+//CSS
+const MypageSummaryBox = styled.div`
+    width:1920px;
+    height:336px;
+    position:relative;
+    overflow:hidden;
+    margin-top:36px;
+    background:#EFEFEF;
+    .name_label{
+        width:200px;
+        height:29px;
+        position:absolute;
+        top:41px;
+        left:70px;
+        font-size:20px;
+        font-weignt:500;
+        font-family:Noto Sans KR;
+        color:#707070;
+        text-align:center;
     }
-    const ExplainBox02 = {
-        position: "absolute", overflow: "hidden", width: "479px", height: "149px", top: "90px", left: "976px",
-        color: "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "200", textAlign: "left", lineHeight: "35px"
+    .category_label{
+        width:479px;
+        height:29px;
+        position:absolute;
+        top:41px;
+        left:418px;
+        font-size:20px;
+        font-weight:200;
+        font-family:Noto Sans KR;
+        color:#FF0000;
+        text-align:left;
     }
-    const SummaryIconBox = {position: "absolute", width: "479px", height: "22px", bottom: "50px", left: "418px" }
-    const Summary_View_Icon = { display: "inline-block", width: "17px", height: "17px" }
-    const Summary_View = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px" }
-    const Summary_ThumbUp_Icon = {
-        display: "inline-block", width: "13px", height: "13px", opacity: "0.55",
-        background: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
+    .explainBox01{
+        width:479px;
+        height:149px;
+        position:absolute;
+        top:90px;
+        left:418px;
+        overflow:hidden;
+        font-size:20px;
+        font-weight:200;
+        font-family:Noto Sans KR;
+        color:#707070;
+        text-align:left;
+        line-height:35px;
+        word-wrap:break-word;
     }
-    const Summary_ThumbUp = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
-    const Summary_Forked_Icon = {
-        display: "inline-block", width: "15px", height: "15px", opacity: "0.55",marginTop:"3px",marginBottom:"-3px",
-        background: `url(${iForked})`, backgroundSize: "cover", backgroundPosition: "center center"
+    .explainBox02{
+        width:479px;
+        height:149px;
+        position:absolute;
+        top:90px;
+        left:976px;
+        overflow:hidden;
+        font-size:20px;
+        font-weight:200;
+        font-family:Noto Sans KR;
+        color:#707070;
+        text-align:left;
+        line-height:35px;
+        word-wrap:break-word;
     }
-    const Summary_Forked = { marginLeft: "5px", display: "inline-block", width: "54px", height: "21px", }
+    .countBox{
+        width:300px;
+        height:22px;
+        position:absolute;
+        display:flex;
+        left:418px;
+        bottom:50px;
+    }
+    .countItem{
+        display:flex;
+        width:75px;
+        height:100%;
+        
+        .count_label{
+            width:54px;
+            height:100%
+            margin-left:5px;
+        }
+    } 
+    .sideMenuBox{
+        width:250px;
+        height:100%;
+        position:absolute;
+        right:67px;
+        padding-top:26px;
 
-const interestDesignerBox = { position: "absolute", width: "250px", height: "45px", top: "26px", right: "72px", textAlign: "right" }
-const interestDesignerTitle = {
-    cursor: "pointer",
-    display: "inline-block", width: "164px", height: "25px",
-    color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-}
+        .sideItemBox{
+            display:flex;
+            justify-content:flex-end;
+            align-items:flex-end;
+            width:100%;
+            height:36px;
+        }
+        .sideMenu_label{
+            cursor:pointer;
+            width:164px;
+            height:25px;
+            color:#707070;
+            font-family:Noto Sans KR;
+            font-size:17px;
+            font-weight:200;
+            text-align:right;
+        }
+        .updateTime_label
+        {
+            width:200px;
+            height:25px;
+            position:absolute;
+            top:273px;
+            right:0px;
+            font-size:17px;
+            font-weight:200;
+            font-family:Noto Sans KR;
+            color:#707070;
+            text-align:right;
+        }
+
+    }
+ 
+`
+const SideItemIcon=styled.div`
+    cursor:pointer;
+    height:36px;
+    width:36px;
+    margin-left:15px;
+    background:${props => `url(${props.imageURL})`};
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center center;
+`
+const MiniIcon = styled.div`
+    width:17px;
+    height:17px;
+    background-image: ${props => `url(${props.imageURL})`};
+    background-position:center center;
+    background-size:contain;
+    background-repeat:no-repeat;
+    opacity:${props=>props.opacity};
+
+`
+const LikeDialog = styled.div`
+    width:396px;
+    height:138px;
+    position:absolute;
+    top:47px;
+    left:763px;
+    background:#FFFFFF 0% 0% no-repeat padding-box;
+    border-radius:5px;
+    box-shadow:0px 3px 6px #000000;
+    opacity:1;
+    .message
+    {
+        width:273px;
+        height:69px;
+        margin-top:31px;
+        margin-left:62px;
+        font-size:20px;
+        font-weight:500;
+        font-family:Noto Sans KR;
+        color:#707070;
+        line-height:40px;
+        text-align:center;
+    }
+`
 const UpdateTimeBox = {
     position: "absolute", width: "200px", height: "25px", top: "273px", right: "72px",
     color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
@@ -92,42 +227,40 @@ class MypageHeader extends Component {
         //console.log("updatetime==", DateFormat(MypageInfo.update_time));
         return (
             <React.Fragment>
-                    <div style={BackgroundBox}>
-                    <div style={Name}>{MypageInfo.nick_name}</div>
+                    <MypageSummaryBox>
+                    <div className="name_label">{MypageInfo.nick_name}</div>
                     <ProfileBox img={thumbnailInfo} />
-                    <div style={Title}>{MypageInfo.categoryName}</div>
-                    <div style={ExplainBox01}>{about_me[0]}</div>
-                    <div style={ExplainBox02}>{about_me[1]}</div>
-                    <div style={SummaryIconBox}>
-                        <div style={Summary_View_Icon}><IconView width="17px" height="13px" fill="#707070" /></div>                        
-                        <div style={Summary_View}>{NumberFormat(countInfo.total_view==null?0:countInfo.total_view)}</div>
-                        <div style={Summary_ThumbUp_Icon}></div>
-                        <div style={Summary_ThumbUp}>{NumberFormat(countInfo.total_like==null?0:countInfo.total_like)}</div>
-                        <div style={Summary_Forked_Icon}></div>
-                        <div style={Summary_Forked}>{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
-                    </div>
-
-                    <div onClick = {this.gotoMyModify}  style={interestDesignerBox
-                    }>
-                    <div style={interestDesignerTitle}>정보 수정하기</div>
-                    <div style={{cursor:"pointer",display: "inline-block", height: "36px",width:"36px",marginLeft:"15px",background:`url("${iEdit}")`,
-                            backgroundRepeat:"no-repeat",backgroundSize: "cover", backgroundPosition: "center center"}}></div>
-                    </div>
-
-                    <div style={UpdateTimeBox}>최근 업데이트 {DateFormat(this.props.MyDetail&&this.props.MyDetail.update_time)}</div>
-
-                    {this.state.likeDialog === false ? null :
-                        <div style={{
-                            position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
-                            background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"
-                        }}>
-                            <div style={{
-                                marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR",
-                                fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070"
-                            }}>관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
+                    <div className="category_label">{MypageInfo.categoryName}</div>
+                    <div className="explainBox01">{about_me[0]}</div>
+                    <div className="explainBox02">{about_me[1]}</div>
+                    <div className="countBox">
+                        <div className="countItem">
+                            <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>                        
+                            <div className="count_label">{NumberFormat(countInfo.total_view==null?0:countInfo.total_view)}</div>
                         </div>
-                        </div>}
+                        <div className="countItem">
+                            <MiniIcon imageURL={iThumbUp} opacity="0.5"></MiniIcon>
+                            <div className="count_label">{NumberFormat(countInfo.total_like==null?0:countInfo.total_like)}</div>
+                        </div>
+                        <div className="countItem">
+                            <MiniIcon imageURL={iForked} opacity="0.5"></MiniIcon>
+                            <div className="count_label">{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
+                        </div>
+                    </div>
+                <div className="sideMenuBox">
+                    <div onClick = {this.gotoMyModify}  className="sideItemBox">
+                    <div className="sideMenu_label">정보 수정하기</div>
+                    <SideItemIcon imageURL={iEdit}/>
+                    </div>
+
+                    <div className="updateTime_label">최근 업데이트 {DateFormat(this.props.MyDetail&&this.props.MyDetail.update_time)}</div>
                 </div>
+                    {this.state.likeDialog === false ? null :
+                        <LikeDialog>
+                            <div className="message">관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
+                        </div>
+                        </LikeDialog>}
+                </MypageSummaryBox>
 
             </React.Fragment>
         );
