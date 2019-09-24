@@ -21,7 +21,134 @@ const CustomModal = styled(Modal)`
         width: 450px;
         height: 37px;
     }
+    .success_signup_Box{
+        margin-left:54px;
+        display:flex;
+    }
+    .Decoline{
+        width:259px;
+        margin-top:174px;
+        border-bottom:2px solid red;
+    }
+    .TextBox{
+        margin-left:46px;
+        margin-right:51px;
+        margin-top:158px;
+    }
+    .HeaderText{
+        font-size:27px;
+        font-weight:700;
+        color:red;
+        line-height:45px;
+        text-align:center;
+    }
+    .subText{
+        margin-top:56px;
+        font-size:20px;
+        font-weight:500;
+        font-family:Noto Sans KR;
+        color:red;
+        line-height:29px;
+        text-align:center;
+    }
+    .guideText{
+        margin-top:205px;
+        color:#707070;
+        font-size:20px;
+        font-weight:500;
+        font-family:Noto Sans KR;
+        text-align:center;
+        line-height:45px
+    }
+    .termBox{
+        width:542px;
+        height:900px;
+        position:absolute;
+        left:850px;
+        top:0px;
+        background-color:white;
+    }
+    .termText{
+        width:450px;
+        height:754px;
+        margin-top:44px;
+        margin-left:46px;
+        font-size:20px;
+        font-weight:300;
+        font-family:Noto Sans KR;
+        color:#707070
+        line-height:35px;
+        text-align:left;
+    }
+    .termOKBtn{
+        position:absolute;
+        right:35px;
+        bottom:100px;
+        font-size:20px;
+        font-weight:500;
+        font-family:Noto Sans KR;
+        color:#707070;
+        cursor:pointer;
+    }
+
 }
+`
+const SignUPBox=styled.form`
+    margin-top:49px;
+    margin-left:225px;
+    .itemBox{
+        margin-top:30px;
+        .normalBox{
+            display:flex;            
+            margin-top:16px;
+        }
+        .normalText{
+            margin-left:21px;
+            margin-top:3px;
+            font-size:17px;
+            font-weight:300;
+            color:#707070;
+            cursor:pointer;
+        }
+        .redBoldText{
+            position:absolute;
+            right:250px;
+            font-size:20px;
+            font-weight:500;
+            color:#FF0000;
+            line-height:29px;
+            text-align:left;
+            cursor:pointer;
+            text-decoration:underline;
+        }
+    }
+
+    .titleLabel{
+        width:300px;
+        height:29px;
+        margin-left:0px;
+        font-size:20px;
+        font-weight:500;
+        color:#707070;
+        line-height:29px;
+        text-align:left;
+    }
+
+  
+`
+const InputText = styled.input.attrs({type:'text'})`
+    width:708px;
+    height:48px;
+    margin-top:16px;
+    padding-left:20px;
+    font-size:20px;
+    font-weight:300;
+    color:#707070;
+    background-color:#EFEFEF;
+    outline:none;
+    border:none;
+    border-radius:15px;
+    
 `
 const CheckboxContainer = styled.label`
     display: block;
@@ -225,26 +352,20 @@ class SignUpModal extends Component {
     render() {
         const { open } = this.props
 
-
-        //window.location.href = href + 'insertUserDetail'
         return (
             <React.Fragment>
 
-                {this.state.success_signup ? (
+                {this.state.success_signup? (
                     <CustomModal open={this.state.success_signup} onClose={this.onClose} onClick={this.tmp_goto_mydetail}>
-                        <div style={{ marginLeft: "54px", display: "flex" }}>
-                            <div style={{ width: "259px", marginTop: "170px" }}><div style={{ marginTop: "14px", borderBottom: "2px solid red" }} /></div>
-                            <div style={{ marginLeft: "46px", marginRight: "51px", marginTop: "158px" }}><div style={{ textAlign: "center", color: "red", fontSize: "27px", lineHeight: "45px", fontWeight: "700" }}>CONGRATULATIONS ON SIGNING UP!<br />회원 가입을 진심으로 축하드립니다!</div></div>
-                            <div style={{ width: "259px", marginTop: "170px" }}><div style={{ marginTop: "14px", borderBottom: "2px solid red" }} /></div>
+                        <div className="success_signup_Box">
+                            <div className="Decoline" />
+                            <div className="TextBox">
+                                <div className="HeaderText">CONGRATULATIONS ON SIGNING UP!<br />회원 가입을 진심으로 축하드립니다!</div>
+                            </div>
+                            <div className="Decoline"/>
                         </div>
-                        <div style={{ marginTop: "56px" }}><div style={{ color: "red", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>오직 한 단계밖에 남지 않았습니다!</div></div>
-                        <div style={{ marginTop: "205px" }}>
-                            <div style={{
-                                color: "#707070", fontFamily: "Noto Sans KR", fontWeight: "500",
-                                fontSize: "20px", textAlign: "center", lineHeight: "45px"
-                            }}>
-                                더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 마이페이지로 이동합니다<br /><br /><br /><br /> 이동 중...</div></div>
-
+                        <div className="subText">오직 한 단계밖에 남지 않았습니다!</div>
+                        <div className="guideText">더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 마이페이지로 이동합니다<br /><br /><br /><br /> 이동 중...</div>
                     </CustomModal>)
 
                     :
@@ -252,8 +373,8 @@ class SignUpModal extends Component {
                     (
                         <CustomModal open={open} onClose={this.onClose}>
                             {this.state.open_term &&
-                                <div style={{ position: "absolute", top: "0px", left: "850px", width: "542px", height: "900px", backgroundColor: "white" }}>
-                                    <div style={{ marginTop: "44px", marginLeft: "46px", width: "450px", height: "754px", fontFamily: "Noto Sans KR", fontWeight: "300", fontSize: "20px", lineHeight: "35px", textAlign: "left", color: "#707070" }}>
+                                <div className="termBox">
+                                    <div className="termText">
                                         [차례]<br />
                                         제1장<br />
                                         총칙 제1조 목적 제2조 용어의 정의 제3조 약관의 명시, 효력 및 개정 제4조 관련법령과의 관계<br />
@@ -262,67 +383,44 @@ class SignUpModal extends Component {
                                         제3장<br />
                                         계약 당사자의 의무 제12조 회사의 의무 제13조 회원의 의무 제4장 서비스의 이용 제14조 서비스 제공 제15조 서비스의 변경 제16조 정보의 제공 및 광고의 게재 제17조 게시물의 관리 제18조 게시물의 저작권 제19조 권리의 귀속 제20조 계약 해지 제21조 서비스 이용제한 또는 중지 및 회원 탈퇴 제22조 손해배상 제23조 책임제한 제24조 재판권 및 준거법<br />
                                     </div>
-                                    <div style={{
-                                        width: "115px", height: "29px", marginTop: "25px", marginLeft: "381px", borderBottom: "1.5px solid red", cursor: "pointer",
-                                        color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "35px", textAlign: "left"
-                                    }} onClick={this.agree}>동의하고 닫기</div>
+                                    <div className="termOKBtn" onClick={this.agree}>동의하고 닫기</div>
                                 </div>}
                             <Modal.Content >
                                 <div className="title">OPEN SOURCE DESIGN</div>
-                                <form style={{ marginTop: "49px", marginLeft: "225px" }} >
-                                    <div style={{
-                                        marginLeft: "0px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px",
-                                        textAlign: "left", width: "56px", height: "29px"
-                                    }}>아이디</div>
-                                    <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange={this.onChangeId} style={{
-                                            outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070",
-                                            fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF"
-                                        }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." /></div>
-                                    <div style={{
-                                        marginTop: "53px", marginLeft: "7px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px",
-                                        textAlign: "left", width: "74px", height: "29px"
-                                    }}>비밀번호</div>
-                                    <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input type="password" onChange={this.onChangePass} style={{
-                                            outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
-                                            fontWeight: "300", backgroundColor: "#EFEFEF"
-                                        }} placeholder="비밀번호를 입력하세요." /></div>
-                                    <div style={{
-                                        marginTop: "16px", marginLeft: "7px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px",
-                                        textAlign: "left", width: "115px", height: "29px"
-                                    }}>비밀번호 확인</div>
-                                    <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input type="password" onChange={this.onChangePassCheck} style={{
-                                            outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
-                                            fontWeight: "300", backgroundColor: "#EFEFEF"
-                                        }} placeholder="비밀번호를 입력하세요." /></div>
-                                    <div style={{
-                                        marginTop: "64px", marginLeft: "7px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px",
-                                        textAlign: "left", width: "115px", height: "29px"
-                                    }}>닉네임</div>
-                                    <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                                        <input onChange={this.onChangeNickname} style={{
-                                            outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px",
-                                            fontWeight: "300", backgroundColor: "#EFEFEF"
-                                        }} placeholder="" /></div>
-                                    <div style={{
-                                        marginTop: "64px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px",
-                                        textAlign: "left", width: "115px", height: "29px"
-                                    }}>이용약관</div>
-                                    <div style={{ marginTop: "16px", width: "708px", height: "29px", padding: "0px", display: "flex" }}>
+                                <SignUPBox>
+                                    <div className="itemBox">
+                                        <div className="titleLabel">아이디</div>
+                                        
+                                            <InputText placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
+                                    </div>
+                                    
+                                    <div className="itemBox">
+                                        <div className="titleLabel">비밀번호</div>
+                                            <InputText placeholder="비밀번호를 입력하세요." />
+                                    </div>
+
+                                    <div className="itemBox">
+                                        <div className="titleLabel">비밀번호 확인</div>
+                                        <InputText placeholder="비밀번호를 입력하세요." />
+                                    </div>
+
+                                    <div className="itemBox">
+                                        <div className="titleLabel">닉네임</div>
+                                        <InputText placeholder="닉네임을 입력하세요." />
+                                        </div>    
+                                    <div className="itemBox">  
+                                    <div className="titleLabel">이용약관</div>
+                                    <div className="normalBox">
                                         <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
                                             {console.log(this.state.checked)}
-                                            <input id="agree" style={{ background: this.state.checked === true ? "#FF0000  0% 0% no-repeat padding-box" : "#FFFFFF 0% 0% no-repeat padding-box" }} onClick={this.onChecked} type="checkbox" value={this.state.checked} />
+                                            <InputText id="agree" onClick={this.onChecked} type="checkbox" value={this.state.checked} />
                                             <span className="checkmark" />
                                         </CheckboxContainer>
-                                        <div style={{ cursor: "pointer", marginLeft: "21px", marginTop: "3px", color: "#707070", fontSize: "17px", fontWeight: "300" }} onClick={this.openterm}>이용약관 보기</div>
+                                        <div className="normalText" onClick={this.openterm}>이용약관 보기</div>
                                     </div>
-                                    <div style={{
-                                        marginLeft: "634px", width: "74px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer",
-                                        color: "#FF0000", fontWeight: "500", fontSize: "20px", lineHeight: "29px", textAlign: "left"
-                                    }} onClick={this.onSubmit}>회원가입</div>
-                                </form>
+                                    <div className="redBoldText" onClick={this.onSubmit}>회원가입</div>
+                                </div>
+                                </SignUPBox>
                             </Modal.Content>
                         </CustomModal >
                     )}

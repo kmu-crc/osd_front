@@ -17,55 +17,183 @@ const SummaryList = styled.div`
   }
 `;
 
-const Banner = { width: "100%", height: "48px", marginTop: "8px", backgroundColor: "#EFEFEF" };
-const BannerText = {
-  display: "inline-block", width: "74px", height: "29px", marginTop: "9px", marginLeft: "65px",
-  fontSize: "20px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500",
-  textAlign: "center", lineHeight: "29px"
-};
-const MessageBox = { width: "1750px", height: "869px", margin: "26px 0px 27px 65px" }
-const MessageAside = {
-  display: "inline-block", width: "445px", height: "100%", marginRight: "7px", overflow: "hidden",
-  borderRadius: "25px 0 0 25px", backgroundColor: "#EFEFEF",
-}
-const MessageAsideHeader = { position: "relative", height: "75px", overflow: "hidden" }
-const MessageAsideHeaderTitle = {
-  position: "absolute", width: "303px", height: "30px", left: "54px", top: "33px",
-  fontSize: "20px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "30px"
-}
-const MessageAsideHeaderIcon = {
-  position: "absolute", width: "51px", height: "51px", right: "20px", bottom: "0px",
-  background: `url(${plusImg})`, backgroundSize: "cover", backgroundPosition: "center center", opacity: "0.5"
-}
+const MainBanner = styled.div`
+  width:100%;
+  height:48px;
+  display:flex;
+  align-items:center;
+  margin-top:8px;
+  padding-left:65px;  
+  background-color:#EFEFEF;
+  .title{
+    font-size:20px;
+    font-weight:500;
+    font-family:Noto Sans KR;
+    color:#707070;
+  }
 
-const MsgSummaryItem = { position: "relative", overflow: "hidden", width: "336px", height: "70px", marginBottom: "30px", opacity: "0.5" };
-const MsgSummarySelectItem = { position: "relative", overflow: "hidden", width: "336px", height: "70px", marginBottom: "30px" };
-const MsgSummaryName = {
-  position: "absolute", width: "244px", height: "29px", left: "92px",
-  fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "left", lineHeight: "29px"
-}
-const MsgSummaryBoard = {
-  position: "absolute", width: "244px", height: "28px", left: "92px", bottom: "3px",
-  fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "0", textAlign: "left", lineHeight: "29px"
-}
+`
+const MainSection = styled.div`
+  width:1750px;
+  height:869px;
+  margin:26px 0px 27px 65px;
+`
+const AsideSection = styled.div`
+    width:445px;
+    height:100%;
+    display:inline-block;
+    overflow:hidden;
+    margin-right:7px;
+    border-radius:25px 0 0 25px;
+    background-color:#EFEFEF;
+    .asideHeader{
+      height:75px;
+      position:relative;
+      overflow:hidden;
+    }
+    .asideTitle{
+      position:absolute;
+      width:303px;
+      height:30px;
+      left:54px;
+      top:33px;
+      font-size:20px;
+      font-family:Noto Sans KR;
+      color:#707070;
+      font-weight:500;
+      text-align:left;
+      line-height:30px;
+    }
+    .plusIcon{
+      width:51px;
+      height:51px;
+      position:absolute;
+      right:20px;
+      bottom:0px;
+      color:#707070;
+      background:url(${plusImg});
+      background-size:contain;
+      background-repeat:no-repeat;
+      background-position:center center;
+      opacity:0.5;
+    }
+` 
 
+const SummaryItemBox = styled.div`
+    position:relative;
+    overflow:hidden;
+    width:336px;
+    height:70px;
+    margin-bottom:30px;
+    opacity:${props=>props.isSelect==true?1:0.5};
+    .summary_Name{
+      width:244px;
+      height:29px;
+      position:absolute;
+      left:92px;
+      font-size:17px;
+      font-weight:500;
+      font-family:Noto Sans KR;
+      color:#707070;
+      text-align:left;
+      line-height:29px;
+    }
+    .summary_message{
+      width:244px;
+      height:28px;
+      position:absolute;
+      left:92px;
+      bottom:3px;
+      font-size:17px;
+      font-weight:100;
+      font-family:Noto Sans KR;
+      color:#707070;
+      text-align:left;
+      line-height:29px;
+    }
+`
+const SummaryIcon = styled.div`
+    width:70px;
+    height:70px;
+    position:absolute;
+    left:0px;
+    top:0px;
+    border-radius:50%;
+    background:url(${props=>props.imageURL});
+    background-size:cover;
+    background-position:center center;
+    .noti{
+      width:10px;
+      height:10px;
+      background-color:#FF0000;
+      border-radius:50%;
+    }
+`
+const MainBoard = styled.div`
+    display:inline-block;
+    oveflow:hidden;
+    width:1298px;
+    height:100%;
+    padding-left:26px;
+    padding-right:23px;
+    border-radius:0px 25px 25px 0px;
+    background-color:#EFEFEF;
+    .boardHeaderBox{
+        height:69px;
+        position:relative;
+        overflow:hidden;
+        .boardHeaderText{
+          width:244px;
+          height:29px;
+          position:absolute;
+          bottom:5px;
+          font-size:20px;
+          font-weight:500;
+          font-family:Noto Sans KR;
+          color:#707070;
+          line-height:29px;
+        }
+    }
+    .sendTypingBox{
+        height:197px;  
+        position:relative;
+        overflow:hidden;
+    }
+    .sendButton{
+        width:117px;
+        height:170px;
+        position:absolute;
+        right:0px;
+        border-radius:0px 0px 25px 0px;
+        background-color:#FFFFFF;
+        font-size:18px;
+        font-weight:500;
+        font-family:Noto Sans KR;
+        text-align:center;
+        line-height:170px;
+    }
 
-const MessageTitle = { overflow: "hidden", position: "relative", height: "69px" }
-const MessageTitleName = {
-  position: "absolute", width: "244px", height: "29px", bottom: "5px",
-  fontSize: "20px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", lineHeight: "29px"
-}
-const MessageSection = {
-  display: "flex", overflow: "hidden", display: "inline-block", width: "1298px", height: "100%", paddingLeft: "26px", paddingRight: "23px",
-  borderRadius: "0px 25px 25px 0px", backgroundColor: "#EFEFEF"
-}
-const MessageDivisionLine = { borderTop: "1px solid #707070" }
-const MessageSectionSend = { overflow: "hidden", position: "relative", height: "197.5px" }
-const MessageSectionTextArea = {
-  position: "absolute", width: "1091px", height: "147px", top: "24.5px",
-  border: "none", outline: "none", resize: "none", backgroundColor: "#EFEFEF",
-  fontSize: "18px", textAlign: "left", fontWeight: "500", lineHeight: "27px", color: "#707070"
-};
+`
+const DivisionLine = styled.div`
+    border-top:1px solid #707070;
+`
+
+const SendMessageTextarea = styled.input.attrs({type:'textarea'})`
+    width:1091px;
+    height:147px;
+    position:absolute;
+    top:24px;
+    font-size:18px;
+    font-weight:500;
+    color:#707070;
+    text-align:left;
+    line-height:27px;
+    background-color:#EFEFEF;
+    resize:none;
+    border:none;
+    outline:none;
+`
+
 const MessageSectionSendBtn = {
   position: "absolute", width: "117px", height: "170px", right: "0px",
   borderRadius: "0px 0px 25px 0px", backgroundColor: "#FFFFFF",
@@ -73,28 +201,15 @@ const MessageSectionSendBtn = {
 };
 
 function SummaryItem(props) {
-  let SummaryStyle = MsgSummaryItem;
-  if (props.opacityON == true) SummaryStyle = MsgSummarySelectItem;
   return (
-    <div style={SummaryStyle}>
-      <div style={{ position: "absolute", borderRadius: "50px", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${props.s_img})`, backgroundSize: "cover", backgroundPosition: "center center" }}>
-    {props.noti?<div style={{width:"10px",height:"10px",backgroundColor:"#FF0000",borderRadius:"50%"}}/>:undefined}
-      </div>
-      <div style={MsgSummaryName}>{props.friend_name}</div>
-      <div style={MsgSummaryBoard}>{props.message}</div>
-    </div>);
+    <SummaryItemBox isSelect={props.opacityON}>
+      <SummaryIcon imageURL={props.s_img}>
+      {props.noti?<div className="noti"/>:undefined}
+      </SummaryIcon>
+      <div className="summary_Name">{props.friend_name}</div>
+      <div className="summary_message">{props.message}</div>
+    </SummaryItemBox>);
 }
-function SummarySelectItem(props) {
-  return (
-    <div style={MsgSummarySelectItem}>
-      <div style={{ position: "absolute", borderRadius: "50px", width: "70px", height: "70px", left: "0px", top: "0px", background: `url(${props.s_img})`, backgroundSize: "cover", backgroundPosition: "center center" }}>
-      
-      </div>
-      <div style={MsgSummaryName}>{props.friend_name}</div>
-      <div style={MsgSummaryBoard}>{props.message}</div>
-    </div>);
-}
-
 
 class Messages extends React.Component {
   constructor(props) {
@@ -265,7 +380,7 @@ class Messages extends React.Component {
 
   }
   handleCloseMember(event) {
-    if (event.target.className != "searchRect") {
+    if (event.target.id != "searchRect") {
       this.setState({ showSearch: false })
     }
     // if(event.target)
@@ -289,14 +404,14 @@ class Messages extends React.Component {
 
     return (
       <div onClick={this.handleCloseMember}>
-        <div style={Banner}>
-          <div style={BannerText}>메시지함</div>
-        </div>
-        <div className="searchRect" style={MessageBox}>
-          <div className="searchRect" style={MessageAside}>
-            <div className="searchRect" style={MessageAsideHeader}>
-              <div className="searchRect" style={MessageAsideHeaderTitle}>받은 메시지함</div>
-              <div className="searchRect" style={MessageAsideHeaderIcon} onClick={this.handleOpenMember}>
+        <MainBanner>
+          <div className="title">메시지함</div>
+        </MainBanner>
+        <MainSection>
+          <AsideSection>
+            <div className="asideHeader" id="searchRect">
+              <div className="asideTitle" id="searchRect">받은 메시지함</div>
+              <div className="plusIcon" id="searchRect" onClick={this.handleOpenMember}>
               </div>
             </div>
             {this.state.showSearch && (
@@ -304,28 +419,28 @@ class Messages extends React.Component {
                 {
                   this.state.hideSearch == true ?
                     null :
-                    <SearchMemverContainer className="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
+                    <SearchMemverContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
                 }
               </React.Fragment>)
             }
-            <SummaryList className="searchRect">
+            <SummaryList id="searchRect">
               {arrSummaryList}
             </SummaryList>
-          </div>
-          <div style={MessageSection}>
-            <div style={MessageTitle}>
-              <div style={MessageTitleName}>{this.state.selectName}</div>
+          </AsideSection>
+          <MainBoard>
+            <div className="boardHeaderBox">
+              <div className="boardHeaderText">{this.state.selectName}</div>
             </div>
             {this.state.render &&
               <MessageDetailContainer repaint={this.state.render} id={this.state.msgId} />
             }
-            <div style={MessageDivisionLine}></div>
-            <div style={MessageSectionSend}>
-              <input type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} style={MessageSectionTextArea} />
-              <div onClick={this.onSubmitForm} style={MessageSectionSendBtn}>전송하기</div>
+            <DivisionLine/>
+            <div className="sendTypingBox">
+              <SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} />
+              <div className="sendButton" onClick={this.onSubmitForm}>전송하기</div>
             </div>
-          </div>
-        </div>
+          </MainBoard>
+        </MainSection>
 
 
       </div>

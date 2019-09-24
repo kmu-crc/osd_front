@@ -4,7 +4,87 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 // import { SetSession } from "modules/Sessions"
 // import close from "source/close_white.png"
+const MainBox=styled.form`
+    width:64%;
+    margin-left:18%;
+    margin-top:107px;
+    .itemBox{
+        margin-top:30px;
+        .normalBox{
+            display:flex;            
+            margin-top:16px;
+        }
+        .normalText{
+            margin-left:21px;
+            margin-top:3px;
+            font-size:17px;
+            font-weight:300;
+            color:#707070;
+            cursor:pointer;
+        }
+        .redBoldText{
+            position:absolute;
+            right:250px;
+            font-size:20px;
+            font-weight:500;
+            color:#FF0000;
+            line-height:29px;
+            text-align:left;
+            cursor:pointer;
+            text-decoration:underline;
+        }
 
+    }
+    .subItemBox{
+        margin-top:65px;
+        height:29px;
+        .redUnderlineText{
+            position:absolute;
+            right:250px;
+            font-size:20px;
+            font-weight:500;
+            color:#FF0000;
+            line-height:29px;
+            text-align:left;
+            cursor:pointer;
+            text-decoration:underline;
+        }
+    }
+    .titleLabel{
+        width:300px;
+        height:29px;
+        margin-left:0px;
+        font-size:20px;
+        font-weight:500;
+        color:#707070;
+        line-height:29px;
+        text-align:left;
+    }
+    .subLabel{
+        width:500px;
+        height:29px;
+        margin-top:10px;
+        font-size:17px;
+        font-weight:200;
+        color:#707070;
+        line-height:29px;
+        text-align:left;
+    }
+`
+const InputText = styled.input.attrs({type:'text'})`
+    width:708px;
+    height:48px;
+    margin-top:16px;
+    padding-left:20px;
+    font-size:20px;
+    font-weight:300;
+    color:#707070;
+    background-color:#EFEFEF;
+    outline:none;
+    border:none;
+    border-radius:15px;
+    
+`
 const CustomModal = styled(Modal)`
     min-width: 1200px;
     height: 900px;
@@ -21,6 +101,24 @@ const CustomModal = styled(Modal)`
         font-weight: 500;
         width: 450px;
         height: 37px;
+    }
+`
+const SmallCustomModal = styled(Modal)`
+    min-width: 1200px;
+    height: 700px;
+    border-radius: 35px; 
+    font-family: Noto Sans KR;
+    .title {
+        width: 450px;
+        height: 37px;
+        padding: 0 0;
+        margin: 0 auto;
+        margin-top: 144px;
+        font-size: 25px;
+        font-weight: 500;
+        color: #FF0000;
+        text-align: center;
+        line-height: 37px;
     }
 `
 class SignInModal extends Component {
@@ -139,45 +237,48 @@ class SignInModal extends Component {
             <CustomModal open={open} onClose={this.onClose}>
                 <Modal.Content>
                     <div className="title">OPEN SOURCE DESIGN, OPEN DESIGN</div>
-                    <form style={{ marginTop: "136px", marginLeft: "225px" }} onSubmit={this.signin}>
-                        <div style={{ marginLeft: "0px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left", width: "56px", height: "29px" }}>
-                            아이디</div>
-                        <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                            <input onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""} onChange={this.handeEmailChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
+                    <MainBox onSubmit={this.signin}>
+                        <div className="itemBox">
+                                    <div className="titleLabel">아이디</div>
+                                    <InputText onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""} 
+                                    onChange={this.handeEmailChange} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
                         </div>
-                        <div style={{ marginTop: "53px", marginLeft: "7px", fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left", width: "74px", height: "29px" }}>
-                            비밀번호</div>
-                        {/* <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px" }}><input style={{ textIndent: "35px", width: "708px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", borderRadius: "15px", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요" /></div> */}
-                        <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                            <input onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""} onChange={this.handlePasswordChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="비밀번호를 입력하세요." />
+                        <div className="itemBox">
+                                    <div className="titleLabel">비밀번호</div>
+                                    <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""} 
+                                    onChange={this.handlePasswordChange}  placeholder="비밀번호를 입력하세요." />
                         </div>
-                        <div style={{ marginTop: "65px", marginLeft: "653px", width: "56px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer", color: "#FF0000", fontWeight: "700", fontSize: "20px", lineHeight: "29px", textAlign: "left" }} onClick={this.signin}>
-                            로그인</div>
-                        <div style={{ marginTop: "65px", marginLeft: "7px", width: "178px", height: "29px" }} >
-                            <div style={{cursor:"pointer" ,fontSize: "20px", fontWeight: "500", color: "#707070", lineHeight: "29px", textAlign: "left" }} onClick={this.findIDPW}>비밀번호 찾기</div></div>
-                        <div style={{ marginTop: "65px", marginLeft: "7px", lineHeight: "35px", width: "203px", height: "64px", fontSize: "20px", fontWeight: "500", color: "#707070", textAlign: "left" }}>
-                            아직 계정이 없으신가요?<br /><Link style={{ color: "#FF0000" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
-                    </form>
+
+                        <div className="subItemBox">
+                            <div className="redUnderlineText" onClick={this.signin}>로그인</div>
+                        </div>
+                        <div className="subItemBox"> 
+                            <div className="titleLabel" style={{cursor:"pointer"}} onClick={this.findIDPW}>비밀번호 찾기</div>
+                        </div>
+                        <div className="subItemBox">
+                        <div className="titleLabel">아직 계정이 없으신가요?<br />
+                        <Link style={{ color: "#FF0000" ,lineHeight:"3em"}} to="/signup" onClick={this.onClose}>회원가입</Link>
+                        </div>
+                        </div>
+                    </MainBox>
                 </Modal.Content>
             </CustomModal>
             :
             //< ================  비밀번호 찾기 ===================== >
-            <CustomModal style={{height:"700px"}} open={open} onClose={this.onClose}>
+            <SmallCustomModal open={open} onClose={this.onClose}>
             <Modal.Content>
-                <div className="title" style = {{marginTop:"100px"}} >OPEN SOURCE DESIGN, OPEN DESIGN</div>
-                <form style={{ marginTop: "136px", marginLeft: "225px" }} onSubmit={this.signin}>
-                    <div style={{ marginLeft: "0px", fontSize: "20px", fontWeight: "1000", color: "#707070", lineHeight: "29px", textAlign: "left", width: "200px", height: "29px" }}>비밀번호 찾기</div>
-                    <div style={{ marginTop:"10px",marginLeft: "0px", fontSize: "17px", fontWeight: "200", color: "#707070", lineHeight: "29px", textAlign: "left", width: "500px", height: "29px" }}>
-                        비밀번호를 찾고자하는 아이디를 입력해주세요</div>
-                    <div style={{ marginTop: "16px", width: "708px", height: "48px", padding: "0px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>
-                        <input name='email' type='text' value={email || ""} onChange={this.handeEmailChange} style={{ outline: "none", marginLeft: "35px", width: "638px", height: "48px", border: "none", color: "#707070", fontSize: "20px", fontWeight: "300", backgroundColor: "#EFEFEF" }} placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
-                    </div>
-
-                    <div style={{ marginTop: "65px", marginLeft: "653px", width: "41px", height: "29px", borderBottom: "1.5px solid red", cursor: "pointer", color: "#FF0000", fontWeight: "700", fontSize: "20px", lineHeight: "29px", textAlign: "left" }} onClick={this.onSubmit}>
+                <div className="title">OPEN SOURCE DESIGN, OPEN DESIGN</div>
+                <MainBox onSubmit={this.signin}>
+                    <div className="titleLabel">비밀번호 찾기</div>
+                    <div className="subLabel">비밀번호를 찾고자하는 아이디를 입력해주세요</div>
+                        <InputText name='email' value={email || ""} onChange={this.handeEmailChange}  placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
+                    <div className="subItemBox">
+                    <div className="redUnderlineText" onClick={this.onSubmit}>
                         전송</div>
-                </form>
+                    </div>
+                </MainBox>
             </Modal.Content>
-            </CustomModal>
+            </SmallCustomModal>
                 }
             </React.Fragment>
         )

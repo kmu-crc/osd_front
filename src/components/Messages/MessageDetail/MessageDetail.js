@@ -18,22 +18,56 @@ overflow-y: scroll;
 
 }`
 
-const MsgReceivedBox ={position:"relative",width:"100%",marginBottom:"32px",float:"bottom"}
-const MsgReceivedBubble ={display:"inline-block",width:"571px",padding:"13px 25px 13px 20px",
-                         borderRadius:"20px",backgroundColor:"#FFFFFF"}
-const MsgReceivedBubbleText = {width:"526px",
-                        fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"500",textAlign:"left",lineHeight:"25px"}
-const MsgReceivedTimeText={position:"absolute",width:"150px",height:"25px",left:"593px",bottom:"0px",font:"Noto Sans KR",
-                            fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"100",textAlign:"left"}
+const MessageBox=styled.div`
+    width:100%;
+    margin-bottom:32px;
+    position:relative;
+    .messageReceiveBubble{
+      display:inline-block;
+      width:571px;
+      padding:13px 25px 13px 20px;
+      border-radius:20px;
+      background-color:#FFFFFF;
+      
+    }
+    .messageSendBubble{
+      display:inline-block;
+      width:571px;
+      margin-left:675px;
+      padding:13px 25px 13px 20px;
+      border-radius:20px;
+      background-color:#FFFFFF;
+    }
+    .messageText{
+      width:526px;
+      font-size:17px;
+      font-weight:500;
+      font-family:Noto Sans KR;
+      color:#707070;
+      text-align:left;
+      line-height:25px;
+    }
+    .messageReceiveTime{
+      position:absolute;
+      width:60px;
+      height:25px;
+      text-align:left;
+      left:593px;
+      bottom:0px;
+      font-family:Noto Sans KR;
+    }
+    .messageSendTime{
+      position:absolute;
+      width:60px;
+      height:25px;
+      text-align:right;
+      left:593px;
+      bottom:0px;
+      font-family:Noto Sans KR;
+    }
+    
+`
 
-const MsgSentBox ={position:"relative",width:"100%",marginBottom:"32px",}
-const MsgSentBubble ={display:"inline-block",width:"571px",padding:"16px 25px 10px 20px",
-                         borderRadius:"20px",backgroundColor:"#FFFFFF",marginLeft:"675px"}
-const MsgSentBubbleText = {width:"526px",
-                        fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"500",textAlign:"left",lineHeight:"25px"}
-const MsgSentTimeText={position:"absolute",width:"80px",height:"25px",display:"inline-block",marginLeft:"579px",bottom:"0px",
-                            fontSize:"17px",fontFamily:"Noto Sans KR",color:"#707070",fontWeight:"100",textAlign:"right"}
-     
 function CheckedTime(date){
   let updateT = new Date(date);
   let today = new Date();
@@ -78,27 +112,25 @@ function CheckedTime(date){
 function MsgReceiveBox(props)
 {
     return(
-        <div style={MsgReceivedBox}>
-            <div style={MsgReceivedBubble}>
-                <div style={MsgReceivedBubbleText}>
-                {props.msgText}
-                </div>                
+        <MessageBox>
+            <div className="messageReceiveBubble">
+                <div className="messageText">{props.msgText}</div>                
             </div>
-                <div style={MsgReceivedTimeText}>{props.updateTime}</div>
-        </div>
+                <div className="messageReceiveTime">{props.updateTime}</div>
+        </MessageBox>
     );
 }
 function MsgSendBox(props)
 {
     return(
-    <div style={MsgSentBox}>        
-        <div style={MsgSentTimeText}>
+    <MessageBox>        
+        <div className="messageSendTime">
         {props.updateTime}
         </div>
-        <div style={MsgSentBubble}>
-            <div style={MsgSentBubbleText}>{props.msgText}</div>                
+        <div className="messageSendBubble">
+            <div className="messageText">{props.msgText}</div>                
         </div>
-    </div>
+    </MessageBox>
 
     );
 }
@@ -126,20 +158,6 @@ class MessageDetail extends Component {
   componentDidMount() {
       console.log("messagID",this.props.id);
       this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-      // if (this.props.userInfo) {
-
-      //   try {
-      //     Socket.emit("INIT", this.props.userInfo.uid)
-      //     Socket.on("getNoti", noti => {
-      //       //console.log("this!noti!");
-      //       this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-      //       //this.setState({ render: true })
-      //     })
-      //   } catch (err) {
-      //     console.log(err)
-      //   }        
-      //}
-    
   }
 
   componentWillUnmount() {
@@ -153,7 +171,6 @@ class MessageDetail extends Component {
   shouldComponentUpdate(nextProps)
   {
     setTimeout(() => {
-      //this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
       this.ScrollDown();
     }, 100);
     return true;
