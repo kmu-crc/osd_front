@@ -30,6 +30,13 @@ const ControllerWrap = styled.div`
       }
     }
   }
+  .innerBox {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+  }
 `;
 const NewController = styled.li`
   width: ${props => props.width};
@@ -80,7 +87,7 @@ class AddController extends Component {
   render() {
     return (
       <ControllerWrap>
-        <div style={{ height: "45px", listStyle: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="innerBox" >
           <NewController onClick={() => this.addContent("FILE")} width="116px" height="29px">파일 등록하기</NewController>
           <NewController onClick={() => this.addContent("TEXT")} width="134px" height="29px">텍스트 등록하기</NewController>
         </div>

@@ -40,6 +40,11 @@ const BoardCard = styled.li`
     font-size: ${opendesign_style.font.size.small};
     color: ${opendesign_style.color.grayScale.scale8};
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & .first { flex: 1;}
+    & .second { flex: 1;}
     & .cardAuthor{
       color: ${opendesign_style.color.grayScale.scale7};
       display: inline-block;
@@ -57,6 +62,8 @@ const BoardCard = styled.li`
       display: inline-block;
       text-align: right;
       width: 30%;
+      flex: 2;
+      text-align: right;
     }
   }
 `;
@@ -275,10 +282,10 @@ class DesignBoardCard extends Component {
           ) : null}
           <div className="content">
             <div className="cardTitle"><TextFormat txt={card.title}/></div>
-            <div className="cardInfo" style={{display:"flex", justifyContent:"space-between",alignItems:"center"}}>
-              <div style={{flex:"1"}}><TextFormat txt={card.nick_name} chars={6}/></div>
-              <div style={{flex:"1"}}>&nbsp;<Icon name="comment outline"/>{card.comment_count?NumberFormat(card.comment_count):0}</div>
-              <div className="cardUpdateTime" style={{flex:"2",textAlign:"right"}}>&nbsp;{DateFormat(card.update_time)}</div>
+            <div className="cardInfo">
+              <div className="first"><TextFormat txt={card.nick_name} chars={6}/></div>
+              <div className="second">&nbsp;<Icon name="comment outline"/>{card.comment_count?NumberFormat(card.comment_count):0}</div>
+              <div className="cardUpdateTime">&nbsp;{DateFormat(card.update_time)}</div>
             </div>
           </div>
         </BoardCard>

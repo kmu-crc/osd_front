@@ -39,8 +39,8 @@ const CategoryItem = styled.div`
     font-weight:500;
     font-family:Noto Sans KR;
     cursor:pointer;
-    opacity:${props=>props.opacity};
-    margin-left:${props=>props.left};
+    opacity:${props => props.opacity};
+    margin-left:${props => props.left};
 `
 
 var pastCate = 0;//for change category
@@ -92,12 +92,12 @@ class MypageBody extends Component {
             <MypageBodyComp>
                 <div className="MypageCategory">
                     {this.state.categorys.map((category, index) => {
-                                   
+
                         return (
-                           
-                            <CategoryItem onClick={this.changeCategory.bind(this, index)}  id={index}
-                                          left={catePadding[index]} key={index} 
-                                          opacity={this.state.cateIndex==index?1:0.5}>{category}</CategoryItem>
+
+                            <CategoryItem onClick={this.changeCategory.bind(this, index)} id={index}
+                                left={catePadding[index]} key={index}
+                                opacity={this.state.cateIndex == index ? 1 : 0.5}>{category}</CategoryItem>
                         )
                     })}
                 </div>
@@ -118,13 +118,13 @@ class MypageBody extends Component {
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper">
                         <div className="interested">관심있는 디자인</div>
-                            {this.props.status === "INIT" ?
-                                <Loading /> :
-                                <ScrollList manual {...opendesign_style.design_margin} ListComponent={Design} dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
+                        {this.props.status === "INIT" ?
+                            <Loading /> :
+                            <ScrollList manual {...opendesign_style.design_margin} type="design" dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
                         <div className="interested">관심있는 그룹</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
-                            <ScrollList manual {...opendesign_style.group_margin} ListComponent={Group} dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
+                            <ScrollList manual {...opendesign_style.group_margin} type="group" dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
                         <div className="interested">관심있는 디자이너</div>
 
                         {this.props.status === "INIT" ?

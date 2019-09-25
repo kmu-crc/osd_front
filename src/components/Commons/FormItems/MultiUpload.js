@@ -38,6 +38,7 @@ const FileImg = styled.div`
   margin-bottom: 5px;
   background-position: center;
   background-size: cover;
+  background-image: url(${props => props.img});
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
 `;
 
@@ -108,7 +109,7 @@ export class MultiUpload extends Component {
         data.value[0].type === "image/jpeg" ||
         data.value[0].type === "image/png" ||
         data.value[0].type === "image/gif" ||
-        data.value[0].type === "image/bmp" 
+        data.value[0].type === "image/bmp"
         // data.value[0].type === "image/webp"
       ) {
         let reader = new FileReader();
@@ -160,7 +161,7 @@ export class MultiUpload extends Component {
     const { name, placeholder, id, validates } = this.props;
     return (
       <InputWrap>
-        <UploaderButton htmlFor={id ? id : name}><i className="file alternate icon"/>{placeholder}</UploaderButton>
+        <UploaderButton htmlFor={id ? id : name}><i className="file alternate icon" />{placeholder}</UploaderButton>
         {this.state.display && (
           <FormFile
             name={name && name}
@@ -179,18 +180,9 @@ export class MultiUpload extends Component {
             console.log("item", this.state.urls, this.state.urls[index]);
             return (
               <FileItem key={`file${index}`}>
-                <FileImg
-                  style={
-                    this.state.render
-                      ? { backgroundImage: `url(${this.state.urls[index]})` }
-                      : null
-                  }
-                />
+                <FileImg img={this.state.render ? this.state.urls[index] : null} />
                 <p>{item.name}</p>
-                <DeleteBtn
-                  type="button"
-                  onClick={() => this.deleteImages(index)}
-                >
+                <DeleteBtn type="button" onClick={() => this.deleteImages(index)}>
                   <Icon name="remove" />
                 </DeleteBtn>
               </FileItem>

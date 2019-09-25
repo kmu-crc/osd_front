@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import {
-  FormInput,
-  FormTextArea,
-  FormThumbnail
-} from "components/Commons/FormItems";
+import { FormInput, FormTextArea, FormThumbnail } from "components/Commons/FormItems";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
 import { ValidationGroup } from "modules/FormControl";
 
@@ -18,15 +14,15 @@ const Label = styled.div`
 `;
 
 class DesignCardModify extends Component {
-  shouldComponentUpdate(nextProps, nextState){
-    if(this.state == null) return true;
-    if(this.state.title){
-      if(this.state.title.value !== nextState.title.value){
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state == null) return true;
+    if (this.state.title) {
+      if (this.state.title.value !== nextState.title.value) {
         return false;
       }
     }
-    if(this.state.content){
-      if(this.state.content.value !== nextState.content.value){
+    if (this.state.content) {
+      if (this.state.content.value !== nextState.content.value) {
         return false;
       }
     }
@@ -75,12 +71,12 @@ class DesignCardModify extends Component {
           console.log("RES: ", res);
           console.log("props.design_id", this.props.detail.design_id);
           this.props.UpdateCardSourceRequest(res, id, token)
-          .then(this.props.UpdateDesignTime(this.props.detail.design_id, token))
-          .then(this.props.GetDesignDetailRequest(this.props.detail.design_id, token))
-          .then(() => {
-            this.props.GetCardDetailRequest(id);
-            resolve("aa");
-          }).catch(err => reject(err));
+            .then(this.props.UpdateDesignTime(this.props.detail.design_id, token))
+            .then(this.props.GetDesignDetailRequest(this.props.detail.design_id, token))
+            .then(() => {
+              this.props.GetCardDetailRequest(id);
+              resolve("aa");
+            }).catch(err => reject(err));
         })
         .catch(err => reject(err));
     });

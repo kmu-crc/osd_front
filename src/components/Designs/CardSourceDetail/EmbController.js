@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import opendesign_style from 'opendesign_style';
 
@@ -28,7 +28,7 @@ class EmbController extends Component {
     value: this.props.value,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     if (!this.props.value) {
       document.getElementById("embValContainer").innerText = "소스를 붙여넣기 해주세요";
     } else {
@@ -53,14 +53,8 @@ class EmbController extends Component {
   render() {
     return (
       <EmbEditWrap>
-        <EmbMenu>
-          EMBED
-        </EmbMenu>
-        <div contentEditable="true"
-             id="embValContainer"
-             onBlur={this.onSave}
-             onFocus={this.setInit}
-             />
+        <EmbMenu>EMBED</EmbMenu>
+        <div contentEditable="true" id="embValContainer" onBlur={this.onSave} onFocus={this.setInit} />
       </EmbEditWrap>
     );
   }

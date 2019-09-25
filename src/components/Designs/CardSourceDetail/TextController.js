@@ -35,6 +35,15 @@ const NaviMenu = styled.div`
     background-size: 10px;
     background-position-y: 49%;
   }
+  .bold {
+    background-image: url(${props => props.bold});
+  }
+  .italic {
+    background-image: url(${props => props.italic});
+  }
+  .underline {
+    background-image: url(${props => props.underline});
+  }
   & .optWrap {
     position: relative;
     & > input {
@@ -57,6 +66,15 @@ const NaviMenu = styled.div`
     background-position: 50% 40%;
     color: transparent;
     padding: 0 14px;
+    &.left {
+      background-image: url(${props => props.left});
+    }
+    &.middle {
+      background-image: url(${props => props.middle});
+    }
+    &.right {
+      background-image: url(${props => props.right});
+    }
   }
   & .align[value="M"] {
     background-position-y: 41%;
@@ -367,7 +385,7 @@ class TextController extends Component {
       ) {
         this.textWrap._reactInternalFiber && this.textWrap._reactInternalFiber.child.stateNode.contains(e.relatedTarget)
       } else { // 텍스트 에디터에서 포커스가 빠져나간 경우
-        this.setState({ openMenu: false});
+        this.setState({ openMenu: false });
         if (!this.edit.textContent) {
           if (this.props.deleteItem) this.props.deleteItem();
         } else {
@@ -464,19 +482,13 @@ class TextController extends Component {
     return (
       <TextEditWrap tabindex="0" onBlur={this.onSave} ref={ref => (this.textWrap = ref)}>
         {this.state.openMenu &&
-          <NaviMenu>
-            <input type="button" value="B" onClick={this.getBold} style={{ backgroundImage: `url(${bold})` }} />
-            <input type="button" value="I" onClick={this.getItalic} style={{ backgroundImage: `url(${italic})` }} />
-            <input type="button" value="U" onClick={this.getUnderline} style={{ backgroundImage: `url(${underline})` }} />
-            <input type="button" value="L" className="align"
-              onClick={this.getJustifyleft}
-              style={{ backgroundImage: `url(${left})` }} />
-            <input type="button" value="M" className="align"
-              onClick={this.getJustifycenter}
-              style={{ backgroundImage: `url(${middle})` }} />
-            <input type="button" value="R" className="align"
-              onClick={this.getJustifyright}
-              style={{ backgroundImage: `url(${right})` }} />
+          <NaviMenu bold={bold} italic={italic} underline={underline} left={left} middle={middle} right={right}>
+            <input type="button" value="B" className="bold" onClick={this.getBold} />
+            <input type="button" value="I" className="italic" onClick={this.getItalic} />
+            <input type="button" value="U" className="underline" onClick={this.getUnderline} />
+            <input type="button" value="L" className="align left" onClick={this.getJustifyleft} />
+            <input type="button" value="M" className="align middle" onClick={this.getJustifycenter} />
+            <input type="button" value="R" className="align right" onClick={this.getJustifyright} />
 
             <span className="optWrap" tabIndex="0" onBlur={this.onBlurSize} ref={ref => (this.menuWrap = ref)}>
               <input type="button" value="size" onClick={this.setOpenSize} />

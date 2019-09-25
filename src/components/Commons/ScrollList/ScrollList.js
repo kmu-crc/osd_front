@@ -91,7 +91,29 @@ const NoData = styled.div`
   font-size: 16px;
   text-align: center;
 `;
-
+const LoadingText = styled.p`
+  color: #707070;
+  opacity: .75; 
+  font-family: Noto Sans KR;
+  font-weight: 500;
+  font-size: 32px; 
+  text-align: center;
+  width: 100%;
+  transform: translateY(-25px);
+`;
+const ScrollIcon = styled.div`
+  cursor: default;
+  text-align: center;
+  color: #707070;
+  font-weight: 500;
+  i{
+    color: #707070;
+    opacity: .75;
+    font-size: 64px;
+    text-align: center;
+    width: 100%;
+  }
+`;
 class ScrollList extends Component {
   state = { hasMore: true, loading: false, page: 0, gap: 150, cols: 0 };
 
@@ -160,7 +182,6 @@ class ScrollList extends Component {
         type === "group" ? osdcss.group_margin.big.cols :
           osdcss.designer_margin.big.cols;
     }
-    console.log("col:", cols);
     this.setState({ cols: cols });
   };
 
@@ -172,7 +193,6 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { hasMore, loading, cols } = this.state;
-    console.log("type:", type);
     return (<React.Fragment>
       {dataListAdded && dataListAdded.length > 0 ?
         <FlexContainer type={type} ref={this.myRef} >
@@ -187,8 +207,8 @@ class ScrollList extends Component {
               {type === "designer" ? <Designer data={item} /> : null}
             </FlexBox>)
           })}
-          {loading && <p style={{ color: "#707070", opacity: ".75", fontFamily: "Noto Sans KR", fontWeight: "500", fontSize: "32px", textAlign: "center", width: "100%", transform: "translateY(-25px)" }}>목록을 가져오고 있습니다.</p>}
-          {!manual && hasMore && <div style={{ cursor: "default", textAlign: "center", color: "#707070", fontWeight: "500" }} onMouseOver={this.getLoadData}>스크롤<i style={{ color: "#707070", opacity: ".75", fontSize: "64px", textAlign: "center", width: "100%" }} className="material-icons">arrow_drop_down</i></div>}
+          {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
+          {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>스크롤<i className="material-icons">arrow_drop_down</i></ScrollIcon>}
           {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
         </FlexContainer>
         : <NoData>데이터가 없습니다.</NoData>}
