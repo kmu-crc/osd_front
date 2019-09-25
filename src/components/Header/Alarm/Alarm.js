@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-
-import TextFormat from 'modules/formats/TextFormat'
+import noimg from "source/noimg.png"
+import TextFormat from 'modules/TextFormat'
 
 const AlarmList = styled.div`
     display: ${props => props.display};
@@ -81,12 +81,10 @@ class Alarm extends Component {
         console.log("alarm-confirm:", userID, ",", alarmID)
         this.props.handleAlarmConfirm(userID, alarmID)
     }
-
     allAlarmConfirm = () => {
         alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.')
         this.props.handleAllAlarmConfirm(this.props.uid)
     }
-
     getLink = item => {
         let link = ``;
         if (item.type === "MESSAGE") {
@@ -101,7 +99,6 @@ class Alarm extends Component {
         }
         return link
     }
-
     getMessageText = item => {
         let msg = ""
         const from = item.from //? TextSlicer(item.from, 4) : "유저"
@@ -159,13 +156,11 @@ class Alarm extends Component {
         }
         return msg;
     }
-
     showButton = (item) => {
         const type = item.type, kinds = item.kinds, confirm = item.confirm
         if (confirm === 1) return false
         return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP" || kinds === "JOIN"))
     }
-
     accept = (e, item) => {
         let confirm = false;
         e.stopPropagation()
@@ -215,7 +210,6 @@ class Alarm extends Component {
         }
         window.location.reload()
     }
-
     reject = (e, item) => {
         e.stopPropagation()
         if (item.type === "DESIGN") {
@@ -303,7 +297,7 @@ class Alarm extends Component {
         list = alarms.filter(alarm => { return alarm.type === "DESIGN" && alarm.kinds === "LIKE" });
         list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
         list = this.frequency(list);
-        rst = [...rst, ...list];
+        rst = [...list];
         //get like group
         list = alarms.filter(alarm => { return alarm.type === "GROUP" && alarm.kinds === "LIKE" });
         list = list && list.length > 0 && list.sort((a, b) => (a.content_id > b.content_id) ? 1 : -1);
@@ -318,7 +312,7 @@ class Alarm extends Component {
         list = alarms.filter(alarm => { return alarm.kinds !== "LIKE" });
         rst = [...rst, ...list];
         //sort by create_time
-        rst.sort((a, b) => (a.confirm < b.confirm) ? 1 : (a.create_time < b.create_time ? 1 : -1));
+        rst.sort((a, b) => (a.confirm > b.confirm) ? 1 : (a.create_time < b.create_time) ? 1 : - 1);
         return rst;
     }
     render() {
@@ -334,19 +328,19 @@ class Alarm extends Component {
                             : <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />}
                     </div>
                     <div className="list">
-                        {alarms && alarms.list ? alarms.list.map(item => {
+                        {alarmscombined && alarmscombined.length ? alarmscombined.map((item, index) => {
+                            if (item == null) return <div key={"undefined" + index}></div>;
                             const alarmtype = this.showButton(item);
                             const alarmKind = item.kinds;
-                            let designCount = 0, groupCount = 0, countObj, msg;
-
-                            msg = this.getMessageText(item);
+                            const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
+                            let msg = this.getMessageText(item);
 
                             return (
-                                <ListItem confirm={item.confirm} key={item.uid}>
+                                <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
                                     <div style={{ fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}><TextFormat txt={msg} /></div>
                                     <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                         <div style={{ display: "flex", justifyContent: "space-start" }}>
-                                            <div style={{ background: `url(${item.thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
+                                            <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
                                             <div style={{ display: "flex" }}>
                                                 {alarmtype ?
                                                     (<React.Fragment>
@@ -358,8 +352,8 @@ class Alarm extends Component {
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div onClick={() => this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
-                                                        : <div onClick={() => this.alarmConfirm(item.user_id, item.uid)} style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }
                                             </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // img
-import noimg from "source/noimg.png";
+import noface from "source/thumbnail.png";
 import iForked from "source/baseline_library_books_black_48dp.png";
 import iThumbUp from "source/thumbup_icon_black.png"
 import iMessage from 'source/email.png';
@@ -172,6 +172,17 @@ const InterestDesignerTitle = styled.div`
     font-weight: 200;
     text-align: right;
 `;
+const InterestDesignerIcon = styled.div`
+    display: inline-block;
+    opacity: ${props => props.opacity};
+    width: 40px;
+    height: 35px;
+    margin-left: 15px;
+    margin-bottom: -7px;
+    background-image: url(${props => props.img});
+    background-size: cover;
+    background-position: center center;
+`;
 const SendMessageBox = styled.div`
     cursor: pointer;
     overflow: hidden;
@@ -179,7 +190,7 @@ const SendMessageBox = styled.div`
     width: 250px;
     height: 45px;
     top: 168px;
-    right: 72px;
+    right: 45px;
     textAlign: right;
 `;
 const SendMessagTitle = styled.div`
@@ -250,21 +261,18 @@ const LikeDialog = styled.div`
     }
 `;
 
-
 class DesignerPageHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            about_me: ["", ""],
-            descriptionLengthCheck: "",
-            joinDialog: false, likeDialog: false, manager: false, tmpLike: false
+            about_me: ["", ""], descriptionLengthCheck: "", joinDialog: false, likeDialog: false, manager: false, tmpLike: false
         };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.gotoMyModify = this.gotoMyModify.bind(this);
     }
-    gotoMyModify = () => {
+    gotoMyModify() {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'mymodify';
     }
@@ -304,19 +312,20 @@ class DesignerPageHeader extends Component {
     }
     render() {
         const { DesignerDetail, Count, like } = this.props;
-        console.log("DesignerDetail::", this.props);
-        const thumbnailInfo = DesignerDetail.thumbnail ? DesignerDetail.thumbnailUrl.m_img : noimg;
+        const { about_me, likeDialog } = this.state;
+        const thumbnailInfo = DesignerDetail.thumbnail ? DesignerDetail.thumbnailUrl.m_img : noface;
         const isMyProfile = this.props.userInfo && DesignerDetail && this.props.userInfo.uid === DesignerDetail.uid ? true : false;
+        console.log("DesignerDetail::", this.props);
         return (
             <React.Fragment>
-                {this.state.likeDialog ?
+                {likeDialog ?
                     <LikeDialog><div className="dialog-context">관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></LikeDialog> : null}
                 <BackgroundBox>
                     <Name>{DesignerDetail.nick_name}</Name>
                     <ProfileBox img={thumbnailInfo} />
                     <Title>{DesignerDetail.categoryName}</Title>
-                    <ExplainBox01>{this.state.about_me[0]}</ExplainBox01>
-                    <ExplainBox02>{this.state.about_me[1]}</ExplainBox02>
+                    <ExplainBox01>{about_me[0]}</ExplainBox01>
+                    <ExplainBox02>{about_me[1]}</ExplainBox02>
                     <SummaryIconBox>
                         <SummaryViewIcon><IconView width="17px" height="13px" fill="#707070" /></SummaryViewIcon>
                         <SummaryView>{NumberFormat(Count.total_view || 0)}</SummaryView>
@@ -333,18 +342,14 @@ class DesignerPageHeader extends Component {
                         : <React.Fragment>
                             <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
                                 <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
-                                <div style={{
-                                    width: "40px",
-                                    display: "inline-block", height: "35px", marginLeft: "15px", marginBottom: "-7px", opacity: like ? "1" : "0.45",
-                                    backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
-                                }}></div>
+                                <InterestDesignerIcon opacity={like ? "1" : "0.45"} img={iThumbUp} />
                             </InterestDesignerBox>
                             <SendMessageBox onClick={this.sendMessage}>
                                 <SendMessagTitle>메시지 보내기</SendMessagTitle>
                                 <SendMessageImg icon={iMessage} />
                             </SendMessageBox>
                         </React.Fragment>}
-                    <UpdateTimeBox>{/*style={{ marginLeft: "auto", marginRight: "0px", width: "max-content", height: "55px", textAlign: "right", lineHeight: "30px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0" }}>*/}
+                    <UpdateTimeBox>
                         <div style={{ width: "max-content" }}>최근 업데이트 {DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
                         <div style={{ marginLeft: "auto", marginTop: "5px", width: "max-content" }}>{DesignerDetail && DateFormat(DesignerDetail.create_time)} 등록</div>
                     </UpdateTimeBox>

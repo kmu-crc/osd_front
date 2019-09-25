@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 
 const EmbEditWrap = styled.div`
   width: 100%;
-  border: 1px solid ${StyleGuide.color.geyScale.scale1};
+  border: 1px solid ${opendesign_style.color.grayScale.scale1};
   & #embValContainer {
     min-height: 100px;
     max-height: 300px;
@@ -17,9 +17,9 @@ const EmbEditWrap = styled.div`
 const EmbMenu = styled.div`
   height: 30px;
   line-height: 30px;
-  font-size: ${StyleGuide.font.size.heading4};
-  color: ${StyleGuide.color.geyScale.scale9}
-  background-color: ${StyleGuide.color.geyScale.scale1};
+  font-size: ${opendesign_style.font.size.heading4};
+  color: ${opendesign_style.color.grayScale.scale9}
+  background-color: ${opendesign_style.color.grayScale.scale1};
   padding: 0 .5rem;
 `;
 
@@ -28,7 +28,7 @@ class EmbController extends Component {
     value: this.props.value,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     if (!this.props.value) {
       document.getElementById("embValContainer").innerText = "소스를 붙여넣기 해주세요";
     } else {
@@ -53,14 +53,8 @@ class EmbController extends Component {
   render() {
     return (
       <EmbEditWrap>
-        <EmbMenu>
-          EMBED
-        </EmbMenu>
-        <div contentEditable="true"
-             id="embValContainer"
-             onBlur={this.onSave}
-             onFocus={this.setInit}
-             />
+        <EmbMenu>EMBED</EmbMenu>
+        <div contentEditable="true" id="embValContainer" onBlur={this.onSave} onFocus={this.setInit} />
       </EmbEditWrap>
     );
   }

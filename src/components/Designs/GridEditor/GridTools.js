@@ -2,6 +2,7 @@ import React from 'react';
 import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
+import PxtoRem from "modules/PxtoRem";
 
 export const CreateStep = (props) => {
     return (<div onClick={props.onClick}
@@ -85,9 +86,12 @@ const CardContainer = styled.div`
     position: relative;
     z-index: 700;
     cursor: pointer;
-    width: 200px;
-    height: 200px;
+    // width: 200px;
+    // height: 200px;
+    width: ${PxtoRem(200)};
+    height: ${PxtoRem(200)};
     border-radius: 15px;
+    overflow:hidden;
     border: 2px solid rgba(112, 112, 112, 1);
     background-color: rgba(112, 112, 112, .15);
     margin-top:${props => props.marginTop};
@@ -121,7 +125,7 @@ export const ContentCard = (props) => {
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
                 <React.Fragment>
-                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", borderRadius: "15px", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} />
+                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute",  width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} />
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                         {props.card.title.slice(0, 10)}
                     </div>

@@ -1,13 +1,12 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { GetDesignListRequest, GetDesignListCountRequest } from "redux/modules/design"
-import { GetCategoryAllRequest } from "redux/modules/category"
-import Category from "components/Commons/Category"
-import OrderOption from "components/Commons/OrderOption"
-import ScrollList from "components/Commons/ScrollList"
-import Loading from "components/Commons/Loading"
-import Design from "components/Designs/Design"
-import styled from 'styled-components'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { GetDesignListRequest, GetDesignListCountRequest } from "redux/modules/design";
+import { GetCategoryAllRequest } from "redux/modules/category";
+import Category from "components/Commons/Category";
+import OrderOption from "components/Commons/OrderOption";
+import ScrollList from "components/Commons/ScrollList";
+import Loading from "components/Commons/Loading";
+import styled from 'styled-components';
 import opendesign_style from "opendesign_style";
 
 const TextWrapper = styled.div`
@@ -20,6 +19,10 @@ const TextWrapper = styled.div`
     font-weight: 700;
     color: red;
     cursor: pointer;
+`;
+const ScrollListContainer = styled.div`
+    padding-top: 128px;
+    padding-bottom: 68px;
 `;
 
 class DesignListContainer extends Component {
@@ -41,7 +44,7 @@ class DesignListContainer extends Component {
   componentDidMount() {
     this.props.GetCategoryAllRequest()
       .then(() => { this.props.GetDesignListCountRequest(null, null) });
-    this.getList(0);
+    this.props.GetDesignListRequest(0, null, null, null, null);
   }
   handleReload() {
     this.setState({ reload: !this.state.reload });
@@ -65,7 +68,7 @@ class DesignListContainer extends Component {
   }
   async getList(page) {
     const { main_category, sub_category, keyword, this_order } = this.state;
-    this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
+    return this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
   }
   changeCategory(category) {
     if (this.state.this_category === category) {
@@ -84,12 +87,12 @@ class DesignListContainer extends Component {
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
 
       <TextWrapper onClick={() => this.changeCategory(main_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</TextWrapper>
-      <div style={{ paddingTop: "128px", paddingBottom: "68px" }}>
+      <ScrollListContainer>
         {status === "INIT"
           ? <Loading />
           : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
-            ListComponent={Design} dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
-      </div>
+            type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
+      </ScrollListContainer>
     </React.Fragment>)
   }
 }

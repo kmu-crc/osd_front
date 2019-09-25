@@ -4,14 +4,14 @@ import { GetGroupInGroupRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import Group from "components/Groups/Group";
 import styled from 'styled-components';
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 import NumberFormat from "modules/NumberFormat";
 
 const GroupBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
     padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
 `;
 
@@ -40,7 +40,6 @@ class GroupInGroupContainer extends Component {
             <div className="boxTitle">그룹 ({NumberFormat(this.props.count)})</div>
             <ScrollList rerender={true}
               getListRequest={this.getList}
-              ListComponent={Group}
               type="Group"
               dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
               mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom" />

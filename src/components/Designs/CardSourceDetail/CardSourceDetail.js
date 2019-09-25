@@ -54,6 +54,86 @@ const ViewContent = styled.div`
     display: block;
   }
 `;
+const ButtonContainer = styled.div`
+  margin-bottom: 35px;
+  .content-edit-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-edit-button {
+    width: max-content;
+    padding: 7px;
+    padding-bottom: 1px;
+    border: none;
+    border-bottom: 1px solid red;
+    color: #FF0000;
+    font-size: 20px;
+    font-weight: 500;
+    background: none;
+    cursor: pointer;
+  }
+  .content-add-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-add-button {
+    width: max-content;
+    border: none;
+    padding: 7px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid red;
+    color: #FF0000;
+    font-size: 20px;
+    font-weight: 500;
+    background: none;
+    cursor: pointer;
+  }
+`;
+const EditorBottonWrapper = styled.div`
+    position: absolute;
+    width: max-content;
+    top: ${props => props.top}; this.state.top, 
+    left: ${props => props.left}; this.state.left, 
+    padding: 45px;
+    box-shadow: 0px 2px 10px 2px rgba(0,0,0, 0.25);
+    background: #FFFFFF;
+    border-radius: 25px;
+    z-index: 907;
+    .submit {
+      margin-left: 5px;
+      background: none;
+      border: none;
+      width: max-content;
+      padding: 7px;
+      padding-bottom: 1px;
+      color: #FF0000;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      :hover{
+        background-color: #DDD;
+        border-radius: 25px;
+      }
+    }
+    .cancel {
+      margin-left: 10px;
+      background: none;
+      border: none;
+      width: max-content;
+      padding: 7px;
+      padding-bottom: 1px;
+      color: #707070;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      :hover{
+        background-color: #DDD;
+        border-radius: 25px;
+      }
+    }
+`;
 
 class CardSourceDetail extends Component {
   state = { top: 250, left: 1250, edit: false, content: [], deleteContent: [], loading: false };
@@ -195,26 +275,24 @@ class CardSourceDetail extends Component {
   }
 
   render() {
-    // console.log("inCardSourceDetail", this.props);
     const { /*edit,*/ content } = this.state;
     return (<React.Fragment>
-      <div style={{ marginBottom: "35px" }}>
+      <ButtonContainer >
         {this.state.edit &&
-          <div style={{ width: "max-content", padding: "25px", boxShadow: "0px 2px 10px 2px rgba(0,0,0,0.25)", background: "#FFFFFF", borderRadius: "25px", top: this.state.top, left: this.state.left, position: "absolute", zIndex: "907" }}>
-            <button onClick={this.onSubmit} style={{ marginLeft: "00px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon outline save " />저장</button>
-            <button onClick={this.onCancel} style={{ marginLeft: "25px", background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid #707070", color: "#707070", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} type="button" ><i className="icon trash" />취소</button>
-          </div>
+          <EditorBottonWrapper top={this.state.top} left={this.state.left}>
+            <button onClick={this.onSubmit} className="submit" type="button"><i className="icon outline save" />등록</button>
+            <button onClick={this.onCancel} className="cancel" type="button"><i className="icon trash" />취소</button>
+          </EditorBottonWrapper>
         }
-        {this.state.edit === false && this.props.isTeam && (
-          content.length > 0 ? (
-            <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", }} >
-              <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} >컨텐츠 수정</button>
-            </div>) : (
-              <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", }} >
-                {/* <div>컨텐츠가 없습니다. </div> */}
-                <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ background: "none", border: "none", width: "max-content", padding: "7px", paddingBottom: "1px", borderBottom: "1px solid red", color: "#FF0000", fontSize: "20px", fontWeight: "500", cursor: "pointer" }} >컨텐츠 추가</button>
-              </div>))}
-      </div>
+        {this.state.edit === false && this.props.isTeam && (content.length > 0 ? (
+          <div className="content-edit-wrapper">
+            <button onClick={() => this.setState({ edit: !this.state.edit })} className="content-edit-button">컨텐츠 수정</button>
+          </div>) : (
+            <div className="content-add-wrapper">
+              {/* <div>컨텐츠가 없습니다. </div> */}
+              <button onClick={() => this.setState({ edit: !this.state.edit })} className="content-add-button" >컨텐츠 추가</button>
+            </div>))}
+      </ButtonContainer>
       <CardSrcWrap ref={(ref) => this.cardwrap = ref}>
         {this.state.edit &&
           <form onSubmit={this.onSubmit}>

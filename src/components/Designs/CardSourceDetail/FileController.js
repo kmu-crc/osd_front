@@ -34,6 +34,9 @@ const File = styled.div`
   overflow: hidden;
   outline: 0;
   border: 0;
+  input {
+    display: none;
+  }
 `;
 
 class FileController extends Component {
@@ -214,7 +217,7 @@ class FileController extends Component {
             name="source"
             onChange={this.onChangeValue}
             ref={ref => (this.input = ref)}
-            style={{ display: "none" }}
+            
           />
           <span></span>
         </File>

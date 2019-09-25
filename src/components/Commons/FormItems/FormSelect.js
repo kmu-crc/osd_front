@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import { Dropdown } from "semantic-ui-react";
 
 const InputWrap = styled.div`
@@ -14,12 +14,15 @@ const InputWrap = styled.div`
     display: block;
     clear: both;
   }
+  select{
+    display: none;
+  }
 `;
 
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${StyleGuide.color.main.basic};
+  color: ${opendesign_style.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `;
@@ -103,7 +106,6 @@ export class FormSelect extends Component {
           />
         ) : null}
         <select
-          style={{ display: "none" }}
           readOnly
           value={this.state.value}
           id={id ? id + value : name + value}

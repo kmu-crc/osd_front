@@ -1,22 +1,125 @@
 import React, { Component } from "react";
 import { FormControl } from "modules/FormControl";
-//import { FormControl, ValidationGroup } from "modules/FormControl";
-// import SelectBox from "components/Commons/SelectBox"
-// import showPw from "source/show_password.svg";
-// import styled from "styled-components";
+import styled from "styled-components";
 
 import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
 import SectionSecurity from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionSecurity"
 import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
 
-const scrollmenu_data = [
-  { txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }
-]
+const MainBanner = styled.div`
+  width: 1920px;
+  display: flex;
+  justify-content: center;
+  .title{
+    width: 196px;
+    height: 37px;
+    margin-top: 45px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
+  }
+`
+const MainSection = styled.div`
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 111px;
+`
+const NavMenu = styled.div`
+  width: 433px;
+  .menuBox{
+    width:325px;
+    position: fixed;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
+  }
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+    cursor:pointer;
 
-//const colorSwich = ['#FFFFFF', '#FF0000'];
+  }
+
+    .deleteText{
+      font-family:Noto Sans KR;
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:500;
+      text-align:left;
+      color:#FF0000;
+      border-bottom:${props => props.borderBottom};
+    }
+`
+const MenuText = styled.div`
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:300;
+  text-align:left;
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
+  border-bottom:${props => props.borderBottom};
+`
+const Arrow = styled.span`
+    margin-left:70px;
+    font-size:15px;
+`
+const InputBoard = styled.div`
+      width:1422px;
+      height:${props => props.isModifyAnother === true ? "2150px" : "925px"};
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justifyContent: flex-end;
+      }
+
+`
+const CompleteButton = styled.div`
+      position:absolute;
+      right:9px;
+      bottom:35px;
+      cursor:pointer;
+      width:104.5px;
+      height:44px;
+      border-radius:5px;
+      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top:6px;
+      padding-left:15px;
+      margin-right:53px;
+  `
+const HRline = styled.div`
+
+    margin-top:100px;
+    margin-bottom:67px;
+    border-bottom:5px solid #F5F4F4;
+
+  `
+
+const BtnText = styled.p`
+  width: 74px;
+  padding: 0px;
+  font-familty: Noto Sans KR;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
+  font-size: 20px;
+  color: #FFFFFF;
+`;
+
+const scrollmenu_data = [{ txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }];
+
 class ModifyMyDetail extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -160,7 +263,7 @@ class ModifyMyDetail extends Component {
     };
     formData.files.push(file);
 
-    if (formData.files.length <= 0 ||this.props.MyDetail.profileImg==null||
+    if (formData.files.length <= 0 || this.props.MyDetail.profileImg == null ||
       formData.files[0].value === this.props.MyDetail.profileImg.m_img) delete formData.files;
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
@@ -230,48 +333,44 @@ class ModifyMyDetail extends Component {
     }
   }
 
-
   render() {
     // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
     const { selected } = this.state
 
     return (<React.Fragment>
-      <div style={{ width: "1920px", display: "flex", justifyContent: "center" }}>
-        <div id="basic" style={{ marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }}>내 프로필 수정하기</div>
-      </div>
+      <MainBanner>
+        <div className="title">내 프로필 수정하기</div>
+      </MainBanner>
 
-      <div style={{ display: "flex", marginTop: "60px", marginBottom: "111px" }}>
+      <MainSection id="basic">
         {/* scroll - menu */}
-        <div style={{ width: "325px", marginLeft: "64px" }}>
-          <div style={{ position: "fixed", top: "197px", width: "325px", height: "190px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
+        <NavMenu>
+          <div className="menuBox">
             {scrollmenu.map((menu, index) => {
-              return (<div onClick={() => this.scrollMove(menu, index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                <div style={{ color: selected === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
-              </div>)
+              return (<div onClick={() => this.scrollMove(menu, index)} 
+                                   className="menuItem"
+                                   borderBottom={index + 1 === scrollmenu.length}
+                                   key={menu.txt}>
+                      <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
+                      </div>)
             })}
           </div>
-        </div>
+        </NavMenu>
+
         {/* form */}
-        <div style={{ width: "1422px", marginLeft: "45px", height: "2104px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "46px", fontFamily: "Noto Sans KR" }}>
-          <form>
-            <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
-            <div style={{ marginTop: "100.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
-            <div style={{ marginTop: "101.5px", marginBottom: "67.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
-              updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
-            <div style={{ marginTop: "102.5px", marginBottom: "41.5px", borderBottom: "5px solid #F5F4F4" }} />
-            <SectionBuziness MyDetail={this.props.MyDetail}
-              updateIsDesigner={this.updateIsDesigner}
-              updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
-          </form>
-          <div onClick={this.onSubmit} style={{
-            cursor: "pointer", display: "table-cell", position: "relative", left: "1264.5px", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", color: "#FFFFFF", fontSize: "20px", fontWeight: "500"
-            , textAlign: "center", verticalAlign: "middle"
-          }}>등록하기</div>
-        </div>
-      </div>
+        <InputBoard isModifyAnother={true}>
+          <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
+          <HRline/>
+          <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
+          <HRline/>
+          <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
+            updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
+          <HRline/>
+          <SectionBuziness MyDetail={this.props.MyDetail} updateIsDesigner={this.updateIsDesigner} updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
+          <CompleteButton id="additional"  isComplete  ={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
+        </InputBoard>
+      </MainSection>
     </React.Fragment>)
   }
 }

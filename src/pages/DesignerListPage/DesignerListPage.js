@@ -21,6 +21,9 @@ const TextWrapper = styled.div`
     font-weight: 700;
     color: red;
 `;
+const JoinDesignerButtonContainer = styled.div`
+    position: relative;
+`;
 const JoinDesigner = styled.div`
     position: relative;
     left: 1724px;
@@ -34,7 +37,10 @@ const JoinDesigner = styled.div`
     line-height: 29px;
     border-bottom: 1.5px solid red;
 `;
-
+const DesignerListContainer = styled.div`
+    padding-top: 100px;
+    padding-bottom: 68px;
+`;
 
 class DesignerListPage extends Component {
     state = {
@@ -93,14 +99,16 @@ class DesignerListPage extends Component {
 
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
                 <TextWrapper onClick={() => this.changeCategory(this_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
-                <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleClickJoin()}>디자이너 등록하기</JoinDesigner></div>
-                <div style={{ paddingTop: "100px", paddingBottom: "68px" }}>
+                <JoinDesignerButtonContainer>
+                    <JoinDesigner onClick={() => this.handleClickJoin()}>디자이너 등록하기</JoinDesigner>
+                </JoinDesignerButtonContainer>
+                <DesignerListContainer>
                     {status === "INIT"
                         ? <Loading />
                         : <ScrollList
-                            {...osdstyle.designer_margin}
-                            page={page} ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
-                </div>
+                            {...osdstyle.designer_margin} page={page} type="designer"
+                            getListRequest={this.getList} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />}
+                </DesignerListContainer>
             </React.Fragment>
         )
 

@@ -39,33 +39,39 @@ class NewCardModal extends Component {
         }
     }
     saveTemporary = (obj) => {
+        console.log("save:", obj);
         this.setState({ card_content: obj });
-        console.log("save:", this.state);
     }
     handleSubmit = (event) => {
         event.preventDefault();
         let files = null;
+
+        // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
+        // const pack = { title: this.state.title, thumbnail: thumbnail, data: this.state.card_content, content: this.state.content };
+        // console.log(pack);return;
+
         // new card 
         ValidationGroup(this.state, false)
             .then(data => {
                 files = data && data.files;
-                console.log("submit:", files, this.state)
+                // console.log("submit:", files, this.state)
                 this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
                     .then((res) => {
-                        if (res.success) {
+                        console.log("res:", res);
+                         if (res.success) {
                             const card_id = res.card;
                             let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
                             const pack = { title: this.state.title, thumbnail: thumbnail, data: this.state.card_content, content: this.state.content };
-                            console.log(pack);//return;
+                            // console.log(pack);return;
                             this.props.UpdateCardSourceRequest(pack, card_id, this.props.token)
-                                .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                                .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                                .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                                .then(() => { this.onClose() })
-                                .catch(err => alert(err));
-                        } else {
-                            alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
-                        }
+                              .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
+                              .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
+                              .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
+                              .then(() => { this.onClose() })
+                              .catch(err => alert(err));
+                         } else {
+                             alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
+                         }
                     });
             })
         // and get new card id
@@ -88,19 +94,15 @@ class NewCardModal extends Component {
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
                 <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>
-                    컨텐츠 제목
-                    </div>
+                    컨텐츠 제목</div>
                 <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                    <input name="title" onChange={this.onChangeTitle} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
-                </div>
+                    <input name="title" onChange={this.onChangeTitle} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." /></div>
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
                 <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>
-                    컨텐츠 설명
-                    </div>
+                    컨텐츠 설명</div>
                 <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                    <input name="content" onChange={this.onChangeContent} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
-                </div>
+                    <input name="content" onChange={this.onChangeContent} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." /></div>
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
                 <div style={{ width: "38px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>내용</div>

@@ -19,7 +19,7 @@ class ScrollGroupListContainer extends Component {
     return (
       <div>
         <ScrollList getListRequest={this.getList}
-          {...opendesign_style.group_margin} ListComponent={Group}
+          {...opendesign_style.group_margin} type="group"
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
       </div>
     );

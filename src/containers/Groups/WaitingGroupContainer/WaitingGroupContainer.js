@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetWaitingGroupRequest, DeleteGroupInGroupRequest, UpdateGroupInGroupRequest, GetGroupInGroupRequest } from "redux/modules/group";
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import ScrollList from 'components/Commons/ScrollList';
 import Group from "components/Groups/Group";
@@ -13,7 +13,7 @@ const GroupBox = styled.div`
   & .boxTitle {
     margin-left: 1rem;
     padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
 `;
 
@@ -60,7 +60,7 @@ class WaitingGroupContainer extends Component {
             {...osdstyle.group_margin}
             reload={reload}
             handleReload={this.handleReload}
-            ListComponent={Group}
+            type="group"
             dataListAdded={this.props.waitingGroup}
             getListRequest={null}
             handleReject={this.setOut} handleAccept={this.setAccept} />

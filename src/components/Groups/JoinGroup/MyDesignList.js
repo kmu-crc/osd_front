@@ -3,7 +3,7 @@ import ValidateForm from "components/Commons/ValidateForm";
 import Button from "components/Commons/Button";
 import styled from "styled-components";
 import { Dropdown, Form } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const Btn = styled(Button)`
   font-size:17px;
@@ -16,7 +16,7 @@ const Btn = styled(Button)`
 
 const Field = styled(Form.Field)`
   label {
-    /* font-size: ${StyleGuide.font.size.paragraph} !important; */
+    /* font-size: ${opendesign_style.font.size.paragraph} !important; */
   }
 `
 class MyDesignList extends Component {

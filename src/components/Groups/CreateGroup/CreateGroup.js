@@ -1,73 +1,135 @@
 import React, { Component } from "react";
-import noimg from "source/noimg.png"
+import styled from "styled-components";
+import noimg from "source/noimg.png";
+import SectionBasic from "components/Groups/CreateGroup/SectionBasic";
+import Loading from "components/Commons/Loading";
 
-import BasicInfo from "components/Groups/CreateGroup/BasicInfo"
-// import AdditionalInfo from "components/Groups/CreateGroup/AdditionalInfo"
-// import { userInfo } from "os";
+const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 
-// const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }, { txt: "부가 정보", tag: "#additional" }]
+const MainBanner = styled.div`
+  width: 1920px;
+  display: flex;
+  justify-content: center;
+  .title{
+    width: 196px;
+    height: 37px;
+    margin-top: 45px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 37px;
+    font-weight: 700;
+    text-align: center;
+  }
+`;
 
-const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
+const MainSection = styled.div`
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 111px;
+`;
 
+const NavMenu = styled.div`
+  width: 433px;
 
-const Main_Banner ={ width: "1920px", display: "flex", justifyContent: "center" }
-const Main_Banner_text = { marginTop: "45px", width: "196px", height: "37px", fontFamily: "Noto Sans KR", fontSize: "25px", fontWeight: "700", lineHeight: "37px", textAlign: "center", color: "#707070" }
-const Main_Section = {display: "flex", marginTop: "60px", marginBottom: "111px" }
-// const Menu_Delete={position:"fixed", top:"349px",left:"100px",width:"150px",height:"29px",fontFamily: "Noto Sans KR",fontWeight:"500",fontSize:"20px",color:"#FF0000"}
-// const Btn_Back = { position:"absolute",right:"54px",bottom:"35px",border:"1px solid black",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: "#FF0000", paddingTop: "6px", paddingLeft: "15px"}
-const Btn_text ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
-// const Btn_Next ={ width: "74px", padding: "0px", fontFamilty: "Noto Sans KR", fontWeight: "500", lineHeight: "29px", textAlign: "center", fontSize: "20px", color: "#FFFFFF" }
+  .menuBox{
+    width:325px;
+    height:62px;
+    position: fixed;
+    top:197px;
+    margin-left:64px;    
+    background-color:#F5F4F4;
+    border-radius:5px;
+  }
+  .menuItem{
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom?"none" : "2px solid #FFFFFF"};
+    cursor:pointer;
+
+  }
+    .menuText{
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:300;
+      text-align:left;
+      color: ${props => props.selected?"#707070":"#FF0000"};
+      border-bottom:${props => props.borderBottom};
+    }
+`;
+
+const InputBoard = styled.div`
+      width:1422px;
+      height:925px;
+      position:relative;
+      padding-top:45px;
+      border-radius:5px;
+      border:8px solid #F5F4F4;
+
+      .buttonBox{
+        display: flex;
+        margin-top: 20.54px;
+        justifyContent: flex-end;
+      }
+`;
+
+const BtnText = styled.p`
+  width: 74px;
+  padding: 0px;
+  font-familty: Noto Sans KR;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
+  font-size: 20px;
+  color: #FFFFFF;
+`;
+
+const CompleteButton = styled.div`
+  position:absolute;
+  right:9px;
+  bottom:35px;
+  cursor:pointer;
+  width:104.5px;
+  height:44px;
+  border-radius:5px;
+  background-color:${props=>props.isComplete?"#FF0000":"#707070"};
+  padding-top:6px;
+  padding-left:15px;
+  margin-right:53px;
+`;
 
 class CreateGroup extends Component {
-
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     this.state = {
-      groupThumbnail:noimg,groupTitle:"",groupExplain:"", groupThumbnailURL:"",groupThumbnailName:"",
+      groupThumbnail: "", groupTitle: "", groupExplain: "", groupThumbnailURL: "", groupThumbnailName: "",
       loading: false, isPossibleNextStep: false, step: 0, /* 0: basics, 1: additional, 2: contents*/ selectedCate1: null,
-     selectedCate2: null, cate1: null,cate2: null}
+      selectedCate2: null, cate1: null, cate2: null
+    }
     this.handleInputDesignExplain = this.handleInputDesignExplain.bind(this);
     this.handleInputDesignTitle = this.handleInputDesignTitle.bind(this);
-    this.handleChangeThumbnail=this.handleChangeThumbnail.bind(this);
-    this.handleChangeThumbnailURL=this.handleChangeThumbnailURL.bind(this);
+    this.handleChangeThumbnail = this.handleChangeThumbnail.bind(this);
+    this.handleChangeThumbnailURL = this.handleChangeThumbnailURL.bind(this);
   }
-  // setLoader = () => { this.setState({ loading: !this.state.loading }) }
-  componentDidMount()
-  {
+  shouldComponentUpdate(nextProps) {
+    return true;
   }
-  shouldComponentUpdate(nextProps)
-  {
-      // if(this.props.DesignDetail.title!=nextProps.DesignDetail.title) this.setState({designTitle:nextProps.DesignDetail.title});
-      // if(this.props.DesignDetail.explanation!=nextProps.DesignDetail.explanation) this.setState({designExplain:nextProps.DesignDetail.explanation});
-      // if(this.props.DesignDetail.img!=nextProps.DesignDetail.img) this.setState({thumbnail:nextProps.DesignDetail.img.m_img});
-    
-      return true;
+  handleInputDesignTitle(title) {
+    this.setState(state => ({ groupTitle: title }))
   }
-  handleInputDesignTitle(title)
-  {
-    console.log("titleinput");
-    this.setState(state=>({groupTitle:title}))
+  handleInputDesignExplain(explain) {
+    this.setState(state => ({ groupExplain: explain }))
   }
-  handleInputDesignExplain(explain)
-  {
-    this.setState(state=>({groupExplain:explain}))
-  }
-  handleChangeThumbnail(imgInfo,imgName)
-  {
-    this.setState(state=>({groupThumbnail:imgInfo,groupThumbnailName:imgName}));
+  handleChangeThumbnail(imgInfo, imgName) {
+    this.setState(state => ({ groupThumbnail: imgInfo, groupThumbnailName: imgName }));
   }
 
-  handleChangeThumbnailURL(imgurl)
-  {
-    this.setState(state=>({groupThumbnailURL:imgurl}));
-    }
-  checkIsPossibleToGoNextStep = (step) => {
-
+  handleChangeThumbnailURL(imgurl) {
+    this.setState(state => ({ groupThumbnailURL: imgurl }));
   }
-
-  gotoStep=(index)=>
-  {
+  gotoStep = (index) => {
     this.setState({ step: index });
   }
   gotoPrevStep = () => {
@@ -79,107 +141,86 @@ class CreateGroup extends Component {
   gotoNextStep = () => {
     this.setState({ step: this.state.step + 1 });
   }
-  completeCreateDesign = () => {
-    this.submit();
+  completed = (T) => {
+    this.setState({ isPossibleNextStep: T });
   }
-  submit = () => {
-  }
-
-  completed = () => {
-    this.setState({ isPossibleNextStep: true })
-  }
-
   onSubmit = async e => {
     e.preventDefault();
 
-    const data = {user_id:this.props.userInfo.uid,title:this.state.groupTitle,explanation:this.state.groupExplain,files:[]};
-    let file = {
-      value: this.state.groupThumbnail,
-      name: this.state.groupThumbnailName,
-      key: 0
-    };
-    console.log("THUMBNAIL:::::::::",this.state.groupThumbnailURL,this.state.groupThumbnail,this.state.groupThumbnailName)
-     data.files.push(file);
-
-      this.props.CreateNewGroupRequest(data, this.props.token)
+    if (this.state.groupThumbnail == "") {
+      alert("그룹의 섬네일을 지정해주세요.");
+      return;
+    }
+    else if (this.state.groupTitle == "") {
+      alert("그룹 이름을 작성해주세요!");
+      return;
+    }
+    else if (this.state.explanation == "") {
+      alert("그룹 설명을 작성해주세요!");
+      return;
+    }
+    this.setState({ loading: true });
+    const data = { user_id: this.props.userInfo.uid, title: this.state.groupTitle, explanation: this.state.groupExplain, files: [] };
+    let file = { value: this.state.groupThumbnail, name: this.state.groupThumbnailName, key: 0 };
+    data.files.push(file);
+    this.props.CreateNewGroupRequest(data, this.props.token)
       .then(res => {
         this.props.history.push(`/groupDetail/${res.id}`);
       }).catch(e => {
-      console.log("실패", e);
-      this.setState({
-        loading: false
+        console.log(e);
       });
-    });
-    // e.preventDefault();
-    // ValidationGroup(this.state, false).then(async data => {
-    //   console.log("성공", data);
-    //   await this.setState({
-    //     loading: true
-    //   });
-    //   this.props.CreateNewGroupRequest(data, this.props.token)
-    //   .then(res => {
-    //     this.props.history.push(`/groupDetail/${res.id}`);
-    //   });
-    // }).catch(e => {
-    //   console.log("실패", e);
-    //   this.setState({
-    //     loading: false
-    //   });
-    // });
+    this.setState({ loading: false });
   };
   render() {
-    // const myInfo = this.props.MyDetail
-
-
-
-    const { step } = this.state
+    const { loading, step } = this.state
     return (<React.Fragment>
+      {loading ? <Loading /> : null}
+      <MainBanner>
+        <div className="title">그룹 등록하기</div>
+      </MainBanner>
 
-      <div style={Main_Banner}>
-        <div style={Main_Banner_text}>그룹 등록하기</div>
-      </div>
-
-      <div style={Main_Section}>
+      <MainSection>
         {/* scroll - menu */}
-        <div style={{width:"433px"}}>
-              <div style={{ width: "325px", marginLeft: "64px" }}>
-                  <div style={{ position: "fixed", top: "197px", width: "325px", height: "62px", backgroundColor: "#F5F4F4", borderRadius: "5px" }}>
-                    {scrollmenu.map((menu, index) => {
-                      return (<div onClick={() => this.gotoStep(index)} style={{ cursor: "pointer", height: "62px", lineHeight: "29px", borderBottom: index + 1 === scrollmenu.length ? "none" : "2px solid #FFFFFF", paddingTop: "18px", paddingLeft: "36px" }} key={menu.txt}>
-                        <div style={{ color: this.state.step === index ? "#FF0000" : "#707070", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{menu.txt}</div>
-                      </div>)
-                    })}
-                  </div>
-              </div>
-        </div>
+        <NavMenu>
+          <div className = "menuBox">
+              {scrollmenu.map((menu, index) => {
+                return (
+                <div className = "menuItem" 
+                     onClick={() => this.gotoStep(index)}
+                     borderBottom={ index + 1 === scrollmenu.length} key={menu.txt}>
+                <div className="menuText" selcted={this.state.step === index}>{menu.txt}</div>
+                </div>)
+              })}
+          </div>
+        </NavMenu>
+
         {/* form */}
-        <div style={{position:"relative", width: "1422px", height: "925px", borderRadius: "5px", border: "8px solid #F5F4F4", paddingTop: "45px" }}>
+        <InputBoard >
           <form>
-             
-             {step ===0 && <BasicInfo groupTitle={this.state.groupTitle} groupExplain={this.state.groupExplain} groupThumbnail={this.state.groupThumbnail}
-             onChangeExplain={this.handleInputDesignExplain} onChangeTitle = {this.handleInputDesignTitle} onChangeThumbnailURL={this.handleChangeThumbnailURL} onChangeThumbnail = {this.handleChangeThumbnail}
-             designExplain={this.state.groupExplain} designTitle ={this.state.groupTitle} thumbnail = {this.state.groupThumbnail} {...this.props}/> }
-             {/* {step ===1 &&<AdditionalInfo {...this.props}/>} */}
-            {/* buttons*/}
-            <div style={{ marginTop: "20.54px", justifyContent: "flex-end", display: "flex" }}>
-
-            <div onClick={this.onSubmit} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-            <p style={Btn_text}>완료</p></div>
-            {/* {step === 1? 
-            <div onClick={this.state.isPossibleNextStep ? this.completeCreateDesign : null} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-            <p style={Btn_text}>완료</p></div>
-            : <div onClick={() => this.gotoStep(1)} style={{ position:"absolute", right:"9px",bottom:"35px",cursor: "pointer", width: "104.5px", height: "44px", borderRadius: "5px", backgroundColor: this.state.isPossibleNextStep ? "#FF0000" : "#707070", paddingTop: "6px", paddingLeft: "15px", marginRight: "53px" }}>
-            <p style={Btn_text}>다음</p>
-            </div>
-            } */}
-
-
+            {step === 0 &&
+              <SectionBasic completed={this.completed}
+                groupTitle={this.state.groupTitle} 
+                groupExplain={this.state.groupExplain} 
+                groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
+                onChangeExplain={this.handleInputDesignExplain} 
+                onChangeTitle={this.handleInputDesignTitle} 
+                onChangeThumbnailURL={this.handleChangeThumbnailURL} 
+                onChangeThumbnail={this.handleChangeThumbnail}
+                designExplain={this.state.groupExplain} 
+                designTitle={this.state.groupTitle} 
+                thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
+            <div className = "buttonBox">
+                <CompleteButton isComplete = {this.state.isPossibleNextStep}
+                     onClick={this.state.isPossibleNextStep ? this.onSubmit : ()=>alert("아직 그룹 등록에 필요한 정보가 입력되지 않았습니다.")} >
+                <BtnText>완료</BtnText>
+              </CompleteButton>
             </div>
           </form>
-        </div>
-      </div>
+        </InputBoard>
+      </MainSection>
     </React.Fragment>)
   }
 }
 
 export default CreateGroup;
+

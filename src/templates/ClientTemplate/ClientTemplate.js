@@ -5,24 +5,30 @@ import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
 const ContentContainer = styled.div`
-    top: 55px;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    &.hidemenu {
-        top: 0px;
-    }
-    -webkit-transition: all 0.45s;
-    -moz-transition: all 0.45s;
-    -ms-transition: all 0.45s;
-    -o-transition: all 0.45s;
-    transition: all 0.45s;
+  position: absolute;
+  top: 55px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  &.hidemenu {
+    top: 0px;
+  }
+  -webkit-transition: all 0.45s;
+  -moz-transition: all 0.45s;
+  -ms-transition: all 0.45s;
+  -o-transition: all 0.45s;
+  transition: all 0.45s;
 `
+const ChildrenContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 1920px;
+`;
 
 class ClientTemplate extends Component {
+  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0 }
   componentDidMount() {
     console.log("isActive", this.props.isActive)
   }
@@ -31,7 +37,6 @@ class ClientTemplate extends Component {
       this.props.SetActive("INIT")
     }
   }
-  state = { scroll: false, whensmall: 256, larger: false, hidemenu: false, prevScroll: 0 }
   checkIsOutScroll = (obj) => {
     this.setState({ scroll: true })
     setTimeout(() => { this.setState({ scroll: false }) }, 100)
@@ -40,7 +45,6 @@ class ClientTemplate extends Component {
     const currentScrollPos = obj.scrollTop
     const prevScrollPos = this.state.prevScroll
     const { hidemenu, whensmall } = this.state
-
     if (window.location.pathname === "/message") {
       this.setState({ larger: true });
       this.setState({ hidemenu: false });
@@ -53,7 +57,7 @@ class ClientTemplate extends Component {
       else {
         this.setState({ larger: false })
       }
-      if (currentScrollPos > whensmall * 2) {
+      if (currentScrollPos > whensmall) {
         if (prevScrollPos < currentScrollPos) { // console.log("hide")
           this.setState({ hidemenu: true })
         }
@@ -74,19 +78,20 @@ class ClientTemplate extends Component {
     const { scroll, hidemenu, larger } = this.state
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
     const hidemenu_style = (hidemenu ? "hidemenu " : "")
-    const larger_style = (larger ? "larger " : "")
-    return (<MenuContext.Provider value={{ hidemenu, larger }}>
-      <HeaderContainer />
-      <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+    const larger_style = (larger ? "larger " : "");
 
-        <div style={{ width: "1920px" }}>
-          {this.props.children}
+    return (
+      <MenuContext.Provider value={{ hidemenu, larger }}>
+        <HeaderContainer />
+        <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+          <ChildrenContainer>
+            {this.props.children}
+          </ChildrenContainer>
           <Footer />
-        </div>
-
-      </ContentContainer>
-    </MenuContext.Provider>)
+        </ContentContainer>
+      </MenuContext.Provider>
+    )
   }
 }
-//margin:"0 auto",
-export default ClientTemplate
+
+export default ClientTemplate;

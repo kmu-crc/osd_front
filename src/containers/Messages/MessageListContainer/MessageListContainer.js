@@ -6,8 +6,6 @@ import { SearchMemberRequest } from "redux/modules/search"
 
 class MessageListContainer extends Component {
   render() {
-
-    console.log("+++++++++++++++++",this.props);
     return (<MessageList {...this.props} />)
   }
 }

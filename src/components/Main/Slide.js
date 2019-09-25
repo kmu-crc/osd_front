@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Carousel } from "react-responsive-carousel";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import Open_img from "source/design_bg.jpg";
 import Easy_img from "source/easy_bg2.jpg";
 import Together_img from "source/together_bg.jpg";
@@ -82,7 +82,7 @@ const Slide = styled.div`
   width: 100%;
   height: 350px;
   & > span {
-    font-size: ${StyleGuide.font.size.heading1};
+    font-size: ${opendesign_style.font.size.heading1};
     position: absolute;
     font-weight: bold;
     color: #fff;

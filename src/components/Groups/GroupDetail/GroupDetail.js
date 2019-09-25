@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import Design from "components/Designs/Design";
 import GroupInfo from "components/Groups/GroupInfo";
-import Group from "components/Groups/Group";
 
 import WaitingDesignContainer from "containers/Groups/WaitingDesignContainer";
 import WaitingGroupContainer from "containers/Groups/WaitingGroupContainer";
@@ -104,11 +102,11 @@ class GroupDetail extends Component {
           {GroupDetail && currentTab === "group" && <React.Fragment>
             {this.props.status === "INIT"
               ? <Loading />
-              : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Group} dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</React.Fragment>}
+              : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</React.Fragment>}
           {GroupDetail && currentTab === "design" && <React.Fragment>
             {this.props.status === "INIT"
               ? <Loading />
-              : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} ListComponent={Design} dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</React.Fragment>}
+              : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</React.Fragment>}
         </React.Fragment>}
     </React.Fragment>)
 

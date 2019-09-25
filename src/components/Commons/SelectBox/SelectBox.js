@@ -71,6 +71,7 @@ const SelectBoxContainer = styled.div`
   }
   
   .select-box--items div.selected {
+    display: ${props => props.display};
     z-index: 950;
     background-color: #FFFFFF;
     background-image: url('/check.png');
@@ -129,9 +130,9 @@ class SelectBox extends Component {
             <div className="select-box--arrow">
               <span className={`${this.state.showItems ? 'select-box--arrow-up' : 'select-box--arrow-down'}`} /></div>
           </div>
-          <div className="select-box--items" style={{ display: this.state.showItems ? 'block' : 'none' }}>
+          <div className="select-box--items" display={this.state.showItems ? "block" : "none"}>
             {this.state.items.map((item, index) =>
-              <div key={index} value={item.value} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? 'selected' : ''}> {item.text}</div>)}
+              <div key={index} value={item.value} onClick={() => this.selectItem(item)} className={this.state.selectedItem === item ? "selected" : ""}> {item.text}</div>)}
           </div>
         </div>
         <input type="hidden" name={this.props.name} value={this.state.selectedItem.id} />

@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import { Grid, Form } from "semantic-ui-react";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
 
 // css styling
-
 const FormWrapper = styled.div`
   width: 100%;
 `;
@@ -45,12 +43,10 @@ class CardSource extends Component {
     this.setState({
       active: value
     });
-    //this.props.GetDesignDetailViewRequest(this.props.match.params.id);
   };
 
   render() {
     const view = this.props.view;
-    // console.log("CANCEL",this.props.isCancel, this.props.on)
     return (
       <FormWrapper>
         <FromFieldCard>

@@ -4,14 +4,14 @@ import { GetDesignInGroupRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import Design from "components/Designs/Design";
 import styled from 'styled-components';
-import StyleGuide from 'StyleGuide';
+import opendesign_style from 'opendesign_style';
 import NumberFormat from "modules/NumberFormat";
 
 const DesignBox = styled.div`
   margin-bottom: 1rem;
   & .boxTitle {
     padding-bottom: 1rem;
-    font-size: ${StyleGuide.font.size.heading4};
+    font-size: ${opendesign_style.font.size.heading4};
   }
 `;
 
@@ -39,7 +39,7 @@ class DesignInGroupContainer extends Component {
         : <DesignBox>
             <div className="boxTitle">디자인 ({NumberFormat(this.props.count)})</div>
             <ScrollList getListRequest={this.getList}
-                        ListComponent={Design}
+                        type="design"
                         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                         mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
           </DesignBox>

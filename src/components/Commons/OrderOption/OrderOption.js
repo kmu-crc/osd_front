@@ -11,6 +11,7 @@ const OrderWrapper = styled.div`
     font-weight: 500;
     line-height: 29px;
     text-align: middle;
+    position:relative;
 `
 const OrderElement = styled.div`
     font-family: Noto Sans KR;
@@ -18,6 +19,8 @@ const OrderElement = styled.div`
     line-height: 29px;
     font-size: 20px;
     cursor: pointer;
+    z-index: 800;
+
     &.selected {
         color: #FF0000;
         margin-right: ${props => props.marginRight};

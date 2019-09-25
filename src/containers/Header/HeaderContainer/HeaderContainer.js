@@ -10,7 +10,7 @@ class HeaderContainer extends Component {
     render() {
         //console.log("HC:", this.props)
         return (
-            <Header {...this.props} />
+            <Header {...this.props} style={{margin:"0 auto"}}/>
         )
     }
 }

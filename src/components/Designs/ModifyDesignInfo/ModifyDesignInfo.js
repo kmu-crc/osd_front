@@ -5,7 +5,7 @@ import { Header, Grid, Form } from "semantic-ui-react";
 import Button from "components/Commons/Button";
 import { FormInput, FormThumbnail, FormCheckBox, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -54,7 +54,7 @@ const FormHeader = styled(Header)`
     content: "";
     height: 20px;
     width: 100%;
-    border-bottom: 3px solid ${StyleGuide.color.geyScale.scale5};
+    border-bottom: 3px solid ${opendesign_style.color.grayScale.scale5};
     bottom: 10px;
     left: 0;
 

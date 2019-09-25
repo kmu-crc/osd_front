@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
+  input {
+    display: none;
+  }
 `
 
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${StyleGuide.color.main.basic};
+  color: ${opendesign_style.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `
@@ -41,7 +44,7 @@ const CheckBoxLabel = styled.label`
     top: -1px;
   }
   &.disabled{
-    color: ${StyleGuide.color.geyScale.scale6}
+    color: ${opendesign_style.color.grayScale.scale6}
     // text-decoration-line: line-through;
   }
 `
@@ -104,7 +107,7 @@ export class FormCheckBox extends Component {
           type="checkbox"
           id={id ? id+value : name+value}
           name={name && name}
-          style={{display: "none"}}
+          
           defaultValue={value && value}
           ref={ref => (this.input = ref)}
           />

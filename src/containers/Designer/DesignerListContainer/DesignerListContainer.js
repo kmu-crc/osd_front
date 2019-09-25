@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Designer from "components/Designers/Designer/Designer";
 import { GetDesignerListRequest, GetDesignerTotalCountRequest } from "redux/modules/designer"
 import { GetCategoryAllRequest } from "redux/modules/category"
 
@@ -10,7 +9,6 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
-
 
 const TextWrapper = styled.div`
     position: relative;
@@ -35,7 +33,13 @@ const JoinDesigner = styled.div`
     line-height: 29px;
     border-bottom: 1.5px solid red;
 `;
-
+const JoinDesignerContainer = styled.div`
+    position: relative;
+`;
+const ScrollListContainer = styled.div`
+    padding-top: 100px;
+    padding-bottom: 68px;
+`;
 class DesignerListContainer extends Component {
     constructor(props) {
         super(props);
@@ -103,13 +107,13 @@ class DesignerListContainer extends Component {
             <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
 
             <TextWrapper onClick={() => this.changeCategory(main_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
-            <div style={{ position: "relative" }}><JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner></div>
-            <div style={{ paddingTop: "100px", paddingBottom: "68px" }}>
+            <JoinDesignerContainer><JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner></JoinDesignerContainer>
+            <ScrollListContainer>
                 {status === "INIT"
                     ? <Loading />
-                    : <ScrollList {...opendesign_style.designer_margin} reload={reload} handleReload={this.handleReload} 
-                    ListComponent={Designer} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
-            </div>
+                    : <ScrollList {...opendesign_style.designer_margin} reload={reload} handleReload={this.handleReload}
+                        type="designer" dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
+            </ScrollListContainer>
         </React.Fragment>)
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 import TextController from "./TextController";
 import FileController from "./FileController";
 import EmbController from "./EmbController";
@@ -9,8 +9,8 @@ import EmbController from "./EmbController";
 const ControllerWrap = styled.div`
   position: relative;
   &:hover {
-    border: 1px dashed ${StyleGuide.color.geyScale.scale3};
-    background-color: ${StyleGuide.color.geyScale.scale0};
+    border: 1px dashed ${opendesign_style.color.grayScale.scale3};
+    background-color: ${opendesign_style.color.grayScale.scale0};
     .editBtn {
       display: block;
     }
@@ -36,7 +36,7 @@ const DelBtn = styled.button`
   line-height: 25px;
   box-sizing: border-box;
   font-size: 12px;
-  background-color: ${StyleGuide.color.main.basic};
+  background-color: ${opendesign_style.color.main.basic};
   color: white;
   text-align: center;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -65,7 +65,6 @@ export class Controller extends Component {
   InitClick = async () => {
     await this.setState({ click: true });
   };
-
   onChangeValue = async data => {
     let newObj = { ...data };
     console.log("newObj", newObj);

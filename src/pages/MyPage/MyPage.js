@@ -1,11 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import MypageHeader from 'components/MypageHeader';
 import MypageBody from 'components/MypageBody';
+
 class MyPage extends Component {
-    render(){
-        return(
+    render() {
+        return (
             <React.Fragment>
-                <MypageHeader/>
+                <MypageHeader />
                 <MypageBody />
             </React.Fragment>
         )

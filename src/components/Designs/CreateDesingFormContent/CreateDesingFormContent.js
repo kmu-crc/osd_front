@@ -12,7 +12,7 @@ import { FormField } from "components/Commons/FormField";
 import CheckBoxFieldContainer from "containers/Commons/CheckBoxFieldContainer";
 import FileUploader from "components/Commons/FileUploader";
 import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
-import StyleGuide from "StyleGuide";
+import opendesign_style from "opendesign_style";
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -40,7 +40,7 @@ const FormHeader = styled(Header)`
     content: "";
     height: 20px;
     width: 100%;
-    border-bottom: 3px solid ${StyleGuide.color.geyScale.scale5};
+    border-bottom: 3px solid ${opendesign_style.color.grayScale.scale5};
     bottom: 10px;
     left: 0;
 
