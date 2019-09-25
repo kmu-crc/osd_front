@@ -12,8 +12,9 @@ const SummaryList = styled.div`
   height:794px;
   margin-top:14px;
   padding-left:54px;
+  overflow-y: hidden;
   &:hover {
-    overflow-y: scroll;
+    overflow-y:overlay;
   }
 `;
 
