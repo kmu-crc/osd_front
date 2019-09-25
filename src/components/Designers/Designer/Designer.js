@@ -12,66 +12,67 @@ import TextFormat from "modules/TextFormat"
 import DateFormat from "modules/DateFormat"
 
 import { geturl } from "config"
+
 //styled
 const DesignerComp = styled.div`
-    font-family: Noto Sans KR;
-    height: 150px;
     width: 587px;
-    cursor:pointer;
+    height: 150px;
+    font-family: Noto Sans KR;
+    cursor: pointer;
 
     .ImageBox{
-        cursor:pointer;
+        position: absolute;
         width: 150px;
         height: 150px;
-        background-color: #D6D6D6;
         border-radius: 50%;
-        position: absolute;
-        background-size:cover;
         border: 1.5px solid #EFEFEF;
-        z-index:1;
+        background-color: #D6D6D6;
+        background-size: cover;
+        cursor: pointer;
+        z-index: 1;
     }
     .TextBox{
         width: 527px;
         height: 130px;
+        position: relative;
         background-color: #EFEFEF;
         border-radius: 15px 15px 15px 15px;
-        position: relative;
-        left:65px;
-        top:8px;
+        left: 65px;
+        top: 8px;
     }
     .userName{
         top: 19px;
         left: 114px;
-        font-size: 20px;
         position: absolute;
-        color: #707070;
-        font-weight: bold;
         max-width: 300px;
+        color: #707070;
+        font-size: 20px;
+        font-weight: bold;
         background-color: #EFEFEF;
     }
     .update{
-        position: absolute;
         top: 20px;
         right: 22px;
+        position: absolute;
         width: 75px;
-        background-color: #EFEFEF;
         color: #707070;
-        font-weight: light;
         font-size: 15px;
         text-align: right;
+        font-weight: light;
+        background-color: #EFEFEF;
     }
     .description{
         top: 56px;
         left: 114px;
-        font-size: 20px;
-        line-height: 20px;
+        position: absolute;
         max-width: 385px;
+        line-height: 20px;
         overflow: hidden;
+        color: #707070;
+        font-size: 20px;
+        font-weight: 100;
         white-space: nowrap;
         text-overflow: ellipsis;
-        position: absolute;
-        color: #707070;
-        font-weight: 100;
         background-color: #EFEFEF;
     }
     .cate{
@@ -96,6 +97,42 @@ const DesignerComp = styled.div`
         margin-left: 110px;
         justify-content: space-start;
         background-color: #EFEFEF;
+        .view {
+            display: flex;
+            margin-right: 10px;
+            .text {
+                width: 40px;
+                margin-left: 5px;
+                font-size: 15px;
+            }
+        }
+        .like {
+            display: flex;
+            margin-right: 10px;
+            img {
+                width: 15px;
+                height: 15px;
+                opacity: 0.55;
+            }   
+            .text{
+                width: 40px;
+                margin-left: 5px;
+                font-size: 15px;
+            }
+        }
+        .child {
+            display: flex;
+            img {
+                width: 19px;
+                height: 19px;
+                opacity: 0.55;
+            }
+            .text{
+                width: 40px;
+                margin-left: 5px;
+                font-size: 15px;
+            }
+        }
     }
 `;
 
@@ -119,17 +156,17 @@ class Designer extends Component {
                     <div className="update">{DateFormat(designer.update_time)}</div>
                     <div className="cate">{designer.categoryName || "전체"}</div>
                     <div className="counter">
-                        <div className="view" style={{ display: "flex", marginRight: "10px" }}>
+                        <div className="view">
                             <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
+                            <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
                         </div>
-                        <div className="like" style={{ display: "flex", marginRight: "10px" }}>
-                            <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
+                        <div className="like" >
+                            <div><img alt="icon" src={iThumbUp} /></div>
+                            <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
                         </div>
-                        <div className="child" style={{ display: "flex" }}>
-                            <div><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} /></div>
-                            <div style={{ marginLeft: "5px", width: "40px", fontSize: '15px' }}>{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
+                        <div className="child">
+                            <div><img alt="icon" src={iForked} /></div>
+                            <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
                         </div>
                     </div>
                 </div>

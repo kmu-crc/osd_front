@@ -8,8 +8,6 @@ const MemberBox = styled.div`
     max-height:630px;
     border: 1px solid red;
     position:relative;
-    
-    
    
     overscroll-behavior:contain;
     border-radius: 30px 30px 30px 30px;
@@ -37,9 +35,8 @@ const MemberBox = styled.div`
         width:345px;
         height:80px;
         left:37px;
-    
+        top:20px;
     }
-    
     
     .MemberImage{
         position:absolute;
@@ -71,16 +68,15 @@ const MemberBox = styled.div`
         bottom:0px;
         background-color:white;
     }
-    
 `;
 
-class MemberList extends Component{
-    render(){
+class MemberList extends Component {
+    render() {
         const makerName = "진아진아진아";
         const memberName = "찬호찬호찬호";
         const status = "개설자";
 
-        return(
+        return (
             <MemberBox>
                 <div className="Members">
                     <div className="GroupMaker">
@@ -88,54 +84,45 @@ class MemberList extends Component{
                         <div className="MemberName">{makerName}</div>
                         <div className="Status">{status}</div>
                     </div>
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
-
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
-
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
-
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
-
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
-
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
-
-                    <div className="GroupMember" style={{top:"20px"}}>
+                    <div className="GroupMember" >
                         <div className="MemberImage"></div>
                         <div className="MemberName">{memberName}</div>
                         <div className="Status">{status}</div>
                     </div>
                 </div>
-
             </MemberBox>
-
-
         )
     }
-
 }
+
 export default MemberList;

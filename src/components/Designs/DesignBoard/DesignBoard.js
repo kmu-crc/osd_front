@@ -12,7 +12,7 @@ const CustomModal = styled(Modal)`
   border: "1px solid";
   border-color: ${opendesign_style.color.main.dark};
   padding: 20px;
-  width: 250px;
+  width: 350px;
   & .icon.close{
     position: absolute;
     top: 10px;
@@ -73,6 +73,7 @@ const MenuIcon = styled.button`
 `;
 
 const Menu = styled.ul`
+  display: ${props => props.display};
   position: absolute;
   right: 10px;
   width: 130px;
@@ -101,6 +102,8 @@ const MenuItem = styled.li`
     height: 100%;
     padding: 10px;
     outline: 0;
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -113,13 +116,29 @@ const CardList = styled.ul`
   background-color: #dbdada;
   border-radius: 0 0 3px 3px;
 `;
+const ListWrapper = styled.li`
+  height: 35px;
+  .icon{
+    width: 10%;
+    display: inline-block;
+  }
+  .value{
+    width: 10%;
+    display: inline-block;
+  }
+  .handle{
+    width: 10%;
+    display: inline-block;
+  }
+`;
+
 const DragHandle = SortableHandle(() => <Icon name="bars" />);
 const SortableItem = SortableElement(({ value }) => (
-  <li style={{ height: "35px" }}>
-    <div style={{ width: "10%", display: "inline-block" }}><Icon color="red" name="minus circle" /></div>
-    <div style={{ width: "80%", display: "inline-block" }}>{value}</div>
-    <div style={{ width: "10%", display: "inline-block" }}><DragHandle /></div>
-  </li>));
+  <ListWrapper>
+    <div className="icon"><Icon color="red" name="minus circle" /></div>
+    <div className="value">{value}</div>
+    <div className="handle"><DragHandle /></div>
+  </ListWrapper>));
 const Container = SortableContainer(({ children }) => { return <ul>{children}</ul>; });
 class SortableComponent extends Component {
   state = { items: this.props.items };
@@ -139,7 +158,45 @@ class SortableComponent extends Component {
     );
   }
 }
-
+const TitleWrapper = styled.div`
+  width: 100%;
+  margin: 0 0 10px 0;
+  padding: 3px 6px 3px 6px;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #FF6F7F;
+`;
+const ButtonWrapper = styled.div`
+  right: 0px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  submit {
+    width: 65px;
+    margin-top: 6px;
+    margin-left: 3px;
+    padding: 0.5em 1.7em;
+    border: 0px;
+    border-color: #E72327;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    font-size: 9pt;
+    line-height: 25px;
+    background-color: #E72327;
+  }
+  cancel {
+    width: 65px;
+    margin-top: 6px;
+    margin-left: 3px;
+    padding: 0.5em 1.7em;
+    border-color: #E72327;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px 5px 5px 5px;
+    color: #666666;
+    font-size: 9pt;
+    line-height: 25px;
+    background-color: #FFFFFF;
+  }
+`;
 class DesignBoard extends Component {
   state = {
     active: false,
@@ -241,100 +298,64 @@ class DesignBoard extends Component {
     return (
       <Board >
         <Title>
-          {this.state.active && this.props.isTeam ?
-            (
-              <BoardUpdate
-                board={board}
-                getBoard={this.props.GetDesignBoardRequest}
-                onUpdate={this.props.UpdateDesignBoardRequest}
-                designTime={this.props.UpdateDesignTime}
-                token={this.props.token}
-                value={board.title}
-                ModifyComplete={this.ModifyComplete}
-              />
-            ) :
-            (
-              <div>
-                <span onClick={this.onModify}><TextFormat txt={board.title} /></span>
-                {this.props.isTeam > 0 ? (
-                  <MenuIcon className="openMenu" onClick={this.onActive}>
-                    <Icon name="ellipsis vertical" />
-                  </MenuIcon>
-                ) : null
-                }
-                <Menu
-                  style={{
-                    display:
-                      this.props.isActive === `BOARD${board.uid}`
-                        ? "block"
-                        : "none"
-                  }}
-                >
-                  {board.order > 0 &&
-                    <MenuItem>
-                      <button onClick={this.onLeft} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                        <Icon name="arrow circle left" /><p>왼쪽으로 보내기</p>
-                      </button>
-                    </MenuItem>
-                  }
-                  {board.order < step.length - 1 &&
-                    <MenuItem>
-                      <button onClick={this.onRight} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                        <Icon name="arrow circle right" /><p>오른쪽으로 보내기</p></button>
-                    </MenuItem>
-                  }
+          {this.state.active && this.props.isTeam ? (
+            <BoardUpdate
+              board={board} getBoard={this.props.GetDesignBoardRequest} onUpdate={this.props.UpdateDesignBoardRequest}
+              designTime={this.props.UpdateDesignTime} token={this.props.token} value={board.title} ModifyComplete={this.ModifyComplete} />) :
+            (<div>
+              <span onClick={this.onModify}><TextFormat txt={board.title} /></span>
+              {this.props.isTeam > 0 ? (
+                <MenuIcon className="openMenu" onClick={this.onActive}>
+                  <Icon name="ellipsis vertical" />
+                </MenuIcon>) : null}
+              <Menu display={this.props.isActive === `BOARD${board.uid}` ? "block" : "none"}>
+                {board.order > 0 &&
                   <MenuItem>
-                    <button onClick={this.openSortableModal} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                      <Icon name="bars" /><p>카드순서바꾸기</p></button>
-                  </MenuItem>
+                    <button onClick={this.onLeft}>
+                      <Icon name="arrow circle left" /><p>왼쪽으로 보내기</p>
+                    </button>
+                  </MenuItem>}
+                {board.order < step.length - 1 &&
                   <MenuItem>
-                    <button onClick={this.onModify} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                      <Icon name="edit outline" /><p>이름바꾸기</p></button>
-                  </MenuItem>
-                  <MenuItem>
-                    <button onClick={this.onDelete} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                      <Icon name="trash alternate outline" /><p>보드지우기</p></button>
-                  </MenuItem>
-                </Menu>
-              </div>
-            )
-          }
+                    <button onClick={this.onRight}>
+                      <Icon name="arrow circle right" /><p>오른쪽으로 보내기</p></button>
+                  </MenuItem>}
+                <MenuItem>
+                  <button onClick={this.openSortableModal}>
+                    <Icon name="bars" /><p>카드순서바꾸기</p></button>
+                </MenuItem>
+                <MenuItem>
+                  <button onClick={this.onModify}>
+                    <Icon name="edit outline" /><p>이름바꾸기</p></button>
+                </MenuItem>
+                <MenuItem>
+                  <button onClick={this.onDelete}>
+                    <Icon name="trash alternate outline" /><p>보드지우기</p></button>
+                </MenuItem>
+              </Menu>
+            </div>)}
         </Title>
         <CardList>
           {board.cards.length > 0 &&
             board.cards.map((item, index) => {
-              return (
-                <DesignBoardCardContainer
-                  key={`card${index}`}
-                  card={item}
-                  boardId={board.uid}
-                />
-              );
+              return (<DesignBoardCardContainer key={`card${index}`} card={item} boardId={board.uid} />);
             })}
           {this.props.isTeam > 0 ? (
-            <CreateDesignCardContainer
-              designId={designId}
-              boardId={board.uid}
-              changeBoard={changeBoard}
-              activeBoard={activeBoard}
-              lastOrder={board.cards.length}
-            />
+            <CreateDesignCardContainer designId={designId} boardId={board.uid} changeBoard={changeBoard} activeBoard={activeBoard} lastOrder={board.cards.length} />
           ) : null}
         </CardList>
         {this.state.sortable && cardList.length > 1 ? (
-          <CustomModal style={{ width: "350px" }} open={this.state.sortable} onClose={this.closeSortableModal}>
+          <CustomModal open={this.state.sortable} onClose={this.closeSortableModal}>
             <Modal.Content>
               <h3>카드목록 편집하기</h3>
-              <div style={{ padding: "3px 6px 3px 6px", margin: "0 0 10px 0", borderRadius: "10px 10px 10px 10px", width: "100%", backgroundColor: "#FF6F7F" }}><h3>{board.title}</h3></div>
+              <TitleWrapper><h3>{board.title}</h3></TitleWrapper>
               <div>
                 <SortableComponent getCardList={this.handleGetCardList} items={cardList} />
               </div><br />
-              <div align="right" style={{ right: "0px", paddingBottom: "5px", paddingRight: "5px" }}>
-                <button style={{ fontSize: "9pt", backgroundColor: "#E72327", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#FFF", border: "0px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
-                  onClick={this.requestReSortCardList}>완료</button>
-                <button style={{ fontSize: "9pt", backgroundColor: "#FFF", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#666", borderStyle: "solid", borderWidth: "1px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
-                  onClick={this.closeSortableModal}> 취소</button>
-              </div>
+              <ButtonWrapper align="right" >
+                <button className="submit" onClick={this.requestReSortCardList}>완료</button>
+                <button className="cancel" onClick={this.closeSortableModal}> 취소</button>
+              </ButtonWrapper>
             </Modal.Content>
           </CustomModal>
         ) : null}

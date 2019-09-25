@@ -68,7 +68,6 @@ class App extends Component {
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
             <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} /> 
 
-
             {/* GROUP D - designer */}
             <Route path="/designerDetail/:id" component={DesignerDetailPage} />
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
@@ -79,7 +78,6 @@ class App extends Component {
             
             <Route path="/footerPrivacy" component={FooterPrivacy} />
             <Route path="/footerPara" component={FooterPara} />
-
             <Route component={NotFoundPage} />
           </Switch>
         </ClientTemplate>

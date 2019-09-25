@@ -87,23 +87,6 @@ export class CardSourcUpdate extends Component {
     this.props.changeActive("INIT");
   };
 
-  // handleSubmit = data => {
-  //   data.delete("source_file[]");
-  //   if (this.state.sources !== []) {
-  //     this.state.sources.map(item => {
-  //       data.append("source_file[]", item, item.name);
-  //     });
-  //   }
-  //   if (this.state.deleteImages !== []) {
-  //     data.append("deleteSources", JSON.stringify(this.state.deleteSources));
-  //   }
-  //   console.log(data);
-  //   this.props.request(data, this.props.token, this.props.uid).then(() => {
-  //     this.props.changeActive("INIT");
-  //     this.setState({ deleteSources: [], sources: [] });
-  //   });
-  // };
-
   onChangeValue = async data => {
     let obj = {};
     if(data.target){
@@ -151,10 +134,6 @@ export class CardSourcUpdate extends Component {
     });
     this.props.changeActive("Sources");
   };
-
-  // onChangeSource = data => {
-  //   this.setState({ sources: data });
-  // };
 
   render() {
     return (

@@ -14,19 +14,15 @@ const SortingButton=styled.div`
     background-color: #fff;
     margin-left: 15px;
   }
-
   & .ui.button:hover{
     background-color: #E72327;
     color: white;
   }
-
-
   & .ui.button.btn-on{
     background-color: #E72327;
     color: white;
   }
-
-`
+`;
 
 class Sorting extends Component {
   render() {

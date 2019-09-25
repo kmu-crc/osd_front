@@ -172,6 +172,17 @@ const InterestDesignerTitle = styled.div`
     font-weight: 200;
     text-align: right;
 `;
+const InterestDesignerIcon = styled.div`
+    display: inline-block;
+    opacity: ${props => props.opacity};
+    width: 40px;
+    height: 35px;
+    margin-left: 15px;
+    margin-bottom: -7px;
+    background-image: url(${props => props.img});
+    background-size: cover;
+    background-position: center center;
+`;
 const SendMessageBox = styled.div`
     cursor: pointer;
     overflow: hidden;
@@ -179,7 +190,7 @@ const SendMessageBox = styled.div`
     width: 250px;
     height: 45px;
     top: 168px;
-    right: 72px;
+    right: 45px;
     textAlign: right;
 `;
 const SendMessagTitle = styled.div`
@@ -331,11 +342,7 @@ class DesignerPageHeader extends Component {
                         : <React.Fragment>
                             <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
                                 <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
-                                <div style={{
-                                    display: "inline-block",opacity: like ? "1" : "0.45",
-                                    width: "40px", height: "35px", marginLeft: "15px", marginBottom: "-7px", 
-                                    backgroundImage: `url(${iThumbUp})`, backgroundSize: "cover", backgroundPosition: "center center"
-                                }}></div>
+                                <InterestDesignerIcon opacity={like ? "1" : "0.45"} img={iThumbUp} />
                             </InterestDesignerBox>
                             <SendMessageBox onClick={this.sendMessage}>
                                 <SendMessagTitle>메시지 보내기</SendMessagTitle>

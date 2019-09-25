@@ -30,7 +30,7 @@ class DesignDetail extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
-      console.log("???");
+      // console.log("???");
       return true;
     }
   }
@@ -45,7 +45,7 @@ class DesignDetail extends Component {
         this.props.DesignDetail.member.find(peer => { return peer.user_id === this.props.userInfo.uid }) ? true : false);
   }
   render() {
-    console.log("userinfo", this.props, this.state)
+    // console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
     return (<React.Fragment>
       {DesignDetail && DesignDetail.uid ? <React.Fragment>
