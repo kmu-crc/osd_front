@@ -84,6 +84,7 @@ const TitleBox = styled.div`
         
         }
 `
+
 const ExplainBox = styled.div`
 
         width:1200px;
@@ -115,7 +116,7 @@ class SectionBasic extends Component {
         this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this);
         this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
-        this.checkisfinished = this.checkisfinished.bind(this);
+    this.checkisfinished = this.checkisfinished.bind(this);
     }
     shouldComponentUpdate(nextProps) {
         return true;
@@ -128,15 +129,13 @@ class SectionBasic extends Component {
         })
     }
     async handleOnChangeTitle(event) {
-        const { value } = event.target;
-        await this.setState({ groupTitle: value });
-        this.props.onChangeTitle(value);
+        this.setState({ groupTitle: event.target.value });
+        this.props.onChangeTitle(event.target.value);
         this.checkisfinished();
     }
     async handleOnChangeExplain(event) {
-        const { value } = event.target;
-        await this.setState({ groupExplain: value });
-        this.props.onChangeExplain(value);
+        this.setState({ groupExplain: event.target.value });
+        this.props.onChangeExplain(event.target.value);
         this.checkisfinished();
     }
     async handleOnChangeThumbnail(event) {
@@ -181,7 +180,7 @@ class SectionBasic extends Component {
                 <TitleBox>
                     <div className="title">제목</div>
                         <input type="text" className="inputText" placeholder="그룹 제목을 입력하세요." onChange={this.handleOnChangeTitle} 
-                             value={this.props.groupTitle || ""} maxLength="50"/>
+                               value={this.props.groupTitle || ""} maxLength="50"/>
                 </TitleBox>
                 {/* description */}
                 <ExplainBox>

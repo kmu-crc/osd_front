@@ -1,6 +1,36 @@
 import React, { Component } from 'react'
-// import styled from 'styled-components'
+import styled from 'styled-components'
 // import { Link } from 'react-router-dom'
+
+const FooterContainer = styled.div`
+    width:100%;
+    height:32px;
+    display:flex;
+    // position:fixed;
+    // bottom:0;
+    margin-height:100%;
+    font-size:15px;
+    font-weight:500;
+    padding:5px;
+    font-family:Noto Sans KR;
+    color:#707070;
+    text-align:center;
+    background-color:white;
+    z-index:9999;
+    .origin{
+        margin-left:15px;
+        float:left;
+    }
+    .term{
+        cursor:pointer;
+        margin-left:auto;
+        margin-right:17px;
+    }
+    .security{
+        cursor:pointer;
+        margin-right:13px;
+    }
+`
 
 class Footer extends Component {
     
@@ -18,15 +48,11 @@ class Footer extends Component {
     }
     render() {
         return (
-            <div style={{ width:"100%",marginHeight:"100%",position:"absolute",padding:"20px",
-                height: "22px", marginBottom: "30px", fontFamily: "Noto Sans KR", color: "#707070", backgroundColor: "white",
-                display: "flex", fontSize: "15px", lineHeight: "22px", textAlign: "center",
-                fontWeight: "500"
-            }}>
-                <div style={{ marginLeft: "15px", float: "left" }}>copyright @ 2019 Open Design Inc.</div>
-                <div onClick = {this.gotoTerm} style={{ cursor:"pointer", marginLeft: "auto", marginRight: "17px" }}>이용약관</div>
-                <div onClick = {this.gotoPrivacy} style={{cursor:"pointer", marginRight: "13px" }}>개인 정보 보호 방책</div>
-            </div>
+            <FooterContainer>
+                <div className="origin">copyright @ 2019 Open Design Inc.</div>
+                <div className="term" onClick = {this.gotoTerm}>이용약관</div>
+                <div className="security" onClick = {this.gotoPrivacy}>개인 정보 보호 방책</div>
+            </FooterContainer>
         )
     }
 }
