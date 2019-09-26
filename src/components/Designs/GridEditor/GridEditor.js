@@ -177,7 +177,7 @@ class GridEditor extends Component {
             if (element.order !== index) jobs.push({ uid: element.uid, neworder: index });
         });
         if (jobs.length === 0) return;
-        promiseAry = jobs.map(job => { this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid) });
+        promiseAry = jobs.map((job) => { this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid) });
 
         await Promise.all(promiseAry)
             .then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
@@ -190,11 +190,8 @@ class GridEditor extends Component {
             if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
         });
         if (jobs.length === 0) return;
-        promiseAry = jobs.map(job => {
-            return this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder });
-        })
-        await Promise.all(promiseAry)
-            .then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
+        promiseAry = jobs.map((job) => this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder }))
+        await Promise.all(promiseAry).then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
     }
     shouldComponentUpdate(nextProps) {
         if (this.props.DesignDetailStep !== nextProps.DesignDetailStep) {

@@ -36,7 +36,6 @@ const ViewWrapper = styled(Grid)`
     width: 100%;
   }
 `;
-
 const GoStepBtn = styled(Button)`
   margin-left: 0.5rem;
   /* position: absolute;
@@ -45,11 +44,14 @@ const GoStepBtn = styled(Button)`
   /* background-color: #57BBBA;
   border: 1px solid #57BBBA; */
 `;
-
 const BtnWrap = styled.div`
   position: absolute;
   top: 0;
   right: 1rem;
+`;
+const TransFormBtnContainer = styled.div`
+  position: relative;
+  margin-top: 35px;
 `;
 
 class DetailView extends Component {
@@ -133,7 +135,7 @@ class DetailView extends Component {
     const len = Object.keys(view).length;
     return (
       <div>
-        <div style={{ position: "relative", marginTop: "35px" }}>
+        <TransFormBtnContainer >
           <BtnWrap>
             {/* {this.props.isTeam ? (
               <Button type="button" size="small" onClick={this.onPreviewMode}>
@@ -146,7 +148,7 @@ class DetailView extends Component {
                   디자인 형식 변경</GoStepBtn>
               )}
           </BtnWrap>
-        </div>
+        </TransFormBtnContainer>
 
         {len > 0 ? (
           <ViewWrapper>
