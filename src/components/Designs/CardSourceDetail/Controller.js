@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import opendesign_style from "opendesign_style";
-import TextController from "./TextController";
+import TextController from "./TextControllerClassic";
 import FileController from "./FileController";
 import EmbController from "./EmbController";
 
@@ -104,3 +104,5 @@ export class Controller extends Component {
     );
   }
 }
+
+
