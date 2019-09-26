@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import IconView from "source/IconView"
 import iEdit from "source/edit.png"
+import iForked from "source/baseline_library_books_black_48dp.png"
+import iThumbUp from "source/thumbup_icon_black.png"
 import iINOUT from "source/inout.svg"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
+import { Modal} from "semantic-ui-react";
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import dots from "source/baseline_more_vert_black_48dp.png";
@@ -14,6 +17,309 @@ import NumberFormat from "modules/NumberFormat";
 
 import Cross from "components/Commons/Cross"
 
+
+const Arrow = styled.div`
+    width: 12px;
+    height: 14px;
+    bacgkground: #707070;
+    opacity: 0.55;
+    border-left: 14px solid #707070;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    margin:22px 3px;
+`;
+ 
+const LoadingBox = styled.div`
+    width:100%;
+    display:flex;
+    margin-left:65px;
+    opacity:0.5;
+    .titleBox{
+        width:197px;
+        height:25px;
+        margin-top:15px;
+        background-color:#707070;
+        border-radius:15px;
+    }
+    .thumbnailBox{
+        width:170px;
+        height:170px;
+        margin-left:14px;
+        margin-top:9px;
+        background-color:#D6D6D6;
+        border-radius:15px;
+    }
+    .InfoBox{
+        margin-left:51px;
+            .cateBox{
+                width:95px;
+                height:25px;
+                margin-top:15px;
+                background-color:#FFA0A0;
+                border-radius:15px;
+            }
+            .MemberBox{
+                width:273px;
+                height:30px;
+                margin-top:15px;
+                background-color:#707070;
+                border-radius:15px;
+            }
+            .ExplainBox{
+                width:1284px;
+                height:90px;
+                display:flex;
+                margin-top:11px;
+                .explain_label{
+                    width:621px;
+                    height:100%;
+                    margin-right:42px;
+                    background-color:#A3A7A3;
+                    border-radius:15px;
+                }
+            }
+            .cntBox{
+                width:250px;
+                height:25px;
+                margin-top:17px;
+                background-color:#0FA0A0;
+                border-radius:15px;
+            }
+       
+        }
+        .BtnBox{
+            margin-left:auto;
+            margin-right:72px;
+            order:2;
+            .likeBox{
+                width:95px;
+                height:29px;
+                margin-left:auto;
+                margin-right:0px;
+                margin-top:15px;
+                background-color:#FFD6D6;
+                border-radius:15px;
+            }
+            .modifyBox{
+                width:183px;
+                height:45px;
+                margin-left:auto;
+                margin-right:0px;
+                margin-top:37px;
+                background-color:#D6D6D6;
+                border-radius:15px;
+            }
+            .timeBox{
+                width:147px;
+                height:55px;
+                margin-left:auto;
+                margin-right:0px;
+                margin-top:43px;
+                background-color:#D6D6D6;
+                border-radius:15px;
+            }
+    }
+
+`
+const Header=styled.div`
+    width:1920px;
+    height:237px;
+    background-color:#EFEFEF;
+    display:flex;
+`
+const GroupHeaderBox=styled.div`
+    width:100%;
+    display:flex;
+    padding-left:65px;
+    .profileBox{
+        width:max-content;
+        .parentBox{
+            display:flex;
+            cursor:default;
+            .grandparent{
+                width:15px;
+                height:15px;
+                margin-top:22px;
+                opacity:0.55;
+                transform:rotate(90deg);
+            }
+            .parent{
+                margin-left:10px;
+                margin-top:17px;
+                font-size:20px;
+                font-weight:300;
+                color:#707070;
+           }    
+        }
+    }
+    .ExplainBox{
+        margin-left:10px;
+        position:relative;
+        .title{
+            width:max-content;
+            height:30px;
+            color:#707070;
+            font-size:20px;
+            font-weight:500;
+            font-family:Noto Sans KR;
+            text-align:left;
+            line-height:25px;
+            margin-top:15px;
+        }
+        .board{
+            margin-left:50px;
+            .creater{
+                width:max-content;
+                height:30px;
+                margin-top:5px;
+                font-size:17px;
+                font-weight:500;
+                color:#707070;
+                text-align:left;
+                line-height:29px;
+            }
+            .explanationRegion{
+                
+                display:flex;
+                height:90px;
+                font-size:17px;
+                color:#707070;
+                line-height:30px;
+                margin-top:10px;
+                .explaination{
+                    width:500px;
+                    margin-right:41px;
+                    word-wrap:break-word;
+                    overflow:hidden;
+                }
+            }
+        }
+        .CountView{
+            width:300px;
+            height:22px;
+            position:absolute;
+            display:flex;
+            left:231px;
+            bottom:0px;
+            .countItem{
+                
+                width:75px;
+                height:100%;
+                display:flex;
+                
+                .count_label{
+                    width:54px;
+                    height:100%
+                    margin-left:5px;
+                }
+            } 
+        }
+    }
+
+    .ButtonRegion{
+
+        margin-left:auto;
+        margin-right:72px;
+        cursor:pointer;
+
+        .ButtonItem{
+            width:100%;
+            height:30px;
+            display:flex;
+            align-items:flex-end;
+            margin-top:26px;
+
+            .button_text_label{
+                width:150px;
+                height:20px;
+                font-size:17px;
+                font-weight:300;
+                font-family:Noto Sans KR;
+                text-align:right;
+                color:#707070
+            }
+        }
+        .time_label{
+            font-size:17px;
+            font-weight:300;
+            font-family:Noto Sans KR;
+            color:#707070;
+            letter-spacing:0;
+            text-align:right;
+            line-height:27px;
+            margin-top:46px;
+        }
+        .Join_label{
+            margin-left:auto;
+            margin-top:15px;
+            width:79px;
+            height:40px;
+            font-size:20px;
+            color:#FF0000;
+            cursor:pointer
+        }
+    }
+    
+
+    
+`
+const MiniIcon = styled.div`
+    width:17px;
+    height:17px;
+    background-image: ${props => `url(${props.imageURL})`};
+    background-position:center center;
+    background-size:contain;
+    background-repeat:no-repeat;
+    opacity:${props=>props.opacity};
+
+`
+const NormalIcon=styled.div`
+    width:40px;
+    height:40px;
+    margin-left:5px;
+    background-image: ${props => `url(${props.imageURL})`};
+    background-position:center center;
+    background-size:contain;
+    background-repeat:no-repeat;
+    opacity:${props=>props.opacity};
+
+`
+const ThumbnailBox=styled.div`
+        width:170px;
+        height:170px;
+        margin-left:14px;
+        margin-top:9px;
+        border-radius:15px;
+        background-color:#D6D6D6;
+        background-repeat:no-repeat;
+        background-size:cover;
+        background-position:center center;
+        background-image:${props => `url(${props.imageURL})`};
+`
+const PopupBox = styled.div`
+    position:absolute;
+    top:47px;
+    left:763px;
+    width:396px;
+    height:138px;
+    background:#FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow:0px 3px 6px #000000;
+    border-radius:5px;
+    opacity:1;
+    z-index:500;
+    .message_label{
+        width:273px;
+        height:69px;
+        margin-top:31px;
+        margin-left:62px;
+        font-size:20px;
+        font-weight:500;
+        font-family:Noto Sans KR;
+        color:#707070
+        text-align:center;
+        line-height:40px;
+    }
+`
 const GroupInfoData = {
     userName: "name",
     child_update_time: "0",
@@ -31,16 +337,6 @@ const GroupInfoData = {
     design: 0,
     description: "Description"
 };
-
-const Arrow = styled.div`
-    width: 12px;
-    height: 14px;
-    bacgkground: #707070;
-    opacity: 0.55;
-    border-left: 14px solid #707070;
-    border-bottom: 6px solid transparent;
-    border-top: 6px solid transparent;
-`;
 
 class GroupInfoComponent extends Component {
     constructor(props) {
@@ -90,75 +386,72 @@ class GroupInfoComponent extends Component {
 
         const LoadingGroupInfo = () => {
             return (
-                <div style={{ opacity: ".5", marginLeft: "65px", display: "flex", width: "100%" }}>
+                <LoadingBox>
                     <div>
-                        <div style={{ marginTop: "15px", width: "197px", height: "29px", backgroundColor: "#707070", borderRadius: "15px" }} />
-                        <div style={{ marginLeft: "14px", marginTop: "9px", width: "170px", height: "170px", backgroundColor: "#D6D6D6", borderRadius: "15px" }} />
+                        <div className="titleBox" />
+                        <div className="thumbnailBox" />
                     </div>
-                    <div style={{ marginLeft: "51px" }}>
-                        <div style={{ marginTop: "15px", width: "95px", height: "25px", backgroundColor: "#FFA0A0", borderRadius: "15px" }} />
-                        <div style={{ marginTop: "15px", width: "273px", height: "30px", backgroundColor: "#707070", borderRadius: "15px" }} />
-                        <div style={{ marginTop: "11px", width: "621px", height: "90px", backgroundColor: "#A3A7A3", borderRadius: "15px" }} />
-                        <div style={{ marginTop: "17px", width: "250px", height: "25px", backgroundColor: "#0FA0A0", borderRadius: "15px" }} />
+                    <div className="InfoBox">
+                        <div className="cateBox"/>
+                        <div className="MemberBox" />
+                        <div className="ExplainBox">
+                            <div className="explain_label"/>
+                            <div className="explain_label"/>
+                        </div>
+                        <div className="cntBox" />
                     </div>
-                    <div style={{ marginLeft: "42px" }}>
-                        <div style={{ marginTop: "15px", width: "95px", height: "25px", borderRadius: "15px" }} />
-                        <div style={{ marginTop: "15px", width: "273px", height: "30px", borderRadius: "15px" }} />
-                        <div style={{ marginTop: "11px", width: "621px", height: "90px", backgroundColor: "#A3A7A3", borderRadius: "15px" }} />
-                        <div style={{ marginTop: "17px", width: "250px", height: "25px", borderRadius: "15px" }} />
+                    <div className="BtnBox">
+                        <div className="likeBox" />
+                        <div className="modifyBox" />
+                        <div className="timeBox" />
                     </div>
-                    <div style={{ marginLeft: "auto", marginRight: "72px", order: "2" }}>
-                        <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "15px", width: "95px", height: "29px", backgroundColor: "#FFD6D6", borderRadius: "15px" }} />
-                        <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", width: "183px", height: "45px", backgroundColor: "#D6D6D6", borderRadius: "15px" }} />
-                        <div style={{ marginLeft: "auto", marginRight: "0px", marginTop: "43px", width: "147px", height: "55px", backgroundColor: "#D6D6D6", borderRadius: "15px" }} />
-                    </div>
-                </div>)
+                </LoadingBox>)
         }
-        const JoinModal = () => {
-            const title = this.props.GroupInfo && this.props.GroupInfo.title;
+        // const JoinModal = () => {
+        //     const title = this.props.GroupInfo && this.props.GroupInfo.title;
 
-            return (
-                this.state.showPopup === 1 &&
-                <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
-                    <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
-                        <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-                    </div>
-                    <div style={{
-                        marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
-                        fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-                    }}>
-                        {title && title.slice(0, 20)}<br />
-                        가입 신청을 하시겠습니까?</div>
-                    <div onClick={() => this.handleShowPopup(-1)} style={{
-                        cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
-                        textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
-                        color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-                    }}>
-                        네, 가입합니다.</div>
-                </div>
+        //     return (
+        //         this.state.showPopup === 1 &&
+        //         <CustomModal>
+        //             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+        //                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+        //             </div>
+        //             <div style={{
+        //                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
+        //                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
+        //             }}>
+        //                 {title && title.slice(0, 20)}<br />
+        //                 가입 신청을 하시겠습니까?</div>
+        //             <div onClick={() => this.handleShowPopup(-1)} style={{
+        //                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
+        //                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
+        //                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
+        //             }}>
+        //                 네, 가입합니다.</div>
+        //         </CustomModal>
 
-            );
-        }
-        const JoinCancelModal = () => {
-            const title = this.props.GroupInfo.title;
-            return (
-                this.state.showPopup === 2 &&
-                <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
-                    <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
-                        <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-                    </div>
-                    <div style={{
-                        marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
-                        fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-                    }}>{title && title.slice(0, 20)}<br />가입 신청을 취소 하시겠습니까?</div>
-                    <div onClick={() => this.handleShowPopup(-1)} style={{
-                        cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
-                        textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
-                        color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-                    }}>네, 취소합니다.</div>
-                </div>
-            );
-        }
+        //     );
+        // }
+        // const JoinCancelModal = () => {
+        //     const title = this.props.GroupInfo.title;
+        //     return (
+        //         this.state.showPopup === 2 &&
+        //         <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
+        //             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+        //                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+        //             </div>
+        //             <div style={{
+        //                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
+        //                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
+        //             }}>{title && title.slice(0, 20)}<br />가입 신청을 취소 하시겠습니까?</div>
+        //             <div onClick={() => this.handleShowPopup(-1)} style={{
+        //                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
+        //                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
+        //                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
+        //             }}>네, 취소합니다.</div>
+        //         </div>
+        //     );
+        // }
         const GroupInfo = (props) => {
             let info = GroupInfoData;
             let parentName = null;
@@ -175,47 +468,51 @@ class GroupInfoComponent extends Component {
 
             console.log("info:", info);
             return (
-                <div style={{ paddingLeft: "65px", width: "100%", display: "flex" }}>
-                    <div style={{ width: "max-content" }}>
+                <GroupHeaderBox>
+                    <div className="profileBox">
                         {parentName &&
-                            <div style={{ display: "flex", cursor: "default" }}>
-                                {info.grand_parentTitle && <React.Fragment><img src={dots} alt={dots} title={info.grand_parentTitle} style={{ height: "15px", width: "15px", transform: "rotate(90deg)", marginTop: "22px", opacity: "0.55" }} /><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></React.Fragment>}
-                                {info.parentName && <React.Fragment><div style={{ marginLeft: "10px", marginTop: "17px", fontSize: "20px", fontWeight: "300", color: "#707070", width: "max-content" }}>{parentName}</div><Arrow style={{ marginLeft: "10px", marginTop: "22px" }} /></React.Fragment>}
+                            <div className="parentBox">
+
+                                {info.grand_parentTitle && 
+                                <React.Fragment>
+                                <img src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent"/> <Arrow/>
+                                </React.Fragment>}
+                                {info.parentName && 
+                                <React.Fragment>
+                                <div className="parent">{parentName}</div><Arrow/>
+                                </React.Fragment>}
+
                             </div>}
                     </div>
 
                     <div >
-                        <div style={{ marginLeft: "10px" }}>
-                            <div style={{ marginTop: "15px", width: "max-content", height: "29px", color: "#707070", fontSize: "20px", textAlign: "left", lineHeight: "25px", fontFamily: "Noto Sans KR", fontWeight: "500" }}><TextFormat txt={info.title} /></div>
+                        <div className="ExplainBox">
+                            <div className="title"><TextFormat txt={info.title} /></div>
                             <div style={{ display: "flex" }}>
-                                <div style={{
-                                    marginLeft: "14px", marginTop: "9px", width: "170px", height: "170px", borderRadius: "15px",
-                                    backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center",
-                                    backgroundImage: info && info.img && info.img.l_img ? `url(${info.img.l_img})` : `url(${noimg})`
-                                }} />
-                                <div style={{ marginLeft: "50px" }}>
-                                    <div style={{ marginTop: "5px", width: "max-content", height: "30px", color: "#707070", lineHeight: "29px", fontSize: "17px", textAlign: "left", fontWeight: "500" }}>개설자 : {info.userName && info.userName.slice(0, 32)}</div>
-                                    <div style={{ marginTop: "10px", height: "90px", display: "flex", fontSize: "17px", color: "#707070", lineHeight: "30px" }}>
-                                        <div style={{ width: "500px", wordWrap: "break-word", overflow: "hidden" }}>
+                                <ThumbnailBox imageURL={ info && info.img && info.img.l_img ? info.img.l_img : noimg} />
+                                <div className="board">
+                                    <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
+                                    <div className="explanationRegion">
+                                        <div className="explaination">
                                             {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
                                         </div>
-                                        <div style={{ wordWrap: "break-word", marginLeft: "41px", width: "500px", overflow: "hidden" }}>
+                                        <div className="explaination">
                                             {info.explanation && info.explanation.slice(200, 400)}
                                             {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
                                         </div>
                                     </div>
-                                    <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-                                        <div id="count-view" style={{ display: "flex", marginRight: "22px", cursor: "default" }}>
-                                            <div><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
-                                            <div style={{ marginLeft: "5.85px", fontSize: "15px", width: "max-content", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.view || 0)}</div>
+                                    <div className="CountView">
+                                        <div id="count-view" className="countItem">
+                                            <MiniIcon><IconView width="17.24px" height="11.41px" fill="#707070" /></MiniIcon>
+                                            <div className="count_label">{NumberFormat(info.view || 0)}</div>
                                         </div>
-                                        <div id="count-like" style={{ display: "flex", marginRight: "0px", cursor: "default" }}>
-                                            <div><i style={{ color: "#707070", fontSize: "14px" }} className="material-icons">thumb_up</i></div>
-                                            <div style={{ marginLeft: "6px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.like || 0)}</div>
+                                        <div id="count-like" className="countItem">
+                                            <MiniIcon imageURL={iThumbUp} opacity="0.5"/>
+                                            <div className="count_label">{NumberFormat(info.like || 0)}</div>
                                         </div>
-                                        <div id="count-childs" style={{ display: "flex", cursor: "default" }}>
-                                            <div><i style={{ color: "#707070", fontSize: "17px" }} className="material-icons">library_books</i></div>
-                                            <div style={{ marginLeft: "5px", fontSize: "15px", width: "34px", height: "22px", lineHeight: "40px", textAlign: "left", fontWeight: "500", color: "#707070" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
+                                        <div id="count-childs" className="countItem">
+                                            <MiniIcon imageURL={iForked}/>
+                                            <div className="count_label">{NumberFormat(info.design || 0 + info.group || 0)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,39 +520,35 @@ class GroupInfoComponent extends Component {
                         </div>
                     </div>
 
-                    <div style={{ marginLeft: "auto", marginRight: "72px" }}>
+                    <div className="ButtonRegion">
                         {isEditor ?
                             <React.Fragment>
-                                <div style={{ display: "flex", marginTop: "25px", cursor: "pointer" }} onClick={this.gotoGroupModify}>
-                                    <div style={{ marginLeft: "auto", width: "150px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "right", lineHeight: "40px", color: "#707070" }}>그룹 정보 수정하기</div>
-                                    <div style={{ height: "30px", width: "40px", opacity: "1", background: `transparent url(${iEdit})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                                <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                                    <div className="button_text_label">그룹 정보 수정하기</div>
+                                    <NormalIcon imageURL={iEdit} opacity={0.5}/>
                                 </div>
-                                <div style={{ display: "flex", marginTop: "35px", cursor: "pointer" }} onClick={this.changeEditMode}>
-                                    <div style={{ marginLeft: "auto", width: "98px", height: "25px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: manager ? "#FF0000" : "#707070" }}>{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                    <div style={{ height: "30px", width: "40px", opacity: manager ? "0.1" : ".6", background: `transparent url(${iINOUT})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                                <div className="ButtonItem" onClick={this.changeEditMode}>
+                                    <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                    <NormalIcon imageURL={iINOUT} opacity={0.5}/>
                                 </div>
                             </React.Fragment>
                             :
                             <React.Fragment>
-                                <div style={{
-                                    marginLeft: "auto", marginRight: "0px", marginTop: "15px",
-                                    width: "79px", height: "29px",
-                                    fontSize: "20px", color: "#FF0000", cursor: "pointer"
-                                }}>
+                                <div className="Join_label">
                                     <JoinGroupContainer />
                                 </div>
-                                <div onClick={this.like} style={{ marginLeft: "auto", marginRight: "0px", marginTop: "37px", marginBottom: "43px", width: "183px", height: "45px", display: "flex", cursor: "pointer" }}>
-                                    <div style={{ width: "133px", height: "25px", marginTop: "10px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                    <div style={{ height: "45px", width: "45px", marginLeft: "5px", opacity: like ? "1" : "0.45", background: `transparent url(${thumbup})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+                                <div onClick={this.like} className="ButtonItem">
+                                    <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                    <NormalIcon opacity={ like ? "1" : "0.45"} imageURL={thumbup}/>
                                 </div>
                             </React.Fragment>
                         }
-                        <div style={{ marginTop: "46px", marginLeft: "auto", marginRight: "0px", width: "max-content", height: "55px", textAlign: "right", lineHeight: "30px", fontWeight: "300", fontSize: "17px", fontFamily: "Noto Sans KR", color: "#707070", letterSpacing: "0" }}>
+                        <div className="time_label">
                             <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
                             <div>{info && DateFormat(info.create_time)} 등록</div>
                         </div>
                     </div>
-                </div >
+                </GroupHeaderBox >
             )
         }
         const info = this.props.GroupInfo
@@ -263,21 +556,14 @@ class GroupInfoComponent extends Component {
             <React.Fragment>
                 {
                     this.state.likeDialog &&
-                    <div style={{
-                        position: "absolute", top: "47px", left: "763px", width: "396px", height: "138px",
-                        background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1"
-                    }}>
-                        <div style={{
-                            marginTop: "31.5px", marginLeft: "62.5px", width: "273px", height: "69px", fontFamily: "Noto Sans KR",
-                            fontSize: "20px", lineHeight: "40px", textAlign: "center", fontWeight: "500", color: "#707070"
-                        }}>관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
+                    <PopupBox>
+                        <div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
                  </div>
-                    </div>
+                    </PopupBox>
                 }
-                {this.state.joinDialog === false ? <JoinModal /> : <JoinCancelModal />}
-                <div style={{ width: "1920px", height: "237px", backgroundColor: "#EFEFEF", display: "flex" }}>
-                    {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
-                </div >
+                <Header>
+                 {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
+                </Header >
             </React.Fragment >)
     }
 }

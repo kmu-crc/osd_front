@@ -236,7 +236,7 @@ class SignInModal extends Component {
                 {this.state.findPW === false?
             <CustomModal open={open} onClose={this.onClose}>
                 <Modal.Content>
-                    <div className="title">OPEN SOURCE DESIGN, OPEN DESIGN</div>
+                    <div className="title">OPEN SOURCE DESIGN</div>
                     <MainBox onSubmit={this.signin}>
                         <div className="itemBox">
                                     <div className="titleLabel">아이디</div>
@@ -267,7 +267,7 @@ class SignInModal extends Component {
             //< ================  비밀번호 찾기 ===================== >
             <SmallCustomModal open={open} onClose={this.onClose}>
             <Modal.Content>
-                <div className="title">OPEN SOURCE DESIGN, OPEN DESIGN</div>
+                <div className="title">OPEN SOURCE DESIGN</div>
                 <MainBox onSubmit={this.signin}>
                     <div className="titleLabel">비밀번호 찾기</div>
                     <div className="subLabel">비밀번호를 찾고자하는 아이디를 입력해주세요</div>
