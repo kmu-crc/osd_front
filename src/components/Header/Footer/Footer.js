@@ -6,8 +6,8 @@ const FooterContainer = styled.div`
     width:100%;
     height:32px;
     display:flex;
-    // position:fixed;
-    // bottom:0;
+    position:fixed;
+    bottom:0;
     margin-height:100%;
     font-size:15px;
     font-weight:500;
