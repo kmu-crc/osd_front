@@ -11,7 +11,6 @@ const FileWrap = styled.div`
   height: 70px;
   margin-right: 1rem;
   position: relative;
-  float: left;
   &::before {
     display: block;
     content: "";

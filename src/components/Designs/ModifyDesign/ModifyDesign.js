@@ -191,12 +191,14 @@ const ImageBox=styled.div`
     background: ${props => `url(${props.imageURL})`};
     background-size:cover;
     background-position:center center;
+    position:relative;
     .forkedImg{
+      z-index:500;
       width:32px;
       height:70px;
       position:absolute;
       right:21px;
-      background-image:${forked};
+      background-image:url(${forked});
       background-size:cover;
     }
 `
@@ -718,10 +720,10 @@ class ModifyDesign extends Component {
               <ContentsBox>
                 <ThumbnailBox>
                 <div className="title">프로필 사진</div>
-                <ImageBox imageURL={thumbnailURL==null?noimg:thumbnailURL}/>
+                <ImageBox imageURL={thumbnailURL==null?noimg:thumbnailURL}>
                   {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
                     <div className="forkedImg"/>}
-
+                </ImageBox>
                 <div className="findThumbnailBox">
                   <div className="findThumbnailBtn">
                     <label className="findThumbnailText" htmlFor="file">찾아보기</label>

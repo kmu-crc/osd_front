@@ -85,7 +85,7 @@ const opendesign_style = {
     width: 330,
     height: 330,
     marginRight: 63,
-    marginBottom: 80,
+    marginBottom: 63,
     marginBottomLast: 26,
     small: { marginRightLast: 87, cols: 1, },
     medium: { marginRightLast: 72, cols: 3, },
