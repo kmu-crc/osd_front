@@ -10,6 +10,92 @@ const EditStepDialog = styled(Modal)`
     border-radius: 5px;
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px #FF0000;
+    .close-box {
+        position: absolute;
+        left: 100%;
+        margin-top: 7.32px;
+        margin-left: 34.32px;
+    }
+    .edit-step-name-title {
+        width: max-content;
+        height: 29px;
+        line-height: 29px;
+        color: #707070;
+        font-family: Noto Sans KR;
+        font-size: 20px;
+        font-weight: 500;
+        text-align: left;
+        margin-top: 43.5px;
+        margin-left: 109.5px;
+    }
+    .edit-step-name-content-container {
+        display: flex;
+        width: 575.5px;
+        margin-top: 40px;
+        margin-left: 109.5px;
+        .edit-step-name-content-title {
+            width: 40px;
+            height: 29px;
+            line-height: 29px;
+            color: #707070;
+            font-family: Noto Sans KR;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: left;
+        }
+        .edit-step-name-content-input-wrapper {
+            width: 505.5px;
+            height: 56px;
+            margin-left: 34px;
+            border-radius: 5px;
+            background-color: #EFEFEF;
+        }
+        .edit-step-name-content-input-style {
+            width: 100%;
+            height: 100%;
+            padding-top: 16px;
+            padding-left: 10px;
+            padding-bottom: 16px;
+            padding-right: 10px;
+            border: none;
+            background-color: transparent;
+        }
+    }
+    .edit-step-name-button-container {
+        display: flex;
+        width: 576px;
+        margin-left: auto;
+        margin-right: 75px;
+        margin-top: 38px;
+
+        .edit-step-name-button-submit {
+            margin-left: auto;
+            text-align: middle;
+            color: #FF0000;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            line-height: 29px;
+            border-bottom: 1.5px solid #FF0000;
+            cursor: pointer;
+        }
+        .edit-step-name-button-cancel {
+            margin-left: 25px;
+            width: max-content;
+            border: none;
+            background: none;
+            height: 40px;
+            line-height: 40px;
+            color: #707070;
+            padding-bottom: 1.5px;
+            border-bottom: 1.5px solid #707070;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            cursor: pointer;
+        }
+    }
 `;
 class EditStepModal extends Component {
     state = { title: "", where: null }
@@ -53,21 +139,20 @@ class EditStepModal extends Component {
         }
     }
     render() {
-        // console.log("edit modal:", this.state, this.props);
         return (<EditStepDialog open={this.props.open} closeOnDimmerClick={false} onClose={this.onClose}>
-            <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+            <div onClick={this.onClose} className="close-box">
                 <Cross angle={45} color={"#FFFFFF"} weight={2} width={32.36} height={32.36} />
             </div>
-            <div style={{ width: "max-content", height: "29px", lineHeight: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "43.5px", marginLeft: "109.5px" }}>단계이름 수정</div>
-            <div style={{ display: "flex", width: "575.5px", marginTop: "40px", marginLeft: "109.5px" }}>
-                <div style={{ width: "40px", height: "29px", lineHeight: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left" }}>제목</div>
-                <div style={{ width: "505.5px", height: "56px", borderRadius: "5px", marginLeft: "34px", backgroundColor: "#EFEFEF" }}>
-                    <input name="title" onChange={this.onChange} style={{ width: "100%", height: "100%", paddingTop: "16px", paddingRight: "10px", paddingBottom: "16px", paddingLeft: "10px", border: "none", backgroundColor: "transparent" }} value={this.state.title || ""} />
+            <div className="edit-step-name-title">단계이름 수정</div>
+            <div className="edit-step-name-content-container">
+                <div className="edit-step-name-content-title">제목</div>
+                <div className="edit-step-name-content-input-wrapper">
+                    <input className="edit-step-name-content-input-style" name="title" onChange={this.onChange} value={this.state.title || ""} />
                 </div>
             </div>
-            <div style={{ display: "flex", width: "576px", marginLeft: "auto", marginRight: "75px", marginTop: "38px" }}>
-                <div onClick={this.onSubmit} style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "29px", borderBottom: "1.5px solid #FF0000", cursor: "pointer" }}>수정하기</div>
-                <div onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} style={{ marginLeft: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>삭제</div>
+            <div className="edit-step-name-button-container">
+                <div className="edit-step-name-button-submit" onClick={this.onSubmit} >수정하기</div>
+                <div className="edit-step-name-button-cancel" onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} >삭제</div>
             </div>
         </EditStepDialog >)
     }

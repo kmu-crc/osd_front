@@ -4,60 +4,54 @@ import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
-// css 
-const SmallMinWidth = 0;
-const SmallMaxWidth = 480;
-const MediumMinWidth = 480;
-const MediumMaxWidth = 1440;
-const LargeMinWidth = 1440;
-const LargeMaxWidth = 1920;
 
+// css 
 const FlexContainer = styled.div`
-  @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
-    width: ${SmallMaxWidth}px;
+  @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+    margin-left: ${props => props.type === "design" ? 75 : props.type === "group" ? 10 : 10}px;
+    margin-left: ${props => props.type === "design" ? 75 : props.type === "group" ? 10 : 10}px;
+    width: ${osdcss.resolutions.SmallMaxWidth}px;
   }
-  @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${MediumMaxWidth}px) {
-    width: ${MediumMaxWidth}px;
+  @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+    margin-left: ${props => props.type === "design" ? 162 : props.type === "group" ? 10 : 67}px;
+    width: ${osdcss.resolutions.MediumMaxWidth}px;
   }
-  @media only screen and (min-width : ${LargeMinWidth}px) and (max-width : ${LargeMaxWidth}px) {
-    width: ${LargeMaxWidth}px;
+  @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+    margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+    width: ${osdcss.resolutions.LargeMaxWidth}px;
   }
-  @media only screen and (min-width : ${LargeMaxWidth}px){
-    width: ${LargeMaxWidth}px;
+  @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+    margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+    width: ${osdcss.resolutions.LargeMaxWidth}px;
   }
   padding: 0;
-  margin-left: 10px;
   position: relative;
 `;
-
 const FlexBox = styled.div`
   flex: 0 0 ${props => props.width}px;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
   margin-bottom: ${props => props.marginBottom}px;
   margin-right: ${props => props.marginRight}px;
-  &.bottom-last { 
-    margin-bottom: ${props => props.marginBottomLast}px; 
-  }
-
+  &.bottom-last { margin-bottom: ${props => props.marginBottomLast}px; }
   &.right-last { 
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
       margin-right: ${props =>
     props.type === "design" ? osdcss.design_margin.small.marginRightLast :
       props.type === "group" ? osdcss.group_margin.small.marginRightLast :
         props.type === "designer" ? osdcss.designer_margin.small.marginRightLast : 0}px; 
     }
-    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${MediumMaxWidth}px) {   margin-right: ${props =>
+    @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {   margin-right: ${props =>
     props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
       props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
         props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px; 
     }
-    @media only screen and (min-width : ${LargeMinWidth}px) and (max-width : ${LargeMaxWidth}px) {   margin-right: ${props =>
+    @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {   margin-right: ${props =>
     props.type === "design" ? osdcss.design_margin.large.marginRightLast :
       props.type === "group" ? osdcss.group_margin.large.marginRightLast :
         props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px; 
     }
-    @media only screen and (min-width : ${LargeMaxWidth}px){   margin-right: ${props =>
+    @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){margin-right: ${props =>
     props.type === "design" ? osdcss.design_margin.big.marginRightLast :
       props.type === "group" ? osdcss.group_margin.big.marginRightLast :
         props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px; 
@@ -66,7 +60,6 @@ const FlexBox = styled.div`
   display: inline-block;
   position: relative;
 `;
-
 const OutBtn = styled.button`
   position: absolute;
   top: 0;
@@ -114,9 +107,9 @@ const ScrollIcon = styled.div`
     width: 100%;
   }
 `;
+
 class ScrollList extends Component {
   state = { hasMore: true, loading: false, page: 0, gap: 150, cols: 0 };
-
   componentDidMount() {
     !this.props.manual && window.addEventListener("scroll", this.handleScroll, true);
     window.addEventListener("resize", this.handleResize, false);
@@ -164,16 +157,16 @@ class ScrollList extends Component {
 
   getColumnNumber(type) {
     let cols = 0;
-    let w = window.innerWidth > LargeMaxWidth ? LargeMaxWidth : window.innerWidth;
-    if (SmallMinWidth <= w && w < SmallMaxWidth) {
+    let w = window.innerWidth > osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth : window.innerWidth;
+    if (osdcss.resolutions.SmallMinWidth <= w && w < osdcss.resolutions.SmallMaxWidth) {
       cols = type === "design" ? osdcss.design_margin.small.cols :
         type === "group" ? osdcss.group_margin.small.cols :
           osdcss.designer_margin.small.cols;
-    } else if (MediumMinWidth <= w && w < MediumMaxWidth) {
+    } else if (osdcss.resolutions.MediumMinWidth <= w && w < osdcss.resolutions.MediumMaxWidth) {
       cols = type === "design" ? osdcss.design_margin.medium.cols :
         type === "group" ? osdcss.group_margin.medium.cols :
           osdcss.designer_margin.medium.cols;
-    } else if (LargeMinWidth <= w && w < LargeMaxWidth) {
+    } else if (osdcss.resolutions.LargeMinWidth <= w && w < osdcss.resolutions.LargeMaxWidth) {
       cols = type === "design" ? osdcss.design_margin.large.cols :
         type === "group" ? osdcss.group_margin.large.cols :
           osdcss.designer_margin.large.cols;
@@ -193,26 +186,23 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { hasMore, loading, cols } = this.state;
-    return (<React.Fragment>
-      {dataListAdded && dataListAdded.length > 0 ?
-        <FlexContainer type={type} ref={this.myRef} >
-          {dataListAdded.map((item, i) => {
-            const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
-            const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
-            return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
-              {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
-              {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>삭제</OutBtn>}
-              {type === "design" ? <Design data={item} /> : null}
-              {type === "group" ? <Group data={item} /> : null}
-              {type === "designer" ? <Designer data={item} /> : null}
-            </FlexBox>)
-          })}
-          {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
-          {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>스크롤<i className="material-icons">arrow_drop_down</i></ScrollIcon>}
-          {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-        </FlexContainer>
-        : <NoData>데이터가 없습니다.</NoData>}
-    </React.Fragment>)
+    return (dataListAdded && dataListAdded.length > 0 ?
+      <FlexContainer cols={cols} type={type} ref={this.myRef} >
+        {dataListAdded.map((item, i) => {
+          const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
+          const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
+          return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+            {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
+            {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>삭제</OutBtn>}
+            {type === "design" ? <Design data={item} /> : null}
+            {type === "group" ? <Group data={item} /> : null}
+            {type === "designer" ? <Designer data={item} /> : null}
+          </FlexBox>)
+        })}
+        {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
+        {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>스크롤<i className="material-icons">arrow_drop_down</i></ScrollIcon>}
+        {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
+      </FlexContainer> : <NoData>데이터가 없습니다.</NoData>)
   }
 }
 

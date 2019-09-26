@@ -16,8 +16,8 @@ class ModifyDesignSection03 extends Component{
               <div style={DesignEditor_content_Box}>
                 <div style={DesignEditor_Step_Box}></div>
                 <div style={{ display: "flex" }}>
-                  <CreateStep marginRight="73px" onClick={() => { alert("??") }} step={"단계"} />
-                  <CreateStep marginRight="48px" disabled onClick={() => { alert("??") }} step={"단계"} />
+                  <CreateStep marginRight={73} onClick={() => { alert("??") }} step={"단계"} />
+                  <CreateStep marginRight={48} disabled onClick={() => { alert("??") }} step={"단계"} />
                   <TipDiv txt="디자인을 등록 후에도 단계 / 컨텐츠를 수정할 수 있습니다." />
                 </div>
               </div>
@@ -27,12 +27,12 @@ class ModifyDesignSection03 extends Component{
                 </div>
               </div>
               <div style={{ display: "flex" }}>
-                <div><CreateStep marginRight="73px" onClick={() => { alert("??") }} step={"단계"} /></div>
-                <div><CreateCard marginRight="321px" onClick={this.completed} step={"카드"} /></div>
+                <div><CreateStep marginRight={73} onClick={() => { alert("??") }} step={"단계"} /></div>
+                <div><CreateCard marginRight={321} onClick={this.completed} step={"카드"} /></div>
                 <TipDiv txt="단계 없이 카드 하나만으로도 등록이 가능합니다." />
               </div>
               <div style={{ display: "flex" }}>
-                <div><CreateStep marginRight="73px" disabled onClick={() => { alert("??") }} step={"단계"} /></div>
+                <div><CreateStep marginRight={73} disabled onClick={() => { alert("??") }} step={"단계"} /></div>
                 <div></div>
                 <div></div>
               </div>

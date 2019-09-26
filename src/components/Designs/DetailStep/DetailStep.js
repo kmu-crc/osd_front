@@ -30,9 +30,11 @@ const BoardMask = styled.div`
   height: 100%;
   overflow: hidden;
   padding-bottom: 50px;
+  overflow-x: ${props => props.overflowX};
 `;
 
 const BoardWrap = styled.ul`
+  width: ${props => props.width}px;
   height: 100%;
   list-style: none;
 `;
@@ -40,6 +42,12 @@ const BoardWrap = styled.ul`
 const BtnBox = styled.div`
   width: 100%;
   z-index: 100;
+  .left {
+    display: ${props => props.left};
+  }
+  .right {
+    display: ${props => props.right};
+  }
 `;
 const BoardController = styled.button`
   position: absolute;
@@ -242,53 +250,29 @@ class DetailStep extends Component {
   render() {
     let step = this.props.DesignDetailStep;
     return (
-      <ContentBox ref={ref => (this.ContentBox = ref)}>
+      <ContentBox
+        ref={ref => (this.ContentBox = ref)}>
         <Container padded={true}>
           <Board>
-            <BtnBox>
-              <BoardController
-                className="left"
-                style={{ display: this.state.left ? "block" : "none" }}
-                onClick={this.leftButton}
-              >
+            <BtnBox
+              left={this.state.left ? "block" : "none"} right={this.state.right ? "block" : "none"}>
+              <BoardController className="left" onClick={this.leftButton}>
                 <Icon name="angle left" />
               </BoardController>
-              <BoardController
-                className="right"
-                style={{ display: this.state.right ? "block" : "none" }}
-                onClick={this.rightButton}
-              >
+              <BoardController className="right" onClick={this.rightButton}>
                 <Icon name="angle right" />
               </BoardController>
             </BtnBox>
             <BoardMask
-              onScroll={this.scrollEvent}
-              style={{
-                overflowX: `${this.state.scroll ? "scroll" : "hidden"}`
-              }}
-              ref={ref => (this.boardMask = ref)}
-            >
+              onScroll={this.scrollEvent} overflowX={this.state.scroll ? "scroll" : "hidden"} ref={ref => (this.boardMask = ref)}>
               <BoardWrap
-                ref={ref => (this.boardList = ref)}
-                style={{ width: `${this.state.boardWidth}px` }}
-              >
+                ref={ref => (this.boardList = ref)} width={this.state.boardWidth}>
                 {step.length > 0 &&
                   step.map((board, i) => (
                     <DesignBoardContainer
-                      step={step}
-                      designId={this.props.id}
-                      key={i}
-                      board={board}
-                      activeBoard={this.stateBoard}
-                      changeBoard={this.changeBoard}
-                    />
+                      step={step} designId={this.props.id} key={i} board={board} activeBoard={this.stateBoard} changeBoard={this.changeBoard} />
                   ))}
-                {this.props.isTeam > 0 ? (
-                  <CreateDesignBoardContainer
-                    designId={this.props.id}
-                    order={step.length}
-                  />
-                ) : null}
+                {this.props.isTeam > 0 ? (<CreateDesignBoardContainer designId={this.props.id} order={step.length} />) : null}
               </BoardWrap>
             </BoardMask>
           </Board>

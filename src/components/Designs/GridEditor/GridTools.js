@@ -4,18 +4,39 @@ import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
 
+const CreateStepContainer = styled.div`
+    position: relative;
+    display: flex;
+    width: 200px;
+    height: 77px;
+    border-radius: 15px;
+    background-clip: padding-box;
+    margin-right: ${props => props.marginRight}px;
+    border: 2px solid rgba(112,112,112, 0.5);
+    cursor: pointer;
+    .close-box{
+        poistion: relative;
+        margin-top: 22.5px;
+        margin-left: 19.5px;
+        margin-right: 15px;
+    }
+    .create-button{
+        opacity: ${props => props.disabled}; 
+        margin-top: 23px;
+        height: 29px;
+        color: #707070;
+        font-family: Noto Sans KR;
+        font-size: 20px;
+        text-align: left;
+        line-height: 29px;
+    }
+`;
 export const CreateStep = (props) => {
-    return (<div onClick={props.onClick}
-        style={{
-            position: "relative",
-            width: "200px", height: "77px", marginRight: props.marginRight, display: "flex",
-            borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
-            cursor: "pointer"
-        }}>
-        <div style={{ poistion: "relative", marginTop: "22.5px", marginLeft: "19.5px", marginRight: "15px" }}>
+    return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
+        <div className="close-box">
             <Cross angle={90} width={33} height={33} disabled={false} /></div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "left", lineHeight: "29px" }}>{props.step} 생성하기</div>
-    </div>)
+        <div className="create-button">{props.step} 생성하기</div>
+    </CreateStepContainer>)
 }
 export const CreateCard = (props) => {
     return (<div onClick={props.onClick}
@@ -125,7 +146,7 @@ export const ContentCard = (props) => {
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
                 <React.Fragment>
-                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute",  width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} />
+                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} />
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                         {props.card.title.slice(0, 10)}
                     </div>
