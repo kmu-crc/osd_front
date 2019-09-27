@@ -4,7 +4,7 @@ import MenuContext from "Global/Context/GlobalContext"
 
 const Container = styled.div`
     height: ${props => props.height};
-    width: 1920px;
+    width: 100%;
     top: 50px;
     position: fixed;
     z-index: 800;
@@ -21,13 +21,23 @@ const Container = styled.div`
 	transition: all 0.45s;
 `
 const MainCategory = styled.div`
+    width: 100%;
     position: fixed;
     z-index: 820;
-    width: 1920px;
     top: 50px;
     padding-left: 115px;
     display: flex;
     background-color: #FFFFFF;
+
+    @media only screen and (max-width : 900px) {
+    top:100px;
+    padding-left:30px;
+    justify-content:flex-start;
+    overflow:scroll;
+    ::-webkit-scrollbar { display: none; }
+
+    }
+
 `
 const MainCateElement = styled.div`
     z-index: 820;
@@ -40,20 +50,31 @@ const MainCateElement = styled.div`
     color: #FF0000;
     margin-right: 30px;    
     cursor: pointer;
+    white-space:nowrap;
+    
     &.selected {
         font-weight: 500;
     }
+
+
 `
 const SubCategory = styled.div`
     z-index: 810;
     position: fixed;
-    width: 1920px;
+    width:100%;
     top: 70px;
     padding-top: 17px;
     height:70px;
     display: flex;
     justify-content: center;
     background-color: #FFFFFF;
+    @media only screen and (max-width : 900px) {
+        top:120px;
+        overflow:scroll;
+        padding-left:30px;
+        justify-content: flex-start;
+        ::-webkit-scrollbar { display: none; }
+    }
 `
 const SubCateElement = styled.div`
     z-index: 810;
@@ -62,9 +83,11 @@ const SubCateElement = styled.div`
     font-weight: 300;
     font-family: Noto Sans KR;
     line-height: 29px;
-    text-align: left;
+    text-align: center;
     color: #707070;
     margin-right: 20px;    
+    white-space:nowrap;
+
     &.selected {
         color: #FF0000;
     }

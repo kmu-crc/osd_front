@@ -79,7 +79,8 @@ const Arrow = styled.span`
 `
 const InputBoard = styled.div`
       width:1422px;
-      height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
+      // height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
+      height:${props=>props.boardWidth}
       position:relative;
       padding-top:45px;
       border-radius:5px;
@@ -685,6 +686,8 @@ class ModifyDesign extends Component {
     const { step, loading, deleteModal } = this.state; // const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
     // console.log("new:", this.props)
+    let boardWidth = 125;
+    if(step==3)boardWidth=0; 
     return (
     
     <React.Fragment>
@@ -713,7 +716,7 @@ class ModifyDesign extends Component {
           {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
 
           {/* form */}
-          <InputBoard>
+          <InputBoard boardWidth={boardWidth}>
             {/* <form ref={(ref) => this.form = ref}> */}
             <section style={{ display: step === 0 ? "block" : "none"}} >
               {/* thumbnail */}

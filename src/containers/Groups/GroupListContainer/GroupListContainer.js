@@ -8,15 +8,25 @@ import Loading from "components/Commons/Loading";
 import osdstyle from "opendesign_style";
 
 const TextWrapper = styled.div`
-    position: relative;
-    width: 1920px;
-    line-height: 37px;
-    text-align: center;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    font-weight: 700;
-    color: red;
-    cursor: pointer;
+      top: 25px;
+      font-size: 25px;
+      font-family: Noto Sans KR;
+      font-weight: 700;
+      color: red;
+      cursor: pointer;
+      margin-top:100px;
+      @media only screen and (max-width : 900px) {
+        margin-top:150px;
+        
+      }
+    .title{
+      width:300px;
+      text-align:center;
+      position:absolute;
+      @media only screen {
+        right:${props=>(props.centerPos-300)/2}px;
+      }
+    }
 `;
 const JoinGroupContainer = styled.div`
     position: relative;
@@ -40,17 +50,34 @@ const ScrollListContainer = styled.div`
 `;
 
 class GroupListContainer extends Component {
-  state = {
-    reload: false,
-    search: null,
-    count: 0,
-    this_order: { text: "최신순", keyword: "update" }
+
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      screenWidth:window.innerWidth,
+      reload: false,
+      search: null,
+      count: 0,
+      this_order: { text: "최신순", keyword: "update" }
+    }
+    this.handleResize = this.handleResize.bind(this);
   }
-  componentDidMount() {
+  
+  componentDidMount(){
     this.props.GetGroupTotalCountRequest()
       .then(() => { this.setState({ count: this.props.Count }) })
-      .then(() => { this.props.GetGroupListRequest(0, null, null) })
-  }
+      .then(() => { this.props.GetGroupListRequest(0, null, null) });
+    window.addEventListener("resize", this.handleResize, false);
+
+    }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize, false);
+  };
+  handleResize(){
+    console.log(window.innerWidth);
+    this.setState({screenWidth:window.innerWidth})
+   }
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
@@ -77,7 +104,7 @@ class GroupListContainer extends Component {
       <React.Fragment>
         <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
 
-        <TextWrapper>그룹({count})</TextWrapper>
+        <TextWrapper centerPos={this.state.screenWidth}><div className="title">그룹({count})</div></TextWrapper>
 
         <JoinGroupContainer><JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup></JoinGroupContainer>
 
