@@ -16,7 +16,8 @@ class ScrollDesignListContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+    console.log("!!!!", this.props.keyword.length==0&&"empty","!!!");
+     this.props.keyword.length > 0 && this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
   shouldComponentUpdate(nextProps)
@@ -32,8 +33,14 @@ class ScrollDesignListContainer extends Component {
     return true;
   }
   getList = async (page) => {
-    console.log("getList",this.props.cate1,this.props.cate2)
-    this.props.GetDesignListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.keyword);
+    console.log(window.location.href);
+    var st = window.location.href;
+    var ks_li = st.split('/');
+    var url_lkeyword = ks_li[ks_li.length - 1];
+
+    console.log(decodeURIComponent(`${url_lkeyword}`));
+      this.props.GetDesignListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, decodeURIComponent(`${url_lkeyword}`));
+
   };
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
