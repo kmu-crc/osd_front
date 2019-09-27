@@ -34,9 +34,308 @@ const CardDialog = styled(Modal)`
     } 
     .content{
         padding: 45px;
+        margin-left: auto;
         line-height: 17px;
     }
+    .prevPane {
+        width: 115px;
+        height: 813.28px;
+        position: absolute;
+        left: 0%;
+        margin-left: -195px;
+        margin-top: 75.7px;
+        border-radius: 0px 10px 10px 0px;
+        background-color: #FFFFFF;
+    }
+    .prevArrow {
+        width: 14px;
+        height: 47px;
+        position: absolute;
+        left: 0%;
+        margin-top: 409.81px;
+        margin-left: -47px;
+        background-image: url(${arrow});
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .nextPane {
+        width: 115px;
+        height: 813.28px;
+        position: absolute;
+        left: 100%;
+        margin-left: 80px;
+        margin-top: 75.7px;
+        border-radius: 10px 0px 0px 10px;
+        background-color: #FFFFFF;
+    }
+    .nextArrow {
+        width: 14px;
+        height: 47px;
+        position: absolute;
+        left: 100%;
+        margin-top: 409.81px;
+        margin-left: 33px;
+        background-image: url(${arrow});
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .close-box {
+        position: absolute;
+        left: 100%;
+        margin-top: -32.07px;
+        margin-left: 111.85px;
+    }
+    .content-wrapper {
+        position: relative;
+        .card-header-first {
+            display: flex;
+            justify-content: space-between;
+            height: 29px;
+            margin-top: 29.78px;
+            margin-left: 52px;
+            .header-title {
+                font-family: Noto Sans KR;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 500;
+                line-height: 29px;
+            }
+            .header-edit-button {
+                font-family: Noto Sans KR;
+                font-size: 17px;
+                color: #707070;
+                font-weight: 900;
+                line-height: 29px;
+                margin-right: 75px;
+                .edit-btn {
+                    border: none;
+                    background: none;
+                    width: max-content;
+                    height: 40px;
+                    line-height: 40px;
+                    color: #FF0000;
+                    padding-bottom: 1.5px;
+                    border-bottom: 1.5px solid #FF0000;
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: Noto Sans KR;
+                    text-align: left;
+                    cursor: pointer;
+                }
+                .cancel-btn {
+                    margin-left: 25px;
+                    border: none;
+                    background: none;
+                    width: max-content;
+                    height: 40px;
+                    line-height: 40px;
+                    color: #707070;
+                    padding-bottom: 1.5px;
+                    border-bottom: 1.5px solid #707070;
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: Noto Sans KR;
+                    text-align: left;
+                    cursor: pointer;
+                }
+            }
+        }
+        .card-header-second {
+            width: 100%;
+            height: 29px;
+            display: flex;
+            justify-content: space-between;
+            padding-left: 52px;
+            margin-top: 30px;
+            .nick-name{
+                font-size: 20px;
+                color: #707070;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;   
+            }
+            .update-time{
+                margin-right: 75px;
+                color: #707070;
+                font-size: 17px;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;
+            }
+        }
+    }
+    .content-border{
+        width: 1492px;
+        height: 29px;
+        font-family: Noto Sans KR;
+        font-size: 20px;
+        color: #707070;
+        font-weight: 500;
+        line-height: 29px;
+        margin-left: 52px;
+        margin-top: 30.5px;
+        padding-right: 25px;
+        .border-line {
+            border-bottom: 1px solid #707070;
+            width: 1400px;
+        }
+    }
+    .comment-title {
+        margin-left: 45px;
+    }
+    .comment-wrapper {
+        width: 1400px;
+        margin-left: 52px;
+        margin-top: 15px;
+        margin-bottom: 75px;
+        color: #707070;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        line-height: 29px;
+    }
 `
+const EditCardHeaderContainer = styled.div`
+    .edit-header-container {
+        display: flex;
+        margin-top: 35.5px;
+        margin-left: 125.5px;
+        .edit-card-info {
+            width: max-content;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+    }
+    .edit-header-thumbnail {
+        display: flex;
+        margin-top: 56px;
+        margin-left: 200.5px;
+        .thumbnail-txt {
+            width: 97px;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+
+    }
+    .edit-header-title {
+        display: flex;
+        margin-top: 75px;
+        margin-left: 200.5px;
+        .title-txt {
+            width: 97px;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+        .title-input-container{
+            margin-left: 31px;
+            width: 505.5px;
+            height: 56px;
+            background-color: #EFEFEF;
+            border-radius: 5px;
+        }
+        .title-input-style{
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: #707070;
+            height: 100%;
+            padding: 16px 23px 16px 23px;
+        }
+    }
+    .edit-header-description{
+        display: flex;
+        margin-top: 75px;
+        margin-left: 200.5px;
+        .description-txt{
+            width: 97px;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+        .description-input-container{
+            margin-left: 31px;
+            width: 505.5px;
+            height: 56px;
+            background-color: #EFEFEF;
+            border-radius: 5px;
+        }
+        .description-input-style{
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: #707070;
+            height: 100%;
+            padding: 16px 23px 16px 23px;
+        }
+    }
+    .edit-header-button-container{
+        padding-left: 1305px;
+        .edit-header-submit-button {
+            border: none;
+            background: none;
+            width: max-content;
+            height: 40px;
+            line-height: 40px;
+            color: #FF0000;
+            padding-bottom: 1.5px;
+            border-bottom: 1.5px solid #FF0000;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            cursor: pointer;
+        }
+        .edit-header-cancel-button {
+            margin-left: 10px;
+            border: none;
+            background: none;
+            width: max-content;
+            height: 40px;
+            line-height: 40px;
+            color: #707070;
+            padding-bottom: 1.5px;
+            border-bottom: 1.5px solid #707070;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            cursor: pointer;
+        }
+    }
+`;
+const BlankSpace = styled.div`
+    width: 250px;
+    height: 250px;
+    background-color: "white";
+    borderRadius: 15px
+`;
 class CardModal extends Component {
     constructor(props) {
         super(props);
@@ -109,91 +408,74 @@ class CardModal extends Component {
         return (
             <React.Fragment>
                 <CardDialog open={this.props.open} onClose={this.onClose}>
-                    {movablePrev && <div style={{ width: "115px", height: "813.28px", position: "absolute", left: "0%", marginLeft: "-195px", marginTop: "75.7px", borderRadius: "0px 10px 10px 0px", backgroundColor: "#FFFFFF" }} />}
-                    {movablePrev && <div style={{ width: "14px", height: "47px", position: "absolute", left: "0%", marginTop: "409.81px", marginLeft: "-47px", backgroundImage: `url(${arrow})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}></div>}
-                    {movableNext && <div style={{ width: "115px", height: "813.28px", position: "absolute", left: "100%", marginLeft: "80px", marginTop: "75.7px", borderRadius: "10px 0px 0px 10px", backgroundColor: "#FFFFFF" }} />}
-                    {movableNext && <div style={{ width: "14px", height: "47px", position: "absolute", left: "100%", marginTop: "409.81px", marginLeft: "33px", backgroundImage: `url(${arrow})`, WebkitTransform: "rotate(180deg)", transform: "rotate(180deg)", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}></div>}
-                    <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "-32.07px", marginLeft: "111.85px" }}>
-                        <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-                    </div>
-                    <div style={{ position: "relative" }}>
+                    {movablePrev && <div className="prevPane" />}
+                    {movablePrev && <div className="prevArrow"></div>}
+                    {movableNext && <div className="nextPane" />}
+                    {movableNext && <div className="nextArrow"></div>}
+
+                    <div className="close-box" onClick={this.onClose} >
+                        <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} /></div>
+
+                    <div className="content-wrapper" >
                         {this.state.edit === false
                             ? <React.Fragment>
-                                <div style={{ display: "flex", justifyContent: "space-between", height: "29px", marginLeft: "52px", marginTop: "29.78px" }}>
-                                    <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px" }}>{card.title}</div>
-                                    <div style={{ fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", fontWeight: "900", lineHeight: "29px", marginRight: "75px" }}>
+                                <div className="card-header-first">
+                                    <div className="header-first">{card.title}</div>
+                                    <div className="header-edit-button" >
                                         {this.props.edit ?
                                             <React.Fragment>
-                                                <button onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>수정</button>
-                                                <button onClick={(event) => this.removeCard(event)} style={{ marginLeft: "25px", border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>삭제</button>
+                                                <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button>
+                                                <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제</button>
                                             </React.Fragment> : undefined}
                                     </div>
                                 </div>
-                                {/* {card.content &&
-                                    <div style={{ display: "flex", justifyContent: "flex-start", height: "29px", marginLeft: "52px", marginTop: "29.78px" }}>
-                                        <div style={{ fontFamily: "Noto Sans KR", fontSize: "16px", color: "#707070", fontWeight: "500" }}>설명</div>
-                                        <div style={{ marginLeft: "25px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px" }}>{card.content}</div>
-                                    </div>}
-                                {card.first_img &&
-                                    <div style={{ marginLeft: "52px", marginTop: "29.78px" }}>
-                                        <div style={{ fontFamily: "Noto Sans KR", fontSize: "16px", color: "#707070", fontWeight: "500" }}>썸네일</div>
-                                        <div style={{ marginTop: "15px", marginLeft: "25px" }}><img style={{ borderRadius: "15px", width: "200px", height: "200px" }} src={card.first_img.m_img} alt="firstimage" /></div>
-                                    </div>} */}
-                                <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "29px", paddingLeft: "52px", marginTop: "30px" }}>
-                                    <div style={{ fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "300", lineHeight: "29px" }}>{card.nick_name}</div>
-                                    <div style={{ fontFamily: "Noto Sans KR", fontSize: "17px", color: "#707070", fontWeight: "300", lineHeight: "29px", marginRight: "75px" }}>업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)}</div>
+                                <div className="card-header-second" >
+                                    <div className="nick-name">{card.nick_name}</div>
+                                    <div className="update-time">업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)}</div>
                                 </div>
                             </React.Fragment>
-                            : <React.Fragment>
-                                <div style={{ display: "flex", marginTop: "35.5px", marginLeft: "125.5px" }}><div style={{ width: "max-content", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>카드정보 수정</div></div>
-                                <div style={{ display: "flex", marginTop: "56px", marginLeft: "200.5px" }}>
-                                    <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>썸네일 사진</div>
-                                    <div></div>
-                                    <FormThumbnailEx
-                                        name="thumbnail" image={imgURL}
-                                        style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }}
-                                        placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                                    />
+                            : <EditCardHeaderContainer>
+                                <div className="edit-header-container">
+                                    <div className="edit-card-info">카드정보 수정</div>
                                 </div>
-                                <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
-                                    <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>
-                                        컨텐츠 제목</div>
-                                    <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                                        <input name="title" onChange={this.onChangeTitle} value={this.state.title} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
+                                <div className="edit-header-thumbnail">
+                                    <div className="thumbnail-txt">썸네일 사진</div>
+                                    <FormThumbnailEx style={{ width: "210px", height: "210px", marginLeft: "30px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
+                                        name="thumbnail" image={imgURL} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
+                                </div>
+                                <div className="edit-header-title">
+                                    <div className="title-txt">컨텐츠 제목</div>
+                                    <div className="title-input-container">
+                                        <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
                                     </div>
                                 </div>
-                                <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
-                                    <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>
-                                        컨텐츠 설명</div>
-                                    <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                                        <input name="content" onChange={this.onChangeContent} value={this.state.content} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." />
+                                <div className="edit-header-description">
+                                    <div className="description-txt">컨텐츠 설명</div>
+                                    <div className="description-input-container">
+                                        <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="20" placeholder="제목을 입력해주세요." />
                                     </div>
                                 </div>
-                                <div style={{ paddingLeft: "1305px" }}>
-                                    <button onClick={this.handleHeaderSubmit} style={{
-                                        border: "none", background: "none", width: "max-content", height: "40px",
-                                        lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px",
-                                        fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer"
-                                    }}>적용하기</button>
-                                    <button onClick={() => this.setState({ edit: !this.state.edit })} style={{ marginLeft: "10px", border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>취소</button>
+                                <div className="edit-header-button-container">
+                                    <button className="edit-header-submit-button" onClick={this.handleHeaderSubmit} >적용하기</button>
+                                    <button className="edit-header-cancel-button" onClick={() => this.setState({ edit: !this.state.edit })}>취소</button>
                                 </div>
-                            </React.Fragment>}
+                            </EditCardHeaderContainer>}
 
-                        <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
-                        <div style={{ marginLeft: "auto" }} className="content" >
+                        <div className="content-border"><div className="border-line" /></div>
+                        <div className="content" >
                             <CardSourceDetailContainer uid={card.uid} isTeam={isTeam} edit={edit && this.state.edit}
                                 isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
-                        <div style={{ width: "1492px", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "30.5px", paddingRight: "25px" }}><div style={{ borderBottom: "1px solid #707070", width: "1400px" }} /></div>
-                        <div style={{ marginLeft: "45px" }}><h3>댓글</h3></div>
-                        <div style={{ width: "1400px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", fontWeight: "500", lineHeight: "29px", marginLeft: "52px", marginTop: "15px" }}>
+
+                        <div className="content-border"><div className="border-line" /></div>
+                        <div className="comment-title"><h3>댓글</h3></div>
+                        <div className="comment-wrapper">
                             <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
                         </div>
-                        <div style={{ marginTop: "75px" }}></div>
                     </div>
                     {/* </div> */}
                 </CardDialog>
-                <div style={{ width: "250px", height: "250px", backgroundColor: "white", borderRadius: "15px" }}></div>
+                <BlankSpace />
             </React.Fragment>)
     }
 }

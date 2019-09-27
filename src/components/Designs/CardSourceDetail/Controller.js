@@ -67,7 +67,7 @@ export class Controller extends Component {
   };
   onChangeValue = async data => {
     let newObj = { ...data };
-    console.log("newObj", newObj);
+    console.log("debug>onChangeValue", newObj);
     await this.setState(data);
     this.returnDate();
   };
@@ -81,6 +81,7 @@ export class Controller extends Component {
   };
 
   returnDate = async e => {
+    console.log("debug>returnData");
     if (this.props.getValue) await this.props.getValue(this.state);
     if (e && this.props.onBlur) await this.props.onBlur();
   };

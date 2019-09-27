@@ -1,4 +1,9 @@
 const opendesign_style = {
+  resolutions: {
+    SmallMinWidth:0, SmallMaxWidth:480, 
+    MediumMinWidth:480, MediumMaxWidth:1440, 
+    LargeMinWidth:1440, LargeMaxWidth:1920
+  },
   font: {
     notoSans: "'Noto Sans KR', sans-serif",
     notoSerif: "'Noto Serif', serif",
@@ -70,6 +75,17 @@ const opendesign_style = {
     largeScreen: 1100,
     wideScreen: 1800,
   },
+  design_margin: {
+    width: 330,
+    height: 330,
+    marginRight: 63,
+    marginBottom: 63,
+    marginBottomLast: 26,
+    small: { marginRightLast: 87, cols: 1, },
+    medium: { marginRightLast: 72, cols: 3, },
+    large: { marginRightLast: 9, cols: 5, },
+    big: { marginRightLast: 9, cols: 5, },
+  },
   group_margin: {
     width: 902,
     height: 230,
@@ -81,19 +97,7 @@ const opendesign_style = {
     large: { marginRightLast: 11, cols: 2, },
     big: { marginRightLast: 11, cols: 2, },
   },
-  design_margin: {
-    width: 330,
-    height: 330,
-    marginRight: 63,
-    marginBottom: 80,
-    marginBottomLast: 26,
-    small: { marginRightLast: 87, cols: 1, },
-    medium: { marginRightLast: 72, cols: 3, },
-    large: { marginRightLast: 8, cols: 5, },
-    big: { marginRightLast: 8, cols: 5, },
-  },
   designer_margin: {
-    cols: 3,
     width: 590,
     height: 150,
     marginRight: 63,
@@ -101,8 +105,8 @@ const opendesign_style = {
     marginBottomLast: 68,
     small: { marginRightLast: 0, cols: 1, },
     medium: { marginRightLast: 192, cols: 2, },
-    large: { marginRightLast: 8, cols: 3, },
-    big: { marginRightLast: 8, cols: 3, },
+    large: { marginRightLast: 12, cols: 3, },
+    big: { marginRightLast: 12, cols: 3, },
   }
 }
 

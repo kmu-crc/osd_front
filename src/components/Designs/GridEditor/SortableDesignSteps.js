@@ -9,22 +9,27 @@ const AsBelowArrow = styled.div`
     width: ${props => props.percent * 100}px;
     height: ${props => props.percent * 65}px;
     background: #707070 0% 0% no-repeat padding-box;
-    opacity: 0.5;
-    border-top: ${props => props.percent * 65}px solid #707070;
+    opacity: ${props => props.opacity};
+    border-top: ${props => props.percent * 65}px solid ${props => props.color || "#707070"};
     border-left: ${props => props.percent * 50}px solid transparent;
     border-right:${props => props.percent * 50}px solid transparent;
     transform: rotate(${props => props.angle}deg);
 `;
 const Container = SortableContainer(({ children }) => { return <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul> });
-const HorizonDragHandle = SortableHandle(() => <div style={{ display: "flex" }}><AsBelowArrow angle={90} percent={.15} marginRight={7} /><AsBelowArrow angle={-90} percent={.15} /></div>)
-const VerticalDragHandle = SortableHandle(() => <div style={{ bakcground: "transparent" }}><AsBelowArrow angle={180} percent={.15} /><AsBelowArrow marginTop={7} angle={0} percent={.15} /></div>)
-
+const HorizonDragHandle = SortableHandle(() =>
+    <div style={{ display: "flex" }}>
+        <AsBelowArrow color="#FF0000" angle={90} percent={.15} marginRight={7} />
+        <AsBelowArrow color="#FF0000" angle={-90} percent={.15} />
+    </div>)
+const VerticalDragHandle = SortableHandle(({ is_white }) =>
+    <div style={{ bakcground: "transparent" }}>
+        <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={180} percent={.15} />
+        <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.15} marginTop={7} />
+    </div>)
 const margin = { marginTop: "25px", marginRight: "74px", marginBottom: "37px" };
-
-
 const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id }) => (
     <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} design_id={design_id} >
-        {editor ? <VerticalDragHandle /> : null}
+        {editor ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>
 ));
 const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCard, createCard, reorder }) => (
@@ -43,8 +48,7 @@ const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCa
             </Fragment>}
         {editor &&
             <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
-                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}
-                />
+                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}/>
             </div>}
     </div>
 ));

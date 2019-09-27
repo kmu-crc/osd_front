@@ -195,7 +195,7 @@ class TextController extends Component {
 
   // 컴포넌트가 초기 렌더링 되었을 때, 기존 값이 있으면 text 섹션에 기존 내용 넣어줌
   componentDidMount() {
-    if (this.props.item) {
+    if (this.props.item.content) {
       this.setState(this.props.item);
       this.edit.innerHTML = this.props.item.content;
     }
@@ -206,7 +206,7 @@ class TextController extends Component {
   shouldComponentUpdate(nextProps) {
     delete nextProps.item.target;
     if (JSON.stringify(this.props.item) !== JSON.stringify(nextProps.item)) {
-      this.edit.innerHTML = nextProps.item.content;
+      // this.edit.innerHTML = nextProps.item.content;
       if (!nextProps.item.uid) this.setState({ uid: null });
       if (nextProps.item.initClick) this.edit.focus();
     }
@@ -376,13 +376,10 @@ class TextController extends Component {
   // 현재 입력되어 있는 데이터 저장
   onSave = async (e) => {
     if (e && e.type === "keydown") { // 키보드 입력했을 경우
-      await this.setState({
-        content: this.edit.innerHTML
-      });
+      await this.setState({ content: this.edit.innerHTML });
+      this.returnData();
     } else if (e && e.type === "blur") { // 포커스가 빠졌을 경우
-      if (e && // 다른 클릭 이벤트 실행시 && 사이즈||컬러 창을 열었을 경우
-        e.relatedTarget
-      ) {
+      if (e && e.relatedtarget) {// 다른 클릭 이벤트 실행시 && 사이즈||컬러 창을 열었을 경우
         this.textWrap._reactInternalFiber && this.textWrap._reactInternalFiber.child.stateNode.contains(e.relatedTarget)
       } else { // 텍스트 에디터에서 포커스가 빠져나간 경우
         this.setState({ openMenu: false });
@@ -398,7 +395,9 @@ class TextController extends Component {
 
   // 상위 컴포넌트로 데이터 넘겨주기
   returnData = async () => {
-    if (this.props.getValue) this.props.getValue(this.state);
+    if (this.props.getValue) {
+      this.props.getValue(this.state);
+    }
   }
 
   // 사이즈 설정 모달창 열기/닫기
