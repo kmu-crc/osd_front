@@ -420,7 +420,7 @@ class CardModal extends Component {
                         {this.state.edit === false
                             ? <React.Fragment>
                                 <div className="card-header-first">
-                                    <div className="header-first">{card.title}</div>
+                                    <div className="header-title">{card.title}</div>
                                     <div className="header-edit-button" >
                                         {this.props.edit ?
                                             <React.Fragment>

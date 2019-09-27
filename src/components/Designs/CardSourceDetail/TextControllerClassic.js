@@ -1,34 +1,36 @@
 import React, { Component } from 'react';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import styled from "styled-components";
 
+const EditorWrapper = styled.div`
+    // width: 80%;
+    // margin-left: auto;
+    // margin-right: auto;
+    margin-bottom: 10px;
+    .copyright {
+        width: max-content;
+        margin-left: auto;
+        font-size: 0.5rem;
+    }
+`;
 class TextControllerClassic extends Component {
     render() {
+        console.log("EDITOR:", this.props);
         const { item } = this.props;
-        return (
-            <div className="App">
-                <p>(editor: CKEditor 5)</p>
-                <CKEditor
-                    editor={ClassicEditor}
-                    data={item.content}//"<p>Hello from CKEditor 5!</p>"
-                    onInit={editor => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log('Editor is ready to use!', editor);
-                    }}
-                    onChange={(event, editor) => {
-                        const data = editor.getData();
-                        this.props.getValue({content:data});
-                        console.log({ event, editor, data });
-                    }}
-                    onBlur={(event, editor) => {
-                        console.log('Blur.', editor);
-                    }}
-                    onFocus={(event, editor) => {
-                        console.log('Focus.', editor);
-                    }}
-                />
-            </div>
-        );
+        return (<EditorWrapper>
+            <CKEditor
+                editor={ClassicEditor} data={item.content}
+                onInit={editor => { console.log('Editor is ready to use!', editor); }}
+                onChange={(event, editor) => {
+                    const data = editor.getData();
+                    console.log("EDITOR: -onChange- ", { event, editor, data });
+                    this.props.getValue({ content: data });
+                }}
+                onBlur={(event, editor) => { console.log('Blur.', editor); }}
+                onFocus={(event, editor) => { console.log('Focus.', editor); }} />
+            <p className="copyright">(editor: CKEditor 5 classic)</p>
+        </EditorWrapper>);
     }
 }
 

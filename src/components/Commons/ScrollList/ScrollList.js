@@ -13,7 +13,7 @@ const FlexContainer = styled.div`
     width: ${osdcss.resolutions.SmallMaxWidth}px;
   }
   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 162 : props.type === "group" ? 10 : 67}px;
+    margin-left: ${props => props.type === "design" ? 162 : props.type === "group" ? 215 : 67}px;
     width: ${osdcss.resolutions.MediumMaxWidth}px;
   }
   @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
