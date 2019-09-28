@@ -9,27 +9,37 @@ import Loading from "components/Commons/Loading";
 import styled from 'styled-components';
 import opendesign_style from "opendesign_style";
 
+
 const TextWrapper = styled.div`
-    position: relative;
-    width: 1920px;
     top: 25px;
-    text-align: center;
     font-size: 25px;
     font-family: Noto Sans KR;
     font-weight: 700;
     color: red;
     cursor: pointer;
-`;
+    margin-top:100px;
+    @media only screen and (max-width : 900px) {
+      margin-top:150px;
+      
+    }
+    .title{
+      width:300px;
+      text-align:center;
+      position:absolute;
+      @media only screen {
+        right:${props=>(props.centerPos-300)/2}px;
+      }
+    }
+    `;
 const ScrollListContainer = styled.div`
     padding-top: 128px;
     padding-bottom: 68px;
 `;
-
 class DesignListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      reload: false,
+      reload: false,screenWidth:window.innerWidth,
       this_order: { text: "등록순", keyword: "update" },
       this_category: { text: null, value: null },
       main_category: { text: null, value: null }, sub_category: { text: null, value: null },
@@ -40,11 +50,20 @@ class DesignListContainer extends Component {
     this.handleChangeOrderOps = this.handleChangeOrderOps.bind(this);
     this.getList = this.getList.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
   componentDidMount() {
     this.props.GetCategoryAllRequest()
-      .then(() => { this.props.GetDesignListCountRequest(null, null) });
+    .then(() => { this.props.GetDesignListCountRequest(null, null) });
     this.props.GetDesignListRequest(0, null, null, null, null);
+    window.addEventListener("resize", this.handleResize, false);
+
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize, false);
+  };
+  handleResize(){
+   this.setState({screenWidth:window.innerWidth})
   }
   handleReload() {
     this.setState({ reload: !this.state.reload });
@@ -79,14 +98,17 @@ class DesignListContainer extends Component {
 
   render() {
     const { this_category, main_category, sub_category, reload, this_order } = this.state
-    const { category1, category2, Count, status } = this.props
+    const { category1, category2, Count, status } = this.props;
+    const screenW = (window.innerWidth-300)/2;
     return (<React.Fragment>
       <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
         category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
 
       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
 
-      <TextWrapper onClick={() => this.changeCategory(main_category)}>{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</TextWrapper>
+      <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
+        <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
+      </TextWrapper>
       <ScrollListContainer>
         {status === "INIT"
           ? <Loading />

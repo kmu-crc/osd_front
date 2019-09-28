@@ -2,16 +2,25 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const OrderWrapper = styled.div`
-    display: flex;
-    justify-content: flex-end;
+    width:100%;
+    z-index:2000;
+    display:flex;
+    justify-content:flex-end;
     padding-top: 55px;
+    padding-right:30px;
     font-size: 20px;
     font-family: Noto Sans KR;
-    color: #707070;
-    font-weight: 500;
-    line-height: 29px;
-    text-align: middle;
-    position:relative;
+    position:fixed;
+    // z-index:1000;
+    // display: flex;
+    // justify-content: flex-end;
+    // padding-top: 55px;
+    // font-size: 20px;
+    // font-family: Noto Sans KR;
+    // color: #707070;
+    // font-weight: 500;
+    // line-height: 29px;
+    // text-align: center;
 `
 const OrderElement = styled.div`
     font-family: Noto Sans KR;
@@ -47,12 +56,14 @@ class OrderOption extends Component {
         return (
 
             <OrderWrapper>
+
                 {options.map(opt => {
                     return (<OrderElement
                         marginRight={opt.marginRight}
                         className={selected.keyword === opt.keyword ? "selected" : "unselected"}
                         onClick={() => this.handleClicked(opt)} key={opt.keyword}>{opt.text}</OrderElement>)
                 })}
+
             </OrderWrapper>
         )
     }

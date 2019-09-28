@@ -2,31 +2,45 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import zoom from "source/zoom.svg"
 
+const flag_MaxWidth = 1440;
+const flag_MinWidth = 480;
 const SearchContainer = styled.div`
     display: ${props => props.visible};
     background-color: #FFFFFF;
     border-radius: 20px;
     border: 1.5px solid #707070;
-    width: 327px;
+    position:relative;
+    overflow:hidden;
+    width: 350px;
     height: 36px;
-    background: url(${zoom});
-    background-size: 21.49px 21.49px;
-    background-repeat: no-repeat;
-    background-position: right 12.7px top 4px;
+    @media only screen and (min-width : ${flag_MinWidth}px) and (max-width : ${flag_MaxWidth}px) {
+        width:${props=>(350-(flag_MaxWidth-props.formSize))>36?(350-(flag_MaxWidth-props.formSize)):36}px;
+    }
+    @media only screen and (max-width : ${flag_MinWidth}px) {
+        width: 36px;
+    }
+    @media only screen and (min-width : ${flag_MaxWidth}px) {
+        width: 350px;
+    }
+
     &:focus{
         outline: 1.5px solid red;
     }
     input {
         outline: none;
-        width: 280px;
+        width: 80%;
         border: none;
         margin: 0px 10px;
     }
     .shadow_button{
+        width:28px;
+        height:28px;
         position: absolute;
-        transform: translate( 285px, -2px);
-        width:36px;
-        height:36px;
+        right:5px;
+
+        background: url(${zoom});
+        background-size: contain;
+        background-repeat: no-repeat;
         cursor: pointer;
     }
 `;
@@ -78,10 +92,11 @@ class SearchForm extends Component {
 
     }
     render() {
+        {console.log(this.props.formWidth)};
         return (
-            <SearchContainer visible={this.props.visible === 1 ? "block" : "none"} >
+            <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder="Search..." maxLength = "100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword}/>
+                <input type="text" placeholder={this.props.formWidth>1200?"Search...":""} maxLength = "100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword}/>
             </SearchContainer>)
     }
 
