@@ -16,7 +16,6 @@ const EditorWrapper = styled.div`
 `;
 class TextControllerClassic extends Component {
     render() {
-        console.log("EDITOR:", this.props);
         const { item } = this.props;
         return (<EditorWrapper>
             <CKEditor
@@ -24,10 +23,9 @@ class TextControllerClassic extends Component {
                 onInit={editor => { console.log('Editor is ready to use!', editor); }}
                 onChange={(event, editor) => {
                     const data = editor.getData();
-                    console.log("EDITOR: -onChange- ", { event, editor, data });
                     this.props.getValue({ content: data });
                 }}
-                onBlur={(event, editor) => { console.log('Blur.', editor); }}
+                onBlur={(event, editor) => { console.log('Blur.', event, editor); }}
                 onFocus={(event, editor) => { console.log('Focus.', editor); }} />
             <p className="copyright">(editor: CKEditor 5 classic)</p>
         </EditorWrapper>);

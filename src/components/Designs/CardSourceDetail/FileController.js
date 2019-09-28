@@ -133,7 +133,7 @@ class FileController extends Component {
 
   onChangeValue = async (e) => {
     console.log("onChangeValue", this.input.files);
-    const event = {...e};
+    const event = { ...e };
     let data = this.input.files;
     if (data[0]) {
       let type = null;
@@ -193,31 +193,32 @@ class FileController extends Component {
   };
 
   render() {
+    console.log("FileWrap: in FC", this.props);
     const contentImg = this.props.item.content
       ? this.props.item.content
       : this.props.item.fileUrl;
     return (
       <FileWrap>
         {(this.props.item.content || this.props.item.fileUrl) &&
-        this.state.is_image ? (
-          <img src={contentImg} alt="이미지" />
-        ) : (this.props.item.content || this.props.item.extension) &&
-        !this.state.is_image ? (
-          <div className="iconWrap">
-            <FileIcon
-              type={this.props.item.file_type}
-              extension={this.props.item.extension}
-            />
-            <span className="LinkFileName">{this.props.item.file_name}</span>
-          </div>
-        ) : null}
+          this.state.is_image ? (
+            <img src={contentImg} alt="이미지" />
+          ) : (this.props.item.content || this.props.item.extension) &&
+            !this.state.is_image ? (
+              <div className="iconWrap">
+                <FileIcon
+                  type={this.props.item.file_type}
+                  extension={this.props.item.extension}
+                />
+                <span className="LinkFileName">{this.props.item.file_name}</span>
+              </div>
+            ) : null}
         <File>
           <input
             type="file"
             name="source"
             onChange={this.onChangeValue}
             ref={ref => (this.input = ref)}
-            
+
           />
           <span></span>
         </File>

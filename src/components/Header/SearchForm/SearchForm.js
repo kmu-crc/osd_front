@@ -14,7 +14,7 @@ const SearchContainer = styled.div`
     width: 350px;
     height: 36px;
     @media only screen and (min-width : ${flag_MinWidth}px) and (max-width : ${flag_MaxWidth}px) {
-        width:${props=>(350-(flag_MaxWidth-props.formSize))>36?(350-(flag_MaxWidth-props.formSize)):36}px;
+        width:${props => (350 - (flag_MaxWidth - props.formSize)) > 36 ? (350 - (flag_MaxWidth - props.formSize)) : 36}px;
     }
     @media only screen and (max-width : ${flag_MinWidth}px) {
         width: 36px;
@@ -51,19 +51,16 @@ class SearchForm extends Component {
     goSearch = () => {
         const addrText = window.location.href.toString();
         let thisCate = "/design";
-        if(addrText.indexOf('/group')!==-1)
-        {
-            thisCate="/group"
+        if (addrText.indexOf('/group') !== -1) {
+            thisCate = "/group"
         }
-        else if(addrText.indexOf('/designer')!==-1)
-        {
-            thisCate="/designer"
+        else if (addrText.indexOf('/designer') !== -1) {
+            thisCate = "/designer"
         }
-        else if(addrText.indexOf('/design')!==-1)
-        {
-            thisCate="/design"
+        else if (addrText.indexOf('/design') !== -1) {
+            thisCate = "/design"
         }
-        window.location.href = '/search'+thisCate+'/null/'+this.state.searchKeyword;
+        window.location.href = '/search' + thisCate + '/null/' + this.state.searchKeyword;
     };
 
     submitEnter = (e) => {
@@ -71,8 +68,8 @@ class SearchForm extends Component {
             this.goSearch();
         }
     };
-    handleKeyDown = (e)=>{
-        if(e.keyCode === 13){
+    handleKeyDown = (e) => {
+        if (e.keyCode === 13) {
             this.goSearch();
         }
         const target = e.target;
@@ -92,14 +89,12 @@ class SearchForm extends Component {
 
     }
     render() {
-        {console.log(this.props.formWidth)};
         return (
             <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
                 <div className="shadow_button" onClick={this.goSearch} />
-                <input type="text" placeholder={this.props.formWidth>1200?"Search...":""} maxLength = "100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword}/>
+                <input type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
             </SearchContainer>)
     }
-
 }
 
 
