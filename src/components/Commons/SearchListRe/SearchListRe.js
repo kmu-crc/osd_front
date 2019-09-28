@@ -46,7 +46,7 @@ const SearchForm = styled.div`
         width: 600px;
     }
     .Box{
-        display: flex;
+        display: flex;  
         justify-content: space-start;
     }
     .innerBox{
@@ -121,6 +121,7 @@ class SearchListRe extends Component {
         else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3, urlCate: "designer" }) }
         else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
         else { this.setState({ selectCate: 1 }) }
+        console.log(this.props.keyword);
         this.setState({ searchKeyword: this.props.keyword == null ? "" : this.props.keyword });
     }
     onChangeSearchkey(event) {
@@ -130,26 +131,8 @@ class SearchListRe extends Component {
             alert("특수문자는 사용할 수 없습니다.");
             return;
         }
-        console.log(event.target.value);
         this.setState({ searchKeyword: event.target.value })
     }
-
-    getSearchValue = (e) => {
-        const target = e.target;
-        const value = target.value;
-        let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
-        console.log(e.target.value);
-        // if (!value.match(regExp)) {
-        //     alert("특수문자는 사용할 수 없습니다.");
-        //     target.value = "";
-        //     return;
-        // } else {
-        //     this.setState({
-        //         searchkeyword: value
-        //     });
-        // }
-    };
-
     submitEnter = (e) => {
         if (e.keyCode === 13) {
             this.setState({ searchKeyword: e.target.value });
@@ -161,8 +144,10 @@ class SearchListRe extends Component {
         if (this.state.searchKeyword == null || this.state.searchKeyword === "") {
             alert("키워드를 입력해주세요");
         } else {
-            this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.searchKeyword}`);
-            window.location.href = `/search/${this.props.type}/${this.props.sort}/${this.state.searchKeyword}`;
+            const urll = encodeURIComponent(`${this.state.searchKeyword}`);
+            //alert(decodeURIComponent(`${this.state.searchKeyword}`));
+            this.props.history.replace(urll);
+            window.location.href = urll;
         }
     };
     onChangeDropBox(event, { value }) {
@@ -209,7 +194,6 @@ class SearchListRe extends Component {
         const { category1, category2 } = this.props;
         const { main_category, sub_category } = this.state;
         return (
-
             <SearchContainer>
                 {this.state.urlCate !== "group" ?
                     <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
