@@ -8,6 +8,7 @@ import NewCardModal from "./NewCardModal";
 import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
+import osdcss from "opendesign_style";
 
 const WhitePane = styled.div`
     position: absolute;
@@ -38,12 +39,12 @@ const Arrow = styled.div`
     }
 `;
 const GridEditorWrapper = styled.div`
-    // width: 1920px;
+    // width: osdcss.resolutions.LargeMaxWidthpx;
     // width: ${props => props.width}px; 
     display: flex;
     margin-left:65px;
     margin-bottom: 75px;
-    width: ${window.innerWidth < 1920 ? window.innerWidth : 1920}; 
+    width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
     .Editor{
         padding-right: 250px;
         overflow: hidden;
@@ -58,7 +59,7 @@ class GridEditor extends Component {
         this.temp = React.createRef();
         this.grid = React.createRef();
         this.state = {
-            h: 0, w: window.innerWidth < 1920 ? window.innerWidth : 1920, left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
+            h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth, left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
             boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
             gap: null,
         };
@@ -91,7 +92,7 @@ class GridEditor extends Component {
         }
     }
     handleResize() {
-        this.setState({ w: window.innerWidth < 1920 ? window.innerWidth : 1920 });
+        this.setState({ w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth });
         if (this.temp) {
             if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
                 this.setState({ right: false });
@@ -205,7 +206,7 @@ class GridEditor extends Component {
     }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
-        const rightArrowPos = window.innerWidth <= 1920 ? 1920 - window.innerWidth : 0;
+        const rightArrowPos = window.innerWidth <= osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth - window.innerWidth : 0;
         console.log("pos:", rightArrowPos);
 
         const { gap, h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;

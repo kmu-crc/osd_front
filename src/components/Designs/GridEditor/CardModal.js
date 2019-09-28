@@ -397,8 +397,6 @@ class CardModal extends Component {
     };
     onClose = () => { this.props.close() }
     render() {
-
-        console.log("this.props.cardmodal", this.props);
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.s_img;
 
         const card = this.props.card || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
@@ -420,7 +418,7 @@ class CardModal extends Component {
                         {this.state.edit === false
                             ? <React.Fragment>
                                 <div className="card-header-first">
-                                    <div className="header-first">{card.title}</div>
+                                    <div className="header-title">{card.title}</div>
                                     <div className="header-edit-button" >
                                         {this.props.edit ?
                                             <React.Fragment>

@@ -1,20 +1,107 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import update from "react-addons-update";
+// import { Controller } from "./Controller";
 import styled from "styled-components";
-import { Controller } from "./Controller";
-import AddController from "./AddController";
-import ContentForm from "./ContentForm";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 
-const CardSrcWrap = styled.div`
-  background-color: #fff;
-  margin: auto;
-  & form {
-    margin: 20px 0;
+import osdcss from "opendesign_style";
+import FileController from "./FileController";
+import TextController from "./TextControllerClassic";
+import EmbController from "./EmbController";
+
+// css styling
+const ControllerWrap = styled.div`
+  position: relative;
+  &:hover {
+    border: 1px dashed ${osdcss.color.grayScale.scale3};
+    background-color: ${osdcss.color.grayScale.scale0};
+    .editBtn {
+      display: block;
+    }
   }
-  & .ui.loader {
-    top: auto;
-    bottom: 70vh;
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+`;
+const UpBtn = styled.button`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
+  }
+`;
+const DownBtn = styled.button`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
+  }
+`;
+const DelBtn = styled.button`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: ${osdcss.color.main.basic};
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
   }
 `;
 
@@ -56,6 +143,8 @@ const ViewContent = styled.div`
 `;
 const ButtonContainer = styled.div`
   margin-bottom: 35px;
+  margin-left: auto;
+  margin-right: auto;
   .content-edit-wrapper {
     width: max-content;
     margin-left: auto;
@@ -94,10 +183,10 @@ const ButtonContainer = styled.div`
 const EditorBottonWrapper = styled.div`
     position: absolute;
     width: max-content;
-    top: ${props => props.top}; this.state.top, 
-    left: ${props => props.left}; this.state.left, 
-    padding: 45px;
-    box-shadow: 0px 2px 10px 2px rgba(0,0,0, 0.25);
+    top: ${props => props.top}; //this.state.top, 
+    left: ${props => props.left}; //this.state.left, 
+    padding: 15px;
+    // box-shadow: 0px 2px 10px 2px rgba(0,0,0, 0.25);
     background: #FFFFFF;
     border-radius: 25px;
     z-index: 907;
@@ -136,62 +225,57 @@ const EditorBottonWrapper = styled.div`
 `;
 
 class CardSourceDetail extends Component {
-  state = { top: 250, left: 1250, edit: false, content: [], deleteContent: [], loading: false };
-  componentDidMount() {
-    document.addEventListener("scroll", (event) => {
-      if (this.cardwrap && event.target.contains(this.cardwrap)) {
-        const top = event.target.scrollTop + 250;
-        const left = this.cardwrap.getBoundingClientRect().width - this.cardwrap.getBoundingClientRect().left;
-        //console.log(top, this.cardwrap.getBoundingClientRect().top, event.target.scrollTop);
-        this.setState({ top: top, left: left });
-      }
-    }, true);
-    if (this.props.uid) { this.props.GetDesignSourceRequest(this.props.uid); }
-  };
-
-  async shouldComponentUpdate(nextProps) {
-    if (
-      JSON.stringify(this.props.editStatus) !==
-      JSON.stringify(nextProps.editStatus)
-    ) {
-      if (nextProps.editStatus === "SUCCESS") {
-        await this.setState({ edit: false });
-        this.props.GetDesignSourceRequest(this.props.uid);
-        await this.setState({ loading: false });
-        this.props.closeEdit();
-      } else if (nextProps.editStatus === "FAILURE") {
-        await this.setState({ loading: false });
-        this.props.closeEdit();
-      }
-    }
-    if (
-      JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)
-    ) {
-      if (nextProps.status === "SUCCESS") {
-        this.setState({ content: nextProps.content });
-      }
-    }
-    return true;
+  constructor(props) {
+    super(props);
+    this.state = { edit: false, content: this.props.content, loading: false };
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+    this.changeMode = this.changeMode.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onAddValue = this.onAddValue.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangeFile = this.onChangeFile.bind(this);
+    this.moveItem = this.moveItem.bind(this);
+    this.moveUpItem = this.moveUpItem.bind(this);
+    this.moveDownItem = this.moveDownItem.bind(this);
   }
-
-  onChangValue = async data => {
-    console.log("debug>onChangeValue", data);
+  componentDidMount() {
+    if (this.props.uid) {
+      this.props.GetDesignSourceRequest(this.props.uid)
+        .then(async () => {
+          await this.setState({ content: this.props.content, origin: this.props.content });
+        })
+    }
+  }
+  async onChangeFile(data) {
     let copyContent = [...this.state.content];
     delete data.initClick;
     delete data.target;
     await copyContent.splice(data.order, 1, data);
-
     copyContent = await Promise.all(
       copyContent.map(async (item, index) => {
         delete item.initClick;
         return item;
       })
     );
-
     await this.setState({ content: copyContent });
-  };
-
-  onAddValue = async data => {
+  }
+  async onChangeValue(data, order) {
+    this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
+  }
+  async onDelete(order) {
+    let copyContent = [...this.state.content];
+    for (var i = 0; i < copyContent.length; i++) {
+      if (copyContent[i].order === order) {
+        copyContent.splice(i, 1);
+      }
+    }
+    for (var i = 0; i < copyContent.length; i++) {
+      copyContent[i].order = i;
+    }
+    await this.setState({ content: copyContent });
+  }
+  async onAddValue(data) {
     let copyContent = [...this.state.content];
     let copyData = { ...data };
     copyData.initClick = true;
@@ -201,13 +285,6 @@ class CardSourceDetail extends Component {
       }
     }
     await copyContent.splice(copyData.order, 0, copyData);
-
-    // let newContent = [];
-    //copyContent = copyContent.map((item, index) => {
-    //  if(item != null){
-    //    newContent.push(item);
-    //  }
-    //})
     let newContent = copyContent.filter((item) => { return item !== null })
     newContent = await Promise.all(
       newContent.map(async (item, index) => {
@@ -218,126 +295,252 @@ class CardSourceDetail extends Component {
         return item;
       })
     );
-    await this.setState({ content: newContent });
-  };
-
-  deleteItem = async index => {
-    let copyContent = [...this.state.content];
-    let copyDelete = [...this.state.deleteContent];
-    if (copyContent[index].uid) {
-      copyDelete.push(copyContent[index]);
+    await this.setState({ content: newContent })
+  }
+  async moveItem(data) {
+    if (!this.state.content) {
+      return;
     }
-    await copyContent.splice(index, 1);
-    copyContent = await Promise.all(
-      copyContent.map(async (item, index) => {
-        delete item.initClick;
-        delete item.target;
-        item.order = await index;
-        return item;
-      })
-    );
-    await this.setState({ content: copyContent, deleteContent: copyDelete });
-  };
-
-  onSubmit = async e => {
-    e.preventDefault();
     let copyContent = [...this.state.content];
-    for (let item of copyContent) {
-      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
-        await copyContent.splice(item.order, 1);
+    let indexOld = -1;
+    let indexNew = -1;
+    for (var i = 0; i < copyContent.length; i++) {
+      if (copyContent[i].order === data.old) {
+        indexOld = i;
+      }
+      if (copyContent[i].order === data.new) {
+        indexNew = i;
       }
     }
-    copyContent = await Promise.all(
-      copyContent.map(async (item, index) => {
-        delete item.initClick;
-        item.order = await index;
-        return item;
-      })
-    );
+    let t = copyContent[indexOld];
+    copyContent[indexOld] = copyContent[indexNew];
+    copyContent[indexNew] = t;
+    copyContent[indexNew].order = data.new;
+    copyContent[indexOld].order = data.old;
     await this.setState({ content: copyContent });
-    let formData = await ContentForm(this.state);
-    await this.setState({ loading: true });
-    await setTimeout(() => { }, 500);
 
-    //edit
-    if (this.props.uid) {
-      this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
-    } else { //new
-      this.props.upDateRequest(formData);
-      await this.setState({ loading: false });
+  }
+  async moveUpItem(order) {
+    this.moveItem({ old: order, new: order - 1 });
+  };
+  async moveDownItem(order) {
+    this.moveItem({ old: order, new: order + 1 });
+  };
+  async onSubmit(event) {
+    let newContent = [...this.state.content];
+    let oldContent = [...this.props.content];
+    if (newContent === oldContent) {
+      alert("변경된 내용이 없습니다.")
+      return;
     }
-  }
+    event.preventDefault();
 
-  onCancel = () => {
-    this.setState({ edit: false });
-    this.props.cancel && this.props.cancel();
+    let formData = {
+      updateContent: [],
+      newContent: [],
+      deleteContent: []
+    }
+    // get updatecontent
+    console.log(newContent, oldContent);
+    // return;
+    for (var i = 0; i < newContent.length; i++) {
+      if (newContent.uid == null) continue;
+      let found = oldContent.filter(item => {
+        return (item.uid === newContent[i].uid && ((item.content != newContent[i].content)))
+      });
+      if (found.length > 0) {
+        formData.updateContent.push(newContent[i]);
+      }
+    }
+    // get newcontent
+    newContent.map(item => {
+      if (item.uid == null) {
+        formData.newContent.push(item);
+      }
+    })
+    // get deletecontent
+    for (var i = 0; i < oldContent.length; i++) {
+      let found = newContent.filter(item => { return item.uid === oldContent[i].uid });
+      if (found.length === 0) {
+        formData.deleteContent.push(oldContent[i]);
+      }
+    }
+    console.log("FORM-DATA:", formData, this.state.origin, this.state.content, this.props.content);
+    // return;
+    // edit
+    await this.setState({ loading: true });
+    if (this.props.uid) {
+      await this.props.upDateRequest(formData, this.props.uid, this.props.token)
+        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+    } else { // new
+      await this.props.upDateRequest(formData);
+    }
+    await this.setState({ edit: false, loading: false });
+    return;
   }
-
+  async onCancel() {
+    await this.setState({ content: this.props.content, edit: false, loading: false });
+  }
+  changeMode() {
+    this.setState({ edit: !this.state.edit });
+  }
   render() {
-    const { /*edit,*/ content } = this.state;
-    return (<React.Fragment>
+    const { edit, content, loading } = this.state;
+    console.log("updated:", this.state.content);
+    return (<div>
+      {loading && <Loading />}
       <ButtonContainer >
-        {this.state.edit &&
-          <EditorBottonWrapper top={this.state.top} left={this.state.left}>
-            <button onClick={this.onSubmit} className="submit" type="button"><i className="icon outline save" />등록</button>
-            <button onClick={this.onCancel} className="cancel" type="button"><i className="icon trash" />취소</button>
+        {edit === false && this.props.isTeam && (content && content.length > 0 ?
+          (<div className="content-edit-wrapper"><button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">컨텐츠 수정</button></div>) :
+          (<div className="content-add-wrapper"><button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >컨텐츠 추가</button></div>))}
+      </ButtonContainer>
+
+      {/* view mode */}
+      {this.props.uid && !edit && content.length > 0 &&
+        <ViewContent>
+          {content.map((item, index) => {
+            if (item.type === "FILE" && item.data_type === "image")
+              return <div className="imgContent" key={index}><img key={index} src={item.content} alt="이미지" download={item.file_name} /></div>
+
+            if (item.type === "FILE" && item.data_type === "video")
+              return <span>
+                <span className="LinkFileName">{item.file_name}</span>
+                <video key={index} width="640" height="360" controls="controls" className="iconWrap" ><source src={item.content} type="video/mp4" download={item.file_name}></source></video>
+              </span>
+
+            if (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video")
+              return <a key={index} href={item.content} download={item.file_name} className="iconWrap">
+                <FileIcon type={item.data_type} extension={item.extension} />
+                <span className="LinkFileName">{item.file_name}</span>
+              </a>
+
+            if (item.type === "TEXT")
+              return <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+          })}
+        </ViewContent>}
+
+      {/* edit mode */}
+      {edit ? (
+        content && content.length > 0 ? (<Fragment>
+          {content.map(item => {
+            return (<ControllerWrap key={item.order}>
+              <div className="contentWrap">
+                {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
+                {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
+                {item.type === "EMBED" ? (<EmbController />) : null}
+              </div>
+
+              <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
+              {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null}
+              {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null}
+            </ControllerWrap>)
+          })}
+          <AddContent getValue={this.onAddValue} order={content.length} />
+        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+      ) : null}
+
+      <ButtonContainer >
+        {edit &&
+          <EditorBottonWrapper>
+            <button onClick={this.onSubmit} className="submit" type="button">
+              <i className="icon outline save" />등록</button>
+            <button onClick={this.onCancel} className="cancel" type="button">
+              <i className="icon trash" />취소</button>
           </EditorBottonWrapper>
         }
-        {this.state.edit === false && this.props.isTeam && (content.length > 0 ? (
-          <div className="content-edit-wrapper">
-            <button onClick={() => this.setState({ edit: !this.state.edit })} className="content-edit-button">컨텐츠 수정</button>
-          </div>) : (
-            <div className="content-add-wrapper">
-              {/* <div>컨텐츠가 없습니다. </div> */}
-              <button onClick={() => this.setState({ edit: !this.state.edit })} className="content-add-button" >컨텐츠 추가</button>
-            </div>))}
       </ButtonContainer>
-      <CardSrcWrap ref={(ref) => this.cardwrap = ref}>
-        {this.state.edit &&
-          <form onSubmit={this.onSubmit}>
-            {content.length > 0 ? (
-              <div>
-                {content.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <AddController type="INIT" order={index} name={`add${index}`} getValue={this.onAddValue} />
-                      <Controller type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />
-                    </div>
-                  );
-                })}
-                <AddController type="INIT" order={content.length} name="addBasic" getValue={this.onAddValue} />
-              </div>
-            ) : (<AddController type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />)}
-          </form>
-        }
-        {!this.state.edit && content.length > 0 &&
-          <ViewContent>
-            {content.map((item, index) => {
-              return item.type === "FILE" && item.data_type === "image" ? (
-                <div className="imgContent" key={index}> <img key={index} src={item.content} alt="이미지" download={item.file_name} /> </div>
-              ) : item.type === "FILE" && item.data_type === "video" ? (
-                <span>
-                  <span className="LinkFileName">{item.file_name}</span>
-                  <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
-                    <source src={item.content} type="video/mp4" download={item.file_name}></source>
-                  </video>
-                </span>
-              ) : item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
-                <a key={index} href={item.content} download={item.file_name} className="iconWrap">
-                  <FileIcon type={item.data_type} extension={item.extension} />
-                  <span className="LinkFileName">{item.file_name}</span>
-                </a>
-              ) : item.type === "TEXT" ? (
-                <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
-              ) : null;
-            })}
-          </ViewContent>}
-        {this.state.loading && <Loading />}
-      </CardSrcWrap>
-    </React.Fragment>
-    );
+    </div>);
   }
 }
 
 export default CardSourceDetail;
+
+
+
+const ControllerWrap2 = styled.div`
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+
+  border: 1px dashed ${osdcss.color.grayScale.scale6};
+  & .initWrap {
+    & > ul {
+      display: flex;
+      // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    & > span {
+      color: ${osdcss.color.grayScale.scale6};
+    }
+  }
+  &:hover {
+    background-color: #FAFAFA;
+    & .initWrap {
+      & > ul {
+        display: flex;
+      }
+      & > span {
+        color: ${osdcss.color.grayScale.scale6};
+      }
+    }
+  }
+  .innerBox {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+  }
+`;
+const NewController = styled.li`
+  width: ${props => props.width};
+  height: ${props => props.height};
+  margin-left: 75px;
+  line-height: 29px;
+  color: #FF0000;
+  padding-bottom: 1.5px;
+  border-bottom: 1.5px solid #FF0000;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  text-align: center;
+  cursor: pointer;
+`;
+
+class AddContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { type: null, content: "", order: null };
+  }
+  addContent = async (type) => {
+    if (type === "FILE") {
+      await this.setState({ type, order: this.props.order, content: "", initClick: true });
+      setTimeout(() => {
+        this.setState({ initClick: false });
+      }, 100);
+    } else {
+      await this.setState({ type, order: this.props.order, content: "" });
+      this.returnData();
+    }
+  }
+
+  returnData = async (data) => {
+    if (data) {
+      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+      this.props.getValue(data);
+    } else {
+      if (this.props.getValue) this.props.getValue(this.state);
+    }
+  }
+  render() {
+    return (
+      <ControllerWrap2>
+        <div className="innerBox" >
+          <NewController onClick={() => this.addContent("FILE")} width="116px" height="29px">파일 등록하기</NewController>
+          <NewController onClick={() => this.addContent("TEXT")} width="134px" height="29px">텍스트 등록하기</NewController>
+        </div>
+        {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
+      </ControllerWrap2>
+    );
+  }
+}
+

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
-import TextController from "./TextController";
+import osdcss from "opendesign_style";
+import TextController from "./TextControllerClassic";
 import FileController from "./FileController";
 import EmbController from "./EmbController";
 
@@ -9,8 +9,8 @@ import EmbController from "./EmbController";
 const ControllerWrap = styled.div`
   position: relative;
   &:hover {
-    border: 1px dashed ${opendesign_style.color.grayScale.scale3};
-    background-color: ${opendesign_style.color.grayScale.scale0};
+    border: 1px dashed ${osdcss.color.grayScale.scale3};
+    background-color: ${osdcss.color.grayScale.scale0};
     .editBtn {
       display: block;
     }
@@ -21,12 +21,11 @@ const ControllerWrap = styled.div`
     clear: both;
   }
 `;
-
-const DelBtn = styled.button`
+const UpBtn = styled.button`
   display: none;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 90%;
   transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
@@ -36,7 +35,59 @@ const DelBtn = styled.button`
   line-height: 25px;
   box-sizing: border-box;
   font-size: 12px;
-  background-color: ${opendesign_style.color.main.basic};
+  background-color: blue;
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
+  }
+`;
+const DownBtn = styled.button`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
+  }
+`;
+const DelBtn = styled.button`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: ${osdcss.color.main.basic};
   color: white;
   text-align: center;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -51,43 +102,59 @@ const DelBtn = styled.button`
 
 
 export class Controller extends Component {
-  state = {
-    type: "INIT",
-    order: 0,
-    click: false
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = { type: "INIT", order: 0, click: false };
+    this.InitClick = this.InitClick.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.moveDownItem = this.moveDownItem.bind(this);
+    this.moveUpItem = this.moveUpItem.bind(this);
+  }
+  async shouldComponentUpdate(nextProps) {
+    if (nextProps.content !== this.props.content)
+      return true;
+  }
   async componentDidMount() {
     if (this.props.type)
       await this.setState({ type: this.props.type, order: this.props.order });
   }
-
-  InitClick = async () => {
+  async InitClick() {
     await this.setState({ click: true });
   };
-  onChangeValue = async data => {
-    let newObj = { ...data };
-    console.log("debug>onChangeValue", newObj);
-    await this.setState(data);
-    this.returnDate();
+  async onChangeValue(data) {
+    let newObj = { ...this.props.item };
+    await this.setState({ ...newObj, data });
+    // this.returnDate();
+    // returnDate = async e => {
+    if (this.props.getValue)
+      await this.props.getValue(this.state);
+    // if (e && this.props.onBlur)
+    // await this.props.onBlur();
+    // };
+    console.log("updated:(changed):", this.props.item.content, this.state.content);
   };
 
-  deleteItem = async => {
+  async deleteItem() {
     if (this.props.deleteItem) {
       if (window.confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
         this.props.deleteItem(this.props.item.order)
       }
     }
   };
-
-  returnDate = async e => {
-    console.log("debug>returnData");
-    if (this.props.getValue) await this.props.getValue(this.state);
-    if (e && this.props.onBlur) await this.props.onBlur();
+  async moveUpItem() {
+    if (this.props.moveUp) {
+      this.props.moveUp({ old: this.props.item.order, new: this.props.item.order - 1 });
+    }
+  };
+  async moveDownItem() {
+    if (this.props.moveDown) {
+      this.props.moveDown({ old: this.props.item.order, new: this.props.item.order + 1 });
+    }
   };
 
   render() {
-    const { item, name } = this.props;
+    const { item, name, maxOrder } = this.props;
     return (
       <ControllerWrap>
         <div className="contentWrap">
@@ -97,10 +164,12 @@ export class Controller extends Component {
             <TextController item={item} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
           ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
-        <DelBtn type="button" className="editBtn" onClick={this.deleteItem}>
-          <i className="trash alternate icon large" />
-        </DelBtn>
+        <DelBtn type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></DelBtn>
+        {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null}
+        {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null}
       </ControllerWrap>
     );
   }
 }
+
+
