@@ -11,14 +11,25 @@ import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
 
 const TextWrapper = styled.div`
-    position: relative;
-    text-align: center;
-    line-height:37px;
+    top: 25px;
     font-size: 25px;
     font-family: Noto Sans KR;
     font-weight: 700;
     color: red;
     cursor: pointer;
+    margin-top:100px;
+    @media only screen and (max-width : 900px) {
+      margin-top:150px;
+      
+    }
+    .title{
+    width:300px;
+    text-align:center;
+    position:absolute;
+    @media only screen {
+        right:${props=>(props.centerPos-300)/2}px;
+  }
+}
 `;
 const JoinDesigner = styled.div`
     position: relative;
@@ -44,6 +55,7 @@ class DesignerListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            screenWidth:window.innerWidth,
             reload: false,
             this_order: { text: "최신순", keyword: "update" },
             this_category: { text: null, value: null },
@@ -56,15 +68,24 @@ class DesignerListContainer extends Component {
         this.getList = this.getList.bind(this);
         this.changeCategory = this.changeCategory.bind(this);
         this.handleCreateDesigner = this.handleCreateDesigner.bind(this);
+        this.handleResize = this.handleResize.bind(this);
+
     }
     componentDidMount() {
         this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignerTotalCountRequest() });
         this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
+        window.addEventListener("resize", this.handleResize, false);
     }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize, false);
+      };
     handleReload() {
         this.setState({ reload: !this.state.reload });
     }
+    handleResize(){
+        this.setState({screenWidth:window.innerWidth})
+       }
     async handleChangeCategory(category) {
         await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
         this.props.GetDesignerTotalCountRequest(category.value, null);
@@ -106,7 +127,9 @@ class DesignerListContainer extends Component {
 
             <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
 
-            <TextWrapper onClick={() => this.changeCategory(main_category)}>{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</TextWrapper>
+            <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
+            <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
+            </TextWrapper>
             <JoinDesignerContainer><JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner></JoinDesignerContainer>
             <ScrollListContainer>
                 {status === "INIT"
