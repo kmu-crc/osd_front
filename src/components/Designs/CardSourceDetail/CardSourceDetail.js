@@ -227,7 +227,7 @@ const EditorBottonWrapper = styled.div`
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { edit: false, content: this.props.content, loading: false };
+    this.state = { edit: false, content: this.props.content, origin:this.props.origin, loading: false };
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.changeMode = this.changeMode.bind(this);
@@ -243,7 +243,7 @@ class CardSourceDetail extends Component {
     if (this.props.uid) {
       this.props.GetDesignSourceRequest(this.props.uid)
         .then(async () => {
-          await this.setState({ content: this.props.content, origin: this.props.content });
+          await this.setState({ content: this.props.content, origin: this.props.origin });
         })
     }
   }
@@ -318,7 +318,6 @@ class CardSourceDetail extends Component {
     copyContent[indexNew].order = data.new;
     copyContent[indexOld].order = data.old;
     await this.setState({ content: copyContent });
-
   }
   async moveUpItem(order) {
     this.moveItem({ old: order, new: order - 1 });
@@ -328,7 +327,7 @@ class CardSourceDetail extends Component {
   };
   async onSubmit(event) {
     let newContent = [...this.state.content];
-    let oldContent = [...this.props.content];
+    let oldContent = [...this.state.origin];
     if (newContent === oldContent) {
       alert("변경된 내용이 없습니다.")
       return;
@@ -341,17 +340,25 @@ class CardSourceDetail extends Component {
       deleteContent: []
     }
     // get updatecontent
-    console.log(newContent, oldContent);
-    // return;
+    //order
+    for(var i = 0; i < oldContent.length; i++){
+      if(oldContent[i].order != i){
+        formData.updateContent.push(oldContent[i]);
+      }
+    }
+    //content
     for (var i = 0; i < newContent.length; i++) {
-      if (newContent.uid == null) continue;
+      if (newContent[i].uid == null) continue;
       let found = oldContent.filter(item => {
-        return (item.uid === newContent[i].uid && ((item.content != newContent[i].content)))
+        return (item.uid === newContent[i].uid 
+          && ((item.content != newContent[i].content))
+          )
       });
       if (found.length > 0) {
         formData.updateContent.push(newContent[i]);
       }
     }
+
     // get newcontent
     newContent.map(item => {
       if (item.uid == null) {
@@ -365,13 +372,18 @@ class CardSourceDetail extends Component {
         formData.deleteContent.push(oldContent[i]);
       }
     }
-    console.log("FORM-DATA:", formData, this.state.origin, this.state.content, this.props.content);
-    // return;
+
     // edit
     await this.setState({ loading: true });
     if (this.props.uid) {
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+        .then(()=>{
+          this.props.GetDesignSourceRequest(this.props.uid)
+            .then(async () => {
+              await this.setState({ content: this.props.content, origin: this.props.origin });
+            })
+        })
     } else { // new
       await this.props.upDateRequest(formData);
     }
@@ -379,7 +391,7 @@ class CardSourceDetail extends Component {
     return;
   }
   async onCancel() {
-    await this.setState({ content: this.props.content, edit: false, loading: false });
+    await this.setState({ content: this.props.content, origin:this.props.origin, edit: false, loading: false });
   }
   changeMode() {
     this.setState({ edit: !this.state.edit });

@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
     content: state.DesignCard.status.content,
+    origin: state.DesignCard.status.origin,
     status: state.DesignCard.DesignSourceDetail.status,
     editStatus: state.DesignCard.DesignSourceEdit.status
   };
