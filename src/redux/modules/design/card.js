@@ -104,7 +104,7 @@ const initialState = {
     DesignSourceEdit: { status: "INIT" },
     DesignDetailStepCard: { status: "INIT" },
     status: {
-        DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: []
+        DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin:[]
     }
 }
 
@@ -143,7 +143,8 @@ export function DesignCard(state, action) {
                     status: { $set: "SUCCESS" }
                 },
                 status: {
-                    content: { $set: action.data }
+                    content: { $set: action.data },
+                    origin: { $set: action.data }
                 }
             });
         case GET_DESIGN_SOURCE_FAILURE:
@@ -152,7 +153,8 @@ export function DesignCard(state, action) {
                     status: { $set: "FAILURE" }
                 },
                 status: {
-                    content: { $set: [] }
+                    content: { $set: [] },
+                    origin: { $set: [] }
                 }
             });
         case UPDATE_DESIGN_FILE:

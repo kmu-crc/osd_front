@@ -461,7 +461,7 @@ class CardModal extends Component {
 
                         <div className="content-border"><div className="border-line" /></div>
                         <div className="content" >
-                            <CardSourceDetailContainer uid={card.uid} isTeam={isTeam} edit={edit && this.state.edit}
+                            <CardSourceDetailContainer designId={this.props.designId} uid={card.uid} isTeam={isTeam} edit={edit && this.state.edit}
                                 isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
 
