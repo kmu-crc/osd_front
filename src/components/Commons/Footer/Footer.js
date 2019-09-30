@@ -29,12 +29,20 @@ const Foot = styled.footer`
 
 
 class Footer extends Component {
+  goNewWorld = () => {
+    alert("새로운 오픈소스디자인 베타사이트로 이동합니다!");
+    window.location.href = `http://dev.opensrcdesign.com`;
+  }
   render() {
-    return(
+    return (
       <Foot>
         <Grid padded={true} columns={2}>
           <Grid.Row>
-            <Grid.Column className="copyright"><TextFormat txt="Copyright @ 2019 Open Design Inc."/></Grid.Column>
+            <Grid.Column className="copyright">
+              <div onClick={this.goNewWorld}>
+                <TextFormat txt="Copyright @ 2019 Open Design Inc." />
+              </div>
+            </Grid.Column>
             <Grid.Column as="ul" className="list">
               <Link to="/Info/info">사이트 소개</Link>
               <Link to="/Term/term">이용약관</Link>
