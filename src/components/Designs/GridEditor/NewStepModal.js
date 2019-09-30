@@ -49,9 +49,12 @@ class NewStepModal extends Component {
             <form /*onSubmit={this.onSubmit}*/ ref={ref => (this.form = ref)}>
                 <div style={{ width: "62px", height: "29px", lineHeight: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "43.5px", marginLeft: "109.5px" }}>새 단계</div>
                 <div style={{ display: "flex", width: "575.5px", marginTop: "40px", marginLeft: "109.5px" }}>
-                    <div style={{ width: "40px", height: "29px", lineHeight: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left" }}>제목</div>
+                    <div style={{ width: "40px", height: "29px", lineHeight: "52px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left" }}>제목</div>
                     <div style={{ width: "505.5px", height: "56px", borderRadius: "5px", marginLeft: "34px", backgroundColor: "#EFEFEF" }}>
-                        <input name="title" onChange={this.onChange} style={{ width: "100%", height: "100%", paddingTop: "16px", paddingRight: "10px", paddingBottom: "16px", paddingLeft: "10px", border: "none", backgroundColor: "transparent" }} value={this.state.title} />
+                        <input name="title" onChange={this.onChange} 
+                        style={{ width: "100%", height: "100%", paddingTop: "16px", paddingRight: "10px", paddingBottom: "16px", paddingLeft: "10px", border: "none", backgroundColor: "transparent",
+                                fontSize:"20px",fontFamily:"Noto Sans KR",fontWeight:"300"}}
+                        value={this.state.title} />
                     </div>
                 </div>
                 <div style={{ display: "flex", width: "576px", marginLeft: "109.5px", marginTop: "38px" }}>
