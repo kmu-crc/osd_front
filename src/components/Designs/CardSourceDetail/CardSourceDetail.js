@@ -227,7 +227,7 @@ const EditorBottonWrapper = styled.div`
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { edit: false, content: this.props.content, origin:this.props.origin, loading: false };
+    this.state = { edit: false, content: this.props.content || [], origin: this.props.origin || [], loading: false };
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.changeMode = this.changeMode.bind(this);
@@ -243,8 +243,16 @@ class CardSourceDetail extends Component {
     if (this.props.uid) {
       this.props.GetDesignSourceRequest(this.props.uid)
         .then(async () => {
-          await this.setState({ content: this.props.content, origin: this.props.origin });
+          await this.setState({ content: this.props.content || [], origin: this.props.origin || [] });
         })
+    }
+  }
+  async shouldComponentUpdate(nextProps) {
+    if (nextProps.hook === true) {
+      console.log("1HOOKED");
+      this.props.handleResetHook && await this.props.handleResetHook();
+      await this.onSubmit();
+      console.log("2HOOKED");
     }
   }
   async onChangeFile(data) {
@@ -325,6 +333,7 @@ class CardSourceDetail extends Component {
   async moveDownItem(order) {
     this.moveItem({ old: order, new: order + 1 });
   };
+
   async onSubmit(event) {
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
@@ -332,7 +341,7 @@ class CardSourceDetail extends Component {
       alert("변경된 내용이 없습니다.")
       return;
     }
-    event.preventDefault();
+    if (event != null) event.preventDefault();
 
     let formData = {
       updateContent: [],
@@ -341,8 +350,13 @@ class CardSourceDetail extends Component {
     }
     // get updatecontent
     //order
-    for(var i = 0; i < oldContent.length; i++){
-      if(oldContent[i].order != i){
+    for (var i = 0; i < newContent.length; i++) {
+      if (newContent[i].order !== i) {
+        newContent[i].order = i;
+      }
+    }
+    for (var i = 0; i < oldContent.length; i++) {
+      if (oldContent[i].order != i) {
         formData.updateContent.push(oldContent[i]);
       }
     }
@@ -350,9 +364,9 @@ class CardSourceDetail extends Component {
     for (var i = 0; i < newContent.length; i++) {
       if (newContent[i].uid == null) continue;
       let found = oldContent.filter(item => {
-        return (item.uid === newContent[i].uid 
+        return (item.uid === newContent[i].uid
           && ((item.content != newContent[i].content))
-          )
+        )
       });
       if (found.length > 0) {
         formData.updateContent.push(newContent[i]);
@@ -362,6 +376,11 @@ class CardSourceDetail extends Component {
     // get newcontent
     newContent.map(item => {
       if (item.uid == null) {
+        delete item.initClick;
+        if (item.type === "TEXT") {
+          item = { type: item.type, content: item.content, order: item.order, extension: item.extension, data_type: item.data_type, file_name: null };
+        }
+        console.log("item:", item);
         formData.newContent.push(item);
       }
     })
@@ -378,7 +397,7 @@ class CardSourceDetail extends Component {
     if (this.props.uid) {
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
         .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
-        .then(()=>{
+        .then(() => {
           this.props.GetDesignSourceRequest(this.props.uid)
             .then(async () => {
               await this.setState({ content: this.props.content, origin: this.props.origin });
@@ -391,14 +410,14 @@ class CardSourceDetail extends Component {
     return;
   }
   async onCancel() {
-    await this.setState({ content: this.props.content, origin:this.props.origin, edit: false, loading: false });
+    await this.setState({ content: this.props.content, origin: this.props.origin, edit: false, loading: false });
   }
   changeMode() {
     this.setState({ edit: !this.state.edit });
   }
   render() {
     const { edit, content, loading } = this.state;
-    console.log("updated:", this.state.content);
+    // console.log("updated:", this.state.content);
     return (<div>
       {loading && <Loading />}
       <ButtonContainer >
@@ -412,12 +431,14 @@ class CardSourceDetail extends Component {
         <ViewContent>
           {content.map((item, index) => {
             if (item.type === "FILE" && item.data_type === "image")
-              return <div className="imgContent" key={index}><img key={index} src={item.content} alt="이미지" download={item.file_name} /></div>
+              return <div className="imgContent" key={index}>
+                <img key={index} src={item.content} alt="이미지" download={item.file_name} /></div>
 
             if (item.type === "FILE" && item.data_type === "video")
               return <span>
                 <span className="LinkFileName">{item.file_name}</span>
-                <video key={index} width="640" height="360" controls="controls" className="iconWrap" ><source src={item.content} type="video/mp4" download={item.file_name}></source></video>
+                <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                  <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
               </span>
 
             if (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video")
@@ -452,7 +473,7 @@ class CardSourceDetail extends Component {
       ) : null}
 
       <ButtonContainer >
-        {edit &&
+        {(edit && this.props.uid) &&
           <EditorBottonWrapper>
             <button onClick={this.onSubmit} className="submit" type="button">
               <i className="icon outline save" />등록</button>
@@ -466,7 +487,6 @@ class CardSourceDetail extends Component {
 }
 
 export default CardSourceDetail;
-
 
 
 const ControllerWrap2 = styled.div`

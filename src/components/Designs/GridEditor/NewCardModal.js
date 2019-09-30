@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
 import { connect } from "react-redux";
-import { UpdateCardSourceRequest, CreateDesignCardRequest, GetDesignBoardRequest, GetDesignDetailRequest, UpdateDesignTime } from "redux/modules/design";
+import { UpdateDesignSourceRequest, CreateDesignCardRequest, GetDesignBoardRequest, GetDesignDetailRequest, UpdateDesignTime } from "redux/modules/design";
 import { ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import CardSourceDetail from 'components/Designs/CardSourceDetail';
@@ -17,7 +17,7 @@ const NewCardDialog = styled(Modal)`
     opacity: 1;
 `;
 class NewCardModal extends Component {
-    state = { scroll: false, edit: false, title: "", content: "", card_content: { deleteContent: [], newContent: [], updateContent: [] } };
+    state = { scroll: false, edit: false, title: "", content: "", hook: false, card_content: { deleteContent: [], newContent: [], updateContent: [] } };
     onClose = () => {
         this.props.close();
     }
@@ -38,59 +38,58 @@ class NewCardModal extends Component {
             this.setState({ content: event.target.value });
         }
     }
-    saveTemporary = (obj) => {
-        console.log("save:", obj);
-        this.setState({ card_content: obj });
+    saveTemporary = async (obj) => {
+        await this.setState({ card_content: obj });
     }
-    handleSubmit = (event) => {
+    handleResetHook = async () => {
+        await this.setState({ hook: false });
+    }
+    handleSubmit = async (event) => {
         event.preventDefault();
         let files = null;
-
-        // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-        // const pack = { title: this.state.title, thumbnail: thumbnail, data: this.state.card_content, content: this.state.content };
-        // console.log(pack);return;
-
+        await this.setState({ hook: true });
         // new card 
         ValidationGroup(this.state, false)
             .then(data => {
                 files = data && data.files;
-                // console.log("submit:", files, this.state)
                 this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
                     .then((res) => {
-                        console.log("res:", res);
-                         if (res.success) {
+                        if (res.success) {
+                            // and get new card id
+                            // directly update contents stored tempolarly
                             const card_id = res.card;
                             let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-                            const pack = { title: this.state.title, thumbnail: thumbnail, data: this.state.card_content, content: this.state.content };
-                            // console.log(pack);return;
-                            this.props.UpdateCardSourceRequest(pack, card_id, this.props.token)
-                              .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                              .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                              .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                              .then(() => { this.onClose() })
-                              .catch(err => alert(err));
-                         } else {
-                             alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
-                         }
+                            const pack = {
+                                title: this.state.title, thumbnail: thumbnail, content: this.state.content,
+                                newContent: this.state.card_content.newContent, deleteContent: this.state.card_content.deleteContent, updateContent: this.state.card_content.updateContent
+                            };
+                            this.props.UpdateDesignSourceRequest({ ...pack }, card_id, this.props.token)
+                                // upDateRequest={this.props.UpdateDesignSourceRequest}
+                                .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
+                                .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
+                                .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
+                                .then(() => { this.onClose() })
+                                .catch(err => alert(err));
+                        } else {
+                            alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
+                        }
                     });
             })
-        // and get new card id
-        // directly update contents stored tempolarly
     }
     render() {
+        const { hook } = this.state;
         return (<NewCardDialog open={this.props.open} onClose={this.props.close}>
             <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
                 <Cross angle={45} color={"#FFFFFF"} weight={3} width={45} height={45} />
             </div>
-            <div style={{ display: "flex", marginTop: "35.5px", marginLeft: "125.5px" }}><div style={{ width: "80px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>새 컨텐츠</div></div>
+            <div style={{ display: "flex", marginTop: "35.5px", marginLeft: "125.5px" }}>
+                <div style={{ width: "80px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>새 컨텐츠</div>
+            </div>
             <div style={{ display: "flex", marginTop: "56px", marginLeft: "200.5px" }}>
                 <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>썸네일 사진</div>
-                <div></div>
-                <FormThumbnailEx
-                    name="thumbnail"
+                <FormThumbnailEx name="thumbnail"
                     style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }}
-                    placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                />
+                    placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
                 <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>
@@ -114,6 +113,8 @@ class NewCardModal extends Component {
                         edit={this.state.edit}
                         closeEdit={this.onCloseEditMode}
                         openEdit={this.onChangeEditMode}
+                        hook={hook}
+                        handleResetHook={this.handleResetHook}
                         upDateRequest={this.saveTemporary} />
                 </div>
             </div>
@@ -151,12 +152,12 @@ const mapDispatchToProps = (dispatch) => {
         GetDesignDetailRequest: (id, token) => {
             return dispatch(GetDesignDetailRequest(id, token));
         },
+        UpdateDesignSourceRequest: (data, card_id, token) => {
+            return dispatch(UpdateDesignSourceRequest(data, card_id, token));
+        },
         UpdateDesignTime: (id) => {
             return dispatch(UpdateDesignTime(id));
         },
-        UpdateCardSourceRequest: (data, card_id, token) => {
-            return dispatch(UpdateCardSourceRequest(data, card_id, token));
-        }
     };
 };
 
