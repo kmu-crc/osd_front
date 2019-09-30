@@ -662,6 +662,7 @@ class ModifyDesign extends Component {
   deleteDialog = () => {
     this.setState({ deleteModal: !this.state.deleteModal })
   }
+
   render() {
     let arrSummaryList = [];
     if (this.state.members != null && this.state.members.length > 0) {
@@ -705,13 +706,17 @@ class ModifyDesign extends Component {
               {scrollmenu.map((menu, index) => {
                 return (
                   <div onClick={() => this.gotoStep(menu)} 
-                     className="menuItem"
+                     className="menuItem" 
                      borderBottom={ index + 1 === scrollmenu.length} 
                      key={menu.txt}>
                   <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
                 </div>)
               })}
+                <div className="menuItem" style={{backgroundColor:"white"}} onClick={this.deleteDialog}>
+                                    <div className="deleteText">디자인 삭제하기</div>
+                </div>
             </div>
+
           </NavMenu>
           {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
 

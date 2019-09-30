@@ -36,8 +36,8 @@ const EditStepDialog = styled(Modal)`
         .edit-step-name-content-title {
             width: 40px;
             height: 29px;
-            line-height: 29px;
             color: #707070;
+            line-height:52px;
             font-family: Noto Sans KR;
             font-size: 20px;
             font-weight: 500;
@@ -59,6 +59,9 @@ const EditStepDialog = styled(Modal)`
             padding-right: 10px;
             border: none;
             background-color: transparent;
+            font-family:Noto Sans KR;
+            font-size:20px;
+            font-weight:300;
         }
     }
     .edit-step-name-button-container {
@@ -75,8 +78,9 @@ const EditStepDialog = styled(Modal)`
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            line-height: 29px;
+            line-height: 40px;
             border-bottom: 1.5px solid #FF0000;
+            border:1px splid black;
             cursor: pointer;
         }
         .edit-step-name-button-cancel {

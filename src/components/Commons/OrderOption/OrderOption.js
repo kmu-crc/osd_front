@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 const OrderWrapper = styled.div`
     width:100%;
-    z-index:2000;
+    z-index:820;
     display:flex;
     justify-content:flex-end;
-    padding-top: 55px;
-    padding-right:30px;
+    top: 180px;
+    right:30px;
     font-size: 20px;
     font-family: Noto Sans KR;
-    position:fixed;
+    position:absolute;
     // z-index:1000;
     // display: flex;
     // justify-content: flex-end;
