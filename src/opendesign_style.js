@@ -91,7 +91,7 @@ const opendesign_style = {
     height: 230,
     marginRight: 94,
     marginBottom: 60,
-    marginBottomLast: 179,
+    marginBottomLast: 79,
     small: { marginRightLast: 0, cols: 1, },
     medium: { marginRightLast: 433, cols: 1, },
     large: { marginRightLast: 11, cols: 2, },

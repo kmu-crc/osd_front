@@ -131,8 +131,6 @@ class MypageBody extends Component {
                             <Loading /> :
                             <ScrollList manual {...opendesign_style.designer_margin} type="designer" dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
                     </div>
-
-
                 }
 
             </MypageBodyComp>

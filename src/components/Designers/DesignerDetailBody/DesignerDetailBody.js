@@ -65,11 +65,6 @@ class DesignerPageBody extends Component {
         categorys: ['디자인', '그룹', '좋아요'],
         selectCate: "unSelectedCate",
         cateIndex: 0,
-        pageDesign: 0,
-        pageGroup: 0,
-        pageLikeDesign: 0,
-        pageLikeGroup: 0,
-        pageLikeDesigner: 0
     }
     handleReload = () => {
         this.setState({ reload: false })
@@ -90,24 +85,19 @@ class DesignerPageBody extends Component {
         this.getLikeDesignerInDesignerRequest(0);
     }
     getMyDesignInDesignerRequest = async (page) => {
-        if (page > this.state.pageDesign) this.setState({ pageDesign: page });
-        this.props.id && this.props.GetMyDesignInDesignerRequest(this.props.id, this.state.pageDesign);
+        this.props.id && this.props.GetMyDesignInDesignerRequest(this.props.id, page);
     }
     getGroupInDesignerRequest = async (page) => {
-        if (page > this.state.pageGroup) this.setState({ pageGroup: page });
-        this.props.id && this.props.GetGroupInDesignerRequest(this.props.id, this.state.pageGroup);
+        this.props.id && this.props.GetGroupInDesignerRequest(this.props.id, page);
     }
     getLikeInDesignerRequest = async (page) => {
-        if (page > this.state.pageLikeDesign) this.setState({ pageLikeDesign: page })
-        this.props.id && this.props.GetLikeInDesignerRequest(this.props.id, this.state.pageLikeDesign);
+        this.props.id && this.props.GetLikeInDesignerRequest(this.props.id, page);
     }
     getLikeGroupInDesignerRequest = async (page) => {
-        if (page > this.state.pageLikeGroup) this.setState({ pageLikeGroup: page })
-        this.props.id && this.props.GetLikeGroupInDesignerRequest(this.props.id, this.state.pageLikeGroup);
+        this.props.id && this.props.GetLikeGroupInDesignerRequest(this.props.id, page);
     }
     getLikeDesignerInDesignerRequest = async (page) => {
-        if (page > this.state.pageLikeDesigner) this.setState({ pageLikeDesigner: page })
-        this.props.id && this.props.GetLikeDesignerInDesignerRequest(this.props.id, this.state.pageLikeDesigner);
+        this.props.id && this.props.GetLikeDesignerInDesignerRequest(this.props.id, page);
     }
 
     changeCategory = (index) => {
@@ -160,8 +150,8 @@ class DesignerPageBody extends Component {
                 }
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper">
+                        <div className="interested first" >관심있는 디자인</div>
                         <div className="interested-first-scroll">
-                            <div className="interested first" >관심있는 디자인</div>
                             {this.props.status === "INIT" ?
                                 <Loading /> :
                                 <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}

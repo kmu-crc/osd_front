@@ -153,6 +153,10 @@ class ScrollList extends Component {
         return true;
       }
     };
+    if (nextProps.dataList.length < 0) {
+      this.setState({ hasMore: false });
+      return true;
+    }
   };
 
   getColumnNumber(type) {

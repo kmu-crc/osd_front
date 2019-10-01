@@ -425,7 +425,6 @@ export function GetLikeDesignerInDesignerRequest(id, page) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log(`${host}/designer/designerDetail/` + id + "/likeDesigner/" + page);
             if (!data) {
                 console.log("no data")
                 data = []
