@@ -277,8 +277,8 @@ class ModifyMyDetail extends Component {
     }
 
     if (this.state.password) {
-      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
-      if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
+      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])/;
+      if (!reg_pw.test(this.state.password) || this.state.password.length < 6 || this.state.password.length > 15) {
         alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
         return false;
       }
@@ -304,7 +304,7 @@ class ModifyMyDetail extends Component {
         if (res.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
-          window.location.href = "/"
+          window.location.href = "/mypage"
         } else {
           alert("다시 시도해주세요");
           this.setState({

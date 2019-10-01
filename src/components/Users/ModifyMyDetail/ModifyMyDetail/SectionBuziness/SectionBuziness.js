@@ -114,12 +114,12 @@ class SectionBuziness extends Component {
   }
   isDesignerCheck = () => {
     var checkDiv = document.getElementById("isDesignerCheckbox");
-    if (checkDiv.style.backgroundColor === "rgb(255, 255, 255)") {
-      checkDiv.style.backgroundColor = "#FF0000"
-    }
-    else {
-      checkDiv.style.backgroundColor = "#FFFFFF";
-    }
+    // if (checkDiv.style.backgroundColor === "rgb(255, 255, 255)") {
+    //   checkDiv.style.backgroundColor = "#FF0000"
+    // }
+    // else {
+    //   checkDiv.style.backgroundColor = "#FFFFFF";
+    // }
     const result = !this.state.isDesigner;
     this.setState({ isDesigner: result });
     this.props.updateIsDesigner(result);

@@ -229,21 +229,38 @@ class ModifyMyDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
-
     let formData = {
-      change_password: this.state.change_password, 
-      nick_name: this.state.nick_name, about_me: this.state.about_me,
-      password: this.state.password, 
-      category_level1: this.state.category_level1, category_level2: this.state.category_level2,
-      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career, location:this.state.location, contact: this.state.contact,
-      files:[]
-    };    
+      uid: this.props.uid, nick_name: this.state.nick_name,
+      about_me: this.state.about_me,
+      password: this.state.password,
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      is_designer: this.state.is_designer,
+      team: this.state.team, career: this.state.career,
+      location: this.state.location, contact: this.state.contact,
+      change_password: this.state.change_password,
+      files: []
+    };
     let file = {
       value: this.state.thumbnail,
       name: this.state.thumbnail_name,
       key: 0
     };
     formData.files.push(file);
+    // let formData = {
+    //   change_password: this.state.change_password, 
+    //   nick_name: this.state.nick_name, about_me: this.state.about_me,
+    //   password: this.state.password, 
+    //   category_level1: this.state.category_level1, category_level2: this.state.category_level2,
+    //   is_designer: this.state.is_designer, team: this.state.team, career: this.state.career, location:this.state.location, contact: this.state.contact,
+    //   files:[]
+    // };    
+    // let file = {
+    //   value: this.state.thumbnail,
+    //   name: this.state.thumbnail_name,
+    //   key: 0
+    // };
+    // formData.files.push(file);
 
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;

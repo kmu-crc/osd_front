@@ -112,7 +112,7 @@ export class FormThumbnailEx extends Component {
           <div className="wrapper">
             <div className="inside-wrapper">
               <div className="find">찾아보기</div></div>
-            <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+            <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
           </div>
         </label>
         <FormFile

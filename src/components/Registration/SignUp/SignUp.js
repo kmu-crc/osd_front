@@ -150,6 +150,20 @@ const InputText = styled.input.attrs({type:'text'})`
     border-radius:15px;
     
 `
+const InputPass = styled.input.attrs({type:'password'})`
+    width:708px;
+    height:48px;
+    margin-top:16px;
+    padding-left:20px;
+    font-size:20px;
+    font-weight:300;
+    color:#707070;
+    background-color:#EFEFEF;
+    outline:none;
+    border:none;
+    border-radius:15px;
+    
+`
 const CheckboxContainer = styled.label`
     display: block;
     align-items: center;
@@ -285,9 +299,7 @@ class SignUpModal extends Component {
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
-
-        if (checkedMail.test(this.state.email) === false) {
+        if (checkedMail.test(this.state.email) == false) {
             alert("이메일 형식이 올바르지 않습니다");
             return;
         }
@@ -391,22 +403,22 @@ class SignUpModal extends Component {
                                     <div className="itemBox">
                                         <div className="titleLabel">아이디</div>
                                         
-                                            <InputText placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
+                                            <InputText placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." onChange={this.onChangeId}/>
                                     </div>
                                     
                                     <div className="itemBox">
                                         <div className="titleLabel">비밀번호</div>
-                                            <InputText placeholder="비밀번호를 입력하세요." />
+                                            <InputPass placeholder="비밀번호를 입력하세요."  onChange={this.onChangePass}/>
                                     </div>
 
                                     <div className="itemBox">
                                         <div className="titleLabel">비밀번호 확인</div>
-                                        <InputText placeholder="비밀번호를 입력하세요." />
+                                        <InputPass placeholder="비밀번호를 입력하세요."  onChange={this.onChangePassCheck}/>
                                     </div>
 
                                     <div className="itemBox">
                                         <div className="titleLabel">닉네임</div>
-                                        <InputText placeholder="닉네임을 입력하세요." />
+                                        <InputText placeholder="닉네임을 입력하세요."  onChange={this.onChangeNickname}/>
                                         </div>    
                                     <div className="itemBox">  
                                     <div className="titleLabel">이용약관</div>
