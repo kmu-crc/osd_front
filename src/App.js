@@ -24,8 +24,7 @@ import CreateGroupPage from "pages/CreateGroupPage"
 import ModifyGroupPage from "pages/ModifyGroupPage"
 
 // + designer
-import DesignerListPage from "containers/Designer/DesignerListContainer"//"pages/DesignerListPage"
-import {DesignerDetailPage} from "pages/DesignerPage"
+import DesignerListPage,{DesignerDetailPage} from "pages/DesignerPage"
 import CreateDesigner from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer"
 
 // + etc.

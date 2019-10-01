@@ -511,7 +511,7 @@ class GroupInfoComponent extends Component {
                                             <div className="count_label">{NumberFormat(info.like || 0)}</div>
                                         </div>
                                         <div id="count-childs" className="countItem">
-                                            <MiniIcon imageURL={iForked}/>
+                                            <MiniIcon imageURL={iForked} style={{opacity:"0.5"}}/>
                                             <div className="count_label">{NumberFormat(info.design || 0 + info.group || 0)}</div>
                                         </div>
                                     </div>

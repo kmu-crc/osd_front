@@ -112,6 +112,13 @@ class ScrollList extends Component {
   state = { hasMore: true, loading: false, page: 0, gap: 150, cols: 0 };
   componentDidMount() {
     !this.props.manual && window.addEventListener("scroll", this.handleScroll, true);
+    // if(this.props.type==="designer")
+    // {
+    //   this.props.getListRequest(0);
+    //   this.props.getListRequest(1);
+    //   this.props.getListRequest(2);
+    //   this.setState({page:3});
+    // }
     window.addEventListener("resize", this.handleResize, false);
     this.getColumnNumber(this.props.type);
   };
@@ -122,7 +129,13 @@ class ScrollList extends Component {
 
   handleScroll = (e) => {
     const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
-    reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
+    if(this.props.type != "designer")
+    {
+      reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
+    }
+    else{
+      reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
+    }
   };
 
   getLoadData = async () => {

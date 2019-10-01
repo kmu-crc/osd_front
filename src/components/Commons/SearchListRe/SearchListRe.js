@@ -62,7 +62,6 @@ const SearchForm = styled.div`
     }
     .OrderBox{
         border: 1xp solid red;
-        position: relative;
         top: 220px;
         left: 1736px;
     }

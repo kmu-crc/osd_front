@@ -62,6 +62,11 @@ const LeftSide = styled.div`
     }
     .box {
         margin-top: 25px;
+        .designer_member{
+            width:200px;
+            font-size:16px;
+            font-weight:300;            
+        }
     }
     .goto-parent {
         width: 165px;
@@ -528,6 +533,7 @@ const DesignMemberModalContainer = styled(Modal)`
     margin-left: 34.32px;
 }
 `;
+
 const DesignCommentModalContainer = styled(Modal)`
     min-width: 1250px;
     .close-box {
@@ -738,7 +744,7 @@ class DesignInfo extends Component {
                         <div className="box">
                             {DesignDetail.parent_design && <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>{DesignDetail.parent_title.slice(0, 4)}{DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>}
                             <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)} onBlur={!isMyDesign ? this.onMemberListHandler : undefined}>
-                                {DesignDetail.userName.slice(0, 8)}{(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}
+                                <div className="designer_member"> {DesignDetail.userName.slice(0, 8)}{(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
                             </button>
                             {!isMyDesign && this.state.memberList &&
                                 <DesignMemberList top={this.memberlist.getBoundingClientRect().top} left={this.memberlist.getBoundingClientRect().left}>

@@ -168,7 +168,6 @@ const PeerIcon = styled.div`
   background: ${props => `url(${props.imageURL})`};
   background-size:cover;
   background-position:center center;
-  background-color:#D6D6D6;
 `
 //---sectionbasic---//
 const ContentsBox = styled.div`
@@ -465,8 +464,9 @@ const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1
 
 function Peer(props) {
   return (
+
     <PeerBox>
-      <PeerIcon imageURL={`url(${props.s_img || noface})`} />
+      <PeerIcon imageURL={props.s_img} />
       <div className="nameLabel">{props.nick_name}</div>
       <div className="closeButton"><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
     </PeerBox>
@@ -713,7 +713,7 @@ class CreateDesign extends Component {
                       <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                       <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                     </div>
-                    <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, JPG/<br />JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                   </div>
                 </ThumbnailBox>
                 {/* title */}
