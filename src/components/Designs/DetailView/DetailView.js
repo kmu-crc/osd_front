@@ -43,6 +43,9 @@ const GoStepBtn = styled(Button)`
   right: 1rem; */
   /* background-color: #57BBBA;
   border: 1px solid #57BBBA; */
+  font-size:17px;
+  width:200px;
+  padding:7px;
 `;
 const BtnWrap = styled.div`
   position: absolute;

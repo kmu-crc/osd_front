@@ -31,7 +31,7 @@ const DesignElement = styled.div`
     z-index: 701;
     position: absolute;
     border-radius: 15px;
-    background-image: linear-gradient(180deg, rgba(255,255,255,0), rgba(32,32,32, 1)); 
+    background-image: linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(32,32,32, 0.7)100%); 
     width: 330px;
     height: 330px;
   }
@@ -52,8 +52,9 @@ const DesignElement = styled.div`
     height: 40px;
     color: #FF0000;
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 400;
     text-align: right;
+    text-shadow:2px 2px 6px rgb(80,80,80,1);
     cursor: default;
   }
   .innerbox {
@@ -69,6 +70,7 @@ const DesignElement = styled.div`
     .design-title {
       font-size: 20px;
       font-weight: 700;
+      text-shadow:2px 2px 6px gray;
       display: flex;
       justify-content: space-between;
     }
@@ -78,14 +80,16 @@ const DesignElement = styled.div`
       width: 80px;
       height: 25px;
       font-size: 17px;
+      font-family: Noto Sans KR;
+      text-shadow:2px 2px 6px gray;
       line-height: 25px;
       text-align: right;
-      font-family: Noto Sans KR;
       cursor: default;
     }
     .user-name {
       font-size: 20px;
       font-weight: 300;
+      text-shadow:2px 2px 6px gray;
       cursor: pointer;
     }  
     .user-update-wrapper {
