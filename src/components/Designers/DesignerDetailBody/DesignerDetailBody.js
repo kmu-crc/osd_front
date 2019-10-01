@@ -23,6 +23,7 @@ const DesignerDetailBody = styled.div`
 
     .compWrapper {
         padding-top: 35px;
+        padding-bottom: 35px;
     }
     .interested {
         position: relative;
@@ -159,19 +160,19 @@ class DesignerPageBody extends Component {
                 }
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper">
-                        <div className="interested first" >
-                            <div >관심있는 디자인</div>
-                        </div>
                         <div className="interested-first-scroll">
+                            <div className="interested first" >관심있는 디자인</div>
                             {this.props.status === "INIT" ?
                                 <Loading /> :
                                 <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
                                     manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}</div>
+
                         <div className="interested second" >관심있는 그룹</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
                             <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
                                 manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+
                         <div className="interested third" >관심있는 디자이너</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :

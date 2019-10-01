@@ -6,12 +6,14 @@ import {
   GetLikeGroupRequest, LikeGroupRequest,
   UnlikeGroupRequest, DeleteGroupRequest,
   GetDesignInGroupRequest, GetGroupInGroupRequest,
+  GetTotalCountGroupInGroupRequest
 } from "redux/modules/group"
 import GroupDetail from "components/Groups/GroupDetail"
 class GroupDetailContainer extends Component {
   render() {
+    console.log(this.props.GroupList, "LIST");
     return (
-      <GroupDetail {...this.props} />
+      <GroupDetail {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />
     )
   }
 }

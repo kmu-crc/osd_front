@@ -209,7 +209,7 @@ class GridEditor extends Component {
         const rightArrowPos = window.innerWidth <= osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth - window.innerWidth : 0;
         console.log("pos:", rightArrowPos);
 
-        const { gap, h, left, right, row, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
@@ -226,7 +226,7 @@ class GridEditor extends Component {
                             title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
                         {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
-                        {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={row} open={newcard} close={() => this.setState({ newcard: false })} />}
+                        {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} />}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>

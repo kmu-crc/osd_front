@@ -456,22 +456,7 @@ export function DeleteGroupInGroupRequest(id, groupid) {
     })
   }
 }
-export function GetCountMyDesignAndGroupInGroupRequest(gid, uid) {
-  return new Promise((resolve, reject) => {
-    fetch(`${host}/group/getCountDesignGroupInGroup/${gid}/${uid}`, {
-      headers: { "Content-Type": "application/json" }, method: "get"
-    }).then(res => { return res.json() })
-      .then(count => {
-        console.log("Cnt:", count)
-        // if (count)
-        resolve(count)
-      })
-      .catch(error => {
-        alert('그룹정보를 서버로부터 가져오는 중 다음과 같은 원인으로 에러가 발생하였습니다.' + error)
-        resolve(null)
-      })
-  })
-}
+
 export function GetMyExistGroupListRequest(token, id) {
   return (dispatch) => {
     dispatch(GetExistGroupList())
@@ -617,9 +602,27 @@ export function CreateNewGroupRequest(data, token) {
       })
   }
 }
+export function GetTotalCountGroupInGroupRequest(id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/groupDetail/${id}/groupCount`;
+    console.log(url);
+    fetch(url, {
+      headers: { "Content-Type": "application/json" }, method: "get"
+    }).then(res => {
+      return res.json();
+    }).then(count => {
+      if (!count) {
+        resolve(count);
+      } else {
+        resolve(-1);
+      }
+    }).catch(err => {
+      resolve(0);
+    })
+  })
+}
 export function GetGroupInGroupRequest(id, page, sort) {
   const url = `${host}/group/groupDetail/` + id + "/group/" + page + "/" + sort
-  console.log(url, "GetGroupInGroup")
   return (dispatch) => {
     return fetch(url, {
       headers: { "Content-Type": "application/json" },

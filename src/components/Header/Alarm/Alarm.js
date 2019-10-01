@@ -110,7 +110,7 @@ class Alarm extends Component {
             } else if (item.kinds === "REQUEST") {
                 msg = `${from}님이 가입요청을 하였습니다.`
             } else if (item.kinds === "INVITE_TRUE") {
-                msg = `${to}님이 ${from}님의 초대를 수락했습니다.`
+                msg = `${from}님이 ${to}님의 초대를 수락했습니다.`
             } else if (item.kinds === "REQUEST_TRUE") {
                 msg = `${to}님이 이 디자인의 멤버가 되었습니다.`
             } else if (item.kinds === "GETOUT") {
@@ -170,12 +170,12 @@ class Alarm extends Component {
                 if (confirm) {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
-                            alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
-                            this.alarmConfirm(item.user_id, item.uid)
-                            //       if (res.data && res.data.success) {
-                            //           } else {
-                            //               alert("다시 시도해주세요.");
-                            //           }
+                            // if (res.data && res.data.success) {
+                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                                this.alarmConfirm(item.user_id, item.uid)
+                            // } else {
+                                // alert("다시 시도해주세요.");
+                            // }
                         })
                         .catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }

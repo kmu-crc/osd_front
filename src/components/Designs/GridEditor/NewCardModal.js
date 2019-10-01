@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
 import { connect } from "react-redux";
-import { UpdateDesignSourceRequest, CreateDesignCardRequest, GetDesignBoardRequest, GetDesignDetailRequest, UpdateDesignTime } from "redux/modules/design";
+import { UpdateDesignSourceRequest, UpdateCardSourceRequest, CreateDesignCardRequest, GetDesignBoardRequest, GetDesignDetailRequest, UpdateDesignTime } from "redux/modules/design";
 import { ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import CardSourceDetail from 'components/Designs/CardSourceDetail';
@@ -47,7 +47,7 @@ class NewCardModal extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         let files = null;
-        await this.setState({ hook: true });
+        await this.setState({ loading: true, hook: true });
         // new card 
         ValidationGroup(this.state, false)
             .then(data => {
@@ -59,22 +59,21 @@ class NewCardModal extends Component {
                             // directly update contents stored tempolarly
                             const card_id = res.card;
                             let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-                            const pack = {
+                            this.props.UpdateCardSourceRequest({
                                 title: this.state.title, thumbnail: thumbnail, content: this.state.content,
-                                newContent: this.state.card_content.newContent, deleteContent: this.state.card_content.deleteContent, updateContent: this.state.card_content.updateContent
-                            };
-                            this.props.UpdateDesignSourceRequest({ ...pack }, card_id, this.props.token)
-                                // upDateRequest={this.props.UpdateDesignSourceRequest}
+                                data: { deleteContent: this.state.card_content.deleteContent, newContent: this.state.card_content.newContent, updateContent: this.state.card_content.updateContent }
+                            }, card_id, this.props.token)
                                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                                 .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
                                 .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
                                 .then(() => { this.onClose() })
-                                .catch(err => alert(err));
+                                .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
                         } else {
                             alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
                         }
                     });
             })
+        await this.setState({ loading: false });
     }
     render() {
         const { hook } = this.state;
@@ -123,15 +122,6 @@ class NewCardModal extends Component {
                     <button onClick={this.handleSubmit} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>생성하기</button>
                 </div>
             </div>
-            {/*<CardSourceDetail
-        //  {...this.props}
-        //  uid={this.props.uid}
-        //  isTeam={this.props.isTeam}
-        //  edit={true}
-        //  closeEdit={this.props.closeEdit}
-        //  openEdit={this.props.openEdit}
-        //  upDateRequest={this.onSubmit}
-        ///>*/}
         </NewCardDialog >)
     }
 }
@@ -151,6 +141,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         GetDesignDetailRequest: (id, token) => {
             return dispatch(GetDesignDetailRequest(id, token));
+        },
+        UpdateCardSourceRequest: (data, card_id, token) => {
+            return dispatch(UpdateCardSourceRequest(data, card_id, token));
         },
         UpdateDesignSourceRequest: (data, card_id, token) => {
             return dispatch(UpdateDesignSourceRequest(data, card_id, token));

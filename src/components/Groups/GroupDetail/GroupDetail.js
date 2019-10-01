@@ -70,6 +70,8 @@ class GroupDetail extends Component {
     if (!this.state.uid) {
       return;
     }
+    const num = await this.props.getCountGroup(this.state.uid);
+    console.log("num:", num);
     this.props.GetGroupInGroupRequest(this.state.uid, page, "update")
   }
   componentWillReceiveProps = async (nextProps) => {
