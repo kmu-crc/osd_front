@@ -10,12 +10,13 @@ import opendesign_style from "opendesign_style";
 //css
 const DesignerDetailBody = styled.div`
     font-family: Noto Sans KR;
-    .MypageCategory {
-        display: flex;
+    .MypageCategory{
+        display:flex;
         justifyContent: space-start;
-        padding-top:60px;
+        padding-top:32px;
         font-size:20px;
         color:#707070;
+        
     }
     .selectedCate {
         opacity: 1.0;
@@ -37,6 +38,9 @@ const DesignerDetailBody = styled.div`
     .first {
         display: flex;
         justify-content: space-start;
+        padding-top: 75px;
+        padding-left: 67px;
+        margin-bottom: 25px;
         .text {
             padding-left: 67px;
             font-weight: Medium;
@@ -124,9 +128,10 @@ class DesignerPageBody extends Component {
             LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
         const catePadding = [70, 55, 60];
         const { reload } = this.state;
-
+            
         return (
             <DesignerDetailBody>
+                
                 <div className="MypageCategory">
                     {this.state.categorys.map((category, index) => {
                         return (<CategoryItems id={index} opacity={this.state.cateIndex === index ? "1.0" : "0.5"} paddingLeft={catePadding[index]} key={index} onClick={this.changeCategory.bind(this, index)}>{category}</CategoryItems>)
