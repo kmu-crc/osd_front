@@ -106,18 +106,16 @@ class GridEditor extends Component {
         this.setState({ row: row, boardId: boardId, newcard: true });
     }
     openCard = (card, row, boardId) => {
-        // console.log(card, row, boardId);
-        // return;
         this.setState({ cardDetail: card, title: card.title, row: row, boardId: boardId, card: true });
+    }
+    OpenNewStep() {
+        this.setState({ newstep: true });
     }
     CloseNewStep() {
         this.setState({ newstep: false });
     }
     CloseEditStep() {
         this.setState({ editstep: false });
-    }
-    OpenNewStep() {
-        this.setState({ newstep: true });
     }
     async OpenEditStep(title, where) {
         await this.setState({ editstep: true, title: title, where: where });
@@ -135,7 +133,7 @@ class GridEditor extends Component {
             .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("2", this.props.DesignDetailStep) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
-        this.setState({ editstep: false });
+        this.CloseEditStep();
     }
     async NewStep(data) {
         await this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)

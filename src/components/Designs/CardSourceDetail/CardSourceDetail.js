@@ -249,10 +249,8 @@ class CardSourceDetail extends Component {
   }
   async shouldComponentUpdate(nextProps) {
     if (nextProps.hook === true) {
-      console.log("1HOOKED");
       this.props.handleResetHook && await this.props.handleResetHook();
       await this.onSubmit();
-      console.log("2HOOKED");
     }
   }
   async onChangeFile(data) {
@@ -403,6 +401,7 @@ class CardSourceDetail extends Component {
               await this.setState({ content: this.props.content, origin: this.props.origin });
             })
         })
+      await this.props.GetCardDetailRequest(this.props.uid);
     } else { // new
       await this.props.upDateRequest(formData);
     }
