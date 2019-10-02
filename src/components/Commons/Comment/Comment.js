@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
-
+const CommentBox = styled.div`
+`
 const CommentContainer = styled.div`
     display: flex; 
     margin-bottom: 30px;
@@ -26,15 +27,18 @@ const CommentContainer = styled.div`
         font-family: Noto Sans KR;
     }
     .comment{
+        max-width:900px;
         margin-top: 8px;
         font-size: 20px;
         font-weight: 300;
         font-family: Noto Sans KR;
+        line-height:30px;
     }
     .button-wrapper{
         margin-left: 26px;
         margin-top: 41px;
         display: flex;
+        align-items:flex-end;
     }
     .create-time{
         height: 22px;
@@ -63,41 +67,54 @@ const CommentContainer = styled.div`
     }
 `;
 const RepliesContainer = styled.div`
-    margin-left: 80px;
+
+    display: flex; 
+    margin-bottom: 30px;
+    margin-left:80px;
     .wrapper {
         display: flex;
     }
     .reply-face {
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
         background-image: url(${props => props.face});
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 50%;
         background-color: #D6D6D6;
-        margin-top: 8px;
         border-radius: 50%;
     }
     .reply-nick-wrapper{
-        margin-left: 24px;
+        margin-left: 15px;
         margin-top: 3px;
     }
     .reply-nick {
         font-size: 20px;
         font-weight: 500;
         font-family: Noto Sans KR;
+        margin-top:5px;
     }
     .wrapper-another {
         margin-left: 55px
         display: flex;
     }
+    .button-wrapper{
+        margin-left: 26px;
+        margin-top: 41px;
+        display: flex;
+        align-items:flex-end;
+    }
     .reply-comment {
-        margin-top: 8px;
+        //margin-top: 8px;
+        margin-right:8px;
         font-size: 20px;
         font-weight: 300;
         font-family: Noto Sans KR;
+        max-width:900px;
+        line-height:35px;
     }
     .reply-create-time {
+        margin-top:5px;
         height: 22px;
         font-size: 15px;
         font-weight: 300;
@@ -147,7 +164,6 @@ const RepliesInputTextContainer = styled.div`
         margin-left: 55px;
         margin-bottom: 15px;
         display: flex;
-        textarea{
             min-width: 450px;
             width: 650px;
             height: 29px;
@@ -190,6 +206,8 @@ const CommentInputTextContainer = styled.div`
     width: max-content;
     display: flex;
     margin-bottom: 30px;
+    margin-top:15px;
+
     .face {
         width: 58px;
         height: 58px;
@@ -297,6 +315,7 @@ class Comment extends Component {
         if (this.state.this_comment.length > 0)
             this.props.comment({ comment: this.state.this_comment, d_flag: null });
         this.reset();
+        console.log(this.props,"?");
     };
     removeComment(commentId) {
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
@@ -316,7 +335,7 @@ class Comment extends Component {
         const { comments, my } = this.props;
         const myface = my && my.thumbnail && my.thumbnail.s_img !== null ? my.thumbnail.s_img : noface
         console.log("my:", comments, my, this.props, this.state);
-        return (<Fragment>
+        return (<CommentBox>
             {comments && comments.length > 0 && comments.map((item, index) => {
                 const face = item && item.s_img ? item.s_img : noface
                 return (<Fragment key={item.nick_name + index}>
@@ -340,10 +359,12 @@ class Comment extends Component {
                                 <div className="wrapper">
                                     <div className="reply-face" />
                                     <div className="reply-nick-wrapper">
-                                        <div className="reply-nick">{repli.nick_name}</div></div>
+                                        <div className="reply-nick">{repli.nick_name}</div>
+                                        <div className="reply-comment" >{repli.comment}</div>
+                                    </div>
                                 </div>
-                                <div className="wrapper-another" >
-                                    <div className="reply-comment" >{repli.comment}</div>
+                                <div className="button-wrapper" >
+                                    {/* <div className="reply-comment" >{repli.comment}</div> */}
                                     <div className="reply-create-time" >{DateFormat(repli.create_time)}</div>
                                     {my && repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} className="reply-del">삭제하기</div>}
                                 </div>
@@ -375,7 +396,7 @@ class Comment extends Component {
                     <div className="cancel" onClick={this.undoComment}>취소</div>
                 </div>
             </CommentInputTextContainer>
-        </Fragment>)
+        </CommentBox>)
     }
 }
 

@@ -128,7 +128,7 @@ class SearchList extends Component {
   getSearchValue = (e) => {
     const target = e.target;
     const value = target.value;
-    let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
+    let regExp =  /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
     if (!value.match(regExp)) {
       alert("특수문자는 사용할 수 없습니다.");
       target.value = "";

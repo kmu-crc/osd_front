@@ -11,7 +11,10 @@ class DesignComment extends Component {
         this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.token)
             .then(res => {
                 this.props.GetDesignCommentRequest(this.props.designId);
-            })
+            }).then(()=>{
+                this.props.requestDesignDetail(this.props.designId);
+            }
+            );
     }
     removeComment = (commentId) => {
         this.props.DeleteDesignCommentRequest(this.props.designId, commentId, this.props.token)
@@ -27,9 +30,9 @@ class DesignComment extends Component {
             return { ...parent, replies };
         })
         console.log(comments);
-        return (<React.Fragment>
-          <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
-        </React.Fragment>)
+        return (<div>
+          <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment}/>
+        </div>)
     }
 };
 const mapStateToProps = state => {

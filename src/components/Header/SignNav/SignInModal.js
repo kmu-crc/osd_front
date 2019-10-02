@@ -160,8 +160,9 @@ class SignInModal extends Component {
                     this.props.signin()
                 }
                 else {
-                    alert('로그인에 실패하였습니다')
-                    this.onClose()
+                    alert('로그인에 실패하였습니다');
+                    this.setState({password:""})
+                    //this.onClose()
                 }
             })
     }

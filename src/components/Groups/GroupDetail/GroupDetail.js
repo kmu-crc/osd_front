@@ -47,7 +47,12 @@ class GroupDetail extends Component {
   }
   componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id)
-      .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
+      .then(() => { 
+        if(this.props.token)
+          {
+            this.props.GetLikeGroupRequest(this.props.id, this.props.token) }
+          }
+        )
     this.getInitData()
   }
   handleReload = () => {

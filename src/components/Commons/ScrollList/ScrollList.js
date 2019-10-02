@@ -142,6 +142,9 @@ class ScrollList extends Component {
 
   checkHasMore = (list) => {
     if (list == null) return false;
+    if(this.props.type=="designer"){
+      return list && list.length < 30 ? false : true;
+    }
     return list && list.length < 10 ? false : true;
   };
 
