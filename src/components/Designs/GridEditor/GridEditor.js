@@ -207,7 +207,6 @@ class GridEditor extends Component {
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const rightArrowPos = window.innerWidth <= osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth - window.innerWidth : 0;
-        console.log("pos:", rightArrowPos);
 
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         return (
@@ -221,7 +220,7 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} /></WhitePane> : null}
 
                         {card && <CardModal
-                            isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
+                            isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                             open={card} close={() => this.setState({ card: false })}
                             title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}

@@ -6,10 +6,8 @@ import CardSourceDetail from "components/Designs/CardSourceDetail";
 class CardSourceDetailContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
   render() {
-    console.log("TEST", this.props)
     return (
       <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
     );

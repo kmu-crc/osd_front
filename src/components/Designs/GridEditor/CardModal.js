@@ -398,7 +398,6 @@ class CardModal extends Component {
     onClose = () => { this.props.close() }
     render() {
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.s_img;
-
         const card = this.props.card || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
         const { isTeam, edit } = this.props;
         const movablePrev = this.props.row > 0
@@ -461,15 +460,16 @@ class CardModal extends Component {
 
                         <div className="content-border"><div className="border-line" /></div>
                         <div className="content" >
-                            <CardSourceDetailContainer designId={this.props.designId} uid={card.uid} isTeam={isTeam} edit={edit && this.state.edit}
+                            <CardSourceDetailContainer designId={this.props.designId} uid={card.uid} isTeam={isTeam} edit={edit}
                                 isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
 
-                        <div className="content-border"><div className="border-line" /></div>
-                        <div className="comment-title"><h3>댓글</h3></div>
+                        <div className="content-border">
+                            <div className="border-line" /></div>
+                        <div className="comment-title">
+                            <h3>댓글</h3></div>
                         <div className="comment-wrapper">
-                            <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
-                        </div>
+                            <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} /></div>
                     </div>
                     {/* </div> */}
                 </CardDialog>

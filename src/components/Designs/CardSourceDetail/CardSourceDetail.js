@@ -417,11 +417,10 @@ class CardSourceDetail extends Component {
   }
   render() {
     const { edit, content, loading } = this.state;
-    // console.log("updated:", this.state.content);
     return (<div>
       {loading && <Loading />}
       <ButtonContainer >
-        {edit === false && this.props.isTeam && (content && content.length > 0 ?
+        {edit === false && this.props.edit && this.props.isTeam && (content && content.length > 0 ?
           (<div className="content-edit-wrapper"><button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">컨텐츠 수정</button></div>) :
           (<div className="content-add-wrapper"><button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >컨텐츠 추가</button></div>))}
       </ButtonContainer>
@@ -453,7 +452,7 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {edit ? (
+      {edit && this.props.edit ? (
         content && content.length > 0 ? (<Fragment>
           {content.map(item => {
             return (<ControllerWrap key={item.order}>
@@ -473,7 +472,7 @@ class CardSourceDetail extends Component {
       ) : null}
 
       <ButtonContainer >
-        {(edit && this.props.uid) &&
+        {(edit && this.props.uid && this.props.edit) &&
           <EditorBottonWrapper>
             <button onClick={this.onSubmit} className="submit" type="button">
               <i className="icon outline save" />등록</button>
