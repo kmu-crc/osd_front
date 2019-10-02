@@ -37,15 +37,24 @@ const Tab = styled.div`
 
 class GroupDetail extends Component {
   state = { reload: false, uid: undefined, currentTab: "design", manager: false }
+  initTab = () => {
+    let tab = "design";
+    if (this.props.GroupDetail) {
+      const { design, group } = this.props.GroupDetail;
+      if (design > group && design > 0) tab = "design";
+      if (group > design && group > 0) tab = "group";
+    }
+    return tab;
+  }
   switchTab = async (tab) => {
     await this.setState({ currentTab: tab, reload: true })
-    this.getInitData()
+    this.getInitData();
   }
   switchMode = () => {
     this.setState({ manager: !this.state.manager })
     this.getInitData();
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id)
       .then(() => { 
         if(this.props.token)
@@ -56,13 +65,13 @@ class GroupDetail extends Component {
     this.getInitData()
   }
   handleReload = () => {
-    this.setState({ reload: false })
+    this.setState({ reload: false });
   }
   getInitData() {
     if (this.state.currentTab === "design") {
-      this.getDesignList(0)
+      this.getDesignList(0);
     } else {
-      this.getGroupList(0)
+      this.getGroupList(0);
     }
   }
   getDesignList = async (page) => {
@@ -75,8 +84,8 @@ class GroupDetail extends Component {
     if (!this.state.uid) {
       return;
     }
-    const num = await this.props.getCountGroup(this.state.uid);
-    console.log("num:", num);
+    // const num = await this.props.getCountGroup(this.state.uid);
+    // console.log("num:", num);
     this.props.GetGroupInGroupRequest(this.state.uid, page, "update")
   }
   componentWillReceiveProps = async (nextProps) => {
@@ -88,9 +97,8 @@ class GroupDetail extends Component {
 
   render() {
     // const { GroupDetail, userInfo, DesignList, DesignListAdded, GroupList, like, GroupListAdded, Count } = this.props;
-    const { GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded } = this.props;
+    const { status, GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded } = this.props;
     const { currentTab, manager, reload } = this.state
-    console.log("reload:", reload)
     return (<React.Fragment>
       <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} {...this.props} />
       {manager ?
@@ -107,13 +115,9 @@ class GroupDetail extends Component {
             <Tab onClick={() => this.switchTab("group")} width={37} className={currentTab === "group" ? "selected" : ""}>그룹</Tab>
           </Tabs>
           {GroupDetail && currentTab === "group" && <React.Fragment>
-            {this.props.status === "INIT"
-              ? <Loading />
-              : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</React.Fragment>}
+            {status === "INIT" ? <Loading /> : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</React.Fragment>}
           {GroupDetail && currentTab === "design" && <React.Fragment>
-            {this.props.status === "INIT"
-              ? <Loading />
-              : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</React.Fragment>}
+            {status === "INIT" ? <Loading /> : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</React.Fragment>}
         </React.Fragment>}
     </React.Fragment>)
 

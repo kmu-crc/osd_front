@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { UpdateDesignTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest } from "redux/modules/design";
+import { GetCardDetailRequest, UpdateDesignTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest } from "redux/modules/design";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
 
 class CardSourceDetailContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
   render() {
-    console.log("TEST", this.props)
     return (
       <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
     );
@@ -30,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignSourceRequest: (id) => {
       return dispatch(GetDesignSourceRequest(id));
+    },
+    GetCardDetailRequest: id => {
+      return dispatch(GetCardDetailRequest(id));
     },
     UpdateDesignSourceRequest: (data, card_id, token) => {
       return dispatch(UpdateDesignSourceRequest(data, card_id, token));

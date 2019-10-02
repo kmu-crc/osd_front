@@ -156,6 +156,9 @@ class ScrollList extends Component {
         return true;
       }
     };
+    if (nextProps.dataList.length !== 0 && nextProps.dataList.length % 10 < 10) {
+      this.setState({ hasMore: false });
+    }
   };
 
   getColumnNumber(type) {
@@ -205,7 +208,7 @@ class ScrollList extends Component {
         {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
         {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>스크롤<i className="material-icons">arrow_drop_down</i></ScrollIcon>}
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-      </FlexContainer> : <NoData>데이터가 없습니다.</NoData>)
+      </FlexContainer> : <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
   }
 }
 

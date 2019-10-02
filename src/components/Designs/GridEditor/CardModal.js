@@ -361,20 +361,18 @@ class CardModal extends Component {
     handleHeaderSubmit = (event) => {
         event.preventDefault();
         let files = null;
-        // new card 
         ValidationGroup(this.state, false)
-            .then(data => {
+            .then(async data => {
                 files = data && data.files;
-                console.log("submit:", files, this.state)
                 let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
                 const pack = { title: this.state.title, thumbnail: thumbnail, content: this.state.content, data: { deleteContent: [], newContent: [], updateContent: [] } };
-                console.log("pack:", pack, this.props.card);//return;
-                this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
+                await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
                     .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
+                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
                     .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                    .then(() => { this.onClose() })
+                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
                     .catch(err => alert(err + ''));
+                this.onClose()
             }).catch(err => alert(err + ''));
         this.setState({ edit: !this.state.edit })
     }
@@ -388,6 +386,7 @@ class CardModal extends Component {
         const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
         if (confirm) {
             this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
+                .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                 .then(async () => {
                     await this.setState({ edit: false });
                     this.props.GetDesignBoardRequest(this.props.designId);
@@ -398,8 +397,7 @@ class CardModal extends Component {
     onClose = () => { this.props.close() }
     render() {
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.s_img;
-
-        const card = this.props.card || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
+        const card = this.props.card// || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
         const { isTeam, edit } = this.props;
         const movablePrev = this.props.row > 0
         const movableNext = this.props.row < this.props.maxRow - 1
@@ -461,15 +459,16 @@ class CardModal extends Component {
 
                         <div className="content-border"><div className="border-line" /></div>
                         <div className="content" >
-                            <CardSourceDetailContainer designId={this.props.designId} uid={card.uid} isTeam={isTeam} edit={edit && this.state.edit}
+                            <CardSourceDetailContainer designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={edit}
                                 isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
 
-                        <div className="content-border"><div className="border-line" /></div>
-                        <div className="comment-title"><h3>댓글</h3></div>
+                        <div className="content-border">
+                            <div className="border-line" /></div>
+                        <div className="comment-title">
+                            <h3>댓글</h3></div>
                         <div className="comment-wrapper">
-                            <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
-                        </div>
+                            <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} /></div>
                     </div>
                     {/* </div> */}
                 </CardDialog>
@@ -509,8 +508,8 @@ const mapDispatchToProps = dispatch => {
         GetCardDetailRequest: id => {
             return dispatch(GetCardDetailRequest(id));
         },
-        UpdateDesignTime: (id) => {
-            return dispatch(UpdateDesignTime(id));
+        UpdateDesignTime: (id, token) => {
+            return dispatch(UpdateDesignTime(id, token));
         },
         GetDesignDetailRequest: (id, token) => {
             return dispatch(GetDesignDetailRequest(id, token));

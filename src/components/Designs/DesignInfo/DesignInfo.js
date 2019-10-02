@@ -680,15 +680,13 @@ class DesignInfo extends Component {
         this.setState({ memberList: true });
     }
     render() {
-        console.log("forklist", this.props.forkDesignList);
-
         const { isMyDesign, editor, DesignDetail, Count, like } = this.props
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
         const MemberModal = () => {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
-                    <div onClick={() => this.setState({ memberList: false })} >
+                    <div className="close-box" onClick={() => this.setState({ memberList: false })} >
                         <Cross angle={45} color={"#FFFFFF"} weight={3} width={45} height={45} />
                     </div>
                     <Modal.Content>
@@ -767,20 +765,20 @@ class DesignInfo extends Component {
                                 {DesignDetail.is_parent && "파생된 디자인 "}
                                 {DesignDetail.is_parent && <div className="fork-count">{DesignDetail.children_count["count(*)"]}</div>}
                                 {this.state.forkDesignList &&
-                                <DesignMemberList top={this.forkDesignRef.getBoundingClientRect().top} left={this.forkDesignRef.getBoundingClientRect().left}>
-                                    <div className="list">
-                                        {this.props.forkDesignList &&
-                                            this.props.forkDesignList.map((item, idx) => {
-                                                return (<ListItem key={item + idx} img={item.p_s_img}>
-                                                    <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
-                                                        <div className="design-thumbnail" />
-                                                        <div className="design-title"><TextFormat txt={item.title} chars={23} /><div>{item.nick_name}</div></div>
-                                                    </div></ListItem>);
-                                            })}</div>
-                                </DesignMemberList>}
+                                    <DesignMemberList top={this.forkDesignRef.getBoundingClientRect().top} left={this.forkDesignRef.getBoundingClientRect().left}>
+                                        <div className="list">
+                                            {this.props.forkDesignList &&
+                                                this.props.forkDesignList.map((item, idx) => {
+                                                    return (<ListItem key={item + idx} img={item.p_s_img}>
+                                                        <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
+                                                            <div className="design-thumbnail" />
+                                                            <div className="design-title"><TextFormat txt={item.title} chars={23} /><div>{item.nick_name}</div></div>
+                                                        </div></ListItem>);
+                                                })}</div>
+                                    </DesignMemberList>}
                             </button>
 
-                        <div className="count-box">
+                            <div className="count-box">
                                 <div className="view"><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
                                 <div className="view-count">{NumberFormat(Count.view_count)}</div>
                                 <div className="like"><i className="material-icons">thumb_up</i></div>
