@@ -6,7 +6,7 @@ import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import iINOUT from "source/inout.svg"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
-import { Modal} from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import dots from "source/baseline_more_vert_black_48dp.png";
@@ -28,7 +28,7 @@ const Arrow = styled.div`
     border-top: 6px solid transparent;
     margin:22px 3px;
 `;
- 
+
 const LoadingBox = styled.div`
     width:100%;
     display:flex;
@@ -121,13 +121,13 @@ const LoadingBox = styled.div`
     }
 
 `
-const Header=styled.div`
+const Header = styled.div`
     width:1920px;
     height:237px;
     background-color:#EFEFEF;
     display:flex;
 `
-const GroupHeaderBox=styled.div`
+const GroupHeaderBox = styled.div`
     width:100%;
     display:flex;
     padding-left:65px;
@@ -227,7 +227,7 @@ const GroupHeaderBox=styled.div`
             height:30px;
             display:flex;
             align-items:flex-end;
-            margin-top:26px;
+            margin-top: 10px;
 
             .button_text_label{
                 width:150px;
@@ -249,14 +249,14 @@ const GroupHeaderBox=styled.div`
             line-height:27px;
             margin-top:46px;
         }
-        .Join_label{
-            margin-left:auto;
-            margin-top:15px;
-            width:79px;
-            height:40px;
-            font-size:20px;
-            color:#FF0000;
-            cursor:pointer
+        .Join_label {
+            width: 79px;
+            height: 40px;
+            margin-top: 15px;
+            margin-left: auto;
+            color: #FF0000;
+            font-size: 20px;
+            cursor: pointer
         }
     }
     
@@ -270,10 +270,10 @@ const MiniIcon = styled.div`
     background-position:center center;
     background-size:contain;
     background-repeat:no-repeat;
-    opacity:${props=>props.opacity};
+    opacity:${props => props.opacity};
 
 `
-const NormalIcon=styled.div`
+const NormalIcon = styled.div`
     width:40px;
     height:40px;
     margin-left:5px;
@@ -281,10 +281,10 @@ const NormalIcon=styled.div`
     background-position:center center;
     background-size:contain;
     background-repeat:no-repeat;
-    opacity:${props=>props.opacity};
+    opacity:${props => props.opacity};
 
 `
-const ThumbnailBox=styled.div`
+const ThumbnailBox = styled.div`
         width:170px;
         height:170px;
         margin-left:14px;
@@ -392,11 +392,11 @@ class GroupInfoComponent extends Component {
                         <div className="thumbnailBox" />
                     </div>
                     <div className="InfoBox">
-                        <div className="cateBox"/>
+                        <div className="cateBox" />
                         <div className="MemberBox" />
                         <div className="ExplainBox">
-                            <div className="explain_label"/>
-                            <div className="explain_label"/>
+                            <div className="explain_label" />
+                            <div className="explain_label" />
                         </div>
                         <div className="cntBox" />
                     </div>
@@ -473,14 +473,14 @@ class GroupInfoComponent extends Component {
                         {parentName &&
                             <div className="parentBox">
 
-                                {info.grand_parentTitle && 
-                                <React.Fragment>
-                                <img src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent"/> <Arrow/>
-                                </React.Fragment>}
-                                {info.parentName && 
-                                <React.Fragment>
-                                <div className="parent">{parentName}</div><Arrow/>
-                                </React.Fragment>}
+                                {info.grand_parentTitle &&
+                                    <React.Fragment>
+                                        <img src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
+                                    </React.Fragment>}
+                                {info.parentName &&
+                                    <React.Fragment>
+                                        <div className="parent">{parentName}</div><Arrow />
+                                    </React.Fragment>}
 
                             </div>}
                     </div>
@@ -489,7 +489,7 @@ class GroupInfoComponent extends Component {
                         <div className="ExplainBox">
                             <div className="title"><TextFormat txt={info.title} /></div>
                             <div style={{ display: "flex" }}>
-                                <ThumbnailBox imageURL={ info && info.img && info.img.l_img ? info.img.l_img : noimg} />
+                                <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
                                 <div className="board">
                                     <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                     <div className="explanationRegion">
@@ -507,11 +507,11 @@ class GroupInfoComponent extends Component {
                                             <div className="count_label">{NumberFormat(info.view || 0)}</div>
                                         </div>
                                         <div id="count-like" className="countItem">
-                                            <MiniIcon imageURL={iThumbUp} opacity="0.5"/>
+                                            <MiniIcon imageURL={iThumbUp} opacity="0.5" />
                                             <div className="count_label">{NumberFormat(info.like || 0)}</div>
                                         </div>
                                         <div id="count-childs" className="countItem">
-                                            <MiniIcon imageURL={iForked} style={{opacity:"0.5"}}/>
+                                            <MiniIcon imageURL={iForked} style={{ opacity: "0.5" }} />
                                             <div className="count_label">{NumberFormat(info.design || 0 + info.group || 0)}</div>
                                         </div>
                                     </div>
@@ -525,11 +525,14 @@ class GroupInfoComponent extends Component {
                             <React.Fragment>
                                 <div className="ButtonItem" onClick={this.gotoGroupModify}>
                                     <div className="button_text_label">그룹 정보 수정하기</div>
-                                    <NormalIcon imageURL={iEdit} opacity={0.5}/>
+                                    <NormalIcon imageURL={iEdit} opacity={0.5} />
+                                </div>
+                                <div className="Join_label">
+                                    <JoinGroupContainer />
                                 </div>
                                 <div className="ButtonItem" onClick={this.changeEditMode}>
                                     <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                    <NormalIcon imageURL={iINOUT} opacity={0.5}/>
+                                    <NormalIcon imageURL={iINOUT} opacity={0.5} />
                                 </div>
                             </React.Fragment>
                             :
@@ -539,7 +542,7 @@ class GroupInfoComponent extends Component {
                                 </div>
                                 <div onClick={this.like} className="ButtonItem">
                                     <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                    <NormalIcon opacity={ like ? "1" : "0.45"} imageURL={thumbup}/>
+                                    <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} />
                                 </div>
                             </React.Fragment>
                         }
@@ -554,16 +557,9 @@ class GroupInfoComponent extends Component {
         const info = this.props.GroupInfo
         return (
             <React.Fragment>
-                {
-                    this.state.likeDialog &&
-                    <PopupBox>
-                        <div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
-                 </div>
-                    </PopupBox>
-                }
-                <Header>
-                 {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}
-                </Header >
+                {this.state.likeDialog &&
+                    <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>}
+                <Header>{info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}</Header >
             </React.Fragment >)
     }
 }
