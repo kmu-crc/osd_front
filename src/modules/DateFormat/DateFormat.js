@@ -2,7 +2,7 @@ const DateFormat = (date) => {
   let update = new Date(date).getTime();
   let today = new Date();
   // today = (process.env.REACT_APP_TYPE === "local" || process.env.REACT_APP_TYPE === "aws_dev") ? today.getTime() + 32400000 : today.getTime();
-  today = today.getTime()- 32400000;
+  today = today.getTime();//- 32400000;
   const m = 30;
   const diff = today - update;
   const diffMin = parseInt((diff / 1000) / 3600 * 60, 10); // N분 전
