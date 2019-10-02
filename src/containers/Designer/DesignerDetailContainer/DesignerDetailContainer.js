@@ -14,8 +14,8 @@ class DesignerDetailContainer extends Component {
 
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id)
-      .then(() => { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) })
       .then(() => { this.props.GetDesignerCountRequest(this.props.id) })
+      .then(() => { if(this.props.token){this.props.GetLikeDesignerRequest(this.props.id, this.props.token) }})
   }
   render() {
     console.log("DESIGNER DETAIL::", this.props)

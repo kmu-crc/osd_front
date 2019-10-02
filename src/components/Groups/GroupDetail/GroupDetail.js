@@ -56,9 +56,13 @@ class GroupDetail extends Component {
   }
   async componentDidMount() {
     this.props.GetGroupDetailRequest(this.props.id)
-      .then(() => { this.props.token && this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
-    this.getInitData();
-    await this.setState({ currentTab: this.initTab() });
+      .then(() => { 
+        if(this.props.token)
+          {
+            this.props.GetLikeGroupRequest(this.props.id, this.props.token) }
+          }
+        )
+    this.getInitData()
   }
   handleReload = () => {
     this.setState({ reload: false });

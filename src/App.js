@@ -70,7 +70,7 @@ class App extends Component {
             {/* GROUP D - designer */}
             <Route path="/designerDetail/:id" component={DesignerDetailPage} />
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
-            <Route path="/createdesigner" component={CreateDesigner} />
+            <Route path="/createdesigner" component={RequiresAuth(CreateDesigner)} />
 
             {/* GROUP E - etc. */}
             <Route path="/resetPw" component={ResetPwPage} />

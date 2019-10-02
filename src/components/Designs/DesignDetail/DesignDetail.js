@@ -45,6 +45,7 @@ class DesignDetail extends Component {
         this.props.DesignDetail.member.find(peer => { return peer.user_id === this.props.userInfo.uid }) ? true : false);
   }
   render() {
+    console.log(this.props,"designdetail");
     // console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
     return (<React.Fragment>
