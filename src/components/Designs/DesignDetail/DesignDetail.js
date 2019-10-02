@@ -5,7 +5,7 @@ import Loading from "components/Commons/Loading";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
 class DesignDetail extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = { isMyDesign: false, editor: false };
@@ -45,6 +45,7 @@ class DesignDetail extends Component {
         this.props.DesignDetail.member.find(peer => { return peer.user_id === this.props.userInfo.uid }) ? true : false);
   }
   render() {
+    console.log(this.props,"designdetail");
     // console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
     return (<React.Fragment>
@@ -52,11 +53,9 @@ class DesignDetail extends Component {
         {/* design info */}
         <DesignInfo {...this.props} {...this.state} />
         {/* design detail */}
-        {DesignDetail && DesignDetail.is_project === 1 ? (
-          <DesignDetailStepContainer design={DesignDetail} {...this.state} />
-        ) : (
-            <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />
-          )}
+        {DesignDetail && DesignDetail.is_project === 1
+          ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)
+          : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)}
       </React.Fragment> : <Loading />}
     </React.Fragment>)
   }

@@ -51,6 +51,13 @@ class ModifyDesignMember extends Component {
   }
   addMember(email, s_img, nick_name, uid) {
     let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
+    
+    for (var i = 0; i < this.props.DesignDetail.member.length; i++) {
+      if (this.props.DesignDetail.member[i].user_id === member.uid) {
+        alert("이미 등록된 디자이너입니다.");
+        return;
+      }
+    }
     this.setState({ members: this.state.members.concat(member) });
     console.log("members[]====", this.state.members);
   }
@@ -70,7 +77,7 @@ class ModifyDesignMember extends Component {
   }
 
   getoutMember = (flag, id) => {
-    const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?" : "가입을 거절하시겠습니까?";
+    const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?" : "가입 요청을 거절하시겠습니까?";
     if (!window.confirm(msg)) return;
 
     this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, flag)
@@ -113,8 +120,7 @@ class ModifyDesignMember extends Component {
   joinMember = () => {
     const data = this.state.members;
     console.log("data:", data);
-    if(data.length<=0||data==null)
-    {
+    if (data.length <= 0 || data == null) {
       alert("초대할 멤버를 선택해주세요!");
       return;
     }

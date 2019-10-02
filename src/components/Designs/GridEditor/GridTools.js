@@ -70,6 +70,7 @@ const StepCardStyle = styled.div`
     margin-bottom: ${props => props.marginBottom}px;
     background-clip: padding-box;
     background-color: white;
+    overflow:hidden;
     .text-area{
         margin-top: 24px;
         margin-left: 12px;

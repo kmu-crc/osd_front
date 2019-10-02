@@ -106,18 +106,16 @@ class GridEditor extends Component {
         this.setState({ row: row, boardId: boardId, newcard: true });
     }
     openCard = (card, row, boardId) => {
-        // console.log(card, row, boardId);
-        // return;
         this.setState({ cardDetail: card, title: card.title, row: row, boardId: boardId, card: true });
+    }
+    OpenNewStep() {
+        this.setState({ newstep: true });
     }
     CloseNewStep() {
         this.setState({ newstep: false });
     }
     CloseEditStep() {
         this.setState({ editstep: false });
-    }
-    OpenNewStep() {
-        this.setState({ newstep: true });
     }
     async OpenEditStep(title, where) {
         await this.setState({ editstep: true, title: title, where: where });
@@ -135,7 +133,7 @@ class GridEditor extends Component {
             .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("2", this.props.DesignDetailStep) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
-        this.setState({ editstep: false });
+        this.CloseEditStep();
     }
     async NewStep(data) {
         await this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
@@ -207,7 +205,6 @@ class GridEditor extends Component {
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const rightArrowPos = window.innerWidth <= osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth - window.innerWidth : 0;
-        console.log("pos:", rightArrowPos);
 
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         return (
@@ -221,7 +218,7 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} /></WhitePane> : null}
 
                         {card && <CardModal
-                            isTeam={editor} edit={userInfo && userInfo.uid === cardDetail.user_id}
+                            isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                             open={card} close={() => this.setState({ card: false })}
                             title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
