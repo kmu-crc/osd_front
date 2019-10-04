@@ -128,15 +128,15 @@ class DesignerPageBody extends Component {
             LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
         const catePadding = [70, 55, 60];
         const { reload } = this.state;
-            
+
         return (
             <DesignerDetailBody>
-                
                 <div className="MypageCategory">
                     {this.state.categorys.map((category, index) => {
                         return (<CategoryItems id={index} opacity={this.state.cateIndex === index ? "1.0" : "0.5"} paddingLeft={catePadding[index]} key={index} onClick={this.changeCategory.bind(this, index)}>{category}</CategoryItems>)
                     })}
                 </div>
+
                 {this.state.cateIndex === 0 &&
                     <div className="compWrapper" >
                         {this.props.status === "INIT" ?
@@ -151,8 +151,8 @@ class DesignerPageBody extends Component {
                             <Loading /> :
                             <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
                                 type="group" dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
-                    </div>
-                }
+                    </div>}
+
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper">
                         <div className="interested first" >관심있는 디자인</div>
@@ -173,8 +173,8 @@ class DesignerPageBody extends Component {
                             <Loading /> :
                             <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
                                 manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
-                    </div>
-                }
+                    </div>}
+
             </DesignerDetailBody>
         )
     }

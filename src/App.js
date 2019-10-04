@@ -57,8 +57,8 @@ class App extends Component {
 
             {/* GROUP B - design */}
             <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage} />
-            <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
             <Route path="/designDetail/:id" component={DesignDetailPage} />
+            <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
             <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
 
             {/* GROUP C - group */}

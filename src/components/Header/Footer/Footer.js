@@ -16,7 +16,7 @@ const FooterContainer = styled.div`
     color:#707070;
     text-align:center;
     background-color:white;
-    z-index:9999;
+    z-index: 999;
     .origin{
         margin-left:15px;
         float:left;

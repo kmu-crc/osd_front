@@ -80,7 +80,7 @@ const Arrow = styled.span`
 const InputBoard = styled.div`
       width:1422px;
       // height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
-      height:${props=>props.boardWidth}
+      height:${props => props.boardWidth}
       position:relative;
       padding-top:45px;
       border-radius:5px;
@@ -185,7 +185,7 @@ const ContentsBox = styled.div`
         color:#707070;
     }
 `
-const ImageBox=styled.div`
+const ImageBox = styled.div`
     width:210px;
     height:210px;
     border-radius:5px;
@@ -341,7 +341,7 @@ const InviteMemberListBox = styled.div`
         margin-bottom:34px;
       }
 `
-const NoInviteMemberBox=styled.div`
+const NoInviteMemberBox = styled.div`
       margin-left:167px;
       margin-top:30px;
       font-size:20px;
@@ -353,7 +353,7 @@ const NoInviteMemberBox=styled.div`
       }
       
 `
-const CheckBox = styled.input.attrs({type:'checkbox'})`
+const CheckBox = styled.input.attrs({ type: 'checkbox' })`
       width:25px;
       height:25px;
       margin-right:17px;
@@ -380,7 +380,7 @@ const LicenseBox = styled.div`
         }
       }
 `
-const LoadingBox=styled.div`
+const LoadingBox = styled.div`
       padding-top:200px;
       .IconBox{
         width:100px;
@@ -396,7 +396,7 @@ const LoadingBox=styled.div`
       }
 
 `
-const LoadingIconBox= styled.div`
+const LoadingIconBox = styled.div`
         width:100px;
         height:100px;
         margin:0 auto;
@@ -688,170 +688,170 @@ class ModifyDesign extends Component {
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
     // console.log("new:", this.props)
     let boardWidth = 125;
-    if(step==3)boardWidth=0; 
+    if (step == 3) boardWidth = 0;
     return (
-    
-    <React.Fragment>
-      {loading ? <Loading /> : null}
-      {deleteModal ? <DeleteDesignModal /> : null}
-      <div onClick={this.handleCloseMember}>
-        <MainBanner>
-          <div className="title">디자인 수정하기</div>
-        </MainBanner>
-        <MainSection>
 
-          {/* scroll - menu */}
-          <NavMenu>
-            <div className="menuBox">
-              {scrollmenu.map((menu, index) => {
-                return (
-                  <div onClick={() => this.gotoStep(menu)} 
-                     className="menuItem" 
-                     borderBottom={ index + 1 === scrollmenu.length} 
-                     key={menu.txt}>
-                  <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
-                </div>)
-              })}
-                <div className="menuItem" style={{backgroundColor:"white"}} onClick={this.deleteDialog}>
-                                    <div className="deleteText">디자인 삭제하기</div>
+      <React.Fragment>
+        {loading ? <Loading /> : null}
+        {deleteModal ? <DeleteDesignModal /> : null}
+        <div onClick={this.handleCloseMember}>
+          <MainBanner>
+            <div className="title">디자인 수정하기</div>
+          </MainBanner>
+          <MainSection>
+
+            {/* scroll - menu */}
+            <NavMenu>
+              <div className="menuBox">
+                {scrollmenu.map((menu, index) => {
+                  return (
+                    <div onClick={() => this.gotoStep(menu)}
+                      className="menuItem"
+                      borderBottom={index + 1 === scrollmenu.length}
+                      key={menu.txt}>
+                      <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
+                    </div>)
+                })}
+                <div className="menuItem" style={{ backgroundColor: "white" }} onClick={this.deleteDialog}>
+                  <div className="deleteText">디자인 삭제하기</div>
                 </div>
-            </div>
+              </div>
 
-          </NavMenu>
-          {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
+            </NavMenu>
+            {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
 
-          {/* form */}
-          <InputBoard boardWidth={boardWidth}>
-            {/* <form ref={(ref) => this.form = ref}> */}
-            <section style={{ display: step === 0 ? "block" : "none"}} >
-              {/* thumbnail */}
-              <ContentsBox>
-                <ThumbnailBox>
-                <div className="title">프로필 사진</div>
-                <ImageBox imageURL={thumbnailURL==null?noimg:thumbnailURL}>
-                  {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
-                    <div className="forkedImg"/>}
-                </ImageBox>
-                <div className="findThumbnailBox">
-                  <div className="findThumbnailBtn">
-                    <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                    <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-                  </div>
-                  <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-                </div>
-                </ThumbnailBox>
+            {/* form */}
+            <InputBoard boardWidth={boardWidth}>
+              {/* <form ref={(ref) => this.form = ref}> */}
+              <section style={{ display: step === 0 ? "block" : "none" }} >
+                {/* thumbnail */}
+                <ContentsBox>
+                  <ThumbnailBox>
+                    <div className="title">프로필 사진</div>
+                    <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL}>
+                      {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
+                        <div className="forkedImg" />}
+                    </ImageBox>
+                    <div className="findThumbnailBox">
+                      <div className="findThumbnailBtn">
+                        <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+                        <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+                      </div>
+                      <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    </div>
+                  </ThumbnailBox>
 
-              {/* title */}
-              <TitleBox>
-                  <div className="title">제목</div>
+                  {/* title */}
+                  <TitleBox>
+                    <div className="title">제목</div>
                     <input onChange={this.onChangeValueTitle}
                       className="inputText" name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
                       onBlur={this.checkFinishBasic} />
-              </TitleBox>
-              {/* explanation */}
-              <ExplainBox>
-                <div className="title">디자인 설명</div>
-                  <textarea className="inputTextareaBox" onChange={this.onChangeValueExplanation} 
-                    name="explanation" maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" 
-                    value={this.state.explanation} onBlur={this.checkFinishBasic} />
-              </ExplainBox>
-              </ContentsBox>
-            </section>
+                  </TitleBox>
+                  {/* explanation */}
+                  <ExplainBox>
+                    <div className="title">디자인 설명</div>
+                    <textarea className="inputTextareaBox" onChange={this.onChangeValueExplanation}
+                      name="explanation" maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)"
+                      value={this.state.explanation} onBlur={this.checkFinishBasic} />
+                  </ExplainBox>
+                </ContentsBox>
+              </section>
 
 
 
-            <section style={{ display: step === 1 ? "block" : "none"}} >
-            <ContentsBox>
-              {this.props.category1.length > 0 ?
-                <CategoryBox>
-                  {/* category */}
-                    <div className="title">카테고리</div>
+              <section style={{ display: step === 1 ? "block" : "none" }} >
+                <ContentsBox>
+                  {this.props.category1.length > 0 ?
+                    <CategoryBox>
+                      {/* category */}
+                      <div className="title">카테고리</div>
                       <CategoryDropDown onChange={this.onChangeCategory1}
                         options={this.props.category1} selection name="category1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
                       <CategoryDropDown id="category2" onChange={this.onChangeCategory2}
                         options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
-                </CategoryBox>
-                : <p>카테고리를 가져오고 있습니다.</p>}
-              {/* invite member*/}
-              <InviteMemberBox>
-                <div className="title">멤버 초대하기</div>
-                <div className="searchBox" >
-                  {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
-                </div>
-                <div className="tipTitle">TIP</div>
-                <div className="tipDescription">
-                  함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
-                  초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
-                  디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
-                </InviteMemberBox>
-                <div>
-                {/* invited member*/}
-                <InviteMemberListBox>
-                  <div className="memberList">
-                    {arrSummaryList}
+                    </CategoryBox>
+                    : <p>카테고리를 가져오고 있습니다.</p>}
+                  {/* invite member*/}
+                  <InviteMemberBox>
+                    <div className="title">멤버 초대하기</div>
+                    <div className="searchBox" >
+                      {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
+                    </div>
+                    <div className="tipTitle">TIP</div>
+                    <div className="tipDescription">
+                      함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
+                      초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
+                      디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
+                  </InviteMemberBox>
+                  <div>
+                    {/* invited member*/}
+                    <InviteMemberListBox>
+                      <div className="memberList">
+                        {arrSummaryList}
+                      </div>
+                    </InviteMemberListBox>
+                    {/* LEAVE ME ALONE */}
+                    <NoInviteMemberBox>
+                      <CheckBox onChange={this.LeaveMeAlone} type="checkbox" />
+                      <span className="textLabel">맴버를 초대하지 않습니다.</span>
+                    </NoInviteMemberBox>
                   </div>
-                </InviteMemberListBox>
-                {/* LEAVE ME ALONE */}
-                <NoInviteMemberBox>
-                  <CheckBox onChange={this.LeaveMeAlone} type="checkbox"/>
-                  <span className="textLabel">맴버를 초대하지 않습니다.</span>
-                </NoInviteMemberBox>
-              </div>
-              <HRline/>
+                  <HRline />
 
-              {/* license*/}
-              <LicenseBox>
-                <div className="title">라이센스</div>
-                <div className="licenseList">
-                    <div className="licenseItem">
-                      <CheckBox onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" />
-                      <span className="textLabel">상업적으로 이용이 가능합니다</span></div>
-                    <div className="licenseItem">
-                      <CheckBox onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" />
-                      <span className="textLabel">원작자를 표시합니다</span></div>
-                    <div className="licenseItem">
-                      <CheckBox onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox"/>
-                      <span className="textLabel">추후에 수정이 가능합니다</span></div>
+                  {/* license*/}
+                  <LicenseBox>
+                    <div className="title">라이센스</div>
+                    <div className="licenseList">
+                      <div className="licenseItem">
+                        <CheckBox onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" />
+                        <span className="textLabel">상업적으로 이용이 가능합니다</span></div>
+                      <div className="licenseItem">
+                        <CheckBox onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" />
+                        <span className="textLabel">원작자를 표시합니다</span></div>
+                      <div className="licenseItem">
+                        <CheckBox onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" />
+                        <span className="textLabel">추후에 수정이 가능합니다</span></div>
+                    </div>
+                  </LicenseBox>
+                  {/* hr line */}
+                  {/* <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div> */}
+                </ContentsBox>
+              </section>
+
+
+
+              <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
+                <div>
+                  {this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> :
+                    <LoadingBox>
+                      <LoadingIconBox imageURL={Logo} />
+                      <div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div>
+                    </LoadingBox>
+                  }
                 </div>
-              </LicenseBox>
-              {/* hr line */}
-              {/* <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div> */}
-              </ContentsBox>
-            </section>
+              </section>
 
-
-
-            <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
-              <div>
-                {this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> : 
-                 <LoadingBox>
-                 <LoadingIconBox imageURL={Logo}/>
-                 <div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div>
-                 </LoadingBox>
-                }
+              {/* buttons*/}
+              <div className="buttonBox">
+                {step === 0 && <React.Fragment>
+                  <CompleteButton onClick={this.gotoNextStep}><BtnText>다음</BtnText></CompleteButton>
+                </React.Fragment>}
+                {step === 1 && <React.Fragment>
+                  <BackButton onClick={this.gotoPrevStep} ><BtnText>뒤로</BtnText></BackButton>
+                  <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
+                </React.Fragment>}
+                {step === 2 && <React.Fragment>
+                  <BackButton onClick={this.gotoPrevStep}><BtnText>뒤로</BtnText></BackButton>
+                  <CompleteButton onClick={this.submit} ><BtnText>완료</BtnText></CompleteButton>
+                </React.Fragment>}
               </div>
-            </section>
-
-            {/* buttons*/}
-            <div className="buttonBox">
-              {step === 0 && <React.Fragment>
-                <CompleteButton onClick={this.gotoNextStep}><BtnText>다음</BtnText></CompleteButton>
-              </React.Fragment>}
-              {step === 1 && <React.Fragment>
-                <BackButton onClick={this.gotoPrevStep} ><BtnText>뒤로</BtnText></BackButton>
-                <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
-              </React.Fragment>}
-              {step === 2 && <React.Fragment>
-                <BackButton onClick={this.gotoPrevStep}><BtnText>뒤로</BtnText></BackButton>
-                <CompleteButton onClick={this.submit} ><BtnText>완료</BtnText></CompleteButton>
-              </React.Fragment>}
-            </div>
-            {/* </form> */}
-          </InputBoard>
-        </MainSection>
+              {/* </form> */}
+            </InputBoard>
+          </MainSection>
         </div>
 
-    </React.Fragment>)
+      </React.Fragment>)
   }
 }
 

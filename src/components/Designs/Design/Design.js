@@ -173,7 +173,7 @@ class Design extends Component {
     const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design;
     return (
-      <DesignElement img={(thumbnail === null ? noimg : thumbnail.m_img === null ? noimg : thumbnail.m_img)}>
+      <DesignElement img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
         <div className="cover" onClick={this.gotoDetailPage} />
         {isForked && <div className="forked" />}
         <div className="categoryName">{data.categoryName}</div>
