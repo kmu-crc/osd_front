@@ -130,7 +130,7 @@ const Header=styled.div`
 const GroupHeaderBox=styled.div`
     width:100%;
     display:flex;
-    padding-left:65px;
+    padding-left:30px;
     .profileBox{
         width:max-content;
         .parentBox{
@@ -140,6 +140,7 @@ const GroupHeaderBox=styled.div`
                 width:15px;
                 height:15px;
                 margin-top:22px;
+                margin-right:10px;
                 opacity:0.55;
                 transform:rotate(90deg);
             }
@@ -459,7 +460,7 @@ class GroupInfoComponent extends Component {
                 info = props.GroupInfo;
                 if (info.parentName != null) {
                     parentName = info.parentName && info.parentName.slice(0, 14);
-                    parentName += info.parentName && info.parentName.length > 14 ? "..." : "";
+                    parentName += info.parentName && info.parentName.length > 14 ? " ... " : "";
                 }
             }
             const { manager } = this.state;

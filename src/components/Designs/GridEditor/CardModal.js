@@ -83,9 +83,11 @@ const CardDialog = styled(Modal)`
     }
     .close-box {
         position: absolute;
-        left: 100%;
-        margin-top: -32.07px;
-        margin-left: 111.85px;
+        top:0px;
+        right:-60px;
+        //left: 100%;
+        // margin-top: -32.07px;
+        // margin-left: 111.85px;
     }
     .content-wrapper {
         position: relative;
@@ -189,7 +191,6 @@ const CardDialog = styled(Modal)`
         width: 1400px;
         margin-left: 52px;
         margin-top: 15px;
-        margin-bottom: 75px;
         color: #707070;
         font-size: 20px;
         font-weight: 500;
@@ -405,14 +406,15 @@ class CardModal extends Component {
         const movableNext = this.props.row < this.props.maxRow - 1
         return (
             <React.Fragment>
-                <CardDialog open={this.props.open} onClose={this.onClose}>
+                <CardDialog  open={this.props.open} onClose={this.onClose}>
+                    
                     {movablePrev && <div className="prevPane" />}
                     {movablePrev && <div className="prevArrow"></div>}
                     {movableNext && <div className="nextPane" />}
                     {movableNext && <div className="nextArrow"></div>}
 
                     <div className="close-box" onClick={this.onClose} >
-                        <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} /></div>
+                        <Cross angle={45} color={"#EFEFEF"} weight={3} width={33} height={33} /></div>
 
                     <div className="content-wrapper" >
                         {this.state.edit === false
@@ -472,6 +474,7 @@ class CardModal extends Component {
                         </div>
                     </div>
                     {/* </div> */}
+                    
                 </CardDialog>
                 <BlankSpace />
             </React.Fragment>)

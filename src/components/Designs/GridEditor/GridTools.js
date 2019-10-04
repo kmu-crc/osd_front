@@ -147,15 +147,18 @@ export const ContentCard = (props) => {
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
                 <React.Fragment>
-                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} />
+                    {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
+                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                         {props.card.title.slice(0, 10)}
                     </div>
-                    <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
-                        <div style={{ fontSize: "17px" }}>
+                    {/* <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}> */}
+                    <div style={{ zIndex: "702", background: "#EAEAEA", width: "170px", height: "63px", borderRadius:"5px",opacity:"0.8",
+                        fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "120px", marginLeft: "13px",padding:"8px" }}>
+                        <div style={{ fontSize: "17px",fontWeight:"400"}}>
                             {props.card.nick_name.slice(0, 10)}
                         </div>
-                        <div style={{ fontSize: "15px", marginTop: "6px" }}>
+                        <div style={{ fontSize: "15px", marginTop: "6px",fontWeight:"400" }}>
                             {DateFormat(props.card.update_time)}
                         </div>
                     </div>

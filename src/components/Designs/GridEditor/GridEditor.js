@@ -21,19 +21,20 @@ const WhitePane = styled.div`
     backgroundRepeat: no-repeat;
 `;
 const Arrow = styled.div`
+    width: 17px;
+    height: 48px;
     position: absolute;
-    z-index: 831;
     top: ${props => props.gap + 105}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
-    width: 17px;
-    height: 48px;
+    z-index: 831;
     border: none;
     background-image: url(${arrow});
     background-size: cover;
     background-position: 50%;
     transform: rotate(${props => props.angle});
     opacity: 0.9;
+    cursor:pointer;
     :hover{
         opacity: 1;
     }
@@ -42,7 +43,7 @@ const GridEditorWrapper = styled.div`
     // width: osdcss.resolutions.LargeMaxWidthpx;
     // width: ${props => props.width}px; 
     display: flex;
-    margin-left:65px;
+    margin-left:32px;
     margin-bottom: 75px;
     width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
     .Editor{
@@ -214,10 +215,10 @@ class GridEditor extends Component {
             <div style={{ position: "relative" }}>
                 {design.uid ?
                     <>
-                        {left ? <WhitePane width={178} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                        {left ? <WhitePane width={147} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} /></WhitePane> : null}
 
-                        {right ? <WhitePane width={178} height={h} right={rightArrowPos} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                        {right ? <WhitePane width={147} height={h} right={rightArrowPos} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} /></WhitePane> : null}
 
                         {card && <CardModal
