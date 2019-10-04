@@ -726,7 +726,7 @@ class CreateDesign extends Component {
                 <ExplainBox>
                   <div className="title">디자인 설명</div>
                   <textarea onChange={this.onChangeValueExplanation} className="inputTextareaBox"
-                    maxLength="1000" placeholder="디자인 설명을 입력해주세요. (1000자 이내)" />
+                    maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
                 </ExplainBox>
               </ContentsBox>
             </SectionContainer>

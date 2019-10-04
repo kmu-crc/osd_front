@@ -115,7 +115,7 @@ class Category extends Component {
         this.props.subcategory_clicked(this.props.main_selected, category)
     }
     render() {
-        console.log("width",window.innerWidth);
+        // console.log("width",window.innerWidth);
         const { category1, category2, main_selected, sub_selected } = this.props;
         const selected = sub_selected && sub_selected.value;
         const hidemenu = this.context.hidemenu ? "hidemenu " : "";

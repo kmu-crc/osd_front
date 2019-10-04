@@ -38,6 +38,7 @@ const Arrow = styled.div`
     :hover{
         opacity: 1;
     }
+    cursor: pointer;
 `;
 const GridEditorWrapper = styled.div`
     // width: osdcss.resolutions.LargeMaxWidthpx;
@@ -212,11 +213,13 @@ class GridEditor extends Component {
             <div style={{ position: "relative" }}>
                 {design.uid ?
                     <>
-                        {left ? <WhitePane width={147} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} /></WhitePane> : null}
+                        {left ? <WhitePane width={178} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
+                        </WhitePane> : null}
 
-                        {right ? <WhitePane width={147} height={h} right={rightArrowPos} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} /></WhitePane> : null}
+                        {right ? <WhitePane width={178} height={h} right={rightArrowPos} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
+                        </WhitePane> : null}
 
                         {card && <CardModal
                             isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)}
@@ -232,7 +235,8 @@ class GridEditor extends Component {
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
-                                    {editor && <div style={{ display: "flex" }}><CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}></div></div>}
+                                    {editor && <div style={{ display: "flex" }}>
+                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div></div>}
                                 </div>
                                 {/* </div> */}
                             </GridEditorWrapper>

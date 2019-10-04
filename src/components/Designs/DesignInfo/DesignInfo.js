@@ -45,14 +45,14 @@ const DesignInfoComp = styled.div`
     }
 `;
 const LeftSide = styled.div`
-    margin-top: 19px;
+    position: relative;
     margin-left: 42px;
+    margin-top: 20px;
+
     .title {
         position: absolute;
         width: max-content;
         height: 29px;
-        margin-top: 0px;
-        margin-left: 0px;
         color: #707070;
         font-size: 20px;
         font-weight: 500;
@@ -60,48 +60,56 @@ const LeftSide = styled.div`
         line-height: 29px;
         cursor: pointer;
     }
+
     .box {
-        margin-top: 25px;
-        .designer_member{
-            width:200px;
-            font-size:16px;
-            font-weight:300;            
+        position: relative;
+        margin-top: 40px;
+        .goto-parent {
+            position: relative;
+            width: 165px;
+            height: 25px;
+            color: #FF0000;
+            font-size: 17px;
+            font-weight: 300;
+            text-align: left;
+            line-height: 25px;
+            cursor: pointer;
+            &.no {
+                cursor: default;
+            }
         }
-    }
-    .goto-parent {
-        width: 165px;
-        height: 25px;
-        margin-top: 9px;
-        margin-left: 0px;
-        color: #FF0000;
-        font-size: 17px;
-        font-weight: 300;
-        text-align: left;
-        line-height: 25px;
-        cursor: pointer;
-    }
-    .member-list-btn{
-        width: 170px;
-        height: 29px;
-        margin-top: ${props => props.memberListMarginTop}px;
-        margin-left: -8px;
-        border: none;
-        outline: none;
-        background: none;
-        font-size: 17px;
-        color: #707070;
-        font-weight: 300;
-        text-align: left;
-        line-height: 29px;
-        cursor: pointer;
-    }
-    .comment-box {
-        display: flex;
-        cursor: pointer;
-        margin-top: 10px;
-        color: #FF0000;
-        font-family: Noto Sans KR;
-        font-weight: 300;
+        .design_member {
+            width: max-content;
+            max-width: 150px;
+            font-size: 16px;
+            font-weight: 300;            
+        }
+
+        .member-list-btn {
+            width: max-content;
+            max-width: 170px;
+            height: 29px;
+            margin-top: 10px;
+            margin-left: -5px;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 17px;
+            color: #707070;
+            font-weight: 300;
+            text-align: left;
+            line-height: 29px;
+            cursor: pointer;
+        }
+
+        .comment-box {
+            width: max-content;
+            display: flex;
+            cursor: pointer;
+            margin-top: 10px;
+            color: #FF0000;
+            font-family: Noto Sans KR;
+            font-weight: 300;
             .txt {
                 font-size: 17px;
             }
@@ -109,57 +117,63 @@ const LeftSide = styled.div`
                 margin-left: 10px;
                 font-size: 15px
             }
-    }
-    .fork-list-btn {
-        width: 165px;
-        height: 29px;
-        margin-top: ${props => props.forkListBtnMarginTop};
-        margin-left: -8px;
-        background: none;
-        border: none;
-        outline: none;
-        display: flex;
-        color: #FF0000;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 29px;
-        text-align: left;
-        align-items: bottom;
-        cursor: pointer;
-        .fork-count {
-            margin-left: 10px;
+        }
+
+        .fork-list-btn {
+            width: 165px;
+            height: 29px;
+            margin-top: 10px;
+            margin-left: -5px;
+            background: none;
+            border: none;
+            outline: none;
+            display: flex;
+            color: #FF0000;
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 29px;
+            text-align: left;
+            align-items: bottom;
+            cursor: pointer;
+            .fork-count {
+                margin-left: 10px;
+            }
+            &.no {
+                cursor: default;
+            }
         }
     }
+
     .count-box {
+        position: absolute;
         width: 165px;
         height: 29px;
-        margin-top: ${props => props.countBoxMarginTop}px;
-        margin-left: 0px;
+        bottom: 18px;
         font-size: 15px;
         color: #707070;
         font-weight: 500;
         text-align: left;
         display: flex;
-        .view{
-            margin-top: auto;
+        .view {
+            margin-top: 12px;
         }
-        .view-count{
+        .view-count {
             margin-top: auto;
-            margin-left: 5.85px;
+            margin-left: 6px;
             width: 34px;
         }
-        .like{
+        .like {
             margin-top: auto;
             margin-left: 22px;
             width: 22px;
             height: 22px;
             padding: 0px;
-            &i{
+            &i {
                 margin-top: auto;
                 font-size: 20px;
             }
         }
-        .like-count{
+        .like-count {
             margin-top: auto;
             margin-left: 6px;
             width: 34px;
@@ -168,10 +182,10 @@ const LeftSide = styled.div`
 `;
 
 const DescriptionContainer = styled.div`
-    margin-top: ${props => props.marginTop}px;
+    margin-top: 60px;
     margin-left: ${props => props.marginLeft}px;
     .category-name {
-        width: 120px;
+        width: max-content;
         height: 25px;
         color: #FF0000;
         font-size: 17px;
@@ -183,7 +197,7 @@ const DescriptionContainer = styled.div`
     .txt {
         width: 423px;
         height: 125px;
-        margin-top: 17px;
+        margin-top: 10px;
         word-wrap: break-word;
         color: #707070;
         font-size: 20px;
@@ -194,11 +208,10 @@ const DescriptionContainer = styled.div`
 `;
 const RightSide = styled.div`
     position: relative;
-    margin-top: 10px;
     margin-left: auto;
     margin-right: 72px;
     .do-fork-btn {
-        margin-top: 0px;
+        margin-top: 15px;
         margin-left: auto;
         text-align: right;
         color: #FF0000;
@@ -210,7 +223,7 @@ const RightSide = styled.div`
     .join-box {
         height: 25px;
         display: flex;
-        margin-top: 10px;
+        margin-top: 15px;
         margin-left: auto;
         .waiting-txt {
             height: 25px;
@@ -234,13 +247,13 @@ const RightSide = styled.div`
     }
     .design-edit-box {
         width: max-content;
-        height: 45px;
+        height: 35px;
         display: flex;
-        margin-top: 10px;
+        margin-top: 15px;
         margin-left: auto;
         cursor: pointer;
         .edit-txt {
-            margin-top: 16px;
+            margin-top: 15px;
             height: 25px;
             font-family: Noto Sans KR;
             font-size: 17px;
@@ -249,8 +262,8 @@ const RightSide = styled.div`
             text-align: right;
         }
         .edit-icon {
-            width: 45px; 
-            height: 45px; 
+            width: 35px; 
+            height: 35px; 
             margin-left: 15px; 
             background: url(${iEdit}); 
             background-size: 45px 45px; 
@@ -259,13 +272,13 @@ const RightSide = styled.div`
         }
     }
     .design-like-box {
-        height: 45px;
+        height: 35px;
         display: flex;
-        margin-top: 17px;
+        margin-top: 10px;
         margin-left: auto;
         cursor: pointer;
         .like-txt {
-            margin-top: 16px;
+            margin-top: 15px;
             height: 25px;
             font-family: Noto Sans KR;
             font-size: 17px;
@@ -274,8 +287,8 @@ const RightSide = styled.div`
             text-align: right;
         }
         .like-icon {
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             margin-left: 15px;
             opacity: ${props => props.like_opacity};
             background: url(${thumbup});
@@ -286,13 +299,13 @@ const RightSide = styled.div`
     }
     .msg-icon-box {
         display: flex;
-        height: 45px;
+        height: 35px;
         margin-top: 15px;
         margin-left: auto;
         cursor: pointer;
         .msg-txt {
             height: 25px;
-            margin-top: 16px;
+            margin-top: 10px;
             margin-left: auto;
             text-align: right;
             color: #707070;
@@ -302,8 +315,8 @@ const RightSide = styled.div`
         }
         .msg-icon {
             margin-left: 15px;
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             background: url(${email});
             background-size: cover;
             background-position: center center;
@@ -314,7 +327,7 @@ const RightSide = styled.div`
         width: 200px;
         height: 25px;
         right: 3px;
-        bottom: 18px;
+        bottom: 10px;
         text-align: right;
         color: #707070;
         font-size: 17px;
@@ -324,11 +337,11 @@ const RightSide = styled.div`
 `;
 const DesignMemberList = styled.div`
     display: ${props => props.display};
-    z-index: 999;
+    z-index: 900;
     position: absolute;
     pointer-events: auto;
-    top: ${props => props.top - 10 + "px"};
-    left: ${props => props.left + "px"};
+    top: ${props => props.top};
+    left: ${props => props.left};
     z-index: 904;
     height: 250px;
     max-height: 550px;
@@ -337,9 +350,16 @@ const DesignMemberList = styled.div`
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
     font-family: Noto Sans KR;
-    overflow-y:scroll;
-    overflow-x:hidden;
-    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    .close-box {
+        z-index: 901;
+        border:1px solid black;
+        position: absolute;
+        left: 305px;
+        top: 10px;
+        cursor:pointer;
+    } 
     &.list::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
@@ -554,13 +574,11 @@ const DesignCommentModalContainer = styled(Modal)`
 class DesignInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false };
+        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);
         this.getForkDesignList = this.getForkDesignList.bind(this);
-        this.onForkListHandler = this.onForkListHandler.bind(this);
-        this.onMemberListHandler = this.onMemberListHandler.bind(this);
         this.joinMember = this.joinMember.bind(this);
         this.getMemberList = this.getMemberList.bind(this);
         this.getDesignComment = this.getDesignComment.bind(this);
@@ -572,19 +590,17 @@ class DesignInfo extends Component {
     needLogin() {
         alert("로그인 해주세요.");
     }
-    onForkListHandler(event) {
-        if (event.type === "blur" && !this.forkDesignRef.contains(event.relatedTarget)) {
-            this.setState({ forkDesignList: false });
-        }
+
+    closeMemberList() {
+        this.setState({ memberList: false });
     }
-    onMemberListHandler(event) {
-        if (event.type === "blur" && !this.memberlist.contains(event.relatedTarget)) {
-            this.setState({ memberList: false });
-        }
+    closeForkList() {
+        this.setState({ forkDesignList: false });
     }
-    getForkDesignList() {
-        this.setState({ forkDesignList: true });
+    async getForkDesignList(event) {
+        await this.setState({ posX: event.clientX, posY: event.clientY });
         this.props.ForkDesignListRequest(this.props.DesignDetail.uid);
+        await this.setState({ forkDesignList: true });
     }
     joinMember = () => {
         if (!this.props.userInfo || !this.props.token) {
@@ -702,10 +718,10 @@ class DesignInfo extends Component {
                         <Cross angle={45} color={"#FFF0FF"} weight={3} width={45} height={45} />
                     </div>
                     {/* <Modal.Content> */}
-                        <div className="header-txt"><h2>댓글</h2></div>
-                        <div className="body-container">
-                            <DesignComment designId={parseInt(this.props.id, 10)}  requestDesignDetail={this.props.GetDesignCountRequest}/>
-                        </div>
+                    <div className="header-txt"><h2>댓글</h2></div>
+                    <div className="body-container">
+                        <DesignComment designId={parseInt(this.props.id, 10)} requestDesignDetail={this.props.GetDesignCountRequest} />
+                    </div>
                     {/* </Modal.Content> */}
                 </DesignCommentModalContainer>)
         }
@@ -737,16 +753,25 @@ class DesignInfo extends Component {
                     {DesignDetail.parent_design && <div className="fork-mark" />}
                     <div className="thumbnail" />
 
-                    {/* left side */}
-                    <LeftSide forkListBtnMarginTop={DesignDetail.parent_design ? 5 : 15} countBoxMarginTop={DesignDetail.parent_design ? 0 : 7} memberListMarginTop={DesignDetail.parent_design ? 8 : 13}>
+                    {/* LEFT SIDE */}
+                    <LeftSide >
                         <div className="title" title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
                         <div className="box">
-                            {DesignDetail.parent_design && <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>{DesignDetail.parent_title.slice(0, 4)}{DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>}
-                            <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)} onBlur={!isMyDesign ? this.onMemberListHandler : undefined}>
-                                <div className="designer_member"> {DesignDetail.userName.slice(0, 8)}{(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
+                            {DesignDetail.parent_design ?
+                                <div className="goto-parent"
+                                    onClick={() => this.goParentDesign(DesignDetail.parent_design)}
+                                    title={DesignDetail.parent_title}>
+                                    {DesignDetail.parent_title.slice(0, 4)}
+                                    {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
+                                </div> : <div className="goto-parent no"></div>}
+                            <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
+                                <div className="design_member"> {DesignDetail.userName.slice(0, 8)}{(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
                             </button>
                             {!isMyDesign && this.state.memberList &&
-                                <DesignMemberList top={this.memberlist.getBoundingClientRect().top} left={this.memberlist.getBoundingClientRect().left}>
+                                <DesignMemberList top={this.state.posY} left={this.state.posX}>
+                                    <div className="close-box" onClick={() => this.setState({ memberList: false })} >
+                                        <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
+                                    </div>
                                     <div className="list">
                                         {DesignDetail.member && DesignDetail.member.length > 0 &&
                                             DesignDetail.member.map((mem, i) =>
@@ -757,56 +782,66 @@ class DesignInfo extends Component {
                                                         <div title={"팀장"} ><i className="star icon" /></div>}
                                                 </DesignMemberListElement>)}</div>
                                 </DesignMemberList>}
+
                             <div className="comment-box" onClick={this.getDesignComment} >
                                 <div className="txt">댓글</div>
                                 <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                             </div>
-                            <button className="fork-list-btn" onClick={DesignDetail.is_parent ? this.getForkDesignList : undefined} ref={ref => (this.forkDesignRef = ref)} onBlur={this.onForkListHandler}>
-                                {DesignDetail.is_parent && "파생된 디자인 "}
-                                {DesignDetail.is_parent && <div className="fork-count">{DesignDetail.children_count["count(*)"]}</div>}
-                                {this.state.forkDesignList &&
-                                    <DesignMemberList top={this.forkDesignRef.getBoundingClientRect().top} left={this.forkDesignRef.getBoundingClientRect().left}>
-                                        <div className="list">
-                                            {this.props.forkDesignList &&
-                                                this.props.forkDesignList.map((item, idx) => {
-                                                    return (<ListItem key={item + idx} img={item.p_s_img}>
-                                                        <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
-                                                            <div className="design-thumbnail" />
-                                                            <div className="design-title"><TextFormat txt={item.title} chars={23} /><div>{item.nick_name}</div></div>
-                                                        </div></ListItem>);
-                                                })}</div>
-                                    </DesignMemberList>}
-                            </button>
 
-                            <div className="count-box">
-                                <div className="view"><IconView width="17.24px" height="11.41px" fill="#707070" /></div>
-                                <div className="view-count">{NumberFormat(Count.view_count)}</div>
-                                <div className="like"><i className="material-icons">thumb_up</i></div>
-                                <div className="like-count">{NumberFormat(Count.like_count)}</div>
-                            </div>
+                            {DesignDetail.children_count["count(*)"] > 0
+                                ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onClick={(event) => { this.getForkDesignList(event) }}>
+                                    <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
+                                </button>
+                                : <button className="fork-list-btn no" disabled></button>}
+
+                            {this.state.forkDesignList &&
+                                <DesignMemberList top={this.state.posY} left={this.state.posX}>
+                                    <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
+                                        <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
+                                    </div>
+                                    <div className="list">
+                                        {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
+                                            return (<ListItem key={item + idx} img={item.p_s_img}>
+                                                <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
+                                                    <div className="design-thumbnail" />
+                                                    <div className="design-title">
+                                                        <TextFormat txt={item.title} chars={23} />
+                                                        <div>{item.nick_name}</div></div>
+                                                </div></ListItem>);
+                                        })}</div>
+                                </DesignMemberList>
+                            }
+                        </div>
+
+                        <div className="count-box">
+                            <div className="view"><IconView width="20px" height="17px" fill="#707070" /></div>
+                            <div className="view-count">{NumberFormat(Count.view_count)}</div>
+                            <div className="like"><i className="material-icons">&#xE8DC;</i></div>
+                            <div className="like-count">{NumberFormat(Count.like_count)}</div>
                         </div>
                     </LeftSide>
 
                     {/*  */}
-                    <DescriptionContainer marginTop={65} marginLeft={65}>
+                    <DescriptionContainer marginLeft={65}>
                         <div className="category-name">{DesignDetail.categoryName}</div>
-                        <div className="txt">{DesignDetail.explanation ? DesignDetail.explanation.slice(0, 150) : DesignDetail.userName + "님의 " + DesignDetail.title + "디자인입니다."}</div>
+                        <div className="txt">{DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : DesignDetail.userName + "님의 " + DesignDetail.title + "디자인입니다."}</div>
                     </DescriptionContainer>
+
                     {/*  */}
-                    <DescriptionContainer marginTop={19} marginLeft={65}>
+                    <DescriptionContainer marginLeft={65}>
                         <div className="category-name"></div>
-                        <div div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(150, 300 - 3)}{(DesignDetail.explanation.length > 300 - 3) ? "..." : ""}</div>
+                        <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
                     </DescriptionContainer>
+
                     {/* right side */}
                     <RightSide like_opacity={like ? 1 : 0.45}>
                         <div className="do-fork-btn" onClick={() => this.forkDesign()}>파생 디자인 생성</div>
-                        {isMyDesign === false &&
-                            <div className="join-box">
-                                {editor === false ?
-                                    DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                        <div className="waiting-txt">가입승인 대기중</div>
-                                        : <div className="join-txt" onClick={this.joinMember} >가입 신청</div> : undefined}
-                            </div>
+                        {isMyDesign === false && <div className="join-box">
+                            {editor === false ?
+                                DesignDetail && DesignDetail.waitingStatus === 1 ?
+                                    <div className="waiting-txt">가입승인 대기중</div>
+                                    : <div className="join-txt" onClick={this.joinMember} >가입 신청</div> : undefined}
+                        </div>
                         }
                         {isMyDesign === true ?
                             <div className="design-edit-box" onClick={this.gotoDesignModify}  >

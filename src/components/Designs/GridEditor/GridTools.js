@@ -180,11 +180,3 @@ export const ContentCard = (props) => {
         : <CardContainer />
     )
 }
-        /*
-<div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "15px", borderRadius: "5px", width: "175px", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }} title={card.title||""}>{card.title && card.title.slice(0, 7)}{card.title && card.title.length > 8 ? "..." : ""}</div>
-<div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "75px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", opacity: props.disabled ? "0.5" : "1.0", height: "29px", color: "#FFF", fontFamily: "Noto Sans KR", fontSize: "17px", textAlign: "center", lineHeight: "29px" }} title={card.nick_name}>{card.nick_name.slice(0, 12)}</div>
-<div style={{ paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "10px", marginTop: "5px", borderRadius: "5px", width: "max-content", backgroundColor: "rgba(12, 12, 12, 0.5)", display: "flex", justifyContent: "flex-end", alignItems: "center", padding: "5px", color: "#FFF" }}>
-<div style={{ marginRight: "15px" }} ><i style={{ opacity: "0.5" }} className="comment icon" />{card.comment_count ? NumberFormat(card.comment_count) : 0}</div>
-<div><i style={{ opacity: "0.5" }} className="clock icon" />{DateFormat(card.update_time)}</div>
-</div>
-*/

@@ -3,8 +3,8 @@ import React from 'react';
 const IconView = (props) => {
     const opacity = props.opacity || "1.0"
     const fill = props.fill || "#FFFFFF"
-    const width = props.width || "13.829px"
-    const height = props.height || "9.156px"
+    const width = props.width || "14px"
+    const height = props.height || "9px"
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 13.829 9.156">
             <g id="outer_eye" data-name="그룹 161" transform="matrix(1, 0.017, -0.017, 1, 46.798, -781.305)">

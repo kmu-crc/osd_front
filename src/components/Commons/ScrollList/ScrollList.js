@@ -88,8 +88,8 @@ const LoadingText = styled.p`
   color: #707070;
   opacity: .75; 
   font-family: Noto Sans KR;
-  font-weight: 500;
-  font-size: 32px; 
+  font-weight: 300;
+  font-size: 24px; 
   text-align: center;
   width: 100%;
   transform: translateY(-25px);
@@ -190,6 +190,7 @@ class ScrollList extends Component {
 
   myRef = React.createRef();
   render() {
+    console.log("list:", this.props.dataListAdded);
     const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { hasMore, loading, cols } = this.state;
     return (dataListAdded && dataListAdded.length > 0 ?

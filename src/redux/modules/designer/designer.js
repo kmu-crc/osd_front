@@ -441,11 +441,13 @@ export function GetLikeDesignerInDesignerRequest(id, page) {
     }
 }
 
-
 // 디자이너의 디자인 리스트 가져오기
 export function GetMyDesignInDesignerRequest(id, page) {
+    const sql = `${host}/designer/designerDetail/` + id + "/allDesignDesigner/" + page
+    // const sql = `${host}/designer/designerDetail/` + id + "/myDesign/" + page
+    console.log(sql);
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/` + id + "/myDesign/" + page, {
+        return fetch(sql, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {

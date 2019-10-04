@@ -39,14 +39,15 @@ const AlarmList = styled.div`
     .list::-webkit-scrollbar-thumb {
         background: rgba(112, 112, 112, 0.45) !important;
     }
-  .list {
-      padding-right: 36px;
-      padding-bottom: 5px;
-      height: 490px;
-      overflow-y: hidden;
-      overflow-x: hidden;
-    &:hover{
-        overflow-y: scroll;
+    .list {
+        padding-right: 36px;
+        padding-bottom: 5px;
+        height: 490px;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        &:hover{
+            overflow-y: scroll;
+        }
     }
 `;
 const ListItem = styled.div`
@@ -183,10 +184,10 @@ class Alarm extends Component {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
                             // if (res.data && res.data.success) {
-                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
-                                this.alarmConfirm(item.user_id, item.uid)
+                            alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                            this.alarmConfirm(item.user_id, item.uid)
                             // } else {
-                                // alert("다시 시도해주세요.");
+                            // alert("다시 시도해주세요.");
                             // }
                         })
                         .catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
@@ -330,7 +331,6 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         const alarmscombined = this.combine(alarms && alarms.list);
-        console.log("combine:result:", alarmscombined);
         return (
             <React.Fragment>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
@@ -378,7 +378,7 @@ class Alarm extends Component {
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
                         {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
-                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}><AlarmIcon/></i>
+                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}><AlarmIcon /></i>
                     </div>
                 </div>
             </React.Fragment>
