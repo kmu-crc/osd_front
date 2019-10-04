@@ -38,6 +38,7 @@ const MenuContainer = styled(Grid)`
 `;
 
 const MenuWrap = styled.div`
+border:1px solid black;
   background-color: white;
   border-top: 1px solid rgba(0,0,0,0.2);
   box-shadow: 0 1px 1px 1px ${opendesign_style.color.grayScale.scale3};

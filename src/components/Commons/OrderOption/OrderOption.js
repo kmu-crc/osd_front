@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const OrderWrapper = styled.div`
-    width:100%;
+    width:${1920+"px"};
     z-index:820;
     display:flex;
     justify-content:flex-end;
     top: 180px;
-    right:30px;
     font-size: 20px;
     font-family: Noto Sans KR;
     position:absolute;

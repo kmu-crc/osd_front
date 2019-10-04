@@ -6,7 +6,7 @@ const Container = styled.div`
     height: ${props => props.height};
     width: 100%;
     top: 50px;
-    position: fixed;
+    position: relative;
     z-index: 800;
     background-color: #FFFFFF;
     &.hidemenu {
@@ -61,13 +61,17 @@ const MainCateElement = styled.div`
 const SubCategory = styled.div`
     z-index: 810;
     position: fixed;
-    width:100%;
+    width:${props=>props.screenWidth<1920?window.innerWidth+"px":"1920px"};
     top: 70px;
     padding-top: 17px;
     height:70px;
     display: flex;
     justify-content: center;
     background-color: #FFFFFF;
+    @media only screen and (max-width : 900px) {
+        justify-content: center;
+        ::-webkit-scrollbar { display: none; }
+    }
     @media only screen and (max-width : 900px) {
         top:120px;
         overflow:scroll;
@@ -111,6 +115,7 @@ class Category extends Component {
         this.props.subcategory_clicked(this.props.main_selected, category)
     }
     render() {
+        console.log("width",window.innerWidth);
         const { category1, category2, main_selected, sub_selected } = this.props;
         const selected = sub_selected && sub_selected.value;
         const hidemenu = this.context.hidemenu ? "hidemenu " : "";
@@ -123,7 +128,7 @@ class Category extends Component {
                         onClick={() => this.clickedMainCategory(element)}
                         key={element.value}>{element.text}</MainCateElement>
                 })}</MainCategory>
-            <SubCategory>
+            <SubCategory screenWidth={window.innerWidth}>
                 {category2 && category2.length > 0 && category2.map(element => {
                     const style = element.value === selected ? "selected " : ""
                     return <SubCateElement

@@ -3,6 +3,18 @@ import styled from "styled-components"
 import noimg from "source/noimg.png"
 import TextFormat from 'modules/TextFormat'
 
+import iAlarm from "source/alarm.png"
+
+
+const AlarmIcon = styled.div`
+width:34px;
+height:34px;
+opacity:0.5;
+background: url(${iAlarm}); 
+background-size:contain;
+background-repeat: no-repeat;
+background-position: center center;
+`
 const AlarmList = styled.div`
     display: ${props => props.display};
     z-index: 999;
@@ -366,7 +378,7 @@ class Alarm extends Component {
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
                         {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
-                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}>notifications</i>
+                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}><AlarmIcon/></i>
                     </div>
                 </div>
             </React.Fragment>

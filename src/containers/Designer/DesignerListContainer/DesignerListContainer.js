@@ -34,7 +34,7 @@ const TextWrapper = styled.div`
 const JoinDesigner = styled.div`
     position: relative;
     left: 1724px;
-    width:152px;
+    width:max-content;
     text-align: left;
     font-size: 20px;
     cursor: pointer;
