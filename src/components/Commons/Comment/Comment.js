@@ -203,6 +203,7 @@ const RepliesInputTextContainer = styled.div`
     }
 `;
 const CommentInputTextContainer = styled.div`
+  
     width: max-content;
     display: flex;
     margin-bottom: 30px;
@@ -223,7 +224,7 @@ const CommentInputTextContainer = styled.div`
         textarea {
             min-width: 650px;
             width: 750px;
-            height: 58px;
+            height: 100%;1
             padding: 7px;
             outline: none;
             border: none;
