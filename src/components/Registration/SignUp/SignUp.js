@@ -311,7 +311,7 @@ class SignUpModal extends Component {
         return returnvalue;
     }
     onBack(){
-        
+        window.history.go(-1);
     }
     onSubmit = async e => {
 

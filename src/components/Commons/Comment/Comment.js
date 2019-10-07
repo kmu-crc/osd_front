@@ -5,6 +5,7 @@ import styled from "styled-components";
 const CommentBox = styled.div`
 `
 const CommentContainer = styled.div`
+    margin-left:15px;
     display: flex; 
     margin-bottom: 30px;
     .face{
