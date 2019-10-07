@@ -31,7 +31,7 @@ const Foot = styled.footer`
 class Footer extends Component {
   goNewWorld = () => {
     alert("새로운 오픈소스디자인 베타사이트로 이동합니다!");
-    window.location.href = `http://dev.opensrcdesign.com`;
+    window.location.href = `https://opensrcdesign.com`;
   }
   render() {
     return (
