@@ -225,12 +225,13 @@ const CommentInputTextContainer = styled.div`
         textarea {
             min-width: 650px;
             width: 750px;
-            height: 100%;1
+            height: 100%;
             padding: 7px;
             outline: none;
             border: none;
             resize: none;
             color: #707070;
+            font-size: 20px;
             font-weight: 300;
             font-family: Noto Sans KR;
             line-height: 22px;
@@ -240,14 +241,14 @@ const CommentInputTextContainer = styled.div`
         }
     }
     .another-wrapper { 
-        margin-left: 26px;
+        margin-left: 20px;
         margin-top: 41px;
         display: flex;
         .submit {
             width: max-content;
             height: 22px;
             margin-left: 18px;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 500;
             text-align: left;
             color: #707070;
@@ -258,7 +259,7 @@ const CommentInputTextContainer = styled.div`
             width: max-content;
             height: 22px;
             margin-left: 18px;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 300;
             text-align: left;
             color: #707070;
