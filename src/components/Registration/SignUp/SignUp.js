@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { Modal } from "semantic-ui-react";
 import styled from "styled-components";
+import iChecked from "source/checked.png"
 // import close from "source/close_white.png"
 
 const CustomModal = styled(Modal)`
@@ -10,7 +11,7 @@ const CustomModal = styled(Modal)`
     border-radius: 35px; 
     font-family: Noto Sans KR;
     .title {
-        padding: 0 0;
+        padding: 0 0;p
         margin: 0 auto;
         margin-top: 44px;
         text-align: center;
@@ -121,6 +122,16 @@ const SignUPBox=styled.form`
             cursor:pointer;
             text-decoration:underline;
         }
+        .blackBoldText{
+            position:absolute;
+            right:340px;
+            font-size:20px;
+            font-weight:500;
+            color:#707070;
+            line-height:29px;
+            text-align:left;
+            cursor:pointer;
+        }
     }
 
     .titleLabel{
@@ -188,11 +199,15 @@ const CheckboxContainer = styled.label`
         height: 0;
         width: 0;
         &:checked ~ .checkmark {
-            background-color: #FF0000;
-            border: 0.5px solid #EFEFEF;
+            background:url(${iChecked}); 
+            background-size:contain;
+            background-position:center center;
+            background-repeat:no-repeat;
+            // background-color: #FF0000;
+             border: 0.5px solid #EFEFEF;
         }
         &:checked ~ .checkmark:after {
-            display: block;
+             display: block;
         }
     }
     .checkmark {
@@ -229,6 +244,7 @@ class SignUpModal extends Component {
         this.onChangePassCheck = this.onChangePassCheck.bind(this);
         this.onChangeNickname = this.onChangeNickname.bind(this);
         this.onChecked = this.onChecked.bind(this);
+        this.onBack=this.onBack.bind(this);
     }
     onChangeId(event) {
         this.setState({ email: event.target.value })
@@ -293,6 +309,9 @@ class SignUpModal extends Component {
         );
         console.log("qwer", returnvalue);
         return returnvalue;
+    }
+    onBack(){
+        
     }
     onSubmit = async e => {
 
@@ -430,6 +449,7 @@ class SignUpModal extends Component {
                                         </CheckboxContainer>
                                         <div className="normalText" onClick={this.openterm}>이용약관 보기</div>
                                     </div>
+                                    <div className="blackBoldText" onClick={this.onBack}>뒤로</div>
                                     <div className="redBoldText" onClick={this.onSubmit}>회원가입</div>
                                 </div>
                                 </SignUPBox>
