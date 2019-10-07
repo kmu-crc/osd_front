@@ -209,7 +209,7 @@ class DesignComment extends React.Component {
                               </div>
                             </div>
                             <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                    {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <div onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</div>}
+                                {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <div onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</div>}
                             </div>
                             <div style={{ position: "relative" }}>
                               <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>

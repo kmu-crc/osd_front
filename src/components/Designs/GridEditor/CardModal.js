@@ -82,6 +82,7 @@ const CardDialog = styled(Modal)`
         background-size: cover;
     }
     .close-box {
+        cursor:pointer;
         position: absolute;
         top:0px;
         right:-60px;

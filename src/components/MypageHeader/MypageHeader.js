@@ -123,7 +123,7 @@ const MypageSummaryBox = styled.div`
         .sideMenu_label{
             cursor:pointer;
             width:164px;
-            height:25px;
+            height:18px;
             color:#707070;
             font-family:Noto Sans KR;
             font-size:17px;
@@ -149,8 +149,8 @@ const MypageSummaryBox = styled.div`
 `
 const SideItemIcon=styled.div`
     cursor:pointer;
-    height:36px;
-    width:36px;
+    height:26px;
+    width:26px;
     margin-left:15px;
     background:${props => `url(${props.imageURL})`};
     background-repeat:no-repeat;
