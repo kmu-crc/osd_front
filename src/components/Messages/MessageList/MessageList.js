@@ -66,17 +66,20 @@ const AsideSection = styled.div`
       line-height:30px;
     }
     .plusIcon{
-      width:51px;
-      height:51px;
-      position:absolute;
-      right:20px;
-      bottom:0px;
-      color:#707070;
-      background:url(${plusImg});
-      background-size:contain;
-      background-repeat:no-repeat;
-      background-position:center center;
-      opacity:0.5;
+      width: 45px;
+      height: 45px;
+      position: absolute;
+      right: 20px;
+      bottom: 5px;
+      color: #707070;
+      background: url(${plusImg});
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      opacity: 1.0;
+      :hover {
+        opacity:0.5;
+      }
     }
 ` 
 
