@@ -3,7 +3,7 @@ import plusImg from "source/plus_cross_gray.png";
 import noImage from "source/thumbnail.png"
 import styled from "styled-components";
 
-import SearchMemverContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
+import SearchMemberContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Socket from "modules/Socket"
 
@@ -18,52 +18,37 @@ const SummaryList = styled.div`
   }
 `;
 
-const MainBanner = styled.div`
-  width:100%;
-  height:48px;
-  display:flex;
-  align-items:center;
-  margin-top:8px;
-  padding-left:65px;  
-  background-color:#EFEFEF;
-  .title{
-    font-size:20px;
-    font-weight:500;
-    font-family:Noto Sans KR;
-    color:#707070;
-  }
 
-`
 const MainSection = styled.div`
   width:1750px;
+  // height: 100%;
   height:869px;
   margin:26px 0px 27px 65px;
 `
 const AsideSection = styled.div`
-    width:445px;
-    height:100%;
-    display:inline-block;
-    overflow:hidden;
-    margin-right:7px;
-    border-radius:25px 0 0 25px;
-    background-color:#EFEFEF;
+    width: 445px;
+    height: 100%;
+    overflow: hidden;
+    margin-right: 7px;
+    border-radius: 25px 0 0 25px;
+    background-color: #EFEFEF;
     .asideHeader{
-      height:75px;
-      position:relative;
-      overflow:hidden;
+      height: 75px;
+      position: relative;
+      overflow: hidden;
     }
     .asideTitle{
-      position:absolute;
-      width:303px;
-      height:30px;
-      left:54px;
-      top:33px;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      color:#707070;
-      font-weight:500;
-      text-align:left;
-      line-height:30px;
+      position: absolute;
+      width: 303px;
+      height: 30px;
+      left: 54px;
+      top: 33px;
+      font-size: 20px;
+      font-family: Noto Sans KR;
+      color: #707070;
+      font-weight: 500;
+      text-align: left;
+      line-height: 30px;
     }
     .plusIcon{
       width: 45px;
@@ -78,7 +63,7 @@ const AsideSection = styled.div`
       background-position: center center;
       opacity: 1.0;
       :hover {
-        opacity:0.5;
+        opacity: 0.5;
       }
     }
 `
@@ -142,50 +127,48 @@ const MainBoard = styled.div`
     padding-right: 23px;
     border-radius: 0px 25px 25px 0px;
     background-color: #EFEFEF;
-    .boardHeaderBox {
-        height: 69px;
-        position: relative;
-        overflow: hidden;
-        .boardHeaderText {
-          position: absolute;
-          width: 244px;
-          height: 29px;
-          bottom: 5px;
-          line-height: 29px;
-          font-size: 20px;
-          font-weight: 500;
-          font-family: Noto Sans KR;
-          color: #707070;
-        }
-    }
-    .sendTypingBox {
-        height: 197px;  
-        position: relative;
-        overflow: hidden;
-    }
-    .sendButton {
-        width: 117px;
-        height: 170px;
-        position: absolute;
-        right: 0px;
-        border-radius: 0px 0px 25px 0px;
-        background-color: #FFFFFF;
-        font-size: 18px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        text-align: center;
-        line-height: 170px;
-        cursor: pointer;
-    }
-`
+}`;
+const BoardHeaderBox = styled.div`
+  height: 69px;
+  position: relative;
+  overflow: hidden;
+  .boardHeaderText {
+    position: absolute;
+    width: 244px;
+    height: 29px;
+    bottom: 5px;
+    margin-left:30px;
+    line-height: 29px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    color: #707070;
+  }
+`;
+const SendTypingBox = styled.div`
+  height: 197px;
+  display: flex;
+  margin-right: 23px;
+  .sendButton {
+    width: 117px;
+    height: 170px;
+    border-radius: 0px 0px 25px 0px;
+    background-color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    text-align: center;
+    line-height: 170px;
+    cursor: pointer;
+  }
+`;
 const DivisionLine = styled.div`
     border-top:1px solid #707070;
 `
 const SendMessageTextarea = styled.textarea`
   width:1091px;
   height:147px;
-  position:absolute;
-  top:24px;
+  margin-right:50px;
   font-size:18px;
   font-weight:500;
   color:#707070;
@@ -214,10 +197,29 @@ function SummaryItem(props) {
     </SummaryItemBox>);
 }
 
+const Wrapper = styled.div`
+  width: ${props => props.width}px;
+`;
+const MainBanner = styled.div`
+  width: ${props => props.width}px;
+  height: 48px;
+  display: flex;
+  margin-top: 8px;
+  padding-left: 65px;  
+  align-items: center;
+  background-color: #EFEFEF;
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    color: #707070;
+  }
+`;
+
 class Messages extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { msgValue: '', msgId: -1, selectId: null, selectName: null, openMember: false, showSearch: false, friendList: [], render: true };
+    this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, msgValue: '', msgId: -1, selectId: null, selectName: null, openMember: false, showSearch: false, friendList: [], render: true };
     this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
     this.handleClickSend = this.handleClickSend.bind(this);
     this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
@@ -225,10 +227,11 @@ class Messages extends React.Component {
     this.handleClickSearchMemberItem = this.handleClickSearchMemberItem.bind(this);
     this.initMsgValue = this.initMsgValue.bind(this);
     this.handleCloseMember = this.handleCloseMember.bind(this);
+    this.handleResize = this.handleResize.bind(this);
     this.getValue = this.getValue.bind(this);
   }
-
   async componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
     await this.props.GetMyMsgListRequest(this.props.token)
       .then(async (res) => {
         if (res.MsgList && res.MsgList.length > 0) {
@@ -338,7 +341,6 @@ class Messages extends React.Component {
   handleChangeMsgValue(event) {
     this.setState({ msgValue: event.target.value })
   }
-
   initMsgValue() {
     this.setState({ msgValue: "" })
   }
@@ -361,6 +363,10 @@ class Messages extends React.Component {
       this.setState({ showSearch: false })
     }
   }
+  handleResize() {
+    const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;
+    this.setState({ w: w });
+  }
   render() {
     let arrSummaryList = [];
     if (this.props.MessageList.length > 0) {
@@ -377,52 +383,45 @@ class Messages extends React.Component {
     }
     arrSummaryList.reverse();
 
+    const { w } = this.state;
+    const maxH = 869 + 25 + 48 + 8 + 55
+    const H = window.innerHeight < maxH ? window.innerHeight - 200 : 869
     return (
-      <div onClick={this.handleCloseMember}>
-        <MainBanner>
+      <Wrapper width={w} onClick={this.handleCloseMember}>
+        <MainBanner width={w} >
           <div className="title">메시지함</div>
         </MainBanner>
-        <MainSection>
+
+        <div style={{ height: H, marginTop: "25px", marginLeft: "85px", marginRight: "85px", borderRadius: "25px", background: "#EFEFEF", display: "flex" }}>
           <AsideSection>
             <div className="asideHeader" id="searchRect">
               <div className="asideTitle" id="searchRect">받은 메시지함</div>
               <div className="plusIcon" id="searchRect" onClick={this.handleOpenMember}>
               </div>
             </div>
-            {this.state.showSearch && (
-              <React.Fragment>
-                {
-                  this.state.hideSearch == true ?
-                    null :
-                    <SearchMemverContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
-                }
-              </React.Fragment>)
-            }
-            <SummaryList id="searchRect">
-              {arrSummaryList}
-            </SummaryList>
+            {this.state.showSearch &&
+              (<React.Fragment>
+                {this.state.hideSearch == true ? null :
+                  <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+              </React.Fragment>)}
+            <SummaryList id="searchRect">{arrSummaryList}</SummaryList>
           </AsideSection>
-
-          <MainBoard>
-            <div className="boardHeaderBox">
+          <div style={{border:"3.5px solid white"}}></div>
+          <div>
+            <BoardHeaderBox>
               <div className="boardHeaderText">{this.state.selectName}</div>
-            </div>
-
-            <div>
-              {this.state.render &&
-                <MessageDetailContainer repaint={this.state.render} id={this.state.msgId} />}
+            </BoardHeaderBox>
+            <div >
+              {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
               <DivisionLine />
             </div>
-
-            <div className="sendTypingBox">
+            <SendTypingBox>
               <SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}></SendMessageTextarea>
               <div className="sendButton" onClick={this.onSubmitForm}>전송하기</div>
-            </div>
-          </MainBoard>
-
-        </MainSection>
-      </div>
-    );
+            </SendTypingBox>
+          </div>
+        </div>
+      </Wrapper>);
   }
 }
 

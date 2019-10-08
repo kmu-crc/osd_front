@@ -9,6 +9,7 @@ import {
 } from "redux/modules/design"
 import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
+import { geturl } from "config"
 
 class ModifyDesignInfoContainer extends Component {
   constructor(props) {
@@ -29,18 +30,23 @@ class ModifyDesignInfoContainer extends Component {
     alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
     this.props.history.push("/myModify")
   }
+  goBack() {
+    alert("디자인 수정 권한이 없습니다");
+    window.location.href = geturl() + '/designDetail/' + this.props.id;
+  }
   render() {
     console.log("props:", this.props)
     return (<React.Fragment>
       {
         this.props.userInfo.is_designer === 1 ?
-          <ModifyDesign {...this.props} />
+          this.props.userInfo.uid === this.props.DesignDetail.user_id ?
+            <ModifyDesign {...this.props} />
+            : this.goBack()
           : this.gotoMyModify()
       }
     </React.Fragment>)
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {

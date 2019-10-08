@@ -8,7 +8,8 @@ import styled from "styled-components";
 
 const MsgSectionBoard = styled.div`
   width: 1259px;
-  height: 602.5px;
+  height: ${props => props.height}px;
+  // height: 602.5px;
   position: relative;
   flex-direction: column-reverse;
   justify-content: flex-end;
@@ -185,7 +186,7 @@ class MessageDetail extends Component {
 
     return (
       <React.Fragment>
-        <MsgSectionBoard id="MsgBox" onClick={this.ScrollDown}>
+        <MsgSectionBoard height={this.props.height} id="MsgBox" onClick={this.ScrollDown}>
           {arrMsg}
         </MsgSectionBoard>
       </React.Fragment>

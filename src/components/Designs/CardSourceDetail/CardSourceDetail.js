@@ -270,6 +270,9 @@ class CardSourceDetail extends Component {
     this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
   }
   async onDelete(order) {
+    if (window.confirm("정말로 선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
+      return;
+    }
     let copyContent = [...this.state.content];
     for (var i = 0; i < copyContent.length; i++) {
       if (copyContent[i].order === order) {
@@ -341,11 +344,7 @@ class CardSourceDetail extends Component {
     }
     if (event != null) event.preventDefault();
 
-    let formData = {
-      updateContent: [],
-      newContent: [],
-      deleteContent: []
-    }
+    let formData = { updateContent: [], newContent: [], deleteContent: [] }
     // get updatecontent
     //order
     for (var i = 0; i < newContent.length; i++) {
@@ -418,10 +417,14 @@ class CardSourceDetail extends Component {
     const { edit, content, loading } = this.state;
     return (<div>
       {loading && <Loading />}
-      <ButtonContainer >
+      <ButtonContainer>
         {edit === false && this.props.edit && this.props.isTeam && (content && content.length > 0 ?
-          (<div className="content-edit-wrapper"><button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">컨텐츠 수정</button></div>) :
-          (<div className="content-add-wrapper"><button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >컨텐츠 추가</button></div>))}
+          (<div className="content-edit-wrapper">
+            <button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">
+              컨텐츠 수정</button></div>) :
+          (<div className="content-add-wrapper">
+            <button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >
+              컨텐츠 추가</button></div>))}
       </ButtonContainer>
 
       {/* view mode */}
@@ -474,11 +477,10 @@ class CardSourceDetail extends Component {
         {(edit && this.props.uid && this.props.edit) &&
           <EditorBottonWrapper>
             <button onClick={this.onSubmit} className="submit" type="button">
-              <i className="icon outline save" />등록</button>
+              <i className="icon outline save" />저장</button>
             <button onClick={this.onCancel} className="cancel" type="button">
               <i className="icon trash" />취소</button>
-          </EditorBottonWrapper>
-        }
+          </EditorBottonWrapper>}
       </ButtonContainer>
     </div>);
   }

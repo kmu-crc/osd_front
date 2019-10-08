@@ -7,6 +7,7 @@ import { UpdateDesignSourceRequest, UpdateCardSourceRequest, CreateDesignCardReq
 import { ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import CardSourceDetail from 'components/Designs/CardSourceDetail';
+import Loading from "components/Commons/Loading";
 
 const NewCardDialog = styled(Modal)`
     min-width: 1777px;
@@ -17,7 +18,7 @@ const NewCardDialog = styled(Modal)`
     opacity: 1;
 `;
 class NewCardModal extends Component {
-    state = { scroll: false, edit: false, title: "", content: "", hook: false, card_content: { deleteContent: [], newContent: [], updateContent: [] } };
+    state = { loading: false, scroll: false, edit: false, title: "", content: "", hook: false, card_content: { deleteContent: [], newContent: [], updateContent: [] } };
     onClose = () => {
         this.props.close();
     }
@@ -49,10 +50,10 @@ class NewCardModal extends Component {
         let files = null;
         await this.setState({ loading: true, hook: true });
         // new card 
-        ValidationGroup(this.state, false)
-            .then(data => {
-                files = data && data.files;
-                this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
+        await ValidationGroup(this.state, false)
+            .then(async data => {
+                files = await data && data.files;
+                await this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
                     .then((res) => {
                         if (res.success) {
                             // and get new card id
@@ -66,21 +67,25 @@ class NewCardModal extends Component {
                                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                                 .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
                                 .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                                .then(() => { this.onClose() })
+                                .then(async () => {
+                                    await this.setState({ loading: false });
+                                    this.onClose();
+                                })
                                 .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
                         } else {
                             alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
                         }
                     });
             })
-        await this.setState({ loading: false });
     }
     render() {
         const { hook } = this.state;
+        console.log(this.state.loading);
         return (<NewCardDialog open={this.props.open} onClose={this.props.close}>
-            <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+            {this.state.loading && <Loading />}
+            {/* <div onClick={this.onClose} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
                 <Cross angle={45} color={"#FFFFFF"} weight={3} width={45} height={45} />
-            </div>
+            </div> */}
             <div style={{ display: "flex", marginTop: "35.5px", marginLeft: "125.5px" }}>
                 <div style={{ width: "80px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>새 컨텐츠</div>
             </div>
@@ -100,7 +105,7 @@ class NewCardModal extends Component {
                 <div style={{ width: "97px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>
                     컨텐츠 설명</div>
                 <div style={{ marginLeft: "31px", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px", }}>
-                    <input name="content" onChange={this.onChangeContent} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="제목을 입력해주세요." /></div>
+                    <input name="content" onChange={this.onChangeContent} style={{ borderRadius: "5px", width: "100%", border: "none", background: "transparent", fontSize: "20px", fontWeight: "500", color: "#707070", height: "100%", padding: "16px 23px 16px 23px" }} maxLength="20" placeholder="설명을 입력해주세요." /></div>
             </div>
             <div style={{ display: "flex", marginTop: "75px", marginLeft: "200.5px" }}>
                 <div style={{ width: "38px", height: "29px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", lineHeight: "40px", color: "#707070" }}>내용</div>
@@ -109,7 +114,7 @@ class NewCardModal extends Component {
                         {...this.props}
                         uid={undefined}
                         isTeam={this.props.isTeam}
-                        edit={this.state.edit}
+                        edit={true}
                         closeEdit={this.onCloseEditMode}
                         openEdit={this.onChangeEditMode}
                         hook={hook}
@@ -118,7 +123,7 @@ class NewCardModal extends Component {
                 </div>
             </div>
             <div style={{ marginTop: "14px", marginLeft: "0px" }}>
-                <div style={{ width: "100px", height: "40px", marginLeft: "auto", marginTop: "24px", marginRight: "80.5px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>
+                <div style={{ width: "100px", height: "40px", marginLeft: "auto", marginTop: "24px", marginRight: "80.5px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>
                     <button onClick={this.handleSubmit} style={{ border: "none", background: "none", width: "max-content", height: "40px", lineHeight: "40px", color: "#FF0000", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }}>생성하기</button>
                 </div>
             </div>
