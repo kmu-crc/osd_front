@@ -81,7 +81,7 @@ const AsideSection = styled.div`
         opacity:0.5;
       }
     }
-` 
+`
 
 const SummaryItemBox = styled.div`
     position:relative;
@@ -89,7 +89,7 @@ const SummaryItemBox = styled.div`
     width:336px;
     height:70px;
     margin-bottom:30px;
-    opacity:${props=>props.isSelect==true?1:0.5};
+    opacity:${props => props.isSelect == true ? 1 : 0.5};
     .summary_Name{
       width:244px;
       height:29px;
@@ -123,7 +123,7 @@ const SummaryIcon = styled.div`
     left:0px;
     top:0px;
     border-radius:50%;
-    background:url(${props=>props.imageURL});
+    background:url(${props => props.imageURL});
     background-size:cover;
     background-position:center center;
     .noti{
@@ -134,68 +134,67 @@ const SummaryIcon = styled.div`
     }
 `
 const MainBoard = styled.div`
-    display:inline-block;
-    oveflow:hidden;
-    width:1298px;
-    height:100%;
-    padding-left:26px;
-    padding-right:23px;
-    border-radius:0px 25px 25px 0px;
-    background-color:#EFEFEF;
-    .boardHeaderBox{
-        height:69px;
-        position:relative;
-        overflow:hidden;
-        .boardHeaderText{
-          width:244px;
-          height:29px;
-          position:absolute;
-          bottom:5px;
-          font-size:20px;
-          font-weight:500;
-          font-family:Noto Sans KR;
-          color:#707070;
-          line-height:29px;
+    display: inline-block;
+    oveflow: hidden;
+    width: 1298px;
+    height: 100%;
+    padding-left: 26px;
+    padding-right: 23px;
+    border-radius: 0px 25px 25px 0px;
+    background-color: #EFEFEF;
+    .boardHeaderBox {
+        height: 69px;
+        position: relative;
+        overflow: hidden;
+        .boardHeaderText {
+          position: absolute;
+          width: 244px;
+          height: 29px;
+          bottom: 5px;
+          line-height: 29px;
+          font-size: 20px;
+          font-weight: 500;
+          font-family: Noto Sans KR;
+          color: #707070;
         }
     }
-    .sendTypingBox{
-        height:197px;  
-        position:relative;
-        overflow:hidden;
+    .sendTypingBox {
+        height: 197px;  
+        position: relative;
+        overflow: hidden;
     }
-    .sendButton{
-        width:117px;
-        height:170px;
-        position:absolute;
-        right:0px;
-        border-radius:0px 0px 25px 0px;
-        background-color:#FFFFFF;
-        font-size:18px;
-        font-weight:500;
-        font-family:Noto Sans KR;
-        text-align:center;
-        line-height:170px;
+    .sendButton {
+        width: 117px;
+        height: 170px;
+        position: absolute;
+        right: 0px;
+        border-radius: 0px 0px 25px 0px;
+        background-color: #FFFFFF;
+        font-size: 18px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: center;
+        line-height: 170px;
+        cursor: pointer;
     }
-
 `
 const DivisionLine = styled.div`
     border-top:1px solid #707070;
 `
-
-const SendMessageTextarea = styled.input.attrs({type:'textarea'})`
-    width:1091px;
-    height:147px;
-    position:absolute;
-    top:24px;
-    font-size:18px;
-    font-weight:500;
-    color:#707070;
-    text-align:left;
-    line-height:27px;
-    background-color:#EFEFEF;
-    resize:none;
-    border:none;
-    outline:none;
+const SendMessageTextarea = styled.textarea`
+  width:1091px;
+  height:147px;
+  position:absolute;
+  top:24px;
+  font-size:18px;
+  font-weight:500;
+  color:#707070;
+  text-align:left;
+  line-height:27px;
+  background-color:#EFEFEF;
+  resize:none;
+  border:none;
+  outline:none;
 `
 
 const MessageSectionSendBtn = {
@@ -208,7 +207,7 @@ function SummaryItem(props) {
   return (
     <SummaryItemBox isSelect={props.opacityON}>
       <SummaryIcon imageURL={props.s_img}>
-      {props.noti?<div className="noti"/>:undefined}
+        {props.noti ? <div className="noti" /> : undefined}
       </SummaryIcon>
       <div className="summary_Name">{props.friend_name}</div>
       <div className="summary_message">{props.message}</div>
@@ -229,7 +228,6 @@ class Messages extends React.Component {
     this.getValue = this.getValue.bind(this);
   }
 
-
   async componentDidMount() {
     await this.props.GetMyMsgListRequest(this.props.token)
       .then(async (res) => {
@@ -244,33 +242,15 @@ class Messages extends React.Component {
     if (this.props.id && this.props.name) {
       let id = parseInt(this.props.id, 10);
       this.selectMember({
-        email: null,
-        nick_name: this.props.name,
-        uid: id
+        email: null, nick_name: this.props.name, uid: id
       })
       Socket.on("reload_msglist", () => {
-        //console.log("giveit")
         this.setState({ render: true })
       })
     }
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
     }
-    // if(this.props.match)
-    // if (this.props.userInfo) {
-
-    // try {
-    // Socket.emit("INIT", this.props.userInfo.uid)
-    // Socket.on("getNoti", noti => {
-    // //console.log("this!noti!");
-    // this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-    // //this.setState({ render: true })
-    // })
-    // } catch (err) {
-    // console.log(err)
-    // }
-    // }
-
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
@@ -333,9 +313,7 @@ class Messages extends React.Component {
       openMember: false,
       render: false
     });
-    this.setState({
-      render: true
-    });
+    this.setState({ render: true });
     setTimeout(async () => {
       await this.props.GetMyMsgListRequest(this.props.token)
       this.setState({ render: true })
@@ -350,14 +328,9 @@ class Messages extends React.Component {
       .then(async res => {
         if (res.data && res.data.success === true) {
           await this.props.GetMyMsgListRequest(this.props.token)
-          await this.setState({
-            msgId: res.data.groupId,
-            render: false
-          });
+          await this.setState({ msgId: res.data.groupId, render: false });
         }
-        this.setState({
-          render: true
-        });
+        this.setState({ render: true });
         this.props.history.replace("/message");
       });
     this.initMsgValue();
@@ -387,19 +360,17 @@ class Messages extends React.Component {
     if (event.target.id != "searchRect") {
       this.setState({ showSearch: false })
     }
-    // if(event.target)
-    // this.setState({showSearch:false});
   }
   render() {
     let arrSummaryList = [];
     if (this.props.MessageList.length > 0) {
-      console.log("message-list",this.props.MessageList);
+      console.log("message-list", this.props.MessageList);
       arrSummaryList = this.props.MessageList.map((item, index) => {
         let SelectedItem = false;
         if (this.state.selectId == item.friend_id) SelectedItem = true;
         return (
           <div key={index} onClick={() => this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
-            <SummaryItem noti={item.noti&&item.noti>0} s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
+            <SummaryItem noti={item.noti && item.noti > 0} s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
           </div>
         )
       });
@@ -431,22 +402,25 @@ class Messages extends React.Component {
               {arrSummaryList}
             </SummaryList>
           </AsideSection>
+
           <MainBoard>
             <div className="boardHeaderBox">
               <div className="boardHeaderText">{this.state.selectName}</div>
             </div>
-            {this.state.render &&
-              <MessageDetailContainer repaint={this.state.render} id={this.state.msgId} />
-            }
-            <DivisionLine/>
+
+            <div>
+              {this.state.render &&
+                <MessageDetailContainer repaint={this.state.render} id={this.state.msgId} />}
+              <DivisionLine />
+            </div>
+
             <div className="sendTypingBox">
-              <SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} />
+              <SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}></SendMessageTextarea>
               <div className="sendButton" onClick={this.onSubmitForm}>전송하기</div>
             </div>
           </MainBoard>
+
         </MainSection>
-
-
       </div>
     );
   }
