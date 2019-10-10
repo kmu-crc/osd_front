@@ -60,19 +60,19 @@ class SectionAdditional extends Component {
   }
 
   render() {
-
     return (
       <ContentsBox>
         {/* category */}
-          <CategoryBox>
+        <CategoryBox>
           <div className="title">카테고리</div>
-            <CategoryDropDown onChange={this.onChangeCategory1} 
-              options={this.props.category1} selection 
-              name="cate1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-            <CategoryDropDown onChange={this.onChangeCategory2} 
-              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection
-              ref="dropdown2" value={this.state.categoryLevel2} />
-          </CategoryBox>
+          <CategoryDropDown onChange={this.onChangeCategory1}
+            options={this.props.category1} selection
+            name="cate1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
+          {this.state.categoryLevel1 !== 0 && this.props.category2[this.state.categoryLevel1 - 1]
+            ? <CategoryDropDown value={this.state.categoryLevel2} ref="dropdown2" selection onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1]} />
+            : <CategoryDropDown value={this.state.categoryLevel2} ref="dropdown2" selection onChange={this.onChangeCategory2} options={emptyCategory} />
+          }
+        </CategoryBox>
       </ContentsBox>
     );
   }

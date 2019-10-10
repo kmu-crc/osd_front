@@ -43,16 +43,16 @@ const IsDesignerBox = styled.div`
     }
 
 `
-const CheckBox = styled.input.attrs({type:'checkbox'})`
-      width:25px;
-      height:25px;
-      margin-left:10px;
-      background-color:#EFEFEF !important;
-      border:1px solid #707070 !important;
-      border-radius:5px !important;  
+const CheckBox = styled.input`
+  width:25px;
+  height:25px;
+  margin-left:10px;
+  background-color:#EFEFEF !important;
+  border:1px solid #707070 !important;
+  border-radius:5px !important;  
 `
 
-const DesignerInfoBox=styled.div`
+const DesignerInfoBox = styled.div`
       margin-left:20px;
 
       .itemBox{
@@ -73,7 +73,7 @@ const DesignerInfoBox=styled.div`
       }
 
 `
-const InputText = styled.input.attrs({type:'text',maxLength:100})`
+const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
       width:505px;
       height:56px;
       padding-left:15px;
@@ -153,39 +153,39 @@ class SectionBuziness extends Component {
 
     console.log("checkbox", this.state.isDesigner);
     return (
-        <ContentsBox>
+      <ContentsBox>
 
         <IsDesignerBox>
           <div className="isDesignerText">디자이너 활동 여부</div>
           <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
-                     onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
+            onChange={this.isDesignerCheck} onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
           <div className="tipTitle">TIP</div>
         </IsDesignerBox>
         <div className="tipDescription">{description[0]}<br />{description[1]}<br />{description[2]}</div>
 
         <DesignerInfoBox>
-        <div className="itemBox">
-          <div className="designerInfoTitle">팀</div>
-          <InputText onChange={this.onChangeTeam} value={this.state.team==null?"":this.state.team} />
-        </div>
+          <div className="itemBox">
+            <div className="designerInfoTitle">팀</div>
+            <InputText onChange={this.onChangeTeam} value={this.state.team == null ? "" : this.state.team} />
+          </div>
 
-        <div className="itemBox">
-          <div className="designerInfoTitle">경력</div>
-          <InputText onChange={this.onChangeCareer} value={this.state.career==null?"":this.state.career} />
-        </div>
+          <div className="itemBox">
+            <div className="designerInfoTitle">경력</div>
+            <InputText onChange={this.onChangeCareer} value={this.state.career == null ? "" : this.state.career} />
+          </div>
 
-        <div className="itemBox">
-          <div className="designerInfoTitle">위치</div>
-          <InputText onChange={this.onChangeLocation}  value={this.state.location==null?"":this.state.location} />
-        </div>
+          <div className="itemBox">
+            <div className="designerInfoTitle">위치</div>
+            <InputText onChange={this.onChangeLocation} value={this.state.location == null ? "" : this.state.location} />
+          </div>
 
-        <div className="itemBox">
-          <div className="designerInfoTitle">연락</div>
-          <InputText onChange={this.onChangeContact} value={this.state.contact==null?"":this.state.contact} />
-        </div>
+          <div className="itemBox">
+            <div className="designerInfoTitle">연락</div>
+            <InputText onChange={this.onChangeContact} value={this.state.contact == null ? "" : this.state.contact} />
+          </div>
         </DesignerInfoBox>
-        </ContentsBox>
-       );
+      </ContentsBox>
+    );
   }
 }
 export default SectionBuziness;

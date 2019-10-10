@@ -46,7 +46,7 @@ const CategoryItem = styled.div`
 var pastCate = 0;//for change category
 class MypageBody extends Component {
     state = {
-        categorys: ['디자인', '그룹', '좋아요'],
+        categorys: ['디자인', '그룹', '관심항목'],
         cateIndex: 0,
         page: 0,
         groupPage: 0,

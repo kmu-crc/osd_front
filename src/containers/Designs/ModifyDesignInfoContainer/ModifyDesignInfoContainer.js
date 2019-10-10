@@ -15,6 +15,7 @@ import Loading from "components/Commons/Loading"
 class ModifyDesignInfoContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = { loading: true };
     this.gotoMyModify = this.gotoMyModify.bind(this);
   }
   componentDidMount() {
@@ -32,13 +33,19 @@ class ModifyDesignInfoContainer extends Component {
     this.props.history.push("/myModify")
   }
   goBack() {
-    // alert("디자인 수정 권한이 없습니다");
-    // window.location.href = geturl() + '/designDetail/' + this.props.id;
+    alert("디자인 수정 권한이 없습니다");
+    window.location.href = geturl() + '/designDetail/' + this.props.id;
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.DesignDetail.uid != null) {
+      if (nextProps.DesignDetail != this.props.DesignDetail && nextProps.DesignDetail.uid) {
+        this.setState({ loading: false });
+      }
+    }
   }
   render() {
-    console.log("props:", this.props.status, this.props.userInfo.uid, this.props.DesignDetail);
     return (<React.Fragment>
-      {this.props.status === "INIT" ? <Loading /> :
+      {this.state.loading ? <Loading /> :
         this.props.userInfo.is_designer === 1 ?
           this.props.userInfo.uid === this.props.DesignDetail.user_id ?
             <ModifyDesign {...this.props} />
@@ -50,7 +57,6 @@ class ModifyDesignInfoContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    status: state.Design.status.DesignDetail.status,
     DesignDetail: state.Design.status.DesignDetail,
     token: state.Authentication.status.token,
     members: state.Search.status.members,

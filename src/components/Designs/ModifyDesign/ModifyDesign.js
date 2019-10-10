@@ -45,17 +45,7 @@ const NavMenu = styled.div`
     background-color:#F5F4F4;
     border-radius:5px;
   }
-  .menuItem{
-    height:62px;
-    padding-left:36px;
-    padding-top:18px;
-    lineHeight:29px;
-    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-    cursor:pointer;
-
-  }
-
-    .deleteText{
+  .deleteText{
       font-family:Noto Sans KR;
       font-size:20px;
       font-family:Noto Sans KR;
@@ -63,8 +53,19 @@ const NavMenu = styled.div`
       text-align:left;
       color:#FF0000;
       border-bottom:${props => props.borderBottom};
-    }
+  }
 `
+const MenuItem = styled.div`
+  height:62px;
+  padding-left:36px;
+  padding-top:18px;
+  lineHeight:29px;
+  border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor:pointer;
+  &.white{
+    background-color: white;
+  }
+}`
 const MenuText = styled.div`
   font-size:20px;
   font-family:Noto Sans KR;
@@ -710,16 +711,16 @@ class ModifyDesign extends Component {
               <div className="menuBox">
                 {scrollmenu.map((menu, index) => {
                   return (
-                    <div onClick={() => this.gotoStep(menu)}
-                      className="menuItem"
+                    <MenuItem onClick={() => this.gotoStep(menu)}
+                      // className="menuItem"
                       borderBottom={index + 1 === scrollmenu.length}
                       key={menu.txt}>
                       <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
-                    </div>)
+                    </MenuItem>)
                 })}
-                <div className="menuItem" style={{ backgroundColor: "white" }} onClick={this.deleteDialog}>
+                <MenuItem className="white" onClick={this.deleteDialog}>
                   <div className="deleteText">디자인 삭제하기</div>
-                </div>
+                </MenuItem>
               </div>
 
             </NavMenu>

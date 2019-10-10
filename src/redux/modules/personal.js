@@ -290,8 +290,10 @@ export function GetMyDetailRequest(token) {
 }
 // 내 디자인 리스트 불러오기
 export function GetMyDesignListRequest(token, page) {
+    const url = `${host}/users/myPage/allDesign/${page}`;
+    // const url = `${host}/users/myPage/design/${page}`;
     return (dispatch) => {
-        return fetch(`${host}/users/myPage/design/${page}`, {
+        return fetch(url, {
             headers: {
                 "Content-Type": "application/json",
                 "x-access-token": token

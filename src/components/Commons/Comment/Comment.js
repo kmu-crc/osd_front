@@ -165,6 +165,7 @@ const RepliesInputTextContainer = styled.div`
         margin-left: 55px;
         margin-bottom: 15px;
         display: flex;
+        textarea {
             min-width: 450px;
             width: 650px;
             height: 29px;
@@ -173,6 +174,7 @@ const RepliesInputTextContainer = styled.div`
             border: none;
             border-radius: 5px;
             color: #707070;
+            font-size: 20px;
             font-weight: 300;
             font-family: Noto Sans KR;
             line-height: 22px;
@@ -180,23 +182,23 @@ const RepliesInputTextContainer = styled.div`
             background-repeat: no-repeat;
             resize: none;
         }
-        .sumbit{
+        .submit {
             width: max-content;
             height: 22px;
-            margin-left: 18px;
+            margin-left: 25px;
             color: #707070;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 500;
             text-align: left;
             cursor: pointer;
             letter-spacing: 0;
         }
-        .cancel{
+        .cancel {
             width: max-content;
             height: 22px;
             margin-left: 18px;
             color: #707070;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 300;
             text-align: left;
             cursor: pointer;
@@ -204,11 +206,11 @@ const RepliesInputTextContainer = styled.div`
     }
 `;
 const CommentInputTextContainer = styled.div`
-  
     width: max-content;
     display: flex;
     margin-bottom: 30px;
-    margin-top:15px;
+    margin-top: 15px;
+    margin-left: 15px;
 
     .face {
         width: 58px;
@@ -318,9 +320,12 @@ class Comment extends Component {
         if (this.state.this_comment.length > 0)
             this.props.comment({ comment: this.state.this_comment, d_flag: null });
         this.reset();
-        console.log(this.props,"?");
+        console.log(this.props, "?");
     };
     removeComment(commentId) {
+        if (window.confirm("선택하신 댓글을 정말로 삭제하시겠습니까?") === false) {
+            return;
+        }
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
         if (comm.replies && comm.replies.length > 0) {
             alert("답변이 있는 댓글은 삭제할 수 없습니다.");
@@ -330,6 +335,9 @@ class Comment extends Component {
         }
     };
     removeReply(commentId) {
+        if (window.confirm("선택하신 댓글을 정말로 삭제하시겠습니까?") === false) {
+            return;
+        }
         this.props.removeComment(commentId);
     };
 
@@ -357,21 +365,20 @@ class Comment extends Component {
 
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
                         const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
-                        return (
-                            <RepliesContainer key={repli.uid + repli_index} face={repli_face}>
-                                <div className="wrapper">
-                                    <div className="reply-face" />
-                                    <div className="reply-nick-wrapper">
-                                        <div className="reply-nick">{repli.nick_name}</div>
-                                        <div className="reply-comment" >{repli.comment}</div>
-                                    </div>
+                        return (<RepliesContainer key={repli.uid + repli_index} face={repli_face}>
+                            <div className="wrapper">
+                                <div className="reply-face" />
+                                <div className="reply-nick-wrapper">
+                                    <div className="reply-nick">{repli.nick_name}</div>
+                                    <div className="reply-comment" >{repli.comment}</div>
                                 </div>
-                                <div className="button-wrapper" >
-                                    {/* <div className="reply-comment" >{repli.comment}</div> */}
-                                    <div className="reply-create-time" >{DateFormat(repli.create_time)}</div>
-                                    {my && repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} className="reply-del">삭제하기</div>}
-                                </div>
-                            </RepliesContainer>)
+                            </div>
+                            <div className="button-wrapper" >
+                                {/* <div className="reply-comment">{repli.comment}</div> */}
+                                <div className="reply-create-time" >{DateFormat(repli.create_time)}</div>
+                                {my && repli.user_id === my.uid && <div onClick={() => this.removeReply(repli.uid)} className="reply-del">삭제하기</div>}
+                            </div>
+                        </RepliesContainer>)
                     })}
                     {reply && item.uid === this.state.targetId && <React.Fragment>
                         <RepliesInputTextContainer face={myface}>
