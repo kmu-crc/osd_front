@@ -452,7 +452,7 @@ class Header extends Component {
         {notice && notice.length > 0 &&
           notice.map(notifi => {
             if (getCookie('noti_' + notifi.uid))
-              return null
+              return;
             else
               return <Notification visible={notifi.visible || "visible"} key={notifi.uid} >
                 <div className="content">
