@@ -772,7 +772,7 @@ class DesignInfo extends Component {
                                     {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
                                 </div> : <div className="goto-parent no"></div>}
                             <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
-                                <div className="design_member"> {DesignDetail.userName.length >= 7 ? DesignDetail.userName.slice(0, 7) + ".." : DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외" + (DesignDetail.member.length - 1).toString() + "명"}</div>
+                                <div className="design_member"> {DesignDetail.userName.length > 7 ? DesignDetail.userName.slice(0, 7) + "..." : DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외" + (DesignDetail.member.length - 1).toString() + "명"}</div>
                             </button>
                             {!isMyDesign && this.state.memberList &&
                                 <DesignMemberList top={this.state.posY} left={this.state.posX}>
