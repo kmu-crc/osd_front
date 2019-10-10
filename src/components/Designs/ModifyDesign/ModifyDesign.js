@@ -773,8 +773,9 @@ class ModifyDesign extends Component {
                       <div className="title">카테고리</div>
                       <CategoryDropDown onChange={this.onChangeCategory1}
                         options={this.props.category1} selection name="category1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-                      <CategoryDropDown id="category2" onChange={this.onChangeCategory2}
-                        options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection name="cate2" ref="dropdown2" value={this.state.categoryLevel2} />
+                      {this.props.category2[this.state.categoryLevel1 - 1] && this.state.categoryLevel1 !== 0
+                        ? <CategoryDropDown options={this.props.category2[this.state.categoryLevel1 - 1]} selection id="category2" name="cate2" ref="dropdown2" onChange={this.onChangeCategory2} value={this.state.categoryLevel2} />
+                        : <CategoryDropDown options={emptyCategory} selection id="category2" name="cate2" ref="dropdown2" onChange={this.onChangeCategory2} value={this.state.categoryLevel2} />}
                     </CategoryBox>
                     : <p>카테고리를 가져오고 있습니다.</p>}
                   {/* invite member*/}

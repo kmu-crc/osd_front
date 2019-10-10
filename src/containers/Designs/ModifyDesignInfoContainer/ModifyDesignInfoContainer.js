@@ -10,6 +10,7 @@ import {
 import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
 import { geturl } from "config"
+import Loading from "components/Commons/Loading"
 
 class ModifyDesignInfoContainer extends Component {
   constructor(props) {
@@ -31,25 +32,25 @@ class ModifyDesignInfoContainer extends Component {
     this.props.history.push("/myModify")
   }
   goBack() {
-    alert("디자인 수정 권한이 없습니다");
-    window.location.href = geturl() + '/designDetail/' + this.props.id;
+    // alert("디자인 수정 권한이 없습니다");
+    // window.location.href = geturl() + '/designDetail/' + this.props.id;
   }
   render() {
-    console.log("props:", this.props)
+    console.log("props:", this.props.status, this.props.userInfo.uid, this.props.DesignDetail);
     return (<React.Fragment>
-      {
+      {this.props.status === "INIT" ? <Loading /> :
         this.props.userInfo.is_designer === 1 ?
           this.props.userInfo.uid === this.props.DesignDetail.user_id ?
             <ModifyDesign {...this.props} />
             : this.goBack()
-          : this.gotoMyModify()
-      }
+          : this.gotoMyModify()}
     </React.Fragment>)
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    status: state.Design.status.DesignDetail.status,
     DesignDetail: state.Design.status.DesignDetail,
     token: state.Authentication.status.token,
     members: state.Search.status.members,

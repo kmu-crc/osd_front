@@ -45,18 +45,16 @@ const NavMenu = styled.div`
     lineHeight:29px;
     border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
-
   }
-
-    .deleteText{
-      font-family:Noto Sans KR;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      text-align:left;
-      color:#FF0000;
-      border-bottom:${props => props.borderBottom};
-    }
+  .deleteText{
+    font-family:Noto Sans KR;
+    font-size:20px;
+    font-family:Noto Sans KR;
+    font-weight:500;
+    text-align:left;
+    color:#FF0000;
+    border-bottom:${props => props.borderBottom};
+  }
 `
 const MenuText = styled.div`
   font-size:20px;
@@ -67,45 +65,40 @@ const MenuText = styled.div`
   border-bottom:${props => props.borderBottom};
 `
 const Arrow = styled.span`
-    margin-left:70px;
-    font-size:15px;
+  margin-left:70px;
+  font-size:15px;
 `
 const InputBoard = styled.div`
-      width:1422px;
-      height:${props => props.isModifyAnother === true ? "2150px" : "925px"};
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
-
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justifyContent: flex-end;
-      }
-
+  width:1422px;
+  height:${props => props.isModifyAnother === true ? "2150px" : "925px"};
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    display: flex;
+    margin-top: 20.54px;
+    justifyContent: flex-end;
+  }
 `
 const CompleteButton = styled.div`
-      position:absolute;
-      right:9px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
-  `
+  position:absolute;
+  right:9px;
+  bottom:35px;
+  cursor:pointer;
+  width:104.5px;
+  height:44px;
+  border-radius:5px;
+  background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+  padding-top:6px;
+  padding-left:15px;
+  margin-right:53px;
+`
 const HRline = styled.div`
-
-    margin-top:100px;
-    margin-bottom:67px;
-    border-bottom:5px solid #F5F4F4;
-
-  `
-
+  margin-top:100px;
+  margin-bottom:67px;
+  border-bottom:5px solid #F5F4F4;
+`
 const BtnText = styled.p`
   width: 74px;
   padding: 0px;
@@ -263,8 +256,9 @@ class ModifyMyDetail extends Component {
     };
     formData.files.push(file);
 
-    if (formData.files.length <= 0 || this.props.MyDetail.profileImg == null ||
-      formData.files[0].value === this.props.MyDetail.profileImg.m_img) delete formData.files;
+    if (formData.files.length <= 0 ||
+      formData.files[0].value === this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img)
+      delete formData.files;
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
         alert("중복된 닉네임입니다");
@@ -348,12 +342,12 @@ class ModifyMyDetail extends Component {
         <NavMenu>
           <div className="menuBox">
             {scrollmenu.map((menu, index) => {
-              return (<div onClick={() => this.scrollMove(menu, index)} 
-                                   className="menuItem"
-                                   borderBottom={index + 1 === scrollmenu.length}
-                                   key={menu.txt}>
-                      <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
-                      </div>)
+              return (<div onClick={() => this.scrollMove(menu, index)}
+                className="menuItem"
+                borderBottom={index + 1 === scrollmenu.length}
+                key={menu.txt}>
+                <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
+              </div>)
             })}
           </div>
         </NavMenu>
@@ -361,14 +355,14 @@ class ModifyMyDetail extends Component {
         {/* form */}
         <InputBoard isModifyAnother={true}>
           <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
-          <HRline/>
+          <HRline />
           <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
-          <HRline/>
+          <HRline />
           <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
             updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
-          <HRline/>
+          <HRline />
           <SectionBuziness MyDetail={this.props.MyDetail} updateIsDesigner={this.updateIsDesigner} updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
-          <CompleteButton id="additional"  isComplete  ={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
+          <CompleteButton id="additional" isComplete={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
         </InputBoard>
       </MainSection>
     </React.Fragment>)
