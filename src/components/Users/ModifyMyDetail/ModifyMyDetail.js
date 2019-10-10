@@ -6,6 +6,7 @@ import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/Section
 import SectionSecurity from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionSecurity"
 import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
+import Loading from "components/Commons/Loading";
 
 const MainBanner = styled.div`
   width: 1920px;
@@ -256,8 +257,8 @@ class ModifyMyDetail extends Component {
     };
     formData.files.push(file);
 
-    if (formData.files.length <= 0 ||
-      formData.files[0].value === this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img)
+    if (formData.files.length == 0 ||
+      formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img))
       delete formData.files;
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
@@ -288,8 +289,7 @@ class ModifyMyDetail extends Component {
       return;
     }
 
-    //ValidationGroup(formData, false).then(async data => {
-    // console.log("성공", {...this.state});
+    // console.log("성공", formData, { ...this.state });
     // return
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
@@ -297,21 +297,16 @@ class ModifyMyDetail extends Component {
         console.log(res);
         if (res.success) {
           alert("정보가 수정되었습니다.");
-          //this.props.history.push(`/`);
           window.location.href = "/mypage"
         } else {
           alert("다시 시도해주세요");
-          this.setState({
-            loading: false
-          });
+          this.setState({ loading: false });
         }
       })
       .catch(e => {
         console.log("실패", e);
         alert("다시 시도해주세요");
-        this.setState({
-          loading: false
-        });
+        this.setState({ loading: false });
       });
   };
   onCancal = () => {
@@ -328,11 +323,11 @@ class ModifyMyDetail extends Component {
   }
 
   render() {
-    // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
     const { selected } = this.state
 
     return (<React.Fragment>
+      {this.state.loading ? <Loading /> : null}
       <MainBanner>
         <div className="title">내 프로필 수정하기</div>
       </MainBanner>
