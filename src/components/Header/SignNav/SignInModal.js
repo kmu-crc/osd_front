@@ -49,6 +49,16 @@ const MainBox=styled.form`
             cursor:pointer;
             text-decoration:underline;
         }
+        .blackBoldText{
+            position:absolute;
+            right:340px;
+            font-size:20px;
+            font-weight:500;
+            color:#707070;
+            line-height:29px;
+            text-align:left;
+            cursor:pointer;
+        }
     }
     .titleLabel{
         width:300px;
@@ -128,6 +138,7 @@ class SignInModal extends Component {
         this.state = { email: "", password: "" ,findPW:false}
         this.findIDPW = this.findIDPW.bind(this);
         this.handlesubmitEnter=this.handlesubmitEnter.bind(this);
+
     }
     signin = () => {
 
@@ -200,6 +211,9 @@ class SignInModal extends Component {
     handlePasswordChange = (e) => {
         this.setState({ password: e.target.value })
     }
+    onBack(){
+        window.location.href="/SignIn";
+    }
     onSubmit = async e => {
         const data = {email:this.state.email};
 
@@ -235,7 +249,7 @@ class SignInModal extends Component {
         return (
             <React.Fragment>
                 {this.state.findPW === false?
-            <CustomModal open={open} onClose={this.onClose}>
+            <CustomModal  open={open} onClose={this.onClose}>
                 <Modal.Content>
                     <div className="title">OPEN SOURCE DESIGN</div>
                     <MainBox onSubmit={this.signin}>
@@ -274,8 +288,8 @@ class SignInModal extends Component {
                     <div className="subLabel">비밀번호를 찾고자하는 아이디를 입력해주세요</div>
                         <InputText name='email' value={email || ""} onChange={this.handeEmailChange}  placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
                     <div className="subItemBox">
-                    <div className="redUnderlineText" onClick={this.onSubmit}>
-                        전송</div>
+                    <div className="blackBoldText" onClick={this.onBack}>뒤로</div>
+                    <div className="redUnderlineText" onClick={this.onSubmit}>전송</div>
                     </div>
                 </MainBox>
             </Modal.Content>

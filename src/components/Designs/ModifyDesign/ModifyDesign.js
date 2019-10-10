@@ -656,6 +656,7 @@ class ModifyDesign extends Component {
   deleteDesign = () => {
     this.props.DeleteDesignRequest(this.props.id, this.props.token)
       .then(() => {
+        alert("삭제되었습니다.");
         window.location.href = geturl() + `/design`;
       })
   }
@@ -675,12 +676,16 @@ class ModifyDesign extends Component {
       });
     }
     const DeleteDesignModal = () => {
-      return (<Modal open={this.state.deleteModal} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
-        <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.title}를<br />삭제하시겠습니까?</div>
-        <div onClick={this.deleteDesign} style={{ fontWeight: "500", cursor: "pointer", width: "100%", height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
-        <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div>
-        <div onClick={this.deleteDialog} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center", }}>
+      return (<Modal open={this.state.deleteModal} closeOnDimmerClick={true} onClose={this.deleteDialog}
+        style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
+        <div style={{ position: "absolute", left: "100%", marginTop: "0px", marginLeft: "10px" }} onClick={this.deleteDialog} >
+          <Cross angle={45} color={"#EFEFEF"} weight={3} width={25} height={25} />
         </div>
+        <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.title}를<br />삭제하시겠습니까?</div>
+        <div style={{ fontWeight: "500", width: "100%", height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>
+          <div style={{ marginLeft: "auto", marginRight: "auto", width: "max-content", cursor: "pointer", }} onClick={this.deleteDesign} >네, 삭제합니다</div>
+        </div>
+        <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div>
       </Modal>
       )
     }

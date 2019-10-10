@@ -16,6 +16,7 @@ import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
 
 import Cross from "components/Commons/Cross"
+import { geturl } from 'config';
 
 
 const Arrow = styled.div`
@@ -128,28 +129,30 @@ const Header = styled.div`
     display:flex;
 `
 const GroupHeaderBox = styled.div`
-    width:100%;
-    display:flex;
-    padding-left:30px;
+    width: 100%;
+    display: flex;
+    padding-left: 30px;
     .profileBox{
-        width:max-content;
+        width: max-content;
         .parentBox{
-            display:flex;
-            cursor:default;
+            display: flex;
+            cursor: default;
             .grandparent{
-                width:15px;
-                height:15px;
-                margin-top:22px;
-                margin-right:10px;
-                opacity:0.55;
-                transform:rotate(90deg);
+                width: 15px;
+                height: 15px;
+                margin-top: 22px;
+                margin-right: 10px;
+                opacity: 0.55;
+                transform: rotate(90deg);
+                cursor: pointer;
             }
             .parent{
-                margin-left:10px;
-                margin-top:17px;
-                font-size:20px;
-                font-weight:300;
-                color:#707070;
+                margin-left: 10px;
+                margin-top: 17px;
+                font-size: 20px;
+                font-weight: 300;
+                color: #707070;
+                cursor: pointer;
            }    
         }
     }
@@ -203,13 +206,11 @@ const GroupHeaderBox = styled.div`
             left:231px;
             bottom:0px;
             .countItem{
-                
-                width:75px;
                 height:100%;
                 display:flex;
-                
+                margin-right: 20px;
                 .count_label{
-                    width:54px;
+                    width: max-content;
                     height:100%
                     margin-left:5px;
                 }
@@ -348,6 +349,10 @@ class GroupInfoComponent extends Component {
         this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
         this.gotoGroupModify = this.gotoGroupModify.bind(this);
         this.changeEditMode = this.changeEditMode.bind(this);
+        this.gotoGroup = this.gotoGroup.bind(this);
+    }
+    gotoGroup(id) {
+        window.location.href = geturl() + `/groupDetail/${id}`
     }
     needLogin() {
         alert("로그인을 해주세요.");
@@ -408,51 +413,7 @@ class GroupInfoComponent extends Component {
                     </div>
                 </LoadingBox>)
         }
-        // const JoinModal = () => {
-        //     const title = this.props.GroupInfo && this.props.GroupInfo.title;
 
-        //     return (
-        //         this.state.showPopup === 1 &&
-        //         <CustomModal>
-        //             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
-        //                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-        //             </div>
-        //             <div style={{
-        //                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
-        //                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-        //             }}>
-        //                 {title && title.slice(0, 20)}<br />
-        //                 가입 신청을 하시겠습니까?</div>
-        //             <div onClick={() => this.handleShowPopup(-1)} style={{
-        //                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
-        //                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
-        //                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-        //             }}>
-        //                 네, 가입합니다.</div>
-        //         </CustomModal>
-
-        //     );
-        // }
-        // const JoinCancelModal = () => {
-        //     const title = this.props.GroupInfo.title;
-        //     return (
-        //         this.state.showPopup === 2 &&
-        //         <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
-        //             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
-        //                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-        //             </div>
-        //             <div style={{
-        //                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
-        //                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-        //             }}>{title && title.slice(0, 20)}<br />가입 신청을 취소 하시겠습니까?</div>
-        //             <div onClick={() => this.handleShowPopup(-1)} style={{
-        //                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
-        //                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
-        //                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-        //             }}>네, 취소합니다.</div>
-        //         </div>
-        //     );
-        // }
         const GroupInfo = (props) => {
             let info = GroupInfoData;
             let parentName = null;
@@ -473,16 +434,14 @@ class GroupInfoComponent extends Component {
                     <div className="profileBox">
                         {parentName &&
                             <div className="parentBox">
-
                                 {info.grand_parentTitle &&
                                     <React.Fragment>
-                                        <img src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
+                                        <img onClick={() => this.gotoGroup(info.grand_parentId)} src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
                                     </React.Fragment>}
                                 {info.parentName &&
                                     <React.Fragment>
-                                        <div className="parent">{parentName}</div><Arrow />
+                                        <div onClick={() => this.gotoGroup(info.parentId)} className="parent" title={info.parentName}>{parentName}</div><Arrow />
                                     </React.Fragment>}
-
                             </div>}
                     </div>
 
@@ -502,18 +461,18 @@ class GroupInfoComponent extends Component {
                                             {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
                                         </div>
                                     </div>
-                                    <div className="CountView">
-                                        <div id="count-view" className="countItem">
-                                            <MiniIcon><IconView width="17.24px" height="11.41px" fill="#707070" /></MiniIcon>
-                                            <div className="count_label">{NumberFormat(info.view || 0)}</div>
+                                    <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+                                        <div style={{ display: "flex", marginRight: "20px" }}>
+                                            <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
+                                            <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.view || 0)}</div>
                                         </div>
-                                        <div id="count-like" className="countItem">
-                                            <MiniIcon imageURL={iThumbUp} opacity="0.5" />
-                                            <div className="count_label">{NumberFormat(info.like || 0)}</div>
+                                        <div style={{ display: "flex", marginRight: "20px" }}>
+                                            <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
+                                            <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.like || 0)}</div>
                                         </div>
-                                        <div id="count-childs" className="countItem">
-                                            <MiniIcon imageURL={iForked} style={{ opacity: "0.5" }} />
-                                            <div className="count_label">{NumberFormat(info.design || 0 + info.group || 0)}</div>
+                                        <div style={{ display: "flex" }}>
+                                            <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
+                                            <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -558,11 +517,57 @@ class GroupInfoComponent extends Component {
         const info = this.props.GroupInfo
         return (
             <React.Fragment>
-                {this.state.likeDialog &&
-                    <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>}
-                <Header>{info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}</Header >
+                {
+                    this.state.likeDialog &&
+                    <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>
+                }
+                < Header > {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}</Header >
             </React.Fragment >)
     }
 }
 
 export default GroupInfoComponent;
+
+// const JoinModal = () => {
+//     const title = this.props.GroupInfo && this.props.GroupInfo.title;
+//     return (
+//         this.state.showPopup === 1 &&
+//         <CustomModal>
+//             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+//                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+//             </div>
+//             <div style={{
+//                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
+//                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
+//             }}>
+//                 {title && title.slice(0, 20)}<br />
+//                 가입 신청을 하시겠습니까?</div>
+//             <div onClick={() => this.handleShowPopup(-1)} style={{
+//                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
+//                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
+//                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
+//             }}>
+//                 네, 가입합니다.</div>
+//         </CustomModal>
+//     );
+// }
+// const JoinCancelModal = () => {
+//     const title = this.props.GroupInfo.title;
+//     return (
+//         this.state.showPopup === 2 &&
+//         <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
+//             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
+//                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
+//             </div>
+//             <div style={{
+//                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
+//                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
+//             }}>{title && title.slice(0, 20)}<br />가입 신청을 취소 하시겠습니까?</div>
+//             <div onClick={() => this.handleShowPopup(-1)} style={{
+//                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
+//                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
+//                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
+//             }}>네, 취소합니다.</div>
+//         </div>
+//     );
+// }

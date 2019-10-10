@@ -18,6 +18,8 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 
 const CardDialog = styled(Modal)`
+    margin-top:50px !important;
+    margin-bottom:50px !important;
     min-width: 1530px;
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -82,6 +84,7 @@ const CardDialog = styled(Modal)`
         background-size: cover;
     }
     .close-box {
+        cursor:pointer;
         position: absolute;
         top:0px;
         right:-60px;

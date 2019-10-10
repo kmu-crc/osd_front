@@ -40,11 +40,11 @@ const SignUpCard = styled.div`
 class SignInPage extends Component {
   render() {
     return (
-      <SignUpContent>
-        <SignUpCard>
-          <SignInContainer />
-        </SignUpCard>
-      </SignUpContent>
+      // <SignUpContent>
+      //   <SignUpCard>
+          <SignInContainer history={this.props.history}/>
+      //   </SignUpCard>
+      // </SignUpContent>
     )
   }
 }

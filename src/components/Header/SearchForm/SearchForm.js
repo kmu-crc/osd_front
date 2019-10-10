@@ -33,10 +33,11 @@ const SearchContainer = styled.div`
         margin: 0px 10px;
     }
     .shadow_button{
-        width:28px;
-        height:28px;
+        width:21px;
+        height:21px;
         position: absolute;
-        right:5px;
+        top:3px;
+        right:12px;
 
         background: url(${zoom});
         background-size: contain;

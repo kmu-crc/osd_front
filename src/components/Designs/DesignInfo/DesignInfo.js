@@ -155,7 +155,7 @@ const LeftSide = styled.div`
         text-align: left;
         display: flex;
         .view {
-            margin-top: 12px;
+            margin-top: 11px;
         }
         .view-count {
             margin-top: auto;
@@ -315,8 +315,8 @@ const RightSide = styled.div`
         }
         .msg-icon {
             margin-left: 15px;
-            width: 35px;
-            height: 35px;
+            width: 33px;
+            height: 33px;
             background: url(${email});
             background-size: cover;
             background-position: center center;
@@ -353,8 +353,9 @@ const DesignMemberList = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
     .close-box {
+        cursor:pointer;
+
         z-index: 901;
-        border:1px solid black;
         position: absolute;
         left: 305px;
         top: 10px;
@@ -468,6 +469,8 @@ const ForkDialogContainer = styled.div`
     border-radius: 5px;
     opacity: 1;
     .close-box {
+        cursor:pointer;
+
         position: absolute;
         left: 100%; 
         margin-top: 7.32px;
@@ -547,6 +550,8 @@ const LikeDialogContainer = styled.div`
 `;
 const DesignMemberModalContainer = styled(Modal)`
 .close-box {
+    cursor:pointer;
+
     position: absolute;
     left: 100%;
     margin-top: 0px;
@@ -558,6 +563,8 @@ const DesignCommentModalContainer = styled(Modal)`
     padding:20px;
     min-width: 1250px;
     .close-box {
+        cursor:pointer;
+
         position: absolute;
         left: 100%;
         margin-top: 0px;
@@ -713,7 +720,7 @@ class DesignInfo extends Component {
         }
         const DesignCommentModal = () => {
             return (
-                <DesignCommentModalContainer open={this.state.comment} closeOnDimmerClick={false} onClose={() => this.setState({ comment: false })}>
+                <DesignCommentModalContainer open={this.state.comment} onClose={() => this.setState({ comment: false })}>
                     <div className="close-box" onClick={() => this.setState({ comment: false })} >
                         <Cross angle={45} color={"#FFF0FF"} weight={3} width={45} height={45} />
                     </div>
@@ -765,12 +772,12 @@ class DesignInfo extends Component {
                                     {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
                                 </div> : <div className="goto-parent no"></div>}
                             <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
-                                <div className="design_member"> {DesignDetail.userName.slice(0, 8)}{(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
+                                <div className="design_member"> {DesignDetail.userName.length>7?DesignDetail.userName.slice(0, 7)+"...":DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외 " + (DesignDetail.member.length - 1).toString() + "명"}</div>
                             </button>
                             {!isMyDesign && this.state.memberList &&
                                 <DesignMemberList top={this.state.posY} left={this.state.posX}>
                                     <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                                        <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
+                                        <Cross angle={45} width={30} height={30} />
                                     </div>
                                     <div className="list">
                                         {DesignDetail.member && DesignDetail.member.length > 0 &&
