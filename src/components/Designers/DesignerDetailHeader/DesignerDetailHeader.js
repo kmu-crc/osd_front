@@ -190,7 +190,7 @@ const InterestDesignerIcon = styled.div`
     background-position: center center;
 `;
 const SendMessageBox = styled.div`
-    // cursor: pointer;
+    cursor: pointer;
     // overflow: hidden;
     // position: absolute;
     // width: 250px;
@@ -408,7 +408,7 @@ const MypageSummaryBox = styled.div`
     }
  
 `
-const SideItemIcon=styled.div`
+const SideItemIcon = styled.div`
     cursor:pointer;
     height:36px;
     width:36px;
@@ -425,7 +425,7 @@ const MiniIcon = styled.div`
     background-position:center center;
     background-size:contain;
     background-repeat:no-repeat;
-    opacity:${props=>props.opacity};
+    opacity:${props => props.opacity};
 
 `
 const LikeDialog = styled.div`
@@ -518,49 +518,40 @@ class DesignerPageHeader extends Component {
                     <div className="explainBox01">{about_me[0]}</div>
                     <div className="explainBox02">{about_me[1]}</div>
                     <div className="countBox">
-                        <div className="countItem">
-                            <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>                        
-                            <div className="count_label">{NumberFormat(Count.total_view==null?0:Count.total_view)}</div>
-                        </div>
-                        <div className="countItem">
-                            <MiniIcon imageURL={iThumbUp} opacity={0.5}></MiniIcon>
-                            <div className="count_label">{NumberFormat(Count.total_like==null?0:Count.total_like)}</div>
-                        </div>
-                        <div className="countItem">
-                            <MiniIcon imageURL={iForked} opacity="0.5"></MiniIcon>
-                            <div className="count_label">{NumberFormat(Count.total_group + Count.total_design)}</div>
+                        <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+                            <div style={{ display: "flex", marginRight: "20px" }}>
+                                <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
+                                <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(Count.total_view || 0)}</div>
+                            </div>
+                            <div style={{ display: "flex", marginRight: "20px" }}>
+                                <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
+                                <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(Count.total_like || 0)}</div>
+                            </div>
+                            <div style={{ display: "flex" }}>
+                                <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
+                                <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(Count.total_design || 0 + Count.total_group || 0)}</div>
+                            </div>
                         </div>
                     </div>
-                    {/* <div className="countBox">
-                        <div className="countItem">
-                            <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>
-                            <div classname="count_label">{NumberFormat(Count.total_view || 0)}</div>
-                        <div>
-                        <SummaryThumbUpIcon icon={iThumbUp} />
-                        <SummaryThumbUp>{NumberFormat(Count.total_like || 0)}</SummaryThumbUp>
-                        <SummaryForkedIcon icon={iForked} />
-                        <SummaryForked>{NumberFormat(Count.total_group + Count.total_design || 0)}</SummaryForked>
-                    </div> */}
-                    <div className= "sideMenuBox" >
-
-                    {isMyProfile ?
-                            <div onClick = {this.gotoMyModify}  className="sideItemBox">
-                            <div className="sideMenu_label">정보 수정하기</div>
-                            <SideItemIcon imageURL={iEdit}/>
+                    <div className="sideMenuBox" >
+                        {isMyProfile ?
+                            <div onClick={this.gotoMyModify} className="sideItemBox">
+                                <div className="sideMenu_label">정보 수정하기</div>
+                                <SideItemIcon imageURL={iEdit} />
                             </div>
-                        : <React.Fragment>
-                            <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
-                                <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
-                                <InterestDesignerIcon opacity={like ? "0.5" : "0.25"} img={iThumbUp} />
-                            </InterestDesignerBox>
-                            <SendMessageBox onClick={this.sendMessage}>
-                                <SendMessagTitle>메시지 보내기</SendMessagTitle>
-                                <SendMessageImg icon={iMessage} />
-                            </SendMessageBox>
-                        </React.Fragment>}
+                            : <React.Fragment>
+                                <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
+                                    <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
+                                    <InterestDesignerIcon opacity={like ? "0.5" : "0.25"} img={iThumbUp} />
+                                </InterestDesignerBox>
+                                <SendMessageBox onClick={this.sendMessage}>
+                                    <SendMessagTitle>메시지 보내기</SendMessagTitle>
+                                    <SendMessageImg icon={iMessage} />
+                                </SendMessageBox>
+                            </React.Fragment>}
                         <div className="updateTime_label">최근 업데이트 {DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
                         {/* <div style={{ marginLeft: "auto", marginTop: "5px", width: "max-content" }}>{DesignerDetail && DateFormat(DesignerDetail.create_time)} 등록</div> */}
-                        </div>
+                    </div>
                 </MypageSummaryBox>
             </React.Fragment>
         );

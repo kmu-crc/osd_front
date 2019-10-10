@@ -225,20 +225,20 @@ const GroupHeaderBox = styled.div`
         cursor:pointer;
 
         .ButtonItem{
-            width:100%;
-            height:30px;
-            display:flex;
-            align-items:flex-end;
+            width: max-content;
+            height: 30px;
+            display: flex;
             margin-top: 10px;
 
             .button_text_label{
-                width:150px;
-                height:20px;
-                font-size:17px;
-                font-weight:300;
-                font-family:Noto Sans KR;
-                text-align:right;
-                color:#707070
+                width: 150px;
+                height: 20px;
+                margin-top: 10px;
+                font-size: 17px;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                text-align: right;
+                color: #707070
             }
         }
         .time_label{
@@ -276,9 +276,9 @@ const MiniIcon = styled.div`
 
 `
 const NormalIcon = styled.div`
-    width:40px;
-    height:40px;
-    margin-left:5px;
+    width: 35px;
+    height: 35px;
+    margin-left: 5px;
     background-image: ${props => `url(${props.imageURL})`};
     background-position:center center;
     background-size:contain;
@@ -445,35 +445,33 @@ class GroupInfoComponent extends Component {
                             </div>}
                     </div>
 
-                    <div >
-                        <div className="ExplainBox">
-                            <div className="title"><TextFormat txt={info.title} /></div>
-                            <div style={{ display: "flex" }}>
-                                <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
-                                <div className="board">
-                                    <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
-                                    <div className="explanationRegion">
-                                        <div className="explaination">
-                                            {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
-                                        </div>
-                                        <div className="explaination">
-                                            {info.explanation && info.explanation.slice(200, 400)}
-                                            {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
-                                        </div>
+                    <div className="ExplainBox">
+                        <div className="title"><TextFormat txt={info.title} /></div>
+                        <div style={{ display: "flex" }}>
+                            <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
+                            <div className="board">
+                                <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
+                                <div className="explanationRegion">
+                                    <div className="explaination">
+                                        {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
                                     </div>
-                                    <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-                                        <div style={{ display: "flex", marginRight: "20px" }}>
-                                            <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                                            <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.view || 0)}</div>
-                                        </div>
-                                        <div style={{ display: "flex", marginRight: "20px" }}>
-                                            <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                                            <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.like || 0)}</div>
-                                        </div>
-                                        <div style={{ display: "flex" }}>
-                                            <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
-                                            <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
-                                        </div>
+                                    <div className="explaination">
+                                        {info.explanation && info.explanation.slice(200, 400)}
+                                        {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
+                                    </div>
+                                </div>
+                                <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+                                    <div style={{ display: "flex", marginRight: "20px" }}>
+                                        <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
+                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.view || 0)}</div>
+                                    </div>
+                                    <div style={{ display: "flex", marginRight: "20px" }}>
+                                        <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
+                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.like || 0)}</div>
+                                    </div>
+                                    <div style={{ display: "flex" }}>
+                                        <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
+                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
                                     </div>
                                 </div>
                             </div>
@@ -483,12 +481,12 @@ class GroupInfoComponent extends Component {
                     <div className="ButtonRegion">
                         {isEditor ?
                             <React.Fragment>
+                                <div className="Join_label">
+                                    <JoinGroupContainer />
+                                </div>
                                 <div className="ButtonItem" onClick={this.gotoGroupModify}>
                                     <div className="button_text_label">그룹 정보 수정하기</div>
                                     <NormalIcon imageURL={iEdit} opacity={0.5} />
-                                </div>
-                                <div className="Join_label">
-                                    <JoinGroupContainer />
                                 </div>
                                 <div className="ButtonItem" onClick={this.changeEditMode}>
                                     <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
@@ -500,12 +498,11 @@ class GroupInfoComponent extends Component {
                                 <div className="Join_label">
                                     <JoinGroupContainer />
                                 </div>
-                                <div onClick={this.like} className="ButtonItem">
+                                <div className="ButtonItem" onClick={this.like}>
                                     <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
                                     <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} />
                                 </div>
-                            </React.Fragment>
-                        }
+                            </React.Fragment>}
                         <div className="time_label">
                             <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
                             <div>{info && DateFormat(info.create_time)} 등록</div>

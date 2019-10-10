@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import styled from "styled-components"
 
 const TextWrapper = styled.p`
@@ -10,8 +10,12 @@ const TextWrapper = styled.p`
 `;
 
 function Loading() {
-    return (<Loader size="huge" active >
-        <TextWrapper>데이터를 가져오고 있습니다.</TextWrapper>
-    </Loader>)
+    return (<React.Fragment>
+        <Dimmer active>
+            <Loader size="huge" active >
+                <TextWrapper>데이터를 가져오고 있습니다.</TextWrapper>
+            </Loader>
+        </Dimmer>
+    </React.Fragment>)
 }
 export default Loading
