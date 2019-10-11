@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetGroupListRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
-import Group from "components/Groups/Group";
 import opendesign_style from "opendesign_style";
 
 class ScrollGroupListContainer extends Component {

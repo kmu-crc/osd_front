@@ -4,9 +4,6 @@ import { GetCardDetailRequest, UpdateDesignTime, GetDesignSourceRequest, UpdateD
 import CardSourceDetail from "components/Designs/CardSourceDetail";
 
 class CardSourceDetailContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />

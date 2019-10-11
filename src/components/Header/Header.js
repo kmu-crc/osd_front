@@ -72,7 +72,7 @@ const MenuItem = styled.li`
     margin-top:11px;
     text-align:center;
     .link_tag{
-        color:${props => props.isSelect == true ? "#FF0000" : "#707070"}
+        color:${props => props.isSelect === true ? "#FF0000" : "#707070"}
     }
 
     // @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
@@ -201,7 +201,7 @@ class Header extends Component {
                     <li className="profileItem">
                         <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
                 </RightMenu>
-                
+
                 <LeftMenu>
                     <li className="logoBox">
                         <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>

@@ -65,10 +65,10 @@ const MenuText = styled.div`
   color: ${props => props.selected ? "#FF0000" : "#707070"};
   border-bottom:${props => props.borderBottom};
 `
-const Arrow = styled.span`
-  margin-left:70px;
-  font-size:15px;
-`
+//const Arrow = styled.span`
+//  margin-left:70px;
+//  font-size:15px;
+//`
 const InputBoard = styled.div`
   width:1422px;
   height:${props => props.isModifyAnother === true ? "2150px" : "925px"};
@@ -257,7 +257,7 @@ class ModifyMyDetail extends Component {
     };
     formData.files.push(file);
 
-    if (formData.files.length == 0 ||
+    if (formData.files.length === 0 ||
       formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img))
       delete formData.files;
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
@@ -324,7 +324,7 @@ class ModifyMyDetail extends Component {
 
   render() {
     const scrollmenu = scrollmenu_data
-    const { selected } = this.state
+    // const { selected } = this.state
 
     return (<React.Fragment>
       {this.state.loading ? <Loading /> : null}

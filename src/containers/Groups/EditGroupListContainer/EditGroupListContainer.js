@@ -4,7 +4,6 @@ import { GetGroupInGroupRequest, DeleteGroupInGroupRequest } from "redux/modules
 import ScrollList from "components/Commons/ScrollList";
 import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
-import Group from "components/Groups/Group";
 import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
 

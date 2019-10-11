@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Modal } from "semantic-ui-react";
 import styled from "styled-components";
 import iChecked from "source/checked.png"
-// import close from "source/close_white.png"
 
 const CustomModal = styled(Modal)`
     min-width: 1200px;
@@ -94,7 +93,7 @@ const CustomModal = styled(Modal)`
 
 }
 `
-const SignUPBox=styled.form`
+const SignUPBox = styled.form`
     margin-top:49px;
     margin-left:225px;
     .itemBox{
@@ -147,7 +146,7 @@ const SignUPBox=styled.form`
 
   
 `
-const InputText = styled.input.attrs({type:'text'})`
+const InputText = styled.input.attrs({ type: 'text' })`
     width:708px;
     height:48px;
     margin-top:16px;
@@ -161,7 +160,7 @@ const InputText = styled.input.attrs({type:'text'})`
     border-radius:15px;
     
 `
-const InputPass = styled.input.attrs({type:'password'})`
+const InputPass = styled.input.attrs({ type: 'password' })`
     width:708px;
     height:48px;
     margin-top:16px;
@@ -244,7 +243,7 @@ class SignUpModal extends Component {
         this.onChangePassCheck = this.onChangePassCheck.bind(this);
         this.onChangeNickname = this.onChangeNickname.bind(this);
         this.onChecked = this.onChecked.bind(this);
-        this.onBack=this.onBack.bind(this);
+        this.onBack = this.onBack.bind(this);
     }
     onChangeId(event) {
         this.setState({ email: event.target.value })
@@ -310,7 +309,7 @@ class SignUpModal extends Component {
         console.log("qwer", returnvalue);
         return returnvalue;
     }
-    onBack(){
+    onBack() {
         window.history.go(-1);
     }
     onSubmit = async e => {
@@ -318,7 +317,7 @@ class SignUpModal extends Component {
         e.preventDefault();
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        if (checkedMail.test(this.state.email) == false) {
+        if (checkedMail.test(this.state.email) === false) {
             alert("이메일 형식이 올바르지 않습니다");
             return;
         }
@@ -386,14 +385,14 @@ class SignUpModal extends Component {
         return (
             <React.Fragment>
 
-                {this.state.success_signup? (
+                {this.state.success_signup ? (
                     <CustomModal open={this.state.success_signup} onClose={this.onClose} onClick={this.tmp_goto_mydetail}>
                         <div className="success_signup_Box">
                             <div className="Decoline" />
                             <div className="TextBox">
                                 <div className="HeaderText">CONGRATULATIONS ON SIGNING UP!<br />회원 가입을 진심으로 축하드립니다!</div>
                             </div>
-                            <div className="Decoline"/>
+                            <div className="Decoline" />
                         </div>
                         <div className="subText">오직 한 단계밖에 남지 않았습니다!</div>
                         <div className="guideText">더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 마이페이지로 이동합니다<br /><br /><br /><br /> 이동 중...</div>
@@ -421,37 +420,37 @@ class SignUpModal extends Component {
                                 <SignUPBox>
                                     <div className="itemBox">
                                         <div className="titleLabel">아이디</div>
-                                        
-                                            <InputText placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." onChange={this.onChangeId}/>
+
+                                        <InputText placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." onChange={this.onChangeId} />
                                     </div>
-                                    
+
                                     <div className="itemBox">
                                         <div className="titleLabel">비밀번호</div>
-                                            <InputPass placeholder="비밀번호를 입력하세요."  onChange={this.onChangePass}/>
+                                        <InputPass placeholder="비밀번호를 입력하세요." onChange={this.onChangePass} />
                                     </div>
 
                                     <div className="itemBox">
                                         <div className="titleLabel">비밀번호 확인</div>
-                                        <InputPass placeholder="비밀번호를 입력하세요."  onChange={this.onChangePassCheck}/>
+                                        <InputPass placeholder="비밀번호를 입력하세요." onChange={this.onChangePassCheck} />
                                     </div>
 
                                     <div className="itemBox">
                                         <div className="titleLabel">닉네임</div>
-                                        <InputText placeholder="닉네임을 입력하세요."  onChange={this.onChangeNickname}/>
-                                        </div>    
-                                    <div className="itemBox">  
-                                    <div className="titleLabel">이용약관</div>
-                                    <div className="normalBox">
-                                        <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
-                                            {console.log(this.state.checked)}
-                                            <InputText id="agree" onClick={this.onChecked} type="checkbox" value={this.state.checked} />
-                                            <span className="checkmark" />
-                                        </CheckboxContainer>
-                                        <div className="normalText" onClick={this.openterm}>이용약관 보기</div>
+                                        <InputText placeholder="닉네임을 입력하세요." onChange={this.onChangeNickname} />
                                     </div>
-                                    <div className="blackBoldText" onClick={this.onBack}>뒤로</div>
-                                    <div className="redBoldText" onClick={this.onSubmit}>회원가입</div>
-                                </div>
+                                    <div className="itemBox">
+                                        <div className="titleLabel">이용약관</div>
+                                        <div className="normalBox">
+                                            <CheckboxContainer><div className="label-text">이용약관에 동의하시나요?</div>
+                                                {console.log(this.state.checked)}
+                                                <InputText id="agree" onClick={this.onChecked} type="checkbox" value={this.state.checked} />
+                                                <span className="checkmark" />
+                                            </CheckboxContainer>
+                                            <div className="normalText" onClick={this.openterm}>이용약관 보기</div>
+                                        </div>
+                                        <div className="blackBoldText" onClick={this.onBack}>뒤로</div>
+                                        <div className="redBoldText" onClick={this.onSubmit}>회원가입</div>
+                                    </div>
                                 </SignUPBox>
                             </Modal.Content>
                         </CustomModal >

@@ -2,91 +2,85 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const ContentsBox = styled.div`
-    padding-left:47px;
-    .title{
-        width:100px;
-        height:29px;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        text-align:left;
-        color:#707070;
-    }
-    .tipTitle{
-      width:27px;
-      height:25px;
-      margin-left:420px;
-      font-size:17px;
-      color:#FF0000;
-      text-align:left;
-    }
-    .tipDescription{
-      width:540px;
-      height:75px;
-      margin-top:5px;
-      margin-left:608px;
-      font-size:17px;
-      font-weight:200;
-      font-family:Noto Sans KR;
-      color:#707070;
-      line-height:25px;
-
-    }
+  padding-left:47px;
+  .title{
+    width:100px;
+    height:29px;
+    font-size:20px;
+    font-weight:500;
+    line-height:29px;
+    text-align:left;
+    color:#707070;
+  }
+  .tipTitle {
+    width: 27px;
+    height: 25px;
+    margin-left: 420px;
+    font-size: 17px;
+    color: #FF0000;
+    text-align: left;
+  }
+  .tipDescription {
+    width: 540px;
+    height: 75px;
+    margin-top: 5px;
+    margin-left: 608px;
+    font-size: 17px;
+    font-weight: 200;
+    font-family: Noto Sans KR;
+    color: #707070;
+    line-height: 25px;
+  }
 `
 const IsDesignerBox = styled.div`
-      display:flex;
-      width:1200px;
-    .isDesignerText{
-      font-size:20px;
-      font-weight:500
-      color:#707070;
-    }
-
+  display: flex;
+  width: 1200px;
+  .isDesignerText {
+    font-size: 20px;
+    font-weight: 500
+    color: #707070;
+  }
 `
 const CheckBox = styled.input`
-  width:25px;
-  height:25px;
-  margin-left:10px;
-  background-color:#EFEFEF !important;
-  border:1px solid #707070 !important;
-  border-radius:5px !important;  
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+  background-color: #EFEFEF !important;
+  border: 1px solid #707070 !important;
+  border-radius: 5px !important;  
 `
-
 const DesignerInfoBox = styled.div`
-      margin-left:20px;
-
-      .itemBox{
-        display:flex;
-        position:relative;
-        margin-top:46px;
-        justify-content:space-start;
-        .designerInfoTitle{
-          width:47px;
-          margin-left:150px;
-          font-size:20px;
-          font-weight:500;
-          font-family:Noto Sans KR;
-          color:#707070;
-          text-align:left;
-          opacity:0.5;
-        }
-      }
-
+  margin-left: 20px;
+  .itemBox{
+    display: flex;
+    position: relative;
+    margin-top: 46px;
+    justify-content: space-start;
+    .designerInfoTitle{
+      width: 47px;
+      margin-left: 150px;
+      font-size: 20px;
+      font-weight: 500;
+      font-family: Noto Sans KR;
+      color: #707070;
+      text-align: left;
+      opacity: 0.5;
+    }
+  }
 `
 const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
-      width:505px;
-      height:56px;
-      padding-left:15px;
-      font-size:20px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-      opacity:0.5;
-      background-color:#EFEFEF;
-      border:none;
-      border-radius:5px;
-      outline:none;
+  width: 505px;
+  height: 56px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  opacity: 0.5;
+  background-color: #EFEFEF;
+  border: none;
+  border-radius: 5px;
+  outline: none;
 `
-
 
 class SectionBuziness extends Component {
   constructor(props) {
@@ -113,7 +107,7 @@ class SectionBuziness extends Component {
     return true;
   }
   isDesignerCheck = () => {
-    var checkDiv = document.getElementById("isDesignerCheckbox");
+    // var checkDiv = document.getElementById("isDesignerCheckbox");
     // if (checkDiv.style.backgroundColor === "rgb(255, 255, 255)") {
     //   checkDiv.style.backgroundColor = "#FF0000"
     // }

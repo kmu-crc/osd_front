@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import SignInModal from './SignInModal'
+// import SignInModal from './SignInModal'
 import { SetSession } from 'modules/Sessions'
 import noimg from "source/thumbnail.png";
 import TextFormat from 'modules/TextFormat';
@@ -53,9 +53,9 @@ const userinfo = {
 }
 class SignNav extends Component {
     state = { signin_modal: false, user_popup: null, userMenuLeft: userinfo.userMenuLeft };
-    openModal = () => { 
-        window.location.href="/SignIn";
-       // this.setState({ signin_modal: true }) 
+    openModal = () => {
+        window.location.href = "/SignIn";
+        // this.setState({ signin_modal: true }) 
     }
     openUserMenu = (event) => {
         document.addEventListener("mousedown", this.handleClickOutside)
@@ -97,7 +97,7 @@ class SignNav extends Component {
     render() {
         const info = this.props.userInfo || userinfo
         const { isLoggedIn } = this.props
-        const { user_popup, signin_modal } = this.state
+        const { user_popup } = this.state
         const profile = (info && info.thumbnail && info.thumbnail.s_img) || noimg
 
         return (<React.Fragment>
@@ -107,9 +107,9 @@ class SignNav extends Component {
                     <hr color="#EFEFEF" width="166px" noshade="none" />
                     <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
-            {/* {signin_modal && <SignInModal open={signin_modal} CheckEmailRequest={this.props.CheckEmailRequest} FindPwRequest={this.props.FindPwRequest} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />} */}
+            {/* {this.state.signin_modal && <SignInModal open={signin_modal} CheckEmailRequest={this.props.CheckEmailRequest} FindPwRequest={this.props.FindPwRequest} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />} */}
             {isLoggedIn
-                ? (<div onClick={this.openUserMenu} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer", display: "flex" }}><UserThumbnail url={profile} /><TextFormat chars={9} txt={this.props.formWidth<1000?"":info.nickName} /></div>)
+                ? (<div onClick={this.openUserMenu} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer", display: "flex" }}><UserThumbnail url={profile} /><TextFormat chars={9} txt={this.props.formWidth < 1000 ? "" : info.nickName} /></div>)
                 : (<div onClick={this.openModal} style={{ width: "max-content", marginRight: "30px", padding: "0", cursor: "pointer" }}>로그인</div>)}
         </React.Fragment>)
     }

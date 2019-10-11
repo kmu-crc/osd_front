@@ -346,8 +346,7 @@ class ModifyMyDetail extends Component {
   render() {
     // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
-    const { selected } = this.state
-
+    // const { selected } = this.state
     return (<React.Fragment>
       <MainBanner>
         <div className="title">내 프로필 수정하기</div>
