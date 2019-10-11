@@ -16,12 +16,18 @@ const SummaryList = styled.div`
     overflow-y:overlay;
   }
 `;
-//const MainSection = styled.div`
-//  width:1750px;
-//  // height: 100%;
-//  height:869px;
-//  margin:26px 0px 27px 65px;
-//`
+
+
+const BoardBox=styled.div`
+  padding-left:20px;
+`
+const MainSection = styled.div`
+  width:1750px;
+  // height: 100%;
+  height:869px;
+  margin:26px 0px 27px 65px;
+`
+
 const AsideSection = styled.div`
     width: 445px;
     height: 100%;
@@ -160,6 +166,7 @@ const SendTypingBox = styled.div`
 `;
 const DivisionLine = styled.div`
     border-top:1px solid #707070;
+    width:98%;
 `
 const SendMessageTextarea = styled.textarea`
   width:1091px;
@@ -403,10 +410,10 @@ class Messages extends React.Component {
             <BoardHeaderBox>
               <div className="boardHeaderText">{this.state.selectName}</div>
             </BoardHeaderBox>
-            <div >
+            <BoardBox >
               {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
               <DivisionLine />
-            </div>
+            </BoardBox>
             <SendTypingBox>
               <SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}></SendMessageTextarea>
               <div className="sendButton" onClick={this.onSubmitForm}>전송하기</div>
