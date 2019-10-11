@@ -2,13 +2,13 @@ import React, { Component, Fragment } from 'react';
 import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
-const CommentBox = styled.div`
-`
+
+const CommentBox = styled.div``
 const CommentContainer = styled.div`
     margin-left:15px;
     display: flex; 
     margin-bottom: 30px;
-    .face{
+    .face {
         width: 58px;
         height: 58px;
         background-image: url(${ props => props.face});
@@ -19,36 +19,40 @@ const CommentContainer = styled.div`
         margin-top: 8px;
         border-radius: 50%;
     }
-    .text-wrapper{
+    .text-wrapper {
         margin-left: 24px;
     }
-    .nick{
+    .nick {
         font-size: 20px;
         font-weight: 500;
         font-family: Noto Sans KR;
     }
-    .comment{
+    .comment {
         max-width:900px;
         margin-top: 8px;
         font-size: 20px;
         font-weight: 300;
         font-family: Noto Sans KR;
         line-height:30px;
+        word-break: break-all;
     }
-    .button-wrapper{
+    .button-wrapper {
+        width: max-content;
         margin-left: 26px;
         margin-top: 41px;
         display: flex;
-        align-items:flex-end;
+        align-items: flex-end;
     }
-    .create-time{
+    .create-time {
+        width: max-content;
         height: 22px;
         font-size: 15px;
         font-weight: 300;
         text-align: left;
         color: #707070;
     }
-    .reply{
+    .reply {
+        width: max-content;
         margin-left: 18px;
         height: 22px;
         font-size: 15px;
@@ -57,7 +61,8 @@ const CommentContainer = styled.div`
         color: #707070;
         cursor: pointer;
     }
-    .del{
+    .del {
+        width: max-content;
         margin-left: 18px;
         height: 22px;
         font-size: 15px;
@@ -68,7 +73,6 @@ const CommentContainer = styled.div`
     }
 `;
 const RepliesContainer = styled.div`
-
     display: flex; 
     margin-bottom: 30px;
     margin-left:80px;
@@ -85,7 +89,7 @@ const RepliesContainer = styled.div`
         background-color: #D6D6D6;
         border-radius: 50%;
     }
-    .reply-nick-wrapper{
+    .reply-nick-wrapper {
         margin-left: 15px;
         margin-top: 3px;
     }
@@ -99,20 +103,20 @@ const RepliesContainer = styled.div`
         margin-left: 55px
         display: flex;
     }
-    .button-wrapper{
+    .button-wrapper {
         margin-left: 26px;
         margin-top: 41px;
         display: flex;
         align-items:flex-end;
     }
     .reply-comment {
-        //margin-top: 8px;
-        margin-right:8px;
+        margin-right: 8px;
         font-size: 20px;
         font-weight: 300;
         font-family: Noto Sans KR;
-        max-width:900px;
-        line-height:35px;
+        max-width: 900px;
+        line-height: 35px;
+        word-break: break-all;
     }
     .reply-create-time {
         margin-top:5px;
@@ -226,7 +230,7 @@ const CommentInputTextContainer = styled.div`
         margin-left: 24px;
         textarea {
             min-width: 650px;
-            width: 750px;
+            width: 50vw;
             height: 100%;
             padding: 7px;
             outline: none;
@@ -257,7 +261,7 @@ const CommentInputTextContainer = styled.div`
             cursor: pointer;
             letter-spacing: 0;
         }
-        .cancel{
+        .cancel {
             width: max-content;
             height: 22px;
             margin-left: 18px;
