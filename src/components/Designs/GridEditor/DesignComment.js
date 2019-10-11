@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Comment from 'components/Commons/Comment';
-import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/modules/design";
+import { GetDesignCountRequest, GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/modules/design";
 
 class DesignComment extends Component {
     componentDidMount() {
@@ -11,15 +11,19 @@ class DesignComment extends Component {
         this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.token)
             .then(res => {
                 this.props.GetDesignCommentRequest(this.props.designId);
-            }).then(()=>{
+            }).then(() => {
                 this.props.requestDesignDetail(this.props.designId);
-            }
-            );
+            }).then(() => {
+                this.props.GetDesignCountRequest(this.props.designId);
+            })
     }
     removeComment = (commentId) => {
         this.props.DeleteDesignCommentRequest(this.props.designId, commentId, this.props.token)
             .then(res => {
                 this.props.GetDesignCommentRequest(this.props.designId);
+            })
+            .then(() => {
+                this.props.GetDesignCountRequest(this.props.designId);
             })
     }
     render() {
@@ -31,7 +35,7 @@ class DesignComment extends Component {
         })
         console.log(comments);
         return (<div>
-          <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment}/>
+            <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
         </div>)
     }
 };
@@ -44,6 +48,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
+        GetDesignCountRequest: (design_id) => {
+            return dispatch(GetDesignCountRequest(design_id));
+        },
         GetDesignCommentRequest: (design_id) => {
             return dispatch(GetDesignCommentRequest(design_id));
         },

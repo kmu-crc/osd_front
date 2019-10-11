@@ -4,7 +4,6 @@ import { GetWaitingDesignRequest, DeleteDesignInGroupRequest, UpdateDesignInGrou
 import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import ScrollList from 'components/Commons/ScrollList';
-import Design from "components/Designs/Design";
 import osdstyle from 'opendesign_style';
 
 const DesignBox = styled.div`

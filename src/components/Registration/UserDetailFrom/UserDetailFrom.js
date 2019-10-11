@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { FormControl } from "modules/FormControl";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
-// import SelectBox from "components/Commons/SelectBox"
-// import showPw from "source/show_password.svg";
 import styled from "styled-components";
 
 import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
@@ -69,10 +66,10 @@ const MenuText = styled.div`
   color: ${props => props.selected ? "#FF0000" : "#707070"};
   border-bottom:${props => props.borderBottom};
 `
-const Arrow = styled.span`
-    margin-left:70px;
-    font-size:15px;
-`
+//const Arrow = styled.span`
+//    margin-left:70px;
+//    font-size:15px;
+//`
 const InputBoard = styled.div`
       width:1422px;
       height:${props => props.isModifyAnother === true ? "1850px" : "925px"};
@@ -317,7 +314,7 @@ class ModifyMyDetail extends Component {
   render() {
     // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
-    const { selected } = this.state
+    // const { selected } = this.state
     console.log(this.props, "MyDetail");
     return (<React.Fragment>
       <MainBanner>

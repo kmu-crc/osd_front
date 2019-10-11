@@ -418,16 +418,15 @@ const SideItemIcon = styled.div`
     background-size:contain;
     background-position:center center;
 `
-const MiniIcon = styled.div`
-    width:17px;
-    height:17px;
-    background-image: ${props => `url(${props.imageURL})`};
-    background-position:center center;
-    background-size:contain;
-    background-repeat:no-repeat;
-    opacity:${props => props.opacity};
-
-`
+//const MiniIcon = styled.div`
+//    width:17px;
+//    height:17px;
+//    background-image: ${props => `url(${props.imageURL})`};
+//    background-position:center center;
+//    background-size:contain;
+//    background-repeat:no-repeat;
+//    opacity:${props => props.opacity};
+//`
 const LikeDialog = styled.div`
     width:396px;
     height:138px;

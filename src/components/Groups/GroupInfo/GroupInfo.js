@@ -6,7 +6,7 @@ import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import iINOUT from "source/inout.svg"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
-import { Modal } from "semantic-ui-react";
+// import { Modal } from "semantic-ui-react";
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import dots from "source/baseline_more_vert_black_48dp.png";
@@ -15,7 +15,7 @@ import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
 
-import Cross from "components/Commons/Cross"
+// import Cross from "components/Commons/Cross"
 import { geturl } from 'config';
 
 
@@ -261,20 +261,16 @@ const GroupHeaderBox = styled.div`
             cursor: pointer
         }
     }
-    
-
-    
 `
-const MiniIcon = styled.div`
-    width:17px;
-    height:17px;
-    background-image: ${props => `url(${props.imageURL})`};
-    background-position:center center;
-    background-size:contain;
-    background-repeat:no-repeat;
-    opacity:${props => props.opacity};
-
-`
+//const MiniIcon = styled.div`
+//    width:17px;
+//    height:17px;
+//    background-image: ${props => `url(${props.imageURL})`};
+//    background-position:center center;
+//    background-size:contain;
+//    background-repeat:no-repeat;
+//    opacity:${props => props.opacity};
+//`
 const NormalIcon = styled.div`
     width: 35px;
     height: 35px;

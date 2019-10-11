@@ -20,6 +20,7 @@ const MsgSectionBoard = styled.div`
     overflow-x: hidden;
   }
 `
+
 const ReceiveMessageBox=styled.div`
   width: 100%;
   margin-bottom: 32px;
@@ -152,7 +153,6 @@ function MsgSendBox(props) {
         <div className="messageText">{props.msgText}</div>
       </div>
     </SendMessageBox>
-
   );
 }
 
@@ -166,7 +166,6 @@ function LoadMessage(props) {
   }
 }
 class MessageDetail extends Component {
-
   constructor(props) {
     super(props);
     this.state = { render: true };
@@ -176,22 +175,18 @@ class MessageDetail extends Component {
     console.log("messagID", this.props.id);
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
   }
-
   componentWillUnmount() {
     this.props.GetMyMessageDetailClear();
   }
   ScrollDown() {
     document.getElementById("MsgBox").scrollTo(0, document.getElementById("MsgBox").scrollHeight);
   }
-
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
       this.ScrollDown();
     }, 100);
     return true;
   }
-
-
 
   render() {
     const list = this.props.MessageDetail;
