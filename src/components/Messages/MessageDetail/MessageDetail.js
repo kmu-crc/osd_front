@@ -7,7 +7,8 @@ import styled from "styled-components";
 // import TextFormat from "modules/TextFormat";
 
 const MsgSectionBoard = styled.div`
-  width: 1259px;
+  width:100%;
+  min-width:600px;
   height: ${props => props.height}px;
   // height: 602.5px;
   position: relative;
@@ -15,28 +16,62 @@ const MsgSectionBoard = styled.div`
   justify-content: flex-end;
   overflow: hidden;
   :hover {
-    overflow-y: scroll;
+    overflow-y: overlay;
+    overflow-x: hidden;
   }
 `
-const MessageBox = styled.div`
+
+const ReceiveMessageBox=styled.div`
+  width: 100%;
+  margin-bottom: 32px;
+  position: relative;
+  display:flex;
+  justify-content: flex-start;
+  align-items:flex-end;
+
+  .messageReceiveBubble{
+    
+    display: inline-block;
+    width: 571px;
+    padding: 13px 25px 13px 20px;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    word-wrap:break-word;
+    
+  }
+  .messageText {
+    width: 526px;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    color: #707070;
+    text-align: left;
+    line-height: 25px;
+  }
+  .messageReceiveTime {
+    width: 100px;
+    height: 25px;
+    text-align: left;
+    font-family: Noto Sans KR;
+    font-weight: 300;
+    margin-left:10px;
+  }
+`
+const SendMessageBox = styled.div`
     width: 100%;
     margin-bottom: 32px;
     position: relative;
-    .messageReceiveBubble{
-      display: inline-block;
-      width: 571px;
-      padding: 13px 25px 13px 20px;
-      border-radius: 20px;
-      background-color: #FFFFFF;
-      margin-left: 25px;
-    }
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+
     .messageSendBubble{
       display: inline-block;
       width: 571px;
-      margin-left: 650px;
       padding: 13px 25px 13px 20px;
       border-radius: 20px;
       background-color: #FFFFFF;
+      word-wrap:break-word;
     }
     .messageText {
       width: 526px;
@@ -47,25 +82,13 @@ const MessageBox = styled.div`
       text-align: left;
       line-height: 25px;
     }
-    .messageReceiveTime {
-      position: absolute;
-      width: max-content;
-      height: 25px;
-      text-align: left;
-      left: 580px;
-      bottom: 0px;
-      font-family: Noto Sans KR;
-      font-weight: 300;
-    }
     .messageSendTime {
-      position: absolute;
-      width: max-content;
+      width: 100px;
       height: 25px;
       text-align: right;
-      left: 600px;
-      bottom: 0px;
       font-family: Noto Sans KR;
       font-weight: 300;
+      margin-right:10px;
     }
     
 `
@@ -113,22 +136,23 @@ function CheckedTime(date) {
 
 function MsgReceiveBox(props) {
   return (
-    <MessageBox>
+    <ReceiveMessageBox>
       <div className="messageReceiveBubble">
         <div className="messageText">{props.msgText}</div>
       </div>
       <div className="messageReceiveTime">{props.updateTime}</div>
-    </MessageBox>
+    </ReceiveMessageBox>
   );
 }
 function MsgSendBox(props) {
   return (
-    <MessageBox>
-      <div className="messageSendTime">{props.updateTime}</div>
+    <SendMessageBox>
+            <div className="messageSendTime">{props.updateTime}</div>
+
       <div className="messageSendBubble">
         <div className="messageText">{props.msgText}</div>
       </div>
-    </MessageBox>
+    </SendMessageBox>
   );
 }
 
@@ -172,7 +196,7 @@ class MessageDetail extends Component {
       if (item.from_user_id !== myId) isMyMsg = false;
       return (
         <React.Fragment key={item.uid}>
-          <LoadMessage isMyMsg={isMyMsg} msgText={item.message} updateTime={CheckedTime(item.create_time)} />
+          <LoadMessage isMyMsg={isMyMsg} msgText={item.message==""?"\u00a0":item.message} updateTime={CheckedTime(item.create_time)} />
         </React.Fragment>
       );
     })
