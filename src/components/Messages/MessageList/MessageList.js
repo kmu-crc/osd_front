@@ -7,7 +7,6 @@ import SearchMemberContainer from "containers/Commons/SearchMemberContainer/Sear
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Socket from "modules/Socket"
 
-
 const SummaryList = styled.div`
   height:794px;
   margin-top:14px;
@@ -17,14 +16,12 @@ const SummaryList = styled.div`
     overflow-y:overlay;
   }
 `;
-
-
-const MainSection = styled.div`
-  width:1750px;
-  // height: 100%;
-  height:869px;
-  margin:26px 0px 27px 65px;
-`
+//const MainSection = styled.div`
+//  width:1750px;
+//  // height: 100%;
+//  height:869px;
+//  margin:26px 0px 27px 65px;
+//`
 const AsideSection = styled.div`
     width: 445px;
     height: 100%;
@@ -67,14 +64,13 @@ const AsideSection = styled.div`
       }
     }
 `
-
 const SummaryItemBox = styled.div`
     position:relative;
     overflow:hidden;
     width:336px;
     height:70px;
     margin-bottom:30px;
-    opacity:${props => props.isSelect == true ? 1 : 0.5};
+    opacity: ${props => props.opacity};
     .summary_Name{
       width:244px;
       height:29px;
@@ -118,16 +114,16 @@ const SummaryIcon = styled.div`
       border-radius:50%;
     }
 `
-const MainBoard = styled.div`
-    display: inline-block;
-    oveflow: hidden;
-    width: 1298px;
-    height: 100%;
-    padding-left: 26px;
-    padding-right: 23px;
-    border-radius: 0px 25px 25px 0px;
-    background-color: #EFEFEF;
-}`;
+// const MainBoard = styled.div`
+//     display: inline-block;
+//     oveflow: hidden;
+//     width: 1298px;
+//     height: 100%;
+//     padding-left: 26px;
+//     padding-right: 23px;
+//     border-radius: 0px 25px 25px 0px;
+//     background-color: #EFEFEF;
+// }`;
 const BoardHeaderBox = styled.div`
   height: 69px;
   position: relative;
@@ -179,16 +175,15 @@ const SendMessageTextarea = styled.textarea`
   border:none;
   outline:none;
 `
-
-const MessageSectionSendBtn = {
-  position: "absolute", width: "117px", height: "170px", right: "0px",
-  borderRadius: "0px 0px 25px 0px", backgroundColor: "#FFFFFF",
-  fontSize: "18px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "center", lineHeight: "170px",
-};
+//const MessageSectionSendBtn = {
+//  position: "absolute", width: "117px", height: "170px", right: "0px",
+//  borderRadius: "0px 0px 25px 0px", backgroundColor: "#FFFFFF",
+//  fontSize: "18px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "center", lineHeight: "170px",
+//};
 
 function SummaryItem(props) {
   return (
-    <SummaryItemBox isSelect={props.opacityON}>
+    <SummaryItemBox opacity={props.opacityON ? 1 : 0.5}>
       <SummaryIcon imageURL={props.s_img}>
         {props.noti ? <div className="noti" /> : undefined}
       </SummaryIcon>
@@ -256,9 +251,6 @@ class Messages extends React.Component {
     }
   }
   shouldComponentUpdate(nextProps) {
-    setTimeout(() => {
-      //this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
-    }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
         let id = parseInt(nextProps.id, 10);
@@ -359,7 +351,7 @@ class Messages extends React.Component {
 
   }
   handleCloseMember(event) {
-    if (event.target.id != "searchRect") {
+    if (event.target.id !== "searchRect") {
       this.setState({ showSearch: false })
     }
   }
@@ -373,7 +365,7 @@ class Messages extends React.Component {
       console.log("message-list", this.props.MessageList);
       arrSummaryList = this.props.MessageList.map((item, index) => {
         let SelectedItem = false;
-        if (this.state.selectId == item.friend_id) SelectedItem = true;
+        if (this.state.selectId === item.friend_id) SelectedItem = true;
         return (
           <div key={index} onClick={() => this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
             <SummaryItem noti={item.noti && item.noti > 0} s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
@@ -401,12 +393,12 @@ class Messages extends React.Component {
             </div>
             {this.state.showSearch &&
               (<React.Fragment>
-                {this.state.hideSearch == true ? null :
+                {this.state.hideSearch ? null :
                   <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
               </React.Fragment>)}
             <SummaryList id="searchRect">{arrSummaryList}</SummaryList>
           </AsideSection>
-          <div style={{border:"3.5px solid white"}}></div>
+          <div style={{ border: "3.5px solid white" }}></div>
           <div>
             <BoardHeaderBox>
               <div className="boardHeaderText">{this.state.selectName}</div>

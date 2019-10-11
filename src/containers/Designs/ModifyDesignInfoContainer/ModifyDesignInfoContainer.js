@@ -38,7 +38,7 @@ class ModifyDesignInfoContainer extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.DesignDetail.uid != null) {
-      if (nextProps.DesignDetail != this.props.DesignDetail && nextProps.DesignDetail.uid) {
+      if ((nextProps.DesignDetail !== this.props.DesignDetail) && nextProps.DesignDetail.uid != null) {
         this.setState({ loading: false });
       }
     }

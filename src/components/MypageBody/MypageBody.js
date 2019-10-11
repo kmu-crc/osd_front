@@ -43,7 +43,7 @@ const CategoryItem = styled.div`
     margin-left:${props => props.left};
 `
 
-var pastCate = 0;//for change category
+// var pastCate = 0;//for change category
 class MypageBody extends Component {
     state = {
         categorys: ['디자인', '그룹', '관심항목'],
@@ -51,7 +51,6 @@ class MypageBody extends Component {
         page: 0,
         groupPage: 0,
         uid: undefined,
-
     }
     componentDidMount() {
         var selectedCate = document.getElementById("0");
@@ -92,12 +91,10 @@ class MypageBody extends Component {
             <MypageBodyComp>
                 <div className="MypageCategory">
                     {this.state.categorys.map((category, index) => {
-
                         return (
-
                             <CategoryItem onClick={this.changeCategory.bind(this, index)} id={index}
                                 left={catePadding[index]} key={index}
-                                opacity={this.state.cateIndex == index ? 1 : 0.5}>{category}</CategoryItem>
+                                opacity={this.state.cateIndex === index ? 1 : 0.5}>{category}</CategoryItem>
                         )
                     })}
                 </div>

@@ -72,10 +72,10 @@ const MenuText = styled.div`
   color: ${props => props.selected ? "#FF0000" : "#707070"};
   border-bottom:${props => props.borderBottom};
 `
-const Arrow = styled.span`
-    margin-left:70px;
-    font-size:15px;
-`
+//const Arrow = styled.span`
+//    margin-left:70px;
+//    font-size:15px;
+//`
 const InputBoard = styled.div`
       width:1422px;
       height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
@@ -533,7 +533,7 @@ class CreateDesign extends Component {
       let designId = null;
       console.log(this.props);
       // create design and next stage, next state will be load new design via grid editor
-      const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
+      const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, thumbnail, thumbnail_name } = this.state;
       let data = {
         is_project: 1, uid: this.props.userInfo.uid,
         category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,

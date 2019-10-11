@@ -18,7 +18,6 @@ const MsgSectionBoard = styled.div`
     overflow-y: scroll;
   }
 `
-
 const MessageBox = styled.div`
     width: 100%;
     margin-bottom: 32px;
@@ -29,12 +28,12 @@ const MessageBox = styled.div`
       padding: 13px 25px 13px 20px;
       border-radius: 20px;
       background-color: #FFFFFF;
-      
+      margin-left: 25px;
     }
     .messageSendBubble{
       display: inline-block;
       width: 571px;
-      margin-left: 675px;
+      margin-left: 650px;
       padding: 13px 25px 13px 20px;
       border-radius: 20px;
       background-color: #FFFFFF;
@@ -130,7 +129,6 @@ function MsgSendBox(props) {
         <div className="messageText">{props.msgText}</div>
       </div>
     </MessageBox>
-
   );
 }
 
@@ -144,7 +142,6 @@ function LoadMessage(props) {
   }
 }
 class MessageDetail extends Component {
-
   constructor(props) {
     super(props);
     this.state = { render: true };
@@ -154,22 +151,18 @@ class MessageDetail extends Component {
     console.log("messagID", this.props.id);
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
   }
-
   componentWillUnmount() {
     this.props.GetMyMessageDetailClear();
   }
   ScrollDown() {
     document.getElementById("MsgBox").scrollTo(0, document.getElementById("MsgBox").scrollHeight);
   }
-
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
       this.ScrollDown();
     }, 100);
     return true;
   }
-
-
 
   render() {
     const list = this.props.MessageDetail;

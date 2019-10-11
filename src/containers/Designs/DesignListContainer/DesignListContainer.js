@@ -27,7 +27,7 @@ const TextWrapper = styled.div`
       text-align:center;
       position:absolute;
       @media only screen {
-        right:${props=>(props.centerPos-300)/2}px;
+        right:${props => (props.centerPos - 300) / 2}px;
       }
     }
     `;
@@ -39,7 +39,7 @@ class DesignListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      reload: false,screenWidth:window.innerWidth,
+      reload: false, screenWidth: window.innerWidth,
       this_order: { text: "등록순", keyword: "update" },
       this_category: { text: null, value: null },
       main_category: { text: null, value: null }, sub_category: { text: null, value: null },
@@ -54,7 +54,7 @@ class DesignListContainer extends Component {
   }
   componentDidMount() {
     this.props.GetCategoryAllRequest()
-    .then(() => { this.props.GetDesignListCountRequest(null, null) });
+      .then(() => { this.props.GetDesignListCountRequest(null, null) });
     this.props.GetDesignListRequest(0, null, null, null, null);
     window.addEventListener("resize", this.handleResize, false);
 
@@ -62,8 +62,8 @@ class DesignListContainer extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize, false);
   };
-  handleResize(){
-   this.setState({screenWidth:window.innerWidth})
+  handleResize() {
+    this.setState({ screenWidth: window.innerWidth })
   }
   handleReload() {
     this.setState({ reload: !this.state.reload });
@@ -99,7 +99,6 @@ class DesignListContainer extends Component {
   render() {
     const { this_category, main_category, sub_category, reload, this_order } = this.state
     const { category1, category2, Count, status } = this.props;
-    const screenW = (window.innerWidth-300)/2;
     return (<React.Fragment>
       <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
         category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />

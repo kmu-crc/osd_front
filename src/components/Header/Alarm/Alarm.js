@@ -5,15 +5,14 @@ import TextFormat from 'modules/TextFormat'
 
 import iAlarm from "source/alarm.png"
 
-
 const AlarmIcon = styled.div`
-width:34px;
-height:34px;
-opacity:0.5;
-background: url(${iAlarm}); 
-background-size:contain;
-background-repeat: no-repeat;
-background-position: center center;
+    width: 34px;
+    height: 34px;
+    opacity: 0.5;
+    background: url(${iAlarm}); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
 `
 const AlarmList = styled.div`
     display: ${props => props.display};
@@ -271,20 +270,6 @@ class Alarm extends Component {
             }
         }
         window.location.reload()
-    }
-    getLikeCount = (item, alarms) => {
-        let count = 0, returnType = "";
-        alarms.list.map(alarmItem => {
-            if ((item.content_id === alarmItem.content_id) && (item.type === "DESIGN")) {
-                count++;
-                returnType = "DESIGN"
-            }
-            else if ((item.content_id === alarmItem.content_id) && (item.type === "GROUP")) {
-                count++;
-                returnType = "GROUP"
-            }
-        })
-        return [returnType, count];
     }
     frequency = (arr) => {
         if (arr == null || arr.length === 0) return null;

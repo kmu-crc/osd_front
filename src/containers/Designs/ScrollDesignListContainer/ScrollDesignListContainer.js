@@ -3,20 +3,14 @@ import { connect } from "react-redux";
 import { GetDesignListRequest } from "redux/modules/design";
 
 import ScrollList from "components/Commons/ScrollList";
-import Design from "components/Designs/Design";
 import opendesign_style from 'opendesign_style';
 import Loading from "../../Designer/DesignerListContainer/DesignerListContainer";
 
 class ScrollDesignListContainer extends Component {
   state = {
-    reload: false,
-    category1: 0,
-    category2: 0,
-    orderOption: "update"
+    reload: false, category1: 0, category2: 0, orderOption: "update"
   }
-
   componentDidMount() {
-    console.log("!!!!", this.props.keyword.length == 0 && "empty", "!!!");
     this.props.keyword.length > 0 && this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }

@@ -7,7 +7,7 @@ import { geturl } from "config";
 import noimg from "source/noimg.png"
 import forked from "source/forked.svg";
 import noface from "source/thumbnail.png";
-import iDelete from "source/deleteItem.png"
+// import iDelete from "source/deleteItem.png"
 import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
 import { Dropdown, Modal } from "semantic-ui-react";
@@ -74,10 +74,10 @@ const MenuText = styled.div`
   color: ${props => props.selected ? "#FF0000" : "#707070"};
   border-bottom:${props => props.borderBottom};
 `
-const Arrow = styled.span`
-    margin-left:70px;
-    font-size:15px;
-`
+//const Arrow = styled.span`
+//    margin-left:70px;
+//    font-size:15px;
+//`
 const InputBoard = styled.div`
       width:1422px;
       // height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
@@ -141,68 +141,69 @@ const BtnText = styled.p`
   color: #FFFFFF;
 `;
 
-const PeerBox = styled.div`
-  display:flex;
-  margin-right:50px;
-  .nameLabel{
-    width:112px;
+//const PeerBox = styled.div`
+//  display:flex;
+//  margin-right:50px;
+//  .nameLabel{
+//    width:112px;
+//    height:29px;
+//    margin-top:1px;
+//    margin-left:10px;
+//    font-size:20px;
+//    font-weight:500;
+//    font-family:Noto Sans KR;
+//    color:#707070;
+//    text-align:left;
+//    line-height:29px;
+//    white-space: nowrap;
+//    overflow:hidden;
+//    text-overflow:ellipsis;
+//  }
+//  .closeButton{
+//    margin-top:7px;
+//    margin-left:14px;
+//  }
+//`
+//const PeerIcon = styled.div`
+//  width:30px;
+//  height:30px;
+//  border-radius:50%;
+//  background: ${props => `url(${props.imageURL})`};
+//  background-size:cover;
+//  background-position:center center;
+//  background-color:#D6D6D6;
+//`
+
+//---sectionbasic---//
+const ContentsBox = styled.div`
+  padding-left:47px;
+  .title{
+    width:167px;
     height:29px;
-    margin-top:1px;
-    margin-left:10px;
+    text-align:left;
     font-size:20px;
     font-weight:500;
-    font-family:Noto Sans KR;
-    color:#707070;
-    text-align:left;
     line-height:29px;
-    white-space: nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .closeButton{
-    margin-top:7px;
-    margin-left:14px;
+    color:#707070;
   }
 `
-const PeerIcon = styled.div`
-  width:30px;
-  height:30px;
-  border-radius:50%;
+const ImageBox = styled.div`
+  width:210px;
+  height:210px;
+  border-radius:5px;
   background: ${props => `url(${props.imageURL})`};
   background-size:cover;
   background-position:center center;
-  background-color:#D6D6D6;
-`
-//---sectionbasic---//
-const ContentsBox = styled.div`
-    padding-left:47px;
-    .title{
-        width:167px;
-        height:29px;
-        text-align:left;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
-    }
-`
-const ImageBox = styled.div`
-    width:210px;
-    height:210px;
-    border-radius:5px;
-    background: ${props => `url(${props.imageURL})`};
+  position:relative;
+  .forkedImg{
+    z-index:500;
+    width:32px;
+    height:70px;
+    position:absolute;
+    right:21px;
+    background-image:url(${forked});
     background-size:cover;
-    background-position:center center;
-    position:relative;
-    .forkedImg{
-      z-index:500;
-      width:32px;
-      height:70px;
-      position:absolute;
-      right:21px;
-      background-image:url(${forked});
-      background-size:cover;
-    }
+  }
 `
 const ThumbnailBox = styled.div`
     display:flex;
@@ -694,7 +695,7 @@ class ModifyDesign extends Component {
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
     // console.log("new:", this.props)
     let boardWidth = 125;
-    if (step == 3) boardWidth = 0;
+    if (step === 3) boardWidth = 0;
     return (
 
       <React.Fragment>
