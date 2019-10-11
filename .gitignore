@@ -9,6 +9,7 @@
 /coverage
 
 # production
+deploy.sh
 /build
 
 # misc
