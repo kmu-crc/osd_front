@@ -126,7 +126,7 @@ class SearchListRe extends Component {
     onChangeSearchkey(event) {
         let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
         const searchKey = event.target.value;
-        if (regExp.test(searchKey) == false) {
+        if (regExp.test(searchKey) === false) {
             alert("특수문자는 사용할 수 없습니다.");
             return;
         }

@@ -79,14 +79,12 @@ class SearchMember extends Component {
 
   componentDidMount() {
     if (this.props.originalMember) {
-      this.setState({
-        member: this.props.originalMember
-      });
+      this.setState({ member: this.props.originalMember });
     }
   }
 
   getValue = (value) => {
-    console.log("get", value);
+    // console.log("get", value);
     this.setState({ open: true });
     if (!value) {
       this.setState({ open: false });
@@ -121,22 +119,22 @@ class SearchMember extends Component {
 
   render() {
     return (
-      <SearchWrap id = "searchRect" style={{display:"inline-block"}}>
-        <SearchInputText  id = "searchRect" type="text" 
-        name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
-        <MemberList  id = "searchRect" style={this.state.open ? {display: "block"} : {display: "none"}}>
+      <SearchWrap id="searchRect" style={{ display: "inline-block" }}>
+        <SearchInputText id="searchRect" type="text"
+          name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+        <MemberList id="searchRect" style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
         </MemberList>
-        <MemberWrap  id = "searchRect">
+        <MemberWrap id="searchRect">
           {this.state.member.map((data, index) => {
             console.log(data);
-            return (<MemberItem  id = "searchRect" key={index}>
+            return (<MemberItem id="searchRect" key={index}>
               {data.nick_name}
               <span>
-                <DeleteBtn  id = "searchRect" type="button" onClick={() => this.deleteMember(index)}>
-                  <Icon  id = "searchRect" name="remove" />
+                <DeleteBtn id="searchRect" type="button" onClick={() => this.deleteMember(index)}>
+                  <Icon id="searchRect" name="remove" />
                 </DeleteBtn>
               </span>
             </MemberItem>)

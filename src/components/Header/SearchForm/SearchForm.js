@@ -77,18 +77,14 @@ class SearchForm extends Component {
         const value = target.value;
         console.log(e.keyCode);
         // let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
-        let regExp = /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
+        let regExp = /^[a-zA-Zㄱ-힣0-9"_-\s]*$/;
         if (!value.match(regExp)) {
             alert("특수문자는 사용할 수 없습니다.");
             target.value = "";
             return;
         } else {
-            this.setState({
-                searchKeyword: value
-            });
+            this.setState({ searchKeyword: value });
         }
-
-
     }
     render() {
         return (

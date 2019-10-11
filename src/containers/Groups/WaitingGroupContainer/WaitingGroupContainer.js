@@ -4,7 +4,6 @@ import { GetWaitingGroupRequest, DeleteGroupInGroupRequest, UpdateGroupInGroupRe
 import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import ScrollList from 'components/Commons/ScrollList';
-import Group from "components/Groups/Group";
 import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
 

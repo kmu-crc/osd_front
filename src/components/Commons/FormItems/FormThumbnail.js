@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import opendesign_style from "opendesign_style";
 import { FormFile } from "./FormFile";
-import ThumbnailDefault from "source/thumbnail.png";
+// import ThumbnailDefault from "source/thumbnail.png";
 
 const InputWrap = styled.div`
   position: relative;

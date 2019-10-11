@@ -147,7 +147,7 @@ const MypageSummaryBox = styled.div`
     }
  
 `
-const SideItemIcon=styled.div`
+const SideItemIcon = styled.div`
     cursor:pointer;
     height:26px;
     width:26px;
@@ -164,7 +164,7 @@ const MiniIcon = styled.div`
     background-position:center center;
     background-size:contain;
     background-repeat:no-repeat;
-    opacity:${props=>props.opacity};
+    opacity:${props => props.opacity};
 
 `
 const LikeDialog = styled.div`
@@ -191,16 +191,8 @@ const LikeDialog = styled.div`
         text-align:center;
     }
 `
-const UpdateTimeBox = {
-    position: "absolute", width: "200px", height: "25px", top: "273px", right: "72px",
-    color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-}
-const defaultCount = {
-    total_like: 0,
-    total_group: 0,
-    total_design: 0,
-    total_view: 0,
-}
+// const UpdateTimeBox = {position: "absolute", width: "200px", height: "25px", top: "273px", right: "72px",color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"}
+const defaultCount = { total_like: 0, total_group: 0, total_design: 0, total_view: 0, }
 let about_me = ["", ""];
 let descriptionLengthCheck = "";
 
@@ -218,7 +210,7 @@ class MypageHeader extends Component {
         const countInfo = MypageInfo.count || defaultCount;
         const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
 
-        if (MypageInfo&&MypageInfo.about_me !=null ) {
+        if (MypageInfo && MypageInfo.about_me != null) {
             about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
             descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
             about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
@@ -227,7 +219,7 @@ class MypageHeader extends Component {
         //console.log("updatetime==", DateFormat(MypageInfo.update_time));
         return (
             <React.Fragment>
-                    <MypageSummaryBox>
+                <MypageSummaryBox>
                     <div className="name_label">{MypageInfo.nick_name}</div>
                     <ProfileBox img={thumbnailInfo} />
                     <div className="category_label">{MypageInfo.categoryName}</div>
@@ -235,26 +227,26 @@ class MypageHeader extends Component {
                     <div className="explainBox02">{about_me[1]}</div>
                     <div className="countBox">
                         <div className="countItem">
-                            <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>                        
-                            <div className="count_label">{NumberFormat(countInfo.total_view==null?0:countInfo.total_view)}</div>
+                            <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>
+                            <div className="count_label">{NumberFormat(countInfo.total_view == null ? 0 : countInfo.total_view)}</div>
                         </div>
                         <div className="countItem">
                             <MiniIcon imageURL={iThumbUp} opacity="0.5"></MiniIcon>
-                            <div className="count_label">{NumberFormat(countInfo.total_like==null?0:countInfo.total_like)}</div>
+                            <div className="count_label">{NumberFormat(countInfo.total_like == null ? 0 : countInfo.total_like)}</div>
                         </div>
                         <div className="countItem">
                             <MiniIcon imageURL={iForked} opacity="0.5"></MiniIcon>
                             <div className="count_label">{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
                         </div>
                     </div>
-                <div className="sideMenuBox">
-                    <div onClick = {this.gotoMyModify}  className="sideItemBox">
-                    <div className="sideMenu_label">정보 수정하기</div>
-                    <SideItemIcon imageURL={iEdit}/>
-                    </div>
+                    <div className="sideMenuBox">
+                        <div onClick={this.gotoMyModify} className="sideItemBox">
+                            <div className="sideMenu_label">정보 수정하기</div>
+                            <SideItemIcon imageURL={iEdit} />
+                        </div>
 
-                    <div className="updateTime_label">최근 업데이트 {DateFormat(this.props.MyDetail&&this.props.MyDetail.update_time)}</div>
-                </div>
+                        <div className="updateTime_label">최근 업데이트 {DateFormat(this.props.MyDetail && this.props.MyDetail.update_time)}</div>
+                    </div>
                     {this.state.likeDialog === false ? null :
                         <LikeDialog>
                             <div className="message">관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.

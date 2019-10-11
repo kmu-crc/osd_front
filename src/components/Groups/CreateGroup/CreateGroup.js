@@ -46,7 +46,7 @@ const NavMenu = styled.div`
     padding-left:36px;
     padding-top:18px;
     lineHeight:29px;
-    border-bottom:${props => props.borderBottom?"none" : "2px solid #FFFFFF"};
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
 
   }
@@ -55,7 +55,7 @@ const NavMenu = styled.div`
       font-family:Noto Sans KR;
       font-weight:300;
       text-align:left;
-      color: ${props => props.selected?"#707070":"#FF0000"};
+      color: ${props => props.selected ? "#707070" : "#FF0000"};
       border-bottom:${props => props.borderBottom};
     }
 `;
@@ -94,7 +94,7 @@ const CompleteButton = styled.div`
   width:104.5px;
   height:44px;
   border-radius:5px;
-  background-color:${props=>props.isComplete?"#FF0000":"#707070"};
+  background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
   padding-top:6px;
   padding-left:15px;
   margin-right:53px;
@@ -147,15 +147,15 @@ class CreateGroup extends Component {
   onSubmit = async e => {
     e.preventDefault();
 
-    if (this.state.groupThumbnail == "") {
+    if (this.state.groupThumbnail === "" || this.state.groupThumbnail == null) {
       alert("그룹의 섬네일을 지정해주세요.");
       return;
     }
-    else if (this.state.groupTitle == "") {
+    else if (this.state.groupTitle === "" || this.state.groupTitle == null) {
       alert("그룹 이름을 작성해주세요!");
       return;
     }
-    else if (this.state.explanation == "") {
+    else if (this.state.explanation === "" || this.state.explanation == null) {
       alert("그룹 설명을 작성해주세요!");
       return;
     }
@@ -182,15 +182,15 @@ class CreateGroup extends Component {
       <MainSection>
         {/* scroll - menu */}
         <NavMenu>
-          <div className = "menuBox">
-              {scrollmenu.map((menu, index) => {
-                return (
-                <div className = "menuItem" 
-                     onClick={() => this.gotoStep(index)}
-                     borderBottom={ index + 1 === scrollmenu.length} key={menu.txt}>
-                <div className="menuText" selcted={this.state.step === index}>{menu.txt}</div>
+          <div className="menuBox">
+            {scrollmenu.map((menu, index) => {
+              return (
+                <div className="menuItem"
+                  onClick={() => this.gotoStep(index)}
+                  borderBottom={index + 1 === scrollmenu.length} key={menu.txt}>
+                  <div className="menuText" selcted={this.state.step === index}>{menu.txt}</div>
                 </div>)
-              })}
+            })}
           </div>
         </NavMenu>
 
@@ -199,19 +199,19 @@ class CreateGroup extends Component {
           <form>
             {step === 0 &&
               <SectionBasic completed={this.completed}
-                groupTitle={this.state.groupTitle} 
-                groupExplain={this.state.groupExplain} 
-                groupThumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail}
-                onChangeExplain={this.handleInputDesignExplain} 
-                onChangeTitle={this.handleInputDesignTitle} 
-                onChangeThumbnailURL={this.handleChangeThumbnailURL} 
+                groupTitle={this.state.groupTitle}
+                groupExplain={this.state.groupExplain}
+                groupThumbnail={this.state.groupThumbnail === "" || this.state.groupThumbnail == null ? noimg : this.state.groupThumbnail}
+                onChangeExplain={this.handleInputDesignExplain}
+                onChangeTitle={this.handleInputDesignTitle}
+                onChangeThumbnailURL={this.handleChangeThumbnailURL}
                 onChangeThumbnail={this.handleChangeThumbnail}
-                designExplain={this.state.groupExplain} 
-                designTitle={this.state.groupTitle} 
-                thumbnail={this.state.groupThumbnail == "" ? noimg : this.state.groupThumbnail} {...this.props} />}
-            <div className = "buttonBox">
-                <CompleteButton isComplete = {this.state.isPossibleNextStep}
-                     onClick={this.state.isPossibleNextStep ? this.onSubmit : ()=>alert("아직 그룹 등록에 필요한 정보가 입력되지 않았습니다.")} >
+                designExplain={this.state.groupExplain}
+                designTitle={this.state.groupTitle}
+                thumbnail={this.state.groupThumbnail === "" || this.state.groupThumbnail == null ? noimg : this.state.groupThumbnail} {...this.props} />}
+            <div className="buttonBox">
+              <CompleteButton isComplete={this.state.isPossibleNextStep}
+                onClick={this.state.isPossibleNextStep ? this.onSubmit : () => alert("아직 그룹 등록에 필요한 정보가 입력되지 않았습니다.")} >
                 <BtnText>완료</BtnText>
               </CompleteButton>
             </div>
