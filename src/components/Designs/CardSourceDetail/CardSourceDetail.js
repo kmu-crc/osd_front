@@ -127,8 +127,9 @@ const ViewContent = styled.div`
     }
     margin-bottom: 2rem;
   }
-  .textWrap{
+  .textWrap {
     margin-bottom: 2rem;
+    word-break: break-all;
     color: inherit;
   }
   & .goEdit {
@@ -448,8 +449,9 @@ class CardSourceDetail extends Component {
                 <span className="LinkFileName">{item.file_name}</span>
               </a>
 
-            if (item.type === "TEXT")
+            if (item.type === "TEXT") {
               return <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+            }
           })}
         </ViewContent>}
 
