@@ -19,7 +19,8 @@ const SummaryList = styled.div`
 `;
 
 const BoardBox=styled.div`
-  padding-left:20px;
+  width:100%;
+  padding-left:25px;
 `
 const MainSection = styled.div`
   width:1750px;
@@ -28,7 +29,9 @@ const MainSection = styled.div`
   margin:26px 0px 27px 65px;
 `
 const AsideSection = styled.div`
+
     width: 445px;
+    min-width:230px;
     height: 100%;
     overflow: hidden;
     margin-right: 7px;
@@ -148,6 +151,7 @@ const BoardHeaderBox = styled.div`
   }
 `;
 const SendTypingBox = styled.div`
+  width:100%;
   height: 197px;
   display: flex;
   margin-right: 23px;
@@ -169,7 +173,7 @@ const DivisionLine = styled.div`
     width:98%;
 `
 const SendMessageTextarea = styled.textarea`
-  width:1091px;
+  width:100%;
   height:147px;
   margin-right:50px;
   font-size:18px;
@@ -181,6 +185,7 @@ const SendMessageTextarea = styled.textarea`
   resize:none;
   border:none;
   outline:none;
+  padding:20px;
 `
 
 const MessageSectionSendBtn = {
@@ -410,7 +415,7 @@ class Messages extends React.Component {
             <SummaryList id="searchRect">{arrSummaryList}</SummaryList>
           </AsideSection>
           <div style={{border:"3.5px solid white"}}></div>
-          <div>
+          <MainBoard>
             <BoardHeaderBox>
               <div className="boardHeaderText">{this.state.selectName}</div>
             </BoardHeaderBox>
@@ -422,7 +427,7 @@ class Messages extends React.Component {
               <SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}></SendMessageTextarea>
               <div className="sendButton" onClick={this.onSubmitForm}>전송하기</div>
             </SendTypingBox>
-          </div>
+          </MainBoard>
         </div>
       </Wrapper>);
   }
