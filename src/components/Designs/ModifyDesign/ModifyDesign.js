@@ -87,13 +87,15 @@ const InputBoard = styled.div`
       border-radius:5px;
       border:8px solid #F5F4F4;
 
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justify-content: flex-end;
-      }
 
 
+
+`
+const ButtonBox=styled.div`
+      height:100px;
+      display: flex;
+      margin-top: 30.54px;
+      justify-content: flex-end;
 `
 const BackButton = styled.div`
       position:absolute;
@@ -841,19 +843,19 @@ class ModifyDesign extends Component {
               </section>
 
               {/* buttons*/}
-              <div className="buttonBox">
+              <ButtonBox>
                 {step === 0 && <React.Fragment>
-                  <CompleteButton onClick={this.gotoNextStep}><BtnText>다음</BtnText></CompleteButton>
+                  <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
                 </React.Fragment>}
                 {step === 1 && <React.Fragment>
-                  <BackButton onClick={this.gotoPrevStep} ><BtnText>뒤로</BtnText></BackButton>
+                  <BackButton onClick={this.gotoPrevStep} isComplete={true}><BtnText>뒤로</BtnText></BackButton>
                   <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
                 </React.Fragment>}
                 {step === 2 && <React.Fragment>
-                  <BackButton onClick={this.gotoPrevStep}><BtnText>뒤로</BtnText></BackButton>
-                  <CompleteButton onClick={this.submit} ><BtnText>완료</BtnText></CompleteButton>
+                  <BackButton onClick={this.gotoPrevStep} isComplete={true}><BtnText>뒤로</BtnText></BackButton>
+                  <CompleteButton onClick={this.submit} isComplete={true}><BtnText>완료</BtnText></CompleteButton>
                 </React.Fragment>}
-              </div>
+              </ButtonBox>
               {/* </form> */}
             </InputBoard>
           </MainSection>
