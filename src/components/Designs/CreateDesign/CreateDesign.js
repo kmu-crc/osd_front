@@ -789,7 +789,7 @@ class CreateDesign extends Component {
                 <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
               </div>
               <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>섬네일 등록</div>
-              <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#FF0000", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 섬네일이 정사각형이 아닙니다.</div>
+              <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 섬네일이 정사각형이 아닙니다.</div>
               <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 섬네일으로 등록하고자하는 영역을 <br /> 조절하여 등록하기를클릭하시면 섬네일이 등록됩니다.</div>
               <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "10px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: this.state.ratio > 1.0 ? "240px" : "370px" }}>
                 <ReactCrop

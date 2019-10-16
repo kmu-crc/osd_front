@@ -7,7 +7,6 @@ import SearchMemberContainer from "containers/Commons/SearchMemberContainer/Sear
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Socket from "modules/Socket"
 
-
 const SummaryList = styled.div`
   height:794px;
   margin-top:14px;
@@ -17,19 +16,11 @@ const SummaryList = styled.div`
     overflow-y:overlay;
   }
 `;
-
 const BoardBox=styled.div`
   width:100%;
   padding-left:25px;
-`
-const MainSection = styled.div`
-  width:1750px;
-  // height: 100%;
-  height:869px;
-  margin:26px 0px 27px 65px;
-`
+`;
 const AsideSection = styled.div`
-
     width: 445px;
     min-width:230px;
     height: 100%;
@@ -71,67 +62,66 @@ const AsideSection = styled.div`
         opacity: 0.5;
       }
     }
-`
-
+`;
 const SummaryItemBox = styled.div`
-    position:relative;
-    overflow:hidden;
-    width:336px;
-    height:70px;
-    margin-bottom:30px;
-    opacity:${props => props.isSelect == true ? 1 : 0.5};
-    .summary_Name{
-      width:244px;
-      height:29px;
-      position:absolute;
-      left:92px;
-      font-size:17px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-      color:#707070;
-      text-align:left;
-      line-height:29px;
-    }
-    .summary_message{
-      width:244px;
-      height:28px;
-      position:absolute;
-      left:92px;
-      bottom:3px;
-      font-size:17px;
-      font-weight:100;
-      font-family:Noto Sans KR;
-      color:#707070;
-      text-align:left;
-      line-height:29px;
-    }
-`
-const SummaryIcon = styled.div`
-    width:70px;
-    height:70px;
+  position:relative;
+  overflow:hidden;
+  width:336px;
+  height:70px;
+  margin-bottom:30px;
+  opacity:${props => props.isSelect === true ? 1 : 0.5};
+  .summary_Name{
+    width:244px;
+    height:29px;
     position:absolute;
-    left:0px;
-    top:0px;
+    left:92px;
+    font-size:17px;
+    font-weight:500;
+    font-family:Noto Sans KR;
+    color:#707070;
+    text-align:left;
+    line-height:29px;
+  }
+  .summary_message{
+    width:244px;
+    height:28px;
+    position:absolute;
+    left:92px;
+    bottom:3px;
+    font-size:17px;
+    font-weight:100;
+    font-family:Noto Sans KR;
+    color:#707070;
+    text-align:left;
+    line-height:29px;
+  }
+`;
+const SummaryIcon = styled.div`
+  width:70px;
+  height:70px;
+  position:absolute;
+  left:0px;
+  top:0px;
+  border-radius:50%;
+  background:url(${props => props.imageURL});
+  background-size:cover;
+  background-position:center center;
+  .noti{
+    width:10px;
+    height:10px;
+    background-color:#FF0000;
     border-radius:50%;
-    background:url(${props => props.imageURL});
-    background-size:cover;
-    background-position:center center;
-    .noti{
-      width:10px;
-      height:10px;
-      background-color:#FF0000;
-      border-radius:50%;
-    }
-`
+  }
+`;
 const MainBoard = styled.div`
-    display: inline-block;
-    oveflow: hidden;
-    width: 1298px;
-    height: 100%;
-    padding-left: 26px;
-    padding-right: 23px;
-    border-radius: 0px 25px 25px 0px;
-    background-color: #EFEFEF;
+  display: inline-block;
+  oveflow: hidden;
+  width: 1298px;
+  height: 100%;
+  padding-left: 26px;
+  padding-right: 23px;
+  border-radius: 0px 25px 25px 0px;
+  background-color: #EFEFEF;
 }`;
 const BoardHeaderBox = styled.div`
   height: 69px;
@@ -169,9 +159,9 @@ const SendTypingBox = styled.div`
   }
 `;
 const DivisionLine = styled.div`
-    border-top:1px solid #707070;
-    width:98%;
-`
+  border-top:1px solid #707070;
+  width: 98%;
+`;
 const SendMessageTextarea = styled.textarea`
   width:100%;
   height:147px;
@@ -186,13 +176,13 @@ const SendMessageTextarea = styled.textarea`
   border:none;
   outline:none;
   padding:20px;
-`
+`;
 
-const MessageSectionSendBtn = {
-  position: "absolute", width: "117px", height: "170px", right: "0px",
-  borderRadius: "0px 0px 25px 0px", backgroundColor: "#FFFFFF",
-  fontSize: "18px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "center", lineHeight: "170px",
-};
+//const MessageSectionSendBtn = {
+//  position: "absolute", width: "117px", height: "170px", right: "0px",
+//  borderRadius: "0px 0px 25px 0px", backgroundColor: "#FFFFFF",
+//  fontSize: "18px", fontFamily: "Noto Sans KR", color: "#707070", fontWeight: "500", textAlign: "center", lineHeight: "170px",
+//};
 
 function SummaryItem(props) {
   return (
@@ -367,7 +357,7 @@ class Messages extends React.Component {
 
   }
   handleCloseMember(event) {
-    if (event.target.id != "searchRect") {
+    if (event.target.id !== "searchRect") {
       this.setState({ showSearch: false })
     }
   }
@@ -381,7 +371,7 @@ class Messages extends React.Component {
       console.log("message-list", this.props.MessageList);
       arrSummaryList = this.props.MessageList.map((item, index) => {
         let SelectedItem = false;
-        if (this.state.selectId == item.friend_id) SelectedItem = true;
+        if (this.state.selectId === item.friend_id) SelectedItem = true;
         return (
           <div key={index} onClick={() => this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
             <SummaryItem noti={item.noti && item.noti > 0} s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
@@ -409,7 +399,7 @@ class Messages extends React.Component {
             </div>
             {this.state.showSearch &&
               (<React.Fragment>
-                {this.state.hideSearch == true ? null :
+                {this.state.hideSearch === true ? null :
                   <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
               </React.Fragment>)}
             <SummaryList id="searchRect">{arrSummaryList}</SummaryList>

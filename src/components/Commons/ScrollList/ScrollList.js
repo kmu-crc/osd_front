@@ -77,11 +77,6 @@ const MoreBtn = styled.button`
   left: 50%;
   z-index: 900;
 `;
-const NoData = styled.div`
-  width: 100%;
-  font-size: 16px;
-  text-align: center;
-`;
 const LoadingText = styled.p`
   color: #707070;
   opacity: .75; 
@@ -143,7 +138,7 @@ class ScrollList extends Component {
     return list && list.length < 10 ? false : true;
   };
   componentWillReceiveProps(nextProps) {
-    if (nextProps.dataList != this.props.dataList) {
+    if (nextProps.dataList !== this.props.dataList) {
       this.setState({ hasMore: this.checkHasMore(nextProps.dataList) })
     }
     if (nextProps.reload) {
