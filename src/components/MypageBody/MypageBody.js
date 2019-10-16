@@ -50,7 +50,7 @@ class MypageBody extends Component {
         this.getInitData();
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.Count != this.props.Count) {
+        if (nextProps.Count !== this.props.Count) {
             this.setTab(nextProps.Count);
         }
     }

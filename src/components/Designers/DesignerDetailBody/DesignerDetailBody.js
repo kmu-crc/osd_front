@@ -4,7 +4,6 @@ import styled from 'styled-components'
 //component
 import ScrollList from "components/Commons/ScrollList"
 import Loading from 'components/Commons/Loading'
-//
 import opendesign_style from "opendesign_style";
 import NumberFormat from 'modules/NumberFormat';
 
@@ -72,7 +71,7 @@ class DesignerPageBody extends Component {
         this.getInitData();
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.Count != this.props.Count) {
+        if (nextProps.Count !== this.props.Count) {
             this.setTab(nextProps.Count);
         }
     }

@@ -1,16 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import Socket from "modules/Socket"
-
-// import thumbnail from "source/thumbnail.png";
-// import DateFormat from "modules/DateFormat";
-// import TextFormat from "modules/TextFormat";
 
 const MsgSectionBoard = styled.div`
   width:100%;
   min-width:600px;
   height: ${props => props.height}px;
-  // height: 602.5px;
   position: relative;
   flex-direction: column-reverse;
   justify-content: flex-end;
@@ -19,25 +13,21 @@ const MsgSectionBoard = styled.div`
     overflow-y: overlay;
     overflow-x: hidden;
   }
-`
-
-const ReceiveMessageBox=styled.div`
+`;
+const ReceiveMessageBox = styled.div`
   width: 100%;
   margin-bottom: 32px;
   position: relative;
   display:flex;
   justify-content: flex-start;
   align-items:flex-end;
-
   .messageReceiveBubble{
-    
     display: inline-block;
     width: 571px;
     padding: 13px 25px 13px 20px;
     border-radius: 20px;
     background-color: #FFFFFF;
     word-wrap:break-word;
-    
   }
   .messageText {
     width: 526px;
@@ -56,7 +46,7 @@ const ReceiveMessageBox=styled.div`
     font-weight: 300;
     margin-left:10px;
   }
-`
+`;
 const SendMessageBox = styled.div`
     width: 100%;
     margin-bottom: 32px;
@@ -64,7 +54,6 @@ const SendMessageBox = styled.div`
     display:flex;
     justify-content:flex-end;
     align-items:flex-end;
-
     .messageSendBubble{
       display: inline-block;
       width: 571px;
@@ -90,15 +79,13 @@ const SendMessageBox = styled.div`
       font-weight: 300;
       margin-right:10px;
     }
-    
-`
+`;
 
 function CheckedTime(date) {
   let updateT = new Date(date);
   let today = new Date();
   //today = today.getTime() + 32400000;
   const diff = today - updateT;
-
   const m = 30;
   //const diffMin = parseInt((diff / 1000) / 3600 * 60, 10); // N분 전
   const diffHour = parseInt((diff / 1000) / 3600, 10); // N시간 전
@@ -114,7 +101,6 @@ function CheckedTime(date) {
   const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
 
   const dateTime = ampm + updateHourT + ":" + updateMinT;
-
 
   if (diffHour < 1) {
     return `${dateTime}`;
@@ -147,7 +133,7 @@ function MsgReceiveBox(props) {
 function MsgSendBox(props) {
   return (
     <SendMessageBox>
-            <div className="messageSendTime">{props.updateTime}</div>
+      <div className="messageSendTime">{props.updateTime}</div>
 
       <div className="messageSendBubble">
         <div className="messageText">{props.msgText}</div>
@@ -196,7 +182,7 @@ class MessageDetail extends Component {
       if (item.from_user_id !== myId) isMyMsg = false;
       return (
         <React.Fragment key={item.uid}>
-          <LoadMessage isMyMsg={isMyMsg} msgText={item.message==""?"\u00a0":item.message} updateTime={CheckedTime(item.create_time)} />
+          <LoadMessage isMyMsg={isMyMsg} msgText={item.message === "" ? "\u00a0" : item.message} updateTime={CheckedTime(item.create_time)} />
         </React.Fragment>
       );
     })
