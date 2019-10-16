@@ -8,15 +8,16 @@ import {
   GetMyDetailRequest, GetMyDesignListRequest, GetMyLikeDesignRequest,
   GetMyLikeDesignerRequest, GetMyGroupListRequest, GetMyLikeGroupRequest
 } from "redux/modules/personal"
-
+import { GetDesignerCountRequest } from "redux/modules/designer"
 
 class MyDetailContainer extends Component {
   componentWillMount() {
-    this.props.GetMyDetailRequest(this.props.token)
+    this.props.GetMyDetailRequest(this.props.token);
+    this.props.GetDesignerCountRequest(this.props.userInfo.uid);
   }
 
   render() {
-    return (//수정 요망 - 내용기술할것! 이러면몰라요ㅠ
+    return (
       <React.Fragment>
         <MypageHeader {...this.props} />
         <MypageBody {...this.props} />
@@ -27,6 +28,8 @@ class MyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    userInfo: state.Authentication.status.userInfo,
+    Count: state.Designer.status.Count,
     MyDetail: state.Personal.status.MyDetail,
     MyLikeDesign: state.Personal.status.MyLikeDesign,
     MyLikeDesigner: state.Personal.status.MyLikeDesigner,
@@ -43,6 +46,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    GetDesignerCountRequest: (id) => {
+      return dispatch(GetDesignerCountRequest(id))
+    },
     GetMyDetailRequest: (token) => {
       return dispatch(GetMyDetailRequest(token))
     },

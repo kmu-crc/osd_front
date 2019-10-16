@@ -2598,6 +2598,11 @@ clone-deep@^2.0.1:
     kind-of "^6.0.0"
     shallow-clone "^1.0.0"
 
+clsx@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
+  integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -2860,6 +2865,11 @@ core-js@^2.4.0:
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
   integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
+
+core-js@^3.2.1:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.2.tgz#cd42da1d7b0bb33ef11326be3a721934277ceb42"
+  integrity sha512-S1FfZpeBchkhyoY76YAdFzKS4zz9aOK7EeFaNA2aJlyXyA+sgqz6xdxmLPGXEAf0nF44MVN1kSjrA9Kt3ATDQg==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -8397,6 +8407,15 @@ react-height@^3.0.0:
   integrity sha1-+uMi+dpk0+niVTbya3fHOVQmFSQ=
   dependencies:
     prop-types "15.5.8"
+
+react-image-crop@^8.3.1:
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-8.3.1.tgz#80e3f1f6dd987cab3f04469d4764c5422a4e74c7"
+  integrity sha512-oVNonX8L04yjQfYkcLmBcAowJApcVGquGjjhZMY22DsI8+Zs/0YT7OJD8jKSzWphSiBzR0Vc4ewGDjzKXBfoPw==
+  dependencies:
+    clsx "^1.0.4"
+    core-js "^3.2.1"
+    prop-types "^15.7.2"
 
 react-infinite-scroller@^1.2.4:
   version "1.2.4"

@@ -8,7 +8,9 @@ import noimg from "source/noimg.png"
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import Logo from "source/logo.png"
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Modal } from "semantic-ui-react";
+import ReactCrop from 'react-image-crop';
+import "react-image-crop/dist/ReactCrop.css";
 
 import styled from "styled-components";
 
@@ -44,15 +46,7 @@ const NavMenu = styled.div`
     background-color:#F5F4F4;
     border-radius:5px;
   }
-  .menuItem{
-    height:62px;
-    padding-left:36px;
-    padding-top:18px;
-    lineHeight:29px;
-    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-    cursor:pointer;
 
-  }
 
     .deleteText{
       font-family:Noto Sans KR;
@@ -63,15 +57,23 @@ const NavMenu = styled.div`
       color:#FF0000;
       border-bottom:${props => props.borderBottom};
     }
-`
-const MenuText = styled.div`
-  font-size:20px;
-  font-family:Noto Sans KR;
-  font-weight:300;
-  text-align:left;
-  color: ${props => props.selected ? "#FF0000" : "#707070"};
-  border-bottom:${props => props.borderBottom};
-`
+`;
+const MenuItem = styled.div`
+    height:62px;
+    padding-left:36px;
+    padding-top:18px;
+    lineHeight:29px;
+    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+    cursor:pointer;
+    .MenuText {
+      font-size:20px;
+      font-family:Noto Sans KR;
+      font-weight:300;
+      text-align:left;
+      color: ${props => props.selected ? "#FF0000" : "#707070"};
+      border-bottom:${props => props.borderBottom};
+    }
+`;
 //const Arrow = styled.span`
 //    margin-left:70px;
 //    font-size:15px;
@@ -459,12 +461,27 @@ const LoadingIconBox = styled.div`
 const SectionContainer = styled.section`
   display: ${props => props.display};
 `;
+const CropperDialog = styled(Modal)`
+  max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
+  height: ${props => props.ratio < 1.0 ? 650 : 450}px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px #FF0000;
+  .edit-step-name-button-container {
+    display: flex;
+    width: 576px;
+    margin-left: auto;
+    margin-right: 75px;
+    margin-top: 38px;
+ 
+  }
+`
+
 const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
 
 function Peer(props) {
   return (
-
     <PeerBox>
       <PeerIcon imageURL={props.s_img} />
       <div className="nameLabel">{props.nick_name}</div>
@@ -476,10 +493,12 @@ class CreateDesign extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
-      showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: false, license2: false, license3: false,
+      showSearch: false, thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
+      license1: true, license2: true, license3: true,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -494,8 +513,15 @@ class CreateDesign extends Component {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
+    reader.onload = () => {
+      var image = new Image();
+      image.src = reader.result;
+      image.onload = () => {
+        this.setState({ is_rectangle: false, ratio: image.width / image.height, cropper: image.width / image.height !== 1.0 });
+      }
+    }
     reader.onloadend = () => {
-      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name });
     }
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
@@ -663,7 +689,67 @@ class CreateDesign extends Component {
 
     this.checkFinishAdditional();
   }
+  closeCropper = () => {
+    if (this.state.is_rectangle === false) {
+      this.setState({ thumbnail_name: "", thumbnail: noimg });
+    }
+    this.setState({ cropper: false, crop: { unit: "%", width: 50, aspect: 1 } });
+  }
+  toDataURL = url => fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    }))
+  crop = async () => {
+    // apply
+    await this.toDataURL(this.state.croppedImageUrl)
+      .then(async (dataUrl) => {
+        this.setState({ thumbnail: dataUrl });
+      })
+    this.setState({ cropper: false });
+  };
+  onImageLoaded = image => {
+    this.imageRef = image;
+  };
+  onCropComplete = crop => {
+    this.makeClientCrop(crop);
+  };
+  onCropChange = (crop, percentCrop) => {
+    // You could also use percentCrop:
+    // this.setState({ crop: percentCrop });
+    this.setState({ crop });
+  };
+  async makeClientCrop(crop) {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(this.imageRef, crop, this.state.thumbnail_name/*"newFile.jpeg"*/);
+      this.setState({ croppedImageUrl });
+    }
+  }
+  getCroppedImg(image, crop, fileName) {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
 
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          console.error("Canvas is empty");
+          return;
+        }
+        blob.name = fileName;
+        window.URL.revokeObjectURL(this.fileUrl);
+        this.fileUrl = window.URL.createObjectURL(blob);
+        resolve(this.fileUrl);
+      }, "image/jpeg");
+    });
+  }
   render() {
     let arrSummaryList = [];
     if (this.state.members.length > 0) {
@@ -683,22 +769,38 @@ class CreateDesign extends Component {
         <MainBanner>
           <div className="title">디자인 등록하기</div>
         </MainBanner>
-        <MainSection>
 
+        <MainSection>
           {/* scroll - menu */}
           <NavMenu>
             <div className="menuBox">
               {scrollmenu.map((menu, index) => {
                 return (
-                  <div onClick={() => this.gotoStep(menu)}
-                    className="menuItem"
-                    borderBottom={index + 1 === scrollmenu.length}
-                    key={menu.txt}>
-                    <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
-                  </div>)
+                  <MenuItem selected={this.state.step === index} onClick={() => this.gotoStep(menu)} borderBottom={index + 1 === scrollmenu.length} key={menu.txt}>
+                    <div className="MenuText">{menu.txt}</div>
+                  </MenuItem>)
               })}
             </div>
           </NavMenu>
+
+          {this.state.cropper &&
+            <CropperDialog ratio={this.state.ratio} onKeyDown={null} open={this.state.cropper} onClose={null}>
+              <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
+                <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
+              </div>
+              <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>섬네일 등록</div>
+              <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", color: "#FF0000", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 섬네일이 정사각형이 아닙니다.</div>
+              <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 섬네일으로 등록하고자하는 영역을 <br /> 조절하여 등록하기를클릭하시면 섬네일이 등록됩니다.</div>
+              <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "10px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: this.state.ratio > 1.0 ? "240px" : "370px" }}>
+                <ReactCrop
+                  src={this.state.thumbnail} crop={this.state.crop}
+                  onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
+              </div>
+              <div style={{ marginTop: "10px", display: "flex" }} >
+                <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
+                <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
+              </div>
+            </CropperDialog>}
 
           {/* form */}
           <InputBoard>
@@ -736,10 +838,8 @@ class CreateDesign extends Component {
                 {this.props.category1.length > 0 ?
                   <CategoryBox>
                     <div className="title">카테고리</div>
-                    <CategoryDropDown onChange={this.onChangeCategory1}
-                      options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-                    <CategoryDropDown id="category2" onChange={this.onChangeCategory2}
-                      options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection ref="dropdown2" value={this.state.categoryLevel2} />
+                    <CategoryDropDown onChange={this.onChangeCategory1} options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
+                    <CategoryDropDown id="category2" onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory} selection ref="dropdown2" value={this.state.categoryLevel2} />}
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* invite member*/}
@@ -773,11 +873,11 @@ class CreateDesign extends Component {
                   <div className="title">라이센스</div>
                   <div className="licenseList">
                     <div className="licenseItem">
-                      <CheckBox onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
+                      <CheckBox checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
                     <div className="licenseItem">
-                      <CheckBox onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
+                      <CheckBox checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
                     <div className="licenseItem">
-                      <CheckBox onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다</span></div>
+                      <CheckBox checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다</span></div>
                   </div>
                 </LicenseBox>
               </ContentsBox>
@@ -810,7 +910,7 @@ class CreateDesign extends Component {
             </div>
           </InputBoard>
         </MainSection>
-      </div>
+      </div >
     )
   }
 }

@@ -6,55 +6,52 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from 'components/Commons/Loading'
 //
 import opendesign_style from "opendesign_style";
+import NumberFormat from 'modules/NumberFormat';
 
 //css
 const DesignerDetailBody = styled.div`
     font-family: Noto Sans KR;
     .MypageCategory{
-        display:flex;
+        display: flex;
         justifyContent: space-start;
-        padding-top:32px;
-        font-size:20px;
-        color:#707070;
-        
+        padding-top: 32px;
+        font-size: 20px;
+        color: #707070;
     }
     .selectedCate {
         opacity: 1.0;
     }
-
     .compWrapper {
         padding-top: 35px;
-        padding-bottom: 35px;
+        padding-bottom: 15px;
     }
     .interested {
         position: relative;
-        padding-top: 56px;
+        margin-left: 56px;
         font-size: 20px;
         color: #707070;
-    } 
-    .interested-first-scroll {
-        padding-top: 25px;
-    }
-    .first {
-        display: flex;
-        justify-content: space-start;
-        padding-top: 75px;
-        padding-left: 67px;
-        margin-bottom: 25px;
-        .text {
-            padding-left: 67px;
-            font-weight: Medium;
+        &.first {
+            display: flex;
+            justify-content: space-start;
+            padding-top: 15px;
+            margin-bottom: 25px;
+            .text {
+                padding-left: 67px;
+                font-weight: Medium;
+            }
+        }
+        &.second {
+            padding-top: 15px;
+            margin-bottom: 25px;
+        }
+        &.third {
+            padding-top: 15px;
+            margin-bottom: 25px;
+            // padding-left: 67px;
         }
     }
-    .second {
-        padding-top: 75px;
-        padding-left: 67px;
-        margin-bottom: 25px;
-    }
-    .third {
-        padding-top: 67px;
-        padding-left: 67px;
-        margin-bottom: 30px;
+    .interested-first-scroll {
+        padding-top: 15px;
     }
 `;
 const CategoryItems = styled.div`
@@ -62,25 +59,40 @@ const CategoryItems = styled.div`
     opacity: ${props => props.opacity};
     cursor: pointer;
 `;
-var pastCate = 0;//for change category
+
 class DesignerPageBody extends Component {
-    state = {
-        reload: false,
-        categorys: ['디자인', '그룹', '좋아요'],
-        selectCate: "unSelectedCate",
-        cateIndex: 0,
+    constructor(props) {
+        super(props);
+        this.state = { reload: false, cateIndex: 0, };
     }
     handleReload = () => {
-        this.setState({ reload: false })
-    }
-    componentDidMount() {
-        var selectedCate = document.getElementById(0);
-        selectedCate.className = selectedCate.className.replace("unSelectedCate", "selectedCate");
+        this.setState({ reload: false });
     }
     componentWillMount() {
         this.getInitData();
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.Count != this.props.Count) {
+            this.setTab(nextProps.Count);
+        }
+    }
+    setTab = (props) => {
+        const { total_design, total_group, total_favorite } = props;
+        let tabindex = 0;
+        if (total_group === 0) {
+            tabindex = 1;
+        }
+        if (total_design === 0) {
+            tabindex = 2;
+        }
+        if (total_favorite === 0) {
+            tabindex = 0;
+        }
+        if (total_group !== 0 && total_design !== 0 && total_favorite !== 0) {
+            tabindex = 0;
+        }
+        this.setState({ cateIndex: tabindex });
+    }
     getInitData() {
         this.getMyDesignInDesignerRequest(0);
         this.getGroupInDesignerRequest(0);
@@ -103,79 +115,54 @@ class DesignerPageBody extends Component {
     getLikeDesignerInDesignerRequest = async (page) => {
         this.props.id && this.props.GetLikeDesignerInDesignerRequest(this.props.id, page);
     }
-
     changeCategory = (index) => {
-        //unselected to selected
-        var selectedCate = document.getElementById(index);
-        if (selectedCate.className === "selectedCate") {
-            return;
-        }
-        selectedCate.className = selectedCate.className.replace("unSelectedCate", "selectedCate");
-
-        //selected to unselected
-        var unSelectedCate = document.getElementById(pastCate);
-        unSelectedCate.className = unSelectedCate.className.replace("selectedCate", "unSelectedCate");
-
-        pastCate = index;
         this.setState({ cateIndex: index });
     }
-    render() {
-        const {
-            MyDesignInDesigner, MyDesignInDesignerAdded,
-            LikeInDesigner, LikeInDesignerAdded,
-            GroupInDesigner, GroupInDesignerAdded,
-            LikeGroupInDesigner, LikeGroupInDesignerAdded,
-            LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
-        const catePadding = [70, 55, 60];
-        const { reload } = this.state;
 
+    render() {
+        const { Count, MyDesignInDesigner, MyDesignInDesignerAdded, GroupInDesigner, GroupInDesignerAdded,
+            LikeInDesigner, LikeInDesignerAdded, LikeGroupInDesigner, LikeGroupInDesignerAdded, LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
+        const { reload } = this.state;
         return (
             <DesignerDetailBody>
                 <div className="MypageCategory">
-                    {this.state.categorys.map((category, index) => {
-                        return (<CategoryItems id={index} opacity={this.state.cateIndex === index ? "1.0" : "0.5"} paddingLeft={catePadding[index]} key={index} onClick={this.changeCategory.bind(this, index)}>{category}</CategoryItems>)
-                    })}
+                    <CategoryItems paddingLeft={70} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group)})</CategoryItems>
+                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>디자인({NumberFormat(Count.total_design)})</CategoryItems>
+                    <CategoryItems paddingLeft={40} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>관심항목({NumberFormat(Count.total_favorite)})</CategoryItems>
                 </div>
 
                 {this.state.cateIndex === 0 &&
                     <div className="compWrapper" >
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
-                            <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
-                                type="design" dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
+                        {this.props.status === "INIT" ? <Loading /> :
+                            <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
+                                dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
                     </div>}
 
                 {this.state.cateIndex === 1 &&
                     <div className="compWrapper" >
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
-                            <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
-                                type="group" dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
+                        {this.props.status === "INIT" ? <Loading /> :
+                            <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design"
+                                dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
                     </div>}
 
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper">
-                        <div className="interested first" >관심있는 디자인</div>
-                        <div className="interested-first-scroll">
-                            {this.props.status === "INIT" ?
-                                <Loading /> :
-                                <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
-                                    manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}</div>
-
-                        <div className="interested second" >관심있는 그룹</div>
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
+                        <div className="interested first">관심있는 그룹({NumberFormat(Count.like_group)})</div>
+                        {this.props.status === "INIT" ? <Loading /> :
                             <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
                                 manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
 
-                        <div className="interested third" >관심있는 디자이너</div>
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
+                        <div className="interested second">관심있는 디자인({NumberFormat(Count.like_design)})</div>
+                        {this.props.status === "INIT" ? <Loading /> :
+                            <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
+                                manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}
+
+                        <div className="interested third">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
+                        {this.props.status === "INIT" ? <Loading /> :
                             <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
                                 manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
                     </div>}
-
-            </DesignerDetailBody>
+            </DesignerDetailBody >
         )
     }
 }

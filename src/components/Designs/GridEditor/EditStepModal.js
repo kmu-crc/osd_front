@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
 
-
 const EditStepDialog = styled(Modal)`
     max-width: 849px;
     height: 295px;
@@ -12,9 +11,9 @@ const EditStepDialog = styled(Modal)`
     box-shadow: 0px 3px 6px #FF0000;
     .close-box {
         position: absolute;
-        left: 100%;
-        margin-top: 7.32px;
-        margin-left: 34.32px;
+        width: max-content;
+        top: 10px;
+        right: 15px;
     }
     .edit-step-name-title {
         width: max-content;
@@ -101,6 +100,7 @@ const EditStepDialog = styled(Modal)`
         }
     }
 `;
+
 class EditStepModal extends Component {
     state = { title: "", where: null }
 
@@ -143,22 +143,24 @@ class EditStepModal extends Component {
         }
     }
     render() {
-        return (<EditStepDialog open={this.props.open} closeOnDimmerClick={false} onClose={this.onClose}>
-            <div onClick={this.onClose} className="close-box">
-                <Cross angle={45} color={"#FFFFFF"} weight={2} width={32.36} height={32.36} />
-            </div>
-            <div className="edit-step-name-title">단계이름 수정</div>
-            <div className="edit-step-name-content-container">
-                <div className="edit-step-name-content-title">제목</div>
-                <div className="edit-step-name-content-input-wrapper">
-                    <input className="edit-step-name-content-input-style" name="title" onChange={this.onChange} value={this.state.title || ""} />
+        return (
+            <EditStepDialog open={this.props.open} closeOnDimmerClick={true} onClose={this.onClose}>
+                <div onClick={this.onClose} className="close-box">
+                    <Cross angle={45} color={"#000000"} weight={3} width={32} height={32} />
                 </div>
-            </div>
-            <div className="edit-step-name-button-container">
-                <div className="edit-step-name-button-submit" onClick={this.onSubmit} >수정하기</div>
-                <div className="edit-step-name-button-cancel" onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} >삭제</div>
-            </div>
-        </EditStepDialog >)
+                <div className="edit-step-name-title">단계이름 수정</div>
+                <div className="edit-step-name-content-container">
+                    <div className="edit-step-name-content-title">제목</div>
+                    <div className="edit-step-name-content-input-wrapper">
+                        <input className="edit-step-name-content-input-style" name="title" onChange={this.onChange} value={this.state.title || ""} />
+                    </div>
+                </div>
+                <div className="edit-step-name-button-container">
+                    <div className="edit-step-name-button-submit" onClick={this.onSubmit} >수정하기</div>
+                    <div className="edit-step-name-button-cancel" onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} >삭제</div>
+                </div>
+            </EditStepDialog >
+        )
     }
 };
 

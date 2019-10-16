@@ -398,7 +398,10 @@ class CardModal extends Component {
                 });
         }
     };
-    onClose = () => { this.props.close() }
+    onClose = async () => {
+        await this.setState({ sroll: false, edit: false, title: "", content: "" });
+        this.props.close();
+    }
     render() {
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.s_img;
         const card = this.props.card// || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
@@ -407,8 +410,8 @@ class CardModal extends Component {
         const movableNext = this.props.row < this.props.maxRow - 1
         return (
             <React.Fragment>
-                <CardDialog  open={this.props.open} onClose={this.onClose}>
-                    
+                <CardDialog open={this.props.open} onClose={this.onClose}>
+
                     {movablePrev && <div className="prevPane" />}
                     {movablePrev && <div className="prevArrow"></div>}
                     {movableNext && <div className="nextPane" />}
@@ -476,7 +479,7 @@ class CardModal extends Component {
                             <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} /></div>
                     </div>
                     {/* </div> */}
-                    
+
                 </CardDialog>
                 <BlankSpace />
             </React.Fragment>)

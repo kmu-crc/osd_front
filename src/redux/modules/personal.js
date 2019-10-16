@@ -1,7 +1,6 @@
 import host from "config"
 import update from "react-addons-update"
 
-
 const GET_MY_DETAIL = "GET_MY_DETAIL"
 const GET_MY_DESIGN = "GET_MY_DESIGN"
 const GET_MY_DESIGN_CLEAR = "GET_MY_DESIGN_CLEAR"

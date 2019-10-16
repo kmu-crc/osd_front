@@ -130,6 +130,7 @@ const ViewContent = styled.div`
   .textWrap {
     margin-bottom: 2rem;
     word-break: break-all;
+    line-height: 25px;
     color: inherit;
   }
   & .goEdit {

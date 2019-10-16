@@ -18,7 +18,7 @@ class DesignerDetailContainer extends Component {
       .then(() => { if(this.props.token){this.props.GetLikeDesignerRequest(this.props.id, this.props.token) }})
   }
   render() {
-    console.log("DESIGNER DETAIL::", this.props)
+    // console.log("DESIGNER DETAIL::", this.props)
     return (
       <React.Fragment>
         <DesignerDetailHeader {...this.props} />

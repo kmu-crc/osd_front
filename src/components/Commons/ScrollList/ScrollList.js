@@ -78,9 +78,7 @@ const MoreBtn = styled.button`
   z-index: 900;
 `;
 const NoData = styled.div`
-  padding-top: 160px;
   width: 100%;
-  height: 330px;
   font-size: 16px;
   text-align: center;
 `;
@@ -99,7 +97,7 @@ const ScrollIcon = styled.div`
   text-align: center;
   color: #707070;
   font-weight: 500;
-  i{
+  i {
     color: #707070;
     opacity: .75;
     font-size: 64px;
@@ -120,12 +118,10 @@ class ScrollList extends Component {
     !this.props.manual && window.removeEventListener("scroll", this.handleScroll, true);
     window.removeEventListener("resize", this.handleResize, false);
   };
-
   handleScroll = (e) => {
     const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
     reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
   };
-
   getLoadData = async () => {
     const { dataList } = this.props;
     if (!this.props.getListRequest) return;
@@ -139,7 +135,6 @@ class ScrollList extends Component {
         });
     });
   };
-
   checkHasMore = (list) => {
     if (list == null) return false;
     if (this.props.type === "designer") {
@@ -147,8 +142,10 @@ class ScrollList extends Component {
     }
     return list && list.length < 10 ? false : true;
   };
-
   componentWillReceiveProps(nextProps) {
+    if (nextProps.dataList != this.props.dataList) {
+      this.setState({ hasMore: this.checkHasMore(nextProps.dataList) })
+    }
     if (nextProps.reload) {
       this.setState({ hasMore: true, loading: false, page: 0 });
       this.props.handleReload && this.props.handleReload();
@@ -156,9 +153,6 @@ class ScrollList extends Component {
         return true;
       }
     };
-    // if (nextProps.dataList.length !== 0 && nextProps.dataList.length % 10 < 10) {
-    // this.setState({ hasMore: false });
-    // }
   };
 
   getColumnNumber(type) {
@@ -190,7 +184,6 @@ class ScrollList extends Component {
 
   myRef = React.createRef();
   render() {
-    console.log("list:", this.props.dataListAdded);
     const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { hasMore, loading, cols } = this.state;
     return (dataListAdded && dataListAdded.length > 0 ?
@@ -209,7 +202,9 @@ class ScrollList extends Component {
         {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
         {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>스크롤<i className="material-icons">arrow_drop_down</i></ScrollIcon>}
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-      </FlexContainer> : <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
+      </FlexContainer> : null
+      // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
+    )
   }
 }
 

@@ -564,7 +564,7 @@ export function GetDesignerCountRequest(id) {
         }).then((data) => {
             if (!data) {
                 console.log("no data")
-                data = { total_like: 0, total_design: 0, total_group: 0, total_view: 0 }
+                data = { total_like: 0, total_group: 0, total_design: 0, total_favorite: 0, total_view: 0 };
             }
             dispatch(GetDesignerCount(data))
         }).catch((err) => {

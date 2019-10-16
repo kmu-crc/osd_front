@@ -222,10 +222,7 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
-                        {card && <CardModal
-                            isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)}
-                            open={card} close={() => this.setState({ card: false })}
-                            title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
+                        {card && <CardModal isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)} open={card} close={() => this.setState({ card: false })} title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
                         {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
                         {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} />}
@@ -237,9 +234,9 @@ class GridEditor extends Component {
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
                                     {editor && <div style={{ display: "flex" }}>
-                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div></div>}
+                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
+                                    </div>}
                                 </div>
-                                {/* </div> */}
                             </GridEditorWrapper>
                         </ReactHeight>
                     </>
