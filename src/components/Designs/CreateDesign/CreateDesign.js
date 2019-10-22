@@ -7,6 +7,7 @@ import { geturl } from "config";
 import noimg from "source/noimg.png"
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
+import CheckBox2 from "components/Commons/CheckBox";
 import Logo from "source/logo.png"
 import { Dropdown, Modal } from "semantic-ui-react";
 import ReactCrop from 'react-image-crop';
@@ -253,14 +254,13 @@ const TitleBox = styled.div`
         }
 `
 const ExplainBox = styled.div`
-
         width:1200px;
         margin-top:103px;
         display:flex;
         .inputTextareaBox{
-            width:717.5px;
-            height:244px;
-            padding:22px 26px 34px 32px;
+            width: 717.5px;
+            height: 244px;
+            padding: 12px 24px 24px 24px;
             font-family:Noto Sans KR;
             font-size:20px;
             font-weight:300;
@@ -331,60 +331,59 @@ const InviteMemberListBox = styled.div`
       }
 `
 const NoInviteMemberBox = styled.div`
-      margin-left:167px;
-      margin-top:30px;
-      font-size:20px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-      color:#707070;
-      .textLabel{
-        vertical-align:top;
-      }
-      
-`
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-      width:25px;
-      height:25px;
-      margin-right:17px;
-      background-color:#EFEFEF !important;
-      border:1px solid #707070 !important;
-      border-radius:5px !important;  
-`
-
+  margin-left: 167px;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  color: #707070;
+  .textLabel {
+    margin-left: 35px;
+    vertical-align: top;
+  }
+`;
+// const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+//   width: 25px;
+//   height: 25px;
+//   margin-right: 17px;
+//   background-color: #EFEFEF !important;
+//   border: 1px solid #707070 !important;
+//   border-radius: 5px !important;  
+// `;
 const LicenseBox = styled.div`
-      display:flex;
-      margin-top:22px;
-      .licenseList{
-        width:645px;
-        height:143px;
-        .licenseItem{
-          margin-bottom:30px;
-          color:#707070;
-          font-size:20px;
-          font-weight:500;
-          font-family:Noto Sans KR;
-        }
-        .textLabel{
-          vertical-align:top;
-        }
+  display: flex;
+  margin-top: 22px;
+  .licenseList {
+    width: 645px;
+    height: 143px;
+    .licenseItem {
+      margin-bottom: 30px;
+      color: #707070;
+      font-size: 20px;
+      font-weight: 500;
+      font-family: Noto Sans KR;
+      .textLabel {
+        margin-left: 35px;
+        vertical-align: top;
       }
-`
+    }
+  }
+`;
 const LoadingBox = styled.div`
-      padding-top:200px;
-      .IconBox{
-        width:100px;
-        height:100px;
-        margin:0 auto;
-      }
-      .loadingText{
-        margin-top:20px;
-        width:100%;
-        font-family:Noto Sans KR;
-        font-size:20px;
-        text-align:center;
-      }
-
-`
+  padding-top: 200px;
+  .IconBox{
+    width:100px;
+    height:100px;
+    margin:0 auto;
+  }
+  .loadingText{
+    margin-top:20px;
+    width:100%;
+    font-family:Noto Sans KR;
+    font-size:20px;
+    text-align:center;
+  }
+`;
 const LoadingIconBox = styled.div`
         width:100px;
         height:100px;
@@ -473,7 +472,6 @@ const CropperDialog = styled(Modal)`
     margin-left: auto;
     margin-right: 75px;
     margin-top: 38px;
- 
   }
 `
 
@@ -686,7 +684,6 @@ class CreateDesign extends Component {
     }
     // display member list
     await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
-
     this.checkFinishAdditional();
   }
   closeCropper = () => {
@@ -802,10 +799,10 @@ class CreateDesign extends Component {
               </div>
             </CropperDialog>}
 
-          {/* form */}
+          {/* FORM */}
           <InputBoard>
             <SectionContainer display={step === 0 ? "block" : "none"}>
-              {/* thumbnail */}
+              {/* THUMBNAIL */}
               <ContentsBox>
                 <ThumbnailBox>
                   <div className="title">프로필 사진</div>
@@ -818,13 +815,13 @@ class CreateDesign extends Component {
                     <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                   </div>
                 </ThumbnailBox>
-                {/* title */}
+                {/* TITLE */}
                 <TitleBox>
                   <div className="title">제목</div>
                   <input onChange={this.onChangeValueTitle}
                     className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
                 </TitleBox>
-                {/* explanation */}
+                {/* EXPLANATION */}
                 <ExplainBox>
                   <div className="title">디자인 설명</div>
                   <textarea onChange={this.onChangeValueExplanation} className="inputTextareaBox"
@@ -832,17 +829,17 @@ class CreateDesign extends Component {
                 </ExplainBox>
               </ContentsBox>
             </SectionContainer>
-            {/* category */}
+            {/* CATEGORY */}
             <SectionContainer display={step === 1 ? "block" : "none"}>
               <ContentsBox>
                 {this.props.category1.length > 0 ?
                   <CategoryBox>
                     <div className="title">카테고리</div>
                     <CategoryDropDown onChange={this.onChangeCategory1} options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-                    <CategoryDropDown id="category2" onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory} selection ref="dropdown2" value={this.state.categoryLevel2} />}
+                    <CategoryDropDown id="category2" onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory} selection ref="dropdown2" value={this.state.categoryLevel2} />
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
-                {/* invite member*/}
+                {/* INVITE MEMBER */}
                 <InviteMemberBox>
                   <div className="title">멤버 초대하기</div>
                   <div className="searchBox">
@@ -852,32 +849,27 @@ class CreateDesign extends Component {
                   <div className="tipDescription">
                     함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
                     초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
-                    디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.   </div>
+                    디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
                 </InviteMemberBox>
                 <div>
-                  {/* invited member*/}
+                  {/* INVITED MEMBER */}
                   <InviteMemberListBox>
-                    <div className="memberList">
-                      {arrSummaryList}
-                    </div>
+                    <div className="memberList">{arrSummaryList}</div>
                   </InviteMemberListBox>
                   {/* LEAVE ME ALONE */}
                   <NoInviteMemberBox>
-                    <CheckBox onChange={this.LeaveMeAlone} />
+                    <CheckBox2 onChange={this.LeaveMeAlone} />
                     <span className="textLabel">멤버를 초대하지 않습니다.</span>
                   </NoInviteMemberBox>
                 </div>
                 <HRline />
-                {/* license*/}
+                {/* LICENSE */}
                 <LicenseBox>
                   <div className="title">라이센스</div>
                   <div className="licenseList">
-                    <div className="licenseItem">
-                      <CheckBox checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
-                    <div className="licenseItem">
-                      <CheckBox checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
-                    <div className="licenseItem">
-                      <CheckBox checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다</span></div>
+                    <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
+                    <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
+                    <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다</span></div>
                   </div>
                 </LicenseBox>
               </ContentsBox>

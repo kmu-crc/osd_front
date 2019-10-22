@@ -80,7 +80,6 @@ const mapDispatchToProps = (dispatch) => {
     GetLikeDesignerInDesignerRequest: (id, page) => {//디자이너가 관심있는 디자이너
       return dispatch(GetLikeDesignerInDesignerRequest(id, page));
     }
-
   };
 };
 

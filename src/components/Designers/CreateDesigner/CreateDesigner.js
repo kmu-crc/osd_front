@@ -142,9 +142,7 @@ class ModifyMyDetail extends Component {
     this.updateCareer = this.updateCareer.bind(this);
     this.updateLocation = this.updateLocation.bind(this);
     this.updateContact = this.updateContact.bind(this);
-
     this.handleClickModifyMyProfile = this.handleClickModifyMyProfile.bind(this);
-
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail && this.props.MyDetail !== nextProps.MyDetail) {
