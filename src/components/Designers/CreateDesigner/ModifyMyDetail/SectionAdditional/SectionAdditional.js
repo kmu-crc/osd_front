@@ -3,7 +3,6 @@ import { Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 
 const emptyCategory = [{ value: 0, text: "" }]
-
 const ContentsBox = styled.div`
     padding-left:47px;
     .title{
@@ -43,8 +42,6 @@ class SectionAdditional extends Component {
       });
       this.props.updateCategory1(nextProps.MyDetail.category_level1);
       this.props.updateCategory2(nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2);
-
-
     }
     return true;
   }

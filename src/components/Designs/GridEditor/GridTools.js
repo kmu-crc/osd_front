@@ -47,7 +47,7 @@ export const CreateCard = (props) => {
         }}>
         <div style={{ position: "relative", marginTop: "38.58px", marginLeft: "66.59px" }}>
             <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.step}생성하기</div>
+        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>컨텐츠 등록하기</div>
     </div>)
 }
 export const TipDiv = (props) => {
@@ -102,14 +102,9 @@ export const StepCard = (props) => {
     </StepCardStyle >)
 }
 const CardContainer = styled.div`
-    div{
-        // border:1px dashed red;
-    }
     position: relative;
     z-index: 700;
     cursor: pointer;
-    // width: 200px;
-    // height: 200px;
     width: ${PxtoRem(200)};
     height: ${PxtoRem(200)};
     border-radius: 15px;
@@ -140,6 +135,21 @@ const CardContainer = styled.div`
     }
 }}>
 `;
+const AuthorBox = styled.div`
+  z-index: 702;
+  background: rgba(234, 234, 234, 0.35);
+  width: 170px;
+  height: 63px;
+  border-radius: 5px;
+  font-family: Noto Sans KR;
+  font-weight: 300;
+  color: #707070;
+  text-align: center;
+  margin-top: 120px;
+  margin-left: 13px;
+  padding: 8px;
+`;
+
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
@@ -153,15 +163,11 @@ export const ContentCard = (props) => {
                         {props.card.title.slice(0, 10)}
                     </div>
                     {/* <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}> */}
-                    <div style={{ zIndex: "702", background: "#EAEAEA", width: "170px", height: "63px", borderRadius:"5px",opacity:"0.8",
-                        fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "120px", marginLeft: "13px",padding:"8px" }}>
-                        <div style={{ fontSize: "17px",fontWeight:"400"}}>
-                            {props.card.nick_name.slice(0, 10)}
-                        </div>
-                        <div style={{ fontSize: "15px", marginTop: "6px",fontWeight:"400" }}>
-                            {DateFormat(props.card.update_time)}
-                        </div>
-                    </div>
+                    {/* #EAEAEA */}
+                    <AuthorBox>
+                        <div style={{ fontSize: "17px", fontWeight: "400" }}>{props.card.nick_name.slice(0, 10)}</div>
+                        <div style={{ fontSize: "15px", marginTop: "6px", fontWeight: "400" }}>{DateFormat(props.card.update_time)}</div>
+                    </AuthorBox>
                 </React.Fragment> :
                 <React.Fragment>
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>

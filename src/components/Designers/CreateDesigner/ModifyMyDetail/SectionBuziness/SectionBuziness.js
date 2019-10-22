@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import CheckBox2 from "components/Commons/CheckBox";
 
 const ContentsBox = styled.div`
     padding-left:47px;
@@ -30,62 +31,60 @@ const ContentsBox = styled.div`
       font-family:Noto Sans KR;
       color:#707070;
       line-height:25px;
-
     }
-`
+`;
 const IsDesignerBox = styled.div`
-      display:flex;
-      width:1200px;
-    .isDesignerText{
-      font-size:20px;
-      font-weight:500
-      color:#707070;
-    }
+  display: flex;
+  width: 1200px;
+  .isDesignerText {
+    margin-right: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #707070;
+  }
+`;
 
-`
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-      width:25px;
-      height:25px;
-      margin-left:10px;
-      background-color:#EFEFEF !important;
-      border:1px solid #707070 !important;
-      border-radius:5px !important;  
-`
+// const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+//       width:25px;
+//       height:25px;
+//       margin-left:10px;
+//       background-color:#EFEFEF !important;
+//       border:1px solid #707070 !important;
+//       border-radius:5px !important;  
+// `
 
 const DesignerInfoBox = styled.div`
-      margin-left:20px;
-
-      .itemBox{
-        display:flex;
-        position:relative;
-        margin-top:46px;
-        justify-content:space-start;
-        .designerInfoTitle{
-          width:47px;
-          margin-left:150px;
-          font-size:20px;
-          font-weight:500;
-          font-family:Noto Sans KR;
-          color:#707070;
-          text-align:left;
-          opacity:0.5;
-        }
-      }
-
-`
-const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
-      width:505px;
-      height:56px;
-      padding-left:15px;
+  margin-left:20px;
+  .itemBox {
+    display:flex;
+    position:relative;
+    margin-top:46px;
+    justify-content:space-start;
+    .designerInfoTitle {
+      width:47px;
+      margin-left:150px;
       font-size:20px;
       font-weight:500;
       font-family:Noto Sans KR;
+      color:#707070;
+      text-align:left;
       opacity:0.5;
-      background-color:#EFEFEF;
-      border:none;
-      border-radius:5px;
-      outline:none;
-`
+    }
+  }
+`;
+const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
+  width: 505px;
+  height: 56px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  opacity: 0.5;
+  background-color: #EFEFEF;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+`;
 
 class SectionBuziness extends Component {
   constructor(props) {
@@ -155,8 +154,8 @@ class SectionBuziness extends Component {
       <ContentsBox>
         <IsDesignerBox>
           <div className="isDesignerText">디자이너 활동 여부</div>
-          <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
-            onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
+          <CheckBox2 type="checkbox" id="designercheckbox" //className="cuteCheckBox"
+            onChange={this.isDesignerCheck} checked={this.state.isDesigner} />
           <div className="tipTitle">TIP</div>
         </IsDesignerBox>
         <div className="tipDescription">
