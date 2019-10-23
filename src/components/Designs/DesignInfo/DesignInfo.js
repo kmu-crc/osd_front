@@ -470,11 +470,11 @@ const ForkDialogContainer = styled.div`
     opacity: 1;
     .close-box {
         cursor:pointer;
-
         position: absolute;
-        left: 100%; 
-        margin-top: 7.32px;
-        margin-left: 34.32px;
+        top: 10px;
+        right: 10px;//left: 100%; 
+        //margin-top: 7.32px;
+        //margin-left: 34.32px;
     }
     .txt {
         margin-top: 25px;
@@ -564,11 +564,9 @@ const DesignCommentModalContainer = styled(Modal)`
     min-width: 1250px;
     .close-box {
         cursor:pointer;
-
         position: absolute;
-        left: 100%;
-        margin-top: 0px;
-        margin-left: 34.32px;
+        right: 10px;
+        top: 10px;
     }
     .header-txt {
         margin-left: 15px;
@@ -722,7 +720,7 @@ class DesignInfo extends Component {
             return (
                 <DesignCommentModalContainer open={this.state.comment} onClose={() => this.setState({ comment: false })}>
                     <div className="close-box" onClick={() => this.setState({ comment: false })} >
-                        <Cross angle={45} color={"#FFF0FF"} weight={3} width={45} height={45} />
+                        <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
                     </div>
                     {/* <Modal.Content> */}
                     <div className="header-txt"><h2>댓글</h2></div>
