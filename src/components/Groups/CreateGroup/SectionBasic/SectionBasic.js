@@ -3,110 +3,159 @@ import styled from "styled-components";
 import noimg from "source/noimg.png"
 
 const ContentsBox = styled.div`
-    padding-left:47px;
-    .title{
-        width:100px;
-        height:29px;
-        text-align:left;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
-    }
+padding-left: 47px;
+display:flex;
+flex-direction:column;
+.title{
+  min-width: 100px;
+  height: 29px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 29px;
+  color: #707070;
+}
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  justify-content:center;
+  .title{
+    margin-bottom:10px;
+  }
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  .title{
+    margin-bottom:10px;
+  }
+}
 `
 const ImageBox=styled.div`
     margin-left:67px;
-    width:210px;
-    height:210px;
+    min-width: 210px;
+    min-height: 210px;
+    max-width: 210px;
+    max-height: 210px;
     border-radius:10px;
     background: ${props => `url(${props.imageURL})`};
     background-size:cover;
     background-position:center center;
 `
 const ThumbnailBox = styled.div`
-    display:flex;
-    width:1200px;
-    .explainBox{
-        margin-left:54px;
-        margin-top:100px;
-    }
-    .findThumbnailBtn{
-        width:63px;
-        height:25px;
-        cursor:pointer;
-    }
-    .findThumbnailText{
-        font-family:Noto Sans KR;
-        font-size:17px;
-        font-weight:500;
-        text-align:left;
-        line-height:25px;
-        color:#FF0000;
-        border-bottom:1.5px solid #FF000;
-        cursor:pointer;
-    }
-    .findThumbnailBox{
-        margin-left:54px;
-        margin-top:100px;
-    .thumbnailExplainText{
-        width:341px;
-        height:45px;
-        margin-top:11px;
-        font-weight:300;
-        font-size:14px;
-        color:#707070;
-        line-height:20px;
-        text-align:left;
-        }
-    }
+display:flex;
+justify-content:flex-start;
+flex-direction:row;
+.explainBox{
+  margin-left:54px;
+  margin-top:100px;
+}
+.findThumbnailBtn{
+  width:63px;
+  height:25px;
+  cursor:pointer;
+}
+.findThumbnailText{
+  font-family:Noto Sans KR;
+  font-size:17px;
+  font-weight:500;
+  text-align:left;
+  line-height:25px;
+  color:#FF0000;
+  border-bottom:1.5px solid #FF000;
+  cursor:pointer;
+}
+.findThumbnailBox{
+  margin-left:54px;
+  margin-top:100px;
+  .thumbnailExplainText{
+    width:341px;
+    height:45px;
+    margin-top:11px;
+    font-weight:300;
+    font-size:14px;
+    color:#707070;
+    line-height:20px;
+    text-align:left;
+  }
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+}
 `
 const TitleBox = styled.div`
-        width:1200px;
-        display:flex;
-        margin-top:96px;
+display:flex;
+margin-top:96px;
+justify-content:flex-start;
+flex-direction:row;
+.inputText{
+  width:505px;
+  height:56px;
+  margin-left:67px;
+  padding-left:22px;
+  padding-right:22px;
+  font-size:20px;
+  font-weight:300;
+  font-family:Noto Sans KR;
+  line-height:29px;
+  color:#707070;
+  border:none;
+  border-radius:5px;
+  outline:none;
+  background-color:#EFEFEF;
+}
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+  .inputText{
+    margin-left:0px;
+  }
 
-
-        .inputText{
-            width:505px;
-            height:56px;
-            margin-left:67px;
-            padding-left:22px;
-            padding-right:22px;
-            font-size:20px;
-            font-weight:300;
-            font-family:Noto Sans KR;
-            line-height:29px;
-            color:#707070;
-            border:none;
-            border-radius:5px;
-            outline:none;
-            background-color:#EFEFEF;
-        
-        }
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+  .inputText{
+    margin-left:0px;
+    width:80%;
+  }
+}
 `
 
 const ExplainBox = styled.div`
+margin-top: 103px;
+  display: flex;
+  justify-content:flex-start;
+  flex-direction:row;
+  .inputTextareaBox {
+    width: 717px;
+    height: 244px;
+    margin-left: 70px;
+    padding: 22px 26px 34px 32px;
+    font-family: Noto Sans KR;
+    font-size: 20px;
+    font-weight: 300;
+    color: #707070;
+    line-height: 35px;
+    text-align: left;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    resize: none;
+    background-color: #EFEFEF;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+    .inputTextareaBox {
+      margin-left: 0px;
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
 
-        width:1200px;
-        margin-top:103px;
-        display:flex;
-        .inputTextareaBox{
-            width:717.5px;
-            height:244px;
-            margin-left:70px;
-            padding:22px 26px 34px 32px;
-            font-family:Noto Sans KR;
-            font-size:20px;
-            font-weight:300;
-            color:#707070;
-            line-height:35px;
-            text-align:left;
-            outline:none;
-            border:none;
-            border-radius:5px;
-            resize:none;
-            background-color:#EFEFEF;
-        }
+    .inputTextareaBox {
+      width:90%;
+      margin-left: 0px;
+    }
+  }
 `
 
 class SectionBasic extends Component {

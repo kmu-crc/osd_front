@@ -9,29 +9,43 @@ const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
 ]
 const MainBanner = styled.div`
-  width: 1920px;
-  display: flex;
-  justify-content: center;
-  .title{
-    width: 196px;
-    height: 37px;
-    margin-top: 45px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 37px;
-    font-weight: 700;
-    text-align: center;
-  }
+width: 100%;
+height:140px;
+display: flex;
+justify-content: center;
+.title{
+  width: 196px;
+  height: 37px;
+  margin-top: 45px;
+  font-size: 25px;
+  font-family: Noto Sans KR;
+  color: #707070;
+  line-height: 37px;
+  font-weight: 700;
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  align-items:flex-end;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  align-items:flex-end;
+}
 `
 const MainSection = styled.div`
-  display: flex;
-  margin-top: 60px;
-  margin-bottom: 111px;
+display: flex;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+}
 `
 
 const NavMenu = styled.div`
-  width: 433px;
+  min-width:433px;
+  height:300px;
+  position:relative;
   .menuBox{
     width:325px;
     position: fixed;
@@ -47,18 +61,36 @@ const NavMenu = styled.div`
     lineHeight:29px;
     border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
-
+  }
+  .deleteText{
+    font-family:Noto Sans KR;
+    font-size:20px;
+    font-family:Noto Sans KR;
+    font-weight:500;
+    text-align:left;
+    color:#FF0000;
+    border-bottom:${props => props.borderBottom};
   }
 
-    .deleteText{
-      font-family:Noto Sans KR;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      text-align:left;
-      color:#FF0000;
-      border-bottom:${props => props.borderBottom};
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;   
+      position: static; 
     }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;  
+      position:static;  
+
+    }
+  }
 `
 const MenuText = styled.div`
   font-size:20px;
@@ -73,18 +105,18 @@ const Arrow = styled.span`
     font-size:15px;
 `
 const InputBoard = styled.div`
-      width:1422px;
-      height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
-
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justifyContent: flex-end;
-      }
+  width:${window.innerWidth>1920?1422+'px':100+'%'};
+  padding-bottom:100px;
+  margin-bottom:100px;
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    display: flex;
+    margin-top: 20.54px;
+    justifyContent: flex-end;
+  }
 
 `
 const CompleteButton = styled.div`
@@ -151,7 +183,7 @@ class ModifyMyDetail extends Component {
         thumbnail: nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img == null ? "" : nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img,
         nick_name: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         about_me: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
-        password: "", passwordCheck: "",
+        password: "", passwordCheck: "",screenWidth: window.innerWidth,
       });
     }
     return true;
@@ -198,12 +230,16 @@ class ModifyMyDetail extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("scroll", this.handleScroll, true)
+    document.addEventListener("scroll", this.handleScroll, true);
+    window.addEventListener("resize", this.handleResize, false);
   }
   handleScroll = () => {
     //let sections = document.querySelectorAll("section")
     document.querySelectorAll("section")
   }
+  handleResize = () => {
+    this.setState({ screenWidth: window.innerWidth })
+  };
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
     window.location.href = menu.tag

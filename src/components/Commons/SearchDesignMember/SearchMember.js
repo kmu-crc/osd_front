@@ -26,13 +26,13 @@ const MemberWrap = styled.div`
 `
 const SearchWrap = styled.div`
   position: relative;
-
   &.searchRect {
     display: inline-block;
+    width:100%;
     .form-input {
+      border:none;
       background: #EFEFEF;
-      border: none;
-      width: 550px;
+      width: 85%;
       height: 30px;
       font-size: 18px;
       margin-top: 15px;

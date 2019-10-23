@@ -14,16 +14,16 @@ const ContentsBox = styled.div`
     color:#707070;
   }
   .tipTitle {
-    width: 27px;
+    // width: 375px;
     height: 25px;
-    margin-left: 420px;
+    text-align:left;
+    margin-left: 410px;
     font-size: 17px;
     color: #FF0000;
     text-align: left;
   }
   .tipDescription {
-    width: 540px;
-    height: 75px;
+    width: 550px;
     margin-top: 5px;
     margin-left: 608px;
     font-size: 17px;
@@ -32,15 +32,47 @@ const ContentsBox = styled.div`
     color: #707070;
     line-height: 25px;
   }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+        flex-direction:column;
+        .tipTitle {
+          margin-top:15px;
+          margin-left:0px;
+        }
+        .tipDescription {
+        margin-left:0px;
+        }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+      flex-direction:column;
+      .tipTitle {
+        margin-top:15px;
+        margin-left:0px;
+      }
+      .tipDescription {
+      margin-left:0px;
+      width: 90%;
+      }
+  }
+
 `
 const IsDesignerBox = styled.div`
-  display: flex;
-  width: 1200px;
+  display:flex;
+  flex-direction:row;
   .isDesignerText {
+    display:flex;
+    max-width: 200px;
+    min-width:200px;
     font-size: 20px;
-    font-weight: 500
+    font-weight: 500;
+    line-height:29px;
     color: #707070;
     margin-right: 15px;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+      flex-direction:column;
   }
 `
 const DesignerInfoBox = styled.div`
@@ -49,9 +81,8 @@ const DesignerInfoBox = styled.div`
     display: flex;
     position: relative;
     margin-top: 46px;
-    justify-content: space-start;
     .designerInfoTitle{
-      width: 47px;
+      min-width: 47px;
       margin-left: 150px;
       font-size: 20px;
       font-weight: 500;
@@ -59,6 +90,25 @@ const DesignerInfoBox = styled.div`
       color: #707070;
       text-align: left;
       opacity: 0.5;
+    }
+  }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {   
+    .itemBox{
+      flex-direction:column;
+      .designerInfoTitle{
+        margin-left:0px;
+        margin-bottom:10px;
+      }
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    .itemBox{
+      flex-direction:column;
+      .designerInfoTitle{
+        margin-left:0px;
+        margin-bottom:10px;
+      }
     }
   }
 `
@@ -74,6 +124,13 @@ const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
   border: none;
   border-radius: 5px;
   outline: none;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    width:505px;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    width:80%
+  }
+
 `
 
 class SectionBuziness extends Component {
@@ -144,9 +201,11 @@ class SectionBuziness extends Component {
       <ContentsBox>
 
         <IsDesignerBox>
-          <div className="isDesignerText">디자이너 활동 여부</div>
-          <CheckBox2 type="checkbox" id="designercheckbox" className="cuteCheckBox"
+          <div className="isDesignerText"><div>디자이너 활동 여부</div>
+          <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
+
             onChange={this.isDesignerCheck} onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
+          </div>
           <div className="tipTitle">TIP</div>
         </IsDesignerBox>
         <div className="tipDescription">{description[0]}<br />{description[1]}<br />{description[2]}</div>

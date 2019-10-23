@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 const emptyCategory = [{ value: 0, text: "" }]
 const ContentsBox = styled.div`
-    padding-left:47px;
+padding-left:47px;
     .title{
-        width:167px;
+        min-width:167px;
         height:29px;
         text-align:left;
         font-size:20px;
@@ -14,18 +14,43 @@ const ContentsBox = styled.div`
         line-height:29px;
         color:#707070;
     }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+      .title{
+        margin-bottom:10px;
+      }
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+      .title{
+        margin-bottom:10px;
+      }
+    }
 `
 const CategoryBox = styled.div`
-        display:flex;
-        width:1200px;
+width:100%;
+display:flex;
+justify-contant:flex-start;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  // flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+}
 `
 const CategoryDropDown = styled(Dropdown)`
-      width:410px;
-      height:56px;     
-      border-radius:5px;
-      font-size:20px;
-      background-color:#EFEFEF !important;
-      margin-right:30px;
+width:410px;
+height:56px;     
+border-radius:5px;
+font-size:20px;
+background-color:#EFEFEF !important;
+margin-right:30px;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  margin-top:10px;
+  width:90%;
+}
 `
 class SectionAdditional extends Component {
   constructor(props) {

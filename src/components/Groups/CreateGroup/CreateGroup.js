@@ -7,7 +7,8 @@ import Loading from "components/Commons/Loading";
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 
 const MainBanner = styled.div`
-  width: 1920px;
+  width: 100%;
+  height:140px;
   display: flex;
   justify-content: center;
   .title{
@@ -19,22 +20,33 @@ const MainBanner = styled.div`
     color: #707070;
     line-height: 37px;
     font-weight: 700;
-    text-align: center;
+  }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    align-items:flex-end;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    align-items:flex-end;
   }
 `;
 
 const MainSection = styled.div`
-  display: flex;
-  margin-top: 60px;
-  margin-bottom: 111px;
+display: flex;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+}
 `;
 
 const NavMenu = styled.div`
-  width: 433px;
-
+  min-width:433px;
+  height:300px;
+  position:relative;
   .menuBox{
     width:325px;
-    height:62px;
     position: fixed;
     top:197px;
     margin-left:64px;    
@@ -48,31 +60,58 @@ const NavMenu = styled.div`
     lineHeight:29px;
     border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
-
   }
-    .menuText{
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:300;
-      text-align:left;
-      color: ${props => props.selected ? "#707070" : "#FF0000"};
-      border-bottom:${props => props.borderBottom};
+  .deleteText{
+    font-family:Noto Sans KR;
+    font-size:20px;
+    font-family:Noto Sans KR;
+    font-weight:500;
+    text-align:left;
+    color:#FF0000;
+    border-bottom:${props => props.borderBottom};
+  }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;   
+      position: static; 
     }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;  
+      position:static;  
+
+    }
+  }
 `;
-
+const MenuText = styled.div`
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:300;
+  text-align:left;
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
+  border-bottom:${props => props.borderBottom};
+`
 const InputBoard = styled.div`
-      width:1422px;
-      height:925px;
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
-
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justifyContent: flex-end;
-      }
+width:${window.innerWidth>1920?1422+'px':100+'%'};
+padding-bottom:100px;
+margin-bottom:100px;
+position:relative;
+padding-top:45px;
+border-radius:5px;
+border:8px solid #F5F4F4;
+.buttonBox{
+  display: flex;
+  margin-top: 20.54px;
+  justifyContent: flex-end;
+}
 `;
 
 const BtnText = styled.p`
@@ -188,7 +227,7 @@ class CreateGroup extends Component {
                 <div className="menuItem"
                   onClick={() => this.gotoStep(index)}
                   borderBottom={index + 1 === scrollmenu.length} key={menu.txt}>
-                  <div className="menuText" selcted={this.state.step === index}>{menu.txt}</div>
+                  <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
                 </div>)
             })}
           </div>

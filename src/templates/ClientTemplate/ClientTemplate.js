@@ -24,13 +24,21 @@ const ContentContainer = styled.div`
 const ChildrenContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 1920px;
+
+  width:${props=>props.screenWidth>1920?1920:props.screenWidth}px;
+  // @media only screen and (max-width: 1920px) {
+  //   width:${window.innerWidth}px;
+  // }
+  // @media only screen and (min-width: 1920px) {
+  //   width:1920px;
+  // }
 `;
 
 class ClientTemplate extends Component {
-  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0 }
+  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0,screenWidth: window.innerWidth }
   componentDidMount() {
-    console.log("isActive", this.props.isActive)
+    console.log("isActive", this.props.isActive);
+    window.addEventListener("resize", this.handleResize, false);
   }
   onClose = e => {
     if (this.props.isActive !== "INIT") {
@@ -74,6 +82,9 @@ class ClientTemplate extends Component {
     this.checkScrollUp(obj)
     this.checkIsOutScroll(obj)
   }
+  handleResize = () => {
+    this.setState({ screenWidth: window.innerWidth })
+  };
   render() {
     const { scroll, hidemenu, larger } = this.state
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
@@ -84,7 +95,7 @@ class ClientTemplate extends Component {
       <MenuContext.Provider value={{ hidemenu, larger }}>
         <HeaderContainer />
         <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-          <ChildrenContainer>
+          <ChildrenContainer screenWidth={this.state.screenWidth}>
             {this.props.children}
           </ChildrenContainer>
           <Footer />

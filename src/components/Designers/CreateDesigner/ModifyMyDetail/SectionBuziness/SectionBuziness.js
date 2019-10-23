@@ -13,36 +13,67 @@ const ContentsBox = styled.div`
         text-align:left;
         color:#707070;
     }
-    .tipTitle{
-      width:27px;
-      height:25px;
-      margin-left:420px;
-      font-size:17px;
-      color:#FF0000;
+    .tipTitle {
+      // width: 375px;
+      height: 25px;
       text-align:left;
+      margin-left: 375px;
+      font-size: 17px;
+      color: #FF0000;
+      text-align: left;
     }
-    .tipDescription{
-      width:540px;
-      height:75px;
-      margin-top:5px;
-      margin-left:608px;
-      font-size:17px;
-      font-weight:200;
-      font-family:Noto Sans KR;
-      color:#707070;
-      line-height:25px;
+
+    .tipDescription {
+      width: 550px;
+      margin-top: 5px;
+      margin-left: 608px;
+      font-size: 17px;
+      font-weight: 200;
+      font-family: Noto Sans KR;
+      color: #707070;
+      line-height: 25px;
+    }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+      flex-direction:column;
+      .tipTitle {
+        margin-top:15px;
+        margin-left:0px;
+      }
+      .tipDescription {
+      margin-left:0px;
+      }
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        flex-direction:column;
+        .tipTitle {
+          margin-top:15px;
+          margin-left:0px;
+        }
+        .tipDescription {
+        margin-left:0px;
+        width: 90%;
+        }
     }
 `;
 const IsDesignerBox = styled.div`
-  display: flex;
-  width: 1200px;
-  .isDesignerText {
-    margin-right: 15px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #707070;
-  }
-`;
+display:flex;
+flex-direction:row;
+.isDesignerText {
+  display:flex;
+  max-width: 200px;
+  min-width:200px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height:29px;
+  color: #707070;
+}
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+}
+
 
 // const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 //       width:25px;
@@ -54,37 +85,62 @@ const IsDesignerBox = styled.div`
 // `
 
 const DesignerInfoBox = styled.div`
-  margin-left:20px;
-  .itemBox {
-    display:flex;
-    position:relative;
-    margin-top:46px;
-    justify-content:space-start;
-    .designerInfoTitle {
-      width:47px;
-      margin-left:150px;
-      font-size:20px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-      color:#707070;
-      text-align:left;
-      opacity:0.5;
+margin-left: 20px;
+.itemBox{
+  display: flex;
+  position: relative;
+  margin-top: 46px;
+  .designerInfoTitle{
+    min-width: 47px;
+    margin-left: 150px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    color: #707070;
+    text-align: left;
+    opacity: 0.5;
+  }
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {   
+  .itemBox{
+    flex-direction:column;
+    .designerInfoTitle{
+      margin-left:0px;
+      margin-bottom:10px;
     }
   }
-`;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  .itemBox{
+    flex-direction:column;
+    .designerInfoTitle{
+      margin-left:0px;
+      margin-bottom:10px;
+    }
+  }
+}
+`
 const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
-  width: 505px;
-  height: 56px;
-  padding-left: 15px;
-  font-size: 20px;
-  font-weight: 500;
-  font-family: Noto Sans KR;
-  opacity: 0.5;
-  background-color: #EFEFEF;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-`;
+width: 505px;
+height: 56px;
+padding-left: 15px;
+font-size: 20px;
+font-weight: 500;
+font-family: Noto Sans KR;
+opacity: 0.5;
+background-color: #EFEFEF;
+border: none;
+border-radius: 5px;
+outline: none;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  width:505px;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  width:80%
+}
+
+`
 
 class SectionBuziness extends Component {
   constructor(props) {
