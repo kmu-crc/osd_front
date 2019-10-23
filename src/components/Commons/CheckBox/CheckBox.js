@@ -2,62 +2,79 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const CheckboxContainer = styled.label`
-    display: block;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    font-family: Noto Sans KR;
-    .label-text {
-        line-height: 25px;
-        text-align: left;
-        margin-left: 49px; 
-        height: 27px;
-        font-size: 17px;
-        font-weight: 500;
-        color: #707070;
-    }
-    input {
-        position: absolute;
-        opacity: 0;
+    .control {
+        font-family: arial;
+        display: block;
+        position: relative;
+        padding-left: 27px;
+        margin-bottom: 5px;
+        padding-top: 1px;
         cursor: pointer;
-        height: 0;
-        width: 0;
-        &:checked ~ .checkmark {
-            background-color: #FF0000;
-            border: 0.5px solid #EFEFEF;
-        }
-        &:checked ~ .checkmark:after {
-            display: block;
-        }
+        font-size: 16px;
     }
-    .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 27px;
-        width: 26px;
-        background-color: #FFFFFF;
-        box-shadow: inset 0px 0px 0px 0.5px #707070;
-        &:after {
-            content: "";
+        .control input {
             position: absolute;
-            display: none;
+            z-index: -1;
+            opacity: 0;
         }
+    .control_indicator {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background: #e6e6e6;
+        border: 0px solid #000000;
+        border-radius: 0px;
     }
-    &:hover input ~ .checkmark {
+    .control:hover input ~ .control_indicator,
+    .control input:focus ~ .control_indicator {
+        background: #cccccc;
     }
-`
+
+    .control input:checked ~ .control_indicator {
+        background: #ff0000;
+    }
+    .control:hover input:not([disabled]):checked ~ .control_indicator,
+    .control input:checked:focus ~ .control_indicator {
+        background: #FF000;
+    }
+    .control input:disabled ~ .control_indicator {
+        background: #e6e6e6;
+        opacity: 35;
+        pointer-events: none;
+    }
+    .control_indicator:after {
+        box-sizing: unset;
+        content: '';
+        position: absolute;
+        display: none;
+    }
+    .control input:checked ~ .control_indicator:after {
+        display: block;
+    }
+    .control-checkbox .control_indicator:after {
+        left: 8px;
+        top: 2px;
+        width: 6px;
+        height: 12px;
+        border: solid #ffffff;
+        border-width: 0 4px 4px 0;
+        transform: rotate(45deg);
+    }
+    .control-checkbox input:disabled ~ .control_indicator:after {
+        border-color: #707070;
+    }
+`;
 class CheckBox extends Component {
     render() {
-        return (<React.Fragment>
-            <CheckboxContainer>
-                <div className="label-text">{this.props.txt}</div><input type="checkbox" checked={this.props.checked} /><span className="checkmark" />
-            </CheckboxContainer>
-        </React.Fragment>)
+        return (<CheckboxContainer>
+            <label className="control control-checkbox">
+                {/* label here */}
+                <input id={this.props.id} onChange={this.props.onChange} type="checkbox" checked={this.props.checked} />
+                <div className="control_indicator"></div>
+            </label>
+        </CheckboxContainer>)
     }
 }
 export default CheckBox

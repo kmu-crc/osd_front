@@ -477,7 +477,7 @@ class CardSourceDetail extends Component {
       ) : null}
 
       <ButtonContainer >
-        {(edit && this.props.uid && this.props.edit) &&
+        {(edit && this.props.edit) &&//this.props.uid &&
           <EditorBottonWrapper>
             <button onClick={this.onSubmit} className="submit" type="button">
               <i className="icon outline save" />저장</button>

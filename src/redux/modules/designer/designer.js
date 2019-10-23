@@ -366,7 +366,7 @@ export function GetDesignInDesignerRequest(id, page) {
 // 디자이너가 속한 그룹 가져오기
 export function GetGroupInDesignerRequest(id, page) {
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/` + id + "/inGroup/" + page, {
+        return fetch(`${host}/designer/designerDetail/${id}/inGroup/${page}`, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
@@ -443,7 +443,8 @@ export function GetLikeDesignerInDesignerRequest(id, page) {
 
 // 디자이너의 디자인 리스트 가져오기
 export function GetMyDesignInDesignerRequest(id, page) {
-    const sql = `${host}/designer/designerDetail/` + id + "/allDesignDesigner/" + page
+    const sql = `${host}/designer/designerDetail/${id}/allDesignDesigner/${page}`;
+    console.log("sql:", sql);
     // const sql = `${host}/designer/designerDetail/` + id + "/myDesign/" + page
     console.log(sql);
     return (dispatch) => {
