@@ -337,7 +337,7 @@ class NewCardModal extends Component {
     render() {
         const { hook } = this.state;
         return (<NewCardDialog open={this.props.open} onClose={this.props.close}>
-            {/* {this.state.loading && <Loading />} */}
+            {this.state.loading && <Loading />}
 
             <div onClick={this.onClose} className="close-box" >
                 <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
