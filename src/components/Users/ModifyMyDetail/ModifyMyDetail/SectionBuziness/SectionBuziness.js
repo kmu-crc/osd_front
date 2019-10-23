@@ -202,8 +202,7 @@ class SectionBuziness extends Component {
 
         <IsDesignerBox>
           <div className="isDesignerText"><div>디자이너 활동 여부</div>
-          <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
-
+          <CheckBox2 type="checkbox" id="designercheckbox" className="cuteCheckBox"
             onChange={this.isDesignerCheck} onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
           </div>
           <div className="tipTitle">TIP</div>
