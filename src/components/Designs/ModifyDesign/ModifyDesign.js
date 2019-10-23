@@ -31,8 +31,15 @@ const MainBanner = styled.div`
 `
 const MainSection = styled.div`
   display: flex;
+  width:100%;
+  // flex-direction:row; 
   margin-top: 60px;
   margin-bottom: 111px;
+  // @media only screen and (max-width : 780px) {
+  //   border:10px solid red;
+    
+  // }
+
 `
 
 const NavMenu = styled.div`
@@ -478,7 +485,7 @@ const emptyCategory = [{ value: 0, text: "" }]
 const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
 
 function Peer(props) {
-  return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px" }}>
+  return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px",marginTop:"10px" }}>
     <div style={{ backgroundSize: "cover", backgroundPosition: "center", backgroundImage: `url(${props.s_img || noface})`, backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
     <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "112px", height: "29px" }}>{props.nick_name}</div>
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>

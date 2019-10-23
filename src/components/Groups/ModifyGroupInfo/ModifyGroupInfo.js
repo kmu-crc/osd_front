@@ -8,91 +8,121 @@ import iDelete from "source/deleteItem.png"
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
 
 const MainBanner = styled.div`
-  width: 1920px;
-  display: flex;
-  justify-content: center;
-  .title{
-    width: 196px;
-    height: 37px;
-    margin-top: 45px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 37px;
-    font-weight: 700;
-    text-align: center;
-  }
+width: 100%;
+height:140px;
+display: flex;
+justify-content: center;
+.title{
+  width: 196px;
+  height: 37px;
+  margin-top: 45px;
+  font-size: 25px;
+  font-family: Noto Sans KR;
+  color: #707070;
+  line-height: 37px;
+  font-weight: 700;
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  align-items:flex-end;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  align-items:flex-end;
+}
 `
 const MainSection = styled.div`
-  display: flex;
-  margin-top: 60px;
-  margin-bottom: 111px;
+display: flex;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+}
 `
 
 const NavMenu = styled.div`
-  width: 433px;
+min-width:433px;
+height:300px;
+position:relative;
+.menuBox{
+  width:325px;
+  position: fixed;
+  top:197px;
+  margin-left:64px;    
+  // background-color:#F5F4F4;
+  border-radius:5px;
+}
+.menuItem{
+  height:62px;
+  padding-left:36px;
+  padding-top:18px;
+  lineHeight:29px;
+  background-color:#F5F4F4;
+  border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor:pointer;
+}
+.deleteMenuItem{
+  height:62px;
+  padding-left:36px;
+  padding-top:18px;
+  lineHeight:29px;
+  background-color:#FFFFFF;
+  border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor:pointer;
+}
+.deleteText{
+  font-family:Noto Sans KR;
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:500;
+  text-align:left;
+  color:#FF0000;
+  border-bottom:${props => props.borderBottom};
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   .menuBox{
-    width:325px;
-    height:62px;
-    position: fixed;
-    top:197px;
-    margin-left:64px;    
-    background-color:#F5F4F4;
-    border-radius:5px;
+    margin-left:0px;   
+    position: static; 
   }
-  .menuItem{
-    height:62px;
-    padding-left:36px;
-    padding-top:18px;
-    lineHeight:29px;
-    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-    cursor:pointer;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  .menuBox{
+    margin-left:0px;  
+    position:static;  
 
   }
-    .menuText{
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:300;
-      text-align:left;
-      color: ${props => props.selected ? "#707070" : "#FF0000"};
-      border-bottom:${props => props.borderBottom};
-    }
-    .deleteText{
-      font-family:Noto Sans KR;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      text-align:left;
-      color:#FF0000;
-      border-bottom:${props => props.borderBottom};
-    }
+}
+`
+
+const MenuText = styled.div`
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:300;
+  text-align:left;
+  color: ${props => props.selected ? "#FF0000" : "#707070"};
+  border-bottom:${props => props.borderBottom};
 `
 const InputBoard = styled.div`
-      width:1422px;
-      height:925px;
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
-
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justifyContent: flex-end;
-      .completeBtn{
-        position:absolute;
-        right:9px;
-        bottom:35px;
-        cursor:pointer;
-        width:104.5px;
-        height:44px;
-        border-radius:5px;
-        background-color:#FF0000;
-        padding-top:6px;
-        padding-left:15px;
-        margin-right:53px;
-      }
-      }
+width:${window.innerWidth>1920?1422+'px':100+'%'};
+padding-bottom:100px;
+margin-bottom:100px;
+position:relative;
+padding-top:45px;
+border-radius:5px;
+border:8px solid #F5F4F4;
+.buttonBox{
+  display: flex;
+  margin-top: 20.54px;
+  justifyContent: flex-end;
+}
 `
 const BtnText = styled.p`
   width: 74px;
@@ -144,7 +174,19 @@ const BtnText = styled.p`
 //        background-position:center center;
 //      }
 //`
-
+const CompleteButton = styled.div`
+  position:absolute;
+  right:9px;
+  bottom:35px;
+  cursor:pointer;
+  width:104.5px;
+  height:44px;
+  border-radius:5px;
+  background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+  padding-top:6px;
+  padding-left:15px;
+  margin-right:53px;
+`;
 class CreateGroup extends Component {
 
   constructor(props) {
@@ -310,10 +352,10 @@ class CreateGroup extends Component {
                 <div className="menuItem"
                   onClick={() => this.gotoStep(index)}
                   borderBottom={index + 1 === scrollmenu.length} key={menu.txt}>
-                  <div className="menuText" selected={this.state.step === index}>{menu.txt}</div>
+                  <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
                 </div>)
             })}
-            <div className="menuItem" onClick={this.handleOnClickDeleteDesign}>
+            <div className="deleteMenuItem" onClick={this.handleOnClickDeleteDesign}>
               <div className="deleteText">그룹 삭제하기</div>
             </div>
           </div>
@@ -336,10 +378,10 @@ class CreateGroup extends Component {
                 thumbnail={this.state.groupThumbnail === "" || this.state.groupThumbnail == null ? noimg : this.state.groupThumbnail} {...this.props} />}
             {/* buttons*/}
             <div className="buttonBox">
-              <div className="completeBtn"
+              <CompleteButton isComplete={true}
                 onClick={this.onSubmit} >
                 <BtnText>완료</BtnText>
-              </div>
+              </CompleteButton>
             </div>
           </form>
         </InputBoard>

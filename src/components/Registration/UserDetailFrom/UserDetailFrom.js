@@ -8,55 +8,87 @@ import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/Sect
 
 
 const MainBanner = styled.div`
-  width: 1920px;
-  display: flex;
-  justify-content: center;
-  .title{
-    width: 196px;
-    height: 37px;
-    margin-top: 45px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 37px;
-    font-weight: 700;
-    text-align: center;
-  }
+width: 100%;
+height:140px;
+display: flex;
+justify-content: center;
+.title{
+  width: 196px;
+  height: 37px;
+  margin-top: 45px;
+  font-size: 25px;
+  font-family: Noto Sans KR;
+  color: #707070;
+  line-height: 37px;
+  font-weight: 700;
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  align-items:flex-end;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  align-items:flex-end;
+}
 `
 const MainSection = styled.div`
-  display: flex;
-  margin-top: 60px;
-  margin-bottom: 111px;
+display: flex;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+}
 `
 const NavMenu = styled.div`
-  width: 433px;
+min-width:433px;
+height:300px;
+position:relative;
+.menuBox{
+  width:325px;
+  position: fixed;
+  top:197px;
+  margin-left:64px;    
+  background-color:#F5F4F4;
+  border-radius:5px;
+}
+.menuItem{
+  height:62px;
+  padding-left:36px;
+  padding-top:18px;
+  lineHeight:29px;
+  border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor:pointer;
+}
+.deleteText{
+  font-family:Noto Sans KR;
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:500;
+  text-align:left;
+  color:#FF0000;
+  border-bottom:${props => props.borderBottom};
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   .menuBox{
-    width:325px;
-    position: fixed;
-    top:197px;
-    margin-left:64px;    
-    background-color:#F5F4F4;
-    border-radius:5px;
+    margin-left:0px;   
+    position: static; 
   }
-  .menuItem{
-    height:62px;
-    padding-left:36px;
-    padding-top:18px;
-    lineHeight:29px;
-    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-    cursor:pointer;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  .menuBox{
+    margin-left:0px;  
+    position:static;  
 
   }
-
-    .deleteText{
-      font-family:Noto Sans KR;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      text-align:left;
-      color:#FF0000;
-      border-bottom:${props => props.borderBottom};
-    }
+}
 `
 const MenuText = styled.div`
   font-size:20px;
@@ -71,32 +103,31 @@ const MenuText = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-      width:1422px;
-      height:${props => props.isModifyAnother === true ? "1850px" : "925px"};
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
-
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justifyContent: flex-end;
-      }
-
+width:${window.innerWidth>1920?1422+'px':100+'%'};
+padding-bottom:100px;
+margin-bottom:100px;
+position:relative;
+padding-top:45px;
+border-radius:5px;
+border:8px solid #F5F4F4;
+.buttonBox{
+  display: flex;
+  margin-top: 20.54px;
+  justifyContent: flex-end;
+}
 `
 const CompleteButton = styled.div`
-      position:absolute;
-      right:9px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
+position:absolute;
+right:9px;
+bottom:35px;
+cursor:pointer;
+width:104.5px;
+height:44px;
+border-radius:5px;
+background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+padding-top:6px;
+padding-left:15px;
+margin-right:53px;
   `
 const HRline = styled.div`
 
@@ -131,7 +162,7 @@ class ModifyMyDetail extends Component {
       thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
-      is_designer: false, team: "", career: "", location: "", contact: "",
+      is_designer: false, team: "", career: "", location: "", contact: "",screenWidth: window.innerWidth,
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -181,12 +212,16 @@ class ModifyMyDetail extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("scroll", this.handleScroll, true)
+    document.addEventListener("scroll", this.handleScroll, true);
+    window.addEventListener("resize", this.handleResize, false);
   }
   handleScroll = () => {
     // let sections = document.querySelectorAll("section")
     document.querySelectorAll("section")
   }
+  handleResize = () => {
+    this.setState({ screenWidth: window.innerWidth })
+  };
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
     window.location.href = menu.tag
@@ -244,21 +279,6 @@ class ModifyMyDetail extends Component {
       key: 0
     };
     formData.files.push(file);
-    // let formData = {
-    //   change_password: this.state.change_password, 
-    //   nick_name: this.state.nick_name, about_me: this.state.about_me,
-    //   password: this.state.password, 
-    //   category_level1: this.state.category_level1, category_level2: this.state.category_level2,
-    //   is_designer: this.state.is_designer, team: this.state.team, career: this.state.career, location:this.state.location, contact: this.state.contact,
-    //   files:[]
-    // };    
-    // let file = {
-    //   value: this.state.thumbnail,
-    //   name: this.state.thumbnail_name,
-    //   key: 0
-    // };
-    // formData.files.push(file);
-
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {

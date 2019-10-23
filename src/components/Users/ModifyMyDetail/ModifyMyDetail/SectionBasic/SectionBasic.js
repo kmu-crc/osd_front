@@ -4,8 +4,10 @@ import noimg from "source/noimg.png"
 
 const ContentsBox = styled.div`
   padding-left: 47px;
+  display:flex;
+  flex-direction:column;
   .title{
-    width: 100px;
+    min-width: 100px;
     height: 29px;
     text-align: left;
     font-size: 20px;
@@ -13,11 +15,24 @@ const ContentsBox = styled.div`
     line-height: 29px;
     color: #707070;
   }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    justify-content:center;
+    .title{
+      margin-bottom:10px;
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    .title{
+      margin-bottom:10px;
+    }
+  }
 `
 const ImageBox = styled.div`
   margin-left: 67px;
-  width: 210px;
-  height: 210px;
+  min-width: 210px;
+  min-height: 210px;
+  max-width: 210px;
+  max-height: 210px;
   border-radius: 50%;
   background: ${props => `url(${props.imageURL})`};
   background-size: cover;
@@ -25,7 +40,8 @@ const ImageBox = styled.div`
 `
 const ThumbnailBox = styled.div`
   display:flex;
-  width:1200px;
+  justify-content:flex-start;
+  flex-direction:row;
   .explainBox{
     margin-left:54px;
     margin-top:100px;
@@ -59,12 +75,19 @@ const ThumbnailBox = styled.div`
       text-align:left;
     }
   }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+  }
 `
 const TitleBox = styled.div`
-  width:1200px;
   display:flex;
   margin-top:96px;
-
+  justify-content:flex-start;
+  flex-direction:row;
   .inputText{
     width:505px;
     height:56px;
@@ -81,13 +104,28 @@ const TitleBox = styled.div`
     outline:none;
     background-color:#EFEFEF;
   }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+    .inputText{
+      margin-left:0px;
+    }
+
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+    .inputText{
+      margin-left:0px;
+      width:80%;
+    }
+  }
 `
 const ExplainBox = styled.div`
-  width: 1200px;
   margin-top: 103px;
   display: flex;
+  justify-content:flex-start;
+  flex-direction:row;
   .inputTextareaBox {
-    width: 717.5px;
+    width: 717px;
     height: 244px;
     margin-left: 70px;
     padding: 22px 26px 34px 32px;
@@ -102,6 +140,20 @@ const ExplainBox = styled.div`
     border-radius: 5px;
     resize: none;
     background-color: #EFEFEF;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+    .inputTextareaBox {
+      margin-left: 0px;
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+
+    .inputTextareaBox {
+      width:90%;
+      margin-left: 0px;
+    }
   }
 `
 //const BasicSecBox = {paddingLeft:"47px"}

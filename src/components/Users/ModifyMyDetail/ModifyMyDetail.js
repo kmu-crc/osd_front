@@ -8,8 +8,10 @@ import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/Se
 import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
 import Loading from "components/Commons/Loading";
 
+
 const MainBanner = styled.div`
-  width: 1920px;
+  width: 100%;
+  height:140px;
   display: flex;
   justify-content: center;
   .title{
@@ -21,16 +23,29 @@ const MainBanner = styled.div`
     color: #707070;
     line-height: 37px;
     font-weight: 700;
-    text-align: center;
+  }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    align-items:flex-end;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    align-items:flex-end;
   }
 `
 const MainSection = styled.div`
   display: flex;
-  margin-top: 60px;
-  margin-bottom: 111px;
+  flex-direction:row;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+      flex-direction:column;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+      flex-direction:column;
+  }
 `
 const NavMenu = styled.div`
-  width: 433px;
+  min-width:433px;
+  height:300px;
+  position:relative;
   .menuBox{
     width:325px;
     position: fixed;
@@ -56,6 +71,26 @@ const NavMenu = styled.div`
     color:#FF0000;
     border-bottom:${props => props.borderBottom};
   }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;   
+      position: static; 
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;  
+      position:static;  
+
+    }
+  }
 `
 const MenuText = styled.div`
   font-size:20px;
@@ -70,8 +105,9 @@ const MenuText = styled.div`
 //  font-size:15px;
 //`
 const InputBoard = styled.div`
-  width:1422px;
-  height:${props => props.isModifyAnother === true ? "2150px" : "925px"};
+  width:${window.innerWidth>1920?1422+'px':100+'%'};
+  padding-bottom:100px;
+  margin-bottom:100px;
   position:relative;
   padding-top:45px;
   border-radius:5px;
@@ -121,7 +157,7 @@ class ModifyMyDetail extends Component {
       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
-      is_designer: false, team: "", career: "", location: "", contact: "",
+      is_designer: false, team: "", career: "", location: "", contact: "",screenWidth: window.innerWidth,
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -177,12 +213,16 @@ class ModifyMyDetail extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("scroll", this.handleScroll, true)
+    document.addEventListener("scroll", this.handleScroll, true);
+    window.addEventListener("resize", this.handleResize, false);
   }
   handleScroll = () => {
     // let sections = document.querySelectorAll("section")
     document.querySelectorAll("section")
   }
+  handleResize = () => {
+    this.setState({ screenWidth: window.innerWidth })
+  };
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
     window.location.href = menu.tag
@@ -328,10 +368,9 @@ class ModifyMyDetail extends Component {
 
     return (<React.Fragment>
       {this.state.loading ? <Loading /> : null}
-      <MainBanner>
+      <MainBanner >
         <div className="title">내 프로필 수정하기</div>
       </MainBanner>
-
       <MainSection id="basic">
         {/* scroll - menu */}
         <NavMenu>
@@ -349,7 +388,7 @@ class ModifyMyDetail extends Component {
 
         {/* form */}
         <InputBoard isModifyAnother={true}>
-          <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
+          <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} /> 
           <HRline />
           <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
           <HRline />

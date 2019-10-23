@@ -3,19 +3,22 @@ import showPw from "source/show_password.svg";
 import styled from "styled-components";
 
 const SectionSecurityContainer = styled.section`
-padding-left:47px;
+  padding-left:47px;
   .pw {
     display: flex;
+    justify-content:flex-start;
+    flex-direction:row;
     .text-label {
-      width: 75px;
+      min-width: 115px;
       height: 29px;
       font-size: 20px;
       line-height: 29px;
       font-weight: 500;
       color: #707070;
+      margin-bottom:10px;
     }
     .input-box {
-      margin-left: 98px;
+      margin-left: 60px;
       width: 505.5px;
       height: 56px;
       background-color: #EFEFEF;
@@ -26,7 +29,7 @@ padding-left:47px;
       color: #707070;
     }
     input {
-      width: 481.5px;
+      width: 95%;
       height: 29px;
       outline: none;
       border: none;
@@ -44,13 +47,16 @@ padding-left:47px;
   .pw-verify {
     margin-top: 55px;
     display: flex;
+    justify-content:flex-start;
+    flex-direction:row;
     .text-label {
-      width: 115px;
+      min-width: 115px;
       height: 29px;
-      color: #707070;
       font-size: 20px;
-      font-weight: 500;
       line-height: 29px;
+      font-weight: 500;
+      color: #707070;
+      margin-bottom:10px;
     }
     .input-box {
       width: 505.5px;
@@ -68,13 +74,44 @@ padding-left:47px;
       border: none;
       margin-left: 12px;
       margin-top: 13px;
-      width: 481.5px;
+      width: 95%;
       height: 29px;
       line-height: 29px;
       color: #707070;
       background-color: #EFEFEF;
     }
   }
+
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+      .pw {
+        flex-direction:column;
+        .input-box{
+          margin-left:0px;
+        }
+      }
+      .pw-verify {
+        flex-direction:column;
+        .input-box{
+          margin-left:0px;
+        }
+      }
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+      .pw {
+        flex-direction:column;
+        .input-box{
+          margin-left:0px;
+          width:80%;
+        }
+      }
+      .pw-verify {
+        flex-direction:column;
+        .input-box{
+          margin-left:0px;
+          width:80%;
+        }
+      }
+    }
 `;
 class SectionSecurity extends Component {
   constructor(props) {
@@ -103,15 +140,19 @@ class SectionSecurity extends Component {
       <SectionSecurityContainer id="security">
         {/* pw */}
         <div className="pw">
+
+
           <div className="text-label" >비밀번호</div>
-          <div className="input-box" >
-            <input type={this.state.showPass === true ? "text" : "password"} maxLength="50" onChange={this.onChangePassword} value={this.state.password} placeholder="비밀번호를 입력하세요." />
+          <div style={{display:"flex",flexDirection:"row"}}>
+              <div className="input-box" >
+                <input type={this.state.showPass === true ? "text" : "password"} maxLength="50" onChange={this.onChangePassword} value={this.state.password} placeholder="비밀번호를 입력하세요." />
+              </div>
+              <div onClick={this.onClickShowPassword} className="showpw" ><img alt="" src={showPw} /></div>
           </div>
-          <div onClick={this.onClickShowPassword} className="showpw" ><img alt="" src={showPw} /></div>
-        </div>
+          </div>
         {/* pw verify */}
         <div className="pw-verify">
-          <div className="text-label">비밀번호 확인</div>
+          <div className="text-label" >비밀번호 확인</div>
           <div className="input-box">
             <input type="password" maxLength="50" onChange={this.onChangeCheckedPassword} value={this.state.passwordcheck} placeholder="비밀번호를 입력하세요." />
           </div>
