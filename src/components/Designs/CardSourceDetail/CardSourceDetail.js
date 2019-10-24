@@ -30,7 +30,7 @@ const UpBtn = styled.button`
   display: none;
   position: absolute;
   top: 0;
-  left: 90%;
+  left: 85%;
   transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
@@ -56,7 +56,7 @@ const DownBtn = styled.button`
   display: none;
   position: absolute;
   top: 0;
-  left: 95%;
+  left: 90%;
   transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
@@ -82,7 +82,7 @@ const DelBtn = styled.button`
   display: none;
   position: absolute;
   top: 0;
-  left: 100%;
+  left: 95%;
   transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
@@ -183,12 +183,10 @@ const ButtonContainer = styled.div`
   }
 `;
 const EditorBottonWrapper = styled.div`
-    position: absolute;
     width: max-content;
-    top: ${props => props.top}; //this.state.top, 
-    left: ${props => props.left}; //this.state.left, 
+    margin: auto;
+    margin-top: 10px;
     padding: 15px;
-    // box-shadow: 0px 2px 10px 2px rgba(0,0,0, 0.25);
     background: #FFFFFF;
     border-radius: 25px;
     z-index: 907;
@@ -418,15 +416,13 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading } = this.state;
     return (<div>
-      {loading && <Loading />}
+      {loading ? <Loading /> : null}
       <ButtonContainer>
         {edit === false && this.props.edit && this.props.isTeam && (content && content.length > 0 ?
           (<div className="content-edit-wrapper">
-            <button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">
-              컨텐츠 수정</button></div>) :
+            <button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">컨텐츠 수정</button></div>) :
           (<div className="content-add-wrapper">
-            <button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >
-              컨텐츠 추가</button></div>))}
+            <button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >컨텐츠 추가</button></div>))}
       </ButtonContainer>
 
       {/* view mode */}
@@ -477,7 +473,7 @@ class CardSourceDetail extends Component {
       ) : null}
 
       <ButtonContainer >
-        {(edit && this.props.uid && this.props.edit) &&
+        {(edit && this.props.edit && this.props.uid) &&
           <EditorBottonWrapper>
             <button onClick={this.onSubmit} className="submit" type="button">
               <i className="icon outline save" />저장</button>

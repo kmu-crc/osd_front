@@ -77,14 +77,15 @@ class DesignerPageBody extends Component {
     }
     setTab = (props) => {
         const { total_design, total_group, total_favorite } = props;
+        // console.log("index", props);
         let tabindex = 0;
         if (total_group === 0) {
             tabindex = 1;
         }
-        if (total_design === 0) {
+        if (total_group === 0 && total_design === 0) {
             tabindex = 2;
         }
-        if (total_favorite === 0) {
+        if (total_group === 0 && total_design === 0 && total_favorite === 0) {
             tabindex = 0;
         }
         if (total_group !== 0 && total_design !== 0 && total_favorite !== 0) {
@@ -125,9 +126,9 @@ class DesignerPageBody extends Component {
         return (
             <DesignerDetailBody>
                 <div className="MypageCategory">
-                    <CategoryItems paddingLeft={70} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group)})</CategoryItems>
-                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>디자인({NumberFormat(Count.total_design)})</CategoryItems>
-                    <CategoryItems paddingLeft={40} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>관심항목({NumberFormat(Count.total_favorite)})</CategoryItems>
+                    <CategoryItems paddingLeft={70} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.joined_group || 0)})</CategoryItems>
+                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</CategoryItems>
+                    <CategoryItems paddingLeft={40} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>관심항목({NumberFormat(Count.total_favorite || 0)})</CategoryItems>
                 </div>
 
                 {this.state.cateIndex === 0 &&

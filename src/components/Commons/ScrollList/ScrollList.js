@@ -4,16 +4,24 @@ import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
-
+// @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+//   margin-right: ${props =>
+//     props.type === "design" ? osdcss.design_margin.small.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.small.marginRightLast :
+//     props.type === "designer" ? osdcss.designer_margin.small.marginRightLast : 0}px; 
+// }
 // css 
 const FlexContainer = styled.div`
+  width:100%;
+  padding: 0;
+  position: relative;
   @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 75 : props.type === "group" ? 10 : 10}px;
-    margin-left: ${props => props.type === "design" ? 75 : props.type === "group" ? 10 : 10}px;
+    margin-left: ${props => props.type === "design" ? 30 : props.type === "group" ? 10 : 10}px;
     width: ${osdcss.resolutions.SmallMaxWidth}px;
+
   }
   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 162 : props.type === "group" ? 215 : 67}px;
+    margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
     width: ${osdcss.resolutions.MediumMaxWidth}px;
   }
   @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
@@ -24,8 +32,13 @@ const FlexContainer = styled.div`
     margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
     width: ${osdcss.resolutions.LargeMaxWidth}px;
   }
-  padding: 0;
-  position: relative;
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+      overflow-x: overlay;
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+      overflow-x: overlay;
+    }
+
 `;
 const FlexBox = styled.div`
   flex: 0 0 ${props => props.width}px;
@@ -35,12 +48,7 @@ const FlexBox = styled.div`
   margin-right: ${props => props.marginRight}px;
   &.bottom-last { margin-bottom: ${props => props.marginBottomLast}px; }
   &.right-last { 
-    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.small.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.small.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.small.marginRightLast : 0}px; 
-    }
+    
     @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {   margin-right: ${props =>
     props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
       props.type === "group" ? osdcss.group_margin.medium.marginRightLast :

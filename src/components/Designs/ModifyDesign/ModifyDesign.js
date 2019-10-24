@@ -12,6 +12,7 @@ import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
 import { Dropdown, Modal } from "semantic-ui-react";
 import Logo from "source/logo.png"
+import CheckBox2 from "components/Commons/CheckBox";
 
 const MainBanner = styled.div`
 width: 100%;
@@ -134,9 +135,8 @@ border:8px solid #F5F4F4;
   margin-top: 20.54px;
   justifyContent: flex-end;
 }
-
 `
-const ButtonBox=styled.div`
+const ButtonBox = styled.div`
       height:100px;
       display: flex;
       margin-top: 30.54px;
@@ -169,14 +169,11 @@ const CompleteButton = styled.div`
       margin-right:53px;
   `
 const HRline = styled.div`
-
-    width:95%;
-    margin-top:60px;
-    margin-bottom:67px;
-    border-bottom:5px solid #F5F4F4;
-
-  `
-
+  width:95%;
+  margin-top:60px;
+  margin-bottom:67px;
+  border-bottom:5px solid #F5F4F4;
+`
 const BtnText = styled.p`
   width: 74px;
   padding: 0px;
@@ -187,39 +184,6 @@ const BtnText = styled.p`
   font-size: 20px;
   color: #FFFFFF;
 `;
-
-//const PeerBox = styled.div`
-//  display:flex;
-//  margin-right:50px;
-//  .nameLabel{
-//    width:112px;
-//    height:29px;
-//    margin-top:1px;
-//    margin-left:10px;
-//    font-size:20px;
-//    font-weight:500;
-//    font-family:Noto Sans KR;
-//    color:#707070;
-//    text-align:left;
-//    line-height:29px;
-//    white-space: nowrap;
-//    overflow:hidden;
-//    text-overflow:ellipsis;
-//  }
-//  .closeButton{
-//    margin-top:7px;
-//    margin-left:14px;
-//  }
-//`
-//const PeerIcon = styled.div`
-//  width:30px;
-//  height:30px;
-//  border-radius:50%;
-//  background: ${props => `url(${props.imageURL})`};
-//  background-size:cover;
-//  background-position:center center;
-//  background-color:#D6D6D6;
-//`
 
 //---sectionbasic---//
 const ContentsBox = styled.div`
@@ -274,15 +238,15 @@ const ImageBox = styled.div`
   background-size:cover;
   background-position:center center;
   position:relative;
-  .forkedImg{
-    z-index:500;
-    width:32px;
-    height:70px;
-    position:absolute;
-    right:21px;
-    background-image:url(${forked});
-    background-size:cover;
-  }
+    .forkedImg{
+      z-index:500;
+      width:32px;
+      height:70px;
+      position:absolute;
+      right:21px;
+      background-image:url(${forked});
+      background-size:cover;
+    }
 `
 const ThumbnailBox = styled.div`
 display:flex;
@@ -355,14 +319,13 @@ const TitleBox = styled.div`
         .inputText{
           margin-left:0px;
         }
-
       }
       @media only screen and (min-width : 360px) and (max-width:780px) {
         flex-direction:column;
         .inputText{
           margin-left:0px;
           width:80%;
-        }
+       }
       }
 `
 const ExplainBox = styled.div`
@@ -514,7 +477,14 @@ const CheckBox = styled.input.attrs({ type: 'checkbox' })`
       border:1px solid #707070 !important;
       border-radius:5px !important;  
 `
-
+// const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+//   width: 25px;
+//   height: 25px;
+//   margin-right: 17px;
+//   background-color: #EFEFEF !important;
+//   border: 1px solid #707070 !important;
+//   border-radius: 5px !important;  
+// `
 const LicenseBox = styled.div`
 display:flex;
 margin-top:22px;
@@ -541,97 +511,98 @@ margin-top:22px;
 }
 `
 const LoadingBox = styled.div`
-      padding-top:200px;
-      .IconBox{
-        width:100px;
-        height:100px;
-        margin:0 auto;
-      }
-      .loadingText{
-        margin-top:20px;
-        width:100%;
-        font-family:Noto Sans KR;
-        font-size:20px;
-        text-align:center;
-      }
-
-`
+  padding-top: 200px;
+  .IconBox {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+  .loadingText{
+    margin-top: 20px;
+    width: 100%;
+    font-family: Noto Sans KR;
+    font-size: 20px;
+    text-align: center;
+  }
+`;
 const LoadingIconBox = styled.div`
-        width:100px;
-        height:100px;
-        margin:0 auto;
-        background: ${props => `url(${props.imageURL})`};
-        background-position:center center;
-        background-repeat:no-repeat;
+  width:100px;
+  height:100px;
+  margin:0 auto;
+  background: ${props => `url(${props.imageURL})`};
+  background-position:center center;
+  background-repeat:no-repeat;
+  -webkit-animation: jello-horizontal 0.9s infinite both;
+            animation: jello-horizontal 0.9s infinite both;
+  
+  @-webkit-keyframes jello-horizontal {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+    30% {
+      -webkit-transform: scale3d(1.25, 0.75, 1);
+              transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+      -webkit-transform: scale3d(0.75, 1.25, 1);
+              transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.15, 0.85, 1);
+              transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      -webkit-transform: scale3d(0.95, 1.05, 1);
+              transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+      -webkit-transform: scale3d(1.05, 0.95, 1);
+              transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes jello-horizontal {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+    30% {
+      -webkit-transform: scale3d(1.25, 0.75, 1);
+              transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+      -webkit-transform: scale3d(0.75, 1.25, 1);
+              transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.15, 0.85, 1);
+              transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      -webkit-transform: scale3d(0.95, 1.05, 1);
+              transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+      -webkit-transform: scale3d(1.05, 0.95, 1);
+              transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+  }
+`;
 
-          -webkit-animation: jello-horizontal 0.9s infinite both;
-                  animation: jello-horizontal 0.9s infinite both;
-        
-        @-webkit-keyframes jello-horizontal {
-          0% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-          30% {
-            -webkit-transform: scale3d(1.25, 0.75, 1);
-                    transform: scale3d(1.25, 0.75, 1);
-          }
-          40% {
-            -webkit-transform: scale3d(0.75, 1.25, 1);
-                    transform: scale3d(0.75, 1.25, 1);
-          }
-          50% {
-            -webkit-transform: scale3d(1.15, 0.85, 1);
-                    transform: scale3d(1.15, 0.85, 1);
-          }
-          65% {
-            -webkit-transform: scale3d(0.95, 1.05, 1);
-                    transform: scale3d(0.95, 1.05, 1);
-          }
-          75% {
-            -webkit-transform: scale3d(1.05, 0.95, 1);
-                    transform: scale3d(1.05, 0.95, 1);
-          }
-          100% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-        }
-        @keyframes jello-horizontal {
-          0% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-          30% {
-            -webkit-transform: scale3d(1.25, 0.75, 1);
-                    transform: scale3d(1.25, 0.75, 1);
-          }
-          40% {
-            -webkit-transform: scale3d(0.75, 1.25, 1);
-                    transform: scale3d(0.75, 1.25, 1);
-          }
-          50% {
-            -webkit-transform: scale3d(1.15, 0.85, 1);
-                    transform: scale3d(1.15, 0.85, 1);
-          }
-          65% {
-            -webkit-transform: scale3d(0.95, 1.05, 1);
-                    transform: scale3d(0.95, 1.05, 1);
-          }
-          75% {
-            -webkit-transform: scale3d(1.05, 0.95, 1);
-                    transform: scale3d(1.05, 0.95, 1);
-          }
-          100% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-        }
-      }
-`
-
-const emptyCategory = [{ value: 0, text: "" }]
-const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
+const emptyCategory = [{ value: 0, text: "" }];
+const scrollmenu = [
+  { step: 0, txt: "기본 정보", tag: "#basics" },
+  { step: 1, txt: "부가 정보", tag: "#additional" },
+  { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }
+];
 
 function Peer(props) {
   return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px",marginTop:"10px" }}>
@@ -639,7 +610,8 @@ function Peer(props) {
     <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "112px", height: "29px" }}>{props.nick_name}</div>
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
   </div>)
-}
+};
+
 class ModifyDesign extends Component {
   constructor(props) {
     super(props);
@@ -828,11 +800,9 @@ class ModifyDesign extends Component {
     let arrSummaryList = [];
     if (this.state.members != null && this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {
-        return (
-          <div onClick={() => this.removeMember(item.user_id)} key={index}>
-            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
-          </div>
-        )
+        return (<div onClick={() => this.removeMember(item.user_id)} key={index}>
+          <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+        </div>)
       });
     }
     const DeleteDesignModal = () => {
@@ -855,7 +825,6 @@ class ModifyDesign extends Component {
     let boardWidth = 125;
     if (step === 3) boardWidth = 0;
     return (
-
       <React.Fragment>
         {loading ? <Loading /> : null}
         {deleteModal ? <DeleteDesignModal /> : null}
@@ -864,8 +833,7 @@ class ModifyDesign extends Component {
             <div className="title">디자인 수정하기</div>
           </MainBanner>
           <MainSection>
-
-            {/* scroll - menu */}
+            {/* SCROLL - MENU */}
             <NavMenu>
               <div className="menuBox">
                 {scrollmenu.map((menu, index) => {
@@ -881,15 +849,14 @@ class ModifyDesign extends Component {
                   <div className="deleteText">디자인 삭제하기</div>
                 </MenuItem>
               </div>
-
             </NavMenu>
             {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
 
-            {/* form */}
+            {/* FORM */}
             <InputBoard boardWidth={boardWidth}>
               {/* <form ref={(ref) => this.form = ref}> */}
               <section style={{ display: step === 0 ? "block" : "none" }} >
-                {/* thumbnail */}
+                {/* THUMBNAIL */}
                 <ContentsBox>
                   <ThumbnailBox>
                     <div className="title">프로필 사진</div>
@@ -906,14 +873,14 @@ class ModifyDesign extends Component {
                     </div>
                   </ThumbnailBox>
 
-                  {/* title */}
+                  {/* TITLE */}
                   <TitleBox>
                     <div className="title">제목</div>
                     <input onChange={this.onChangeValueTitle}
                       className="inputText" name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
                       onBlur={this.checkFinishBasic} />
                   </TitleBox>
-                  {/* explanation */}
+                  {/* EXPLANATION */}
                   <ExplainBox>
                     <div className="title">디자인 설명</div>
                     <textarea className="inputTextareaBox" onChange={this.onChangeValueExplanation}
@@ -922,8 +889,6 @@ class ModifyDesign extends Component {
                   </ExplainBox>
                 </ContentsBox>
               </section>
-
-
 
               <section style={{ display: step === 1 ? "block" : "none" }} >
                 <ContentsBox>
@@ -951,7 +916,7 @@ class ModifyDesign extends Component {
                       디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
                   </InviteMemberBox>
                   <div>
-                    {/* invited member*/}
+                    {/* INVITED MEMBER */}
                     <InviteMemberListBox>
                       <div className="memberList">
                         {arrSummaryList}
@@ -959,24 +924,25 @@ class ModifyDesign extends Component {
                     </InviteMemberListBox>
                     {/* LEAVE ME ALONE */}
                     <NoInviteMemberBox>
-                      <CheckBox onChange={this.LeaveMeAlone} type="checkbox" />
+                      <CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" />
                       <span className="textLabel">맴버를 초대하지 않습니다.</span>
                     </NoInviteMemberBox>
                   </div>
                   <HRline />
 
-                  {/* license*/}
+                  {/* LICENSE */}
                   <LicenseBox>
                     <div className="title">라이센스</div>
                     <div className="licenseList">
                       <div className="licenseItem">
-                        <CheckBox onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" />
-                        <span className="textLabel">상업적으로 이용이 가능합니다</span></div>
+                        <CheckBox2 onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" />
+                        <span className="textLabel">상업적으로 이용이 가능합니다</span>
+                      </div>
                       <div className="licenseItem">
-                        <CheckBox onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" />
+                        <CheckBox2 onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" />
                         <span className="textLabel">원작자를 표시합니다</span></div>
                       <div className="licenseItem">
-                        <CheckBox onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" />
+                        <CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" />
                         <span className="textLabel">추후에 수정이 가능합니다</span></div>
                     </div>
                   </LicenseBox>
@@ -984,8 +950,6 @@ class ModifyDesign extends Component {
                   {/* <div style={{ marginTop: "150.5px", marginLeft: "auto", marginRight: "52px", width: "545px", height: "69px", textAlign: "right", fontWeight: "300", fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#FF0000", opacity: "1" }} >마지막 단계만이 남아있습니다!<br />단계 / 컨텐츠 정보 탭에서 기본적인 디자인의 뼈대를 구성해 주세요</div> */}
                 </ContentsBox>
               </section>
-
-
 
               <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
                 <div>
@@ -998,7 +962,7 @@ class ModifyDesign extends Component {
                 </div>
               </section>
 
-              {/* buttons*/}
+              {/* BUTTONS */}
               <ButtonBox>
                 {step === 0 && <React.Fragment>
                   <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
@@ -1016,7 +980,6 @@ class ModifyDesign extends Component {
             </InputBoard>
           </MainSection>
         </div>
-
       </React.Fragment>)
   }
 }

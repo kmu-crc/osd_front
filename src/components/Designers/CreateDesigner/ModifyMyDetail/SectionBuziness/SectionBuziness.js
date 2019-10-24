@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import CheckBox2 from "components/Commons/CheckBox";
 
 const ContentsBox = styled.div`
     padding-left:47px;
@@ -21,6 +22,7 @@ const ContentsBox = styled.div`
       color: #FF0000;
       text-align: left;
     }
+
     .tipDescription {
       width: 550px;
       margin-top: 5px;
@@ -52,7 +54,7 @@ const ContentsBox = styled.div`
         width: 90%;
         }
     }
-`
+`;
 const IsDesignerBox = styled.div`
 display:flex;
 flex-direction:row;
@@ -72,15 +74,15 @@ flex-direction:row;
     flex-direction:column;
 }
 
-`
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-      width:25px;
-      height:25px;
-      margin-left:10px;
-      background-color:#EFEFEF !important;
-      border:1px solid #707070 !important;
-      border-radius:5px !important;  
-`
+
+// const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+//       width:25px;
+//       height:25px;
+//       margin-left:10px;
+//       background-color:#EFEFEF !important;
+//       border:1px solid #707070 !important;
+//       border-radius:5px !important;  
+// `
 
 const DesignerInfoBox = styled.div`
 margin-left: 20px;
@@ -208,8 +210,8 @@ class SectionBuziness extends Component {
       <ContentsBox>
         <IsDesignerBox>
           <div className="isDesignerText">디자이너 활동 여부</div>
-          <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
-            onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
+          <CheckBox2 type="checkbox" id="designercheckbox" //className="cuteCheckBox"
+            onChange={this.isDesignerCheck} checked={this.state.isDesigner} />
           <div className="tipTitle">TIP</div>
         </IsDesignerBox>
         <div className="tipDescription">

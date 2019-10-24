@@ -18,8 +18,8 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 
 const CardDialog = styled(Modal)`
-    margin-top:50px !important;
-    margin-bottom:50px !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
     min-width: 1530px;
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -86,11 +86,8 @@ const CardDialog = styled(Modal)`
     .close-box {
         cursor:pointer;
         position: absolute;
-        top:0px;
-        right:-60px;
-        //left: 100%;
-        // margin-top: -32.07px;
-        // margin-left: 111.85px;
+        top: 10px;
+        right: 10px;
     }
     .content-wrapper {
         position: relative;
@@ -418,7 +415,8 @@ class CardModal extends Component {
                     {movableNext && <div className="nextArrow"></div>}
 
                     <div className="close-box" onClick={this.onClose} >
-                        <Cross angle={45} color={"#EFEFEF"} weight={3} width={33} height={33} /></div>
+                        <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+                    </div>
 
                     <div className="content-wrapper" >
                         {this.state.edit === false

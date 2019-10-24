@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import CheckBox2 from "components/Commons/CheckBox";
 
 const ContentsBox = styled.div`
   padding-left:47px;
@@ -65,6 +66,7 @@ const IsDesignerBox = styled.div`
     font-weight: 500;
     line-height:29px;
     color: #707070;
+    margin-right: 15px;
   }
   @media only screen and (min-width : 780px) and (max-width:1440px) {
     flex-direction:column;
@@ -72,14 +74,6 @@ const IsDesignerBox = styled.div`
   @media only screen and (min-width : 360px) and (max-width:780px) {
       flex-direction:column;
   }
-`
-const CheckBox = styled.input`
-  width: 25px;
-  height: 25px;
-  margin-left: 10px;
-  background-color: #EFEFEF !important;
-  border: 1px solid #707070 !important;
-  border-radius: 5px !important;  
 `
 const DesignerInfoBox = styled.div`
   margin-left: 20px;
@@ -208,7 +202,7 @@ class SectionBuziness extends Component {
 
         <IsDesignerBox>
           <div className="isDesignerText"><div>디자이너 활동 여부</div>
-          <CheckBox type="checkbox" id="designercheckbox" className="cuteCheckBox"
+          <CheckBox2 type="checkbox" id="designercheckbox" className="cuteCheckBox"
             onChange={this.isDesignerCheck} onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
           </div>
           <div className="tipTitle">TIP</div>

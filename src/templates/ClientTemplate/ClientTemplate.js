@@ -20,6 +20,15 @@ const ContentContainer = styled.div`
   -ms-transition: all 0.45s;
   -o-transition: all 0.45s;
   transition: all 0.45s;
+
+  // @media only screen and (min-width : 780px) and (max-width:1440px) {
+  //   overflow-y: overlay;
+  // overflow-x: overlay;
+  // }
+  // @media only screen and (min-width : 360px) and (max-width:780px) {
+  //   overflow-y: overlay;
+  //   overflow-x: overlay;
+  // }
 `
 const ChildrenContainer = styled.div`
   margin-left: auto;

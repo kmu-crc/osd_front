@@ -136,7 +136,7 @@ export class FormInput extends Component {
     delete newProps.onChange;
     return (
       <div>
-        <input status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <input autocomplete="off" status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );

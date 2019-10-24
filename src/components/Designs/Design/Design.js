@@ -149,6 +149,8 @@ const DesignElement = styled.div`
     margin-right: 0px;
     cursor: default;
   }
+
+
 `;
 
 const DesignEmpty = {
