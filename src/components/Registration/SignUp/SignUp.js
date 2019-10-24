@@ -93,18 +93,41 @@ const CustomModal = styled(Modal)`
     }
 
 }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        min-width:90%;
+        .termBox{
+            width:100%;
+            left:0px;
+        }
+        .termText{
+            width:90%;
+        }
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        min-width:90%;
+        .termBox{
+            left:0px;
+            width:90%;
+        }
+        .termText{
+            width:90%;
+            width:90%;
+        }
+    }
 `
 const SignUPBox = styled.form`
+    width:64%;
     margin-top:49px;
-    margin-left:225px;
+    margin-left:18%;
     .itemBox{
         margin-top:30px;
         .normalBox{
-            display:flex;            
+            display:flex;   
+            flex-wrap:wrap;
             margin-top:16px;
         }
         .normalText{
-            margin-left:21px;
+            margin-left:40px;
             margin-top:3px;
             font-size:17px;
             font-weight:300;
@@ -112,8 +135,7 @@ const SignUPBox = styled.form`
             cursor:pointer;
         }
         .redBoldText{
-            position:absolute;
-            right:250px;
+            margin-left:15px;
             font-size:20px;
             font-weight:500;
             color:#FF0000;
@@ -122,9 +144,8 @@ const SignUPBox = styled.form`
             cursor:pointer;
             text-decoration:underline;
         }
-        .blackBoldText{
-            position:absolute;
-            right:340px;
+        .blackBoldText{            
+            margin-left:15px;
             font-size:20px;
             font-weight:500;
             color:#707070;
@@ -133,7 +154,11 @@ const SignUPBox = styled.form`
             cursor:pointer;
         }
     }
-
+    .subItemBox{
+        display:flex;
+        margin-top:65px;
+        height:29px;
+    }
     .titleLabel{
         width:300px;
         height:29px;
@@ -144,11 +169,19 @@ const SignUPBox = styled.form`
         line-height:29px;
         text-align:left;
     }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-  
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        .itemBox{
+            .normalBox{
+                margin-top:55px;
+            }
+        }
+    }
 `
 const InputText = styled.input.attrs({ type: 'text' })`
-    width:708px;
+    width:100%;
     height:48px;
     margin-top:16px;
     padding-left:20px;
@@ -159,10 +192,15 @@ const InputText = styled.input.attrs({ type: 'text' })`
     outline:none;
     border:none;
     border-radius:15px;
-    
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        width:100%;
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        width:100%;
+    }
 `
 const InputPass = styled.input.attrs({ type: 'password' })`
-    width:708px;
+    width:100%;
     height:48px;
     margin-top:16px;
     padding-left:20px;
@@ -173,7 +211,12 @@ const InputPass = styled.input.attrs({ type: 'password' })`
     outline:none;
     border:none;
     border-radius:15px;
-    
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        width:100%;
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        width:100%;
+    }
 `
 const CheckboxContainer = styled.label`
     display: block;
@@ -257,9 +300,9 @@ class SignUpModal extends Component {
         this.setState({ nick_name: event.target.value })
     }
     onChecked(event) {
-        !this.state.checked && alert("이용약관을 보시고 동의하셔야 합니다. '이용약관 보기'를 클릭하시기 바랍니다.") && this.setState({ checked: false });
-        this.state.checked && this.setState({ checked: false });
-        // this.setState({ checked: !this.state.checked, open_term: false });
+        // !this.state.checked && alert("이용약관을 보시고 동의하셔야 합니다. '이용약관 보기'를 클릭하시기 바랍니다.") && this.setState({ checked: false });
+        // this.state.checked && this.setState({ checked: false });
+         this.setState({ checked: !this.state.checked, open_term: false });
     }
     openterm = () => {
         this.setState({ open_term: true })
@@ -434,14 +477,13 @@ class SignUpModal extends Component {
                                         <CheckBox2 id="agree" onChange={this.onChecked} checked={this.state.checked} value={this.state.checked} />
                                         <CheckboxContainer>
                                             <div className="label-text">이용약관에 동의하시나요?</div>
-                                            {/* {console.log(this.state.checked)} */}
-                                            {/* <InputText id="agree" onClick={this.onChecked} type="checkbox" value={this.state.checked} /> */}
-                                            {/* <span className="checkmark" /> */}
                                         </CheckboxContainer>
                                         <div className="normalText" onClick={this.openterm}>이용약관 보기</div>
                                     </div>
+                                    <div className="subItemBox" style={{justifyContent:"flex-end"}}>
                                     <div className="blackBoldText" onClick={this.onBack}>뒤로</div>
                                     <div className="redBoldText" onClick={this.onSubmit}>회원가입</div>
+                                    </div>
                                 </div>
                             </SignUPBox>
                         </Modal.Content>

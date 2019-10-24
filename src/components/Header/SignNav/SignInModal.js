@@ -36,11 +36,10 @@ const MainBox=styled.form`
 
     }
     .subItemBox{
+        display:flex;
         margin-top:65px;
         height:29px;
         .redUnderlineText{
-            position:absolute;
-            right:250px;
             font-size:20px;
             font-weight:500;
             color:#FF0000;
@@ -48,16 +47,16 @@ const MainBox=styled.form`
             text-align:left;
             cursor:pointer;
             text-decoration:underline;
+            margin-left:15px;
         }
         .blackBoldText{
-            position:absolute;
-            right:340px;
             font-size:20px;
             font-weight:500;
             color:#707070;
             line-height:29px;
             text-align:left;
             cursor:pointer;
+            margin-left:15px;
         }
     }
     .titleLabel{
@@ -82,7 +81,7 @@ const MainBox=styled.form`
     }
 `
 const InputText = styled.input.attrs({type:'text'})`
-    width:708px;
+    width:100%;
     height:48px;
     margin-top:16px;
     padding-left:20px;
@@ -93,7 +92,13 @@ const InputText = styled.input.attrs({type:'text'})`
     outline:none;
     border:none;
     border-radius:15px;
-    
+
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        width:100%;
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        width:100%;
+    }
 `
 const CustomModal = styled(Modal)`
     min-width: 1200px;
@@ -112,6 +117,12 @@ const CustomModal = styled(Modal)`
         width: 450px;
         height: 37px;
     }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        min-width:90%;
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        min-width:90%;
+    }
 `
 const SmallCustomModal = styled(Modal)`
     min-width: 1200px;
@@ -129,6 +140,12 @@ const SmallCustomModal = styled(Modal)`
         color: #FF0000;
         text-align: center;
         line-height: 37px;
+    }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        min-width:90%;
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        min-width:90%;
     }
 `
 class SignInModal extends Component {
@@ -264,7 +281,7 @@ class SignInModal extends Component {
                                     onChange={this.handlePasswordChange}  placeholder="비밀번호를 입력하세요." />
                         </div>
 
-                        <div className="subItemBox">
+                        <div className="subItemBox" style={{justifyContent:"flex-end"}}>
                             <div className="redUnderlineText" onClick={this.signin}>로그인</div>
                         </div>
                         <div className="subItemBox"> 
@@ -287,9 +304,9 @@ class SignInModal extends Component {
                     <div className="titleLabel">비밀번호 찾기</div>
                     <div className="subLabel">비밀번호를 찾고자하는 아이디를 입력해주세요</div>
                         <InputText name='email' value={email || ""} onChange={this.handeEmailChange}  placeholder="아이디(이메일주소)를 입력하세요(ex. opensrcdesign@gmail.com)." />
-                    <div className="subItemBox">
+                    <div className="subItemBox" style={{justifyContent:"flex-end"}}>
                     <div className="blackBoldText" onClick={this.onBack}>뒤로</div>
-                    <div className="redUnderlineText" onClick={this.onSubmit}>전송</div>
+                    <div className="redUnderlineText"  onClick={this.onSubmit}>전송</div>
                     </div>
                 </MainBox>
             </Modal.Content>

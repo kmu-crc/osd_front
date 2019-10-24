@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const OrderWrapper = styled.div`
-    width:${1920+"px"};
+    width:100%;
     z-index:820;
     display:flex;
     justify-content:flex-end;

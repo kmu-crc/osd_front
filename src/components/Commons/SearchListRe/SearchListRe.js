@@ -10,18 +10,22 @@ import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContai
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
 
 const SearchForm = styled.div`
+    width:100%;
     font-family: Noto Sans KR;
     position:relative;
     margin-top:50px;
+    justify-content:column;
+    .searchBox{
+        display:flex;
+        justify-content:center;
+    }
     .inputBox{
         z-index:1000;
-        justify-content: space-start;
+        width:760px;
         position:relative;
         padding-top:105px;
-        left: 580px;
         height: 49px;
         border-bottom: 1.5px solid black;
-        width:760px;
     }
     .zoomImg {
         z-index:500;
@@ -61,9 +65,7 @@ const SearchForm = styled.div`
         z-index: 10001;
     }
     .OrderBox{
-        border: 1xp solid red;
-        top: 220px;
-        left: 1736px;
+
     }
     .CategoryBox{
         position: relative;
@@ -85,6 +87,16 @@ const SearchForm = styled.div`
         letter-spacing: 0;
         color: #707070;
         opacity: 1;
+    }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+        .inputBox{
+            width:50%;
+        }
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        .inputBox{
+            width:60%;
+        }
     }
 `;
 const SearchContainer = styled.div`
@@ -198,15 +210,17 @@ class SearchListRe extends Component {
                     <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
                         category1={category1} category2={category2[this.state.main_category.value - 1]} main_selected={main_category} sub_selected={sub_category} /> : <React.Fragment></React.Fragment>}
                 <SearchForm>
-                    <div className="inputBox">
-                        <div className="zoomImg"><img src={zoom} alt="" /></div>
-                        <input className="searchInput" id="searchInput"
-                            placeholder="검색어를 입력하세요"
-                            value={this.state.searchKeyword}
-                            onChange={this.onChangeSearchkey}
-                            onKeyDown={this.submitEnter}
-                            maxLength="100"
-                        />
+                    <div className="searchBox">
+                        <div className="inputBox">
+                            <div className="zoomImg"><img src={zoom} alt="" /></div>
+                            <input className="searchInput" id="searchInput"
+                                placeholder="검색어를 입력하세요"
+                                value={this.state.searchKeyword}
+                                onChange={this.onChangeSearchkey}
+                                onKeyDown={this.submitEnter}
+                                maxLength="100"
+                            />
+                        </div>
                     </div>
                     {/*box position*/}
                     <div className="Box">

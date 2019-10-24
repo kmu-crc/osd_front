@@ -15,7 +15,8 @@ import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 
 const MainBanner = styled.div`
-  width: 1920px;
+width: 100%;
+  height:140px;
   display: flex;
   justify-content: center;
   .title{
@@ -27,41 +28,76 @@ const MainBanner = styled.div`
     color: #707070;
     line-height: 37px;
     font-weight: 700;
-    text-align: center;
+  }
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    align-items:flex-end;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    align-items:flex-end;
   }
 `
 const MainSection = styled.div`
-  display: flex;
-  width:100%;
-  // flex-direction:row; 
-  margin-top: 60px;
-  margin-bottom: 111px;
-  // @media only screen and (max-width : 780px) {
-  //   border:10px solid red;
-    
-  // }
+display: flex;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
+}
 
 `
 
 const NavMenu = styled.div`
-  width: 433px;
+min-width:433px;
+height:300px;
+position:relative;
+.menuBox{
+  width:325px;
+  position: fixed;
+  top:197px;
+  margin-left:64px;    
+  background-color:#F5F4F4;
+  border-radius:5px;
+}
+.menuItem{
+  height:62px;
+  padding-left:36px;
+  padding-top:18px;
+  lineHeight:29px;
+  border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor:pointer;
+}
+.deleteText{
+  font-family:Noto Sans KR;
+  font-size:20px;
+  font-family:Noto Sans KR;
+  font-weight:500;
+  text-align:left;
+  color:#FF0000;
+  border-bottom:${props => props.borderBottom};
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   .menuBox{
-    width:325px;
-    position: fixed;
-    top:197px;
-    margin-left:64px;    
-    background-color:#F5F4F4;
-    border-radius:5px;
+    margin-left:0px;   
+    position: static; 
   }
-  .deleteText{
-      font-family:Noto Sans KR;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      text-align:left;
-      color:#FF0000;
-      border-bottom:${props => props.borderBottom};
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  .menuBox{
+    margin-left:0px;  
+    position:static;  
+
   }
+}
 `
 const MenuItem = styled.div`
   height:62px;
@@ -87,13 +123,18 @@ const MenuText = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-      width:1422px;
-      // height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
-      height:${props => props.boardWidth}
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
+width:${window.innerWidth>1920?1422+'px':100+'%'};
+padding-bottom:100px;
+margin-bottom:100px;
+position:relative;
+padding-top:45px;
+border-radius:5px;
+border:8px solid #F5F4F4;
+.buttonBox{
+  display: flex;
+  margin-top: 20.54px;
+  justifyContent: flex-end;
+}
 `
 const ButtonBox = styled.div`
       height:100px;
@@ -146,20 +187,52 @@ const BtnText = styled.p`
 
 //---sectionbasic---//
 const ContentsBox = styled.div`
-padding-left:47px;
-.title{
-  width:167px;
-  height:29px;
-  text-align:left;
-  font-size:20px;
-  font-weight:500;
-  line-height:29px;
-  color:#707070;
-}
+padding-left: 47px;
+  display:flex;
+  flex-direction:column;
+  .title{
+        min-width:100px;
+        height:29px;
+        text-align:left;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+  }
+  .additionalTitle{
+        min-width:167px;
+        height:29px;
+        text-align:left;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        color:#707070;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    justify-content:center;
+    .title{
+      margin-bottom:10px;
+    }
+    .additionalTitle{
+      margin-bottom:10px;
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    .title{
+      margin-bottom:10px;
+    }
+    .additionalTitle{
+      margin-bottom:10px;
+    }
+  }
 `
 const ImageBox = styled.div`
-  width:210px;
-  height:210px;
+  
+  margin-left: 67px;
+    min-width: 210px;
+    min-height: 210px;
+    max-width: 210px;
+    max-height: 210px;
   border-radius:5px;
   background: ${props => `url(${props.imageURL})`};
   background-size:cover;
@@ -176,151 +249,233 @@ const ImageBox = styled.div`
     }
 `
 const ThumbnailBox = styled.div`
-    display:flex;
-    width:1200px;
-    .explainBox{
-        margin-left:54px;
-        margin-top:100px;
-    }
-    .findThumbnailBtn{
-        width:63px;
-        height:25px;
-        cursor:pointer;
-    }
-    .findThumbnailText{
-        font-family:Noto Sans KR;
-        font-size:17px;
-        font-weight:500;
-        text-align:left;
-        line-height:25px;
-        color:#FF0000;
-        border-bottom:1.5px solid #FF000;
-        cursor:pointer;
-    }
-    .findThumbnailBox{
-        margin-left:54px;
-        margin-top:100px;
-    .thumbnailExplainText{
-        width:341px;
-        height:45px;
-        margin-top:11px;
-        font-weight:300;
-        font-size:14px;
-        color:#707070;
-        line-height:20px;
-        text-align:left;
-        }
-    }
+display:flex;
+justify-content:flex-start;
+flex-direction:row;
+.explainBox{
+  margin-left:54px;
+  margin-top:100px;
+}
+.findThumbnailBtn{
+  width:63px;
+  height:25px;
+  cursor:pointer;
+}
+.findThumbnailText{
+  font-family:Noto Sans KR;
+  font-size:17px;
+  font-weight:500;
+  text-align:left;
+  line-height:25px;
+  color:#FF0000;
+  border-bottom:1.5px solid #FF000;
+  cursor:pointer;
+}
+.findThumbnailBox{
+  margin-left:54px;
+  margin-top:100px; 
+  .thumbnailExplainText{
+    width:341px;
+    height:45px;
+    margin-top:11px;
+    font-weight:300;
+    font-size:14px;
+    color:#707070;
+    line-height:20px;
+    text-align:left;
+  }
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+}
 `
 const TitleBox = styled.div`
-        width:1200px;
-        display:flex;
-        margin-top:96px;
+      display:flex;
+      margin-top:96px;
+      justify-content:flex-start;
+      flex-direction:row;
+      .inputText{
+        width:505px;
+        height:56px;
+        margin-left:67px;
+        padding-left:22px;
+        padding-right:22px;
+        font-size:20px;
+        font-weight:300;
+        font-family:Noto Sans KR;
+        line-height:29px;
+        color:#707070;
+        border:none;
+        border-radius:5px;
+        outline:none;
+        background-color:#EFEFEF;
+      }
+      @media only screen and (min-width : 780px) and (max-width:1440px) {
+        flex-direction:column;
         .inputText{
-            width:505px;
-            height:56px;
-            padding-left:22px;
-            padding-right:22px;
-            font-size:20px;
-            font-weight:300;
-            font-family:Noto Sans KR;
-            line-height:29px;
-            color:#707070;
-            border:none;
-            border-radius:5px;
-            outline:none;
-            background-color:#EFEFEF;
+          margin-left:0px;
         }
+      }
+      @media only screen and (min-width : 360px) and (max-width:780px) {
+        flex-direction:column;
+        .inputText{
+          margin-left:0px;
+          width:80%;
+       }
+      }
 `
 const ExplainBox = styled.div`
+margin-top: 103px;
+  display: flex;
+  justify-content:flex-start;
+  flex-direction:row;
+  .inputTextareaBox {
+    width: 717px;
+    height: 244px;
+    margin-left: 70px;
+    padding: 22px 26px 34px 32px;
+    font-family: Noto Sans KR;
+    font-size: 20px;
+    font-weight: 300;
+    color: #707070;
+    line-height: 35px;
+    text-align: left;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    resize: none;
+    background-color: #EFEFEF;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction:column;
+    .inputTextareaBox {
+      margin-left: 0px;
+    }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction:column;
 
-        width:1200px;
-        margin-top:103px;
-        display:flex;
-        .inputTextareaBox{
-            width:717.5px;
-            height:244px;
-            padding:22px 26px 34px 32px;
-            font-family:Noto Sans KR;
-            font-size:20px;
-            font-weight:300;
-            color:#707070;
-            line-height:35px;
-            text-align:left;
-            outline:none;
-            border:none;
-            border-radius:5px;
-            resize:none;
-            background-color:#EFEFEF;
-        }
+    .inputTextareaBox {
+      width:90%;
+      margin-left: 0px;
+    }
+  }
 `
 //---additional--//
 const CategoryBox = styled.div`
-        display:flex;
-        width:1200px;
+width:100%;
+display:flex;
+justify-contant:flex-start;
+flex-direction:row;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  // flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+}
 `
 const CategoryDropDown = styled(Dropdown)`
-      width:410px;
-      height:56px;     
-      border-radius:5px;
-      font-size:20px;
-      background-color:#EFEFEF !important;
-      margin-right:30px;
+width:410px;
+height:56px;     
+border-radius:5px;
+font-size:20px;
+background-color:#EFEFEF !important;
+margin-right:30px;
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  margin-top:10px;
+  width:90%;
+}
 `
 const InviteMemberBox = styled.div`
-      display:flex;
-      margin-top:120px;
-      .searchBox{
-        width:645px;
-        height:56px;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
-        border-radius:5px;
-        background-color:#EFEFEF;
-      }
-      .tipTitle{
-        width:27px;
-        height:25px;
-        margin-left:20px;
-        font-size:17px;
-        font-weight:500;
-        line-height:25px;
-        text-align:left;
-        color:#FF0000;
-      }
-      .tipDescription{  
-        margin-left:17px;
-        font-size:16px;
-        font-weight:100;
-        font-family:Noto Sans KR;
-        text-align:left;
-        line-height:25px;
-        color:#707070;
-      }      
+display:flex;
+justify-content:flex-start;
+flex-direction:row;
+margin-top:120px;
+.searchBox{
+  width:645px;
+  height:56px;
+  font-size:20px;
+  font-weight:500;
+  line-height:29px;
+  color:#707070;
+  border-radius:5px;
+  background-color:#EFEFEF;
+}
+.tipTitle{
+  width:27px;
+  height:25px;
+  margin-left:20px;
+  font-size:17px;
+  font-weight:500;
+  line-height:25px;
+  text-align:left;
+  color:#FF0000;
+}
+.tipDescription{  
+  margin-left:17px;
+  font-size:16px;
+  font-weight:100;
+  font-family:Noto Sans KR;
+  text-align:left;
+  line-height:25px;
+  color:#707070;
+}      
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+  .searchBox{
+  }
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+  .searchBox{
+    width:92%;
+  }
+}   
 `
 const InviteMemberListBox = styled.div`
-      margin-top:20px;
-      margin-left:207px;
-      .memberList{
-        display:flex;
-        flex-wrap:wrap;
-        flex-direction:row;
-        margin-bottom:34px;
-      }
+margin-top:20px;
+margin-left:167px;
+width:645px;
+.memberList{
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+}
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  margin-left:0px;
+  width:645px;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  margin-left:0px;
+  width:92%;
+}
 `
 const NoInviteMemberBox = styled.div`
-      margin-left:167px;
-      margin-top:30px;
-      font-size:20px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-      color:#707070;
-      .textLabel{
-        margin-left: 35px;
-        vertical-align:top;
-      }     
+margin-left:167px;
+margin-top:30px;
+font-size:20px;
+font-weight:500;
+font-family:Noto Sans KR;
+color:#707070;
+.textLabel{
+  vertical-align:top;
+}
+      
+`
+const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+      width:25px;
+      height:25px;
+      margin-right:17px;
+      background-color:#EFEFEF !important;
+      border:1px solid #707070 !important;
+      border-radius:5px !important;  
 `
 // const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 //   width: 25px;
@@ -331,24 +486,30 @@ const NoInviteMemberBox = styled.div`
 //   border-radius: 5px !important;  
 // `
 const LicenseBox = styled.div`
-  display:flex;
-  margin-top:22px;
-  .licenseList{
-    width:645px;
-    height:143px;
-    .licenseItem{
-      margin-bottom:30px;
-      color:#707070;
-      font-size:20px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-    }
-    .textLabel{
-      margin-left: 35px;
-      vertical-align:top;
-    }
+display:flex;
+margin-top:22px;
+.licenseList{
+  width:645px;
+  height:143px;
+  .licenseItem{
+    margin-bottom:30px;
+    color:#707070;
+    font-size:20px;
+    font-weight:500;
+    font-family:Noto Sans KR;
   }
-`;
+  .textLabel{
+    vertical-align:top;
+  }
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+}
+`
 const LoadingBox = styled.div`
   padding-top: 200px;
   .IconBox {
@@ -734,7 +895,7 @@ class ModifyDesign extends Component {
                   {this.props.category1.length > 0 ?
                     <CategoryBox>
                       {/* category */}
-                      <div className="title">카테고리</div>
+                      <div className="additionalTitle">카테고리</div>
                       <CategoryDropDown onChange={this.onChangeCategory1}
                         options={this.props.category1} selection name="category1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
                       {this.props.category2[this.state.categoryLevel1 - 1] && this.state.categoryLevel1 !== 0
@@ -744,7 +905,7 @@ class ModifyDesign extends Component {
                     : <p>카테고리를 가져오고 있습니다.</p>}
                   {/* invite member*/}
                   <InviteMemberBox>
-                    <div className="title">멤버 초대하기</div>
+                    <div className="additionalTitle ">멤버 초대하기</div>
                     <div className="searchBox" >
                       {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
                     </div>
