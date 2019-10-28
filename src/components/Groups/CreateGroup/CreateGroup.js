@@ -194,7 +194,7 @@ class CreateGroup extends Component {
       alert("그룹 이름을 작성해주세요!");
       return;
     }
-    else if (this.state.explanation === "" || this.state.explanation == null) {
+    else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
       alert("그룹 설명을 작성해주세요!");
       return;
     }
@@ -250,7 +250,7 @@ class CreateGroup extends Component {
                 thumbnail={this.state.groupThumbnail === "" || this.state.groupThumbnail == null ? noimg : this.state.groupThumbnail} {...this.props} />}
             <div className="buttonBox">
               <CompleteButton isComplete={this.state.isPossibleNextStep}
-                onClick={this.state.isPossibleNextStep ? this.onSubmit : () => alert("아직 그룹 등록에 필요한 정보가 입력되지 않았습니다.")} >
+                onClick={this.onSubmit} >
                 <BtnText>완료</BtnText>
               </CompleteButton>
             </div>

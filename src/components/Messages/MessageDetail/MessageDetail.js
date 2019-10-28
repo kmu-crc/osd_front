@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const MsgSectionBoard = styled.div`
   width:100%;
-  min-width:600px;
-  height: ${props => props.height}px;
+  // height: ${props => props.height}px;
+  height:100%;
   position: relative;
   flex-direction: column-reverse;
   justify-content: flex-end;
@@ -23,14 +23,14 @@ const ReceiveMessageBox = styled.div`
   align-items:flex-end;
   .messageReceiveBubble{
     display: inline-block;
-    width: 571px;
+    width: 45%;
     padding: 13px 25px 13px 20px;
     border-radius: 20px;
     background-color: #FFFFFF;
     word-wrap:break-word;
   }
   .messageText {
-    width: 526px;
+    width: 100%;
     font-size: 17px;
     font-weight: 500;
     font-family: Noto Sans KR;
@@ -56,14 +56,14 @@ const SendMessageBox = styled.div`
     align-items:flex-end;
     .messageSendBubble{
       display: inline-block;
-      width: 571px;
+      width: 45%;
       padding: 13px 25px 13px 20px;
       border-radius: 20px;
       background-color: #FFFFFF;
       word-wrap:break-word;
     }
     .messageText {
-      width: 526px;
+      width: 100%;
       font-size: 17px;
       font-weight: 500;
       font-family: Noto Sans KR;
