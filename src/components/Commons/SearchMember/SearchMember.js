@@ -26,23 +26,24 @@ const MemberWrap = styled.div`
 `
 const SearchWrap = styled.div`
   display: ${props => props.display};
+  justify-content:
   position: relative;
   .input-style {
     box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
     border-radius: 10px;
-    padding-left: 10px;
+    // padding-left: 10px;
     outline: none;
     border: none;
     width: 353px;
     height: 40px;
     font-size: 18px;
-    margin-left: 50px;
+    // margin-left: 50px;
   }
 `
 const MemberList = styled.ul`
   display: ${props => props.display};
   width: 353px;
-  margin-left: 50px;
+   margin-left: 20px;
   padding: 0.5rem;
   min-height: 0px;
   max-height: 300px;
@@ -69,7 +70,7 @@ const SearchInputText = styled(FormInput)`
     width:353px;
     height:40px;
     font-size:18px;
-    margin-left:50px;
+     margin-left:20px;
 
 `
 
