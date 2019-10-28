@@ -208,17 +208,16 @@ class GridEditor extends Component {
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         // const rightArrowPos = window.innerWidth <= osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth - window.innerWidth : 0;
-
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
-                    <>
+                    <React.Fragment>
                         {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
                         </WhitePane> : null}
 
-                        {right ? <WhitePane width={158} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                        {right ? <WhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
@@ -239,7 +238,7 @@ class GridEditor extends Component {
                                 </div>
                             </GridEditorWrapper>
                         </ReactHeight>
-                    </>
+                    </React.Fragment>
                     : null//<div>디자인정보를 가져오고 있습니다.</div>
                 }</div>)
     }
