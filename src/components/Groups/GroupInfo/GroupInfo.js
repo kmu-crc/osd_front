@@ -18,7 +18,6 @@ import NumberFormat from "modules/NumberFormat";
 // import Cross from "components/Commons/Cross"
 import { geturl } from 'config';
 
-
 const Arrow = styled.div`
     width: 12px;
     height: 14px;
@@ -29,7 +28,6 @@ const Arrow = styled.div`
     border-top: 6px solid transparent;
     margin:22px 3px;
 `;
-
 const LoadingBox = styled.div`
     width:100%;
     display:flex;
@@ -120,204 +118,269 @@ const LoadingBox = styled.div`
                 border-radius:15px;
             }
     }
-
 `
 const Header = styled.div`
-    width:1920px;
-    height:237px;
-    background-color:#EFEFEF;
-    display:flex;
-`
-const GroupHeaderBox = styled.div`
-    width: 100%;
+    width: ${props => props.width}px;
     display: flex;
-    padding-left: 30px;
-    .profileBox{
-        width: max-content;
-        .parentBox{
-            display: flex;
-            cursor: default;
-            .grandparent{
-                width: 15px;
-                height: 15px;
-                margin-top: 22px;
-                margin-right: 10px;
-                opacity: 0.55;
-                transform: rotate(90deg);
-                cursor: pointer;
-            }
-            .parent{
-                margin-left: 10px;
-                margin-top: 17px;
-                font-size: 20px;
-                font-weight: 300;
-                color: #707070;
-                cursor: pointer;
-           }    
+`
+const ProfileBox = styled.div`
+    width: max-content;
+    .parentBox{
+        display: flex;
+        cursor: default;
+        .grandparent {
+            width: 15px;
+            height: 15px;
+            // margin-top: 22px;
+            margin-right: 10px;
+            opacity: 0.55;
+            transform: rotate(90deg);
+            cursor: pointer;
+        }
+        .parent{
+            margin-left: 10px;
+            // margin-top: 17px;
+            font-size: 20px;
+            font-weight: 300;
+            color: #707070;
+            cursor: pointer;
         }
     }
-    .ExplainBox{
-        margin-left:10px;
-        position:relative;
-        .title{
-            width:max-content;
-            height:30px;
-            color:#707070;
-            font-size:20px;
-            font-weight:500;
-            font-family:Noto Sans KR;
-            text-align:left;
-            line-height:25px;
-            margin-top:15px;
-        }
-        .board{
-            margin-left:50px;
-            .creater{
-                width:max-content;
-                height:30px;
-                margin-top:5px;
-                font-size:17px;
-                font-weight:500;
-                color:#707070;
-                text-align:left;
-                line-height:29px;
-            }
-            .explanationRegion{
-                
-                display:flex;
-                height:90px;
-                font-size:17px;
-                color:#707070;
-                line-height:30px;
-                margin-top:10px;
-                .explaination{
-                    width:500px;
-                    margin-right:41px;
-                    word-wrap:break-word;
-                    overflow:hidden;
-                }
-            }
-        }
-        .CountView{
-            width:300px;
-            height:22px;
-            position:absolute;
-            display:flex;
-            left:231px;
-            bottom:0px;
-            .countItem{
-                height:100%;
-                display:flex;
-                margin-right: 20px;
-                .count_label{
-                    width: max-content;
-                    height:100%
-                    margin-left:5px;
-                }
-            } 
-        }
-    }
-
-    .ButtonRegion{
-
-        margin-left:auto;
-        margin-right:72px;
-        cursor:pointer;
-
-        .ButtonItem{
+`;
+const ExplainBox = styled.div`
+    margin-left: 10px;
+    position: relative;
+    .board {
+        margin-left: 50px;
+        .creater {
             width: max-content;
             height: 30px;
+            // margin-top: 5px;
+            font-size: 17px;
+            font-weight: 500;
+            color: #707070;
+            text-align: left;
+            line-height: 29px;
+        }
+        .explanationRegion{
             display: flex;
-            margin-top: 10px;
-
-            .button_text_label{
-                width: 150px;
-                height: 20px;
-                margin-top: 10px;
-                font-size: 17px;
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                text-align: right;
-                color: #707070
+            height: 90px;
+            font-size: 17px;
+            color: #707070;
+            line-height: 30px;
+            // margin-top: 10px;
+            .explaination{
+                width: 500px;
+                margin-right: 41px;
+                word-wrap: break-word;
+                overflow: hidden;
             }
         }
-        .time_label{
-            font-size:17px;
-            font-weight:300;
-            font-family:Noto Sans KR;
-            color:#707070;
-            letter-spacing:0;
-            text-align:right;
-            line-height:27px;
-            margin-top:46px;
-        }
-        .Join_label {
-            width: 79px;
-            height: 40px;
-            margin-top: 15px;
-            margin-left: auto;
-            color: #FF0000;
-            font-size: 20px;
-            cursor: pointer
+    }
+    .CountView {
+        width: 300px;
+        height: 22px;
+        position: absolute;
+        display: flex;
+        left: 231px;
+        bottom: 0px;
+        .countItem{
+            height: 100%;
+            display: flex;
+            margin-right: 20px;
+            .count_label{
+                width: max-content;
+                height: 100%
+                margin-left:5px;
+            }
+        } 
+    }
+}`
+const GroupHeaderBox = styled.div`
+width: 100%;
+display: flex;
+padding-left: 30px;
+`;
+const ButtonRegion = styled.div`
+    display: flex;
+    flex-direction: column !important;
+    .ButtonItem {
+        width: max-content;
+        height: 30px;
+        display: flex;
+        margin-top: 10px;
+        cursor: pointer;
+        .button_text_label{
+            width: 150px;
+            height: 20px;
+            margin-top: 10px;
+            font-size: 17px;
+            font-weight: 300;
+            font-family: Noto Sans KR;
+            text-align: right;
+            color: #707070
         }
     }
-`
-//const MiniIcon = styled.div`
-//    width:17px;
-//    height:17px;
-//    background-image: ${props => `url(${props.imageURL})`};
-//    background-position:center center;
-//    background-size:contain;
-//    background-repeat:no-repeat;
-//    opacity:${props => props.opacity};
-//`
-const NormalIcon = styled.div`
-    width: 35px;
-    height: 35px;
-    margin-left: 5px;
-    background-image: ${props => `url(${props.imageURL})`};
-    background-position:center center;
-    background-size:contain;
-    background-repeat:no-repeat;
-    opacity:${props => props.opacity};
-
-`
-const ThumbnailBox = styled.div`
-        width:170px;
-        height:170px;
-        margin-left:14px;
-        margin-top:9px;
-        border-radius:15px;
-        background-color:#D6D6D6;
-        background-repeat:no-repeat;
-        background-size:cover;
-        background-position:center center;
-        background-image:${props => `url(${props.imageURL})`};
-`
-const PopupBox = styled.div`
-    position:absolute;
-    top:47px;
-    left:763px;
-    width:396px;
-    height:138px;
-    background:#FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow:0px 3px 6px #000000;
-    border-radius:5px;
-    opacity:1;
-    z-index:500;
-    .message_label{
-        width:273px;
-        height:69px;
-        margin-top:31px;
-        margin-left:62px;
-        font-size:20px;
-        font-weight:500;
+    .time_label{
+        font-size:17px;
+        font-weight:300;
         font-family:Noto Sans KR;
-        color:#707070
-        text-align:center;
-        line-height:40px;
+        color:#707070;
+        letter-spacing:0;
+        text-align:right;
+        line-height:27px;
+        margin-top:46px;
     }
+    .Join_label {
+        width: 79px;
+        height: 40px;
+        margin-top: 15px;
+        margin-left: auto;
+        color: #FF0000;
+        font-size: 20px;
+        cursor: pointer
+    }
+}`;
+const NormalIcon = styled.div`
+width: 35px;
+height: 35px;
+margin-left: 5px;
+background-image: ${props => `url(${props.imageURL})`};
+background-position:center center;
+background-size:contain;
+background-repeat:no-repeat;
+opacity:${props => props.opacity};
+`;
+const GroupTitleWrapper = styled.div`
+    width: max-content;
+    height: 30px;
+    color: #707070;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    text-align: left;
+    line-height: 25px;
+    // margin-top: 15px;
+`;
+const ThumbnailBox = styled.div`
+width: 170px;
+height: 170px;
+margin-left: 14px;
+// margin-top: 9px;
+border-radius: 15px;
+background-color: #D6D6D6;
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center center;
+background-image: ${props => `url(${props.imageURL})`};
+`;
+const PopupBox = styled.div`
+position:absolute;
+top:47px;
+left:763px;
+width:396px;
+height:138px;
+background:#FFFFFF 0% 0% no-repeat padding-box;
+box-shadow:0px 3px 6px #000000;
+border-radius:5px;
+opacity:1;
+z-index:500;
+.message_label{
+    width:273px;
+    height:69px;
+    margin-top:31px;
+    margin-left:62px;
+    font-size:20px;
+    font-weight:500;
+    font-family:Noto Sans KR;
+    color:#707070
+    text-align:center;
+    line-height:40px;
+}
 `
+const GroupInfo3 = styled.div`
+    width: 100%;
+    background-color: #EFEFEF;    
+    padding-bottom: 18px;    
+    @media only screen and (min-width: 0px) and (max-width: 900px) {
+        margin-top: 55px;    
+    }
+    .grid {
+        min-height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        .title {
+            display: none;
+            @media only screen and (min-width: 0px) and (max-width: 1250px) {    
+                display: block;
+                margin-left: 25px;
+            }
+            position: absolute;
+            height: 29px;
+            color: #707070;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: left;
+            line-height: 29px;
+            cursor: pointer;
+        }
+    }
+    .grid > div {
+        display: flex; 
+        justify-content: center;
+        flex-direction: row;//column;
+    }
+    .grid > div:last-child {
+        display: flex; 
+        justify-content: center;
+        flex-direction: column;
+    }
+    .grid > div > div {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .box1 { 
+        order: 0;
+    }
+    .box2 {
+        order: 1;
+        width: 197px;
+        margin-left: 65px;
+        margin-tp: 15px;
+    }
+    .box3 { 
+        order: 2;
+        width: 621px;
+        margin-left: 55px;
+        margin-top: 65px;
+        @media only screen and (min-width: 0px) and (max-width: 1250px) {
+            order: 3;
+        }
+        &.secondary {
+            @media only screen and (min-width: 0px) and (max-width: 1900px) {
+            display: none;
+            }
+        }
+    }
+    .box4 { 
+        order: 3;
+        width: 183px;
+        margin-left: auto;
+        margin-right: 72px;
+        margin-top: 19px;
+        @media only screen and (min-width: 500px) and (max-width: 1220px) {
+            order: 2;
+            margin-left: 25px;
+        }
+        @media only screen and (min-width: 0px) and (max-width: 500px) {
+            order: 2;
+            margin-left: 25px;
+            margin-right: 0px;
+        }
+    }
+`;
 const GroupInfoData = {
     userName: "name",
     child_update_time: "0",
@@ -339,13 +402,23 @@ const GroupInfoData = {
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { joinDialog: false, likeDialog: false, forkDialog: 0, manager: false };
+        this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, joinDialog: false, likeDialog: false, forkDialog: 0, manager: false };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
         this.gotoGroupModify = this.gotoGroupModify.bind(this);
         this.changeEditMode = this.changeEditMode.bind(this);
         this.gotoGroup = this.gotoGroup.bind(this);
+        this.handleResize = this.handleResize.bind(this);
+    }
+    handleResize = () => {
+        this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize);
     }
     gotoGroup(id) {
         window.location.href = geturl() + `/groupDetail/${id}`
@@ -426,95 +499,124 @@ class GroupInfoComponent extends Component {
 
             console.log("info:", info);
             return (
-                <GroupHeaderBox>
-                    <div className="profileBox">
-                        {parentName &&
-                            <div className="parentBox">
-                                {info.grand_parentTitle &&
-                                    <React.Fragment>
-                                        <img onClick={() => this.gotoGroup(info.grand_parentId)} src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
-                                    </React.Fragment>}
-                                {info.parentName &&
-                                    <React.Fragment>
-                                        <div onClick={() => this.gotoGroup(info.parentId)} className="parent" title={info.parentName}>{parentName}</div><Arrow />
-                                    </React.Fragment>}
-                            </div>}
-                    </div>
+                <GroupInfo3>
+                    <div className="grid">
+                        {/* box1 */}{parentName ?
+                            <div className="box box1">
+                                <ProfileBox>
+                                    <div className="parentBox">
+                                        {info.grand_parentTitle &&
+                                            <React.Fragment>
+                                                <img onClick={() => this.gotoGroup(info.grand_parentId)} src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
+                                            </React.Fragment>}
+                                        {info.parentName &&
+                                            <React.Fragment>
+                                                <div onClick={() => this.gotoGroup(info.parentId)} className="parent" title={info.parentName}>{parentName}</div><Arrow />
+                                            </React.Fragment>}
+                                    </div>
+                                </ProfileBox>
+                            </div> : null}
 
-                    <div className="ExplainBox">
-                        <div className="title"><TextFormat txt={info.title} /></div>
-                        <div style={{ display: "flex" }}>
-                            <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
-                            <div className="board">
-                                <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
-                                <div className="explanationRegion">
-                                    <div className="explaination">
-                                        {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
-                                    </div>
-                                    <div className="explaination">
-                                        {info.explanation && info.explanation.slice(200, 400)}
-                                        {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
-                                    </div>
-                                </div>
-                                <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-                                    <div style={{ display: "flex", marginRight: "20px" }}>
-                                        <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.view || 0)}</div>
-                                    </div>
-                                    <div style={{ display: "flex", marginRight: "20px" }}>
-                                        <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.like || 0)}</div>
-                                    </div>
-                                    <div style={{ display: "flex" }}>
-                                        <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
-                                    </div>
-                                </div>
+                        {/* box2 */}
+                        <div className="box box2">
+                            <div style={{ display: "flex", flexDirection: "column" }}>
+                                <GroupTitleWrapper>{info.title}</GroupTitleWrapper>
+                                <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
                             </div>
                         </div>
-                    </div>
 
-                    <div className="ButtonRegion">
-                        {isEditor ?
-                            <React.Fragment>
-                                <div className="Join_label">
-                                    <JoinGroupContainer />
+                        {/* box3 */}
+                        <div className="box box3">
+                            <ExplainBox>
+                                <div style={{ display: "flex" }}>
+                                    <div className="board">
+                                        <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
+                                        <div className="explanationRegion">
+                                            <div className="explaination">
+                                                {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
+                                            </div>
+                                        </div>
+                                        <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
+                                            <div style={{ display: "flex", marginRight: "20px" }}>
+                                                <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
+                                                <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.view || 0)}</div>
+                                            </div>
+                                            <div style={{ display: "flex", marginRight: "20px" }}>
+                                                <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
+                                                <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.like || 0)}</div>
+                                            </div>
+                                            <div style={{ display: "flex" }}>
+                                                <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
+                                                <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="ButtonItem" onClick={this.gotoGroupModify}>
-                                    <div className="button_text_label">그룹 정보 수정하기</div>
-                                    <NormalIcon imageURL={iEdit} opacity={0.5} />
-                                </div>
-                                <div className="ButtonItem" onClick={this.changeEditMode}>
-                                    <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                    <NormalIcon imageURL={iINOUT} opacity={0.5} />
-                                </div>
-                            </React.Fragment>
-                            :
-                            <React.Fragment>
-                                <div className="Join_label">
-                                    <JoinGroupContainer />
-                                </div>
-                                <div className="ButtonItem" onClick={this.like}>
-                                    <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                    <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} />
-                                </div>
-                            </React.Fragment>}
-                        <div className="time_label">
-                            <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
-                            <div>{info && DateFormat(info.create_time)} 등록</div>
+                            </ExplainBox>
+                        </div>
+
+                        {/* box3`*/}
+                        {parentName ? null : <div className="box box3 secondary">
+                            <ExplainBox>
+                                <div className="explaination">{info.explanation && info.explanation.slice(200, 400)}{info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}</div>
+                            </ExplainBox>
+                        </div>}
+
+                        {/* box4 */}
+                        <div className="box box4">
+                            <ButtonRegion>{isEditor
+                                ? <React.Fragment>
+                                    <div className="Join_label">
+                                        <JoinGroupContainer /></div>
+
+                                    <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                                        <div className="button_text_label">그룹 정보 수정하기</div>
+                                        <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
+
+                                    <div className="ButtonItem" onClick={this.changeEditMode}>
+                                        <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                        <NormalIcon imageURL={iINOUT} opacity={0.5} /></div>
+
+                                </React.Fragment>
+                                : <React.Fragment>
+                                    <div className="Join_label">
+                                        <JoinGroupContainer /></div>
+
+                                    <div className="ButtonItem" onClick={this.like}>
+                                        <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                        <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
+
+                                </React.Fragment>}
+
+                                <div className="time_label">
+                                    <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
+                                    <div>{info && DateFormat(info.create_time)} 등록</div></div>
+
+                            </ButtonRegion>
                         </div>
                     </div>
-                </GroupHeaderBox >
+                </GroupInfo3>
+
+                // {/* <GroupHeaderBox>
+                // <div className="ExplainBox">
+                // <div className="title"><TextFormat txt={info.title} /></div>
+                // <div style={{ display: "flex" }}>
+                // <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
+                // </div>
+                // </div>
+                // </GroupHeaderBox > */}
             )
         }
-        const info = this.props.GroupInfo
+        const { w } = this.state;
+        const info = this.props.GroupInfo;
         return (
             <React.Fragment>
-                {
-                    this.state.likeDialog &&
-                    <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>
-                }
-                < Header > {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}</Header >
+                {this.state.likeDialog && <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>}
+                <Header width={w}>
+                    {info
+                        ? <GroupInfo GroupInfo={info} />
+                        : <LoadingGroupInfo />}
+                </Header>
             </React.Fragment >)
     }
 }
