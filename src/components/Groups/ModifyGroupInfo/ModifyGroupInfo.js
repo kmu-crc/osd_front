@@ -283,7 +283,7 @@ class CreateGroup extends Component {
       alert("그룹 이름을 작성해주세요!");
       return;
     }
-    else if (this.state.explanation === "" || this.state.explanation == null) {
+    else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
       alert("그룹 설명을 작성해주세요!");
       return;
     }

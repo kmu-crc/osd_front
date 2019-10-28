@@ -120,7 +120,8 @@ const MenuItem = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-width:${window.innerWidth>1920?1422+'px':100+'%'};
+// width:${window.innerWidth>1920?1422+'px':100+'%'};
+width:77%;
 padding-bottom:100px;
 margin-bottom:100px;
 position:relative;
@@ -131,6 +132,13 @@ border:8px solid #F5F4F4;
   display: flex;
   margin-top: 20.54px;
   justifyContent: flex-end;
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  width:100%;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  width:100%;
 }
 `
 const BackButton = styled.div`
@@ -1029,8 +1037,9 @@ class CreateDesign extends Component {
             </SectionContainer>
 
             <SectionContainer display={step === 2 ? "block" : "none"}>
-              <div>{this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> :
+                <div>{this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> :
                 <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>}</div>
+
             </SectionContainer>
 
             {/* buttons*/}

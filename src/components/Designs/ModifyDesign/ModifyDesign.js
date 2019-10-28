@@ -15,7 +15,7 @@ import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 
 const MainBanner = styled.div`
-width: 100%;
+  width: 100%;
   height:140px;
   display: flex;
   justify-content: center;
@@ -38,6 +38,8 @@ width: 100%;
   }
 `
 const MainSection = styled.div`
+width:${window.innerWidth>1920?1920+'px':100+'%'};
+border:2px solid blue;
 display: flex;
 flex-direction:row;
 @media only screen and (min-width : 780px) and (max-width:1440px) {
@@ -123,7 +125,8 @@ const MenuText = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-width:${window.innerWidth>1920?1422+'px':100+'%'};
+// width:${window.innerWidth>1920?1422+'px':100+'%'};
+width:77%;
 padding-bottom:100px;
 margin-bottom:100px;
 position:relative;
@@ -134,6 +137,13 @@ border:8px solid #F5F4F4;
   display: flex;
   margin-top: 20.54px;
   justifyContent: flex-end;
+}
+
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  width:100%;
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  width:100%;
 }
 `
 const ButtonBox = styled.div`
