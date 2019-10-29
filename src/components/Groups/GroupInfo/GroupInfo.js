@@ -131,7 +131,7 @@ const ProfileBox = styled.div`
         .grandparent {
             width: 15px;
             height: 15px;
-            // margin-top: 22px;
+            margin-top: 22px;
             margin-right: 10px;
             opacity: 0.55;
             transform: rotate(90deg);
@@ -139,7 +139,7 @@ const ProfileBox = styled.div`
         }
         .parent{
             margin-left: 10px;
-            // margin-top: 17px;
+            margin-top: 17px;
             font-size: 20px;
             font-weight: 300;
             color: #707070;
@@ -507,7 +507,7 @@ class GroupInfoComponent extends Component {
                                     <div className="parentBox">
                                         {info.grand_parentTitle &&
                                             <React.Fragment>
-                                                <img onClick={() => this.gotoGroup(info.grand_parentId)} src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
+                                                <img onClick={() => this.gotoGroup(info.grand_parentId)} src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent"/><Arrow />
                                             </React.Fragment>}
                                         {info.parentName &&
                                             <React.Fragment>

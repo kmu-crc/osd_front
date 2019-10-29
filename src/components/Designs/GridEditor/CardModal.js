@@ -16,11 +16,38 @@ import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContai
 import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
-
+const ContentBorder = styled.div`
+    height: 29px;
+    font-family: Noto Sans KR;
+    font-size: 20px;
+    color: #707070;
+    font-weight: 500;
+    line-height: 29px;
+    margin-left: 50px;
+    margin-top: 30px;
+    padding-right: 25px;
+    .border-line {
+        border-bottom: 1px solid #707070;
+    }
+`;
+const CommentWrapper = styled.div`
+    .comment-title {
+        margin-left: 45px;
+    }
+    .comment-body{
+        margin-left: 52px;
+        margin-top: 15px;
+        color: #707070;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        line-height: 29px;
+    }
+`;
 const CardDialog = styled(Modal)`
     margin-top: 50px !important;
     margin-bottom: 50px !important;
-    min-width: 1530px;
+    // min-width: 1530px;
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
@@ -168,35 +195,7 @@ const CardDialog = styled(Modal)`
             }
         }
     }
-    .content-border{
-        width: 1492px;
-        height: 29px;
-        font-family: Noto Sans KR;
-        font-size: 20px;
-        color: #707070;
-        font-weight: 500;
-        line-height: 29px;
-        margin-left: 52px;
-        margin-top: 30.5px;
-        padding-right: 25px;
-        .border-line {
-            border-bottom: 1px solid #707070;
-            width: 1400px;
-        }
-    }
-    .comment-title {
-        margin-left: 45px;
-    }
-    .comment-wrapper {
-        width: 1400px;
-        margin-left: 52px;
-        margin-top: 15px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 29px;
-    }
+
 `
 const EditCardHeaderContainer = styled.div`
     .edit-header-container {
@@ -463,24 +462,23 @@ class CardModal extends Component {
                                 </div>
                             </EditCardHeaderContainer>}
 
-                        <div className="content-border"><div className="border-line" /></div>
+                        <ContentBorder><div className="border-line" /></ContentBorder>
                         <div className="content" >
                             <CardSourceDetailContainer designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={edit}
                                 isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
 
-                        <div className="content-border">
-                            <div className="border-line" /></div>
-                        <div className="comment-title">
-                            <h3>댓글</h3></div>
-                        <div className="comment-wrapper">
-                            <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} /></div>
+                        <ContentBorder><div className="border-line" /></ContentBorder>
+                        <CommentWrapper>
+                            <div className="comment-title"><h3>댓글</h3></div>
+                            <div className="comment-body">
+                                <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
+                            </div>
+                        </CommentWrapper>
                     </div>
-                    {/* </div> */}
-
                 </CardDialog>
                 <BlankSpace />
-            </React.Fragment>)
+            </React.Fragment >)
     }
 }
 

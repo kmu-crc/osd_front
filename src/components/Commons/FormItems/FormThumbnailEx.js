@@ -4,9 +4,14 @@ import styled from "styled-components";
 import { FormFile } from "./FormFile";
 
 const InputWrap = styled.div`
-  position: relative;
+// div{border:1px solid red;};
+  // position: relative;
   margin-bottom: 2.5rem;
   display: flex;
+  flex-direction: row;
+  @media only screen and (min-width: 0px) and (max-width: 700px) {
+    flex-direction: column;
+  }
   label{
     width: 63px;
     height: 25px;
@@ -15,6 +20,10 @@ const InputWrap = styled.div`
   .wrapper{
     margin-left: 54.5px;
     margin-top: 100px;
+    @media only screen and (min-width: 0px) and (max-width: 700px) {
+      margin-left: 10px;
+      margin-top: 25px;
+    }
   }        
   .inside-wrapper{
     width: 63px;
@@ -108,13 +117,15 @@ export class FormThumbnailEx extends Component {
     return (
       <InputWrap>
         <ThumbnailImgEx style={newstyle} />
-        <label htmlFor={id ? id : name} >
-          <div className="wrapper">
-            <div className="inside-wrapper">
-              <div className="find">찾아보기</div></div>
-            <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-          </div>
-        </label>
+        <div>
+          <label htmlFor={id ? id : name} >
+            <div className="wrapper">
+              <div className="inside-wrapper">
+                <div className="find">찾아보기</div></div>
+              <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+            </div>
+          </label>
+        </div>
         <FormFile
           name={name}
           id={id ? id : name}
