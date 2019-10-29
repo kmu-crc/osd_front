@@ -10,19 +10,19 @@ import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
 
 const NewCardDialog = styled(Modal)`
-    min-width: 1777px;
+    min-width: 320px;
     height: 850px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
     border-radius: 5px;
     opacity: 1;
+    
     .close-box {
         position: absolute;
         right: 10px;
         top: 10px;
         cursor:pointer;
     }
-    
     .title-wrapper {
         display: flex;
         margin-top: 15px;
