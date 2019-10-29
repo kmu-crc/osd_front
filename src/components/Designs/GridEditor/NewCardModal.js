@@ -9,9 +9,164 @@ import CardSourceDetail from 'components/Designs/CardSourceDetail';
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
 
+const TitleWrapper = styled.div`
+    display: flex;
+    width: max-content;
+    margin-top: 15px;
+    margin-left: 66px;
+    @media only screen and (min-width: 0px) and (max-width: 900px) {
+        margin-left: 25px;
+    }
+    .title {
+        width: max-content;
+        height: 29px;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        line-height: 40px;
+        color: #707070;
+    }
+`;
+const ThumbnailWrapper = styled.div`
+    display: flex;
+    margin-top: 25px;
+    margin-left: 100px;
+    @media only screen and (min-width: 0px) and (max-width: 900px) {
+        margin-left: 25px;
+        flex-direction: column;
+    }
+    .title {
+        width: max-content;
+        height: 29px;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        line-height: 40px;
+        color: #707070
+        @media only screen and (min-width: 0px) and (max-width: 900px) {
+            margin-bottom: 15px;
+        }
+    }
+`;
+const ContentTitleWrapper = styled.div`
+    display: flex;
+    margin-left: 100px;
+    @media only screen and (min-width: 0px) and (max-width: 900px) {
+        margin-left: 25px;
+        flex-direction: column;
+    }
+    .title {
+        width: max-content;
+        height: 29px;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        line-height: 40px;
+        color: #707070;
+        @media only screen and (min-width: 0px) and (max-width: 900px) {
+            margin-bottom: 15px;
+        }
+    }
+    .wrapper {
+        margin-left: 31px;
+        width: max-content;
+        height: 56px;
+        background-color: #EFEFEF;
+        border-radius: 5px;
+        & input { 
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: #707070;
+            height: 100%;
+            padding: 16px 23px 16px 23px;
+        }
+    }
+`;
+const ContentDescriptionWrapper = styled.div`
+    display: flex;
+    margin-top: 25px;
+    margin-left: 100px;
+    @media only screen and (min-width: 0px) and (max-width: 900px) {
+        margin-left: 25px;
+        flex-direction: column;
+    }
+    .title {
+        width: 118px;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        line-height: 40px;
+        color: #707070;
+        @media only screen and (min-width: 0px) and (max-width: 900px) {
+            margin-bottom: 15px;
+        }
+    }
+    .wrapper {
+        margin-left: 25px;
+        width: 90%;
+        height: 56px;
+        background-color: #EFEFEF;
+        border-radius: 5px;
+        margin-right: 15px;
+        & input {
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: #707070;
+            height: 100%;
+            padding: 16px 23px 16px 23px;
+        }
+    }
+`;
+const CardSourceWrapper = styled.div`
+    display: flex;
+    margin-top: 25px;
+    margin-left: 100px;
+    @media only screen and (min-width: 0px) and (max-width: 900px) {
+        margin-left: 25px;
+        flex-direction: column;
+    }
+    .title {
+        width: 65px;
+        height: 29px;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        line-height: 40px;
+        color: #707070;
+        @media only screen and (min-width: 0px) and (max-width: 900px) {
+            margin-bottom: 15px;
+        }
+    }
+    .card-detail-scroll {
+        width: 90%;
+        font-size: 24px;
+        overflow: hidden scroll;
+        margin-left: 70px;
+        max-height: 250px;
+        background-color: #EFEFEF;
+        border-radius: 5px;
+        border: 5px solid #EFEFEF;
+        margin-right: 15px;
+        @media only screen and (min-width: 0px) and (max-width: 900px) {
+            margin-left: 25px;
+        }
+    }
+`;
 const NewCardDialog = styled(Modal)`
     min-width: 320px;
-    height: 850px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
     border-radius: 5px;
@@ -22,127 +177,6 @@ const NewCardDialog = styled(Modal)`
         right: 10px;
         top: 10px;
         cursor:pointer;
-    }
-    .title-wrapper {
-        display: flex;
-        margin-top: 15px;
-        margin-left: 125.5px;
-        .title {
-            width: 80px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: left;
-            line-height: 40px;
-            color: #707070;
-        }
-    }
-    .thumbnail-wrapper {
-        display: flex;
-        margin-top: 25px;
-        margin-left: 200.5px;
-        .title {
-            width: 97px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: left;
-            line-height: 40px;
-            color: #707070
-        }
-    }
-    .content-title-wrapper {
-        display: flex;
-        margin-left: 200.5px;
-        .title {
-            width: 97px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: left;
-            line-height: 40px;
-            color: #707070;
-        }
-        .wrapper {
-            margin-left: 31px;
-            width: max-content;
-            height: 56px;
-            background-color: #EFEFEF;
-            border-radius: 5px;
-            & input { 
-                border-radius: 5px;
-                width: 100%;
-                border: none;
-                background: transparent;
-                font-size: 20px;
-                font-weight: 500;
-                color: #707070;
-                height: 100%;
-                padding: 16px 23px 16px 23px;
-            }
-        }
-    }
-    .content-description-wrapper {
-        display: flex;
-        margin-top: 25px;
-        margin-left: 200.5px;
-        .title {
-            width: 97px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: left;
-            line-height: 40px;
-            color: #707070;
-        }
-        .wrapper {
-            margin-left: 31px;
-            width: 505.5px;
-            height: 56px;
-            background-color: #EFEFEF;
-            border-radius: 5px;
-            & input {
-                border-radius: 5px;
-                width: 100%;
-                border: none;
-                background: transparent;
-                font-size: 20px;
-                font-weight: 500;
-                color: #707070;
-                height: 100%;
-                padding: 16px 23px 16px 23px;
-            }
-        }
-    }
-
-    .card-source-wrapper {
-        display: flex;
-        margin-top: 25px;
-        margin-left: 200.5px;
-        .title {
-            width: 38px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: left;
-            line-height: 40px;
-            color: #707070;
-        }
-        .card-detail-scroll {
-            font-size: 24px;
-            overflow: hidden scroll;
-            margin-left: 90px;
-            width: 1200px;
-            height: 250px;
-            background-color: #EFEFEF;
-            border-radius: 5px;
-            border: 5px solid #EFEFEF;
-        }
     }
     .submit-button-wrapper {
         margin-top: 14px;
@@ -343,34 +377,34 @@ class NewCardModal extends Component {
                 <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
             </div>
 
-            <div className="title-wrapper">
+            <TitleWrapper>
                 <div className="title">새 컨텐츠</div>
-            </div>
+            </TitleWrapper>
 
-            <div className="thumbnail-wrapper">
+            <ThumbnailWrapper>
                 <div className="title">썸네일 사진</div>
                 <FormThumbnailEx name="thumbnail" placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
                     style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
-            </div>
+            </ThumbnailWrapper>
 
-            <div className="content-title-wrapper">
+            <ContentTitleWrapper>
                 <div className="title">컨텐츠 제목</div>
                 <div className="wrapper">
                     <input name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." /></div>
-            </div>
+            </ContentTitleWrapper>
 
-            <div className="content-description-wrapper">
+            <ContentDescriptionWrapper>
                 <div className="title">컨텐츠 설명</div>
                 <div className="wrapper">
                     <input name="content" onChange={this.onChangeContent} maxLength="20" placeholder="설명을 입력해주세요." /></div>
-            </div>
+            </ContentDescriptionWrapper>
 
-            <div className="card-source-wrapper">
+            <CardSourceWrapper>
                 <div className="title">내용</div>
                 <div className="card-detail-scroll" >
                     <CardSourceDetail {...this.props} uid={undefined} isTeam={this.props.isTeam} edit={true} closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} hook={hook} handleResetHook={this.handleResetHook} upDateRequest={this.saveTemporary} />
                 </div>
-            </div>
+            </CardSourceWrapper>
             <ButtonContainer >
                 <EditorBottonWrapper>
                     <button onClick={this.handleSubmit} className="submit" type="button">

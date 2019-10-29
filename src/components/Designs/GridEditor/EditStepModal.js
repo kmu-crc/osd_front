@@ -115,7 +115,6 @@ const StepDialog = styled(Modal)`
 
 class EditStepModal extends Component {
     state = { title: "", where: null }
-
     onChange = (event) => {
         const target = event.target
         this.setState({ [target.name]: target.value })
@@ -164,7 +163,7 @@ class EditStepModal extends Component {
                 <InputWrapper>
                     <div className="title">제목</div>
                     <div className="wrapper">
-                        <input className="input-tag" name="title" onChange={this.onChange} autoComplete="off" autoFocus="true" value={this.state.title || ""} />
+                        <input className="input-tag" name="title" onChange={this.onChange} autoComplete="off"  value={this.state.title || ""} />
                     </div>
                 </InputWrapper>
                 <div className="edit-step-name-button-container">

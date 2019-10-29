@@ -29,11 +29,13 @@ const TextWrapper = styled.div`
     }
 `;
 const JoinGroupContainer = styled.div`
-    position: relative;
+    border: 1px solid red;
+    width: max-content;
+    margin-left: auto;
+    margin-right: 25px;
 `;
 const JoinGroup = styled.div`
     position: relative;
-    left: 1761px;
     width: 115px;
     text-align: left;
     font-size: 20px;

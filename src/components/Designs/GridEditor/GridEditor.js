@@ -61,7 +61,8 @@ class GridEditor extends Component {
         this.temp = React.createRef();
         this.grid = React.createRef();
         this.state = {
-            h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth, left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
+            h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth, 
+            left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
             boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
             gap: null,
         };
