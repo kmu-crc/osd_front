@@ -5,8 +5,8 @@ import styled from "styled-components";
 
 const CommentBox = styled.div``
 const CommentContainer = styled.div`
-    margin-left:15px;
     display: flex; 
+    margin-left: 15px;
     margin-bottom: 30px;
     .face {
         width: 58px;
@@ -28,7 +28,6 @@ const CommentContainer = styled.div`
         font-family: Noto Sans KR;
     }
     .comment {
-        max-width:900px;
         margin-top: 8px;
         font-size: 20px;
         font-weight: 300;
@@ -114,7 +113,6 @@ const RepliesContainer = styled.div`
         font-size: 20px;
         font-weight: 300;
         font-family: Noto Sans KR;
-        max-width: 900px;
         line-height: 35px;
         word-break: break-all;
     }
@@ -171,7 +169,6 @@ const RepliesInputTextContainer = styled.div`
         display: flex;
         textarea {
             min-width: 450px;
-            width: 650px;
             height: 29px;
             padding: 7px;
             outline: none;
@@ -210,11 +207,10 @@ const RepliesInputTextContainer = styled.div`
     }
 `;
 const CommentInputTextContainer = styled.div`
-    width: max-content;
-    display: flex;
     margin-bottom: 30px;
     margin-top: 15px;
     margin-left: 15px;
+    display: flex;
 
     .face {
         width: 58px;
@@ -229,8 +225,8 @@ const CommentInputTextContainer = styled.div`
     .wrapper {
         margin-left: 24px;
         textarea {
-            min-width: 650px;
-            width: 50vw;
+            width: 560px;
+            min-width: 100px;
             height: 100%;
             padding: 7px;
             outline: none;
@@ -247,9 +243,11 @@ const CommentInputTextContainer = styled.div`
         }
     }
     .another-wrapper { 
-        margin-left: 20px;
+        margin-left: auto;
+        margin-right: 20px;
         margin-top: 41px;
         display: flex;
+        // border: 1px solid red;
         .submit {
             width: max-content;
             height: 22px;
