@@ -21,16 +21,14 @@ class CardComment extends Component {
             })
     }
     render() {
-        // console.log(this.props.Comment);
         let parentComments = this.props.Comment.filter(item => item.d_flag === null);
         let comments = parentComments.map(parent => {
             let replies = this.props.Comment.filter(item => item.d_flag === parent.uid);
             return { ...parent, replies };
         })
-        // console.log(comments);
-        return (<React.Fragment>
+        return (<div >
             <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
-        </React.Fragment>)
+        </div>)
     }
 };
 const mapStateToProps = state => {
