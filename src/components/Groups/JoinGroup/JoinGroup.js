@@ -23,6 +23,7 @@ const ModalContent = styled.div`
 
 const JoinGroupWrap = styled.div`
   display: inline-block;
+  width:100px;
 `;
 
 const Title = styled.h2`
