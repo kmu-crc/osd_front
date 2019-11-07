@@ -26,7 +26,7 @@ const Arrow = styled.div`
     border-left: 14px solid #707070;
     border-bottom: 6px solid transparent;
     border-top: 6px solid transparent;
-    margin:22px 3px;
+    margin:3px 3px;
 `;
 const LoadingBox = styled.div`
     width:100%;
@@ -128,10 +128,10 @@ const ProfileBox = styled.div`
     .parentBox{
         display: flex;
         cursor: default;
+        padding-top:22px;
         .grandparent {
             width: 15px;
             height: 15px;
-            margin-top: 22px;
             margin-right: 10px;
             opacity: 0.55;
             transform: rotate(90deg);
@@ -139,7 +139,6 @@ const ProfileBox = styled.div`
         }
         .parent{
             margin-left: 10px;
-            margin-top: 17px;
             font-size: 20px;
             font-weight: 300;
             color: #707070;
@@ -348,7 +347,7 @@ const GroupInfo3 = styled.div`
         order: 1;
         width: 197px;
         margin-left: 65px;
-        margin-tp: 15px;
+        margin-top: 15px;
     }
     .box3 { 
         order: 2;
