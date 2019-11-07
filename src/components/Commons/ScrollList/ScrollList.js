@@ -146,6 +146,9 @@ class ScrollList extends Component {
     return list && list.length < 10 ? false : true;
   };
   componentWillReceiveProps(nextProps) {
+    if (!nextProps.dataList || !this.props.dataList) {
+      this.setState({ hasMore: false });
+    }
     if (nextProps.dataList !== this.props.dataList) {
       this.setState({ hasMore: this.checkHasMore(nextProps.dataList) })
     }
