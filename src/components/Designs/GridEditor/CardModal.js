@@ -16,6 +16,7 @@ import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContai
 import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
+import TextFormat from 'modules/TextFormat';
 const ContentBorder = styled.div`
     height: 29px;
     font-family: Noto Sans KR;
@@ -173,19 +174,32 @@ const CardDialog = styled(Modal)`
         }
         .card-header-second {
             width: 100%;
+            // div{ border:1px solid red; };
+            // border: 1px solid red;
             height: 29px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;//space-between;
             padding-left: 52px;
             margin-top: 30px;
-            .nick-name{
+            .contents {
                 font-size: 20px;
                 color: #707070;
                 font-weight: 300;
                 font-family: Noto Sans KR;
                 line-height: 29px;   
             }
-            .update-time{
+            .nick-name {
+                width: max-content;
+                margin-left: auto;
+                margin-right: 5px;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;   
+            }
+            .update-time {
+                width: max-content;
                 margin-right: 75px;
                 color: #707070;
                 font-size: 17px;
@@ -200,8 +214,8 @@ const CardDialog = styled(Modal)`
 const EditCardHeaderContainer = styled.div`
     .edit-header-container {
         display: flex;
-        margin-top: 35.5px;
-        margin-left: 125.5px;
+        margin-top: 15px;
+        margin-left: 125px;
         .edit-card-info {
             width: max-content;
             height: 29px;
@@ -215,7 +229,7 @@ const EditCardHeaderContainer = styled.div`
     }
     .edit-header-thumbnail {
         display: flex;
-        margin-top: 56px;
+        margin-top: 25px;
         margin-left: 200.5px;
         .thumbnail-txt {
             width: 97px;
@@ -231,8 +245,8 @@ const EditCardHeaderContainer = styled.div`
     }
     .edit-header-title {
         display: flex;
-        margin-top: 75px;
-        margin-left: 200.5px;
+        margin-top: 15px;
+        margin-left: 200px;
         .title-txt {
             width: 97px;
             height: 29px;
@@ -245,7 +259,7 @@ const EditCardHeaderContainer = styled.div`
         }
         .title-input-container{
             margin-left: 31px;
-            width: 505.5px;
+            width: 500px;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
@@ -264,8 +278,8 @@ const EditCardHeaderContainer = styled.div`
     }
     .edit-header-description{
         display: flex;
-        margin-top: 75px;
-        margin-left: 200.5px;
+        margin-top: 15px;
+        margin-left: 200px;
         .description-txt{
             width: 97px;
             height: 29px;
@@ -278,7 +292,7 @@ const EditCardHeaderContainer = styled.div`
         }
         .description-input-container{
             margin-left: 31px;
-            width: 505.5px;
+            width: 505px;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
@@ -295,8 +309,10 @@ const EditCardHeaderContainer = styled.div`
             padding: 16px 23px 16px 23px;
         }
     }
-    .edit-header-button-container{
-        padding-left: 1305px;
+    .edit-header-button-container {
+        width: max-content;
+        margin-left: auto;
+        margin-right: 25px;
         .edit-header-submit-button {
             border: none;
             background: none;
@@ -359,7 +375,7 @@ class CardModal extends Component {
         }
     }
     handleHeaderSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault(event);
         let files = null;
         ValidationGroup(this.state, false)
             .then(async data => {
@@ -395,15 +411,19 @@ class CardModal extends Component {
         }
     };
     onClose = async () => {
+        if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
+            return;
+        }
         await this.setState({ sroll: false, edit: false, title: "", content: "" });
         this.props.close();
     }
     render() {
-        const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.s_img;
+        const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.l_img;
         const card = this.props.card// || { title: "사용자 메뉴얼 디자인 등록 01", userName: "진아진아진아" }
-        const { isTeam, edit } = this.props;
+        const { isTeam/*, edit*/ } = this.props;
         const movablePrev = this.props.row > 0
-        const movableNext = this.props.row < this.props.maxRow - 1
+        const movableNext = this.props.row < this.props.maxRow - 1;
+        console.log("debug - CardModal:", this.state);
         return (
             <React.Fragment>
                 <CardDialog open={this.props.open} onClose={this.onClose}>
@@ -431,8 +451,9 @@ class CardModal extends Component {
                                     </div>
                                 </div>
                                 <div className="card-header-second" >
+                                    <div className="contents"><TextFormat txt={card.content} chars={25} /></div>
                                     <div className="nick-name">{card.nick_name}</div>
-                                    <div className="update-time">업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)}</div>
+                                    <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
                                 </div>
                             </React.Fragment>
                             : <EditCardHeaderContainer>
@@ -453,18 +474,20 @@ class CardModal extends Component {
                                 <div className="edit-header-description">
                                     <div className="description-txt">컨텐츠 설명</div>
                                     <div className="description-input-container">
-                                        <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="20" placeholder="제목을 입력해주세요." />
+                                        <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="1000" placeholder="설명을 입력해주세요." />
                                     </div>
                                 </div>
-                                <div className="edit-header-button-container">
+                                {/* <div className="edit-header-button-container">
                                     <button className="edit-header-submit-button" onClick={this.handleHeaderSubmit} >적용하기</button>
                                     <button className="edit-header-cancel-button" onClick={() => this.setState({ edit: !this.state.edit })}>취소</button>
-                                </div>
+                                </div> */}
                             </EditCardHeaderContainer>}
 
                         <ContentBorder><div className="border-line" /></ContentBorder>
                         <div className="content" >
-                            <CardSourceDetailContainer designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={edit}
+                            <CardSourceDetailContainer
+                                handleSubmit={this.handleHeaderSubmit}
+                                designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={this.state.edit}
                                 isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
                         </div>
 
