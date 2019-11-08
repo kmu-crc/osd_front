@@ -13,11 +13,11 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import Font from '@ckeditor/ckeditor5-font/src/font'
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
+// import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
 ClassicEditor.defaultConfig = {
   alignment: { options: ['left', 'center', 'justify', 'right'] },
-  toolbar: { items: ['heading', '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
+  toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
   fontSize: { options: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 26] },
   language: 'en'
@@ -50,4 +50,4 @@ class TextControllerPlus extends Component {
   }
 }
 
-export default TextControllerPlus
+export default TextControllerPlus;

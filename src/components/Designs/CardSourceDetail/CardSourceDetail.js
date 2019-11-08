@@ -7,7 +7,8 @@ import Loading from "components/Commons/Loading";
 
 import osdcss from "opendesign_style";
 import FileController from "./FileController";
-import TextController from "./TextControllerClassic";
+// import TextController from "./TextControllerClassic";
+import TextController from "./TextControllerPlus";
 import EmbController from "./EmbController";
 
 // css styling
@@ -410,6 +411,7 @@ class CardSourceDetail extends Component {
   }
   async onCancel() {
     await this.setState({ content: this.props.content, origin: this.props.origin, edit: false, loading: false });
+    this.props.handleCancel && this.props.handleCancel();
   }
   changeMode() {
     this.setState({ edit: !this.state.edit });
@@ -466,8 +468,8 @@ class CardSourceDetail extends Component {
               </div>
 
               <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
-              {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null}
-              {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null}
+              {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
+              {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
             </ControllerWrap>)
           })}
           <AddContent getValue={this.onAddValue} order={content.length} />
@@ -568,8 +570,8 @@ class AddContent extends Component {
     return (
       <ControllerWrap2>
         <div className="innerBox" >
-          <NewController onClick={() => this.addContent("FILE")} width="116px" height="29px">파일 등록하기</NewController>
-          <NewController onClick={() => this.addContent("TEXT")} width="134px" height="29px">텍스트 등록하기</NewController>
+          <NewController onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
+          <NewController onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 등록하기</NewController>
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap2>

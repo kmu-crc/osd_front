@@ -223,7 +223,16 @@ class GridEditor extends Component {
                         </WhitePane> : null}
 
                         {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} />}
-                        {card && <CardModal isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)} open={card} close={() => this.setState({ card: false })} title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
+                        {card && <CardModal
+                        // getData={this.props.GetDesignBoardRequest} 
+                        isTeam={editor} 
+                        edit={userInfo && (userInfo.uid === cardDetail.user_id)} 
+                        open={card} 
+                        close={() => this.setState({ card: false })} 
+                        title={title} 
+                        boardId={boardId} 
+                        designId={this.props.design.uid} 
+                        card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
                         {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
 
