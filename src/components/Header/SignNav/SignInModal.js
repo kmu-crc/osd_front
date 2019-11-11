@@ -80,7 +80,7 @@ const MainBox=styled.form`
         text-align:left;
     }
 `
-const InputText = styled.input.attrs({type:'text'})`
+const InputText = styled.input`
     width:100%;
     height:48px;
     margin-top:16px;
