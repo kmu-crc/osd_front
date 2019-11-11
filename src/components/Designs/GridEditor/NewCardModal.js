@@ -9,194 +9,245 @@ import CardSourceDetail from 'components/Designs/CardSourceDetail';
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
 
-const TitleWrapper = styled.div`
-    display: flex;
-    width: max-content;
-    margin-top: 15px;
-    margin-left: 66px;
-    @media only screen and (min-width: 0px) and (max-width: 900px) {
-        margin-left: 25px;
-    }
-    .title {
-        width: max-content;
-        height: 29px;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        text-align: left;
-        line-height: 40px;
-        color: #707070;
-    }
-`;
-const ThumbnailWrapper = styled.div`
-    display: flex;
-    margin-top: 25px;
-    margin-left: 100px;
-    @media only screen and (min-width: 0px) and (max-width: 900px) {
-        margin-left: 25px;
-        flex-direction: column;
-    }
-    .title {
-        width: max-content;
-        height: 29px;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        text-align: left;
-        line-height: 40px;
-        color: #707070
-        @media only screen and (min-width: 0px) and (max-width: 900px) {
-            margin-bottom: 15px;
-        }
-    }
-`;
-const ContentTitleWrapper = styled.div`
-    display: flex;
-    margin-left: 100px;
-    @media only screen and (min-width: 0px) and (max-width: 900px) {
-        margin-left: 25px;
-        flex-direction: column;
-    }
-    .title {
-        width: max-content;
-        height: 29px;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        text-align: left;
-        line-height: 40px;
-        color: #707070;
-        @media only screen and (min-width: 0px) and (max-width: 900px) {
-            margin-bottom: 15px;
-        }
-    }
-    .wrapper {
-        margin-left: 31px;
-        width: max-content;
-        height: 56px;
-        background-color: #EFEFEF;
-        border-radius: 5px;
-        & input { 
-            border-radius: 5px;
-            width: 100%;
-            border: none;
-            background: transparent;
-            font-size: 20px;
-            font-weight: 500;
-            color: #707070;
-            height: 100%;
-            padding: 16px 23px 16px 23px;
-        }
-    }
-`;
-const ContentDescriptionWrapper = styled.div`
-    display: flex;
-    margin-top: 25px;
-    margin-left: 100px;
-    @media only screen and (min-width: 0px) and (max-width: 900px) {
-        margin-left: 25px;
-        flex-direction: column;
-    }
-    .title {
-        width: 118px;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        text-align: left;
-        line-height: 40px;
-        color: #707070;
-        @media only screen and (min-width: 0px) and (max-width: 900px) {
-            margin-bottom: 15px;
-        }
-    }
-    .wrapper {
-        margin-left: 25px;
-        width: 90%;
-        height: 56px;
-        background-color: #EFEFEF;
-        border-radius: 5px;
-        margin-right: 15px;
-        & input {
-            border-radius: 5px;
-            width: 100%;
-            border: none;
-            background: transparent;
-            font-size: 20px;
-            font-weight: 500;
-            color: #707070;
-            height: 100%;
-            padding: 16px 23px 16px 23px;
-        }
-    }
-`;
-const CardSourceWrapper = styled.div`
-    display: flex;
-    margin-top: 25px;
-    margin-left: 100px;
-    @media only screen and (min-width: 0px) and (max-width: 900px) {
-        margin-left: 25px;
-        flex-direction: column;
-    }
-    .title {
-        width: 65px;
-        height: 29px;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        text-align: left;
-        line-height: 40px;
-        color: #707070;
-        @media only screen and (min-width: 0px) and (max-width: 900px) {
-            margin-bottom: 15px;
-        }
-    }
-    .card-detail-scroll {
-        width: 90%;
-        font-size: 24px;
-        overflow: hidden scroll;
-        margin-left: 70px;
-        max-height: 250px;
-        background-color: #EFEFEF;
-        border-radius: 5px;
-        border: 5px solid #EFEFEF;
-        margin-right: 15px;
-        @media only screen and (min-width: 0px) and (max-width: 900px) {
-            margin-left: 25px;
-        }
-    }
-`;
-const NewCardDialog = styled(Modal)`
-    min-width: 320px;
+const NewCardDialogWrapper = styled(Modal)`
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
-    border-radius: 5px;
+    border: 1px solid #EFEFEF;
+    border-radius: 10px;
     opacity: 1;
-    
-    .close-box {
+    ::-webkit-scrollbar {
         position: absolute;
-        right: 10px;
-        top: 10px;
-        cursor:pointer;
+        width: 3.9px;
     }
-    .submit-button-wrapper {
-        margin-top: 14px;
-        margin-left: 0px;
-        .wrapper {
-            width: 100px;
-            height: 40px;
-            margin-left: auto;
-            margin-top: 24px;
-            margin-right: 80.5px;
-            line-height: 40px;
-            color: #FF0000;
-            padding-bottom: 1.5px;
+    ::-webkit-scrollbar-thumb {
+        background: rgba(112, 112, 112, 0.45) !important;
+    } 
+    .content{
+        padding: 45px;
+        margin-left: auto;
+        line-height: 17px;
+    }
+    .close-box {
+        width: max-content;
+        cursor: pointer;
+        position: relative;
+        margin-left: auto;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+    .content-wrapper {
+        position: relative;
+        .card-header-first {
+            display: flex;
+            justify-content: space-between;
+            height: 29px;
+            margin-top: 30px;
+            margin-left: 52px;
+            .header-title {
+                font-family: Noto Sans KR;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 500;
+                line-height: 29px;
+            }
+            .header-edit-button {
+                font-family: Noto Sans KR;
+                font-size: 17px;
+                color: #707070;
+                font-weight: 900;
+                line-height: 29px;
+                margin-right: 75px;
+                .edit-btn {
+                    border: none;
+                    background: none;
+                    width: max-content;
+                    height: 40px;
+                    line-height: 40px;
+                    color: #FF0000;
+                    padding-bottom: 1.5px;
+                    border-bottom: 1.5px solid #FF0000;
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: Noto Sans KR;
+                    text-align: left;
+                    cursor: pointer;
+                }
+                .cancel-btn {
+                    margin-left: 25px;
+                    border: none;
+                    background: none;
+                    width: max-content;
+                    height: 40px;
+                    line-height: 40px;
+                    color: #707070;
+                    padding-bottom: 1.5px;
+                    border-bottom: 1.5px solid #707070;
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: Noto Sans KR;
+                    text-align: left;
+                    cursor: pointer;
+                }
+            }
+        }
+        .card-header-second {
+            width: 100%;
+            div{ border:1px solid red; };
+            border: 1px solid red;
+            height: 29px;
+            display: flex;
+            justify-content: flex-start;//space-between;
+            padding-left: 52px;
+            margin-top: 30px;
+            .contents {
+                font-size: 20px;
+                color: #707070;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;   
+            }
+            .nick-name {
+                width: max-content;
+                margin-left: auto;
+                margin-right: 5px;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;   
+            }
+            .update-time {
+                width: max-content;
+                margin-right: 75px;
+                color: #707070;
+                font-size: 17px;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;
+            }
+        }
+    }
+`;
+const ContentBorder = styled.div`
+    height: 29px;
+    font-family: Noto Sans KR;
+    font-size: 20px;
+    color: #707070;
+    font-weight: 500;
+    line-height: 29px;
+    margin-left: 50px;
+    margin-top: 30px;
+    padding-right: 25px;
+    .border-line {
+        border-bottom: 1px solid #707070;
+    }
+`;
+const EditCardHeaderContainer = styled.div`
+    .edit-header-container {
+        display: flex;
+        margin-top: 15px;
+        margin-left: 45px;
+        .edit-card-info {
+            width: max-content;
+            height: 29px;
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
-            cursor: pointer;
+            line-height: 40px;
+            color: #707070;
         }
-        & button {
+    }
+    .edit-header-thumbnail {
+        display: flex;
+        margin-top: 25px;
+        margin-left: 65px;
+        .thumbnail-txt {
+            width: 97px;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+
+    }
+    .edit-header-title {
+        display: flex;
+        margin-top: 15px;
+        margin-left: 65px;
+        .title-txt {
+            width: 97px;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+        .title-input-container{
+            margin-left: 31px;
+            width: 500px;
+            height: 56px;
+            background-color: #EFEFEF;
+            border-radius: 5px;
+        }
+        .title-input-style{
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: #707070;
+            height: 100%;
+            padding: 16px 23px 16px 23px;
+        }
+    }
+    .edit-header-description{
+        display: flex;
+        margin-top: 15px;
+        margin-left: 65px;
+        .description-txt{
+            width: 97px;
+            height: 29px;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            line-height: 40px;
+            color: #707070;
+        }
+        .description-input-container{
+            margin-left: 31px;
+            width: 505px;
+            height: 56px;
+            background-color: #EFEFEF;
+            border-radius: 5px;
+        }
+        .description-input-style{
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            font-weight: 500;
+            color: #707070;
+            height: 100%;
+            padding: 16px 23px 16px 23px;
+        }
+    }
+    .edit-header-button-container {
+        width: max-content;
+        margin-left: auto;
+        margin-right: 25px;
+        .edit-header-submit-button {
             border: none;
             background: none;
             width: max-content;
@@ -211,88 +262,31 @@ const NewCardDialog = styled(Modal)`
             text-align: left;
             cursor: pointer;
         }
+        .edit-header-cancel-button {
+            margin-left: 10px;
+            border: none;
+            background: none;
+            width: max-content;
+            height: 40px;
+            line-height: 40px;
+            color: #707070;
+            padding-bottom: 1.5px;
+            border-bottom: 1.5px solid #707070;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            cursor: pointer;
+        }
     }
 `;
-const ButtonContainer = styled.div`
-  margin-bottom: 35px;
-  margin-left: auto;
-  margin-right: auto;
-  .content-edit-wrapper {
-    width: max-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .content-edit-button {
-    width: max-content;
-    padding: 7px;
-    padding-bottom: 1px;
-    border: none;
-    border-bottom: 1px solid red;
-    color: #FF0000;
-    font-size: 20px;
-    font-weight: 500;
-    background: none;
-    cursor: pointer;
-  }
-  .content-add-wrapper {
-    width: max-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .content-add-button {
-    width: max-content;
-    border: none;
-    padding: 7px;
-    padding-bottom: 1px;
-    border-bottom: 1px solid red;
-    color: #FF0000;
-    font-size: 20px;
-    font-weight: 500;
-    background: none;
-    cursor: pointer;
-  }
+const BlankSpace = styled.div`
+    width: 250px;
+    height: 250px;
+    background-color: "white";
+    borderRadius: 15px
 `;
-const EditorBottonWrapper = styled.div`
-    width: max-content;
-    margin: auto;
-    margin-top: 10px;
-    padding: 15px;
-    background: #FFFFFF;
-    border-radius: 25px;
-    z-index: 907;
-    .submit {
-      margin-left: 5px;
-      background: none;
-      border: none;
-      width: max-content;
-      padding: 7px;
-      padding-bottom: 1px;
-      color: #FF0000;
-      font-size: 20px;
-      font-weight: 500;
-      cursor: pointer;
-      :hover{
-        background-color: #DDD;
-        border-radius: 25px;
-      }
-    }
-    .cancel {
-      margin-left: 10px;
-      background: none;
-      border: none;
-      width: max-content;
-      padding: 7px;
-      padding-bottom: 1px;
-      color: #707070;
-      font-size: 20px;
-      font-weight: 500;
-      cursor: pointer;
-      :hover{
-        background-color: #DDD;
-        border-radius: 25px;
-      }
-    }
-`;
+
 class NewCardModal extends Component {
     state = {
         loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
@@ -330,13 +324,16 @@ class NewCardModal extends Component {
     }
     submit = async () => {
         let files = null;
+        if (!this.state.title || this.state.title === "") {
+            alert("컨텐츠의 제목을 입력하세요.");
+            return;
+        }
         // new card
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
                 await this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
                     .then((res) => {
-                        console.log("3:", res.success, this.state.card_content);
                         if (res.success) {
                             // and get new card id
                             // directly update contents stored tempolarly
@@ -370,55 +367,68 @@ class NewCardModal extends Component {
     }
     render() {
         const { hook } = this.state;
-        return (<NewCardDialog open={this.props.open} onClose={this.props.close}>
-            {this.state.loading && <Loading />}
+        return (
+            <React.Fragment>
+                <NewCardDialogWrapper open={this.props.open} onClose={this.props.close}>
+                    <div className="close-box" onClick={this.onClose} >
+                        <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+                    </div>
 
-            <div onClick={this.onClose} className="close-box" >
-                <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
-            </div>
+                    {this.state.loading && <Loading />}
 
-            <TitleWrapper>
-                <div className="title">새 컨텐츠</div>
-            </TitleWrapper>
+                    <div className="content-wrapper">
+                        <EditCardHeaderContainer>
+                            <div className="edit-header-container">
+                                <div className="edit-card-info">새 컨텐츠</div>
+                            </div>
+                            <div className="edit-header-thumbnail">
+                                <div className="thumbnail-txt">썸네일 사진</div>
+                                <FormThumbnailEx name="thumbnail" placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
+                                    style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
+                            </div>
+                            <div className="edit-header-title">
+                                <div className="title-txt">컨텐츠 제목</div>
+                                <div className="title-input-container">
+                                    <input className="title-input-style" name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." />
+                                </div>
+                            </div>
+                            <div className="edit-header-description">
+                                <div className="description-txt">컨텐츠 설명</div>
+                                <div className="description-input-container">
+                                    <input className="description-input-style" name="content" onChange={this.onChangeContent} maxLength="1000" placeholder="설명을 입력해주세요." />
+                                </div>
+                            </div>
+                        </EditCardHeaderContainer>
 
-            <ThumbnailWrapper>
-                <div className="title">썸네일 사진</div>
-                <FormThumbnailEx name="thumbnail" placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                    style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
-            </ThumbnailWrapper>
-
-            <ContentTitleWrapper>
-                <div className="title">컨텐츠 제목</div>
-                <div className="wrapper">
-                    <input name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." /></div>
-            </ContentTitleWrapper>
-
-            <ContentDescriptionWrapper>
-                <div className="title">컨텐츠 설명</div>
-                <div className="wrapper">
-                    <input name="content" onChange={this.onChangeContent} maxLength="20" placeholder="설명을 입력해주세요." /></div>
-            </ContentDescriptionWrapper>
-
-            <CardSourceWrapper>
-                <div className="title">내용</div>
-                <div className="card-detail-scroll" >
-                    <CardSourceDetail {...this.props} uid={undefined} isTeam={this.props.isTeam} edit={true} closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} hook={hook} handleResetHook={this.handleResetHook} upDateRequest={this.saveTemporary} />
-                </div>
-            </CardSourceWrapper>
-            <ButtonContainer >
-                <EditorBottonWrapper>
-                    <button onClick={this.handleSubmit} className="submit" type="button">
-                        <i className="icon outline save" />생성</button>
-                    <button onClick={this.handleCancel} className="cancel" type="button">
-                        <i className="icon trash" />취소</button>
-                </EditorBottonWrapper>
-            </ButtonContainer>
-            {/*<div className="submit-button-wrapper">
-                <div className="wrapper">
-                    <button onClick={this.handleSubmit} >생성하기</button>
-                </div>
-            </div> */}
-        </NewCardDialog >)
+                        <ContentBorder><div className="border-line" /></ContentBorder>
+                        <div className="content" >
+                            <div className="title">내용</div>
+                            <CardSourceDetail {...this.props} uid={"new"} isTeam={true} edit={true} closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} hook={hook} handleResetHook={this.handleResetHook} upDateRequest={this.saveTemporary} />
+                            {/*<CardSourceDetailContainer*/}
+                            {/*    handleSubmit={this.handleHeaderSubmit}*/}
+                            {/*    handleCancel={this.onCloseEditMode}*/}
+                            {/*    designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={this.state.edit}*/}
+                            {/*    isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />*/}
+                        </div>
+                    </div>
+                </NewCardDialogWrapper>
+                <BlankSpace />
+            </React.Fragment >
+            //     <ButtonContainer >
+            //         <EditorBottonWrapper>
+            //             <button onClick={this.handleSubmit} className="submit" type="button">
+            //                 <i className="icon outline save" />생성</button>
+            //             <button onClick={this.handleCancel} className="cancel" type="button">
+            //                 <i className="icon trash" />취소</button>
+            //         </EditorBottonWrapper>
+            //     </ButtonContainer>
+            //     {/*<div className="submit-button-wrapper">
+            //     <div className="wrapper">
+            //         <button onClick={this.handleSubmit} >생성하기</button>
+            //     </div>
+            // </div> */}
+            // </NewCardDialog >
+        )
     }
 }
 const mapStateToProps = (state) => {

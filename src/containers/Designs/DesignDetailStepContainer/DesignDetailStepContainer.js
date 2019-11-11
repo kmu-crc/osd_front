@@ -1,9 +1,9 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import GridEditor from "components/Designs/GridEditor"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import GridEditor from "components/Designs/GridEditor";
 import {
   CreateDesignBoardRequest, DeleteDesignBoardRequest,
-  GetDesignDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
+  GetDesignDetailRequest, GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
   UpdateCardTitleRequest, UpdateDesignBoardRequest, UpdateDesignTime
 } from "redux/modules/design";
 
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
+    DesignDetailStepCard: state.DesignCard.status.DesignDetailStepCard,
     DesignDetailStep: state.DesignCard.status.DesignDetailStep,
   }
 }
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     CreateDesignBoardRequest: (data, design_id, token) => {
       return dispatch(CreateDesignBoardRequest(data, design_id, token));
+    },
+    GetCardDetailRequest: (id) => {
+      return dispatch(GetCardDetailRequest(id));
     },
     GetDesignDetailRequest: (id, token) => {
       return dispatch(GetDesignDetailRequest(id, token));

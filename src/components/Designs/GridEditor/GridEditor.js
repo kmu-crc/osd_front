@@ -41,8 +41,6 @@ const Arrow = styled.div`
     cursor: pointer;
 `;
 const GridEditorWrapper = styled.div`
-    // width: osdcss.resolutions.LargeMaxWidthpx;
-    // width: ${props => props.width}px; 
     display: flex;
     margin-left:32px;
     margin-bottom: 75px;
@@ -55,13 +53,14 @@ const GridEditorWrapper = styled.div`
         margin-top: 90px;
     }
 `;
+
 class GridEditor extends Component {
     constructor(props) {
         super(props);
         this.temp = React.createRef();
         this.grid = React.createRef();
         this.state = {
-            h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth, 
+            h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth,
             left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
             boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
             gap: null,
@@ -126,14 +125,20 @@ class GridEditor extends Component {
     async RemoveStep(data) {
         await this.props.DeleteDesignBoardRequest(this.props.design.uid, data, this.props.token)
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("1", this.props.DesignDetailStep) })
+            .then(() => {
+                this.props.GetDesignBoardRequest(this.props.design.uid);
+                // console.log("1", this.props.DesignDetailStep) 
+            })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
     }
     async EditStep(data) {
         await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("2", this.props.DesignDetailStep) })
+            .then(() => {
+                this.props.GetDesignBoardRequest(this.props.design.uid);
+                // console.log("2", this.props.DesignDetailStep) 
+            })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
         this.CloseEditStep();
@@ -141,7 +146,10 @@ class GridEditor extends Component {
     async NewStep(data) {
         await this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid); console.log("3", this.props.DesignDetailStep) })
+            .then(() => {
+                this.props.GetDesignBoardRequest(this.props.design.uid);
+                // console.log("3", this.props.DesignDetailStep) 
+            })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
         this.CloseNewStep();
@@ -204,12 +212,16 @@ class GridEditor extends Component {
                 }
             }
         }
+        if (nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
+            // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
+            this.setState({ cardDetail: nextProps.DesignDetailStepCard });
+        }
         return true;
     }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
-        // const rightArrowPos = window.innerWidth <= osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth - window.innerWidth : 0;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        // console.log("card detail:", this.props.DesignDetailStepCard, cardDetail);
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
@@ -222,10 +234,18 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
-                        {card && <CardModal isTeam={editor} edit={userInfo && (userInfo.uid === cardDetail.user_id)} open={card} close={() => this.setState({ card: false })} title={title || "로딩중"} boardId={boardId} designId={this.props.design.uid} card={cardDetail} />}
+                        {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} />}
+                        {card && <CardModal
+                            isTeam={editor}
+                            edit={userInfo && (userInfo.uid === cardDetail.user_id)}
+                            open={card}
+                            close={() => this.setState({ card: false })}
+                            title={title}
+                            boardId={boardId}
+                            designId={this.props.design.uid}
+                            card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
                         {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
-                        {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} />}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>

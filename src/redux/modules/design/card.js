@@ -103,9 +103,7 @@ const initialState = {
     DesignSourceDetail: { status: "INIT" },
     DesignSourceEdit: { status: "INIT" },
     DesignDetailStepCard: { status: "INIT" },
-    status: {
-        DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin:[]
-    }
+    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: []  }
 }
 
 export function DesignCard(state, action) {

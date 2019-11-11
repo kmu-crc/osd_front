@@ -4,10 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from "styled-components";
 
 const EditorWrapper = styled.div`
-    // width: 80%;
-    // margin-left: auto;
-    // margin-right: auto;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     .copyright {
         width: max-content;
         margin-left: auto;
@@ -19,8 +16,9 @@ class TextControllerClassic extends Component {
         const { item } = this.props;
         return (<EditorWrapper>
             <CKEditor
-                editor={ClassicEditor} data={item.content}
-                onInit={editor => { console.log('Editor is ready to use!', editor); }}
+                editor={ClassicEditor}
+                data={item.content}
+                onInit={editor => { editor.editing.view.focus(); }}
                 onChange={(event, editor) => {
                     const data = editor.getData();
                     this.props.getValue({ content: data });
