@@ -187,7 +187,7 @@ const EditCardHeaderContainer = styled.div`
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            text-align: left;
+            text-align: right;
             line-height: 40px;
             color: #707070;
         }
@@ -210,28 +210,28 @@ const EditCardHeaderContainer = styled.div`
             padding: 16px 23px 16px 23px;
         }
     }
-    .edit-header-description{
+    .edit-header-description {
         display: flex;
         margin-top: 15px;
         margin-left: 65px;
-        .description-txt{
+        .description-txt {
             width: 97px;
             height: 29px;
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            text-align: left;
+            text-align: right;
             line-height: 40px;
             color: #707070;
         }
-        .description-input-container{
+        .description-input-container {
             margin-left: 31px;
             width: 505px;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
         }
-        .description-input-style{
+        .description-input-style {
             border-radius: 5px;
             width: 100%;
             border: none;
@@ -387,13 +387,13 @@ class NewCardModal extends Component {
                                     style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
                             </div>
                             <div className="edit-header-title">
-                                <div className="title-txt">컨텐츠 제목</div>
+                                <div className="title-txt">제목</div>
                                 <div className="title-input-container">
                                     <input className="title-input-style" name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." />
                                 </div>
                             </div>
                             <div className="edit-header-description">
-                                <div className="description-txt">컨텐츠 설명</div>
+                                <div className="description-txt">설명</div>
                                 <div className="description-input-container">
                                     <input className="description-input-style" name="content" onChange={this.onChangeContent} maxLength="1000" placeholder="설명을 입력해주세요." />
                                 </div>
