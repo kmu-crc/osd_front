@@ -241,7 +241,7 @@ class CardSourceDetail extends Component {
     this.moveDownItem = this.moveDownItem.bind(this);
   }
   componentDidMount() {
-    if (this.props.uid) {
+    if (this.props.uid !== "new") {
       this.props.GetDesignSourceRequest(this.props.uid)
         .then(async () => {
           await this.setState({ content: this.props.content || [], origin: this.props.origin || [] });
@@ -392,7 +392,7 @@ class CardSourceDetail extends Component {
 
     // edit
     await this.setState({ loading: true });
-    if (this.props.uid) {
+    if (this.props.uid !== "new") {
       await this.props.handleSubmit(event);
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
         .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
@@ -457,7 +457,7 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {(edit || this.props.edit) ? (
+      {((edit || this.props.edit) && this.props.uid !== "new") ? (
         content && content.length > 0 ? (<Fragment>
           {content.map(item => {
             return (<ControllerWrap key={item.order}>

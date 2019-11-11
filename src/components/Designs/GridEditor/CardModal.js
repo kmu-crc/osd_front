@@ -117,7 +117,8 @@ const CardDialog = styled(Modal)`
         cursor: pointer;
         position: relative;
         margin-left: auto;
-        margin-right: 10px;        
+        margin-right: 10px;
+        margin-top: 10px; 
     }
     .content-wrapper {
         position: relative;
@@ -125,7 +126,7 @@ const CardDialog = styled(Modal)`
             display: flex;
             justify-content: space-between;
             height: 29px;
-            margin-top: 29.78px;
+            margin-top: 30px;
             margin-left: 52px;
             .header-title {
                 font-family: Noto Sans KR;
@@ -383,8 +384,8 @@ class CardModal extends Component {
             this.setState({ content: event.target.value });
         }
     }
-    handleHeaderSubmit = (event) => {
-        // event.preventDefault(event);
+    handleHeaderSubmit = (_) => {
+        // _.preventDefault(_);
         let files = null;
         ValidationGroup(this.state, false)
             .then(async data => {
@@ -393,9 +394,9 @@ class CardModal extends Component {
                 const pack = { title: this.state.title, thumbnail: files && thumbnail, content: this.state.content, data: { deleteContent: [], newContent: [], updateContent: [] } };
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
                     .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
                     .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
                     .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
+                    .then(() => {this.props.GetCardDetailRequest(this.props.card.uid)})
                     .catch(err => alert(err + ''));
                 // this.onClose();
             }).catch(err => alert(err + ''));
@@ -504,10 +505,16 @@ class CardModal extends Component {
 
                         <div className="content" >
                             <CardSourceDetailContainer
+                                isCancel
                                 handleSubmit={this.handleHeaderSubmit}
                                 handleCancel={this.onCloseEditMode}
-                                designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={this.state.edit}
-                                isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />
+                                designId={this.props.designId}
+                                card={card}
+                                uid={card.uid}
+                                isTeam={isTeam}
+                                edit={this.state.edit}
+                                closeEdit={this.onCloseEditMode}
+                                openEdit={this.onChangeEditMode} />
                         </div>
 
                         <ContentBorder><div className="border-line" /></ContentBorder>

@@ -12,7 +12,6 @@ import Cross from "components/Commons/Cross";
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
     margin-bottom: 50px !important;
-    // min-width: 1530px;
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
@@ -32,10 +31,12 @@ const NewCardDialogWrapper = styled(Modal)`
         line-height: 17px;
     }
     .close-box {
-        cursor:pointer;
-        position: absolute;
-        top: 10px;
-        right: 10px;
+        width: max-content;
+        cursor: pointer;
+        position: relative;
+        margin-left: auto;
+        margin-right: 10px;
+        margin-top: 10px;
     }
     .content-wrapper {
         position: relative;
@@ -43,7 +44,7 @@ const NewCardDialogWrapper = styled(Modal)`
             display: flex;
             justify-content: space-between;
             height: 29px;
-            margin-top: 29.78px;
+            margin-top: 30px;
             margin-left: 52px;
             .header-title {
                 font-family: Noto Sans KR;
@@ -94,8 +95,8 @@ const NewCardDialogWrapper = styled(Modal)`
         }
         .card-header-second {
             width: 100%;
-            // div{ border:1px solid red; };
-            // border: 1px solid red;
+            div{ border:1px solid red; };
+            border: 1px solid red;
             height: 29px;
             display: flex;
             justify-content: flex-start;//space-between;
@@ -323,13 +324,16 @@ class NewCardModal extends Component {
     }
     submit = async () => {
         let files = null;
+        if (!this.state.title || this.state.title === "") {
+            alert("컨텐츠의 제목을 입력하세요.");
+            return;
+        }
         // new card
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
                 await this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
                     .then((res) => {
-                        // console.log("3:", res.success, this.state.card_content);
                         if (res.success) {
                             // and get new card id
                             // directly update contents stored tempolarly
@@ -366,10 +370,11 @@ class NewCardModal extends Component {
         return (
             <React.Fragment>
                 <NewCardDialogWrapper open={this.props.open} onClose={this.props.close}>
-                    {this.state.loading && <Loading />}
                     <div className="close-box" onClick={this.onClose} >
                         <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                     </div>
+
+                    {this.state.loading && <Loading />}
 
                     <div className="content-wrapper">
                         <EditCardHeaderContainer>
@@ -398,7 +403,7 @@ class NewCardModal extends Component {
                         <ContentBorder><div className="border-line" /></ContentBorder>
                         <div className="content" >
                             <div className="title">내용</div>
-                            <CardSourceDetail {...this.props} uid={undefined} isTeam={this.props.isTeam} edit={true} closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} hook={hook} handleResetHook={this.handleResetHook} upDateRequest={this.saveTemporary} />
+                            <CardSourceDetail {...this.props} uid={"new"} isTeam={true} edit={true} closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} hook={hook} handleResetHook={this.handleResetHook} upDateRequest={this.saveTemporary} />
                             {/*<CardSourceDetailContainer*/}
                             {/*    handleSubmit={this.handleHeaderSubmit}*/}
                             {/*    handleCancel={this.onCloseEditMode}*/}
