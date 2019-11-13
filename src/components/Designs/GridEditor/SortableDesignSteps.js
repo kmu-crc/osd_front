@@ -18,8 +18,8 @@ const AsBelowArrow = styled.div`
 const Container = SortableContainer(({ children }) => { return <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul> });
 const HorizonDragHandle = SortableHandle(() =>
     <div style={{ display: "flex" }}>
-        <AsBelowArrow color="#FF0000" angle={90} percent={.15} marginRight={7} />
-        <AsBelowArrow color="#FF0000" angle={-90} percent={.15} />
+        <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={7} />
+        <AsBelowArrow color="#FF0000" angle={-90} percent={.21} />
     </div>)
 const VerticalDragHandle = SortableHandle(({ is_white }) =>
     <div style={{ bakcground: "transparent" }}>
@@ -48,7 +48,7 @@ const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCa
             </Fragment>}
         {editor &&
             <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
-                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}/>
+                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
             </div>}
     </div>
 ));

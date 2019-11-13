@@ -12,7 +12,7 @@ import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import dots from "source/baseline_more_vert_black_48dp.png";
 import noimg from "source/noimg.png";
 import DateFormat from "modules/DateFormat";
-import TextFormat from "modules/TextFormat";
+// import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
 
 // import Cross from "components/Commons/Cross"
@@ -196,11 +196,11 @@ const ExplainBox = styled.div`
         } 
     }
 }`
-const GroupHeaderBox = styled.div`
-width: 100%;
-display: flex;
-padding-left: 30px;
-`;
+// const GroupHeaderBox = styled.div`
+// width: 100%;
+// display: flex;
+// padding-left: 30px;
+// `;
 const ButtonRegion = styled.div`
     display: flex;
     flex-direction: column !important;

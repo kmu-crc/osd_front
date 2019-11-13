@@ -166,12 +166,13 @@ const EditCardHeaderContainer = styled.div`
         margin-top: 25px;
         margin-left: 65px;
         .thumbnail-txt {
-            width: 97px;
+            border: 1px solid red;
+            width: max-content;
             height: 29px;
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            text-align: left;
+            text-align: right;
             line-height: 40px;
             color: #707070;
         }
@@ -382,7 +383,7 @@ class NewCardModal extends Component {
                                 <div className="edit-card-info">새 컨텐츠</div>
                             </div>
                             <div className="edit-header-thumbnail">
-                                <div className="thumbnail-txt">썸네일 사진</div>
+                                <div className="thumbnail-txt">썸네일</div>
                                 <FormThumbnailEx name="thumbnail" placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
                                     style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
                             </div>
