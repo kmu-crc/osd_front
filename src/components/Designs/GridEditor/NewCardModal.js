@@ -25,10 +25,17 @@ const NewCardDialogWrapper = styled(Modal)`
     ::-webkit-scrollbar-thumb {
         background: rgba(112, 112, 112, 0.45) !important;
     } 
-    .content{
+    .content {
         padding: 45px;
         margin-left: auto;
         line-height: 17px;
+        .title {
+            font-family: Noto Sans KR;
+            font-size: 20px;
+            color: #707070;
+            font-weight: 500;
+            line-height: 29px;
+        }
     }
     .close-box {
         width: max-content;
@@ -41,7 +48,7 @@ const NewCardDialogWrapper = styled(Modal)`
     .content-wrapper {
         position: relative;
         .card-header-first {
-            display: flex;
+            display: flex;  
             justify-content: space-between;
             height: 29px;
             margin-top: 30px;
@@ -166,7 +173,6 @@ const EditCardHeaderContainer = styled.div`
         margin-top: 25px;
         margin-left: 65px;
         .thumbnail-txt {
-            border: 1px solid red;
             width: max-content;
             height: 29px;
             font-size: 20px;

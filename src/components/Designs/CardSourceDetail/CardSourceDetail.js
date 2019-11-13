@@ -457,7 +457,7 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {((edit || this.props.edit) && this.props.uid !== "new") ? (
+      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
         content && content.length > 0 ? (<Fragment>
           {content.map(item => {
             return (<ControllerWrap key={item.order}>
