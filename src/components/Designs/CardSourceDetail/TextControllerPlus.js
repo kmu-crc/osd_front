@@ -41,6 +41,7 @@ class TextControllerPlus extends Component {
     return (
       <div>
         <CKEditor
+          autoFocus
           ref={ref => (this.edit = ref)}
           data={item.content}
           onBlur={this.onSave}

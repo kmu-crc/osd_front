@@ -27,58 +27,58 @@ const ControllerWrap = styled.div`
     clear: both;
   }
 `;
-const UpBtn = styled.button`
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 85%;
-  transform: translate(-50%, -50%);
-  border: 0;
-  padding: 0;
-  width: 45px;
-  height: 45px;
-  border-radius: 25px;
-  line-height: 25px;
-  box-sizing: border-box;
-  font-size: 12px;
-  background-color: blue;
-  color: white;
-  text-align: center;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  outline: 0;
-  i.icon {
-    margin: 0;
-  }
-  &:focus .subMenu {
-    display: block;
-  }
-`;
-const DownBtn = styled.button`
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 90%;
-  transform: translate(-50%, -50%);
-  border: 0;
-  padding: 0;
-  width: 45px;
-  height: 45px;
-  border-radius: 25px;
-  line-height: 25px;
-  box-sizing: border-box;
-  font-size: 12px;
-  background-color: blue;
-  color: white;
-  text-align: center;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  outline: 0;
-  i.icon {
-    margin: 0;
-  }
-  &:focus .subMenu {
-    display: block;
-  }
-`;
+//const UpBtn = styled.button`
+//  display: none;
+//  position: absolute;
+//  top: 0;
+//  left: 85%;
+//  transform: translate(-50%, -50%);
+//  border: 0;
+//  padding: 0;
+//  width: 45px;
+//  height: 45px;
+//  border-radius: 25px;
+//  line-height: 25px;
+//  box-sizing: border-box;
+//  font-size: 12px;
+//  background-color: blue;
+//  color: white;
+//  text-align: center;
+//  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+//  outline: 0;
+//  i.icon {
+//    margin: 0;
+//  }
+//  &:focus .subMenu {
+//    display: block;
+//  }
+//`;
+//const DownBtn = styled.button`
+//  display: none;
+//  position: absolute;
+//  top: 0;
+//  left: 90%;
+//  transform: translate(-50%, -50%);
+//  border: 0;
+//  padding: 0;
+//  width: 45px;
+//  height: 45px;
+//  border-radius: 25px;
+//  line-height: 25px;
+//  box-sizing: border-box;
+//  font-size: 12px;
+//  background-color: blue;
+//  color: white;
+//  text-align: center;
+//  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+//  outline: 0;
+//  i.icon {
+//    margin: 0;
+//  }
+//  &:focus .subMenu {
+//    display: block;
+//  }
+//`;
 const DelBtn = styled.button`
   display: none;
   position: absolute;
@@ -457,7 +457,7 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {((edit || this.props.edit) && this.props.uid !== "new") ? (
+      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
         content && content.length > 0 ? (<Fragment>
           {content.map(item => {
             return (<ControllerWrap key={item.order}>

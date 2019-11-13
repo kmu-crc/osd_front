@@ -25,10 +25,17 @@ const NewCardDialogWrapper = styled(Modal)`
     ::-webkit-scrollbar-thumb {
         background: rgba(112, 112, 112, 0.45) !important;
     } 
-    .content{
+    .content {
         padding: 45px;
         margin-left: auto;
         line-height: 17px;
+        .title {
+            font-family: Noto Sans KR;
+            font-size: 20px;
+            color: #707070;
+            font-weight: 500;
+            line-height: 29px;
+        }
     }
     .close-box {
         width: max-content;
@@ -41,7 +48,7 @@ const NewCardDialogWrapper = styled(Modal)`
     .content-wrapper {
         position: relative;
         .card-header-first {
-            display: flex;
+            display: flex;  
             justify-content: space-between;
             height: 29px;
             margin-top: 30px;
@@ -166,12 +173,12 @@ const EditCardHeaderContainer = styled.div`
         margin-top: 25px;
         margin-left: 65px;
         .thumbnail-txt {
-            width: 97px;
+            width: max-content;
             height: 29px;
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            text-align: left;
+            text-align: right;
             line-height: 40px;
             color: #707070;
         }
@@ -187,7 +194,7 @@ const EditCardHeaderContainer = styled.div`
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            text-align: left;
+            text-align: right;
             line-height: 40px;
             color: #707070;
         }
@@ -210,28 +217,28 @@ const EditCardHeaderContainer = styled.div`
             padding: 16px 23px 16px 23px;
         }
     }
-    .edit-header-description{
+    .edit-header-description {
         display: flex;
         margin-top: 15px;
         margin-left: 65px;
-        .description-txt{
+        .description-txt {
             width: 97px;
             height: 29px;
             font-size: 20px;
             font-weight: 500;
             font-family: Noto Sans KR;
-            text-align: left;
+            text-align: right;
             line-height: 40px;
             color: #707070;
         }
-        .description-input-container{
+        .description-input-container {
             margin-left: 31px;
             width: 505px;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
         }
-        .description-input-style{
+        .description-input-style {
             border-radius: 5px;
             width: 100%;
             border: none;
@@ -382,18 +389,18 @@ class NewCardModal extends Component {
                                 <div className="edit-card-info">새 컨텐츠</div>
                             </div>
                             <div className="edit-header-thumbnail">
-                                <div className="thumbnail-txt">썸네일 사진</div>
+                                <div className="thumbnail-txt">썸네일</div>
                                 <FormThumbnailEx name="thumbnail" placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
                                     style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
                             </div>
                             <div className="edit-header-title">
-                                <div className="title-txt">컨텐츠 제목</div>
+                                <div className="title-txt">제목</div>
                                 <div className="title-input-container">
                                     <input className="title-input-style" name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." />
                                 </div>
                             </div>
                             <div className="edit-header-description">
-                                <div className="description-txt">컨텐츠 설명</div>
+                                <div className="description-txt">설명</div>
                                 <div className="description-input-container">
                                     <input className="description-input-style" name="content" onChange={this.onChangeContent} maxLength="1000" placeholder="설명을 입력해주세요." />
                                 </div>

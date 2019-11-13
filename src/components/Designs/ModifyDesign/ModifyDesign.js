@@ -468,25 +468,24 @@ width:645px;
 }
 `
 const NoInviteMemberBox = styled.div`
-margin-left:167px;
-margin-top:30px;
-font-size:20px;
-font-weight:500;
-font-family:Noto Sans KR;
-color:#707070;
-.textLabel{
-  vertical-align:top;
-}
-      
-`
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-      width:25px;
-      height:25px;
-      margin-right:17px;
-      background-color:#EFEFEF !important;
-      border:1px solid #707070 !important;
-      border-radius:5px !important;  
-`
+  margin-left: 167px;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  color: #707070;
+  .textLabel {
+    vertical-align: top;
+  }
+`;
+//const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+//      width:25px;
+//      height:25px;
+//      margin-right:17px;
+//      background-color:#EFEFEF !important;
+//      border:1px solid #707070 !important;
+//      border-radius:5px !important;  
+//`
 // const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 //   width: 25px;
 //   height: 25px;

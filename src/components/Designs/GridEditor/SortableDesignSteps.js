@@ -16,27 +16,59 @@ const AsBelowArrow = styled.div`
     transform: rotate(${props => props.angle}deg);
 `;
 const Container = SortableContainer(({ children }) => { return <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul> });
-const HorizonDragHandle = SortableHandle(() =>
-    <div style={{ display: "flex" }}>
-        <AsBelowArrow color="#FF0000" angle={90} percent={.15} marginRight={7} />
-        <AsBelowArrow color="#FF0000" angle={-90} percent={.15} />
-    </div>)
-const VerticalDragHandle = SortableHandle(({ is_white }) =>
-    <div style={{ bakcground: "transparent" }}>
-        <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={180} percent={.15} />
-        <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.15} marginTop={7} />
-    </div>)
+const HorizonDragHandle = SortableHandle(() => <div style={{ display: "flex" }}>
+    <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={7} />
+    <AsBelowArrow color="#FF0000" angle={-90} percent={.21} />
+</div>)
+const VerticalDragHandle = SortableHandle(({ is_white }) => <div>
+    <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={180} percent={.21} />
+    <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.21} marginTop={7} />
+</div>)
 const margin = { marginTop: "25px", marginRight: "74px", marginBottom: "37px" };
 const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id }) => (
     <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} design_id={design_id} >
         {editor ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>
+
 ));
+const DragHandler = styled.div`
+    position: absolute;
+    margin-left: 150px;
+    margin-top: 30px;
+    z-index: 900;
+    .wrapper {
+        display: flex;
+        visibility: hidden;
+    }
+    .tip-txt {
+        display: none;
+        width: max-content;
+        background-color: #000000;
+        color: #FFFFFF;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        margin-top: -10px;
+    }
+    :hover {
+        .wrapper {
+            visibility: visible;
+        }
+        .tip-txt {
+            display: block;
+        }
+    }
+`;
 const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCard, createCard, reorder }) => (
-    <div>
-        <StepCard title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={74} marginBottom={0} marginLef={0} >
-            {editor ? <HorizonDragHandle /> : null}
-        </StepCard>
+    <div style={{ position: "relative" }}>
+        <DragHandler>
+            <div className="wrapper">
+                {editor ? <HorizonDragHandle /> : null}
+                <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div>
+            </div>
+        </DragHandler>
+        <StepCard title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={74} marginBottom={0} marginLef={0} />
+
         {step.cards && step.cards.length > 0 &&
             <Fragment>
                 <div style={{ marginTop: "25px" }}>
@@ -48,7 +80,7 @@ const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCa
             </Fragment>}
         {editor &&
             <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
-                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0}/>
+                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
             </div>}
     </div>
 ));
@@ -130,4 +162,5 @@ class SortableDesignSteps extends Component {
         </Container >)
     }
 }
+
 export default SortableDesignSteps;
