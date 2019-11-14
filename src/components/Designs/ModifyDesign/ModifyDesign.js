@@ -38,17 +38,16 @@ const MainBanner = styled.div`
   }
 `
 const MainSection = styled.div`
-width:${window.innerWidth>1920?1920+'px':100+'%'};
-border:2px solid blue;
-display: flex;
-flex-direction:row;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-}
-
+  width:${window.innerWidth>1920?1920+'px':100+'%'};
+  // border:2px solid blue;
+  display: flex;
+  flex-direction:row;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+      flex-direction:column;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+      flex-direction:column;
+  }
 `
 
 const NavMenu = styled.div`
