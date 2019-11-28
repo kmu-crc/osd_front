@@ -295,8 +295,14 @@ class ModifyMyDetail extends Component {
       name: this.state.thumbnail_name,
       key: 0
     };
-    formData.files.push(file);
 
+    if(this.state.thumbnail!=null)
+    {
+      if(this.state.thumbnail!="")
+      {      
+        formData.files.push(file);  
+      }
+    }
     if (formData.files.length === 0 ||
       formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img))
       delete formData.files;

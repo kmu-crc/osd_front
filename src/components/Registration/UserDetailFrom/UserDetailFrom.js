@@ -159,7 +159,7 @@ class ModifyMyDetail extends Component {
     super(props);
     this.state = {
       change_password: false, selected: 0, loading: false,
-      thumbnail: "",thumbnail_name:"", nick_name: "", about_me: "",
+      thumbnail: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",screenWidth: window.innerWidth,
@@ -278,7 +278,17 @@ class ModifyMyDetail extends Component {
       name: this.state.thumbnail_name,
       key: 0
     };
-    formData.files.push(file);
+    if(this.state.thumbnail!=null)
+    {
+      if(this.state.thumbnail!="")
+      {      
+        formData.files.push(file);  
+      }
+    }
+    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
+      delete formData.files;
+    }
+
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {

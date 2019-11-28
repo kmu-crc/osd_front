@@ -162,7 +162,7 @@ class SectionBasic extends Component
     constructor(props)
     {
         super(props);
-        this.state = {nick:true,nickname:"",introduce:"",thumbnail:noimg,tnumbnail_name:""}
+        this.state = {nick:true,nickname:"",introduce:"",thumbnail:"",tnumbnail_name:""}
         this.handleInputNickName = this.handleInputNickName.bind(this);
         this.handleInputIntroduce = this.handleInputIntroduce.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);

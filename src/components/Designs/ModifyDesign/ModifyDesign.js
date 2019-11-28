@@ -200,6 +200,7 @@ padding-left: 47px;
   display:flex;
   flex-direction:column;
   .title{
+
         min-width:100px;
         height:29px;
         text-align:left;
@@ -472,6 +473,7 @@ const NoInviteMemberBox = styled.div`
   font-size: 20px;
   font-weight: 500;
   font-family: Noto Sans KR;
+  display:flex;
   color: #707070;
   .textLabel {
     vertical-align: top;
@@ -505,6 +507,7 @@ margin-top:22px;
     font-size:20px;
     font-weight:500;
     font-family:Noto Sans KR;
+    display:flex;
   }
   .textLabel{
     vertical-align:top;
@@ -710,7 +713,7 @@ class ModifyDesign extends Component {
   }
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
-    if (title && title.length > 0 && thumbnail && thumbnail.img && explanation && explanation.length > 0) {
+    if (title && title.length > 0 && thumbnail && thumbnail.img ) {
       await this.setState({ basic: true });
     } else {
       await this.setState({ basic: false });
@@ -867,7 +870,7 @@ class ModifyDesign extends Component {
                 {/* THUMBNAIL */}
                 <ContentsBox>
                   <ThumbnailBox>
-                    <div className="title">프로필 사진</div>
+                    <div className="title">섬네일 사진<sup>*</sup></div>
                     <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL}>
                       {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
                         <div className="forkedImg" />}
@@ -877,13 +880,13 @@ class ModifyDesign extends Component {
                         <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                         <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                       </div>
-                      <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                      <div className="thumbnailExplainText">섬네일 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                   </ThumbnailBox>
 
                   {/* TITLE */}
                   <TitleBox>
-                    <div className="title">제목</div>
+                    <div className="title">제목<sup>*</sup></div>
                     <input onChange={this.onChangeValueTitle}
                       className="inputText" name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
                       onBlur={this.checkFinishBasic} />
@@ -913,7 +916,7 @@ class ModifyDesign extends Component {
                     : <p>카테고리를 가져오고 있습니다.</p>}
                   {/* invite member*/}
                   <InviteMemberBox>
-                    <div className="additionalTitle ">멤버 초대하기</div>
+                    <div className="additionalTitle ">멤버 초대하기<sup>*</sup></div>
                     <div className="searchBox" >
                       {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
                     </div>
@@ -932,26 +935,26 @@ class ModifyDesign extends Component {
                     </InviteMemberListBox>
                     {/* LEAVE ME ALONE */}
                     <NoInviteMemberBox>
-                      <CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" />
-                      <span className="textLabel">맴버를 초대하지 않습니다.</span>
+                       <div><CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" /></div>
+                      <div className="textLabel">멤버를 초대하지 않습니다.</div>
                     </NoInviteMemberBox>
                   </div>
                   <HRline />
 
                   {/* LICENSE */}
                   <LicenseBox>
-                    <div className="title">라이센스</div>
+                    <div className="additionalTitle">라이센스</div>
                     <div className="licenseList">
                       <div className="licenseItem">
-                        <CheckBox2 onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" />
-                        <span className="textLabel">상업적으로 이용이 가능합니다</span>
+                        <div><CheckBox2 onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" /></div>
+                        <div className="textLabel">상업적으로 이용이 가능합니다</div>
                       </div>
                       <div className="licenseItem">
-                        <CheckBox2 onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" />
-                        <span className="textLabel">원작자를 표시합니다</span></div>
+                      <div><CheckBox2 onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" /></div>
+                        <div className="textLabel">원작자를 표시합니다</div></div>
                       <div className="licenseItem">
-                        <CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" />
-                        <span className="textLabel">추후에 수정이 가능합니다</span></div>
+                      <div><CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" /></div>
+                        <div className="textLabel">추후에 수정이 가능합니다</div></div>
                     </div>
                   </LicenseBox>
                   {/* hr line */}

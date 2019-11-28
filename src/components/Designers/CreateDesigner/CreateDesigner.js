@@ -297,16 +297,18 @@ class ModifyMyDetail extends Component {
     let formData = {
       change_password: this.change_password,
       nick_name: this.state.nick_name, about_me: this.state.about_me,
-      password: this.state.password,
+      password: this.state.password,thumbnail:"",
       category_level1: this.state.category_level1, category_level2: this.state.category_level2,
       is_designer: this.state.is_designer, team: this.state.team, career: this.state.career,
       location: this.state.location, contact: this.state.contact, files: []
     };
 
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
-
-    formData.files.push(file);
-    if (formData.files.length <= 0 || formData.files[0].value === this.props.MyDetail.profileImg.m_img) {
+    if(this.state.thumbnail!=null||this.state.thumbnail!="")
+    {
+      formData.files.push(file);
+    }
+    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
       delete formData.files;
     }
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {

@@ -185,6 +185,7 @@ const BtnText = styled.p`
   text-align: center;
   font-size: 20px;
   color: #FFFFFF;
+  cursor:pointer;
 `;
 
 const PeerBox = styled.div`
@@ -655,7 +656,7 @@ class CreateDesign extends Component {
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
-      showSearch: false, thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
+      showSearch: false,title:"", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
     }
@@ -667,6 +668,7 @@ class CreateDesign extends Component {
     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+    this.checkInputForm = this.checkInputForm.bind(this);
   }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -684,6 +686,41 @@ class CreateDesign extends Component {
     }
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
+    }
+  }
+  checkInputForm(){
+    const warning = "필수 입력항목을 모두 입력하지 않아 다음 단계를 진행할 수 없습니다.\n";
+    if(this.state.step === 0)
+    {
+      
+      if(this.state.thumbnail == noimg)
+      {
+        alert(warning+"섬네일 이미지를 등록해주세요");
+        return;
+      }
+      else if(this.state.title=="")
+      {
+        alert(warning+"제목을 입력해주세요.");
+        return;
+      }
+    }
+    else if(this.state.step===1)
+    {
+      if(this.state.categoryLevel1 === false)
+      {
+        alert(warning+"카테고리를 선택해주세요.");
+        return;
+      }
+      else if((this.state.alone===false && this.state.members.length === 0))
+      {
+        alert(warning+"멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.");
+        return;
+      }
+      else if(this.state.license1===false || this.state.license2===false || this.state.license3===false)
+      {
+        alert(warning+"라이센스 사용에 동의해주세요.");
+        return;
+      }
     }
   }
   onChangeValueThumbnail = async data => {
@@ -705,7 +742,7 @@ class CreateDesign extends Component {
     if (event.target) {
       await this.setState({ explanation: event.target.value });
     }
-    this.checkFinishBasic();
+    //this.checkFinishBasic();
   }
   onKeyPress = () => {
     this.checkFinishBasic();
@@ -746,11 +783,14 @@ class CreateDesign extends Component {
   }
   gotoStep = (menu) => {
     if (!this.state.basic && menu.step > 0) {
-      alert("디자인 기본정보를 모두 작성하셔야 이동하실 수 있습니다.");
+      this.checkInputForm();
       return;
+      // alert("디자인 기본정보를 모두 작성하셔야 이동하실 수 있습니다.");
+      // return;
     }
     if (!this.state.additional && menu.step > 1) {
-      alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
+      // alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
+      this.checkInputForm();
       return;
     }
     if (this.state.basic && this.state.additional && menu.step <= 2) {
@@ -785,7 +825,7 @@ class CreateDesign extends Component {
   }
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
-    if (title && thumbnail !== noimg && explanation) {
+    if (title && thumbnail !== noimg) {
       await this.setState({ basic: true });
     } else {
       await this.setState({ basic: false });
@@ -966,25 +1006,25 @@ class CreateDesign extends Component {
               {/* THUMBNAIL */}
               <ContentsBox>
                 <ThumbnailBox>
-                  <div className="title">프로필 사진</div>
+                  <div className="title">섬네일<sup>*</sup></div>
                   <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL} />
                   <div className="findThumbnailBox">
                     <div className="findThumbnailBtn">
                       <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                       <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                     </div>
-                    <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    <div className="thumbnailExplainText">섬네일 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                   </div>
                 </ThumbnailBox>
                 {/* TITLE */}
                 <TitleBox>
-                  <div className="title">제목</div>
+                  <div className="title">제목<sup>*</sup></div>
                   <input onChange={this.onChangeValueTitle}
                     className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
                 </TitleBox>
                 {/* EXPLANATION */}
                 <ExplainBox>
-                  <div className="title">디자인 설명</div>
+                  <div className="title">설명</div>
                   <textarea onChange={this.onChangeValueExplanation} className="inputTextareaBox"
                     maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
                 </ExplainBox>
@@ -995,14 +1035,14 @@ class CreateDesign extends Component {
               <ContentsBox>
                 {this.props.category1.length > 0 ?
                   <CategoryBox>
-                    <div className="additionalTitle">카테고리</div>
-                    <CategoryDropDown onChange={this.onChangeCategory1} options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
+                    <div className="additionalTitle">카테고리<sup>*</sup></div>
+                    <CategoryDropDown onChange={this.onChangeCategory1} options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요(필수)" />
                     <CategoryDropDown id="category2" onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory} selection ref="dropdown2" value={this.state.categoryLevel2} />
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* INVITE MEMBER */}
                 <InviteMemberBox>
-                  <div className="additionalTitle">멤버 초대하기</div>
+                  <div className="additionalTitle">멤버 초대하기<sup>*</sup></div>
                   <div className="searchBox">
                     {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
                   </div>
@@ -1026,7 +1066,7 @@ class CreateDesign extends Component {
                 <HRline />
                 {/* LICENSE */}
                 <LicenseBox>
-                  <div className="title">라이센스</div>
+                  <div className="additionalTitle">라이센스</div>
                   <div className="licenseList">
                     <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
                     <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
@@ -1045,7 +1085,7 @@ class CreateDesign extends Component {
             {/* buttons*/}
             <div className="buttonBox">
               {step === 0 && <React.Fragment>
-                <CompleteButton onClick={this.state.basic ? this.gotoNextStep : undefined} isComplete={this.state.basic}>
+                <CompleteButton onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm} isComplete={this.state.basic}>
                   <BtnText>다음</BtnText>
                 </CompleteButton>
               </React.Fragment>}
@@ -1053,13 +1093,13 @@ class CreateDesign extends Component {
                 <BackButton onClick={this.gotoPrevStep}>
                   <BtnText>뒤로</BtnText>
                 </BackButton>
-                <CompleteButton onClick={this.state.additional ? this.gotoNextStep : undefined} isComplete={this.state.additional}>
+                <CompleteButton onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm} isComplete={this.state.additional}>
                   <BtnText>다음</BtnText>
                 </CompleteButton>
               </React.Fragment>}
               {step === 2 && <React.Fragment>
                 <BackButton onClick={this.gotoPrevStep}><BtnText>뒤로</BtnText></BackButton>
-                <CompleteButton onClick={this.state.content ? this.submit : undefined} isComplete={true}><BtnText>완료</BtnText></CompleteButton>
+                <CompleteButton onClick={this.state.content ? this.submit : this.checkInputForm} isComplete={true}><BtnText>완료</BtnText></CompleteButton>
               </React.Fragment>}
             </div>
           </InputBoard>
