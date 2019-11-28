@@ -200,7 +200,7 @@ class GroupBasicInfo extends Component {
             <ContentsBox>
                 {/* thumbnail */}
                 <ThumbnailBox>
-                    <div className="title">섬네일 사진</div>
+                    <div className="title">섬네일 사진<sup>*</sup></div>
                     <ImageBox imageURL={this.props.groupThumbnail} ></ImageBox>
                     <div className="findThumbnailBox">
                         <div className="findThumbnailBtn">
@@ -212,7 +212,7 @@ class GroupBasicInfo extends Component {
                 </ThumbnailBox>
                 {/* title */}
                 <TitleBox>
-                    <div className="title">제목</div>
+                    <div className="title">제목<sup>*</sup></div>
                     <input type="text" className="inputText" onChange={this.handleOnChangeTitle} value={this.props.groupTitle} />
                 </TitleBox>
                 {/* description */}

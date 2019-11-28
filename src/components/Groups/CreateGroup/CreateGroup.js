@@ -185,19 +185,19 @@ class CreateGroup extends Component {
   }
   onSubmit = async e => {
     e.preventDefault();
-
+    const warning = "필수 입력항목을 모두 입력하지 않아 작업을 완료할 수 없습니다.\n";
     if (this.state.groupThumbnail === "" || this.state.groupThumbnail == null) {
-      alert("그룹의 섬네일을 지정해주세요.");
+      alert(warning+"섬네일 이미지를 등록해주세요!");
       return;
     }
     else if (this.state.groupTitle === "" || this.state.groupTitle == null) {
-      alert("그룹 이름을 작성해주세요!");
+      alert(warning+"그룹의 이름을 입력해주세요!");
       return;
     }
-    else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
-      alert("그룹 설명을 작성해주세요!");
-      return;
-    }
+    // else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
+    //   alert("그룹 설명을 작성해주세요!");
+    //   return;
+    // }
     this.setState({ loading: true });
     const data = { user_id: this.props.userInfo.uid, title: this.state.groupTitle, explanation: this.state.groupExplain, files: [] };
     let file = { value: this.state.groupThumbnail, name: this.state.groupThumbnailName, key: 0 };

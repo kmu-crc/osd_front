@@ -167,7 +167,7 @@ const ExplainBox = styled.div`
 class SectionBasic extends Component {
   constructor(props) {
     super(props);
-    this.state = { nick: true, nickname: "", introduce: "", thumbnail: noimg, tnumbnail_name: "" }
+    this.state = { nick: true, nickname: "", introduce: "", thumbnail: null, tnumbnail_name: "" }
     this.handleInputNickName = this.handleInputNickName.bind(this);
     this.handleInputIntroduce = this.handleInputIntroduce.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -181,7 +181,7 @@ class SectionBasic extends Component {
         introduce: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
         thumbnail: nextProps.MyDetail.profileImg == null ? noimg : nextProps.MyDetail.profileImg.m_img
       });
-      this.props.updateThumbnail(nextProps.MyDetail.profileImg == null ? noimg : nextProps.MyDetail.profileImg.m_img);
+      this.props.updateThumbnail(nextProps.MyDetail.profileImg == null ? "" : nextProps.MyDetail.profileImg.m_img);
       this.props.updateIntroduce(nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me);
       this.props.updateNickName(nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name);
       return true;
