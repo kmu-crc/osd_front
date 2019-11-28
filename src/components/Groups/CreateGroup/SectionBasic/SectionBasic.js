@@ -27,7 +27,7 @@ flex-direction:column;
   }
 }
 `
-const ImageBox=styled.div`
+const ImageBox = styled.div`
     margin-left:67px;
     min-width: 210px;
     min-height: 210px;
@@ -159,87 +159,87 @@ margin-top: 103px;
 `
 
 class SectionBasic extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { groupTitle: null, groupExplain: null, groupThumbnail: noimg, groupThumbnailURL: null, groupThumbnailName: null };
-        this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this);
-        this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
-        this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = { groupTitle: null, groupExplain: null, groupThumbnail: noimg, groupThumbnailURL: null, groupThumbnailName: null };
+    this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this);
+    this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.checkisfinished = this.checkisfinished.bind(this);
+  }
+  shouldComponentUpdate(nextProps) {
+    return true;
+  }
+  componentDidMount() {
+    this.setState({
+      groupTitle: this.props.groupTitle,
+      groupExplain: this.props.groupExplain,
+      groupThumbnail: this.props.groupThumbnail
+    })
+  }
+  async handleOnChangeTitle(event) {
+    this.setState({ groupTitle: event.target.value });
+    this.props.onChangeTitle(event.target.value);
+    this.checkisfinished();
+  }
+  async handleOnChangeExplain(event) {
+    this.setState({ groupExplain: event.target.value });
+    this.props.onChangeExplain(event.target.value);
+    this.checkisfinished();
+  }
+  async handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = async () => {
+      await this.setState({ groupThumbnail: reader.result, groupThumbnailName: file.name })
+      await this.props.onChangeThumbnail(reader.result, file.name);
     }
-    shouldComponentUpdate(nextProps) {
-        return true;
+    if (event.target.files[0]) {
+      let imgurl = reader.readAsDataURL(file)
+      await this.setState({ groupThumbnailURL: imgurl });
+      await this.props.onChangeThumbnail(imgurl);
     }
-    componentDidMount() {
-        this.setState({
-            groupTitle: this.props.groupTitle,
-            groupExplain: this.props.groupExplain,
-            groupThumbnail: this.props.groupThumbnail
-        })
+    this.checkisfinished();
+  }
+  checkisfinished() {
+    const { groupTitle, /* groupExplain, */ groupThumbnailName } = this.state;
+    if (groupTitle != null && groupTitle.length > 0 && /*groupExplain != null && groupExplain.length > 0 &&*/ groupThumbnailName != null && groupThumbnailName.length > 0) {
+      this.props.completed && this.props.completed(true);
+    } else {
+      this.props.completed && this.props.completed(false);
     }
-    async handleOnChangeTitle(event) {
-        this.setState({ groupTitle: event.target.value });
-        this.props.onChangeTitle(event.target.value);
-        this.checkisfinished();
-    }
-    async handleOnChangeExplain(event) {
-        this.setState({ groupExplain: event.target.value });
-        this.props.onChangeExplain(event.target.value);
-        this.checkisfinished();
-    }
-    async handleOnChangeThumbnail(event) {
-        event.preventDefault();
-        const reader = new FileReader();
-        const file = event.target.files[0];
-        reader.onloadend = async () => {
-            await this.setState({ groupThumbnail: reader.result, groupThumbnailName: file.name })
-            await this.props.onChangeThumbnail(reader.result, file.name);
-        }
-        if (event.target.files[0]) {
-            let imgurl = reader.readAsDataURL(file)
-            await this.setState({ groupThumbnailURL: imgurl });
-            await this.props.onChangeThumbnail(imgurl);
-        }
-        this.checkisfinished();
-    }
-    checkisfinished() {
-        const { groupTitle, groupExplain, groupThumbnailName } = this.state;
-        if (groupTitle != null && groupTitle.length > 0 && groupExplain != null && groupExplain.length > 0 && groupThumbnailName != null && groupThumbnailName.length > 0) {
-            this.props.completed && this.props.completed(true);
-        } else {
-            this.props.completed && this.props.completed(false);
-        }
-    }
-    render() {
-        return (
-            <ContentsBox  >
-                {/* thumbnail */}
-                <ThumbnailBox>
-                    <div className="title">섬네일 사진<sup>*</sup></div>
-                    <ImageBox imageURL={this.props.groupThumbnail}></ImageBox>
-                    <div className="findThumbnailBox">
-                        <div className="findThumbnailBtn">
-                            <label className="findThumbnailText"  htmlFor="file">찾아보기</label>
-                            <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-                        </div>
-                        <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-                    </div>
-                </ThumbnailBox>
-                {/* title */}
-                <TitleBox>
-                    <div className="title">제목<sup>*</sup></div>
-                        <input type="text" className="inputText" placeholder="그룹 제목을 입력하세요." onChange={this.handleOnChangeTitle} 
-                               value={this.props.groupTitle || ""} maxLength="50"/>
-                </TitleBox>
-                {/* description */}
-                <ExplainBox>
-                    <div className="title">그룹 설명</div>
-                        <textarea className="inputTextareaBox" placeholder="그룹 설명을 입력하세요." onChange={this.handleOnChangeExplain}
-                                  value={this.props.groupExplain} maxLength="400"/>
-                </ExplainBox>
-            </ContentsBox>
-        );
-    }
+  }
+  render() {
+    return (
+      <ContentsBox  >
+        {/* thumbnail */}
+        <ThumbnailBox>
+          <div className="title">섬네일 사진<sup>*</sup></div>
+          <ImageBox imageURL={this.props.groupThumbnail}></ImageBox>
+          <div className="findThumbnailBox">
+            <div className="findThumbnailBtn">
+              <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+            </div>
+            <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+          </div>
+        </ThumbnailBox>
+        {/* title */}
+        <TitleBox>
+          <div className="title">제목<sup>*</sup></div>
+          <input type="text" className="inputText" placeholder="그룹 제목을 입력하세요." onChange={this.handleOnChangeTitle}
+            value={this.props.groupTitle || ""} maxLength="50" />
+        </TitleBox>
+        {/* description */}
+        <ExplainBox>
+          <div className="title">그룹 설명</div>
+          <textarea className="inputTextareaBox" placeholder="그룹 설명을 입력하세요." onChange={this.handleOnChangeExplain}
+            value={this.props.groupExplain} maxLength="400" />
+        </ExplainBox>
+      </ContentsBox>
+    );
+  }
 }
 export default SectionBasic;
 
