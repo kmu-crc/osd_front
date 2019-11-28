@@ -35,7 +35,7 @@ const DragHandler = styled.div`
     position: absolute;
     margin-left: 150px;
     margin-top: 30px;
-    z-index: 900;
+    z-index: 800;
     .wrapper {
         display: flex;
         visibility: hidden;
