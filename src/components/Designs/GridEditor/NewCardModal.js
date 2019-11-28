@@ -299,36 +299,41 @@ class NewCardModal extends Component {
         loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
         card_content: { deleteContent: [], newContent: [], updateContent: [] }
     };
-    handleCancel = () => {
+    handleCancel = (obj) => {
+        if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
+            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+                return;
+            }
+        }
         this.onClose();
-    }
+    };
     onClose = () => {
         this.props.close();
-    }
+    };
     onChangeValueThumbnail = async data => {
         let obj = {};
         if (data.target) {
             obj[data.target.name] = data;
             await this.setState(obj);
         }
-    }
+    };
     onChangeTitle = event => {
         if (event.target) {
             this.setState({ title: event.target.value });
         }
-    }
+    };
     onChangeContent = event => {
         if (event.target) {
             this.setState({ content: event.target.value });
         }
-    }
+    };
     saveTemporary = async (obj) => {
         await this.setState({ card_content: obj });
         this.submit();
-    }
+    };
     handleResetHook = async () => {
         await this.setState({ hook: false });
-    }
+    };
     submit = async () => {
         let files = null;
         if (!this.state.title || this.state.title === "") {
@@ -363,7 +368,7 @@ class NewCardModal extends Component {
                         }
                     });
             });
-    }
+    };
     handleSubmit = async (event) => {
         event.preventDefault();
         if (!this.state.title) {
@@ -371,7 +376,7 @@ class NewCardModal extends Component {
             return;
         }
         await this.setState({ loading: true, hook: true });
-    }
+    };
     render() {
         const { hook } = this.state;
         return (
@@ -410,7 +415,15 @@ class NewCardModal extends Component {
                         <ContentBorder><div className="border-line" /></ContentBorder>
                         <div className="content" >
                             <div className="title">내용</div>
-                            <CardSourceDetail {...this.props} uid={"new"} isTeam={true} edit={true} closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} hook={hook} handleResetHook={this.handleResetHook} upDateRequest={this.saveTemporary} />
+                            <CardSourceDetail
+                                {...this.props}
+                                uid={"new"}
+                                isTeam={true} edit={true}
+                                handleCancel={this.handleCancel}
+                                closeEdit={this.onCloseEditMode}
+                                openEdit={this.onChangeEditMode}
+                                hook={hook} handleResetHook={this.handleResetHook}
+                                upDateRequest={this.saveTemporary} />
                             {/*<CardSourceDetailContainer*/}
                             {/*    handleSubmit={this.handleHeaderSubmit}*/}
                             {/*    handleCancel={this.onCloseEditMode}*/}
