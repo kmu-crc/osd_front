@@ -410,8 +410,12 @@ class CardSourceDetail extends Component {
     return;
   }
   async onCancel() {
-    await this.setState({ content: this.props.content, origin: this.props.origin, edit: false, loading: false });
-    this.props.handleCancel && this.props.handleCancel();
+    if (this.props.uid !== "new") {
+      await this.setState({ content: this.props.content, origin: this.props.origin, edit: false, loading: false });
+      this.props.handleCancel && this.props.handleCancel();
+    } else {
+      this.props.handleCancel && this.props.handleCancel(this.state.content);
+    }
   }
   changeMode() {
     this.setState({ edit: !this.state.edit });
