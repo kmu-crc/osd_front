@@ -1071,7 +1071,7 @@ class CreateDesign extends Component {
             <SectionContainer display={step === 2 ? "block" : "none"}>
               <div>
               {this.state.grid && this.state.is_project === 1  
-                ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> */}
+                ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />
                 : <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>}
               </div>
             </SectionContainer>
