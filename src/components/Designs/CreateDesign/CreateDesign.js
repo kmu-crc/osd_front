@@ -14,6 +14,7 @@ import ReactCrop from 'react-image-crop';
 import "react-image-crop/dist/ReactCrop.css";
 
 import styled from "styled-components";
+import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
 const MainBanner = styled.div`
 width: 100%;
@@ -120,7 +121,7 @@ const MenuItem = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-// width:${window.innerWidth>1920?1422+'px':100+'%'};
+// width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
 width:77%;
 padding-bottom:100px;
 margin-bottom:100px;
@@ -656,7 +657,7 @@ class CreateDesign extends Component {
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
-      showSearch: false,title:"", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
+      showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
     }
@@ -688,37 +689,30 @@ class CreateDesign extends Component {
       reader.readAsDataURL(file);
     }
   }
-  checkInputForm(){
+  checkInputForm() {
     const warning = "필수 입력항목을 모두 입력하지 않아 다음 단계를 진행할 수 없습니다.\n";
-    if(this.state.step === 0)
-    {
-      
-      if(this.state.thumbnail == noimg)
-      {
-        alert(warning+"섬네일 이미지를 등록해주세요");
+    if (this.state.step === 0) {
+
+      if (this.state.thumbnail == noimg) {
+        alert(warning + "섬네일 이미지를 등록해주세요");
         return;
       }
-      else if(this.state.title=="")
-      {
-        alert(warning+"제목을 입력해주세요.");
+      else if (this.state.title == "") {
+        alert(warning + "제목을 입력해주세요.");
         return;
       }
     }
-    else if(this.state.step===1)
-    {
-      if(this.state.categoryLevel1 === false)
-      {
-        alert(warning+"카테고리를 선택해주세요.");
+    else if (this.state.step === 1) {
+      if (this.state.categoryLevel1 === false) {
+        alert(warning + "카테고리를 선택해주세요.");
         return;
       }
-      else if((this.state.alone===false && this.state.members.length === 0))
-      {
-        alert(warning+"멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.");
+      else if ((this.state.alone === false && this.state.members.length === 0)) {
+        alert(warning + "멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.");
         return;
       }
-      else if(this.state.license1===false || this.state.license2===false || this.state.license3===false)
-      {
-        alert(warning+"라이센스 사용에 동의해주세요.");
+      else if (this.state.license1 === false || this.state.license2 === false || this.state.license3 === false) {
+        alert(warning + "라이센스 사용에 동의해주세요.");
         return;
       }
     }
@@ -754,17 +748,16 @@ class CreateDesign extends Component {
     if (this.state.step === 1 && this.state.designId == null) {
       let designId = null;
       console.log(this.props);
-      // create design and next stage, next state will be load new design via grid editor
       const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, thumbnail, thumbnail_name } = this.state;
       let data = {
-        is_project: 1, uid: this.props.userInfo.uid,
+        is_project: 0, uid: this.props.userInfo.uid,
         category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
         files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
         is_commercial: license1, is_display_creater: license2, is_modify: license3,
         members: { add: this.state.addmem, del: this.state.delmem },
         title: title
       };
-      // console.log(data);
+
       this.setState({ loading: true });
       this.props.CreateDesignRequest(data, this.props.token)
         .then(async (res) => {
@@ -1077,9 +1070,15 @@ class CreateDesign extends Component {
             </SectionContainer>
 
             <SectionContainer display={step === 2 ? "block" : "none"}>
-                <div>{this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> :
-                <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>}</div>
-
+              <div>
+                {/* {this.state.grid */}
+                {/* ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> */}
+                {/* : <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>} */}
+                {this.state.grid && this.state.is_project === 1
+                  ? (<GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />)
+                  : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)
+                }
+              </div>
             </SectionContainer>
 
             {/* buttons*/}

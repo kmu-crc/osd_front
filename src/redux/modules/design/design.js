@@ -26,6 +26,9 @@ const CHANGE_TO_PROJECT_FAILURE = "CHANGE_TO_PROJECT_FAILURE"
 const GET_WAITING_LIST = "GET_WAITING_LIST"
 const GET_WAITING_LIST_SUCCESS = "GET_WAITING_LIST_SUCCESS"
 const GET_WAITING_LIST_FAILURE = "GET_WAITING_LIST_FAILURE"
+const GET_WAITING_TO_ACCEPT_LIST = "GET_WAITING_TO_ACCEPT_LIST"
+const GET_WAITING_TO_ACCEPT_LIST_SUCCESS = "GET_WAITING_TO_ACCEPT_LIST_SUCCESS"
+const GET_WAITING_TO_ACCEPT_LIST_FAILURE = "GET_WAITING_TO_ACCEPT_LIST_FAILURE"
 const JOIN_DESIGN = "JOIN_DESIGN"
 const JOIN_DESIGN_SUCCESS = "JOIN_DESIGN_SUCCESS"
 const JOIN_DESIGN_FAILURE = "JOIN_DESIGN_FAILURE"
@@ -59,9 +62,11 @@ const initialState = {
     UpdateDesignInfo: { status: "INIT" },
     DesignDetailView: { status: "INIT" },
     WaitingList: { status: 'INIT' },
+    WaitingToAcceptList: { status: 'INIT' },
     status: {
         Message: "", list: null, like: false, new_design_id: null,
-        WaitingList: [], DesignDetail: [], DesignDetailView: [], DesignForked: [],
+        WaitingList: [], WaitingToAcceptList: [],
+        DesignDetail: [], DesignDetailView: [], DesignForked: [],
         Count: { like_count: 0, member_count: 0, card_count: 0, view_count: 0 }
     }
 }
@@ -95,6 +100,9 @@ const ForkDesignListFailure = () => ({ type: FORK_DESIGN_LIST_FAILURE })
 const DesignWaitingList = () => ({ type: GET_WAITING_LIST })
 const DesignWaitingListSuccess = (data) => ({ type: GET_WAITING_LIST_SUCCESS, list: data })
 const DesignWaitingListFailure = () => ({ type: GET_WAITING_LIST_FAILURE, list: [] })
+const DesignWaitingToAcceptList = () => ({ type: GET_WAITING_TO_ACCEPT_LIST })
+const DesignWaitingToAcceptListSuccess = (data) => ({ type: GET_WAITING_TO_ACCEPT_LIST_SUCCESS, list: data })
+const DesignWaitingToAcceptListFailure = () => ({ type: GET_WAITING_TO_ACCEPT_LIST_FAILURE, list: [] })
 const GetDesignDetailStepCard = (data) => ({ type: GET_DESIGN_DETAIL_STEP_CARD, DesignDetailStepCard: data })
 const GetLikeDesign = () => ({ type: GET_LIKE_DESIGN })
 const GetLikeDesignSuccess = (data) => ({ type: GET_LIKE_DESIGN_SUCCESS, like: data })
@@ -167,6 +175,20 @@ export function Design(state, action) {
             return update(state, {
                 status: { WaitingList: { $set: action.list } },
                 WaitingList: { status: { $set: "FAILURE" } }
+            })
+        case GET_WAITING_TO_ACCEPT_LIST:
+            return update(state, {
+                WaitingToAcceptList: { status: { $set: "WAITING" } }
+            })
+        case GET_WAITING_TO_ACCEPT_LIST_SUCCESS:
+            return update(state, {
+                status: { WaitingToAcceptList: { $set: action.list } },
+                WaitingToAcceptList: { status: { $set: "SUCCESS" } }
+            })
+        case GET_WAITING_TO_ACCEPT_LIST_FAILURE:
+            return update(state, {
+                status: { WaitingToAcceptList: { $set: action.list } },
+                WaitingToAcceptList: { status: { $set: "FAILURE" } }
             })
         case UPDATE_DESIGN_INFO:
             return update(state, {
@@ -430,6 +452,26 @@ export function GetLikeDesignRequest(id, token) {
             console.log("err", error)
             GetLikeDesignFailure(false)
         })
+    }
+}
+export function DesignWaitingToAcceptListRequest(id, token) {
+    return (dispatch) => {
+        dispatch(DesignWaitingToAcceptList())
+        return fetch(`${host}/design/designDetail/${id}/waitingListAccept`, {
+            headers: { "Content-Type": "application/json", 'x-access-token': token },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log("list >>>", data.data)
+            if (!data) {
+                console.log("no data")
+            }
+            return dispatch(DesignWaitingToAcceptListSuccess(data.data))
+        }).catch((error) => {
+            console.log("err", error)
+            return dispatch(DesignWaitingToAcceptListFailure(error))
+        });
     }
 }
 export function DesignWaitingListRequest(id, token) {

@@ -48,16 +48,30 @@ class ModifyDesignMember extends Component {
   }
   componentDidMount() {
     this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
+    this.props.DesignWaitingToAcceptListRequest(this.props.match.params.id, this.props.token);
   }
   addMember(email, s_img, nick_name, uid) {
     let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
-    
+
     for (var i = 0; i < this.props.DesignDetail.member.length; i++) {
       if (this.props.DesignDetail.member[i].user_id === member.uid) {
         alert("이미 등록된 디자이너입니다.");
         return;
       }
     }
+    if (this.state.members.find(mem => mem.uid === member.uid)) {
+      alert("이미 초대목록에 있는 디자이너입니다.");
+      return;
+    }
+    if (this.props.WaitingList.find(mem => mem.user_id === member.uid)) {
+      alert("\"가입 신청중인 멤버\"에 있는 디자이너입니다.");
+      return;
+    }
+    if (this.props.WaitingToAcceptList.find(mem => mem.user_id === member.uid)) {
+      alert("\"승인대기중인 멤버\"에 있는 디자이너입니다.");
+      return;
+    }
+
     this.setState({ members: this.state.members.concat(member) });
     console.log("members[]====", this.state.members);
   }
@@ -179,6 +193,17 @@ class ModifyDesignMember extends Component {
                 </div>
               </form>
             }
+            {this.props.WaitingToAcceptList && this.props.WaitingToAcceptList.length > 0 &&
+              <form>
+                <Label>승인대기중인 멤버</Label>
+                <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
+                  {this.props.WaitingToAcceptList.map((mem, i) =>
+                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
+                      <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
+                      <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
+                    </div>)}
+                </div>
+              </form>}
             <form widths="equal" className="newMember">
               <Label>새 멤버 초대</Label>
               <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
