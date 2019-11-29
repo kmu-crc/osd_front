@@ -749,7 +749,7 @@ class CreateDesign extends Component {
       console.log(this.props);
       const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, thumbnail, thumbnail_name } = this.state;
       let data = {
-        is_project: 0, uid: this.props.userInfo.uid,
+        is_project: 1, uid: this.props.userInfo.uid,
         category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
         files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
         is_commercial: license1, is_display_creater: license2, is_modify: license3,
