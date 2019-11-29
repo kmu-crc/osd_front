@@ -14,7 +14,6 @@ import ReactCrop from 'react-image-crop';
 import "react-image-crop/dist/ReactCrop.css";
 
 import styled from "styled-components";
-import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
 const MainBanner = styled.div`
 width: 100%;
@@ -1071,13 +1070,9 @@ class CreateDesign extends Component {
 
             <SectionContainer display={step === 2 ? "block" : "none"}>
               <div>
-                {/* {this.state.grid */}
-                {/* ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> */}
-                {/* : <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>} */}
-                {this.state.grid && this.state.is_project === 1
-                  ? (<GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />)
-                  : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)
-                }
+              {this.state.grid && this.state.is_project === 1  
+                ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> */}
+                : <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>}
               </div>
             </SectionContainer>
 
