@@ -59,7 +59,7 @@ const DragHandler = styled.div`
         }
     }
 `;
-const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCard, createCard, reorder }) => (
+const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_id, openCard, createCard, reorder }) => (
     <div style={{ position: "relative" }}>
         <DragHandler>
             <div className="wrapper">
@@ -67,7 +67,7 @@ const SortableStep = SortableElement(({ step, boardId, editor, design_id, openCa
                 <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div>
             </div>
         </DragHandler>
-        <StepCard title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={74} marginBottom={0} marginLef={0} />
+        <StepCard onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={74} marginBottom={0} marginLef={0} />
 
         {step.cards && step.cards.length > 0 &&
             <Fragment>
@@ -152,11 +152,11 @@ class SortableDesignSteps extends Component {
             pressThreshold={5}
             onSortEnd={this.onSortEnd}
             onSortStart={(_, event) => event.preventDefault()}
-            shouldCancelStart={this.shouldCancelStart}
+            // shouldCancelStart={this.shouldCancelStart}
             useDragHandle>
             <div style={{ display: "flex" }}>
                 {items.map((item, index) => (
-                    <SortableStep boardId={item.uid} createCard={createCard} openCard={openCard} reorder={cardReorder} design_id={design_id} disabled={!editor} editor={editor} key={`step-${index}`} index={index} step={item} />
+                    <SortableStep editStep={this.props.editStep} boardId={item.uid} createCard={createCard} openCard={openCard} reorder={cardReorder} design_id={design_id} disabled={!editor} editor={editor} key={`step-${index}`} index={index} step={item} />
                 ))}
             </div>
         </Container >)
