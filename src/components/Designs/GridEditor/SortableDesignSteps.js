@@ -123,7 +123,7 @@ class SortableDesignSteps extends Component {
         this.props.reorder(this.state.items);
     }
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.items !== this.props.items) {
+        if (nextProps.refresh !== this.props.refresh) {
             this.setState({ items: nextProps.items });
             return true;
         }
@@ -140,7 +140,6 @@ class SortableDesignSteps extends Component {
         if (targetEle.id === 'stepcard') {
             const title = targetEle.getAttribute('title');
             const uid = targetEle.getAttribute('uid');
-            // console.log(title, uid);
             this.props.editStep(title, uid);
         }
     }

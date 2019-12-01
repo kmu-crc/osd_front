@@ -151,7 +151,6 @@ const AuthorBox = styled.div`
 `;
 
 export const ContentCard = (props) => {
-    // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
         ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
             <div className="icon-area">{props.children}</div>
@@ -171,11 +170,11 @@ export const ContentCard = (props) => {
                 </React.Fragment> :
                 <React.Fragment>
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
-                        {props.card.title.slice(0, 10)}
+                        {props.card.title ? props.card.title.slice(0, 10) : ""}
                     </div>
                     <div style={{ zIndex: "702", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
                         <div style={{ fontSize: "17px" }}>
-                            {props.card.nick_name.slice(0, 10)}
+                            {props.card.nick_name ? props.card.nick_name.slice(0, 10) : ""}
                         </div>
                         <div style={{ fontSize: "15px", marginTop: "6px" }}>
                             {DateFormat(props.card.update_time)}

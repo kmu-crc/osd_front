@@ -393,9 +393,9 @@ class CardSourceDetail extends Component {
     // edit
     await this.setState({ loading: true });
     if (this.props.uid !== "new") {
-      await this.props.handleSubmit(event);
+      this.props.handleSubmit && await this.props.handleSubmit(event);
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+        .then(this.props.UpdateDesignTime(this.props.uid, this.props.token))
         .then(() => {
           this.props.GetDesignSourceRequest(this.props.uid)
             .then(async () => {

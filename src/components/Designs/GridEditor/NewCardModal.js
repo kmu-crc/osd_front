@@ -344,13 +344,20 @@ class NewCardModal extends Component {
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
-                await this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
+                let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
+
+                // local
+                if (this.props.local) {
+                    this.props.localNewCardSave({ title: this.state.title, thumbnail: thumbnail, content: this.state.content, contents: this.state.card_content });
+                    this.onClose();
+                    return;
+                }
+                await this.props.CreateDesignCardRequest({ title: this.state.title }, this.props.designId, this.props.boardId, this.props.token)
                     .then((res) => {
                         if (res.success) {
                             // and get new card id
                             // directly update contents stored tempolarly
                             const card_id = res.card;
-                            let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
                             this.props.UpdateCardSourceRequest({
                                 title: this.state.title, thumbnail: thumbnail, content: this.state.content,
                                 data: { deleteContent: this.state.card_content.deleteContent, newContent: this.state.card_content.newContent, updateContent: this.state.card_content.updateContent }
