@@ -519,12 +519,13 @@ class CardModal extends Component {
 
                         <ContentBorder><div className="border-line" /></ContentBorder>
 
-                        <CommentWrapper>
-                            <div className="comment-title"><h3>댓글</h3></div>
-                            <div className="comment-body">
-                                <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
-                            </div>
-                        </CommentWrapper>
+                        {!this.props.local ?
+                            <CommentWrapper>
+                                <div className="comment-title"><h3>댓글</h3></div>
+                                <div className="comment-body">
+                                    <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
+                                </div>
+                            </CommentWrapper> : null}
                     </div>
                 </CardDialog>
                 <BlankSpace />

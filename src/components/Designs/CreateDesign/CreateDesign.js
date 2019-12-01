@@ -118,8 +118,7 @@ const MenuItem = styled.div`
     }
 `;
 const InputBoard = styled.div`
-  // width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
-  width:55%;
+  width: ${window.innerWidth > 1920 ? 1422 : window.innerWidth - 500}px;
   padding-bottom:100px;
   margin-bottom:100px;
   position:relative;
@@ -548,6 +547,7 @@ const DelBtn = styled.button`
 `;
 const SectionContainer = styled.section`
   display: ${props => props.display};
+  // width: ${props => props.width || "100%"};
 `;
 const CropperDialog = styled(Modal)`
   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
@@ -595,7 +595,7 @@ class CreateDesign extends Component {
       is_project: 0, info_dialog: false, contents: [],
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
-      basic: false, additional: false, content: false, step: 2,
+      basic: false, additional: false, content: false, step: 0,
       showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
@@ -684,8 +684,6 @@ class CreateDesign extends Component {
     this.setState({ step: this.state.step - 1 });
   };
   gotoNextStep = async () => {
-    // if (this.state.step === 1 && this.state.designId == null) {
-    alert("boom!");
     await this.setState({ step: this.state.step + 1 });
   };
   gotoStep = (menu) => {
@@ -748,8 +746,7 @@ class CreateDesign extends Component {
     }
   };
   submit = () => {
-
-    console.log(this.props);
+    // console.log(this.props);
     const {
       contents, categoryLevel1, categoryLevel2, title, explanation,
       license1, license2, license3,
@@ -891,10 +888,11 @@ class CreateDesign extends Component {
   };
   toProject = async () => {
     await this.setState({ loading: true, info_dialog: false });
-    let contents = this.state.contents;
+    // let contents = this.state.contents;
     //contents.board name = design name
     //contents.card name = design name
-    await this.setState({ is_project: 1, contents: contents });
+    await this.setState({ is_project: 1, });// contents: contents });
+    this.submit();
     this.setState({ loading: false });
   };
   onChangeFile = async (data) => {
@@ -976,7 +974,6 @@ class CreateDesign extends Component {
 
         {this.state.loading ?
           <Loading /> : null}
-
 
         <MainSection>
           {/* scroll - menu */}
@@ -1123,13 +1120,16 @@ class CreateDesign extends Component {
                     </React.Fragment>) : <AddContent getValue={this.onAddValue} order={0} change={this.openInfoToProject} />}
                 </React.Fragment>
                 : <React.Fragment>
-                  <GridEditor
+                  <div style={{ fontSize: "16px" }}>디자인페이지로 이동합니다.</div>
+                  {/* <GridEditor
                     getData={this.onChangeGridData}
                     editor={true}
                     local={true}
-                    design={{ uid: "local" }} />
+                    userInfo={this.props.userInfo}
+                    nick_name={this.props.userInfo.nickName}
+                    user_id={this.props.userInfo.uid}
+                    design={{ uid: "local" }} /> */}
                 </React.Fragment>}
-
             </SectionContainer>
 
             {/* buttons*/}

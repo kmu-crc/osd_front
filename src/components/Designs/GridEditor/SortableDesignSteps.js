@@ -123,7 +123,7 @@ class SortableDesignSteps extends Component {
         this.props.reorder(this.state.items);
     }
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.items !== this.props.items) {
+        if (nextProps.refresh !== this.props.refresh) {
             this.setState({ items: nextProps.items });
             return true;
         }

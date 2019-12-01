@@ -135,11 +135,11 @@ class DetailView extends Component {
       <div>
         <TransFormBtnContainer >
           <BtnWrap>
-            {this.props.isTeam ? (
+            {/* {this.props.isTeam ? (
               <Button type="button" size="small" onClick={this.onPreviewMode}>
                 {this.state.edit ? "미리보기" : "편집하기"}
               </Button>
-            ) : null}
+            ) : null} */}
             {this.props.token &&
               this.props.userInfo.uid === view.user_id && (
                 <GoStepBtn onClick={this.onActiveStep} size="small">

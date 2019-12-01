@@ -60,6 +60,7 @@ class GridEditor extends Component {
         this.temp = React.createRef();
         this.grid = React.createRef();
         this.state = {
+            localsteps: [], refresh: 0,
             h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth,
             left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
             boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
@@ -123,6 +124,14 @@ class GridEditor extends Component {
         await this.setState({ editstep: true, title: title, where: where });
     }
     async RemoveStep(data) {
+        if (this.props.local) {
+            let copy = this.state.localsteps;
+            copy.splice(data, 1);
+            copy.map((item, index) => { item.order = index; item.uid = index; });
+            this.setState({ localsteps: copy, refresh: this.state.refresh + 1 });
+            this.CloseEditStep();
+            return;
+        }
         await this.props.DeleteDesignBoardRequest(this.props.design.uid, data, this.props.token)
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
             .then(() => {
@@ -133,17 +142,32 @@ class GridEditor extends Component {
             .catch((err) => { console.error(err) });
     }
     async EditStep(data) {
+        if (this.props.local) {
+            let copy = this.state.localsteps;
+            copy.map(item => {
+                if (item.uid === data.where) {
+                    item.title = data.title;
+                }
+            });
+            this.setState({ localsteps: copy, refresh: this.state.refresh + 1 });
+            this.CloseEditStep();
+            return;
+        }
         await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
-            .then(() => {
-                this.props.GetDesignBoardRequest(this.props.design.uid);
-                // console.log("2", this.props.DesignDetailStep) 
-            })
+            .then(() => { this.props.GetDesignBoardRequest(this.props.design.uid) })
             .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
             .catch((err) => { console.error(err) });
         this.CloseEditStep();
     }
     async NewStep(data) {
+        if (this.props.local) {
+            let copy = this.state.localsteps;
+            copy.push({ ...data, uid: copy.length, order: copy.length });
+            this.setState({ localsteps: copy, refresh: this.state.refresh + 1 });
+            this.handleResize();
+            return;
+        }
         await this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
             .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
             .then(() => {
@@ -204,6 +228,11 @@ class GridEditor extends Component {
         promiseAry = jobs.map((job) => this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder }))
         await Promise.all(promiseAry).then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
     }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.refresh !== this.state.refresh) {
+            this.handleResize();
+        }
+    }
     shouldComponentUpdate(nextProps) {
         if (this.props.DesignDetailStep !== nextProps.DesignDetailStep) {
             if (nextProps.DesignDetailStep.length) {
@@ -213,16 +242,35 @@ class GridEditor extends Component {
             }
         }
         if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
-            // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
             this.setState({ cardDetail: nextProps.DesignDetailStepCard });
         }
         return true;
     }
+    localNewCardSave = (data) => {
+        let copy = this.state.localsteps;
+        copy.map(item => {
+            if (item.uid === this.state.boardId) {
+                item.cards = [];
+                const _ = {
+                    comment_count: 0,
+                    content: data.content,
+                    first_img: data.thumbnail ? data.thumbnail.img : "",
+                    nick_name: this.props.nick_name,
+                    order: item.cards ? item.cards.length : 0,
+                    title: data.title,
+                    uid: item.cards ? item.cards.length : 0,
+                    update_time: new Date(),
+                    user_id: this.props.user_id
+                }
+                item.cards.push(_);
+            }
+        })
+        this.setState({ localsteps: copy, refresh: this.state.refresh + 1 });
+    }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
-        const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
-        // console.log("card detail:", this.props.DesignDetailStepCard, cardDetail);
-        console.log("step detail:", this.props.DesignDetailStep, this.props);
+        const { refresh, gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const designSteps = DesignDetailStep || this.state.localsteps;
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
@@ -235,14 +283,17 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
-                        {editor && newcard && <NewCardModal 
-                                            isTeam={editor} 
-                                            boardId={boardId} 
-                                            designId={this.props.design.uid} 
-                                            order={this.props.DesignDetailStep.length} 
-                                            open={newcard} 
-                                            close={() => this.setState({ newcard: false })} />}
+                        {editor && newcard && <NewCardModal
+                            local={true}
+                            localNewCardSave={this.localNewCardSave}
+                            isTeam={editor}
+                            boardId={boardId}
+                            designId={this.props.design.uid}
+                            // order={designSteps?designSteps[].length:0}
+                            open={newcard}
+                            close={() => this.setState({ newcard: false })} />}
                         {card && <CardModal
+                            local={this.props.local}
                             isTeam={editor}
                             edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                             open={card}
@@ -252,14 +303,14 @@ class GridEditor extends Component {
                             designId={this.props.design.uid}
                             card={cardDetail} />}
                         {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
-                        {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
+                        {editor && <EditStepModal open={editstep} title={title} where={where} steps={designSteps} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>
                                 <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
-                                    {DesignDetailStep && DesignDetailStep.length > 0 &&
-                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
+                                    {designSteps && designSteps.length > 0 &&
+                                        <SortableDesignSteps refresh={refresh} editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={designSteps} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
                                     {editor && <div style={{ display: "flex" }}>
                                         <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
                                     </div>}
