@@ -222,6 +222,7 @@ class GridEditor extends Component {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         // console.log("card detail:", this.props.DesignDetailStepCard, cardDetail);
+        console.log("step detail:", this.props.DesignDetailStep, this.props);
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
@@ -234,7 +235,13 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
-                        {editor && newcard && <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} />}
+                        {editor && newcard && <NewCardModal 
+                                            isTeam={editor} 
+                                            boardId={boardId} 
+                                            designId={this.props.design.uid} 
+                                            order={this.props.DesignDetailStep.length} 
+                                            open={newcard} 
+                                            close={() => this.setState({ newcard: false })} />}
                         {card && <CardModal
                             isTeam={editor}
                             edit={userInfo && (userInfo.uid === cardDetail.user_id)}

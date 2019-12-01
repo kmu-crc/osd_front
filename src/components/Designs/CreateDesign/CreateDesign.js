@@ -1,22 +1,26 @@
 import React, { Component } from "react";
-
-import GridEditor from "components/Designs/GridEditor";
+import update from "react-addons-update";
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
-import { geturl } from "config";
-
-import noimg from "source/noimg.png"
+import noimg from "source/noimg.png";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import CheckBox2 from "components/Commons/CheckBox";
-import Logo from "source/logo.png"
 import { Dropdown, Modal } from "semantic-ui-react";
+import styled from "styled-components";
 import ReactCrop from 'react-image-crop';
 import "react-image-crop/dist/ReactCrop.css";
+import osdcss from "opendesign_style";
+import FileController from "../CardSourceDetail/FileController";
+import EmbController from "../CardSourceDetail/EmbController";
+import TextControllerPlus from "../CardSourceDetail/TextControllerPlus";
+import GridEditor from "components/Designs/GridEditor";
+import { geturl } from "config";
+import Loading from "components/Commons/Loading";
 
-import styled from "styled-components";
+// import { geturl } from "config";
 
 const MainBanner = styled.div`
-width: 100%;
+  width: 100%;
   height:140px;
   display: flex;
   justify-content: center;
@@ -30,53 +34,51 @@ width: 100%;
     line-height: 37px;
     font-weight: 700;
   }
-
   @media only screen and (min-width : 780px) and (max-width:1440px) {
-    align-items:flex-end;
+    align-items: flex-end;
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
-    align-items:flex-end;
+    align-items: flex-end;
   }
-`
+`;
 const MainSection = styled.div`
-display: flex;
-flex-direction:row;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-}
-`
-
+  display: flex;
+  flex-direction: row;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    flex-direction: column;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    flex-direction: column;
+  }
+`;
 const NavMenu = styled.div`
-min-width:433px;
-height:300px;
-position:relative;
-.menuBox{
-  width:325px;
+min-width: 433px;
+height: 300px;
+position: relative;
+.menuBox {
+  width: 325px;
   position: fixed;
-  top:197px;
-  margin-left:64px;    
-  background-color:#F5F4F4;
-  border-radius:5px;
+  top: 197px;
+  margin-left: 64px;    
+  background-color: #F5F4F4;
+  border-radius: 5px;
 }
 .menuItem{
-  height:62px;
-  padding-left:36px;
-  padding-top:18px;
-  lineHeight:29px;
-  border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-  cursor:pointer;
+  height: 62px;
+  padding-left: 36px;
+  padding-top: 18px;
+  lineHeight: 29px;
+  border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor: pointer;
 }
 .deleteText{
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-family:Noto Sans KR;
-  font-weight:500;
-  text-align:left;
-  color:#FF0000;
-  border-bottom:${props => props.borderBottom};
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-family: Noto Sans KR;
+  font-weight: 500;
+  text-align: left;
+  color: #FF0000;
+  border-bottom: ${props => props.borderBottom};
 }
 
 @media only screen and (min-width : 780px) and (max-width:1440px) {
@@ -115,67 +117,60 @@ const MenuItem = styled.div`
       border-bottom:${props => props.borderBottom};
     }
 `;
-//const Arrow = styled.span`
-//    margin-left:70px;
-//    font-size:15px;
-//`
 const InputBoard = styled.div`
-// width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
-width:77%;
-padding-bottom:100px;
-margin-bottom:100px;
-position:relative;
-padding-top:45px;
-border-radius:5px;
-border:8px solid #F5F4F4;
-.buttonBox{
-  display: flex;
-  margin-top: 20.54px;
-  justifyContent: flex-end;
-}
+  // width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
+  width:55%;
+  padding-bottom:100px;
+  margin-bottom:100px;
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    display: flex;
+    margin-top: 20.54px;
+    justifyContent: flex-end;
+  }
 
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  width:100%;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  width:100%;
-}
-`
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    width:100%;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    width:100%;
+  }
+`;
 const BackButton = styled.div`
-      position:absolute;
-      right:120px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:#FF0000;
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
-`
+  position: absolute;
+  right: 120px;
+  bottom: 35px;
+  cursor: pointer;
+  width: 104.5px;
+  height: 44px;
+  border-radius: 5px;
+  background-color: #FF0000;
+  padding-top: 6px;
+  padding-left: 15px;
+  margin-right: 53px;
+`;
 const CompleteButton = styled.div`
-      position:absolute;
-      right:9px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
-  `
+  position: absolute;
+  right: 9px;
+  bottom: 35px;
+  cursor: pointer;
+  width: 104.5px;
+  height: 44px;
+  border-radius: 5px;
+  background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+  padding-top: 6px;
+  padding-left: 15px;
+  margin-right: 53px;
+`;
 const HRline = styled.div`
-
-    width:95%;
-    margin-top:60px;
-    margin-bottom:67px;
-    border-bottom:5px solid #F5F4F4;
-
-  `
-
+  width: 95%;
+  margin-top: 60px;
+  margin-bottom: 67px;
+  border-bottom: 5px solid #F5F4F4;
+`;
 const BtnText = styled.p`
   width: 74px;
   padding: 0px;
@@ -185,179 +180,177 @@ const BtnText = styled.p`
   text-align: center;
   font-size: 20px;
   color: #FFFFFF;
-  cursor:pointer;
+  cursor: pointer;
 `;
-
 const PeerBox = styled.div`
-  display:flex;
-  margin-right:25px;
-  margin-bottom:10px;
+  display: flex;
+  margin-right: 25px;
+  margin-bottom: 10px;
   .nameLabel{
-    width:112px;
-    height:29px;
-    margin-top:1px;
-    margin-left:10px;
-    font-size:20px;
-    font-weight:500;
-    font-family:Noto Sans KR;
-    color:#707070;
-    text-align:left;
-    line-height:29px;
+    width: 112px;
+    height: 29px;
+    margin-top: 1px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    color: #707070;
+    text-align: left;
+    line-height: 29px;
     white-space: nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .closeButton{
-    margin-top:7px;
-    margin-left:14px;
+    margin-top: 7px;
+    margin-left: 14px;
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
-    margin-right:15px;
+    margin-right: 15px;
   }
-`
+`;
 const PeerIcon = styled.div`
-  width:30px;
-  height:30px;
-  border-radius:50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   background: ${props => `url(${props.imageURL})`};
-  background-size:cover;
-  background-position:center center;
-`
+  background-size: cover;
+  background-position: center center;
+`;
 //---sectionbasic---//
 const ContentsBox = styled.div`
   padding-left: 47px;
-  display:flex;
-  flex-direction:column;
-  .title{
-        min-width:100px;
-        height:29px;
-        text-align:left;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
+  display: flex;
+  flex-direction: column;
+  .title {
+    min-width: 100px;
+    height: 29px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 29px;
+    color: #707070;
   }
   .additionalTitle{
-        min-width:167px;
-        height:29px;
-        text-align:left;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
+    min-width: 167px;
+    height: 29px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 29px;
+    color: #707070;
   }
   @media only screen and (min-width : 780px) and (max-width:1440px) {
-    justify-content:center;
+    justify-content: center;
     .title{
-      margin-bottom:10px;
+      margin-bottom: 10px;
     }
     .additionalTitle{
-      margin-bottom:10px;
+      margin-bottom: 10px;
     }
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
     .title{
-      margin-bottom:10px;
+      margin-bottom: 10px;
     }
-    .additionalTitle{
-      margin-bottom:10px;
+    .additionalTitle {
+      margin-bottom: 10px;
     }
   }
-`
+`;
 const ImageBox = styled.div`
-    margin-left: 67px;
-    min-width: 210px;
-    min-height: 210px;
-    max-width: 210px;
-    max-height: 210px;
-    border-radius:5px;
-    background: ${props => `url(${props.imageURL})`};
-    background-size:cover;
-    background-position:center center;
-`
+  margin-left: 67px;
+  min-width: 210px;
+  min-height: 210px;
+  max-width: 210px;
+  max-height: 210px;
+  border-radius:5px;
+  background: ${props => `url(${props.imageURL})`};
+  background-size:cover;
+  background-position:center center;
+`;
 const ThumbnailBox = styled.div`
-display:flex;
-justify-content:flex-start;
-flex-direction:row;
-.explainBox{
-  margin-left:54px;
-  margin-top:100px;
-}
-.findThumbnailBtn{
-  width:63px;
-  height:25px;
-  cursor:pointer;
-}
-.findThumbnailText{
-  font-family:Noto Sans KR;
-  font-size:17px;
-  font-weight:500;
-  text-align:left;
-  line-height:25px;
-  color:#FF0000;
-  border-bottom:1.5px solid #FF000;
-  cursor:pointer;
-}
-.findThumbnailBox{
-  margin-left:54px;
-  margin-top:100px;
-  .thumbnailExplainText{
-    width:341px;
-    height:45px;
-    margin-top:11px;
-    font-weight:300;
-    font-size:14px;
-    color:#707070;
-    line-height:20px;
-    text-align:left;
-  }
-}
-
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  flex-direction:column;
-}
-`
-const TitleBox = styled.div`
-display:flex;
-  margin-top:96px;
+  display:flex;
   justify-content:flex-start;
   flex-direction:row;
-  .inputText{
-    width:505px;
-    height:56px;
-    margin-left:67px;
-    padding-left:22px;
-    padding-right:22px;
-    font-size:20px;
-    font-weight:300;
+  .explainBox{
+    margin-left:54px;
+    margin-top:100px;
+  }
+  .findThumbnailBtn{
+    width:63px;
+    height:25px;
+    cursor:pointer;
+  }
+  .findThumbnailText{
     font-family:Noto Sans KR;
-    line-height:29px;
-    color:#707070;
-    border:none;
-    border-radius:5px;
-    outline:none;
-    background-color:#EFEFEF;
+    font-size:17px;
+    font-weight:500;
+    text-align:left;
+    line-height:25px;
+    color:#FF0000;
+    border-bottom:1.5px solid #FF000;
+    cursor:pointer;
+  }
+  .findThumbnailBox{
+    margin-left:54px;
+    margin-top:100px;
+    .thumbnailExplainText{
+      width:341px;
+      height:45px;
+      margin-top:11px;
+      font-weight:300;
+      font-size:14px;
+      color:#707070;
+      line-height:20px;
+      text-align:left;
+    }
   }
   @media only screen and (min-width : 780px) and (max-width:1440px) {
     flex-direction:column;
-    .inputText{
-      margin-left:0px;
-    }
-
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
     flex-direction:column;
-    .inputText{
-      margin-left:0px;
-      width:80%;
-    }
   }
-`
+`;
+const TitleBox = styled.div`
+  display:flex;
+    margin-top:96px;
+    justify-content:flex-start;
+    flex-direction:row;
+    .inputText{
+      width:505px;
+      height:56px;
+      margin-left:67px;
+      padding-left:22px;
+      padding-right:22px;
+      font-size:20px;
+      font-weight:300;
+      font-family:Noto Sans KR;
+      line-height:29px;
+      color:#707070;
+      border:none;
+      border-radius:5px;
+      outline:none;
+      background-color:#EFEFEF;
+    }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
+      flex-direction:column;
+      .inputText{
+        margin-left:0px;
+      }
+
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+      flex-direction:column;
+      .inputText{
+        margin-left:0px;
+        width:80%;
+      }
+    }
+`;
 const ExplainBox = styled.div`
-margin-top: 103px;
+  margin-top: 103px;
   display: flex;
   justify-content:flex-start;
   flex-direction:row;
@@ -392,8 +385,7 @@ margin-top: 103px;
       margin-left: 0px;
     }
   }
-
-`
+`;
 //---additional--//
 const CategoryBox = styled.div`
   width:100%;
@@ -406,86 +398,85 @@ const CategoryBox = styled.div`
   @media only screen and (min-width : 360px) and (max-width:780px) {
     flex-direction:column;
   }
-`
+`;
 const CategoryDropDown = styled(Dropdown)`
-    width:410px;
-    height:56px;     
-    border-radius:5px;
-    font-size:20px;
-    background-color:#EFEFEF !important;
-    margin-right:30px;
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-      
-    }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-      margin-top:10px;
-      width:90%;
-    }
+  width:410px;
+  height:56px;     
+  border-radius:5px;
+  font-size:20px;
+  background-color:#EFEFEF !important;
+  margin-right:30px;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    margin-top:10px;
+    width:90%;
+  }
 `
 const InviteMemberBox = styled.div`
-      display:flex;
-      justify-content:flex-start;
-      flex-direction:row;
-      margin-top:120px;
-      .searchBox{
-        width:645px;
-        height:56px;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
-        border-radius:5px;
-        background-color:#EFEFEF;
-      }
-      .tipTitle{
-        width:27px;
-        height:25px;
-        margin-left:20px;
-        font-size:17px;
-        font-weight:500;
-        line-height:25px;
-        text-align:left;
-        color:#FF0000;
-      }
-      .tipDescription{  
-        margin-left:17px;
-        font-size:16px;
-        font-weight:100;
-        font-family:Noto Sans KR;
-        text-align:left;
-        line-height:25px;
-        color:#707070;
-      }      
-      @media only screen and (min-width : 780px) and (max-width:1440px) {
-        flex-direction:column;
-        .searchBox{
-        }
-      }
-      @media only screen and (min-width : 360px) and (max-width:780px) {
-        flex-direction:column;
-        .searchBox{
-          width:92%;
-        }
-      }
-`
+  display:flex;
+  justify-content:flex-start;
+  flex-direction:row;
+  margin-top:120px;
+  .searchBox{
+  width:645px;
+  height:56px;
+  font-size:20px;
+  font-weight:500;
+  line-height:29px;
+  color:#707070;
+  border-radius:5px;
+  background-color:#EFEFEF;
+  }
+  .tipTitle{
+  width:27px;
+  height:25px;
+  margin-left:20px;
+  font-size:17px;
+  font-weight:500;
+  line-height:25px;
+  text-align:left;
+  color:#FF0000;
+  }
+  .tipDescription{  
+  margin-left:17px;
+  font-size:16px;
+  font-weight:100;
+  font-family:Noto Sans KR;
+  text-align:left;
+  line-height:25px;
+  color:#707070;
+  }      
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+  .searchBox{
+  }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+  .searchBox{
+  width:92%;
+  }
+  }
+`;
 const InviteMemberListBox = styled.div`
-      margin-top:20px;
-      margin-left:167px;
-      width:645px;
-      .memberList{
-        display:flex;
-        flex-wrap:wrap;
-        flex-direction:row;
-      }
-      @media only screen and (min-width : 780px) and (max-width:1440px) {
-        margin-left:0px;
-        width:645px;
-      }
-      @media only screen and (min-width : 360px) and (max-width:780px) {
-        margin-left:0px;
-        width:92%;
-      }
-`
+  margin-top:20px;
+  margin-left:167px;
+  width:645px;
+  .memberList{
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  margin-left:0px;
+  width:645px;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+  margin-left:0px;
+  width:92%;
+  }
+`;
 const NoInviteMemberBox = styled.div`
   margin-left: 167px;
   margin-top: 30px;
@@ -510,115 +501,51 @@ const LicenseBox = styled.div`
   display: flex;
   margin-top: 22px;
   .licenseList {
-    width: 645px;
-    height: 143px;
-    .licenseItem {
-      margin-bottom: 30px;
-      color: #707070;
-      font-size: 20px;
-      font-weight: 500;
-      font-family: Noto Sans KR;
-      .textLabel {
-        margin-left: 35px;
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width : 780px) and (max-width:1440px) {
-        flex-direction:column;
-      }
-      @media only screen and (min-width : 360px) and (max-width:780px) {
-        flex-direction:column;
-      }
-`
-
-const LoadingBox = styled.div`
-  padding-top: 200px;
-  .IconBox{
-    width:100px;
-    height:100px;
-    margin:0 auto;
+  width: 645px;
+  height: 143px;
+  .licenseItem {
+  margin-bottom: 30px;
+  color: #707070;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  .textLabel {
+  margin-left: 35px;
+  vertical-align: top;
   }
-  .loadingText{
-    margin-top:20px;
-    width:100%;
-    font-family:Noto Sans KR;
-    font-size:20px;
-    text-align:center;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
   }
 `;
-const LoadingIconBox = styled.div`
-        width:100px;
-        height:100px;
-        margin:0 auto;
-        background: ${props => `url(${props.imageURL})`};
-        background-position:center center;
-        background-repeat:no-repeat;
-
-          -webkit-animation: jello-horizontal 0.9s infinite both;
-                  animation: jello-horizontal 0.9s infinite both;
-        
-        @-webkit-keyframes jello-horizontal {
-          0% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-          30% {
-            -webkit-transform: scale3d(1.25, 0.75, 1);
-                    transform: scale3d(1.25, 0.75, 1);
-          }
-          40% {
-            -webkit-transform: scale3d(0.75, 1.25, 1);
-                    transform: scale3d(0.75, 1.25, 1);
-          }
-          50% {
-            -webkit-transform: scale3d(1.15, 0.85, 1);
-                    transform: scale3d(1.15, 0.85, 1);
-          }
-          65% {
-            -webkit-transform: scale3d(0.95, 1.05, 1);
-                    transform: scale3d(0.95, 1.05, 1);
-          }
-          75% {
-            -webkit-transform: scale3d(1.05, 0.95, 1);
-                    transform: scale3d(1.05, 0.95, 1);
-          }
-          100% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-        }
-        @keyframes jello-horizontal {
-          0% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-          30% {
-            -webkit-transform: scale3d(1.25, 0.75, 1);
-                    transform: scale3d(1.25, 0.75, 1);
-          }
-          40% {
-            -webkit-transform: scale3d(0.75, 1.25, 1);
-                    transform: scale3d(0.75, 1.25, 1);
-          }
-          50% {
-            -webkit-transform: scale3d(1.15, 0.85, 1);
-                    transform: scale3d(1.15, 0.85, 1);
-          }
-          65% {
-            -webkit-transform: scale3d(0.95, 1.05, 1);
-                    transform: scale3d(0.95, 1.05, 1);
-          }
-          75% {
-            -webkit-transform: scale3d(1.05, 0.95, 1);
-                    transform: scale3d(1.05, 0.95, 1);
-          }
-          100% {
-            -webkit-transform: scale3d(1, 1, 1);
-                    transform: scale3d(1, 1, 1);
-          }
-        }
-      }
-`
+const DelBtn = styled.button`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: ${osdcss.color.main.basic};
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
+  }
+`;
 const SectionContainer = styled.section`
   display: ${props => props.display};
 `;
@@ -635,11 +562,23 @@ const CropperDialog = styled(Modal)`
     margin-right: 75px;
     margin-top: 38px;
   }
-`
-
-const emptyCategory = [{ value: 0, text: "" }]
-const scrollmenu = [{ step: 0, txt: "기본 정보", tag: "#basics" }, { step: 1, txt: "부가 정보", tag: "#additional" }, { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }]
-
+`;
+const ToProjectInfoDialog = styled(Modal)`
+  width: 650px;
+  height: 450px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px #FF0000;
+  .edit-step-name-button-container {
+    display: flex;
+    width: 576px;
+    margin-left: auto;
+    margin-right: 75px;
+    margin-top: 38px;
+  }
+`;
+const emptyCategory = [{ value: 0, text: "" }];
+const scrollmenu = [{ step: 0, txt: "기본 정보" }, { step: 1, txt: "부가 정보" }, { step: 2, txt: "단계/컨텐츠 입력" }];
 function Peer(props) {
   return (
     <PeerBox>
@@ -648,18 +587,19 @@ function Peer(props) {
       <div className="closeButton"><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
     </PeerBox>
   );
-}
+};
 class CreateDesign extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      is_project: 0, info_dialog: false, contents: [],
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
-      basic: false, additional: false, content: false, step: 0,
+      basic: false, additional: false, content: false, step: 2,
       showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
-    }
+    };
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
     this.onCheckedLicense01 = this.onCheckedLicense01.bind(this);
@@ -670,7 +610,7 @@ class CreateDesign extends Component {
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.checkInputForm = this.checkInputForm.bind(this);
   }
-  handleOnChangeThumbnail(event) {
+  handleOnChangeThumbnail = (event) => {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
@@ -687,8 +627,8 @@ class CreateDesign extends Component {
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
     }
-  }
-  checkInputForm() {
+  };
+  checkInputForm = () => {
     const warning = "필수 입력항목을 모두 입력하지 않아 다음 단계를 진행할 수 없습니다.\n";
     if (this.state.step === 0) {
 
@@ -715,7 +655,7 @@ class CreateDesign extends Component {
         return;
       }
     }
-  }
+  };
   onChangeValueThumbnail = async data => {
     let obj = {};
     if (data.target) {
@@ -724,55 +664,30 @@ class CreateDesign extends Component {
       console.log("thumbnail:", this.state);
     }
     this.checkFinishBasic();
-  }
+  };
   onChangeValueTitle = async event => {
     if (event.target) {
       await this.setState({ title: event.target.value });
     }
     this.checkFinishBasic();
-  }
+  };
   onChangeValueExplanation = async event => {
     if (event.target) {
       await this.setState({ explanation: event.target.value });
     }
     //this.checkFinishBasic();
-  }
+  };
   onKeyPress = () => {
     this.checkFinishBasic();
-  }
+  };
   gotoPrevStep = () => {
     this.setState({ step: this.state.step - 1 });
-  }
+  };
   gotoNextStep = async () => {
-    if (this.state.step === 1 && this.state.designId == null) {
-      let designId = null;
-      console.log(this.props);
-      const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, thumbnail, thumbnail_name } = this.state;
-      let data = {
-        is_project: 1, uid: this.props.userInfo.uid,
-        category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
-        files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
-        is_commercial: license1, is_display_creater: license2, is_modify: license3,
-        members: { add: this.state.addmem, del: this.state.delmem },
-        title: title
-      };
-
-      this.setState({ loading: true });
-      this.props.CreateDesignRequest(data, this.props.token)
-        .then(async (res) => {
-          if (res.success) {
-            designId = res.design_id;
-            this.props.GetDesignDetailRequest(designId, this.props.token)
-              .then(() => {
-                this.props.GetDesignBoardRequest(designId)
-              })
-            await this.setState({ content: true, designId: designId, grid: true, loading: false });
-          }
-        })
-        .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
-    }
+    // if (this.state.step === 1 && this.state.designId == null) {
+    alert("boom!");
     await this.setState({ step: this.state.step + 1 });
-  }
+  };
   gotoStep = (menu) => {
     if (!this.state.basic && menu.step > 0) {
       this.checkInputForm();
@@ -814,7 +729,7 @@ class CreateDesign extends Component {
       }
     }
     this.setState({ step: menu.step });
-  }
+  };
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
     if (title && thumbnail !== noimg) {
@@ -822,43 +737,74 @@ class CreateDesign extends Component {
     } else {
       await this.setState({ basic: false });
     }
-  }
+  };
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
     console.log("checkFinishAdditional", categoryLevel1, ((alone && members.length === 0) || (!alone && members.length > 0)), license1, license2, license3);
     if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
-      await this.setState({ additional: true });
+      await this.setState({ additional: true, content: true });
     } else {
       await this.setState({ additional: false });
     }
-  }
+  };
   submit = () => {
-    window.location.href = geturl() + `/designDetail/` + this.state.designId;
-  }
-  onChangeCategory1(event, { value }) {
+
+    console.log(this.props);
+    const {
+      contents, categoryLevel1, categoryLevel2, title, explanation,
+      license1, license2, license3,
+      thumbnail, thumbnail_name } = this.state;
+    contents && contents.map(content => {
+      delete content.initClick;
+    });
+    let data = {
+      uid: this.props.userInfo.uid,
+      is_project: this.state.is_project, contents: contents,
+      category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
+      files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
+      is_commercial: license1 ? 1 : 0, is_display_creater: license2 ? 1 : 0, is_modify: license3 ? 1 : 0,
+      members: { add: this.state.addmem, del: this.state.delmem },
+      title: title
+    };
+
+    let designId = null;
+    this.setState({ loading: true });
+    console.log(data);
+    this.props.CreateDesignRequest(data, this.props.token)
+      .then(async (res) => {
+        if (res.success) {
+          this.setState({ loading: false });
+          designId = res.design_id;
+          window.location.href = geturl() + `/designDetail/` + designId;
+        }
+      })
+      .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
+    this.setState({ loading: false });
+  };
+  onChangeCategory1 = (event, { value }) => {
     this.setState({ categoryLevel1: { value }.value });
     this.checkFinishAdditional();
-  }
-  onChangeCategory2(event, { value }) {
+  };
+  onChangeCategory2 = (event, { value }) => {
     this.setState({ categoryLevel2: { value }.value })
     this.checkFinishAdditional();
-  }
+  };
   onCheckedLicense01 = async () => {
     await this.setState({ license1: !this.state.license1 });
     this.checkFinishAdditional();
-  }
+  };
   onCheckedLicense02 = async () => {
     await this.setState({ license2: !this.state.license2 });
     this.checkFinishAdditional();
-  }
+  };
   onCheckedLicense03 = async () => {
     await this.setState({ license3: !this.state.license3 });
     this.checkFinishAdditional();
-  }
+  };
   LeaveMeAlone = async () => {
     await this.setState({ alone: !this.state.alone, members: [] });
     this.checkFinishAdditional();
-  }
+  };
   addMember = async (email, s_img, nick_name, uid) => {
     let member = { email: email, s_img: s_img, nick_name: nick_name, user_id: uid, uid: uid };
     await this.setState({
@@ -867,8 +813,8 @@ class CreateDesign extends Component {
     });
     // console.log("members[]====", this.state.members);
     this.checkFinishAdditional();
-  }
-  async removeMember(user_id) {
+  };
+  removeMember = async (user_id) => {
     // remove from addmem
     if (this.state.addmem.find(mem => { return mem.user_id === user_id })) {
       await this.setState({ addmem: this.state.addmem.filter(member => { return member.user_id !== user_id }) });
@@ -878,13 +824,13 @@ class CreateDesign extends Component {
     // display member list
     await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
     this.checkFinishAdditional();
-  }
+  };
   closeCropper = () => {
     if (this.state.is_rectangle === false) {
       this.setState({ thumbnail_name: "", thumbnail: noimg });
     }
     this.setState({ cropper: false, crop: { unit: "%", width: 50, aspect: 1 } });
-  }
+  };
   toDataURL = url => fetch(url)
     .then(response => response.blob())
     .then(blob => new Promise((resolve, reject) => {
@@ -892,7 +838,7 @@ class CreateDesign extends Component {
       reader.onloadend = () => resolve(reader.result)
       reader.onerror = reject
       reader.readAsDataURL(blob)
-    }))
+    }));
   crop = async () => {
     // apply
     await this.toDataURL(this.state.croppedImageUrl)
@@ -912,13 +858,13 @@ class CreateDesign extends Component {
     // this.setState({ crop: percentCrop });
     this.setState({ crop });
   };
-  async makeClientCrop(crop) {
+  makeClientCrop = async (crop) => {
     if (this.imageRef && crop.width && crop.height) {
       const croppedImageUrl = await this.getCroppedImg(this.imageRef, crop, this.state.thumbnail_name/*"newFile.jpeg"*/);
       this.setState({ croppedImageUrl });
     }
-  }
-  getCroppedImg(image, crop, fileName) {
+  };
+  getCroppedImg = (image, crop, fileName) => {
     const canvas = document.createElement("canvas");
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
@@ -939,6 +885,73 @@ class CreateDesign extends Component {
         resolve(this.fileUrl);
       }, "image/jpeg");
     });
+  };
+  openInfoToProject = () => {
+    this.setState({ info_dialog: true });
+  };
+  toProject = async () => {
+    await this.setState({ loading: true, info_dialog: false });
+    let contents = this.state.contents;
+    //contents.board name = design name
+    //contents.card name = design name
+    await this.setState({ is_project: 1, contents: contents });
+    this.setState({ loading: false });
+  };
+  onChangeFile = async (data) => {
+    let copyContent = [...this.state.contents];
+    delete data.initClick;
+    delete data.target;
+    await copyContent.splice(data.order, 1, data);
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        delete item.initClick;
+        return item;
+      })
+    );
+    await this.setState({ contents: copyContent });
+  };
+  onChangeValue = async (data, order) => {
+    this.setState({ contents: update(this.state.contents, { [order]: { contents: { $set: data.content } } }) });
+  };
+  onDelete = async (order) => {
+    if (window.confirm("정말로 선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
+      return;
+    }
+    let copyContent = [...this.state.contents];
+    for (var i = 0; i < copyContent.length; i++) {
+      if (copyContent[i].order === order) {
+        copyContent.splice(i, 1);
+      }
+    }
+    for (i = 0; i < copyContent.length; i++) {
+      copyContent[i].order = i;
+    }
+    await this.setState({ contents: copyContent });
+  };
+  onAddValue = async (data) => {
+    let copyContent = [...this.state.contents];
+    let copyData = { ...data };
+    copyData.initClick = true;
+    for (let item of copyContent) {
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+        await copyContent.splice(item.order, 1, null);
+      }
+    }
+    await copyContent.splice(copyData.order, 0, copyData);
+    let newContent = copyContent.filter((item) => { return item !== null })
+    newContent = await Promise.all(
+      newContent.map(async (item, index) => {
+        item.order = await index;
+        delete item.target;
+        if (item.type === "FILE") delete item.initClick;
+        if (item.order !== copyData.order) delete item.initClick;
+        return item;
+      })
+    );
+    await this.setState({ contents: newContent });
+  };
+  onChangeGridData = async (data) => {
+    ;
   }
   render() {
     let arrSummaryList = [];
@@ -952,13 +965,18 @@ class CreateDesign extends Component {
       });
     }
 
-    const { step } = this.state;
+    const { step, is_project, contents } = this.state;
     const thumbnailURL = this.state.thumbnail;
+    console.log(this.state.contents);
     return (
       <div onClick={this.handleCloseMember}>
         <MainBanner>
           <div className="title">디자인 등록하기</div>
         </MainBanner>
+
+        {this.state.loading ?
+          <Loading /> : null}
+
 
         <MainSection>
           {/* scroll - menu */}
@@ -973,7 +991,7 @@ class CreateDesign extends Component {
             </div>
           </NavMenu>
 
-          {this.state.cropper &&
+          {this.state.cropper ?
             <CropperDialog ratio={this.state.ratio} onKeyDown={null} open={this.state.cropper} onClose={null}>
               <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
                 <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
@@ -990,7 +1008,22 @@ class CreateDesign extends Component {
                 <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
                 <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
               </div>
-            </CropperDialog>}
+            </CropperDialog> : null}
+
+          {this.state.info_dialog ?
+            <ToProjectInfoDialog open={this.state.info_dialog} onClose={null}>
+              <div onClick={() => this.setState({ info_dialog: false })} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
+                <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
+              </div>
+              <div>
+                <div>그림그림</div>
+                <div>설명설명</div>
+              </div>
+              <div style={{ marginTop: "10px", display: "flex" }} >
+                <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={this.toProject} >계속하기</div>
+                <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.setState({ info_dialog: false })} >취소</div>
+              </div>
+            </ToProjectInfoDialog> : null}
 
           {/* FORM */}
           <InputBoard>
@@ -1069,11 +1102,34 @@ class CreateDesign extends Component {
             </SectionContainer>
 
             <SectionContainer display={step === 2 ? "block" : "none"}>
-              <div>
-              {this.state.grid && this.state.is_project === 1  
-                ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />
-                : <LoadingBox><LoadingIconBox imageURL={Logo} /><div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div></LoadingBox>}
-              </div>
+              {is_project === 0 ?
+                <React.Fragment>
+                  {/* edit mode */}
+                  {contents && contents.length > 0 ? (
+                    <React.Fragment>
+                      {contents.map(item => {
+                        return (<ControllerWrap key={item.order}>
+                          <div className="contentWrap">
+                            {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
+                            {item.type === "TEXT" ? (<TextControllerPlus item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
+                            {item.type === "EMBED" ? (<EmbController />) : null}
+                          </div>
+                          <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
+                          {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
+                          {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
+                        </ControllerWrap>)
+                      })}
+                      <AddContent getValue={this.onAddValue} order={contents.length} />
+                    </React.Fragment>) : <AddContent getValue={this.onAddValue} order={0} change={this.openInfoToProject} />}
+                </React.Fragment>
+                : <React.Fragment>
+                  <GridEditor
+                    getData={this.onChangeGridData}
+                    editor={true}
+                    local={true}
+                    design={{ uid: "local" }} />
+                </React.Fragment>}
+
             </SectionContainer>
 
             {/* buttons*/}
@@ -1098,9 +1154,98 @@ class CreateDesign extends Component {
             </div>
           </InputBoard>
         </MainSection>
-      </div >
-    )
-  }
+      </div >)
+  };
 }
 
 export default CreateDesign;
+
+const ControllerWrap = styled.div`
+  // margin: 20px 0;
+  position: relative;
+  text-align: center;
+
+  border: 1px dashed ${osdcss.color.grayScale.scale6};
+  & .initWrap {
+    & > ul {
+      display: flex;
+      // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    & > span {
+      color: ${osdcss.color.grayScale.scale6};
+    }
+  }
+  &:hover {
+    background-color: #FAFAFA;
+    & .initWrap {
+      & > ul { display: flex; }
+      & > span { color: ${osdcss.color.grayScale.scale6}; }
+    }
+  }
+  .innerBox {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+  }
+`;
+const NewController = styled.li`
+  width: max-content;
+  height: 29px;
+  color: #FF0000;
+  margin-left: 75px;
+  &.first {
+    margin-left: 0px;
+  }
+  line-height: 29px;
+  padding-bottom: 1.5px;
+  border-bottom: 1.5px solid #FF0000;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  text-align: center;
+  cursor: pointer;
+`;
+
+class AddContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { type: null, content: "", order: null };
+  }
+  addContent = async (type) => {
+    if (type === "FILE") {
+      await this.setState({ type, order: this.props.order, content: "", initClick: true });
+      setTimeout(() => {
+        this.setState({ initClick: false });
+      }, 100);
+    } else {
+      await this.setState({ type, order: this.props.order, content: "" });
+      this.returnData();
+    }
+  }
+  changeType = () => {
+    this.props.change && this.props.change();
+  }
+  returnData = async (data) => {
+    if (data) {
+      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+      this.props.getValue(data);
+    } else {
+      if (this.props.getValue) this.props.getValue(this.state);
+    }
+  }
+  render() {
+    return (
+      <ControllerWrap>
+        <div className="innerBox">
+          <NewController className="first" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
+          <NewController onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 등록하기</NewController>
+          {this.props.order === 0 ? <NewController onClick={this.changeType} width="max-content" height="29px">단계 추가하기</NewController> : null}
+        </div>
+        {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
+      </ControllerWrap>
+    );
+  }
+}
+

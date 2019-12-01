@@ -10,6 +10,7 @@ import CardSourceContainer from "containers/Designs/CardSourceContainer";
 // css styling
 
 const ViewWrapper = styled(Grid)`
+  
   &.ui.grid {
     margin: 0;
     padding-bottom: 60px;
@@ -54,14 +55,11 @@ const BtnWrap = styled.div`
 `;
 const TransFormBtnContainer = styled.div`
   position: relative;
-  margin-top: 35px;
+  margin-top: 15px;
 `;
 
 class DetailView extends Component {
-  state = {
-    render: true,
-    edit: false
-  }
+  state = { render: true, edit: false }
 
   componentDidMount() {
     this.props
@@ -81,10 +79,7 @@ class DetailView extends Component {
   }
 
   onActiveStep = () => {
-    const confirm = window.confirm(
-      "프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)"
-    );
-    if (confirm) {
+    if (window.confirm("프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)")) {
       this.props
         .ChangeToProjectRequest(this.props.id, this.props.token)
         .then(data => {
@@ -140,11 +135,11 @@ class DetailView extends Component {
       <div>
         <TransFormBtnContainer >
           <BtnWrap>
-            {/* {this.props.isTeam ? (
+            {this.props.isTeam ? (
               <Button type="button" size="small" onClick={this.onPreviewMode}>
                 {this.state.edit ? "미리보기" : "편집하기"}
               </Button>
-            ) : null} */}
+            ) : null}
             {this.props.token &&
               this.props.userInfo.uid === view.user_id && (
                 <GoStepBtn onClick={this.onActiveStep} size="small">
@@ -154,8 +149,7 @@ class DetailView extends Component {
         </TransFormBtnContainer>
 
         {len > 0 ? (
-          <ViewWrapper>
-            <div className="date" />
+          <ViewWrapper>&nbsp;{/* <div className="date" >???</div> */}
             <CardSourceContainer
               view={this.props.DesignDetailView}
               edit={this.state.edit}
@@ -166,9 +160,7 @@ class DetailView extends Component {
             />
             {/*comment form deleted */}
           </ViewWrapper>
-        ) : (
-            <Loading />
-          )}
+        ) : (<Loading />)}
       </div>
     );
   }

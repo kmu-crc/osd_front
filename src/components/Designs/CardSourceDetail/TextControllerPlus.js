@@ -19,7 +19,7 @@ ClassicEditor.defaultConfig = {
   alignment: { options: ['left', 'center', 'justify', 'right'] },
   toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
-  fontSize: { options: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 26] },
+  fontSize: { options: [10, 11, 12, 14, 18, 24, 30, 36 ] },
   language: 'en'
 };
 
