@@ -595,7 +595,7 @@ class CreateDesign extends Component {
       is_project: 0, info_dialog: false, contents: [],
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
-      basic: false, additional: false, content: false, step: 0,
+      basic: false, additional: false, content: false, step: 2,
       showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
@@ -1009,12 +1009,41 @@ class CreateDesign extends Component {
 
           {this.state.info_dialog ?
             <ToProjectInfoDialog open={this.state.info_dialog} onClose={null}>
-              <div onClick={() => this.setState({ info_dialog: false })} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
+              <div onClick={() => this.setState({ info_dialog: false })} style={{ width: "max-content", marginLeft: "auto", marginRight: "10px" }}>
                 <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
               </div>
               <div>
-                <div>그림그림</div>
-                <div>설명설명</div>
+                <div style={{ padding: "15px" }}>
+                  <div style={{ border: "1px dashed #EFEFEF", padding: "25px" }}>
+                    <div style={{ display: "flex" }}>
+                      <div >
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", borderRadius: "15px", backgroundColor: "#AAAAFF" }}>단계1</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠1</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠2</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠3</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>+</div>
+                      </div>
+                      <div style={{ marginLeft: "25px" }}>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", borderRadius: "15px", backgroundColor: "#AAAAFF" }}>단계1</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠1</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠2</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠3</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>+</div>
+                      </div>
+                      <div style={{ marginLeft: "25px" }}>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", borderRadius: "15px", backgroundColor: "#AAAAFF" }}>단계1</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠1</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠2</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>컨텐츠3</div>
+                        <div style={{ width: "125px", height: "35px", lineHeight: "35px", textAlign: "center", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "10px", borderRadius: "15px", backgroundColor: "#EFEFEF" }}>+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ marginLeft: "25px", fontSize: "18px", color: "#707070", fontWeight: "bold" }}>
+                  단계를 추가하면 위와 같이 디자인의 형식이 프로젝트형식으로 변환됩니다.<br />
+                  이 과정을 한 번 진행하면 다시 이전 형식으로 돌아갈 수 없습니다.
+                </div>
               </div>
               <div style={{ marginTop: "10px", display: "flex" }} >
                 <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={this.toProject} >계속하기</div>
