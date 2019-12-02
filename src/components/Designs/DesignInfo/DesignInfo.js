@@ -925,7 +925,7 @@ class DesignInfo extends Component {
                             {/* DESCRIPTION */}
                             <DescriptionContainer>
                                 <div className="category-name"></div>
-                                <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
+                                <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation && DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
                             </DescriptionContainer>
                         </div>
                         <div className="box box4">
