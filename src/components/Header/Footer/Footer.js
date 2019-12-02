@@ -49,7 +49,7 @@ class Footer extends Component {
     render() {
         return (
             <FooterContainer>
-                <div className="origin">copyright @ 2019 Open Design Inc.</div>
+                <div className="origin">Copyright @ 2019 Open Design Inc.</div>
                 <div className="term" onClick = {this.gotoTerm}>이용약관</div>
                 <div className="security" onClick = {this.gotoPrivacy}>개인 정보 보호 방책</div>
             </FooterContainer>
