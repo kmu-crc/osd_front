@@ -595,7 +595,7 @@ class CreateDesign extends Component {
       is_project: 0, info_dialog: false, contents: [],
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
-      basic: false, additional: false, content: false, step: 2,
+      basic: false, additional: false, content: false, step: 0,
       showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
