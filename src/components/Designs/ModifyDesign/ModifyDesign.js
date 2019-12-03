@@ -974,8 +974,7 @@ class ModifyDesign extends Component {
                     <LoadingBox>
                       <LoadingIconBox imageURL={Logo} />
                       <div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div>
-                    </LoadingBox>
-                  }
+                    </LoadingBox>}
                 </div>
               </section>
 
