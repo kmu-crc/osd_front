@@ -613,7 +613,7 @@ const emptyCategory = [{ value: 0, text: "" }];
 const scrollmenu = [
   { step: 0, txt: "기본 정보", tag: "#basics" },
   { step: 1, txt: "부가 정보", tag: "#additional" },
-  { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }
+  { step: 2, txt: "컨텐츠 정보", tag: "#contenteditor" }
 ];
 
 function Peer(props) {
@@ -973,7 +973,7 @@ class ModifyDesign extends Component {
                     :
                     <LoadingBox>
                       <LoadingIconBox imageURL={Logo} />
-                      <div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div>
+                      <div className="loadingText">컨텐츠 에디터를 가져오고 있습니다...</div>
                     </LoadingBox>}
                 </div>
               </section>

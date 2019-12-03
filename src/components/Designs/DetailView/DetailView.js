@@ -82,7 +82,7 @@ class DetailView extends Component {
 
   onActiveStep = () => {
     const confirm = window.confirm(
-      "프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)"
+      "단계를 가지는 디자인 형식으로 변경하시겠습니까? 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인 내 모든 데이터들은 저장됩니다.)"
     );
     if (confirm) {
       this.props
