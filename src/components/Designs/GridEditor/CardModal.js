@@ -396,7 +396,7 @@ class CardModal extends Component {
                     .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                     .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
                     .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                    .then(() => {this.props.GetCardDetailRequest(this.props.card.uid)})
+                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
                     .catch(err => alert(err + ''));
                 // this.onClose();
             }).catch(err => alert(err + ''));
@@ -466,7 +466,7 @@ class CardModal extends Component {
                                     </div>
                                 </div>
                                 <div className="card-header-second" >
-                                    <div className="contents"><TextFormat txt={card.content} chars={25} /></div>
+                                    <div className="contents"><TextFormat txt={card.content || ""} chars={25} /></div>
                                     <div className="nick-name">{card.nick_name}</div>
                                     <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
                                 </div>
