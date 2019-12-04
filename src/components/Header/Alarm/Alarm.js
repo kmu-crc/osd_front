@@ -66,7 +66,9 @@ const ListItem = styled.div`
 const userinfo = {
     alarmLeft: "1512px",
 }
+let alarmlist = [];
 class Alarm extends Component {
+
     constructor(props)
     {
         super(props);
@@ -79,6 +81,7 @@ class Alarm extends Component {
             alarmLeft: userinfo.alarmLeft,
         }
         this.accept = this.accept.bind(this);
+
     }
     myRef = React.createRef()
     openAlarmList = (e) => {
@@ -90,7 +93,8 @@ class Alarm extends Component {
     checkClickOutside = (e) => {
         if (this.myRef.current === null) return
         if (!this.myRef.current.contains(e.target)) {
-            this.setState({ active: false, top: 0, left: 0 })
+            this.setState({ active: false, top: 0, left: 0 });
+            alarmlist = [];
             document.removeEventListener("mousedown", this.checkClickOutside)
         }
     }
@@ -99,8 +103,10 @@ class Alarm extends Component {
         this.props.handleAlarmConfirm(userID, alarmID)
     }
     allAlarmConfirm = () => {
-        alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.')
-        this.props.handleAllAlarmConfirm(this.props.uid)
+        if (this.props.alarm && this.props.alarm.count) {
+            alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.');
+            this.props.handleAllAlarmConfirm(this.props.uid);
+        }
     }
     getLink = item => {
         let link = ``;
@@ -181,7 +187,7 @@ class Alarm extends Component {
     }
     accept = (e, item) => {
         let confirm = false;
-        e.stopPropagation()
+        e && e.stopPropagation();
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
                 confirm = window.confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?");
@@ -319,6 +325,26 @@ class Alarm extends Component {
         rst.sort((a, b) => (a.confirm > b.confirm) ? 1 : (a.create_time < b.create_time) ? 1 : - 1);
         return rst;
     }
+    checkedAlarm = (event) => {
+        if (!event.target.value) return;
+        if (event.target.checked) {
+            alarmlist.push(event.target.value);
+        } else {
+            alarmlist.splice(alarmlist.indexOf(event.target.value), 1);
+        }
+    };
+    acceptChecked = () => {
+        if (!alarmlist.length) {
+            // alert("승인하고자하는 알람의 체크박스를 선택해주세요."); 
+            return;
+        }
+        alarmlist.map(alarm => {
+            const item = this.props.alarm.list.filter(e => e.uid == alarm)[0];
+            this.accept(null, item);
+        });
+        alarmlist = [];
+    }
+
     render() {
         const alarms = this.props.alarm;
         const alarmscombined = this.combine(alarms && alarms.list);
@@ -326,9 +352,14 @@ class Alarm extends Component {
             <React.Fragment>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
                     <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
-                        {alarms && alarms.count > 0 ?
-                            <div onClick={this.allAlarmConfirm} style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }}>모두 읽음으로 표시하기</div>
-                            : <div style={{ zIndex: "999", cursor: "pointer", width: "214px", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />}
+                        <div onClick={this.acceptChecked}
+                            style={{
+                                zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
+                                marginTop: "13px", marginLeft: "10px"
+                            }}>선택 알람 승인</div>
+                        {/* {alarms && alarms.count > 0 ? */}
+                        <div onClick={this.allAlarmConfirm} style={{ zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px" }}>모두 읽음</div>
+                        {/* : <div style={{ zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />} */}
                     </div>
                     <div className="list">
                         {alarmscombined && alarmscombined.length ? alarmscombined.map((item, index) => {
@@ -341,7 +372,10 @@ class Alarm extends Component {
                             const itemTitle = item.title.length>10?item.title.slice(0,10)+"...":item.title;
                             return (
                                 <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
-                                    <div style={{ fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}><TextFormat txt={msg} /></div>
+                                    <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
+                                        {alarmtype ? <div><input type="checkbox" id="alarm-checkbox" value={item.uid} onChange={this.checkedAlarm} /></div> : null}
+                                        <TextFormat txt={msg} />
+                                    </div>
                                     <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                          <div style={{ display: "flex", justifyContent: "space-start" }}>
                                             <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />

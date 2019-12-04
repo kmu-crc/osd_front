@@ -12,8 +12,8 @@ import "react-image-crop/dist/ReactCrop.css";
 import osdcss from "opendesign_style";
 import FileController from "../CardSourceDetail/FileController";
 import EmbController from "../CardSourceDetail/EmbController";
-import TextControllerPlus from "../CardSourceDetail/TextControllerPlus";
-import GridEditor from "components/Designs/GridEditor";
+import TextController from "../CardSourceDetail/TextControllerPlus";
+// import GridEditor from "components/Designs/GridEditor";
 import { geturl } from "config";
 import Loading from "components/Commons/Loading";
 
@@ -579,7 +579,7 @@ const ToProjectInfoDialog = styled(Modal)`
 `;
 const designImageText = "디자인 이미지";
 const emptyCategory = [{ value: 0, text: "" }];
-const scrollmenu = [{ step: 0, txt: "기본 정보" }, { step: 1, txt: "부가 정보" }, { step: 2, txt: "단계/컨텐츠 입력" }];
+const scrollmenu = [{ step: 0, txt: "기본 정보" }, { step: 1, txt: "부가 정보" }, { step: 2, txt: "컨텐츠 입력" }];
 function Peer(props) {
   return (
     <PeerBox>
@@ -900,7 +900,9 @@ class CreateDesign extends Component {
     });
   };
   openInfoToProject = () => {
-    this.setState({ info_dialog: true });
+    this.setState({ loading: true });
+    // this.setState({ info_dialog: true });
+    this.toProject();
   };
   toProject = async () => {
     await this.setState({ loading: true, info_dialog: false });
@@ -1057,7 +1059,7 @@ class CreateDesign extends Component {
                   </div>
                 </div>
                 <div style={{ marginLeft: "25px", fontSize: "18px", color: "#707070", fontWeight: "bold" }}>
-                  단계를 추가하면 위와 같이 디자인의 형식이 프로젝트형식으로 변환됩니다.<br />
+                  단계를 생성하면 위와 같이 단계를 가지는 디자인 형식으로 변환됩니다.<br />
                   이 과정을 한 번 진행하면 다시 이전 형식으로 돌아갈 수 없습니다.
                 </div>
               </div>
@@ -1155,7 +1157,7 @@ class CreateDesign extends Component {
                         return (<ControllerWrap key={item.order}>
                           <div className="contentWrap">
                             {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
-                            {item.type === "TEXT" ? (<TextControllerPlus item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
+                            {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
                             {item.type === "EMBED" ? (<EmbController />) : null}
                           </div>
                           <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
@@ -1167,15 +1169,9 @@ class CreateDesign extends Component {
                     </React.Fragment>) : <AddContent getValue={this.onAddValue} order={0} change={this.openInfoToProject} />}
                 </React.Fragment>
                 : <React.Fragment>
-                  <div style={{ fontSize: "16px" }}>디자인페이지로 이동합니다.</div>
-                  {/* <GridEditor
-                    getData={this.onChangeGridData}
-                    editor={true}
-                    local={true}
-                    userInfo={this.props.userInfo}
-                    nick_name={this.props.userInfo.nickName}
-                    user_id={this.props.userInfo.uid}
-                    design={{ uid: "local" }} /> */}
+                  <Loading />
+                  <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", marginLeft: "auto", fontSize: "28px" }}>디자인페이지로 이동합니다.</div>
+                  {/* <GridEditor getData={this.onChangeGridData} editor={true} local={true} userInfo={this.props.userInfo} nick_name={this.props.userInfo.nickName} user_id={this.props.userInfo.uid} design={{ uid: "local" }} /> */}
                 </React.Fragment>}
             </SectionContainer>
 
@@ -1245,16 +1241,51 @@ const NewController = styled.li`
   &.first {
     margin-left: 0px;
   }
+  &.complecated {
+    display: flex;
+    flex-direction: row;
+    .txt{
+      border-bottom: 1.5px solid #FF0000;
+    }
+  }
+  &.txt{
+    border-bottom: 1.5px solid #FF0000;
+  }
   line-height: 29px;
   padding-bottom: 1.5px;
-  border-bottom: 1.5px solid #FF0000;
   font-size: 20px;
   font-weight: 500;
   font-family: Noto Sans KR;
   text-align: center;
   cursor: pointer;
 `;
-
+const Tip = styled.div`
+  .wrapper {
+    z-index: 900;
+    position: absolute;
+    display: flex;
+    visibility: hidden;
+  }
+  .tip-txt {
+    display: none;
+    width: max-content;
+    background-color: #707070;
+    color: #EFEFEF;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px 5px;
+    margin-top: -5px;
+    font-size: 14px;
+  }
+  :hover {
+    .wrapper {
+        visibility: visible;
+    }
+    .tip-txt {
+        display: block;
+    }
+  }
+`;
 class AddContent extends Component {
   constructor(props) {
     super(props);
@@ -1286,9 +1317,17 @@ class AddContent extends Component {
     return (
       <ControllerWrap>
         <div className="innerBox">
-          <NewController className="first" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
-          <NewController onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 등록하기</NewController>
-          {this.props.order === 0 ? <NewController onClick={this.changeType} width="max-content" height="29px">단계 추가하기</NewController> : null}
+          <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
+          <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
+          {this.props.order === 0 ? <NewController className="txt" className="complecated" width="max-content" height="29px">
+            <div onClick={this.changeType} className="txt">단계 생성하기</div>
+            <Tip>
+              <sup>&nbsp;?</sup>
+              <div className="wrapper">
+                <div className="tip-txt">단계를 가지는 디자인을 생성합니다.<br /> <font style={{ color: "pink" }}>*&nbsp;</font>이 과정을 진행하면 되 돌릴 수 없습니다.</div>
+              </div>
+            </Tip>
+          </NewController> : null}
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>
