@@ -23,7 +23,7 @@ class TextFormat extends Component {
     const { backgroundColor, width, txt, id, lines, chars } = this.props;
     return (
       <TextFormatContainer backgroundColor={backgroundColor} width={width} title={txt} id={id} lines={lines} className={lines ? "multi" : "single"}>
-        {chars ? (txt.length < chars ? txt : txt.slice(0, chars - 3) + "...") : txt}
+        {chars ? (txt && txt.length < chars ? txt : txt && txt.slice(0, chars - 3) + "...") : txt}
       </TextFormatContainer>)
   }
 }
