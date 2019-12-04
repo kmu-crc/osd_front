@@ -551,9 +551,8 @@ const DesignMemberModalContainer = styled(Modal)`
 .close-box {
     cursor:pointer;
     position: absolute;
-    left: 100%;
-    margin-top: 0px;
-    margin-left: 34px;
+    right:10px;
+    top:10px;
 }
 `;
 const DesignCommentModalContainer = styled(Modal)`
@@ -791,7 +790,7 @@ class DesignInfo extends Component {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
                     <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                        <Cross angle={45} color={"#FFFFFF"} weight={3} width={45} height={45} />
+                        <Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
                     </div>
                     <Modal.Content>
                         <DesignMemberContainer mine={isMyDesign} DesignDetail={DesignDetail} />

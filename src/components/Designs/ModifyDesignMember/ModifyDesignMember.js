@@ -206,6 +206,7 @@ class ModifyDesignMember extends Component {
               </form>}
             <form widths="equal" className="newMember">
               <Label>새 멤버 초대</Label>
+              
               <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
               {this.state.members && this.state.members.length > 0 && <React.Fragment>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
@@ -217,7 +218,7 @@ class ModifyDesignMember extends Component {
                     </div>
                   )}
                 </div></React.Fragment>}
-              <div style={{ paddingBottom: "2px", borderBottom: "1.5px solid red", width: "max-content", cursor: "pointer", marginLeft: "auto", marginRight: "65px", fontWeight: "500", fontSize: "23px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }} onClick={this.joinMember}>초대</div>
+              <div style={{ paddingBottom: "2px", borderBottom: "1.5px solid red", width: "max-content", cursor: "pointer", marginLeft: "auto",marginRight: "0px", fontWeight: "500", fontSize: "23px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }} onClick={this.joinMember}>초대</div>
             </form>
           </React.Fragment>
         }

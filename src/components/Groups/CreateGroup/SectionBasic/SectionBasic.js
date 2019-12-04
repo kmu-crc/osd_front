@@ -7,7 +7,7 @@ padding-left: 47px;
 display:flex;
 flex-direction:column;
 .title{
-  min-width: 100px;
+  min-width: 105px;
   height: 29px;
   text-align: left;
   font-size: 20px;
@@ -224,7 +224,7 @@ class SectionBasic extends Component {
       <ContentsBox  >
         {/* thumbnail */}
         <ThumbnailBox>
-    <div className="title">{GroupImageText}<sup>*</sup></div>
+    <div className="title">{GroupImageText}<sup style={{color:"red"}}>*</sup></div>
           <ImageBox imageURL={this.props.groupThumbnail}></ImageBox>
           <div className="findThumbnailBox">
             <div className="findThumbnailBtn">
@@ -236,7 +236,7 @@ class SectionBasic extends Component {
         </ThumbnailBox>
         {/* title */}
         <TitleBox>
-          <div className="title">제목<sup>*</sup></div>
+          <div className="title">제목<sup style={{color:"red"}}>*</sup></div>
           <input type="text" className="inputText" placeholder="그룹 제목을 입력하세요." onChange={this.handleOnChangeTitle}
             onKeyDown={this.onKeyDownEnter} value={this.props.groupTitle || ""} maxLength="50" />
         </TitleBox>

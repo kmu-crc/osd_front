@@ -234,7 +234,7 @@ class SearchListRe extends Component {
                     </div>
 
                     <div className="CategoryBox">
-                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer
+                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer 
                             sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}
                         {this.state.urlCate === "group" && <ScrollGroupListContainer
                             sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}

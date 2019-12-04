@@ -5,7 +5,7 @@ import noimg from "source/noimg.png"
 const ContentsBox = styled.div`
     padding-left:47px;
     .title{
-        width:100px;
+        width:105px;
         height:29px;
         text-align:left;
         font-size:20px;
@@ -207,7 +207,7 @@ class GroupBasicInfo extends Component {
             <ContentsBox>
                 {/* thumbnail */}
                 <ThumbnailBox>
-                    <div className="title">{GroupImageText}<sup>*</sup></div>
+                    <div className="title">{GroupImageText}<sup style={{color:"red"}}>*</sup></div>
                     <ImageBox imageURL={this.props.groupThumbnail} ></ImageBox>
                     <div className="findThumbnailBox">
                         <div className="findThumbnailBtn">
@@ -219,7 +219,7 @@ class GroupBasicInfo extends Component {
                 </ThumbnailBox>
                 {/* title */}
                 <TitleBox>
-                    <div className="title">제목<sup>*</sup></div>
+                    <div className="title">제목<sup style={{color:"red"}}>*</sup></div>
                     <input type="text" onKeyDown={this.onKeyDownEnter} className="inputText" onChange={this.handleOnChangeTitle} value={this.props.groupTitle} />
                 </TitleBox>
                 {/* description */}

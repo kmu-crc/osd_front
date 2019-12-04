@@ -229,7 +229,7 @@ class Comment extends Component {
         this.reset();
     };
     removeComment(commentId) {
-        if (window.confirm("선택하신 댓글을 정말로 삭제하시겠습니까?") === false) {
+        if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
             return;
         }
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
@@ -241,7 +241,7 @@ class Comment extends Component {
         }
     };
     removeReply(commentId) {
-        if (window.confirm("선택하신 댓글을 정말로 삭제하시겠습니까?") === false) {
+        if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
             return;
         }
         this.props.removeComment(commentId);

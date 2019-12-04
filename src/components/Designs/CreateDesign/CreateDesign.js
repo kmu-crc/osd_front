@@ -598,7 +598,7 @@ class CreateDesign extends Component {
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
       showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [],
+      categoryLevel1: null, categoryLevel2: null, alone: true, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
     };
     this.addMember = this.addMember.bind(this);
@@ -819,6 +819,7 @@ class CreateDesign extends Component {
     });
     // console.log("members[]====", this.state.members);
     this.checkFinishAdditional();
+    this.setState({alone:false});
   };
   removeMember = async (user_id) => {
     // remove from addmem
@@ -830,6 +831,12 @@ class CreateDesign extends Component {
     // display member list
     await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
     this.checkFinishAdditional();
+
+    if(this.state.members.length===0)
+    {
+      this.setState({alone:true})
+    }
+
   };
   closeCropper = () => {
     if (this.state.is_rectangle === false) {
@@ -923,7 +930,7 @@ class CreateDesign extends Component {
     this.setState({ contents: update(this.state.contents, { [order]: { contents: { $set: data.content } } }) });
   };
   onDelete = async (order) => {
-    if (window.confirm("정말로 선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
+    if (window.confirm("선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
       return;
     }
     let copyContent = [...this.state.contents];
@@ -1068,7 +1075,7 @@ class CreateDesign extends Component {
               {/* THUMBNAIL */}
               <ContentsBox>
                 <ThumbnailBox>
-          <div className="title">{designImageText}<sup>*</sup></div>
+          <div className="title">{designImageText}<sup style={{color:"red"}}>*</sup></div>
                   <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL} />
                   <div className="findThumbnailBox">
                     <div className="findThumbnailBtn">
@@ -1080,7 +1087,7 @@ class CreateDesign extends Component {
                 </ThumbnailBox>
                 {/* TITLE */}
                 <TitleBox>
-                  <div className="title">제목<sup>*</sup></div>
+                  <div className="title">제목<sup style={{color:"red"}}>*</sup></div>
                   <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
                     className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
                 </TitleBox>
@@ -1097,16 +1104,17 @@ class CreateDesign extends Component {
               <ContentsBox>
                 {this.props.category1.length > 0 ?
                   <CategoryBox>
-                    <div className="additionalTitle">카테고리<sup>*</sup></div>
+                    <div className="additionalTitle">카테고리<sup style={{color:"red"}}>*</sup></div>
                     <CategoryDropDown onChange={this.onChangeCategory1} options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요(필수)" />
                     <CategoryDropDown id="category2" onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory} selection ref="dropdown2" value={this.state.categoryLevel2} />
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* INVITE MEMBER */}
                 <InviteMemberBox>
-                  <div className="additionalTitle">멤버 초대하기<sup>*</sup></div>
+                  <div className="additionalTitle">멤버 초대하기<sup style={{color:"red"}}>*</sup></div>
                   <div className="searchBox">
-                    {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />}
+                    {/* {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />} */}
+                    <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
                   </div>
                   <div className="tipTitle">TIP</div>
                   <div className="tipDescription">
@@ -1121,7 +1129,8 @@ class CreateDesign extends Component {
                   </InviteMemberListBox>
                   {/* LEAVE ME ALONE */}
                   <NoInviteMemberBox>
-                    <CheckBox2 onChange={this.LeaveMeAlone} />
+                    <CheckBox2 onChange={this.LeaveMeAlone} checked={this.state.alone}/>
+
                     <span className="textLabel">멤버를 초대하지 않습니다.</span>
                   </NoInviteMemberBox>
                 </div>

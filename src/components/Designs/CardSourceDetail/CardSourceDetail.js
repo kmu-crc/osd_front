@@ -271,7 +271,7 @@ class CardSourceDetail extends Component {
     this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
   }
   async onDelete(order) {
-    if (window.confirm("정말로 선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
+    if (window.confirm("선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
       return;
     }
     let copyContent = [...this.state.content];
