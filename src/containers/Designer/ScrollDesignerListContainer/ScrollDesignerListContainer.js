@@ -3,7 +3,17 @@ import { connect } from "react-redux";
 import { GetDesignerListRequest } from "redux/modules/designer";
 import ScrollList from "components/Commons/ScrollList";
 import opendesign_style from "opendesign_style";
+import styled from "styled-components";
 
+const NoDataMsg = styled.div`
+  width:100%;
+  height:500px;
+  padding:100px;
+  font-size:30pt;
+  color:#707070;
+  font-family:Noto Sans KR;
+  text-align:center;
+`
 class ScrollDesignerListContainer extends Component {
   state = {
     reload: false,
@@ -24,7 +34,7 @@ class ScrollDesignerListContainer extends Component {
   }
 
   render() {
-    const {cate1, cate2, orderOption} = this.props;
+    const {cate1, cate2, orderOption,dataListAdded} = this.props;
     if(cate1 !== undefined || cate2 !== undefined){
       if(this.state.category1 !== cate1){
         this.getList(0);
@@ -39,15 +49,21 @@ class ScrollDesignerListContainer extends Component {
       }
     }
     return (
-      
+      <div>
+        {dataListAdded.length<=0?
+        <NoDataMsg>등록된 디자이너가 없습니다.</NoDataMsg>
+        :
       <ScrollList
         getListRequest={this.getList}
         type="designer"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
         {...opendesign_style.designer_margin}
       />
+        }
+        </div>
     );
   }
+  
 }
 
 const mapStateToProps = (state) => {

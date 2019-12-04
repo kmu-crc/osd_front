@@ -202,6 +202,7 @@ class CreateGroup extends Component {
     this.handleChangeThumbnail = this.handleChangeThumbnail.bind(this);
     this.handleChangeThumbnailURL = this.handleChangeThumbnailURL.bind(this);
     this.handleOnClickDeleteDesign = this.handleOnClickDeleteDesign.bind(this);
+    this.cancelDeleteGroup = this.cancelDeleteGroup.bind(this);
 
   }
   // setLoader = () => { this.setState({ loading: !this.state.loading }) }
@@ -273,6 +274,9 @@ class CreateGroup extends Component {
       });
 
   }
+  cancelDeleteGroup = ()=>{
+    this.setState({ isDelete: !this.state.isDelete });
+  }
 
   onSubmit = async e => {
     const warning = "필수 입력항목을 모두 입력하지 않아 작업을 완료할 수 없습니다.\n";
@@ -317,14 +321,10 @@ class CreateGroup extends Component {
       });
   };
   handleOnClickDeleteDesign() {
-    if (this.state.isDelete === true) {
       this.setState({ isDelete: !this.state.isDelete })
-    }
-    else {
-      this.setState({ isDelete: !this.state.isDelete })
-    }
-
   }
+
+  
   render() {
     const { step } = this.state
 
@@ -332,7 +332,10 @@ class CreateGroup extends Component {
       return (
         <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
           <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.groupTitle}를<br />삭제하시겠습니까?</div>
-          <div onClick={this.deleteGroup} style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px", textDecoration: "underline", color: "#FF0000" }}>네, 삭제합니다</div>
+          <div style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px"}}>
+            <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteGroup}>확인</span>
+            <span style={{color:"#707070"}} onClick={this.cancelDeleteGroup}>취소</span>
+          </div>
           <div onClick={this.handleOnClickDeleteDesign} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
         </Modal>
       );

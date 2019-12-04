@@ -5,7 +5,16 @@ import { GetDesignListRequest } from "redux/modules/design";
 import ScrollList from "components/Commons/ScrollList";
 import opendesign_style from 'opendesign_style';
 import Loading from "../../Designer/DesignerListContainer/DesignerListContainer";
-
+import styled from "styled-components";
+const NoDataMsg = styled.div`
+  width:100%;
+  height:500px;
+  padding:100px;
+  font-size:30pt;
+  color:#707070;
+  font-family:Noto Sans KR;
+  text-align:center;
+`
 class ScrollDesignListContainer extends Component {
   state = {
     reload: false, category1: 0, category2: 0, orderOption: "update"
@@ -37,7 +46,7 @@ class ScrollDesignListContainer extends Component {
     this.setState({ reload: !this.state.reload });
   }
   render() {
-    const { cate1, cate2, orderOption } = this.props;
+    const { cate1, cate2, orderOption,dataListAdded } = this.props;
     if (cate1 !== undefined || cate2 !== undefined) {
       if (this.state.category1 !== cate1) {
         this.getList(0);
@@ -51,10 +60,15 @@ class ScrollDesignListContainer extends Component {
       }
     }
     return (
+      <div>
+      {dataListAdded.length<=0?
+      <NoDataMsg>등록된 디자인이 없습니다.</NoDataMsg>
+      :
       this.props.status === "INIT" ?
         <Loading /> : <ScrollList {...opendesign_style.design_margin} getListRequest={this.getList} reload={this.state.reload} type="design" handleReload={this.handleReload} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-    )
-  }
+      } </div>
+       )
+    }
 }
 
 const mapStateToProps = (state) => {
