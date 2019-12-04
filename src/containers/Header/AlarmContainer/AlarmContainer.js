@@ -13,6 +13,7 @@ class AlarmContainer extends Component {
         Socket.emit("allConfirm", { user_id: this.props.userInfo.uid })
     }
     render() {
+        console.log(this.props);
         return <Alarm handleAllAlarmConfirm={this.handleAllAlarmConfirm} handleAlarmConfirm={this.handleAlarmConfirm} {...this.props} />
     }
 }

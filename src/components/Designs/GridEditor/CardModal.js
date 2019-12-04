@@ -475,10 +475,10 @@ class CardModal extends Component {
                             : <React.Fragment>
                                 <EditCardHeaderContainer>
                                     <div className="edit-header-container">
-                                        <div className="edit-card-info">컨텐츠 수정</div>
+                                        <div className="edit-card-info">컨텐츠 정보 수정</div>
                                     </div>
                                     <div className="edit-header-thumbnail">
-                                        <div className="thumbnail-txt">썸네일 사진</div>
+                                        <div className="thumbnail-txt">컨텐츠 이미지</div>
                                         <FormThumbnailEx style={{ width: "210px", height: "210px", marginLeft: "30px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
                                             name="thumbnail" image={imgURL} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
                                     </div>

@@ -13,6 +13,7 @@ import {
 import {
   GetDesignerCountRequest,
   GetGroupInDesignerRequest,
+  GetRelatedGroupInDesignerRequest,
   GetLikeInDesignerRequest,
   GetMyDesignInDesignerRequest,
   GetLikeGroupInDesignerRequest,
@@ -51,6 +52,8 @@ const mapStateToProps = (state) => {
     MyLikeDesignerAdded: state.Designer.status.LikeDesignerInDesignerAdded,
     MyGroup: state.Designer.status.GroupInDesigner,
     MyGroupAdded: state.Designer.status.GroupInDesignerAdded,
+    RelatedGroup: state.Designer.status.RelatedGroupInDesigner,
+    RelatedGroupAdded: state.Designer.status.RelatedGroupInDesignerAdded,
   };
 };
 
@@ -73,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetGroupInDesignerRequest: (id, page) => {
       return dispatch(GetGroupInDesignerRequest(id, page))
+    },
+    GetRelatedGroupInDesignerRequest: (id, page) => {
+      return dispatch(GetRelatedGroupInDesignerRequest(id, page))
     },
     // GetMyGroupListRequest: (token, page) => {
     // return dispatch(GetMyGroupListRequest(token, page))

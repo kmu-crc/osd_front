@@ -193,7 +193,7 @@ class FileController extends Component {
   };
 
   render() {
-    console.log("FileWrap: in FC", this.props);
+    // console.log("FileWrap: in FC", this.props);
     const contentImg = this.props.item.content
       ? this.props.item.content
       : this.props.item.fileUrl;
