@@ -556,7 +556,7 @@ const DesignMemberModalContainer = styled(Modal)`
 }
 `;
 const DesignCommentModalContainer = styled(Modal)`
-    padding: 20px;
+    padding: 60px;
     min-width: 800px;
     // width: max-content;
     // max-width: 1440px;
@@ -567,8 +567,7 @@ const DesignCommentModalContainer = styled(Modal)`
         top: 10px;
     }
     .header-txt {
-        margin-left: 15px;
-        margin-bottom: 15px;
+        margin-bottom:20px;
     }
     .body-container {
         width: 100%;
@@ -661,7 +660,7 @@ const DesignInfo3 = styled.div`
 class DesignInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: true/*false*/ };
+        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false/*false*/ };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);

@@ -4,6 +4,7 @@ import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 
 const CommentBox = styled.div`
+    
     // div { border:1px solid red; };
     *{
         font-family: Noto Sans KR;
@@ -13,12 +14,12 @@ const CommentBox = styled.div`
     }
 `;
 const Comments = styled.div`
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 `;
 const CommentInner = styled.div`
     display: flex;
     flex-direction: row;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     &.reply {
         margin-left: 55px;
     };
@@ -88,7 +89,7 @@ const CommentInner = styled.div`
 const CommentInputTextContainer = styled.div`
    margin-bottom: 30px;
    margin-top: 15px;
-   margin-left: 15px;
+//    margin-left: 15px;
    display: flex;
     &.reply {
         margin-left: 50px;
@@ -96,6 +97,8 @@ const CommentInputTextContainer = styled.div`
    .face {
        width: 58px;
        height: 58px;
+       min-width: 58px;
+       min-height: 58px;
        background-image: url(${props => props.face});
        background-repeat: no-repeat;
        background-size: cover;
