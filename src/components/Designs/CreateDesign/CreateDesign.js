@@ -12,8 +12,8 @@ import "react-image-crop/dist/ReactCrop.css";
 import osdcss from "opendesign_style";
 import FileController from "../CardSourceDetail/FileController";
 import EmbController from "../CardSourceDetail/EmbController";
-import TextControllerPlus from "../CardSourceDetail/TextControllerPlus";
-import GridEditor from "components/Designs/GridEditor";
+import TextController from "../CardSourceDetail/TextControllerPlus";
+// import GridEditor from "components/Designs/GridEditor";
 import { geturl } from "config";
 import Loading from "components/Commons/Loading";
 
@@ -1139,7 +1139,7 @@ class CreateDesign extends Component {
                         return (<ControllerWrap key={item.order}>
                           <div className="contentWrap">
                             {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
-                            {item.type === "TEXT" ? (<TextControllerPlus item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
+                            {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
                             {item.type === "EMBED" ? (<EmbController />) : null}
                           </div>
                           <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
