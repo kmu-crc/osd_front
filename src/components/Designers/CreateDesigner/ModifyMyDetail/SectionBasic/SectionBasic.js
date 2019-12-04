@@ -166,6 +166,7 @@ class SectionBasic extends Component
         this.handleInputNickName = this.handleInputNickName.bind(this);
         this.handleInputIntroduce = this.handleInputIntroduce.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+        this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
     }
     componentDidMount()
     {
@@ -218,6 +219,13 @@ class SectionBasic extends Component
       this.setState({nickname:event.target.value})
       this.props.updateNickName(event.target.value);
     }
+    onKeyDownEnter(event){
+      if(event.key=="Enter")
+      {
+        document.getElementById("explainBox").focus();
+      }
+  
+    }
     render()
     {
         const thumbnailURL = this.state.thumbnail;
@@ -238,13 +246,13 @@ class SectionBasic extends Component
             {/* nick */}
             <TitleBox>
                 <div className="title">닉네임</div>
-                  <input type="text" className="inputText"  placeholder="닉네임을 입력하세요." onChange = {this.handleInputNickName}  
+                  <input type="text" className="inputText"  placeholder="닉네임을 입력하세요." onChange = {this.handleInputNickName}  onKeyDown={this.onKeyDownEnter}
                         value={this.state.nickname} maxLength="50"/>
             </TitleBox>
             {/* introduction */}
             <ExplainBox>
               <div className="title">자기소개</div>
-                <textarea className="inputTextareaBox"  onChange = {this.handleInputIntroduce} value ={this.state.introduce} 
+                <textarea className="inputTextareaBox"  onChange = {this.handleInputIntroduce} value ={this.state.introduce} id="explainBox"
                           placeholder="자기소개를 입력하세요." maxLength="400"  />
             </ExplainBox>
           </ContentsBox>

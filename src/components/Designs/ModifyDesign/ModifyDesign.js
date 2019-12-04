@@ -15,6 +15,8 @@ import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
+
+const designImageText = "디자인 이미지";
 const MainBanner = styled.div`
   width: 100%;
   height:140px;
@@ -642,6 +644,7 @@ class ModifyDesign extends Component {
     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+    this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
@@ -699,6 +702,13 @@ class ModifyDesign extends Component {
     }
     this.checkFinishBasic();
   };
+  onKeyDownEnter(event){
+    if(event.key=="Enter")
+    {
+      document.getElementById("explainBox").focus();
+    }
+
+  }
   onKeyPress = () => {
     this.checkFinishBasic();
   }
@@ -871,7 +881,7 @@ class ModifyDesign extends Component {
                 {/* THUMBNAIL */}
                 <ContentsBox>
                   <ThumbnailBox>
-                    <div className="title">섬네일 사진<sup>*</sup></div>
+              <div className="title">{designImageText}<sup>*</sup></div>
                     <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL}>
                       {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
                         <div className="forkedImg" />}
@@ -881,21 +891,21 @@ class ModifyDesign extends Component {
                         <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                         <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                       </div>
-                      <div className="thumbnailExplainText">섬네일 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                      <div className="thumbnailExplainText">{designImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                   </ThumbnailBox>
 
                   {/* TITLE */}
                   <TitleBox>
                     <div className="title">제목<sup>*</sup></div>
-                    <input onChange={this.onChangeValueTitle}
+                    <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
                       className="inputText" name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
                       onBlur={this.checkFinishBasic} />
                   </TitleBox>
                   {/* EXPLANATION */}
                   <ExplainBox>
                     <div className="title">디자인 설명</div>
-                    <textarea className="inputTextareaBox" onChange={this.onChangeValueExplanation}
+                    <textarea id="explainBox" className="inputTextareaBox" onChange={this.onChangeValueExplanation}
                       name="explanation" maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)"
                       value={this.state.explanation} onBlur={this.checkFinishBasic} />
                   </ExplainBox>

@@ -32,7 +32,7 @@ const JoinGroupContainer = styled.div`
     // border: 1px solid red;
     width: max-content;
     margin-left: auto;
-    margin-right: 25px;
+    margin-right: 45px;
 `;
 const JoinGroup = styled.div`
     position: relative;
@@ -104,8 +104,9 @@ class GroupListContainer extends Component {
     const { dataList, dataListAdded } = this.props
     return (
       <React.Fragment>
+        <div style={{width:"100%",height:"1px",position:"relative"}}>
         <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-
+        </div>
         <TextWrapper centerPos={this.state.screenWidth}><div className="title">그룹({count})</div></TextWrapper>
 
         <JoinGroupContainer><JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup></JoinGroupContainer>
@@ -116,7 +117,7 @@ class GroupListContainer extends Component {
             <ScrollList {...osdstyle.group_margin} type="group" reload={reload} handleReload={this.handleReload}
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
         </ScrollListContainer>
-      </React.Fragment>
+s      </React.Fragment>
     )
   }
 }

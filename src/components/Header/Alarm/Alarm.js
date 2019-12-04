@@ -4,7 +4,7 @@ import noimg from "source/noimg.png"
 import TextFormat from 'modules/TextFormat'
 
 import iAlarm from "source/alarm.png"
-
+import { geturl } from "config"
 const AlarmIcon = styled.div`
     width: 34px;
     height: 34px;
@@ -24,7 +24,7 @@ const AlarmList = styled.div`
     left: ${props => props.left + "px"};
     z-index: 904;
     height: 550px;
-    width: 365px;
+    width: 380px;
     border-radius: 15px;
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
@@ -68,14 +68,20 @@ const userinfo = {
 }
 let alarmlist = [];
 class Alarm extends Component {
-    state = {
-        test: false,
-        profile: false,
-        active: false,
-        keyword: null,
-        msg: null,
-        top: 0, left: 0,
-        alarmLeft: userinfo.alarmLeft,
+
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            profile: false,
+            active: false,
+            keyword: null,
+            msg: null,
+            top: 0, left: 0,
+            alarmLeft: userinfo.alarmLeft,
+        }
+        this.accept = this.accept.bind(this);
+
     }
     myRef = React.createRef()
     openAlarmList = (e) => {
@@ -114,6 +120,7 @@ class Alarm extends Component {
         } else if (item.type === "GROUP") {
             link = `/groupDetail/${item.content_id}`
         }
+        console.log("link",link);
         return link
     }
     getMessageText = item => {
@@ -201,16 +208,16 @@ class Alarm extends Component {
         else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
                 if (window.confirm("가입을 승인하시겠습니까?")) {
-
                     console.log(item, item.content_id, item.sub_content_id, item.user_id, item.uid);
                     // return;
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
-                        .then(res => {
+                        .then(res => {console.log("getURL",geturl()+this.getLink(item));
                             //     if (res.data && res.data.success) {
-                            this.alarmConfirm(item.user_id, item.uid)
-                            alert("승인되었습니다. 해당페이지로 이동합니다.")
+                            this.alarmConfirm(item.user_id, item.uid);
+                             alert("승인되었습니다. 해당페이지로 이동합니다.");
                             this.props.history.push(this.getLink(item))
                             //           } else { alert("다시 시도해주세요.") }
+
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
             } else if (item.kinds === "JOIN_withGROUP") {
@@ -225,7 +232,7 @@ class Alarm extends Component {
                 }
             }
         }
-        window.location.reload()
+        // window.location.reload()
     }
     reject = (e, item) => {
         e.stopPropagation()
@@ -362,6 +369,7 @@ class Alarm extends Component {
                             const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
                             let msg = this.getMessageText(item);
 
+                            const itemTitle = item.title.length>10?item.title.slice(0,10)+"...":item.title;
                             return (
                                 <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
                                     <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
@@ -369,20 +377,21 @@ class Alarm extends Component {
                                         <TextFormat txt={msg} />
                                     </div>
                                     <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
-                                        <div style={{ display: "flex", justifyContent: "space-start" }}>
+                                         <div style={{ display: "flex", justifyContent: "space-start" }}>
                                             <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
-                                            <div style={{ display: "flex" }}>
+                                            <div style={{ display: "flex"
+                                                          }}>
                                                 {alarmtype ?
                                                     (<React.Fragment>
-                                                        <div style={{ paddingLeft: "15px", paddingTop: "12.5px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}><TextFormat txt={item.title} /></div>
-                                                        <div style={{ display: "flex", justifyContent: "space-start", position: "absolute", paddingLeft: "200px", paddingTop: "25px", fontSize: "17px", fontWeight: "500" }}>
+                                                        <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}><TextFormat txt={itemTitle} /></div>
+                                                        <div style={{display: "flex",position:"absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
                                                             <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
                                                         </div>
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} /></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={itemTitle} /></div>
                                                         : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }

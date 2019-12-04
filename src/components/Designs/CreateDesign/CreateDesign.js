@@ -577,6 +577,7 @@ const ToProjectInfoDialog = styled(Modal)`
     margin-top: 38px;
   }
 `;
+const designImageText = "디자인 이미지";
 const emptyCategory = [{ value: 0, text: "" }];
 const scrollmenu = [{ step: 0, txt: "기본 정보" }, { step: 1, txt: "부가 정보" }, { step: 2, txt: "컨텐츠 입력" }];
 function Peer(props) {
@@ -609,6 +610,7 @@ class CreateDesign extends Component {
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.checkInputForm = this.checkInputForm.bind(this);
+    this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
   }
   handleOnChangeThumbnail = (event) => {
     event.preventDefault();
@@ -633,7 +635,7 @@ class CreateDesign extends Component {
     if (this.state.step === 0) {
 
       if (this.state.thumbnail == noimg) {
-        alert(warning + "섬네일 이미지를 등록해주세요");
+        alert(warning+designImageText + "를 등록해주세요");
         return;
       }
       else if (this.state.title == "") {
@@ -677,6 +679,13 @@ class CreateDesign extends Component {
     }
     //this.checkFinishBasic();
   };
+  onKeyDownEnter(event){
+    if(event.key=="Enter")
+    {
+      document.getElementById("explainBox").focus();
+    }
+
+  }
   onKeyPress = () => {
     this.checkFinishBasic();
   };
@@ -995,9 +1004,9 @@ class CreateDesign extends Component {
               <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
                 <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
               </div>
-              <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>섬네일 등록</div>
-              <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 섬네일이 정사각형이 아닙니다.</div>
-              <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 섬네일으로 등록하고자하는 영역을 <br /> 조절하여 등록하기를클릭하시면 섬네일이 등록됩니다.</div>
+          <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>{designImageText} 등록</div>
+          <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
+          <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
               <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "10px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: this.state.ratio > 1.0 ? "240px" : "370px" }}>
                 <ReactCrop
                   src={this.state.thumbnail} crop={this.state.crop}
@@ -1059,26 +1068,26 @@ class CreateDesign extends Component {
               {/* THUMBNAIL */}
               <ContentsBox>
                 <ThumbnailBox>
-                  <div className="title">섬네일<sup>*</sup></div>
+          <div className="title">{designImageText}<sup>*</sup></div>
                   <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL} />
                   <div className="findThumbnailBox">
                     <div className="findThumbnailBtn">
                       <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                       <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
                     </div>
-                    <div className="thumbnailExplainText">섬네일 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+            <div className="thumbnailExplainText"> {designImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                   </div>
                 </ThumbnailBox>
                 {/* TITLE */}
                 <TitleBox>
                   <div className="title">제목<sup>*</sup></div>
-                  <input onChange={this.onChangeValueTitle}
+                  <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
                     className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
                 </TitleBox>
                 {/* EXPLANATION */}
                 <ExplainBox>
                   <div className="title">설명</div>
-                  <textarea onChange={this.onChangeValueExplanation} className="inputTextareaBox"
+                  <textarea id="explainBox" onChange={this.onChangeValueExplanation} className="inputTextareaBox"
                     maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
                 </ExplainBox>
               </ContentsBox>

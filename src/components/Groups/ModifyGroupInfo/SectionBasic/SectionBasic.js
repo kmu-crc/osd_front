@@ -124,7 +124,7 @@ const ExplainBox = styled.div`
 // const BasicSec_explain_Input ={  width: "717.5px", height: "244px", backgroundColor: "#EFEFEF", outline: "none", border: "none", 
 // resize: "none", lineHeight: "35px",  textAlign: "left", fontSize: "20px", fontWeight: "300", color: "#707070", paddingTop: "26px", paddingLeft: "22px", 
 // paddingBottom: "34px", paddingRight: "32.5px"}
-
+const GroupImageText = "그룹 이미지";
 class GroupBasicInfo extends Component {
     constructor(props) {
         super(props);
@@ -132,6 +132,7 @@ class GroupBasicInfo extends Component {
         this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this);
         this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+        this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
     }
     shouldComponentUpdate(nextProps) {
         // if(this.props.DesignDetail.title!=nextProps.DesignDetail.title) this.props.onChangeTitle(nextProps.DesignDetail.title);
@@ -192,7 +193,13 @@ class GroupBasicInfo extends Component {
         }
 
     }
-
+    onKeyDownEnter(event){
+        if(event.key=="Enter")
+        {
+          document.getElementById("explainBox").focus();
+        }
+    
+      }
     render() {
         console.log("THUMBNAIL", this.props);
         //const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
@@ -200,25 +207,25 @@ class GroupBasicInfo extends Component {
             <ContentsBox>
                 {/* thumbnail */}
                 <ThumbnailBox>
-                    <div className="title">섬네일 사진<sup>*</sup></div>
+                    <div className="title">{GroupImageText}<sup>*</sup></div>
                     <ImageBox imageURL={this.props.groupThumbnail} ></ImageBox>
                     <div className="findThumbnailBox">
                         <div className="findThumbnailBtn">
                             <label for="file" className="findThumbnailText" onClick={this.handleFileUploadModal}>찾아보기</label>
                             <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" value={null} />
                         </div>
-                        <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    <div className="thumbnailExplainText">{GroupImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                 </ThumbnailBox>
                 {/* title */}
                 <TitleBox>
                     <div className="title">제목<sup>*</sup></div>
-                    <input type="text" className="inputText" onChange={this.handleOnChangeTitle} value={this.props.groupTitle} />
+                    <input type="text" onKeyDown={this.onKeyDownEnter} className="inputText" onChange={this.handleOnChangeTitle} value={this.props.groupTitle} />
                 </TitleBox>
                 {/* description */}
                 <ExplainBox>
-                    <div className="title">그룹 설명</div>
-                    <textarea className="inputTextareaBox" placeholder="디자인에 대한 설명을 입력하세요." onChange={this.handleOnChangeExplain} value={this.props.groupExplain} />
+                    <div className="title">설명</div>
+                    <textarea id="explainBox" className="inputTextareaBox" placeholder="디자인에 대한 설명을 입력하세요." onChange={this.handleOnChangeExplain} value={this.props.groupExplain} />
                 </ExplainBox>
             </ContentsBox>
 
