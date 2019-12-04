@@ -33,7 +33,7 @@ const ContentContainer = styled.div`
 const ChildrenContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
-
+  
   width:${props=>props.screenWidth>1920?1920:props.screenWidth}px;
   // @media only screen and (max-width: 1920px) {
   //   width:${window.innerWidth}px;

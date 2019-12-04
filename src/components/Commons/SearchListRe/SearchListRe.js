@@ -132,7 +132,6 @@ class SearchListRe extends Component {
         else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3, urlCate: "designer" }) }
         else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
         else { this.setState({ selectCate: 1 }) }
-        console.log(this.props.keyword);
         this.setState({ searchKeyword: this.props.keyword == null ? "" : this.props.keyword });
     }
     onChangeSearchkey(event) {

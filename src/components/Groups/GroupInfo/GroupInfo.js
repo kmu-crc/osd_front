@@ -149,6 +149,7 @@ const ProfileBox = styled.div`
 const ExplainBox = styled.div`
     margin-left: 10px;
     position: relative;
+    
     .board {
         margin-left: 50px;
         .creater {
@@ -264,7 +265,6 @@ const GroupTitleWrapper = styled.div`
 const ThumbnailBox = styled.div`
 width: 170px;
 height: 170px;
-margin-left: 14px;
 // margin-top: 9px;
 border-radius: 15px;
 background-color: #D6D6D6;
@@ -452,9 +452,12 @@ class GroupInfoComponent extends Component {
     changeEditMode() {
         this.setState({ manager: !this.state.manager });
         this.props.handleSwitchMode();
+        if(!this.state.manager === false)
+        {
+            window.location.reload();
+        }
     }
     render() {
-        console.log(this.props.GroupInfo);
         const group_user_id = this.props.GroupInfo && this.props.GroupInfo.user_id;
         const user_id = this.props.userInfo && this.props.userInfo.uid;
 
@@ -496,7 +499,7 @@ class GroupInfoComponent extends Component {
             const isEditor = group_user_id === user_id;
             const { like } = this.props;
 
-            console.log("info:", info);
+
             return (
                 <GroupInfo3>
                     <div className="grid">
@@ -517,11 +520,11 @@ class GroupInfoComponent extends Component {
                             </div> : null}
 
                         {/* box2 */}
-                        <div className="box box2">
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <GroupTitleWrapper>{info.title}</GroupTitleWrapper>
-                                <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
-                            </div>
+                        <div className="box box2" style={{position:"relative"}}>
+
+                                <GroupTitleWrapper style={{position:"absolute",left:"0px"}}>{info.title}</GroupTitleWrapper>
+                                <ThumbnailBox style={{position:"absolute",left:"0px",top:"30px"}} imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
+
                         </div>
 
                         {/* box3 */}
@@ -557,7 +560,9 @@ class GroupInfoComponent extends Component {
                         {/* box3`*/}
                         {parentName ? null : <div className="box box3 secondary">
                             <ExplainBox>
-                                <div className="explaination">{info.explanation && info.explanation.slice(200, 400)}{info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}</div>
+                                
+                                <div className="explaination" style={{fontSize:"17px",color:"#707070"}}>{info.explanation && info.explanation.slice(200, 400)}{info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}</div>
+                                
                             </ExplainBox>
                         </div>}
 

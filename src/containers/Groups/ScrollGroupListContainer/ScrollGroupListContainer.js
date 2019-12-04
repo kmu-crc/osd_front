@@ -3,7 +3,16 @@ import { connect } from "react-redux";
 import { GetGroupListRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
 import opendesign_style from "opendesign_style";
-
+import styled from "styled-components";
+const NoDataMsg = styled.div`
+  width:100%;
+  height:500px;
+  padding:100px;
+  font-size:30pt;
+  color:#707070;
+  font-family:Noto Sans KR;
+  text-align:center;
+`
 class ScrollGroupListContainer extends Component {
   componentWillMount() {
     this.props.GetGroupListRequest(0, this.props.sort, this.props.keyword);
@@ -15,12 +24,19 @@ class ScrollGroupListContainer extends Component {
   }
 
   render() {
+    const {dataListAdded} = this.props;
+    console.log(this.props);
     return (
+      
       <div>
+        {dataListAdded.length<=0?
+        <NoDataMsg>등록된 그룹이 없습니다.</NoDataMsg>
+        :
         <ScrollList getListRequest={this.getList}
           {...opendesign_style.group_margin} type="group"
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-      </div>
+        }
+       </div>
     );
   }
 }

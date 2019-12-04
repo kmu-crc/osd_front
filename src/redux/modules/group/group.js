@@ -490,7 +490,6 @@ export function GetMyExistDesignListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyDesignListRequest >>", data)
       if (!data.list) {
         console.log("no data")
         data = []
@@ -535,7 +534,6 @@ export function LikeGroupRequest(id, token) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("like >>>", data)
       if (!data) {
         console.log("no data")
       }
@@ -630,7 +628,6 @@ export function GetGroupInGroupRequest(id, page, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("group in group data >>", data)
       if (!data) {
         console.log("no data")
         data = []
@@ -721,7 +718,6 @@ export function GetGroupDetailRequest(id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("group Detail data >>", data)
       if (!data) {
         console.log("no data")
         data = []

@@ -157,6 +157,7 @@ margin-top: 103px;
     }
   }
 `
+const GroupImageText = "그룹 이미지";
 
 class SectionBasic extends Component {
   constructor(props) {
@@ -166,6 +167,7 @@ class SectionBasic extends Component {
     this.handleOnChangeExplain = this.handleOnChangeExplain.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.checkisfinished = this.checkisfinished.bind(this);
+    this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     return true;
@@ -210,31 +212,38 @@ class SectionBasic extends Component {
       this.props.completed && this.props.completed(false);
     }
   }
+  onKeyDownEnter(event){
+    if(event.key=="Enter")
+    {
+      document.getElementById("explainBox").focus();
+    }
+
+  }
   render() {
     return (
       <ContentsBox  >
         {/* thumbnail */}
         <ThumbnailBox>
-          <div className="title">섬네일 사진<sup>*</sup></div>
+    <div className="title">{GroupImageText}<sup>*</sup></div>
           <ImageBox imageURL={this.props.groupThumbnail}></ImageBox>
           <div className="findThumbnailBox">
             <div className="findThumbnailBtn">
               <label className="findThumbnailText" htmlFor="file">찾아보기</label>
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
             </div>
-            <div className="thumbnailExplainText">프로필 사진은 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+        <div className="thumbnailExplainText">{GroupImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
           </div>
         </ThumbnailBox>
         {/* title */}
         <TitleBox>
           <div className="title">제목<sup>*</sup></div>
           <input type="text" className="inputText" placeholder="그룹 제목을 입력하세요." onChange={this.handleOnChangeTitle}
-            value={this.props.groupTitle || ""} maxLength="50" />
+            onKeyDown={this.onKeyDownEnter} value={this.props.groupTitle || ""} maxLength="50" />
         </TitleBox>
         {/* description */}
         <ExplainBox>
-          <div className="title">그룹 설명</div>
-          <textarea className="inputTextareaBox" placeholder="그룹 설명을 입력하세요." onChange={this.handleOnChangeExplain}
+          <div className="title">설명</div>
+          <textarea id="explainBox" className="inputTextareaBox" placeholder="그룹 설명을 입력하세요." onChange={this.handleOnChangeExplain}
             value={this.props.groupExplain} maxLength="400" />
         </ExplainBox>
       </ContentsBox>

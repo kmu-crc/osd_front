@@ -160,8 +160,8 @@ const AsideSection = styled.div`
       width:85%;
       height:100%;
       border-top:1px solid #707070;
+      background-color:#dddddd;
     }
-
   }
   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
@@ -203,7 +203,7 @@ const SendMessageTextarea = styled.textarea`
   color:#707070;
   text-align:left;
   line-height:27px;
-  background-color:#EFEFEF;
+  background-color:#dddddd;
   resize:none;
   border:none;
   outline:none;
@@ -327,6 +327,7 @@ class Messages extends React.Component {
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
     }
+    document.getElementById("box").focus();
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
@@ -490,7 +491,7 @@ class Messages extends React.Component {
                     </div>
                   </div>
                   <div className="asideSend">
-                      <div className="sendBox"><SendMessageTextarea type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}/></div>
+                      <div className="sendBox"><SendMessageTextarea id="box" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}/></div>
                       <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
                   </div>
               </AsideSection>
