@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CKEditor from '@ckeditor/ckeditor5-react'
+import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
@@ -11,15 +11,16 @@ import Link from '@ckeditor/ckeditor5-link/src/link';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-import Font from '@ckeditor/ckeditor5-font/src/font'
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
+import Font from '@ckeditor/ckeditor5-font/src/font';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
 ClassicEditor.defaultConfig = {
+  startupFocus: true,
   alignment: { options: ['left', 'center', 'justify', 'right'] },
   toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
-  fontSize: { options: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 26] },
+  fontSize: { options: [9, 10, 11, 12, 14, 18, 24, 30, 36, 48] },
   language: 'en'
 };
 
@@ -37,7 +38,8 @@ class TextControllerPlus extends Component {
     this.props.getValue(this.state)
   }
   render() {
-    const item = this.props.item
+    const { item } = this.props;
+    console.log("editor");
     return (
       <div>
         <CKEditor
@@ -45,6 +47,7 @@ class TextControllerPlus extends Component {
           ref={ref => (this.edit = ref)}
           data={item.content}
           onBlur={this.onSave}
+          onInit={editor => { editor.editing.view.focus(); }}
           editor={ClassicEditor} />
       </div>
     );

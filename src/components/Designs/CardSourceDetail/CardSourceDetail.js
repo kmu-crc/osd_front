@@ -393,7 +393,7 @@ class CardSourceDetail extends Component {
     // edit
     await this.setState({ loading: true });
     if (this.props.uid !== "new") {
-      await this.props.handleSubmit(event);
+      this.props.handleSubmit && await this.props.handleSubmit(event);
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
         .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
         .then(() => {
@@ -575,7 +575,7 @@ class AddContent extends Component {
       <ControllerWrap2>
         <div className="innerBox" >
           <NewController onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
-          <NewController onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 등록하기</NewController>
+          <NewController onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap2>

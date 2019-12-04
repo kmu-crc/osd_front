@@ -13,6 +13,7 @@ import Loading from "components/Commons/Loading";
 import { Dropdown, Modal } from "semantic-ui-react";
 import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
+import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
 
 const designImageText = "디자인 이미지";
@@ -40,7 +41,7 @@ const MainBanner = styled.div`
   }
 `
 const MainSection = styled.div`
-  width:${window.innerWidth>1920?1920+'px':100+'%'};
+  width:${window.innerWidth > 1920 ? 1920 + 'px' : 100 + '%'};
   // border:2px solid blue;
   display: flex;
   flex-direction:row;
@@ -126,7 +127,7 @@ const MenuText = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-// width:${window.innerWidth>1920?1422+'px':100+'%'};
+// width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
 width:77%;
 padding-bottom:100px;
 margin-bottom:100px;
@@ -614,11 +615,11 @@ const emptyCategory = [{ value: 0, text: "" }];
 const scrollmenu = [
   { step: 0, txt: "기본 정보", tag: "#basics" },
   { step: 1, txt: "부가 정보", tag: "#additional" },
-  { step: 2, txt: "단계/컨텐츠 정보", tag: "#contenteditor" }
+  { step: 2, txt: "컨텐츠 정보", tag: "#contenteditor" }
 ];
 
 function Peer(props) {
-  return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px",marginTop:"10px" }}>
+  return (<div style={{ cursor: "pointer", display: "flex", marginRight: "50px", marginTop: "10px" }}>
     <div style={{ backgroundSize: "cover", backgroundPosition: "center", backgroundImage: `url(${props.s_img || noface})`, backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
     <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "112px", height: "29px" }}>{props.nick_name}</div>
     <div style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
@@ -723,7 +724,7 @@ class ModifyDesign extends Component {
   }
   checkFinishBasic = async () => {
     const { title, thumbnail, explanation } = this.state;
-    if (title && title.length > 0 && thumbnail && thumbnail.img ) {
+    if (title && title.length > 0 && thumbnail && thumbnail.img) {
       await this.setState({ basic: true });
     } else {
       await this.setState({ basic: false });
@@ -842,7 +843,7 @@ class ModifyDesign extends Component {
     }
     const { step, loading, deleteModal } = this.state; // const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
-    // console.log("new:", this.props)
+    console.log("modify:", this.props)
     let boardWidth = 125;
     if (step === 3) boardWidth = 0;
     return (
@@ -945,7 +946,7 @@ class ModifyDesign extends Component {
                     </InviteMemberListBox>
                     {/* LEAVE ME ALONE */}
                     <NoInviteMemberBox>
-                       <div><CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" /></div>
+                      <div><CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" /></div>
                       <div className="textLabel">멤버를 초대하지 않습니다.</div>
                     </NoInviteMemberBox>
                   </div>
@@ -960,10 +961,10 @@ class ModifyDesign extends Component {
                         <div className="textLabel">상업적으로 이용이 가능합니다</div>
                       </div>
                       <div className="licenseItem">
-                      <div><CheckBox2 onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" /></div>
+                        <div><CheckBox2 onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" /></div>
                         <div className="textLabel">원작자를 표시합니다</div></div>
                       <div className="licenseItem">
-                      <div><CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" /></div>
+                        <div><CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" /></div>
                         <div className="textLabel">추후에 수정이 가능합니다</div></div>
                     </div>
                   </LicenseBox>
@@ -974,12 +975,16 @@ class ModifyDesign extends Component {
 
               <section style={{ display: step === 2 ? "block" : "none", paddingLeft: "51px", marginBottom: "204px" }} >
                 <div>
-                  {this.state.grid ? <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} /> :
+                  {this.state.grid ?
+                    this.props.DesignDetail &&
+                      this.props.DesignDetail.is_project ?
+                      <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />
+                      : <DesignDetailViewContainer history={this.props.history} id={this.props.DesignDetail.uid} isMyDesign={true} editor={false} />
+                    :
                     <LoadingBox>
                       <LoadingIconBox imageURL={Logo} />
-                      <div className="loadingText">단계/컨텐츠 에디터를 가져오고 있습니다...</div>
-                    </LoadingBox>
-                  }
+                      <div className="loadingText">컨텐츠 에디터를 가져오고 있습니다...</div>
+                    </LoadingBox>}
                 </div>
               </section>
 

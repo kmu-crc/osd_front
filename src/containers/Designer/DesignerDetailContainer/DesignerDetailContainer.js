@@ -4,7 +4,7 @@ import {
   GetDesignerDetailRequest, GetDesignerCountRequest,
   GetLikeDesignerRequest, LikeDesignerRequest,
   UnlikeDesignerRequest, GetLikeInDesignerRequest,
-  GetMyDesignInDesignerRequest, GetGroupInDesignerRequest,
+  GetMyDesignInDesignerRequest, GetGroupInDesignerRequest, GetRelatedGroupInDesignerRequest,
   GetLikeGroupInDesignerRequest, GetLikeDesignerInDesignerRequest,
 } from "redux/modules/designer"
 
@@ -43,7 +43,9 @@ const mapStateToProps = (state) => {
     LikeDesignerInDesigner: state.Designer.status.LikeDesignerInDesigner,
     LikeDesignerInDesignerAdded: state.Designer.status.LikeDesignerInDesignerAdded,
     GroupInDesigner: state.Designer.status.GroupInDesigner,
+    RelatedGroupInDesigner: state.Designer.status.RelatedGroupInDesigner,
     GroupInDesignerAdded: state.Designer.status.GroupInDesignerAdded,
+    RelatedGroupInDesignerAdded: state.Designer.status.RelatedGroupInDesignerAdded,
   };
 };
 
@@ -72,6 +74,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetGroupInDesignerRequest: (id, page) => {
       return dispatch(GetGroupInDesignerRequest(id, page));
+    },
+    GetRelatedGroupInDesignerRequest: (id, page) => {
+      return dispatch(GetRelatedGroupInDesignerRequest(id, page));
     },
     GetLikeGroupInDesignerRequest: (id, page) => {
       return dispatch(GetLikeGroupInDesignerRequest(id, page));

@@ -153,7 +153,7 @@ class CreateDesingFormContent extends Component {
                   />
                   <FormField
                     name="is_project"
-                    placeholder="프로젝트 형태"
+                    placeholder="단계가지는 디자인 형태"
                     value="1"
                     currentValue={this.state.currentValue}
                     onChange={this.onChangeRadio}
