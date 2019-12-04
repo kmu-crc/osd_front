@@ -557,8 +557,10 @@ const DesignMemberModalContainer = styled(Modal)`
 }
 `;
 const DesignCommentModalContainer = styled(Modal)`
-    padding:20px;
-    min-width: 1250px;
+    padding: 20px;
+    min-width: 800px;
+    // width: max-content;
+    // max-width: 1440px;
     .close-box {
         cursor:pointer;
         position: absolute;
@@ -660,7 +662,7 @@ const DesignInfo3 = styled.div`
 class DesignInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false };
+        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: true/*false*/ };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);
