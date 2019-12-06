@@ -4,8 +4,6 @@ import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 
 const CommentBox = styled.div`
-    
-    // div { border:1px solid red; };
     *{
         font-family: Noto Sans KR;
         font-weight: 500;
@@ -28,8 +26,9 @@ const CommentInner = styled.div`
         height: 45px;
         border-radius: 50%;
         background-image: url(${props => props.face});
+        background-size: cover;
+        border: 1px solid #EFEFEF;
     };
-
     .text-wrapper {
         margin-left: 10px;
         width: max-content;
@@ -64,17 +63,14 @@ const CommentInner = styled.div`
     .button-wrapper {
         display: flex;
         flex-direction: row;
-        margin-top: 14px;
         margin-left: 7px;
         .reply {
             width: max-content;
             height: 16px;
             font-size: 14px;
             font-weight: 500;
-            line-height: 14px;
             margin-left: 5px;
             pointer: default;
-            background-color: #EFEFEF;
         }
         .del {
             width: max-content;
@@ -266,12 +262,12 @@ class Comment extends Component {
                             <div className="nick">
                                 <div className="name">{item.nick_name}</div>
                                 <div className="create-time">({DateFormat(item.create_time)})</div>
+                                <div className="button-wrapper">
+                                    {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
+                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
+                                </div>
                             </div>
                             <div className="comment">{item.comment}</div>
-                        </div>
-                        <div className="button-wrapper">
-                            {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
-                            {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
                         </div>
                     </CommentInner>
 
