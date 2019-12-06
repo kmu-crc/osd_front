@@ -551,13 +551,12 @@ const DesignMemberModalContainer = styled(Modal)`
 .close-box {
     cursor:pointer;
     position: absolute;
-    left: 100%;
-    margin-top: 0px;
-    margin-left: 34px;
+    right:10px;
+    top:10px;
 }
 `;
 const DesignCommentModalContainer = styled(Modal)`
-    padding: 20px;
+    padding: 60px;
     min-width: 800px;
     // width: max-content;
     // max-width: 1440px;
@@ -568,8 +567,7 @@ const DesignCommentModalContainer = styled(Modal)`
         top: 10px;
     }
     .header-txt {
-        margin-left: 15px;
-        margin-bottom: 15px;
+        margin-bottom:20px;
     }
     .body-container {
         width: 100%;
@@ -791,7 +789,7 @@ class DesignInfo extends Component {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
                     <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                        <Cross angle={45} color={"#FFFFFF"} weight={3} width={45} height={45} />
+                        <Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
                     </div>
                     <Modal.Content>
                         <DesignMemberContainer mine={isMyDesign} DesignDetail={DesignDetail} />
@@ -976,112 +974,3 @@ class DesignInfo extends Component {
 };
 
 export default DesignInfo;
-
-//    <DesignInfoComp>
-//         {/* THUMBNAIL */}
-//         {/* <ThumbnailWrapper img={thumbnail}>
-//             {DesignDetail.parent_design && <div className="fork-mark" />}
-//             <div className="thumbnail" />
-//         </ThumbnailWrapper> */}
-//         {/* LEFT */}
-//         <LeftSide>
-//             <div className="title" title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
-//             <div className="box">
-//                 {DesignDetail.parent_design ?
-//                     <div className="goto-parent"
-//                         onClick={() => this.goParentDesign(DesignDetail.parent_design)}
-//                         title={DesignDetail.parent_title}>
-//                         {DesignDetail.parent_title.slice(0, 4)}
-//                         {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
-//                     </div> : <div className="goto-parent no"></div>}
-//                 <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
-//                     <div className="design_member"> {DesignDetail.userName.length > 7 ? DesignDetail.userName.slice(0, 7) + "..." : DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외" + (DesignDetail.member.length - 1).toString() + "명"}</div>
-//                 </button>
-//                 {!isMyDesign && this.state.memberList &&
-//                     <DesignMemberList top={this.state.posY} left={this.state.posX}>
-//                         <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-//                             <Cross angle={45} width={30} height={30} />
-//                         </div>
-//                         <div className="list">
-//                             {DesignDetail.member && DesignDetail.member.length > 0 &&
-//                                 DesignDetail.member.map((mem, i) =>
-//                                     <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
-//                                         <div className="face" />
-//                                         <div className="nick-name">{mem.nick_name}</div>
-//                                         {DesignDetail.user_id === mem.user_id &&
-//                                             <div title={"팀장"} ><i className="star icon" /></div>}
-//                                     </DesignMemberListElement>)}</div>
-//                     </DesignMemberList>}
-//                 <div className="comment-box" onClick={this.getDesignComment} >
-//                     <div className="txt">댓글</div>
-//                     <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
-//                 </div>
-//                 {DesignDetail.children_count["count(*)"] > 0
-//                     ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onClick={(event) => { this.getForkDesignList(event) }}>
-//                         <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
-//                     </button>
-//                     : <button className="fork-list-btn no" disabled></button>}
-//                 {this.state.forkDesignList &&
-//                     <DesignMemberList top={this.state.posY} left={this.state.posX}>
-//                         <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
-//                             <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
-//                         </div>
-//                         <div className="list">
-//                             {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
-//                                 return (<ListItem key={item + idx} img={item.p_s_img}>
-//                                     <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
-//                                         <div className="design-thumbnail" />
-//                                         <div className="design-title">
-//                                             <TextFormat txt={item.title} chars={23} />
-//                                             <div>{item.nick_name}</div></div>
-//                                     </div></ListItem>);
-//                             })}</div>
-//                     </DesignMemberList>}
-//             </div>
-//             <div className="count-box">
-//                 <div className="view"><IconView width="20px" height="17px" fill="#707070" /></div>
-//                 <div className="view-count">{NumberFormat(Count.view_count)}</div>
-//                 <div className="like"><i className="material-icons">&#xE8DC;</i></div>
-//                 <div className="like-count">{NumberFormat(Count.like_count)}</div>
-//             </div>
-//         </LeftSide>
-//         {/* DESCRIPTION */}
-//         <DescriptionContainer marginLeft={65}>
-//             <div className="category-name">{DesignDetail.categoryName}</div>
-//             <div className="txt">{DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : (`'${DesignDetail.userName}'님의 '${DesignDetail.title}' 프로젝트입니다."}`)}</div>
-//         </DescriptionContainer>
-//         {/* DESCRIPTION */}
-//         <DescriptionContainer marginLeft={65}>
-//             <div className="category-name"></div>
-//             <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
-//         </DescriptionContainer>
-//         {/* RIGHT */}
-//         <RightSide like_opacity={like ? 1 : 0.45}>
-//             <div className="do-fork-btn" onClick={() => this.forkDesign()}>파생 디자인 생성</div>
-//             {isMyDesign === false && <div className="join-box">
-//                 {editor === false ?
-//                     DesignDetail && DesignDetail.waitingStatus === 1 ?
-//                         <div className="waiting-txt">가입승인 대기중</div>
-//                         : <div className="join-txt" onClick={this.joinMember} >가입 신청</div> : undefined}
-//             </div>
-//             }
-//             {isMyDesign === true ?
-//                 <div className="design-edit-box" onClick={this.gotoDesignModify}  >
-//                     <div className="edit-txt">디자인 수정하기</div>
-//                     <div className="edit-icon" />
-//                 </div>
-//                 :
-//                 <div className="design-like-box" onClick={this.like} >
-//                     <div className="like-txt" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
-//                     <div className="like-icon" />
-//                 </div>}
-//             {isMyDesign === true ?
-//                 null :
-//                 <div className="msg-icon-box" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
-//                     <div className="msg-txt">메시지 보내기</div>
-//                     <div className="msg-icon" />
-//                 </div>
-//             }
-//             <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-//         </RightSide>
-//     </DesignInfoComp>

@@ -152,6 +152,7 @@ class SectionBuziness extends Component {
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeTeam = this.onChangeTeam.bind(this);
     this.isDesignerCheck = this.isDesignerCheck.bind(this);
+    this.onFocusNext=this.onFocusNext.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail !== nextProps.MyDetail) {
@@ -164,7 +165,7 @@ class SectionBuziness extends Component {
       this.props.updateIsDesigner(nextProps.MyDetail.is_designer);
       this.props.updateLocation(nextProps.MyDetail.location);
       this.props.updateContact(nextProps.MyDetail.contact);
-
+      
     }
     return true;
   }
@@ -200,6 +201,26 @@ class SectionBuziness extends Component {
     this.setState({ contact: event.target.value });
     this.props.updateContact(event.target.value);
   }
+  onFocusNext(event)
+  {
+    const arrID = ["team","career","location","contact"];
+    if(event.key=="Enter")
+    {
+      if(event.target.id == arrID[0])
+      {
+        document.getElementById(arrID[1]).focus();
+      }
+      else if(event.target.id == arrID[1])
+      {
+        document.getElementById(arrID[2]).focus();
+      }
+      else if(event.target.id == arrID[2])
+      {
+        document.getElementById(arrID[3]).focus();
+      }
+      
+    }
+  }
   render() {
 
     let description = [];
@@ -220,20 +241,20 @@ class SectionBuziness extends Component {
           {description[2]}</div>
         <DesignerInfoBox>
           <div className="itemBox">
-            <div className="designerInfoTitle">팀</div>
-            <InputText onChange={this.onChangeTeam} value={this.state.team == null ? "" : this.state.team} />
+            <div className="designerInfoTitle" >팀</div>
+            <InputText id="team" onKeyDown={this.onFocusNext} onChange={this.onChangeTeam} value={this.state.team == null ? "" : this.state.team} />
           </div>
           <div className="itemBox">
             <div className="designerInfoTitle">경력</div>
-            <InputText onChange={this.onChangeCareer} value={this.state.career == null ? "" : this.state.career} />
+            <InputText id="career" onKeyDown={this.onFocusNext} onChange={this.onChangeCareer} value={this.state.career == null ? "" : this.state.career} />
           </div>
           <div className="itemBox">
             <div className="designerInfoTitle">위치</div>
-            <InputText onChange={this.onChangeLocation} value={this.state.location == null ? "" : this.state.location} />
+            <InputText id="location" onKeyDown={this.onFocusNext} onChange={this.onChangeLocation} value={this.state.location == null ? "" : this.state.location} />
           </div>
           <div className="itemBox">
             <div className="designerInfoTitle">연락</div>
-            <InputText onChange={this.onChangeContact} value={this.state.contact == null ? "" : this.state.contact} />
+            <InputText id="contact" onChange={this.onChangeContact} value={this.state.contact == null ? "" : this.state.contact} />
           </div>
         </DesignerInfoBox>
       </ContentsBox>

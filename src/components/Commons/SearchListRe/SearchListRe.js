@@ -132,7 +132,6 @@ class SearchListRe extends Component {
         else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3, urlCate: "designer" }) }
         else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
         else { this.setState({ selectCate: 1 }) }
-        console.log(this.props.keyword);
         this.setState({ searchKeyword: this.props.keyword == null ? "" : this.props.keyword });
     }
     onChangeSearchkey(event) {
@@ -235,7 +234,7 @@ class SearchListRe extends Component {
                     </div>
 
                     <div className="CategoryBox">
-                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer
+                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer 
                             sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}
                         {this.state.urlCate === "group" && <ScrollGroupListContainer
                             sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}

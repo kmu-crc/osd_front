@@ -12,6 +12,7 @@ class SectionBuziness extends Component {
     this.onChangeIsDesigner = this.onChangeIsDesigner.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeTeam = this.onChangeTeam.bind(this);
+    this.onFocusNext = this.onFocusNext.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail != nextProps.MyDetail) {
@@ -59,6 +60,26 @@ class SectionBuziness extends Component {
     this.setState({ contact: event.target.value });
     this.props.updateContact(event.target.value);
   }
+  onFocusNext(event)
+  {
+    const arrID = ["team","career","location","contact"];
+    if(event.key=="Enter")
+    {
+      if(event.target.id == arrID[0])
+      {
+        document.getElementById(arrID[1]).focus();
+      }
+      else if(event.target.id == arrID[1])
+      {
+        document.getElementById(arrID[2]).focus();
+      }
+      else if(event.target.id == arrID[2])
+      {s
+        document.getElementById(arrID[3]).focus();
+      }
+      
+    }
+  }
   render() {
 
     let description = [];
@@ -79,7 +100,7 @@ class SectionBuziness extends Component {
 
         <div style={{ display: "flex", position: "relative", marginTop: "66px", justifyContent: "space-start" }}>
           <div style={{ marginLeft: "265px", color: "#707070", fontSize: "20px", opacity: "0.5" }}>팀</div>
-          <input onChange={this.onChangeTeam} type="text" value={this.state.team} maxLength="100"
+          <input  id="team" onKeyDown={this.onFocusNext} onChange={this.onChangeTeam} type="text" value={this.state.team} maxLength="100"
             style={{
               border: "none", outline: "none", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500",
               paddingLeft: "15px", marginLeft: "57px", opacity: "0.5", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px"
@@ -87,7 +108,7 @@ class SectionBuziness extends Component {
         </div>
         <div style={{ display: "flex", position: "relative", marginTop: "46px", justifyContent: "space-start" }}>
           <div style={{ marginLeft: "265px", color: "#707070", fontSize: "20px", opacity: "0.5" }}>경력</div>
-          <input onChange={this.onChangeCareer} type="text" value={this.state.career} maxLength="100"
+          <input id="career" onKeyDown={this.onFocusNext}  onChange={this.onChangeCareer} type="text" value={this.state.career} maxLength="100"
             style={{
               border: "none", outline: "none", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500",
               paddingLeft: "15px", marginLeft: "37px", opacity: "0.5", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px"
@@ -95,7 +116,7 @@ class SectionBuziness extends Component {
         </div>
         <div style={{ display: "flex", position: "relative", marginTop: "46px", justifyContent: "space-start" }}>
           <div style={{ marginLeft: "265px", color: "#707070", fontSize: "20px", opacity: "0.5" }}>위치</div>
-          <input onChange={this.onChangeLocation} type="text" value={this.state.location} maxLength="100"
+          <input id="location" onKeyDown={this.onFocusNext}  onChange={this.onChangeLocation} type="text" value={this.state.location} maxLength="100"
             style={{
               border: "none", outline: "none", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500",
               paddingLeft: "15px", marginLeft: "37px", opacity: "0.5", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px"
@@ -103,7 +124,7 @@ class SectionBuziness extends Component {
         </div>
         <div style={{ display: "flex", position: "relative", marginTop: "46px", justifyContent: "space-start" }}>
           <div style={{ marginLeft: "265px", color: "#707070", fontSize: "20px", opacity: "0.5" }}>연락</div>
-          <input onChange={this.onChangeContact} type="text" value={this.state.contact} maxLength="100"
+          <input id="contact" onChange={this.onChangeContact} onChange={this.onChangeContact} type="text" value={this.state.contact} maxLength="100"
             style={{
               border: "none", outline: "none", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500",
               paddingLeft: "15px", marginLeft: "37px", opacity: "0.5", width: "505.5px", height: "56px", backgroundColor: "#EFEFEF", borderRadius: "5px"

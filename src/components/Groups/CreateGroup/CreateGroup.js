@@ -138,7 +138,6 @@ const CompleteButton = styled.div`
   padding-left:15px;
   margin-right:53px;
 `;
-
 class CreateGroup extends Component {
   constructor(props) {
     super(props);

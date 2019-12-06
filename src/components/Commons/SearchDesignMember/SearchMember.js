@@ -29,6 +29,7 @@ const SearchWrap = styled.div`
   &.searchRect {
     display: inline-block;
     width:100%;
+
     .form-input {
       border:none;
       background: #EFEFEF;
@@ -37,6 +38,7 @@ const SearchWrap = styled.div`
       font-size: 18px;
       margin-top: 15px;
       margin-left: 50px;
+      
     }
   }
 `;
@@ -100,11 +102,11 @@ class SearchMember extends Component {
     return (
       <SearchWrap className="searchRect">
         <FormInput className="form-input" type="text" name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
-        <MemberList display={this.state.open ? "block" : "none"}>
+        <div style={{width:"100%",height:"100%",paddingLeft:"50px"}}><MemberList display={this.state.open ? "block" : "none"}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
-        </MemberList>
+        </MemberList></div>
         <MemberWrap className="searchRect">
           {this.state.member.map((data, index) => {
             return (<MemberItem className="searchRect" key={index}>
