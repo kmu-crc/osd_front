@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import eximg from "source/myPage.jpeg";
@@ -7,6 +7,7 @@ import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
+import MoneyStyle from "modules/MoneyStyle";
 // css styling
 
 const Designli = styled.li`
@@ -20,7 +21,6 @@ const Designli = styled.li`
   text-align: left;
   list-style-type: none;
 `;
-
 const ImgPart = styled.div`
   width: 100%;
   height: 140px;
@@ -40,34 +40,34 @@ const ImgPart = styled.div`
     color: ${StyleGuide.color.main.dark};
   }
 `;
-
 const TextPart = styled.div`
   padding: 10px 10px;
   font-size: ${StyleGuide.font.size.paragraph};
-  & .title {
+   .title {
     font-weight: bold;
     line-height: 20px;
     height: 20px;
     color: ${StyleGuide.color.geyScale.scale7};
     font-size: 16px;
   }
-  & .userName {
+   .userName {
     line-height: 1.35;
     margin: 5px 0;
     color: ${StyleGuide.color.geyScale.scale6};
   }
-  & .cate {
+   .cate {
     color: ${StyleGuide.color.main.basic};
     font-weight: 300;
     font-size: ${StyleGuide.font.size.small};
   }
-  & .update {
-    color: ${StyleGuide.color.geyScale.scale7};
+   .update {
+    color: ${StyleGuide.color.geyScale.scale9};
+    width: max-content;
+    font-size: 20px;
     padding-left : 10px;
     float: right;
   }
 `;
-
 const Count = styled.div`
   background-color: #fff;
   padding: 5px 10px;
@@ -92,9 +92,9 @@ const Count = styled.div`
 class Design extends Component {
   render() {
     let design = this.props.data;
-    // console.log("design", design)
+    const price = design.price || 0;
     return (
-      <NavLink to={"/designDetail/" + design.uid}>
+      <NavLink to={`/designDetail/` + design.uid}>
         <Designli>
           <ImgPart style={design.thumbnailUrl ? { backgroundImage: `url(${design.thumbnailUrl.m_img})` } : { backgroundImage: `url(${eximg})` }}>
             {design.parent_design === null
@@ -112,14 +112,14 @@ class Design extends Component {
             }
             <div className="cate">
               {design.categoryName ? design.categoryName : "전체"}
-              <span className="update">
-                {DateFormat(design.update_time)}
-              </span>
+              <span className="update"> {MoneyStyle(price)}</span>
+              {/* <div style={{ width: "max-content", backgroundColor: "white", marginTop: "110px", marginLeft: "auto", marginRight: "5px", fontSize: "25px" }}>$10,000</div> */}
+              {/* {DateFormat(design.update_time)} */}
             </div>
           </TextPart>
           <Count>
             <div>
-              <Icon name="unhide"/>
+              <Icon name="unhide" />
               {design.view_count ? NumberFormat(design.view_count) : 0}
             </div>
             <div>

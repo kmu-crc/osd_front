@@ -48,15 +48,15 @@ class ResetPwForm extends Component {
     loading: false
   };
 
-  shouldComponentUpdate(nextProps){
-    if(JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)){
-      if(nextProps.status === "SUCCESS"){
-        this.setState({loading:false});
+  shouldComponentUpdate(nextProps) {
+    if (JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)) {
+      if (nextProps.status === "SUCCESS") {
+        this.setState({ loading: false });
         this.props.history.push('./signin');
         console.log("this loading state success >> ", this.state.loading);
         alert(nextProps.message);
       } else if (nextProps.status === "FAILURE") {
-        this.setState({loading:false});
+        this.setState({ loading: false });
         console.log("this loading state failure >> ", this.state.loading);
         alert(nextProps.message);
       }
@@ -77,8 +77,9 @@ class ResetPwForm extends Component {
     e.preventDefault();
     ValidationGroup(this.state, true)
       .then(data => {
+        console.log(data); return;
         this.props.FindPwRequest(data);
-        this.setState({loading:true});
+        this.setState({ loading: true });
         console.log("this loading state onsubmit >> ", this.state.loading);
       })
       .catch(e => {
@@ -87,12 +88,12 @@ class ResetPwForm extends Component {
   };
   render() {
     return (
-        <Bg>
+      <Bg>
         <ResetFormCard>
           <h2>비밀번호 찾기</h2>
           <p>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</p>
           <ResetForm onSubmit={this.onSubmit}>
-            {this.state.loading===true ? <ResetPwModal/> : null}
+            {this.state.loading === true ? <ResetPwModal /> : null}
             <FormInput
               name="email"
               validates={["Required", "IsEmail"]}

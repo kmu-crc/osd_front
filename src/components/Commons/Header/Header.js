@@ -447,6 +447,9 @@ class Header extends Component {
       );
     };
     const notice = this.state.notification
+    const design_menu_bold = this.props.location.pathname === "/design" || this.props.match.path.indexOf("/design/") === 0 || this.props.match.path.indexOf("/designDetail") !== -1 ? "active" : "";
+    const group_menu_bold = this.props.location.pathname === "/group" || this.props.match.path.indexOf("/groupDetail") !== -1 ? "active" : "";
+    const designer_menu_bold = this.props.location.pathname === "/designer" || this.props.match.path.indexOf("/designer/") === 0 || this.props.match.path.indexOf("/designerDetail") !== -1 ? "active" : "";
     return (
       <Head>
         {notice && notice.length > 0 &&
@@ -472,45 +475,13 @@ class Header extends Component {
           <MainMenu>
             <Logo href="/" />
             <MenuItem>
-              <a
-                href="/design"
-                className={
-                  this.props.location.pathname === "/design" ||
-                    this.props.match.path.indexOf("/design/") === 0 ||
-                    this.props.match.path.indexOf("/designDetail") !== -1
-                    ? "active"
-                    : ""
-                }
-              >
-                디자인
-              </a>
+              <a href="/design" className={design_menu_bold}>디자인</a>
             </MenuItem>
             <MenuItem>
-              <a
-                href="/group"
-                className={
-                  this.props.location.pathname === "/group" ||
-                    this.props.match.path.indexOf("/groupDetail") !== -1
-                    ? "active"
-                    : ""
-                }
-              >
-                그룹
-              </a>
+              <a href="/group" className={group_menu_bold}>그룹</a>
             </MenuItem>
             <MenuItem>
-              <a
-                href="/designer"
-                className={
-                  this.props.location.pathname === "/designer" ||
-                    this.props.match.path.indexOf("/designer/") === 0 ||
-                    this.props.match.path.indexOf("/designerDetail") !== -1
-                    ? "active"
-                    : ""
-                }
-              >
-                디자이너
-              </a>
+              <a href="/designer" className={designer_menu_bold}>디자이너</a>
             </MenuItem>
             <MenuItem>
               <a href="/createdesign">

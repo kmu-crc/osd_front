@@ -74,7 +74,7 @@
   "scripts": {
     "start": "HTTPS=true REACT_APP_BUILD=false node scripts/start.js",
     "open": "HTTPS=true REACT_APP_BUILD=true node scripts/start.js",
-    "local": "HTTPS=true REACT_APP_LOCAL=true node scripts/start.js",
+    "local": "REACT_APP_LOCAL=true node scripts/start.js",
     "dev": "REACT_APP_DEV=true node scripts/start.js",
     "build": "HTTPS=true REACT_APP_BUILD=true node scripts/build.js",
     "TBuild": "REACT_APP_DEV=true node scripts/build.js",

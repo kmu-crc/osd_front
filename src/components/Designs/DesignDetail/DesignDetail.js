@@ -15,6 +15,7 @@ import DesignComment from "./DesignComment";
 import NumberFormat from "modules/NumberFormat";
 import Loading from "components/Commons/Loading";
 import TextFormat from "modules/TextFormat";
+import MoneyStyle from "modules/MoneyStyle";
 
 // css styling
 
@@ -390,6 +391,9 @@ const InfoItem = styled.div`
   }
   p {
     color: #fff;
+    &.price {
+      font-size: 28px;
+    }
   }
 `;
 
@@ -475,7 +479,6 @@ const MemberlistItem = styled.div`
     white-space: nowrap;
   }
 `;
-
 class DesignDetail extends Component {
   state = {
     activeMoreBtn: false,
@@ -711,7 +714,7 @@ class DesignDetail extends Component {
                 return (
                   <li style={{ textAlign: "left", bottomPadding: "0", verticalAlign: "middle" }} key={i}>
                     <div stype={{ display: "block" }}>
-                      <img style={{ verticalAlign: "middle" }} src={design_list.length > i + 1 ? img_t_url : img_l_url} alt="showing list"/>
+                      <img style={{ verticalAlign: "middle" }} src={design_list.length > i + 1 ? img_t_url : img_l_url} alt="showing list" />
                       <img style={{ verticalAlign: "middle", borderRadius: "30%", width: "20px", height: "20px" }} src={li.s_img} alt="showing list" />
                       &nbsp;
                 <Link to={`/designerDetail/${li.user_id}`}>
@@ -761,6 +764,7 @@ class DesignDetail extends Component {
       )
     }
     if (this.props.new_design_id !== null) { this.closeForkModal() }
+    console.log("design-detail", this.props);
     return (
       <div>
         {designDetail.length !== 0 && (
@@ -869,6 +873,10 @@ class DesignDetail extends Component {
                               })}
                             </Memberlist>
                           </Members>
+                        </InfoItem>
+                        <InfoItem>
+                          <h3>가격</h3>
+                          <p className="price">{MoneyStyle(designDetail.price)}</p>
                         </InfoItem>
                         <DesignComment id={designDetail.uid} token={this.props.token} open={this.state.commentState} onClose={() => { this.setState({ commentState: false }); (this.props.GetDesignCountRequest(this.props.id)) }} />
                       </DesignInfoCard>
