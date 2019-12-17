@@ -4,9 +4,7 @@ import TestContainer from "containers/TestContainer";
 class TestPage extends Component {
   render() {
     return (
-      <ClientTemplate>
         <TestContainer />
-      </ClientTemplate>
     );
   }
 }

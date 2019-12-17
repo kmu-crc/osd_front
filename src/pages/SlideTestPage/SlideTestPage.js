@@ -5,9 +5,7 @@ import MainSlide from "components/Main/Slide";
 class SlideTestPage extends Component {
   render() {
     return (
-      <ClientTemplate>
         <MainSlide />
-      </ClientTemplate>
     );
   }
 }

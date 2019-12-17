@@ -5,10 +5,7 @@ import CardSourceDetail from "components/Designs/CardSourceDetail";
 class TestPage3 extends Component {
   render() {
     return (
-      <ClientTemplate>
         <CardSourceDetail/>
-      </ClientTemplate>
-    );
   }
 }
 
