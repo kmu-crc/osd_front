@@ -5,20 +5,26 @@ import DesignDetail from "components/Designs/DesignDetail"
 import { GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest, GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest } from "actions/Design"
 import { DeleteDesignRequest } from "actions/Designs/DeleteDesign"
 import { JoinDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign"
-import { ForkDesignRequest, ForkDesignListRequest }  from "actions/Designs/ForkDesign"
+import { ForkDesignRequest, ForkDesignListRequest } from "actions/Designs/ForkDesign"
 
 class DesignDetailContainer extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    this.props.GetDesignDetailRequest(this.props.id);
+  }
   render() {
     return (
-      <DesignDetail {...this.props}/>
+      <DesignDetail {...this.props} />
     )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignForked:state.DesignForked.status.DesignForked,
-    new_design_id:state.DesignForked.status.new_design_id,
+    DesignForked: state.DesignForked.status.DesignForked,
+    new_design_id: state.DesignForked.status.new_design_id,
     forked_list: state.DesignForked.status.list,
     DesignDetail: state.DesignDetail.status.DesignDetail,
     Count: state.DesignDetail.status.Count,

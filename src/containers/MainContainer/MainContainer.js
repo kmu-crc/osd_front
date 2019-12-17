@@ -4,20 +4,20 @@ import Main from "components/Main";
 
 class MainContainer extends Component {
   render() {
-    return(
-      <Main/>
+    return (
+      <Main {...this.props} />
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    userInfo: state.Authentication.status.userInfo
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

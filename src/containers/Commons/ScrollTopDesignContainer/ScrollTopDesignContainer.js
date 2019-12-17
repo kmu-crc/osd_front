@@ -1,31 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetTopDesignListRequest } from "actions/Commons/TopList";
-import ScrollList from "components/Commons/ScrollList";
+import ScrollListNew from "components/Commons/ScrollListNew";
 import Design from "components/Designs/Design";
 import Loading from "components/Commons/Loading";
 
 class ScrollTopDesignContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetTopDesignListRequest(0);
   }
 
-  getList = (page) => {
-    return this.props.GetTopDesignListRequest(page);
-  }
-
   render() {
-    return(
-      <div>
-        {this.props.status === "INIT" ?
-        <Loading/>
-        :
-        <ScrollList getListRequest={this.getList}
-                    ListComponent={Design}
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
-        }
-      </div>
+    return (
+      this.props.status === "INIT" ? <Loading /> :
+        <ScrollListNew
+          // getListRequest={this.getList}
+          ListComponent={Design}
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+          mobile={4} tablet={4} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom" />
     );
   }
 }

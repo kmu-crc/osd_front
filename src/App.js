@@ -42,7 +42,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={MainPage} />
             <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
-            <Route path="/designDetail/:id" component={DesignDetailPage} />
+            <Route path="/productDetail/:id" component={DesignDetailPage} />
             <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage} />
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
             <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
