@@ -38,7 +38,7 @@ const FromFieldCard = styled.div`
 const ProductImage = styled.div`
   display:flex;
   margin-bottom:50px;
-
+  border:1px solid black;
   .title-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;

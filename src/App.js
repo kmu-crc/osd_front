@@ -25,6 +25,7 @@ import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import ResetPwPage from "pages/ResetPwPage";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
+import PaymentPage from "pages/PaymentPage"
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -63,6 +64,7 @@ class App extends Component {
             <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
+            <Route path="/payment" component={PaymentPage} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>
