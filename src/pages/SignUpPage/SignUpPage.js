@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import ClientTemplate from "templates/ClientTemplate";
 import SignUpContainer from "containers/Registration/SignUpContainer";
 import open_bg from "source/open_bg.jpg";
 
@@ -42,13 +41,11 @@ const InsertDetail = styled.div`
 class SignUpPage extends Component {
   render() {
     return (
-      <ClientTemplate>
         <SignUpContent>
           <InsertDetail>
             <SignUpContainer onSubmit={this.handleFormSubmit} />
           </InsertDetail>
         </SignUpContent>
-      </ClientTemplate>
     );
   }
 }

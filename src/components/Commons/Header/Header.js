@@ -448,7 +448,7 @@ class Header extends Component {
     };
     const notice = this.state.notification
     const design_menu_bold = this.props.location.pathname === "/design" || this.props.match.path.indexOf("/design/") === 0 || this.props.match.path.indexOf("/designDetail") !== -1 ? "active" : "";
-    const group_menu_bold = this.props.location.pathname === "/group" || this.props.match.path.indexOf("/groupDetail") !== -1 ? "active" : "";
+    const group_menu_bold = this.props.location.pathname === "/maker" || this.props.match.path.indexOf("/makerDetail") !== -1 ? "active" : "";
     const designer_menu_bold = this.props.location.pathname === "/designer" || this.props.match.path.indexOf("/designer/") === 0 || this.props.match.path.indexOf("/designerDetail") !== -1 ? "active" : "";
     return (
       <Head>
@@ -474,22 +474,10 @@ class Header extends Component {
         <Content>
           <MainMenu>
             <Logo href="/" />
-            <MenuItem>
-              <a href="/design" className={design_menu_bold}>디자인</a>
-            </MenuItem>
-            <MenuItem>
-              <a href="/group" className={group_menu_bold}>그룹</a>
-            </MenuItem>
-            <MenuItem>
-              <a href="/designer" className={designer_menu_bold}>디자이너</a>
-            </MenuItem>
-            <MenuItem>
-              <a href="/createdesign">
-                <Button size="small" round={true} color="Solid">
-                  디자인 등록
-                </Button>
-              </a>
-            </MenuItem>
+            <MenuItem><a href="/design" className={design_menu_bold}>디자인</a></MenuItem>
+            <MenuItem><a href="/designer" className={designer_menu_bold}>디자이너</a></MenuItem>
+            <MenuItem><a href="/maker" className={group_menu_bold}>메이커</a></MenuItem>
+            <MenuItem><a href="/createdesign"><Button size="small" round={true} color="Solid">상품 등록</Button></a></MenuItem>
           </MainMenu>
           <SubMenu>
             <SubMenuGroup>

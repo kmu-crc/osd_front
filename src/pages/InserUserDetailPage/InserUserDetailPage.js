@@ -23,13 +23,11 @@ const FormCard = styled.div`
 class InserUserDetailPage extends Component {
   render() {
     return(
-      <ClientTemplate>
         <PageContent>
           <FormCard>
             <UserDetailFormContainer history={this.props.history}/>
           </FormCard>
         </PageContent>
-      </ClientTemplate>
     );
   }
 }

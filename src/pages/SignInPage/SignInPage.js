@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import ClientTemplate from "templates/ClientTemplate";
 import SignInContainer from "containers/Registration/SignInContainer";
 import open_bg from "source/open_bg.jpg";
 
@@ -41,13 +40,11 @@ const SignUpCard = styled.div`
 class SignInPage extends Component {
   render() {
     return (
-      <ClientTemplate>
         <SignUpContent>
           <SignUpCard>
             <SignInContainer />
           </SignUpCard>
         </SignUpContent>
-      </ClientTemplate>
     );
   }
 }
