@@ -918,7 +918,7 @@ class DesignInfo extends Component {
                             {/* DESCRIPTION */}
                             <DescriptionContainer>
                                 <div className="category-name">{DesignDetail.categoryName}</div>
-                                <div className="txt">{DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : (`'${DesignDetail.userName}'님의 '${DesignDetail.title}' 프로젝트입니다."}`)}</div>
+                                <div className="txt">{DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : (`'${DesignDetail.userName}'님의 '${DesignDetail.title}' 프로젝트입니다."`)}</div>
                             </DescriptionContainer>
                         </div>
                         <div className="box box3 secondary">

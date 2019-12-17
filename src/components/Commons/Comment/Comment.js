@@ -75,6 +75,7 @@ const CommentInner = styled.div`
             margin-left: 5px;
             pointer: default;
             background-color: #EFEFEF;
+            cursor:pointer;
         }
         .del {
             width: max-content;
@@ -83,6 +84,7 @@ const CommentInner = styled.div`
             margin-left: 5px;
             color: red;
             pointer: default;
+            cursor:pointer;
         }
     };
 `;
