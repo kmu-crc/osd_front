@@ -63,7 +63,7 @@ class CreateDesign extends Component {
     return (
       <div>
         <ImgWrapper>
-          <Title><h1>디자인 등록</h1></Title>
+          <Title><h1>상품 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
           <CreateDesignFormContainer setLoader={this.setLoader}/>
