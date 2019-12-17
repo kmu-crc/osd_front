@@ -660,7 +660,9 @@ const DesignInfo3 = styled.div`
 class DesignInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false/*false*/ };
+
+        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false };
+
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);
