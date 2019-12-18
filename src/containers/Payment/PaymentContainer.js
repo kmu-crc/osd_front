@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import CreateDesignFormContainer from "containers/Designs/CreateDesignFormContainer";
-import Loading from "components/Commons/Loading";
+import Payment from 'components/Payment/Payment';
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
@@ -49,29 +48,21 @@ const Wrapper = styled(ContentBox)`
   z-index:3;
 `
 
-class CreateDesign extends Component {
-  state = {
-    loading: false
-  }
-
-  setLoader = () => {
-    this.setState({
-      loading: !this.state.loading
-    });
-  }
+class PaymentContainer extends Component {
   render() {
-    return (
-      <div>
+    return(
+        <div>
         <ImgWrapper>
           <Title><h1>상품 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <CreateDesignFormContainer setLoader={this.setLoader}/>
+          <Payment/>
         </Wrapper>
-        {this.state.loading && <Loading/>}
-      </div>
+        {/* {this.state.loading && <Loading/>} */}
+        </div>
+
     );
   }
 }
 
-export default CreateDesign;
+export default PaymentContainer;
