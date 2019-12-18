@@ -9,9 +9,7 @@ class MyDetailContainer extends Component {
   }
 
   render() {
-    return(
-      <MyDetail {...this.props}/>
-    );
+    return(<MyDetail {...this.props}/>);
   }
 }
 

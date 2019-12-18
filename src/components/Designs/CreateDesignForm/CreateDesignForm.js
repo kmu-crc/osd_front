@@ -38,7 +38,7 @@ const FromFieldCard = styled.div`
 const ProductImage = styled.div`
   display:flex;
   margin-bottom:50px;
-  border:1px solid black;
+  // border:1px solid black;
   .title-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -52,7 +52,6 @@ const ProductImage = styled.div`
       margin-left: 15px;
       font-weight: bold;
       font-size: ${TxtSz.M}px;
-      
     }
     .text {
       width: max-content;
@@ -142,7 +141,6 @@ const ProductDescription = styled.div`
           margin-left: 15px;
         }
       }
-      
     }
   }
 `;
