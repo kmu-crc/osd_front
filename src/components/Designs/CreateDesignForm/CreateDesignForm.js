@@ -51,7 +51,6 @@ const ProductImage = styled.div`
       margin-left: 15px;
       font-weight: bold;
       font-size: ${TxtSz.M}px;
-      
     }
     .text {
       width: max-content;
@@ -141,7 +140,6 @@ const ProductDescription = styled.div`
           margin-left: 15px;
         }
       }
-      
     }
   }
 `;
