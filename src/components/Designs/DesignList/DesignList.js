@@ -7,13 +7,16 @@ import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
 import StyleGuide from "StyleGuide";
 import NumberFormat from "modules/NumberFormat";
+import ProductFilter from "components/Products/ProductFilter";
 
 // css styling
-
 const Wrapper = styled.div`
   width: 100%;
+  &.listWrap {
+    display: flex;
+    flex-direction: row;
+  }
 `;
-
 const Content = styled(ContentBox)`
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
@@ -21,7 +24,6 @@ const Content = styled(ContentBox)`
     }
   }
 `;
-
 const MenuContainer = styled(Grid)`
   font-size: 1rem;
 
@@ -30,7 +32,6 @@ const MenuContainer = styled(Grid)`
     padding-bottom: 0rem;
   }
 `;
-
 const MenuWrap = styled.div`
   background-color: white;
   border-top: 1px solid rgba(0,0,0,0.2);
@@ -41,7 +42,6 @@ const MenuWrap = styled.div`
   right: 0;
   z-index: 3;
 `;
-
 const Head = styled.div`
   padding-top: 80px;
   padding-bottom: 2rem;
@@ -53,22 +53,17 @@ const Head = styled.div`
 `;
 
 class DesignList extends Component {
-  state = {
-    rendering: true
+  constructor(props) {
+    super(props);
+    this.state = { rendering: true };
   }
-
   componentDidMount() {
     this.props.GetDesignTotalCountRequest(this.props.cate1, this.props.cate2);
   }
-
   changeState = async () => {
-    await this.setState({
-      rendering: false
-    });
-    await this.setState({
-      rendering: true
-    });
-  } // state 값 업데이트를 통해 컴포넌트 새로 렌더링함
+    await this.setState({ rendering: false });
+    await this.setState({ rendering: true });
+  }
 
   cate1Change = (value) => {
     this.props.history.replace(`/design/${this.props.sort}/${value}/null`);
@@ -126,28 +121,30 @@ class DesignList extends Component {
       }
     };
     return (
-      <div>
+      <React.Fragment>
         <MenuWrap>
           <Content>
             <Wrapper>
               <MenuContainer>
-                <CategoryContainer handleCate1={this.cate1Change}
-                  handleCate2={this.cate2Change}
-                  cate1={this.props.cate1}
-                  cate2={this.props.cate2} />
+                <CategoryContainer
+                  cate1={this.props.cate1} handleCate1={this.cate1Change}
+                  cate2={this.props.cate2} handleCate2={this.cate2Change} />
               </MenuContainer>
             </Wrapper>
           </Content>
         </MenuWrap>
+
         <Content>
           <Header />
           <Wrapper className="listWrap">
-            {this.state.rendering &&
-              <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />
-            }
+            <div><ProductFilter /></div>
+            <div>
+              {this.state.rendering &&
+                <ScrollDesignListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+            </div>
           </Wrapper>
         </Content>
-      </div>
+      </React.Fragment>
     );
   }
 }

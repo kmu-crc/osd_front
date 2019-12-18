@@ -1,26 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
-import ScrollList from "components/Commons/ScrollList";
+import ScrollListTest from "components/Commons/ScrollListTest";
 import Design from "components/Designs/Design";
 
 class ScrollDesignListContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
-    // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
-
   getList = (page) => {
     return this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
-    // ScrollList에서는 그 다음 페이지부터 불러옴
   }
-
   render() {
-    return(
-      <ScrollList getListRequest={this.getList}
-                  ListComponent={Design}
-                  dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                  mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>
+    return (
+      <React.Fragment>
+        {/* <Design /> */}
+        <ScrollListTest
+          getListRequest={this.getList}
+          ListComponent={Design}
+          dataList={this.props.dataList}
+          dataListAdded={this.props.dataListAdded}
+          mobile={4} tablet={4} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom" />
+      </React.Fragment>
     );
   }
 }
@@ -34,9 +35,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
-        return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
-      }
+    GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
+      return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+    }
   };
 };
 

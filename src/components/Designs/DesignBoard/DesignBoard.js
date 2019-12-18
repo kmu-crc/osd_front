@@ -285,15 +285,15 @@ class DesignBoard extends Component {
                   }
                   <MenuItem>
                     <button onClick={this.openSortableModal} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                      <Icon name="bars" /><p>카드순서바꾸기</p></button>
+                      <i className="bars icon" /><p>카드순서바꾸기</p></button>
                   </MenuItem>
                   <MenuItem>
                     <button onClick={this.onModify} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                      <Icon name="edit outline" /><p>이름바꾸기</p></button>
+                      <i className="edit outline icon" /><p>이름바꾸기</p></button>
                   </MenuItem>
                   <MenuItem>
                     <button onClick={this.onDelete} style={{ display: "flex", justifyContent: "spaceBetween" }}>
-                      <Icon name="trash alternate outline" /><p>보드지우기</p></button>
+                      <i className={`trash alternate outline icon`} /><p>보드지우기</p></button>
                   </MenuItem>
                 </Menu>
               </div>

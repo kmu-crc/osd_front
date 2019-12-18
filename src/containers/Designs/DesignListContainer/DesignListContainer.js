@@ -6,9 +6,7 @@ import DesignList from "components/Designs/DesignList";
 class DesignListContainer extends Component {
   render() {
     return(
-      <div>
         <DesignList {...this.props}/>
-      </div>
     );
   }
 }

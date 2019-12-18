@@ -8,7 +8,7 @@ import Together_img from "source/together_bg.jpg";
 
 const SlideWrap = styled.div`
   width: 100%;
-  height: 350px;
+  height: 250px;
   overflow: hidden;
   position: relative;
   & .slider-wrapper ul {
@@ -135,7 +135,7 @@ export default class MainSlide extends Component {
           showIndicators={true}
           axis="horizontal"
           transitionTime={1000}
-          interval={10000}
+          interval={20000}
           width="100%"
           infiniteLoop={true}
           showThumbs={false}
