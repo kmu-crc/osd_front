@@ -53,7 +53,7 @@ class PaymentContainer extends Component {
     return(
         <div>
         <ImgWrapper>
-          <Title><h1>상품 등록</h1></Title>
+          <Title><h1>상품 구매</h1></Title>
         </ImgWrapper>
         <Wrapper>
           <Payment/>
