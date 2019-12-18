@@ -163,6 +163,20 @@ class SignUpForm extends Component {
             validates={["SamePassword"]}
             onBlur={this.samePwCheck}
           />
+
+          <Label>휴대폰 번호</Label>
+          <div style={{display:"flex"}}>
+          <FormInput
+            name="phone"
+            type="phone"
+            placeholder="휴대폰 번호를 입력해주세요."
+            getValue={this.onChangeValue}
+            // validates={["SamePassword"]}
+            // onBlur={this.samePwCheck}
+          />
+          <button style={{height:"40px",marginLeft:"10px",borderRadius:"5px"}}>휴대폰 인증</button>
+          </div>
+
           <Label>이용약관 동의 확인</Label>
           <Labellink><div style={{ cursor: "pointer" }} onClick={this.openTermModal}>이용약관 보기</div></Labellink>
           <label><input disabled ref="use_agreement" value={this.state.agree} onClick={this.preventClick} type="checkbox" /> 이용약관에 동의함</label>

@@ -173,7 +173,7 @@ const UserInterface = styled.div`
 const UserItem = styled.div`
   text-align: right;
   & .logOutNavLink {
-    margin: 0 0.5rem;
+    margin: 0 0.17rem;
   }
 `;
 
@@ -408,6 +408,15 @@ class Header extends Component {
             >
               <Content>
                 <UserMenu>
+
+                <UserMenuItem>
+                  
+                  <a href="/cart">
+                      <Icon name="cart" />
+                      장바구니
+                    </a>
+                  </UserMenuItem>
+
                   <UserMenuItem>
                     <a href="/myPage">
                       <Icon name="user" />
@@ -426,6 +435,7 @@ class Header extends Component {
                       로그아웃
                     </LogOutBtn>
                   </UserMenuItem>
+
                 </UserMenu>
               </Content>
             </UserMenuDimm>
@@ -442,6 +452,9 @@ class Header extends Component {
           </UserItem>
           <UserItem>
             <a href="/signup" className="logOutNavLink">회원가입</a>
+          </UserItem>
+          <UserItem>
+            <a href="/cart" className="logOutNavLink">장바구니</a>
           </UserItem>
         </UserInterface>
       );

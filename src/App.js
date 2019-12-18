@@ -25,7 +25,8 @@ import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import ResetPwPage from "pages/ResetPwPage";
 import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
-import PaymentPage from "pages/PaymentPage"
+import PaymentPage from "pages/PaymentPage";
+import CartPage from 'pages/CartPage';
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -65,6 +66,7 @@ class App extends Component {
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
             <Route path="/payment" component={PaymentPage} />
+            <Route path="/cart" component={CartPage} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>
