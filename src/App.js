@@ -27,6 +27,11 @@ import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
 import PaymentPage from "pages/PaymentPage";
 import CartPage from 'pages/CartPage';
+import CreateDesignerPage from 'pages/CreateDesignerPage';
+import ModifyDesignerPage from 'pages/ModifyDesignerPage';
+import CreateMakerPage from 'pages/CreateMakerPage';
+import ModifyMakerPage from 'pages/ModifyMakerPage';
+
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -53,6 +58,10 @@ class App extends Component {
             <Route path="/maker/:sorting?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
+            <Route path="/createDesigner" component={CreateDesignerPage} />
+            <Route path="/designerModify" component={ModifyDesignerPage} />
+            <Route path="/createMaker" component={CreateMakerPage} />
+            <Route path="/makerModify" component={ModifyMakerPage} />
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
             <Route path="/inserUserDetail" component={RequiresAuth(InserUserDetailPage)} />

@@ -123,9 +123,51 @@ class ModifyGroupInfo extends Component {
         <form onSubmit={this.onSubmit} encType="multipart/form-data">
           <FromFieldCard>
             <Grid>
-              <Grid.Column mobile={16} computer={4}>
-                <FormHeader as="h2">정보 수정</FormHeader>
+            <Grid.Column mobile={16} computer={4}>
+                  <FormHeader as="h2">갤러리 정보</FormHeader>
+                </Grid.Column>
+                <Grid.Column mobile={16} computer={12}>
+                <Label>썸네일 수정</Label>
+                  <FormThumbnail
+                    name="thumbnail"
+                    placeholder="썸네일 수정"
+                    getValue={this.onChangeValue}
+                    image={this.props.GroupDetail.img && this.props.GroupDetail.img.m_img}
+                    onChange={()=>{this.liveCheck("thumbnail")}}
+                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
+                  />
+                  <Label>갤러리 이름</Label>
+                  <FormInput
+                    value={this.props.GroupDetail.title}
+                    name="title"
+                    placeholder="그룹 이름을 입력해주세요"
+                    getValue={this.onChangeValue}
+                    validates={["Required"]}
+                    onBlur={()=>{this.liveCheck("title")}}
+                  />
+                  <Label>갤러리 설명</Label>
+                  <FormInput
+                    value={this.props.GroupDetail.explanation}
+                    name="explanation"
+                    placeholder={this.props.GroupDetail.explanation}
+                    getValue={this.onChangeValue}
+                  />
+
+                </Grid.Column>
+              {/* <Grid.Column mobile={16} computer={4}>
+                <FormHeader as="h2">갤러리 정보</FormHeader>
               </Grid.Column>
+              <Form.Group widths="equal">
+                  <Label>썸네일 수정</Label>
+                  <FormThumbnail
+                    name="thumbnail"
+                    placeholder="썸네일 수정"
+                    getValue={this.onChangeValue}
+                    image={this.props.GroupDetail.img && this.props.GroupDetail.img.m_img}
+                    onChange={()=>{this.liveCheck("thumbnail")}}
+                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
+                  />
+                </Form.Group>
               <Grid.Column mobile={16} computer={12}>
                 <Form.Group widths="equal">
                   <Label>그룹 이름</Label>
@@ -147,18 +189,8 @@ class ModifyGroupInfo extends Component {
                     getValue={this.onChangeValue}
                   />
                 </Form.Group>
-                <Form.Group widths="equal">
-                  <Label>썸네일 수정</Label>
-                  <FormThumbnail
-                    name="thumbnail"
-                    placeholder="썸네일 수정"
-                    getValue={this.onChangeValue}
-                    image={this.props.GroupDetail.img && this.props.GroupDetail.img.m_img}
-                    onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                  />
-                </Form.Group>
-              </Grid.Column>
+
+              </Grid.Column> */}
             </Grid>
           </FromFieldCard>
           <Button className="submitBtn" type="submit">수정</Button>
