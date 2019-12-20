@@ -102,13 +102,19 @@ class CreateMaker extends Component {
                     placeholder="메이커 경력을 입력해주세요."
                     getValue={this.onChangeValue}
                   />
+                  
                   <Label>보유 장비</Label>
                   <FormInput
                     name="own"
                     placeholder="보유 장비를 입력해주세요."
                     getValue={this.onChangeValue}
                   />
-
+                  <Label>태그</Label>
+                  <FormInput
+                    name="tag"
+                    placeholder="태그를 입력해주세요."
+                    getValue={this.onChangeValue}
+                  />
 
                 </Grid.Column>
               </Grid>
