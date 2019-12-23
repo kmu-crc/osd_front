@@ -62,44 +62,43 @@ const AlarmDropDown = styled.ul`
 
 // padding: 10px 20px;
 const AlarmItem = styled.li`
-border-bottom: 1px solid #222;
-text-align: left;
-position: relative;
-box-sizing: border-box;
-padding: 2px 2px 1px 2px;
-display: flex;
-.time {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-}
-:hover{
-  background-color:${StyleGuide.color.geyScale.scale1};
-}
-div { 
-}
-h4 {
-  font-size: 9pt;
-  text-align: center;
-}
-&:last-child {
-  border-bottom: 0;
-}
-&.confirm {
+  border-bottom: 1px solid #222;
+  text-align: left;
+  position: relative;
+  box-sizing: border-box;
+  padding: 2px 2px 1px 2px;
   display: flex;
-  flexDirection: row;
-  justify-content: left;
-  h5 {
-    font-size: 10pt;
-    color: ${StyleGuide.color.geyScale.scale6};
+  .time {
+    position: absolute;
+    top: 10px;
+    right: 20px;
   }
-  color: ${StyleGuide.color.geyScale.scale5};
-}  
-&.unconfirm {
-  display: flex;
-  flexDirection: row;
-  justify-content: left;
-}
+  :hover{
+    background-color:${StyleGuide.color.geyScale.scale1};
+  }
+  div {}
+  h4 {
+    font-size: 9pt;
+    text-align: center;
+  }
+  &:last-child {
+    border-bottom: 0;
+  }
+  &.confirm {
+    display: flex;
+    flexDirection: row;
+    justify-content: left;
+    h5 {
+      font-size: 10pt;
+      color: ${StyleGuide.color.geyScale.scale6};
+    }
+    color: ${StyleGuide.color.geyScale.scale5};
+  }  
+  &.unconfirm {
+    display: flex;
+    flexDirection: row;
+    justify-content: left;
+  }
 `;
 
 class Alarm extends Component {

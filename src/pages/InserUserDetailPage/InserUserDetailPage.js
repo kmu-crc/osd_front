@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ClientTemplate from "templates/ClientTemplate";
 import UserDetailFormContainer from "containers/Registration/UserDetailFormContainer";
 import styled from "styled-components";
 
@@ -22,12 +21,12 @@ const FormCard = styled.div`
 
 class InserUserDetailPage extends Component {
   render() {
-    return(
-        <PageContent>
-          <FormCard>
-            <UserDetailFormContainer history={this.props.history}/>
-          </FormCard>
-        </PageContent>
+    return (
+      <PageContent>
+        <FormCard>
+          <UserDetailFormContainer history={this.props.history} />
+        </FormCard>
+      </PageContent>
     );
   }
 }
