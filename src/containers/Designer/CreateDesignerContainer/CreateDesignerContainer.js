@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import ModifyDesignFormContainer from "containers/Designs/ModifyDesignFormContainer";
+import CreateDesigner from 'components/Designers/CreateDesigner/CreateDesigner';
+import Loading from "components/Commons/Loading";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
@@ -46,22 +47,20 @@ const Wrapper = styled(ContentBox)`
   margin-bottom: 100px;
   position: relative;
   z-index:3;
-`;
-
-class ModifyDesign extends Component {
+`
+class CreateDesignerContainer extends Component {
   render() {
-    console.log("props", this.props)
-    return (
-      <div>
+    return(
+       <React.Fragment>
         <ImgWrapper>
-          <Title><h1>상품 정보 수정</h1></Title>
+          <Title><h1>디자이너 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <ModifyDesignFormContainer history={this.props.history} id={this.props.id}/>
-        </Wrapper>
-      </div>
+         <CreateDesigner/>
+         </Wrapper>
+       </React.Fragment>
     );
   }
 }
 
-export default ModifyDesign;
+export default CreateDesignerContainer;

@@ -55,7 +55,7 @@ class ModifyGroup extends Component {
     return(
       <div>
         <ImgWrapper>
-          <Title><h1>그룹 정보 수정</h1></Title>
+          <Title><h1>갤러리 수정</h1></Title>
         </ImgWrapper>
         <Wrapper>
           <ModifyGroupInfoContainer {...this.props}/>
