@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import DesignerDetailContainer from "containers/Designer/DesignerDetailContainer";
+import MakerDetailContainer from "containers/Maker/MakerDetailContainer";
 
-export class DesignerDetailPage extends Component {
+export class MakerDetailPage extends Component {
   render() {
     return(
-        <DesignerDetailContainer id={this.props.match.params.id}
+        <MakerDetailContainer id={this.props.match.params.id}
                                  type={this.props.match.params.type? this.props.match.params.type : null}
                                  history={this.props.history}/>
     );

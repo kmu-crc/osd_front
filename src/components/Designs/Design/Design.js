@@ -65,11 +65,11 @@ class Design extends Component {
   }
   render() {
     const product = this.props.data || loading;
-    console.log("PRODUCT", product);
+    // console.log("PRODUCT", product);
     return (<ProductBox img={product.thumbnailUrl && product.thumbnailUrl.m_img} onClick={() => this.gotoDetail(product.uid)}>
       <div className="img-box" />
       <div className="info-box">
-        <div className="title"><TextFormat chars="24" txt={product.name || ""} /></div>
+        <div className="title"><TextFormat chars="24" txt={product.title || ""} /></div>
         <div className="user">{product.userName}</div>
         <div className="rate-and-review">
           <div className="rate">{Star(product.rate)}</div>

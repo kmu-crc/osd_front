@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import DesignerListContainer from 'containers/Designer/DesignerListContainer';
+import MakerListContainer from 'containers/Maker/MakerListContainer';
 
-class DesignerListPage extends Component {
+class MakerListPage extends Component {
   render() {
     return (
-      <DesignerListContainer
+      <MakerListContainer
         sort={this.props.match.params.sorting ? this.props.match.params.sorting : "update"}
         cate1={this.props.match.params.cate1 ? this.props.match.params.cate1 : null}
         cate2={this.props.match.params.cate2 ? this.props.match.params.cate2 : null}
@@ -13,4 +13,4 @@ class DesignerListPage extends Component {
   }
 }
 
-export default DesignerListPage;
+export default MakerListPage;

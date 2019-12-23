@@ -64,28 +64,63 @@ const FilterBox = styled.div`
 `;
 
 class ProductFilter extends Component {
-    onReset = () => {}
-    onSubmit = () => {}
+    constructor(props) {
+        super(props);
+        this.state = { kinds: [] };
+    };
+    onReset = () => {
+        this.setState({ kinds: [] });
+        let checks = document.getElementsByName('kinds');
+        checks.forEach(item => {
+            if (item.checked) {
+                item.checked = false;
+            }
+        })
+        // this.props.reset && this.props.reset();
+        // this.props.close
+    };
+    onSubmit = () => {
+        this.props.submit && this.props.submit(this.state);
+    };
+    changedCheckbox = (e, t) => {
+        if (e.target.type !== "checkbox") return;
+        let copy = this.state[t];
+        if (e.target.checked) {
+            copy.push(e.target.value);
+        } else {
+            copy.splice(copy.indexOf(e.target.value), 1);
+        }
+        this.setState({ [t]: copy });
+    }
+    // changedRadio = (e, t) => {
+    // ;
+    // }
     render() {
+        const { ops } = this.props;
+        console.log(ops);
+        const items = [
+            { value: "patent", text: "특허" },
+            { value: "consort", text: "기술자문/상담" },
+            { value: "info", text: "정보/아이디어/노하우" },
+            { value: "product", text: "제품" },
+        ];
         return (<FilterBox>
             <div className="wrapper">
                 <div className="title">아이템종류</div>
                 <ul className="list-box">
-                    <li className="list-element"><input type="radio" name="item-kinds" /><label>파일</label></li>
-                    <li className="list-element"><input type="radio" name="item-kinds" /><label>공예품</label></li>
-                    <li className="list-element"><input type="radio" name="item-kinds" /><label>커스텀 상품</label></li>
+                    {items.map(item => <li key={item.value} className="list-element"><label><input name="kinds" type="checkbox" onChange={e => this.changedCheckbox(e, "kinds")} value={item.value} />{item.text}</label></li>)}
                 </ul>
             </div>
 
+            {/*
             <div className="wrapper">
                 <div className="title">배송</div>
                 <ul className="list-box">
-                    <li className="list-element"><input type="radio" name="item-delivery-method" /><label>무료배송</label></li>
-                    <li className="list-element"><input type="radio" name="item-delivery-method" /><label>직접배송</label></li>
-                    <li className="list-element"><input type="radio" name="item-delivery-method" /><label>직거래</label></li>
+                    <li className="list-element"><label><input name="delivery" type="radio" onChange={e => this.changedRadio(e, "delivery")} />무료배송</label></li>
+                    <li className="list-element"><label><input name="delivery" type="radio" onChange={e => this.changedRadio(e, "delivery")} />직접배송</label></li>
+                    <li className="list-element"><label><input name="delivery" type="radio" onChange={e => this.changedRadio(e, "delivery")} />직거래</label></li>
                 </ul>
             </div>
-
             <div className="wrapper">
                 <div className="title">가격</div>
                 <ul className="list-box">
@@ -101,10 +136,10 @@ class ProductFilter extends Component {
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> */}
             <div className="wrapper button-wrapper">
                 <div className="button" onClick={this.onSubmit}>적용</div>
-                <div className="button" onClick={this.onReset}>리셋</div>
+                <div className="button" onClick={this.onReset}>모두해제</div>
             </div>
             <div style={{ height: "50px" }}></div>
         </FilterBox>)
