@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ModifyDesignFormContainer from "containers/Designs/ModifyDesignFormContainer";
+import CreateMaker from 'components/Maker/CreateMaker/CreateMaker';
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
@@ -46,22 +46,20 @@ const Wrapper = styled(ContentBox)`
   margin-bottom: 100px;
   position: relative;
   z-index:3;
-`;
-
-class ModifyDesign extends Component {
+`
+class CreateMakerContainer extends Component {
   render() {
-    console.log("props", this.props)
-    return (
-      <div>
-        <ImgWrapper>
-          <Title><h1>상품 정보 수정</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
-          <ModifyDesignFormContainer history={this.props.history} id={this.props.id}/>
-        </Wrapper>
-      </div>
+    return(
+       <React.Fragment>
+            <ImgWrapper>
+            <Title><h1>메이커 등록</h1></Title>
+            </ImgWrapper>
+            <Wrapper>
+           <CreateMaker/>
+           </Wrapper>
+       </React.Fragment>
     );
   }
 }
 
-export default ModifyDesign;
+export default CreateMakerContainer;

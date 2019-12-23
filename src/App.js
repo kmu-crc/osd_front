@@ -27,6 +27,11 @@ import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
 import PaymentPage from "pages/PaymentPage";
 import CartPage from 'pages/CartPage';
+import CreateDesignerPage from 'pages/CreateDesignerPage';
+import ModifyDesignerPage from 'pages/ModifyDesignerPage';
+import CreateMakerPage from 'pages/CreateMakerPage';
+import ModifyMakerPage from 'pages/ModifyMakerPage';
+
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -53,6 +58,8 @@ class App extends Component {
 
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
+            <Route path="/createDesigner" component={CreateDesignerPage} />
+            <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/bedesigner" component={RequiresAuth(InserUserDetailPage)} />
 
@@ -60,7 +67,9 @@ class App extends Component {
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/bemaker" component={RequiresAuth(InserUserDetailPage)} />
-
+            <Route path="/createMaker" component={CreateMakerPage} />
+            <Route path="/makerModify" component={ModifyMakerPage} />
+              
             {/* gallery */}
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
 

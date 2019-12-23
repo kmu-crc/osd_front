@@ -1,18 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import styled from 'styled-components';
-import { Header, Grid } from "semantic-ui-react";
-import Button from "components/Commons/Button";
-// import ValidateForm from "components/Commons/ValidateForm";
-// import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
-// import { FormField } from "components/Commons/FormField";
 import { FormInput, FormThumbnail } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+import { Header, Grid } from "semantic-ui-react"
 import StyleGuide from "StyleGuide";
-import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
-import Loading from "components/Commons/Loading";
-
-// css styling
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -66,52 +56,16 @@ const Label = styled.div`
   text-transform: none;
 `;
 
-
-class CreateGroup extends Component {
-  state = {
-    loading: false
-  }
-
-  onChangeValue = async data => {
-    let obj = {};
-    if(data.target){
-      obj[data.target.name] = data;
-    }
-    await this.setState(obj);
-    console.log(this.state);
-  };
-
-  liveCheck = (target) => {
-    FormControl(this.state[target]);
-  };
-
-  onSubmit = async e => {
-    e.preventDefault();
-    ValidationGroup(this.state, false).then(async data => {
-      console.log("성공", data);
-      await this.setState({
-        loading: true
-      });
-      this.props.CreateNewGroupRequest(data, this.props.token)
-      .then(res => {
-        this.props.history.push(`/groupDetail/${res.id}`);
-      });
-    }).catch(e => {
-      console.log("실패", e);
-      this.setState({
-        loading: false
-      });
-    });
-  };
-
-  render(){
+class CreateMaker extends Component {
+  render() {
     return(
-      <div>
+       <React.Fragment>
+         <div>
           <form onSubmit={this.onSubmit}>
-            <FromFieldCard>
+          <FromFieldCard>
               <Grid>
                 <Grid.Column mobile={16} computer={4}>
-                  <FormHeader as="h2">갤러리 정보</FormHeader>
+                  <FormHeader as="h2">메이커 정보</FormHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={12}>
                 <Label>썸네일 등록</Label>
@@ -122,30 +76,54 @@ class CreateGroup extends Component {
                     onChange={()=>{this.liveCheck("thumbnail")}}
                     validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                   />
-                  <Label>갤러리 이름</Label>
+                  <Label>메이커 이름</Label>
                   <FormInput
                     name="title"
-                    placeholder="갤러리의 이름을 입력해주세요."
+                    placeholder="메이커 이름을 입력해주세요."
                     getValue={this.onChangeValue}
                     validates={["Required"]}
                     onBlur={()=>{this.liveCheck("title")}}
                   />
-                  <Label>갤러리 설명</Label>
+                  <Label>메이커 설명</Label>
                   <FormInput
                     name="explanation"
-                    placeholder="갤러리의 설명을 입력해주세요."
+                    placeholder="메이커 설명을 입력해주세요."
+                    getValue={this.onChangeValue}
+                  />
+                  <Label>메이커 위치</Label>
+                  <FormInput
+                    name="location"
+                    placeholder="메이커 위치를 입력해주세요."
+                    getValue={this.onChangeValue}
+                  />
+                  <Label>메이커 경력</Label>
+                  <FormInput
+                    name="career"
+                    placeholder="메이커 경력을 입력해주세요."
+                    getValue={this.onChangeValue}
+                  />
+                  
+                  <Label>보유 장비</Label>
+                  <FormInput
+                    name="own"
+                    placeholder="보유 장비를 입력해주세요."
+                    getValue={this.onChangeValue}
+                  />
+                  <Label>태그</Label>
+                  <FormInput
+                    name="tag"
+                    placeholder="태그를 입력해주세요."
                     getValue={this.onChangeValue}
                   />
 
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
-            <Button type="submit">등록</Button>
-          </form>
-        {this.state.loading && <Loading/>}
-      </div>
+            </form>
+          </div>
+       </React.Fragment>
     );
   }
 }
 
-export default CreateGroup;
+export default CreateMaker;
