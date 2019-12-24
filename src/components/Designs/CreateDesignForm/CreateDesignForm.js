@@ -7,13 +7,22 @@ import noimg from "source/noimg.png";
 import newimg from "source/new-img.png";
 
 
-import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect ,FormDropBox} from "components/Commons/FormItems";
+import {FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 
 import CreateOption from "components/Designs/CreateDesignForm/CreateOption/CreateOption";
 
-
+const newCategory = [
+  {text:"특허권",value:0},
+  {text:"디자인권",value:1},
+  {text:"기술자문",value:2},
+  {text:"기술상담",value:3},
+  {text:"경험",value:4},
+  {text:"정보/데이터",value:5},
+  {text:"아이디어/노하우",value:6},
+  {text:"제품",value:7},
+];
 const TxtSz = { s: 12, m: 16, M: 20, l: 24, b: 28 };
 const MAX_PRODUCT_IMAGE_COUNT = 5;
 const FromFieldCard = styled.div`
@@ -351,7 +360,8 @@ class CreateDesignForm extends Component {
           <div className="row">
             <div className="text">카테고리</div>
             <div className="input">
-              <Dropdown
+              <FormDropBox options ={newCategory}/>
+              {/* <Dropdown
                 className="dropdown-style"
                 placeholder={"카테고리를 선택해주세요."}
                 onChange={this.handleCate1}
@@ -361,7 +371,7 @@ class CreateDesignForm extends Component {
                   className="dropdown-style giveaspace"
                   placeholder={"세부 카테고리를 선택해주세요."}
                   onChange={this.handleCate2}
-                  options={category.find(cate => cate.uid === this.state.cate1).child || [{ key: "all", value: "all", text: "전체" },]} /> : null}
+                  options={category.find(cate => cate.uid === this.state.cate1).child || [{ key: "all", value: "all", text: "전체" },]} /> : null} */}
             </div>
           </div>
           <div className="row">
