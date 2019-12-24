@@ -190,7 +190,7 @@ class DesignerDetail extends Component {
   }
 
   typeChange = (e) => {
-    let url = "/designerDetail/"+this.props.id+"/"+e.target.id;
+    let url = "/designerDetail/" + this.props.id + "/" + e.target.id;
     this.props.history.replace(url);
   }
 
@@ -201,63 +201,75 @@ class DesignerDetail extends Component {
     }
     if (this.props.like === true) {
       this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.success === true) {
-          this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
-          .then(this.props.GetDesignerCountRequest(this.props.id))
-        }
-      });
+        .then(data => {
+          if (data.success === true) {
+            this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+              .then(this.props.GetDesignerCountRequest(this.props.id))
+          }
+        });
     } else {
       this.props.LikeDesignerRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.success === true) {
-          this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
-          .then(this.props.GetDesignerCountRequest(this.props.id))
-        }
-      });
+        .then(data => {
+          if (data.success === true) {
+            this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+              .then(this.props.GetDesignerCountRequest(this.props.id))
+          }
+        });
     }
   }
 
-  render(){
+  render() {
     const designerDetail = this.props.DesignerDetail;
     const count = this.props.Count;
     // console.log(designerDetail);
 
-    return(
+    return (
       <div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {/* 섬네일, 닉테임, 카테고리, */}
+          {/* 거주지역, 전문분야, 디자인경험, 디자인 상품, 디자인 의뢰, 고객평가 */}
+
+          <div>
+            <div style={{ width: "150px", height: "150px", borderRadius: "50%", border: "1px solid black", backgroundColor: "#FFF" }} />
+            <div>닉네임</div>
+            <div>전문분야</div>
+            <div></div>
+          </div>
+          <div>고객평가</div>
+        </div>
         {designerDetail.length !== 0 &&
           <ContentBox>
             <Wrapper padded={false} columns={2}>
               <Grid.Row className="edit">
-              { (this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid))?
-                <Link to="/myModify"><Button>내 정보 수정</Button></Link>
-                : <div></div>
-              }
+                {(this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid)) ?
+                  <Link to="/myModify"><Button>내 정보 수정</Button></Link>
+                  : <div></div>
+                }
               </Grid.Row>
               <Grid.Row className="contentRow">
                 <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
                   <ProfileSection>
                     <div className="imgContainer">
                       <div style={designerDetail.thumbnailUrl
-                         ? {backgroundImage: `url(${designerDetail.thumbnailUrl.m_img})`}
-                         : {backgroundImage: `url(${profile})`}}>
+                        ? { backgroundImage: `url(${designerDetail.thumbnailUrl.m_img})` }
+                        : { backgroundImage: `url(${profile})` }}>
                       </div>
                     </div>
                     <div className="title">
-                      <h3><TextFormat txt={designerDetail.nick_name}/></h3>
+                      <h3><TextFormat txt={designerDetail.nick_name} /></h3>
                     </div>
                     <div className="category">
-                      <TextFormat txt={designerDetail.categoryName? designerDetail.categoryName : "전체"}/>
+                      <TextFormat txt={designerDetail.categoryName ? designerDetail.categoryName : "전체"} />
                     </div>
                     <InfoSection>
                       <h4>소개</h4>
                       <p className="explanation">
-                      <TextFormat lines={3} txt={designerDetail.about_me}/></p>
+                        <TextFormat lines={3} txt={designerDetail.about_me} /></p>
                     </InfoSection>
                     <div className="btnContainer">
                       {this.props.like === true
-                      ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
-                      : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
+                        ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
+                        : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
                       }
                       <Link to={`/message/${this.props.id}/${designerDetail.nick_name}`}><Button color="Solid">메시지보내기</Button></Link>
                     </div>
@@ -282,25 +294,25 @@ class DesignerDetail extends Component {
                     <Grid.Row>
                       <Grid.Column as="ul">
                         <li id="my"
-                            className={this.props.type === "my" || this.props.type === null? "onSelected" : ""}
-                            onClick={this.typeChange}>등록한 디자인</li>
+                          className={this.props.type === "my" || this.props.type === null ? "onSelected" : ""}
+                          onClick={this.typeChange}>등록한 디자인</li>
                         <li id="design"
-                            className={this.props.type === "design"? "onSelected" : ""}
-                            onClick={this.typeChange}>참여 디자인</li>
+                          className={this.props.type === "design" ? "onSelected" : ""}
+                          onClick={this.typeChange}>참여 디자인</li>
                         <li id="like"
-                            className={this.props.type === "like"? "onSelected" : ""}
-                            onClick={this.typeChange}>관심 디자인</li>
+                          className={this.props.type === "like" ? "onSelected" : ""}
+                          onClick={this.typeChange}>관심 디자인</li>
                         <div className="clear"></div>
                       </Grid.Column>
                     </Grid.Row>
                   </Head>
                   <MiniContentBox>
                     <Route path="/designerDetail/:id/:type?"
-                           component={this.props.type === "like"
-                                      ? LikeInDesignerContainer
-                                      : this.props.type === "design"
-                                      ? DesignInDesignerContainer
-                                      : MyDesignInDesignerContainer}/>
+                      component={this.props.type === "like"
+                        ? LikeInDesignerContainer
+                        : this.props.type === "design"
+                          ? DesignInDesignerContainer
+                          : MyDesignInDesignerContainer} />
                   </MiniContentBox>
                 </TabContainer>
               </Grid.Row>
