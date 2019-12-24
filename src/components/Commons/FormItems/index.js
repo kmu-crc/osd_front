@@ -8,3 +8,8 @@ export * from "./MultiUpload";
 export * from "./AsyncInput";
 export * from "./DeleteItems";
 export * from "./FormTextArea";
+export * from "./FormDropBox";
+export * from "./FormTag";
+export * from "./FormAddress";
+export * from "./FormExp";
+export * from "./FormEquipment";

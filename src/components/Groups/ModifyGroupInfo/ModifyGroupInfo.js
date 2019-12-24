@@ -3,13 +3,22 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { Grid, Header, Form } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import { FormInput, FormThumbnail } from "components/Commons/FormItems";
+import { FormInput, FormThumbnail,FormDropBox } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
 
 // css styling
-
+const category = [
+  {text:"특허권",value:0},
+  {text:"디자인권",value:1},
+  {text:"기술자문",value:2},
+  {text:"기술상담",value:3},
+  {text:"경험",value:4},
+  {text:"정보/데이터",value:5},
+  {text:"아이디어/노하우",value:6},
+  {text:"제품",value:7},
+];
 const Wrapper = styled.div`
   width: 100%;
   padding: 0!important;
@@ -144,6 +153,10 @@ class ModifyGroupInfo extends Component {
                     getValue={this.onChangeValue}
                     validates={["Required"]}
                     onBlur={()=>{this.liveCheck("title")}}
+                  />
+                  <Label>갤러리 카테고리</Label>
+                  <FormDropBox
+                    options={category}
                   />
                   <Label>갤러리 설명</Label>
                   <FormInput
