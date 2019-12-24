@@ -1,5 +1,12 @@
 import Authentication from "./Authentication";
 import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignCardComment, DesignIssueList, DesignIssueComment, DesignLike, DeleteDesign, ChangeToProject, UpdateDesign, DesignSourceDetail, DesignWaitingList, DesignDetailComment } from "reducers/Designs";
+import {
+    ProductDetail, ProductLike, ProductList,
+    //ProductDetailView, ProductDetailStep,
+    // ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,
+    // ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,
+    // ProductWaitingList, ProductDetailComment
+} from "reducers/Products";
 import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
 import { SignIn, SignUp, FindPw } from "reducers/Registration";
@@ -14,48 +21,20 @@ import OpenDesign from "reducers/OpenDesign";
 import { combineReducers } from "redux";
 
 export default combineReducers({
+    // PRODUCT
+    ProductDetail, ProductLike, ProductList,
+    // DESIGN
+    DesignList, DesignDetail,
+    DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignForked, DesignSourceDetail, DesignCardComment, DesignDetailComment, DesignIssueList,
+    DesignIssueComment, DesignLike, DeleteDesign,
+    ChangeToProject, UpdateDesign, DesignWaitingList,
+    // GROUP
+    CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList,
+    MyList, DeleteGroup, GroupIssue, MyExistList, DesignerList, DesignerLike, DesignerDetail,
+    // MY
+    SignIn, SignUp, FindPw, UserInfo, Categorys, CategoryAll, form: formReducer,
+    MyDetail, MyJoin,
+    // ETC
     Authentication,
-    DesignList,
-    DesignDetail,
-    DesignDetailView,
-    DesignDetailStep,
-    DesignDetailStepCard,
-    DesignForked,
-    DesignSourceDetail,
-    DesignCardComment,
-    DesignDetailComment,
-    DesignIssueList,
-    DesignIssueComment,
-    DesignLike,
-    DeleteDesign,
-    ChangeToProject,
-    UpdateDesign,
-    DesignWaitingList,
-    CreateGroup,
-    GroupLike,
-    GroupList,
-    GroupDetail,
-    GroupWaitingList,
-    MyList,
-    DeleteGroup,
-    GroupIssue,
-    MyExistList,
-    DesignerList,
-    DesignerLike,
-    DesignerDetail,
-    SignIn,
-    SignUp,
-    FindPw,
-    UserInfo,
-    Categorys,
-    CategoryAll,
-    form: formReducer,
-    MyDetail,
-    MyJoin,
-    Search,
-    SearchIssue,
-    TopList,
-    OpenDesign,
-    MessageList,
-    MessageDetail
+    Search, SearchIssue, TopList, OpenDesign, MessageList, MessageDetail
 });
