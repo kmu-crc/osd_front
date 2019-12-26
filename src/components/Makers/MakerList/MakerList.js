@@ -95,38 +95,29 @@ class MakerList extends Component {
     }
 
     render() {
-        const { sort, cate1, cate2 } = this.props;
+        const { sort, cate1, cate2, Count } = this.props;
         const Header = () => {
             const cate1List = this.props.category1;
             const cate2List = this.props.category2;
 
-            if (cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0) {
-                const cate1Name = this.props.cate1 && this.props.cate1 !== "null"
-                    ? cate1List[this.props.cate1]
-                    : null;
-                const n = parseInt(this.props.cate1, 10);
-                const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
-                    ? cate2List[n].filter(sub => sub.value === this.props.cate2)
-                    : null;
-                return (
-                    <Head>
-                        <span>디자이너 </span>
-                        {this.props.cate1 && this.props.cate1 !== "null" &&
-                            <span> > {cate1Name.text} </span>
-                        }
-                        {this.props.cate2 && this.props.cate2 !== "null" &&
-                            <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
-                        }
-                        <span> ({NumberFormat(this.props.Count)})</span>
-                        <div className="Sorting">
-                            <Sorting handleClick={this.sortChange}
-                                placeholder={sort} />
-                        </div>
-                    </Head>
-                );
-            } else {
-                return null;
+            if (!(cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0)) {
+                return <div>nothing</div>;
             }
+
+            const cate1Name = cate1 && cate1 !== "null" ? cate1List[cate1] : null;
+            const cate2Name = cate2 && cate2 !== "null" ? cate2List[parseInt(cate1, 10)].filter(sub => sub.value === parseInt(cate2, 10)) : null;
+
+            return (
+                <Head>
+                    <span>메이커 </span>
+                    {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
+                    {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
+                    <span> ({NumberFormat(Count)})</span>
+                    <div className="Sorting">
+                        <Sorting handleClick={this.sortChange} placeholder={sort} />
+                    </div>
+                </Head>
+            );
         };
 
         return (

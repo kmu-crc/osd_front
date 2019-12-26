@@ -3,10 +3,11 @@ import DesignerDetailContainer from "containers/Designer/DesignerDetailContainer
 
 export class DesignerDetailPage extends Component {
   render() {
-    return(
-        <DesignerDetailContainer id={this.props.match.params.id}
-                                 type={this.props.match.params.type? this.props.match.params.type : null}
-                                 history={this.props.history}/>
+    return (
+      <DesignerDetailContainer
+        history={this.props.history}
+        id={this.props.match.params.id}
+        type={this.props.match.params.type ? this.props.match.params.type : null} />
     );
   }
 }

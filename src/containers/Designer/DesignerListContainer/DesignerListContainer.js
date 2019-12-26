@@ -4,13 +4,8 @@ import { GetDesignerListRequest, GetDesignerTotalCountRequest } from "actions/De
 import DesignerList from "components/Designers/DesignerList";
 
 class DesignerListContainer extends Component {
-
   render() {
-    return(
-      <div>
-        <DesignerList {...this.props}/>
-      </div>
-    );
+    return (<DesignerList {...this.props} />);
   }
 }
 
@@ -27,12 +22,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignerListRequest: (page, sort) => {
-        return dispatch(GetDesignerListRequest(page, sort))
-      },
-      GetDesignerTotalCountRequest: (category1, category2) => {
-        return dispatch(GetDesignerTotalCountRequest(category1, category2))
-      }
+    GetDesignerListRequest: (page, sort) => {
+      return dispatch(GetDesignerListRequest(page, sort))
+    },
+    GetDesignerTotalCountRequest: (category1, category2) => {
+      return dispatch(GetDesignerTotalCountRequest(category1, category2))
+    }
   };
 };
 

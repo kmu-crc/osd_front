@@ -3,8 +3,8 @@ import styled from "styled-components";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import ScrollTopDesignContainer from "containers/Commons/ScrollTopDesignContainer";
-// import ScrollRecentlyViewedContainer from "containers/Commons/ScrollRecentlyViewedContainer";
 import MainSlide from "./Slide";
+// import ScrollRecentlyViewedContainer from "containers/Commons/ScrollRecentlyViewedContainer";
 
 // CSS STYLE
 const ImgWrapper = styled.div``;
