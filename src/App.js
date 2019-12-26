@@ -54,14 +54,12 @@ class App extends Component {
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
-            {/* <Route path="/bedesigner" component={RequiresAuth(InserUserDetailPage)} /> */}
-            <Route path="/createDesigner" component={CreateDesignerPage} />
+            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             {/* maker */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
-            {/* <Route path="/bemaker" component={RequiresAuth(InserUserDetailPage)} /> */}
-            <Route path="/createMaker" component={CreateMakerPage} />
+            <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
             {/* gallery */}
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
