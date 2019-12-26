@@ -349,9 +349,9 @@ class Header extends Component {
 
             <Menu>
               <Logo href="/" />
-              <MenuItem><a href="/product" className={design_menu_bold}>상품</a></MenuItem>
               <MenuItem><a href="/designer" className={designer_menu_bold}>디자이너</a></MenuItem>
               <MenuItem><a href="/maker" className={maker_menu_bold}>메이커</a></MenuItem>
+              <MenuItem><a href="/product" className={design_menu_bold}>상품</a></MenuItem>
               <MenuItem><a href="/createProduct"><Button size="small" round={true} color="Solid">상품 등록</Button></a></MenuItem>
             </Menu>
 

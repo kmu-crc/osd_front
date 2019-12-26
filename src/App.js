@@ -10,9 +10,9 @@ import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import MakerListPage, { MakerDetailPage } from "pages/MakerPage";
 import CreateProductPage from "pages/CreateProductPage";
 import ModifyProductPage from "pages/ModifyProductPage";
-import CreateGroupPage from "pages/CreateGroupPage";
+import CreateGalleryPage from "pages/CreateGroupPage";
 // import ModifyGroupPage from "pages/ModifyGroupPage";
-import InserUserDetailPage from "pages/InserUserDetailPage"
+// import InserUserDetailPage from "pages/InserUserDetailPage"
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
@@ -29,14 +29,14 @@ import CreateDesignerPage from 'pages/CreateDesignerPage';
 import ModifyDesignerPage from 'pages/ModifyDesignerPage';
 import CreateMakerPage from 'pages/CreateMakerPage';
 import ModifyMakerPage from 'pages/ModifyMakerPage';
+import DesignerBoardListPage, { CreateDesignerBoardPage, DesignerBoardDetailPage } from "pages/DesignerBoardPage";
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
 class App extends Component {
   componentDidMount() {
-    this.props.GetCategoryLevel1Request().then(() => {
-      this.props.GetCategoryLevel2Request(null);
-    });
+    this.props.GetCategoryLevel1Request()
+      .then(this.props.GetCategoryLevel2Request(null));
     this.props.GetCategoryAllRequest();
   }
   render() {
@@ -54,17 +54,18 @@ class App extends Component {
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
-            {/* <Route path="/bedesigner" component={RequiresAuth(InserUserDetailPage)} /> */}
-            <Route path="/createDesigner" component={CreateDesignerPage} />
+            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
+            <Route path="/designerBoardDetail/:id/:type?" component={DesignerBoardDetailPage} />
+            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             {/* maker */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
-            {/* <Route path="/bemaker" component={RequiresAuth(InserUserDetailPage)} /> */}
-            <Route path="/createMaker" component={CreateMakerPage} />
+            <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
             {/* gallery */}
-            <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
+            <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
             {/* etc */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />

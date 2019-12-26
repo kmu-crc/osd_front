@@ -110,38 +110,35 @@ class ProductList extends Component {
 
       const options = ['kinds'];
       const { ops } = this.state;
-      return (
-        <Head>
-          <div>
-            <span>디자인</span>
-            {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
-            {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
-            <span>({NumberFormat(Count)})</span>
-          </div>
+      return (<Head>
+        <div>
+          <span>디자인</span>
+          {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
+          {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
+          <span>({NumberFormat(Count)})</span>
+        </div>
 
-          <div style={{ width: "max-content", marginLeft: "auto", marginBottom: "10px" }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {options.map(opt_name =>
-                ops[opt_name] && ops[opt_name].map(item => {
-                  // console.log("test elements:", item)
-                  return <div key={item} style={{ display: "flex", flexDirection: "row", marginRight: "10px", height: "25px", fontSize: "18px" }}>
-                    <div style={{ cursor: "default", padding: "5px", width: "max-content", backgroundColor: "#707070", color: "#FFFFFF" }}>{item}</div>
-                    <div onClick={() => this.removeFilter(opt_name, item)} style={{ cursor: "pointer", padding: "5px", width: "max-content", border: "1px solid #707070" }}>x</div>
-                  </div>
-                }))}
-              <Button onClick={this.openFilterDialog}><i className="filter icon" />필터</Button>
-            </div>
-            {filter ?
-              <Modal onLoad visible={filter} effect="fadeInLeft" >
-                <ProductFilter ops={ops} close={this.closeFilterDialog} reset={this.reset} submit={this.filtering} />
-              </Modal> : null}
+        <div style={{ width: "max-content", marginLeft: "auto", marginBottom: "10px" }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            {options.map(opt_name =>
+              ops[opt_name] && ops[opt_name].map(item => {
+                return <div key={item} style={{ display: "flex", flexDirection: "row", marginRight: "10px", height: "25px", fontSize: "18px" }}>
+                  <div style={{ cursor: "default", padding: "5px", width: "max-content", backgroundColor: "#F00", color: "#FEFEFE" }}>{item}</div>
+                  <div onClick={() => this.removeFilter(opt_name, item)} style={{ cursor: "pointer", padding: "5px", width: "max-content", border: "1px solid #707070" }}>x</div>
+                </div>
+              }))}
+            <Button onClick={this.openFilterDialog}><i className="filter icon" />필터</Button>
           </div>
+          {filter ?
+            <Modal onLoad visible={filter} effect="fadeInLeft" >
+              <ProductFilter ops={ops} close={this.closeFilterDialog} reset={this.reset} submit={this.filtering} />
+            </Modal> : null}
+        </div>
 
-          <div className="Sorting">
-            <Sorting handleClick={this.sortChange} placeholder={sort} />
-          </div>
-        </Head>
-      );
+        <div className="Sorting">
+          <Sorting handleClick={this.sortChange} placeholder={sort} />
+        </div>
+      </Head>);
     };
 
     return (
