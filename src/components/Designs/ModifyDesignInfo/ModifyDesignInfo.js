@@ -264,7 +264,7 @@ const InputStyle = styled.input.attrs({type:'text'})`
    padding: 10px;
 `;
 
-class CreateDesignForm extends Component {
+class ModifyDesignInfo extends Component {
   constructor(props) {
 
     super(props);
@@ -484,4 +484,4 @@ class CreateDesignForm extends Component {
   }
 }
 
-export default CreateDesignForm;
+export default ModifyDesignInfo;
