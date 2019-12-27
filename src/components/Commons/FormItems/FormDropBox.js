@@ -18,6 +18,7 @@ export class FormDropBox extends Component{
     }
 
     onChangeValue(event,{value}){
+        this.props.onChangeValue&& this.props.onChangeValue({value}.value);
     }
     render(){
         return(

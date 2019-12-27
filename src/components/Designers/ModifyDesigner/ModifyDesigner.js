@@ -85,24 +85,25 @@ class ModifyDesigner extends Component {
                     onChange={()=>{this.liveCheck("thumbnail")}}
                     validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                   />
-                  <Label>디자이너 카테고리</Label>
+                  <Label>카테고리</Label>
                   <FormDropBox
                     name="explanation"
                     placeholder="디자이너 설명을 입력해주세요."
                     options={category}
                   />
-                  <Label>디자이너 설명</Label>
+                  <Label>태그</Label>
+                  <FormTag
+                  placeholder="태그를 입력해주세요(한글10자 영문20자 이내)"/>
+                  <Label>설명</Label>
                   <FormInput
                     name="explanation"
                     placeholder="디자이너 설명을 입력해주세요."
                     getValue={this.onChangeValue}
                   />
-                  <Label>디자이너 위치</Label>
+                  <Label>위치</Label>
                   <FormAddress/>
-                  <Label>디자이너 경력</Label>
+                  <Label>경력</Label>
                   <FormExp/>
-                  <Label>태그</Label>
-                  <FormTag/>
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
