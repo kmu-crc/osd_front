@@ -453,16 +453,6 @@ export const UNLIKE_DESIGNER_FAILURE = "UNLIKE_DESIGNER_FAILURE";
 // commons
 ////////////////////////////////////////////////////////////////////////////
 
-// get cagetgory level1
-export const GET_CATEGORY_LEVEL1 = "GET_CATEGORY_LEVEL1";
-export const GET_CATEGORY_LEVEL1_SUCCESS = "GET_CATEGORY_LEVEL1_SUCCESS";
-export const GET_CATEGORY_LEVEL1_FAILURE = "GET_CATEGORY_LEVEL1_FAILURE";
-
-// get cagetgory level2
-export const GET_CATEGORY_LEVEL2 = "GET_CATEGORY_LEVEL2";
-export const GET_CATEGORY_LEVEL2_SUCCESS = "GET_CATEGORY_LEVEL2_SUCCESS";
-export const GET_CATEGORY_LEVEL2_FAILURE = "GET_CATEGORY_LEVEL2_FAILURE";
-
 // get category level2 All
 export const GET_CATEGORY_ALL = "GET_CATEGORY_ALL";
 export const GET_CATEGORY_ALL_SUCCESS = "GET_CATEGORY_ALL_SUCCESS";

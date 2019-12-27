@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
 import newimg from "source/new-img.png";
-// import { Header, Grid, Form } from "semantic-ui-react";
-// import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect } from "components/Commons/FormItems";
-// import StyleGuide from "StyleGuide";
 import Button from "components/Commons/Button";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown';
@@ -242,7 +239,7 @@ const InputStyle = styled.input.attrs({ type: 'text' })`
 class CreateProductForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { openCreateOption: false, loading: false, imgs: [], cate1: null, cate2: null, is_custom: false };
+    this.state = { openCreateOption: false, loading: false, imgs: [], cate1: null, cate2: null, category: [], is_custom: false };
     this.handleImageChange = this.handleImageChange.bind(this);
   };
   async handleImageChange(event) {
@@ -252,7 +249,7 @@ class CreateProductForm extends Component {
     const filename = file.name.replace(/\s/g, '');
     await imgs.push({ src: URL.createObjectURL(file), value: await this.readFile(file), name: filename, key: "thumbnail[]" });
     await this.setState({ imgs: imgs });
-    await console.log(this.state.imgs);
+    // await console.log(this.state.imgs);
   };
   readFile = (inputFile) => {
     const reader = new FileReader();
@@ -307,6 +304,15 @@ class CreateProductForm extends Component {
   getMember = data => {
     this.props.SearchMemberRequest(null, { key: data }, this.props.token);
   };
+  handleCate1 = (_, { value: v }) => {
+    _.preventDefault();
+    const category = [...this.props.category2[v]];
+    this.setState({ cate1: v, category: category });
+  };
+  handleCate2 = (_, { value: v }) => {
+    _.preventDefault();
+    this.setState({ cate2: v });
+  };
 
   render() {
     const { imgs, loading, category } = this.state; // const { category } = this.props;
@@ -347,30 +353,26 @@ class CreateProductForm extends Component {
                       className="dropdown-style"
                       placeholder={"카테고리를 선택해주세요."}
                       onChange={this.handleCate1}
-                      options={category || [{ key: "all", value: "all", text: "전체" },]} />
+                      options={this.props.category1 || [{ key: "all", value: "all", text: "전체" },]} />
                     {this.state.cate1 ?
                       <Dropdown
                         className="dropdown-style giveaspace"
                         placeholder={"세부 카테고리를 선택해주세요."}
                         onChange={this.handleCate2}
-                        options={category.find(cate => cate.uid === this.state.cate1).child || [{ key: "all", value: "all", text: "전체" },]} /> : null}
+                        options={this.state.category || [{ key: "all", value: "all", text: "전체" },]} /> : null}
                   </div>
                 </div>
                 <div className="row">
                   <div className="text">상품 이름</div>
-                  <div className="input">
-                    <InputStyle width="300" name="name" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
+                  <div className="input"><InputStyle width="300" name="name" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
                 </div>
                 <div className="row">
                   <div className="text">상품 설명</div>
-                  <div className="input">
-                    <TextBox />
-                  </div>
+                  <div className="input"><TextBox /></div>
                 </div>
                 <div className="row">
                   <div className="text">태그</div>
-                  <div className="input">
-                    <InputStyle name="tag" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
+                  <div className="input"><InputStyle name="tag" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
                 </div>
               </div>
             </ProductDescription >

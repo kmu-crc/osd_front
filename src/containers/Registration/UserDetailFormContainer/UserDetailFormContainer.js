@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserDetailForm from "components/Registration/UserDetailFrom";
 import { InsertUserDetailRequest } from "actions/Users";
-import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
+// import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 
 class UpdateUserInfoContainer extends Component {
   render() {
@@ -16,8 +16,8 @@ class UpdateUserInfoContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
-    category1: state.Categorys.status.level1,
-    category2: state.Categorys.status.level2
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2
   };
 };
 
@@ -26,13 +26,13 @@ const mapDispatchToProps = (dispatch) => {
     InsertUserDetailRequest: (data, token) => {
       return dispatch(InsertUserDetailRequest(data, token));
     },
-    GetCategoryLevel1Request: () => {
-      return dispatch(GetCategoryLevel1Request());
-    },
-    GetCategoryLevel2Request: (id) => {
-      return dispatch(GetCategoryLevel2Request(id));
-    }
-  };
+  //   GetCategoryLevel1Request: () => {
+  //     return dispatch(GetCategoryLevel1Request());
+  //   },
+  //   GetCategoryLevel2Request: (id) => {
+  //     return dispatch(GetCategoryLevel2Request(id));
+  //   }
+  // };
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UpdateUserInfoContainer));

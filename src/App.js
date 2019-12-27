@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 // redux
-import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
+import { GetCategoryAllRequest } from "actions/Categorys";
 // market
 import ProductListPage, { ProductDetailPage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
@@ -35,8 +35,6 @@ import ClientTemplate from 'templates/ClientTemplate';
 
 class App extends Component {
   componentDidMount() {
-    this.props.GetCategoryLevel1Request()
-      .then(this.props.GetCategoryLevel2Request(null));
     this.props.GetCategoryAllRequest();
   }
   render() {
@@ -51,6 +49,7 @@ class App extends Component {
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
             <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
+
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
@@ -59,13 +58,16 @@ class App extends Component {
             <Route path="/designerBoardDetail/:id/:type?" component={DesignerBoardDetailPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
+
             {/* maker */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
+
             {/* gallery */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
+
             {/* etc */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
@@ -90,15 +92,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetCategoryLevel1Request: () => {
-      return dispatch(GetCategoryLevel1Request());
-    },
-    GetCategoryLevel2Request: (id) => {
-      return dispatch(GetCategoryLevel2Request(id));
-    },
-    GetCategoryAllRequest: () => {
-      return dispatch(GetCategoryAllRequest());
-    }
+    GetCategoryAllRequest: () => dispatch(GetCategoryAllRequest())
   };
 };
 

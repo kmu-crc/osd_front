@@ -251,24 +251,30 @@ class DesignerDetail extends Component {
             <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
               <Section>
                 <h4>소개</h4>
-                <div className="text"><TextFormat lines={3} txt={DesignerDetail.about_me} /></div>
+                <div className="text">
+                  <TextFormat lines={3} txt={DesignerDetail.about_me} /></div>
               </Section>
               <Section>
                 <h4>거주지역</h4>
-                <div className="text"><TextFormat lines={3} txt={DesignerDetail.location || "*거주지역*"} /></div>
+                <div className="text">
+                  <TextFormat lines={3} txt={DesignerDetail.location || "*거주지역*"} /></div>
               </Section>
               <Section>
                 <h4>전문분야</h4>
-                <div className="text"><TextFormat lines={3} txt={DesignerDetail.categoryName || "*카테고리*"} /></div>
-                <div className="text">{!DesignerDetail.tag ? "" : DesignerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
+                <div className="text">
+                  <TextFormat lines={3} txt={DesignerDetail.categoryName || "*카테고리*"} /></div>
+                <div className="text">
+                  {!DesignerDetail.tag ? "" : DesignerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
               </Section>
               <Section>
                 <h4>디자인경험</h4>
-                <div className="text"><TextFormat lines={3} txt={DesignerDetail.experience || "*경험*"} /></div>
+                <div className="text">
+                  <TextFormat lines={3} txt={DesignerDetail.experience || "*경험*"} /></div>
               </Section>
               <Section>
                 <h4>디자인 상품</h4>
-                <div className="text"><TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /></div>
+                <div className="text">
+                  <TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /></div>
               </Section>
 
               <Section>
