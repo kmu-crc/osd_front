@@ -12,7 +12,7 @@ import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyLis
 import { SignIn, SignUp, FindPw } from "reducers/Registration";
 import { UserInfo, MyDetail, MyJoin } from "reducers/Users";
 import { MessageList, MessageDetail } from "reducers/Messages";
-import { Categorys, CategoryAll } from "reducers/Categorys";
+import { CategoryAll } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
 import { Search, SearchIssue, TopList } from "reducers/Commons"
 import { DesignForked } from "reducers/Designs/DesignForked"
@@ -32,7 +32,7 @@ export default combineReducers({
     CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList,
     MyList, DeleteGroup, GroupIssue, MyExistList, DesignerList, DesignerLike, DesignerDetail,
     // MY
-    SignIn, SignUp, FindPw, UserInfo, Categorys, CategoryAll, form: formReducer,
+    SignIn, SignUp, FindPw, UserInfo, CategoryAll, form: formReducer,
     MyDetail, MyJoin,
     // ETC
     Authentication,

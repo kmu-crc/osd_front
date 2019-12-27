@@ -189,8 +189,8 @@ const AlarmLabel = styled.div`
   width: 30px;
   height: 30px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  margin-top: -30px;
+  margin-left: 10px;
   color: white;
   background-color: red;
   border-radius: 15px;
