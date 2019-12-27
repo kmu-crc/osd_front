@@ -7,21 +7,32 @@ import noimg from "source/noimg.png";
 import newimg from "source/new-img.png";
 
 
-import { FormInput, FormThumbnail, FormCheckBox, AsyncInput, FormSelect ,FormDropBox} from "components/Commons/FormItems";
+import { FormTag,FormDropBox,FormInput,FormTextArea} from "components/Commons/FormItems";
 import {FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 
 import CreateOption from "components/Designs/CreateDesignForm/CreateOption/CreateOption";
 
+const patent_option = [
+  {text:"양도",value:0},
+  {text:"독점 사용권",value:1},
+  {text:"일반 사용권",value:2}
+]
+const counsel_option = [
+  {text:"온/오프라인",value:0},
+  {text:"방문지도",value:1},
+  {text:"팀/개인교육",value:2}
+]
 const newCategory = [
-  {text:"특허권",value:0},
-  {text:"디자인권",value:1},
-  {text:"기술자문",value:2},
-  {text:"기술상담",value:3},
-  {text:"경험",value:4},
-  {text:"정보/데이터",value:5},
-  {text:"아이디어/노하우",value:6},
-  {text:"제품",value:7},
+  {text:"디자인",value:0},
+  {text:"특허권",value:1},
+  {text:"디자인권",value:2},
+  {text:"기술자문",value:3},
+  {text:"기술상담",value:4},
+  {text:"경험",value:5},
+  {text:"정보/데이터",value:6},
+  {text:"아이디어/노하우",value:7},
+  {text:"제품",value:8},
 ];
 const TxtSz = { s: 12, m: 16, M: 20, l: 24, b: 28 };
 const MAX_PRODUCT_IMAGE_COUNT = 5;
@@ -106,7 +117,6 @@ const ProductImage = styled.div`
 const ProductDescription = styled.div`
   display:flex;
   margin-bottom:50px;
-
   .title-wrapper {
     margin-right:80px;
     padding-top: 20px;
@@ -121,22 +131,25 @@ const ProductDescription = styled.div`
     }
   }
   .description-wrapper {
+
     padding-top:10px;
     margin-left: 10px;
     margin-right: 10px;
     background-color: white;
+    width:100%;
     .row {
       display: flex;
       flex-direction: row;
-      padding-top: 5px;
-      padding-bottom: 10px;
+      margin-bottom: 10px;
+      margin-top: 10px;
       .text {
         width: 210px;
         margin-left: 15px;
       }
       .input {
-        display: flex;
-        flex-direction: row;
+        // display: flex;
+        // flex-direction: row;
+        width:100%;
       }
       .dropdown-style {
         margin: 0;
@@ -170,10 +183,11 @@ const ProductPrice = styled.div`
     }
   }
   .price-wrapper {
+    width:100%;
     margin-left: 10px;
     margin-right: 10px;
     background-color: white;
- 
+    width:100%;
     .option {
       display: flex;
       flex-direction: row;
@@ -184,13 +198,11 @@ const ProductPrice = styled.div`
         margin-left: 15px;
       }
       .input {
-        ;
+        width:100%;
       }
     }
     .button {
       border-radius: 5px;
-      margin-left: auto;
-      margin-right: 25px;
       width: 175px;
       height: 32px;
       line-height: 32px;
@@ -219,11 +231,10 @@ const ProductDelivery = styled.div`
     }
   }
   .delivery-method-wrapper {
+    width:100%;
     margin-left: 10px;
     margin-right: 10px;
-    margin-bottom: 10px;
-    background-color: white;
- 
+    background-color: white; 
     .option {
       display: flex;
       flex-direction: row;
@@ -234,7 +245,7 @@ const ProductDelivery = styled.div`
         margin-left: 15px;
       }
       .input {
-        ;
+        width:100%;
       }
     }
   }
@@ -255,9 +266,18 @@ const InputStyle = styled.input.attrs({type:'text'})`
 
 class CreateDesignForm extends Component {
   constructor(props) {
+
     super(props);
-    this.state = { openCreateOption: false, loading: false, imgs: [], cate1: null, cate2: null, is_custom: false };
+
+    this.state = { 
+      selectCategory:-1,
+      openCreateOption: false, 
+      loading: false, 
+      imgs: [], cate1: null, cate2: null, 
+      is_custom: false };
+
     this.handleImageChange = this.handleImageChange.bind(this);
+    this.onSelectCategory = this.onSelectCategory.bind(this);
   };
   async handleImageChange(event){
     if(event.target.files.length<=0)return;
@@ -299,6 +319,13 @@ class CreateDesignForm extends Component {
     FormControl(this.state[target]);
   };
 
+  onSelectCategory(value)
+  {
+    this.setState({
+      selectCategory:value
+    });
+  }
+
   onSubmit = async e => {
     e.preventDefault();
     this.state.member.value = JSON.stringify(this.state.member.value);
@@ -327,14 +354,95 @@ class CreateDesignForm extends Component {
 
   render() {
     const { imgs, loading, category } = this.state; // const { category } = this.props;
+
+    const SectionDevelivery = ()=>{
+      return(
+        <ProductDelivery>
+            <div className="title-wrapper">
+              <div className="title">배송</div></div>
+            <div className="delivery-method-wrapper">
+              <div className="option">
+                <div className="text">배송기간</div>
+                <div className="input">
+                  <FormInput name="delivery_days" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
+              <div className="option">
+                <div className="text">배송업체</div>
+                <div className="input">
+                  <FormInput name="delivery_company" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
+              <div className="option">
+                <div className="text">배송비</div>
+                <div className="input">
+                  <FormInput name="delivery_cost" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
+            </div>
+        </ProductDelivery>
+      );
+    }
+
+    const SectionDescription = ()=>{
+      return(
+        <ProductDescription>
+        <div className="title-wrapper">
+          <div className="title">설명</div></div>
+        <div className="description-wrapper">
+
+          <div className="row">
+            <div className="text">상품 이름</div>
+            <div className="input">
+              <FormInput name="name" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
+          </div>
+          <div className="row">
+            <div className="text">상품 설명</div>
+            <div className="input">
+              <FormTextArea name="description" placeholder="상품 설명을 입력해주세요"/>
+            </div>
+          </div>
+          
+            
+            
+              {this.state.selectCategory === 1 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option}/></div></div>:null}
+              {this.state.selectCategory === 2 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option}/></div></div>:null}
+              {this.state.selectCategory === 3 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option}/></div></div>:null}
+              {this.state.selectCategory === 4 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option}/></div></div>:null}          
+          
+          <div className="row">
+            <div className="text">태그</div>
+            <div className="input">
+              <FormTag placeholder = "상품 태그를 입력해주세요(한글10자이내 영문 20자이내)"/></div>
+          </div>
+        </div>
+      </ProductDescription >
+      );
+    }
+
+    const SectionPrice = () =>{
+      return(
+        <ProductPrice>
+        <div className="title-wrapper"><div className="title">가격</div></div>
+        <div className="price-wrapper">
+          <div className="option">
+            <div className="text">가격</div>
+            <div className="input"><FormInput name="price" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
+          <div className="option">
+            <div className="text">재고</div>
+            <div className="input"><FormInput name="amount" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
+          <div className="option">
+            <div className="text">옵션</div>
+            <div className="input"><div className="button" onClick={this.onClickCreateOption}>옵션정보등록</div>
+            </div>
+          </div>
+        </div>
+      </ProductPrice>
+      );
+    }
+
     return (
       <React.Fragment>
          <CreateOption handleSetOptions={this.handleSetOptions} closeOption={this.onCloseCreateOption} open={this.state.openCreateOption} />
-      <form onSubmit={this.onSubmit}>
+      {/* <form onSubmit={this.onSubmit}> */}
         <FromFieldCard>
           <ProductImage>
           <div className="title-wrapper">
-            <div className="title">상품 이미지</div>
+            <div className="title">이미지</div>
             {/* <div className="text">판매 상품의 이미지를 업로드 해주세요. 최대 5장까지 업로드 가능합니다.</div> */}
             </div>
           <div className="img-list-wrapper">
@@ -352,183 +460,28 @@ class CreateDesignForm extends Component {
               </div> : null}
           </div>
         </ProductImage>
-
         <ProductDescription>
-        <div className="title-wrapper">
-          <div className="title">상품설명</div></div>
-        <div className="description-wrapper">
-          <div className="row">
+          <div className="title-wrapper">
+          <div className="title">종류</div></div>
+          <div className="description-wrapper">
+            <div className="row">
             <div className="text">카테고리</div>
             <div className="input">
-              <FormDropBox options ={newCategory}/>
-              {/* <Dropdown
-                className="dropdown-style"
-                placeholder={"카테고리를 선택해주세요."}
-                onChange={this.handleCate1}
-                options={category || [{ key: "all", value: "all", text: "전체" },]} />
-              {this.state.cate1 ?
-                <Dropdown
-                  className="dropdown-style giveaspace"
-                  placeholder={"세부 카테고리를 선택해주세요."}
-                  onChange={this.handleCate2}
-                  options={category.find(cate => cate.uid === this.state.cate1).child || [{ key: "all", value: "all", text: "전체" },]} /> : null} */}
-            </div>
+              <FormDropBox onChangeValue={this.onSelectCategory} options ={newCategory}/>
+           </div>
           </div>
-          <div className="row">
-            <div className="text">상품 이름</div>
-            <div className="input">
-              <InputStyle width="300" name="name" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
           </div>
-          <div className="row">
-            <div className="text">상품 설명</div>
-            <div className="input">
-              <TextBox/>
-            </div>
-          </div>
-          <div className="row">
-            <div className="text">태그</div>
-            <div className="input">
-              <InputStyle name="tag" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
-          </div>
-        </div>
-      </ProductDescription >
-
-      <ProductPrice>
-        <div className="title-wrapper"><div className="title">가격</div></div>
-        <div className="price-wrapper">
-          <div className="option">
-            <div className="text">가격</div>
-            <div className="input"><InputStyle name="price" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-          <div className="option">
-            <div className="text">재고</div>
-            <div className="input"><InputStyle name="amount" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-          <div className="option">
-            <div className="text">옵션</div>
-            <div className="input"><div className="button" onClick={this.onClickCreateOption}>옵션정보등록</div>
-            </div>
-          </div>
-        </div>
-      </ProductPrice>
-
-      <ProductDelivery>
-        <div className="title-wrapper">
-          <div className="title">배송</div></div>
-        <div className="delivery-method-wrapper">
-          <div className="option">
-            <div className="text">배송기간</div>
-            <div className="input">
-              <InputStyle name="delivery_days" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-          <div className="option">
-            <div className="text">배송업체</div>
-            <div className="input">
-              <InputStyle name="delivery_company" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-          <div className="option">
-            <div className="text">배송비</div>
-            <div className="input">
-              <InputStyle name="delivery_cost" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-        </div>
-      </ProductDelivery>
+        </ProductDescription>
+        {this.state.selectCategory !== -1? <SectionDescription/>:null}
+              {this.state.selectCategory === 8? <SectionDevelivery/>:null}
+      
 
         </FromFieldCard>
         <Button type="submit">등록</Button>
-      </form>
+      {/* </form> */}
       </React.Fragment>
     );
   }
 }
 
 export default CreateDesignForm;
-
-
-
-{/* <Grid>
-<Grid.Column mobile={16} computer={4}>
-  <FormHeader as="h2">디자인 정보</FormHeader>
-</Grid.Column>
-<Grid.Column mobile={16} computer={12}>
-  <Form.Group widths="equal" className="clearFix">
-    <Label>디자인 제목</Label>
-    <FormInput
-      name="title"
-      maxLength="100"
-      placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
-      getValue={this.onChangeValue}
-      validates={["Required"]}
-      onBlur={()=>{this.liveCheck("title")}}
-    />
-  </Form.Group>
-  <Form.Group widths="equal" className="clearFix">
-    <Label>디자인 설명</Label>
-    <FormInput
-      name="explanation"
-      maxLength="1000"
-      placeholder="디자인 설명을 입력해주세요. (1000자 이내)"
-      getValue={this.onChangeValue}
-    />
-  </Form.Group>
-  <Form.Group widths="equal" className="clearFix">
-    <Label>썸네일 등록</Label>
-    <FormThumbnail
-      name="thumbnail"
-      placeholder="썸네일 등록"
-      getValue={this.onChangeValue}
-      onChange={()=>{this.liveCheck("thumbnail")}}
-      validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
-    />
-  </Form.Group>
-  <Form.Group widths="equal" className="clearFix">
-    <Label>카테고리</Label>
-    <FormSelect
-      selection={true}
-      options={this.props.cate1}
-      name="category_level1"
-      getValue={this.onChangeValue}
-      onChange={()=>this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
-    />
-    <FormSelect
-      selection={true}
-      options={this.props.cate2}
-      name="category_level2"
-      getValue={this.onChangeValue}
-    />
-  </Form.Group>
-  <Form.Group widths="equal" className="clearFix">
-    <Label>멤버 초대</Label>
-    <AsyncInput
-      name="member"
-      getValue={this.onChangeValue}
-      asyncFn={this.getMember}
-      list={this.props.members}
-    />
-  </Form.Group>
-</Grid.Column>
-</Grid>
-</FromFieldCard>
-<FromFieldCard>
-<Grid>
-<Grid.Column mobile={16} computer={4}>
-  <FormHeader as="h2">라이센스</FormHeader>
-</Grid.Column>
-<Grid.Column mobile={16} computer={12}>
-  <Form.Group widths={4}>
-    <FormCheckBox
-      name="is_commercial"
-      placeholder="상업적 이용 가능"
-      getValue={this.onChangeValue}
-      value={true}
-    />
-    <FormCheckBox
-      name="is_display_creater"
-      placeholder="원작자 표시"
-      getValue={this.onChangeValue}
-      value={true}
-    />
-    <FormCheckBox
-      name="is_modify"
-      placeholder="수정 가능"
-      getValue={this.onChangeValue}
-      value={true}
-    />
-  </Form.Group>
-</Grid.Column>
-</Grid> */}

@@ -61,6 +61,52 @@ const TagPiece = styled.div`
       padding:0px 2px;
   }
 `
+const WarningBox = styled.div`
+.showani{
+    position:absolute;
+    margin-top:5px;
+    border-radius:5px;
+    padding:5px;
+    background-color:#707070;
+    color:white;
+    opacity:0.0;
+    animation-name:fadeinout;
+    animation-duration:3s;
+
+    @keyframes fadeinout{
+        from{
+            opacity:0;
+        }
+        to{
+            opacity:0;
+        }
+        75%{
+            opacity:0.7;
+        }
+    }
+}
+.hideani{
+    display:none;
+}
+
+    
+`
+function CheckedCharLength(text){
+    let str = text;
+    let charLength = 0;
+    let ch = "";
+    for(let n=0;n<str.length;n++)
+    {
+        ch = str.charAt(n);
+        if(escape(ch).length>4){
+            charLength+=2;
+        }
+        else{
+            charLength+=1;
+        }
+    }
+    return charLength;
+}
 export class FormTag extends Component{
 
     constructor(props)
@@ -69,6 +115,7 @@ export class FormTag extends Component{
         this.state={
             tag:[],
             value:"",
+            warning:false,
         }
         this.onChangeValue = this.onChangeValue.bind(this);
         this.onEnterKeyDown = this.onEnterKeyDown.bind(this);
@@ -78,14 +125,27 @@ export class FormTag extends Component{
         // this.setState({tag:this.props.tag});
     }
     onEnterKeyDown(event){
-        if(event.key==='Enter')
+        if(event.keyCode===13)
         {
+            let warningMsg = document.getElementById("wariningBox");
+            const charLength = CheckedCharLength(this.state.value);
             if(this.state.value!=="")
-            {
-                this.setState({
-                    tag:this.state.tag.concat(this.state.value),
-                    value:"",
-                });
+            {   
+                if(charLength>20)
+                {
+                    warningMsg.className = "showani";
+                    return;
+                }
+                else if(this.state.tag.length>10){
+                    warningMsg.className = "showani";
+                    return;
+                }
+                else{
+                    this.setState({
+                        tag:this.state.tag.concat(this.state.value),
+                        value:"",
+                    })
+                }
             }
 
         }
@@ -114,14 +174,26 @@ export class FormTag extends Component{
                 </TagPiece>
             );
         })
+        const ShowWarning = ()=>{
+            return(
+                <WarningBox>
+                    <div id="wariningBox" className="hideani">
+                        태그는 한글 10자, 영문 20자 이내로 최대 10개까지 입력이 가능합니다.
+                    </div>
+                </WarningBox>
+
+            );
+        }
         return(
             <React.Fragment>
+              
             <FormStyle
             placeholder = {this.props.placeholder}
             onKeyDown = {this.onEnterKeyDown}
             onChange={this.onChangeValue}
             value={this.state.value}
             />
+            <ShowWarning/>
             <TagList>
                 {TagBox}
             </TagList>

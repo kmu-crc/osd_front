@@ -96,8 +96,8 @@ export class FormInput extends Component {
         <Input
           type={type ? type : "text"}
           name={name && name}
-          maxLength = {maxLength ? maxLength : false}
-          minLength = {minLength ? minLength : false}
+          // maxLength = {maxLength ? maxLength : false}
+          // minLength = {minLength ? minLength : false}
           placeholder={placeholder && placeholder}
           style={style && style}
           id={id ? id : name}

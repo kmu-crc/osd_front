@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { FormInput,FormAddress,FormExp,FormTag ,FormThumbnail, FormDropBox,FormEquipment } from "components/Commons/FormItems";
+import { FormInput,FormAddress,FormExp,FormTag ,FormThumbnail, FormDropBox,FormCheckBox_new } from "components/Commons/FormItems";
 
 import { Header, Grid } from "semantic-ui-react"
 import StyleGuide from "StyleGuide";
@@ -26,6 +26,12 @@ const FromFieldCard = styled.div`
   border-radius: 3px;
   @media only screen and (min-width: 1200px) {
     padding: 70px 100px 70px 100px;
+  }
+
+  .miniLabel{
+    width:100px;
+    margin-top:10px;
+    margin-bottom:10px;
   }
 `;
 
@@ -89,28 +95,34 @@ class CreateMaker extends Component {
                     onChange={()=>{this.liveCheck("thumbnail")}}
                     validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                   />
-                  <Label>메이커 카테고리</Label>
+                  <Label>카테고리</Label>
                   <FormDropBox
                     name="explanation"
                     placeholder="메이커 설명을 입력해주세요."
                     options={category}
                   />
-                  <Label>메이커 설명</Label>
+                  <Label>설명</Label>
                   <FormInput
                     name="explanation"
                     placeholder="메이커 설명을 입력해주세요."
                     getValue={this.onChangeValue}
                   />
-                  <Label>메이커 위치</Label>
+                  <Label>위치</Label>
                   <FormAddress/>
-                  <Label>메이커 경력</Label>
+                  <Label>경력</Label>
                   <FormExp/>
                   <Label>태그</Label>
-                  <FormTag/>
+                  <FormTag
+                  placeholder="태그를 입력해주세요(한글10자 영문20자 이내)"/>
                   <Label>보유장비</Label>
-                  <FormEquipment/>
+                  <FormCheckBox_new 
+                  items="장비1장비1,장비2장비2,장비3장비3,장비4장비4,장비5장비5,장비6장비6,장비7장비7,장비8장비8,장비9장비9,장비10장비10"/>
+                  <div className="miniLabel">추가입력</div><FormTag/>
+                  
                   <Label>보유기술</Label>
-                  <FormEquipment/>
+                  <FormCheckBox_new 
+                  items="기술1기술1,기술2기술2,기술3기술3,기술4기술4,기술5기술5,기술6기술6,기술7기술7,기술8기술8,기술9기술9,기술10기술10"/>
+                  <div className="miniLabel">추가입력</div><FormTag/>
 
                 </Grid.Column>
               </Grid>
