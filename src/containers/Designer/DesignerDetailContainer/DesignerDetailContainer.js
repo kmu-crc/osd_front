@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignerDetailRequest, GetDesignerCountRequest, GetLikeDesignerRequest, LikeDesignerRequest, UnlikeDesignerRequest } from "actions/Designer";
 import DesignerDetail from "components/Designers/DesignerDetail";
+import {
+  GetDesignerDetailRequest, GetDesignerCountRequest, GetLikeDesignerRequest,
+  LikeDesignerRequest, UnlikeDesignerRequest
+} from "actions/Designer";
 
 class GroupDetailContainer extends Component {
   render() {
-    return(
-      <DesignerDetail {...this.props}/>
-    );
+    return (<DesignerDetail {...this.props} />);
   }
 }
 
@@ -23,21 +24,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignerDetailRequest: (id) => {
-        return dispatch(GetDesignerDetailRequest(id))
-      },
-      GetLikeDesignerRequest: (id, token) => {
-        return dispatch(GetLikeDesignerRequest(id, token))
-      },
-      LikeDesignerRequest: (id, token) => {
-        return dispatch(LikeDesignerRequest(id, token))
-      },
-      UnlikeDesignerRequest: (id, token) => {
-        return dispatch(UnlikeDesignerRequest(id, token))
-      },
-      GetDesignerCountRequest: (id) => {
-        return dispatch(GetDesignerCountRequest(id))
-      }
+    GetLikeDesignerRequest: (id, token) => dispatch(GetLikeDesignerRequest(id, token)),
+    UnlikeDesignerRequest: (id, token) => dispatch(UnlikeDesignerRequest(id, token)),
+    LikeDesignerRequest: (id, token) => dispatch(LikeDesignerRequest(id, token)),
+    GetDesignerDetailRequest: (id) => dispatch(GetDesignerDetailRequest(id)),
+    GetDesignerCountRequest: (id) => dispatch(GetDesignerCountRequest(id))
   };
 };
 

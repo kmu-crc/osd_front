@@ -85,9 +85,9 @@ class ModifyMyDetail extends Component {
 
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token)
-      .then(data => {
-        this.props.GetCategoryLevel2Request(data.MyDetail.category_level1);
-      });
+    // .then(data => {
+    //   this.props.GetCategoryLevel2Request(data.MyDetail.category_level1);
+    // });
   }
 
   onChangeValue = async data => {
@@ -174,8 +174,7 @@ class ModifyMyDetail extends Component {
 
   render() {
     const myInfo = this.props.MyDetail;
-    console.log("myInfo", myInfo)
-    console.log("state", this.state)
+    console.log("tiger", this.props);
     return (
       <div>
         <ImgWrapper>

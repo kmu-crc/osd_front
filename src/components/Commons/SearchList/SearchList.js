@@ -5,7 +5,7 @@ import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
-import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
+import ScrollDesignListContainer from "containers/Products/ScrollProductListContainer";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 

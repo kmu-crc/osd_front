@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import StyleGuide from 'StyleGuide';
+import ProductFilter from 'components/Products/ProductFilter';
+import { geturl } from 'config';
 
 const CateColumn = styled(Grid.Column)`
   @media only screen and (max-width: 1200px) {
@@ -83,46 +85,49 @@ class Category2 extends Component {
     //await this.props.handleCate1(this.props.cate1);
     this.props.handleCate2(cate1, value);
   };
-
-  render(){
+  gotoBoard = () => { 
+    window.location.href = `${geturl()}/designerboard`
+  };
+  render() {
     const Cate2List = (i) => {
       const n = i.parentNum;
       const list = this.props.category2[n];
       return (
-          <ul className="cateUl subCateUl">
-            {list && list.length !== 0 && list.map((subcate, i) => (
-              subcate.value !== 0 &&
-                <SubCateItem key={i}
-                             className={subcate.value === this.props.cate2
-                                        ? "active" : ""}
-                             onClick={(e) => this.onChangeCategory2(e, subcate.parent, subcate.value)}>
-                  {subcate.text}
-                </SubCateItem>
-            ))}
-          </ul>
+        <ul className="cateUl subCateUl">
+          {list && list.length !== 0 && list.map((subcate, i) => (
+            subcate.value !== 0 &&
+            <SubCateItem key={i}
+              className={subcate.value === this.props.cate2
+                ? "active" : ""}
+              onClick={(e) => this.onChangeCategory2(e, subcate.parent, subcate.value)}>
+              {subcate.text}
+            </SubCateItem>
+          ))}
+        </ul>
       )
     };
-    return(
+
+    return (
       <CateColumn className="category"
-                  widescreen={this.props.widescreen ? this.props.widescreen : null}
-                  largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
-                  computer={this.props.computer ? this.props.computer : null}
-                  tablet={this.props.tablet ? this.props.tablet : null}
-                  mobile={this.props.mobile ? this.props.mobile : null}>
+        widescreen={this.props.widescreen ? this.props.widescreen : null}
+        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
+        computer={this.props.computer ? this.props.computer : null}
+        tablet={this.props.tablet ? this.props.tablet : null}
+        mobile={this.props.mobile ? this.props.mobile : null}>
         <ul className="cateUl">
           {this.props.category1.map((cate, i) => (
             cate.value !== 0 &&
-              <CateItem key={i}
-                        className={cate.value === this.props.cate1 ||
-                                  (cate.value === 0 && this.props.cate1 === null) ||
-                                  (cate.value === 0 && this.props.cate1 === "null")
-                                  ? "active" : ""}
-                        onClick={() => this.onChangeCategory1(cate.value)}>
-                {cate.text}
-                <Cate2List parentNum={i}/>
-              </CateItem>
+            <CateItem key={i}
+              className={cate.value === this.props.cate1 ||
+                (cate.value === 0 && this.props.cate1 === null) ||
+                (cate.value === 0 && this.props.cate1 === "null")
+                ? "active" : ""}
+              onClick={() => this.onChangeCategory1(cate.value)}>
+              {cate.text}
+              <Cate2List parentNum={i} />
+            </CateItem>
           ))}
-
+          <CateItem className="go-right" onClick={this.gotoBoard}>{this.props.which}게시판</CateItem>
         </ul>
       </CateColumn>
     );

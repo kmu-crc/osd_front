@@ -64,7 +64,7 @@ const StyleGuide = {
     }
   },
   gridContent: {
-    mobile: 320,
+    mobile: "320px",
     tablet: "700px",
     computer: "850px",
     largeScreen: "1100px",
