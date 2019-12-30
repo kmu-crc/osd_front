@@ -3,6 +3,8 @@ import styled from "styled-components";
 import thumbnail from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
+import Socket from "modules/socket";
+import host from "config";
 
 // css styling
 const MsgContent = styled.div`
@@ -69,9 +71,18 @@ const MsgContent = styled.div`
   }
 `;
 
+
 class MessageDetail extends Component {
+  state = {
+    list_v1 : [],
+    myId_v1 : null,
+  }
   componentDidMount() {
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+    Socket.on("getNewMsg", msgList=> {
+      console.log("get message");
+      this.setState({list_v1 : msgList}) // get
+    })
   }
 
   componentWillUnmount() {
