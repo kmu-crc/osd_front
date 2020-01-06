@@ -128,7 +128,7 @@ const TabContainer = styled(Grid.Column)`
     color: inherit;
   }
 `;
-// todo
+// TODO
 const TagItem = styled.div``;
 const BoardItem = styled.div``;
 const CommentItem = styled.div``;

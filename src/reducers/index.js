@@ -7,7 +7,7 @@ import {
     // ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,
     // ProductWaitingList, ProductDetailComment
 } from "reducers/Products";
-import { DesignerList, DesignerLike, DesignerDetail } from "reducers/Designers";
+import { DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail } from "reducers/Designers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
 import { SignIn, SignUp, FindPw } from "reducers/Registration";
 import { UserInfo, MyDetail, MyJoin } from "reducers/Users";
@@ -30,7 +30,9 @@ export default combineReducers({
     ChangeToProject, UpdateDesign, DesignWaitingList,
     // GROUP
     CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList,
-    MyList, DeleteGroup, GroupIssue, MyExistList, DesignerList, DesignerLike, DesignerDetail,
+    MyList, DeleteGroup, GroupIssue, MyExistList,
+    // DESIGNER 
+    DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail,
     // MY
     SignIn, SignUp, FindPw, UserInfo, CategoryAll, form: formReducer,
     MyDetail, MyJoin,

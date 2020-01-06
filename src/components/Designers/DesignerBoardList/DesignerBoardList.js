@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
+// import { Link } from "react-router-dom";
 import Sorting from "components/Commons/Sorting";
-import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
+import ScrollDesignerBoardListContainer from "containers/Designer/ScrollDesignerBoardListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
 import StyleGuide from "StyleGuide";
@@ -11,6 +12,10 @@ import NumberFormat from "modules/NumberFormat";
 // CSS STYLING
 const Wrapper = styled.div`
   width: 100%;
+  &.header {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 const Content = styled(ContentBox)`
   @media only screen and (max-width: 991px) and (min-width: 768px){
@@ -51,36 +56,51 @@ const Head = styled.div`
     float: right;
   }
 `;
+const ListElement = styled.div`
+  width: 100%;
+  margin: 0 auto 0.9rem;
+  font-size: 13px;
+  border-radius: 3px 3px 3px 3px;
+  overflow: hidden;
+  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
+  background-color: #fff;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 10px;
+  list-style: none;
+  display: flex;
+  fiex-direction: row;
+`;
 
-class DesignerList extends Component {
+class DesignerBoardList extends Component {
   constructor(props) {
     super(props);
     this.state = { rendering: true };
   }
   componentDidMount() {
-    this.props.GetDesignerTotalCountRequest(this.props.cate1, this.props.cate2);
+    this.props.GetDesignerBoardTotalCountRequest(this.props.cate1, this.props.cate2);
   }
   changeState = async () => {
     await this.setState({ rendering: false });
     await this.setState({ rendering: true });
   }
   cate1Change = (value) => {
-    this.props.history.replace(`/designer/${this.props.sort}/${value}/null`);
-    this.props.GetDesignerTotalCountRequest(value, null);
+    this.props.history.replace(`/designerboard/${this.props.sort}/${value}/null`);
+    this.props.GetDesignerBoardTotalCountRequest(value, null);
     this.changeState();
   }
   cate2Change = (cate1, value) => {
     if (cate1 && this.props.cate1 !== cate1) {
-      this.props.history.replace(`/designer/${this.props.sort}/${cate1}/${value}`);
+      this.props.history.replace(`/designerboard/${this.props.sort}/${cate1}/${value}`);
     } else {
-      this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
+      this.props.history.replace(`/designerboard/${this.props.sort}/${this.props.cate1}/${value}`);
     }
-    this.props.GetDesignerTotalCountRequest(this.props.cate1, value);
+    this.props.GetDesignerBoardTotalCountRequest(this.props.cate1, value);
     this.changeState();
   }
 
   sortChange = (e, { value }) => {
-    this.props.history.replace(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
+    this.props.history.replace(`/designerboard/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.changeState();
   }
 
@@ -91,7 +111,7 @@ class DesignerList extends Component {
       const cate2List = this.props.category2;
 
       if (!(cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0)) {
-        return <div>nothing</div>;
+        return <div>NOTHING</div>;
       }
 
       const cate1Name = cate1 && cate1 !== "null" ? cate1List[cate1] : null;
@@ -116,7 +136,7 @@ class DesignerList extends Component {
           <Wrapper>
             <MenuContainer devided="vertically" padded={true} columns={2}>
               <Grid.Row stretched={false}>
-                <CategoryContainer which="디자이너 " board="designer" handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2} />
+                <CategoryContainer board="designer" handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2} />
               </Grid.Row>
             </MenuContainer>
           </Wrapper>
@@ -124,13 +144,22 @@ class DesignerList extends Component {
       </MenuWrap>
       <Content>
         <Header />
+
+        <ListElement>
+          {/* no.     */}<div style={{ marginRight: "15px" }}>번호</div>
+          {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
+          {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
+          {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
+          {/* view    */}<div style={{ marginRight: "15px" }}>조회수</div>
+          {/* like    */}<div style={{ marginRight: "15px" }}>좋아요</div>
+        </ListElement>
         <Wrapper className="listWrap">
           {this.state.rendering &&
-            <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+            <ScrollDesignerBoardListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
         </Wrapper>
       </Content>
     </React.Fragment>);
   }
 }
 
-export default DesignerList;
+export default DesignerBoardList;

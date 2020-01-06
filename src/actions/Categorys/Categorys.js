@@ -5,9 +5,8 @@ export function GetCategoryAllRequest() {
   return (dispatch) => {
     dispatch(GetCategoryAll());
     return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
-      .then((res) => {
-        return res.json();
-      }).then(function (res) {
+      .then(res => res.json())
+      .then(res => {
         let category1 = res.data.category1.map(data => {
           return { text: data.name, value: data.uid };
         });

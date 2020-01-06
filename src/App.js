@@ -44,6 +44,7 @@ class App extends Component {
           <Switch>
             {/* main */}
             <Route exact path="/" component={MainPage} />
+
             {/* product */}
             <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
@@ -53,9 +54,9 @@ class App extends Component {
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
-            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
             <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
-            <Route path="/designerBoardDetail/:id/:type?" component={DesignerBoardDetailPage} />
+            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/designerBoardDetail/:id" component={DesignerBoardDetailPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
 
