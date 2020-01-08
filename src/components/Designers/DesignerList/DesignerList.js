@@ -18,6 +18,7 @@ const Content = styled(ContentBox)`
       margin-left: 6.25% !important;
     }
   }
+  background-color: ${props => props.bgcolor || "#FFF"};
 `;
 const MenuContainer = styled(Grid)`
   & .sorting {
@@ -122,11 +123,10 @@ class DesignerList extends Component {
           </Wrapper>
         </Content>
       </MenuWrap>
-      <Content>
+      <Content bgcolor="#EFEFEF">
         <Header />
         <Wrapper className="listWrap">
-          {this.state.rendering &&
-            <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+          {this.state.rendering && <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
         </Wrapper>
       </Content>
     </React.Fragment>);

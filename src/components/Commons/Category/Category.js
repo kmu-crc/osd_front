@@ -2,22 +2,21 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import StyleGuide from 'StyleGuide';
-import { Link } from "react-router-dom";
-// import ProductFilter from 'components/Products/ProductFilter';
 import { geturl } from 'config';
 
 const CateColumn = styled(Grid.Column)`
   @media only screen and (max-width: 1200px) {
-    display: none;
+    // display: none;
   }
   @media only screen and (min-width: 1200px) {
-    display: block;
+    // display: block;
   }
+
   & ul.cateUl {
     margin-top: 0;
+    display: flex;
     & li {
       cursor: pointer;
-      float: left;
       position: relative;
       padding-top: 1rem;
       padding-bottom: 1rem;
@@ -61,9 +60,12 @@ const CateColumn = styled(Grid.Column)`
     }
   }
 `;
-
 const CateItem = styled.li`
   padding-right: 20px;
+  &.go-right {
+    margin-left: auto;
+    padding-right: 0px;
+  }
 `;
 
 const SubCateItem = styled.li`
@@ -83,7 +85,6 @@ class Category2 extends Component {
     if (value === 0) {
       value = null;
     }
-    //await this.props.handleCate1(this.props.cate1);
     this.props.handleCate2(cate1, value);
   };
   gotoBoard = () => {
