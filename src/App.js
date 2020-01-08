@@ -31,6 +31,7 @@ import CreateMakerPage from 'pages/CreateMakerPage';
 import ModifyMakerPage from 'pages/ModifyMakerPage';
 import DesignerBoardListPage, { CreateDesignerBoardPage, DesignerBoardDetailPage } from "pages/DesignerBoardPage";
 import requestDesignerPage from "pages/RequestToDesignerPage";
+import requestMakerPage from "pages/RequestToMakerPage";
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -78,6 +79,7 @@ class App extends Component {
             <Route path="/createMakerBoard" component={CreateDesignerBoardPage} />
             <Route path="/makerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
             <Route path="/makerBoardDetail/:id" component={DesignerBoardDetailPage} />
+            <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
 
             {/* maker */}
             {/* gallery */}
