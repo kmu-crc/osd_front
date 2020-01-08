@@ -62,6 +62,7 @@ const CateColumn = styled(Grid.Column)`
 `;
 const CateItem = styled.li`
   padding-right: 20px;
+  min-width: max-content;
   &.go-right {
     margin-left: auto;
     padding-right: 0px;

@@ -50,6 +50,10 @@ class App extends Component {
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
             <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
+            {/* product-board */}
+            <Route path="/createProductBoard" component={CreateDesignerBoardPage} />
+            <Route path="/productBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/productBoardDetail/:id" component={DesignerBoardDetailPage} />
 
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
@@ -66,7 +70,12 @@ class App extends Component {
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
+            {/* maker-board */}
+            <Route path="/createMakerBoard" component={CreateDesignerBoardPage} />
+            <Route path="/makerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/makerBoardDetail/:id" component={DesignerBoardDetailPage} />
 
+            {/* maker */}
             {/* gallery */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
 
