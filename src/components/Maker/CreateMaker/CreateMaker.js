@@ -126,10 +126,10 @@ class CreateMaker extends Component {
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
-            <div style={{ width: "max-content", marginLeft: "auto" }}>
-              <Button color="Primary">등록하기</Button>
-            </div>
           </form>
+          <div style={{ width: "max-content", marginLeft: "auto" }}>
+            <Button color="Primary">등록하기</Button>
+          </div>
         </div>
       </React.Fragment>
     );
