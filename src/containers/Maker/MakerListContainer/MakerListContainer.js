@@ -5,9 +5,7 @@ import MakerList from "components/Makers/MakerList";
 
 class MakerListContainer extends Component {
     render() {
-        return (
-            <MakerList {...this.props} />
-        );
+        return (<MakerList {...this.props} />);
     }
 }
 
