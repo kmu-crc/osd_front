@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
-import ScrollTopDesignContainer from "containers/Commons/ScrollTopDesignContainer";
 import MainSlide from "./Slide";
-// import ScrollRecentlyViewedContainer from "containers/Commons/ScrollRecentlyViewedContainer";
+
+import ScrollTopDesignerContainer from "containers/Commons/ScrollTopDesignerContainer";
+import ScrollTopMakerContainer from "containers/Commons/ScrollTopMakerContainer";
+import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
 
 // CSS STYLE
 const ImgWrapper = styled.div``;
 const TextWrapper = styled.div`
-  padding-bottom: 50px;
+  // padding-bottom: 50px;
 `;
 const Content = styled(ContentBox)`
   @media only screen and (max-width: 991px) and (min-width: 768px){
@@ -29,7 +31,6 @@ const Head = styled.div`
   margin-bottom: 1rem;
 `;
 
-
 class Main extends Component {
   render() {
     return (
@@ -37,26 +38,24 @@ class Main extends Component {
         <ImgWrapper>
           <MainSlide />
         </ImgWrapper>
-        <TextWrapper>
-          <Content>
-            <Wrapper>
-              <Head>인기상품</Head>
-              <ScrollTopDesignContainer />
-            </Wrapper>
-            {this.props.userInfo &&
-              <Wrapper>
-                <Head>최근 본 상품</Head>
-                <ScrollTopDesignContainer />
-              </Wrapper>}
-          </Content>
-        </TextWrapper>
+        <Content>
+          <Wrapper>
+            <TextWrapper><Head>인기 디자이너</Head></TextWrapper>
+            <ScrollTopDesignerContainer />
+          </Wrapper>
+
+          <Wrapper>
+            <TextWrapper><Head>인기 메이커</Head></TextWrapper>
+            <ScrollTopMakerContainer />
+          </Wrapper>
+
+          <Wrapper>
+            <TextWrapper><Head>인기상품</Head></TextWrapper>
+            <ScrollTopProductContainer />
+          </Wrapper>
+        </Content>
       </React.Fragment>
     );
   }
 }
-
 export default Main;
-
-
-
-

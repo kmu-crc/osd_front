@@ -54,11 +54,12 @@ class App extends Component {
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
+            <Route path="/designerModify" component={ModifyDesignerPage} />
+            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
+            {/* designer-board */}
             <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
             <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
             <Route path="/designerBoardDetail/:id" component={DesignerBoardDetailPage} />
-            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
-            <Route path="/designerModify" component={ModifyDesignerPage} />
 
             {/* maker */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
@@ -84,6 +85,7 @@ class App extends Component {
             <Route path="/payment" component={PaymentPage} />
             <Route path="/cart" component={CartPage} />
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
+
           </Switch>
         </ClientTemplate>
       </BrowserRouter>
