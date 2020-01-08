@@ -128,7 +128,6 @@ const TabContainer = styled(Grid.Column)`
     color: inherit;
   }
 `;
-// TODO
 const TagItem = styled.div``;
 const BoardItem = styled.div``;
 const CommentItem = styled.div``;
@@ -280,14 +279,12 @@ class DesignerDetail extends Component {
               <Section>
                 <h4>디자인 의뢰</h4>
                 <div className="text">
-                  <Button>의뢰하기</Button>
-                  {/* <TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /> */}
+                  <Link to={`/requestToDesigner/${DesignerDetail.uid}`}><Button>의뢰하기</Button></Link>
                 </div>
               </Section>
 
               <Section>
                 <h4>디자이너 게시판</h4>
-                {/* <div className="text"></div> */}
                 <div className="text">{!DesignerDetail.board ? "" : DesignerDetail.board.map(item => <BoardItem key={item.uid}>{item.value}</BoardItem>)}</div>
               </Section>
 
