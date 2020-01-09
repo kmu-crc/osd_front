@@ -4,10 +4,10 @@ import host from "config";
 export function GetCategoryAllRequest() {
   return (dispatch) => {
     dispatch(GetCategoryAll());
-    return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
-      .then((res) => {
-        return res.json();
-      }).then(function (res) {
+    const sql = `${host}/categorys/getCategoryAll`;
+    return fetch(sql, { method: "GET" })
+      .then(res => res.json())
+      .then(res => {
         let category1 = res.data.category1.map(data => {
           return { text: data.name, value: data.uid };
         });
@@ -27,22 +27,6 @@ export function GetCategoryAllRequest() {
   }
 };
 
-export function GetCategoryAll() {
-  return {
-    type: types.GET_CATEGORY_ALL
-  }
-};
-
-export function GetCategoryAllSuccess(cate1, cate2) {
-  return {
-    type: types.GET_CATEGORY_ALL_SUCCESS,
-    category1: cate1,
-    category2: cate2
-  }
-};
-
-export function GetCategoryAllFailure() {
-  return {
-    type: types.GET_CATEGORY_ALL_FAILURE
-  }
-};
+const GetCategoryAll = () => ({ type: types.GET_CATEGORY_ALL });
+const GetCategoryAllSuccess = (cate1, cate2) => ({ type: types.GET_CATEGORY_ALL_SUCCESS, category1: cate1, category2: cate2 });
+const GetCategoryAllFailure = () => ({ type: types.GET_CATEGORY_ALL_FAILURE });

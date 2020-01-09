@@ -25,6 +25,7 @@ const Content = styled(ContentBox)`
       margin-left: 6.25% !important;
     }
   }
+  background-color: ${props => props.bgcolor || "#FFF"};
 `;
 const MenuContainer = styled(Grid)`
   font-size: 1rem;
@@ -47,6 +48,7 @@ const Head = styled.div`
   padding-top: 80px;
   padding-bottom: 2rem;
   font-size: ${StyleGuide.font.size.paragraph};
+  display: flex;
   &.Sorting {
     float: right;
     display: flex;
@@ -111,11 +113,14 @@ class ProductList extends Component {
       const options = ['kinds'];
       const { ops } = this.state;
       return (<Head>
-        <div>
-          <span>디자인</span>
+        <div style={{ height: "30px", lineHeight: "30px" }}>
+          <span>아이템</span>
           {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
           {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
           <span>({NumberFormat(Count)})</span>
+        </div>
+        <div style={{ marginLeft: "15px" }}>
+          <Button onClick={this.openFilterDialog}><i className="filter icon" />필터</Button>
         </div>
 
         <div style={{ width: "max-content", marginLeft: "auto", marginBottom: "10px" }}>
@@ -127,7 +132,6 @@ class ProductList extends Component {
                   <div onClick={() => this.removeFilter(opt_name, item)} style={{ cursor: "pointer", padding: "5px", width: "max-content", border: "1px solid #707070" }}>x</div>
                 </div>
               }))}
-            <Button onClick={this.openFilterDialog}><i className="filter icon" />필터</Button>
           </div>
           {filter ?
             <Modal onLoad visible={filter} effect="fadeInLeft" >
@@ -148,6 +152,7 @@ class ProductList extends Component {
             <Wrapper>
               <MenuContainer>
                 <CategoryContainer
+                  which="아이템" board="product"
                   cate1={cate1} handleCate1={this.cate1Change}
                   cate2={cate2} handleCate2={this.cate2Change} />
               </MenuContainer>
@@ -155,7 +160,7 @@ class ProductList extends Component {
           </Content>
         </MenuWrap>
 
-        <Content>
+        <Content bgcolor="#EFEFEF">
           <SortOption />
           <Wrapper className="listWrap">
             {rendering && <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} history={history} />}

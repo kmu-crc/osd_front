@@ -128,12 +128,15 @@ const TabContainer = styled(Grid.Column)`
     color: inherit;
   }
 `;
-// todo
 const TagItem = styled.div``;
 const BoardItem = styled.div``;
 const CommentItem = styled.div``;
 
 class DesignerDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { tab: true }
+  }
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id); // 디자이너 디테일 정보
     this.props.GetDesignerCountRequest(this.props.id); // 디자이너 count 정보
@@ -170,9 +173,11 @@ class DesignerDetail extends Component {
         });
     }
   }
+  changeTab = () => this.setState({ tab: !this.state.tab });
 
   render() {
     const { DesignerDetail, Count } = this.props;
+    const { tab } = this.state;
 
     if (DesignerDetail == null) return <div>No data.</div>
 
@@ -248,55 +253,94 @@ class DesignerDetail extends Component {
 
         <ContentBox>
           <Grid.Row>
-            <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
-              <Section>
-                <h4>소개</h4>
-                <div className="text">
-                  <TextFormat lines={3} txt={DesignerDetail.about_me} /></div>
-              </Section>
-              <Section>
-                <h4>거주지역</h4>
-                <div className="text">
-                  <TextFormat lines={3} txt={DesignerDetail.location || "*거주지역*"} /></div>
-              </Section>
-              <Section>
-                <h4>전문분야</h4>
-                <div className="text">
-                  <TextFormat lines={3} txt={DesignerDetail.categoryName || "*카테고리*"} /></div>
-                <div className="text">
-                  {!DesignerDetail.tag ? "" : DesignerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
-              </Section>
-              <Section>
-                <h4>디자인경험</h4>
-                <div className="text">
-                  <TextFormat lines={3} txt={DesignerDetail.experience || "*경험*"} /></div>
-              </Section>
-              <Section>
-                <h4>디자인 상품</h4>
-                <div className="text">
-                  <TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /></div>
-              </Section>
+            <div style={{
+              borderRight: "1px solid rgba(0,0,0,0.15)",
+              boxShadow: "0 0 5px rgba(0,0,0,0.25)",
+              display: "flex", flexDirection: "row"
+            }}>
+              <div onClick={this.changeTab} style={{ cursor: "pointer", textAlign: "center", width: "33%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#FFF") : ("#EFEFEF"), fontSize: "24px" }}>기본정보</div>
+              <div onClick={this.changeTab} style={{ cursor: "pointer", textAlign: "center", width: "33%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#EFEFEF") : ("#FFF"), fontSize: "24px" }}>디자인 의뢰</div>
+              <div style={{ cursor: "default", textAlign: "center", width: "34%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#EFEFEF") : ("#EFEFEF"), fontSize: "24px" }}>&nbsp;</div>
+            </div>
+            {tab ? (
+              <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                <Section>
+                  <h4>소개</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.about_me} /></div>
+                </Section>
+                <Section>
+                  <h4>거주지역</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.location || "*거주지역*"} /></div>
+                </Section>
+                <Section>
+                  <h4>전문분야</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.categoryName || "*카테고리*"} /></div>
+                  <div className="text">
+                    {!DesignerDetail.tag ? "" : DesignerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
+                </Section>
+                <Section>
+                  <h4>디자인경험</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.experience || "*경험*"} /></div>
+                </Section>
+                <Section>
+                  <h4>디자인 상품</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /></div>
+                </Section>
+                <Section>
+                  <h4>디자인 의뢰</h4>
+                  <div className="text">
+                    <Link to={`/requestToDesigner/${DesignerDetail.uid}`}><Button>의뢰하기</Button></Link>
+                  </div>
+                </Section>
+                <Section>
+                  <h4>디자이너 게시판</h4>
+                  <div className="text">{!DesignerDetail.board ? "" : DesignerDetail.board.map(item => <BoardItem key={item.uid}>{item.value}</BoardItem>)}</div>
+                </Section>
+              </TabContainer>) : (
+                <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                  <Section>
+                    <div style={{ display: "flex", border: "1px solid gray", backgroundColor: "#EEE" }}>
+                      <div style={{ width: "60%", textAlign: "center", fontSize: "16px", }}>제목</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>작성자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>작성일</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", display: "flex" }}>
+                        <Icon className="reply" /><div style={{ width: "max-content", borderRadius: "5px", backgroundColor: "#1E90FF", color: "white", padding: "3px 10px 3px 10px", fontSize: "10px" }}>Re:</div>&nbsp;[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
 
-              <Section>
-                <h4>디자인 의뢰</h4>
-                <div className="text">
-                  <Button>의뢰하기</Button>
-                  {/* <TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /> */}
-                </div>
-              </Section>
-
-              <Section>
-                <h4>디자이너 게시판</h4>
-                {/* <div className="text"></div> */}
-                <div className="text">{!DesignerDetail.board ? "" : DesignerDetail.board.map(item => <BoardItem key={item.uid}>{item.value}</BoardItem>)}</div>
-              </Section>
-
-            </TabContainer>
+                  </Section>
+                </TabContainer>)}
           </Grid.Row >
         </ContentBox >
-
       </Wrapper>
-
     </React.Fragment >);
   }
 }

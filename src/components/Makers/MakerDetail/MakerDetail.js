@@ -134,17 +134,16 @@ const BoardItem = styled.div``;
 const CommentItem = styled.div``;
 
 class MakerDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { tab: true }
+  }
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id); // 디자이너 디테일 정보
     this.props.GetDesignerCountRequest(this.props.id); // 디자이너 count 정보
     if (this.props.token) {
       this.props.GetLikeDesignerRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
     }
-  }
-
-  typeChange = (e) => {
-    let url = "/designerDetail/" + this.props.id + "/" + e.target.id;
-    this.props.history.replace(url);
   }
 
   updateLike = () => {
@@ -170,9 +169,11 @@ class MakerDetail extends Component {
         });
     }
   }
+  changeTab = () => this.setState({ tab: !this.state.tab });
 
   render() {
     const { MakerDetail, Count } = this.props;
+    const { tab } = this.state;
 
     if (MakerDetail == null) return <div>No data.</div>
 
@@ -248,42 +249,87 @@ class MakerDetail extends Component {
 
         <ContentBox>
           <Grid.Row>
-            <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
-              <Section>
-                <h4>소개</h4>
-                <div className="text"><TextFormat lines={3} txt={MakerDetail.about_me} /></div>
-              </Section>
-              <Section>
-                <h4>사업장 주소</h4>
-                <div className="text"><TextFormat lines={3} txt={MakerDetail.location || "*거주지역*"} /></div>
-              </Section>
-              <Section>
-                <h4>전문분야</h4>
-                <div className="text"><TextFormat lines={3} txt={MakerDetail.categoryName || "*카테고리*"} /></div>
-                <div className="text">{!MakerDetail.tag ? "" : MakerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
-              </Section>
-              <Section>
-                <h4>제작경험</h4>
-                <div className="text"><TextFormat lines={3} txt={MakerDetail.experience || "*경험*"} /></div>
-              </Section>
-              <Section>
-                <h4>보유 기술</h4>
-                <div className="text"><TextFormat lines={3} txt={MakerDetail.skills || "*기술*"} /></div>
-              </Section>
-              <Section>
-                <h4>제작 상품</h4>
-                <div className="text"><TextFormat lines={3} txt={MakerDetail.product || "*상품*"} /></div>
-              </Section>
-              <Section>
-                <h4>제작의뢰</h4>
-                <div className="text"><Button>의뢰하기</Button></div>
-              </Section>
-              <Section>
-                <h4>디자이너 게시판</h4>
-                <div className="text">{!MakerDetail.board ? "" : MakerDetail.board.map(item => <BoardItem key={item.uid}>{item.value}</BoardItem>)}</div>
-              </Section>
+            <div style={{
+              borderRight: "1px solid rgba(0,0,0,0.15)",
+              boxShadow: "0 0 5px rgba(0,0,0,0.25)",
+              display: "flex", flexDirection: "row"
+            }}>
+              <div onClick={this.changeTab} style={{ cursor: "pointer", textAlign: "center", width: "33%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#FFF") : ("#EFEFEF"), fontSize: "24px" }}>기본정보</div>
+              <div onClick={this.changeTab} style={{ cursor: "pointer", textAlign: "center", width: "33%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#EFEFEF") : ("#FFF"), fontSize: "24px" }}>제작 의뢰</div>
+              <div style={{ cursor: "default", textAlign: "center", width: "34%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#EFEFEF") : ("#EFEFEF"), fontSize: "24px" }}>&nbsp;</div>
+            </div>
+            {tab ? (
+              <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                <Section>
+                  <h4>소개</h4>
+                  <div className="text"><TextFormat lines={3} txt={MakerDetail.about_me} /></div>
+                </Section>
+                <Section>
+                  <h4>사업장 주소</h4>
+                  <div className="text"><TextFormat lines={3} txt={MakerDetail.location || "*거주지역*"} /></div>
+                </Section>
+                <Section>
+                  <h4>전문분야</h4>
+                  <div className="text"><TextFormat lines={3} txt={MakerDetail.categoryName || "*카테고리*"} /></div>
+                  <div className="text">{!MakerDetail.tag ? "" : MakerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
+                </Section>
+                <Section>
+                  <h4>제작경험</h4>
+                  <div className="text"><TextFormat lines={3} txt={MakerDetail.experience || "*경험*"} /></div>
+                </Section>
+                <Section>
+                  <h4>보유 기술</h4>
+                  <div className="text"><TextFormat lines={3} txt={MakerDetail.skills || "*기술*"} /></div>
+                </Section>
+                <Section>
+                  <h4>제작 상품</h4>
+                  <div className="text"><TextFormat lines={3} txt={MakerDetail.product || "*상품*"} /></div>
+                </Section>
+                <Section>
+                  <h4>제작의뢰</h4>
+                  <div className="text"><Button>의뢰하기</Button></div>
+                </Section>
+                <Section>
+                  <h4>메이커 게시판</h4>
+                  <div className="text">{!MakerDetail.board ? "" : MakerDetail.board.map(item => <BoardItem key={item.uid}>{item.value}</BoardItem>)}</div>
+                </Section>
 
-            </TabContainer>
+              </TabContainer>) : (
+                <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                  <Section>
+                    <div style={{ display: "flex", border: "1px solid gray", backgroundColor: "#EEE" }}>
+                      <div style={{ width: "60%", textAlign: "center", fontSize: "16px", }}>제목</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>작성자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>작성일</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[제작의뢰] 제작의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>제작의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[제작의뢰] 제작의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>제작의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", display: "flex" }}>
+                        <Icon className="reply" /><div style={{ width: "max-content", borderRadius: "5px", backgroundColor: "#1E90FF", color: "white", padding: "3px 10px 3px 10px", fontSize: "10px" }}>Re:</div>&nbsp;[제작의뢰] 제작의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>제작의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[제작의뢰] 제작의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>제작의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[제작의뢰] 제작의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>제작의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                  </Section>
+                </TabContainer>)}
           </Grid.Row >
         </ContentBox >
 
