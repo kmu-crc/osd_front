@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import DesignerListContainer from 'containers/Designer/DesignerListContainer';
+import DesignerBoardListContainer from 'containers/Designer/DesignerBoardListContainer';
 
 class DesignerBoardListPage extends Component {
   render() {
     return (
-      <DesignerListContainer
+      <DesignerBoardListContainer
         sort={this.props.match.params.sorting ? this.props.match.params.sorting : "update"}
         cate1={this.props.match.params.cate1 ? this.props.match.params.cate1 : null}
         cate2={this.props.match.params.cate2 ? this.props.match.params.cate2 : null}

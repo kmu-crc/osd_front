@@ -24,7 +24,6 @@ const ImgWrapper = styled.div`
     z-index: 1;
   }
 `;
-
 const Title = styled.div`
   width: 100%;
   color: white;
@@ -40,24 +39,24 @@ const Title = styled.div`
     font-weight: bold;
   }
 `;
-
 const Wrapper = styled(ContentBox)`
   margin-top: -70px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
-`
+`;
+
 class CreateMakerContainer extends Component {
   render() {
-    return(
-       <React.Fragment>
-            <ImgWrapper>
-            <Title><h1>메이커 등록</h1></Title>
-            </ImgWrapper>
-            <Wrapper>
-           <CreateMaker/>
-           </Wrapper>
-       </React.Fragment>
+    return (
+      <React.Fragment>
+        <ImgWrapper>
+          <Title><h1>메이커 등록</h1></Title>
+        </ImgWrapper>
+        <Wrapper>
+          <CreateMaker />
+        </Wrapper>
+      </React.Fragment>
     );
   }
 }

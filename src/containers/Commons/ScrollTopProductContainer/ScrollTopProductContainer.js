@@ -5,7 +5,7 @@ import ScrollListNew from "components/Commons/ScrollListNew";
 import Design from "components/Designs/Design";
 import Loading from "components/Commons/Loading";
 
-class ScrollTopDesignContainer extends Component {
+class ScrollTopProductContainer extends Component {
   componentWillMount() {
     this.props.GetTopDesignListRequest(0);
   }
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScrollTopDesignContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollTopProductContainer);

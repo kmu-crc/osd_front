@@ -18,6 +18,7 @@ const Content = styled(ContentBox)`
       margin-left: 6.25% !important;
     }
   }
+  background-color: ${props => props.bgcolor || "#FFF"};
 `;
 const MenuContainer = styled(Grid)`
   & .sorting {
@@ -120,31 +121,33 @@ class MakerList extends Component {
             );
         };
 
-        return (
-            <div>
-                <MenuWrap>
-                    <Content>
-                        <Wrapper>
-                            <MenuContainer devided="vertically" padded={true} columns={2}>
-                                <Grid.Row stretched={false}>
-                                    <CategoryContainer handleCate1={this.cate1Change}
-                                        handleCate2={this.cate2Change}
-                                        cate1={this.props.cate1}
-                                        cate2={this.props.cate2} />
-                                </Grid.Row>
-                            </MenuContainer>
-                        </Wrapper>
-                    </Content>
-                </MenuWrap>
+        return (<React.Fragment>
+            <MenuWrap>
                 <Content>
-                    <Header />
-                    <Wrapper className="listWrap">
-                        {this.state.rendering &&
-                            <ScrollMakerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+                    <Wrapper>
+                        <MenuContainer devided="vertically" padded={true} columns={2}>
+                            <Grid.Row stretched={false}>
+                                <CategoryContainer
+                                    which="메이커" board="maker"
+                                    cate1={this.props.cate1}
+                                    handleCate1={this.cate1Change}
+                                    cate2={this.props.cate2}
+                                    handleCate2={this.cate2Change} />
+                            </Grid.Row>
+                        </MenuContainer>
                     </Wrapper>
                 </Content>
-            </div>
-        );
+            </MenuWrap>
+            <Content bgcolor="#EFEFEF">
+                <Header />
+                <Wrapper className="listWrap">
+                    {this.state.rendering &&
+                        <ScrollMakerListContainer
+                            sort={sort} cate1={cate1} cate2={cate2}
+                            history={this.props.history} />}
+                </Wrapper>
+            </Content>
+        </React.Fragment>);
     }
 }
 

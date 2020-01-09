@@ -249,7 +249,7 @@ class ModifyMyDetail extends Component {
                         name="category_level1"
                         value={myInfo.category_level1}
                         getValue={this.onChangeValue}
-                        onChange={() => this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
+                        // onChange={() => this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
                       />
                       <FormSelect
                         selection={true}

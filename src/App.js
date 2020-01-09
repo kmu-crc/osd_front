@@ -30,6 +30,8 @@ import ModifyDesignerPage from 'pages/ModifyDesignerPage';
 import CreateMakerPage from 'pages/CreateMakerPage';
 import ModifyMakerPage from 'pages/ModifyMakerPage';
 import DesignerBoardListPage, { CreateDesignerBoardPage, DesignerBoardDetailPage } from "pages/DesignerBoardPage";
+import requestDesignerPage from "pages/RequestToDesignerPage";
+import requestMakerPage from "pages/RequestToMakerPage";
 // template
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -44,27 +46,42 @@ class App extends Component {
           <Switch>
             {/* main */}
             <Route exact path="/" component={MainPage} />
+
             {/* product */}
             <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
             <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
+            {/* product-board */}
+            <Route path="/createProductBoard" component={CreateDesignerBoardPage} />
+            <Route path="/productBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/productBoardDetail/:id" component={DesignerBoardDetailPage} />
+
 
             {/* designer */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
-            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
-            <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
-            <Route path="/designerBoardDetail/:id/:type?" component={DesignerBoardDetailPage} />
-            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
+            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
+            <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
+
+            {/* designer-board */}
+            <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
+            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/designerBoardDetail/:id" component={DesignerBoardDetailPage} />
 
             {/* maker */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
+            {/* maker-board */}
+            <Route path="/createMakerBoard" component={CreateDesignerBoardPage} />
+            <Route path="/makerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/makerBoardDetail/:id" component={DesignerBoardDetailPage} />
+            <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
 
+            {/* maker */}
             {/* gallery */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
 
@@ -83,6 +100,7 @@ class App extends Component {
             <Route path="/payment" component={PaymentPage} />
             <Route path="/cart" component={CartPage} />
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
+
           </Switch>
         </ClientTemplate>
       </BrowserRouter>

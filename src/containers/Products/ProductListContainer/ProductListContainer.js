@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { GetProductListRequest, GetProductTotalCountRequest } from "actions/Product";
 import ProductList from "components/Products/ProductList";
 
 class ProductListContainer extends Component {
   render() {
-    return (
-      <ProductList {...this.props} />
-    );
+    return (<ProductList {...this.props} />);
   }
 }
 
