@@ -53,21 +53,21 @@ export class FormCheckBox extends Component {
     validates: []
   };
 
-  componentDidMount(){
-    if(this.props.validates){
+  componentDidMount() {
+    if (this.props.validates) {
       this.setState({ validates: this.props.validates });
     }
-    if(this.props.value){
+    if (this.props.value) {
       this.setState({ value: this.props.value });
     }
-    if(this.props.value === 0){
+    if (this.props.value === 0) {
       this.setState({ value: false });
     }
     this.init();
   }
 
   init = async () => {
-    await this.setState({target: this.input})
+    await this.setState({ target: this.input })
     this.returnData();
   }
 
@@ -77,38 +77,18 @@ export class FormCheckBox extends Component {
   };
 
   returnData = async (e) => {
-    if(this.props.getValue) await this.props.getValue(this.state);
-    if(e && this.props.onBlur) await this.props.onBlur();
+    if (this.props.getValue) await this.props.getValue(this.state);
+    if (e && this.props.onBlur) await this.props.onBlur();
   }
   render() {
     const { name, value, disableMsg, disabled, placeholder, id } = this.props;
     return (
       <InputWrap>
-      {disabled?(
-        <CheckBoxLabel      
-        className={this.state.value ? "disabled checked" : null}
-        htmlFor={id ? id+value : name+value}
-        onBlur={this.returnData}
-        title={disableMsg}
-        >{placeholder}</CheckBoxLabel>
-        
-        ):(
-          <CheckBoxLabel
-          className={this.state.value ? "checked" : null}
-          htmlFor={id ? id+value : name+value}
-          onClick={this.onChangeValue}
-          onBlur={this.returnData}
-          >{placeholder}</CheckBoxLabel>
-          )}
-        <input
-          type="checkbox"
-          id={id ? id+value : name+value}
-          name={name && name}
-          style={{display: "none"}}
-          defaultValue={value && value}
-          ref={ref => (this.input = ref)}
-          />
-        <Message/>
+        {disabled ?
+          (<CheckBoxLabel className={this.state.value ? "disabled checked" : null} htmlFor={id ? id + value : name + value} onBlur={this.returnData} title={disableMsg}>{placeholder}</CheckBoxLabel>) :
+          (<CheckBoxLabel className={this.state.value ? "checked" : null} htmlFor={id ? id + value : name + value} onClick={this.onChangeValue} onBlur={this.returnData} >{placeholder}</CheckBoxLabel>)}
+        <input type="checkbox" id={id ? id + value : name + value} name={name && name} style={{ display: "none" }} defaultValue={value && value} ref={ref => (this.input = ref)} />
+        <Message />
       </InputWrap>
     )
   }

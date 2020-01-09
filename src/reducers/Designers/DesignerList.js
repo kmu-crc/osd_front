@@ -45,11 +45,11 @@ export function DesignerList(state, action) {
         }
       });
     case types.GET_DESIGNER_TOTAL_COUNT_FAIL:
-     return update(state, {
-       status: {
-         Count: { $set: action.Count }
-       }
-     });
+      return update(state, {
+        status: {
+          Count: { $set: action.Count }
+        }
+      });
     default:
       return state;
   }
