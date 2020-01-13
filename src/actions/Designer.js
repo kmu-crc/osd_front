@@ -1,6 +1,22 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+export const CreateDesignerBoardArticleRequest = (data, token) => {
+  return dispatch => {
+    dispatch(CreateDesignerBoardArticle());
+    const url = `${host}/designer/createboard`;
+    console.log("url", url);
+    return fetch(url, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
+      .then(res => res.json())
+      .then(res => dispatch(CreateDesignerBoardArticleSuccess(res)))
+      .catch(error => dispatch(CreateDesignerBoardArticleFail(error)));
+  };
+};
+const CreateDesignerBoardArticle = () => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE });
+const CreateDesignerBoardArticleSuccess = res => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS, success: res.success });
+const CreateDesignerBoardArticleFail = error => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE_FAIL, success: error.success });
+
+
 export function GetDesignerBoardListRequest(page, sort, cate1, cate2, keyword) {
   return (dispatch) => {
     const url = `${host}/designer/board/${page}/${sort}/${cate1}/${cate2}/${keyword}`
@@ -15,11 +31,12 @@ const GetDesignerBoardList = (data) => ({ type: types.GET_DESIGNER_BOARD_LIST, D
 const DesignerBoardListClear = (data) => ({ type: types.DESIGNER_BOARD_LIST_CLEAR, DesignerBoardList: data });
 const DesignerBoardListFail = () => ({ type: types.DESIGNER_BOARD_LIST_FAIL, DesignerBoardList: [] });
 
+
 export function GetDesignerBoardTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
     const url = `${host}/designer/boardCount/${cate1}/${cate2}`
     console.log(url);
-    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "get" })
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetDesignerBoardTotalCount(data["count(*)"] || 0)))
       .catch(err => dispatch(DesignerBoardTotalCountFail()))

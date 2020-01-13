@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import CreateDesignerContainer from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer"
+import CreateDesignerBoardContainer from "containers/Designer/CreateDesignerBoardContainer/CreateDesignerBoardContainer";
 
-class CreateDesignerBoardPage extends Component {
+export class CreateDesignerBoardPage extends Component {
   render() {
-    console.log("create-designer-board-page");
-    return (
-      <div style={{ marginTop: "250px", fontSize: "26px" }}>test</div>
-      // <CreateDesignerContainer />
-    );
+    return (<CreateDesignerBoardContainer />);
   }
 }
-
-export default CreateDesignerBoardPage;
