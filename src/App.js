@@ -2,10 +2,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
 // REDUX
 import { GetCategoryAllRequest } from "actions/Categorys";
-
 // MARKET
 import ProductListPage, { ProductDetailPage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
@@ -32,7 +30,6 @@ import ModifyMakerPage from 'pages/ModifyMakerPage';
 import DesignerBoardListPage, { CreateDesignerBoardPage, DesignerBoardDetailPage } from "pages/DesignerBoardPage";
 import requestDesignerPage from "pages/RequestToDesignerPage";
 import requestMakerPage from "pages/RequestToMakerPage";
-
 // TEMPLATE
 import ClientTemplate from 'templates/ClientTemplate';
 

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react"
 import styled from 'styled-components';
-import Button from "components/Commons/Button";
-import { FormFile, FormInput, FormCheckBox, FormTag, FormTextArea } from "components/Commons/FormItems";
 import StyleGuide from "StyleGuide";
-import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import ContentBox from "components/Commons/ContentBox";
+import { FormFile, FormInput, FormCheckBox, FormTag, FormTextArea } from "components/Commons/FormItems";
+import Button from "components/Commons/Button";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -67,43 +67,62 @@ const Label = styled.div`
   text-transform: none;
 `;
 
-
 class CreateDesignerBoard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loading: false, };
+  };
+  onChangeValue = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    // console.log(e.target.type === "checkbox" && e.target.checked);
+  };
+  onSubmit = e => {
+    e.preventDefault();
+    let data = { ...this.state };
+    delete data.loading;
+    console.log("data:", data);
+    this.props.CreateDesignerBoardRequest &&
+      this.props.CreateDesignerBoardRequest(data, this.props.token)
+        .then(rst => alert(rst))
+        .catch(e => alert(e));
+    this.setState({ loading: false });
+  };
+
   render() {
     return (<React.Fragment>
-        <ImgWrapper>
-          <Title><h1>글쓰기</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
+      <ImgWrapper>
+        <Title><h1>글쓰기</h1></Title>
+      </ImgWrapper>
+      <Wrapper>
         <form onSubmit={this.onSubmit}>
           <FromFieldCard>
             <Grid>
               <Grid.Column mobile={16} computer={12}>
 
                 <Label>제목</Label>
-                <FormInput name="explanation" placeholder="디자이너 설명을 입력해주세요." getValue={this.onChangeValue} />
+                <FormInput name="title" placeholder="디자이너 설명을 입력해주세요." getValue={this.onChangeValue} />
 
                 <Label>내용</Label>
-                <FormTextArea name="explanation" placeholder="디자이너 설명을 입력해주세요." getValue={this.onChangeValue} />
+                <FormTextArea name="content" placeholder="디자이너 설명을 입력해주세요." getValue={this.onChangeValue} />
 
                 <Label>파일첨부</Label>
-                <FormFile />
+                <FormFile name="file" getValue={this.onChangeValue} />
 
                 <Label>태그</Label>
-                <FormTag placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
+                <FormTag name="tag" getValue={this.onChangeValue} placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
 
                 <Label>공개여부</Label>
-                <FormCheckBox placeholder="비공개" />
+                <FormCheckBox items="비공개" name="private" getValue={this.onChangeValue} />
 
               </Grid.Column>
             </Grid>
           </FromFieldCard>
+          <div style={{ width: "max-content", marginLeft: "auto" }}>
+            <Button color="Primary" type="submit">등록하기</Button>
+          </div>
         </form>
-        <div style={{ width: "max-content", marginLeft: "auto" }}>
-          <Button color="Primary">등록하기</Button>
-        </div>
-        </Wrapper>
-      </React.Fragment>);
+      </Wrapper>
+    </React.Fragment>);
   }
 }
 

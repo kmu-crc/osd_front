@@ -12,6 +12,7 @@ class CreateDesignerBoardContainer extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
+  userInfo: state.Authentication.status.userInfo,
 });
 const mapDispatchToProps = (dispatch) => ({
   CreateDesignerBoardArticleRequest: (data, token) => dispatch(CreateDesignerBoardArticleRequest(data, token)),
