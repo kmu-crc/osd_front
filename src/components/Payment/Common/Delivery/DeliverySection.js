@@ -101,6 +101,27 @@ const GrayButton = styled.div`
 `
 class DeliverySection extends React.Component{
 
+    constructor(props){
+        super(props);
+        this.state = {
+            name:"",phone_first:0,phone_second:"",address_essential:"",address_detail:"",comment:"",
+        }
+        this.onChangeNameValue=this.onChangeNameValue.bind(this);
+        this.onChangePhoneFirstValue=this.onChangePhoneFirstValue.bind(this);
+        this.onChangePhoneSecondValue=this.onChangePhoneSecondValue.bind(this);
+        
+    }
+
+    onChangeNameValue(event){
+        this.setState({name:event.target.value});
+    }
+    onChangePhoneFirstValue(event,{value}){
+        this.setState({phone_first:{value}.value})
+    }
+    onChangePhoneSecondValue(event){
+        this.setState({phone_second:event.target.value})
+    }
+
     render(){
         return(
             <SectionBox>
@@ -110,7 +131,7 @@ class DeliverySection extends React.Component{
                                         <div className="inner_label">이름</div>
                                         <div className="inner_box">
                                             <div className="inner_line_box">
-                                            <FormText width="300"/>
+                                            <FormText value={this.state.name} width="300"/>
                                             </div>
                                         </div>
                                     </div>
@@ -120,8 +141,8 @@ class DeliverySection extends React.Component{
                                         <div className="inner_box">
                                             <div className="inner_line_box">
                                                 <Dropdown className="dropdown-style"options={phoneNumList} selection 
-                                                         value="1"style={{marginRight:"10px"}}/>
-                                                <FormText width="150"/>
+                                                         value={this.state.phone_first} style={{marginRight:"10px"}}/>
+                                                <FormText value={this.state.phone_second} width="150"/>
                                             </div>
                                         </div>
                                     </div>

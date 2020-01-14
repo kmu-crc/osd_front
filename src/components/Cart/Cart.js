@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import Button from "components/Commons/Button";
 import noimg from "source/noimg.png";
+import cookie from 'react-cookies';
 
 const MainBox = styled.div`
     *{
@@ -145,17 +146,23 @@ const SmallImage = styled.div`
 `
 
 class Cart extends Component {
+    constructor(props){
+        super(props);
+        this.state={};
+    }
+    componentDidMount(){
+        this.state = {token:cookie.load("cart")};
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.CartList !== this.props.CartList)
+        {
+            console.log("CartContainer",this.props);
+        }
+        return true;
+    }
     render() {
-      return(
-        <React.Fragment>
-            <MainBox>
-                <div className="content_box">
-                    <div className="label_box">
-                        <div className="checkbox_label"><input type="checkbox"/></div>
-                        <div className="product_info_label">상품정보</div>
-                        <div className="product_price_label">상품금액</div>
-                        <div className="product_delivery_label">배송비</div>
-                    </div>
+    const CartList = ()=>{
+        return(
                     <div className="value_box">
                         <div className="checkbox_value"><input type="checkbox"/></div>
                         <div className="product_info_value">
@@ -169,6 +176,20 @@ class Cart extends Component {
                         <div className="product_price_value"><div>10000</div></div>
                         <div className="product_delivery_value"><div>2500</div></div>
                     </div>
+        );
+    }
+      return(
+        <React.Fragment>
+            <MainBox>
+                <div className="content_box">
+                    <div className="label_box">
+                        <div className="checkbox_label"><input type="checkbox"/></div>
+                        <div className="product_info_label">상품정보</div>
+                        <div className="product_price_label">상품금액</div>
+                        <div className="product_delivery_label">배송비</div>
+                    </div>
+                    {/* <CartList/>
+                    <CartList/> */}
                 </div>
                 <div className="product_delete_button_box">
                     <div className="button">전체삭제</div>

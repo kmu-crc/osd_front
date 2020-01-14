@@ -63,6 +63,23 @@ const GrayButton = styled.div`
 `
 
 class Payment extends Component {
+
+  constructor(props){
+        super(props);
+        this.onClickPayment = this.onClickPayment.bind(this);
+  }
+
+  onClickPayment(){
+      console.log("결제하기요청",this.props);
+      const Result = {user_id:this.props.userInfo.uid,
+                    product_id:3499,amount:1,name:"테스트",
+                    phone:"01000000000",post_number:"10101",
+                    address_essential:"경기도 고양시 일산동구 장항동 신성하이네스트",address_detail:"605호",
+                    comment:"배송전전화주세요"
+                };
+      this.props.addOrderRequest(Result,this.props.token);
+  }
+
   render() {
     return(
         <React.Fragment>
@@ -83,7 +100,7 @@ class Payment extends Component {
 
                 </MainBox>
                 <div className="payment_content_box">
-                <Button>결제하기</Button>
+                <Button onClick={this.onClickPayment}>결제하기</Button>
                 <FormCheckbox/><span style={{paddingLeft:"10px"}}>구매 대행 서비스에 동의합니다.</span>
                 </div>
         </React.Fragment>

@@ -46,7 +46,7 @@ class App extends Component {
           <Switch>
             {/* main */}
             <Route exact path="/" component={MainPage} />
-
+ 
             {/* product */}
             <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />

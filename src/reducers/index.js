@@ -2,6 +2,7 @@ import Authentication from "./Authentication";
 import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignCardComment, DesignIssueList, DesignIssueComment, DesignLike, DeleteDesign, ChangeToProject, UpdateDesign, DesignSourceDetail, DesignWaitingList, DesignDetailComment } from "reducers/Designs";
 import {
     ProductDetail, ProductLike, ProductList,
+    CartList,OrderList,
     //ProductDetailView, ProductDetailStep,
     // ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,
     // ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,
@@ -23,6 +24,7 @@ import { combineReducers } from "redux";
 export default combineReducers({
     // PRODUCT
     ProductDetail, ProductLike, ProductList,
+    CartList,OrderList,
     // DESIGN
     DesignList, DesignDetail,
     DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignForked, DesignSourceDetail, DesignCardComment, DesignDetailComment, DesignIssueList,

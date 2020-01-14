@@ -5,6 +5,8 @@ import who from "source/thumbnail.png";
 import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css';
 import TextFormat from 'modules/TextFormat';
+
+import cookie from 'react-cookies';
 // import ViewContainer from 'containers/Designs/DesignDetailViewContainer';
 
 const MainBox = styled.div`
@@ -395,15 +397,44 @@ class ReviewComment extends Component {
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { select_image: 0, };
+    this.state = { select_image: 0, productCount:1,cartlist:"", };
     this.onClickPayment = this.onClickPayment.bind(this);
     this.onChangeBigImage = this.onChangeBigImage.bind(this);
+    this.onClickCart = this.onClickCart.bind(this);
+    this.onChangeProductCount = this.onChangeProductCount.bind(this);
+  }
+  async onClickCart(){
+    console.log("cart gogo",this.props);
+    const Result = {user_id:this.props.userInfo.uid,product_id:this.props.ProductDetail.uid,amount:1}
+    this.props.addCartRequest(Result,this.props.token);
+    // console.log(this.props);
+    // const CartProduct = this.props.ProductDetail.user_id+","+this.state.count; 
+    // cookie.save(this.props.ProductDetail.uid,CartProduct);
+    // this.state = {token:cookie.load(this.props.ProductDetail.uid)};
+    // alert(this.state.token);
+
+    this.state = {cartlist:cookie.load("cart")};
+
+    const userID = this.props.userInfo.uid;
+    const productID = this.props.ProductDetail.uid;
+    const count = document.getElementById('productCount').value;
+    const cartProduct = this.state.cartlist==null?"/":this.state.cartlist;
+    const newCartProduct = userID+","+productID+","+count+"/";
+    cookie.save("cart",cartProduct+newCartProduct,{
+      path:'/',
+    });
+
+    // console.log(this.state.cartlist);
   }
   onClickPayment() {
     window.location.href = "/payment";
   }
   onChangeBigImage(index) {
     this.setState({ select_image: index });
+  }
+  onChangeProductCount(event){
+    alert(event.target.value);
+    this.setState({productCount:event.target.value});
   }
   render() {
     const { ProductDetail } = this.props;
@@ -456,11 +487,11 @@ class ProductDetail extends Component {
                 </div>
                 <div className="product_stock">
                   <div className="amount_label">수량</div>
-                  <div><FormText value="1" onChange={() => alert("!")} /></div>
+                  <div><FormText id="productCount" onChange={this.onChangeProductCount} value={this.state.productCount} /></div>
                   <div className="stock_label">(재고:{ProductDetail.amount})</div>
                 </div>
                 <div className="product_buy_button">
-                  <div className="gray_button">장바구니</div>
+                  <div className="gray_button" onClick={this.onClickCart}>장바구니</div>
                   <div className="gray_button" onClick={this.onClickPayment}>즉시구매</div>
                 </div>
               </div>

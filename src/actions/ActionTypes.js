@@ -550,3 +550,20 @@ export const GET_MY_MSG_DETAIL_CLEAR = "GET_MY_MSG_DETAIL_CLEAR";
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const SEND_MESSAGE_SUCCESS = "SEND_MESSAGE_SUCCESS";
 export const SEND_MESSAGE_FAILURE = "SEND_MESSAGE_FAILURE";
+
+////////////////////////////////////////////////////////////////////////////
+// cart
+////////////////////////////////////////////////////////////////////////////
+
+export const ADD_CART = "ADD_CART";
+export const ADD_CART_SUCCESS = "ADD_CART_SUCESS";
+export const ADD_CART_FAILURE = "ADD_CART_FAILURE";
+export const GET_CART_LIST = "GET_CART_LIST";
+export const GET_CART_LIST_FAILURE = "GET_CART_LIST_FAILURE";
+
+
+////////////////////////////////////////////////////////////////////////////
+// order
+////////////////////////////////////////////////////////////////////////////
+export const GET_ORDER_LIST = "GET_ORDER_LIST";
+export const GET_ORDER_LIST_FAILURE = "GET_ORDER_LIST_FAILURE";

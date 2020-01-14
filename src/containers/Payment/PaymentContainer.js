@@ -5,6 +5,10 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import {addOrderRequest} from "actions/Product";
+
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
   background-position: center;
@@ -56,7 +60,7 @@ class PaymentContainer extends Component {
           <Title><h1>상품 구매</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <Payment/>
+          <Payment {...this.props}/>
         </Wrapper>
         {/* {this.state.loading && <Loading/>} */}
         </div>
@@ -64,5 +68,17 @@ class PaymentContainer extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    //  CartList: state.CartList.status.CartList,
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+  }
+}
 
-export default PaymentContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addOrderRequest: (items,token) => dispatch(addOrderRequest(items,token)),
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PaymentContainer));
