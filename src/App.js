@@ -52,7 +52,7 @@ class App extends Component {
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
             {/* DESIGNER-BOARD */}
-            <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
+            <Route path="/createDesignerBoard" component={RequiresAuth(CreateDesignerBoardPage)} />
             <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
             <Route path="/designerBoardDetail/:id" component={DesignerBoardDetailPage} />
 

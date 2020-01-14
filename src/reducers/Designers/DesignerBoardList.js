@@ -17,10 +17,10 @@ export function DesignerBoardList(state, action) {
       return update(state, { CreateDesignerBoard: { status: { $set: types.CREATE_DESIGNER_BOARD_ARTICLE } } });
 
     case types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS:
-      return update(state, { CreateDesignerBoard: { status: { $set: types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS } } });
+      return update(state, { CreateDesignerBoard: { status: { $set: types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS } }, status: { success: { $set: action.success } } });
 
     case types.CREATE_DESIGNER_BOARD_ARTICLE_FAIL:
-      return update(state, { CreateDesignerBoard: { status: { $set: types.CREATE_DESIGNER_BOARD_ARTICLE_FAIL } } });
+      return update(state, { CreateDesignerBoard: { status: { $set: types.CREATE_DESIGNER_BOARD_ARTICLE_FAIL } }, status: { success: { $set: action.success } } });
 
     case types.GET_DESIGNER_BOARD_LIST:
       return update(state, { status: { DesignerBoardList: { $set: action.DesignerBoardList }, } });

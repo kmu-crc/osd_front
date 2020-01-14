@@ -74,9 +74,9 @@ const TabContainer = styled(Grid.Column)`
   }
 `;
 // TODO
-const TagItem = styled.div``;
-const BoardItem = styled.div``;
-const CommentItem = styled.div``;
+// const TagItem = styled.div``;
+// const BoardItem = styled.div``;
+// const CommentItem = styled.div``;
 
 class DesignerBoardDetail extends Component {
   componentWillMount() {

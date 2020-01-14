@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import profile from "source/thumbnail.png";
-import { Icon } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
+// import { Icon } from "semantic-ui-react";
+// import StyleGuide from "StyleGuide";
+// import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
-import TextFormat from "modules/TextFormat";
+import DateFormat from "modules/DateFormat";
 
 // CSS STYLING
 const ListElement = styled.div`
@@ -35,30 +36,27 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    console.log("item:", item);
+    // console.log("item:", item);
     return (
       <NavLink to={"/designerBoardDetail/" + item.uid}>
         <ListElement>
           {/* no.*/}
           <div style={{ marginRight: "15px" }}>{item.uid}</div>
+
           {/* title */}
-          <div style={{ marginRight: "15px" }}>{item.title || "글 제목"}</div>
+          <div style={{ marginRight: "15px" }}>{item.status === "request" ? "[의뢰]" : ""}{item.title || "글 제목"}</div>
+
           {/* writer */}
           <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
             <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
           </div>
-          {/* date */}
-          <div style={{ marginRight: "15px" }}>{item.create_time}</div>
 
-          {/* view */}
-          <div style={{ marginRight: "15px" }}>{item.view || 0}</div>
+          {/* date */}<div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
 
-          {/* like */}
-          <div style={{ marginRight: "15px" }}>{item.like || 0}</div>
+          {/* view */}<div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div>
 
-          {/* func.*/}
-          <div>{/* <Icon size="small" className="icon edit" /> */}</div>
+          {/* like */}<div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div>
 
         </ListElement>
       </NavLink>

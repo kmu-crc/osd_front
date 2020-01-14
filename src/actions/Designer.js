@@ -13,22 +13,24 @@ export const CreateDesignerBoardArticleRequest = (data, token) => {
   };
 };
 const CreateDesignerBoardArticle = () => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE });
-const CreateDesignerBoardArticleSuccess = res => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS, success: res.success });
+const CreateDesignerBoardArticleSuccess = res => {
+  console.log("result create article:", res);
+  return { type: types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS, success: res.success };
+};
 const CreateDesignerBoardArticleFail = error => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE_FAIL, success: error.success });
 
 
-export function GetDesignerBoardListRequest(page, sort, cate1, cate2, keyword) {
-  return (dispatch) => {
+export const GetDesignerBoardListRequest = (page, sort, cate1, cate2, keyword) => {
+  return dispatch => {
     const url = `${host}/designer/board/${page}/${sort}/${cate1}/${cate2}/${keyword}`
-    console.log(url);
     return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(page === 0 ? DesignerBoardListClear(data || []) : GetDesignerBoardList(data || [])))
       .catch(err => dispatch(DesignerBoardListFail()))
   }
 };
-const GetDesignerBoardList = (data) => ({ type: types.GET_DESIGNER_BOARD_LIST, DesignerBoardList: data });
-const DesignerBoardListClear = (data) => ({ type: types.DESIGNER_BOARD_LIST_CLEAR, DesignerBoardList: data });
+const GetDesignerBoardList = data => ({ type: types.GET_DESIGNER_BOARD_LIST, DesignerBoardList: data });
+const DesignerBoardListClear = data => ({ type: types.DESIGNER_BOARD_LIST_CLEAR, DesignerBoardList: data });
 const DesignerBoardListFail = () => ({ type: types.DESIGNER_BOARD_LIST_FAIL, DesignerBoardList: [] });
 
 
@@ -38,11 +40,11 @@ export function GetDesignerBoardTotalCountRequest(cate1, cate2) {
     console.log(url);
     return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
-      .then(data => dispatch(GetDesignerBoardTotalCount(data["count(*)"] || 0)))
+      .then(data => dispatch(GetDesignerBoardTotalCount(data || 0)))
       .catch(err => dispatch(DesignerBoardTotalCountFail()))
   }
 };
-const GetDesignerBoardTotalCount = (data) => ({ type: types.GET_DESIGNER_BOARD_TOTAL_COUNT, Count: data });
+const GetDesignerBoardTotalCount = data => ({ type: types.GET_DESIGNER_BOARD_TOTAL_COUNT, Count: data });
 const DesignerBoardTotalCountFail = () => ({ type: types.GET_DESIGNER_BOARD_TOTAL_COUNT_FAIL, Count: 0 });
 
 

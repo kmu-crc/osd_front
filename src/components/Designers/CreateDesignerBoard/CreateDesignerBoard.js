@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Grid } from "semantic-ui-react"
+import { Grid } from "semantic-ui-react";
 import styled from 'styled-components';
 import StyleGuide from "StyleGuide";
 import mainSlide from "source/mainSlide.jpg";
 import ContentBox from "components/Commons/ContentBox";
-import { FormFile, FormInput, FormCheckBox, FormTag, FormTextArea } from "components/Commons/FormItems";
+import { FormDropBox, FormFile, FormInput, FormCheckBox, FormTag, FormTextArea } from "components/Commons/FormItems";
 import Button from "components/Commons/Button";
+import Loading from "components/Commons/Loading";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -72,55 +73,76 @@ class CreateDesignerBoard extends Component {
     super(props);
     this.state = { loading: false, };
   };
+
   onChangeValue = e => {
+    console.log(e);
     this.setState({ [e.target.name]: e.target.value });
-    // console.log(e.target.type === "checkbox" && e.target.checked);
+  };
+  onChangeTag = v => {
+    alert("tag!");
+    this.setState({ tag: v });
+  }
+  onChangedPrivate = checkbox => {
+    this.setState({ private: checkbox.value });
   };
   onSubmit = e => {
     e.preventDefault();
-    let data = { ...this.state };
+    this.setState({ loading: true });
+    let data = { ...this.state, writer: this.props.userInfo.uid, type: "designer" };
     delete data.loading;
-    console.log("data:", data);
-    this.props.CreateDesignerBoardRequest &&
-      this.props.CreateDesignerBoardRequest(data, this.props.token)
-        .then(rst => alert(rst))
+    console.log(data);
+    this.props.CreateDesignerBoardArticleRequest &&
+      this.props.CreateDesignerBoardArticleRequest(data, this.props.token)
         .catch(e => alert(e));
     this.setState({ loading: false });
   };
 
   render() {
     return (<React.Fragment>
+      {this.state.loading ? <Loading /> : null}
+
       <ImgWrapper>
         <Title><h1>글쓰기</h1></Title>
       </ImgWrapper>
+
       <Wrapper>
-        <form onSubmit={this.onSubmit}>
-          <FromFieldCard>
-            <Grid>
-              <Grid.Column mobile={16} computer={12}>
+        <FromFieldCard>
+          <Grid>
+            <Grid.Column mobile={16} computer={16}>
+              <Label>제목</Label>
+              <FormInput name="title" placeholder="설명을 입력해주세요." getValue={this.onChangeValue} />
+              <Label>카테고리</Label>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <FormDropBox
+                  selection={true} name="category_level1"
+                  getValue={this.onChangeValue}
+                  options={this.props.category1}
+                // onChange={()=>{}}
+                />&nbsp;&nbsp;
+                  {this.state.category_level1 ?
+                  <FormDropBox
+                    selection={true} name="category_level2"
+                    getValue={this.onChangeValue}
+                    options={this.props.category2} /> : null}
+              </div>
+              <Label>내용</Label>
+              <FormTextArea name="content" placeholder="내용을 입력해주세요." getValue={this.onChangeValue} />
 
-                <Label>제목</Label>
-                <FormInput name="title" placeholder="디자이너 설명을 입력해주세요." getValue={this.onChangeValue} />
+              <Label>파일첨부</Label>
+              <FormFile name="file" getValue={this.onChangeValue} />
 
-                <Label>내용</Label>
-                <FormTextArea name="content" placeholder="디자이너 설명을 입력해주세요." getValue={this.onChangeValue} />
+              <Label>태그</Label>
+              <FormTag name="tag" getValue={this.onChangeTag} placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
 
-                <Label>파일첨부</Label>
-                <FormFile name="file" getValue={this.onChangeValue} />
+              <Label>비공개여부</Label>
+              <FormCheckBox name="private" value={false} getValue={this.onChangedPrivate} placeholder="비공개" />
 
-                <Label>태그</Label>
-                <FormTag name="tag" getValue={this.onChangeValue} placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
-
-                <Label>공개여부</Label>
-                <FormCheckBox items="비공개" name="private" getValue={this.onChangeValue} />
-
-              </Grid.Column>
-            </Grid>
-          </FromFieldCard>
-          <div style={{ width: "max-content", marginLeft: "auto" }}>
-            <Button color="Primary" type="submit">등록하기</Button>
-          </div>
-        </form>
+            </Grid.Column>
+          </Grid>
+        </FromFieldCard>
+        <div style={{ width: "max-content", marginLeft: "auto" }}>
+          <Button color="Primary" onClick={this.onSubmit} type="submit">등록하기</Button>
+        </div>
       </Wrapper>
     </React.Fragment>);
   }

@@ -26,7 +26,7 @@ const CheckBoxPiece = styled.div`
 
 `
 
-export class FormCheckBox_new extends Component{
+export class FormCheckBoxnew extends Component{
     constructor(props){
         super(props);
         this.state = {

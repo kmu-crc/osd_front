@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import InfiniteScroll from "react-infinite-scroller";
-import { Grid, Loader } from "semantic-ui-react";
+// import InfiniteScroll from "react-infinite-scroller";
+// import { Grid, Loader } from "semantic-ui-react";
 import styled from "styled-components";
 
 // css styling
@@ -35,7 +35,7 @@ class ScrollBoardList extends Component {
     return (
       <ScrollContainer>
         {dataList && dataList.length > 0 ?
-          dataList.map(content => <ListComponent data={content} />)
+          dataList.map(content => <ListComponent key={content.uid} data={content} />)
           : <p>등록된 게시글이 없습니다.</p>}
         {dataList && dataList.length > 0 ? <div onClick={this.getLoadData}>next</div> : <div>1</div>}
       </ScrollContainer>

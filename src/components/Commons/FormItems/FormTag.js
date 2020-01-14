@@ -91,7 +91,7 @@ const WarningBox = styled.div`
 
     
 `
-function CheckedCharLength(text) {
+const CheckedCharLength = text => {
     let str = text;
     let charLength = 0;
     let ch = "";
@@ -120,7 +120,16 @@ export class FormTag extends Component {
         this.onDeleteTag = this.onDeleteTag.bind(this);
     }
     componentDidMount() {
-        // this.setState({tag:this.props.tag});
+        this.init();
+    }
+    returnData = async e => {
+        if (this.props.getValue) {
+            await this.props.getValue(this.state.tag);
+        }
+    }
+    init = async () => {
+        await this.setState({ tag: this.props.tag || [] });
+        this.returnData();
     }
     onEnterKeyDown(event) {
         if (event.keyCode === 13) {
@@ -142,11 +151,9 @@ export class FormTag extends Component {
                     })
                 }
             }
-
         }
     }
     onChangeValue(event) {
-
         this.setState({ value: event.target.value })
     }
     async onDeleteTag(event) {

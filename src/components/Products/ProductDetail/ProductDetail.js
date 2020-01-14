@@ -355,8 +355,7 @@ class ProductOption extends Component {
             <React.Fragment>
               <CustomFormText value={this.state.value} onChange={this.onChangeEditBox} width={150} height={35} backgroundColor={"#EFEFEF"} disabled />
               <label htmlFor="file" >
-                <CustomButton width={80} height={35} backgroundColor={"#EFEFEF"}
-                  fontSize={11} padding={10} fontSize={11}>...</CustomButton>
+                <CustomButton width={80} height={35} backgroundColor={"#EFEFEF"} padding={10} fontSize={11}>...</CustomButton>
               </label>
               <input hidden onChange={this.onChangeUploadImage} id="file" type="file" />
             </React.Fragment>

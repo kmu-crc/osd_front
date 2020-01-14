@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import DeliverySection from 'components/Payment/Common/Delivery/DeliverySection'
-import AddInfoSection from 'components/Payment/Common/AddInformation/AddInfoSection'
+// import AddInfoSection from 'components/Payment/Common/AddInformation/AddInfoSection'
 import OrderSection from 'components/Payment/Common/Order/OrderSection'
 import PaySection from 'components/Payment/Pay/PaySection'
 import Button from "components/Commons/Button";
@@ -50,17 +50,17 @@ const FormCheckbox = styled.input.attrs({type:'checkbox'})`
   height:20px !important;
   margin-top:2px;
 `
-const GrayButton = styled.div`
-    width:200px;
-    height:40px;
-    padding:10px;
-    border-radius:5px;
-    font-weight:500;
-    background-color:#707070;
-    color:white;
-    text-align:center;
-    cursor:pointer;
-`
+//const GrayButton = styled.div`
+//    width:200px;
+//    height:40px;
+//    padding:10px;
+//    border-radius:5px;
+//    font-weight:500;
+//    background-color:#707070;
+//    color:white;
+//    text-align:center;
+//    cursor:pointer;
+//`
 
 class Payment extends Component {
   render() {
