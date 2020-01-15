@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetDesignerBoardListRequest, GetDesignerBoardTotalCountRequest } from "actions/Designer";
+import { CreateDesignerBoardArticleRequest, GetDesignerBoardListRequest, GetDesignerBoardTotalCountRequest } from "actions/Designer";
 import DesignerBoardList from "components/Designers/DesignerBoardList";
 
 class DesignerBoardListContainer extends Component {
@@ -12,6 +12,7 @@ class DesignerBoardListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     DesignerList: state.DesignerBoardList.status.DesignerBoardList,
+    token: state.Authentication.status.token,
     Count: state.DesignerBoardList.status.Count,
     userInfo: state.Authentication.status.userInfo,
     category1: state.CategoryAll.status.category1,
@@ -21,12 +22,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignerBoardListRequest: (page, sort) => {
-      return dispatch(GetDesignerBoardListRequest(page, sort))
-    },
-    GetDesignerBoardTotalCountRequest: (category1, category2) => {
-      return dispatch(GetDesignerBoardTotalCountRequest(category1, category2))
-    }
+    CreateDesignerBoardArticleRequest: (data, token) => dispatch(CreateDesignerBoardArticleRequest(data, token)),
+    GetDesignerBoardListRequest: (page, sort) => dispatch(GetDesignerBoardListRequest(page, sort)),
+    GetDesignerBoardTotalCountRequest: (category1, category2) => dispatch(GetDesignerBoardTotalCountRequest(category1, category2))
   };
 };
 

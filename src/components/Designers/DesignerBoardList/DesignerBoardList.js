@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
-// import { Link } from "react-router-dom";
 import Sorting from "components/Commons/Sorting";
 import ScrollDesignerBoardListContainer from "containers/Designer/ScrollDesignerBoardListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
 import StyleGuide from "StyleGuide";
 import NumberFormat from "modules/NumberFormat";
-
+import Button from "components/Commons/Button";
+import { Link } from "react-router-dom";
 // CSS STYLING
 const Wrapper = styled.div`
   width: 100%;
@@ -52,6 +52,7 @@ const Head = styled.div`
   padding-top: 80px;
   padding-bottom: 2rem;
   font-size: ${StyleGuide.font.size.paragraph};
+  display: flex;
   & .Sorting{
     float: right;
   }
@@ -119,11 +120,19 @@ class DesignerBoardList extends Component {
 
       return (
         <Head>
-          <span>디자이너 </span>
-          {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
-          {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
-          <span> ({NumberFormat(Count)})</span>
-          <div className="Sorting">
+          <div style={{ width: "max-content" }}>
+            <span>디자이너 </span>
+            {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
+            {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
+            <span> ({NumberFormat(Count)})</span>
+          </div>
+
+          <div style={{ marginLeft: "auto", width: "max-content" }}>
+            <Link to={`/createdesignerboard`}><Button color="Primary">글쓰기</Button></Link>
+          </div>
+
+          {/* <div className="Sorting"> */}
+          <div style={{ width: "max-content" }}>
             <Sorting handleClick={this.sortChange} placeholder={sort} />
           </div>
         </Head>
@@ -143,6 +152,7 @@ class DesignerBoardList extends Component {
         </Content>
       </MenuWrap>
       <Content>
+
         <Header />
 
         <ListElement>
