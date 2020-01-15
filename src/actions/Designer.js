@@ -8,7 +8,7 @@ export const CreateDesignerBoardArticleRequest = (data, token) => {
     console.log("url", url);
     return fetch(url, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
       .then(res => res.json())
-      .then(res => dispatch(CreateDesignerBoardArticleSuccess(res)))
+      .then(res => dispatch(CreateDesignerBoardArticleSuccess(res)) && res.id)
       .catch(error => dispatch(CreateDesignerBoardArticleFail(error)));
   };
 };

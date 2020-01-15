@@ -72,18 +72,26 @@ class CreateDesignerBoard extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: false, };
-  };
-
-  onChangeValue = e => {
-    console.log(e);
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  onChangeTag = v => {
-    alert("tag!");
-    this.setState({ tag: v });
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeTag = this.onChangeTag.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangeCategory1 = this.onChangeCategory1.bind(this);
+    this.onChangeCategory2 = this.onChangeCategory2.bind(this);
+    this.onChangedPrivate = this.onChangedPrivate.bind(this);
+    this.gotoDetailPage = this.gotoDetailPage.bind(this);
   }
-  onChangedPrivate = checkbox => {
-    this.setState({ private: checkbox.value });
+  onChangeTag = v => { this.setState({ tag: v }); };
+  onChangeValue = e => { this.setState({ [e.target.name]: e.target.value }); };
+  onChangeCategory1 = v => { this.setState({ category_level1: v }); };
+  onChangeCategory2 = v => { this.setState({ category_level2: v }); };
+  onChangedPrivate = checkbox => { this.setState({ private: checkbox.value }); };
+  gotoDetailPage = id => {
+    if (id) {
+      alert("완료되었습니다.");
+      window.location.href = `/designerBoardDetail/${id}`
+    } else {
+      alert("글 작성에 실패하였습니다.");
+    }
   };
   onSubmit = e => {
     e.preventDefault();
@@ -93,6 +101,7 @@ class CreateDesignerBoard extends Component {
     console.log(data);
     this.props.CreateDesignerBoardArticleRequest &&
       this.props.CreateDesignerBoardArticleRequest(data, this.props.token)
+        .then(id => this.gotoDetailPage(id))
         .catch(e => alert(e));
     this.setState({ loading: false });
   };
@@ -115,21 +124,20 @@ class CreateDesignerBoard extends Component {
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <FormDropBox
                   selection={true} name="category_level1"
-                  getValue={this.onChangeValue}
+                  onChangeValue={this.onChangeCategory1}
                   options={this.props.category1}
-                // onChange={()=>{}}
                 />&nbsp;&nbsp;
                   {this.state.category_level1 ?
                   <FormDropBox
                     selection={true} name="category_level2"
-                    getValue={this.onChangeValue}
-                    options={this.props.category2} /> : null}
+                    onChangeValue={this.onChangeCategory2}
+                    options={this.props.category2[this.state.category_level1]} /> : null}
               </div>
               <Label>내용</Label>
               <FormTextArea name="content" placeholder="내용을 입력해주세요." getValue={this.onChangeValue} />
 
-              <Label>파일첨부</Label>
-              <FormFile name="file" getValue={this.onChangeValue} />
+              {/* <Label>파일첨부</Label>
+              <FormFile name="file" getValue={this.onChangeValue} /> */}
 
               <Label>태그</Label>
               <FormTag name="tag" getValue={this.onChangeTag} placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
