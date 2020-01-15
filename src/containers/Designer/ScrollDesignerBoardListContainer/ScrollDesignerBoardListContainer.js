@@ -14,27 +14,19 @@ class ScrollDesignerBoardListContainer extends Component {
 
   render() {
     return (
-      <ScrollBoardList
-        getListRequest={this.getList}
-        ListComponent={DesignerBoardElement}
-        dataList={this.props.dataList}
+      <ScrollBoardList getListRequest={this.getList} ListComponent={DesignerBoardElement} dataList={this.props.dataList} total={this.props.Count}
         mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom" />
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    dataList: state.DesignerBoardList.status.DesignerBoardList,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetDesignerBoardListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
-      return dispatch(GetDesignerBoardListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
-    }
-  };
-};
+const mapStateToProps = (state) => ({
+  dataList: state.DesignerBoardList.status.DesignerBoardList,
+  Count: state.DesignerBoardList.status.Count,
+});
+const mapDispatchToProps = (dispatch) => ({
+  GetDesignerBoardListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) =>
+    dispatch(GetDesignerBoardListRequest(page, sort, categoryLevel1, categoryLevel2, keyword)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollDesignerBoardListContainer);

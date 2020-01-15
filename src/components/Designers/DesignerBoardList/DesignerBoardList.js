@@ -9,6 +9,8 @@ import StyleGuide from "StyleGuide";
 import NumberFormat from "modules/NumberFormat";
 import Button from "components/Commons/Button";
 import { Link } from "react-router-dom";
+import { FormCheckBox } from "components/Commons/FormItems";
+
 // CSS STYLING
 const Wrapper = styled.div`
   width: 100%;
@@ -99,7 +101,6 @@ class DesignerBoardList extends Component {
     this.props.GetDesignerBoardTotalCountRequest(this.props.cate1, value);
     this.changeState();
   }
-
   sortChange = (e, { value }) => {
     this.props.history.replace(`/designerboard/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.changeState();
@@ -127,9 +128,13 @@ class DesignerBoardList extends Component {
             <span> ({NumberFormat(Count)})</span>
           </div>
 
+          {/* write button */}
           <div style={{ marginLeft: "auto", width: "max-content" }}>
             <Link to={`/createdesignerboard`}><Button color="Primary">글쓰기</Button></Link>
           </div>
+
+          {/* hide private */}
+          {/* ... */}
 
           {/* <div className="Sorting"> */}
           <div style={{ width: "max-content" }}>

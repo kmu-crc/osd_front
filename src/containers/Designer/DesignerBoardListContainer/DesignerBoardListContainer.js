@@ -7,7 +7,7 @@ class DesignerBoardListContainer extends Component {
   render() {
     return (<DesignerBoardList {...this.props} />);
   }
-}
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
     category2: state.CategoryAll.status.category2,
   };
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     CreateDesignerBoardArticleRequest: (data, token) => dispatch(CreateDesignerBoardArticleRequest(data, token)),

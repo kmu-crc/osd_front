@@ -23,6 +23,7 @@ const ListElement = styled.div`
   list-style: none;
   display: flex;
   fiex-direction: row;
+  cursor: default;
 `;
 const ThumbnailWriter = styled.div`
   width: 35px;
@@ -36,30 +37,32 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    // console.log("item:", item);
+    console.log("item:", item);
+    const Element = () =>
+      <ListElement>
+        {/* no.*/}
+        <div style={{ marginRight: "15px" }}>{item.uid}</div>
+        {/* title */}
+        <div style={{ marginRight: "15px" }}>{item.private === 0 ? "" : "[비공개]"}{item.status === "request" ? "[의뢰]" : ""}{item.title || "글 제목"}</div>
+        {/* writer */}
+        <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
+          <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+          <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+        </div>
+        {/* date */}
+        <div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
+        {/* view */}
+        <div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div>
+        {/* like */}
+        <div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div>
+      </ListElement>
+
     return (
-      <NavLink to={"/designerBoardDetail/" + item.uid}>
-        <ListElement>
-          {/* no.*/}
-          <div style={{ marginRight: "15px" }}>{item.uid}</div>
-
-          {/* title */}
-          <div style={{ marginRight: "15px" }}>{item.status === "request" ? "[의뢰]" : ""}{item.title || "글 제목"}</div>
-
-          {/* writer */}
-          <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
-            <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
-          </div>
-
-          {/* date */}<div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
-
-          {/* view */}<div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div>
-
-          {/* like */}<div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div>
-
-        </ListElement>
-      </NavLink>
+      item.private === 0 ?
+        <NavLink to={"/designerBoardDetail/" + item.uid}>
+          <Element />
+        </NavLink>
+        : <Element />
     );
   }
 }
