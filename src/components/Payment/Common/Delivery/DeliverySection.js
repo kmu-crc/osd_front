@@ -109,17 +109,35 @@ class DeliverySection extends React.Component{
         this.onChangeNameValue=this.onChangeNameValue.bind(this);
         this.onChangePhoneFirstValue=this.onChangePhoneFirstValue.bind(this);
         this.onChangePhoneSecondValue=this.onChangePhoneSecondValue.bind(this);
+        this.onChangeComment = this.onChangeComment.bind(this);
+        this.onChangeAddressEssentialValue=this.onChangeAddressEssentialValue.bind(this);
+        this.onChangeAddressDetailValue=this.onChangeAddressDetailValue.bind(this);
         
     }
 
     onChangeNameValue(event){
         this.setState({name:event.target.value});
+        this.props.onChangeNameValue(event.target.value);
     }
     onChangePhoneFirstValue(event,{value}){
         this.setState({phone_first:{value}.value})
+        this.props.onChangePhoneFirst(phoneNumList[{value}.value].text);
     }
     onChangePhoneSecondValue(event){
         this.setState({phone_second:event.target.value})
+        this.props.onChangePhoneSecond(event.target.value);
+    }
+    onChangeAddressEssentialValue(event){
+        this.setState({address_essential:event.target.value});
+        this.props.onChangeAddressEssential(event.target.value);
+    }
+    onChangeAddressDetailValue(event){
+        this.setState({address_detail:event.target.value});
+        this.props.onChangeAddressDetail(event.target.value);
+    }
+    onChangeComment(event){
+        this.setState({comment:event.target.value});
+        this.props.onChangeComment(event.target.value);
     }
 
     render(){
@@ -131,7 +149,7 @@ class DeliverySection extends React.Component{
                                         <div className="inner_label">이름</div>
                                         <div className="inner_box">
                                             <div className="inner_line_box">
-                                            <FormText value={this.state.name} width="300"/>
+                                            <FormText value={this.state.name} onChange={this.onChangeNameValue} width="300"/>
                                             </div>
                                         </div>
                                     </div>
@@ -140,9 +158,9 @@ class DeliverySection extends React.Component{
                                         <div className="inner_label">연락처</div>
                                         <div className="inner_box">
                                             <div className="inner_line_box">
-                                                <Dropdown className="dropdown-style"options={phoneNumList} selection 
+                                                <Dropdown className="dropdown-style"options={phoneNumList} selection onChange={this.onChangePhoneFirstValue}
                                                          value={this.state.phone_first} style={{marginRight:"10px"}}/>
-                                                <FormText value={this.state.phone_second} width="150"/>
+                                                <FormText value={this.state.phone_second} onChange={this.onChangePhoneSecondValue} width="150"/>
                                             </div>
                                         </div>
                                     </div>
@@ -151,12 +169,12 @@ class DeliverySection extends React.Component{
                                         <div className="inner_label">배송지</div>
                                         <div className="inner_box">
                                             <div className="inner_line_box">
-                                                <FormText width="150" style={{backgroundColor:"#EFEFEF"}} readOnly/>
+                                                <FormText onChangeAddressEssential={this.onChangeAddressEssentialValue} width="150" style={{backgroundColor:"#EFEFEF"}} readOnly/>
                                                 <GrayButton style={{color:"white"}}>우편번호찾기</GrayButton>
                                             </div>
                                             <div className="inner_line_box">
                                                 <FormText width="200" style={{backgroundColor:"#EFEFEF"}} readOnly/>
-                                                <FormText width="100"/>
+                                                <FormText onChange={this.onChangeAddressDetailValue}width="100"/>
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +183,7 @@ class DeliverySection extends React.Component{
                                         <div className="inner_label">배송요청사항</div>
                                         <div className="inner_box">
                                             <div className="inner_line_box">
-                                            <FormText width="400"/>
+                                            <FormText value={this.state.comment} onChange={this.onChangeComment} width="400"/>
                                             </div>
                                         </div>
                                     </div>

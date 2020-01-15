@@ -169,6 +169,7 @@ class MyDetail extends Component {
     super(props);
     this.state = {
       selected: "WriteReview"//"OrderProduct" 
+      ,repaint:false,
     };
   }
   componentWillMount() {
@@ -190,7 +191,6 @@ class MyDetail extends Component {
     if(value=="OrderProduct")
     {
       //testcode
-      alert("?");
       this.props.getOrderListRequest(this.props.MyDetail.uid);
     }
   }
@@ -268,10 +268,21 @@ class MyDetail extends Component {
 
     // 주문 상품 정보
     const OrderProduct = (props) => {
-      console.log("ORDERPRODUCT:::::",this.props.OrderList.uid);
+      console.log("ORDERPRODUCT:::::",this.props);
       return(
         <div>
-          {this.props.OrderList.uid};
+          {
+            this.props.OrderList.map((item,index)=>{
+              return(
+              <div style={{width:"100%",padding:"5px",border:"1px solid gray",marginBottom:"10px"}}key={index}>
+                <div>상품명:{item.name}</div>
+                <div>수량:{item.amount}개</div>
+                <div>배송주소:{item.address_essential+item.address_detail}</div>
+                <div>요청사항:{item.comment}</div>
+              </div>
+              );
+            })
+          }
         </div>
       );
       // return <div>

@@ -5,7 +5,7 @@ class CartPage extends Component {
     render() {
       return(
         <React.Fragment>
-            <CartContainer id={this.props.match.params.id}/>
+            <CartContainer/>
         </React.Fragment>
       );
     }

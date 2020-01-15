@@ -405,13 +405,8 @@ class ProductDetail extends Component {
   }
   async onClickCart(){
     console.log("cart gogo",this.props);
-    const Result = {user_id:this.props.userInfo.uid,product_id:this.props.ProductDetail.uid,amount:1}
+    const Result = {user_id:this.props.userInfo.uid,product_id:this.props.ProductDetail.uid,amount:document.getElementById('productCount').value}
     this.props.addCartRequest(Result,this.props.token);
-    // console.log(this.props);
-    // const CartProduct = this.props.ProductDetail.user_id+","+this.state.count; 
-    // cookie.save(this.props.ProductDetail.uid,CartProduct);
-    // this.state = {token:cookie.load(this.props.ProductDetail.uid)};
-    // alert(this.state.token);
 
     this.state = {cartlist:cookie.load("cart")};
 
@@ -427,7 +422,10 @@ class ProductDetail extends Component {
     // console.log(this.state.cartlist);
   }
   onClickPayment() {
-    window.location.href = "/payment";
+    // console.log("props",encodeURIComponent(this.props.ProductDetail.img[0].s_img));
+    // const thumbnail = this.props.ProductDetail.img&&this.props.ProductDetail.img[0].s_img
+    window.location.href = "/payment"+"/"+this.props.ProductDetail.uid+"/"+this.props.ProductDetail.title+"/"+
+                          document.getElementById("productCount").value+"/"+this.props.ProductDetail.options+"/"+encodeURIComponent(this.props.ProductDetail.img[0].s_img);
   }
   onChangeBigImage(index) {
     this.setState({ select_image: index });

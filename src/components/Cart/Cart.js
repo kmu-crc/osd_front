@@ -161,22 +161,27 @@ class Cart extends Component {
         return true;
     }
     render() {
-    const CartList = ()=>{
+        console.log("CART::",this.props);
+    const CartList = (item)=>{
         return(
                     <div className="value_box">
                         <div className="checkbox_value"><input type="checkbox"/></div>
                         <div className="product_info_value">
-                            <SmallImage imageURL={noimg}/>
+                            <SmallImage imageURL={item.s_img}/>
                             <div className="information_text">
-                               상품명상품명상품명<br/>
-                               [옵션]옵션옵션옵션<br/>
-                               [수량]nn <br/> 
+                               {item.title}<br/>
+                               [옵션]{item.product_option}<br/>
+                               [수량]{item.amount} <br/> 
                             </div>
                         </div>
-                        <div className="product_price_value"><div>10000</div></div>
+                        <div className="product_price_value"><div>{item.price}</div></div>
                         <div className="product_delivery_value"><div>2500</div></div>
                     </div>
         );
+    }
+    let AllPrice = 0;
+    for(let idx=0;idx<this.props.CartList.length;idx++){
+        AllPrice+=this.props.CartList[idx].price*this.props.CartList[idx].amount;
     }
       return(
         <React.Fragment>
@@ -188,6 +193,13 @@ class Cart extends Component {
                         <div className="product_price_label">상품금액</div>
                         <div className="product_delivery_label">배송비</div>
                     </div>
+                    {
+                        this.props.CartList.map((item,index)=>{
+                            return(
+                                CartList(item)
+                            );
+                        })
+                    }
                     {/* <CartList/>
                     <CartList/> */}
                 </div>
@@ -203,7 +215,7 @@ class Cart extends Component {
                     <div className="calculate">
                         <div className="item_row">
                             <div>상품금액</div>
-                            <div>10000</div>
+                            <div>{AllPrice}원</div>
                         </div>
                         <div className="item_row">
                             <div>배송비</div>
@@ -215,7 +227,7 @@ class Cart extends Component {
                         </div>
                     </div>
                     <div className="result">
-                        <div>=10000원</div>
+                        <div>={AllPrice+2500}원</div>
                     </div> 
                 </div>
 
