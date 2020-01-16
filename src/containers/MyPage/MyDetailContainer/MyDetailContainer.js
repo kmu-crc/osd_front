@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyDetailRequest, GetMyDesignListRequest } from "actions/Users/MyDetail";
 import MyDetail from "components/Users/MyDetail";
+import {getOrderListRequest} from "actions/Product";
 
 class MyDetailContainer extends Component {
   componentWillMount() {
@@ -15,7 +16,8 @@ class MyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    MyDetail: state.MyDetail.status.MyDetail
+    MyDetail: state.MyDetail.status.MyDetail,
+    OrderList: state.OrderList.status.OrderList,
   };
 };
 
@@ -26,7 +28,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     GetMyDesignListRequest: (token, page) => {
       return dispatch(GetMyDesignListRequest(token, page));
-    }
+    },
+    getOrderListRequest: (id) => {
+      return dispatch(getOrderListRequest(id));
+    },
   };
 };
 

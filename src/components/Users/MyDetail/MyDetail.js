@@ -169,6 +169,7 @@ class MyDetail extends Component {
     super(props);
     this.state = {
       selected: "WriteReview"//"OrderProduct" 
+      ,repaint:false,
     };
   }
   componentWillMount() {
@@ -186,8 +187,15 @@ class MyDetail extends Component {
   };
   onChangedSelected = (value) => {
     this.setState({ selected: value });
+    //
+    if(value=="OrderProduct")
+    {
+      //testcode
+      this.props.getOrderListRequest(this.props.MyDetail.uid);
+    }
   }
   render() {
+    console.log(this.props);
     let MyInfo = this.props.MyDetail;
     let count = null;
     if (MyInfo.count != null) {
@@ -260,52 +268,69 @@ class MyDetail extends Component {
 
     // 주문 상품 정보
     const OrderProduct = (props) => {
-      return <div>
-        {/* <div>주문 상품 정보</div> */}
-        {/* filter - date picker */}
-        <div style={{ border: "1px solid #E0E0E0", padding: "15px 5px", margin: "0px", display: "flex", flexDirection: "row" }}>
-          <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#EFEFEF", color: "#707070" }}>오늘</div>
-          <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#EFEFEF", color: "#707070" }}>15일</div>
-          <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#EFEFEF", color: "#707070" }}>1개월</div>
-          <div style={{ width: "max-content", padding: "5px 10px", marginLeft: "10px" }}><input placeholder="2019/01/01" style={{ width: "105px" }} /></div>
-          <div style={{ width: "max-content", padding: "5px 10px", marginLeft: "0px" }}>~</div>
-          <div style={{ width: "max-content", padding: "5px 10px", marginLeft: "0px" }}><input placeholder="2019/12/31" style={{ width: "105px" }} /></div>
-          <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#FFF", color: "#707070" }}>조회</div>
-        </div>
-        {/* list */}
-        <div style={{ border: "1px solid #E0E0E0", padding: "", marginTop: "10px" }}>
-          {props.items ? props.items.map(item =>
-            <div key={item.num}
-              style={{ padding: "10px", display: "flex", flexDirection: "row" }}>
-              <div>
-                <div>{item.purchase.date}(구매번호:{item.purchase.num})</div>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div style={{ width: "120px" }}><img src={noimg} style={{ width: "100px", height: "100px" }} /></div>
-                  <div>
-                    <div>{item.product.title}</div>
-                    <div>[옵션]{item.purchase.option}</div>
-                    <div>[수량]x{item.purchase.amount}</div>
-                    <div>결제금액:{item.purchase.price}x{item.purchase.amount}={item.purchase.price * item.purchase.amount}</div>
-                  </div>
-                </div>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div style={{ width: "150px", textAlign: "center" }}>배송지 정보</div>
-                  <div>
-                    <div>이름:{item.product.userName}</div>
-                    <div>연락처:{item.product.phone}</div>
-                    <div>주소:{item.product.addr}</div>
-                  </div>
-                </div>
+      console.log("ORDERPRODUCT:::::",this.props);
+      return(
+        <div>
+          {
+            this.props.OrderList.map((item,index)=>{
+              return(
+              <div style={{width:"100%",padding:"5px",border:"1px solid gray",marginBottom:"10px"}}key={index}>
+                <div>상품명:{item.name}</div>
+                <div>수량:{item.amount}개</div>
+                <div>배송주소:{item.address_essential+item.address_detail}</div>
+                <div>요청사항:{item.comment}</div>
               </div>
-              <div style={{ backgroundColor: "#EFEFEF", padding: "10px" }}>
-                <div style={{ textAlign: "center", backgroundColor: "#5E5E5E", padding: "10px 5px", color: "#FFF", fontSize: "16px", width: "120px", borderRadius: "5px", marginLeft: "5px", marginBottom: "5px", }}>구매취소</div>
-                <div style={{ textAlign: "center", backgroundColor: "#5E5E5E", padding: "10px 5px", color: "#FFF", fontSize: "16px", width: "120px", borderRadius: "5px", marginLeft: "5px", marginBottom: "5px", }}>교환/반품 신청</div>
-                <div style={{ textAlign: "center", backgroundColor: "#5793D8", padding: "10px 5px", color: "#FFF", fontSize: "16px", width: "120px", borderRadius: "5px", marginLeft: "5px", marginTop: "50px", }}>구매후기</div>
-              </div>
-            </div>
-          ) : "항목이 없습니다."}
+              );
+            })
+          }
         </div>
-      </div>
+      );
+      // return <div>
+      //   {/* <div>주문 상품 정보</div> */}
+      //   {/* filter - date picker */}
+      //   <div style={{ border: "1px solid #E0E0E0", padding: "15px 5px", margin: "0px", display: "flex", flexDirection: "row" }}>
+      //     <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#EFEFEF", color: "#707070" }}>오늘</div>
+      //     <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#EFEFEF", color: "#707070" }}>15일</div>
+      //     <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#EFEFEF", color: "#707070" }}>1개월</div>
+      //     <div style={{ width: "max-content", padding: "5px 10px", marginLeft: "10px" }}><input placeholder="2019/01/01" style={{ width: "105px" }} /></div>
+      //     <div style={{ width: "max-content", padding: "5px 10px", marginLeft: "0px" }}>~</div>
+      //     <div style={{ width: "max-content", padding: "5px 10px", marginLeft: "0px" }}><input placeholder="2019/12/31" style={{ width: "105px" }} /></div>
+      //     <div style={{ borderRadius: "5px", border: "1px solid #AAA", width: "max-content", padding: "5px 10px", marginLeft: "10px", backgroundColor: "#FFF", color: "#707070" }}>조회</div>
+      //   </div>
+      //   {/* list */}
+      //   <div style={{ border: "1px solid #E0E0E0", padding: "", marginTop: "10px" }}>
+      //     {props.items ? props.items.map(item =>
+      //       <div key={item.num}
+      //         style={{ padding: "10px", display: "flex", flexDirection: "row" }}>
+      //         <div>
+      //           <div>{item.purchase.date}(구매번호:{item.purchase.num})</div>
+      //           <div style={{ display: "flex", flexDirection: "row" }}>
+      //             <div style={{ width: "120px" }}><img src={noimg} style={{ width: "100px", height: "100px" }} /></div>
+      //             <div>
+      //               <div>{item.product.title}</div>
+      //               <div>[옵션]{item.purchase.option}</div>
+      //               <div>[수량]x{item.purchase.amount}</div>
+      //               <div>결제금액:{item.purchase.price}x{item.purchase.amount}={item.purchase.price * item.purchase.amount}</div>
+      //             </div>
+      //           </div>
+      //           <div style={{ display: "flex", flexDirection: "row" }}>
+      //             <div style={{ width: "150px", textAlign: "center" }}>배송지 정보</div>
+      //             <div>
+      //               <div>이름:{item.product.userName}</div>
+      //               <div>연락처:{item.product.phone}</div>
+      //               <div>주소:{item.product.addr}</div>
+      //             </div>
+      //           </div>
+      //         </div>
+      //         <div style={{ backgroundColor: "#EFEFEF", padding: "10px" }}>
+      //           <div style={{ textAlign: "center", backgroundColor: "#5E5E5E", padding: "10px 5px", color: "#FFF", fontSize: "16px", width: "120px", borderRadius: "5px", marginLeft: "5px", marginBottom: "5px", }}>구매취소</div>
+      //           <div style={{ textAlign: "center", backgroundColor: "#5E5E5E", padding: "10px 5px", color: "#FFF", fontSize: "16px", width: "120px", borderRadius: "5px", marginLeft: "5px", marginBottom: "5px", }}>교환/반품 신청</div>
+      //           <div style={{ textAlign: "center", backgroundColor: "#5793D8", padding: "10px 5px", color: "#FFF", fontSize: "16px", width: "120px", borderRadius: "5px", marginLeft: "5px", marginTop: "50px", }}>구매후기</div>
+      //         </div>
+      //       </div>
+      //     ) : "항목이 없습니다."}
+      //   </div>
+      // </div>
     }
     const RefundProduct = (props) => {
       return <div>

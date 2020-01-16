@@ -71,10 +71,10 @@ class OrderSection extends React.Component{
                             <div className="inner_label">상품</div>
                             <div className="inner_box">
                                 <div className="inner_line_box">
-                                    <SmallImage imageURL={noimg}/>
-                                    상품이름<br/>
-                                    상품정보상품정보<br/>
-                                    수량
+                                    <SmallImage imageURL={this.props.product_img}/>
+                                    {this.props.product_title}<br/>
+                                    {this.props.product_option=="undefined"?"":this.props.product_option}<br/>
+                                    {this.props.product_amount}
                                 </div>
                             </div>
                         </div>

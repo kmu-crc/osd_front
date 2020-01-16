@@ -63,15 +63,73 @@ const GrayButton = styled.div`
 `
 
 class Payment extends Component {
+
+  constructor(props){
+        super(props);
+        this.state = {
+            name:"",phone_first:"010",phone_second:"",address_essential:"",address_detail:"",comment:"",
+        }
+        this.onClickPayment = this.onClickPayment.bind(this);
+        this.onChangeNameValue=this.onChangeNameValue.bind(this);
+        this.onChangePhoneFirst=this.onChangePhoneFirst.bind(this);
+        this.onChangePhoneSecond=this.onChangePhoneSecond.bind(this); 
+        this.onChangeAddressEssential=this.onChangeAddressEssential.bind(this);
+        this.onChangeAddressDetail=this.onChangeAddressDetail.bind(this);
+        this.onChangeComment=this.onChangeComment.bind(this);
+  }
+
+  onClickPayment(){
+      const {id,title,amount,option,thumbnail} = this.props.match.params;
+      console.log("결제하기요청",this.props);
+      const Result = {user_id:this.props.userInfo.uid,
+                    product_id:id,amount:amount,name:title,
+                    phone:this.state.phone_first+this.state.phone_second,post_number:"",
+                    address_essential:this.state.address_essential,address_detail:this.state.address_detail,
+                    comment:this.state.comment
+                };
+      this.props.addOrderRequest(Result,this.props.token);
+  }
+  onChangeNameValue(value){
+      this.setState({name:value});
+  }
+  onChangePhoneFirst(value){
+      this.setState({phone_first:value});
+  }
+  onChangePhoneSecond(value){
+      this.setState({phone_second:value});
+  }
+  onChangeAddressEssential(value){
+       this.setState({address_essential:value});
+  }
+  onChangeAddressDetail(value){
+       this.setState({address_detail:value});
+  }
+  onChangeComment(value){
+      this.setState({comment:value});
+  }
   render() {
+    
     return(
         <React.Fragment>
              <MainBox>
                     <div className="contents_box">
                         <div className="payment_box">
-                            <DeliverySection/>
+                            <DeliverySection
+                            onChangeNameValue={this.onChangeNameValue}
+                            onChangePhoneFirst={this.onChangePhoneFirst}
+                            onChangePhoneSecond={this.onChangePhoneSecond}
+                            onChangeAddressEssential={this.onChangeAddressEssential}
+                            onChangeAddressDetail={this.onChangeAddressDetail}
+                            onChangeComment={this.onChangeComment}
+                            />
                             {/* <AddInfoSection/> */}
-                            <OrderSection/>
+                            <OrderSection
+                                product_id={this.props.match.params.id}
+                                product_title={this.props.match.params.title}
+                                product_amount={this.props.match.params.amount}
+                                product_option={this.props.match.params.option}
+                                product_img={decodeURIComponent(this.props.match.params.thumbnail)}
+                            />
                             <PaySection/>
                             <div className="payment_content_box">
                                 
@@ -83,7 +141,7 @@ class Payment extends Component {
 
                 </MainBox>
                 <div className="payment_content_box">
-                <Button>결제하기</Button>
+                <Button onClick={this.onClickPayment}>결제하기</Button>
                 <FormCheckbox/><span style={{paddingLeft:"10px"}}>구매 대행 서비스에 동의합니다.</span>
                 </div>
         </React.Fragment>
