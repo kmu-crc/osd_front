@@ -5,15 +5,13 @@ import MakerDetail from "components/Makers/MakerDetail";
 
 class MakerDetailContainer extends Component {
   render() {
-    return(
-      <MakerDetail {...this.props}/>
-    );
+    return (<MakerDetail {...this.props} />);
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignerDetail: state.DesignerDetail.status.DesignerDetail,
+    MakerDetail: state.DesignerDetail.status.DesignerDetail,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
     like: state.DesignerLike.status.like,
@@ -23,21 +21,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      GetDesignerDetailRequest: (id) => {
-        return dispatch(GetDesignerDetailRequest(id))
-      },
-      GetLikeDesignerRequest: (id, token) => {
-        return dispatch(GetLikeDesignerRequest(id, token))
-      },
-      LikeDesignerRequest: (id, token) => {
-        return dispatch(LikeDesignerRequest(id, token))
-      },
-      UnlikeDesignerRequest: (id, token) => {
-        return dispatch(UnlikeDesignerRequest(id, token))
-      },
-      GetDesignerCountRequest: (id) => {
-        return dispatch(GetDesignerCountRequest(id))
-      }
+    GetDesignerDetailRequest: (id) => dispatch(GetDesignerDetailRequest(id)),
+    GetLikeDesignerRequest: (id, token) => dispatch(GetLikeDesignerRequest(id, token)),
+    LikeDesignerRequest: (id, token) => dispatch(LikeDesignerRequest(id, token)),
+    UnlikeDesignerRequest: (id, token) => dispatch(UnlikeDesignerRequest(id, token)),
+    GetDesignerCountRequest: (id) => dispatch(GetDesignerCountRequest(id))
   };
 };
 

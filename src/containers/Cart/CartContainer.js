@@ -5,6 +5,10 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import {getCartListRequest} from "actions/Product";
+
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
   background-position: center;
@@ -49,17 +53,37 @@ const Wrapper = styled(ContentBox)`
 `
 
 class CartContainer extends Component {
+    // componentDidMount() {
+    //   console.log(this.props);
+    //   this.props.GetProductDetailRequest(this.props.id);
+    // }
+    componentDidMount(){
+      
+      this.props.getCartListRequest(1028);
+    }
     render() {
+      console.log("getCartListRequest---------------",this.props);
       return(
         <div>
         <ImgWrapper>
           <Title><h1>장바구니</h1></Title>
         </ImgWrapper>
         <Wrapper>
-          <Cart/>
+          <Cart {...this.props} />
         </Wrapper>
         </div>
       );
     }
   }
-  export default CartContainer;
+  const mapStateToProps = (state) => {
+    return {
+       CartList: state.CartList.status.CartList,
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      getCartListRequest: (id) => dispatch(getCartListRequest(id)),
+    }
+  }
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartContainer));

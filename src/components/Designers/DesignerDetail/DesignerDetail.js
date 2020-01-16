@@ -1,114 +1,121 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
-import MyDesignInDesignerContainer from "containers/Designer/MyDesignInDesignerContainer";
-import DesignInDesignerContainer from "containers/Designer/DesignInDesignerContainer";
-import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
+import mainSlide from "source/mainSlide.jpg";
 
 // css styling
-
-const Wrapper = styled(Grid)`
+const Wrapper = styled(ContentBox)`
+  margin-top: -85px;
+  margin-bottom: 100px;
+  position: relative;
+  z-index:3;
+`;
+const ImgWrapper = styled.div`
+  background-image: url(${mainSlide});
+  background-position: center;
+  background-size: cover;
   width: 100%;
-  &.ui.grid {
-    margin-top: 2rem;
-    margin-bottom: 5rem;
-    margin-left: 0rem;
-    margin-right: 0rem;
-  }
-  &.ui.grid > .row,
-  &.ui.grid > .row > .column {
-    padding: 0;
-  }
-  & .edit {
-    margin-bottom: 5px;
-  }
-  & .contentRow {
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+  height: 200px;
+  position: relative;
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
   }
 `;
-
-const HeadContainer = styled(Grid.Column)`
-  box-shadow: 0 0 5px rgba(0,0,0,0.25);
-  background-color: ${StyleGuide.color.geyScale.scale1};
+const Title = styled.div`
+  width: 100%;
+  color: white;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  left: 0;
+  z-index: 2;
+  transform: translateY(-50%);
+  h1 {
+    color: ${StyleGuide.color.geyScale.scale0};
+    font-size: ${StyleGuide.font.size.heading2};
+    font-weight: bold;
+  }
 `;
-
 const ProfileSection = styled.div`
   border-bottom: 1px solid rgba(0,0,0,0.15);
   padding: 1rem;
   & .imgContainer {
-    width: 100%;
-    height: 140px;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
   }
-  & .imgContainer > div {
-    width: 140px;
-    height: 140px;
+  & .imgContainer .profile {
+    width: 200px;
+    height: 200px;
     margin: auto;
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,0.25);
+    background-image: url(${props => props.img});
     overflow: hidden;
     background-position: 50%;
     background-size: cover;
   }
   & .title {
-    min-height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
     font-weight: bold;
     font-size: 24px;
     text-align: center;
     padding: 10px 0;
+    display: flex;
+    flex-direction: row;
   }
   & .category {
+    font-size: 20px;
     min-height: 20px;
     text-align: center;
     color: #EB3324;
   }
-  & .btnContainer {
+  & .buttons{
+    padding: 0px;
+    position: absolute;
+    margin-top: -195px;
+    margin-left: 215px;
     display: flex;
-    justify-content: space-around;
-    margin: 5px 0;
-    & button {
-      padding: 0.75em 1.6em;
-      border: 0;
-      &:focus {
-        outline: 0;
-      }
-    }
-    & .likeBtn {
-      background: ${StyleGuide.color.sub.bule.light};
-      &:hover {
-        border: 0;
-        background: ${StyleGuide.color.sub.bule.basic};
-      }
-    }
+    flex-direction: column;
+    justify-content: center;
   }
 `;
-
 const CountSection = styled.div`
+  margin: 15px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   padding: 1rem 2rem;
   & .list {
     height: 24px;
-    width: 100%;
-    font-size: 13px;
-  }
-  & .list span {
-    float: right;
-    font-size: 18px;
+    width: max-content;
+    margin: 0 10px;
   }
 `;
-
-const InfoSection = styled.div`
+const Section = styled.div`
+  margin-left: 20px;
   padding: 1rem;
-  & .explanation {
-    font-size: 13px;
+  & .text{
+    font-size: 16px;
   }
 `;
-
 const TabContainer = styled(Grid.Column)`
   background-color: white;
   border-right: 1px solid rgba(0,0,0,0.15);
@@ -121,66 +128,15 @@ const TabContainer = styled(Grid.Column)`
     color: inherit;
   }
 `;
-
-const Head = styled(Grid)`
-  border-bottom: 1px solid rgba(0,0,0,0.25);
-  &.ui.grid > .row {
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
-  }
-  & ul {
-    line-height: 38px;
-  }
-  & li {
-    float: left;
-    width: 120px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: normal;
-  }
-  & li:hover {
-    font-weight: 500;
-  }
-  & li.onSelected {
-    color: red;
-    position: relative;
-    font-weight: bold;
-  }
-`;
-
-const MiniContentBox = styled.div`
-  margin: 0 auto;
-  padding-top: 20px;
-  @media only screen and (max-width: 767px) and (min-width: 320px){
-    padding: 0 20px;
-    width: 320px;
-  }
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 450px;
-  }
-  @media only screen and (min-width: 992px){
-    width: 440px;
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1200px){
-    width: 760px;
-  }
-  @media only screen and (min-width: 1920px){
-    width: 1100px;
-  }
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    .ui.grid > .row{
-      margin-left: 6.25% !important;
-    }
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1200px){
-    .ui.grid > .row{
-      margin-left: 6.25% !important;
-    }
-  }
-`;
-
+const TagItem = styled.div``;
+const BoardItem = styled.div``;
+const CommentItem = styled.div``;
 
 class DesignerDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { tab: true }
+  }
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id); // 디자이너 디테일 정보
     this.props.GetDesignerCountRequest(this.props.id); // 디자이너 count 정보
@@ -190,7 +146,7 @@ class DesignerDetail extends Component {
   }
 
   typeChange = (e) => {
-    let url = "/designerDetail/"+this.props.id+"/"+e.target.id;
+    let url = "/designerDetail/" + this.props.id + "/" + e.target.id;
     this.props.history.replace(url);
   }
 
@@ -201,114 +157,191 @@ class DesignerDetail extends Component {
     }
     if (this.props.like === true) {
       this.props.UnlikeDesignerRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.success === true) {
-          this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
-          .then(this.props.GetDesignerCountRequest(this.props.id))
-        }
-      });
+        .then(data => {
+          if (data.success === true) {
+            this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+              .then(this.props.GetDesignerCountRequest(this.props.id))
+          }
+        });
     } else {
       this.props.LikeDesignerRequest(this.props.id, this.props.token)
-      .then(data => {
-        if (data.success === true) {
-          this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
-          .then(this.props.GetDesignerCountRequest(this.props.id))
-        }
-      });
+        .then(data => {
+          if (data.success === true) {
+            this.props.GetLikeDesignerRequest(this.props.id, this.props.token)
+              .then(this.props.GetDesignerCountRequest(this.props.id))
+          }
+        });
     }
   }
+  changeTab = () => this.setState({ tab: !this.state.tab });
 
-  render(){
-    const designerDetail = this.props.DesignerDetail;
-    const count = this.props.Count;
-    // console.log(designerDetail);
+  render() {
+    const { DesignerDetail, Count } = this.props;
+    const { tab } = this.state;
 
-    return(
-      <div>
-        {designerDetail.length !== 0 &&
-          <ContentBox>
-            <Wrapper padded={false} columns={2}>
-              <Grid.Row className="edit">
-              { (this.props.userInfo && (this.props.userInfo.uid === designerDetail.uid))?
-                <Link to="/myModify"><Button>내 정보 수정</Button></Link>
-                : <div></div>
-              }
-              </Grid.Row>
-              <Grid.Row className="contentRow">
-                <HeadContainer mobile={16} tablet={16} computer={5} largeScreen={4}>
-                  <ProfileSection>
-                    <div className="imgContainer">
-                      <div style={designerDetail.thumbnailUrl
-                         ? {backgroundImage: `url(${designerDetail.thumbnailUrl.m_img})`}
-                         : {backgroundImage: `url(${profile})`}}>
-                      </div>
-                    </div>
-                    <div className="title">
-                      <h3><TextFormat txt={designerDetail.nick_name}/></h3>
-                    </div>
-                    <div className="category">
-                      <TextFormat txt={designerDetail.categoryName? designerDetail.categoryName : "전체"}/>
-                    </div>
-                    <InfoSection>
-                      <h4>소개</h4>
-                      <p className="explanation">
-                      <TextFormat lines={3} txt={designerDetail.about_me}/></p>
-                    </InfoSection>
-                    <div className="btnContainer">
-                      {this.props.like === true
-                      ? <Button color="Primary" onClick={this.updateLike}>좋아요 취소</Button>
-                      : <Button className="likeBtn" onClick={this.updateLike}>좋아요</Button>
-                      }
-                      <Link to={`/message/${this.props.id}/${designerDetail.nick_name}`}><Button color="Solid">메시지보내기</Button></Link>
-                    </div>
-                  </ProfileSection>
-                  <CountSection>
-                    <div className="list">
-                      <Icon name="signup" color="grey" size="tiny"></Icon> 등록한 디자인
-                      <span>{NumberFormat(count.total_design)}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="heart" color="grey" size="tiny"></Icon> 받은 좋아요
-                      <span>{NumberFormat(count.total_like)}</span>
-                    </div>
-                    <div className="list">
-                      <Icon name="user" color="grey" size="tiny"></Icon> 받은 조회수
-                      <span>{NumberFormat(count.total_view)}</span>
-                    </div>
-                  </CountSection>
-                </HeadContainer>
+    if (DesignerDetail == null) return <div>No data.</div>
+
+    return (<React.Fragment>
+      <ImgWrapper>
+        <Title><h1>디자이너 정보</h1></Title>
+      </ImgWrapper>
+
+      <Wrapper>
+        <ContentBox>
+          <Grid.Row>
+            <TabContainer mobile={16} tablet={16} computer={16} largeScreen={16}>
+              <ProfileSection img={DesignerDetail.thumbnailUrl ? DesignerDetail.thumbnailUrl.m_img : profile}>
+                <div className="imgContainer">
+                  <div className="profile" />
+                  <div className="buttons" >
+                    <Link to={`/message/${this.props.id}/${DesignerDetail.nick_name}`}><Icon name="envelope" color="blue" size="big" title="해당 디자이너에게 메시지를 보냅니다." />메시지</Link>
+                    <div>
+                      <Icon name="heart" color={this.props.like ? "red" : "grey"} onClick={this.updateLike} size="big" title="관심있는 디자이너로 등록됩니다." />좋아요
+                  </div>
+                  </div>
+                </div>
+
+                <div className="title">
+                  <div>
+                    <h1><TextFormat txt={DesignerDetail.nick_name} /></h1>
+                  </div>
+                  <div style={{ marginLeft: "7px" }}>
+                    {(this.props.userInfo && (this.props.userInfo.uid === DesignerDetail.uid)) ? <Link to="/myModify"><Icon name="edit" color="grey" size="small" title="내 정보 수정" /></Link> : null}
+                  </div>
+                </div>
+
+                <div className="category">
+                  <TextFormat txt={DesignerDetail.categoryName ? DesignerDetail.categoryName : "전체"} />
+                </div>
+
+                <CountSection>
+                  <div className="list">
+                    <Icon name="signup" color="grey" size="big" title="등록한 디자인" />
+                    <span>{NumberFormat(Count.total_design || 0)}</span>
+                  </div>
+                  <div className="list">
+                    <Icon name="heart" color="grey" size="big" title="받은 좋아요" />
+                    <span>{NumberFormat(Count.total_like || 0)}</span>
+                  </div>
+                  <div className="list">
+                    <Icon name="user" color="grey" size="big" title="조회수" />
+                    <span>{NumberFormat(Count.total_view || 0)}</span>
+                  </div>
+                </CountSection>
+
+              </ProfileSection>
+            </TabContainer>
+          </Grid.Row>
+        </ContentBox>
+
+        <div style={{ marginTop: "10px" }} />
+
+        <ContentBox>
+          <Grid.Row>
+            <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+              <Section>
+                <h4>평가</h4>
+                <div className="text"><TextFormat lines={3} txt={DesignerDetail.rate || "평가"} /></div>
+                <div className="text">{!DesignerDetail.comment ? "" : DesignerDetail.comment.map(item => <CommentItem key={item.uid}>{item.value}</CommentItem>)}</div>
+              </Section>
+
+            </TabContainer>
+          </Grid.Row>
+        </ContentBox>
+
+        <div style={{ marginTop: "10px" }} />
+
+        <ContentBox>
+          <Grid.Row>
+            <div style={{
+              borderRight: "1px solid rgba(0,0,0,0.15)",
+              boxShadow: "0 0 5px rgba(0,0,0,0.25)",
+              display: "flex", flexDirection: "row"
+            }}>
+              <div onClick={this.changeTab} style={{ cursor: "pointer", textAlign: "center", width: "33%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#FFF") : ("#EFEFEF"), fontSize: "24px" }}>기본정보</div>
+              <div onClick={this.changeTab} style={{ cursor: "pointer", textAlign: "center", width: "33%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#EFEFEF") : ("#FFF"), fontSize: "24px" }}>디자인 의뢰</div>
+              <div style={{ cursor: "default", textAlign: "center", width: "34%", height: "45px", lineHeight: "45px", backgroundColor: tab ? ("#EFEFEF") : ("#EFEFEF"), fontSize: "24px" }}>&nbsp;</div>
+            </div>
+            {tab ? (
+              <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
+                <Section>
+                  <h4>소개</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.about_me} /></div>
+                </Section>
+                <Section>
+                  <h4>거주지역</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.location || "*거주지역*"} /></div>
+                </Section>
+                <Section>
+                  <h4>전문분야</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.categoryName || "*카테고리*"} /></div>
+                  <div className="text">
+                    {!DesignerDetail.tag ? "" : DesignerDetail.tag.map(item => <TagItem key={item.uid}>{item.value}</TagItem>)}</div>
+                </Section>
+                <Section>
+                  <h4>디자인경험</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.experience || "*경험*"} /></div>
+                </Section>
+                <Section>
+                  <h4>디자인 상품</h4>
+                  <div className="text">
+                    <TextFormat lines={3} txt={DesignerDetail.product || "*상품*"} /></div>
+                </Section>
+                <Section>
+                  <h4>디자인 의뢰</h4>
+                  <div className="text">
+                    <Link to={`/requestToDesigner/${DesignerDetail.uid}`}><Button>의뢰하기</Button></Link>
+                  </div>
+                </Section>
+                <Section>
+                  <h4>디자이너 게시판</h4>
+                  <div className="text">{!DesignerDetail.board ? "" : DesignerDetail.board.map(item => <BoardItem key={item.uid}>{item.value}</BoardItem>)}</div>
+                </Section>
+              </TabContainer>) : (
                 <TabContainer mobile={16} tablet={16} computer={11} largeScreen={12}>
-                  <Head devided="vertically" padded={true}>
-                    <Grid.Row>
-                      <Grid.Column as="ul">
-                        <li id="my"
-                            className={this.props.type === "my" || this.props.type === null? "onSelected" : ""}
-                            onClick={this.typeChange}>등록한 디자인</li>
-                        <li id="design"
-                            className={this.props.type === "design"? "onSelected" : ""}
-                            onClick={this.typeChange}>참여 디자인</li>
-                        <li id="like"
-                            className={this.props.type === "like"? "onSelected" : ""}
-                            onClick={this.typeChange}>관심 디자인</li>
-                        <div className="clear"></div>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Head>
-                  <MiniContentBox>
-                    <Route path="/designerDetail/:id/:type?"
-                           component={this.props.type === "like"
-                                      ? LikeInDesignerContainer
-                                      : this.props.type === "design"
-                                      ? DesignInDesignerContainer
-                                      : MyDesignInDesignerContainer}/>
-                  </MiniContentBox>
-                </TabContainer>
-              </Grid.Row>
-            </Wrapper>
-          </ContentBox>
-        }
-      </div>
-    );
+                  <Section>
+                    <div style={{ display: "flex", border: "1px solid gray", backgroundColor: "#EEE" }}>
+                      <div style={{ width: "60%", textAlign: "center", fontSize: "16px", }}>제목</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>작성자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>작성일</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", display: "flex" }}>
+                        <Icon className="reply" /><div style={{ width: "max-content", borderRadius: "5px", backgroundColor: "#1E90FF", color: "white", padding: "3px 10px 3px 10px", fontSize: "10px" }}>Re:</div>&nbsp;[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+                    <div style={{ padding: "5px", display: "flex", borderBottom: "1px solid gray", backgroundColor: "#FFF" }}>
+                      <div style={{ width: "60%", textAlign: "left", fontSize: "16px", }}>[디자인의뢰] 디자인의뢰문의드립니다.</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>디자인의뢰자</div>
+                      <div style={{ width: "20%", textAlign: "center", fontSize: "16px", }}>1999.12.31</div>
+                    </div>
+
+                  </Section>
+                </TabContainer>)}
+          </Grid.Row >
+        </ContentBox >
+      </Wrapper>
+    </React.Fragment >);
   }
 }
 

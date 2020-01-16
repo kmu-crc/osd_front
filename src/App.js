@@ -1,20 +1,18 @@
-// react
+// REACT
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-// redux
-import { GetCategoryLevel1Request, GetCategoryLevel2Request, GetCategoryAllRequest } from "actions/Categorys";
+// REDUX
+import { GetCategoryAllRequest } from "actions/Categorys";
 
-// market
-import DesignListPage, { DesignDetailPage } from "pages/DesignPage";
+// MARKET
+import ProductListPage, { ProductDetailPage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import MakerListPage, { MakerDetailPage } from "pages/MakerPage";
-import CreateDesignPage from "pages/CreateDesignPage";
-import ModifyDesignPage from "pages/ModifyDesignPage";
-import CreateGroupPage from "pages/CreateGroupPage";
-import ModifyGroupPage from "pages/ModifyGroupPage";
-import InserUserDetailPage from "pages/InserUserDetailPage"
+import CreateProductPage from "pages/CreateProductPage";
+import ModifyProductPage from "pages/ModifyProductPage";
+import CreateGalleryPage from "pages/CreateGroupPage";
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
@@ -31,15 +29,15 @@ import CreateDesignerPage from 'pages/CreateDesignerPage';
 import ModifyDesignerPage from 'pages/ModifyDesignerPage';
 import CreateMakerPage from 'pages/CreateMakerPage';
 import ModifyMakerPage from 'pages/ModifyMakerPage';
+import DesignerBoardListPage, { CreateDesignerBoardPage, DesignerBoardDetailPage } from "pages/DesignerBoardPage";
+import requestDesignerPage from "pages/RequestToDesignerPage";
+import requestMakerPage from "pages/RequestToMakerPage";
 
-// template
+// TEMPLATE
 import ClientTemplate from 'templates/ClientTemplate';
 
 class App extends Component {
   componentDidMount() {
-    this.props.GetCategoryLevel1Request().then(() => {
-      this.props.GetCategoryLevel2Request(null);
-    });
     this.props.GetCategoryAllRequest();
   }
   render() {
@@ -47,33 +45,45 @@ class App extends Component {
       <BrowserRouter>
         <ClientTemplate>
           <Switch>
-            {/* main */}
+            {/* MAIN */}
             <Route exact path="/" component={MainPage} />
 
-            {/* product */}
-            <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
-            <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
-            <Route path="/product/:sorting?/:cate1?/:cate2?" component={DesignListPage} />
-            <Route path="/productDetail/:id" component={DesignDetailPage} />
-
-            {/* designer */}
+            {/* DESIGNER */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
-            <Route path="/createDesigner" component={CreateDesignerPage} />
-            <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
-            <Route path="/bedesigner" component={RequiresAuth(InserUserDetailPage)} />
+            <Route path="/designerModify" component={ModifyDesignerPage} />
+            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
+            <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
+            {/* DESIGNER-BOARD */}
+            <Route path="/createDesignerBoard" component={CreateDesignerBoardPage} />
+            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/designerBoardDetail/:id" component={DesignerBoardDetailPage} />
 
-            {/* maker */}
+            {/* MAKER */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
-            <Route path="/bemaker" component={RequiresAuth(InserUserDetailPage)} />
-            <Route path="/createMaker" component={CreateMakerPage} />
+            <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
-              
-            {/* gallery */}
-            <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
+            {/* MAKER-BOARD */}
+            {/* <Route path="/createMakerBoard" component={CreateMakerBoardPage} /> */}
+            <Route path="/makerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/makerBoardDetail/:id" component={DesignerBoardDetailPage} />
+            <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
 
-            {/* etc */}
+            {/* GALLERY */}
+            <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
+
+            {/* ITEM */}
+            <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} />
+            <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
+            <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
+            <Route path="/productDetail/:id" component={ProductDetailPage} />
+            {/* ITEM-BOARD */}
+            {/* <Route path="/createProductBoard" component={CreateItemBoardPage} /> */}
+            <Route path="/productBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
+            <Route path="/productBoardDetail/:id" component={DesignerBoardDetailPage} />
+
+            {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
             <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)} />
@@ -85,28 +95,18 @@ class App extends Component {
             <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
-            <Route path="/payment" component={PaymentPage} />
+            {/* <Route path="/payment/:id/:amount/:option" component={PaymentPage} /> */}
+            <Route path="/payment/:id/:title/:amount/:option/:thumbnail" component={PaymentPage} />
             <Route path="/cart" component={CartPage} />
-            <Route component={() => <div style={{width:"100%",fontSize:"36px"}}>페이지를 찾을 수 없습니다.</div>} />
+            <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
           </Switch>
         </ClientTemplate>
-      </BrowserRouter>
-    );
+      </BrowserRouter>);
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetCategoryLevel1Request: () => {
-      return dispatch(GetCategoryLevel1Request());
-    },
-    GetCategoryLevel2Request: (id) => {
-      return dispatch(GetCategoryLevel2Request(id));
-    },
-    GetCategoryAllRequest: () => {
-      return dispatch(GetCategoryAllRequest());
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  GetCategoryAllRequest: () => dispatch(GetCategoryAllRequest())
+});
 
 export default connect(null, mapDispatchToProps)(App);

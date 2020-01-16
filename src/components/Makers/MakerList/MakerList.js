@@ -18,6 +18,7 @@ const Content = styled(ContentBox)`
       margin-left: 6.25% !important;
     }
   }
+  background-color: ${props => props.bgcolor || "#FFF"};
 `;
 const MenuContainer = styled(Grid)`
   & .sorting {
@@ -95,65 +96,58 @@ class MakerList extends Component {
     }
 
     render() {
-        const { sort, cate1, cate2 } = this.props;
+        const { sort, cate1, cate2, Count } = this.props;
         const Header = () => {
             const cate1List = this.props.category1;
             const cate2List = this.props.category2;
 
-            if (cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0) {
-                const cate1Name = this.props.cate1 && this.props.cate1 !== "null"
-                    ? cate1List[this.props.cate1]
-                    : null;
-                const n = parseInt(this.props.cate1, 10);
-                const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
-                    ? cate2List[n].filter(sub => sub.value === this.props.cate2)
-                    : null;
-                return (
-                    <Head>
-                        <span>디자이너 </span>
-                        {this.props.cate1 && this.props.cate1 !== "null" &&
-                            <span> > {cate1Name.text} </span>
-                        }
-                        {this.props.cate2 && this.props.cate2 !== "null" &&
-                            <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
-                        }
-                        <span> ({NumberFormat(this.props.Count)})</span>
-                        <div className="Sorting">
-                            <Sorting handleClick={this.sortChange}
-                                placeholder={sort} />
-                        </div>
-                    </Head>
-                );
-            } else {
-                return null;
+            if (!(cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0)) {
+                return <div>nothing</div>;
             }
+
+            const cate1Name = cate1 && cate1 !== "null" ? cate1List[cate1] : null;
+            const cate2Name = cate2 && cate2 !== "null" ? cate2List[parseInt(cate1, 10)].filter(sub => sub.value === parseInt(cate2, 10)) : null;
+
+            return (
+                <Head>
+                    <span>메이커 </span>
+                    {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
+                    {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
+                    <span> ({NumberFormat(Count)})</span>
+                    <div className="Sorting">
+                        <Sorting handleClick={this.sortChange} placeholder={sort} />
+                    </div>
+                </Head>
+            );
         };
 
-        return (
-            <div>
-                <MenuWrap>
-                    <Content>
-                        <Wrapper>
-                            <MenuContainer devided="vertically" padded={true} columns={2}>
-                                <Grid.Row stretched={false}>
-                                    <CategoryContainer handleCate1={this.cate1Change}
-                                        handleCate2={this.cate2Change}
-                                        cate1={this.props.cate1}
-                                        cate2={this.props.cate2} />
-                                </Grid.Row>
-                            </MenuContainer>
-                        </Wrapper>
-                    </Content>
-                </MenuWrap>
+        return (<React.Fragment>
+            <MenuWrap>
                 <Content>
-                    <Header />
-                    <Wrapper className="listWrap">
-                        {this.state.rendering &&
-                            <ScrollMakerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+                    <Wrapper>
+                        <MenuContainer devided="vertically" padded={true} columns={2}>
+                            <Grid.Row stretched={false}>
+                                <CategoryContainer
+                                    which="메이커" board="maker"
+                                    cate1={this.props.cate1}
+                                    handleCate1={this.cate1Change}
+                                    cate2={this.props.cate2}
+                                    handleCate2={this.cate2Change} />
+                            </Grid.Row>
+                        </MenuContainer>
                     </Wrapper>
                 </Content>
-            </div>
-        );
+            </MenuWrap>
+            <Content bgcolor="#EFEFEF">
+                <Header />
+                <Wrapper className="listWrap">
+                    {this.state.rendering &&
+                        <ScrollMakerListContainer
+                            sort={sort} cate1={cate1} cate2={cate2}
+                            history={this.props.history} />}
+                </Wrapper>
+            </Content>
+        </React.Fragment>);
     }
 }
 

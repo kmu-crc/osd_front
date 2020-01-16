@@ -1,9 +1,18 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { FormInput, FormThumbnail } from "components/Commons/FormItems";
+import { FormInput,FormAddress,FormExp,FormTag ,FormThumbnail, FormDropBox } from "components/Commons/FormItems";
 import { Header, Grid } from "semantic-ui-react"
 import StyleGuide from "StyleGuide";
-
+const category = [
+  {text:"특허권",value:0},
+  {text:"디자인권",value:1},
+  {text:"기술자문",value:2},
+  {text:"기술상담",value:3},
+  {text:"경험",value:4},
+  {text:"정보/데이터",value:5},
+  {text:"아이디어/노하우",value:6},
+  {text:"제품",value:7},
+];
 const FromFieldCard = styled.div`
   width: 100%;
   background-color: white;
@@ -76,38 +85,25 @@ class ModifyDesigner extends Component {
                     onChange={()=>{this.liveCheck("thumbnail")}}
                     validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
                   />
-                  <Label>디자이너 이름</Label>
-                  <FormInput
-                    name="title"
-                    placeholder="디자이너 이름을 입력해주세요."
-                    getValue={this.onChangeValue}
-                    validates={["Required"]}
-                    onBlur={()=>{this.liveCheck("title")}}
+                  <Label>카테고리</Label>
+                  <FormDropBox
+                    name="explanation"
+                    placeholder="디자이너 설명을 입력해주세요."
+                    options={category}
                   />
-                  <Label>디자이너 설명</Label>
+                  <Label>태그</Label>
+                  <FormTag
+                  placeholder="태그를 입력해주세요(한글10자 영문20자 이내)"/>
+                  <Label>설명</Label>
                   <FormInput
                     name="explanation"
                     placeholder="디자이너 설명을 입력해주세요."
                     getValue={this.onChangeValue}
                   />
-                  <Label>디자이너 위치</Label>
-                  <FormInput
-                    name="location"
-                    placeholder="디자이너 위치를 입력해주세요."
-                    getValue={this.onChangeValue}
-                  />
-                  <Label>디자이너 경력</Label>
-                  <FormInput
-                    name="career"
-                    placeholder="디자이너 경력을 입력해주세요."
-                    getValue={this.onChangeValue}
-                  />
-                  <Label>태그</Label>
-                  <FormInput
-                    name="tag"
-                    placeholder="태그를 입력해주세요."
-                    getValue={this.onChangeValue}
-                  />
+                  <Label>위치</Label>
+                  <FormAddress/>
+                  <Label>경력</Label>
+                  <FormExp/>
                 </Grid.Column>
               </Grid>
             </FromFieldCard>

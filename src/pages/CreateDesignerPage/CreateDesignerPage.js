@@ -3,11 +3,7 @@ import CreateDesignerContainer from "containers/Designer/CreateDesignerContainer
 
 class CreateDesignerPage extends Component {
   render() {
-    return(
-       <React.Fragment>
-           <CreateDesignerContainer/>
-       </React.Fragment>
-    );
+    return (<CreateDesignerContainer />);
   }
 }
 
