@@ -76,40 +76,55 @@ class MessageDetail extends Component {
   state = {
     list_v1 : [],
     myId_v1 : null,
+    test : [],
   }
   componentDidMount() {
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-    Socket.on("getNewMsg", msgList=> {
-      console.log("get message");
-      this.setState({list_v1 : msgList}) // get
-    })
+    try{
+      Socket.emit("INIT", this.props.userInfo.uid)
+      Socket.on("getNewMsg", msgList=> {
+        this.setState({list_v1 : msgList}) // get
+      })
+    } catch(err){
+      console.log(err);
+    }
   }
 
   componentWillUnmount() {
     this.props.GetMyMessageDetailClear();
   }
+  shouldComponentUpdate(nextProps) {
+    // setTimeout(() => {
+    //   this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
+    // }, 100);
+    return true;
+  }
 
 
   render() {
-    const list = this.props.MessageDetail;
+    const list = this.state.list_v1.length > 0 ?  this.state.list_v1 : this.props.MessageDetail;
     const myId = this.props.userInfo.uid;
-
+    let scrollDown = document.getElementsByClassName("ui comments");
+    scrollDown.scrollTop = scrollDown.scrollHeight;
     return (
       <MsgContent>
-        <div className="ui comments">
-          {list.map(item => (
-            <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
-              {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
-              <div className={item.from_user_id === myId ? "content my" : "content"}>
-                {item.from_user_id !== myId && <a className="author"><TextFormat txt={item.nick_name} chars={12} /></a>}
-                <div className={item.from_user_id === myId ? "wrapper my" : "wrapper"} >
-                  {item.from_user_id === myId && <div className="metadata">{DateFormat(item.create_time)}</div>}
-                  < div className="text">{item.message.split("\n").map((line, i) => { return (<span key={i}> {line} <br /></span>) })}</div>
-                  {item.from_user_id !== myId && <div className="metadata"><div>{DateFormat(item.create_time)}</div></div>}
+
+        <div className="ui comments" ref={ref => this.list = ref}>
+          <div style={{bottom:"0px"}}>
+            {list.map(item => (
+              <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
+                {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
+                <div className={item.from_user_id === myId ? "content my" : "content"}>
+                  {item.from_user_id !== myId && <a className="author"><TextFormat txt={item.nick_name} chars={12} /></a>}
+                  <div className={item.from_user_id === myId ? "wrapper my" : "wrapper"} >
+                    {item.from_user_id === myId && <div className="metadata">{DateFormat(item.create_time)}</div>}
+                    < div className="text">{item.message.split("\n").map((line, i) => { return (<span key={i}> {line} <br /></span>) })}</div>
+                    {item.from_user_id !== myId && <div className="metadata"><div>{DateFormat(item.create_time)}</div></div>}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </MsgContent>
     );
