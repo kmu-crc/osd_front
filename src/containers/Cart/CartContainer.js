@@ -58,8 +58,7 @@ class CartContainer extends Component {
     //   this.props.GetProductDetailRequest(this.props.id);
     // }
     componentDidMount(){
-      
-      this.props.getCartListRequest(1028);
+      if(this.props.userInfo != null )this.props.getCartListRequest(this.props.userInfo.uid);
     }
     render() {
       console.log("getCartListRequest---------------",this.props);
@@ -78,6 +77,8 @@ class CartContainer extends Component {
   const mapStateToProps = (state) => {
     return {
        CartList: state.CartList.status.CartList,
+       userInfo: state.Authentication.status.userInfo,
+       token: state.Authentication.status.token,
     }
   }
   
