@@ -175,4 +175,75 @@ export function ChangeToProjectFailure() {
   return {
     type: types.CHANGE_TO_PROJECT_FAILURE
   }
+};  
+//cart
+export function addCartRequest(items,token){
+  console.log("items",items);
+  return (dispatch)=>{
+    // dispatch(addCart());
+    const url = `${host}/product/addCart`
+    console.log(token);
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body:JSON.stringify(items)
+    }).then((response)=>{
+      console.log("response");
+      return response.json();
+    // }).then((res)=>{
+    //   return dispatch(addCartSuccess());
+    }).catch((error)=>{
+      // dispatch(addCartFailure());
+      console.log("error",error)
+    })
+  }
+}
+
+const addCart = () =>{ return{type:types.ADD_CART}};
+const addCartSuccess = () =>{ return{type:types.ADD_CART_SUCCESS}};
+const addCartFailure = ()=>{return {type:types.ADD_CART_FAILURE}}
+
+
+export function getCartListRequest(id) {
+  console.log("id:::",id);
+  return(dispatch)=>{
+      const url = `${host}/product/getCartList/${id}`;
+          return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+            .then(res => res.json())
+            .then(data => dispatch(getCartList(data)))
+            .catch(error => dispatch(getCartListFailure()))
+  }
 };
+const getCartList = data => {   return { type: types.GET_CART_LIST, CartList: data.list } };
+const getCartListFailure = () => { return { type: types.GET_CART_LIST_FAILURE, CartList: null } };
+
+// order
+export function addOrderRequest(items,token){
+  console.log("items",items);
+  return (dispatch)=>{
+    const url = `${host}/product/addOrder`
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body:JSON.stringify(items)
+    }).then((response)=>{
+      console.log("response");
+      return response.json();
+    }).catch((error)=>{
+      console.log("error",error)
+    })
+  }
+}
+
+export function getOrderListRequest(id) {
+  console.log("id:::",id);
+  return(dispatch)=>{
+      const url = `${host}/product/getOrderList/${id}`;
+          return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+            .then(res => res.json())
+            .then(data => dispatch(getOrderList(data)))
+            .catch(error => dispatch(getOrderListFailure()))
+  }
+};
+const getOrderList = data => {   return { type: types.GET_ORDER_LIST, OrderList: data.list } };
+const getOrderListFailure = () => { return { type: types.GET_ORDER_LIST_FAILURE, OrderList: null } };

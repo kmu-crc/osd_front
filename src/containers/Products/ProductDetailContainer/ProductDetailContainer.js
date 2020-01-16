@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import ProductDetail from "components/Products/ProductDetail";
 import {
   GetProductDetailRequest, GetProductCountRequest, GetLikeProductRequest,
-  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest
+  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest,addCartRequest
 } from "actions/Product";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
@@ -36,7 +36,8 @@ const mapDispatchToProps = (dispatch) => {
     LikeProductRequest: (id, token) => dispatch(LikeProductRequest(id, token)),
     UpdateProductViewRequest: (id) => dispatch(UpdateProductViewRequest(id)),
     UnlikeProductRequest: (id, token) => dispatch(UnlikeProductRequest(id, token)),
-    DeleteProductRequest: (id, token) => dispatch(DeleteProductRequest(id, token))
+    DeleteProductRequest: (id, token) => dispatch(DeleteProductRequest(id, token)),
+    addCartRequest:(items,token)=>dispatch(addCartRequest(items,token)),
   }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import Button from "components/Commons/Button";
 import noimg from "source/noimg.png";
+import cookie from 'react-cookies';
 
 const MainBox = styled.div`
     *{
@@ -145,7 +146,43 @@ const SmallImage = styled.div`
 `
 
 class Cart extends Component {
+    constructor(props){
+        super(props);
+        this.state={};
+    }
+    componentDidMount(){
+        this.state = {token:cookie.load("cart")};
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.CartList !== this.props.CartList)
+        {
+            console.log("CartContainer",this.props);
+        }
+        return true;
+    }
     render() {
+        console.log("CART::",this.props);
+    const CartList = (item)=>{
+        return(
+                    <div className="value_box">
+                        <div className="checkbox_value"><input type="checkbox"/></div>
+                        <div className="product_info_value">
+                            <SmallImage imageURL={item.s_img}/>
+                            <div className="information_text">
+                               {item.title}<br/>
+                               [옵션]{item.product_option}<br/>
+                               [수량]{item.amount} <br/> 
+                            </div>
+                        </div>
+                        <div className="product_price_value"><div>{item.price}</div></div>
+                        <div className="product_delivery_value"><div>2500</div></div>
+                    </div>
+        );
+    }
+    let AllPrice = 0;
+    for(let idx=0;idx<this.props.CartList.length;idx++){
+        AllPrice+=this.props.CartList[idx].price*this.props.CartList[idx].amount;
+    }
       return(
         <React.Fragment>
             <MainBox>
@@ -156,19 +193,15 @@ class Cart extends Component {
                         <div className="product_price_label">상품금액</div>
                         <div className="product_delivery_label">배송비</div>
                     </div>
-                    <div className="value_box">
-                        <div className="checkbox_value"><input type="checkbox"/></div>
-                        <div className="product_info_value">
-                            <SmallImage imageURL={noimg}/>
-                            <div className="information_text">
-                               상품명상품명상품명<br/>
-                               [옵션]옵션옵션옵션<br/>
-                               [수량]nn <br/> 
-                            </div>
-                        </div>
-                        <div className="product_price_value"><div>10000</div></div>
-                        <div className="product_delivery_value"><div>2500</div></div>
-                    </div>
+                    {
+                        this.props.CartList.map((item,index)=>{
+                            return(
+                                CartList(item)
+                            );
+                        })
+                    }
+                    {/* <CartList/>
+                    <CartList/> */}
                 </div>
                 <div className="product_delete_button_box">
                     <div className="button">전체삭제</div>
@@ -182,7 +215,7 @@ class Cart extends Component {
                     <div className="calculate">
                         <div className="item_row">
                             <div>상품금액</div>
-                            <div>10000</div>
+                            <div>{AllPrice}원</div>
                         </div>
                         <div className="item_row">
                             <div>배송비</div>
@@ -194,7 +227,7 @@ class Cart extends Component {
                         </div>
                     </div>
                     <div className="result">
-                        <div>=10000원</div>
+                        <div>={AllPrice+2500}원</div>
                     </div> 
                 </div>
 
