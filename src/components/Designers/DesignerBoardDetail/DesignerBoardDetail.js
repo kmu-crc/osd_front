@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import profile from "source/thumbnail.png";
@@ -15,8 +16,9 @@ class Viewer extends Component {
     this.state = {};
   }
   render() {
-    if (!this.props.contents) return <div>글 내용이 없습니다.</div>;
-    return (<div>{this.props.contents.map(item => <div>{item.content}</div>)}</div>)
+    if (!this.props.content) return <div>글 내용이 없습니다.</div>;
+    return (<div>{this.props.content}</div>);
+    // return (<div>{this.props.content.map(item => <div>{item.content}</div>)}</div>)
   }
 };
 
@@ -73,24 +75,12 @@ const TabContainer = styled(Grid.Column)`
     color: inherit;
   }
 `;
-// TODO
-// const TagItem = styled.div``;
-// const BoardItem = styled.div``;
-// const CommentItem = styled.div``;
 
-class DesignerBoardDetail extends Component {
-  componentWillMount() {
-    // this.props.GetDesignerDetailRequest(this.props.id); // 디자이너 디테일 정보
-    // this.props.GetDesignerCountRequest(this.props.id); // 디자이너 count 정보
-    // if (this.props.token) {
-    //   this.props.GetLikeDesignerRequest(this.props.id, this.props.token); // token 값 있을때만 뜨는 좋아요 정보
-    // }
-  }
-
+class Detail extends Component {
   render() {
-    // console.log("props:", this.props);
-    const { DesignerBoardDetail, Count } = this.props;
-    if (DesignerBoardDetail == null) return <div>No data.</div>
+    console.log("props:", this.props);
+    const { Detail, Count } = this.props;
+    if (Detail == null) return <div>No data.</div>
 
     const Navigation = () => {
       return <ContentBox>
@@ -100,7 +90,7 @@ class DesignerBoardDetail extends Component {
               <Button>이전글</Button><Button>다음글</Button>
             </div>
             <div style={{ marginLeft: "auto" }}>
-              <Button>목록</Button>
+              <Link to={`/designerboard`}><Button>목록</Button></Link>
             </div>
           </div>
         </Grid.Row>
@@ -112,23 +102,23 @@ class DesignerBoardDetail extends Component {
           <TabContainer mobile={16} tablet={16} computer={16} largeScreen={16}>
             {/* header */}
             <div style={{ borderBottom: "1px dashed gray", padding: "1rem", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-              <div>{DesignerBoardDetail.title || "제목"} | {DesignerBoardDetail.category || "분야"}</div>
-              <div>{DateFormat(DesignerBoardDetail.update_time) || "업데이트시간"}</div>
+              <div>{Detail.title || "제목"} | {Detail.categoryName || "분야"}</div>
+              <div>{DateFormat(Detail.update_time) || "업데이트시간"}</div>
             </div>
-            <ProfileSection img={DesignerBoardDetail.thumbnailUrl ? DesignerBoardDetail.thumbnailUrl.m_img : profile}>
+            <ProfileSection img={Detail.thumbnailUrl ? Detail.thumbnailUrl.m_img : profile}>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <div className="profile" />
-                <div className="title"><TextFormat txt={DesignerBoardDetail.nick_name || "작성자"} /></div>
+                <div className="title"><TextFormat txt={Detail.nick_name || "작성자"} /></div>
               </div>
               <div style={{ marginLeft: "auto" }}>
-                <div><Icon className="eye" />&nbsp;{NumberFormat(Count.view || 0)}</div>
-                <div><Icon className="like" />&nbsp;{NumberFormat(Count.like || 0)}</div>
+                <div><Icon className="eye" />&nbsp;{NumberFormat(Detail.view || 0)}</div>
+                <div><Icon className="like" />&nbsp;{NumberFormat(Detail.likes || 0)}</div>
               </div>
             </ProfileSection>
 
             {/* body */}
             <Section>
-              <Viewer contents={DesignerBoardDetail.contents} />
+              <Viewer content={Detail.content} />
             </Section>
 
           </TabContainer>
@@ -140,24 +130,26 @@ class DesignerBoardDetail extends Component {
         <Grid.Row>
           <TabContainer>
             <Section>
-              <BoardComment id={DesignerBoardDetail.uid} />
+              <BoardComment id={Detail.uid} />
             </Section>
           </TabContainer>
         </Grid.Row>
       </ContentBox>
     }
     return (<React.Fragment>
-      <Wrapper>
-        <Navigation />
-        <div style={{ marginTop: "10px" }} />
-        <Contents />
-        <Comment />
-        <div style={{ marginTop: "10px" }} />
-        <Navigation />
-      </Wrapper>
+      {Detail ? (
+        <Wrapper>
+          <Navigation />
+          <div style={{ marginTop: "10px" }} />
+          <Contents />
+          <Comment />
+          <div style={{ marginTop: "10px" }} />
+          <Navigation />
+        </Wrapper>
+      ) : (<div>LOADING</div>)}
     </React.Fragment >);
   }
 }
 
-export default DesignerBoardDetail;
+export default Detail;
 
