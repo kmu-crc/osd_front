@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown';
+import PostCodeModal from 'modules/PostCode/PostCode';
 
 const phoneNumList = [
     {value:0,text:"010"},
@@ -105,6 +106,7 @@ class DeliverySection extends React.Component{
         super(props);
         this.state = {
             name:"",phone_first:0,phone_second:"",address_essential:"",address_detail:"",comment:"",
+            post_code:"",post_code_modal:false,
         }
         this.onChangeNameValue=this.onChangeNameValue.bind(this);
         this.onChangePhoneFirstValue=this.onChangePhoneFirstValue.bind(this);
@@ -112,6 +114,11 @@ class DeliverySection extends React.Component{
         this.onChangeComment = this.onChangeComment.bind(this);
         this.onChangeAddressEssentialValue=this.onChangeAddressEssentialValue.bind(this);
         this.onChangeAddressDetailValue=this.onChangeAddressDetailValue.bind(this);
+        this.onChangePostCode = this.onChangePostCode.bind(this);
+        this.onClickPostCode = this.onClickPostCode.bind(this);
+        this.onChangePostCodeValue = this.onChangePostCodeValue.bind(this);
+        this.onChangeAddressEssentialValue = this.onChangeAddressEssentialValue.bind(this);
+        this.onShowPostCodeModal = this.onShowPostCodeModal.bind(this);
         
     }
 
@@ -139,9 +146,30 @@ class DeliverySection extends React.Component{
         this.setState({comment:event.target.value});
         this.props.onChangeComment(event.target.value);
     }
-
+    onChangePostCode(event){
+        this.setState({post_code:event.target.value});
+    }
+    onClickPostCode(){
+        this.setState({post_code_modal:true});
+    }
+    onChangePostCodeValue(code){
+        this.setState({post_code:code});
+    }
+    onChangeAddressEssentialValue(address){
+        this.setState({address_essential:address});
+    }
+    onShowPostCodeModal(show){
+        this.setState({post_code_modal:show});
+    }
     render(){
         return(
+            <React.Fragment>
+                <PostCodeModal 
+                post_code_modal={this.state.post_code_modal}
+                onChangeModal= {this.onShowPostCodeModal}
+                onChangeAddress = {this.onChangeAddressEssentialValue}
+                onChangePostCode = {this.onChangePostCodeValue}
+                />
             <SectionBox>
                         <div className="payment_content_label">배송 정보</div>
                             <div className="payment_contents_box ">
@@ -169,12 +197,21 @@ class DeliverySection extends React.Component{
                                         <div className="inner_label">배송지</div>
                                         <div className="inner_box">
                                             <div className="inner_line_box">
-                                                <FormText onChangeAddressEssential={this.onChangeAddressEssentialValue} width="150" style={{backgroundColor:"#EFEFEF"}} readOnly/>
-                                                <GrayButton style={{color:"white"}}>우편번호찾기</GrayButton>
+                                                <FormText 
+                                                onChange={this.onChangePostCode} 
+                                                value={this.state.post_code}
+                                                width="150" style={{backgroundColor:"#EFEFEF"}} readOnly/>
+                                                <GrayButton onClick={this.onClickPostCode} style={{color:"white"}}>우편번호찾기</GrayButton>
                                             </div>
                                             <div className="inner_line_box">
-                                                <FormText width="200" style={{backgroundColor:"#EFEFEF"}} readOnly/>
-                                                <FormText onChange={this.onChangeAddressDetailValue}width="100"/>
+                                                <FormText 
+                                                onChange={this.onChangeAddressEssentialValue} 
+                                                value={this.state.address_essential} 
+                                                width="200" 
+                                                style={{backgroundColor:"#EFEFEF"}} readOnly/>
+                                                <FormText onChange={this.onChangeAddressDetailValue} 
+                                                width="100" 
+                                                value={this.state.address_detail}/>
                                             </div>
                                         </div>
                                     </div>
@@ -190,6 +227,7 @@ class DeliverySection extends React.Component{
                                     
                             </div>
                 </SectionBox>
+                </React.Fragment>
         );
     }
     
