@@ -33,11 +33,7 @@ class ScrollListTest extends Component {
   };
 
   render() {
-    const {
-      ListComponent, type,
-      mobile, tablet, computer, largeScreen, widescreen, customClass,
-      dataList, dataListAdded } = this.props;
-
+    const { ListComponent, type, mobile, tablet, computer, largeScreen, widescreen, customClass, dataListAdded } = this.props;
     return (
       <ScrollContainer>
         {dataListAdded.length > 0 ?

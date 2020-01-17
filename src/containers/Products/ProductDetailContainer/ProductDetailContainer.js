@@ -9,9 +9,6 @@ import {
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
 class ProductDetailContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     this.props.GetProductDetailRequest(this.props.id);
   }

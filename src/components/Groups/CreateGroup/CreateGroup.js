@@ -8,8 +8,8 @@ import Button from "components/Commons/Button";
 import { FormInput, FormThumbnail,FormDropBox } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
-import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
+// import ContentBox from "components/Commons/ContentBox";
+// import mainSlide from "source/mainSlide.jpg";
 import Loading from "components/Commons/Loading";
 
 // css styling

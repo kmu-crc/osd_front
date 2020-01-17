@@ -1,52 +1,8 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export const CreateDesignerBoardArticleRequest = (data, token) => {
-  return dispatch => {
-    dispatch(CreateDesignerBoardArticle());
-    const url = `${host}/designer/createboard`;
-    console.log("url", url);
-    return fetch(url, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
-      .then(res => res.json())
-      .then(res => dispatch(CreateDesignerBoardArticleSuccess(res)))
-      .catch(error => dispatch(CreateDesignerBoardArticleFail(error)));
-  };
-};
-const CreateDesignerBoardArticle = () => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE });
-const CreateDesignerBoardArticleSuccess = res => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE_SUCCESS, success: res.success });
-const CreateDesignerBoardArticleFail = error => ({ type: types.CREATE_DESIGNER_BOARD_ARTICLE_FAIL, success: error.success });
-
-
-export function GetDesignerBoardListRequest(page, sort, cate1, cate2, keyword) {
-  return (dispatch) => {
-    const url = `${host}/designer/board/${page}/${sort}/${cate1}/${cate2}/${keyword}`
-    console.log(url);
-    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
-      .then(res => res.json())
-      .then(data => dispatch(page === 0 ? DesignerBoardListClear(data || []) : GetDesignerBoardList(data || [])))
-      .catch(err => dispatch(DesignerBoardListFail()))
-  }
-};
-const GetDesignerBoardList = (data) => ({ type: types.GET_DESIGNER_BOARD_LIST, DesignerBoardList: data });
-const DesignerBoardListClear = (data) => ({ type: types.DESIGNER_BOARD_LIST_CLEAR, DesignerBoardList: data });
-const DesignerBoardListFail = () => ({ type: types.DESIGNER_BOARD_LIST_FAIL, DesignerBoardList: [] });
-
-
-export function GetDesignerBoardTotalCountRequest(cate1, cate2) {
-  return (dispatch) => {
-    const url = `${host}/designer/boardCount/${cate1}/${cate2}`
-    console.log(url);
-    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
-      .then(res => res.json())
-      .then(data => dispatch(GetDesignerBoardTotalCount(data["count(*)"] || 0)))
-      .catch(err => dispatch(DesignerBoardTotalCountFail()))
-  }
-};
-const GetDesignerBoardTotalCount = (data) => ({ type: types.GET_DESIGNER_BOARD_TOTAL_COUNT, Count: data });
-const DesignerBoardTotalCountFail = () => ({ type: types.GET_DESIGNER_BOARD_TOTAL_COUNT_FAIL, Count: 0 });
-
-
-export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
+// NORMAL
+export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
     console.log(keyword);
     return fetch(`${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
@@ -75,6 +31,7 @@ const GetDesignerList = (data) => ({ type: types.GET_DESIGNER_LIST, DesignerList
 const DesignerListClear = (data) => ({ type: types.DESIGNER_LIST_CLEAR, DesignerList: data, DesignerListAdded: [] });
 const DesignerListFail = () => ({ type: types.DESIGNER_LIST_FAIL, DesignerList: [], DesignerListAdded: [] });
 
+
 export function GetDesignerTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
     const sql = `${host}/designer/designerCount/${cate1}/${cate2}`;
@@ -86,32 +43,10 @@ export function GetDesignerTotalCountRequest(cate1, cate2) {
 };
 const GetDesignerTotalCount = (data) => ({ type: types.GET_DESIGNER_TOTAL_COUNT, Count: data });
 const DesignerTotalCountFail = () => ({ type: types.GET_DESIGNER_TOTAL_COUNT_FAIL, Count: 0 });
-
-export function GetDesignerBoardDetailRequest(id) {
-  return (dispatch) => {
-    const sql = `${host}/designer/boardDetail/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
-      .then(res => res.json())
-      .then(data => dispatch(GetDesignerBoardDetail(data ? data : [])))
-      .catch(err => { console.log("err", err); })
-  }
-};
-const GetDesignerBoardDetail = (data) => ({ type: types.GET_DESIGNER_BOARD_DETAIL, DesignerDetail: data });
-export function GetDesignerBoardCountRequest(id) {
-  return (dispatch) => {
-    const sql = `${host}/designer/getBoardCount/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
-      .then(res => res.json())
-      .then(data => dispatch(GetDesignerBoardCount(data ? data : { like: 0, view: 0 })))
-      .catch(err => { console.log("err", err) });
-  }
-};
-const GetDesignerBoardCount = (data) => ({ type: types.GET_DESIGNER_BOARD_COUNT, Count: data });
-
-export function GetDesignerDetailRequest(id) {
+export const GetDesignerDetailRequest = (id) => {
   return (dispatch) => {
     const sql = `${host}/designer/designerDetail/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "get" })
+    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetDesignerDetail(data ? data : [])))
       .catch(err => { console.log("err", err); })
@@ -379,6 +314,6 @@ export const DeleteDesignBoardCommentRequest = (design_id, card_id, comment_id, 
   };
 };
 
-const DeleteDesignerBoardComment = () => ({ type: types.DELETE_DESIGNER_BOARD_COMMENT });
-const DeleteDesignerBoardCommentSuccess = res => ({ type: types.DELETE_DESIGNER_BOARD_COMMENT_SUCCESS, data: res });
-const DeleteDesignerBoardCommentFailure = error => ({ type: types.DELETE_DESIGNER_BOARD_COMMENT_FAILURE });
+const DeleteDesignerBoardComment = () => ({ type: types.DELETE_DESIGN_COMMENT });
+const DeleteDesignerBoardCommentSuccess = res => ({ type: types.DELETE_DESIGN_COMMENT_SUCCESS, data: res });
+const DeleteDesignerBoardCommentFailure = error => ({ type: types.DELETE_DESIGN_COMMENT_FAILURE });
