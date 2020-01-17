@@ -27,9 +27,9 @@ import CreateDesignerPage from 'pages/CreateDesignerPage';
 import ModifyDesignerPage from 'pages/ModifyDesignerPage';
 import CreateMakerPage from 'pages/CreateMakerPage';
 import ModifyMakerPage from 'pages/ModifyMakerPage';
-import DesignerBoardListPage, { CreateDesignerBoardPage, DesignerBoardDetailPage } from "pages/DesignerBoardPage";
+import RequestListPage, { CreateRequestPage, RequestDetailPage } from "pages/RequestPage";
 import requestDesignerPage from "pages/RequestToDesignerPage";
-import requestMakerPage from "pages/RequestToMakerPage";
+// import requestMakerPage from "pages/RequestToMakerPage";
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -44,42 +44,28 @@ class App extends Component {
           <Switch>
             {/* MAIN */}
             <Route exact path="/" component={MainPage} />
-
             {/* DESIGNER */}
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
-            {/* DESIGNER-BOARD */}
-            <Route path="/createDesignerBoard" component={RequiresAuth(CreateDesignerBoardPage)} />
-            <Route path="/designerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
-            <Route path="/designerBoardDetail/:id" component={DesignerBoardDetailPage} />
-
             {/* MAKER */}
             <Route path="/maker/:sorting?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />
-            {/* MAKER-BOARD */}
-            {/* <Route path="/createMakerBoard" component={CreateMakerBoardPage} /> */}
-            <Route path="/makerBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
-            <Route path="/makerBoardDetail/:id" component={DesignerBoardDetailPage} />
-            <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
-
-            {/* GALLERY */}
-            <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
-
             {/* ITEM */}
             <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
-            <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
-            {/* ITEM-BOARD */}
-            {/* <Route path="/createProductBoard" component={CreateItemBoardPage} /> */}
-            <Route path="/productBoard/:sorting?/:cate1?/:cate2?" component={DesignerBoardListPage} />
-            <Route path="/productBoardDetail/:id" component={DesignerBoardDetailPage} />
-
+            <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
+            {/* REQUEST */}
+            <Route path="/createRequest" component={RequiresAuth(CreateRequestPage)} />
+            <Route path="/request/:sorting?/:cate1?/:cate2?" component={RequestListPage} />
+            <Route path="/requestDetail/:id" component={RequestDetailPage} />
+            {/* GALLERY */}
+            <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
