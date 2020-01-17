@@ -205,7 +205,7 @@ class MessageList extends Component {
         nick_name: this.props.name,
         uid: id
       })
-      Socket.on("reload_msglist", () => {
+      Socket.on("init", () => {
         console.log("giveit")
         this.setState({ render: true })
       })
@@ -290,7 +290,7 @@ class MessageList extends Component {
 
   onSubmitForm = async (data) => {
     if (this.state.selectId === null) {
-      alert("받는 사람을 지정해주세요.")
+      alert("받는 사람을 지정해주세요.");
       return
     }
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)

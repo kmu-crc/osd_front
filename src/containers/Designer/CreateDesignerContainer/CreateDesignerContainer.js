@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CreateDesigner from 'components/Designers/CreateDesigner/CreateDesigner';
-import Loading from "components/Commons/Loading";
+// import Loading from "components/Commons/Loading";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";

@@ -6,16 +6,14 @@ import StyleGuide from "StyleGuide";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
-`
-
+`;
 const Message = styled.div`
   display: block;
   position: absolute;
   color: ${StyleGuide.color.main.basic};
   left: 0;
   bottom: -1.5rem;
-`
-
+`;
 const CheckBoxLabel = styled.label`
   position: relative;
   padding-left: 2rem;
@@ -44,75 +42,51 @@ const CheckBoxLabel = styled.label`
     color: ${StyleGuide.color.geyScale.scale6}
     // text-decoration-line: line-through;
   }
-`
+`;
 
 export class FormCheckBox extends Component {
-  state = {
-    value: this.value,
-    target: null,
-    validates: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = { value: this.value, target: null, validates: [] };
+    this.init = this.init.bind(this);
+    this.returnData = this.returnData.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+  }
 
-  componentDidMount(){
-    if(this.props.validates){
+  componentDidMount() {
+    if (this.props.validates) {
       this.setState({ validates: this.props.validates });
     }
-    if(this.props.value){
-      this.setState({ value: this.props.value });
-    }
-    if(this.props.value === 0){
-      this.setState({ value: false });
-    }
+    this.setState({ value: this.props.value || false });
     this.init();
-  }
+  };
 
   init = async () => {
-    await this.setState({target: this.input})
+    await this.setState({ target: this.input })
     this.returnData();
-  }
-
+  };
   onChangeValue = async e => {
     await this.setState({ value: !this.state.value, target: this.input });
     this.returnData();
   };
+  returnData = async e => {
+    if (this.props.getValue) await this.props.getValue(this.state);
+    if (e && this.props.onBlur) await this.props.onBlur();
+  };
 
-  returnData = async (e) => {
-    if(this.props.getValue) await this.props.getValue(this.state);
-    if(e && this.props.onBlur) await this.props.onBlur();
-  }
   render() {
     const { name, value, disableMsg, disabled, placeholder, id } = this.props;
     return (
       <InputWrap>
-      {disabled?(
-        <CheckBoxLabel      
-        className={this.state.value ? "disabled checked" : null}
-        htmlFor={id ? id+value : name+value}
-        onBlur={this.returnData}
-        title={disableMsg}
-        >{placeholder}</CheckBoxLabel>
-        
-        ):(
-          <CheckBoxLabel
-          className={this.state.value ? "checked" : null}
-          htmlFor={id ? id+value : name+value}
-          onClick={this.onChangeValue}
-          onBlur={this.returnData}
-          >{placeholder}</CheckBoxLabel>
-          )}
-        <input
-          type="checkbox"
-          id={id ? id+value : name+value}
-          name={name && name}
-          style={{display: "none"}}
-          defaultValue={value && value}
-          ref={ref => (this.input = ref)}
-          />
-        <Message/>
+        {disabled ?
+          (<CheckBoxLabel className={this.state.value ? "disabled checked" : null} htmlFor={id ? id + value : name + value} onBlur={this.returnData} title={disableMsg}>{placeholder}</CheckBoxLabel>) :
+          (<CheckBoxLabel className={this.state.value ? "checked" : null} htmlFor={id ? id + value : name + value} onClick={this.onChangeValue} onBlur={this.returnData} >{placeholder}</CheckBoxLabel>)}
+        <input type="checkbox" id={id ? id + value : name + value} name={name && name} style={{ display: "none" }} defaultValue={value && value} ref={ref => (this.input = ref)} />
+        <Message />
       </InputWrap>
     )
   }
-}
+};
 
 FormCheckBox.propTypes = {
   disabled: PropTypes.bool,

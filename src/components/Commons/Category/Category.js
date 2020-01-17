@@ -68,7 +68,6 @@ const CateItem = styled.li`
     padding-right: 0px;
   }
 `;
-
 const SubCateItem = styled.li`
   padding-right: 1.2rem;
 `;
@@ -88,12 +87,6 @@ class Category2 extends Component {
     }
     this.props.handleCate2(cate1, value);
   };
-  gotoBoard = () => {
-    window.location.href = geturl() + `/${this.props.board}board`;
-  };
-  gotoBack = () => {
-    window.location.href = geturl() + `/${this.props.board}`;
-  }
   render() {
     const Cate2List = (i) => {
       const n = i.parentNum;
@@ -133,9 +126,6 @@ class Category2 extends Component {
               <Cate2List parentNum={i} />
             </CateItem>
           ))}
-          {this.props.which ?
-            <CateItem className="go-right" onClick={this.gotoBoard}>{this.props.which}게시판</CateItem> :
-            <CateItem className="go-right" onClick={this.gotoBack}>목록페이지로 이동</CateItem>}
         </ul>
       </CateColumn>
     );

@@ -59,7 +59,7 @@ class Notice extends Component {
         return (
             notice.map(noti => {
                 if (getCookie("noti_" + noti.uid))
-                    return;
+                    return null;
                 else
                     return <Notification visible={noti.visible || "visible"} key={noti.uid} >
                         <div className="content">

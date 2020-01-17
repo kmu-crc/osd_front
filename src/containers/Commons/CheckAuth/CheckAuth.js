@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { CheckTokenRequest } from "actions/Authentication";
@@ -27,9 +27,9 @@ export default function CheckAuth(Components) {
       }
       GetSession("opendesign_token").then(token => {
         this.props.CheckTokenRequest(token).then(data => {
-          if (data.info) {
+          if (data && data.info) {
             if (!data.info.isDetail) {
-              if(this.props.location.pathname === "/inserUserDetail"){
+              if (this.props.location.pathname === "/inserUserDetail") {
                 this.setState({ valid: true });
               } else {
                 this.props.history.push("/inserUserDetail");

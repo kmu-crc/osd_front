@@ -50,24 +50,23 @@ const Input = styled.input`
 `;
 
 export class FormInput extends Component {
-  state = {
-    value: "",
-    target: null,
-    validates: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = { value: "", target: null, validates: [] };
+  }
 
-  componentDidMount(){
-    if(this.props.validates){
+  componentDidMount() {
+    if (this.props.validates) {
       this.setState({ validates: this.props.validates });
     }
-    if(this.props.value){
+    if (this.props.value) {
       this.setState({ value: this.props.value });
     }
     this.init();
   }
 
   init = async () => {
-    await this.setState({target: this.input._reactInternalFiber.child.stateNode})
+    await this.setState({ target: this.input._reactInternalFiber.child.stateNode })
     this.returnData();
   }
 
@@ -80,17 +79,17 @@ export class FormInput extends Component {
 
   returnData = async (e) => {
     let event = null;
-    if(e && this.props.prevent) {
-      if(e.key === "Enter"){
+    if (e && this.props.prevent) {
+      if (e.key === "Enter") {
         e.preventDefault();
       }
     }
-    event = {...e};
-    if(this.props.getValue) await this.props.getValue(this.state, event);
-    if(event.type === "blur" && this.props.onBlur) await this.props.onBlur();
+    event = { ...e };
+    if (this.props.getValue) await this.props.getValue(this.state, event);
+    if (event.type === "blur" && this.props.onBlur) await this.props.onBlur();
   }
   render() {
-    const { type, minLength, maxLength,name, placeholder, style, id } = this.props;
+    const { type, /*minLength, maxLength,*/ name, placeholder, style, id } = this.props;
     return (
       <InputWrap>
         <Input

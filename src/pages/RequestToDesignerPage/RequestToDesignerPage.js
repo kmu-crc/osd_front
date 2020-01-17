@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import RequestToDesignerContainer from "containers/Designer/RequestToDesignerContainer";
+import RequestToDesignerContainer from "containers/Request/RequestToDesignerContainer";
 
 class RequestToDesignerPage extends Component {
   render() {

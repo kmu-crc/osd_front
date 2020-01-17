@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { FormInput,FormAddress,FormExp,FormTag ,FormThumbnail, FormDropBox,FormCheckBox_new } from "components/Commons/FormItems";
+import { FormInput,FormAddress,FormExp,FormTag ,FormThumbnail, FormDropBox,FormCheckBoxnew } from "components/Commons/FormItems";
 import { Header, Grid } from "semantic-ui-react"
 import StyleGuide from "StyleGuide";
 const category = [
@@ -104,12 +104,12 @@ class ModifyMaker extends Component {
                   <FormTag
                   placeholder="태그를 입력해주세요(한글10자 영문20자 이내)"/>
                   <Label>보유장비</Label>
-                  <FormCheckBox_new 
+                  <FormCheckBoxnew 
                   items="장비1장비1,장비2장비2,장비3장비3,장비4장비4,장비5장비5,장비6장비6,장비7장비7,장비8장비8,장비9장비9,장비10장비10"/>
                   <div className="miniLabel">추가입력</div><FormTag/>
                   
                   <Label>보유기술</Label>
-                  <FormCheckBox_new 
+                  <FormCheckBoxnew 
                   items="기술1기술1,기술2기술2,기술3기술3,기술4기술4,기술5기술5,기술6기술6,기술7기술7,기술8기술8,기술9기술9,기술10기술10"/>
                   <div className="miniLabel">추가입력</div><FormTag/>
              </Grid.Column>

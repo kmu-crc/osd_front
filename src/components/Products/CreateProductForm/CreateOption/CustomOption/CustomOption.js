@@ -39,9 +39,9 @@ const OptionValuePiece = styled.div`
     }
 `
 
-const FormText = styled.input.attrs({type:"text"})`
-    width:${props=>props.width}px;
-    height:${props=>props.height}px;
+const FormText = styled.input.attrs({ type: "text" })`
+    width:${props => props.width}px;
+    height:${props => props.height}px;
     padding:15px;
     font-family:Noto Sans KR;
     color:#707070;
@@ -50,58 +50,57 @@ const FormText = styled.input.attrs({type:"text"})`
     margin-right:10px;
 `
 const Button = styled.div`
-    width:${props=>props.width}px;
-    height:${props=>props.height}px;
+    width:${props => props.width}px;
+    height:${props => props.height}px;
     border:1px solid #dddddd;
-    background-color:${props=>props.backgroundColor};
-    font-size:${props=>props.fontSize}pt;
+    background-color:${props => props.backgroundColor};
+    font-size:${props => props.fontSize}pt;
     font-weight:500;
     text-align:center;
-    padding:${props=>props.padding}px;
+    padding:${props => props.padding}px;
     margin-top:-1px;
     &:hover{
-        // background-color:${props=>props.onMouseColor};
+        // background-color:${props => props.onMouseColor};
         cursor:pointer;
     }
 `
-class CustomOption extends React.Component{
+class CustomOption extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            OptionValue:"",
-            OptionList:[],
+            OptionValue: "",
+            OptionList: [],
         }
         this.onClickDelete = this.onClickDelete.bind(this);
         this.onClickAdd = this.onClickAdd.bind(this);
         this.onChangeOptionValue = this.onChangeOptionValue.bind(this);
     }
-    async onClickAdd()
-    {
+    async onClickAdd() {
         await this.setState({
-            OptionList:this.state.OptionList.concat(this.state.OptionValue),
+            OptionList: this.state.OptionList.concat(this.state.OptionValue),
         })
 
-        await this.props.setOptionList(this.props.CustomType,this.props.optionName,this.state.OptionList,this.props.OptionIndex);
+        await this.props.setOptionList(this.props.CustomType, this.props.optionName, this.state.OptionList, this.props.OptionIndex);
     }
-    onChangeOptionValue(event){
-        this.setState({OptionValue:event.target.value});
+    onChangeOptionValue(event) {
+        this.setState({ OptionValue: event.target.value });
     }
-    async onClickDelete(event){
+    async onClickDelete(event) {
         console.log(event.target.id);
         const deleteIdx = event.target.id;
         const length = this.state.OptionList.length;
-        let list=[];
-        list=list.concat(this.state.OptionList);
+        let list = [];
+        list = list.concat(this.state.OptionList);
 
         this.setState({
-            OptionList:list.slice(0,deleteIdx).concat(this.state.OptionList.slice(parseInt(deleteIdx,10)+1,length))
+            OptionList: list.slice(0, deleteIdx).concat(this.state.OptionList.slice(parseInt(deleteIdx, 10) + 1, length))
         })
     }
-    render(){
-        const CustomType=this.props.CustomType;
-        const OptionValueList = this.state.OptionList.map((value,index)=>{
-            return(
+    render() {
+        const CustomType = this.props.CustomType;
+        const OptionValueList = this.state.OptionList.map((value, index) => {
+            return (
                 <OptionValuePiece key={index}>
                     <div className="OptionValue_label">{value}</div>
                     <div className="OptionCross_button" id={index} onClick={this.onClickDelete}>x</div>
@@ -109,55 +108,55 @@ class CustomOption extends React.Component{
             );
         });
 
-        return(
+        return (
             <React.Fragment>
 
-                { CustomType===0?
+                {CustomType === 0 ?
                     <OptionListBox>
-                    <div className="addName_box">
-                    {this.props.optionName}
-                    </div>
-                    <div className="optionList">
-                    <div className="addValue_box">
-                        <FormText width={160} height={40} placeholder="ex:레드,블루,그린.."
-                            value={this.state.OptionValue} onChange={this.onChangeOptionValue}/>
-                        <Button width={40} height={40} backgroundColor={"#EFEFEF"} 
-                        fontSize={11} padding={10} onMouseColor={"#dddddd"}
-                        onClick={this.onClickAdd}>+</Button>
-                    </div>
-                    {OptionValueList}
-                    </div>
-                </OptionListBox>
-                :null}
-                { CustomType===1?
-                <OptionListBox>
-                    <div className="addName_box">
-                    {this.props.optionName}
-                    </div>
-                    <div className="optionList">
-                        <div className="addValue_box">
-                        <FormText width={200} height={40} placeholder="예시를 입력하세요"/>
-                    </div>
-                    </div>
-                </OptionListBox>
-                :null}
-                { CustomType===2?
-                <OptionListBox>
-                    <div className="addName_box">
-                    {this.props.optionName}
-                    </div>
-                    <div className="optionList">
-                        <div className="addValue_box">
-                        <FormText width={150} height={40} disabled/>
-                        <Button width={80} height={40} backgroundColor={"#EFEFEF"} 
-                        fontSize={11} padding={10} fontSize={11}>...</Button>
-                    </div>
-                    </div>
-                </OptionListBox>
-                :null}
-               
-                
+                        <div className="addName_box">
+                            {this.props.optionName}
+                        </div>
+                        <div className="optionList">
+                            <div className="addValue_box">
+                                <FormText width={160} height={40} placeholder="ex:레드,블루,그린.."
+                                    value={this.state.OptionValue} onChange={this.onChangeOptionValue} />
+                                <Button width={40} height={40} backgroundColor={"#EFEFEF"}
+                                    fontSize={11} padding={10} onMouseColor={"#dddddd"}
+                                    onClick={this.onClickAdd}>+</Button>
+                            </div>
+                            {OptionValueList}
+                        </div>
+                    </OptionListBox>
+                    : null}
+                {CustomType === 1 ?
+                    <OptionListBox>
+                        <div className="addName_box">
+                            {this.props.optionName}
+                        </div>
+                        <div className="optionList">
+                            <div className="addValue_box">
+                                <FormText width={200} height={40} placeholder="예시를 입력하세요" />
+                            </div>
+                        </div>
+                    </OptionListBox>
+                    : null}
+                {CustomType === 2 ?
+                    <OptionListBox>
+                        <div className="addName_box">
+                            {this.props.optionName}
+                        </div>
+                        <div className="optionList">
+                            <div className="addValue_box">
+                                <FormText width={150} height={40} disabled />
+                                <Button width={80} height={40} backgroundColor={"#EFEFEF"}
+                                    padding={10} fontSize={11}>...</Button>
+                            </div>
+                        </div>
+                    </OptionListBox>
+                    : null}
+
+
             </React.Fragment>
         );
     }
-}export default CustomOption;
+} export default CustomOption;
