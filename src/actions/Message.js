@@ -96,7 +96,7 @@ export function GetMyMessageDetailClear() {
   };
 };
 
-export function SendMessageRequest(token, data, id) {
+export function SendMessageRequest(token, data,id) {
   return (dispatch) => {
     dispatch(SendMessage());
     return fetch(`${host}/users/sendMsg/${id}`, {
@@ -106,6 +106,7 @@ export function SendMessageRequest(token, data, id) {
       },
       method: "post",
       body: JSON.stringify(data)
+      //body: JSON.stringify(data),
     }).then((response) => {
         return response.json();
       }).then((data) => {

@@ -228,6 +228,9 @@ class Header extends Component {
         Socket.on("getNoti", noti => {
           this.setState({ noti: noti })
         })
+        // socket.on("connectedCheck", ()=>{
+          
+        // })
       } catch (err) {
         console.log(err)
       }
