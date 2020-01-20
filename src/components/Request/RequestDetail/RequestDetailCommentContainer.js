@@ -17,6 +17,7 @@ class RequestDetailComment extends Component {
       .then(res => this.props.GetRequestCommentRequest(this.props.id));
   };
   render() {
+    console.log("test",this.props.Comment, this.props);
     if (!this.props.Comment) return <div>댓글이 없습니다.</div>
     let parentComments = this.props.Comment.filter(item => item.d_flag === null);
     let comments = parentComments.map(parent => {

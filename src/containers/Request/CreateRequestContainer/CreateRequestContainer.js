@@ -13,7 +13,7 @@ class CreateRequestContainer extends Component {
 const mapStateToProps = (state) => ({
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,
-  success: state.DesignerBoardList.status.success,
+  success: state.RequestList.status.success,
   token: state.Authentication.status.token,
   userInfo: state.Authentication.status.userInfo,
 });
