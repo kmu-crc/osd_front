@@ -10,6 +10,7 @@ import ContentBox from "components/Commons/ContentBox";
 import ProductFilter from "components/Products/ProductFilter";
 import ScrollProductListContainer from "containers/Products/ScrollProductListContainer";
 import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
+import ButtonOSD from "components/Commons/Button";
 
 // css styling
 const Wrapper = styled.div`
@@ -133,6 +134,8 @@ class ProductList extends Component {
                 </div>
               }))}
           </div>
+
+          <a href="/createProduct"><ButtonOSD size="small" round={true} color="Primary">상품 등록</ButtonOSD></a>
           {filter ?
             <Modal onLoad visible={filter} effect="fadeInLeft" >
               <ProductFilter ops={ops} close={this.closeFilterDialog} reset={this.reset} submit={this.filtering} />

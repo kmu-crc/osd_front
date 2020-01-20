@@ -2,7 +2,7 @@ import Authentication from "./Authentication";
 import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignCardComment, DesignIssueList, DesignIssueComment, DesignLike, DeleteDesign, ChangeToProject, UpdateDesign, DesignSourceDetail, DesignWaitingList, DesignDetailComment } from "reducers/Designs";
 import {
     ProductDetail, ProductLike, ProductList,
-    CartList,OrderList,
+    CartList, OrderList,
     //ProductDetailView, ProductDetailStep,
     // ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,
     // ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,
@@ -17,6 +17,7 @@ import { CategoryAll } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
 import { Search, SearchIssue, TopList } from "reducers/Commons"
 import { DesignForked } from "reducers/Designs/DesignForked"
+import { Request, RequestDetail, RequestList } from "reducers/Request";
 import OpenDesign from "reducers/OpenDesign";
 
 import { combineReducers } from "redux";
@@ -24,7 +25,7 @@ import { combineReducers } from "redux";
 export default combineReducers({
     // PRODUCT
     ProductDetail, ProductLike, ProductList,
-    CartList,OrderList,
+    CartList, OrderList,
     // DESIGN
     DesignList, DesignDetail,
     DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignForked, DesignSourceDetail, DesignCardComment, DesignDetailComment, DesignIssueList,
@@ -34,7 +35,9 @@ export default combineReducers({
     CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList,
     MyList, DeleteGroup, GroupIssue, MyExistList,
     // DESIGNER 
-    DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail,
+    DesignerList, DesignerLike, DesignerDetail,
+    // REQUEST
+    Request, RequestDetail, RequestList,
     // MY
     SignIn, SignUp, FindPw, UserInfo, CategoryAll, form: formReducer,
     MyDetail, MyJoin,

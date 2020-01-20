@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Grid, Icon } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import Button from "components/Commons/Button";
-import MyDesignContainer from "containers/MyPage/MyDesignContainer";
-import MemberDesignContainer from "containers/MyPage/MemberDesignContainer";
-import MyGroupContainer from "containers/MyPage/MyGroupContainer";
-import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
-import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
-import MyInvitedContainer from "containers/MyPage/MyInvitedContainer";
+// import MyDesignContainer from "containers/MyPage/MyDesignContainer";
+// import MemberDesignContainer from "containers/MyPage/MemberDesignContainer";
+// import MyGroupContainer from "containers/MyPage/MyGroupContainer";
+// import MyLikeDesignContainer from "containers/MyPage/MyLikeDesignContainer";
+// import MyLikeDesignerContainer from "containers/MyPage/MyLikeDesignerContainer";
+// import MyInvitedContainer from "containers/MyPage/MyInvitedContainer";
 // import MyInvitingContainer from "containers/MyPage/MyInvitingContainer";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import profile from "source/thumbnail.png";
-import NumberFormat from "modules/NumberFormat";
+// import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
 import noimg from "source/noimg.png";
 
@@ -71,18 +71,18 @@ const ProfileSection = styled.div`
     color: #EB3324;
   }
 `;
-const CountSection = styled.div`
-  padding: 1rem 2rem;
-  & .list {
-    height: 24px;
-    width: 100%;
-    font-size: 13px;
-  }
-  & .list span {
-    float: right;
-    font-size: 18px;
-  }
-`;
+//const CountSection = styled.div`
+//  padding: 1rem 2rem;
+//  & .list {
+//    height: 24px;
+//    width: 100%;
+//    font-size: 13px;
+//  }
+//  & .list span {
+//    float: right;
+//    font-size: 18px;
+//  }
+//`;
 const InfoSection = styled.div`
   padding: 1rem;
   & .explanation {
@@ -130,46 +130,46 @@ const Head = styled(Grid)`
     position: relative;
   }
 `;
-const MiniContentBox = styled.div`
-  margin: 0 auto;
-  padding: 20px 0;
-
-  @media only screen and (max-width: 767px) and (min-width: 320px){
-    padding: 0 20px;
-    width: 320px;
-  }
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    width: 450px;
-  }
-  @media only screen and (min-width: 992px){
-    width: 440px;
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1200px){
-    width: 760px;
-  }
-  @media only screen and (min-width: 1920px){
-    width: 1100px;
-  }
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    .ui.grid > .row{
-      margin-left: 6.25% !important;
-    }
-  }
-  @media only screen and (max-width: 1919px) and (min-width: 1200px){
-    .ui.grid > .row{
-      margin-left: 6.25% !important;
-    }
-  }
-`;
-const TEST = styled.div`
-// div{border:1px solid red;};
-`;
+//const MiniContentBox = styled.div`
+//  margin: 0 auto;
+//  padding: 20px 0;
+//
+//  @media only screen and (max-width: 767px) and (min-width: 320px){
+//    padding: 0 20px;
+//    width: 320px;
+//  }
+//  @media only screen and (max-width: 991px) and (min-width: 768px){
+//    width: 450px;
+//  }
+//  @media only screen and (min-width: 992px){
+//    width: 440px;
+//  }
+//  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+//    width: 760px;
+//  }
+//  @media only screen and (min-width: 1920px){
+//    width: 1100px;
+//  }
+//  @media only screen and (max-width: 991px) and (min-width: 768px){
+//    .ui.grid > .row{
+//      margin-left: 6.25% !important;
+//    }
+//  }
+//  @media only screen and (max-width: 1919px) and (min-width: 1200px){
+//    .ui.grid > .row{
+//      margin-left: 6.25% !important;
+//    }
+//  }
+//`;
+//const TEST = styled.div`
+//// div{border:1px solid red;};
+//`;
 class MyDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selected: "WriteReview"//"OrderProduct" 
-      ,repaint:false,
+      , repaint: false,
     };
   }
   componentWillMount() {
@@ -188,8 +188,7 @@ class MyDetail extends Component {
   onChangedSelected = (value) => {
     this.setState({ selected: value });
     //
-    if(value=="OrderProduct")
-    {
+    if (value == "OrderProduct") {
       //testcode
       this.props.getOrderListRequest(this.props.MyDetail.uid);
     }
@@ -197,53 +196,48 @@ class MyDetail extends Component {
   render() {
     console.log(this.props);
     let MyInfo = this.props.MyDetail;
-    let count = null;
-    if (MyInfo.count != null) {
-      count = MyInfo.count;
-    } else {
-      count = { total_like: 0, total_design: 0, total_group: 0, total_view: 0 };
-    }
-    const ContentPage = () => {
-      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
-        return <div />;
-      } else {
-        return (
-          <div>
-            {this.props.type2 === "group"
-              ? <MyGroupContainer token={this.props.token} />
-              : this.props.type2 === "teamDesign"
-                ? <MemberDesignContainer token={this.props.token} uid={MyInfo.uid} />
-                : <MyDesignContainer token={this.props.token} />
-            }
-          </div>
-        );
-      }
-    };
-
-    const LikePage = () => {
-      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
-        return <div />;
-      } else {
-        return (
-          <div>
-            {this.props.type2 === "designer"
-              ? <MyLikeDesignerContainer token={this.props.token} />
-              : <MyLikeDesignContainer token={this.props.token} />
-            }
-          </div>
-        )
-      }
-    }
-
-    const JoinPage = () => {
-      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
-        return <div />;
-      } else {
-        return (
-          <MyInvitedContainer token={this.props.token} history={this.props.history} />
-        );
-      }
-    }
+    // let count = (MyInfo.count != null) ? MyInfo.count : { total_like: 0, total_design: 0, total_group: 0, total_view: 0 };
+    //    const ContentPage = () => {
+    //      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
+    //        return <div />;
+    //      } else {
+    //        return (
+    //          <div>
+    //            {this.props.type2 === "group"
+    //              ? <MyGroupContainer token={this.props.token} />
+    //              : this.props.type2 === "teamDesign"
+    //                ? <MemberDesignContainer token={this.props.token} uid={MyInfo.uid} />
+    //                : <MyDesignContainer token={this.props.token} />
+    //            }
+    //          </div>
+    //        );
+    //      }
+    //    };
+    //
+    //    const LikePage = () => {
+    //      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
+    //        return <div />;
+    //      } else {
+    //        return (
+    //          <div>
+    //            {this.props.type2 === "designer"
+    //              ? <MyLikeDesignerContainer token={this.props.token} />
+    //              : <MyLikeDesignContainer token={this.props.token} />
+    //            }
+    //          </div>
+    //        )
+    //      }
+    //    }
+    //
+    //    const JoinPage = () => {
+    //      if (this.props.MyDetail.length && this.props.MyDetail.length === 0) {
+    //        return <div />;
+    //      } else {
+    //        return (
+    //          <MyInvitedContainer token={this.props.token} history={this.props.history} />
+    //        );
+    //      }
+    //    }
     const ConvertUserType = (props) => {
       const button_menu = [
         { img: `url(${noimg})`, description: `다양한 아이디어를 판매하세요!`, text: `디자이너 등록/관리` },
@@ -268,23 +262,17 @@ class MyDetail extends Component {
 
     // 주문 상품 정보
     const OrderProduct = (props) => {
-      console.log("ORDERPRODUCT:::::",this.props);
-      return(
-        <div>
-          {
-            this.props.OrderList.map((item,index)=>{
-              return(
-              <div style={{width:"100%",padding:"5px",border:"1px solid gray",marginBottom:"10px"}}key={index}>
-                <div>상품명:{item.name}</div>
-                <div>수량:{item.amount}개</div>
-                <div>배송주소:{item.address_essential+item.address_detail}</div>
-                <div>요청사항:{item.comment}</div>
-              </div>
-              );
-            })
-          }
-        </div>
-      );
+      return (<div>
+        {this.props.OrderList.map((item, index) => {
+          return (
+            <div style={{ width: "100%", padding: "5px", border: "1px solid gray", marginBottom: "10px" }} key={index}>
+              <div>상품명:{item.name}</div>
+              <div>수량:{item.amount}개</div>
+              <div>배송주소:{item.address_essential + item.address_detail}</div>
+              <div>요청사항:{item.comment}</div>
+            </div>);
+        })}
+      </div>);
       // return <div>
       //   {/* <div>주문 상품 정보</div> */}
       //   {/* filter - date picker */}
@@ -353,7 +341,7 @@ class MyDetail extends Component {
               <div>
                 <div>{item.purchase.date}(구매번호:{item.purchase.num})</div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div style={{ width: "120px" }}><img src={noimg} style={{ width: "100px", height: "100px" }} /></div>
+                  <div style={{ width: "120px" }}><img alt="" src={noimg} style={{ width: "100px", height: "100px" }} /></div>
                   <div>
                     <div>{item.product.title}</div>
                     <div>[옵션]{item.purchase.option}</div>
@@ -380,7 +368,7 @@ class MyDetail extends Component {
         </div>
       </div>
     }
-    {/* 구매후기 쓰기 */ }
+    /* 구매후기 쓰기 */
     const WriteReview = (props) => {
       return <div>
         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -390,7 +378,7 @@ class MyDetail extends Component {
         {props.items && props.items.length ? props.items.map(item =>
           <div style={{ backgroundColor: "#EAEAEA" }}>
             <div>
-              <div><img src={noimg} style={{ width: "75px", height: "75px" }} /></div>
+              <div><img alt="" src={noimg} style={{ width: "75px", height: "75px" }} /></div>
               <div>
                 <div>{item.product.title}</div>
                 <div>[옵션] {item.purchase.option}</div>

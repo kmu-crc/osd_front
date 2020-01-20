@@ -92,7 +92,7 @@ export function GetLikeProductRequest(id, token) {
     const sql = `${host}/Design/getLike/${id}`;
     return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "GET" })
       .then(res => res.json())
-      .then(data => dispatch(GetLikeProductSuccess(data && data.like || false)))
+      .then(data => dispatch(GetLikeProductSuccess((data && data.like) || false)))
       .catch(error => GetLikeProductFailure(false));
   }
 }

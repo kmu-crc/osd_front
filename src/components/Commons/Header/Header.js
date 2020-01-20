@@ -341,6 +341,7 @@ class Header extends Component {
     const item_menu_bold = this.props.location.pathname === "/product" || this.props.match.path.indexOf("/productDetail/") === 0 || this.props.match.path.indexOf("/productDetail") !== -1 ? "active" : "";
     const designer_menu_bold = this.props.location.pathname === "/designer" || this.props.match.path.indexOf("/designerDetail") === 0 || this.props.match.path.indexOf("/designerDetail") !== -1 ? "active" : "";
     const maker_menu_bold = this.props.location.pathname === "/maker" || this.props.match.path.indexOf("/makerDetail") !== -1 ? "active" : "";
+    const request_menu_bold = this.props.location.pathname === "/request" || this.props.match.path.indexOf("/requestDetail") !== -1 ? "active" : "";
     const { valid } = this.props;
 
     return (
@@ -355,7 +356,7 @@ class Header extends Component {
               <MenuItem><a href="/designer" className={designer_menu_bold}>디자이너</a></MenuItem>
               <MenuItem><a href="/maker" className={maker_menu_bold}>메이커</a></MenuItem>
               <MenuItem><a href="/product" className={item_menu_bold}>아이템</a></MenuItem>
-              <MenuItem><a href="/createProduct"><Button size="small" round={true} color="Solid">상품 등록</Button></a></MenuItem>
+              <MenuItem><a href="/request" className={request_menu_bold}>의뢰</a></MenuItem>
             </Menu>
 
             <Menu>

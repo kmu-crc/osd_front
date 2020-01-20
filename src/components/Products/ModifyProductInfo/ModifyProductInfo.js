@@ -315,7 +315,7 @@ class ModifyProductInfo extends Component {
   };
 
   render() {
-    const { imgs, loading, category } = this.state; // const { category } = this.props;
+    const { imgs } = this.state;
     return (
       <React.Fragment>
         <CreateOption handleSetOptions={this.handleSetOptions} closeOption={this.onCloseCreateOption} open={this.state.openCreateOption} />

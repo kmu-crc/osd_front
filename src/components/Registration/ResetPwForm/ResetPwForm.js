@@ -77,10 +77,8 @@ class ResetPwForm extends Component {
     e.preventDefault();
     ValidationGroup(this.state, true)
       .then(data => {
-        console.log(data); return;
         this.props.FindPwRequest(data);
         this.setState({ loading: true });
-        console.log("this loading state onsubmit >> ", this.state.loading);
       })
       .catch(e => {
         console.log("실패", e);
