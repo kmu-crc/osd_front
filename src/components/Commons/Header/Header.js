@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Zoom from "source/baseline_search_black_48dp.png";
-// import logo from "source/logo.png";
+import Socket from "modules/socket";
+import host from "config";
+import { Link } from "react-router-dom";
 // import ContentBox from "components/Commons/ContentBox";
-// import Socket from "modules/socket";
 // import StyleGuide from "StyleGuide";
 // import Button from "components/Commons/Button";
 // import { SetSession } from "modules/Sessions";
-// import host from "config";
 // import Alarm from "./Alarm";
 // import Notice from "./Notice";
 // import NumberFormat from "modules/NumberFormat";
@@ -88,18 +88,6 @@ const HeaderItem = styled.li`
   &.cart {
     margin-left: 35px;
     margin-right: 12px;
-    .red-circle {
-      position: absolute;
-      font-size: 8px;
-      margin-left: 20px;
-      line-height: 12px;
-      text-align: center;
-      color: #FFF;
-      width: 15px;
-      height: 15px;
-      background: #F00;
-      border-radius: 50%;
-    }
   }
   &.search {
     margin-top: 0px;
@@ -128,116 +116,131 @@ const HeaderItem = styled.li`
       }
     }
   }
-
+  .active {
+    color: #F00;
+  }
+`;
+const RedCircle = styled.div`
+  position: absolute;
+  font-size: 8px;
+  margin-left: 20px;
+  line-height: 12px;
+  text-align: center;
+  color: #FFF;
+  width: 15px;
+  height: 15px;
+  background: #F00;
+  border-radius: 50%;
 `;
 
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { logged: false, }
+    this.state = { logged: false, alarms: {} };
+    this.getNews = this.getNews.bind(this);
+    this.submitEnter = this.submitEnter.bind(this);
+    this.saveKeyword = this.saveKeyword.bind(this);
   }
+  componentDidMount() {
+    if (this.props.valid) {
+      try {
+        Socket.emit("INIT", this.props.userInfo.uid)
+        Socket.on("getNoti", alarms => {
+          this.setState({ alarms: alarms });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    this.getNews();
+  }
+  getNews = () => {
+    const url = `${host}/common/notice`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    }).then(res => res.json())
+      .then(data => this.setState({ news: data }))
+      .catch(err => alert(`공지사항을 가져올 수 없습니다.\n${err}`));
+  };
+  submitEnter = e => {
+    if (e.keyCode === 13) {
+      const dom = document.getElementById("searchLink");
+      dom && dom.click();
+    }
+  };
+  saveKeyword = e => {
+    const target = e.target;
+    const word = target.value;
+    let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
+    if (!word.match(regExp)) {
+      alert("특수문자는 사용할 수 없습니다.");
+      target.value = this.state.keyword;
+    } else {
+      this.setState({ keyword: word });
+    }
+  };
+
   render() {
+    const location = window.location.pathname;
+    const { valid } = this.props;
+    console.log(this.props);
     return (
       <HeaderContainer>
         <HeaderItem className="first">
-          <Logo /></HeaderItem>
-        <HeaderItem>디자이너</HeaderItem>
-        <HeaderItem>메이커</HeaderItem>
-        <HeaderItem>아이템</HeaderItem>
-        <HeaderItem>게시판</HeaderItem>
+          <Link to={`/`}><Logo /></Link>
+        </HeaderItem>
+        <HeaderItem>
+          <Link
+            to={`/designer`}
+            className={location === "/designer" || location.indexOf("/designerDetail") !== -1 ? "active" : ""}>
+            디자이너</Link>
+        </HeaderItem>
+        <HeaderItem>
+          <Link to={`/maker`}
+            className={location === "/maker" || location.indexOf("/makerDetail") !== -1 ? "active" : ""}>
+            메이커</Link>
+        </HeaderItem>
+        <HeaderItem>
+          <Link to={`/product`}
+            className={location === "/product" || location.indexOf("/productDetail") !== -1 ? "active" : ""}>
+            아이템</Link>
+        </HeaderItem>
+        <HeaderItem>
+          <Link to={`/request`}
+            className={location === "/request" || location.indexOf("/requestDetail") !== -1 ? "active" : ""}>
+            게시판</Link>
+        </HeaderItem>
         <HeaderItem className="left search">
           <div className="search-icon-wrapper">
-            <input className="input-style" />
-            <img alt="icon" src={Zoom} className="search-icon" /></div>
+            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
+            <Link to={`/search/null/null/${this.state.keyword}`} id="searchLink">
+              <img alt="icon" src={Zoom} className="search-icon" />
+            </Link>
+          </div>
         </HeaderItem>
-        <HeaderItem>로그인</HeaderItem>
+        <HeaderItem>
+          {valid
+            ? (<div>
+
+            </div>)
+            : (<Link to={`/signin`}>로그인</Link>)}
+        </HeaderItem>
         <HeaderItem className="cart">
-          <div className="red-circle">
-            <div style={{ width: "4", height: "12px" }}>1</div></div>
-          <i style={{ width: "29px", height: "29px" }} className="cart icon" />
+          <Link to={'/cart'}>
+            <RedCircle>
+              <div style={{ width: "4", height: "12px" }}>1</div>
+            </RedCircle>
+            <i style={{ width: "29px", height: "29px" }} className="cart icon" />
+          </Link>
         </HeaderItem>
-      </HeaderContainer>
+      </HeaderContainer >
     )
   };
-}
+};
 
 export default Header;
 
-// CSS STYLE //
-// const Head = styled.header`
-//   width: 100%;
-//   height: 60px;
-//   top: 0;
-//   position: fixed;
-//   z-index: 100;
-//   color: ${StyleGuide.color.geyScale.scale9};
-//   background-color: #fff;
-//   box-shadow: 0 1px 1px 1px #e1e4e6;
-//   a {
-//     font-weight: normal;
-//     &:hover {
-//       color: ${StyleGuide.color.main.basic};
-//     }
-//   }
-// `;
-// const Content = styled(ContentBox)`
-//   // position: relative;
-// `;
-// const Menu = styled.div`
-//   display: flex;
-//   flex-direction: row;
-// `;
-// const MenuWrapper = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-// `;
-// const MenuItem = styled.div`
-//   width: max-content;
-//   padding: 0px 10px;
-//   a {
-//     line-height: 60px;
-//   }
-//   a.active {
-//     color: ${StyleGuide.color.main.basic};
-//   }
-// `;
-// const SubMenuItem = styled.div`
-//   float: left;
-//   position: relative;
-//   & > input {
-//     display: block;
-//     border: 1px solid #e9e9e9;
-//     border-radius: 2em;
-//     padding: 0.5em 1em;
-//     position: absolute;
-//     top: 50%;
-//     /* right: 2vw; */
-//     transform: translate(-100%, -50%);
-//     -ms-transform: translate(-100%, -50%);
-//     @media only screen and (max-width: 1200px) {
-//       display: none;
-//     }
-//   }
-//   & a {
-//     line-height: 60px;
-//   }
-//   & > button {
-//     position: relative;
-//     padding: 0;
-//     border: 0;
-//     background-color: transparent;
-//     outline: 0;
-//   }
-// `;
-// const Logo = styled.a`
-//   width: 60px;
-//   height: 60px;
-//   display: block;
-//   background-image: url(${logo});
-//   background-size: cover;
-//   background-position: 50%;
-// `;
 // const UserInterface = styled.div`
 //   width: max-content;
 //   display: flex;
@@ -336,52 +339,17 @@ export default Header;
 //   box-sizing: border-box;
 //   color: ${StyleGuide.color.geyScale.scale9};
 // `;
-// const AlarmLabel = styled.div`
-//   width: 30px;
-//   height: 30px;
-//   position: absolute;
-//   margin-top: -30px;
-//   margin-left: 10px;
-//   color: white;
-//   background-color: red;
-//   border-radius: 15px;
-//   line-height: 30px;
-//   text-align: center;
-//   font-size: 16px;
-//   vertical-align: middle;
-//   padding-top: 2px;
-//   transform: scale(0.6);
-//   -ms-transform: scale(0.6);
-//   transform-origin: 0 0;
-//   -ms-transform-origin: 0 0;
-// `;
 
 // class Header extends Component {
 //   constructor(props) {
 //     super(props);
-//     this.state = { profile: false, active: false, keyword: null, noti: {}, notification: [], msg: null };
-//   };
-//   _getNotification = () => {
-//     return fetch(`${host}/common/notice`, { headers: { "Content-Type": "application/json" }, method: "get" })
-//       .then((response) => { return response.json() })
-//       .then((data) => {
-//         if (data) {
-//           this.setState({ notification: data })
-//         }
-//       })//.catch(err => console.log(err))
-//   };
-//   componentDidMount() {
-//     if (this.props.valid) {
-//       try {
-//         Socket.emit("INIT", this.props.userInfo.uid)
-//         Socket.on("getNoti", noti => {
-//           this.setState({ noti: noti })
-//         })
-//       } catch (err) {
-//         console.log(err)
-//       }
-//     }
-//     this._getNotification()
+//     this.state = { 
+  // profile: false, 
+  // active: false, 
+  // keyword: null, 
+  // noti: {}, 
+  // notification: [], 
+  // msg: null };
 //   };
 //   handleSignOut = async () => {
 //     SetSession("opendesign_token", null).then(data => {
@@ -403,42 +371,19 @@ export default Header;
 //     // console.log("onactive", active);
 //     this.props.SetActive(active, target);
 //   };
-//   saveKeyWord = e => {
-//     const target = e.target;
-//     const word = target.value;
-//     let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
-//     if (!word.match(regExp)) {
-//       alert("특수문자는 사용할 수 없습니다.");
-//       target.value = "";
-//       return;
-//     } else {
-//       this.setState({
-//         keyword: word
-//       });
-//     }
-//   };
-//   submitEnter = e => {
-//     if (e.keyCode === 13) {
-//       document.getElementById("searchLink").click();
-//     }
-//   };
-//   limitNickName = str => {
-//     if (str.length < 6) {
-//       return str;
-//     }
-//     else {
-//       return str.slice(0, 5) + "...";
-//     }
-//   };
-// 
-// 
+
+
 //   render() {
 //     const LoginNav = () => {
 //       return (
 //         <UserInterface>
 //           <UserItem>
-//             <UserBtn onClick={this.onActive} className={`openMenu ${this.props.active === "MENU" && "active"}`}>
-//               <div className="userIcon" style={{ backgroundImage: `url(${this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img}), url(${logo})` }} onError={this.noneImage} />
+//             <UserBtn onClick={this.onActive} 
+//     className={`openMenu ${this.props.active === "MENU" && "active"}`}>
+//               <div className="userIcon" 
+//     style={{ backgroundImage: `url(${this.props.userInfo.thumbnail && 
+// this.props.userInfo.thumbnail.s_img}), url(${logo})` }} 
+//onError={this.noneImage} />
 //               {this.limitNickName(this.props.userInfo.nickName)}
 //             </UserBtn>
 // 
@@ -484,11 +429,7 @@ export default Header;
 //       );
 //     };
 // 
-//     const item_menu_bold = this.props.location.pathname === "/product" || this.props.match.path.indexOf("/productDetail/") === 0 || this.props.match.path.indexOf("/productDetail") !== -1 ? "active" : "";
-//     const designer_menu_bold = this.props.location.pathname === "/designer" || this.props.match.path.indexOf("/designerDetail") === 0 || this.props.match.path.indexOf("/designerDetail") !== -1 ? "active" : "";
-//     const maker_menu_bold = this.props.location.pathname === "/maker" || this.props.match.path.indexOf("/makerDetail") !== -1 ? "active" : "";
-//     const request_menu_bold = this.props.location.pathname === "/request" || this.props.match.path.indexOf("/requestDetail") !== -1 ? "active" : "";
-//     const { valid } = this.props;
+// const { valid } = this.props;
 // 
 //     return (
 //       <Head>
@@ -496,23 +437,6 @@ export default Header;
 // 
 //         <Content>
 //           <MenuWrapper>
-// 
-//             <Menu>
-//               <Logo href="/" />
-//               <MenuItem><a href="/designer" className={designer_menu_bold}>디자이너</a></MenuItem>
-//               <MenuItem><a href="/maker" className={maker_menu_bold}>메이커</a></MenuItem>
-//               <MenuItem><a href="/product" className={item_menu_bold}>아이템</a></MenuItem>
-//               <MenuItem><a href="/request" className={request_menu_bold}>의뢰</a></MenuItem>
-//             </Menu>
-// 
-//             <Menu>
-//               <MenuItem className="submenu-item">
-//                 <input onChange={this.saveKeyWord} onKeyDown={this.submitEnter} />&nbsp;
-//                 <a href={`/search/null/null/${this.state.keyword}`} id="searchLink">
-//                   <Icon name="search" /></a>
-//               </MenuItem>
-//             </Menu>
-// 
 //             <Menu>
 //               {valid ? (
 //                 <React.Fragment>
