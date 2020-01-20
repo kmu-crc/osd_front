@@ -14,11 +14,13 @@ class ClientTemplate extends Component {
 
   render() {
     return (
-      <div style={{ position: "relative" , paddingBottom: "33px", paddingTop: "60px"}} onClick={this.onClose}>
+      <React.Fragment>
+        {/* // <div style={{ position: "relative" , paddingBottom: "33px", paddingTop: "60px"}} onClick={this.onClose}> */}
         <HeaderContainer active={this.props.isActive} />
-        {this.props.children}
-        <Footer />
-      </div>
+        {/* {this.props.children} */}
+        {/* <Footer /> */}
+        {/* // </div> */}
+      </React.Fragment>
     );
   }
 }
