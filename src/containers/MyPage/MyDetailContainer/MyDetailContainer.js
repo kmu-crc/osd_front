@@ -6,6 +6,7 @@ import {getOrderListRequest} from "actions/Product";
 
 class MyDetailContainer extends Component {
   componentWillMount() {
+    console.log(this.props.token);
     this.props.GetMyDetailRequest(this.props.token);
   }
 
