@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import HeaderContainer from "containers/Commons/HeaderContainer";
 import Footer from "components/Commons/Footer";
+import styled from "styled-components";
+
+const ContentBox=styled.div`
+  display:flex;
+  justify-content:center;
+`
 
 class ClientTemplate extends Component {
   componentDidMount() {
@@ -16,7 +22,8 @@ class ClientTemplate extends Component {
     return (
       <div style={{ position: "relative" , paddingBottom: "33px", paddingTop: "60px"}} onClick={this.onClose}>
         <HeaderContainer active={this.props.isActive} />
-        {this.props.children}
+        <ContentBox>{this.props.children}</ContentBox>
+        {/* {this.props.children} */}
         <Footer />
       </div>
     );

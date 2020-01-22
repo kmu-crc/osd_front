@@ -7,7 +7,7 @@ import mainSlide from "source/mainSlide.jpg";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {getCartListRequest} from "actions/Product";
+import {getCartListRequest,deleteCartAllItem,deleteCartItem} from "actions/Product";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -85,6 +85,8 @@ class CartContainer extends Component {
   const mapDispatchToProps = (dispatch) => {
     return {
       getCartListRequest: (id) => dispatch(getCartListRequest(id)),
+      deleteCartItem: (itemID,token)=>dispatch(deleteCartItem(itemID,token)),
+      deleteCartAllItem:(user_id,token)=>dispatch(deleteCartAllItem(user_id,token)),
     }
   }
   export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartContainer));

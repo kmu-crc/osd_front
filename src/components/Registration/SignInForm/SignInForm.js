@@ -8,6 +8,7 @@ import { FormControl, ValidationGroup } from "modules/FormControl";
 const MainBox = styled.div`
   *{
     font-family:Noto Sans KR,Medium;
+    color:#060000;
   }
 
   width:933px;
@@ -30,6 +31,7 @@ const MainBox = styled.div`
       align-items:center;
       .title{
         font-size:20px;
+        font-weight:700;
       }
     }
     .row{
@@ -41,7 +43,7 @@ const MainBox = styled.div`
       margin-bottom:19px;
       .label{
         min-width:104px;
-        font-weight:60px;
+        font-weight:500;
         display:flex;
         align-items:center;
       }
@@ -59,11 +61,14 @@ const InputTextBox = styled.input.attrs({type:'text'})`
   border:none;
   width:100%;
   height:100%;
+  padding-left:20px;
   background-color:#E9E9E9;
   border-radius:21px;
   display:flex;
   justify-content:center;
   outline:none;
+  
+  color:#060000;
 `
 const CustomButton = styled.div`
   width:${props=>props.width}px;
@@ -76,6 +81,7 @@ const CustomButton = styled.div`
   justify-content:center;
   align-items:center;
   opacity:1;
+  cursor:pointer;
   &:hover{
     opacity:0.7;
   }
@@ -98,68 +104,59 @@ const CustomBox = styled.div`
 `
 
 class SignInForm extends Component {
-  onChangeValue = async data => {
-    let obj = {};
-    if (data.target) {
-      obj[data.target.name] = data;
-    }
-    await this.setState(obj);
-    console.log(this.state);
-  };
 
-  liveCheck = target => {
-    FormControl(this.state[target]);
-  };
+  constructor(props){
+    super(props);
+    this.state={email:"",password:""};
+    this.onChangeID = this.onChangeID.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onSubmit=this.onSubmit.bind(this);
+  }
+
+  onChangeID(event){
+    this.setState({email:event.target.value});
+  }
+  onChangePassword(event){
+    this.setState({password:event.target.value});
+  }
 
   onSubmit = async e => {
     e.preventDefault();
-    ValidationGroup(this.state, true)
-      .then(data => {
-        console.log("성공", data);
-        this.props.SignInRequest(data).then(data => {
-          if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
-            alert("opendesign회원이 아닙니다.");
-          } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
-            alert("비밀번호가 일치하지 않습니다.");
-          } else {
-            this.props.history.go(-1);
-          }
-        });
-      })
-      .catch(e => {
-        console.log("실패", e);
+    const data = {email:this.state.email,password:this.state.password};
+     this.props.SignInRequest(data).then(data => {
+        if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
+          alert("opendesign회원이 아닙니다.");
+        } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
+          alert("비밀번호가 일치하지 않습니다.");
+        } else {
+          this.props.history.go(-1);
+        }
       });
-  };
-
-  onClickFBSignInbtn = data => {
-    console.log(data);
-    let formData = {
-      FB_user_id: data.userID
-    };
-    this.props.FBSignInRequest(formData).then(data => {
-      if (data.type === "AUTH_FBSIGNIN_IS_NOT_MEMBER") {
-        alert("opendesign회원이 아닙니다.");
-      } else {
-        this.props.history.push("/");
-      }
-    });
-  };
+    
+  }
 
   render() {
     return (
         <React.Fragment>
-          <form>
+          <form onSubmit={this.onSubmit}>
             <MainBox>
               <div className="contentsBox">
                 <div className="titleBox"><div className="title">로그인</div></div>
                   <CustomBox height={14.8}/>
                   <div className="row">
                     <div className="label"><div>아이디</div></div>
-                    <InputTextBox/>
+                    <InputTextBox 
+                    placeholder="아이디를 입력하세요." 
+                    value={this.state.email}
+                    onChange={this.onChangeID}/>
                   </div> 
                   <div className="row">
-                    <div className="label"><div>비밀번호</div></div>
-                    <InputTextBox/>
+                    <div className="label" value={this.state.password}><div>비밀번호</div></div>
+                    <InputTextBox 
+                    type="password"
+                    placeholder="비밀번호를 입력하세요."
+                    value={this.state.password}
+                    onChange={this.onChangePassword}/>
                   </div>
                   <div className="row">
                     <div className="label"/>
@@ -167,7 +164,7 @@ class SignInForm extends Component {
                     <CustomBox width={29}><CheckBox/>로그인 상태 유지</CustomBox>
                   </div>
                   <div className="row">
-                  <CustomButton width={498} height={43} 
+                  <CustomButton onClick={this.onSubmit}  width={498} height={43} 
                   bgColor={"#FF0000"} borderRadius={21} fontColor={"white"}>로그인</CustomButton>
                   </div>
                   <div className="row spaceBetween">
@@ -185,7 +182,54 @@ class SignInForm extends Component {
 }
 
 export default SignInForm;
+  // onClickFBSignInbtn = data => {
+  //   console.log(data);
+  //   let formData = {
+  //     FB_user_id: data.userID
+  //   };
+  //   this.props.FBSignInRequest(formData).then(data => {
+  //     if (data.type === "AUTH_FBSIGNIN_IS_NOT_MEMBER") {
+  //       alert("opendesign회원이 아닙니다.");
+  //     } else {
+  //       this.props.history.push("/");
+  //     }
+  //   });
+  // };
 
+// onChangeValue = async data => {
+//   let obj = {};
+//   if (data.target) {
+//     obj[data.target.name] = data;
+//   }
+//   await this.setState(obj);
+//   console.log(this.state);
+// };
+
+// liveCheck = target => {
+//   FormControl(this.state[target]);
+// };
+
+// onSubmit = async e => {
+//   e.preventDefault();
+
+  // e.preventDefault();
+  // ValidationGroup(this.state, true)
+  //   .then(data => {
+  //     console.log("성공", data);
+  //     this.props.SignInRequest(data).then(data => {
+  //       if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
+  //         alert("opendesign회원이 아닙니다.");
+  //       } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
+  //         alert("비밀번호가 일치하지 않습니다.");
+  //       } else {
+  //         this.props.history.go(-1);
+  //       }
+  //     });
+  //   })
+  //   .catch(e => {
+  //     console.log("실패", e);
+  //   });
+// };
 
       // <form onSubmit={this.onSubmit}>
       //   <Label>Email</Label>
