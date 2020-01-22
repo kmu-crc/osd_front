@@ -27,7 +27,8 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(GetMyMsgListRequest(token));
     },
     SendMessageRequest: (token, data, id) => {
-      return dispatch(SendMessageRequest(token, data, id));
+      console.log("container");
+      return dispatch(SendMessageRequest(token, data,id));
     },
     SearchMemberRequest: (id, data, token) => {
       return dispatch(SearchMemberRequest(id, data, token));

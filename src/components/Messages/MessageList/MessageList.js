@@ -185,6 +185,7 @@ class MessageList extends Component {
     openMember: false,
     friendList: [],
     render: true,
+    incidentalData:{currentUrl : "", selectedId: ""},
   }
 
   async componentDidMount() {
@@ -215,6 +216,7 @@ class MessageList extends Component {
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
       this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
+      console.log("this list : " + this.list._reactInternalFiber.child.stateNode.scrollTop);
     }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
@@ -293,7 +295,16 @@ class MessageList extends Component {
       alert("받는 사람을 지정해주세요.");
       return
     }
-    this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.state.selectId)
+    if(window.location.href === "http://localhost:3000/message"){
+      this.setState({incidentalData :
+        {
+          currentUrl:"message", 
+          selectedId:this.state.selectId
+        }
+      });
+    }    
+    
+    this.props.SendMessageRequest(this.props.token, FormDataToJson(data),this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {
           await this.props.GetMyMsgListRequest(this.props.token)
