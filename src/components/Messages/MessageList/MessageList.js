@@ -149,7 +149,7 @@ const DetailWrapper = styled.div`
   background-color: #F0F0F0;
   min-height: 250px;
   max-height: 600px;
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 0rem 0rem 0rem 0rem;
   overflow-y: scroll;
   position: relative;
   & p {
@@ -185,10 +185,18 @@ class MessageList extends Component {
     openMember: false,
     friendList: [],
     render: true,
-    incidentalData:{currentUrl : "", selectedId: ""},
+    connectedCheck : false,
   }
 
   async componentDidMount() {
+    Socket.on("connectedCheck", (uid)=>{
+      console.log("111111");
+      if(this.props.id === uid){
+        console.log(this.props.id+" "+uid)
+        this.setState({connectedCheck:true});
+      }
+      this.props.CheckConnectedResponse(this.props.token, this.state.connectedCheck);
+    })
     await this.props.GetMyMsgListRequest(this.props.token)
       .then(async (res) => {
         if (res.MsgList && res.MsgList.length > 0) {
@@ -216,7 +224,6 @@ class MessageList extends Component {
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
       this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
-      console.log("this list : " + this.list._reactInternalFiber.child.stateNode.scrollTop);
     }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
@@ -295,15 +302,6 @@ class MessageList extends Component {
       alert("받는 사람을 지정해주세요.");
       return
     }
-    if(window.location.href === "http://localhost:3000/message"){
-      this.setState({incidentalData :
-        {
-          currentUrl:"message", 
-          selectedId:this.state.selectId
-        }
-      });
-    }    
-    
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data),this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {

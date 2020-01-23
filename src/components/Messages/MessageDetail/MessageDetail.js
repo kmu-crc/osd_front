@@ -80,6 +80,7 @@ class MessageDetail extends Component {
     test : [],
   }
   componentDidMount() {
+    var divdiv = document.getElementById("comments");
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
     try{
       Socket.emit("INIT", this.props.userInfo.uid)
@@ -98,13 +99,7 @@ class MessageDetail extends Component {
     this.props.GetMyMessageDetailClear();
   }
   shouldComponentUpdate(nextProps) {
-    // setTimeout(() => {
-    //   this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
-    // }, 100);
     var divdiv = document.getElementById("comments");
-    // console.log("======"+divdiv.scrollTop, divdiv.scrollHeight);
-    // divdiv.setAttribute("scrollTop", divdiv.scrollHeight);
-    // console.log("++++++"+divdiv.scrollTop, divdiv.scrollHeight);
     divdiv.scrollIntoView(false);
     return true;
   }

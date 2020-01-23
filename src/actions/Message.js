@@ -1,6 +1,21 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+export function CheckConnectedResponse(token, checkData) {
+  console.log("cli!!")
+  return (dispatch) => {
+    return fetch(`${host}/users/checkOpponent`, {
+      headers:{
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method:"post",
+      body:checkData,
+    })
+    .catch((err)=>{console.log(err)})
+  }
+}
+
 export function GetMyMsgListRequest(token) {
   return (dispatch) => {
     dispatch(GetMyMsgList());
@@ -13,7 +28,7 @@ export function GetMyMsgListRequest(token) {
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("message list data >>", data);
+        //console.log("message list data >>", data);
         if (!data) {
           console.log("no message");
           data = [];
@@ -57,7 +72,7 @@ export function GetMyMsgDetailRequest(token, id) {
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("message detail data >>", data);
+        //console.log("message detail data >>", data);
         if (!data) {
           console.log("no detail message");
           data = [];
