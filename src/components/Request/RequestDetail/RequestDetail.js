@@ -6,21 +6,9 @@ import Button from "components/Commons/Button";
 import ContentBox from "components/Commons/ContentBox";
 import profile from "source/thumbnail.png";
 import TextFormat from "modules/TextFormat";
-import BoardComment from "./RequestDetailComment";
+import RequestCommentContainer from "./RequestDetailCommentContainer";
 import NumberFormat from "modules/NumberFormat";
 import DateFormat from "modules/DateFormat";
-
-class Viewer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    if (!this.props.content) return <div>글 내용이 없습니다.</div>;
-    return (<div>{this.props.content}</div>);
-    // return (<div>{this.props.content.map(item => <div>{item.content}</div>)}</div>)
-  }
-};
 
 // CSS STYLING
 const Wrapper = styled(ContentBox)`
@@ -76,26 +64,31 @@ const TabContainer = styled(Grid.Column)`
   }
 `;
 
+class Viewer extends Component {
+  render() {
+    if (!this.props.content) return <div>글 내용이 없습니다.</div>;
+    return (<div>
+      <h4>내용</h4>
+      {this.props.content}
+    </div>);
+  }
+};
 class Detail extends Component {
   render() {
     console.log("props:", this.props);
-    const { Detail, Count } = this.props;
+    const { Detail } = this.props;
+
     if (Detail == null) return <div>No data.</div>
 
     const Navigation = () => {
       return <ContentBox>
         <Grid.Row>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <div>
-              <Button>이전글</Button><Button>다음글</Button>
-            </div>
-            <div style={{ marginLeft: "auto" }}>
-              <Link to={`/request`}><Button>목록</Button></Link>
-            </div>
+            <Link to={`/request`}><Button>목록</Button></Link>
           </div>
         </Grid.Row>
       </ContentBox>
-    }
+    };
     const Contents = () => {
       return <ContentBox>
         <Grid.Row>
@@ -124,29 +117,26 @@ class Detail extends Component {
           </TabContainer>
         </Grid.Row>
       </ContentBox>
-    }
-    const Comment = () => {
-      return <ContentBox>
-        <Grid.Row>
-          <TabContainer>
-            <Section>
-              <BoardComment id={Detail.uid} />
-            </Section>
-          </TabContainer>
-        </Grid.Row>
-      </ContentBox>
-    }
+    };
+
     return (<React.Fragment>
-      {Detail ? (
-        <Wrapper>
-          <Navigation />
-          <div style={{ marginTop: "10px" }} />
-          <Contents />
-          <Comment />
-          <div style={{ marginTop: "10px" }} />
-          <Navigation />
-        </Wrapper>
-      ) : (<div>LOADING</div>)}
+      <Wrapper>
+        <Navigation />
+        <div style={{ marginTop: "10px" }} />
+        <Contents />
+        <ContentBox>
+          <Grid.Row>
+            <TabContainer>
+              <Section>
+                <h4>댓글</h4>
+                <RequestCommentContainer id={this.props.id} />
+              </Section>
+            </TabContainer>
+          </Grid.Row>
+        </ContentBox>
+        <div style={{ marginTop: "10px" }} />
+        <Navigation />
+      </Wrapper>
     </React.Fragment >);
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
-import ScrollListTest from "components/Commons/ScrollListTest";
+import ScrollList from "components/Commons/ScrollListHorizontal";
 import Design from "components/Designs/Design";
 
 class ScrollDesignListContainer extends Component {
@@ -15,7 +15,7 @@ class ScrollDesignListContainer extends Component {
     return (
       <React.Fragment>
         {/* <Design /> */}
-        <ScrollListTest
+        <ScrollList
           getListRequest={this.getList}
           ListComponent={Design}
           dataList={this.props.dataList}

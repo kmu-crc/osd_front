@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignerListRequest } from "actions/Designer";
 import ScrollList from "components/Commons/ScrollList";
-import Maker from "components/Makers/Maker";
+import Expert from "components/Experts/Expert";
 
 class ScrollMakerListContainer extends Component {
   componentWillMount(){
@@ -17,7 +17,7 @@ class ScrollMakerListContainer extends Component {
   render() {
     return(
       <ScrollList getListRequest={this.getList}
-                  ListComponent={Maker}
+                  ListComponent={Expert}
                   type="Maker"
                   dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                   mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom"/>

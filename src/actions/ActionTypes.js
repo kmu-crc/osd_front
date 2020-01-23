@@ -438,6 +438,27 @@ export const GET_DESIGNER_TOTAL_COUNT = "GET_DESIGNER_TOTAL_COUNT";
 export const GET_DESIGNER_TOTAL_COUNT_FAIL = "GET_DESIGNER_TOTAL_COUNT_FAIL";
 
 ////////////////////////////////////////////////////////////////////////////
+// maker
+////////////////////////////////////////////////////////////////////////////
+// maker List
+export const GET_MAKER_LIST = "GET_MAKER_LIST";
+export const MAKER_LIST_CLEAR = "MAKER_LIST_CLEAR";
+export const MAKER_LIST_FAIL = "MAKER_LIST_FAIL";
+export const GET_MAKER_DETAIL = "GET_MAKER_DETAIL";
+export const GET_MAKER_COUNT = "GET_MAKER_COUNT";
+export const GET_MY_DESIGN_IN_MAKER = "GET_MY_DESIGN_IN_MAKER";
+export const GET_MY_DESIGN_IN_MAKER_CLEAR = "GET_MY_DESIGN_IN_MAKER_CLEAR";
+export const MY_DESIGN_IN_MAKER_FAIL = "MY_DESIGN_IN_MAKER_FAIL";
+export const GET_DESIGN_IN_MAKER = "GET_DESIGN_IN_MAKER";
+export const GET_DESIGN_IN_MAKER_CLEAR = "GET_DESIGN_IN_MAKER_CLEAR";
+export const DESIGN_IN_MAKER_FAIL = "DESIGN_IN_MAKER_FAIL";
+export const GET_LIKE_IN_MAKER = "GET_LIKE_IN_MAKER";
+export const GET_LIKE_IN_MAKER_CLEAR = "GET_LIKE_IN_MAKER_CLEAR";
+export const LIKE_IN_MAKER_FAIL = "LIKE_IN_MAKER_FAIL";
+export const GET_MAKER_TOTAL_COUNT = "GET_MAKER_TOTAL_COUNT";
+export const GET_MAKER_TOTAL_COUNT_FAIL = "GET_MAKER_TOTAL_COUNT_FAIL";
+
+////////////////////////////////////////////////////////////////////////////
 // REQUEST 
 ////////////////////////////////////////////////////////////////////////////
 export const CREATE_REQUEST = "CREATE_REQUEST";
@@ -528,6 +549,8 @@ export const SET_ACTIVE = "SET_ACTIVE";
 export const GET_TOP_DESIGN_LIST_SUCCESS = "GET_TOP_DESIGN_LIST_SUCCESS";
 export const GET_TOP_DESIGN_LIST_FAILURE = "GET_TOP_DESIGN_LIST_FAILURE";
 export const GET_TOP_DESIGN_LIST_CLEAR = "GET_TOP_DESIGN_LIST_CLEAR";
+export const GET_TOP_EXPERT_LIST_SUCCESS = "GET_TOP_EXPERT_LIST_SUCCESS";
+export const GET_TOP_EXPERT_LIST_FAILURE = "GET_TOP_EXPERT_LIST_FAILURE";
 export const GET_TOP_DESIGNER_LIST_SUCCESS = "GET_TOP_DESIGNER_LIST_SUCCESS";
 export const GET_TOP_DESIGNER_LIST_FAILURE = "GET_TOP_DESIGNER_LIST_FAILURE";
 export const GET_TOP_GROUP_LIST_SUCCESS = "GET_TOP_GROUP_LIST_SUCCESS";

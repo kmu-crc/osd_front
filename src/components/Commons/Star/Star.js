@@ -12,13 +12,20 @@ const Wrapper = styled.div`
 const Star = (rate) => {
     var star = [];
     for (var i = 0; i < 5; i++) {
-        if (parseInt(rate, 10) > i) { star.push(<i key={i} className="icon star" />) }
-        else if (rate >= i + 0.1) { star.push(<i key={i} className="icon star half" />) }
-        else { star.push(<i key={i} className="icon star outline" />) }
+        if (parseInt(rate, 10) > i) {
+            star.push("★")
+        }//<i key={i} className="icon star" />) }
+        // else if (rate >= i + 0.1) {
+        // star.push("★")
+        // }//<i key={i} className="icon star half" />) }
+        else { star.push("☆") }//<i key={i} className="icon star outline" />) }
     }
-    return (<Wrapper title={`5점 만점에 ${rate}점`}>
-        <div >{star}</div>
-        {/* <div className="rate">({rate}/5)</div> */}
-    </Wrapper>)
+    return (
+        <React.Fragment>{star}</React.Fragment>
+        // <Wrapper title={`5점 만점에 ${rate}점`}>
+        // <div >{star}</div>
+        // {/* <div className="rate">({rate}/5)</div> */}
+        // {/* </Wrapper> */}
+    )
 }
 export default Star; 
