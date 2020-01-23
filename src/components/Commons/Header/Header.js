@@ -178,6 +178,7 @@ class Header extends Component {
         Socket.on("getNoti", alarms => {
           this.setState({ alarms: alarms });
         });
+
       } catch (err) {
         console.log(err);
       }

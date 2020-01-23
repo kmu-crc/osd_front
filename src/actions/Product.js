@@ -199,10 +199,46 @@ export function addCartRequest(items,token){
   }
 }
 
-const addCart = () =>{ return{type:types.ADD_CART}};
-const addCartSuccess = () =>{ return{type:types.ADD_CART_SUCCESS}};
-const addCartFailure = ()=>{return {type:types.ADD_CART_FAILURE}}
-
+export function deleteCartItem(itemID,token){
+  console.log("delete Select item",itemID);
+  return (dispatch)=>{
+    // dispatch(addCart());
+    const url = `${host}/product/deleteSelectCart/${itemID}`
+    console.log(token);
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "DELETE",
+    }).then((response)=>{
+      console.log("response");
+      return response.json();
+    // }).then((res)=>{
+    //   return dispatch(addCartSuccess());
+    }).catch((error)=>{
+      // dispatch(addCartFailure());
+      console.log("error",error)
+    })
+  }
+}
+export function deleteCartAllItem(user_id,token){
+  console.log("delete all item",user_id);
+  return (dispatch)=>{
+    // dispatch(addCart());
+    const url = `${host}/product/deleteAllCart/${user_id}`
+    console.log(token);
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "DELETE",
+    }).then((response)=>{
+      console.log("response");
+      return response.json();
+    // }).then((res)=>{
+    //   return dispatch(addCartSuccess());
+    }).catch((error)=>{
+      // dispatch(addCartFailure());
+      console.log("error",error)
+    })
+  }
+}
 
 export function getCartListRequest(id) {
   console.log("id:::",id);

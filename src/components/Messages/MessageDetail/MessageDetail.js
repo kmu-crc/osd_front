@@ -11,6 +11,7 @@ const MsgContent = styled.div`
   & .ui.comments .comment {
     position: relative;
     padding: 0.3rem 0;
+    overflow:auto;
   }
   & .ui.comments .comment.my {
     padding: 0.3rem 0;
@@ -84,7 +85,10 @@ class MessageDetail extends Component {
       Socket.emit("INIT", this.props.userInfo.uid)
       Socket.on("getNewMsg", msgList=> {
         this.setState({list_v1 : msgList}) // get
-      })
+        // let obj = document.getElementById("ui comments");
+        // obj.setAttribute("scrollTop", obj.scrollHeight); 
+        // console.log(obj.scrollTop);
+      });
     } catch(err){
       console.log(err);
     }
@@ -97,6 +101,11 @@ class MessageDetail extends Component {
     // setTimeout(() => {
     //   this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
     // }, 100);
+    var divdiv = document.getElementById("comments");
+    // console.log("======"+divdiv.scrollTop, divdiv.scrollHeight);
+    // divdiv.setAttribute("scrollTop", divdiv.scrollHeight);
+    // console.log("++++++"+divdiv.scrollTop, divdiv.scrollHeight);
+    divdiv.scrollIntoView(false);
     return true;
   }
 
@@ -104,12 +113,10 @@ class MessageDetail extends Component {
   render() {
     const list = this.state.list_v1.length > 0 ?  this.state.list_v1 : this.props.MessageDetail;
     const myId = this.props.userInfo.uid;
-    let scrollDown = document.getElementsByClassName("ui comments");
-    scrollDown.scrollTop = scrollDown.scrollHeight;
     return (
       <MsgContent>
 
-        <div className="ui comments" ref={ref => this.list = ref}>
+        <div className="ui comments" id="comments" ref={ref => this.list = ref}>
           <div style={{bottom:"0px"}}>
             {list.map(item => (
               <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>

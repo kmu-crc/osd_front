@@ -27,19 +27,20 @@ export default function CheckAuth(Components) {
       }
       GetSession("opendesign_token").then(token => {
         this.props.CheckTokenRequest(token).then(data => {
-          if (data && data.info) {
-            if (!data.info.isDetail) {
-              if (this.props.location.pathname === "/inserUserDetail") {
-                this.setState({ valid: true });
-              } else {
-                this.props.history.push("/inserUserDetail");
-              }
-            } else {
-              this.setState({ valid: true });
-            }
-          } else {
-            this.setState({ valid: true });
-          }
+          this.setState({ valid: true });
+          // if (data && data.info) {
+          //   if (!data.info.isDetail) {
+          //     if (this.props.location.pathname === "/inserUserDetail") {
+          //       this.setState({ valid: true });
+          //     } else {
+          //       this.props.history.push("/inserUserDetail");
+          //     }
+          //   } else {
+          //     this.setState({ valid: true });
+          //   }
+          // } else {
+          //   this.setState({ valid: true });
+          // }
         });
       }).catch(data => {
         this.props.SignOutRequest();

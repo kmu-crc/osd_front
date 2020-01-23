@@ -70,7 +70,7 @@ class App extends Component {
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
             <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)} />
-            <Route path="/myPage" component={RequiresAuth(MyDetailPage)} />
+            {/* <Route path="/myPage" component={MyDetailPage} /> */}
             <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)} />
             <Route path="/Term/:page" component={FooterPage} />
             <Route path="/Privacy/:page" component={FooterPage} />

@@ -11,30 +11,16 @@ const SignUpContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f2;
-  background-image: url(${open_bg});
   background-size: cover;
   background-position: center;
-  &::before{
-    display: block;
-    content: "";
-    position: absolute;
-    z-index:1;
-    background-color: rgba(0,0,0,0.7);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
 `;
 
 const SignUpCard = styled.div`
   position: relative;
   z-index: 2;
-  width: 400px;
-  background-color: rgba(255,255,255,0.9);
-  padding: 30px;
-  border-radius: 5px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px #00000029;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
 `;
 
 class SignInPage extends Component {
