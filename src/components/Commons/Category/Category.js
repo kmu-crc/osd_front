@@ -1,135 +1,110 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
-import { Grid } from "semantic-ui-react";
 import StyleGuide from 'StyleGuide';
 import { geturl } from 'config';
 
-const CateColumn = styled(Grid.Column)`
-  @media only screen and (max-width: 1200px) {
-    // display: none;
-  }
-  @media only screen and (min-width: 1200px) {
-    // display: block;
-  }
-
-  & ul.cateUl {
-    margin-top: 0;
+const Container = styled.div`
+  // width: 100%;
+  font-family: Noto Sans KR;
+  // display: flex;
+  // flex-direction: colum;
+  cursor: default;
+  .over {
     display: flex;
-    & li {
-      cursor: pointer;
-      position: relative;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      &:hover {
-        color: ${StyleGuide.color.main.basic};
-        &:hover ul.subCateUl {
-          display: block;
-        }
-      }
-    }
-    & li.active {
-      font-weight: bold;
-      color: ${StyleGuide.color.main.basic};
-    }
-    &::after {
-      content: "";
-      display: block;
-      clear: both;
-    }
+    flex-direction: row;
   }
-  & ul.cateUl.subCateUl {
-    display: none;
+  .under {
+    margin-top: 18px;
+  }
+`;
+const CurrentCategory = styled.div`
+  width: 180px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: left;
+  line-height: 29px;
+`;
+const CategoryMenu = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  text-align: left;
+  font-weight: 500;
+  line-height: 29px;
+  .element {
+    margin-right: 20px;
+  }
+  .active {
+    color: #FF0000;
+  }
+  &.fly {
     position: absolute;
-    z-index: 2;
-    top: 40px;
-    left: 0;
-    background-color: ${StyleGuide.color.geyScale.scale0};
-    border: 1px solid ${StyleGuide.color.geyScale.scale2};
-    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
-    color: ${StyleGuide.color.geyScale.scale6};
-    font-weight: normal;
-    &:hover {
-      display: block;
-    }
-    & li {
-      width: 120px;
-      padding: .7rem 1rem;
-      &:hover {
-        background-color: ${StyleGuide.color.geyScale.scale2};
-      }
-    }
   }
 `;
-const CateItem = styled.li`
-  padding-right: 20px;
-  min-width: max-content;
-  &.go-right {
-    margin-left: auto;
-    padding-right: 0px;
-  }
-`;
-const SubCateItem = styled.li`
-  padding-right: 1.2rem;
-`;
-
-class Category2 extends Component {
+class Category extends Component {
   onChangeCategory1 = async value => {
     if (value === 0) {
       value = null;
     }
     await this.props.handleCate1(value);
   }
-
   onChangeCategory2 = async (e, cate1, value) => {
     e.stopPropagation();
     if (value === 0) {
       value = null;
     }
-    this.props.handleCate2(cate1, value);
+    await this.props.handleCate2(cate1, value);
   };
-  render() {
-    const Cate2List = (i) => {
-      const n = i.parentNum;
-      const list = this.props.category2[n];
-      return (
-        <ul className="cateUl subCateUl">
-          {list && list.length !== 0 && list.map((subcate, i) => (
-            subcate.value !== 0 &&
-            <SubCateItem key={i}
-              className={subcate.value === this.props.cate2
-                ? "active" : ""}
-              onClick={(e) => this.onChangeCategory2(e, subcate.parent, subcate.value)}>
-              {subcate.text}
-            </SubCateItem>
-          ))}
-        </ul>
-      )
-    };
+  resetCate = () => {
+    this.props.resetCate();
+  }
 
+  render() {
+    console.log("category", this.props);
+    const { category1, cate1, category2, cate2 } = this.props;
     return (
-      <CateColumn className="category"
-        widescreen={this.props.widescreen ? this.props.widescreen : null}
-        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
-        computer={this.props.computer ? this.props.computer : null}
-        tablet={this.props.tablet ? this.props.tablet : null}
-        mobile={this.props.mobile ? this.props.mobile : null}>
-        <ul className="cateUl">
-          {this.props.category1.map((cate, i) => (
-            cate.value !== 0 &&
-            <CateItem key={i}
-              className={cate.value === this.props.cate1 ||
-                (cate.value === 0 && this.props.cate1 === null) ||
-                (cate.value === 0 && this.props.cate1 === "null")
-                ? "active" : ""}
-              onClick={() => this.onChangeCategory1(cate.value)}>
-              {cate.text}
-              <Cate2List parentNum={i} />
-            </CateItem>
-          ))}
-        </ul>
-      </CateColumn>
+      <Container>
+        <div className="over">
+          <CurrentCategory onClick={this.resetCate}>{this.props.which}</CurrentCategory>
+          <CategoryMenu>
+            {category1.map((cate, i) => cate.value !== 0 &&
+              <div
+                onClick={() => this.onChangeCategory1(cate.value)}
+                key={i} className={`element ${cate.value === parseInt(cate1, 10) ? "active" : ""}`}>
+                {cate.text}</div>)}
+          </CategoryMenu></div>
+        <div className="under">
+          <CategoryMenu className="fly">
+            {cate1 && category2 && category2[cate1] ? (
+              category2[cate1].map((cate, i) => cate.value !== 0 &&
+                <div
+                  onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
+                  key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</div>)) : null}
+          </CategoryMenu>
+        </div>
+      </Container>
+      // <CateColumn className="category"
+      //   widescreen={this.props.widescreen ? this.props.widescreen : null}
+      //   largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
+      //   computer={this.props.computer ? this.props.computer : null}
+      //   tablet={this.props.tablet ? this.props.tablet : null}
+      //   mobile={this.props.mobile ? this.props.mobile : null}>
+      //   <ul className="cateUl">
+      //     {this.props.category1.map((cate, i) => (
+      //       cate.value !== 0 &&
+      //       <CateItem key={i}
+      //         className={cate.value === this.props.cate1 ||
+      //           (cate.value === 0 && this.props.cate1 === null) ||
+      //           (cate.value === 0 && this.props.cate1 === "null")
+      //           ? "active" : ""}
+      //         {cate.text}
+      //         <Cate2List parentNum={i} />
+      //       </CateItem>
+      //     ))}
+      //   </ul>
+      // </CateColumn>
     );
   }
 }
 
-export default Category2;
+export default Category;

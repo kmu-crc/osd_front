@@ -4,10 +4,13 @@ import Zoom from "source/baseline_search_black_48dp.png";
 import Socket from "modules/socket";
 import host from "config";
 import { Link } from "react-router-dom";
+import NoFace from "source/thumbnail.png";
+import TextFormat from "modules/TextFormat";
+import { SetSession } from "modules/Sessions";
+
 // import ContentBox from "components/Commons/ContentBox";
 // import StyleGuide from "StyleGuide";
 // import Button from "components/Commons/Button";
-// import { SetSession } from "modules/Sessions";
 // import Alarm from "./Alarm";
 // import Notice from "./Notice";
 // import NumberFormat from "modules/NumberFormat";
@@ -17,6 +20,7 @@ const LogoWrapper = styled.div`
   padding: 0;
   font-family: Noto Sans KR;
   width: 200px;
+  height: 74px;
   .over {
     border: 1px solid red;
     background: #F00;
@@ -61,6 +65,7 @@ const Logo = () => <React.Fragment>
 
 const HeaderContainer = styled.ul`
   display: flex;
+  height: 74px;
   flex-direction: row;
 `;
 const HeaderItem = styled.li`
@@ -132,11 +137,36 @@ const RedCircle = styled.div`
   background: #F00;
   border-radius: 50%;
 `;
-
+const UserMenu = styled.div`
+  z-index: 999;
+  position: absolute;
+  height: 125px;
+  width: 175px;
+  padding-top:10px;
+  pointer-events: auto;
+  margin-top: 45px;
+  border-radius: 15px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+  border-radius: 10px;
+  color: #707070;
+  font-size: 20px;
+  font-weight: 500;
+  .item {
+    margin-top:5px;
+    cursor: pointer;
+    width: 100%;
+    line-height: 30px;
+    text-align: center;
+    &:hover {
+        color:#FF0000;
+    } 
+  }
+`;
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { logged: false, alarms: {} };
+    this.state = { logged: false, alarms: {}, active: false };
     this.getNews = this.getNews.bind(this);
     this.submitEnter = this.submitEnter.bind(this);
     this.saveKeyword = this.saveKeyword.bind(this);
@@ -153,7 +183,7 @@ class Header extends Component {
       }
     }
     this.getNews();
-  }
+  };
   getNews = () => {
     const url = `${host}/common/notice`;
     return fetch(url, {
@@ -180,62 +210,79 @@ class Header extends Component {
       this.setState({ keyword: word });
     }
   };
-
+  logout = () => {
+    SetSession("opendesign_token", null)
+      .then(data => {
+        // console.log("data:", data)
+        this.props.SignOutRequest()
+        this.setState({ sign_modal: false, user_popup: null })
+        window.location.reload()
+      })
+    this.setState({ user_popup: null })
+  }
   render() {
     const location = window.location.pathname;
-    const { valid } = this.props;
-    console.log(this.props);
-    return (
-      <HeaderContainer>
-        <HeaderItem className="first">
-          <Link to={`/`}><Logo /></Link>
-        </HeaderItem>
-        <HeaderItem>
-          <Link
-            to={`/designer`}
-            className={location === "/designer" || location.indexOf("/designerDetail") !== -1 ? "active" : ""}>
-            디자이너</Link>
-        </HeaderItem>
-        <HeaderItem>
-          <Link to={`/maker`}
-            className={location === "/maker" || location.indexOf("/makerDetail") !== -1 ? "active" : ""}>
-            메이커</Link>
-        </HeaderItem>
-        <HeaderItem>
-          <Link to={`/product`}
-            className={location === "/product" || location.indexOf("/productDetail") !== -1 ? "active" : ""}>
-            아이템</Link>
-        </HeaderItem>
-        <HeaderItem>
-          <Link to={`/request`}
-            className={location === "/request" || location.indexOf("/requestDetail") !== -1 ? "active" : ""}>
-            게시판</Link>
-        </HeaderItem>
-        <HeaderItem className="left search">
-          <div className="search-icon-wrapper">
-            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/null/null/${this.state.keyword}`} id="searchLink">
-              <img alt="icon" src={Zoom} className="search-icon" />
-            </Link>
-          </div>
-        </HeaderItem>
-        <HeaderItem>
-          {valid
-            ? (<div>
-
-            </div>)
-            : (<Link to={`/signin`}>로그인</Link>)}
-        </HeaderItem>
-        <HeaderItem className="cart">
-          <Link to={'/cart'}>
-            <RedCircle>
-              <div style={{ width: "4", height: "12px" }}>1</div>
-            </RedCircle>
-            <i style={{ width: "29px", height: "29px" }} className="cart icon" />
+    const { valid, userInfo } = this.props;
+    const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
+    // console.log(this.props);
+    return (<HeaderContainer>
+      <HeaderItem className="first">
+        <Link to={`/`}><Logo /></Link>
+      </HeaderItem>
+      <HeaderItem>
+        <Link
+          to={`/designer`}
+          className={location === "/designer" || location.indexOf("/designerDetail") !== -1 ? "active" : ""}>
+          디자이너</Link>
+      </HeaderItem>
+      <HeaderItem>
+        <Link to={`/maker`}
+          className={location === "/maker" || location.indexOf("/makerDetail") !== -1 ? "active" : ""}>
+          메이커</Link>
+      </HeaderItem>
+      <HeaderItem>
+        <Link to={`/product`}
+          className={location === "/product" || location.indexOf("/productDetail") !== -1 ? "active" : ""}>
+          아이템</Link>
+      </HeaderItem>
+      <HeaderItem>
+        <Link to={`/request`}
+          className={location === "/request" || location.indexOf("/requestDetail") !== -1 ? "active" : ""}>
+          게시판</Link>
+      </HeaderItem>
+      <HeaderItem className="left search">
+        <div className="search-icon-wrapper">
+          <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
+          <Link to={`/search/null/null/${this.state.keyword}`} id="searchLink">
+            <img alt="icon" src={Zoom} className="search-icon" />
           </Link>
-        </HeaderItem>
-      </HeaderContainer >
-    )
+        </div>
+      </HeaderItem>
+      <HeaderItem>
+        {valid && userInfo
+          ? (<div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+            <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+            <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
+            {this.state.active ?
+              <UserMenu>
+                <Link to={`/mypage`}>
+                  <div className="item">mypage</div>
+                </Link>
+                <div onClick={this.logout} className="item">logout</div>
+              </UserMenu>
+              : null}
+          </div>)
+          : (<Link to={`/signin`}>로그인</Link>)}
+      </HeaderItem>
+      <HeaderItem className="cart">
+        <Link to={'/cart'}>
+          <RedCircle>
+            <div style={{ width: "4", height: "12px" }}>1</div>
+          </RedCircle>
+          <i style={{ width: "29px", height: "29px" }} className="cart icon" />
+        </Link>
+      </HeaderItem>
+    </HeaderContainer >)
   };
 };
 

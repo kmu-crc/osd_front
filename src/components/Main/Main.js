@@ -9,52 +9,46 @@ import ScrollTopMakerContainer from "containers/Commons/ScrollTopMakerContainer"
 import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
 
 // CSS STYLE
+const MainContainer = styled.div`
+  margin-top: 31px;
+`;
 const ImgWrapper = styled.div``;
-const TextWrapper = styled.div`
-  // padding-bottom: 50px;
-`;
-const Content = styled(ContentBox)`
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    & .ui.grid>.row {
-      margin-left: 6.25% !important;
-    }
-  }
-`;
 const Wrapper = styled.div`
   width: 100%;
-  margin: 3rem 0;
+  margin-top: ${props => props.top || 50}px;
 `;
 const Head = styled.div`
-  color: ${StyleGuide.color.geyScale.scale7};
-  font-size: ${StyleGuide.font.size.heading3};
-  text-align: center;
-  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  text-align: left;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+  font-family: Noto Sans KR;
+  letter-spacing: 0;
+  color: #060000;
+  opacity: 1;
 `;
-
+const TextWrapper = styled.div`
+  padding-bottom: 30px;
+`;
 class Main extends Component {
   render() {
     return (
-      <React.Fragment>
+      <MainContainer>
         <ImgWrapper>
           <MainSlide />
         </ImgWrapper>
-        <Content>
-          <Wrapper>
-            <TextWrapper><Head>인기 디자이너</Head></TextWrapper>
-            <ScrollTopDesignerContainer />
-          </Wrapper>
-
-          <Wrapper>
-            <TextWrapper><Head>인기 메이커</Head></TextWrapper>
-            <ScrollTopMakerContainer />
-          </Wrapper>
-
-          <Wrapper>
-            <TextWrapper><Head>인기상품</Head></TextWrapper>
-            <ScrollTopProductContainer />
-          </Wrapper>
-        </Content>
-      </React.Fragment>
+        <Wrapper>
+          <TextWrapper><Head>인기 메이커/디자이너</Head></TextWrapper>
+          <ScrollTopDesignerContainer />
+        </Wrapper>
+        <Wrapper top={88}>
+          <TextWrapper><Head>인기 아이템</Head></TextWrapper>
+          <ScrollTopProductContainer />
+        </Wrapper>
+      </MainContainer>
     );
   }
 }

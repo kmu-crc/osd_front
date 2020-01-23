@@ -1,70 +1,35 @@
 import React, { Component } from "react";
-import { Grid, Button } from "semantic-ui-react";
 import styled from "styled-components";
 
-const SortingButton=styled.div`
-  & .ui.button{
-    width: 80px;
-    height: 32px;
-    box-sizing: border-box;
-    border: 1px solid #E72327;
-    font-size: 11px;
-    color: #444444;
-    border-radius: 5px 5px 5px 5px;
-    background-color: #fff;
-    margin-left: 15px;
+const Container = styled.div`
+  font-family: Noto Sans KR;
+  width: 215px;
+  height: 29px;
+  display: flex;
+  flex-direction: row;
+  cursor: default;
+  .element {
+    width: 69px;
+    margin-left: 4px;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 29px;
   }
-
-  & .ui.button:hover{
-    background-color: #E72327;
-    color: white;
+  .active {
+    color: #FF0000;
   }
-
-
-  & .ui.button.btn-on{
-    background-color: #E72327;
-    color: white;
-  }
-
-`
+`;
 
 class Sorting extends Component {
   render() {
+    const { placeholder } = this.props;
     return (
-      <Grid.Column
-        className="sorting"
-        widescreen={this.props.widescreen ? this.props.widescreen : null}
-        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
-        computer={this.props.computer ? this.props.computer : null}
-        tablet={this.props.tablet ? this.props.tablet : null}
-        mobile={this.props.mobile ? this.props.mobile : null}
-        textAlign={this.props.textAlign ? this.props.textAlign : "right"}
-      >
-        <SortingButton>
-          <Button
-            key={"update"}
-            value={"update"}
-            text={"최신순"}
-            onClick={this.props.handleClick}
-            placeholder="update"
-            className={this.props.placeholder===null?"btn-on":this.props.placeholder==="update"?"btn-on":null}
-          >최신순</Button>
-          <Button
-            key={"create"}
-            value={"create"}
-            text={"등록순"}
-            onClick={this.props.handleClick}
-            className={this.props.placeholder==="create"?"btn-on":null}
-          >등록순</Button>
-          <Button
-            key={"like"}
-            value={"like"}
-            text={"인기순"}
-            onClick={this.props.handleClick}
-            className={this.props.placeholder==="like"?"btn-on":null}
-          >인기순</Button>
-        </SortingButton>
-      </Grid.Column>
+      <Container>
+        <div key={"update"} onClick={(e) => this.props.handleClick(e, { value: "update" })} className={`element ${placeholder === "update" ? "active" : ""}`}>최신순</div>
+        <div key={"create"} onClick={(e) => this.props.handleClick(e, { value: "create" })} className={`element ${placeholder === "create" ? "active" : ""}`}>등록순</div>
+        <div key={"like"} onClick={(e) => this.props.handleClick(e, { value: "like" })} className={`element ${placeholder === "like" ? "active" : ""}`}>인기순</div>
+      </Container>
     );
   }
 }

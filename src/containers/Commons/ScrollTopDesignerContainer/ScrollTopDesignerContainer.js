@@ -1,41 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetTopDesignListRequest } from "actions/Commons/TopList";
-import ScrollListNew from "components/Commons/ScrollListNew";
-import Designer from "components/Designers/Designer";
+import { GetTopExpertListRequest } from "actions/Commons/TopList";
+import ScrollList from "components/Commons/ScrollListHorizontal";
+import Expert from "components/Experts/Expert";
 import Loading from "components/Commons/Loading";
 
-class ScrollTopDesignerContainer extends Component {
+class ScrollTopExpertContainer extends Component {
   componentWillMount() {
-    this.props.GetTopDesignListRequest(0);
+    this.props.GetTopExpertListRequest();
   }
 
   render() {
     return (
-      this.props.status === "INIT" ? <Loading /> :
-        <ScrollListNew
-          // getListRequest={this.getList}
-          ListComponent={Designer}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-          mobile={4} tablet={4} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom" />
+      this.props.status === "INIT" ?
+        <Loading /> : <ScrollList ListComponent={Expert} dataList={this.props.dataList} />
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    dataList: state.TopList.status.DesignList,
-    dataListAdded: state.TopList.status.DesignListAdded,
-    status: state.TopList.TopList.status
-  };
-};
+const mapStateToProps = (state) => ({
+  dataList: state.TopList.status.ExpertList,
+  status: state.TopList.ExpertList.status,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetTopDesignListRequest: (page) => {
-      return dispatch(GetTopDesignListRequest(page))
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  GetTopExpertListRequest: () => dispatch(GetTopExpertListRequest())
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScrollTopDesignerContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollTopExpertContainer);
