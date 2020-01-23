@@ -17,7 +17,7 @@ import { CategoryAll } from "reducers/Categorys";
 import { reducer as formReducer } from 'redux-form';
 import { Search, SearchIssue, TopList } from "reducers/Commons"
 import { DesignForked } from "reducers/Designs/DesignForked"
-import { Request, RequestDetail, RequestList } from "reducers/Request";
+import { Request, RequestDetail, RequestList, RequestComment } from "reducers/Request";
 import OpenDesign from "reducers/OpenDesign";
 
 import { combineReducers } from "redux";
@@ -37,7 +37,7 @@ export default combineReducers({
     // DESIGNER 
     DesignerList, DesignerLike, DesignerDetail,
     // REQUEST
-    Request, RequestDetail, RequestList,
+    Request, RequestDetail, RequestList, RequestComment,
     // MY
     SignIn, SignUp, FindPw, UserInfo, CategoryAll, form: formReducer,
     MyDetail, MyJoin,

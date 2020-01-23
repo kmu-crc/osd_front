@@ -22,13 +22,13 @@ const ListContainer = styled(Grid)`
 `;
 
 class ScrollListNew extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasMore: true, loading: false };
-  }
+  state = {
+    hasMore: true,
+    loading: false
+  };
 
   getLoadData = page => {
-    this.props.getListRequest && this.props.getListRequest(page)
+    this.props.getListRequest(page)
       .then(() => {
         this.setState({
           hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true,
@@ -55,25 +55,24 @@ class ScrollListNew extends Component {
               <Loader className="loading" active={false} inline="centered" size="huge" key={0} />
             }>
             <ListContainer devided="vertically" padded={true} as="ul">
-              <Grid.Row>
-                {this.props.dataListAdded.map((content) => (
-                  <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer}
-                    largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
-                    className={this.props.customClass}
-                    key={content.uid}>
-                    <ListComponent data={content} rerender={this.props.rerender} />
-                  </Grid.Column>
-                ))
-                }
-              </Grid.Row>
+              {/* <Grid.Row> */}
+              {this.props.dataListAdded.map(content => (
+                // <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer}
+                // largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
+                // className={this.props.customClass}
+                // key={content.uid}>
+                <ListComponent key={content.uid} data={content} rerender={this.props.rerender} />
+                // </Grid.Column>
+              ))
+              }
+              {/* </Grid.Row> */}
             </ListContainer>
           </InfiniteScroll>
           :
           <p>
             {type === "Designer" ? "등록된 디자이너가 없습니다"
               : type === "Group" ? "등록된 그룹이 없습니다"
-                : "등록된 작품이 없습니다"
-            }
+                : "등록된 작품이 없습니다"}
           </p>
         }
       </ScrollContainer>

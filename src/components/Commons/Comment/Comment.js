@@ -250,7 +250,6 @@ class Comment extends Component {
         const { reply, this_comment, this_reply } = this.state;
         const { comments, my } = this.props;
         const myface = my && my.thumbnail && my.thumbnail.s_img !== null ? my.thumbnail.s_img : noface;
-
         return (<CommentBox>
             {comments && comments.length > 0 && comments.map((item, index) => {
                 const face = item && item.s_img ? item.s_img : noface;

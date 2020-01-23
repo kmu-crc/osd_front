@@ -129,7 +129,7 @@ class RequestList extends Component {
 
           {/* write button */}
           <div style={{ marginLeft: "auto", width: "max-content" }}>
-            <Link to={`/createdesignerboard`}><Button color="Primary">글쓰기</Button></Link>
+            <Link to={`/createrequest`}><Button color="Primary">글쓰기</Button></Link>
           </div>
 
           {/* hide private */}

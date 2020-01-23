@@ -83,6 +83,7 @@ const MainBox = styled.div`
     margin-top:10px;
     margin-bottom:10px;
     display:flex;
+    cursor:pointer;
     .button{
         width:80px;
         height:100%;
@@ -92,6 +93,7 @@ const MainBox = styled.div`
         margin-right:10px;
         text-align:center;
         padding-top:5px;
+        cursor:pointer;
     }
 
 }
@@ -149,6 +151,9 @@ class Cart extends Component {
     constructor(props){
         super(props);
         this.state={};
+        this.onChangeCheck = this.onChangeCheck.bind(this);
+        this.onClickDeleteAll = this.onClickDeleteAll.bind(this);
+        this.onClickDeleteSelect = this.onClickDeleteSelect.bind(this);
     }
     componentDidMount(){
         this.state = {token:cookie.load("cart")};
@@ -160,12 +165,32 @@ class Cart extends Component {
         }
         return true;
     }
+    onChangeCheck(event){
+    }
+    onClickDeleteAll(event){
+        this.props.CartList.map((item,index)=>{
+            document.getElementById(index).checked=true;
+        });
+        this.props.deleteCartAllItem(this.props.userInfo.uid,this.props.token);
+        window.location.reload();
+    }
+    onClickDeleteSelect(event){
+        this.props.CartList.map((item,index)=>{
+            // console.log(document.getElementById(index).checked);
+            if(document.getElementById(index)&&document.getElementById(index).checked === true){
+                
+                console.log(this.props.CartList[index].uid+"제거");
+                this.props.deleteCartItem(this.props.CartList[index].uid,this.props.token)
+            }
+        });
+        window.location.reload();
+    }
     render() {
         console.log("CART::",this.props);
-    const CartList = (item)=>{
+    const CartList = (item,index)=>{
         return(
                     <div className="value_box">
-                        <div className="checkbox_value"><input type="checkbox"/></div>
+                        <div className="checkbox_value"><input id={index} type="checkbox"/></div>
                         <div className="product_info_value">
                             <SmallImage imageURL={item.s_img}/>
                             <div className="information_text">
@@ -196,7 +221,7 @@ class Cart extends Component {
                     {
                         this.props.CartList.map((item,index)=>{
                             return(
-                                CartList(item)
+                                CartList(item,index)
                             );
                         })
                     }
@@ -204,8 +229,8 @@ class Cart extends Component {
                     <CartList/> */}
                 </div>
                 <div className="product_delete_button_box">
-                    <div className="button">전체삭제</div>
-                    <div className="button">선택삭제</div>
+                    <div className="button" onClick={this.onClickDeleteAll}>전체삭제</div>
+                    <div className="button" onClick={this.onClickDeleteSelect}>선택삭제</div>
                 </div>
 
                 <div className="payment_price_box">

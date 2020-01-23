@@ -404,25 +404,26 @@ class ProductDetail extends Component {
   }
   async onClickCart(){
     console.log("cart gogo",this.props);
-    const Result = {user_id:this.props.userInfo.uid,product_id:this.props.ProductDetail.uid,amount:document.getElementById('productCount').value}
-    this.props.addCartRequest(Result,this.props.token);
+    
+    if(this.props.userInfo != null){
+      const Result = {user_id:this.props.userInfo.uid,product_id:this.props.ProductDetail.uid,amount:document.getElementById('productCount').value}
+      this.props.addCartRequest(Result,this.props.token);
+    }
+    else
+    {
+      this.state = {cartlist:cookie.load("cart")};
 
-    this.state = {cartlist:cookie.load("cart")};
-
-    const userID = this.props.userInfo.uid;
-    const productID = this.props.ProductDetail.uid;
-    const count = document.getElementById('productCount').value;
-    const cartProduct = this.state.cartlist==null?"/":this.state.cartlist;
-    const newCartProduct = userID+","+productID+","+count+"/";
-    cookie.save("cart",cartProduct+newCartProduct,{
-      path:'/',
-    });
-
-    // console.log(this.state.cartlist);
+      const userID = this.props.userInfo==null?-1:this.props.userInfo.uid; // 
+      const productID = this.props.ProductDetail.uid;
+      const count = document.getElementById('productCount').value;
+      const cartProduct = this.state.cartlist==null?"/":this.state.cartlist;
+      const newCartProduct = userID+","+productID+","+count+"/";
+      cookie.save("cart",cartProduct+newCartProduct,{
+        path:'/',
+      });
+    }
   }
   onClickPayment() {
-    // console.log("props",encodeURIComponent(this.props.ProductDetail.img[0].s_img));
-    // const thumbnail = this.props.ProductDetail.img&&this.props.ProductDetail.img[0].s_img
     window.location.href = "/payment"+"/"+this.props.ProductDetail.uid+"/"+this.props.ProductDetail.title+"/"+
                           document.getElementById("productCount").value+"/"+this.props.ProductDetail.options+"/"+encodeURIComponent(this.props.ProductDetail.img[0].s_img);
   }
