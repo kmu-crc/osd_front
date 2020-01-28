@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import ProductDetail from "components/Products/ProductDetail";
+// import ProductDetail from "components/Products/ProductDetail";
+import ItemDetail from "components/Items/ItemDetail";
 import {
   GetProductDetailRequest, GetProductCountRequest, GetLikeProductRequest,
-  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest,addCartRequest
+  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest
 } from "actions/Product";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
@@ -13,7 +14,8 @@ class ProductDetailContainer extends Component {
     this.props.GetProductDetailRequest(this.props.id);
   }
   render() {
-    return (<ProductDetail {...this.props} />)
+    return (<ItemDetail {...this.props} />)
+    // return (<ProductDetail {...this.props} />)
   }
 }
 
@@ -37,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     UpdateProductViewRequest: (id) => dispatch(UpdateProductViewRequest(id)),
     UnlikeProductRequest: (id, token) => dispatch(UnlikeProductRequest(id, token)),
     DeleteProductRequest: (id, token) => dispatch(DeleteProductRequest(id, token)),
-    addCartRequest:(items,token)=>dispatch(addCartRequest(items,token)),
+    addCartRequest: (items, token) => dispatch(addCartRequest(items, token)),
   }
 }
 

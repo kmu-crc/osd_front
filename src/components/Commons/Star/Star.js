@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 `;
 const Star = (rate) => {
     var star = [];
+    console.log(rate);
     for (var i = 0; i < 5; i++) {
         if (parseInt(rate, 10) > i) {
             star.push("★")
