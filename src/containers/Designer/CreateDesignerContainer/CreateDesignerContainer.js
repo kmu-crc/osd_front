@@ -43,7 +43,8 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
+  width:100%;
+  margin-top:60px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
@@ -52,12 +53,15 @@ class CreateDesignerContainer extends Component {
   render() {
     return(
        <React.Fragment>
-        <ImgWrapper>
+         <Wrapper>
+         <CreateDesigner/>
+         </Wrapper>
+        {/* <ImgWrapper>
           <Title><h1>디자이너 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
          <CreateDesigner/>
-         </Wrapper>
+         </Wrapper> */}
        </React.Fragment>
     );
   }
