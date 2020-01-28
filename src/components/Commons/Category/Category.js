@@ -39,6 +39,7 @@ const CategoryMenu = styled.div`
   }
   &.fly {
     position: absolute;
+    left: 10%;
   }
 `;
 class Category extends Component {

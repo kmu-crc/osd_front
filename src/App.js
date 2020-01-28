@@ -29,7 +29,7 @@ import CreateMakerPage from 'pages/CreateMakerPage';
 import ModifyMakerPage from 'pages/ModifyMakerPage';
 import RequestListPage, { CreateRequestPage, RequestDetailPage } from "pages/RequestPage";
 import requestDesignerPage from "pages/RequestToDesignerPage";
-// import requestMakerPage from "pages/RequestToMakerPage";
+import requestMakerPage from "pages/RequestToMakerPage";
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -50,8 +50,9 @@ class App extends Component {
             <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
+            <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
             {/* MAKER */}
-            <Route path="/maker/:sorting?" component={MakerListPage} />
+            <Route path="/maker/:sorting?/:cate1?/:cate2?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/makerModify" component={ModifyMakerPage} />

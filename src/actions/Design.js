@@ -1,35 +1,26 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export function GetDesignListRequest(page, sort, cate1, cate2, keyword) {
+export const GetDesignListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
-    return fetch(`${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
+    const url = `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "get"
-    }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(DesignListClear(data));
-          return;
-        }
-        dispatch(GetDesignList(data));
-      }).catch((error) => {
-        dispatch(DesignListFail());
-        console.log("err", error);
-      })
+    })
+      .then(res => res.json())
+      .then(data =>
+        dispatch((page === 0)
+          ? DesignListClear(data ? data : [])
+          : GetDesignList(data ? data : [])))
+      .catch(error => dispatch(DesignListFail()));
   }
 };
 
 export function GetDesignList(data) {
   return {
     type: types.GET_DESIGN_LIST,
-    DesignList : data
+    DesignList: data
   }
 };
 
@@ -55,26 +46,26 @@ export function GetDesignTotalCountRequest(cate1, cate2) {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        if (!data) {
-          console.log("no data");
-          data = 0;
-        } else {
-          data = data["count(*)"];
-        }
-        dispatch(GetDesignTotalCount(data));
-      }).catch((error) => {
-        dispatch(DesignTotalCountFail());
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      if (!data) {
+        console.log("no data");
+        data = 0;
+      } else {
+        data = data["count(*)"];
+      }
+      dispatch(GetDesignTotalCount(data));
+    }).catch((error) => {
+      dispatch(DesignTotalCountFail());
+      console.log("err", error);
+    })
   }
 };
 
 export function GetDesignTotalCount(data) {
   return {
     type: types.GET_DESIGN_TOTAL_COUNT,
-    Count : data
+    Count: data
   }
 };
 
@@ -90,31 +81,31 @@ export function GetDesignDetailRequest(id, token) {
     if (token == null) {
       token = "";
     }
-    return fetch(`${host}/design/designDetail/`+id, {
+    return fetch(`${host}/design/designDetail/` + id, {
       headers: {
         "Content-Type": "application/json",
         "x-access-token": token
-     },
+      },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        // console.log("design Detail data >>", data);
-        if (!data) {
-          // console.log("no data");
-          data = [];
-        }
-        return dispatch(GetDesignDetail(data));
-      }).catch((error) => {
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      // console.log("design Detail data >>", data);
+      if (!data) {
+        // console.log("no data");
+        data = [];
+      }
+      return dispatch(GetDesignDetail(data));
+    }).catch((error) => {
+      console.log("err", error);
+    })
   }
 };
 
 export function GetDesignDetail(data) {
   return {
     type: types.GET_DESIGN_DETAIL,
-    DesignDetail : data
+    DesignDetail: data
   }
 };
 
@@ -146,7 +137,8 @@ export function GetDesignCountRequest(id) {
           like_count: 0,
           member_count: 0,
           card_count: 0,
-          view_count: 0 };
+          view_count: 0
+        };
       }
       dispatch(GetDesignCount(data));
     }).catch((err) => {
@@ -200,24 +192,24 @@ export function GetDesignDetailViewRequest(id, token) {
       },
       method: "get",
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design Detail View data >>", data);
-        if (!data || data.length === 0) {
-          console.log("no data");
-          data = [];
-        }
-        return dispatch(GetDesignDetailView(data));
-      }).catch((error) => {
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      console.log("design Detail View data >>", data);
+      if (!data || data.length === 0) {
+        console.log("no data");
+        data = [];
+      }
+      return dispatch(GetDesignDetailView(data));
+    }).catch((error) => {
+      console.log("err", error);
+    })
   }
 };
 
 export function GetDesignDetailView(data) {
   return {
     type: types.GET_DESIGN_DETAIL_VIEW,
-    DesignDetailView : data
+    DesignDetailView: data
   }
 };
 
@@ -236,84 +228,84 @@ export function DesignDetailViewReset() {
 
 export function GetDesignDetailStepRequest(id) {
   return (dispatch) => {
-    return fetch(`${host}/design/designDetail/`+id+"/step", {
+    return fetch(`${host}/design/designDetail/` + id + "/step", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design Detail Step data >>", data);
-        if (!data) {
-          console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignDetailStep(data));
-        }
-      }).catch((error) => {
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      console.log("design Detail Step data >>", data);
+      if (!data) {
+        console.log("no data");
+        return;
+      } else {
+        dispatch(GetDesignDetailStep(data));
+      }
+    }).catch((error) => {
+      console.log("err", error);
+    })
   }
 };
 
 export function GetDesignDetailStep(data) {
   return {
     type: types.GET_DESIGN_DETAIL_STEP,
-    DesignDetailStep : data
+    DesignDetailStep: data
   }
 };
 
 export function GetDesignDetailStepCardRequest(id, card_id) {
   return (dispatch) => {
-    return fetch(`${host}/design/designDetail/`+id+"/cardDetail/"+card_id, {
+    return fetch(`${host}/design/designDetail/` + id + "/cardDetail/" + card_id, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design Detail Card data >>", data);
-        if (!data || data.length === 0) {
-          console.log("no data");
-          return;
-        } else {
-          dispatch(GetDesignDetailStepCard(data));
-        }
-      }).catch((error) => {
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      console.log("design Detail Card data >>", data);
+      if (!data || data.length === 0) {
+        console.log("no data");
+        return;
+      } else {
+        dispatch(GetDesignDetailStepCard(data));
+      }
+    }).catch((error) => {
+      console.log("err", error);
+    })
   }
 };
 
 export function GetDesignDetailStepCard(data) {
   return {
     type: types.GET_DESIGN_DETAIL_STEP_CARD,
-    DesignDetailStepCard : data
+    DesignDetailStepCard: data
   }
 };
 
 export function GetDesignIssueListRequest(id) {
   return (dispatch) => {
-    return fetch(`${host}/design/designDetail/`+id+"/issue", {
+    return fetch(`${host}/design/designDetail/` + id + "/issue", {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design Detail Issue data >>", data);
-        if (!data || data.length === 0) {
-          console.log("no data");
-          data = [];
-        }
-        dispatch(GetDesignIssueList(data));
-      }).catch((error) => {
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      console.log("design Detail Issue data >>", data);
+      if (!data || data.length === 0) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetDesignIssueList(data));
+    }).catch((error) => {
+      console.log("err", error);
+    })
   }
 };
 
 export function GetDesignIssueList(data) {
   return {
     type: types.GET_DESIGN_ISSUE_LIST,
-    DesignIssueList : data
+    DesignIssueList: data
   }
 };
 
@@ -323,17 +315,17 @@ export function GetDesignIssueDetailRequest(id, issue_id) {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("design Issue Detail data >>", data);
-        if (!data || data.length === 0) {
-          console.log("no data");
-          data = [];
-        }
-        dispatch(GetDesignIssueDetail(data));
-      }).catch((error) => {
-        console.log("err", error);
-      })
+      return response.json();
+    }).then((data) => {
+      console.log("design Issue Detail data >>", data);
+      if (!data || data.length === 0) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetDesignIssueDetail(data));
+    }).catch((error) => {
+      console.log("err", error);
+    })
   }
 };
 

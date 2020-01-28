@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
-import ScrollList from "components/Commons/ScrollListHorizontal";
-import Design from "components/Designs/Design";
+import ScrollList from "components/Commons/ScrollList";
+import Item from "components/Items/Item";
+// import Design from "components/Designs/Design";
 
 class ScrollDesignListContainer extends Component {
   componentWillMount() {
@@ -14,10 +15,9 @@ class ScrollDesignListContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <Design /> */}
         <ScrollList
           getListRequest={this.getList}
-          ListComponent={Design}
+          ListComponent={Item}
           dataList={this.props.dataList}
           dataListAdded={this.props.dataListAdded}
           mobile={4} tablet={4} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom" />

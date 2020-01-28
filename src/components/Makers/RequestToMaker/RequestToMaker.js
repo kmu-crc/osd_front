@@ -179,7 +179,7 @@ class RequestToMaker extends Component {
   render() {
     return (<React.Fragment>
       <ImgWrapper>
-        <Title><h1>디자인 의뢰</h1></Title>
+        <Title><h1>제작 의뢰</h1></Title>
       </ImgWrapper>
       <Wrapper>
         <RequestForm />
