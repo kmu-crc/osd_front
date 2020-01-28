@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import ContentBox from "components/Commons/ContentBox";
-import StyleGuide from "StyleGuide";
 import MainSlide from "./Slide";
-
 import ScrollTopDesignerContainer from "containers/Commons/ScrollTopDesignerContainer";
-import ScrollTopMakerContainer from "containers/Commons/ScrollTopMakerContainer";
 import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
+// import StyleGuide from "StyleGuide";
+// import ScrollTopMakerContainer from "containers/Commons/ScrollTopMakerContainer";
+// import ContentBox from "components/Commons/ContentBox";
 
 // CSS STYLE
 const MainContainer = styled.div`

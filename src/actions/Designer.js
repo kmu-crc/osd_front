@@ -4,7 +4,6 @@ import host from "config";
 // NORMAL
 export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
-    console.log(keyword);
     return fetch(`${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"

@@ -8,13 +8,6 @@ import NoFace from "source/thumbnail.png";
 import TextFormat from "modules/TextFormat";
 import { SetSession } from "modules/Sessions";
 
-// import ContentBox from "components/Commons/ContentBox";
-// import StyleGuide from "StyleGuide";
-// import Button from "components/Commons/Button";
-// import Alarm from "./Alarm";
-// import Notice from "./Notice";
-// import NumberFormat from "modules/NumberFormat";
-
 const LogoWrapper = styled.div`
   margin: 0;
   padding: 0;
@@ -214,10 +207,9 @@ class Header extends Component {
   logout = () => {
     SetSession("opendesign_token", null)
       .then(data => {
-        // console.log("data:", data)
-        this.props.SignOutRequest()
-        this.setState({ sign_modal: false, user_popup: null })
-        window.location.reload()
+        this.props.SignOutRequest();
+        this.setState({ sign_modal: false, user_popup: null });
+        window.location.reload();
       })
     this.setState({ user_popup: null })
   }
@@ -225,41 +217,49 @@ class Header extends Component {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
-    // console.log(this.props);
+
     return (<HeaderContainer>
+      {/*  */}
       <HeaderItem className="first">
         <Link to={`/`}><Logo /></Link>
       </HeaderItem>
+      {/*  */}
       <HeaderItem>
         <Link
           to={`/designer`}
-          className={location === "/designer" || location.indexOf("/designerDetail") !== -1 ? "active" : ""}>
+          className={location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1 ? "active" : ""}>
           디자이너</Link>
       </HeaderItem>
+      {/*  */}
       <HeaderItem>
         <Link to={`/maker`}
-          className={location === "/maker" || location.indexOf("/makerDetail") !== -1 ? "active" : ""}>
+          className={location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1 ? "active" : ""}>
           메이커</Link>
       </HeaderItem>
+      {/*  */}
       <HeaderItem>
         <Link to={`/product`}
-          className={location === "/product" || location.indexOf("/productDetail") !== -1 ? "active" : ""}>
+          className={location.indexOf("/product") !== -1 || location.indexOf("/productDetail") !== -1 ? "active" : ""}>
           아이템</Link>
       </HeaderItem>
+      {/*  */}
       <HeaderItem>
         <Link to={`/request`}
-          className={location === "/request" || location.indexOf("/requestDetail") !== -1 ? "active" : ""}>
+          className={location.indexOf("/request") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active" : ""}>
           게시판</Link>
       </HeaderItem>
-      <HeaderItem className="left search">
-        <div className="search-icon-wrapper">
-          <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-          <Link to={`/search/null/null/${this.state.keyword}`} id="searchLink">
-            <img alt="icon" src={Zoom} className="search-icon" />
-          </Link>
-        </div>
-      </HeaderItem>
-      <HeaderItem>
+      {/*  */}
+      {location.indexOf("/search") !== -1 ? null :
+        <HeaderItem className="left search">
+          <div className="search-icon-wrapper">
+            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
+            <Link to={`/search/null/null/${this.state.keyword}`} id="searchLink">
+              <img alt="icon" src={Zoom} className="search-icon" />
+            </Link>
+          </div>
+        </HeaderItem>}
+      {/*  */}
+      <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}>
         {valid && userInfo
           ? (<div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
             <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
@@ -267,9 +267,9 @@ class Header extends Component {
             {this.state.active ?
               <UserMenu>
                 <Link to={`/mypage`}>
-                  <div className="item">mypage</div>
+                  <div className="item">마이페이지</div>
                 </Link>
-                <div onClick={this.logout} className="item">logout</div>
+                <div onClick={this.logout} className="item">로그아웃</div>
               </UserMenu>
               : null}
           </div>)
@@ -277,9 +277,11 @@ class Header extends Component {
       </HeaderItem>
       <HeaderItem className="cart">
         <Link to={'/cart'}>
-          <RedCircle>
-            <div style={{ width: "4", height: "12px" }}>1</div>
-          </RedCircle>
+          {this.props.cart ?
+            <RedCircle>
+              <div style={{ width: "4", height: "12px" }}>{this.props.cart.count}</div>
+            </RedCircle>
+            : null}
           <i style={{ width: "29px", height: "29px" }} className="cart icon" />
         </Link>
       </HeaderItem>
@@ -288,228 +290,3 @@ class Header extends Component {
 };
 
 export default Header;
-
-// const UserInterface = styled.div`
-//   width: max-content;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-//   &::after {
-//     display: block;
-//     content: "";
-//     clear: both;
-//   }
-// `;
-// const UserItem = styled.div`
-//   text-align: right;
-//   & .logOutNavLink {
-//     margin: 0 5px;
-//   }
-// `;
-// const UserBtn = styled.button`
-//   color: ${StyleGuide.color.geyScale.scale9};
-//   text-align: right;
-//   vertical-align: top;
-//   /* margin-left: 20px; */
-//   width: 100%;
-//   padding: 0;
-//   height: 60px;
-//   line-height: 60px;
-//   padding-left: 55px;
-//   padding-right: 20px;
-//   box-sizing: border-box;
-//   background-color: transparent;
-//   position: relative;
-//   border: 0;
-//   .userIcon {
-//     position: absolute;
-//     top: 50%;
-//     left: 20px;
-//     transform: translateY(-50%);
-//     display: block;
-//     width: 25px;
-//     height: 25px;
-//     background-position: center;
-//     background-size: cover;
-//     overflow: hidden;
-//     border-radius: 50%;
-//   }
-//   &.active {
-//     background-color: ${StyleGuide.color.geyScale.scale3};
-//   }
-// `;
-// const UserMenuDimm = styled.div`
-//   position: fixed;
-//   width: 100vw;
-//   height: 100vh;
-//   pointer-events: none;
-//   top: 0;
-//   left: 0;
-//   background: 0 0;
-// `;
-// const UserMenu = styled.ul`
-//   display: block;
-//   position: absolute;
-//   pointer-events: auto;
-//   top: 60px;
-//   right: 0;
-//   z-index: 1000;
-//   width: 150px;
-//   background-color: ${StyleGuide.color.geyScale.scale0};
-//   border: 1px solid ${StyleGuide.color.geyScale.scale2};
-//   box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
-// `;
-// const UserMenuItem = styled.li`
-//   text-align: center;
-//   width: 100%;
-//   height: 50px;
-//   border-bottom: 1px solid ${StyleGuide.color.geyScale.scale2};
-//   box-sizing: border-box;
-//   line-height: 50px;
-//   &:hover {
-//     background-color: ${StyleGuide.color.geyScale.scale2};
-//   }
-//   a {
-//     line-height: 50px;
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     &:hover {
-//       color: ${StyleGuide.color.geyScale.scale9};
-//     }
-//   }
-// `;
-// const LogOutBtn = styled.button`
-//   background-color: transparent;
-//   border: 0;
-//   width: 100%;
-//   height: 100%;
-//   box-sizing: border-box;
-//   color: ${StyleGuide.color.geyScale.scale9};
-// `;
-
-// class Header extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { 
-  // profile: false, 
-  // active: false, 
-  // keyword: null, 
-  // noti: {}, 
-  // notification: [], 
-  // msg: null };
-//   };
-//   handleSignOut = async () => {
-//     SetSession("opendesign_token", null).then(data => {
-//       this.props.SignOutRequest()
-//       this.setState({ profile: false, active: false, keyword: null, noti: {}, msg: null })
-//       this.props.history.push("/")
-//     })
-//   };
-//   onActive = e => {
-//     const event = e;
-//     event.stopPropagation();
-//     let target = event.currentTarget;
-//     let active = this.props.isActive;
-//     if (active === "INIT" || active !== "MENU") {
-//       active = "MENU";
-//     } else if (active === "MENU") {
-//       active = "INIT";
-//     }
-//     // console.log("onactive", active);
-//     this.props.SetActive(active, target);
-//   };
-
-
-//   render() {
-//     const LoginNav = () => {
-//       return (
-//         <UserInterface>
-//           <UserItem>
-//             <UserBtn onClick={this.onActive} 
-//     className={`openMenu ${this.props.active === "MENU" && "active"}`}>
-//               <div className="userIcon" 
-//     style={{ backgroundImage: `url(${this.props.userInfo.thumbnail && 
-// this.props.userInfo.thumbnail.s_img}), url(${logo})` }} 
-//onError={this.noneImage} />
-//               {this.limitNickName(this.props.userInfo.nickName)}
-//             </UserBtn>
-// 
-//             <UserMenuDimm style={{ display: `${this.props.active === "MENU" ? "block" : "none"}` }}>
-//               <Content>
-//                 <UserMenu>
-//                   {/* <UserMenuItem>
-//                     <a href="/cart"><Icon name="cart" />장바구니</a>
-//                   </UserMenuItem> */}
-//                   <UserMenuItem>
-//                     <a href="/myPage"><Icon name="user" />마이페이지</a>
-//                   </UserMenuItem>
-//                   {/* <UserMenuItem>
-//                     <a href="/message"><Icon name="envelope" />메시지함</a>
-//                   </UserMenuItem> */}
-//                   <UserMenuItem>
-//                     <LogOutBtn onClick={this.handleSignOut}><Icon name="log out" />로그아웃</LogOutBtn>
-//                   </UserMenuItem>
-//                 </UserMenu>
-//               </Content>
-//             </UserMenuDimm>
-//           </UserItem>
-//         </UserInterface>
-//       );
-//     };
-// 
-//    const LogOutNav = () => {
-//       return (
-//         <UserInterface>
-//           <UserItem>
-//             <a href="/signin" className="logOutNavLink">로그인</a>
-//           </UserItem>
-// 
-//           <UserItem>
-//             <a href="/signup" className="logOutNavLink">회원가입</a>
-//           </UserItem>
-// 
-//           <UserItem>
-//             <a href="/cart" className="logOutNavLink">장바구니</a>
-//           </UserItem>
-// 
-//         </UserInterface>
-//       );
-//     };
-// 
-// const { valid } = this.props;
-// 
-//     return (
-//       <Head>
-//         <Notice notice={this.state.notification} />
-// 
-//         <Content>
-//           <MenuWrapper>
-//             <Menu>
-//               {valid ? (
-//                 <React.Fragment>
-//                   <SubMenuItem className="submenu-item">
-//                     <Alarm history={this.props.history} token={this.props.token} open={this.openAlarmHandler} close={this.onAlarmHandler} noti={this.state.noti} valid={this.props.valid} uid={this.props.userInfo.uid} socket={Socket} />
-//                   </SubMenuItem>
-// 
-//                   <MenuItem className="submenu-item">
-//                     <a href="/message"><Icon name="envelope" />{this.state.noti.countMsg > 0 && (<AlarmLabel>{NumberFormat(this.state.noti.countMsg)}</AlarmLabel>)}</a>
-//                   </MenuItem>
-// 
-//                   <MenuItem className="submenu-item">
-//                     <a href="/cart"><Icon name="cart" /></a>
-//                   </MenuItem>
-//                 </React.Fragment>
-//               ) : null}
-// 
-//               <SubMenuItem>
-//                 {this.props.valid ? <LoginNav /> : <LogOutNav />}
-//               </SubMenuItem>
-// 
-//             </Menu>
-//           </MenuWrapper>
-// 
-//         </Content>
-//       </Head>)
-//   };
-// }
