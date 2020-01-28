@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetDesignerDetailRequest, GetDesignerCountRequest, GetLikeDesignerRequest, LikeDesignerRequest, UnlikeDesignerRequest } from "actions/Designer";
+import { GetMakerDetailRequest } from "actions/Maker";
 import MakerDetail from "components/Makers/MakerDetail";
 
 class MakerDetailContainer extends Component {
@@ -9,24 +9,14 @@ class MakerDetailContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    MakerDetail: state.DesignerDetail.status.DesignerDetail,
-    userInfo: state.Authentication.status.userInfo,
-    token: state.Authentication.status.token,
-    like: state.DesignerLike.status.like,
-    Count: state.DesignerDetail.status.Count
-  };
-};
+const mapStateToProps = (state) => ({
+  MakerDetail: state.MakerDetail.status.MakerDetail,
+  userInfo: state.Authentication.status.userInfo,
+  token: state.Authentication.status.token,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetDesignerDetailRequest: (id) => dispatch(GetDesignerDetailRequest(id)),
-    GetLikeDesignerRequest: (id, token) => dispatch(GetLikeDesignerRequest(id, token)),
-    LikeDesignerRequest: (id, token) => dispatch(LikeDesignerRequest(id, token)),
-    UnlikeDesignerRequest: (id, token) => dispatch(UnlikeDesignerRequest(id, token)),
-    GetDesignerCountRequest: (id) => dispatch(GetDesignerCountRequest(id))
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  GetMakerDetailRequest: (id) => dispatch(GetMakerDetailRequest(id)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakerDetailContainer);
