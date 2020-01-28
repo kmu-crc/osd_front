@@ -5,9 +5,7 @@ import Sorting from "components/Commons/Sorting";
 import ScrollMakerListContainer from "containers/Maker/ScrollMakerListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
-// import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-// import StyleGuide from "StyleGuide";
-// import NumberFormat from "modules/NumberFormat";
+
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -49,69 +47,75 @@ const Container = styled.div`
     width: max-content;
   }
 `;
-
+const target = `maker`;
 class MakerList extends Component {
-    constructor(props) {
-      super(props);
-      this.state = { rendering: true }
+  constructor(props) {
+    super(props);
+    this.state = { rendering: true, };
+  }
+  componentDidMount() {
+    this.props.GetMakerTotalCountRequest(this.props.cate1, this.props.cate2);
+  }
+  changeState = async () => {
+    await this.setState({ rendering: false });
+    await this.setState({ rendering: true });
+  }
+  cate1Change = (value) => {
+    this.props.history.replace(`/${target}/${this.props.sort}/${value}/null`);
+    this.props.GetMakerTotalCountRequest(value, null);
+    this.changeState();
+  }
+  cate2Change = (cate1, value) => {
+    if (cate1 && this.props.cate1 !== cate1) {
+      this.props.history.replace(`/${target}/${this.props.sort}/${cate1}/${value}`);
+    } else {
+      this.props.history.replace(`/${target}/${this.props.sort}/${this.props.cate1}/${value}`);
     }
-    componentDidMount() {
-      this.props.GetMakerTotalCountRequest(this.props.cate1, this.props.cate2);
-    }
-    changeState = async () => {
-      await this.setState({ rendering: false });
-      await this.setState({ rendering: true });
-    }
-    cate1Change = (value) => {
-      this.props.history.replace(`/maker/${this.props.sort}/${value}/null`);
-      // this.props.GetMakerTotalCountRequest(value, null);
-      this.changeState();
-    }
-    cate2Change = (cate1, value) => {
-        if (cate1 && this.props.cate1 !== cate1) {
-            this.props.history.replace(`/maker/${this.props.sort}/${cate1}/${value}`);
-        } else {
-            this.props.history.replace(`/maker/${this.props.sort}/${this.props.cate1}/${value}`);
-        }
-        this.props.GetMakerTotalCountRequest(this.props.cate1, value);
-        this.changeState();
-    }
-    sortChange = (e, { value }) => {
-      this.props.history.replace(`/maker/${value}/${this.props.cate1}/${this.props.cate2}`);
-      this.changeState();
-    }
-    resetCate = () => {
-        this.props.history.replace(`/maker/${this.props.sort}`);
-        this.changeState();
-    }
-    render() {
-        const { sort, category1, category2, cate1, cate2 } = this.props;
-        return (<React.Fragment>
-            <Content top={116}>
-                <Container>
-                    <div className="category">
-                        <Category
-                            handleCate2={this.cate2Change} handleCate1={this.cate1Change} resetCate={this.resetCate}
-                            cate1={cate1} cate2={cate2}
-                            category1={category1} category2={category2}
-                            which="메이커" /></div>
-                    <div className="sort">
-                        <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
-                    <div className="request"><RequestButton>
-                        <Link to={`/requestToMaker/null`}>제작 의뢰하기</Link></RequestButton></div>
-                </Container>
-            </Content>
+    this.props.GetMakerTotalCountRequest(this.props.cate1, value);
+    this.changeState();
+  }
+  sortChange = (e, { value }) => {
+    this.props.history.replace(`/${target}/${value}/${this.props.cate1}/${this.props.cate2}`);
+    this.changeState();
+  }
+  resetCate = () => {
+    this.props.history.replace(`/${target}/${this.props.sort}`);
+    this.changeState();
+  }
 
-            <Content top={160}>
-                <Wrapper className="listWrap">
-                    {this.state.rendering &&
-                        <ScrollMakerListContainer
-                            sort={sort} cate1={cate1} cate2={cate2}
-                            history={this.props.history} />}
-                </Wrapper>
-            </Content>
-        </React.Fragment>);
-    }
+  render() {
+    const { sort, category1, category2, cate1, cate2 } = this.props;
+    return (<React.Fragment>
+
+      <Content top={116}>
+        <Container>
+          <div className="category">
+            <Category
+              handleCate2={this.cate2Change}
+              handleCate1={this.cate1Change}
+              resetCate={this.resetCate}
+              cate1={cate1}
+              cate2={cate2}
+              category1={category1}
+              category2={category2}
+              which="메이커" /></div>
+          <div className="sort">
+            <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
+          <div className="request"><RequestButton>
+            <Link to={`/requestToMaker/null`}>제작 의뢰하기</Link></RequestButton></div>
+        </Container>
+      </Content>
+
+      <Content top={160}>
+        <Wrapper className="listWrap">
+          {this.state.rendering &&
+            <ScrollMakerListContainer
+              sort={sort} cate1={cate1} cate2={cate2}
+              history={this.props.history} />}
+        </Wrapper>
+      </Content>
+    </React.Fragment>);
+  }
 }
 
 export default MakerList;

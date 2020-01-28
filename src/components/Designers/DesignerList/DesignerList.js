@@ -5,9 +5,6 @@ import Sorting from "components/Commons/Sorting";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
-// import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-// import StyleGuide from "StyleGuide";
-// import NumberFormat from "modules/NumberFormat";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -93,9 +90,13 @@ class DesignerList extends Component {
         <Container>
           <div className="category">
             <Category
-              handleCate2={this.cate2Change} handleCate1={this.cate1Change} resetCate={this.resetCate}
-              cate1={cate1} cate2={cate2}
-              category1={category1} category2={category2}
+              handleCate2={this.cate2Change} 
+              handleCate1={this.cate1Change} 
+              resetCate={this.resetCate}
+              cate1={cate1} 
+              cate2={cate2}
+              category1={category1} 
+              category2={category2}
               which="디자이너" /></div>
           <div className="sort">
             <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
@@ -107,7 +108,9 @@ class DesignerList extends Component {
       <Content top={160}>
         <Wrapper className="listWrap">
           {this.state.rendering &&
-            <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+            <ScrollDesignerListContainer
+              sort={sort} cate1={cate1} cate2={cate2}
+              history={this.props.history} />}
         </Wrapper>
       </Content>
     </React.Fragment>);

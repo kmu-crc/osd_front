@@ -1,14 +1,11 @@
 import Authentication from "./Authentication";
 import { DesignList, DesignDetail, DesignDetailView, DesignDetailStep, DesignDetailStepCard, DesignCardComment, DesignIssueList, DesignIssueComment, DesignLike, DeleteDesign, ChangeToProject, UpdateDesign, DesignSourceDetail, DesignWaitingList, DesignDetailComment } from "reducers/Designs";
 import {
-    ProductDetail, ProductLike, ProductList,
-    CartList, OrderList,
-    //ProductDetailView, ProductDetailStep,
-    // ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,
-    // ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,
-    // ProductWaitingList, ProductDetailComment
+    ProductDetail, ProductLike, ProductList, CartList, OrderList,
+    //ProductDetailView, ProductDetailStep,// ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,// ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,// ProductWaitingList, ProductDetailComment
 } from "reducers/Products";
 import { DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail } from "reducers/Designers";
+import { MakerList, MakerDetail } from "reducers/Makers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
 import { SignIn, SignUp, FindPw } from "reducers/Registration";
 import { UserInfo, MyDetail, MyJoin } from "reducers/Users";
@@ -36,6 +33,8 @@ export default combineReducers({
     MyList, DeleteGroup, GroupIssue, MyExistList,
     // DESIGNER 
     DesignerList, DesignerLike, DesignerDetail,
+    // MAKER
+    MakerList, MakerDetail,
     // REQUEST
     Request, RequestDetail, RequestList, RequestComment,
     // MY

@@ -4,7 +4,8 @@ import host from "config";
 // NORMAL
 export const GetMakerListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
-    return fetch(`${host}/maker/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
+    const url = `${host}/maker/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET"
     })
@@ -16,14 +17,14 @@ export const GetMakerListRequest = (page, sort, cate1, cate2, keyword) => {
       .catch(error => dispatch(MakerListFail()));
   }
 };
-const GetMakerList = (data) => ({ type: types.GET_MAKER_LIST, MakerList: data });
-const MakerListClear = (data) => ({ type: types.MAKER_LIST_CLEAR, MakerList: data, MakerListAdded: [] });
-const MakerListFail = () => ({ type: types.MAKER_LIST_FAIL, MakerList: [], MakerListAdded: [] });
+const GetMakerList = (data) => ({ type: types.GET_MAKER_LIST, List: data });
+const MakerListClear = (data) => ({ type: types.MAKER_LIST_CLEAR, List: data, ListAdded: [] });
+const MakerListFail = () => ({ type: types.MAKER_LIST_FAIL, List: [], ListAdded: [] });
 
 
 export function GetMakerTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
-    const sql = `${host}/maker/count/${cate1}/${cate2}`;
+    const sql = `${host}/maker/list-count/${cate1}/${cate2}`;
     return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetMakerTotalCount(data ? data["count(*)"] : 0)))
@@ -44,7 +45,7 @@ export const GetMakerDetailRequest = (id) => {
 const GetMakerDetail = (data) => ({ type: types.GET_MAKER_DETAIL, MakerDetail: data });
 export function GetMakerCountRequest(id) {
   return (dispatch) => {
-    const sql = `${host}/maker/get-count/${id}`;
+    const sql = `${host}/maker/maker-count/${id}`;
     return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetMakerCount(data ? data : { total_like: 0, total_design: 0, total_group: 0, total_view: 0 })))

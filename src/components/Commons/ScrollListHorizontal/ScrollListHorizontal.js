@@ -5,12 +5,11 @@ import { Icon } from "semantic-ui-react";
 
 // CSS STYLE
 const ScrollContainer = styled.div`
-  // border: 1px solid red;
-  width: 100%;
+  padding-right: 10px;
   height: 330px;
   display: flex;
   overflow-x: scroll;
-  ::-webkit-scrollbar { display: none; }
+  ::-webkit-scrollbar { display: none; };
   .arrow {
     position: absolute;
     width: 35px;
@@ -19,6 +18,7 @@ const ScrollContainer = styled.div`
     margin-top: 125px;
     border-radius: 50%;
     background: #EFEFEF;
+    border: 1px solid #EEEEEE;
     &.left {
       padding-top: 4px;
       margin-left: 7px;
@@ -39,27 +39,30 @@ class ScrollListHorizontal extends Component {
   constructor(props) {
     super(props);
     this.state = { hasMore: true, loading: false };
-    this.hScroll = React.createRef();
+    this.scrollHorizon = this.scrollHorizon.bind(this);
   };
-  scrollLeft = e => { };
+  scrollHorizon(far) {
+    document.getElementById("content").scrollLeft += far;
+  }
+  scrollLeft = e => {
+    console.log("clicked", this.scroller);
+  };
   render() {
-    // console.log("scroll:", this.props);
     const { ListComponent } = this.props;
     const List = this.props.getMore ? this.props.dataListAdded : this.props.dataList
 
     return (
-      <ScrollContainer id="container">
-        <div className="arrow left" onClick={this.scrollLeft}>
-          <div>
-            <Icon name="caret left" size="big" />
-          </div>
-        </div>
-        <div className="arrow right"> <Icon name="caret right" size="big" /> </div>
+      <ScrollContainer id="content">
+        <div className="arrow left" onClick={() => this.scrollHorizon(-500)}>
+          <Icon name="caret left" size="big" /></div>
+
+        <div className="arrow right" onClick={() => this.scrollHorizon(500)}>
+          <Icon name="caret right" size="big" /></div>
+
         {List.length ? List.map(item =>
-          <div key={item.uid} style={{ marginRight: "45px" }}>
-            <ListComponent data={item} />
-          </div>
-        ) : (<div style={{ marginLeft: "auto", marginRight: "auto" }}>노 데이타!</div>)}
+          <div key={item.uid} style={{ paddingRight: "10px", marginRight: "45px" }}>
+            <ListComponent data={item} /></div>) : (
+            <div style={{ marginLeft: "auto", marginRight: "auto" }}>노 데이타!</div>)}
       </ScrollContainer>
     );
   }
