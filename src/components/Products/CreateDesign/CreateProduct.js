@@ -43,10 +43,11 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
-  margin-bottom: 100px;
-  position: relative;
-  z-index:3;
+    width:100%;
+    margin-top:60px;
+    margin-bottom: 100px;
+    position: relative;
+    z-index:3;
 `
 
 class CreateProduct extends Component {
@@ -60,13 +61,16 @@ class CreateProduct extends Component {
   render() {
     return (
       <div>
-        <ImgWrapper>
+        <Wrapper>
+            <CreateProductFormContainer setLoader={this.setLoader} />
+        </Wrapper>
+        {/* <ImgWrapper>
           <Title><h1>상품 등록</h1></Title>
         </ImgWrapper>
         <Wrapper>
           <CreateProductFormContainer setLoader={this.setLoader} />
         </Wrapper>
-        {this.state.loading && <Loading />}
+        {this.state.loading && <Loading />} */}
       </div>
     );
   }
