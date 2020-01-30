@@ -149,7 +149,7 @@ const DetailWrapper = styled.div`
   background-color: #F0F0F0;
   min-height: 250px;
   max-height: 600px;
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 0rem 0rem 0rem 0rem;
   overflow-y: scroll;
   position: relative;
   & p {
@@ -177,6 +177,8 @@ const AlarmLabel = styled.div`
   transform-origin: 0 0;
   -ms-transform-origin: 0 0;
 `;
+//현 문제 : 특정 채팅방에 접속한 뒤 다른 채팅방에 접속한 직 후에 알람의 제어가 꼬인다. 
+let test = 1; //보낼 사람이 변경됐을 때 알람의 수를 제어하기 위한 변수. 같은 채팅방에서 메세지를 보내면 test가 증가되고 채팅방을 변경하면 test가 1로 초기화 된다. 
 class MessageList extends Component {
   state = {
     msgId: -1,
@@ -185,10 +187,25 @@ class MessageList extends Component {
     openMember: false,
     friendList: [],
     render: true,
-    incidentalData:{currentUrl : "", selectedId: ""},
+    connectedCheck : false,//채팅을 받는 당사자가 접속돼있는지, 아닌지 판별하는 변수
   }
 
   async componentDidMount() {
+    Socket.on("connectedCheck", (sendingUserId)=>{
+      ++test;
+      console.log(test);
+      if(this.state.selectId=== sendingUserId){
+        this.setState({connectedCheck:true});
+      }else{
+        this.setState({connectedCheck:false});
+      }
+      this.props.CheckConnectedResponse(
+        this.props.token, 
+        {
+        "checkData" : this.state.connectedCheck,
+        "count" : test,
+        }, sendingUserId);
+    })
     await this.props.GetMyMsgListRequest(this.props.token)
       .then(async (res) => {
         if (res.MsgList && res.MsgList.length > 0) {
@@ -216,7 +233,6 @@ class MessageList extends Component {
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
       this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
-      console.log("this list : " + this.list._reactInternalFiber.child.stateNode.scrollTop);
     }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
@@ -249,7 +265,6 @@ class MessageList extends Component {
       render: false
     });
     const index = this.state.friendList.indexOf(data.uid);
-    console.log(this.state, this.props.MessageList, index);
     if (index === -1) {
       this.setState({
         selectId: data.uid,
@@ -270,6 +285,7 @@ class MessageList extends Component {
   }
 
   setMsgId = async (group_id, user_id, user_name) => {
+    test = 1; //보낼 사람이 바뀔 때 test를 1로 초기화 
     await this.setState({
       msgId: group_id,
       selectId: user_id,
@@ -295,15 +311,6 @@ class MessageList extends Component {
       alert("받는 사람을 지정해주세요.");
       return
     }
-    if(window.location.href === "http://localhost:3000/message"){
-      this.setState({incidentalData :
-        {
-          currentUrl:"message", 
-          selectedId:this.state.selectId
-        }
-      });
-    }    
-    
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data),this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {
@@ -366,7 +373,7 @@ class MessageList extends Component {
               </div>
               <DetailWrapper style={{ maxHeight: "250px" }} ref={ref => this.list = ref}>
                 {this.state.render &&
-                  <MessageDetailContainer id={this.state.msgId} />
+                  <MessageDetailContainer id={this.state.msgId} targetUid={this.state.selectId} />
                 }
               </DetailWrapper>
               <SendingMsg style={{ height: "50px" }}>
