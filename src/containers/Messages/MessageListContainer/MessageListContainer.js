@@ -33,8 +33,8 @@ const mapDispatchToProps = (dispatch) => {
     SearchMemberRequest: (id, data, token) => {
       return dispatch(SearchMemberRequest(id, data, token));
     },
-    CheckConnectedResponse :(token, checkData)=>{
-      return dispatch(CheckConnectedResponse(token, checkData));
+    CheckConnectedResponse :(token, checkData, id)=>{
+      return dispatch(CheckConnectedResponse(token, checkData, id));
     }
   };
 };

@@ -189,13 +189,15 @@ class MessageList extends Component {
   }
 
   async componentDidMount() {
-    Socket.on("connectedCheck", (uid)=>{
-      console.log("111111");
-      if(this.props.id === uid){
-        console.log(this.props.id+" "+uid)
+    Socket.on("connectedCheck", (sendingUserId)=>{
+      console.log(sendingUserId);
+      if(this.state.selectId=== sendingUserId){
         this.setState({connectedCheck:true});
+      }else{
+        this.setState({connectedCheck:false});
       }
-      this.props.CheckConnectedResponse(this.props.token, this.state.connectedCheck);
+      console.log(this.state.connectedCheck);
+      this.props.CheckConnectedResponse(this.props.token, {"checkData" : this.state.connectedCheck}, sendingUserId);
     })
     await this.props.GetMyMsgListRequest(this.props.token)
       .then(async (res) => {
@@ -364,7 +366,7 @@ class MessageList extends Component {
               </div>
               <DetailWrapper style={{ maxHeight: "250px" }} ref={ref => this.list = ref}>
                 {this.state.render &&
-                  <MessageDetailContainer id={this.state.msgId} />
+                  <MessageDetailContainer id={this.state.msgId} targetUid={this.state.selectId} />
                 }
               </DetailWrapper>
               <SendingMsg style={{ height: "50px" }}>

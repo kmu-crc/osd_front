@@ -84,8 +84,13 @@ class MessageDetail extends Component {
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
     try{
       Socket.emit("INIT", this.props.userInfo.uid)
-      Socket.on("getNewMsg", msgList=> {
-        this.setState({list_v1 : msgList}) // get
+      Socket.on("getNewMsg", (msgList, groupId)=> {
+        if(groupId == this.props.targetUid){
+          this.setState({list_v1 : msgList}) // get
+        }
+        else{
+          this.setState({list_v1:[]});
+        }
         // let obj = document.getElementById("ui comments");
         // obj.setAttribute("scrollTop", obj.scrollHeight); 
         // console.log(obj.scrollTop);

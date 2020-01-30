@@ -1,18 +1,21 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export function CheckConnectedResponse(token, checkData) {
-  console.log("cli!!")
+export function CheckConnectedResponse(token, checkData, id) {
+  console.log(JSON.stringify(checkData));
   return (dispatch) => {
-    return fetch(`${host}/users/checkOpponent`, {
+    //dispatch(CheckConnected());
+    return fetch(`${host}/users/checkOpponent/${id}`, {
       headers:{
         "Content-Type": "application/json",
         "x-access-token": token
       },
       method:"post",
-      body:checkData,
+      body:JSON.stringify(checkData),
     })
-    .catch((err)=>{console.log(err)})
+    .then(()=>{
+      console.log("success");
+    })
   }
 }
 
@@ -41,11 +44,19 @@ export function GetMyMsgListRequest(token) {
   }
 };
 
+export function CheckConnected(){
+  return {
+    type: types.CHECK_CONNECTED
+  }
+}
+
 export function GetMyMsgList() {
   return {
     type: types.GET_MY_MSG_LIST
   };
 };
+
+
 
 export function GetMyMsgListSuccess(data) {
   return {
