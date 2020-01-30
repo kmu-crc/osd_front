@@ -112,6 +112,8 @@ class MessageDetail extends Component {
 
   render() {
     const list = this.state.list_v1.length > 0 ?  this.state.list_v1 : this.props.MessageDetail;
+    console.log("v1 : "+this.state.list_v1.length);
+    console.log("listlist : "+this.props.MessageDetail.length);
     const myId = this.props.userInfo.uid;
     return (
       <MsgContent>
