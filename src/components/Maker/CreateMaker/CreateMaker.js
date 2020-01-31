@@ -61,6 +61,7 @@ const ThumbnailBox = styled.div`
     align-items:center;
     background:#E9E9E9;
     border-radius:50%;
+    margin-left:110px;
   }
 `
 
