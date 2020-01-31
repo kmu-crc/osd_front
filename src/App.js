@@ -80,7 +80,8 @@ class App extends Component {
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
             {/* <Route path="/payment/:id/:amount/:option" component={PaymentPage} /> */}
-            <Route path="/payment/:id/:title/:amount/:option/:thumbnail" component={PaymentPage} />
+            {/* <Route path="/payment/:id/:title/:amount/:option/:thumbnail" component={PaymentPage} /> */}
+            <Route path="/payment" component={PaymentPage} /> 
             <Route path="/cart" component={CartPage} />
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
           </Switch>

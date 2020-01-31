@@ -46,7 +46,8 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
+  width:100%;
+  margin-top:60px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
@@ -56,9 +57,6 @@ class PaymentContainer extends Component {
   render() {
     return(
         <div>
-        <ImgWrapper>
-          <Title><h1>상품 구매</h1></Title>
-        </ImgWrapper>
         <Wrapper>
           <Payment {...this.props}/>
         </Wrapper>
