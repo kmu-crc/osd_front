@@ -113,7 +113,10 @@ const ItemInfo = styled.div`
       &.first { 
         color: #FFFFFF; background: #FF0000; margin-right: 27px; }
       &.second { 
-        color: #FF0000; background: #FFFFFF; }
+        border: 1px solid red;
+        color: #FF0000;
+        background: #FFFFFF; 
+      }
     }
   }
 `;
@@ -195,6 +198,7 @@ const Reviews = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
+  // padding: 
 `;
 const empty = {
   title: "Lorem Ipsum", nickName: "fdnwodfowfdn", price: 18000, rate: 4, reviews: 30,
@@ -228,14 +232,72 @@ const Page = styled.div`
     .another {}
     .more {}
 `;
+const Board = styled.div`
+  width: 1094px;
+  height: 892px;
+  background: #FFFFFF;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  opacity: 1;
+  padding: 90px 51px 45px 60px;
+  font-family: Noto Sans KR;
+  color: #000000;
+  font-weight: 300;
+  font-size: 19px;
+  line-height: 28px;
+  text-align: left;
+
+  .title {
+    font-weight: 500;
+  }
+  .element {
+    margin-top: 22px;
+  }
+  .element-reply {
+    margin-top: 14px;
+  }
+  .first {
+    margin-top: 50px; 
+  }
+  .input-wrapper {
+     width: 735px;
+     height: 88px;
+     border-radius: 21px;
+     background: #E9E9E9;
+     padding: 15px;
+     textarea {
+      width: 705px;
+      height: 58px;
+      border: none;
+      background: none;
+      resize: none;
+    }
+  }
+  .button {
+    width: 205px;
+    height: 88px;
+    margin-left: 39px;
+    border: 3px solid #E9E9E9;
+    cursor: default;
+    .text {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 32px;
+      width: max-content;
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 25px;
+      text-align: left;
+    }
+  }
+`;
 
 class ItemDetail extends Component {
   render() {
-    const item = this.props.item || empty;
-    console.log(item);
+    const item = this.props.item || empty; // console.log(item);
+
     return !item ? (<div>loading...</div>) :
       (<Wrapper>
-
         <div className="line">
           <ItemImages main={item.mainImage}>
             <div className="main-image"></div>
@@ -285,7 +347,7 @@ class ItemDetail extends Component {
         <div className="line">
           <div>
             <div className="line" style={{ marginTop: "110px" }}>
-              <Detail mRight={160}>
+              <Detail mRight={101}>
                 <div className="title">상품 상세설명</div>
                 <div className="text">{item.detail}</div>
               </Detail>
@@ -299,29 +361,104 @@ class ItemDetail extends Component {
                 <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div>
               </Delivery>
             </div>
-            <div>board</div>
+            <div style={{ marginTop: "95px" }}>
+              <Board>
+                <div className="title">디자인 의뢰 게시판</div>
+
+                <div className="line" style={{ marginTop: "34px", }}>
+                  <div className="input-wrapper">
+                    <textarea />
+                  </div>
+                  <div className="button" >
+                    <div className="text" >의뢰하기</div></div>
+                </div>
+
+                <div className="line first">
+                  <div>천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element-reply">
+                  <div> &#x0221F; [Re] 천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element">
+                  <div>천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element-reply">
+                  <div> &#x0221F; [Re] 천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element">
+                  <div>천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element-reply">
+                  <div> &#x0221F; [Re] 천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element">
+                  <div>천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element-reply">
+                  <div> &#x0221F; [Re] 천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element">
+                  <div>천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+                <div className="line element-reply">
+                  <div> &#x0221F; [Re] 천지는 맞어, 끓는 법을 곧 것이다</div>
+                  <div style={{ marginLeft: "auto" }}>디자인 의뢰자</div>
+                  <div style={{ marginLeft: "181px" }}>2020.01.01</div>
+                </div>
+
+                <Page>
+                  <div className="this number">1</div>
+                  <div className="another number">2</div>
+                  <div className="another number">3</div>
+                  <div className="another number">4</div>
+                  <div className="more">...</div>
+                </Page>
+
+              </Board>
+            </div>
           </div>
-          <Reviews>
-            <div className="line">
-              <div className="title">리뷰</div>
-              <div className="rate">{Star(item.rate)}({item.reviews})</div>
-            </div>
-            <div className="line list-element">
-              <div className="pics" />
-              <div>
-                <div className="rate">{Star(4)}({30})</div>
-                <div className="comment">생각보다 튼튼하고 예쁩니다!</div>
-                <div className="nickname">fdnwodfowfdn</div>
+
+          <div style={{ marginTop: "110px" }}>
+            <Reviews>
+              <div className="line">
+                <div className="title">리뷰</div>
+                <div className="rate">{Star(item.rate)}({item.reviews})</div>
               </div>
-            </div>
-            <Page>
-              <div className="this number">1</div>
-              <div className="another number">2</div>
-              <div className="another number">3</div>
-              <div className="another number">4</div>
-              <div className="more">...</div>
-            </Page>
-          </Reviews>
+              <div className="line list-element">
+                <div className="pics" />
+                <div>
+                  <div className="rate">{Star(4)}({30})</div>
+                  <div className="comment">생각보다 튼튼하고 예쁩니다!</div>
+                  <div className="nickname">fdnwodfowfdn</div>
+                </div>
+              </div>
+              <Page>
+                <div className="this number">1</div>
+                <div className="another number">2</div>
+                <div className="another number">3</div>
+                <div className="another number">4</div>
+                <div className="more">...</div>
+              </Page>
+            </Reviews>
+          </div>
         </div>
       </Wrapper>)
   }

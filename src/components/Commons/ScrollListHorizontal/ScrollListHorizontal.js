@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
-// import InfiniteScroll from "react-infinite-scroller";
 
 // CSS STYLE
 const ScrollContainer = styled.div`
-  padding-right: 10px;
+  padding: 5px 10px 10px 5px;
   height: 330px;
   display: flex;
   overflow-x: scroll;
@@ -38,25 +37,23 @@ const ScrollContainer = styled.div`
 class ScrollListHorizontal extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasMore: true, loading: false };
+    this.state = { hasMore: true, loading: false, scrollOffset: 500 };
     this.scrollHorizon = this.scrollHorizon.bind(this);
   };
   scrollHorizon(far) {
     document.getElementById("content").scrollLeft += far;
-  }
-  scrollLeft = e => {
-    console.log("clicked", this.scroller);
   };
+
   render() {
     const { ListComponent } = this.props;
     const List = this.props.getMore ? this.props.dataListAdded : this.props.dataList
 
     return (
       <ScrollContainer id="content">
-        <div className="arrow left" onClick={() => this.scrollHorizon(-500)}>
+        <div className="arrow left" onClick={() => this.scrollHorizon(-1 * this.state.scrollOffset)}>
           <Icon name="caret left" size="big" /></div>
 
-        <div className="arrow right" onClick={() => this.scrollHorizon(500)}>
+        <div className="arrow right" onClick={() => this.scrollHorizon(1 * this.state.scrollOffset)}>
           <Icon name="caret right" size="big" /></div>
 
         {List.length ? List.map(item =>

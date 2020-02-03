@@ -260,9 +260,9 @@ class MakerDetail extends Component {
   }
   componentWillMount() {
     this.props.GetMakerDetailRequest(this.props.id);
-    if (this.props.token) {
-      this.props.GetLikeMakerRequest(this.props.id, this.props.token);
-    }
+    // if (this.props.token) {
+    // this.props.GetLikeMakerRequest(this.props.id, this.props.token);
+    // }
   }
   render() {
     const expert = this.props.MakerDetail || empty;

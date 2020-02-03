@@ -19,7 +19,7 @@ class ScrollMakerListContainer extends Component {
         dataList={this.props.dataList}
         dataListAdded={this.props.dataListAdded}
         ListComponent={Expert}
-        type="Maker" />
+        type="maker" />
     );
   }
 }
