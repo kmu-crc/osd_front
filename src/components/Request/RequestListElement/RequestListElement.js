@@ -24,6 +24,18 @@ const ListElement = styled.div`
   display: flex;
   fiex-direction: row;
   cursor: default;
+  .status-box{
+    width: max-content;
+    height: 25px;
+    line-height: 15px;
+    background: hotpink;
+    color: white;
+    font-family: Noto Sans KR;
+    font-weight: 500;
+    padding: 3px 5px 2px 5px;
+    border-radius: 15px;
+    margin-right: 5px;
+  }
 `;
 const ThumbnailWriter = styled.div`
   width: 35px;
@@ -43,7 +55,7 @@ class DesignerBoardElement extends Component {
         {/* no.*/}
         <div style={{ marginRight: "15px" }}>{item.uid}</div>
         {/* title */}
-        <div style={{ marginRight: "15px" }}>{item.private === 0 ? "" : "[비공개]"}{item.status === "request" ? "[의뢰]" : ""}{item.title || "글 제목"}</div>
+        <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>{item.private === 0 ? "" : "[비공개]"}{item.status === "request" ? <div className="status-box">의뢰</div> : ""}{item.title || "글 제목"}</div>
         {/* writer */}
         <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
           <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>

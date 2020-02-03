@@ -3,59 +3,54 @@ import styled from "styled-components";
 import noimg from "source/noimg.png";
 
 const MainBox = styled.div`
-
-  width:1790px;
-  height:1959px;
-  margin-top:10px;
-  .header{
-    width:100%;
-    height:372px;
-    margin-bottom:94px;
-    display:flex;
+  width: 1790px;
+  height: 1959px;
+  margin-top: 10px;
+  .header {
+    width: 100%;
+    height: 372px;
+    margin-bottom: 94px;
+    display: flex;
   }
-  .contents{
-    width:100%;
-    height:1493px;
-    display:flex;
+  .contents {
+    width: 100%;
+    height: 1493px;
+    display: flex;
   }
-`
+`;
 const ProfileBox = styled.div`
- 
-    width:285px;
-    height:372px;
-    border-radius:20px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 5px 5px 10px #00000029;
+  width: 285px;
+  height: 372px;
+  border-radius: 20px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 5px 5px 10px #00000029;
 
-    .fontBig{font-size:19px;}
-    .fontSmall{font-size:13px;}
-    .fontStyleNormal{font-family:Noto Sans KR,Medium; font-weight:500;}
-    .fontStyleLight{font-family:Noto Sans KR,Light; font-weight:200;}
-    .red{color:red;}
-    .normal{color:#060000;}
+  .fontBig{font-size:19px;}
+  .fontSmall{font-size:13px;}
+  .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
+  .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
+  .red{color:red;}
+  .normal{color:#060000;}
 
-    .imageBox{
-      width:100%;
-      height:236px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
-    .LabelBox{
-      width:100%;
-      height:28px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
-
+  .imageBox {
+    width: 100%;
+    height: 236px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .LabelBox {
+    width: 100%;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 const InformationBox = styled.div`
-    *{
-    }
-
+    *{}
     .fontBig{font-size:20px;}
-    .fontStyleNormal{font-family:Noto Sans KR,Medium; font-weight:500;}
+    .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
     .red{color:red;}
 
     width:1388px;
@@ -93,7 +88,7 @@ const InformationBox = styled.div`
 
     }
 `
-const MenuBox= styled.div`
+const MenuBox = styled.div`
     *{
       color:#060000;
     }
@@ -128,7 +123,7 @@ const MenuButton = styled.div`
   margin-left:15px;
   margin-bottom:30px;
   cursor:pointer;
-  color:${props=>props.fontColor==null?"#060000":props.fontColor};
+  color:${props => props.fontColor == null ? "#060000" : props.fontColor};
 `
 const BoardBox = styled.div`
     width:1388px;
@@ -143,107 +138,107 @@ const Thumbnail = styled.div`
     width:190px;
     height:190px;
     border-radius:50%;
-    background-image:url(${props=>props.URL==null?noimg:props.URL});
+    background-image:url(${props => props.URL == null ? noimg : props.URL});
 `
 const EmptyBox = styled.div`
-    width:${props=>props.width}px;
-    height:${props=>props.height}px;
+    width:${props => props.width}px;
+    height:${props => props.height}px;
 `
 
 const RoundButton = styled.div`
-    width:${props=>props.width}px;
-    height:${props=>props.height}px;
-    color:${props=>props.color};
-    border:1px solid ${props=>props.borderColor};
+    width:${props => props.width}px;
+    height:${props => props.height}px;
+    color:${props => props.color};
+    border:1px solid ${props => props.borderColor};
     border-radius:21px;
     display:flex;
     justify-content:center;
     align-items:center;
     cursor:pointer;
 `
-class MyDetail extends Component{
+class MyDetail extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { selectMenu:-1,}
+    this.state = { selectMenu: -1, }
     this.onClickMenu = this.onClickMenu.bind(this);
   }
-  onClickMenu(event){
+  onClickMenu(event) {
     let selectMenu = -1;
-    switch(event.target.id){
-      case "orderlist":selectMenu=0; break;
-      case "myreview":selectMenu=1; break;
-      case "writereview":selectMenu=2; break;
-      case "refund":selectMenu=3; break;
-      case "interestlist":selectMenu=4; break;
-      case "designeritem":selectMenu=5; break;
-      case "makeritem":selectMenu=6; break;
+    switch (event.target.id) {
+      case "orderlist": selectMenu = 0; break;
+      case "myreview": selectMenu = 1; break;
+      case "writereview": selectMenu = 2; break;
+      case "refund": selectMenu = 3; break;
+      case "interestlist": selectMenu = 4; break;
+      case "designeritem": selectMenu = 5; break;
+      case "makeritem": selectMenu = 6; break;
     }
     console.log(this.state.selectMenu);
-    this.setState({selectMenu:selectMenu});
+    this.setState({ selectMenu: selectMenu });
   }
-  render(){
-    console.log("myDetail",this.props);
-    return(
+  render() {
+    console.log("myDetail", this.props);
+    return (
       <React.Fragment>
         <MainBox>
           <div className="header">
             <ProfileBox>
               <div className="imageBox">
-                <Thumbnail URL={this.props.MyDetail.profileImg == null ? noimg : this.props.MyDetail.profileImg.m_img}/>
+                <Thumbnail URL={this.props.MyDetail.profileImg == null ? noimg : this.props.MyDetail.profileImg.m_img} />
               </div>
               <div className="LabelBox fontBig fontStyleNormal">{this.props.MyDetail.nick_name}</div>
               <div className="LabelBox fontSmall fontStyleLight red">카테고리</div>
-              <EmptyBox height={32}/>
-              <div className="LabelBox"> 
-                  <span className="fontSmall normal fontStyleLight">300개의 아이템 |</span>&nbsp;
-                  <span className="red">♥</span> 
-                  <span className="fontSmall normal fontStyleNormal">5000000</span>
+              <EmptyBox height={32} />
+              <div className="LabelBox">
+                <span className="fontSmall normal fontStyleLight">300개의 아이템 |</span>&nbsp;
+                  <span className="red">♥</span>
+                <span className="fontSmall normal fontStyleNormal">5000000</span>
               </div>
             </ProfileBox>
             <InformationBox>
               <div className="grayBox">
                 <div className="wrap">
-                <div className="title fontBig fontStyleNormal red">다양한 아이디어를 판매하세요!</div>
-                <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">디자이너 등록 / 관리</div></RoundButton>
+                  <div className="title fontBig fontStyleNormal red">다양한 아이디어를 판매하세요!</div>
+                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">디자이너 등록 / 관리</div></RoundButton>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
-                <div className="title fontBig fontStyleNormal red">제작 기술을 공유하고 장소를 <br/> 쉐어해보세요!</div>
-                <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">메이커 등록 / 관리</div></RoundButton>
+                  <div className="title fontBig fontStyleNormal red">제작 기술을 공유하고 장소를 <br /> 쉐어해보세요!</div>
+                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">메이커 등록 / 관리</div></RoundButton>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
-                <div className="title fontBig fontStyleNormal red">본인인증을 통해 더욱 다양한 <br/> 혜택을 누려보세요!</div>
-                <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">본인 인증 하기</div></RoundButton>
+                  <div className="title fontBig fontStyleNormal red">본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div>
+                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">본인 인증 하기</div></RoundButton>
                 </div>
               </div>
             </InformationBox>
           </div>
           <div className="contents">
             <MenuBox>
-                <div className="title_Label">구매내역</div>
-                <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu==0?"red":null}>주문 아이템 정보</MenuButton>
-                <MenuButton id="myreview" onClick={this.onClickMenu} fontColor={this.state.selectMenu==1?"red":null}>내가 쓴 구매후기</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">구매내역</div>
+              <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 0 ? "red" : null}>주문 아이템 정보</MenuButton>
+              <MenuButton id="myreview" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 1 ? "red" : null}>내가 쓴 구매후기</MenuButton>
+              <div className="hrLine" />
 
-                <div className="title_Label">리뷰</div>
-                <MenuButton id="writereview" onClick={this.onClickMenu} fontColor={this.state.selectMenu==2?"#FF0000":null}>구매 후기 쓰기</MenuButton>
-                <MenuButton id="refund" onClick={this.onClickMenu} fontColor={this.state.selectMenu==3?"red":null}>반품 / 교환 / 취소 내역</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">리뷰</div>
+              <MenuButton id="writereview" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 2 ? "#FF0000" : null}>구매 후기 쓰기</MenuButton>
+              <MenuButton id="refund" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 3 ? "red" : null}>반품 / 교환 / 취소 내역</MenuButton>
+              <div className="hrLine" />
 
-                <div className="title_Label">아이템</div>
-                <MenuButton id="interestlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu==4?"red":null}>관심 아이템</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">아이템</div>
+              <MenuButton id="interestlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 4 ? "red" : null}>관심 아이템</MenuButton>
+              <div className="hrLine" />
 
-                <div className="title_Label">디자이너</div>
-                <MenuButton id="designeritem" onClick={this.onClickMenu} fontColor={this.state.selectMenu==5?"red":null}>등록 아이템</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">디자이너</div>
+              <MenuButton id="designeritem" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 5 ? "red" : null}>등록 아이템</MenuButton>
+              <div className="hrLine" />
 
-                <div className="title_Label">메이커</div>
-                <MenuButton id="makeritem" onClick={this.onClickMenu} fontColor={this.state.selectMenu==6?"red":null}>등록 아이템</MenuButton>
+              <div className="title_Label">메이커</div>
+              <MenuButton id="makeritem" onClick={this.onClickMenu} fontColor={this.state.selectMenu == 6 ? "red" : null}>등록 아이템</MenuButton>
 
             </MenuBox>
             <BoardBox>
@@ -254,4 +249,4 @@ class MyDetail extends Component{
       </React.Fragment>
     );
   }
-}export default MyDetail;
+} export default MyDetail;

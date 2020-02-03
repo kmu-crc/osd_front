@@ -1,61 +1,49 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ScrollRequestListContainer from "containers/Request/ScrollRequestListContainer";
 import ContentBox from "components/Commons/ContentBox";
-import CategoryContainer from "containers/Commons/CategoryContainer/CategoryContainer";
-import StyleGuide from "StyleGuide";
-import NumberFormat from "modules/NumberFormat";
-import Button from "components/Commons/Button";
-import { Link } from "react-router-dom";
+import Category from "components/Commons/Category";
 
 // CSS STYLING
 const Wrapper = styled.div`
   width: 100%;
-  &.header {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  &.left {
+    margin-left: auto;
   }
 `;
 const Content = styled(ContentBox)`
+  margin-top: ${props => props.top}px;
+  width: 1790px;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
       margin-left: 6.25% !important;
     }
   }
+  background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
-const MenuContainer = styled(Grid)`
-  & .sorting {
-    text-align: right;
-    line-height: 50px;
-  }
-  & .ui.default.dropdown:not(.button)>.text,
-  & .ui.dropdown:not(.button)>.default.text {
-    color: inherit;
-  }
-  &.ui.grid > .row {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-  }
+const RequestButton = styled.div`
+  margin-left: 100px;
+  width: 150px;
+  color: #FF0000;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  line-height: 29px;
 `;
-const MenuWrap = styled.div`
-  background-color: white;
-  border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 1px 1px 1px ${StyleGuide.color.geyScale.scale3};
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  z-index: 3;
-`;
-const Head = styled.div`
-  padding-top: 80px;
-  padding-bottom: 2rem;
-  font-size: ${StyleGuide.font.size.paragraph};
+const Container = styled.div`
   display: flex;
-  & .Sorting{
-    float: right;
+  .categoy {
+    width: max-content;
+  }
+  .sort {
+    width: max-content;
+    margin-left: auto;
+  }
+  .request {
+    width: max-content;
   }
 `;
 const ListElement = styled.div`
@@ -64,8 +52,8 @@ const ListElement = styled.div`
   font-size: 13px;
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
-  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
-  background-color: #fff;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF;
   text-align: left;
   box-sizing: border-box;
   padding: 10px;
@@ -77,7 +65,7 @@ const ListElement = styled.div`
 class RequestList extends Component {
   constructor(props) {
     super(props);
-    this.state = { rendering: true, path:"request" };
+    this.state = { rendering: true, path: "request" };
   }
   componentDidMount() {
     this.props.GetRequestTotalCountRequest(this.props.cate1, this.props.cate2);
@@ -104,75 +92,48 @@ class RequestList extends Component {
     this.props.history.replace(`/${this.state.path}/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.changeState();
   }
-
+  resetCate = () => {
+    this.props.history.replace(`/${this.state.path}/${this.props.sort}`);
+    this.changeState();
+  }
   render() {
-    const { sort, cate1, cate2, Count } = this.props;
-    const Header = () => {
-      const cate1List = this.props.category1;
-      const cate2List = this.props.category2;
+    const { sort, category1, category2, cate1, cate2 } = this.props;
+    return (
+      <React.Fragment>
+        <Content top={116}>
+          <Container>
+            <div className="category">
+              <Category
+                handleCate2={this.cate2Change}
+                handleCate1={this.cate1Change}
+                resetCate={this.resetCate}
+                cate1={cate1}
+                cate2={cate2}
+                category1={category1}
+                category2={category2}
+                which="게시판" /></div>
+            <div className="sort">
+              <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
+            <div className="request"><RequestButton>
+              <Link to={`/requestToDesigner/null`}>디자인 의뢰하기</Link></RequestButton></div>
+          </Container>
+        </Content>
 
-      if (!(cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0)) {
-        return <div>NOTHING</div>;
-      }
-
-      const cate1Name = cate1 && cate1 !== "null" ? cate1List[cate1] : null;
-      const cate2Name = cate2 && cate2 !== "null" ? cate2List[parseInt(cate1, 10)].filter(sub => sub.value === parseInt(cate2, 10)) : null;
-
-      return (
-        <Head>
-          <div style={{ width: "max-content" }}>
-            <span>디자이너 </span>
-            {cate1 && cate1 !== "null" && <span> > {cate1Name.text} </span>}
-            {cate2 && cate2 !== "null" && <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>}
-            <span> ({NumberFormat(Count)})</span>
-          </div>
-
-          {/* write button */}
-          <div style={{ marginLeft: "auto", width: "max-content" }}>
-            <Link to={`/createrequest`}><Button color="Primary">글쓰기</Button></Link>
-          </div>
-
-          {/* hide private */}
-          {/* ... */}
-
-          {/* <div className="Sorting"> */}
-          <div style={{ width: "max-content" }}>
-            <Sorting handleClick={this.sortChange} placeholder={sort} />
-          </div>
-        </Head>
-      );
-    };
-
-    return (<React.Fragment>
-      <MenuWrap>
-        <Content>
-          <Wrapper>
-            <MenuContainer devided="vertically" padded={true} columns={2}>
-              <Grid.Row stretched={false}>
-                <CategoryContainer board="designer" handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2} />
-              </Grid.Row>
-            </MenuContainer>
+        <Content top={100}>
+          <ListElement>
+            {/* no.     */}<div style={{ marginRight: "15px" }}>번호</div>
+            {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
+            {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
+            {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
+            {/* view    */}<div style={{ marginRight: "15px" }}>조회수</div>
+            {/* like    */}<div style={{ marginRight: "15px" }}>좋아요</div>
+          </ListElement>
+          <Wrapper className="listWrap">
+            {this.state.rendering &&
+              <ScrollRequestListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
           </Wrapper>
         </Content>
-      </MenuWrap>
-      <Content>
-
-        <Header />
-
-        <ListElement>
-          {/* no.     */}<div style={{ marginRight: "15px" }}>번호</div>
-          {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
-          {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
-          {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
-          {/* view    */}<div style={{ marginRight: "15px" }}>조회수</div>
-          {/* like    */}<div style={{ marginRight: "15px" }}>좋아요</div>
-        </ListElement>
-        <Wrapper className="listWrap">
-          {this.state.rendering &&
-            <ScrollRequestListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
-        </Wrapper>
-      </Content>
-    </React.Fragment>);
+      </React.Fragment>);
   }
 }
 

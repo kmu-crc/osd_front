@@ -7,9 +7,8 @@ const initialState = {
   // TopDesignerList: { status: "INIT" },
   status: {
     ExpertList: [],
-    DesignList: [],
-    DesignListAdded: [],
-    // DesignerList: []
+    ItemList: [],
+    ItemListAdded: [],
   }
 };
 
@@ -18,34 +17,34 @@ export function TopList(state, action) {
     state = initialState;
   }
   switch (action.type) {
-    case types.GET_TOP_DESIGN_LIST_SUCCESS:
+    case types.GET_TOP_ITEM_LIST_SUCCESS:
       return update(state, {
         TopList: {
           status: { $set: "SUCCESS" }
         },
         status: {
-          DesignList: { $set: action.TopList },
-          DesignListAdded: { $push: action.TopList }
+          ItemList: { $set: action.TopList },
+          ItemListAdded: { $push: action.TopList }
         }
       });
-    case types.GET_TOP_DESIGN_LIST_FAILURE:
+    case types.GET_TOP_ITEM_LIST_FAILURE:
       return update(state, {
         TopList: {
           status: { $set: "FAILURE" }
         },
         status: {
-          DesignList: { $set: action.TopList },
-          DesignListAdded: { $set: action.TopList }
+          ItemList: { $set: action.TopList },
+          ItemListAdded: { $set: action.TopList }
         }
       });
-    case types.GET_TOP_DESIGN_LIST_CLEAR:
+    case types.GET_TOP_ITEM_LIST_CLEAR:
       return update(state, {
         TopList: {
           status: { $set: "SUCCESS" }
         },
         status: {
-          DesignList: { $set: action.TopList },
-          DesignListAdded: { $set: action.TopList }
+          ItemList: { $set: action.TopList },
+          ItemListAdded: { $set: action.TopList }
         }
       });
     case types.GET_TOP_DESIGNER_LIST_SUCCESS:
