@@ -40,10 +40,11 @@ class Main extends Component {
           <MainSlide />
         </ImgWrapper>
         <Wrapper>
-          <TextWrapper><Head>인기 메이커/디자이너</Head></TextWrapper>
+          <TextWrapper>
+            <Head>인기 디자이너 / 메이커</Head></TextWrapper>
           <ScrollTopDesignerContainer />
         </Wrapper>
-        <Wrapper top={88}>
+        <Wrapper top={154}>
           <TextWrapper><Head>인기 아이템</Head></TextWrapper>
           <ScrollTopProductContainer />
         </Wrapper>

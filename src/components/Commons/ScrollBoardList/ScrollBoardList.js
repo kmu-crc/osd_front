@@ -5,16 +5,7 @@ import styled from "styled-components";
 
 // css styling
 const ScrollContainer = styled.div`
-  & .ui.centered.inline.loader.active.loading,
-  & .ui.centered.inline.loader.visible.loading {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-  & p {
-    text-align: center;
-  }
+  width: 100%;
 `;
 
 class ScrollBoardList extends Component {

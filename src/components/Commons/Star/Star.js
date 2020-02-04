@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Wrapper = styled.p`
     font-size: 15px;
     display: flex;
     flex-direction: row;
@@ -21,7 +21,7 @@ const Star = (rate) => {
         else { star.push("☆") }//<i key={i} className="icon star outline" />) }
     }
     return (
-        <React.Fragment>{star}</React.Fragment>
+        <Wrapper>{star}</Wrapper>
         // <Wrapper title={`5점 만점에 ${rate}점`}>
         // <div >{star}</div>
         // {/* <div className="rate">({rate}/5)</div> */}

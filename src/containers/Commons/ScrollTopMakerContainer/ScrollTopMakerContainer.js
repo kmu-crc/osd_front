@@ -16,6 +16,7 @@ class ScrollTopMakerContainer extends Component {
         <ScrollListNew
           // getListRequest={this.getList}
           ListComponent={Maker}
+          type="maker"
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
           mobile={4} tablet={4} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom" />
     );

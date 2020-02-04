@@ -17,9 +17,11 @@ const GetTopExpertListSuccess = (data) => ({ type: types.GET_TOP_EXPERT_LIST_SUC
 const GetTopExpertListFailure = () => ({ type: types.GET_TOP_EXPERT_LIST_FAILURE, ExpertList: [] });
 
 // 탑 디자인 가져오기
-export const GetTopDesignListRequest = page => {
+export const GetTopItemListRequest = page => {
   return (dispatch) => {
-    return fetch(`${host}/product/TopList/${page}`, {
+    const url = `${host}/product/TopList/${page}`
+    console.log(url)
+    return fetch(url, {
       headers: { "Content-Type": "application/json" }, method: "GET"
     }).then(res => res.json())
       .then(data => dispatch(
@@ -29,9 +31,9 @@ export const GetTopDesignListRequest = page => {
       .catch(error => dispatch(GetTopDesignListFailure()))
   }
 };
-const GetTopDesignListSuccess = data => ({ type: types.GET_TOP_DESIGN_LIST_SUCCESS, TopList: data });
-const GetTopDesignListFailure = () => ({ type: types.GET_TOP_DESIGN_LIST_FAILURE, TopList: [], TopListAdded: [] });
-const GetTopDesignListClear = data => ({ type: types.GET_TOP_DESIGN_LIST_CLEAR, TopList: data, TopListAdded: [] })
+const GetTopDesignListSuccess = data => ({ type: types.GET_TOP_ITEM_LIST_SUCCESS, TopList: data });
+const GetTopDesignListFailure = () => ({ type: types.GET_TOP_ITEM_LIST_FAILURE, TopList: [], TopListAdded: [] });
+const GetTopDesignListClear = data => ({ type: types.GET_TOP_ITEM_LIST_CLEAR, TopList: data, TopListAdded: [] })
 
 // // 탑 디자이너 가져오기
 // export function GetTopDesignerListRequest() {

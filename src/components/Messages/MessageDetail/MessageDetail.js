@@ -80,11 +80,17 @@ class MessageDetail extends Component {
     test : [],
   }
   componentDidMount() {
+    var divdiv = document.getElementById("comments");
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
     try{
       Socket.emit("INIT", this.props.userInfo.uid)
-      Socket.on("getNewMsg", msgList=> {
-        this.setState({list_v1 : msgList}) // get
+      Socket.on("getNewMsg", (msgList, groupId)=> {
+        if(groupId == this.props.targetUid){
+          this.setState({list_v1 : msgList}) // get
+        }
+        else{
+          this.setState({list_v1:[]});
+        }
         // let obj = document.getElementById("ui comments");
         // obj.setAttribute("scrollTop", obj.scrollHeight); 
         // console.log(obj.scrollTop);
@@ -98,13 +104,7 @@ class MessageDetail extends Component {
     this.props.GetMyMessageDetailClear();
   }
   shouldComponentUpdate(nextProps) {
-    // setTimeout(() => {
-    //   this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
-    // }, 100);
     var divdiv = document.getElementById("comments");
-    // console.log("======"+divdiv.scrollTop, divdiv.scrollHeight);
-    // divdiv.setAttribute("scrollTop", divdiv.scrollHeight);
-    // console.log("++++++"+divdiv.scrollTop, divdiv.scrollHeight);
     divdiv.scrollIntoView(false);
     return true;
   }
@@ -112,6 +112,8 @@ class MessageDetail extends Component {
 
   render() {
     const list = this.state.list_v1.length > 0 ?  this.state.list_v1 : this.props.MessageDetail;
+    console.log("v1 : "+this.state.list_v1.length);
+    console.log("listlist : "+this.props.MessageDetail.length);
     const myId = this.props.userInfo.uid;
     return (
       <MsgContent>

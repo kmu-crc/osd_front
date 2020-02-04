@@ -169,6 +169,7 @@ class Header extends Component {
       try {
         Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", alarms => {
+          console.log("alarm@@@@@@@@@@@@@@@@@@@");
           this.setState({ alarms: alarms });
         });
 

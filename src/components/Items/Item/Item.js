@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Star from "components/Commons/Star";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from 'modules/TextFormat';
-import { geturl } from 'config';
 import noimg from "source/noimg.png";
+// import { geturl } from 'config';
 
 const Wrapper = styled.div`
   border: 1px solid transparent;
@@ -65,7 +65,6 @@ const NumberWrapper = styled.div`
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 };
 class Item extends Component {
   render() {
-    console.log(this.props.data);
     const item = this.props.data || empty;
     return (
       <Wrapper>

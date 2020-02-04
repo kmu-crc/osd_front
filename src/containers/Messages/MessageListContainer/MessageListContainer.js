@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageList from "components/Messages/MessageList";
-import { GetMyMsgListRequest, SendMessageRequest } from "actions/Message";
+import { GetMyMsgListRequest, SendMessageRequest, CheckConnectedResponse } from "actions/Message";
 import { SearchMemberRequest } from "actions/Commons/Search";
 
 class MessageListContainer extends Component {
@@ -32,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     SearchMemberRequest: (id, data, token) => {
       return dispatch(SearchMemberRequest(id, data, token));
+    },
+    CheckConnectedResponse :(token, checkData, id)=>{
+      return dispatch(CheckConnectedResponse(token, checkData, id));
     }
   };
 };

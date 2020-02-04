@@ -9,6 +9,7 @@ import TextFormat from "modules/TextFormat";
 import RequestCommentContainer from "./RequestDetailCommentContainer";
 import NumberFormat from "modules/NumberFormat";
 import DateFormat from "modules/DateFormat";
+import Loading from "components/Commons/Loading";
 
 // CSS STYLING
 const Wrapper = styled(ContentBox)`
@@ -75,11 +76,8 @@ class Viewer extends Component {
 };
 class Detail extends Component {
   render() {
-    console.log("props:", this.props);
     const { Detail } = this.props;
-
-    if (Detail == null) return <div>No data.</div>
-
+    const dtl = this.props.Detail;
     const Navigation = () => {
       return <ContentBox>
         <Grid.Row>
@@ -118,7 +116,9 @@ class Detail extends Component {
         </Grid.Row>
       </ContentBox>
     };
-
+    console.log("Log-Request:", Detail);
+    if (Detail === []) return <Loading />;
+    if (Detail.private === 1) return <div>PRIVATE-REQUEST</div>
     return (<React.Fragment>
       <Wrapper>
         <Navigation />

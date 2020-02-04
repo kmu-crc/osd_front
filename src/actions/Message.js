@@ -1,6 +1,24 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+export function CheckConnectedResponse(token, checkData, id) {
+  console.log(JSON.stringify(checkData));
+  return (dispatch) => {
+    //dispatch(CheckConnected());
+    return fetch(`${host}/users/checkOpponent/${id}`, {
+      headers:{
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method:"post",
+      body:JSON.stringify(checkData),
+    })
+    .then(()=>{
+      console.log("success");
+    })
+  }
+}
+
 export function GetMyMsgListRequest(token) {
   return (dispatch) => {
     dispatch(GetMyMsgList());
@@ -13,7 +31,7 @@ export function GetMyMsgListRequest(token) {
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("message list data >>", data);
+        //console.log("message list data >>", data);
         if (!data) {
           console.log("no message");
           data = [];
@@ -26,11 +44,19 @@ export function GetMyMsgListRequest(token) {
   }
 };
 
+export function CheckConnected(){
+  return {
+    type: types.CHECK_CONNECTED
+  }
+}
+
 export function GetMyMsgList() {
   return {
     type: types.GET_MY_MSG_LIST
   };
 };
+
+
 
 export function GetMyMsgListSuccess(data) {
   return {
@@ -57,7 +83,7 @@ export function GetMyMsgDetailRequest(token, id) {
     }).then((response) => {
         return response.json();
       }).then((data) => {
-        console.log("message detail data >>", data);
+        //console.log("message detail data >>", data);
         if (!data) {
           console.log("no detail message");
           data = [];

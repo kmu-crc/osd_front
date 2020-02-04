@@ -5,7 +5,6 @@ import who from "source/thumbnail.png";
 import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css';
 import TextFormat from 'modules/TextFormat';
-
 import cookie from 'react-cookies';
 // import ViewContainer from 'containers/Designs/DesignDetailViewContainer';
 
@@ -396,43 +395,42 @@ class ReviewComment extends Component {
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { select_image: 0, productCount:1,cartlist:"", };
+    this.state = { select_image: 0, productCount: 1, cartlist: "", };
     this.onClickPayment = this.onClickPayment.bind(this);
     this.onChangeBigImage = this.onChangeBigImage.bind(this);
     this.onClickCart = this.onClickCart.bind(this);
     this.onChangeProductCount = this.onChangeProductCount.bind(this);
   }
-  async onClickCart(){
-    console.log("cart gogo",this.props);
-    
-    if(this.props.userInfo != null){
-      const Result = {user_id:this.props.userInfo.uid,product_id:this.props.ProductDetail.uid,amount:document.getElementById('productCount').value}
-      this.props.addCartRequest(Result,this.props.token);
-    }
-    else
-    {
-      this.state = {cartlist:cookie.load("cart")};
+  async onClickCart() {
+    console.log("cart gogo", this.props);
 
-      const userID = this.props.userInfo==null?-1:this.props.userInfo.uid; // 
+    if (this.props.userInfo != null) {
+      const Result = { user_id: this.props.userInfo.uid, product_id: this.props.ProductDetail.uid, amount: document.getElementById('productCount').value }
+      this.props.addCartRequest(Result, this.props.token);
+    }
+    else {
+      this.state = { cartlist: cookie.load("cart") };
+
+      const userID = this.props.userInfo == null ? -1 : this.props.userInfo.uid; // 
       const productID = this.props.ProductDetail.uid;
       const count = document.getElementById('productCount').value;
-      const cartProduct = this.state.cartlist==null?"/":this.state.cartlist;
-      const newCartProduct = userID+","+productID+","+count+"/";
-      cookie.save("cart",cartProduct+newCartProduct,{
-        path:'/',
+      const cartProduct = this.state.cartlist == null ? "/" : this.state.cartlist;
+      const newCartProduct = userID + "," + productID + "," + count + "/";
+      cookie.save("cart", cartProduct + newCartProduct, {
+        path: '/',
       });
     }
   }
   onClickPayment() {
-    window.location.href = "/payment"+"/"+this.props.ProductDetail.uid+"/"+this.props.ProductDetail.title+"/"+
-                          document.getElementById("productCount").value+"/"+this.props.ProductDetail.options+"/"+encodeURIComponent(this.props.ProductDetail.img[0].s_img);
+    window.location.href = "/payment" + "/" + this.props.ProductDetail.uid + "/" + this.props.ProductDetail.title + "/" +
+      document.getElementById("productCount").value + "/" + this.props.ProductDetail.options + "/" + encodeURIComponent(this.props.ProductDetail.img[0].s_img);
   }
   onChangeBigImage(index) {
     this.setState({ select_image: index });
   }
-  onChangeProductCount(event){
+  onChangeProductCount(event) {
     alert(event.target.value);
-    this.setState({productCount:event.target.value});
+    this.setState({ productCount: event.target.value });
   }
   render() {
     const { ProductDetail } = this.props;

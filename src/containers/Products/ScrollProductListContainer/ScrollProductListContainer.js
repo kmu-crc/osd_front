@@ -16,11 +16,12 @@ class ScrollDesignListContainer extends Component {
     return (
       <React.Fragment>
         <ScrollList
+          type="item"
           getListRequest={this.getList}
           ListComponent={Item}
           dataList={this.props.dataList}
           dataListAdded={this.props.dataListAdded}
-          mobile={4} tablet={4} computer={4} largeScreen={4} widescreen={4} customClass="largeCustom" />
+          />
       </React.Fragment>
     );
   }

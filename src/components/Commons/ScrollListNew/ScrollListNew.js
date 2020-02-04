@@ -5,75 +5,65 @@ import styled from "styled-components";
 
 // css styling
 const ScrollContainer = styled.div`
-  & .ui.centered.inline.loader.active.loading,
-  & .ui.centered.inline.loader.visible.loading {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-  & p {
-    text-align: center;
+  .no-data {
+    font-size: 28px;
   }
 `;
-
-const ListContainer = styled(Grid)`
-  margin-top: 30px;
+const ListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  .item {
+    flex: 0 1 180px;
+    justify-content: space-around;
+    margin: 10px;
+    padding: 10px;
+    background: #F7F7F7;
+    border: 1px solid #EFEFEF;
+  }
+  .designer {
+    flex: 0 1 237px;
+    justify-content: space-around;
+    margin: 10px;
+    padding: 10px;
+    background: #707070;
+    border: 1px solid #FAFAFA;
+  }
 `;
 
 class ScrollListNew extends Component {
-  state = {
-    hasMore: true,
-    loading: false
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = { hasMore: true, loading: false, page: 0, gap: 150, cols: 0 };
+    this.getLoadData = this.getLoadData.bind(this);
+  }
+  componentDidMount(){
+    window.addEventListener("scroll",this.handleScroll, false);
+  }
   getLoadData = page => {
     this.props.getListRequest(page)
-      .then(() => {
-        this.setState({
-          hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true,
-          loading: true
-        });
-      }).catch((err) => {
-        console.log(err);
-        this.setState({
-          hasMore: false
-        });
+      .then(this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: true }))
+      .catch((err) => {
+        this.setState({ hasMore: false });
       });
   };
 
   render() {
-    const ListComponent = this.props.ListComponent;
-    const type = this.props.type;
-
+    const { ListComponent, type } = this.props;
     return (
       <ScrollContainer>
         {this.props.dataListAdded.length > 0 ?
-          <InfiniteScroll threshold={100} pageStart={0}
-            loadMore={this.getLoadData} hasMore={this.state.hasMore}
-            loader={
-              <Loader className="loading" active={false} inline="centered" size="huge" key={0} />
-            }>
-            <ListContainer devided="vertically" padded={true} as="ul">
-              {/* <Grid.Row> */}
-              {this.props.dataListAdded.map(content => (
-                // <Grid.Column mobile={this.props.mobile} tablet={this.props.tablet} computer={this.props.computer}
-                // largeScreen={this.props.largeScreen} widescreen={this.props.widescreen}
-                // className={this.props.customClass}
-                // key={content.uid}>
-                <ListComponent key={content.uid} data={content} rerender={this.props.rerender} />
-                // </Grid.Column>
-              ))
-              }
-              {/* </Grid.Row> */}
-            </ListContainer>
-          </InfiniteScroll>
+          <ListContainer>
+            {this.props.dataListAdded.map(content => (
+              <div key={content.uid} className={`${type}`}>
+                <ListComponent data={content} rerender={this.props.rerender} />
+              </div>
+            ))}
+          </ListContainer>
           :
-          <p>
-            {type === "Designer" ? "등록된 디자이너가 없습니다"
-              : type === "Group" ? "등록된 그룹이 없습니다"
-                : "등록된 작품이 없습니다"}
-          </p>
+          <div className="no-data">
+            {type === "item" ? "아이템이 없습니다." : type === "Group" ? "등록된 그룹이 없습니다." : "등록된 작품이 없습니다"}
+          </div>
         }
       </ScrollContainer>
     );
