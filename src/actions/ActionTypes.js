@@ -594,3 +594,14 @@ export const GET_CART_LIST_FAILURE = "GET_CART_LIST_FAILURE";
 ////////////////////////////////////////////////////////////////////////////
 export const GET_ORDER_LIST = "GET_ORDER_LIST";
 export const GET_ORDER_LIST_FAILURE = "GET_ORDER_LIST_FAILURE";
+
+////////////////////////////////////////////////////////////////////////////
+// POINT
+////////////////////////////////////////////////////////////////////////////
+export const GET_POINT = "GET_POINT";
+export const GET_POINT_SUCCESS = "GET_POINT_SUCCESS";
+export const GET_POINT_FAILURE = "GET_POINT_FAILURE";
+export const REQUEST_POINT_UP = "REQUEST_POINT_UP";
+export const GET_POINT_HISTORY_REQUEST="GET_POINT_HISTORY_REQUEST";
+export const GET_POINT_HISTORY_FAILURE="GET_POINT_HISTORY_FAILURE";
+export const GET_POINT_HISTORY_SUCCESS="GET_POINT_HISTORY_SUCCESS";
