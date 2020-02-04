@@ -90,6 +90,7 @@ class App extends Component {
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => ({
   GetCategoryAllRequest: () => dispatch(GetCategoryAllRequest())
 });

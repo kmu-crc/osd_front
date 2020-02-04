@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
 
+import {LikeItem} from "components/Users/MyDetail/MyDetailTab/likeItem";
+
 const MainBox = styled.div`
 
   width:1790px;
@@ -98,12 +100,13 @@ const MenuBox= styled.div`
       color:#060000;
     }
     width:285px;
-    height:857px;
+    height:max-content;
     border-radius:20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
     padding-top:7px;
     padding-left:25px;
+    padding-bottom:30px;
     .title_Label{
       width:100%;
       height:20px;
@@ -117,6 +120,7 @@ const MenuBox= styled.div`
     .hrLine{
       width:230px;
       border:0.5px solid #707070;
+      opacity:0.2;
     }
 `
 const MenuButton = styled.div`
@@ -132,11 +136,11 @@ const MenuButton = styled.div`
 `
 const BoardBox = styled.div`
     width:1388px;
-    height:1493px;
     border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
     margin-left:117px;
+    padding:50px;
 `
 
 const Thumbnail = styled.div`
@@ -172,12 +176,12 @@ class MyDetail extends Component{
     let selectMenu = -1;
     switch(event.target.id){
       case "orderlist":selectMenu=0; break;
-      case "myreview":selectMenu=1; break;
-      case "writereview":selectMenu=2; break;
-      case "refund":selectMenu=3; break;
-      case "interestlist":selectMenu=4; break;
-      case "designeritem":selectMenu=5; break;
-      case "makeritem":selectMenu=6; break;
+      case "interest_Item":selectMenu=1; break;
+      case "interest_Designer":selectMenu=2; break;
+      case "interest_Maker":selectMenu=3; break;
+      case "join_project":selectMenu=4; break;
+      case "request_designer":selectMenu=5; break;
+      case "request_maker":selectMenu=6; break;
     }
     console.log(this.state.selectMenu);
     this.setState({selectMenu:selectMenu});
@@ -224,30 +228,26 @@ class MyDetail extends Component{
           </div>
           <div className="contents">
             <MenuBox>
-                <div className="title_Label">구매내역</div>
-                <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu==0?"red":null}>주문 아이템 정보</MenuButton>
-                <MenuButton id="myreview" onClick={this.onClickMenu} fontColor={this.state.selectMenu==1?"red":null}>내가 쓴 구매후기</MenuButton>
-                <div className="hrLine"/>
-
-                <div className="title_Label">리뷰</div>
-                <MenuButton id="writereview" onClick={this.onClickMenu} fontColor={this.state.selectMenu==2?"#FF0000":null}>구매 후기 쓰기</MenuButton>
-                <MenuButton id="refund" onClick={this.onClickMenu} fontColor={this.state.selectMenu==3?"red":null}>반품 / 교환 / 취소 내역</MenuButton>
-                <div className="hrLine"/>
-
                 <div className="title_Label">아이템</div>
-                <MenuButton id="interestlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu==4?"red":null}>관심 아이템</MenuButton>
+                <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu==0?"red":null}>구매 아이템 정보</MenuButton>
                 <div className="hrLine"/>
 
-                <div className="title_Label">디자이너</div>
-                <MenuButton id="designeritem" onClick={this.onClickMenu} fontColor={this.state.selectMenu==5?"red":null}>등록 아이템</MenuButton>
+                <div className="title_Label">관심</div>
+                <MenuButton id="interest_Item" onClick={this.onClickMenu} fontColor={this.state.selectMenu==1?"red":null}>관심 아이템</MenuButton>
+                <MenuButton id="interest_Designer" onClick={this.onClickMenu} fontColor={this.state.selectMenu==2?"red":null}>관심 디자이너</MenuButton>
+                <MenuButton id="interest_Maker" onClick={this.onClickMenu} fontColor={this.state.selectMenu==3?"red":null}>관심 메이커</MenuButton>
                 <div className="hrLine"/>
 
-                <div className="title_Label">메이커</div>
-                <MenuButton id="makeritem" onClick={this.onClickMenu} fontColor={this.state.selectMenu==6?"red":null}>등록 아이템</MenuButton>
+                <div className="title_Label">참여</div>
+                <MenuButton id="join_project" onClick={this.onClickMenu} fontColor={this.state.selectMenu==4?"red":null}>프로젝트</MenuButton>
+                <div className="hrLine"/>
 
+                <div className="title_Label">의뢰</div>
+                <MenuButton id="request_designer" onClick={this.onClickMenu} fontColor={this.state.selectMenu==5?"red":null}>디자이너 의뢰</MenuButton>
+                <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={this.state.selectMenu==6?"red":null}>메이커 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
-
+              <LikeItem/>
             </BoardBox>
           </div>
         </MainBox>

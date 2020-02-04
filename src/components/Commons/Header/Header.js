@@ -275,7 +275,7 @@ class Header extends Component {
           </div>)
           : (<Link to={`/signin`}>로그인</Link>)}
       </HeaderItem>
-      <HeaderItem className="cart">
+      {/* <HeaderItem className="cart">
         <Link to={'/cart'}>
           {this.props.cart ?
             <RedCircle>
@@ -284,7 +284,7 @@ class Header extends Component {
             : null}
           <i style={{ width: "29px", height: "29px" }} className="cart icon" />
         </Link>
-      </HeaderItem>
+      </HeaderItem> */}
     </HeaderContainer >)
   };
 };
