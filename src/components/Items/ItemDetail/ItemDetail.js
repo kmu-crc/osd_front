@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import noimg from "source/noimg.png";
-import who from "source/thumbnail.png";
-import { Dropdown } from "semantic-ui-react";
-import TextFormat from 'modules/TextFormat';
-import cookie from 'react-cookies';
 import 'react-dropdown/style.css';
 import Star from "components/Commons/Star";
+import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
+import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+// import noimg from "source/noimg.png";
+// import who from "source/thumbnail.png";
+// import { Dropdown } from "semantic-ui-react";
+// import TextFormat from 'modules/TextFormat';
+// import cookie from 'react-cookies';
 
 const Wrapper = styled.div`
-  // *{ border:1px solid red; };
-  margin-top: 134px;
+  *{ border:1px solid red; };
+  margin-top: 50px;
   .line { display: flex; }
 `;
 const ItemImages = styled.div`
@@ -294,8 +296,9 @@ const Board = styled.div`
 
 class ItemDetail extends Component {
   render() {
-    const item = this.props.item || empty; // console.log(item);
-
+    const item = this.props.item;
+    console.log(item);
+    return <div></div>
     return !item ? (<div>loading...</div>) :
       (<Wrapper>
         <div className="line">
@@ -459,6 +462,13 @@ class ItemDetail extends Component {
               </Page>
             </Reviews>
           </div>
+        </div>
+
+        {/* item-detail */}
+        <div className="line">
+          {/* {item && item.is_project === 1 */}
+            {/* ? <DesignDetailStepContainer design={item} {...this.state} /> */}
+            {/* : <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
         </div>
       </Wrapper>)
   }
