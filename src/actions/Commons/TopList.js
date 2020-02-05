@@ -19,7 +19,7 @@ const GetTopExpertListFailure = () => ({ type: types.GET_TOP_EXPERT_LIST_FAILURE
 // 탑 디자인 가져오기
 export const GetTopItemListRequest = page => {
   return (dispatch) => {
-    const url = `${host}/product/TopList/${page}`
+    const url = `${host}/item/toplist/${page}`
     console.log(url)
     return fetch(url, {
       headers: { "Content-Type": "application/json" }, method: "GET"

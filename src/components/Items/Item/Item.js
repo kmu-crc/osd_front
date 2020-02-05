@@ -5,6 +5,7 @@ import NumberFormat from "modules/NumberFormat";
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
+import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   border: 1px solid transparent;
@@ -68,20 +69,22 @@ class Item extends Component {
     const item = this.props.data || empty;
     return (
       <Wrapper>
-        {/* picture */}
-        <ItemPic img={(item && item.thumbnail) || noimg} />
-        {/* text */}
-        <TextWrapper>
-          <div className="title"><TextFormat txt={item.title} /></div>
-          <div className="author"><TextFormat txt={item.userName} /></div>
-        </TextWrapper>
-        {/* numbers */}
-        <NumberWrapper>
-          <div className="price">{NumberFormat(item.price) || 0} won</div>
-          <div className="rate">
-            {Star(item.rate + 0.5)}({NumberFormat(item.reviews)})
+        <NavLink to={"/productDetail/" + item.uid}>
+          {/* picture */}
+          <ItemPic img={(item && item.thumbnail) || noimg} />
+          {/* text */}
+          <TextWrapper>
+            <div className="title"><TextFormat txt={item.title} /></div>
+            <div className="author"><TextFormat txt={item.userName} /></div>
+          </TextWrapper>
+          {/* numbers */}
+          <NumberWrapper>
+            <div className="price">{NumberFormat(item.price) || 0} won</div>
+            <div className="rate">
+              {Star(item.rate + 0.5)}({NumberFormat(item.reviews)})
           </div>
-        </NumberWrapper>
+          </NumberWrapper>
+        </NavLink>
       </Wrapper>
     )
   }
