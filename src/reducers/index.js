@@ -16,6 +16,7 @@ import { Search, SearchIssue, TopList } from "reducers/Commons"
 import { DesignForked } from "reducers/Designs/DesignForked"
 import { Request, RequestDetail, RequestList, RequestComment } from "reducers/Request";
 import OpenDesign from "reducers/OpenDesign";
+import Point from "reducers/Point";
 
 import { combineReducers } from "redux";
 
@@ -42,5 +43,7 @@ export default combineReducers({
     MyDetail, MyJoin,
     // ETC
     Authentication,
-    Search, SearchIssue, TopList, OpenDesign, MessageList, MessageDetail
+    Search, SearchIssue, TopList, OpenDesign, MessageList, MessageDetail,
+    // POINT
+    Point
 });

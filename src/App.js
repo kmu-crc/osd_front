@@ -14,7 +14,7 @@ import CreateGalleryPage from "pages/CreateGroupPage";
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
-import MainPage from "pages/MainPage/MainPage";
+import MainPage from "pages/MainPage";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
@@ -23,6 +23,7 @@ import SearchPage from "pages/SearchPage";
 import MessagePage from "pages/MessagePage";
 import PaymentPage from "pages/PaymentPage";
 import CartPage from 'pages/CartPage';
+import PointPage from 'pages/PointPage';
 import CreateDesignerPage from 'pages/CreateDesignerPage';
 import ModifyDesignerPage from 'pages/ModifyDesignerPage';
 import CreateMakerPage from 'pages/CreateMakerPage';
@@ -71,7 +72,6 @@ class App extends Component {
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
             <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)} />
-            {/* <Route path="/myPage" component={MyDetailPage} /> */}
             <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)} />
             <Route path="/Term/:page" component={FooterPage} />
             <Route path="/Privacy/:page" component={FooterPage} />
@@ -79,10 +79,14 @@ class App extends Component {
             <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
+            {/* <Route path="/myPage" component={MyDetailPage} /> */}
             {/* <Route path="/payment/:id/:amount/:option" component={PaymentPage} /> */}
             {/* <Route path="/payment/:id/:title/:amount/:option/:thumbnail" component={PaymentPage} /> */}
-            <Route path="/payment" component={PaymentPage} /> 
+            <Route path="/payment" component={PaymentPage} />
             <Route path="/cart" component={CartPage} />
+            {/* POINT */}
+            <Route path="/point" component={RequiresAuth(PointPage)} />
+            {/* NOT FOUND */}
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
           </Switch>
         </ClientTemplate>

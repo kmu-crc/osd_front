@@ -1,1 +1,1 @@
-export {default} from "./OpenDesign";
+export { default } from "./OpenDesign";
