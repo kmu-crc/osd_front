@@ -75,51 +75,47 @@ const MsgContent = styled.div`
 
 class MessageDetail extends Component {
   state = {
-    list_v1 : [],
-    myId_v1 : null,
-    test : [],
+    list_v1: [],
+    myId_v1: null,
+    test: [],
   }
   componentDidMount() {
-    var divdiv = document.getElementById("comments");
+    // var divdiv = document.getElementById("comments");
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
-    try{
+    try {
       Socket.emit("INIT", this.props.userInfo.uid)
-      Socket.on("getNewMsg", (msgList, groupId)=> {
-        if(groupId == this.props.targetUid){
-          this.setState({list_v1 : msgList}) // get
+      Socket.on("getNewMsg", (msgList, groupId) => {
+        if (groupId == this.props.targetUid) {
+          this.setState({ list_v1: msgList }) // get
         }
-        else{
-          this.setState({list_v1:[]});
+        else {
+          this.setState({ list_v1: [] });
         }
         // let obj = document.getElementById("ui comments");
         // obj.setAttribute("scrollTop", obj.scrollHeight); 
         // console.log(obj.scrollTop);
       });
-    } catch(err){
+    } catch (err) {
       console.log(err);
     }
   }
-
   componentWillUnmount() {
     this.props.GetMyMessageDetailClear();
   }
-  shouldComponentUpdate(nextProps) {
-    var divdiv = document.getElementById("comments");
-    divdiv.scrollIntoView(false);
-    return true;
+  scrollToBottom = () => { this.dummy.scrollIntoView({ behavior: "auto" }); }
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
-
   render() {
-    const list = this.state.list_v1.length > 0 ?  this.state.list_v1 : this.props.MessageDetail;
-    console.log("v1 : "+this.state.list_v1.length);
-    console.log("listlist : "+this.props.MessageDetail.length);
+    const list = this.state.list_v1.length > 0 ? this.state.list_v1 : this.props.MessageDetail;
+    // console.log("v1 : " + this.state.list_v1.length);
+    // console.log("listlist : " + this.props.MessageDetail.length);
     const myId = this.props.userInfo.uid;
     return (
       <MsgContent>
-
         <div className="ui comments" id="comments" ref={ref => this.list = ref}>
-          <div style={{bottom:"0px"}}>
+          <div style={{ bottom: "0px" }}>
             {list.map(item => (
               <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
                 {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
@@ -134,6 +130,7 @@ class MessageDetail extends Component {
               </div>
             ))}
           </div>
+          <div ref={el => this.dummy= el}></div>
         </div>
       </MsgContent>
     );

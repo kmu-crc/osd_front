@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import profile from "source/thumbnail.png";
@@ -91,21 +91,23 @@ class Expert extends Component {
     const expert = this.props.data || empty;
     return (
       <Wrapper>
-        {/* profile */}
-        <Profile face={(expert && expert.imgURL && expert.imgURL.m_img) || profile} />
-        {/* text */}
-        <TextWrapper>
-          <div className="nick"><TextFormat txt={expert.nick_name} chars={32} /></div>
-          <div className="category"><TextFormat txt={expert.categoryName || "전체"} chars={32} /></div>
-        </TextWrapper>
-        {/* counter */}
-        <Counter>
-          <div className="items">
-            {NumberFormat(expert.items) || 0}개의 아이템</div>
-          <div className="v-line" />
-          <div className="likes">{/*♥*/}
-            <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likes) || 0}</div>
-        </Counter>
+        <NavLink to={`/${expert.type ? expert.type : this.props.type}Detail/${expert.uid}`}>
+          {/* profile */}
+          <Profile face={(expert && expert.imgURL && expert.imgURL.m_img) || profile} />
+          {/* text */}
+          <TextWrapper>
+            <div className="nick"><TextFormat txt={expert.nick_name} chars={32} /></div>
+            <div className="category"><TextFormat txt={expert.categoryName || "전체"} chars={32} /></div>
+          </TextWrapper>
+          {/* counter */}
+          <Counter>
+            <div className="items">
+              {NumberFormat(expert.items) || 0}개의 아이템</div>
+            <div className="v-line" />
+            <div className="likes">{/*♥*/}
+              <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likes) || 0}</div>
+          </Counter>
+        </NavLink>
       </Wrapper>
     );
   }
