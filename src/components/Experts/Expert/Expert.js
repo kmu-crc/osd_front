@@ -7,12 +7,17 @@ import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
 
 const Wrapper = styled.div`
+  *{
+    cursor:pointer;
+  }
   border: 1px solid transparent;
   width: 247px;
   height: 322px;
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
+  cursor:pointer;
+
 `;
 const Profile = styled.div`
   width: 164px;
@@ -87,10 +92,19 @@ const empty = {
 };
 
 class Expert extends Component {
+  constructor(props){
+    super(props);
+    this.onClickItem = this.onClickItem.bind(this);
+  }
+
+  onClickItem(event){
+    window.location.href="/designerDetail/"+this.props.data.uid;
+    console.log(this.props);
+  }
   render() {
     const expert = this.props.data || empty;
     return (
-      <Wrapper>
+      <Wrapper onClick={this.onClickItem}>
         {/* profile */}
         <Profile face={(expert && expert.imgURL && expert.imgURL.m_img) || profile} />
         {/* text */}

@@ -35,11 +35,12 @@ export function GetProductDetailRequest(id, token) {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => dispatch(GetProductDetail(data || [])))
+      .then(data => dispatch(GetProductDetail(data)))
       .catch(error => console.log("err", error));
   }
 };
 const GetProductDetail = (data) => {
+  console.log("GetProductDetail:",data);
   return { type: types.GET_PRODUCT_DETAIL, ProductDetail: data }
 };
 export function GetProductCountRequest(id) {

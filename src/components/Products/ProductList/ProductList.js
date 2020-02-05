@@ -87,7 +87,7 @@ class ProductList extends Component {
     console.log(this.props);
 
     return (<React.Fragment>
-      <Content top={116}>
+      <Content top={30}>
         <Container>
           <div className="category">
             <Category
@@ -107,7 +107,7 @@ class ProductList extends Component {
         </Container>
       </Content>
 
-      <Content top={160}>
+      <Content top={80}>
         <Wrapper className="listWrap">
           {this.state.rendering &&
             <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}

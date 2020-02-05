@@ -7,13 +7,16 @@ import noimg from "source/noimg.png";
 // import { geturl } from 'config';
 
 const Wrapper = styled.div`
+  *{
+    cursor:pointer;
+  }
   border: 1px solid transparent;
   width: 247px;
   height: 335px;
   background: transparent;//#FFFFFF;
   font-family: Noto Sans KR;
   // div{border:1px solid red;}
-  cursor: default;
+  cursor: pointer;
 `;
 const ItemPic = styled.div`
   width: 247px;
@@ -64,10 +67,20 @@ const NumberWrapper = styled.div`
 
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 };
 class Item extends Component {
+  constructor(props){
+    super(props);
+    this.onClickItem = this.onClickItem.bind(this);
+  }
+
+  onClickItem(event){
+    window.location.href="/productDetail/"+this.props.data.uid;
+    console.log(this.props);
+  }
+
   render() {
     const item = this.props.data || empty;
     return (
-      <Wrapper>
+      <Wrapper onClick={this.onClickItem}>
         {/* picture */}
         <ItemPic img={(item && item.thumbnail) || noimg} />
         {/* text */}

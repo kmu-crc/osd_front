@@ -166,6 +166,14 @@ class MyDetail extends Component {
     super(props);
     this.state = { selectMenu: -1, }
     this.onClickMenu = this.onClickMenu.bind(this);
+    this.onClickCreateDesigner=this.onClickCreateDesigner.bind(this);
+    this.onClickCreateMaker=this.onClickCreateMaker.bind(this);
+  }
+  onClickCreateDesigner(event){
+    window.location.href = "/createDesigner";
+  }
+  onClickCreateMaker(event){
+    window.location.href = "/createMaker";
   }
   onClickMenu(event) {
     let selectMenu = -1;
@@ -206,13 +214,13 @@ class MyDetail extends Component {
               <div className="grayBox">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal red">다양한 아이디어를 판매하세요!</div>
-                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">디자이너 등록 / 관리</div></RoundButton>
+                  <RoundButton onClick={this.onClickCreateDesigner} width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">디자이너 등록 / 관리</div></RoundButton>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal red">제작 기술을 공유하고 장소를 <br /> 쉐어해보세요!</div>
-                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">메이커 등록 / 관리</div></RoundButton>
+                  <RoundButton onClick={this.onClickCreateMaker} width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">메이커 등록 / 관리</div></RoundButton>
                 </div>
               </div>
               <div className="grayBox">

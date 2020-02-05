@@ -433,6 +433,7 @@ class ProductDetail extends Component {
     this.setState({ productCount: event.target.value });
   }
   render() {
+    console.log(this.props);
     const { ProductDetail } = this.props;
     const reviewComment = ProductDetail.reviews && ProductDetail.reviews.map((item, index) => {
       return <ReviewComment key={index} img={item.img} who={item.who} name={item.user_id} comment={item.comment} option="" />;
