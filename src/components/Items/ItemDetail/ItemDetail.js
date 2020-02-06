@@ -298,7 +298,6 @@ class ItemDetail extends Component {
   render() {
     const item = this.props.item;
     console.log(item);
-    return <div></div>
     return !item ? (<div>loading...</div>) :
       (<Wrapper>
         <div className="line">
@@ -466,9 +465,9 @@ class ItemDetail extends Component {
 
         {/* item-detail */}
         <div className="line">
-          {/* {item && item.is_project === 1 */}
-            {/* ? <DesignDetailStepContainer design={item} {...this.state} /> */}
-            {/* : <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
+          {item && item.is_project === 1 ? "project-view" : "blog-view"}
+          {/* ? <DesignDetailStepContainer design={item} {...this.state} /> */}
+          {/* : <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
         </div>
       </Wrapper>)
   }
