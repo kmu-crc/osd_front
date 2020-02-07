@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Button from "components/Commons/Button";
 import { FormInput } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
+import cookie from 'react-cookies';
 
 const MainBox = styled.div`
   *{
@@ -49,6 +50,7 @@ const MainBox = styled.div`
       }
       .red_text{
         color:red;
+        cursor:pointer;
       }
     }
     .spaceBetween{
@@ -87,7 +89,7 @@ const CustomButton = styled.div`
   }
 
   `
-const CheckBox = styled.div`
+const CheckBox = styled.input.attrs({type:"checkbox"})`
   width:17px;
   height:17px;
   border:0.5px solid #707070;
@@ -107,10 +109,14 @@ class SignInForm extends Component {
 
   constructor(props){
     super(props);
-    this.state={email:"",password:""};
+    const { cookies } = props;
+    this.state={email:cookie.load('saveid')||"",password:cookie.load('savepassword')||"",saveID:cookie.load('saveid')!=null?true:false,saveLogin:cookie.load('savepassword')!=null?true:false,};
     this.onChangeID = this.onChangeID.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onSubmit=this.onSubmit.bind(this);
+    this.onCheckSaveID = this.onCheckSaveID.bind(this);
+    this.onCheckSaveLogin=this.onCheckSaveLogin.bind(this);
+    this.onClickSignUp = this.onClickSignUp.bind(this);
   }
 
   onChangeID(event){
@@ -120,7 +126,28 @@ class SignInForm extends Component {
     this.setState({password:event.target.value});
   }
 
+
   onSubmit = async e => {
+    //아이디저장
+    const { cookies } = this.props;
+
+    if(this.state.saveID===true)
+    {
+      cookie.save("saveid", this.state.email, {
+        path: '/',
+      });
+    }
+    //로그인저장
+    if(this.state.saveLogin===true)
+    {
+      cookie.save("saveid", this.state.email, {
+        path: '/',
+      });
+      cookie.save("savepassword", this.state.password, {
+        path: '/',
+      });
+    }
+
     e.preventDefault();
     const data = {email:this.state.email,password:this.state.password};
      this.props.SignInRequest(data).then(data => {
@@ -133,6 +160,28 @@ class SignInForm extends Component {
         }
       });
     
+  }
+
+  onCheckSaveID(event){
+    const result = document.getElementById(event.target.id).checked;
+    if(result===false)
+    { 
+      cookie.remove(('saveid'),{path:'/'});
+    }
+     
+    this.setState({saveID:result});
+  }
+  onCheckSaveLogin(event){
+    const result = document.getElementById(event.target.id).checked;
+    { 
+      cookie.remove(('saveid'),{path:'/'});
+      cookie.remove(('savepassword'),{path:'/'});
+    }
+    this.setState({saveLogin:result});
+  }
+
+  onClickSignUp(event){
+    window.location.href="/signup";
   }
 
   render() {
@@ -160,15 +209,15 @@ class SignInForm extends Component {
                   </div>
                   <div className="row">
                     <div className="label"/>
-                    <CustomBox width={29} ><CheckBox/>아이디 저장</CustomBox>
-                    <CustomBox width={29}><CheckBox/>로그인 상태 유지</CustomBox>
+                    <CustomBox  width={29} ><CheckBox  checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID"/>아이디 저장</CustomBox>
+                    <CustomBox  width={29}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 저장</CustomBox>
                   </div>
                   <div className="row">
                   <CustomButton onClick={this.onSubmit}  width={498} height={43} 
                   bgColor={"#FF0000"} borderRadius={21} fontColor={"white"}>로그인</CustomButton>
                   </div>
                   <div className="row spaceBetween">
-                    <CustomButton width={251} height={43} 
+                    <CustomButton onClick={this.onClickSignUp} width={251} height={43} 
                     bgColor={"white"} borderRadius={21} borderColor={"red"} fontColor={"red"}>회원가입</CustomButton>
                     <div className="label red_text ">아이디/비밀번호 찾기</div>
                   </div>

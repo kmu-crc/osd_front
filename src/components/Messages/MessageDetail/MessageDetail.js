@@ -8,10 +8,12 @@ import host from "config";
 
 // css styling
 const MsgContent = styled.div`
+
   & .ui.comments .comment {
     position: relative;
     padding: 0.3rem 0;
-    overflow:auto;
+    overflow:hidden;
+    word-wrap:break;
   }
   & .ui.comments .comment.my {
     padding: 0.3rem 0;
@@ -35,10 +37,14 @@ const MsgContent = styled.div`
   }
 
   & .ui.comments .comment .content .text{
-    background-color: white;
+    max-width:500px;
+    word-wrap:break;
+    background-color: #E6E6E6;
     padding: 10px;
+    padding-left:20px;
+    padding-right:20px;
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 20px;
     display: inline-block;
   }
 
@@ -65,10 +71,14 @@ const MsgContent = styled.div`
     justify-content: flex-start;
   }
   & .ui.comments .comment .content .wrapper .metadata{
-    margin-bottom: 0;
+    width:max-content;
+    margin-bottom: 10px;
+    margin-right:10px;
+    margin-left:10px;
     align-self: flex-end;
     color: #444;
     font-size: 9pt;
+    
   }
 `;
 

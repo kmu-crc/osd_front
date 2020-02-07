@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import NoFace from "source/thumbnail.png";
 import TextFormat from "modules/TextFormat";
 import { SetSession } from "modules/Sessions";
+import { Icon } from "semantic-ui-react";
 
 const LogoWrapper = styled.div`
   margin: 0;
@@ -58,8 +59,10 @@ const Logo = () => <React.Fragment>
 
 const HeaderContainer = styled.ul`
   display: flex;
+
   height: 74px;
   flex-direction: row;
+  
 `;
 const HeaderItem = styled.li`
   margin-left: 50px;
@@ -88,9 +91,9 @@ const HeaderItem = styled.li`
     margin-right: 12px;
   }
   &.search {
-    margin-top: 0px;
-    width: 554px;
-    min-width: 554px;
+    margin-top: 5px;
+    width: 354px;
+    min-width: 300px;
     height: 43px;
     background: #E9E9E9;
     border-radius: 21px;
@@ -156,6 +159,16 @@ const UserMenu = styled.div`
     } 
   }
 `;
+
+const LoginBox = styled.div`
+  display:flex;
+  .iconBox{
+    width:35px;
+    height35px;
+    margin-right:30px;
+    cursor:pointer;
+  }
+`
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -163,6 +176,7 @@ class Header extends Component {
     this.getNews = this.getNews.bind(this);
     this.submitEnter = this.submitEnter.bind(this);
     this.saveKeyword = this.saveKeyword.bind(this);
+    this.onClickMessageIcon = this.onClickMessageIcon.bind(this);
   }
   componentDidMount() {
     if (this.props.valid) {
@@ -214,6 +228,9 @@ class Header extends Component {
       })
     this.setState({ user_popup: null })
   }
+  onClickMessageIcon(){
+    window.location.href="/message";
+  }
   render() {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
@@ -262,7 +279,11 @@ class Header extends Component {
       {/*  */}
       <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}>
         {valid && userInfo
-          ? (<div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+          ? (
+            <LoginBox>
+            <div className="iconBox"><Icon name="grey alarm" size="large"/></div>
+            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon name="grey envelope" size="large"/></div>
+            <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
             <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
             <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
             {this.state.active ?
@@ -273,7 +294,9 @@ class Header extends Component {
                 <div onClick={this.logout} className="item">로그아웃</div>
               </UserMenu>
               : null}
-          </div>)
+          </div>
+          </LoginBox>
+          )
           : (<Link to={`/signin`}>로그인</Link>)}
       </HeaderItem>
       {/* <HeaderItem className="cart">
