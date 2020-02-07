@@ -10,7 +10,7 @@ import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
 class ProductDetailContainer extends Component {
   componentDidMount() {
-    this.props.GetProductDetailRequest(this.props.id);
+    this.props.GetProductDetailRequest(this.props.id,this.props.token);
   }
   render() {
     return (<ItemDetail item={this.props.ProductDetail} {...this.props} />)

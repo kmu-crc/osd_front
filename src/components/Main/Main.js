@@ -44,7 +44,7 @@ class Main extends Component {
             <Head>인기 디자이너 / 메이커</Head></TextWrapper>
           <ScrollTopDesignerContainer />
         </Wrapper>
-        <Wrapper top={154}>
+        <Wrapper top={77}>
           <TextWrapper><Head>인기 아이템</Head></TextWrapper>
           <ScrollTopProductContainer />
         </Wrapper>

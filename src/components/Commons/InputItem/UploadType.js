@@ -5,10 +5,12 @@ import { Icon } from "semantic-ui-react";
 
 const FormStyle = styled.div`
     width:100%;
-    height:100px;
+    height:max-content;
     display:flex;
 
     .contentBox{
+        width:max-content;
+        height:max-content;
         margin-right:50px;
     }
 ` 

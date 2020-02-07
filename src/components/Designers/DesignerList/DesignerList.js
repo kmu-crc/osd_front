@@ -35,7 +35,7 @@ const RequestButton = styled.div`
 `;
 const Container = styled.div`
   display: flex;
-  .categoy {
+  .category {
     width: max-content;
   }
   .sort {
@@ -86,7 +86,7 @@ class DesignerList extends Component {
     const { sort, category1, category2, cate1, cate2 } = this.props;
     return (<React.Fragment>
 
-      <Content top={116}>
+      <Content top={30}>
         <Container>
           <div className="category">
             <Category
@@ -101,11 +101,11 @@ class DesignerList extends Component {
           <div className="sort">
             <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
           <div className="request"><RequestButton>
-            <Link to={`/requestToDesigner/null`}>디자인 의뢰하기</Link></RequestButton></div>
+            <Link to={`/createRequest/null`}>디자인 의뢰하기</Link></RequestButton></div>
         </Container>
       </Content>
 
-      <Content top={160}>
+      <Content top={80}>
         <Wrapper className="listWrap">
           {this.state.rendering &&
             <ScrollDesignerListContainer

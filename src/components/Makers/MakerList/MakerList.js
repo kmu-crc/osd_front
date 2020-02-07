@@ -87,7 +87,7 @@ class MakerList extends Component {
     const { sort, category1, category2, cate1, cate2 } = this.props;
     return (<React.Fragment>
 
-      <Content top={116}>
+      <Content top={30}>
         <Container>
           <div className="category">
             <Category
@@ -102,11 +102,11 @@ class MakerList extends Component {
           <div className="sort">
             <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
           <div className="request"><RequestButton>
-            <Link to={`/requestToMaker/null`}>제작 의뢰하기</Link></RequestButton></div>
+            <Link to={`/createRequest/null`}>제작 의뢰하기</Link></RequestButton></div>
         </Container>
       </Content>
 
-      <Content top={160}>
+      <Content top={80}>
         <Wrapper className="listWrap">
           {this.state.rendering &&
             <ScrollMakerListContainer
