@@ -17,7 +17,12 @@ import TextSlicer from 'modules/TextSlicer'
 
 // CSS STYLING
 const Container = styled.div`
+*{
+  font-family:Noto Sans KR;
+}
 // *{ border: 1px solid red;}
+  display:flex;
+  justify-content:center;
   margin-top: 35px;
   width: 100%;
   .line{
@@ -29,13 +34,18 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-start;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px #00000029;
 `;
 const Peers = styled.div`
   cursor: default;
   background: #F9F9F9;
   border-radius: 25px 0 0 25px;
-  padding: 25px 10px 25px 10px;
+  padding: 25px ;
   .self {
+    padding:25px;
+    border-radius:20px;
+    background-color:#fff;
     display: flex;
     flex-direction: row;
     .me {
@@ -46,17 +56,31 @@ const Peers = styled.div`
       background-position: center center;
     }
   }
+  .searchBox{
+    display:flex;
+    align-items:center;
+    padding-top:25px;
+    padding-bottom:25px;
+    .heading{
+      margin-right:10px;
+    }
+  }
   .list {
     font-family: Noto Sans KR;
     dipsplay: flex;
     flex-direction: column;
-    height: 750px;
-    // overflow: hidden;
-    // :hover {
-    overflow-y: scroll;
-    // }
+    height: 650px;
+    overflow: hidden;
+    :hover {
+    overflow: auto;
+    }
     .person {
-      padding: 5px;
+      margin-bottom:5px;
+      background-color:#FBFBFB;
+      border:1px solid #E6E6E6;
+      border-radius:20px;
+      padding: 25px;
+
       :hover {
         background: #F0F0F0;
       }
@@ -72,7 +96,7 @@ const Peers = styled.div`
         width: 250px;
         margin-left: 5px;
         .name {
-          color: #628DFF;
+          color: #7F7F7F;
           font-weight: 500;
         }
         .last-message {
@@ -98,8 +122,8 @@ const Peers = styled.div`
 `;
 const Chatting = styled.div`
   background: #FFFFFF;
-  border: 1px solid gray;
-  padding: 25px 10px 25px 10px;
+  border-left:1px solid #E6E6E6;
+  padding:25px;
   border-radius: 0 25px 25px 0;
   font-family: Noto Sans KR;
   width: 750px;
@@ -108,8 +132,12 @@ const Chatting = styled.div`
     border-radius: 0;
   }
   .status {
+    background-color:#F9F9F9;
+    border-radius:0px 20px 0px 0px;
+    border:1px solid #E9E9E9;
     display: flex;
     flex-direction: row;
+    padding:25px;
     .nick {
       margin-left: 5px;
       font-size: 16px;
@@ -131,7 +159,7 @@ const Chatting = styled.div`
   .chat-list {
     margin-top: 15px;
     height: 750px;
-    overflow-y: auto;
+    overflow:hidden;
   }
   .chat-input {
     margin-top: 15px;
@@ -141,7 +169,10 @@ const Chatting = styled.div`
     .input-wrapper {
       margin-top: 15px;
       .input-style {
-        width: 100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width: 90%;
         background: #F0F0F0;
         border-radius: 25px 0 0 25px; 
         input {
@@ -152,16 +183,27 @@ const Chatting = styled.div`
         }
       }
       .button-style{
-        background: #628DFF;
+        min-width:60px;
+        min-height:30px;
+        background-color: red;
         width: 35px;
         height: 35px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
         text-align: center;
-        border-radius: 50%;
+        border-radius: 0px 20px 20px 0px;
         button{
           border: none;
           background: transparent;
+
         }
       }
+    }
+  }
+  &:hover{
+    .chat-list{
+      overflow:auto;
     }
   }
 `;
@@ -173,6 +215,7 @@ const ProfileDetail = styled.div`
     display: block;
     border-radius: 0 25px 25px 0;
   }
+
 `;
 const Face = styled.div`
   background-image: url(${props => props.img ? props.img : who});
@@ -331,9 +374,10 @@ class MessageList extends Component {
               <div style={{ marginLeft: "auto" }}><i className="edit icon" /></div>
             </div>
 
-            <div>
+            <div className="searchBox">
               <div className="heading">멤버 검색</div>
-              <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
+              <FormInput style={{borderRadius:"20px",outline:"none",border:"none",width:"380px",height:"29px",paddingLeft:"10px"}}
+              type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
               <div style={this.state.openMember ? { display: "block" } : { display: "none" }}>
                 {this.props.members && this.props.members.map((item, index) => {
                   return (<div key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</div>);
@@ -378,9 +422,9 @@ class MessageList extends Component {
                   {this.state.render && <React.Fragment>
                     <div className="border"></div>
                     <div className="input-wrapper line">
-                      <div className="input-style"><input name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
+                      <div className="input-style"><input style={{border:"none",outline:"none"}} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
                       <div className="button-style">
-                        <button type="button" onClick={this.sendText}><i className="send icon" /></button></div>
+                        <button type="button" onClick={this.sendText}><div style={{color:"white"}}>SEND</div></button></div>
                     </div>
                   </React.Fragment>}
                 </div>

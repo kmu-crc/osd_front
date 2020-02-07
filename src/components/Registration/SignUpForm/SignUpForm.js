@@ -110,9 +110,9 @@ const CustomBox = styled.div`
   margin-left:${props=>props.marginLeft == null?0:props.marginLeft}px;
   margin-right:${props=>props.marginRight == null?0:props.marginRight}px;
 `
-const CheckBox = styled.div`
-  width:17px;
-  height:17px;
+const CheckBox = styled.input.attrs({type:"checkbox"})`
+  width:17px !important;
+  height:17px !important;
   border:0.5px solid #707070;
   margin-right:11px;
 `
@@ -136,6 +136,7 @@ class SignUpForm extends Component {
     super(props);
     this.state = {
       email:"",password:"",passwordCheck:"",name:"",phone:"",
+      checkAllOk:false,checkTerms:false,checkPersonalInfo_ess:false,checkPersonal_choice:false,
     }
     this.onChangeID = this.onChangeID.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
@@ -143,10 +144,44 @@ class SignUpForm extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
     this.onSubmit=this.onSubmit.bind(this);
+    this.onCheckAllOk = this.onCheckAllOk.bind(this);
+    this.onCheckTerms = this.onCheckTerms.bind(this);
+    this.onCheckPersonalInfoEsscential = this.onCheckPersonalInfoEsscential.bind(this);
+    this.onCheckPersonalInfoChoice = this.onCheckPersonalInfoChoice.bind(this);
   }
   onSubmit = async e => {
+
+    //유효성검사
+    if(this.state.email==="")
+    {
+      alert("아이디를 입력해주세요");
+    }
+    else if(this.state.password==="")
+    {
+      alert("비밀번호를 입력해주세요");
+    }
+    else if(this.state.passwordCheck==="")
+    {
+      alert("비밀번호 확인을 입력해주세요");
+    }
+    else if(this.state.name==="")
+    {
+      alert("이름을 입력해주세요");
+    }
+    else if(this.state.phone==="")
+    {
+      alert("휴대폰 번호를 입력해주세요");
+    }
+    //약관동의
+    if(this.state.checkTerms===false || this.state.checkPersonalInfo_ess===false)
+    {
+      alert("필수 이용약관에 동의해주세요!");
+      return;
+    }
+    
+
     e.preventDefault();
-    const data = {email:this.state.email,password:this.state.password,nick_name:this.state.name};
+    const data = {email:this.state.email,password:this.state.password,nick_name:this.state.name,phone:this.state.phone};
   
       this.props.SignUpRequest(data).then(res => {
         if (res.type === "AUTH_SIGNUP_SUCCESS") {
@@ -174,6 +209,32 @@ class SignUpForm extends Component {
   onChangePhone(event){
     this.setState({phone:event.target.value});
   }
+  onCheckAllOk(event){
+    const result = document.getElementById(event.target.id).checked;
+
+    this.setState({
+      checkAllOk:result,checkTerms:result,checkPersonalInfo_ess:result,checkPersonal_choice:result,
+    })
+
+  }
+  onCheckTerms(event){
+    const result = document.getElementById(event.target.id).checked;
+    this.setState({
+      checkTerms:result,
+    })
+  }
+  onCheckPersonalInfoEsscential(event){
+    const result = document.getElementById(event.target.id).checked;
+    this.setState({
+      checkPersonalInfo_ess:result,
+    })
+  }
+  onCheckPersonalInfoChoice(event){
+    const result = document.getElementById(event.target.id).checked;
+    this.setState({
+      checkPersonal_choice:result,
+    })
+  }
   render() {
     console.log(this.state.agree)
     return (
@@ -191,14 +252,14 @@ class SignUpForm extends Component {
                   </div> 
                   <div className="row">
                     <div className="label"><div>비밀번호</div></div>
-                    <InputTextBox 
+                    <InputTextBox type="password"
                     value = {this.state.password}
                     placeholder="비밀번호를 입력하세요."
                     onChange={this.onChangePassword}/>
                   </div> 
                   <div className="row">
                     <div className="label"><div>비밀번호 확인</div></div>
-                    <InputTextBox 
+                    <InputTextBox type="password"
                     value = {this.state.passwordCheck}
                     placeholder="비밀번호를 한번 더 입력하세요."
                     onChange={this.onChangePasswordCheck}/>
@@ -220,19 +281,19 @@ class SignUpForm extends Component {
                   <CustomBox height={4}/>
                   <div className="row">
                     <div className="label"><div className="red_text">이용약관</div></div>
-                    <div className="label"><CheckBox/>전체동의</div>
+                    <div className="label"><CheckBox onChange={this.onCheckAllOk} checked={this.state.checkAllOk} id="allOk"/>전체동의</div>
                   </div> 
                   <div className="row2">
                     <div className="label2"/>
-                    <div className="content2"><CheckBox/>이용약관 (필수)</div>
+                    <div className="content2"><CheckBox onChange={this.onCheckTerms} checked={this.state.checkTerms} id="terms"/>이용약관 (필수)</div>
                   </div>
                   <div className="row2">
                     <div className="label2"/>
-                    <div className="content2"><CheckBox/>개인정보 수집 및 이용 (필수)</div>
+                    <div className="content2"><CheckBox onChange={this.onCheckPersonalInfoEsscential} checked={this.state.checkPersonalInfo_ess} id="personalInfoEss"/>개인정보 수집 및 이용 (필수)</div>
                   </div>
                   <div className="row2">
                     <div className="label2"/>
-                    <div className="content2"><CheckBox/>개인정보 수집 및 이용&nbsp;<div className="red_text">(선택)</div></div>
+                    <div className="content2"><CheckBox onChange={this.onCheckPersonalInfoChoice} checked={this.state.checkPersonal_choice} id="personalInfoChoice"/>개인정보 수집 및 이용&nbsp;<div className="red_text">(선택)</div></div>
                   </div>
 
                   <CustomButton onClick={this.onSubmit}
