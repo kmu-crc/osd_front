@@ -1,6 +1,9 @@
 import React,{Component} from "react";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
+import noimg from "source/noimg.png";
+import {Dropdown} from "semantic-ui-react"
+import {InputTag} from "components/Commons/InputItem/InputTag"
 
 
 const MainBox = styled.div`
@@ -35,6 +38,8 @@ const RedButton = styled.div`
   position:absolute;
   left:${props=>props.left};
   bottom:${props=>props.bottom};
+
+  cursor:pointer;
 `
 const ThumbnailBox = styled.div`
   *{
@@ -64,6 +69,19 @@ const ThumbnailBox = styled.div`
     margin-left:110px;
   }
 `
+const Thumbnail = styled.div`
+  cursor:pointer;
+  width:256px;
+  height:256px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-image: ${props => `url(${props.imageURL==null?noimg:props.imageURL})`};
+  background-size: cover;
+  background-position: center center;
+  border-radius:50%;
+  margin-left:110px;
+`
 
 const FormBox=styled.div`
   *{
@@ -79,10 +97,19 @@ const FormBox=styled.div`
 
   .wrapper{
     width:100%;
+    display:flex;
+    align-items:center;
+    margin-bottom:70px;
+  }
+  .wrapper_noflex{
+    width:100%;
     margin-bottom:70px;
   }
   .margin_zero{
     margin:0px;
+  }
+  .margin_bottom{
+    margin-bottom:30px;
   }
   .flex{
     display:flex;
@@ -93,7 +120,7 @@ const FormBox=styled.div`
     display:flex;
   }
   .label{
-    width:157px;
+    min-width:157px;
     height:29px;
   }
   .label_centering{
@@ -118,6 +145,7 @@ const Button = styled.div`
     .label{
       margin-left:60px;
     }
+    cursor:pointer;
     
 `
 const InputText = styled.input.attrs({type:"text"})`
@@ -130,6 +158,8 @@ const InputText = styled.input.attrs({type:"text"})`
   margin-right:21px;
   outline:none;
   border:0px;
+  padding: 0.67857143em 1em;
+
 `
 const InputTextarea = styled.textarea`
   width:${props=>props.width==null?100+"%":props.width+"px"};
@@ -141,78 +171,214 @@ const InputTextarea = styled.textarea`
   outline:none;
   border:0px;
   readonly;
+  padding: 0.67857143em 1em;
+
 `
 const Margin = styled.div`
   width:${props=>props.width==null?100+"%":props.width+"px"};
   height:${props=>props.height==null?100+"%":props.height+"px"}
 `
+const DropBox = styled(Dropdown)`
+    min-width:200px !important;
+    background-color:#E9E9E9 !important;
+    margin-right:10px;
+
+    border-radius:20px !important;
+`
 
 class CreateMaker extends Component{
+  constructor(props){
+    super(props);
+    this.state = { 
+      thumbnail:null,thumbnail_name:null,
+      firstCategory:0,secondCategory:-1,location:"",
+      explain:"",tag:[],equipment:[],technique:[],
+      career:[{number:0,task:"",explain:"",during:""}],
+    }
+    this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
+    this.onClickSecondCategory = this.onClickSecondCategory.bind(this);
+    this.onChangeCareer = this.onChangeCareer.bind(this);
+    this.onClickAddCareer = this.onClickAddCareer.bind(this);
+    this.handleOnChangeThumbnail=this.handleOnChangeThumbnail.bind(this);
+    this.onChangeExplain = this.onChangeExplain.bind(this);
+    this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.handleAddTag=this.handleAddTag.bind(this);
+    this.handleAddEquipment=this.handleAddEquipment.bind(this);
+    this.handleAddTechnique=this.handleAddTechnique.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onClickFirstCategory(event,{value}){
+    this.setState({firstCategory:{value}.value,secondCategory:-1});
+  }
+  onClickSecondCategory(event,{value}){
+    this.setState({secondCategory:{value}.value,});
+  }
+  async onChangeCareer(number,task,explain,during){
+    let arr = this.state.career.slice();
+    await arr.splice(number,1,{number:number,task:task,explain:explain,during:during});
+    this.setState({
+      career:arr,
+    })
+  }
+  onClickAddCareer(event){
+    this.setState({
+      career:this.state.career.concat({number:this.state.career.length,task:"",explain:"",during:""}),
+    })
+  }
+  onChangeExplain(event){
+    this.setState({explain:event.target.value})
+  }
+  onChangeLocation(event){
+    this.setState({location:event.target.value});
+  }
+  handleAddTag(tag){
+    this.setState({
+      tag:tag.slice(),
+    });
+  }
+  handleAddEquipment(equipment){
+    this.setState({
+      equipment:equipment.slice(),
+    })
+  }
+  handleAddTechnique(technique){
+    this.setState({
+      technique:technique.slice(),
+    })
+  }
+
+  handleOnChangeThumbnail(event)
+  {
+      event.preventDefault();
+      const reader = new FileReader();
+      const file =event.target.files[0];
+      reader.onloadend = ()=>{
+        this.setState({thumbnail:reader.result,thumbnail_name:file.name})
+      }
+      if(event.target.files[0])
+      {
+        reader.readAsDataURL(file);
+      }
+  }
+
+  onSubmit(){
+    let tagList="";
+    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
+      return(
+        tagList+=item+","
+      );
+    });
+    let experienceList="";
+    this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+      return(
+        experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+      );
+    });
+
+    let equipmentList="";
+    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
+      return(
+        equipmentList+=item+","
+      );
+    });
+
+    let techniqueList="";
+    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
+      return(
+        techniqueList+=item+","
+      );
+    });
+    const data = {
+      user_id:this.props.userInfo.uid,
+      thumbnail:this.state.thumbnail,
+      type:"maker",
+      description:this.state.explain,
+      category_level1:this.props.firstCategory,
+      category_level2:this.props.secondCategory,
+      tag:tagList,
+      experience:experienceList,
+      maker_equipment:equipmentList,
+      maker_technique:techniqueList
+      
+    }
+
+
+    window.location.href = "/myPage"
+  }
+
   render(){
     return(
       <React.Fragment>
         <MainBox>
           <div className="title">메이커 등록하기</div>
           <div className="contentsBox">
-            <ThumbnailBox>
-              <div className="label">썸네일 등록</div>
-              <Margin height={70}/>
-              <div className="thumbnail"><div>첨부하기</div></div>
-            </ThumbnailBox>
-            <RedButton left={223} bottom={0}><div>등록하기</div></RedButton>
+              <ThumbnailBox>
+                  <div className="label">썸네일 등록</div>
+                  <Margin height={70}/>
+                  <input hidden onChange = {this.handleOnChangeThumbnail} id="file" type="file"/>
+                  <label htmlFor="file">
+                  {this.state.thumbnail==null?
+                    <div className="thumbnail"><div>첨부하기</div></div>
+                    :
+                    <Thumbnail imageURL={this.state.thumbnail}/>
+                  }
+                  </label>
+                </ThumbnailBox>
+            <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
             <FormBox>
 
               <div className="wrapper flex">
                 <div className="label">카테고리</div>
-                <InputText width={370}/>
+                <DropBox id="firstCategory" value={this.state.firstCategory} selection options={this.props.category1} placeholder="대분류" onChange={this.onClickFirstCategory}/>
+                <DropBox id="secondCategory" value={this.state.secondCategory} selection placeholder="소분류" onChange={this.onClickSecondCategory}
+                        options={this.props.category2[this.state.firstCategory]}/>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea width={483} height={99}/>
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99}/>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">태그</div>
-                <InputText width={370}/>
+                <div>
+                <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                </div>
               </div>
 
               <div className="wrapper flex">
-                <div className="label">위치</div>
-                <InputText width={215}/>
-                <InputText width={215}/>
+                <div className="label">거주지역</div>
+                <InputText onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
               </div>
 
-              <div className="wrapper ">
-                <div className="wrapper flex margin_zero">
-                <div className="label">경력</div>
-                <div className="index">01</div>
-                <div>
-                    <div className="innerWraper">
-                      <div className="label label_centering">업무</div>
-                      <InputText width={370}/>
-                    </div>
-                    <div className="innerWraper">
-                      <div className="label label_centering">내용</div>
-                      <InputTextarea width={370} height={84}/>
-                    </div>
-                    <div className="innerWraper">
-                      <div className="label label_centering">기간</div>
-                      <InputText width={370}/>
-                    </div>
-                </div>
-                </div>    
-                <Button width ={250} height={30} margin={157}><Icon name="plus"/><div className="label">경력 추가하기</div></Button>      
+              <div className="wrapper_noflex ">
+                {
+                  this.state.career.map((item,index)=>{
+                    console.log(item.number)
+                    return(
+                      <CreateCareer number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
+                    );
+                  })
+                }
+                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+                <Button onClick={this.onSubmit} width ={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                  <Icon name="plus"/><div className="label">경력 추가하기</div>
+                </Button>      
               </div>
 
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
-                <InputText width={370}/>
+                <div>
+                <InputTag getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483}/>
+                </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">보유기술</div>
-                <InputText width={370}/>
+                <div>
+                <InputTag getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483}/>
+                </div>
               </div>
 
             </FormBox>
@@ -222,6 +388,67 @@ class CreateMaker extends Component{
     );
   };
 }export default CreateMaker;
+
+
+// 경력 //
+class CreateCareer extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      task:"",explain:"",during:"",
+    }
+    this.onChangeTask=this.onChangeTask.bind(this);
+    this.onChangeExplain=this.onChangeExplain.bind(this);
+    this.onChangeDuring=this.onChangeDuring.bind(this);
+  }
+
+  onChangeTask(event){
+    this.setState({task:event.target.value,})
+    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+  }
+  onChangeExplain(event){
+    this.setState({explain:event.target.value,})
+    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+  }
+  onChangeDuring(event){
+    this.setState({during:event.target.value,})
+    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+  }
+  
+
+  render(){
+    const leadingZeros = (n, digits) =>{ //0채우는 함수
+      var zero = '';
+      n = n.toString();
+    
+      if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++)
+          zero += '0';
+      }
+      return zero + n;
+    }
+    return(
+      <div className="wrapper flex margin_bottom ">
+      <div className="label">경력</div>
+      <div className="index">{leadingZeros(this.props.number,2)}</div>
+      <div>
+          <div className="innerWraper">
+            <div className="label label_centering">업무</div>
+            <InputText value={this.state.task} onChange={this.onChangeTask} width={370}/>
+          </div>
+          <div className="innerWraper">
+            <div className="label label_centering">내용</div>
+            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84}/>
+          </div>
+          <div className="innerWraper">
+            <div className="label label_centering">기간</div>
+            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370}/>
+          </div>
+      </div>
+      </div>    
+    );
+  }
+}
 // import React, { Component } from "react";
 // import styled from 'styled-components';
 // import { FormInput, FormAddress, FormExp, FormTag, FormThumbnail, FormDropBox, FormCheckBoxnew } from "components/Commons/FormItems";

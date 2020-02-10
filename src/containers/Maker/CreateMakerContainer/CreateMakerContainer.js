@@ -4,6 +4,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import { connect } from "react-redux";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -52,17 +53,22 @@ class CreateMakerContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-          <CreateMaker/>
+          <CreateMaker {...this.props}/>
         </Wrapper>
-        {/* <ImgWrapper>
-          <Title><h1>메이커 등록</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
-          <CreateMaker />
-        </Wrapper> */}
       </React.Fragment>
     );
   }
 }
-
-export default CreateMakerContainer;
+const mapStateToProps = (state) => {
+  return {
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMakerContainer);
