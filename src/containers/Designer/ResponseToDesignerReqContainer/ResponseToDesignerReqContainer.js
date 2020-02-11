@@ -1,0 +1,24 @@
+import React, { Component } from 'react';
+import ResponseToDesignerReq from "components/Request/ResponseToDesignerReq";
+import { connect } from "react-redux";
+
+class ResponseToDesignerReqContainer extends Component {
+  render() {
+    return (<ResponseToDesignerReq {...this.props}/>)
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResponseToDesignerReqContainer);

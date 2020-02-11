@@ -164,7 +164,7 @@ const HRLine=styled.div`
     margin-top:35px;
     margin-bottom:35px;
 `
-class RequestToDesigner extends Component{
+class ModifyRequestToDesigner extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -184,7 +184,21 @@ class RequestToDesigner extends Component{
 
     this.onSubmit = this.onSubmit.bind(this);
   }
+  componentDidMount(){
+    //modify :*** 데이터베이스 호출 시 주석해제 *****
 
+    // this.setState({
+    //   category_level1:this.props.RequestDetail.category_level1,
+    //   category_level2:this.props.RequestDetail.category_level2,
+    //   title:this.props.RequestDetail.title,
+    //   tag:this.props.RequestDetail.tag.split(','),
+    //   price:this.props.RequestDetail.price,
+    //   content:this.props.RequestDetail.content,
+    //   location:this.props.RequestDetail.location,
+    //   ownership:this.props.RequestDetail.ownership,
+    //   offline:this.props.RequestDetail.offline_consultation,
+    // });
+  }
   onClickCategorylevel1(event,{value}){
     this.setState({category_level1:{value}.value});
   }
@@ -320,7 +334,7 @@ class RequestToDesigner extends Component{
       </React.Fragment>
     );
   };
-}export default RequestToDesigner;
+}export default ModifyRequestToDesigner;
 
 // import React, { Component } from "react";
 // import { Grid } from "semantic-ui-react";

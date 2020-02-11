@@ -86,10 +86,10 @@ const FormBox=styled.div`
   border-radius: 20px;
   padding-left:59px;
   padding-top:49px;
-
+  margin:50px;
   .wrapper{
     width:100%;
-    margin-bottom:70px;
+    margin-bottom:35px;
   }
   .margin_zero{
     margin:0px;
@@ -104,6 +104,12 @@ const FormBox=styled.div`
     width:100%;
     margin-bottom:26px;
     display:flex;
+  }
+  .textBox{
+    width:70%;
+    border:1px solid #E6E6E6;
+    border-radius:20px;
+    padding: 0.67857143em 1em;
   }
   .label{
     min-width:157px;
@@ -164,69 +170,76 @@ const HRLine=styled.div`
     margin-top:35px;
     margin-bottom:35px;
 `
-class RequestToDesigner extends Component{
+const TagList = styled.div`
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    flex-wrap: wrap;
+`;
+const TagPiece = styled.div`
+    width: max-content;
+    min-width: 30px;
+    background-color: #EFEFEF;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: #707070;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    .close {
+        margin-left: 10px;
+        width: max-content;
+        height: max-content;
+        padding: 0px 2px;
+    }
+`;
+class ResponseToMakerReq extends Component{
   constructor(props){
     super(props);
     this.state = {
-      category_level1:-1,category_level2:-1,
-      title:"",tag:[],price:0,content:"",location:"",ownership:-1,offline:-1,
+      category_level1:0,category_level2:0,
+      title:"",tag:[],price:0,content:"",location:"",offline:-1,amount:0,resale:-1,
+
+      res_title:"",res_content:"",res_price:"",
     }
-    this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
-    this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
-    this.onClickItemType= this.onClickItemType.bind(this);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.getTagValue = this.getTagValue.bind(this);
-    this.onChangePrice = this.onChangePrice.bind(this);
-    this.onChangeContent = this.onChangeContent.bind(this);
-    this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.onChangeOwnership = this.onChangeOwnership.bind(this);
-    this.onChangeOffline=this.onChangeOffline.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeResponseTitle=this.onChangeResponseTitle.bind(this);
+    this.onChangeResponseContent=this.onChangeResponseContent.bind(this);
+    this.onChangeResponsePrice=this.onChangeResponsePrice.bind(this);
+  }
+  componentDidMount(){
+    //test 데이터 초기화
+    this.setState({
+      category_level1:1,
+      category_level2:0,
+      title:"제작의뢰합니다.",
+      tag:["테스트1","테스트2","테스트3"],
+      price:12300,
+      content:"제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
+      location:"대한민국 서울특별시",
+      offline:0,
+      amount:1,
+      resale:0,
+    });
   }
 
-  onClickCategorylevel1(event,{value}){
-    this.setState({category_level1:{value}.value});
-  }
-  onClickCategorylevel2(event,{value}){
-    this.setState({category_level2:{value}.value});
-  }
-  onClickItemType(event,{value}){
-    this.setState({itemType:{value}.value});
-  }
-  onChangeTitle(event){
+  onChangeResponseTitle(event){
     this.setState({
-      title:event.target.value,
+      res_title:event.target.value,
     })
   }
-  getTagValue(data){
+  onChangeResponseContent(event){
     this.setState({
-      tag:data.slice(),
+      res_content:event.target.value,
     })
   }
-  onChangePrice(event){
+  onChangeResponsePrice(event){
     this.setState({
-      price:event.target.value,
-    })
-  }
-  onChangeLocation(event){
-    this.setState({
-      location:event.target.value,
-    })
-  }
-  onChangeContent(event){
-    this.setState({
-      content:event.target.value,
-    })
-  }
-  onChangeOwnership(event,{value}){
-    this.setState({
-      ownership:{value}.value,
-    })
-  }
-  onChangeOffline(event,{value}){
-    this.setState({
-      offline:{value}.value,
+      res_price:event.target.value,
     })
   }
 
@@ -239,17 +252,12 @@ class RequestToDesigner extends Component{
       );
     });
 
+    
     const Data = {
-      type:"designer_req", // "designer_req" "designer_res" "maker_req" "maker_res"
-      title:this.state.title,
-      category_level1:this.state.category_level1,
-      category_level2:this.state.category_level2,
-      tag:tagList,
-      price:this.state.price,
-      content:this.state.content,
-      location:this.state.location,
-      ownership:this.state.ownership,
-      offline_consultation:this.state.offline,
+      type:"maker_res", // "designer_req" "designer_res" "maker_req" "maker_res"
+      title:this.state.res_title,
+      content:this.state.res_content,
+      price:this.state.res_price,
     }
 
     // 페이지이동
@@ -257,70 +265,100 @@ class RequestToDesigner extends Component{
   }
 
   render(){
+
+    const category_level1 = this.props.category1&&this.props.category1[this.state.category_level1].text;
+    const category2 = this.props.category2&&this.props.category2[this.state.category_level1];
+    const category_level2 = category2&&category2[this.state.category_level2].text;
     return(
       <React.Fragment>
       <Wrapper>
         <MainBox>
-          <div className="title">디자이너 의뢰하기</div>
+          <div className="title">메이커 의뢰 답변</div>
           <div className="contentsBox">
             <FormBox>
 
               <div className="wrapper flex centering">
-                <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
-                <InputText width={483}/>
+                <div className="label">제목</div>
+                <div className="textBox">{this.state.title}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">카테고리</div>
-                <DropBox id="firstCategory" value={this.state.category_level1} selection options={FirstCategory} 
-                        placeholder="대분류" onChange={this.onClickCategorylevel1}/>
-                <DropBox id="secondCategory" value={this.state.category_level2} selection placeholder="소분류" onChange={this.onClickCategorylevel2}
-                        options={this.state.firstCategory>-1?SecondCategory[this.state.firstCategory]:EmptyCategory}/>
+                <div className="textBox">{category_level1}>{category_level2}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">태그</div>
-                <div>
-                <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
-                </div>
+                <TagList>
+                  {
+                    this.state.tag.map((item, index) => {
+                      return (
+                      <TagPiece key={index}>
+                        {item}
+                    </TagPiece>);
+                    })
+                  }
+                  
+                </TagList>
               </div>
 
               <div className="wrapper flex centering">
-                <div className="label ">희망 비용</div>
-                <InputText onChange={this.onChangePrice} value={this.state.price} width={483}/>
+                <div className="label">희망비용</div>
+                <div className="textBox">{this.state.price}</div>
               </div>
 
               <div className="wrapper flex centering">
-                <div className="label">의뢰 내용</div>
-                <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344}/>
-              </div>
-              <HRLine/>
-              <div className="wrapper flex centering">
-                <div className="label">디자이너 위치</div>
-                <InputText onChange={this.onChangeLocation} value={this.state.location} width={483}/>
+                <div className="label">내용</div>
+                <div className="textBox">{this.state.content}</div>
               </div>
 
               <div className="wrapper flex centering">
-                <div className="label">디자인 소유권</div>
-                <DropBox id="designerOwnership" selection options={[{text:"의뢰자",value:0},{text:"디자이너",value:1}]} 
-                onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택"/>
+                <div className="label">수량</div>
+                <div className="textBox">{this.state.amount}</div>
+              </div>
+
+              <div className="wrapper flex centering">
+                <div className="label">메이커 위치</div>
+                <div className="textBox">{this.state.location}</div>
+              </div>
+
+              <div className="wrapper flex centering">
+                <div className="label">메이커 재판매</div>
+                <div className="textBox">{this.state.resale<=0?"불가능":"가능"}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">오프라인 상담</div>
-                <DropBox id="offline" selection options={[{text:"가능",value:0},{text:"불가능",value:1}]} 
-                onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택"/>
+                <div className="textBox">{this.state.offline<=0?"불가능":"가능"}</div>
               </div>
 
             </FormBox>
-            <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
-          </div>
+            <FormBox>
+
+              <div className="wrapper flex">
+                <div className="label">제목</div>
+                <InputText onChange={this.onChangeResponseTitle} value={this.state.res_title} width={483}/>
+              </div>
+
+              <div className="wrapper flex">
+                <div className="label">설명</div>
+                <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700}/>
+              </div>
+
+              <div className="wrapper flex">
+                <div className="label">희망비용</div>
+                <InputText onChange={this.onChangeResponsePrice} value={this.state.res_price} width={483}/>
+              </div>
+
+            </FormBox>
+          </div>         
         </MainBox>
+        <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
         </Wrapper>
       </React.Fragment>
     );
   };
-}export default RequestToDesigner;
+}export default ResponseToMakerReq;
 
 // import React, { Component } from "react";
 // import { Grid } from "semantic-ui-react";
