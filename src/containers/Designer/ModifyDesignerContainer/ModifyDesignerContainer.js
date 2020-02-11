@@ -4,6 +4,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import { connect } from "react-redux";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -42,7 +43,8 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
+  width:100%;
+  margin-top:60px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
@@ -51,15 +53,24 @@ class ModifyDesignerContainer extends Component {
   render() {
     return(
        <React.Fragment>
-        <ImgWrapper>
-          <Title><h1>디자이너 수정</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
-         <ModifyDesigner/>
+         <Wrapper>
+         <ModifyDesigner  {...this.props}/>
          </Wrapper>
        </React.Fragment>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
 
-export default ModifyDesignerContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(ModifyDesignerContainer);

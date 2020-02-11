@@ -5,6 +5,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import { connect } from "react-redux";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -54,17 +55,23 @@ class CreateDesignerContainer extends Component {
     return(
        <React.Fragment>
          <Wrapper>
-         <CreateDesigner/>
+         <CreateDesigner  {...this.props}/>
          </Wrapper>
-        {/* <ImgWrapper>
-          <Title><h1>디자이너 등록</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
-         <CreateDesigner/>
-         </Wrapper> */}
        </React.Fragment>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
 
-export default CreateDesignerContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateDesignerContainer);

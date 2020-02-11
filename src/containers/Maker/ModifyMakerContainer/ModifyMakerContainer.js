@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import ModifyMaker from 'components/Maker/ModifyMaker/ModifyMaker'
+import ModifyMaker from 'components/Maker/ModifyMaker/ModifyMaker';
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import { connect } from "react-redux";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -24,7 +25,6 @@ const ImgWrapper = styled.div`
     z-index: 1;
   }
 `;
-
 const Title = styled.div`
   width: 100%;
   color: white;
@@ -40,26 +40,35 @@ const Title = styled.div`
     font-weight: bold;
   }
 `;
-
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
-  margin-bottom: 100px;
-  position: relative;
-  z-index:3;
-`
+    width:100%;
+    margin-top:60px;
+    margin-bottom: 100px;
+    position: relative;
+    z-index:3;
+`;
+
 class ModifyMakerContainer extends Component {
   render() {
-    return(
-       <React.Fragment>
-        <ImgWrapper>
-          <Title><h1>메이커 수정</h1></Title>
-        </ImgWrapper>
+    return (
+      <React.Fragment>
         <Wrapper>
-           <ModifyMaker/>
+          <ModifyMaker {...this.props}/>
         </Wrapper>
-       </React.Fragment>
+      </React.Fragment>
     );
   }
 }
-
-export default ModifyMakerContainer;
+const mapStateToProps = (state) => {
+  return {
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ModifyMakerContainer);

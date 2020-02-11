@@ -150,7 +150,18 @@ export class InputTag extends Component {
         }
     }
     onChangeValue = (event) => {
-        this.setState({ value: event.target.value });
+        console.log("!");
+        var pattern = /^[a-zA-Zㄱ-힣0-9]*$/;
+        if(event.target.value.match(pattern))
+        {
+            this.setState({ value: event.target.value });
+        }
+        else{
+            let warningMsg1 = document.getElementById("wariningBox3");
+            warningMsg1.className = "showani";
+            return;
+        }
+        
     }
     onDeleteTag = async (event) => {
         console.log(event.target.id);
@@ -179,6 +190,9 @@ export class InputTag extends Component {
                     </div>
                     <div id="wariningBox2" className="hideani">
                         중복이 허용되지 않습니다.
+                    </div>
+                    <div id="wariningBox3" className="hideani">
+                        특수문자는 허용되지 않습니다.
                     </div>
                 </WarningBox>
             );
