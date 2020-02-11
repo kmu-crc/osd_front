@@ -31,6 +31,11 @@ import ModifyMakerPage from 'pages/ModifyMakerPage';
 import RequestListPage, { CreateRequestPage, RequestDetailPage } from "pages/RequestPage";
 import requestDesignerPage from "pages/RequestToDesignerPage";
 import requestMakerPage from "pages/RequestToMakerPage";
+import ModifyrequestDesignerPage from "pages/ModifyRequestToDesignerPage";
+import ModifyrequestMakerPage from "pages/ModifyRequestToMakerPage";
+import ResponseToDesignerReqPage from "pages/ResponseToDesignerReqPage";
+import ResponseToMakerReqPage from "pages/ResponseToMakerReqPage";
+
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -53,6 +58,11 @@ class App extends Component {
             <Route path="/modifyDesigner" component={RequiresAuth(ModifyDesignerPage)} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
+            <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(ModifyrequestDesignerPage)} />
+            <Route path="/ModifyrequestToMaker/:id" component={RequiresAuth(ModifyrequestMakerPage)} />
+            <Route path="/responseToDesignerReq/:id" component={RequiresAuth(ResponseToDesignerReqPage)} />
+            <Route path="/responseToMakerReq/:id" component={RequiresAuth(ResponseToMakerReqPage)} />
+
             {/* MAKER */}
             <Route path="/maker/:sorting?/:cate1?/:cate2?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />

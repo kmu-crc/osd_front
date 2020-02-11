@@ -209,13 +209,23 @@ class ModifyMaker extends Component{
   }
   componentDidMount(){
     //modify :*** 데이터베이스 호출 시 주석해제 *****
+    
+    // const arr = this.props.DesignerDetail.career.split('/');
+    
+    // const arrCareer = arr.map((item,index)=>{
+    //   const piece = item.split(',');
+    //   return(
+    //     {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
+    //   );
+    // })
+    
     // this.setState({
     //   thumbnail:this.props.DesignerDetail.thumbnail == null? noimg:this.props.DesignerDetail.thumbnail.m_img,
     //   firstCategory:this.props.DesignerDetail.category_level1,
     //   secondCategory:this.props.DesignerDetail.category_level2,
     //   explain:this.props.DesignerDetail.description,
-    //   tag:this.props.DesignerDetail.tag,
-    //   career:this.props.DesignerDetail.career,
+    // tag:this.props.DesignerDetail.tag.split(','),
+    // career:arrCareer,
     //  equipment:this.props.DesignDetail.maker_equipment,
     //  technique:this.props.DesignDetail.maker_technique,
     // })

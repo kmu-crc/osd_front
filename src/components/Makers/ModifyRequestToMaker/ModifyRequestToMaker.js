@@ -164,12 +164,12 @@ const HRLine=styled.div`
     margin-top:35px;
     margin-bottom:35px;
 `
-class RequestToDesigner extends Component{
+class ModifyRequestToMaker extends Component{
   constructor(props){
     super(props);
     this.state = {
       category_level1:-1,category_level2:-1,
-      title:"",tag:[],price:0,content:"",location:"",ownership:-1,offline:-1,
+      title:"",tag:[],price:0,content:"",location:"",offline:-1,amount:0,resale:-1,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -179,10 +179,28 @@ class RequestToDesigner extends Component{
     this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.onChangeOwnership = this.onChangeOwnership.bind(this);
+    this.onChangeResale = this.onChangeResale.bind(this);
     this.onChangeOffline=this.onChangeOffline.bind(this);
+    this.onChangeAmount = this.onChangeAmount.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount(){
+    //modify :*** 데이터베이스 호출 시 주석해제 *****
+
+    // this.setState({
+    //   category_level1:this.props.RequestDetail.category_level1,
+    //   category_level2:this.props.RequestDetail.category_level2,
+    //   title:this.props.RequestDetail.title,
+    //   tag:this.props.RequestDetail.tag.split(','),
+    //   price:this.props.RequestDetail.price,
+    //   content:this.props.RequestDetail.content,
+    //   location:this.props.RequestDetail.location,
+    //   offline:this.props.RequestDetail.offline_consultation,
+    //   amount:this.props.RequestDetail.amount,
+    //   resale:this.props.RequestDetail.resale,
+    // });
   }
 
   onClickCategorylevel1(event,{value}){
@@ -209,6 +227,11 @@ class RequestToDesigner extends Component{
       price:event.target.value,
     })
   }
+  onChangeAmount(event){
+    this.setState({
+      amount:event.target.value,
+    })
+  }
   onChangeLocation(event){
     this.setState({
       location:event.target.value,
@@ -219,14 +242,14 @@ class RequestToDesigner extends Component{
       content:event.target.value,
     })
   }
-  onChangeOwnership(event,{value}){
-    this.setState({
-      ownership:{value}.value,
-    })
-  }
   onChangeOffline(event,{value}){
     this.setState({
       offline:{value}.value,
+    })
+  }
+  onChangeResale(event,{value}){
+    this.setState({
+      resale:{value}.value,
     })
   }
 
@@ -240,15 +263,16 @@ class RequestToDesigner extends Component{
     });
 
     const Data = {
-      type:"designer_req", // "designer_req" "designer_res" "maker_req" "maker_res"
+      type:"maker_req", // "designer_req" "designer_res" "maker_req" "maker_res"
       title:this.state.title,
       category_level1:this.state.category_level1,
       category_level2:this.state.category_level2,
       tag:tagList,
       price:this.state.price,
       content:this.state.content,
+      amount:this.state.amount,
       location:this.state.location,
-      ownership:this.state.ownership,
+      resale:this.state.resale,
       offline_consultation:this.state.offline,
     }
 
@@ -267,7 +291,7 @@ class RequestToDesigner extends Component{
 
               <div className="wrapper flex centering">
                 <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
-                <InputText width={483}/>
+                <InputText width={483} />
               </div>
 
               <div className="wrapper flex centering">
@@ -294,16 +318,23 @@ class RequestToDesigner extends Component{
                 <div className="label">의뢰 내용</div>
                 <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344}/>
               </div>
+
+
               <HRLine/>
               <div className="wrapper flex centering">
-                <div className="label">디자이너 위치</div>
+                <div className="label">수량</div>
+                <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80}/>
+              </div>
+
+              <div className="wrapper flex centering">
+                <div className="label">메이커 위치</div>
                 <InputText onChange={this.onChangeLocation} value={this.state.location} width={483}/>
               </div>
 
               <div className="wrapper flex centering">
-                <div className="label">디자인 소유권</div>
-                <DropBox id="designerOwnership" selection options={[{text:"의뢰자",value:0},{text:"디자이너",value:1}]} 
-                onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택"/>
+                <div className="label">메이커 재판매</div>
+                <DropBox id="resale" selection options={[{text:"가능",value:0},{text:"불가능",value:1}]} 
+                onChange={this.onChangeResale} value={this.state.resale} placeholder="선택"/>
               </div>
 
               <div className="wrapper flex centering">
@@ -320,7 +351,7 @@ class RequestToDesigner extends Component{
       </React.Fragment>
     );
   };
-}export default RequestToDesigner;
+}export default ModifyRequestToMaker;
 
 // import React, { Component } from "react";
 // import { Grid } from "semantic-ui-react";
