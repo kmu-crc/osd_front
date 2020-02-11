@@ -8,17 +8,14 @@ import { SearchMemberRequest } from "actions/Commons/Search";
 class CreateProductFormContainer extends Component {
   componentDidMount() {
     if (this.props.userInfo.is_designer === 0) {
-      alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
-      this.props.history.push("/myModify")
+      alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.");
+      this.props.history.push("/myModify");
     }
   }
   render() {
-    return (
-      <div>{
-        this.props.userInfo.is_designer === 1 ? (
-          <CreateProductForm {...this.props} />
-        ) : (<p style={{ color: "#FFF" }}> 권한을 확인 중입니다.</p>)
-      }</div>
+    return (this.props.userInfo.is_designer === 1
+      ? (<CreateProductForm {...this.props} />)
+      : (<p style={{ color: "#FFF" }}> 권한을 확인 중입니다.</p>)
     )
   }
 }
