@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react";
 import { InputTag } from "components/Commons/InputItem/InputTag";
 import { ThumbnailList } from "components/Commons/InputItem/ThumbnailList";
@@ -16,7 +15,6 @@ const FirstCategory = [
   { text: "엔터테인먼트", value: 4 },
   { text: "소프트웨어", value: 5 },
   { text: "새분야", value: 6 }];
-const EmptyCategory = [{ text: "", value: -1 }];
 const SecondCategory =
   [[{ text: "스마트패션", value: 0 }, { text: "의상", value: 1 }, { text: "엑세서리", value: 2 }, { text: "패션모듈", value: 3 }],
   [{ text: "스마트카", value: 0 }, { text: "로봇", value: 1 }, { text: "기계/기기/기구", value: 2 }, { text: "센서모듈", value: 3 }, { text: "공예", value: 4 }],
@@ -25,15 +23,17 @@ const SecondCategory =
   [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
   [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
   [{ text: "새분야", value: 0 }]];
-const ItemType =
-  [{ text: "디자인", value: 0 },
+const EmptyCategory = [{ text: "", value: -1 }];
+const ItemType = [
+  { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
-  { text: "특허권", value: 2 },
-  { text: "기술자문/상담", value: 3 },
-  { text: "경험", value: 4 },
-  { text: "정보/데이터", value: 5 },
-  { text: "아이디어/노하우", value: 6 },
+  { text: "기술자문/상담", value: 2 },
+  { text: "경험", value: 3 },
+  { text: "정보/데이터", value: 4 },
+  { text: "아이디어/노하우", value: 5 },
+  { text: "특허권", value: 6 },
   { text: "제품", value: 7 }];
+
 const MainBox = styled.div`
   width:100%;
   .title{
@@ -57,20 +57,19 @@ const MainBox = styled.div`
   }
 `;
 const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
-
-  position:absolute;
-  left:${props => props.left};
-  bottom:${props => props.bottom};
+  width: 290px;
+  height: 70px;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.gray ? "gray" : "red"};
+  // position: absolute;
+  // left:${props => props.left};
+  // bottom:${props => props.bottom};
 `;
 const ThumbnailBox = styled.div`
   *{
@@ -106,6 +105,7 @@ const Thumbnail = styled.div`
   height: ${props => props.height == null ? 100 : props.height}px;
   margin-bottom: ${props => props.marginBottom == null ? 0 : props.marginBottom}px;
   background: #E9E9E9;
+  border: ${props => props.img ? "1px solid #E9E9E9" : "none"};
   background-image: url(${props => props.img});
   background-size: cover;
   background-position: center center;
@@ -215,44 +215,53 @@ const HRLine = styled.div`
   margin-top: 35px;
   margin-bottom: 35px;
 `;
-
+const InfoContentChooseItemType = styled.div`
+  border: 1px dashed gray;
+  padding: 25px;
+  width: 860px;
+  border-radius: 20px;
+  line-height: 28px;
+  text-align: center;
+  margin-top: 76px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 24px;
+  color: #707070;
+`;
 class CreateProductForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      thumbnail: null, thumbnail_name: null,
-      title: null, category1: null, category2: null, tag: [],
-      type_content: null,
+      // local
       firstCategory: 0, secondCategory: -1,
-      itemType: -1, content: [], deleteContent: []
+      // send data - basic
+      title: null,
+      thumbnail: null, thumbnail_name: null,
+      tag: [], category1: null, category2: null,
+      itemType: -1,
+      // send data - additional
+      additional: null
     };
     this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    this.onAddValue = this.onAddValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   };
   success = () => 1070;
   onSubmit(event) {
     event.preventDefault();
-    const basic = {
-      thumbnail: this.state.thumbnail, thumbnail_name: this.state.thumbnail_name,
-      title: this.state.title,
-      category1: this.state.category1, category2: this.state.category2,
-      tag: this.state.tags
-    };
-    const add = { type_content: this.state.type_content };
-    const data = { ...basic, add };
+    let data = { ...this.state };
+    delete data.firstCategory;
+    delete data.secondCategory;
     console.log(data);
-
-    window.location.href = `/productDetail/${this.success()}`;
+    // window.location.href = `/productDetail/${this.success()}`;
   }
   onClickFirstCategory(event, { value }) {
     this.setState({ firstCategory: { value }.value });
   };
   onClickItemType(event, { value }) {
-    this.setState({ itemType: { value }.value });
+    this.setState({ itemType: { value }.value, additional: null });
   };
   handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -282,46 +291,22 @@ class CreateProductForm extends Component {
     );
     await this.setState({ content: copyContent, deleteContent: copyDelete });
   };
-  async onAddValue(data) {
-    let copyContent = [...this.state.content];
-    let copyData = { ...data };
-    copyData.initClick = true;
-    for (let item of copyContent) {
-      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
-        await copyContent.splice(item.order, 1, null);
-      }
-    }
-    await copyContent.splice(copyData.order, 0, copyData);
-    // let newContent = [];
-    //copyContent = copyContent.map((item, index) => {
-    //  if(item != null){
-    //    newContent.push(item);
-    //  }
-    //})
-    let newContent = copyContent.filter((item) => { return item !== null })
-    newContent = await Promise.all(
-      newContent.map(async (item, index) => {
-        item.order = await index;
-        delete item.target;
-        if (item.type === "FILE") delete item.initClick;
-        if (item.order !== copyData.order) delete item.initClick;
-        return item;
-      })
-    );
-    await this.setState({ content: newContent });
-  };
+
 
   render() {
-    const { /*edit, */ content } = this.state;
+    const { /*edit, */itemType } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
     return (<MainBox>
+      {/* 타이틀 */}
       <div className="title">아이템 등록하기</div>
+
+      {/* 공통/기본입력사항 */}
       <div className="contentsBox">
         <ThumbnailBox>
           <div className="label">썸네일 이미지 등록<Mandatory /></div>
           <Margin height={50} />
-          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
           <label htmlFor="file">
             <Thumbnail img={this.state.thumbnail} width={334} height={334}>
               {this.state.thumbnail ? null : <div>첨부하기</div>}
@@ -329,8 +314,7 @@ class CreateProductForm extends Component {
           </label>
           <Margin height={75} />
         </ThumbnailBox>
-
-        <FormBox height={'550px'} boxShadow={true}>
+        <FormBox height="550px" boxShadow={true}>
           <div className="contentWrap">
             <div className="wrapper flex">
               <div className="label">아이템명<Mandatory /></div>
@@ -360,1084 +344,441 @@ class CreateProductForm extends Component {
         </FormBox>
       </div>
 
-      {/* create-item-detail */}
-      {this.state.itemType > -1 ? (
+      {/* 아이템 상세정보 입력 폼 */}
+      {itemType > -1 ? (
+        <ItemTypeForm returnState={obj => this.setState({ additional: obj.additional })} itemType={this.state.itemType} />
+      ) : (<InfoContentChooseItemType>아이템 유형을 선택하여 세부적인 <br />내용을 입력해주신 후 아이템을 등록해주세요.</InfoContentChooseItemType>)}
+      {/* // <div className="contentsBox">
+          // <FormBox boxShadow={true} width="760px" >
+            // <div className="contentWrap">
+            // </div>
+          // </FormBox>
+        // </div> */}
+      {/* 버튼 */}
+      {itemType > -1 ? (
         <div className="contentsBox">
-          <FormBox boxShadow={true} >
-            <div className="contentWrap">
-              <ItemTypeForm itemType={this.state.itemType} />
-            </div>
-            <div className="contentWrap">
-              <form onSubmit={this.onSubmit}>
-                {content.length > 0 ? (
-                  <div>
-                    {content.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          {/* <AddController type="INIT" order={index} name={`add${index}`} getValue={this.onAddValue} /> */}
-                          <Controller type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />
-                        </div>
-                      );
-                    })}
-                    <AddController type="INIT" order={content.length} name="addBasic" getValue={this.onAddValue} />
-                  </div>
-                ) : (<AddController type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />)}
-              </form>
-            </div>
-          </FormBox>
-        </div>) : (<div style={{ border: "1px dashed gray", padding: "25px", width: "860px", borderRadius: "20px", lineHeight: "28px", textAlign: "center", marginTop: "76px", marginLeft: "auto", marginRight: "auto", fontSize: "24px", color: "#707070" }}>아이템 유형을 선택하여 세부적인 <br />내용을 입력해주신 후 아이템을 등록해주세요.</div>)}
-
-      {/* buttons */}
-      {this.state.itemType > -1 ? (
-        <div className="contentsBox">
-          <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>
+          <RedButton onClick={this.onSubmit}>아이템 등록</RedButton><RedButton gray onClick={() => alert("canceled!")}>취소</RedButton>
         </div>
       ) : null}
     </MainBox>);
   };
-} export default CreateProductForm;
+}
+
+export default CreateProductForm;
+
 
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
+    this.state = { additional: null, content: [] };
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+    this.onAddValue = this.onAddValue.bind(this);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.itemType !== this.props.itemType)
+      this.setState({ additional: null, content: [] });
+  }
+  returnState() {
+    this.props.returnState && this.props.returnState(this.state);
+  }
+  async onHandleReturn(value) {
+    await this.setState({ additional: value });
+    this.returnState();
+  }
+  async onAddValue(data) {
+    let copyContent = [...this.state.content];
+    let copyData = { ...data };
+    copyData.initClick = true;
+    for (let item of copyContent) {
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+        await copyContent.splice(item.order, 1, null);
+      }
+    }
+    await copyContent.splice(copyData.order, 0, copyData);
+
+    let newContent = copyContent.filter((item) => { return item !== null })
+    newContent = await Promise.all(
+      newContent.map(async (item, index) => {
+        item.order = await index;
+        delete item.target;
+        if (item.type === "FILE") delete item.initClick;
+        if (item.order !== copyData.order) delete item.initClick;
+        return item;
+      })
+    );
+    await this.setState({ content: newContent });
+  };
+  render() {
+    const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
+    const { additional, content } = this.state;
+    return (
+      <MainBox>
+
+        <div className="contentsBox">
+          <FormBox boxShadow={true}>
+            {itemType === 0 ? <ItemDesign return={this.onHandleReturn} /> : null}
+            {itemType === 1 ? <ItemProject return={this.onHandleReturn} /> : null}
+            {itemType === 2 ? <ItemConsulting return={this.onHandleReturn} /> : null}
+            {itemType === 3 ? <ItemExperience return={this.onHandleReturn} /> : null}
+            {itemType === 4 ? <ItemInfoData return={this.onHandleReturn} /> : null}
+            {itemType === 5 ? <ItemIdea return={this.onHandleReturn} /> : null}
+            {itemType === 6 ? <ItemPatent return={this.onHandleReturn} /> : null}
+            {itemType === 7 ? <ItemProduct return={this.onHandleReturn} /> : null}
+          </FormBox>
+        </div>
+
+        <div className="contentsBox">
+          <FormBox boxShadow={true} width="760px">&nbsp;
+
+            {itemType === 1 ? // 프로젝트 아이템일 경우 바로 프로젝트형을 출력한다!
+
+              <React.Fragment>project !!!!!</React.Fragment>
+
+              : additional ? // 그 외 아이템인 경우 유저의 선택에 따라 블로그형/프로젝트형을 출력한다.
+                <React.Fragment>
+                  <div className="contentWrap">
+                    {additional.uploadType === "블로그형" ?
+                      <React.Fragment>
+                        {content.length > 0 && content.map((item, index) =>
+                          <Controller key={index} type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
+                        <AddController type="INIT" order={content.length > 0 ? content.length : 0} name="addBasic" getValue={this.onAddValue} />
+                      </React.Fragment>
+
+                      : <React.Fragment>project !!!!!</React.Fragment>}
+                  </div>
+                </React.Fragment> : null
+            }
+          </FormBox>
+        </div>
+
+      </MainBox >);
+  }
+};
+class Field extends Component {
+  render() {
+    const { title } = this.props;
+    return (
+      <div className="wrapper flex">
+        <div className="label">{title}</div>
+        {this.props.children}
+      </div>)
+  }
+};
+class ItemDesign extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { description: "", uploadType: "", price: 0 }
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
+  render() {
+    const types = ["블로그형", "프로젝트형"];
+    return (
+      <React.Fragment>
+        <Field title="디자인 설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+        <Field title="업로드 유형">
+          <UploadType name="type" return={this.onHandleReturn} Options={types} /></Field>
+        <Field title="가격">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+      </React.Fragment>)
+  }
+};
+class ItemProject extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { description: "", members: [], uploadType: "", price: 0 }
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
   }
 
   render() {
-    const selectType = this.props.itemType == null ? -1 : this.props.itemType;
+    const types = ["예", "아니오"];
     return (
-      <FormBox>
-        <div className="wrapper flex">
-          <div className="label">설명</div>
-          <InputTextarea width={483} height={99} />
-        </div>
-        <div className="wrapper flex">
-          <div className="label">가격<span className="font_red">*</span></div>
-          <InputText width={370} />
-        </div>
-        {/* <HRLine /> */}
-        {selectType == 0 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">상세 이미지</div>
-              <ThumbnailList />
-            </div>
+      <React.Fragment>
+        <Field title="프로젝트 설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+        <Field title="팀원 초대">
+          <InputText onChange={this.onHandleChange} name="members" width={370} /></Field>
+        <Field title="공개">
+          <UploadType return={this.onHandleReturn} name="type" Options={types} /></Field>
+        <Field title="가격">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+      </React.Fragment>)
+  }
+};
+class ItemConsulting extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { description: "", contactMedthod: "", public: "", price: 0 };
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(name, value) {
+    await this.setState({ [name]: value });
+    this.returnState();
+  }
 
-            <div className="wrapper flex">
-              <div className="label">업로드 유형</div>
-              <UploadType name="type" Options={["블로그형", "프로젝트형"]} />
-            </div>
-          </React.Fragment>}
+  render() {
+    const typeTF = ["예", "아니오"];
+    const typeOnOff = ["온라인", "오프라인"];
 
-        {selectType == 1 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">상세 이미지</div>
-              <ThumbnailList />
-            </div>
+    return (
+      <React.Fragment>
+        <Field title="자문/상담 설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+        <Field title="자문/상담 방법">
+          <UploadType return={(value) => this.onHandleReturn("contactMethod", value)} name="contactMethod" Options={typeOnOff} /></Field>
+        <Field title="내용 공개 여부">
+          <UploadType return={(value) => this.onHandleReturn("pulic", value)} name="public" Options={typeTF} /></Field>
+        <Field title="자문/상담 비용">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+      </React.Fragment>)
+  }
+};
+class ItemExperience extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { description: "", price: 0 };
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
 
-            <div className="wrapper flex">
-              <div className="label">팀원 초대</div>
-              <InputText width={370} />
-            </div>
+  render() {
+    const type = ["블로그형", "프로젝트형"];
 
-            <div className="wrapper flex">
-              <div className="label">기간제 서비스</div>
-              <UploadType name="isTerm" Options={["예", "아니오"]} />
-            </div>
+    return (
+      <React.Fragment>
+        <Field title="경험 설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+        <Field title="업로드 유형">
+          <UploadType return={this.onHandleReturn} name="uploadType" Options={type} /></Field>
+        <Field title="자문/상담 비용">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+      </React.Fragment>)
+  }
+};
+class ItemInfoData extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { description: "", uploadType: "", price: 0 };
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
 
-            <div className="wrapper flex">
-              <div className="label">기간제 기간</div>
-              <InputText width={100} /> ~ <InputText width={100} />
-            </div>
+  render() {
+    const type = ["블로그형", "프로젝트형"];
 
-            <div className="wrapper flex">
-              <div className="label">공개</div>
-              <UploadType name="isOpen" Options={["예", "아니오"]} />
-            </div>
-          </React.Fragment>}
+    return (
+      <React.Fragment>
+        <Field title="정보/데이터에 관한 설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+        <Field title="업로드 유형">
+          <UploadType return={this.onHandleReturn} name="uploadType" Options={type} /></Field>
+        <Field title="구입 비용">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+      </React.Fragment>)
+  }
+};
+class ItemIdea extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { description: "", uploadType: "", price: 0 };
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
 
-        {selectType == 2 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">판매 방식</div>
-              <DropBox selection options={[{ text: "양도", value: 0 }, { text: "독점 사용권", value: 1 }, { text: "일반 사용권", value: 2 }]}
-                placeholder="판매 방식" onChange={this.onClickFirstCategory} />
-            </div>
-          </React.Fragment>}
+  render() {
+    const type = ["블로그형", "프로젝트형"];
 
-        {selectType == 3 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">판매 방식</div>
-              <DropBox selection options={[{ text: "양도", value: 0 }, { text: "독점 사용권", value: 1 }, { text: "일반 사용권", value: 2 }]}
-                placeholder="판매 방식" onChange={this.onClickFirstCategory} />
-            </div>
-          </React.Fragment>}
+    return (
+      <React.Fragment>
+        <Field title="아이디어/노하우에 관한 설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+        <Field title="업로드 유형">
+          <UploadType return={this.onHandleReturn} name="uploadType" Options={type} /></Field>
+        <Field title="구입 비용">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+      </React.Fragment>)
+  }
+};
+class ItemPatent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { content: [], description: "", uploadType: "", price: 0 };
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+    this.onAddValue = this.onAddValue.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
+  async onAddValue(data) {
+    let copyContent = [...this.state.content];
+    let copyData = { ...data };
+    copyData.initClick = true;
+    for (let item of copyContent) {
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+        await copyContent.splice(item.order, 1, null);
+      }
+    }
+    await copyContent.splice(copyData.order, 0, copyData);
 
-        {selectType == 4 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">상담 방법</div>
-              <DropBox selection options={[{ text: "온라인", value: 0 }, { text: "오프라인", value: 1 }]}
-                placeholder="판매 방식" onChange={this.onClickFirstCategory} />
-            </div>
-          </React.Fragment>}
-        {selectType == 5 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">업로드 유형</div>
-              <UploadType name="type" Options={["블로그형", "프로젝트형"]} />
-            </div>
-
-            <div className="wrapper flex">
-              <div className="label">공개</div>
-              <UploadType name="isOpen" Options={["예", "아니오"]} />
-            </div>
-          </React.Fragment>}
-        {selectType == 6 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">업로드 유형</div>
-              <UploadType name="type" Options={["블로그형", "프로젝트형"]} />
-            </div>
-
-            <div className="wrapper flex">
-              <div className="label">공개</div>
-              <UploadType name="isOpen" Options={["예", "아니오"]} />
-            </div>
-          </React.Fragment>}
-        {selectType == 7 &&
-          <React.Fragment>
-            <div className="wrapper flex">
-              <div className="label">상세 이미지</div>
-              <ThumbnailList />
-            </div>
-            <div className="wrapper flex">
-              <div className="label">배송업체</div>
-              <InputText width={370} />
-            </div>
-            <div className="wrapper flex">
-              <div className="label">배송비</div>
-              <InputText width={370} />
-            </div>
-            <div className="wrapper flex">
-              <div className="label">배송 소요</div>
-              <InputText width={370} />
-            </div>
-          </React.Fragment>}
-      </FormBox>
+    let newContent = copyContent.filter((item) => { return item !== null })
+    newContent = await Promise.all(
+      newContent.map(async (item, index) => {
+        item.order = await index;
+        delete item.target;
+        if (item.type === "FILE") delete item.initClick;
+        if (item.order !== copyData.order) delete item.initClick;
+        return item;
+      })
     );
+    await this.setState({ content: newContent });
+  };
+  render() {
+    const kinds = ["양도", "독점 사용권", "일반 사용권"];
+    const { content } = this.state;
+    return (
+      <React.Fragment>
+        <Field title="설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+
+        <Field title="내용">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {content.length > 0 &&
+              content.map((item, index) =>
+                <Controller key={index} type={item.type} item={item} order={index}
+                  deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
+            <AddController onlyfile type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />
+          </div></Field>
+
+        <Field title="판매 방식 선택">
+          <UploadType return={this.onHandleReturn} name="uploadType" Options={kinds} /></Field>
+
+        <Field title="구입 비용">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
+
+      </React.Fragment >)
   }
 };
 
-// import React, { Component } from "react";
-// import Button from "components/Commons/Button";
-// import styled from "styled-components";
-// // import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown';
-// // import { Header, Grid, Form } from "semantic-ui-react";
-// import noimg from "source/noimg.png";
-// import newimg from "source/new-img.png";
+class ItemProduct extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { content: [], description: "", uploadType: "", price: 0 };
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.returnState = this.returnState.bind(this);
+  }
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  }
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
+    this.returnState();
+  }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
 
+  render() {
+    const type = ["블로그형", "프로젝트형"];
+    return (
+      <React.Fragment>
+        <Field title="설명">
+          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
 
-// import { FormTag, FormDropBox, FormInput, FormTextArea } from "components/Commons/FormItems";
-// import { FormControl, ValidationGroup } from "modules/FormControl";
-// // import StyleGuide from "StyleGuide";
+        <Field title="업로드 유형">
+          <UploadType return={this.onHandleReturn} name="uploadType" Options={type} /></Field>
 
-// import CreateOption from "components/Products/CreateProductForm/CreateOption/CreateOption";
+        <Field title="내용">
+          <ThumbnailList />
+        </Field>
 
-// const patent_option = [
-//   { text: "양도", value: 0 },
-//   { text: "독점 사용권", value: 1 },
-//   { text: "일반 사용권", value: 2 }
-// ]
-// //const counsel_option = [
-// //  { text: "온/오프라인", value: 0 },
-// //  { text: "방문지도", value: 1 },
-// //  { text: "팀/개인교육", value: 2 }
-// //]
-// const newCategory = [
-//   { text: "디자인", value: 0 },
-//   { text: "특허권", value: 1 },
-//   { text: "디자인권", value: 2 },
-//   { text: "기술자문", value: 3 },
-//   { text: "기술상담", value: 4 },
-//   { text: "경험", value: 5 },
-//   { text: "정보/데이터", value: 6 },
-//   { text: "아이디어/노하우", value: 7 },
-//   { text: "제품", value: 8 },
-// ];
-// const TxtSz = { s: 12, m: 16, M: 20, l: 24, b: 28 };
-// const MAX_PRODUCT_IMAGE_COUNT = 5;
-// const FromFieldCard = styled.div`
-//   width: 100%;
-//   background-color: white;
-//   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-//   padding: 70px;
-//   margin-bottom: 30px;
-//   border-radius: 3px;
-//   @media only screen and (min-width: 1200px) {
-//     padding: 70px 100px 70px 100px;
-//   }
-//   & .field label {
-//     margin: 0 0 0.8rem 0;
-//     display: block;
-//     color: rgba(0,0,0,.87);
-//     font-size: .92857143em;
-//     font-weight: 700;
-//     text-transform: none;
-//   }
-// `;
-// const ProductImage = styled.div`
-//   display:flex;
-//   margin-bottom:50px;
-//   .title-wrapper {
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//     margin-right:80px;
-//     display: flex;
-//     flex-direction: row;
-//     .title {
-//       width: 150px;
-//       height:30px;
-//       border-right:10px solid #707070;
-//       margin-left: 15px;
-//       font-weight: bold;
-//       font-size: ${TxtSz.M}px;
-//     }
-//     .text {
-//       width: max-content;
-//       margin-left: 25px;
-//       font-weight: light;
-//       font-size: ${TxtSz.s}px;
-//       color: #707070;
-//     }
-//   }
-//   .img-list-wrapper {
-//     padding-top: 10px;
-//     padding-bottom: 10px;
-//     margin-left: 10px;
-//     margin-right: 10px;
-//     height: 180px;
-//     background-color: white;
-//     display: flex;
-//     flex-direction: row;
-//     overflow: hidden;
+        <Field title="구입 비용">
+          <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
 
-//     .list-element-img {
-//       margin-top: 10px;
-//       margin-left: 10px;
-//       width: 120px;
-//       height: 120px;
-//       img {
-//         width: 116px;
-//         height: 116px;
-//       }
-//     }
-//     .add-img {
-//       margin-top: 10px;
-//       margin-left: 10px;
-//       min-width: 120px;
-//       height: 120px;
-//       background-color: #E0E0E0;
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       cursor: pointer;
-//     }
-//   }
-// `;
-// const ProductDescription = styled.div`
-//   display:flex;
-//   margin-bottom:50px;
-//   .title-wrapper {
-//     margin-right:80px;
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//     .title {
-//       width: 150px;
-//       height:30px;
-//       border-right:10px solid #707070;
-//       margin-left: 15px;
-//       font-weight: bold;
-//       font-size: ${TxtSz.M}px;
-//     }
-//   }
-//   .description-wrapper {
+      </React.Fragment>)
+  }
+};
 
-//     padding-top:10px;
-//     margin-left: 10px;
-//     margin-right: 10px;
-//     background-color: white;
-//     width:100%;
-//     .row {
-//       display: flex;
-//       flex-direction: row;
-//       margin-bottom: 10px;
-//       margin-top: 10px;
-//       .text {
-//         width: 210px;
-//         margin-left: 15px;
-//       }
-//       .input {
-//         // display: flex;
-//         // flex-direction: row;
-//         width:100%;
-//       }
-//       .dropdown-style {
-//         margin: 0;
-//         padding: 5px;
-//         width: max-content;
-//         height: 30px;
-//         font-size: 16px;
-//         border: 1px solid #EFEFEF;
-//         &.giveaspace {
-//           margin-left: 15px;
-//         }
-//       }
-//     }
-//   }
-// `;
-// //const ProductPrice = styled.div`
-// //  display:flex;
-// //  margin-bottom:50px;
-// //
-// //  .title-wrapper {
-// //    margin-right:80px;
-// //    padding-top: 20px;
-// //    padding-bottom: 20px;
-// //    .title {
-// //      width: 150px;
-// //      height:30px;
-// //      border-right:10px solid #707070;
-// //      margin-left: 15px;
-// //      font-weight: bold;
-// //      font-size: ${TxtSz.M}px;
-// //    }
-// //  }
-// //  .price-wrapper {
-// //    width:100%;
-// //    margin-left: 10px;
-// //    margin-right: 10px;
-// //    background-color: white;
-// //    width:100%;
-// //    .option {
-// //      display: flex;
-// //      flex-direction: row;
-// //      margin-bottom: 10px;
-// //      margin-top: 10px;
-// //      .text {
-// //        width: 210px;
-// //        margin-left: 15px;
-// //      }
-// //      .input {
-// //        width:100%;
-// //      }
-// //    }
-// //    .button {
-// //      border-radius: 5px;
-// //      width: 175px;
-// //      height: 32px;
-// //      line-height: 32px;
-// //      text-align: center;
-// //      color: white;
-// //      cursor: pointer;
-// //      background-color: #A0A0A0;
-// //    }
-// //  }
-// //`;
-
-// const ProductDelivery = styled.div`
-//   display:flex;
-//   margin-bottom:50px;
-//   .title-wrapper {
-//     margin-right:80px;
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//     .title {
-//       width: 150px;
-//       height:30px;
-//       border-right:10px solid #707070;
-//       margin-left: 15px;
-//       font-weight: bold;
-//       font-size: ${TxtSz.M}px;
-//     }
-//   }
-//   .delivery-method-wrapper {
-//     width:100%;
-//     margin-left: 10px;
-//     margin-right: 10px;
-//     background-color: white; 
-//     .option {
-//       display: flex;
-//       flex-direction: row;
-//       margin-bottom: 10px;
-//       margin-top: 10px;
-//       .text {
-//         width: 210px;
-//         margin-left: 15px;
-//       }
-//       .input {
-//         width:100%;
-//       }
-//     }
-//   }
-// `;
-
-// //const TextBox = styled.textarea`
-// //  width:300px;
-// //  height:100px;
-// //  border:1px solid #EFEFEF;
-// //`
-// //const InputStyle = styled.input.attrs({ type: 'text' })`
-// //   width: ${props => props.width || 200}px;
-// //   height: ${props => props.height || 30}px;
-// //   border: 1px solid #EFEFEF;
-// //   padding: 10px;
-// //`;
-
-// class CreateProductForm extends Component {
-//   constructor(props) {
-
-//     super(props);
-
-//     this.state = {
-//       selectCategory: -1,
-//       openCreateOption: false,
-//       loading: false,
-//       imgs: [], cate1: null, cate2: null,
-//       is_custom: false
-//     };
-
-//     this.handleImageChange = this.handleImageChange.bind(this);
-//     this.onSelectCategory = this.onSelectCategory.bind(this);
-//   };
-//   async handleImageChange(event) {
-//     if (event.target.files.length <= 0) return;
-//     let imgs = this.state.imgs;
-//     const file = event.target.files[0];
-//     const filename = file.name.replace(/\s/g, '');
-//     await imgs.push({ src: URL.createObjectURL(file), value: await this.readFile(file), name: filename, key: "thumbnail[]" });
-//     await this.setState({ imgs: imgs });
-//     await console.log(this.state.imgs);
-//   };
-//   readFile = (inputFile) => {
-//     const reader = new FileReader();
-//     return new Promise((resolve, reject) => {
-//       reader.onerror = () => {
-//         reader.abort();
-//         reject(new DOMException("Problem parsing input file."));
-//       };
-//       reader.onload = () => {
-//         resolve(reader.result);
-//       };
-//       reader.readAsDataURL(inputFile);
-//     });
-//   };
-//   onClickCreateOption = () => {
-//     this.setState({ openCreateOption: true });
-//   };
-//   onCloseCreateOption = () => {
-//     this.setState({ openCreateOption: false });
-//   };
-//   onChangeValue = async data => {
-//     let obj = {};
-//     if (data.target) {
-//       obj[data.target.name] = data;
-//     }
-//     await this.setState(obj);
-//   };
-
-//   liveCheck = (target) => {
-//     FormControl(this.state[target]);
-//   };
-
-//   onSelectCategory(value) {
-//     this.setState({
-//       selectCategory: value
-//     });
-//   }
-
-//   onSubmit = async e => {
-//     e.preventDefault();
-//     this.state.member.value = JSON.stringify(this.state.member.value);
-//     ValidationGroup(this.state, false).then(data => {
-//       console.log("성공", data);
-//       this.props.setLoader();
-//       this.props.CreateDesignRequest(data, this.props.token)
-//         .then(res => {
-//           if (res.success) {
-//             this.props.history.push(`/designDetail/${res.design_id}`);
-//           } else {
-//             alert("다시 시도해주세요");
-//             this.state.member.value = JSON.parse(this.state.member.value);
-//             this.props.setLoader();
-//           }
-//         });
-//     }).catch(e => {
-//       console.log("실패", e);
-//       this.state.member.value = JSON.parse(this.state.member.value);
-//     });
-//   };
-
-//   getMember = data => {
-//     this.props.SearchMemberRequest(null, { key: data }, this.props.token);
-//   }
-
-//   render() {
-//     const { imgs } = this.state;
-
-//     const SectionDevelivery = () => {
-//       return (
-//         <ProductDelivery>
-//           <div className="title-wrapper">
-//             <div className="title">배송</div></div>
-//           <div className="delivery-method-wrapper">
-//             <div className="option">
-//               <div className="text">배송기간</div>
-//               <div className="input">
-//                 <FormInput name="delivery_days" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-//             <div className="option">
-//               <div className="text">배송업체</div>
-//               <div className="input">
-//                 <FormInput name="delivery_company" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-//             <div className="option">
-//               <div className="text">배송비</div>
-//               <div className="input">
-//                 <FormInput name="delivery_cost" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-//           </div>
-//         </ProductDelivery>
-//       );
-//     }
-
-//     const SectionDescription = () => {
-//       return (
-//         <ProductDescription>
-//           <div className="title-wrapper">
-//             <div className="title">설명</div></div>
-//           <div className="description-wrapper">
-
-//             <div className="row">
-//               <div className="text">상품 이름</div>
-//               <div className="input">
-//                 <FormInput name="name" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
-//             </div>
-//             <div className="row">
-//               <div className="text">상품 설명</div>
-//               <div className="input">
-//                 <FormTextArea name="description" placeholder="상품 설명을 입력해주세요" />
-//               </div>
-//             </div>
-
-
-
-//             {this.state.selectCategory === 1 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option} /></div></div> : null}
-//             {this.state.selectCategory === 2 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option} /></div></div> : null}
-//             {this.state.selectCategory === 3 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option} /></div></div> : null}
-//             {this.state.selectCategory === 4 ? <div className="row"><div className="text">유형</div><div className="input"><FormDropBox options={patent_option} /></div></div> : null}
-
-//             <div className="row">
-//               <div className="text">태그</div>
-//               <div className="input">
-//                 <FormTag placeholder="상품 태그를 입력해주세요(한글10자이내 영문 20자이내)" /></div>
-//             </div>
-//           </div>
-//         </ProductDescription >
-//       );
-//     }
-
-//     //    const SectionPrice = () => {
-//     //      return (
-//     //        <ProductPrice>
-//     //          <div className="title-wrapper"><div className="title">가격</div></div>
-//     //          <div className="price-wrapper">
-//     //            <div className="option">
-//     //              <div className="text">가격</div>
-//     //              <div className="input"><FormInput name="price" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-//     //            <div className="option">
-//     //              <div className="text">재고</div>
-//     //              <div className="input"><FormInput name="amount" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-//     //            <div className="option">
-//     //              <div className="text">옵션</div>
-//     //              <div className="input"><div className="button" onClick={this.onClickCreateOption}>옵션정보등록</div>
-//     //              </div>
-//     //            </div>
-//     //          </div>
-//     //        </ProductPrice>
-//     //      );
-//     //    }
-
-//     return (
-//       <React.Fragment>
-//         <CreateOption handleSetOptions={this.handleSetOptions} closeOption={this.onCloseCreateOption} open={this.state.openCreateOption} />
-//         {/* <form onSubmit={this.onSubmit}> */}
-//         <FromFieldCard>
-//           <ProductImage>
-//             <div className="title-wrapper">
-//               <div className="title">이미지</div>
-//               {/* <div className="text">판매 상품의 이미지를 업로드 해주세요. 최대 5장까지 업로드 가능합니다.</div> */}
-//             </div>
-//             <div className="img-list-wrapper">
-//               {imgs.length > 0 ?
-//                 imgs.map(img =>
-//                   <div key={img.src + "image-list"} className="list-element-img">
-//                     <img alt="" src={img.src || noimg} /></div>)
-//                 : null}
-//               {imgs.length < MAX_PRODUCT_IMAGE_COUNT ?
-//                 <div className="add-img" >
-//                   <label htmlFor="file" >
-//                     <img alt="" src={newimg} />
-//                   </label>
-//                   <input hidden onChange={this.handleImageChange} id="file" type="file" />
-//                 </div> : null}
-//             </div>
-//           </ProductImage>
-//           <ProductDescription>
-//             <div className="title-wrapper">
-//               <div className="title">종류</div></div>
-//             <div className="description-wrapper">
-//               <div className="row">
-//                 <div className="text">카테고리</div>
-//                 <div className="input">
-//                   <FormDropBox onChangeValue={this.onSelectCategory} options={newCategory} />
-//                 </div>
-//               </div>
-//             </div>
-//           </ProductDescription>
-//           {this.state.selectCategory !== -1 ? <SectionDescription /> : null}
-//           {this.state.selectCategory === 8 ? <SectionDevelivery /> : null}
-
-
-//         </FromFieldCard>
-//         <Button type="submit">등록</Button>
-//         {/* </form> */}
-//       </React.Fragment>
-//     );
-//   }
-// }
-
-// export default CreateProductForm;
-
-// // import React, { Component } from "react";
-// // import styled from "styled-components";
-// // import noimg from "source/noimg.png";
-// // import newimg from "source/new-img.png";
-// // import Button from "components/Commons/Button";
-// // import { FormControl, ValidationGroup } from "modules/FormControl";
-// // import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown';
-// // import CreateOption from "components/Products/CreateProductForm/CreateOption/CreateOption";
-
-// // const TxtSz = { s: 12, m: 16, M: 20, l: 24, b: 28 };
-// // const MAX_PRODUCT_IMAGE_COUNT = 5;
-
-// // const FromFieldCard = styled.div`
-// //   width: 100%;
-// //   background-color: white;
-// //   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-// //   padding: 70px;
-// //   margin-bottom: 30px;
-// //   border-radius: 3px;
-// //   @media only screen and (min-width: 1200px) {
-// //     padding: 70px 100px 70px 100px;
-// //   }
-// //   & .field label {
-// //     margin: 0 0 0.8rem 0;
-// //     display: block;
-// //     color: rgba(0,0,0,.87);
-// //     font-size: .92857143em;
-// //     font-weight: 700;
-// //     text-transform: none;
-// //   }
-// // `;
-// // const ProductImage = styled.div`
-// //   display:flex;
-// //   margin-bottom:50px;
-// //   .title-wrapper {
-// //     padding-top: 20px;
-// //     padding-bottom: 20px;
-// //     margin-right:80px;
-// //     display: flex;
-// //     flex-direction: row;
-// //     .title {
-// //       width: 150px;
-// //       height:30px;
-// //       border-right:10px solid #707070;
-// //       margin-left: 15px;
-// //       font-weight: bold;
-// //       font-size: ${TxtSz.M}px;
-// //     }
-// //     .text {
-// //       width: max-content;
-// //       margin-left: 25px;
-// //       font-weight: light;
-// //       font-size: ${TxtSz.s}px;
-// //       color: #707070;
-// //     }
-// //   }
-// //   .img-list-wrapper {
-// //     padding-top: 10px;
-// //     padding-bottom: 10px;
-// //     margin-left: 10px;
-// //     margin-right: 10px;
-// //     height: 180px;
-// //     background-color: white;
-// //     display: flex;
-// //     flex-direction: row;
-// //     overflow: hidden;
-
-// //     .list-element-img {
-// //       margin-top: 10px;
-// //       margin-left: 10px;
-// //       width: 120px;
-// //       height: 120px;
-// //       img {
-// //         width: 116px;
-// //         height: 116px;
-// //       }
-// //     }
-// //     .add-img {
-// //       margin-top: 10px;
-// //       margin-left: 10px;
-// //       min-width: 120px;
-// //       height: 120px;
-// //       background-color: #E0E0E0;
-// //       display: flex;
-// //       align-items: center;
-// //       justify-content: center;
-// //       cursor: pointer;
-// //     }
-// //   }
-// // `;
-// // const ProductDescription = styled.div`
-// //   display:flex;
-// //   margin-bottom:50px;
-
-// //   .title-wrapper {
-// //     margin-right:80px;
-// //     padding-top: 20px;
-// //     padding-bottom: 20px;
-// //     .title {
-// //       width: 150px;
-// //       height:30px;
-// //       border-right:10px solid #707070;
-// //       margin-left: 15px;
-// //       font-weight: bold;
-// //       font-size: ${TxtSz.M}px;
-// //     }
-// //   }
-// //   .description-wrapper {
-// //     padding-top:10px;
-// //     margin-left: 10px;
-// //     margin-right: 10px;
-// //     background-color: white;
-// //     .row {
-// //       display: flex;
-// //       flex-direction: row;
-// //       padding-top: 5px;
-// //       padding-bottom: 10px;
-// //       .text {
-// //         width: 210px;
-// //         margin-left: 15px;
-// //       }
-// //       .input {
-// //         display: flex;
-// //         flex-direction: row;
-// //       }
-// //       .dropdown-style {
-// //         margin: 0;
-// //         padding: 5px;
-// //         width: max-content;
-// //         height: 30px;
-// //         font-size: 16px;
-// //         border: 1px solid #EFEFEF;
-// //         &.giveaspace {
-// //           margin-left: 15px;
-// //         }
-// //       }
-// //     }
-// //   }
-// // `;
-// // const ProductPrice = styled.div`
-// //   display:flex;
-// //   margin-bottom:50px;
-
-// //   .title-wrapper {
-// //     margin-right:80px;
-// //     padding-top: 20px;
-// //     padding-bottom: 20px;
-// //     .title {
-// //       width: 150px;
-// //       height:30px;
-// //       border-right:10px solid #707070;
-// //       margin-left: 15px;
-// //       font-weight: bold;
-// //       font-size: ${TxtSz.M}px;
-// //     }
-// //   }
-// //   .price-wrapper {
-// //     margin-left: 10px;
-// //     margin-right: 10px;
-// //     background-color: white;
-
-// //     .option {
-// //       display: flex;
-// //       flex-direction: row;
-// //       margin-bottom: 10px;
-// //       margin-top: 10px;
-// //       .text {
-// //         width: 210px;
-// //         margin-left: 15px;
-// //       }
-// //       .input {
-// //         ;
-// //       }
-// //     }
-// //     .button {
-// //       border-radius: 5px;
-// //       margin-left: auto;
-// //       margin-right: 25px;
-// //       width: 175px;
-// //       height: 32px;
-// //       line-height: 32px;
-// //       text-align: center;
-// //       color: white;
-// //       cursor: pointer;
-// //       background-color: #A0A0A0;
-// //     }
-// //   }
-// // `;
-// // const ProductDelivery = styled.div`
-// //   display:flex;
-// //   margin-bottom:50px;
-// //   .title-wrapper {
-// //     margin-right:80px;
-// //     padding-top: 20px;
-// //     padding-bottom: 20px;
-// //     .title {
-// //       width: 150px;
-// //       height:30px;
-// //       border-right:10px solid #707070;
-// //       margin-left: 15px;
-// //       font-weight: bold;
-// //       font-size: ${TxtSz.M}px;
-// //     }
-// //   }
-// //   .delivery-method-wrapper {
-// //     margin-left: 10px;
-// //     margin-right: 10px;
-// //     margin-bottom: 10px;
-// //     background-color: white;
-
-// //     .option {
-// //       display: flex;
-// //       flex-direction: row;
-// //       margin-bottom: 10px;
-// //       margin-top: 10px;
-// //       .text {
-// //         width: 210px;
-// //         margin-left: 15px;
-// //       }
-// //       .input {
-// //         ;
-// //       }
-// //     }
-// //   }
-// // `;
-// // const TextBox = styled.textarea`
-// //   width:300px;
-// //   height:100px;
-// //   border:1px solid #EFEFEF;
-// // `;
-// // const InputStyle = styled.input.attrs({ type: 'text' })`
-
-// //    width: ${props => props.width || 200}px;
-// //    height: ${props => props.height || 30}px;
-// //    border: 1px solid #EFEFEF;
-// //    padding: 10px;
-// // `;
-
-// // class CreateProductForm extends Component {
-// //   constructor(props) {
-// //     super(props);
-// //     this.state = { openCreateOption: false, loading: false, imgs: [], cate1: null, cate2: null, category: [], is_custom: false };
-// //     this.handleImageChange = this.handleImageChange.bind(this);
-// //   };
-// //   async handleImageChange(event) {
-// //     if (event.target.files.length <= 0) return;
-// //     let imgs = this.state.imgs;
-// //     const file = event.target.files[0];
-// //     const filename = file.name.replace(/\s/g, '');
-// //     await imgs.push({ src: URL.createObjectURL(file), value: await this.readFile(file), name: filename, key: "thumbnail[]" });
-// //     await this.setState({ imgs: imgs });
-// //     // await console.log(this.state.imgs);
-// //   };
-// //   readFile = (inputFile) => {
-// //     const reader = new FileReader();
-// //     return new Promise((resolve, reject) => {
-// //       reader.onerror = () => {
-// //         reader.abort();
-// //         reject(new DOMException("Problem parsing input file."));
-// //       };
-// //       reader.onload = () => {
-// //         resolve(reader.result);
-// //       };
-// //       reader.readAsDataURL(inputFile);
-// //     });
-// //   };
-// //   onClickCreateOption = () => {
-// //     this.setState({ openCreateOption: true });
-// //   };
-// //   onCloseCreateOption = () => {
-// //     this.setState({ openCreateOption: false });
-// //   };
-// //   onChangeValue = async data => {
-// //     let obj = {};
-// //     if (data.target) {
-// //       obj[data.target.name] = data;
-// //     }
-// //     await this.setState(obj);
-// //   };
-// //   liveCheck = (target) => {
-// //     FormControl(this.state[target]);
-// //   };
-// //   onSubmit = async e => {
-// //     e.preventDefault();
-// //     this.state.member.value = JSON.stringify(this.state.member.value);
-// //     ValidationGroup(this.state, false).then(data => {
-// //       console.log("성공", data);
-// //       this.props.setLoader();
-// //       this.props.CreateDesignRequest(data, this.props.token)
-// //         .then(res => {
-// //           if (res.success) {
-// //             this.props.history.push(`/designDetail/${res.design_id}`);
-// //           } else {
-// //             alert("다시 시도해주세요");
-// //             this.state.member.value = JSON.parse(this.state.member.value);
-// //             this.props.setLoader();
-// //           }
-// //         });
-// //     }).catch(e => {
-// //       console.log("실패", e);
-// //       this.state.member.value = JSON.parse(this.state.member.value);
-// //     });
-// //   };
-// //   getMember = data => {
-// //     this.props.SearchMemberRequest(null, { key: data }, this.props.token);
-// //   };
-// //   handleCate1 = (_, { value: v }) => {
-// //     _.preventDefault();
-// //     const category = [...this.props.category2[v]];
-// //     this.setState({ cate1: v, category: category });
-// //   };
-// //   handleCate2 = (_, { value: v }) => {
-// //     _.preventDefault();
-// //     this.setState({ cate2: v });
-// //   };
-
-// //   render() {
-// //     const { imgs, loading, category } = this.state; // const { category } = this.props;
-// //     return (
-// //       <React.Fragment>
-// //         <CreateOption handleSetOptions={this.handleSetOptions} closeOption={this.onCloseCreateOption} open={this.state.openCreateOption} />
-// //         <form onSubmit={this.onSubmit}>
-// //           <FromFieldCard>
-// //             <ProductImage>
-// //               <div className="title-wrapper">
-// //                 <div className="title">상품 이미지</div>
-// //                 {/* <div className="text">판매 상품의 이미지를 업로드 해주세요. 최대 5장까지 업로드 가능합니다.</div> */}
-// //               </div>
-// //               <div className="img-list-wrapper">
-// //                 {imgs.length > 0 ?
-// //                   imgs.map(img =>
-// //                     <div key={img.src + "image-list"} className="list-element-img">
-// //                       <img alt="" src={img.src || noimg} /></div>)
-// //                   : null}
-// //                 {imgs.length < MAX_PRODUCT_IMAGE_COUNT ?
-// //                   <div className="add-img" >
-// //                     <label htmlFor="file" >
-// //                       <img alt="" src={newimg} />
-// //                     </label>
-// //                     <input hidden onChange={this.handleImageChange} id="file" type="file" />
-// //                   </div> : null}
-// //               </div>
-// //             </ProductImage>
-
-// //             <ProductDescription>
-// //               <div className="title-wrapper">
-// //                 <div className="title">상품설명</div></div>
-// //               <div className="description-wrapper">
-// //                 <div className="row">
-// //                   <div className="text">카테고리</div>
-// //                   <div className="input">
-// //                     <Dropdown
-// //                       className="dropdown-style"
-// //                       placeholder={"카테고리를 선택해주세요."}
-// //                       onChange={this.handleCate1}
-// //                       options={this.props.category1 || [{ key: "all", value: "all", text: "전체" },]} />
-// //                     {this.state.cate1 ?
-// //                       <Dropdown
-// //                         className="dropdown-style giveaspace"
-// //                         placeholder={"세부 카테고리를 선택해주세요."}
-// //                         onChange={this.handleCate2}
-// //                         options={this.state.category || [{ key: "all", value: "all", text: "전체" },]} /> : null}
-// //                   </div>
-// //                 </div>
-// //                 <div className="row">
-// //                   <div className="text">상품 이름</div>
-// //                   <div className="input"><InputStyle width="300" name="name" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
-// //                 </div>
-// //                 <div className="row">
-// //                   <div className="text">상품 설명</div>
-// //                   <div className="input"><TextBox /></div>
-// //                 </div>
-// //                 <div className="row">
-// //                   <div className="text">태그</div>
-// //                   <div className="input"><InputStyle name="tag" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div>
-// //                 </div>
-// //               </div>
-// //             </ProductDescription >
-
-// //             <ProductPrice>
-// //               <div className="title-wrapper"><div className="title">가격</div></div>
-// //               <div className="price-wrapper">
-// //                 <div className="option">
-// //                   <div className="text">가격</div>
-// //                   <div className="input"><InputStyle name="price" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-// //                 <div className="option">
-// //                   <div className="text">재고</div>
-// //                   <div className="input"><InputStyle name="amount" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-// //                 <div className="option">
-// //                   <div className="text">옵션</div>
-// //                   <div className="input"><div className="button" onClick={this.onClickCreateOption}>옵션정보등록</div>
-// //                   </div>
-// //                 </div>
-// //               </div>
-// //             </ProductPrice>
-
-// //             <ProductDelivery>
-// //               <div className="title-wrapper">
-// //                 <div className="title">배송</div></div>
-// //               <div className="delivery-method-wrapper">
-// //                 <div className="option">
-// //                   <div className="text">배송기간</div>
-// //                   <div className="input">
-// //                     <InputStyle name="delivery_days" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-// //                 <div className="option">
-// //                   <div className="text">배송업체</div>
-// //                   <div className="input">
-// //                     <InputStyle name="delivery_company" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-// //                 <div className="option">
-// //                   <div className="text">배송비</div>
-// //                   <div className="input">
-// //                     <InputStyle name="delivery_cost" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
-// //               </div>
-// //             </ProductDelivery>
-
-// //           </FromFieldCard>
-// //           <Button type="submit">등록</Button>
-// //         </form>
-// //       </React.Fragment>
-// //     );
-// //   }
-// // }
-
-// // export default CreateProductForm;

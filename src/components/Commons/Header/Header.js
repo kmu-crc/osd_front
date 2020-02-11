@@ -183,7 +183,7 @@ class Header extends Component {
       try {
         Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", alarms => {
-          console.log("alarm@@@@@@@@@@@@@@@@@@@");
+          // console.log("alarm@@@@@@@@@@@@@@@@@@@");
           this.setState({ alarms: alarms });
         });
 
@@ -228,8 +228,8 @@ class Header extends Component {
       })
     this.setState({ user_popup: null })
   }
-  onClickMessageIcon(){
-    window.location.href="/message";
+  onClickMessageIcon() {
+    window.location.href = "/message";
   }
   render() {
     const location = window.location.pathname;
@@ -281,21 +281,21 @@ class Header extends Component {
         {valid && userInfo
           ? (
             <LoginBox>
-            <div className="iconBox"><Icon name="grey alarm" size="large"/></div>
-            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon name="grey envelope" size="large"/></div>
-            <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
-            <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-            <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
-            {this.state.active ?
-              <UserMenu>
-                <Link to={`/mypage`}>
-                  <div className="item">마이페이지</div>
-                </Link>
-                <div onClick={this.logout} className="item">로그아웃</div>
-              </UserMenu>
-              : null}
-          </div>
-          </LoginBox>
+              <div className="iconBox"><Icon name="alarm" style={{ color: "gray" }} size="large" /></div>
+              <div className="iconBox" onClick={this.onClickMessageIcon}><Icon name="envelope" style={{ color: "gray" }} size="large" /></div>
+              <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+                <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
+                {this.state.active ?
+                  <UserMenu>
+                    <Link to={`/mypage`}>
+                      <div className="item">마이페이지</div>
+                    </Link>
+                    <div onClick={this.logout} className="item">로그아웃</div>
+                  </UserMenu>
+                  : null}
+              </div>
+            </LoginBox>
           )
           : (<Link to={`/signin`}>로그인</Link>)}
       </HeaderItem>
