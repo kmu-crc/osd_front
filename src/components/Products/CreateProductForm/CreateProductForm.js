@@ -1,40 +1,39 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
-import {Dropdown} from "semantic-ui-react"
-import {InputTag} from "components/Commons/InputItem/InputTag"
-import {ThumbnailList} from "components/Commons/InputItem/ThumbnailList"
-import {UploadType} from "components/Commons/InputItem/UploadType"
-import {AddController} from "components/Commons/InputItem/AddController"
-import {Controller} from "components/Commons/InputItem/Controller"
+import { Dropdown } from "semantic-ui-react";
+import { InputTag } from "components/Commons/InputItem/InputTag";
+import { ThumbnailList } from "components/Commons/InputItem/ThumbnailList";
+import { UploadType } from "components/Commons/InputItem/UploadType";
+import { AddController } from "components/Commons/InputItem/AddController";
+import { Controller } from "components/Commons/InputItem/Controller";
 
-
-const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
-                        {text:"커뮤니케이션",value:2},
-                        {text:"공간",value:3},
-                        {text:"엔터테인먼트",value:4},
-                        {text:"소프트웨어",value:5},
-                        {text:"새분야",value:6}];
-
-const EmptyCategory = [{text:"",value:-1}]
-
-const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1},{text:"엑세서리",value:2},{text:"패션모듈",value:3}],
-                        [{text:"스마트카",value:0},{text:"로봇",value:1},{text:"기계/기기/기구",value:2},{text:"센서모듈",value:3},{text:"공예",value:4}],
-                        [{text:"UI/UX",value:0},{text:"광고",value:1},{text:"웹",value:2},{text:"영상",value:3},{text:"타이포그래피",value:4}],
-                        [{text:"스마트시티",value:0},{text:"건축",value:1},{text:"인테리어",value:2},{text:"환경",value:3}],
-                        [{text:"스마트미디어",value:0},{text:"게임",value:1},{text:"디지털컨텐츠",value:2},{text:"서비스",value:3}],
-                        [{text:"인공지능",value:0},{text:"빅데이터",value:1},{text:"시스템SW",value:2},{text:"응용SW",value:3}],
-                        [{text:"새분야",value:0}]];
-
-const ItemType = [{text:"디자인",value:0},
-                  {text:"프로젝트",value:1},
-                  {text:"특허권",value:2},
-                  {text:"기술자문/상담",value:3},
-                  {text:"경험",value:4},
-                  {text:"정보/데이터",value:5},
-                  {text:"아이디어/노하우",value:6},
-                  {text:"제품",value:7}];
+const FirstCategory = [
+  { text: "패션", value: 0 },
+  { text: "제품", value: 1 },
+  { text: "커뮤니케이션", value: 2 },
+  { text: "공간", value: 3 },
+  { text: "엔터테인먼트", value: 4 },
+  { text: "소프트웨어", value: 5 },
+  { text: "새분야", value: 6 }];
+const EmptyCategory = [{ text: "", value: -1 }];
+const SecondCategory =
+  [[{ text: "스마트패션", value: 0 }, { text: "의상", value: 1 }, { text: "엑세서리", value: 2 }, { text: "패션모듈", value: 3 }],
+  [{ text: "스마트카", value: 0 }, { text: "로봇", value: 1 }, { text: "기계/기기/기구", value: 2 }, { text: "센서모듈", value: 3 }, { text: "공예", value: 4 }],
+  [{ text: "UI/UX", value: 0 }, { text: "광고", value: 1 }, { text: "웹", value: 2 }, { text: "영상", value: 3 }, { text: "타이포그래피", value: 4 }],
+  [{ text: "스마트시티", value: 0 }, { text: "건축", value: 1 }, { text: "인테리어", value: 2 }, { text: "환경", value: 3 }],
+  [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
+  [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
+  [{ text: "새분야", value: 0 }]];
+const ItemType =
+  [{ text: "디자인", value: 0 },
+  { text: "프로젝트", value: 1 },
+  { text: "특허권", value: 2 },
+  { text: "기술자문/상담", value: 3 },
+  { text: "경험", value: 4 },
+  { text: "정보/데이터", value: 5 },
+  { text: "아이디어/노하우", value: 6 },
+  { text: "제품", value: 7 }];
 const MainBox = styled.div`
   width:100%;
   .title{
@@ -50,8 +49,13 @@ const MainBox = styled.div`
     padding-left:130px;
     padding-top:36px;
   }
-
-`
+  .font_red {
+    width: 7px;
+    height: 7px;
+    color: #FF0000;
+    cursor: default;
+  }
+`;
 const RedButton = styled.div`
   width:290px;
   height:70px;
@@ -65,26 +69,24 @@ const RedButton = styled.div`
   background-color:red;
 
   position:absolute;
-  left:${props=>props.left};
-  bottom:${props=>props.bottom};
-`
+  left:${props => props.left};
+  bottom:${props => props.bottom};
+`;
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
     font-size:20px;
   }
-
-  width:562px;
-  height:max-content;
+  width: 562px;
+  height: max-content;
   box-shadow: 5px 5px 10px #00000029;
-  border-radius:20px;
-  padding-top:54px;
-  margin-right:63px;
-  
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  border-radius: 20px;
+  padding-top: 54px;
+  margin-right: 63px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .label{
     width:100%;
@@ -98,26 +100,29 @@ const ThumbnailBox = styled.div`
     align-items:center;
     margin-bottom:20px;
   }
-`
+`;
 const Thumbnail = styled.div`
-    width:${props=>props.width==null?100:props.width}px;
-    height:${props=>props.height==null?100:props.height}px;
-    margin-bottom:${props=>props.marginBottom==null?0:props.marginBottom}px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#E9E9E9;
-`
-
-const FormBox=styled.div`
+  width: ${props => props.width == null ? 100 : props.width}px;
+  height: ${props => props.height == null ? 100 : props.height}px;
+  margin-bottom: ${props => props.marginBottom == null ? 0 : props.marginBottom}px;
+  background: #E9E9E9;
+  background-image: url(${props => props.img});
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const FormBox = styled.div`
   *{
-    font-family:Noto Sans KR;
-    font-weight:500;
-    font-size:20px;
+    font-family: Noto Sans KR;
+    font-weight: 500;
+    font-size: 20px;
   }
-  width:939px;
-  height:max-content;
-  box-shadow: ${props=>props.boxShadow==null?"":"5px 5px 10px #00000029"};
+  width:${props => props.width || 939}px;
+  height:${props => props.height || "max-content"};
+  box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
+  border-radius: 20px;
   
   .contentWrap{
     border-radius: 20px;
@@ -152,27 +157,22 @@ const FormBox=styled.div`
     height:30px;
     color:#707070;
   }
-  .font_red{
-    color:#ff0000;
-  }
-
-`
+`;
 const Button = styled.div`
-    width:${props=>props.width==null?100+"%":props.width+"px"};
-    height:${props=>props.height==null?100+"%":props.height+"px"};
-    background-color:white;
-    font-family:Noto Sans KR;
-    font-size:20px;
-    display:flex;
-    align-items:center;
-    margin-left:${props=>props.margin==null?0+"px":props.margin+"px"};
-    .label{
-      margin-left:60px;
-    }
-    
-`
-const InputText = styled.input.attrs({type:"text"})`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+  background-color:white;
+  font-family:Noto Sans KR;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
+  .label{
+    margin-left:60px;
+  }
+`;
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
@@ -183,10 +183,10 @@ const InputText = styled.input.attrs({type:"text"})`
   border:0px;
   padding: 0.67857143em 1em;
 
-`
+`;
 const InputTextarea = styled.textarea`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
@@ -197,46 +197,75 @@ const InputTextarea = styled.textarea`
   resize:none;
   padding: 0.67857143em 1em;
 
-`
-
+`;
 const DropBox = styled(Dropdown)`
-    min-width:200px !important;
-    background-color:#E9E9E9 !important;
-    margin-right:10px;
-
-    border-radius:20px !important;
-`
-
+  min-width:200px !important;
+  background-color: #E9E9E9 !important;
+  margin-right: 10px;
+  border-radius: 20px !important;
+`;
 const Margin = styled.div`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"}
-`
-const HRLine=styled.div`
-    width:100%;
-    height:3px;
-    background-color:#E9E9E9;
-    margin-top:35px;
-    margin-bottom:35px;
-`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+`;
+const HRLine = styled.div`
+  width: 100%;
+  height: 3px;
+  background-color: #E9E9E9;
+  margin-top: 35px;
+  margin-bottom: 35px;
+`;
 
-class CreateProductForm extends Component{
-
-  constructor(props){
+class CreateProductForm extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      firstCategory:0,secondCategory:-1,itemType:-1,content: [],deleteContent: [], 
-    }
+      thumbnail: null, thumbnail_name: null,
+      title: null, category1: null, category2: null, tag: [],
+      type_content: null,
+      firstCategory: 0, secondCategory: -1,
+      itemType: -1, content: [], deleteContent: []
+    };
     this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
-    this.onClickItemType= this.onClickItemType.bind(this);
-  }
+    this.onClickItemType = this.onClickItemType.bind(this);
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.onAddValue = this.onAddValue.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  };
+  success = () => 1070;
+  onSubmit(event) {
+    event.preventDefault();
+    const basic = {
+      thumbnail: this.state.thumbnail, thumbnail_name: this.state.thumbnail_name,
+      title: this.state.title,
+      category1: this.state.category1, category2: this.state.category2,
+      tag: this.state.tags
+    };
+    const add = { type_content: this.state.type_content };
+    const data = { ...basic, add };
+    console.log(data);
 
-  onClickFirstCategory(event,{value}){
-    this.setState({firstCategory:{value}.value});
+    window.location.href = `/productDetail/${this.success()}`;
   }
-  onClickItemType(event,{value}){
-    this.setState({itemType:{value}.value});
+  onClickFirstCategory(event, { value }) {
+    this.setState({ firstCategory: { value }.value });
+  };
+  onClickItemType(event, { value }) {
+    this.setState({ itemType: { value }.value });
+  };
+  handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(file);
+    }
   }
-  deleteItem = async index => {
+  async deleteItem(index) {
     let copyContent = [...this.state.content];
     let copyDelete = [...this.state.deleteContent];
     if (copyContent[index].uid) {
@@ -253,8 +282,7 @@ class CreateProductForm extends Component{
     );
     await this.setState({ content: copyContent, deleteContent: copyDelete });
   };
-
-  onAddValue = async data => {
+  async onAddValue(data) {
     let copyContent = [...this.state.content];
     let copyData = { ...data };
     copyData.initClick = true;
@@ -264,7 +292,6 @@ class CreateProductForm extends Component{
       }
     }
     await copyContent.splice(copyData.order, 0, copyData);
-
     // let newContent = [];
     //copyContent = copyContent.map((item, index) => {
     //  if(item != null){
@@ -284,76 +311,70 @@ class CreateProductForm extends Component{
     await this.setState({ content: newContent });
   };
 
-  render(){
-    const { /*edit,*/ content } = this.state;
+  render() {
+    const { /*edit, */ content } = this.state;
+    const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
-    return(
-      <React.Fragment>
-        <MainBox>
-        
-          <div className="title">아이템 등록하기</div>
-          <div className="contentsBox">
-            <ThumbnailBox>
-              <div className="label">대표 이미지 등록</div>
-              <Margin height={50}/>
-              <Thumbnail width={334} height={334}><div>첨부하기</div></Thumbnail>
-              <Margin height={50}/>
-            </ThumbnailBox>
+    return (<MainBox>
+      <div className="title">아이템 등록하기</div>
+      <div className="contentsBox">
+        <ThumbnailBox>
+          <div className="label">썸네일 이미지 등록<Mandatory /></div>
+          <Margin height={50} />
+          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+          <label htmlFor="file">
+            <Thumbnail img={this.state.thumbnail} width={334} height={334}>
+              {this.state.thumbnail ? null : <div>첨부하기</div>}
+            </Thumbnail>
+          </label>
+          <Margin height={75} />
+        </ThumbnailBox>
 
-            <FormBox boxShadow={true}>
-              <div className="contentWrap">
-              <div className="wrapper flex">
-                <div className="label">이름<span className="font_red">*</span></div>
-                <InputText width={370}/>
+        <FormBox height={'550px'} boxShadow={true}>
+          <div className="contentWrap">
+            <div className="wrapper flex">
+              <div className="label">아이템명<Mandatory /></div>
+              <InputText width={370} />
+            </div>
+
+            <div className="wrapper flex ">
+              <div className="label">카테고리<Mandatory /></div>
+              <DropBox id="firstCategory" selection options={FirstCategory} placeholder="대분류" onChange={this.onClickFirstCategory} />
+              <DropBox id="secondCategory" selection placeholder="소분류"
+                options={this.state.firstCategory > -1 ? SecondCategory[this.state.firstCategory] : EmptyCategory} />
+            </div>
+
+            <div className="wrapper flex">
+              <div className="label">태그</div>
+              <div>
+                <InputTag width={370} />
               </div>
+            </div>
 
-              <div className="wrapper flex">
-                <div className="label">설명</div>
-                <InputTextarea width={483} height={99}/>
-              </div>
+            <div className="wrapper flex">
+              <div className="label">아이템 유형<span className="font_red">*</span></div>
+              <DropBox selection options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} />
+            </div>
+            {/* <HRLine /> */}
+          </div>
+        </FormBox>
+      </div>
 
-
-              <div className="wrapper flex">
-                <div className="label">가격<span className="font_red">*</span></div>
-                <InputText width={370}/>
-              </div>
-              <HRLine/>
-
-              <div className="wrapper flex ">
-                <div className="label">카테고리<span className="font_red">*</span></div>
-                <DropBox id="firstCategory" selection options={FirstCategory} placeholder="대분류" onChange={this.onClickFirstCategory}/>
-                <DropBox id="secondCategory" selection placeholder="소분류" 
-                        options={this.state.firstCategory>-1?SecondCategory[this.state.firstCategory]:EmptyCategory}/>
-              </div>
-
-              <div className="wrapper flex">
-                <div className="label">태그</div>
-                <div>
-                <InputTag width={370}/>
-                </div>
-              </div>
-              <HRLine/>
-
-              <div className="wrapper flex">
-                <div className="label">아이템 유형<span className="font_red">*</span></div>
-                <DropBox selection options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType}/>
-
-                
-              </div>
-
-              <HRLine/>
-              </div>
-              <div className="contentWrap">
-                <ItemTypeForm itemType={this.state.itemType}/>
-              </div>
-              <div className="contentWrap">
+      {/* create-item-detail */}
+      {this.state.itemType > -1 ? (
+        <div className="contentsBox">
+          <FormBox boxShadow={true} >
+            <div className="contentWrap">
+              <ItemTypeForm itemType={this.state.itemType} />
+            </div>
+            <div className="contentWrap">
               <form onSubmit={this.onSubmit}>
                 {content.length > 0 ? (
                   <div>
                     {content.map((item, index) => {
                       return (
                         <div key={index}>
-                          <AddController type="INIT" order={index} name={`add${index}`} getValue={this.onAddValue} />
+                          {/* <AddController type="INIT" order={index} name={`add${index}`} getValue={this.onAddValue} /> */}
                           <Controller type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />
                         </div>
                       );
@@ -362,166 +383,152 @@ class CreateProductForm extends Component{
                   </div>
                 ) : (<AddController type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />)}
               </form>
-            
+            </div>
+          </FormBox>
+        </div>) : (<div style={{ border: "1px dashed gray", padding: "25px", width: "860px", borderRadius: "20px", lineHeight: "28px", textAlign: "center", marginTop: "76px", marginLeft: "auto", marginRight: "auto", fontSize: "24px", color: "#707070" }}>아이템 유형을 선택하여 세부적인 <br />내용을 입력해주신 후 아이템을 등록해주세요.</div>)}
 
-              </div>
-             
-
-            </FormBox>
-          </div>
-        </MainBox>
-      </React.Fragment>
-    );
+      {/* buttons */}
+      {this.state.itemType > -1 ? (
+        <div className="contentsBox">
+          <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>
+        </div>
+      ) : null}
+    </MainBox>);
   };
-}export default CreateProductForm;
+} export default CreateProductForm;
 
-class ItemTypeForm extends Component{
-  constructor(props){
+class ItemTypeForm extends Component {
+  constructor(props) {
     super(props);
   }
 
-  render(){
-    const selectType=this.props.itemType == null? -1:this.props.itemType;
-    return(
-        <FormBox>
-        {
-          selectType == 0&&
+  render() {
+    const selectType = this.props.itemType == null ? -1 : this.props.itemType;
+    return (
+      <FormBox>
+        <div className="wrapper flex">
+          <div className="label">설명</div>
+          <InputTextarea width={483} height={99} />
+        </div>
+        <div className="wrapper flex">
+          <div className="label">가격<span className="font_red">*</span></div>
+          <InputText width={370} />
+        </div>
+        {/* <HRLine /> */}
+        {selectType == 0 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">상세 이미지</div>
-            <ThumbnailList/>
+              <div className="label">상세 이미지</div>
+              <ThumbnailList />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">업로드 유형</div>
-              <UploadType name="type" Options={["블로그형","프로젝트형"]}/>
+              <div className="label">업로드 유형</div>
+              <UploadType name="type" Options={["블로그형", "프로젝트형"]} />
             </div>
-          </React.Fragment>
+          </React.Fragment>}
 
-        }
-        {
-          selectType == 1&&
+        {selectType == 1 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">상세 이미지</div>
-            <ThumbnailList/>
+              <div className="label">상세 이미지</div>
+              <ThumbnailList />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">팀원 초대</div>
-                <InputText width={370}/>
+              <div className="label">팀원 초대</div>
+              <InputText width={370} />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">기간제 서비스</div>
-                <UploadType name="isTerm" Options={["예","아니오"]}/>
+              <div className="label">기간제 서비스</div>
+              <UploadType name="isTerm" Options={["예", "아니오"]} />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">기간제 기간</div>
-                <InputText width={100}/> ~ <InputText width={100}/>
+              <div className="label">기간제 기간</div>
+              <InputText width={100} /> ~ <InputText width={100} />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">공개</div>
-                <UploadType name="isOpen" Options={["예","아니오"]}/>
+              <div className="label">공개</div>
+              <UploadType name="isOpen" Options={["예", "아니오"]} />
             </div>
-          </React.Fragment>
+          </React.Fragment>}
 
-        }
-
-        {
-          selectType == 2&&
+        {selectType == 2 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">판매 방식</div>
-              <DropBox selection options={[{text:"양도",value:0},{text:"독점 사용권",value:1},{text:"일반 사용권",value:2}]} 
-              placeholder="판매 방식" onChange={this.onClickFirstCategory}/>
+              <div className="label">판매 방식</div>
+              <DropBox selection options={[{ text: "양도", value: 0 }, { text: "독점 사용권", value: 1 }, { text: "일반 사용권", value: 2 }]}
+                placeholder="판매 방식" onChange={this.onClickFirstCategory} />
             </div>
-          </React.Fragment>
+          </React.Fragment>}
 
-        }
-
-      { 
-          selectType == 3&&
+        {selectType == 3 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">판매 방식</div>
-              <DropBox selection options={[{text:"양도",value:0},{text:"독점 사용권",value:1},{text:"일반 사용권",value:2}]} 
-              placeholder="판매 방식" onChange={this.onClickFirstCategory}/>
+              <div className="label">판매 방식</div>
+              <DropBox selection options={[{ text: "양도", value: 0 }, { text: "독점 사용권", value: 1 }, { text: "일반 사용권", value: 2 }]}
+                placeholder="판매 방식" onChange={this.onClickFirstCategory} />
             </div>
-          </React.Fragment>
+          </React.Fragment>}
 
-        }
-
-        { 
-          selectType == 4&&
+        {selectType == 4 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">상담 방법</div>
-              <DropBox selection options={[{text:"온라인",value:0},{text:"오프라인",value:1}]} 
-              placeholder="판매 방식" onChange={this.onClickFirstCategory}/>
+              <div className="label">상담 방법</div>
+              <DropBox selection options={[{ text: "온라인", value: 0 }, { text: "오프라인", value: 1 }]}
+                placeholder="판매 방식" onChange={this.onClickFirstCategory} />
             </div>
-          </React.Fragment>
-
-        }
-        { 
-          selectType == 5&&
+          </React.Fragment>}
+        {selectType == 5 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">업로드 유형</div>
-              <UploadType name="type" Options={["블로그형","프로젝트형"]}/>
+              <div className="label">업로드 유형</div>
+              <UploadType name="type" Options={["블로그형", "프로젝트형"]} />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">공개</div>
-                <UploadType name="isOpen" Options={["예","아니오"]}/>
+              <div className="label">공개</div>
+              <UploadType name="isOpen" Options={["예", "아니오"]} />
             </div>
-          </React.Fragment>
-
-        }
-        { 
-          selectType == 6&&
+          </React.Fragment>}
+        {selectType == 6 &&
           <React.Fragment>
             <div className="wrapper flex">
-            <div className="label">업로드 유형</div>
-              <UploadType name="type" Options={["블로그형","프로젝트형"]}/>
+              <div className="label">업로드 유형</div>
+              <UploadType name="type" Options={["블로그형", "프로젝트형"]} />
             </div>
 
             <div className="wrapper flex">
-            <div className="label">공개</div>
-                <UploadType name="isOpen" Options={["예","아니오"]}/>
+              <div className="label">공개</div>
+              <UploadType name="isOpen" Options={["예", "아니오"]} />
             </div>
-          </React.Fragment>
-
-        }
-        { 
-          selectType == 7&&
+          </React.Fragment>}
+        {selectType == 7 &&
           <React.Fragment>
-             <div className="wrapper flex">
-            <div className="label">상세 이미지</div>
-            <ThumbnailList/>
+            <div className="wrapper flex">
+              <div className="label">상세 이미지</div>
+              <ThumbnailList />
             </div>
             <div className="wrapper flex">
-            <div className="label">배송업체</div>
-                <InputText width={370}/>
+              <div className="label">배송업체</div>
+              <InputText width={370} />
             </div>
             <div className="wrapper flex">
-            <div className="label">배송비</div>
-                <InputText width={370}/>
+              <div className="label">배송비</div>
+              <InputText width={370} />
             </div>
             <div className="wrapper flex">
-            <div className="label">배송 소요</div>
-                <InputText width={370}/>
+              <div className="label">배송 소요</div>
+              <InputText width={370} />
             </div>
-            
-          </React.Fragment>
-
-        }
-          </FormBox>
+          </React.Fragment>}
+      </FormBox>
     );
   }
-}
+};
 
 // import React, { Component } from "react";
 // import Button from "components/Commons/Button";
