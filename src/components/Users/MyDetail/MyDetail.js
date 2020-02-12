@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
+import Item from "components/Items/Item/Item"
+import Expert from "components/Experts/Expert";
 
 import {LikeItem} from "components/Users/MyDetail/MyDetailTab/likeItem";
 
@@ -136,8 +138,77 @@ const BoardBox = styled.div`
     box-shadow: 5px 5px 10px #00000029;
     margin-left:117px;
     padding:50px;
-`
+    .flex{
+      display:flex;
+    }
+    .wrap{
+      margin-bottom:50px;
+      .wrapItem{
+        margin-right:50px;
+      }
+      .alignRight{
+        text-align:right;
+      }
+      .redText{
+        color:red;
+        cursor:pointer;
+      }
+      .title {
+        color: #000000;
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 28px;
+        text-align: left;
+      };
+    
+      .list {
+        margin-top: 72px;
+        font-weight: 300;
+        font-size: 19px;
+        text-align: left;
+        line-height: 27px;
+        color: #000000;
+    
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        .line {
+          width:1300px;
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 37px;
+          .title_text{
+            width:750px;
+            height:29px;
+            overflow:hidden;
+            margin-right:130px;
+          }
+          .sub_text{
+            margin-left:70px;
+          }
+        }
+        .circle {
+          width: 80px;
+          height: 29px;
+          margin-right: 13px;
+          border-radius: 16px;
+          font-size:6px;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          padding:5px;
+          &.red1 { background: #FF0000; };
+          &.red2 { background: #FFC0C0; };
+          &.red3 { background: #FF6868; };
+          &.red4 { background: #FFD6D6; };
+        };
+      }
 
+    
+      
+      .another {}
+      .more {}
+`
 const Thumbnail = styled.div`
     width:190px;
     height:190px;
@@ -160,6 +231,39 @@ const RoundButton = styled.div`
     align-items:center;
     cursor:pointer;
 `
+const empty = {
+
+  //등록아이템
+  likeItem:[{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
+            { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+  likeDesigner:[
+    {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
+    create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"},
+    {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
+    create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"}],
+  likeMaker:[
+      {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
+      create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"},
+      {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
+      create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"}],
+      // 게시판
+  designerRequest:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"designer_req",
+                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+                create_time:"1999.99.99",update_time:"1999.11.11"},
+                {uid:"1",user_id:"123",nick_name:"멍멍이",type:"designer_req",
+                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+                create_time:"1999.99.99",update_time:"1999.11.11"}],
+  makerRequest:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
+                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+                create_time:"1999.99.99",update_time:"1999.11.11"},
+                {uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
+                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+                create_time:"1999.99.99",update_time:"1999.11.11"},
+                {uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
+                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+                create_time:"1999.99.99",update_time:"1999.11.11"}],
+};
+
 class MyDetail extends Component {
 
   constructor(props) {
@@ -253,7 +357,88 @@ class MyDetail extends Component {
                 <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={this.state.selectMenu==6?"red":null}>메이커 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
-              <LikeItem/>
+              {
+                this.state.selectMenu===1&&
+                <div className="wrap flex">
+                  {
+                    empty.likeItem.map((item,index)=>{
+                      return(
+                        <div className="wrapItem" key={index}>
+                          <Item data={item} />
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              }
+              {
+                this.state.selectMenu===2&&
+                <div className="wrap flex">
+                  {
+                    empty.likeDesigner.map((item,index)=>{
+                      return(
+                        <div className="wrapItem" key={index}>
+                          <Expert data={item} />
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              }
+              {
+                this.state.selectMenu===3&&
+                <div className="wrap flex">
+                  {
+                    empty.likeMaker.map((item,index)=>{
+                      return(
+                        <div className="wrapItem" key={index}>
+                          <Expert data={item} />
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              }
+              {
+                this.state.selectMenu===5&&
+                <div className="wrap flex">
+                  <div className="list"> 
+                  {
+                      empty.designerRequest.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
+                      const type = item.type=="designer_req"?<div className="circle red1" >디자이너의뢰</div>:<div className="circle red2" >디자이너응답</div>
+                      return(
+                        <div className="line">
+                          {type}
+                          <div className="title_text">{item.title}</div>
+                          <div className="sub_text">{item.nick_name}</div>
+                          <div className="sub_text">{item.create_time}</div>
+                        </div>
+                      );
+                      })
+                  }
+                  </div>
+                </div>
+              }
+              {
+                this.state.selectMenu===6&&
+                <div className="wrap flex">
+                <div className="list"> 
+                {
+                    empty.makerRequest.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
+                    const type = item.type=="maker_req"?<div className="circle red1" >메이커의뢰</div>:<div className="circle red2" >메이커응답</div>
+                    return(
+                      <div className="line">
+                        {type}
+                        <div className="title_text">{item.title}</div>
+                        <div className="sub_text">{item.nick_name}</div>
+                        <div className="sub_text">{item.create_time}</div>
+                      </div>
+                    );
+                    })
+                }
+                </div>
+              </div>
+              }
             </BoardBox>
           </div>
         </MainBox>

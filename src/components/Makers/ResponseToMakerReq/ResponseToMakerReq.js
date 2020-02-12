@@ -255,6 +255,7 @@ class ResponseToMakerReq extends Component{
     
     const Data = {
       type:"maker_res", // "designer_req" "designer_res" "maker_req" "maker_res"
+      // user_id: this.props.userInfo.uid // 
       title:this.state.res_title,
       content:this.state.res_content,
       price:this.state.res_price,

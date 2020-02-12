@@ -79,6 +79,9 @@ const HeaderItem = styled.li`
   color: #000000;
   opacity: 1;
   cursor: default;
+  .margin_left{
+    margin-left:100px;
+  }
   &.first {
     margin-left: 0px;
     margin-top: 0px;
@@ -261,11 +264,27 @@ class Header extends Component {
           아이템</Link>
       </HeaderItem>
       {/*  */}
-      <HeaderItem>
-        <Link to={`/request`}
-          className={location.indexOf("/request") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active" : ""}>
-          게시판</Link>
-      </HeaderItem>
+      {
+        (location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestToDesigner")!== -1||location.indexOf("/ModifyrequestToDesigner")!== -1||
+        location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) &&
+        <HeaderItem>
+        <Link to={`/requestDesigner`}
+          className={location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
+          디자이너 게시판
+        </Link>
+        </HeaderItem>
+      }
+            {
+        (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker")!== -1||location.indexOf("/ModifyrequestToMaker")!== -1||
+        location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
+        <HeaderItem>
+        <Link to={`/requestMaker`}
+          className={location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
+          메이커 게시판
+        </Link>
+        </HeaderItem>
+      }
+      
       {/*  */}
       {location.indexOf("/search") !== -1 ? null :
         <HeaderItem className="left search">

@@ -80,12 +80,7 @@ const Counter = styled.div`
     line-height: 18px;
   }
 `;
-const empty = {
-  nick_name: "Loading", categoryName: "카테고리",
-  items: 300, likes: 5000000,
-  create_time: "2020-01-01T00:00:01.000Z",
-  update_time: "2020-01-01T00:00:01.000Z",
-};
+
 const Introduction = styled.div`
       margin-right: ${prop => prop.mRight}px;
       position:relative;
@@ -203,6 +198,9 @@ const AdditionalInfo = styled.div`
         line-height: 28px;
         text-align: left;
       }
+      .margin_bottom{
+        margin-bottom:10px;
+      }
       .text {
         width: 100%;
         height: max-content;
@@ -212,9 +210,10 @@ const AdditionalInfo = styled.div`
         font-weight: 300;
         line-weight: 27px;
         text-align: left;
-        word-wrap:break-word;
-
-        
+        word-wrap:break-word;        
+      }
+      .flex{
+        display:flex;
       }
       .wrapText{
         width:100%;
@@ -293,12 +292,26 @@ const MakerBoard = styled.div`
           display: flex;
           flex-direction: row;
           margin-bottom: 37px;
+          .title_text{
+            width:750px;
+            height:29px;
+            overflow:hidden;
+            margin-right:130px;
+          }
+          .sub_text{
+            margin-left:70px;
+          }
         }
         .circle {
-          width: 50px;
-          height: 20px;
+          width: 80px;
+          height: 29px;
           margin-right: 13px;
           border-radius: 16px;
+          font-size:6px;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          padding:5px;
           &.red1 { background: #FF0000; };
           &.red2 { background: #FFC0C0; };
           &.red3 { background: #FF6868; };
@@ -372,10 +385,55 @@ const ExpTable = styled.div`
       font-weight:300;
     }
 `
+const TagPiece = styled.div`
+    width: max-content;
+    min-width: 30px;
+    background-color: #EFEFEF;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: #707070;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    .close {
+        margin-left: 10px;
+        width: max-content;
+        height: max-content;
+        padding: 0px 2px;
+    }
+`;
+const empty = {
+  // 기본
+  nick_name: "Loading", categoryName: "카테고리",
+  items: 300, likes: 5000000,score:4,
+  description:"",location:"",
+  maker_equipment:[],maker_technique:[],
+  create_time: "2020-01-01T00:00:01.000Z",
+  update_time: "2020-01-01T00:00:01.000Z",
+
+  //경험
+  experience:[{number:"1",task:"디자인업무",explain:"디자인업무입니다",during:"1999.99.99~1999.99.99"}],
+
+  //등록아이템
+  itemlist:[{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
+            { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+
+  // 게시판
+  board:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
+  title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+  create_time:"1999.99.99",update_time:"1999.11.11"},
+  {uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_res",
+  title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+  create_time:"1999.99.99",update_time:"1999.11.11"}],
+};
 class MakerDetail extends Component {
   constructor(props) {
     super(props);
     this.state = { tab: true };
+    this.onClickRequest = this.onClickRequest.bind(this);
   }
   componentWillMount() {
     this.props.GetMakerDetailRequest(this.props.id);
@@ -383,11 +441,15 @@ class MakerDetail extends Component {
     // this.props.GetLikeMakerRequest(this.props.id, this.props.token);
     // }
   }
+  onClickRequest(event){
+    window.location.href = "/requestToMaker/"+ this.props.DesignerDetail.uid;
+  }
   render() {
-    const expert = this.props.MakerDetail || empty;
+    // const expert = this.props.MakerDetail || empty;
+    const expert = empty;
     console.log("detail:", expert);
     const { tab } = this.state;
-
+    
     return (<Wrapper>
       <div style={{ display: "flex", flexDirection: "row" }}>
         {/* Designer */}
@@ -419,68 +481,95 @@ class MakerDetail extends Component {
         <AdditionalInfo>
           <div className="wrapText">
           <div className="title">거주지역</div>
-          <div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div>
-          <div className="title">전문분야</div>
-          <div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div>
-          <div className="title">보유 장비</div>
-          <div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div>
+          <div className="text">{expert.location}</div>
+          <div className="title">보유기술</div>
+          <div className="text flex">
+            {
+              expert.maker_technique.map((item,index)=>{
+                return(
+                  <TagPiece key={index}>
+                    {item}
+                  </TagPiece>
+                );
+              })
+            }
+          </div>
+          <div className="title">보유장비</div>
+          <div className="text flex">
+          {
+              expert.maker_equipment.map((item,index)=>{
+                return(
+                  <TagPiece key={index}>
+                    {item}
+                  </TagPiece>
+                );
+              })
+            }
+          </div>
         </div>
         <div className="gradient_box"><div>▾</div></div>
 
         </AdditionalInfo>
       </div>
       <AdditionalInfo width={1523} height={280} mTop={60}>
+            <div className="title margin_bottom">제작 경험</div>
             <ExpTable>
               <div className="header">
                 <div className="th">경험</div>
                 <div className="th">기간</div>
                 <div className="th">업무내용</div>
               </div>
-              <div className="row">
-                <div className="th">경험경험경험경험경험</div>
-                <div className="td">1999.99.99~1999.99.99</div>
-                <div className="td">업무내용업무내용업무내용업무내용</div>
-              </div>
-              <div className="row">
-                <div className="th">경험경험경험경험경험</div>
-                <div className="td">1999.99.99~1999.99.99</div>
-                <div className="td">업무내용업무내용업무내용업무내용</div>
-              </div>
-              <div className="row">
-                <div className="th">경험경험경험경험경험</div>
-                <div className="td">1999.99.99~1999.99.99</div>
-                <div className="td">업무내용업무내용업무내용업무내용</div>
-              </div>
+              {
+                expert.experience.map((item,index)=>{
+                  return(
+                    <div className="row" key={index}>
+                      <div className="td">{item.task}</div>
+                      <div className="td">{item.during}</div>
+                      <div className="td">{item.explain}</div>
+                    </div>
+                  );
+                })
+              }
             </ExpTable>
 
         </AdditionalInfo>
 
         {/**보유아이템 */}
         <AdditionalInfo width={1523} height={491} mTop={60}>
-        <div className="title">아이템</div>
+        <div className="title">제작 아이템</div>
         <div className="wrapItem">
-          <div style={{marginRight:"50px"}}><Item/></div>
-          <div style={{marginRight:"50px"}}><Item/></div>
-          <div style={{marginRight:"50px"}}><Item/></div>
-          <div style={{marginRight:"50px"}}><Item/></div>
-          <div style={{marginRight:"50px"}}><Item/></div>
-          <div style={{marginRight:"50px"}}><Item/></div>
+          {
+            expert.itemlist.map((item,index)=>{
+              return(
+                <div style={{marginRight:"50px"}} key={index}><Item data={item}/></div>
+              );
+            })
+          }
+           
         </div>
         </AdditionalInfo>
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         
         <MakerBoard>
           <div className="title">메이커 게시판</div>
-          <div className="list">
-            <div className="line"><div className="circle red1" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red2" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red4" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red2" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red3" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red2" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red1" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-            <div className="line"><div className="circle red2" /><div className="text">천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를</div></div>
-          </div>
+          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰하기</div></div>
+          <div className="list"> 
+          {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
+
+            {
+                expert.board.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
+                  const type = item.type=="maker_req"?<div className="circle red1" >메이커의뢰</div>:<div className="circle red2" >메이커응답</div>
+                  return(
+                    <div className="line">
+                      {type}
+                      <div className="title_text">{item.title}</div>
+                      <div className="sub_text">{item.nick_name}</div>
+                      <div className="sub_text">{item.create_time}</div>
+                    </div>
+                  );
+                })
+              }
+         </div>
           <div className="page">
             <div className="this number">1</div>
             <div className="another number">2</div>
