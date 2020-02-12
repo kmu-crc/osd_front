@@ -131,7 +131,7 @@ export class Controller extends Component {
     // if (e && this.props.onBlur)
     // await this.props.onBlur();
     // };
-    console.log("updated:(changed):", this.props.item.content, this.state.content);
+    // console.log("updated:(changed):", this.props.item.content, this.state.content);
   };
 
   async deleteItem() {
@@ -153,7 +153,7 @@ export class Controller extends Component {
   };
 
   render() {
-    const { item, name, maxOrder } = this.props;
+    const { item, name, /* maxOrder*/ } = this.props;
     return (
       <ControllerWrap>
         <div className="contentWrap">
@@ -163,9 +163,9 @@ export class Controller extends Component {
             <TextControllerClassic item={item} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
           ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
-        <DelBtn type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></DelBtn>
-        {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null}
-        {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null}
+        {/* <DelBtn type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></DelBtn> */}
+        {/* {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null} */}
+        {/* {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null} */}
       </ControllerWrap>
     );
   }
