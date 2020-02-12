@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import {FileController} from "components/Commons/InputItem/FileController";
+import { FileController } from "components/Commons/InputItem/FileController";
 
 const ControllerWrap = styled.div`
   // padding: 15px 0;
@@ -35,12 +35,14 @@ const ControllerWrap = styled.div`
     align-items: center;
     justify-content: center;
     list-style: none;
+    padding: 35px;
   }
 `;
 const NewController = styled.li`
   width: ${props => props.width};
   height: ${props => props.height};
-  margin-left: 75px;
+  margin-left: 35px;
+  margin-right: 35px;
   line-height: 29px;
   color: #FF0000;
   padding-bottom: 1.5px;
@@ -87,8 +89,8 @@ export class AddController extends Component {
     return (
       <ControllerWrap>
         <div className="innerBox" >
-          <NewController onClick={() => this.addContent("FILE")} width="116px" height="29px">파일 등록하기</NewController>
-          <NewController onClick={() => this.addContent("TEXT")} width="150px" height="29px">텍스트 입력하기</NewController>
+          {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="116px" height="29px">파일 등록하기</NewController>}
+          {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="150px" height="29px">텍스트 입력하기</NewController>}
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>

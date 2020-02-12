@@ -186,7 +186,7 @@ class Header extends Component {
       try {
         Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", alarms => {
-          console.log("alarm@@@@@@@@@@@@@@@@@@@");
+          // console.log("alarm@@@@@@@@@@@@@@@@@@@");
           this.setState({ alarms: alarms });
         });
 
@@ -231,8 +231,8 @@ class Header extends Component {
       })
     this.setState({ user_popup: null })
   }
-  onClickMessageIcon(){
-    window.location.href="/message";
+  onClickMessageIcon() {
+    window.location.href = "/message";
   }
   render() {
     const location = window.location.pathname;
@@ -310,6 +310,7 @@ class Header extends Component {
         {valid && userInfo
           ? (
             <LoginBox>
+
             <div className="iconBox"><Icon className="grey alarm" size="large"/></div>
             <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large"/></div>
             <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
@@ -325,6 +326,7 @@ class Header extends Component {
               : null}
           </div>
           </LoginBox>
+
           )
           : (<Link to={`/signin`}>로그인</Link>)}
       </HeaderItem>

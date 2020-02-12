@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import 'react-dropdown/style.css';
 import Star from "components/Commons/Star";
-import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
+import noimg from "source/noimg.png";
+
+// import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
-// import noimg from "source/noimg.png";
 // import who from "source/thumbnail.png";
 // import { Dropdown } from "semantic-ui-react";
 // import TextFormat from 'modules/TextFormat';
 // import cookie from 'react-cookies';
 
 const Wrapper = styled.div`
-  *{ border:1px solid red; };
+  // *{ border:1px solid red; };
   margin-top: 50px;
   .line { display: flex; }
 `;
@@ -106,7 +107,9 @@ const ItemInfo = styled.div`
       width: 213px;
       height: 70px;
       .text{
-        margin-left: 61px;
+        width: max-content;
+        margin-left: auto;
+        margin-right: auto;
         margin-top: 15px;
         line-height: 37px;
         font-size: 25px;
@@ -296,15 +299,12 @@ const empty = {
 };
 class ItemDetail extends Component {
   render() {
-
-    console.log(this.props);
-    // const {m_img} = this.props.ProductDetail&&this.props.ProductDetail.img&&this.props.ProductDetail.img;
-    const item = this.props.item || empty; // console.log(item);
-
+    const item = this.props.item;
+    console.log(item);
     return !item ? (<div>loading...</div>) :
       (<Wrapper>
         <div className="line">
-          <ItemImages main={this.props.ProductDetail==null?item.mainImage:(this.props.ProductDetail.img==null?null:this.props.ProductDetail.img[0].m_img)}>
+          <ItemImages main={item.img ? item.img[0].l_img : noimg}>
             <div className="main-image"></div>
             <div className="sub-images line">
               <div img={item.mainImage} className="sub nine-teen"></div>
@@ -319,16 +319,16 @@ class ItemDetail extends Component {
             <div className="title">{this.props.ProductDetail==null?item.title:this.props.ProductDetail.title}</div>
             <div className="expert line">
               <div className="who" />
-              <div className="nick">{item.nickName}</div>
+              <div className="nick">{item.userName}</div>
             </div>
 
             <div className="price-and-rate line">
-              <div className="price">{item.price}</div>
-              <div className="rate">{Star(item.rate)}({item.reviews})</div>
+              <div className="price" style={{ marginRight: "35px" }}>{item.price}</div>
+              <div className="rate line">{Star(item.rate)}({item.reviews || 0})</div>
             </div>
 
-            <div className="options">
-              {/* {item.options.map(opt => <Options key={opt} data={opt} />)} */}
+            {/* <div className="options">
+              {/ * {item.options.map(opt => <Options key={opt} data={opt} />)} * /}
               <div className="combo-wrapper line">
                 <div className="text">모양</div>
                 <div className="box WIDTH360"></div>
@@ -337,13 +337,13 @@ class ItemDetail extends Component {
                 <div className="text">수량</div>
                 <div className="box WIDTH178"></div>
               </div>
-            </div>
+            </div> */}
 
             <div className="buttons line">
               <div className="button first">
-                <div className="text">즉시구매</div></div>
+                <div className="text">아이템구매</div></div>
               <div className="button second">
-                <div className="text">장바구니</div></div>
+                <div className="text">관심항목추가</div></div>
             </div>
           </ItemInfo>
         </div>
@@ -356,14 +356,15 @@ class ItemDetail extends Component {
                 <div className="title">상품 상세설명</div>
                 <div className="text">{item.detail}</div>
               </Detail>
-              <Delivery mRight={102}>
-                <div className="title">배송정보</div>
+              <Delivery mRight={102} style={{ background: "#EFEFEF", fontSize: "36px", fontWeight: "500", padding: "35px" }}>
+                선택사항들어갈공간
+                {/* <div className="title">배송정보</div>
                 <div className="sub-title">제작기간</div>
                 <div className="text">3~5일</div>
                 <div className="sub-title">배송</div>
                 <div className="text">택배배송(무료)</div>
                 <div className="sub-title">반품</div>
-                <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div>
+                <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div> */}
               </Delivery>
             </div>
             <div style={{ marginTop: "95px" }}>
@@ -468,9 +469,12 @@ class ItemDetail extends Component {
 
         {/* item-detail */}
         <div className="line">
-          {/* {item && item.is_project === 1 */}
-            {/* ? <DesignDetailStepContainer design={item} {...this.state} /> */}
-            {/* : <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
+          {/* {item && item.is_project === 1 ? "project-view" : "blog-view"} */}
+          <div style={{ padding: "45px", fontSize: "36px", fontFamily: "Noto Sans KR", fontWeight: "500", marginTop: "35px", borderRadius: "35px", width: "100%", background: "#EFEFEF", height: "350px" }}>
+            아이템 내용 들어갈 공간
+          </div>
+          {/* ? <DesignDetailStepContainer design={item} {...this.state} /> */}
+          {/* <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
         </div>
       </Wrapper>)
   }

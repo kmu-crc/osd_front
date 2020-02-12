@@ -25,7 +25,6 @@ const ImgWrapper = styled.div`
     z-index: 1;
   }
 `;
-
 const Title = styled.div`
   width: 100%;
   color: white;
@@ -41,14 +40,13 @@ const Title = styled.div`
     font-weight: bold;
   }
 `;
-
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
     margin-bottom: 100px;
     position: relative;
     z-index:3;
-`
+`;
 
 class CreateProduct extends Component {
   constructor(props) {

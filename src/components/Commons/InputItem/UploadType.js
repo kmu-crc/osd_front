@@ -1,44 +1,43 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
-import noimg from "source/noimg.png";
-import { Icon } from "semantic-ui-react";
+// import noimg from "source/noimg.png";
+// import { Icon } from "semantic-ui-react";
 
 const FormStyle = styled.div`
-    width:100%;
-    height:max-content;
-    display:flex;
+    width: 100%;
+    height: max-content;
+    display: flex;
 
     .contentBox{
-        width:max-content;
-        height:max-content;
-        margin-right:50px;
+        width: max-content;
+        height: max-content;
+        margin-right: 50px;
     }
-` 
-const Radio = styled.input.attrs({type:"radio"})`
-    width:20px;
-    height:20px;
-`
+`;
+const Radio = styled.input.attrs({ type: "radio" })`
+    width: 20px;
+    height: 20px;
+`;
+
 export class UploadType extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            imageList:[noimg],
-        }
+        this.onHandleClicked = this.onHandleClicked.bind(this);
     }
-    
-    render(){
-        return(
+    onHandleClicked(_, item) {
+        if (!item || !this.props.return || !this.props.Options.length) return;
+        this.props.return(item);
+    }
+    render() {
+        return (
             <React.Fragment>
                 <FormStyle>
-                    {
-                        this.props.Options.map((item,key)=>{
-                            return(
-                                <div className="contentBox">
-                                    <Radio name={this.props.name}/><label>{item}</label>
-                                </div>
-                            );
-                        })
-                    }
+                    {this.props.Options.map((item, key) => {
+                        return (<div key={key} className="contentBox">
+                            <Radio name={this.props.name} onChange={_ => this.onHandleClicked(_, item)}/>
+                            <label >{item}</label>
+                        </div>);
+                    })}
                 </FormStyle>
             </React.Fragment>
         );
