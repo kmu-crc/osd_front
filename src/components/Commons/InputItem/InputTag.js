@@ -114,6 +114,14 @@ export class InputTag extends Component {
     componentDidMount() {
         this.init();
     }
+    componentDidUpdate(prevProps){
+        if(prevProps.taglist !== this.props.taglist){
+            console.log(this.props.taglist);
+            this.setState({
+                tag:this.props.taglist,
+            })
+        }
+    }
     returnData = async e => {
         this.props.getValue && await this.props.getValue(this.state.tag);
     }

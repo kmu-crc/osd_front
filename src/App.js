@@ -72,8 +72,9 @@ class App extends Component {
             <Route path="/createRequest" component={RequiresAuth(CreateRequestPage)} />
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
 
-            <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />
+            <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> 
             <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} />
+            <Route path="/requestItem/:sorting?/:cate1?/:cate2?" component={RequestListPage} />
 
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />

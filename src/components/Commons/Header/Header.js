@@ -238,7 +238,7 @@ class Header extends Component {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
-
+    console.log(valid);
     return (<HeaderContainer>
       {/*  */}
       <HeaderItem className="first">
@@ -274,13 +274,23 @@ class Header extends Component {
         </Link>
         </HeaderItem>
       }
-            {
+      {
         (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker")!== -1||location.indexOf("/ModifyrequestToMaker")!== -1||
         location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
         <HeaderItem>
         <Link to={`/requestMaker`}
           className={location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
           메이커 게시판
+        </Link>
+        </HeaderItem>
+      }
+      {
+        (location.indexOf("/requestItem") !== -1 || location.indexOf("/createProduct")!== -1||location.indexOf("/productModify")!== -1||
+        location.indexOf("/productDetail") !== -1 || location.indexOf("/product") !== -1) &&
+        <HeaderItem>
+        <Link to={`/requestItem`}
+          className={location.indexOf("/requestItem") !== -1 ? "active margin_left" : "margin_left"}>
+          아이템 게시판
         </Link>
         </HeaderItem>
       }
@@ -300,8 +310,8 @@ class Header extends Component {
         {valid && userInfo
           ? (
             <LoginBox>
-            <div className="iconBox"><Icon name="grey alarm" size="large"/></div>
-            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon name="grey envelope" size="large"/></div>
+            <div className="iconBox"><Icon className="grey alarm" size="large"/></div>
+            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large"/></div>
             <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
             <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
             <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>

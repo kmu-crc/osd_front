@@ -227,6 +227,17 @@ class CreateDesigner extends Component{
     this.handleAddTag=this.handleAddTag.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  componentDidMount(){
+      this.setState({
+      thumbnail:noimg,
+      thumbnail_name:"sh",
+      firstCategory:1,
+      secondCategory:1,
+      explain:"블라블라",
+      tag:["가","나","다"],
+      career:[{number:0,task:"테스트업무",explain:"테스트업무입니다",during:"1999~2001"}],
+    })
+  }
   onClickFirstCategory(event,{value}){
     this.setState({firstCategory:{value}.value,secondCategory:-1});
   }
@@ -271,37 +282,92 @@ class CreateDesigner extends Component{
       }
   }
 
-  onSubmit(){
-    let tagList="";
-    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
-      return(
-        tagList+=item+","
-      );
-    });
-    let experienceList="";
-    this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
-      return(
-        experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
-      );
-    })
+  // onSubmit(){
+  //   let tagList="";
+  //   this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
+  //     return(
+  //       tagList+=item+","
+  //     );
+  //   });
+  //   let experienceList="";
+  //   this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+  //     return(
+  //       experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+  //     );
+  //   })
+  //   const data = {
+  //     user_id:this.props.userInfo.uid,
+  //     thumbnail:this.state.thumbnail,
+  //     type:"designer",
+  //     description:this.state.explain,
+  //     category_level1:this.props.firstCategory,
+  //     category_level2:this.props.secondCategory,
+  //     tag:tagList,
+  //     experience:experienceList,
+  //   }
+  //   window.location.href="/mypage";
 
+  // }
+  onSubmit = async e => {
 
+    e.preventDefault();
+      let tagList="";
+      this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
+        return(
+          tagList+=item+","
+        );
+      });
+      let experienceList="";
+      this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+        return(
+          experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+        );
+      })
+      const data = {
+        files: [],
+        user_id:this.props.userInfo.uid,
+        thumbnail:this.state.thumbnail,
+        type:"designer",
+        description:this.state.explain,
+        category_level1:this.props.firstCategory,
+        category_level2:this.props.secondCategory,
+        tag:tagList,
+        experience:experienceList,
+      }
+      let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+      console.log(this.state.thumbnail,this.state.thumbnail_name)
+      if(this.state.thumbnail!=null||this.state.thumbnail!="")
+      {
+        data.files.push(file);
+      }
+      // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
+      //   delete data.files;
+      // }
+    this.props.UpdateUserDetailRequest(data, this.props.token)
+      .then(res => {
+        if (res.success) {
+          alert("정보가 수정되었습니다.");
+          //this.props.history.push(`/`);
+          window.location.href = "/designer";
+        } else {
+          alert("다시 시도해주세요");
+          this.setState({
+            loading: false
+          });
+        }
+      })
+      .catch(e => {
+        console.log("실패", e);
+        alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
+      });
+  };
 
-    const data = {
-      user_id:this.props.userInfo.uid,
-      thumbnail:this.state.thumbnail,
-      type:"designer",
-      description:this.state.explain,
-      category_level1:this.props.firstCategory,
-      category_level2:this.props.secondCategory,
-      tag:tagList,
-      experience:experienceList,
-    }
-    window.location.href="/mypage";
-
-  }
 
   render(){
+    console.log(this.state);
     return(
       <React.Fragment>
         <MainBox>
@@ -337,21 +403,21 @@ class CreateDesigner extends Component{
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">거주지역</div>
-                <InputText onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
+                <InputText value={this.props.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
               </div>
 
               <div className="wrapper_noflex ">
                 {
                   this.state.career.map((item,index)=>{
-                    console.log(item.number)
+                    console.log("career",item)
                     return(
-                      <CreateCareer number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
+                      <CreateCareer item={item} number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
                     );
                   })
                 }
@@ -380,7 +446,17 @@ class CreateCareer extends Component{
     this.onChangeExplain=this.onChangeExplain.bind(this);
     this.onChangeDuring=this.onChangeDuring.bind(this);
   }
-
+  componentDidUpdate(prevProps){
+    if(prevProps.item !== this.props.item)
+    {
+      this.setState({
+        task:this.props.item.task,
+        explain:this.props.item.explain,
+        during:this.props.item.during,
+      })
+    }
+    return true;
+  }
   onChangeTask(event){
     this.setState({task:event.target.value,})
     this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
@@ -396,6 +472,8 @@ class CreateCareer extends Component{
   
 
   render(){
+    console.log("componentdidmount",this.props.item);
+
     const leadingZeros = (n, digits) =>{ //0채우는 함수
       var zero = '';
       n = n.toString();
@@ -406,6 +484,7 @@ class CreateCareer extends Component{
       }
       return zero + n;
     }
+    console.log("careerlog",this.state);
     return(
       <div className="wrapper flex margin_bottom ">
       <div className="label">경력</div>

@@ -407,7 +407,7 @@ class MyDetail extends Component {
                       empty.designerRequest.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
                       const type = item.type=="designer_req"?<div className="circle red1" >디자이너의뢰</div>:<div className="circle red2" >디자이너응답</div>
                       return(
-                        <div className="line">
+                        <div className="line" key={index}>
                           {type}
                           <div className="title_text">{item.title}</div>
                           <div className="sub_text">{item.nick_name}</div>

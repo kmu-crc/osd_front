@@ -149,8 +149,39 @@ class SignUpForm extends Component {
     this.onCheckPersonalInfoEsscential = this.onCheckPersonalInfoEsscential.bind(this);
     this.onCheckPersonalInfoChoice = this.onCheckPersonalInfoChoice.bind(this);
   }
+  async checkEmail()
+  {
+      const data = {email:this.state.email}
+      let returnvalue = true;
+      await this.props.CheckEmailRequest(data).then(
+          (res)=>{
+              console.log(res, data);
+              if(res.checkEmail===false)
+              {                   
+                  returnvalue = false;
+              }
+          }
+      );
+      console.log("qwer",returnvalue);
+      return returnvalue;
+  }
+  async checkNickname() {
+    const data = { nick_name: this.state.name }
+    let returnvalue = true;
+    await this.props.CheckNickNameRequest(data).then(
+        (res) => {
+            console.log(res, data);
+            if (res.checkNickName === false) {
+                returnvalue = false;
+            }
+        }
+    );
+    console.log("qwer", returnvalue);
+    return returnvalue;
+}
   onSubmit = async e => {
 
+    e.persist();
     //유효성검사
     if(this.state.email==="")
     {
@@ -172,21 +203,30 @@ class SignUpForm extends Component {
     {
       alert("휴대폰 번호를 입력해주세요");
     }
+    else if(await this.checkEmail()===false)
+    {      
+        alert("중복된 아이디입니다.");
+        return;
+    }
+    else if(await this.checkNickname()===false)
+    {      
+        alert("중복된 닉네임입니다.");
+        return;
+    }
     //약관동의
     if(this.state.checkTerms===false || this.state.checkPersonalInfo_ess===false)
     {
       alert("필수 이용약관에 동의해주세요!");
       return;
     }
-    
-
+    // 
     e.preventDefault();
     const data = {email:this.state.email,password:this.state.password,nick_name:this.state.name,phone:this.state.phone};
   
       this.props.SignUpRequest(data).then(res => {
         if (res.type === "AUTH_SIGNUP_SUCCESS") {
           this.setState({ success: true });
-          window.location.href="/";
+          // window.location.href="/";
         } else {
           alert("다시 시도해주세요")
         }
