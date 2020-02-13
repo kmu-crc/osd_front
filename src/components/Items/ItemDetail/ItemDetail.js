@@ -4,15 +4,15 @@ import 'react-dropdown/style.css';
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 
+// import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 // import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer";
-import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 // import who from "source/thumbnail.png";
 // import { Dropdown } from "semantic-ui-react";
 // import TextFormat from 'modules/TextFormat';
 // import cookie from 'react-cookies';
 
 const Wrapper = styled.div`
-  // *{ border:1px solid red; };
+  // * { border: 1px solid red; };
   margin-top: 50px;
   .line { display: flex; }
 `;

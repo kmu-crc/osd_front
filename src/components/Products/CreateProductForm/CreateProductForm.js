@@ -6,7 +6,9 @@ import { ThumbnailList } from "components/Commons/InputItem/ThumbnailList";
 import { UploadType } from "components/Commons/InputItem/UploadType";
 import { AddController } from "components/Commons/InputItem/AddController";
 import { Controller } from "components/Commons/InputItem/Controller";
-import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+import GridEditor from "components/GridEditor";
+
+// import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
 const FirstCategory = [
   { text: "패션", value: 0 },
@@ -24,7 +26,8 @@ const SecondCategory =
   [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
   [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
   [{ text: "새분야", value: 0 }]];
-const EmptyCategory = [{ text: "", value: -1 }];
+const EmptyCategory = [
+  { text: "", value: -1 }];
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
@@ -158,19 +161,19 @@ const FormBox = styled.div`
   }
 `;
 const Button = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  background-color:white;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  display:flex;
-  align-items:center;
-  margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
+  width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height: ${props => props.height == null ? 100 + "%" : props.height + "px"};
+  background-color: white;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  margin-left: ${props => props.margin == null ? 0 + "px" : props.margin + "px"};
   .label{
-    margin-left:60px;
+    margin-left: 60px;
   }
 `;
-const InputText = styled.input.attrs({ type: "text", value: props=>props.value || "" })`
+const InputText = styled.input.attrs({ type: "text", value: props => props.value || "" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
@@ -226,6 +229,7 @@ const InfoContentChooseItemType = styled.div`
   font-size: 24px;
   color: #707070;
 `;
+
 
 class CreateProductForm extends Component {
   constructor(props) {
@@ -378,6 +382,8 @@ class CreateProductForm extends Component {
 export default CreateProductForm;
 
 
+
+
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
@@ -435,7 +441,7 @@ class ItemTypeForm extends Component {
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
     const { additional, content } = this.state;
-    console.log("content:", content);
+
     return (
       <MainBox>
         <FormBox boxShadow={true} width={1570}>
@@ -464,7 +470,10 @@ class ItemTypeForm extends Component {
 
           {itemType === 1 || additional && additional.uploadType === "프로젝트형" ?
             <div className="contentWrap">
-              <React.Fragment>project !!!!!</React.Fragment>
+              <GridEditor
+                editor={true} isMyDesign={true}
+                return={steps => this.setState({ content: steps })}
+                design={{ uid: "new"}} />
             </div>
             : null}
 
@@ -473,6 +482,8 @@ class ItemTypeForm extends Component {
       </MainBox >);
   }
 };
+
+
 class Field extends Component {
   render() {
     const { title } = this.props;
@@ -807,4 +818,3 @@ class ItemProduct extends Component {
       </React.Fragment>)
   }
 };
-

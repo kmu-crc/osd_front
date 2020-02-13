@@ -5,6 +5,7 @@ export * from "./FormCheckBoxnew";
 export * from "./FormSelect";
 export * from "./FormFile";
 export * from "./FormThumbnail";
+export * from "./FormThumbnailEx";
 export * from "./MultiUpload";
 export * from "./AsyncInput";
 export * from "./DeleteItems";
