@@ -1,4 +1,9 @@
 const StyleGuide = {
+  resolutions: {
+    SmallMinWidth:0, SmallMaxWidth:480, 
+    MediumMinWidth:480, MediumMaxWidth:1440, 
+    LargeMinWidth:1440, LargeMaxWidth:1920
+  },
   font: {
     notoSans: "'Noto Sans', sans-serif",
     notoSerif: "'Noto Serif', serif",

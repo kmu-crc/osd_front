@@ -68,7 +68,7 @@ class CardSourceDetail extends Component {
   };
 
   componentDidMount() {
-    this.props.GetDesignSourceRequest(this.props.uid);
+    this.props.GetDesignSourceRequest && this.props.GetDesignSourceRequest(this.props.uid);
   }
 
   async shouldComponentUpdate(nextProps) {
@@ -79,10 +79,10 @@ class CardSourceDetail extends Component {
       if (nextProps.editStatus === "SUCCESS") {
         await this.setState({ edit: false });
         this.props.GetDesignSourceRequest(this.props.uid);
-        await this.setState({loading: false});
+        await this.setState({ loading: false });
         this.props.closeEdit();
-      } else if(nextProps.editStatus === "FAILURE") {
-        await this.setState({loading: false});
+      } else if (nextProps.editStatus === "FAILURE") {
+        await this.setState({ loading: false });
         this.props.closeEdit();
       }
     }
@@ -118,7 +118,7 @@ class CardSourceDetail extends Component {
     let copyData = { ...data };
     copyData.initClick = true;
     for (let item of copyContent) {
-      if((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")){
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
         await copyContent.splice(item.order, 1, null);
       }
     }
@@ -130,7 +130,7 @@ class CardSourceDetail extends Component {
     //    newContent.push(item);
     //  }
     //})
-    let newContent = copyContent.filter((item)=>{return item !== null})
+    let newContent = copyContent.filter((item) => { return item !== null })
     newContent = await Promise.all(
       newContent.map(async (item, index) => {
         item.order = await index;
@@ -165,7 +165,7 @@ class CardSourceDetail extends Component {
     e.preventDefault();
     let copyContent = [...this.state.content];
     for (let item of copyContent) {
-      if((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")){
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
         await copyContent.splice(item.order, 1);
       }
     }
@@ -176,13 +176,17 @@ class CardSourceDetail extends Component {
         return item;
       })
     );
-    await this.setState({content: copyContent});
+    await this.setState({ content: copyContent });
     let formData = await ContentForm(this.state);
-    await this.setState({loading: true});
-    await setTimeout(() => {}, 500);
-    
-    this.props.upDateRequest(formData, this.props.uid, this.props.token)
-      .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+    await this.setState({ loading: true });
+    await setTimeout(() => { }, 500);
+    if (this.props.uid === "new") {
+      this.props.upDateRequest(formData)
+    }
+    else
+      this.props.upDateRequest(formData, this.props.uid, this.props.token)
+        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+
   }
 
 
@@ -223,20 +227,20 @@ class CardSourceDetail extends Component {
                 />
               </div>
             ) : (
-              <AddController
-                type="INIT"
-                order={0}
-                name="addBasic"
-                getValue={this.onAddValue}
-              />
-            )}
+                <AddController
+                  type="INIT"
+                  order={0}
+                  name="addBasic"
+                  getValue={this.onAddValue}
+                />
+              )}
             <Button type="button" onClick={this.onSubmit}>
               저장
             </Button>
             {
               this.props.isCancel ? (
-                  <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (
-                  <Button type="button" onClick={this.props.closeEdit}>취소</Button> )
+                <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (
+                  <Button type="button" onClick={this.props.closeEdit}>취소</Button>)
             }
           </form>
         ) : content.length > 0 ? (
@@ -254,10 +258,10 @@ class CardSourceDetail extends Component {
                 </div>
               ) : item.type === "FILE" && item.data_type === "video" ? (
                 <span>
-                <span className="LinkFileName">{item.file_name}</span>
-                <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
-                <source src={item.content} type="video/mp4" download={item.file_name}></source>
-                </video>
+                  <span className="LinkFileName">{item.file_name}</span>
+                  <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                    <source src={item.content} type="video/mp4" download={item.file_name}></source>
+                  </video>
                 </span>
               ) : item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
                 <a key={index} href={item.content} download={item.file_name} className="iconWrap">
@@ -274,18 +278,18 @@ class CardSourceDetail extends Component {
             })}
           </ViewContent>
         ) : (
-          <Nodata>
-            {/* {this.props.isTeam === 1 ?
+              <Nodata>
+                {/* {this.props.isTeam === 1 ?
             <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>
               업로드
             </Button>
             :
             <div>등록된 컨텐츠가 없습니다.</div>
             } */}
-            <div>{/*등록된 컨텐츠가 없습니다.*/}</div>
-          </Nodata>
-        )}
-        {this.state.loading && <Loading/>}
+                <div>{/*등록된 컨텐츠가 없습니다.*/}</div>
+              </Nodata>
+            )}
+        {this.state.loading && <Loading />}
       </CardSrcWrap>
     );
   }
