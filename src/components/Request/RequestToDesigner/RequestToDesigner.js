@@ -241,6 +241,7 @@ class RequestToDesigner extends Component{
 
     const Data = {
       type:"designer_req", // "designer_req" "designer_res" "maker_req" "maker_res"
+      // user_id: this.props.userInfo.uid // 
       title:this.state.title,
       category_level1:this.state.category_level1,
       category_level2:this.state.category_level2,
@@ -275,7 +276,7 @@ class RequestToDesigner extends Component{
                 <DropBox id="firstCategory" value={this.state.category_level1} selection options={FirstCategory} 
                         placeholder="대분류" onChange={this.onClickCategorylevel1}/>
                 <DropBox id="secondCategory" value={this.state.category_level2} selection placeholder="소분류" onChange={this.onClickCategorylevel2}
-                        options={this.state.firstCategory>-1?SecondCategory[this.state.firstCategory]:EmptyCategory}/>
+                        options={this.state.category_level1>-1?SecondCategory[this.state.category_level1]:EmptyCategory}/>
               </div>
 
               <div className="wrapper flex centering">

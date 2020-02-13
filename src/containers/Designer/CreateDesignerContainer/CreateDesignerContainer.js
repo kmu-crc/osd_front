@@ -6,6 +6,8 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import { connect } from "react-redux";
+import { UpdateUserDetailRequest } from "actions/Users/UserInfo";
+
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -71,6 +73,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    UpdateUserDetailRequest: (data, token) => {
+      return dispatch(UpdateUserDetailRequest(data, token))
+    },
   };
 };
 
