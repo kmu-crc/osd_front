@@ -80,6 +80,7 @@ const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_
             </Fragment>}
         {editor &&
             <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
+                {console.log(step.cards, "cards")}
                 <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
             </div>}
     </div>

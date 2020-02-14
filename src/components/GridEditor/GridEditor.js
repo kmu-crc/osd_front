@@ -40,6 +40,9 @@ const Arrow = styled.div`
     }
     cursor: pointer;
 `;
+const Wrapper = styled.div`
+    position: relative;
+`;
 const GridEditorWrapper = styled.div`
     display: flex;
     margin-left:32px;
@@ -81,6 +84,7 @@ class GridEditor extends Component {
         this.NewStep = this.NewStep.bind(this);
         this.requestReorder = this.requestReorder.bind(this);
         this.requestCardReorder = this.requestCardReorder.bind(this);
+        this.handleReturn = this.handleReturn.bind(this);
     };
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, true);
@@ -107,6 +111,7 @@ class GridEditor extends Component {
         }
     }
     createNewCard(row, boardId) {
+        alert(row);
         this.setState({ row: row, boardId: boardId, newcard: true });
     }
     openCard = (card, row, boardId) => {
@@ -248,14 +253,24 @@ class GridEditor extends Component {
         }
         return true;
     }
-
+    async handleReturn(data) {
+        console.log(data);
+        let copy = [...this.state.content];
+        for (let item of copy) {
+            // if (item)
+            if(item.uid === data.uid){
+                
+            }
+        }
+    }
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const { content, gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = DesignDetailStep || content;
         console.log(steps);
+
         return (
-            <div style={{ position: "relative" }}>
+            <Wrapper>
                 {design.uid ?
                     <React.Fragment>
                         {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
@@ -269,7 +284,7 @@ class GridEditor extends Component {
                         {editor && newcard &&
                             <NewCardModal
                                 isTeam={editor} boardId={boardId} designId={this.props.design.uid}
-                                order={steps.length} open={newcard}
+                                order={steps.length} open={newcard} return={this.handleReturn}
                                 close={() => this.setState({ newcard: false })} />}
 
                         {card &&
@@ -294,9 +309,9 @@ class GridEditor extends Component {
                             </GridEditorWrapper>
                         </ReactHeight>
                     </React.Fragment>
-                    : <div>oops, could not load data :("</div>
+                    : <div>o</div>
                 }
-            </div>)
+            </Wrapper>)
     }
 }
 

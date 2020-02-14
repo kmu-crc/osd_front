@@ -238,7 +238,7 @@ class Header extends Component {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
-    console.log(valid);
+    
     return (<HeaderContainer>
       {/*  */}
       <HeaderItem className="first">
