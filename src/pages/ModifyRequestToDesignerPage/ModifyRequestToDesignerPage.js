@@ -3,7 +3,7 @@ import ModifyRequestToDesignerContainer from "containers/Request/ModifyReqeustTo
 
 class ModifyRequestToDesignerPage extends Component {
   render() {
-    return (<ModifyRequestToDesignerContainer id={this.props.match.params.id} />);
+    return (<ModifyRequestToDesignerContainer id={this.props.match.params.id ? this.props.match.params.id : null} />);
   }
 }
 

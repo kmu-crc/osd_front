@@ -5,6 +5,7 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import { connect } from "react-redux";
+import { InsertMakerDetailRequest } from "actions/Users/UserInfo";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -69,6 +70,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    InsertMakerDetailRequest: (data, token) => {
+      return dispatch(InsertMakerDetailRequest(data, token))
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateMakerContainer);

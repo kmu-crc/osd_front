@@ -101,6 +101,7 @@ class CreateGroup extends Component {
       await this.setState({
         loading: true
       });
+      return;
       this.props.CreateNewGroupRequest(data, this.props.token)
       .then(res => {
         this.props.history.push(`/groupDetail/${res.id}`);
