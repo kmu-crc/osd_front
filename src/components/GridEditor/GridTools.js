@@ -4,6 +4,32 @@ import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
 
+const CreateCardContainer = styled.div`
+    width: 200px;
+    height: 200px;
+    margin-right: ${props => props.marginRight}px;
+    border-radius: 15px; 
+    background-clip: padding-box; 
+    border: 2px solid rgba(112, 112, 112, 0.5);
+    cursor: pointer;
+    
+    .cross-wrapper {
+        position: relative;
+        margin-top: 38.58px;
+        margin-left: 66.59px;
+    }
+    .text {
+        opacity: ${props => props.disabled ? "0.5" : "1.0"};
+        margin-top: 32.23px;
+        height: 29px;
+        color: #707070;
+        font-family: Noto Sans KR;
+        font-size: 20px;
+        text-align: center;
+        line-height: 29px;
+    }
+`;
+
 const CreateStepContainer = styled.div`
     position: relative;
     display: flex;
@@ -39,16 +65,11 @@ export const CreateStep = (props) => {
     </CreateStepContainer>)
 }
 export const CreateCard = (props) => {
-    return (<div onClick={props.onClick}
-        style={{
-            width: "200px", height: "200px", marginRight: props.marginRight,
-            borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
-            cursor: "pointer"
-        }}>
-        <div style={{ position: "relative", marginTop: "38.58px", marginLeft: "66.59px" }}>
+    return (<CreateCardContainer marginRight={props.marginRight} onClick={props.onClick} disabled={props.disabled}>
+        <div className="cross-wrapper" >
             <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>컨텐츠 등록하기</div>
-    </div>)
+        <div className="text">컨텐츠 등록하기</div>
+    </CreateCardContainer>)
 }
 export const TipDiv = (props) => {
     return (<div>

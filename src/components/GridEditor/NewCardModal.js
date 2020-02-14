@@ -338,30 +338,34 @@ class NewCardModal extends Component {
         await this.setState({ hook: false });
     };
     submit = async () => {
-        let files = null;
         if (!this.state.title || this.state.title === "") {
             alert("컨텐츠의 제목을 입력하세요.");
             return;
         }
-        if (this.props.designId === "new") {
-            alert("!");
-        }
-        else
-            // new card
-            await ValidationGroup(this.state, false)
-                .then(async data => {
-                    files = await data && data.files;
-                    // if (this.props.design.uid === "new") {
-                    // this.props.return({ title: this.state.title, order: this.props.order });
-                    // return;
-                    // } else
+        // new card
+        let files = null;
+        await ValidationGroup(this.state, false)
+            .then(async data => {
+                files = await data && data.files;
+                let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
+
+                if (this.props.designId === "new") {
+                    this.props.return && this.props.return({
+                        card: { title: this.state.title, order: 9999},
+                        content: {
+                            title: this.state.title, thumbnail: thumbnail, content: this.state.content,
+                            data: {
+                                deleteContent: this.state.card_content.deleteContent, newContent: this.state.card_content.newContent, updateContent: this.state.card_content.updateContent
+                            }
+                        }
+                    })
+                    await this.setState({ loading: false });
+                    this.onClose();
+                } else
                     await this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
                         .then((res) => {
                             if (res.success) {
-                                // and get new card id
-                                // directly update contents stored tempolarly
                                 const card_id = res.card;
-                                let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
                                 this.props.UpdateCardSourceRequest({
                                     title: this.state.title, thumbnail: thumbnail, content: this.state.content,
                                     data: { deleteContent: this.state.card_content.deleteContent, newContent: this.state.card_content.newContent, updateContent: this.state.card_content.updateContent }
@@ -378,16 +382,16 @@ class NewCardModal extends Component {
                                 alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
                             }
                         });
-                });
+            });
     };
-    handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!this.state.title) {
-            alert("컨텐츠의 제목을 입력하세요.");
-            return;
-        }
-        await this.setState({ loading: true, hook: true });
-    };
+    // handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     if (!this.state.title) {
+    //         alert("컨텐츠의 제목을 입력하세요.");
+    //         return;
+    //     }
+    //     await this.setState({ loading: true, hook: true });
+    // };
 
     render() {
         const { hook } = this.state;
@@ -436,30 +440,11 @@ class NewCardModal extends Component {
                                 openEdit={this.onChangeEditMode}
                                 hook={hook} handleResetHook={this.handleResetHook}
                                 upDateRequest={this.saveTemporary} />
-                            {/*<CardSourceDetailContainer*/}
-                            {/*    handleSubmit={this.handleHeaderSubmit}*/}
-                            {/*    handleCancel={this.onCloseEditMode}*/}
-                            {/*    designId={this.props.designId} card={card} uid={card.uid} isTeam={isTeam} edit={this.state.edit}*/}
-                            {/*    isCancel closeEdit={this.onCloseEditMode} openEdit={this.onChangeEditMode} />*/}
                         </div>
                     </div>
                 </NewCardDialogWrapper>
                 <BlankSpace />
             </React.Fragment >
-            //     <ButtonContainer >
-            //         <EditorBottonWrapper>
-            //             <button onClick={this.handleSubmit} className="submit" type="button">
-            //                 <i className="icon outline save" />생성</button>
-            //             <button onClick={this.handleCancel} className="cancel" type="button">
-            //                 <i className="icon trash" />취소</button>
-            //         </EditorBottonWrapper>
-            //     </ButtonContainer>
-            //     {/*<div className="submit-button-wrapper">
-            //     <div className="wrapper">
-            //         <button onClick={this.handleSubmit} >생성하기</button>
-            //     </div>
-            // </div> */}
-            // </NewCardDialog >
         )
     }
 }

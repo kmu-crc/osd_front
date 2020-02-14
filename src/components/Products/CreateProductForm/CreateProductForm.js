@@ -7,6 +7,7 @@ import { UploadType } from "components/Commons/InputItem/UploadType";
 import { AddController } from "components/Commons/InputItem/AddController";
 import { Controller } from "components/Commons/InputItem/Controller";
 import GridEditor from "components/GridEditor";
+import { GridEditor2 } from "components/GridEditor/GridEditor2";
 
 // import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
@@ -257,11 +258,24 @@ class CreateProductForm extends Component {
   success = () => 1070;
   onSubmit(event) {
     event.preventDefault();
-    let data = { ...this.state };
-    delete data.firstCategory;
-    delete data.secondCategory;
+    let data = {
+      //basic
+      title: this.state.title,
+      files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
+      tag: this.state.tag, category1: this.state.category1, category2: this.state.category2,
+      itemType: this.state.itemType,
+      //additional
+      additional: this.state.additional, content: this.state.content
+    };
     console.log(data);
-    // window.location.href = `/productDetail/${this.success()}`;
+    this.props.CreateDesignRequest(data, this.props.token)
+      .then(result => {
+        if (result.success) {
+          window.location.href = `/productDetail/${result.id}`
+        }
+      })
+    // .catch(error => {/* console.log("error:", error);*/ });
+
   };
   onClickFirstCategory(_, { value }) {
     this.setState({ firstCategory: { value }.value, category1: { value }.value });
@@ -307,6 +321,8 @@ class CreateProductForm extends Component {
     this.setState({ tags: param });
   };
   render() {
+    // return 
+
     const { /* edit, */ itemType } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
@@ -357,6 +373,11 @@ class CreateProductForm extends Component {
           </div>
         </FormBox>
 
+      </div>
+
+      {/* 로컬 그리드 에디터 */}
+      <div className="contentsBox">
+        <GridEditor2 />
       </div>
 
       {/* 아이템 상세정보 입력 폼 */}
@@ -473,7 +494,7 @@ class ItemTypeForm extends Component {
               <GridEditor
                 editor={true} isMyDesign={true}
                 return={steps => this.setState({ content: steps })}
-                design={{ uid: "new"}} />
+                design={{ uid: "new" }} />
             </div>
             : null}
 
