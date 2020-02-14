@@ -7,7 +7,7 @@ import { UploadType } from "components/Commons/InputItem/UploadType";
 import { AddController } from "components/Commons/InputItem/AddController";
 import { Controller } from "components/Commons/InputItem/Controller";
 import GridEditor from "components/GridEditor";
-import { GridEditor2 } from "components/GridEditor/GridEditor2";
+import { GridEditorLocal } from "components/GridEditor/GridEditorLocal";
 
 // import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
@@ -377,7 +377,7 @@ class CreateProductForm extends Component {
 
       {/* 로컬 그리드 에디터 */}
       <div className="contentsBox">
-        <GridEditor2 />
+        <GridEditorLocal />
       </div>
 
       {/* 아이템 상세정보 입력 폼 */}
