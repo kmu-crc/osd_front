@@ -1,70 +1,318 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-const details = {
-    "success": true, "message": "get board list 성공.",
-    "list":
-        [
-            {
-                "uid": 3207, "user_id": 190, "design_id": 2494, "title": "회원 가입", "order": 0, "create_time": "2018-10-14T17:27:07.000Z", "update_time": "2019-03-19T05:18:44.000Z", "d_flag": 0,
-                "cards":
-                    [{ "uid": 9842, "user_id": 249, "nick_name": "귤귤귤귤귤귤귤", "content": "", "first_img": null, "title": "사용자 매뉴얼 : 회원가입", "order": 0, "update_time": "2018-10-17T07:23:54.000Z", "comment_count": 1 }]
-            },
-            {
-                "uid": 3989, "user_id": 190, "design_id": 2494, "title": "서비스 개요", "order": 1, "create_time": "2018-11-21T01:48:33.000Z", "update_time": "2019-03-19T05:18:44.000Z", "d_flag": 0,
-                "cards":
-                    [{ "uid": 11947, "user_id": 249, "nick_name": "귤귤귤귤귤귤귤", "content": "", "first_img": null, "title": "서비스 개요", "order": 0, "update_time": "2018-11-21T07:02:27.000Z", "comment_count": 0 }]
-            },
-            {
-                "uid": 3991, "user_id": 190, "design_id": 2494, "title": "디자인", "order": 2, "create_time": "2018-11-21T01:49:15.000Z", "update_time": "2019-03-04T03:04:31.000Z", "d_flag": 0,
-                "cards":
-                    [{ "uid": 11911, "user_id": 190, "nick_name": "둉", "content": "", "first_img": null, "title": "디자인 등록", "order": 0, "update_time": "2018-11-21T01:59:34.000Z", "comment_count": 0 },
-                    { "uid": 11912, "user_id": 190, "nick_name": "둉", "content": "", "first_img": null, "title": "블로그 형식 : 컨텐츠 수정", "order": 1, "update_time": "2018-11-21T01:59:55.000Z", "comment_count": 0 },
-                    { "uid": 11913, "user_id": 190, "nick_name": "둉", "content": "사용자 매뉴얼의 '디자인 등록_프로젝트 형식' 파트를 기술함.", "first_img": null, "title": "블로그 -> 프로젝트 형식 변경", "order": 2, "update_time": "2018-11-21T02:02:21.000Z", "comment_count": 0 },
-                    { "uid": 11914, "user_id": 190, "nick_name": "둉", "content": "사용자 매뉴얼의 '디자인 등록_프로젝트 형식' 파트를 기술함", "first_img": null, "title": "프로젝트 형식 : 컨텐츠 등록", "order": 3, "update_time": "2018-11-21T02:02:31.000Z", "comment_count": 0 },
-                    { "uid": 11915, "user_id": 190, "nick_name": "둉", "content": "사용자 매뉴얼의 '디자인 등록_프로젝트 형식' 파트를 기술함", "first_img": null, "title": "프로젝트 형식 : 컨텐츠 삭제", "order": 4, "update_time": "2018-11-21T02:02:36.000Z", "comment_count": 0 },
-                    { "uid": 11916, "user_id": 190, "nick_name": "둉", "content": ":: 문의사항은 doeuncow@gmail.com으로 연락주세요", "first_img": null, "title": "FAQ", "order": 5, "update_time": "2018-11-21T02:02:40.000Z", "comment_count": -3 }]
-            },
-            {
-                "uid": 3992, "user_id": 190, "design_id": 2494, "title": "그룹", "order": 3, "create_time": "2018-11-21T01:49:27.000Z", "update_time": "2018-11-21T01:49:27.000Z", "d_flag": 0,
-                "cards":
-                    [{ "uid": 11930, "user_id": 192, "nick_name": "쩡", "content": "그룹 가입 신청에 대한 설명입니다.", "first_img": null, "title": "그룹 가입 신청/승인", "order": 0, "update_time": "2018-11-21T05:59:19.000Z", "comment_count": 0 },
-                    { "uid": 11929, "user_id": 192, "nick_name": "쩡", "content": "상단 바의 그룹 탭을 클릭합니다", "first_img": null, "title": "그룹 개설", "order": 1, "update_time": "2018-11-21T05:59:09.000Z", "comment_count": 0 },
-                    { "uid": 11949, "user_id": 192, "nick_name": "쩡", "content": "그룹 가입관리에 대한 설명입니다.", "first_img": null, "title": "그룹 관리", "order": 2, "update_time": "2018-11-21T07:18:33.000Z", "comment_count": 0 }]
-            },
-            {
-                "uid": 3993, "user_id": 190, "design_id": 2494, "title": "디자이너", "order": 4, "create_time": "2018-11-21T01:49:36.000Z", "update_time": "2018-11-21T01:49:36.000Z", "d_flag": 0,
-                "cards":
-                    [{ "uid": 11919, "user_id": 191, "nick_name": "ssssss0", "content": "메뉴에서 디자이너 탭에대한 설명입니다.", "first_img": null, "title": "디자이너 탭", "order": 0, "update_time": "2018-11-21T02:26:10.000Z", "comment_count": 0 },
-                    { "uid": 11920, "user_id": 191, "nick_name": "ssssss0", "content": "회원가입 절차에서 디자이너로 등록하는 방법입니다.(기본)", "first_img": null, "title": "회원가입에서 등록", "order": 1, "update_time": "2018-11-21T02:30:12.000Z", "comment_count": 0 },
-                    { "uid": 11921, "user_id": 191, "nick_name": "ssssss0", "content": "마이페이지에서 디자이너로 등록하는 방법입니다.", "first_img": null, "title": "마이페이지에서 등록", "order": 2, "update_time": "2018-11-21T02:31:15.000Z", "comment_count": 0 }]
-            }]
-}
+import React, { Component } from 'react';
+import { CreateStep } from "./GridTools";
+import styled from 'styled-components';
+import CardModal from "./CardModal";
+import NewStepModal from "./NewStepModal";
+import EditStepModal from "./EditStepModal";
+import NewCardModal from "./NewCardModal";
+import { ReactHeight } from 'react-height';
+import arrow from "source/arrow.svg";
+import SortableDesignSteps from "./SortableDesignSteps";
+import osdcss from "StyleGuide";
+
+const WhitePane = styled.div`
+    position: absolute;
+    z-index: 830;
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    left: ${props => props.left}px;
+    right: ${props => props.right}px;
+    background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
+    backgroundRepeat: no-repeat;
+`;
+const Arrow = styled.div`
+    width: 17px;
+    height: 48px;
+    position: absolute;
+    top: ${props => props.gap + 105}px;
+    left: ${props => props.left}px;
+    right: ${props => props.right}px;
+    z-index: 831;
+    border: none;
+    background-image: url(${arrow});
+    background-size: cover;
+    background-position: 50%;
+    transform: rotate(${props => props.angle});
+    opacity: 0.9;
+    cursor:pointer;
+    :hover{
+        opacity: 1;
+    }
+    cursor: pointer;
+`;
 const Wrapper = styled.div`
-  width: 94%;
-  border: 1px solid red;
-  height: max-content;
+    position: relative;
 `;
-const Editor = styled.div`
-  ;
+const GridEditorWrapper = styled.div`
+    display: flex;
+    margin-left:32px;
+    margin-bottom: 75px;
+    width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
+    .Editor{
+        padding-right: 250px;
+        overflow: hidden;
+        white-space: nowrap;
+        display: flex;
+        margin-top: 90px;
+    }
 `;
-export class GridEditor2 extends Component {
+
+
+export class GridEditorLocal extends Component {
     constructor(props) {
         super(props);
+        this.temp = React.createRef();
+        this.grid = React.createRef();
         this.state = {
-            // ui
-            
-            // data
-            content: []
+            content: [],
+            h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth,
+            left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
+            boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
+            gap: null,
+        };
+        this.handleScroll = this.handleScroll.bind(this);
+        this.handleResize = this.handleResize.bind(this);
+        this.ScrollLeft = this.ScrollLeft.bind(this);
+        this.ScrollRight = this.ScrollRight.bind(this);
+        this.createNewCard = this.createNewCard.bind(this);
+        this.CloseNewStep = this.CloseNewStep.bind(this);
+        this.CloseEditStep = this.CloseEditStep.bind(this);
+        this.OpenNewStep = this.OpenNewStep.bind(this);
+        this.OpenEditStep = this.OpenEditStep.bind(this);
+        this.RemoveStep = this.RemoveStep.bind(this);
+        this.EditStep = this.EditStep.bind(this);
+        this.NewStep = this.NewStep.bind(this);
+        this.requestReorder = this.requestReorder.bind(this);
+        this.requestCardReorder = this.requestCardReorder.bind(this);
+        this.handleReturn = this.handleReturn.bind(this);
+    };
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize, true);
+        window.removeEventListener("scroll", this.handleScroll, true);
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize, true);
+        window.addEventListener("scroll", this.handleScroll, true);
+    }
+    handleScroll(event) {
+        if (this.grid && event.target.scrollTop !== 0) {
+            this.setState({ gap: event.target.scrollTop });
+        }
+    }
+    handleResize() {
+        this.setState({ w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth });
+        if (this.temp) {
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
+                this.setState({ right: false });
+            } else {
+                this.setState({ right: true });
+            }
+            if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
+        }
+    }
+    createNewCard(row, boardId) {
+        alert(row);
+        this.setState({ row: row, boardId: boardId, newcard: true });
+    }
+    openCard = (card, row, boardId) => {
+        this.setState({ cardDetail: card, title: card.title, row: row, boardId: boardId, card: true });
+    }
+    OpenNewStep() {
+        this.setState({ newstep: true });
+    }
+    CloseNewStep() {
+        this.setState({ newstep: false });
+    }
+    CloseEditStep() {
+        this.setState({ editstep: false });
+    }
+    async OpenEditStep(title, where) {
+        await this.setState({ editstep: true, title: title, where: where });
+    }
+    sorting = (list) => {
+        list.map((item, index) => {
+            item.uid = index;
+            item.where = index;
+            return item;
+        })
+        return list;
+    }
+    async RemoveStep(data) {
+        if (this.props.design.uid === "new") {
+            let copyContent = [...this.state.content];
+            copyContent.splice(data, 1);
+            copyContent = this.sorting(copyContent);
+            this.setState({ content: copyContent });
+        }
+        else
+            await this.props.DeleteDesignBoardRequest(this.props.design.uid, data, this.props.token)
+                .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
+                .then(() => {
+                    this.props.GetDesignBoardRequest(this.props.design.uid);
+                    // console.log("1", this.props.DesignDetailStep) 
+                })
+                .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
+                .catch((err) => { console.error(err) });
+    }
+    async EditStep(data) {
+        if (this.props.design.uid === "new") {
+            let copyContent = [...this.state.content];
+            copyContent.splice(data.where, 1, { uid: data.where, title: data.title, where: data.where });
+            copyContent = this.sorting(copyContent);
+            this.setState({ content: copyContent });
+        }
+        else
+            await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
+                .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
+                .then(() => {
+                    this.props.GetDesignBoardRequest(this.props.design.uid);
+                    // console.log("2", this.props.DesignDetailStep) 
+                })
+                .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
+                .catch((err) => { console.error(err) });
+        this.CloseEditStep();
+    }
+    async NewStep(data) {
+        if (this.props.design.uid === "new") {
+            let copyContent = [...this.state.content];
+            copyContent.push({ uid: data.where, title: data.title, where: data.where });
+            copyContent = this.sorting(copyContent);
+            this.setState({ content: copyContent });
+        }
+        else
+            await this.props.CreateDesignBoardRequest(data, this.props.design.uid, this.props.token)
+                .then(() => { this.props.UpdateDesignTime(this.props.design.uid, this.props.token) })
+                .then(() => {
+                    this.props.GetDesignBoardRequest(this.props.design.uid);
+                })
+                .then(() => { this.props.GetDesignDetailRequest(this.props.design.uid, this.props.token) })
+                .catch((err) => { console.error(err) });
+        this.CloseNewStep();
+    }
+    ScrollLeft() {
+        if (this.temp) {
+            this.temp.current.scrollLeft -= 275;
+
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w) {
+                this.setState({ right: true });
+            }
+
+            if (this.temp.current.scrollLeft === 0) {
+                this.setState({ left: false });
+            }
+        }
+    }
+    ScrollRight() {
+        if (this.temp) {
+            this.temp.current.scrollLeft += 275;
+
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w) {
+                this.setState({ right: false });
+            }
+
+            if (this.temp.current.scrollLeft > 0) {
+                this.setState({ left: true });
+            }
+        }
+    }
+    async requestCardReorder(items) {
+        const jobs = [];
+        let promiseAry = [];
+        items.forEach((element, index) => {
+            if (element.order !== index) jobs.push({ uid: element.uid, neworder: index });
+        });
+        if (jobs.length === 0) return;
+        promiseAry = jobs.map(job =>
+            this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid)
+        );
+        await Promise.all(promiseAry)
+            .then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
+            .then(() => this.props.GetDesignCardRequest(this.props.design.uid, this.state.boardId));
+    }
+    async requestReorder(items) {
+        const jobs = [];
+        let promiseAry = [];
+        items.forEach((element, index) => {
+            if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
+        });
+        if (jobs.length === 0) return;
+        promiseAry = jobs.map((job) => this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder }))
+        await Promise.all(promiseAry).then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
+    }
+    shouldComponentUpdate(nextProps) {
+        if (this.props.DesignDetailStep !== nextProps.DesignDetailStep) {
+            if (nextProps.DesignDetailStep.length) {
+                if (nextProps.DesignDetailStep.length * 275 > this.state.w) {
+                    this.setState({ right: true });
+                }
+            }
+        }
+        if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
+            // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
+            this.setState({ cardDetail: nextProps.DesignDetailStepCard });
+        }
+        return true;
+    }
+    async handleReturn(data) {
+        console.log(data);
+        let copy = [...this.state.content];
+        for (let item of copy) {
+            // if (item)
+            if(item.uid === data.uid){
+                
+            }
         }
     }
     render() {
-        return (<Wrapper>
-            {/* shadow modal */}
-            {/* horizontal scroll buttons is here */}
-            <Editor>
+        const { editor, design, DesignDetailStep, userInfo } = this.props;
+        const { content, gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const steps = DesignDetailStep || content;
+        console.log(steps);
 
-            </Editor>
-            {/* lists */}
-        </Wrapper>)
+        return (
+            <Wrapper>
+                {design.uid ?
+                    <React.Fragment>
+                        {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
+                        </WhitePane> : null}
+
+                        {right ? <WhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
+                        </WhitePane> : null}
+
+                        {editor && newcard &&
+                            <NewCardModal
+                                isTeam={editor} boardId={boardId} designId={this.props.design.uid}
+                                order={steps.length} open={newcard} return={this.handleReturn}
+                                close={() => this.setState({ newcard: false })} />}
+
+                        {card &&
+                            <CardModal
+                                open={card} close={() => this.setState({ card: false })}
+                                edit={userInfo && (userInfo.uid === cardDetail.user_id)}
+                                card={cardDetail} isTeam={editor} title={title} boardId={boardId} designId={this.props.design.uid} />}
+
+                        {editor && newstep && <NewStepModal {...this.props} steps={steps} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
+                        {editor && editstep && <EditStepModal open={editstep} title={title} where={where} steps={steps} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
+
+                        <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
+                            <GridEditorWrapper ref={this.grid}>
+                                <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
+                                    {/* ------------단계 ------------*/}
+                                    {steps && steps.length > 0 &&
+                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={steps} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
+                                    {editor && <div style={{ display: "flex" }}>
+                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
+                                    </div>}
+                                </div>
+                            </GridEditorWrapper>
+                        </ReactHeight>
+                    </React.Fragment>
+                    : <div>o</div>
+                }
+            </Wrapper>)
     }
 }
+
+
