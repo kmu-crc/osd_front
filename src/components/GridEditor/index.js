@@ -1,5 +1,4 @@
 export { default } from "./GridEditor";
-export * from "./GridEditorLocal";
 export * from "./GridTools";
 export * from "./NewCardModal";
 export * from "./NewStepModal";
@@ -8,3 +7,8 @@ export * from "./CardModal";
 export * from "./CardComment";
 export * from "./DesignComment";
 export * from "./SortableDesignSteps";
+
+//for local
+export * from "./LocalGridEditor";
+export * from "./LocalNewCardModal";
+export * from "./LocalCardModal";

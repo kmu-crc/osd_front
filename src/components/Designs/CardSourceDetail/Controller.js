@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-import TextController from "./TextController.js";
+import { TextController } from "components/Commons/InputItem/TextControllerClassic";
 import FileController from "./FileController";
 import EmbController from "./EmbController";
 
@@ -126,33 +126,33 @@ export class Controller extends Component {
     return (
       <ControllerWrap>
         <div className="contentWrap">
-            {item.type === "FILE" ? (
-              <FileController
-                item={item}
-                setController={this.setController}
-                initClick={this.state.click}
-                name="source"
-                getValue={this.onChangeValue}
-                deleteItem={this.deleteItem}
-              />
-            ) : item.type === "TEXT" ? (
-              <TextController
-                item={item}
-                name={name}
-                getValue={this.onChangeValue}
-                initClick={this.state.click}
-                deleteItem={this.deleteItem}
-              />
-            ) : item.type === "EMBED" ? (
-              <EmbController />
-            ) : null}
-          </div>
-          <EditBtn type="button" className="editBtn">
-            <i className="pencil alternate icon" />
-            <SubMenu className="subMenu">
-              <li onClick={this.deleteItem}>삭제</li>
-            </SubMenu>
-          </EditBtn>
+          {item.type === "FILE" ? (
+            <FileController
+              item={item}
+              setController={this.setController}
+              initClick={this.state.click}
+              name="source"
+              getValue={this.onChangeValue}
+              deleteItem={this.deleteItem}
+            />
+          ) : item.type === "TEXT" ? (
+            <TextController
+              item={item}
+              name={name}
+              getValue={this.onChangeValue}
+              initClick={this.state.click}
+              deleteItem={this.deleteItem}
+            />
+          ) : item.type === "EMBED" ? (
+            <EmbController />
+          ) : null}
+        </div>
+        <EditBtn type="button" className="editBtn">
+          <i className="pencil alternate icon" />
+          <SubMenu className="subMenu">
+            <li onClick={this.deleteItem}>삭제</li>
+          </SubMenu>
+        </EditBtn>
       </ControllerWrap>
     );
   }
