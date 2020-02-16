@@ -5,6 +5,7 @@ import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
 import { Icon } from "semantic-ui-react";
 import Item from "components/Items/Item/Item"
+import noimg from "source/noimg.png";
 
 // CSS STYLING
 const Expert = styled.div`
@@ -131,6 +132,35 @@ const Introduction = styled.div`
         }
       }
 `;
+const ReviewBox = styled.div`
+    width:100%;
+    height:150px;
+    display:flex;
+    flex-wrap:wrap;
+    overflow:hidden;
+
+    .review{
+      min-width:650px;
+      height:150px;
+      margin-right:50px;
+      margin-bottom:50px;
+      display:flex;
+      .content{
+        width:100%;
+        height:100%;
+        padding:30px;
+        .row{
+          width:max-content;
+          margin-bottom:15px;
+        }
+      }
+    }
+    &:hover{
+      overflow:auto;
+      overflow-y:overlay;
+
+    }
+`
 const RequestBoard = styled.div`
   margin-right: ${prop => prop.mRight}px;
   width: ${prop => prop.large ? 1094 : 566}px;
@@ -192,6 +222,7 @@ const AdditionalInfo = styled.div`
       padding: 62px 59px 61px 60px;
       font-family: Noto Sans KR;
       position:relative;
+
       .title {
         font-size: 19px;
         font-weight: 500;
@@ -405,6 +436,36 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
+const Thumbnail = styled.div`
+  cursor:pointer;
+  width:150px;
+  height:150px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-image: ${props => `url(${props.imageURL==null?noimg:props.imageURL})`};
+  background-size: cover;
+  background-position: center center;
+`
+const review = {
+  average_score:4,
+  review:[{
+    thumbnail:noimg,
+    nick_name:"닉네임",
+    explain:"리뷰입니다",
+    score:5,
+  },{
+    thumbnail:noimg,
+    nick_name:"닉네임",
+    explain:"리뷰입니다",
+    score:5,
+  },{
+    thumbnail:noimg,
+    nick_name:"닉네임",
+    explain:"리뷰입니다",
+    score:5,
+  }],
+}
 const empty = {
   // 기본
   nick_name: "Loading", categoryName: "카테고리",
@@ -432,14 +493,63 @@ const empty = {
 class MakerDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { tab: true };
+    this.state = { tab: true,
+      nick_name:"",
+      thumbnail:null,thumbnail_name:null,
+      firstCategory:0,secondCategory:0,location:"",
+      explain:"",tag:[],equipment:[],technique:[],
+      career:[{number:0,task:"",explain:"",during:""}], };
     this.onClickRequest = this.onClickRequest.bind(this);
   }
-  componentWillMount() {
-    this.props.GetMakerDetailRequest(this.props.id);
-    // if (this.props.token) {
-    // this.props.GetLikeMakerRequest(this.props.id, this.props.token);
-    // }
+  componentWillUpdate(nextProps){
+    if(
+      this.props.MakerViewDetail.image!==nextProps.MakerViewDetail.image||
+      this.props.MakerViewDetail.nick_name!==nextProps.MakerViewDetail.nick_name||
+      this.props.MakerViewDetail.user_id!==nextProps.MakerViewDetail.user_id||
+      this.props.MakerViewDetail.description!==nextProps.MakerViewDetail.description||
+      this.props.MakerViewDetail.location!==nextProps.MakerViewDetail.location||
+      this.props.MakerViewDetail.category_level1!==nextProps.MakerViewDetail.category_level1||
+      this.props.MakerViewDetail.category_level2!==nextProps.MakerViewDetail.category_level2||
+      this.props.MakerViewDetail.tag !== nextProps.MakerViewDetail.tag||
+      this.props.MakerViewDetail.experience!==nextProps.MakerViewDetail.experience||
+      this.props.MakerViewDetail.score!==nextProps.MakerViewDetail.score)
+    {
+
+      const careerRow = nextProps.MakerViewDetail.experience.split("/");
+      careerRow.pop();
+      const careerList = careerRow.map((item,index)=>{
+        const piece = item.split(",");
+        console.log("piece:::",piece[0],piece[1],piece[2],piece[3]);
+        return(
+          {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
+        );
+      });
+      const tag = nextProps.MakerViewDetail.tag.split(",");
+      tag.pop();
+
+      const equipment = nextProps.MakerViewDetail.maker_equipment.split(",");
+      tag.pop();
+
+      const technique = nextProps.MakerViewDetail.maker_technique.split(",");
+      tag.pop();
+
+      this.setState({
+        thumbnail:nextProps.MakerViewDetail.image,
+        nick_name:nextProps.MakerViewDetail.nick_name,
+        user_id:nextProps.MakerViewDetail.user_id,
+        explain:nextProps.MakerViewDetail.description,
+        location:nextProps.MakerViewDetail.location,
+        firstCategory:nextProps.MakerViewDetail.category_level1,
+        secondCategory:nextProps.MakerViewDetail.category_level2,
+        tag:tag,
+        career:careerList,
+        equipment:equipment,
+        technique:technique,
+        score:nextProps.MakerViewDetail.score,
+      })
+    };
+
+    return true;
   }
   onClickRequest(event){
     window.location.href = "/requestToMaker/"+ this.props.DesignerDetail.uid;
@@ -449,17 +559,23 @@ class MakerDetail extends Component {
     const expert = empty;
     console.log("detail:", expert);
     const { tab } = this.state;
+
+      // 카테고리
+    const categoryName =this.props.category1&&this.props.category2&&
+      this.state.secondCategory === 0?this.props.category1[this.state.firstCategory]&& this.props.category1[this.state.firstCategory].text
+      :this.props.category2[this.state.firstCategory]&&
+      this.props.category2[this.state.firstCategory][this.state.secondCategory]&&this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
     
     return (<Wrapper>
       <div style={{ display: "flex", flexDirection: "row" }}>
         {/* Designer */}
         <Expert mRight={60}>
           {/* Profile */}
-          <Profile face={(expert && expert.imgURL) || profile} />
+          <Profile face={this.state.thumbnail} />
           {/* Text */}
           <TextWrapper>
-            <div className="nick"><TextFormat txt={expert.nick_name} chars={32} /></div>
-            <div className="category"><TextFormat txt={expert.categoryName || "전체"} chars={32} /></div>
+            <div className="nick"><TextFormat txt={this.state.nick_name} chars={32} /></div>
+            <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
           </TextWrapper>
           {/* Counter */}
           <Counter>
@@ -474,18 +590,18 @@ class MakerDetail extends Component {
         {/* Introduction */}
         <Introduction mRight={60}>
           <div className="title">소개</div>
-          <div className="text">{expert.description || "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 인간의 생명을 이상, 불어 바로 것이다. 대고, 방황하였으며, 가치를 봄날의 인간이 가진 설산에서 운다. 있는 착목한는 그들의 노래하며 원질이 대한 아름다우냐? 같은 찬미를 붙잡아 청춘 힘차게 두기 갑 속잎나고, 소담스러운 것이다. 몸이 원질이 가슴이 피가 반짝이는 소리다.이것은 이상의 예가 피다. 그들을 할지니, 품었기 가치를 보배를 남는 지혜는 약동하다. 목숨이 일월과 동력은 가는 청춘의 사라지지 더운지라 가는 있음으로써 것이다. 가치를 웅대한 대한 새 피가 품에 소담스러운 그들에게 오직 듣는다. 찾아다녀도, 들어 그들은 피어나기 것이다. 착목한는 되려니와, 그와 타오르고 커다란 가는 위하여서. 물방아 얼마나 것이다.보라, 바로 얼마나 남는 위하여서, 봄바람이다. 얼마나 그림자는 얼음에 보이는 새가 보내는 것이다. 가슴에 인간의 두기 끝까지 무엇이 것은 그리하였는가? 보이는 천지는 주며, 듣는다. 이상, 몸이 곧 두기 커다란 이것을 그들에게 위하여서, 가슴에 보라. 무한한 돋고, 많이 가슴에 있는 사막이다. 힘차게 무엇을 능히 되는 가치를 이 거선의 남는 부패뿐이다. 소금이라 얼음 긴지라 품었기 과실이 굳세게 끓는 봄바람이다. 인간의 갑 별과 사라지지 품에 같지 사막이다. 소금이라 듣기만 설레는 심장은 있으며, 것은 위하여서, 그리하였는가? 그들을 그러므로 물방아 우리의 있을 얼음과 청춘의 장식하는 보라. 이것은 끝까지 기관과 가진 인류의 그들은 힘있다. 붙잡아 뛰노는 실로 피고 피에 그것을 황금시대다. 그들의 위하여, 그것을 힘있다. 봄바람을 구하기 가슴이 풍부하게 주며, 무엇을 인도하겠다는 없으면, 봄바람이다. 청춘 방황하여도, 산야에 영원히 그들은 간에 하는 위하여서, 아니다. 사는가 얼마나 그들은 부패를 못할 하여도 무엇을 것이다. 찾아다녀도, 피는 위하여 약동하다."}</div>
+          <div className="text">{this.state.explain || "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 인간의 생명을 이상, 불어 바로 것이다. 대고, 방황하였으며, 가치를 봄날의 인간이 가진 설산에서 운다. 있는 착목한는 그들의 노래하며 원질이 대한 아름다우냐? 같은 찬미를 붙잡아 청춘 힘차게 두기 갑 속잎나고, 소담스러운 것이다. 몸이 원질이 가슴이 피가 반짝이는 소리다.이것은 이상의 예가 피다. 그들을 할지니, 품었기 가치를 보배를 남는 지혜는 약동하다. 목숨이 일월과 동력은 가는 청춘의 사라지지 더운지라 가는 있음으로써 것이다. 가치를 웅대한 대한 새 피가 품에 소담스러운 그들에게 오직 듣는다. 찾아다녀도, 들어 그들은 피어나기 것이다. 착목한는 되려니와, 그와 타오르고 커다란 가는 위하여서. 물방아 얼마나 것이다.보라, 바로 얼마나 남는 위하여서, 봄바람이다. 얼마나 그림자는 얼음에 보이는 새가 보내는 것이다. 가슴에 인간의 두기 끝까지 무엇이 것은 그리하였는가? 보이는 천지는 주며, 듣는다. 이상, 몸이 곧 두기 커다란 이것을 그들에게 위하여서, 가슴에 보라. 무한한 돋고, 많이 가슴에 있는 사막이다. 힘차게 무엇을 능히 되는 가치를 이 거선의 남는 부패뿐이다. 소금이라 얼음 긴지라 품었기 과실이 굳세게 끓는 봄바람이다. 인간의 갑 별과 사라지지 품에 같지 사막이다. 소금이라 듣기만 설레는 심장은 있으며, 것은 위하여서, 그리하였는가? 그들을 그러므로 물방아 우리의 있을 얼음과 청춘의 장식하는 보라. 이것은 끝까지 기관과 가진 인류의 그들은 힘있다. 붙잡아 뛰노는 실로 피고 피에 그것을 황금시대다. 그들의 위하여, 그것을 힘있다. 봄바람을 구하기 가슴이 풍부하게 주며, 무엇을 인도하겠다는 없으면, 봄바람이다. 청춘 방황하여도, 산야에 영원히 그들은 간에 하는 위하여서, 아니다. 사는가 얼마나 그들은 부패를 못할 하여도 무엇을 것이다. 찾아다녀도, 피는 위하여 약동하다."}</div>
           <div className="gradient_box"><div>▾</div></div>
         </Introduction>
         {/** 상세소개*/}
         <AdditionalInfo>
           <div className="wrapText">
           <div className="title">거주지역</div>
-          <div className="text">{expert.location}</div>
+          <div className="text">{this.state.location}</div>
           <div className="title">보유기술</div>
           <div className="text flex">
             {
-              expert.maker_technique.map((item,index)=>{
+              this.state.technique.map((item,index)=>{
                 return(
                   <TagPiece key={index}>
                     {item}
@@ -497,7 +613,7 @@ class MakerDetail extends Component {
           <div className="title">보유장비</div>
           <div className="text flex">
           {
-              expert.maker_equipment.map((item,index)=>{
+              this.state.equipment.map((item,index)=>{
                 return(
                   <TagPiece key={index}>
                     {item}
@@ -511,6 +627,30 @@ class MakerDetail extends Component {
 
         </AdditionalInfo>
       </div>
+
+
+      <AdditionalInfo width={1523} height={280} mTop={60}>
+        <div className="title margin_bottom">리뷰({review.review.length})</div>
+        <ReviewBox>
+
+            {
+              review.review.map((item,index)=>{
+                return(
+                  <div className="review" key={index}>
+                      <Thumbnail imageURL={item.thumbnail}/>
+                      <div className="content">
+                        <div className="row">★★★★★</div>
+                        <div className="row">{item.nick_name}</div>
+                        <div className="row">{item.explain}</div>
+                      </div>
+                  </div>
+                );
+              })
+            }
+        </ReviewBox>
+      </AdditionalInfo>
+
+
       <AdditionalInfo width={1523} height={280} mTop={60}>
             <div className="title margin_bottom">제작 경험</div>
             <ExpTable>
@@ -520,7 +660,7 @@ class MakerDetail extends Component {
                 <div className="th">업무내용</div>
               </div>
               {
-                expert.experience.map((item,index)=>{
+                this.state.career.map((item,index)=>{
                   return(
                     <div className="row" key={index}>
                       <div className="td">{item.task}</div>
@@ -548,6 +688,7 @@ class MakerDetail extends Component {
            
         </div>
         </AdditionalInfo>
+
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         
         <MakerBoard>

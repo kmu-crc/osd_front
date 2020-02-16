@@ -7,6 +7,7 @@ const initialState = {
   },
   status: {
     DesignerDetail: [],
+    DesignerViewDetail:[],
     Count: {
       total_like: 0,
       total_design: 0,
@@ -33,6 +34,12 @@ export function DesignerDetail(state, action) {
           DesignerDetail: { $set: action.DesignerDetail }
         }
       });
+    case types.GET_DESIGNER_VIEW_DETAIL:
+        return update(state, {
+          status: {
+            DesignerViewDetail: { $set: action.DesignerViewDetail }
+          }
+        });
     case types.GET_DESIGNER_COUNT:
       return update(state, {
         status: {
