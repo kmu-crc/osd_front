@@ -401,7 +401,7 @@ export class LocalNewCardModal extends Component {
 
                         <div className="content" >
                             <div className="title">내용</div>
-                            <React.Fragment>
+                            {/* <React.Fragment>
                                 {content.length > 0 && content.map((item, index) =>
                                     <Controller
                                         maxOrder={content.length - 1}
@@ -419,7 +419,7 @@ export class LocalNewCardModal extends Component {
                                     name="addBasic"
                                     getValue={this.onAddValue} />
 
-                            </React.Fragment>
+                            </React.Fragment> */}
 
                         </div>
 
