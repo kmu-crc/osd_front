@@ -58,18 +58,12 @@ class CreateProduct extends Component {
   }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Wrapper>
             <CreateProductFormContainer setLoader={this.setLoader} />
         </Wrapper>
-        {/* <ImgWrapper>
-          <Title><h1>상품 등록</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
-          <CreateProductFormContainer setLoader={this.setLoader} />
-        </Wrapper>
-        {this.state.loading && <Loading />} */}
-      </div>
+        {this.state.loading && <Loading />}
+      </React.Fragment>
     );
   }
 }

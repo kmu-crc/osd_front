@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import { Dropdown } from "semantic-ui-react";
-import { InputTag } from "components/Commons/InputItem/InputTag";
-import { ThumbnailList } from "components/Commons/InputItem/ThumbnailList";
-import { UploadType } from "components/Commons/InputItem/UploadType";
-
-import GridEditor from "components/GridEditor";
+import Cross from "components/Commons/Cross";
+import CheckBox2 from "components/Commons/CheckBox";
+import noface from "source/thumbnail.png";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
-import { InputContent } from "components/Commons/InputItem";
-
-// import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+import { AddController, InputContent, Controller, InputTag, ThumbnailList, UploadType } from "components/Commons/InputItem";
+import SearchDesignMemverContainer from "containers/Commons/SearchMemberContainer";
+// import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
 
 const FirstCategory = [
   { text: "패션", value: 0 },
@@ -255,7 +253,6 @@ class CreateProductForm extends Component {
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onHandleReturnedTags = this.onHandleReturnedTags.bind(this);
   };
-  success = () => 1070;
   onSubmit(event) {
     event.preventDefault();
     let data = {
@@ -267,15 +264,19 @@ class CreateProductForm extends Component {
       //additional
       additional: this.state.additional, content: this.state.content
     };
-    console.log(data);
+    // console.log("send-data:", data);
+    // return;
     this.props.CreateDesignRequest(data, this.props.token)
       .then(result => {
         if (result.success) {
           window.location.href = `/productDetail/${result.id}`
+        }else{
+          alert("boom!");
         }
       })
-    // .catch(error => {/* console.log("error:", error);*/ });
-
+      .catch(error => {
+        alert("오류내용:" + error.message);
+      });
   };
   onClickFirstCategory(_, { value }) {
     this.setState({ firstCategory: { value }.value, category1: { value }.value });
@@ -318,8 +319,10 @@ class CreateProductForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   onHandleReturnedTags(param) {
-    this.setState({ tags: param });
+    this.setState({ tag: param });
   };
+
+
   render() {
     // return 
 
@@ -375,19 +378,10 @@ class CreateProductForm extends Component {
 
       </div>
 
-      {/* 로컬 그리드 에디터 */}
-      {/* <div className="contentsBox">
-        <LocalGridEditor
-          userInfo={this.props.userInfo}
-          content={this.state.content}
-          returnContent={content => this.setState({ content: content })}
-          editor={true} />
-      </div> */}
-
       {/* 아이템 상세정보 입력 폼 */}
       <div className="contentsBox">
         {itemType > -1 ?
-          <ItemTypeForm returnState={obj => this.setState({ additional: obj.additional, content: obj.content })} itemType={this.state.itemType} />
+          <ItemTypeForm userInfo={this.props.userInfo} returnState={obj => this.setState({ additional: obj.additional, content: obj.content })} itemType={this.state.itemType} />
           : <InfoContentChooseItemType>아이템 유형을 선택하여 세부적인 <br />내용을 입력해주신 후 아이템을 등록해주세요.</InfoContentChooseItemType>}
       </div>
 
@@ -407,61 +401,40 @@ class CreateProductForm extends Component {
 export default CreateProductForm;
 
 
-
-
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
     this.state = { additional: null, content: [] };
-    this.onHandleReturn = this.onHandleReturn.bind(this);
+    this.onHandleContent = this.onHandleContent.bind(this);
+    this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.returnState = this.returnState.bind(this);
-    this.onAddValue = this.onAddValue.bind(this);
-    this.onChangValue = this.onChangValue.bind(this);
+    this.onHandleGrid = this.onHandleGrid.bind(this);
+    // this.onAddValue = this.onAddValue.bind(this); this.onChangValue = this.onChangValue.bind(this);
   }
   componentDidUpdate(prevProps) {
     if (prevProps.itemType !== this.props.itemType)
       this.setState({ additional: null, content: [] });
   }
-  returnState() {
+  async returnState() {
     this.props.returnState && this.props.returnState(this.state);
   }
-  async onHandleReturn(value) {
+  async onHandleContent(value) { //write content state
+    await this.setState({ content: value.content });
+    this.returnState();
+  }
+  async onHandleGrid(value) {
+    await this.setState({ content: value });
+    this.returnState();
+  }
+  async onHandleAdditional(value) { //write additional state
+    if (this.state.additional && this.state.additional.uploadType) {
+      if (value.uploadType !== this.state.additional.uploadType) {
+        await this.setState({ content: [] });
+      }
+    }
     await this.setState({ additional: value });
     this.returnState();
   }
-  async onAddValue(data) {
-    let copyContent = [...this.state.content];
-    let copyData = { ...data };
-    copyData.initClick = true;
-    for (let item of copyContent) {
-      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
-        await copyContent.splice(item.order, 1, null);
-      }
-    }
-    await copyContent.splice(copyData.order, 0, copyData);
-    let newContent = copyContent.filter((item) => item !== null);
-    newContent = await Promise.all(
-      newContent.map(async (item, index) => {
-        item.order = await index;
-        delete item.target;
-        if (item.type === "FILE" || item.order !== copyData.order) delete item.initClick;
-        return item;
-      })
-    );
-    await this.setState({ content: newContent });
-    this.returnState();
-  };
-  async onChangValue(data) {
-    let copyContent = [...this.state.content];
-    const copyData = { ...data };
-    for (let item of copyContent) {
-      if (item.order === copyData.order) {
-        item.content = data.data.content
-      }
-    }
-    await this.setState({ content: copyContent });
-    this.returnState();
-  };
 
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
@@ -471,43 +444,44 @@ class ItemTypeForm extends Component {
       <MainBox>
         <FormBox boxShadow={true} width={1570}>
           <div className="contentWrap">
-            {itemType === 0 ? <ItemDesign return={this.onHandleReturn} /> : null}
-            {itemType === 1 ? <ItemProject return={this.onHandleReturn} /> : null}
-            {itemType === 2 ? <ItemConsulting return={this.onHandleReturn} /> : null}
-            {itemType === 3 ? <ItemExperience return={this.onHandleReturn} /> : null}
-            {itemType === 4 ? <ItemInfoData return={this.onHandleReturn} /> : null}
-            {itemType === 5 ? <ItemIdea return={this.onHandleReturn} /> : null}
-            {itemType === 6 ? <ItemPatent return={this.onHandleReturn} /> : null}
-            {itemType === 7 ? <ItemProduct return={this.onHandleReturn} /> : null}
+            {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
+            {itemType === 1 ? <ItemProject return={this.onHandleAdditional} /> : null}
+            {itemType === 2 ? <ItemConsulting return={this.onHandleAdditional} /> : null}
+            {itemType === 3 ? <ItemExperience return={this.onHandleAdditional} /> : null}
+            {itemType === 4 ? <ItemInfoData return={this.onHandleAdditional} /> : null}
+            {itemType === 5 ? <ItemIdea return={this.onHandleAdditional} /> : null}
+            {itemType === 6 ? <ItemPatent return={this.onHandleAdditional} /> : null}
+            {itemType === 7 ? <ItemProduct return={this.onHandleAdditional} /> : null}
+
           </div>
         </FormBox>
 
         <FormBox boxShadow={true} width={1570}>
           {additional && additional.uploadType === "블로그형" ?
             <div className="contentWrap">
-              <InputContent content={content}/>
-              {/* <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
-              {/* <React.Fragment>
-                {content.length > 0 && content.map((item, index) =>
-                  <Controller maxOrder={content.length - 1} key={index} type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
-                <AddController type="INIT" order={content.length > 0 ? content.length : 0} name="addBasic" getValue={this.onAddValue} />
-              </React.Fragment> */}
+              <InputContent
+                content={content}
+                returnState={this.onHandleContent} />
             </div> : null}
 
           {itemType === 1 || additional && additional.uploadType === "프로젝트형" ?
             <div className="contentWrap">
-              {/* <GridEditor
-                editor={true} isMyDesign={true}
-                return={steps => this.setState({ content: steps })}
-                design={{ uid: "new" }} /> */}
-            </div>
-            : null}
+              {/* 로컬 그리드 에디터 - */}
+              <div className="contentsBox">
+                <LocalGridEditor
+                  userInfo={this.props.userInfo}
+                  content={content}
+                  returnContent={this.onHandleGrid}
+                  editor={true} />
+              </div>
+            </div> : null}
 
         </FormBox>
 
       </MainBox >);
   }
 };
+
 
 
 class Field extends Component {
@@ -552,10 +526,131 @@ class ItemDesign extends Component {
       </React.Fragment>)
   }
 };
+const InviteMemberBox = styled.div`
+  display:flex;
+  justify-content:flex-start;
+  flex-direction:row;
+  margin-top:120px;
+  .searchBox{
+  width:645px;
+  height:56px;
+  font-size:20px;
+  font-weight:500;
+  line-height:29px;
+  color:#707070;
+  border-radius:5px;
+  background-color:#EFEFEF;
+  }
+  .tipTitle{
+  width:27px;
+  height:25px;
+  margin-left:20px;
+  font-size:17px;
+  font-weight:500;
+  line-height:25px;
+  text-align:left;
+  color:#FF0000;
+  }
+  .tipDescription{  
+  margin-left:17px;
+  font-size:16px;
+  font-weight:100;
+  font-family:Noto Sans KR;
+  text-align:left;
+  line-height:25px;
+  color:#707070;
+  }      
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+  .searchBox{
+  }
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
+  .searchBox{
+  width:92%;
+  }
+  }
+`;
+const InviteMemberListBox = styled.div`
+  margin-top:20px;
+  margin-left:167px;
+  width:645px;
+  .memberList{
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+  }
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  margin-left:0px;
+  width:645px;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+  margin-left:0px;
+  width:92%;
+  }
+`;
+const NoInviteMemberBox = styled.div`
+  margin-left: 167px;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  color: #707070;
+  .textLabel {
+    margin-left: 35px;
+    vertical-align: top;
+  }
+`;
+const PeerBox = styled.div`
+  display: flex;
+  margin-right: 25px;
+  margin-bottom: 10px;
+  .nameLabel{
+    width: 112px;
+    height: 29px;
+    margin-top: 1px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    color: #707070;
+    text-align: left;
+    line-height: 29px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .closeButton{
+    margin-top: 7px;
+    margin-left: 14px;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    margin-right: 15px;
+  }
+`;
+const PeerIcon = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: ${props => `url(${props.imageURL})`};
+  background-size: cover;
+  background-position: center center;
+`;
+function Peer(props) {
+  return (
+    <PeerBox>
+      <PeerIcon imageURL={props.s_img} />
+      <div className="nameLabel">{props.nick_name}</div>
+      <div className="closeButton"><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
+    </PeerBox>
+  );
+};
+
 class ItemProject extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", members: [], uploadType: "", price: 0 }
+    this.state = { description: "", members: [], uploadType: "", price: 0, alone: false }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -579,7 +674,27 @@ class ItemProject extends Component {
         <Field title="프로젝트 설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="팀원 초대">
-          <InputText onChange={this.onHandleChange} name="members" width={370} /></Field>
+          {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={mem => this.setState({ members: [] })} />}
+          {/* <SearchDesignMemverContainer className="searchRect" addMember={() => this.setState({ members: [] })} /> */}
+          <div>
+            {/* INVITED MEMBER */}
+            <InviteMemberListBox>
+              <div className="memberList">{
+                (this.state.members.length > 0) ?
+                  this.state.members.map((item, index) =>
+                    <div onClick={() => this.removeMember(item.user_id)} key={index}>
+                      <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+                    </div>) : null}</div>
+            </InviteMemberListBox>
+
+            {/* LEAVE ME ALONE */}
+            <NoInviteMemberBox>
+              <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
+              <span className="textLabel">멤버를 초대하지 않습니다.</span>
+            </NoInviteMemberBox>
+          </div>
+          {/* <InputText onChange={this.onHandleChange} name="members" width={370} /> */}
+        </Field>
         <Field title="공개">
           <UploadType return={this.onHandleReturn} name="type" Options={types} /></Field>
         <Field title="가격">
@@ -844,3 +959,4 @@ class ItemProduct extends Component {
       </React.Fragment>)
   }
 };
+

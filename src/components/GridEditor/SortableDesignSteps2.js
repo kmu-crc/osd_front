@@ -59,16 +59,16 @@ const VerticalDragHandle = SortableHandle(({ is_white }) =>
 const margin = {
     marginTop: "25px", marginRight: "74px", marginBottom: "37px"
 };
-const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, boardId, designId }) => (
+const SortableCard = SortableElement(({ editor, card, openCard, boardId, designId }) => (
     <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} designId={designId} >
-        {editor && !disableReorder ? <VerticalDragHandle is_white={card.first_img} /> : null}
+        {editor ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>));
 
-const SortableStep = SortableElement(({ disableReorder, reload, index, editStep, step, boardId, editor, designId, openCard, createCard, reorder }) => (
+const SortableStep = SortableElement(({ reload, index, editStep, step, boardId, editor, designId, openCard, createCard, reorder }) => (
     <div style={{ position: "relative" }}>
         <DragHandler>
             <div className="wrapper">
-                {editor && !disableReorder ? <HorizonDragHandle /> : null}
+                {editor ? <HorizonDragHandle /> : null}
                 <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div>
             </div>
         </DragHandler>
@@ -93,8 +93,7 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
                         items={step.cards}
                         designId={designId}
                         openCard={openCard}
-                        reorder={reorder}
-                        disableReorder={disableReorder} />
+                        reorder={reorder} />
                 </div>
             </Fragment>}
         {editor &&
@@ -158,49 +157,20 @@ class SortableDesignCards extends Component {
                     key={`step-${index}`}
                     index={index}
                     card={item}
-                    disableReorder={this.props.disableReorder}
                 />))}
         </Container>)
     }
 };
-class SortableDesignSteps extends Component {
-    state = { items: this.props.items };
-    onSortEnd = async ({ oldIndex, newIndex }) => {
-        if (oldIndex === newIndex) return;
-        this.setState(({ items }) => ({ items: arrayMove(items, oldIndex, newIndex), }));
-        this.props.reorder(this.state.items);
+class SortableDesignSteps2 extends Component {
+    constructor(props){
+        super(props);
+        this.state = { steps: this.props.steps };
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.reload !== this.props.reload) {
-            return true;
-        }
-        if (nextProps.items !== this.props.items) {
-            this.setState({ items: nextProps.items });
-            console.log("updated 2");
-            return true;
-        }
-        if (nextState.items !== this.state.items) {
-            console.log("updated 3");
-            return true;
-        }
-        return false;
-    }
-    shouldCancelStart = (e) => {
-        var targetEle = e;
-        if (!targetEle.id) {
-            targetEle = e.target;
-        }
-        if (targetEle.id === 'stepcard') {
-            const title = targetEle.getAttribute('title');
-            const uid = targetEle.getAttribute('uid');
-            // console.log(title, uid);
-            this.props.editStep(title, uid);
-        }
-    }
+
     render() {
-        console.log("SortableDesignSteps:", this.state.items);
-        const { items } = this.state;
-        const { editor, designId, cardReorder, createCard, openCard } = this.props;
+        console.log("SortableDesignSteps2:", this.state.steps);
+        const { steps } = this.state;
+
         return (<Container
             axis="x"
             pressThreshold={5}
@@ -209,22 +179,10 @@ class SortableDesignSteps extends Component {
             // shouldCancelStart = { this.shouldCancelStart }
             useDragHandle>
             <div style={{ display: "flex" }}>
-                {items.map((item, index) => (
+                {steps.map((step, index) => (
                     <SortableStep
-                        reload={this.props.reload}
-                        editStep={this.props.editStep}
-                        boardId={item.uid}
-                        createCard={createCard}
-                        openCard={openCard}
-                        reorder={cardReorder}
-                        designId={designId}
-                        disabled={!editor}
-                        editor={editor}
                         key={`step-${index}`}
-                        index={index}
-                        step={item}
-                        steporder={index}
-                        disableReorder={this.props.disableReorder}
+                        step={step}
                     />
                 ))}
             </div>
@@ -233,4 +191,4 @@ class SortableDesignSteps extends Component {
 };
 
 
-export default SortableDesignSteps;
+export default SortableDesignSteps2;

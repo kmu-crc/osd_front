@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { Modal } from 'semantic-ui-react'
 import { ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
-import CardSourceDetail from 'components/Designs/CardSourceDetail';
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
+import { InputContent, AddController, Controller } from "components/Commons/InputItem";
+import CardSourceDetail from 'components/Designs/CardSourceDetail';
 
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
@@ -291,13 +292,108 @@ const BlankSpace = styled.div`
     background-color: "white";
     borderRadius: 15px
 `;
+const ButtonContainer = styled.div`
+  margin-bottom: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  .content-edit-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-edit-button {
+    width: max-content;
+    padding: 7px;
+    padding-bottom: 1px;
+    border: none;
+    border-bottom: 1px solid red;
+    color: #FF0000;
+    font-size: 20px;
+    font-weight: 500;
+    background: none;
+    cursor: pointer;
+  }
+  .content-add-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-add-button {
+    width: max-content;
+    border: none;
+    padding: 7px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid red;
+    color: #FF0000;
+    font-size: 20px;
+    font-weight: 500;
+    background: none;
+    cursor: pointer;
+  }
+`;
+const EditorBottonWrapper = styled.div`
+    width: max-content;
+    margin: auto;
+    margin-top: 10px;
+    padding: 15px;
+    background: #FFFFFF;
+    border-radius: 25px;
+    z-index: 907;
+    .submit {
+      margin-left: 5px;
+      background: none;
+      border: none;
+      width: max-content;
+      padding: 7px;
+      padding-bottom: 1px;
+      color: #FF0000;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      :hover{
+        background-color: #DDD;
+        border-radius: 25px;
+      }
+    }
+    .cancel {
+      margin-left: 10px;
+      background: none;
+      border: none;
+      width: max-content;
+      padding: 7px;
+      padding-bottom: 1px;
+      color: #707070;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      :hover{
+        background-color: #DDD;
+        border-radius: 25px;
+      }
+    }
+`;
 
 export class LocalNewCardModal extends Component {
-    state = {
-        loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
-        card_content: { deleteContent: [], newContent: [], updateContent: [] }
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false, scroll: false, edit: false, hook: false,
+            title: "", content: "",
+            card_content: {
+                deleteContent: [], newContent: [], updateContent: []
+            }
+        };
+        this.onSave = this.onSave.bind(this);
+        this.onCancel = this.onCancel.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.onClose = this.onClose.bind(this);
+        this.onChangeValueThumbnail = this.onChangeValueThumbnail.bind(this);
+        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeContent = this.onChangeContent.bind(this);
+        this.saveTemporary = this.saveTemporary.bind(this);
+        this.submit = this.submit.bind(this);
     };
-    handleCancel = (obj) => {
+    handleCancel(obj){
         if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
             if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
@@ -305,34 +401,33 @@ export class LocalNewCardModal extends Component {
         }
         this.onClose();
     };
-    onClose = () => {
+    onClose(){
         this.props.close();
     };
-    onChangeValueThumbnail = async data => {
+    async onChangeValueThumbnail(data){
         let obj = {};
         if (data.target) {
             obj[data.target.name] = data;
             await this.setState(obj);
         }
     };
-    onChangeTitle = event => {
+    onChangeTitle(event){
         if (event.target) {
             this.setState({ title: event.target.value });
         }
     };
-    onChangeContent = event => {
+    onChangeContent(event){
         if (event.target) {
             this.setState({ content: event.target.value });
         }
     };
-    saveTemporary = async (obj) => {
-        await this.setState({ card_content: obj });
-        this.submit();
+    async saveTemporary(obj){
+        console.log("zlzl", obj.content);
+        const newObj = { deleteContent: [], newContent: obj.content, updateContent: [] };
+        await this.setState({ card_content: newObj });
+        // this.submit();
     };
-    handleResetHook = async () => {
-        await this.setState({ hook: false });
-    };
-    submit = async () => {
+    async submit(){
         if (!this.state.title || this.state.title === "") {
             alert("컨텐츠의 제목을 입력하세요.");
             await this.setState({ loading: false });
@@ -360,8 +455,25 @@ export class LocalNewCardModal extends Component {
             }
             );
     };
+    async onSave() {
+        await this.submit();
+    };
+    onCancel() {
+        const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
+        if (confirm) {
+            this.setState({
+                loading: false, scroll: false, edit: false, hook: false,
+                title: "", content: "",
+                card_content: {
+                    deleteContent: [], newContent: [], updateContent: []
+                }
+            })
+        }
+    };
+    
     render() {
-        const { content } = this.props.content;
+        console.log("zlzl", this.state.card_content);
+
         return (
             <React.Fragment>
                 <NewCardDialogWrapper open={this.props.open} onClose={this.props.close}>
@@ -401,28 +513,25 @@ export class LocalNewCardModal extends Component {
 
                         <div className="content" >
                             <div className="title">내용</div>
-                            {/* <React.Fragment>
-                                {content.length > 0 && content.map((item, index) =>
-                                    <Controller
-                                        maxOrder={content.length - 1}
-                                        key={index}
-                                        type={item.type}
-                                        item={item}
-                                        order={index}
-                                        deleteItem={this.deleteItem}
-                                        name={`content${index}`}
-                                        getValue={this.onChangValue} />)}
-
-                                <AddController
-                                    type="INIT"
-                                    order={content.length > 0 ? content.length : 0}
-                                    name="addBasic"
-                                    getValue={this.onAddValue} />
-
-                            </React.Fragment> */}
-
+                            <InputContent
+                                content={this.state.card_content.newContent || []}
+                                returnState={this.saveTemporary} />
                         </div>
 
+                        <ContentBorder>
+                            <div className="border-line" />
+                        </ContentBorder>
+
+                        <div className="content">
+                            <ButtonContainer >
+                                <EditorBottonWrapper>
+                                    <button onClick={this.onSave} className="submit" type="button">
+                                        <i className="icon outline save" />저장</button>
+                                    <button onClick={this.onCancel} className="cancel" type="button">
+                                        <i className="icon trash" />취소</button>
+                                </EditorBottonWrapper>
+                            </ButtonContainer>
+                        </div>
                     </div>
 
                 </NewCardDialogWrapper>
