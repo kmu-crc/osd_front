@@ -228,7 +228,8 @@ class ModifyDesigner extends Component{
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentWillUpdate(nextProps){
-    if(this.props.DesignerDetail.image!==nextProps.DesignerDetail.image||
+    if(
+      this.props.DesignerDetail.image!==nextProps.DesignerDetail.image||
       this.props.DesignerDetail.user_id!==nextProps.DesignerDetail.user_id||
       this.props.DesignerDetail.description!==nextProps.DesignerDetail.description||
       this.props.DesignerDetail.location!==nextProps.DesignerDetail.location||

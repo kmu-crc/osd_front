@@ -1,34 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DesignerDetail from "components/Designers/DesignerDetail";
-import {
-  GetDesignerDetailRequest, GetDesignerCountRequest, GetLikeDesignerRequest,
-  LikeDesignerRequest, UnlikeDesignerRequest
-} from "actions/Designer";
+import { GetExpertDesignerViewDetailRequest} from "actions/Expert"
+
 
 class GroupDetailContainer extends Component {
+  componentWillMount(){
+    this.props.GetExpertDesignerViewDetailRequest(this.props.id);
+  }
   render() {
+    console.log("ModifyDesignerContainer=====",this.props);
     return (<DesignerDetail {...this.props} />);
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    DesignerDetail: state.DesignerDetail.status.DesignerDetail,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
     like: state.DesignerLike.status.like,
-    Count: state.DesignerDetail.status.Count
+    Count: state.DesignerDetail.status.Count,
+    category1: state.CategoryAll.status.category1,
+    category2: state.CategoryAll.status.category2,
+    DesignerViewDetail: state.DesignerDetail.status.DesignerViewDetail,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetLikeDesignerRequest: (id, token) => dispatch(GetLikeDesignerRequest(id, token)),
-    UnlikeDesignerRequest: (id, token) => dispatch(UnlikeDesignerRequest(id, token)),
-    LikeDesignerRequest: (id, token) => dispatch(LikeDesignerRequest(id, token)),
-    GetDesignerDetailRequest: (id) => dispatch(GetDesignerDetailRequest(id)),
-    GetDesignerCountRequest: (id) => dispatch(GetDesignerCountRequest(id))
+    GetExpertDesignerViewDetailRequest: (data) => {
+      return dispatch(GetExpertDesignerViewDetailRequest(data))
+    },
   };
 };
 
