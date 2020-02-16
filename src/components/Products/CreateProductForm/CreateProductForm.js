@@ -4,10 +4,10 @@ import { Dropdown } from "semantic-ui-react";
 import { InputTag } from "components/Commons/InputItem/InputTag";
 import { ThumbnailList } from "components/Commons/InputItem/ThumbnailList";
 import { UploadType } from "components/Commons/InputItem/UploadType";
-import { AddController } from "components/Commons/InputItem/AddController";
-import { Controller } from "components/Commons/InputItem/Controller";
+
 import GridEditor from "components/GridEditor";
-import { GridEditorLocal } from "components/GridEditor/GridEditorLocal";
+import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
+import { InputContent } from "components/Commons/InputItem";
 
 // import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 
@@ -174,16 +174,16 @@ const Button = styled.div`
     margin-left: 60px;
   }
 `;
-const InputText = styled.input.attrs({ type: "text", value: props => props.value || "" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
+const InputText = styled.input`
+  width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height: 43px;
+  border-radius: 20px;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  background-color: #E9E9E9;
+  margin-right: 21px;
+  outline: none;
+  border: 0px;
   padding: 0.67857143em 1em;
 `;
 const InputTextarea = styled.textarea`
@@ -348,7 +348,7 @@ class CreateProductForm extends Component {
           <div className="contentWrap">
             <div className="wrapper flex">
               <div className="label">아이템명<Mandatory /></div>
-              <InputText width={370} name="title" value={this.state.title} onChange={this.onChangeValue} />
+              <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
             </div>
 
             <div className="wrapper flex ">
@@ -376,9 +376,13 @@ class CreateProductForm extends Component {
       </div>
 
       {/* 로컬 그리드 에디터 */}
-      <div className="contentsBox">
-        <GridEditorLocal />
-      </div>
+      {/* <div className="contentsBox">
+        <LocalGridEditor
+          userInfo={this.props.userInfo}
+          content={this.state.content}
+          returnContent={content => this.setState({ content: content })}
+          editor={true} />
+      </div> */}
 
       {/* 아이템 상세정보 입력 폼 */}
       <div className="contentsBox">
@@ -481,20 +485,21 @@ class ItemTypeForm extends Component {
         <FormBox boxShadow={true} width={1570}>
           {additional && additional.uploadType === "블로그형" ?
             <div className="contentWrap">
+              <InputContent content={content}/>
               {/* <DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />} */}
-              <React.Fragment>
+              {/* <React.Fragment>
                 {content.length > 0 && content.map((item, index) =>
                   <Controller maxOrder={content.length - 1} key={index} type={item.type} item={item} order={index} deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
                 <AddController type="INIT" order={content.length > 0 ? content.length : 0} name="addBasic" getValue={this.onAddValue} />
-              </React.Fragment>
+              </React.Fragment> */}
             </div> : null}
 
           {itemType === 1 || additional && additional.uploadType === "프로젝트형" ?
             <div className="contentWrap">
-              <GridEditor
+              {/* <GridEditor
                 editor={true} isMyDesign={true}
                 return={steps => this.setState({ content: steps })}
-                design={{ uid: "new" }} />
+                design={{ uid: "new" }} /> */}
             </div>
             : null}
 

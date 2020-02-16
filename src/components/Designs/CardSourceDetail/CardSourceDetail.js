@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Controller } from "./Controller";
+import { Controller } from "components/Commons/InputItem/Controller";
 import Button from "components/Commons/Button";
 import AddController from "./AddController";
 import ContentForm from "./ContentForm";
@@ -180,13 +180,14 @@ class CardSourceDetail extends Component {
     let formData = await ContentForm(this.state);
     await this.setState({ loading: true });
     await setTimeout(() => { }, 500);
-    if (this.props.uid === "new") {
-      this.props.upDateRequest(formData)
+    if (this.props.uid === "local") {
+      this.props.upDateRequest(formData);
     }
     else
       this.props.upDateRequest(formData, this.props.uid, this.props.token)
         .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
 
+    await this.setState({ loading: false });
   }
 
 
