@@ -207,28 +207,53 @@ class ModifyMaker extends Component{
     this.handleAddTechnique=this.handleAddTechnique.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentDidMount(){
-    //modify :*** 데이터베이스 호출 시 주석해제 *****
-    
-    // const arr = this.props.DesignerDetail.career.split('/');
-    
-    // const arrCareer = arr.map((item,index)=>{
-    //   const piece = item.split(',');
-    //   return(
-    //     {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
-    //   );
-    // })
-    
-    // this.setState({
-    //   thumbnail:this.props.DesignerDetail.thumbnail == null? noimg:this.props.DesignerDetail.thumbnail.m_img,
-    //   firstCategory:this.props.DesignerDetail.category_level1,
-    //   secondCategory:this.props.DesignerDetail.category_level2,
-    //   explain:this.props.DesignerDetail.description,
-    // tag:this.props.DesignerDetail.tag.split(','),
-    // career:arrCareer,
-    //  equipment:this.props.DesignDetail.maker_equipment,
-    //  technique:this.props.DesignDetail.maker_technique,
-    // })
+  componentWillUpdate(nextProps){
+    if(this.props.MakerDetail.image!==nextProps.MakerDetail.image||
+      this.props.MakerDetail.user_id!==nextProps.MakerDetail.user_id||
+      this.props.MakerDetail.description!==nextProps.MakerDetail.description||
+      this.props.MakerDetail.location!==nextProps.MakerDetail.location||
+      this.props.MakerDetail.category_level1!==nextProps.MakerDetail.category_level1||
+      this.props.MakerDetail.category_level2!==nextProps.MakerDetail.category_level2||
+      this.props.MakerDetail.tag !== nextProps.MakerDetail.tag||
+      this.props.MakerDetail.experience!==nextProps.MakerDetail.experience||
+      this.props.MakerDetail.score!==nextProps.MakerDetail.score)
+    {
+
+      const careerRow = nextProps.MakerDetail.experience.split("/");
+      careerRow.pop();
+      const careerList = careerRow.map((item,index)=>{
+        const piece = item.split(",");
+        console.log("piece:::",piece[0],piece[1],piece[2],piece[3]);
+        return(
+          {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
+        );
+      });
+      console.log(careerList);
+      const tag = nextProps.MakerDetail.tag.split(",");
+      tag.pop();
+
+      const equipment = nextProps.MakerDetail.tag.split(",");
+      equipment.pop();
+
+      const technique = nextProps.MakerDetail.tag.split(",");
+      technique.pop();
+
+      this.setState({
+        thumbnail:nextProps.MakerDetail.image,
+        user_id:nextProps.MakerDetail.user_id,
+        explain:nextProps.MakerDetail.description||"",
+        location:nextProps.MakerDetail.location||"",
+        firstCategory:nextProps.MakerDetail.category_level1,
+        secondCategory:nextProps.MakerDetail.category_level2,
+        tag:tag||[],
+        career:careerList,
+        score:nextProps.MakerDetail.score||0,
+        equipment:equipment,
+        technique:technique,
+      })
+    };
+
+    return true;
   }
   onClickFirstCategory(event,{value}){
     this.setState({firstCategory:{value}.value,secondCategory:-1});
@@ -237,6 +262,7 @@ class ModifyMaker extends Component{
     this.setState({secondCategory:{value}.value,});
   }
   async onChangeCareer(number,task,explain,during){
+    console.log("arr",arr);
     let arr = this.state.career.slice();
     await arr.splice(number,1,{number:number,task:task,explain:explain,during:during});
     this.setState({
@@ -312,20 +338,55 @@ class ModifyMaker extends Component{
       );
     });
     const data = {
+      files:[],
       user_id:this.props.userInfo.uid,
-      thumbnail:this.state.thumbnail,
       type:"maker",
       description:this.state.explain,
-      category_level1:this.props.firstCategory,
-      category_level2:this.props.secondCategory,
+      location:this.state.location,
+      category_level1:this.state.firstCategory,
+      category_level2:this.state.secondCategory,
       tag:tagList,
       experience:experienceList,
       maker_equipment:equipmentList,
       maker_technique:techniqueList
       
     }
+    let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+    data.files.push(file);
+    console.log(data);
 
-    window.location.href="/mypage";
+
+    if(this.state.thumbnail!=null||this.state.thumbnail!="")
+    {
+      data.files.push(file);
+    }
+    if (data.files.length <= 0 || data.files[0].value === (this.props.MakerDetail&&this.props.MakerDetail.image)) {
+      delete data.files;
+    }
+    this.props.UpdateMakerDetailRequest(data, this.props.token)
+    .then(res => {
+      console.log("res",res);
+      const result = res;
+      if (result.success) {
+        alert("정보가 수정되었습니다.");
+        //this.props.history.push(`/`);
+        // window.location.href = "/maker";
+      } else {
+        alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
+      }
+    })
+    .catch(e => {
+      console.log("실패", e);
+      alert("다시 시도해주세요");
+      this.setState({
+        loading: false
+      });
+    });
+
+    // window.location.href="/mypage";
   }
 
   render(){
@@ -364,21 +425,21 @@ class ModifyMaker extends Component{
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">거주지역</div>
-                <InputText onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
+                <InputText value={this.state.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
               </div>
 
               <div className="wrapper_noflex ">
                 {
                   this.state.career.map((item,index)=>{
-                    console.log(item.number)
+                    console.log(item);
                     return(
-                      <CreateCareer number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
+                      <CreateCareer item={item} number={parseInt(item.number,10)+1} onChangeCareer={this.onChangeCareer} key={index}/>
                     );
                   })
                 }
@@ -391,14 +452,14 @@ class ModifyMaker extends Component{
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
                 <div>
-                <InputTag getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483}/>
+                <InputTag taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">보유기술</div>
                 <div>
-                <InputTag getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483}/>
+                <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
@@ -409,7 +470,6 @@ class ModifyMaker extends Component{
     );
   };
 }export default ModifyMaker;
-
 
 // 경력 //
 class CreateCareer extends Component{
@@ -422,18 +482,36 @@ class CreateCareer extends Component{
     this.onChangeExplain=this.onChangeExplain.bind(this);
     this.onChangeDuring=this.onChangeDuring.bind(this);
   }
+  componentDidMount(){
 
+      this.setState({
+        task:this.props.item.task,
+        explain:this.props.item.explain,
+        during:this.props.item.during,
+      })
+  }
+  componentDidUpdate(prevProps){
+    if(prevProps.item !== this.props.item)
+    {
+      this.setState({
+        task:this.props.item.task,
+        explain:this.props.item.explain,
+        during:this.props.item.during,
+      })
+    }
+    return true;
+  }
   onChangeTask(event){
     this.setState({task:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,event.target.value,this.state.explain,this.state.during);
   }
   onChangeExplain(event){
     this.setState({explain:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,this.state.task,event.target.value,this.state.during);
   }
   onChangeDuring(event){
     this.setState({during:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,event.target.value);
   }
   
 
@@ -448,6 +526,7 @@ class CreateCareer extends Component{
       }
       return zero + n;
     }
+    console.log("careerlog",this.state);
     return(
       <div className="wrapper flex margin_bottom ">
       <div className="label">경력</div>

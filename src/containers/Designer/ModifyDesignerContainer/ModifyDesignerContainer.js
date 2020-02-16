@@ -5,6 +5,9 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import { connect } from "react-redux";
+import { UpdateDesignerDetailRequest } from "actions/Users/UserInfo";
+import { GetExpertDesignerDetailRequest} from "actions/Expert"
+// import { GetTopItemListRequest } from "actions/Commons/TopList";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -50,7 +53,14 @@ const Wrapper = styled(ContentBox)`
   z-index:3;
 `
 class ModifyDesignerContainer extends Component {
+  componentWillMount(){
+    this.props.GetExpertDesignerDetailRequest(this.props.id);
+    //this.props.GetTopItemListRequest(0);
+  }
   render() {
+    console.log("ModifyDesignerContainer=====",this.props);
+    // GetDesignerDetailRequest(this.props.id);
+
     return(
        <React.Fragment>
          <Wrapper>
@@ -66,10 +76,17 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     category1: state.CategoryAll.status.category1,
     category2: state.CategoryAll.status.category2,
+    DesignerDetail: state.DesignerDetail.status.DesignerDetail,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    GetExpertDesignerDetailRequest: (data) => {
+      return dispatch(GetExpertDesignerDetailRequest(data))
+    },
+    UpdateDesignerDetailRequest: (data, token) => {
+      return dispatch(UpdateDesignerDetailRequest(data, token))
+    },
   };
 };
 

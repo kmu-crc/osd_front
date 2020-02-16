@@ -227,17 +227,17 @@ class CreateDesigner extends Component{
     this.handleAddTag=this.handleAddTag.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentDidMount(){
-      this.setState({
-      thumbnail:noimg,
-      thumbnail_name:"sh",
-      firstCategory:1,
-      secondCategory:1,
-      explain:"블라블라",
-      tag:["가","나","다"],
-      career:[{number:0,task:"테스트업무",explain:"테스트업무입니다",during:"1999~2001"}],
-    })
-  }
+  // componentDidMount(){
+  //     this.setState({
+  //     thumbnail:noimg,
+  //     thumbnail_name:"sh",
+  //     firstCategory:2,
+  //     secondCategory:2,
+  //     explain:"블라블라",
+  //     tag:["가","나","다"],
+  //     career:[{number:0,task:"테스트업무",explain:"테스트업무입니다",during:"1999~2001"}],
+  //   })
+  // }
   onClickFirstCategory(event,{value}){
     this.setState({firstCategory:{value}.value,secondCategory:-1});
   }
@@ -268,46 +268,20 @@ class CreateDesigner extends Component{
     });
   }
 
-  handleOnChangeThumbnail(event)
+  async handleOnChangeThumbnail(event)
   {
       event.preventDefault();
       const reader = new FileReader();
       const file =event.target.files[0];
       reader.onloadend = ()=>{
-        this.setState({thumbnail:reader.result,thumbnail_name:file.name})
+       this.setState({thumbnail:reader.result,thumbnail_name:file.name})
       }
       if(event.target.files[0])
       {
-        reader.readAsDataURL(file);
+        await reader.readAsDataURL(file);
       }
   }
 
-  // onSubmit(){
-  //   let tagList="";
-  //   this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
-  //     return(
-  //       tagList+=item+","
-  //     );
-  //   });
-  //   let experienceList="";
-  //   this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
-  //     return(
-  //       experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
-  //     );
-  //   })
-  //   const data = {
-  //     user_id:this.props.userInfo.uid,
-  //     thumbnail:this.state.thumbnail,
-  //     type:"designer",
-  //     description:this.state.explain,
-  //     category_level1:this.props.firstCategory,
-  //     category_level2:this.props.secondCategory,
-  //     tag:tagList,
-  //     experience:experienceList,
-  //   }
-  //   window.location.href="/mypage";
-
-  // }
   onSubmit = async e => {
 
     e.preventDefault();
@@ -326,26 +300,32 @@ class CreateDesigner extends Component{
       const data = {
         files: [],
         user_id:this.props.userInfo.uid,
-        thumbnail:this.state.thumbnail,
+        // thumbnail:this.state.thumbnail,
         type:"designer",
         description:this.state.explain,
-        category_level1:this.props.firstCategory,
-        category_level2:this.props.secondCategory,
+        location:this.state.location,
+        category_level1:this.state.firstCategory,
+        category_level2:this.state.secondCategory,
         tag:tagList,
         experience:experienceList,
       }
       let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
-      console.log(this.state.thumbnail,this.state.thumbnail_name)
+      await data.files.push(file);
+      console.log(data);
+
+
       if(this.state.thumbnail!=null||this.state.thumbnail!="")
       {
-        data.files.push(file);
+        await data.files.push(file);
       }
       // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
       //   delete data.files;
       // }
-    this.props.UpdateUserDetailRequest(data, this.props.token)
+    this.props.InsertDesignerDetailRequest(data, this.props.token)
       .then(res => {
-        if (res.success) {
+        console.log("res",res.res);
+        const result = res.res;
+        if (result.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
           window.location.href = "/designer";
@@ -363,6 +343,8 @@ class CreateDesigner extends Component{
           loading: false
         });
       });
+      // window.location.href = "/myPage"
+
   };
 
 
@@ -446,6 +428,14 @@ class CreateCareer extends Component{
     this.onChangeExplain=this.onChangeExplain.bind(this);
     this.onChangeDuring=this.onChangeDuring.bind(this);
   }
+  componentDidMount(){
+
+      this.setState({
+        task:this.props.item.task,
+        explain:this.props.item.explain,
+        during:this.props.item.during,
+      })
+  }
   componentDidUpdate(prevProps){
     if(prevProps.item !== this.props.item)
     {
@@ -459,21 +449,19 @@ class CreateCareer extends Component{
   }
   onChangeTask(event){
     this.setState({task:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,event.target.value,this.state.explain,this.state.during);
   }
   onChangeExplain(event){
     this.setState({explain:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,this.state.task,event.target.value,this.state.during);
   }
   onChangeDuring(event){
     this.setState({during:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,event.target.value);
   }
   
 
   render(){
-    console.log("componentdidmount",this.props.item);
-
     const leadingZeros = (n, digits) =>{ //0채우는 함수
       var zero = '';
       n = n.toString();

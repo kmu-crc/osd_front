@@ -207,7 +207,19 @@ class CreateMaker extends Component{
     this.handleAddTechnique=this.handleAddTechnique.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
+  componentDidMount(){
+      this.setState({
+      thumbnail:noimg,
+      thumbnail_name:"sh",
+      firstCategory:1,
+      secondCategory:1,
+      explain:"블롸블라",
+      tag:["가","나","다"],
+      equipment:["장비1","장비2","장비3",],
+      technique:["기술1","기술2","기술3",],
+      career:[{number:0,task:"테스트업무",explain:"테스트업무입니다",during:"1999~2001"}],
+    })
+  }
   onClickFirstCategory(event,{value}){
     this.setState({firstCategory:{value}.value,secondCategory:-1});
   }
@@ -290,19 +302,53 @@ class CreateMaker extends Component{
       );
     });
     const data = {
+      files:[],
       user_id:this.props.userInfo.uid,
-      thumbnail:this.state.thumbnail,
       type:"maker",
       description:this.state.explain,
-      category_level1:this.props.firstCategory,
-      category_level2:this.props.secondCategory,
+      category_level1:this.state.firstCategory,
+      category_level2:this.state.secondCategory,
+      location:this.state.location,
       tag:tagList,
       experience:experienceList,
       maker_equipment:equipmentList,
       maker_technique:techniqueList
       
     }
+    let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+    data.files.push(file);
+    console.log(data);
 
+
+    if(this.state.thumbnail!=null||this.state.thumbnail!="")
+    {
+      data.files.push(file);
+    }
+    // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
+    //   delete data.files;
+    // }
+  this.props.InsertMakerDetailRequest(data, this.props.token)
+    .then(res => {
+      console.log("res",res.res);
+      const result = res.res;
+      if (result.success) {
+        alert("정보가 수정되었습니다.");
+        //this.props.history.push(`/`);
+        window.location.href = "/designer";
+      } else {
+        alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
+      }
+    })
+    .catch(e => {
+      console.log("실패", e);
+      alert("다시 시도해주세요");
+      this.setState({
+        loading: false
+      });
+    });
 
     window.location.href = "/myPage"
   }
@@ -343,21 +389,21 @@ class CreateMaker extends Component{
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">거주지역</div>
-                <InputText onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
+                <InputText value={this.state.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
               </div>
 
               <div className="wrapper_noflex ">
-                {
+              {
                   this.state.career.map((item,index)=>{
-                    console.log(item.number)
+                    console.log("career",item)
                     return(
-                      <CreateCareer number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
+                      <CreateCareer item={item} number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
                     );
                   })
                 }
@@ -370,14 +416,14 @@ class CreateMaker extends Component{
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
                 <div>
-                <InputTag getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483}/>
+                <InputTag taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">보유기술</div>
                 <div>
-                <InputTag getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483}/>
+                <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
               </div>
 
@@ -401,18 +447,36 @@ class CreateCareer extends Component{
     this.onChangeExplain=this.onChangeExplain.bind(this);
     this.onChangeDuring=this.onChangeDuring.bind(this);
   }
+  componentDidMount(){
 
+      this.setState({
+        task:this.props.item.task,
+        explain:this.props.item.explain,
+        during:this.props.item.during,
+      })
+  }
+  componentDidUpdate(prevProps){
+    if(prevProps.item !== this.props.item)
+    {
+      this.setState({
+        task:this.props.item.task,
+        explain:this.props.item.explain,
+        during:this.props.item.during,
+      })
+    }
+    return true;
+  }
   onChangeTask(event){
     this.setState({task:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,event.target.value,this.state.explain,this.state.during);
   }
   onChangeExplain(event){
     this.setState({explain:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,this.state.task,event.target.value,this.state.during);
   }
   onChangeDuring(event){
     this.setState({during:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,this.state.during);
+    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,event.target.value);
   }
   
 
@@ -427,6 +491,7 @@ class CreateCareer extends Component{
       }
       return zero + n;
     }
+    console.log("careerlog",this.state);
     return(
       <div className="wrapper flex margin_bottom ">
       <div className="label">경력</div>

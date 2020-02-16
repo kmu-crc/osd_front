@@ -6,7 +6,7 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import { connect } from "react-redux";
-import { UpdateUserDetailRequest } from "actions/Users/UserInfo";
+import { InsertDesignerDetailRequest } from "actions/Users/UserInfo";
 
 
 const ImgWrapper = styled.div`
@@ -73,8 +73,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    UpdateUserDetailRequest: (data, token) => {
-      return dispatch(UpdateUserDetailRequest(data, token))
+    InsertDesignerDetailRequest: (data, token) => {
+      return dispatch(InsertDesignerDetailRequest(data, token))
     },
   };
 };
