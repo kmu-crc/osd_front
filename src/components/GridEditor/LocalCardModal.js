@@ -8,7 +8,7 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
-import { AddController, Controller } from "components/Commons/InputItem";
+import { AddController, Controller, InputContent } from "components/Commons/InputItem";
 
 
 const ContentBorder = styled.div`
@@ -430,94 +430,102 @@ const EditorBottonWrapper = styled.div`
 export class LocalCardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", content: "" };
+        this.state = {
+            loading: false, scroll: false, edit: false, hook: false,
+            title: this.props.title || "", content: this.props.content || "",
+            card_content: {
+                deleteContent: [], newContent: [], updateContent: []
+            }
+        };
+        this.onSave = this.onSave.bind(this);
+        this.onCancel = this.onCancel.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
         this.onClose = this.onClose.bind(this);
-        // this.onCancel = this.onCancel.bind(this);
-        // this.onSave = this.onSave.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log("card:", nextProps.card);
-        if (nextProps.card !== this.props.card) {
-            // alert("!");
-
-            return true;
+        this.onChangeValueThumbnail = this.onChangeValueThumbnail.bind(this);
+        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeContent = this.onChangeContent.bind(this);
+        this.saveTemporary = this.saveTemporary.bind(this);
+        this.submit = this.submit.bind(this);
+    };
+    handleCancel(obj) {
+        if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
+            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+                return;
+            }
         }
-    }
-    onChangeValueThumbnail = async data => {
+        this.onClose();
+    };
+    onClose() {
+        this.props.close();
+    };
+    async onChangeValueThumbnail(data) {
         let obj = {};
         if (data.target) {
             obj[data.target.name] = data;
             await this.setState(obj);
         }
-    }
-    onChangeTitle = event => {
+    };
+    onChangeTitle(event) {
         if (event.target) {
             this.setState({ title: event.target.value });
         }
-    }
-    onChangeContent = event => {
+    };
+    onChangeContent(event) {
         if (event.target) {
             this.setState({ content: event.target.value });
         }
-    }
-    handleHeaderSubmit = (_) => {
-        // _.preventDefault(_);
-        let files = null;
-        ValidationGroup(this.state, false)
-            .then(async data => {
-                files = data && data.files;
-                let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-                const pack = { title: this.state.title, thumbnail: files && thumbnail, content: this.state.content, data: { deleteContent: [], newContent: [], updateContent: [] } };
-                await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
-                    .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
-                    .catch(err => alert(err + ''));
-                // this.onClose();
-            }).catch(err => alert(err + ''));
-        this.setState({ edit: !this.state.edit })
-    }
-    onCloseEditMode = () => {
-        if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
-            if (!window.confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
-                return;
-            }
-        }
-        this.setState({ edit: false });
     };
-    onChangeEditMode = () => {
-        this.setState({ edit: this.state.edit })
+    async saveTemporary(obj) {
+        // console.log("zlzl change", obj);
+        // if exists
+        
+        // const newObj = { deleteContent: [], newContent: obj.content, updateContent: [] };
+        // await this.setState({ card_content: newObj });
+        // this.submit();
     };
-    removeCard = e => {
-        e.stopPropagation();
-        const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
-        if (confirm) {
-            this.props.removeCard(this.props.boardId, this.props.card.uid)
-            this.setState({ edit: false });
-            this.onClose();
-        }
-    };
-
-    // completed
-    async onClose() {
-        if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
+    async submit() {
+        if (!this.state.title || this.state.title === "") {
+            alert("컨텐츠의 제목을 입력하세요.");
+            await this.setState({ loading: false });
             return;
         }
-        await this.setState({ sroll: false, edit: false, title: "", content: "" });
-        this.props.close();
+        // new card
+        let files = null;
+        await ValidationGroup(this.state, false)
+            .then(async data => {
+                files = await data && data.files;
+                let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
+                this.props.return && this.props.return({
+                    card: { title: this.state.title, order: this.props.cardOrder, boardId: this.props.boardId },
+                    content: {
+                        title: this.state.title, thumbnail: thumbnail, content: this.state.content,
+                        data: {
+                            deleteContent: this.state.card_content.deleteContent,
+                            newContent: this.state.card_content.newContent,
+                            updateContent: this.state.card_content.updateContent
+                        }
+                    }
+                })
+                await this.setState({ loading: false });
+                this.onClose();
+            }
+            );
     };
-    // async onCancel(event) {
-    //     event.stopPropagation();
-    //     alert(event.target.type);
-    //     this.setState({ edit: false });
-    // };
-    // async onSave(event) {
-    //     event.stopPropagation();
-    //     alert(event.target.type);
-    //     this.setState({ edit: false });
-    // };
+    async onSave() {
+        await this.submit();
+    };
+    onCancel() {
+        const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
+        if (confirm) {
+            this.setState({
+                loading: false, scroll: false, edit: false, hook: false,
+                title: "", content: "",
+                card_content: {
+                    deleteContent: [], newContent: [], updateContent: []
+                }
+            })
+        }
+    };
 
     render() {
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.l_img;
@@ -575,46 +583,22 @@ export class LocalCardModal extends Component {
                                         <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="1000" placeholder="설명을 입력해주세요." />
                                     </div>
                                 </div>
-                                {/* <div className="edit-header-button-container">
-                                         <button className="edit-header-submit-button" onClick={this.handleHeaderSubmit} >적용하기</button>
-                                         <button className="edit-header-cancel-button" onClick={() => this.setState({ edit: !this.state.edit })}>취소</button>
-                                     </div> */}
                             </EditCardHeaderContainer>
                         </React.Fragment>}
 
                     <ContentBorder><div className="border-line" /></ContentBorder>
                     <div className="content" >
-                        <React.Fragment>
-                            {/* {card.content.length > 0 && card.content.map((item, index) =>
-                                <Controller
-                                    maxOrder={card.content.length - 1}
-                                    key={index}
-                                    type={item.type}
-                                    item={item}
-                                    order={index}
-                                    deleteItem={this.deleteItem}
-                                    name={`content${index}`}
-                                    getValue={this.onChangValue} />)}
-                            <AddController
-                                type="INIT"
-                                // order={card.content.length > 0 ? card.content.length : 0}
-                                name="addBasic"
-                                getValue={this.onAddValue} /> 
-                            */}
-                        </React.Fragment>
+                        <InputContent content={card.contents} returnState={this.saveTemporary} />
                     </div>
 
-                    {/*
                     <ButtonContainer >
-                        {(this.state.edit && this.props.designId) &&
-                            <EditorBottonWrapper>
-                                <button onClick={this.onSave} className="submit" type="button">
-                                    <i className="icon outline save" />저장</button>
+                        <EditorBottonWrapper>
+                            <button onClick={this.onSave} className="submit" type="button">
+                                <i className="icon outline save" />저장</button>
                             <button onClick={this.onCancel} className="cancel" type="button">
-                                    <i className="icon trash" />취소</button>
-                            </EditorBottonWrapper>}
-                    </ButtonContainer> 
-                    */}
+                                <i className="icon trash" />취소</button>
+                        </EditorBottonWrapper>
+                    </ButtonContainer>
                 </div>
 
 

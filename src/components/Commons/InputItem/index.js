@@ -7,3 +7,4 @@ export * from "./Controller";
 export * from "./EmbController";
 export * from "./TextControllerClassic";
 
+export * from "./InputContent";

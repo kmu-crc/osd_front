@@ -8,6 +8,7 @@ import { LocalCardModal } from "./LocalCardModal";
 import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
+import SortableDesignSteps2 from "./SortableDesignSteps2";
 import osdcss from "StyleGuide";
 
 const WhitePane = styled.div`
@@ -64,6 +65,111 @@ const GridEditorWrapper = styled.div`
     }
 `;
 
+const DUMMY = {
+    //info
+
+    // data(steps)
+    steps: [
+        {
+            uid: 0,
+            order: 0,
+            title: "First step",
+            cards: [
+                {
+                    uid: 0,
+                    order: 0,
+                    title: "First Card",
+                    //
+                    content: "First Card Content",
+                    contents: [
+                        { uid: 0, order: 0, type: "TEXT", content: "text test" },
+                        { uid: 1, order: 1, type: "TEXT", content: "text test" },
+                        { uid: 2, order: 2, type: "TEXT", content: "text test" },
+                        { uid: 3, order: 3, type: "TEXT", content: "text test" },
+                        { uid: 4, order: 4, type: "TEXT", content: "text test" }
+                    ]
+                },
+                {
+                    uid: 1,
+                    order: 1,
+                    title: "Second Card",
+                    //
+                    content: "Second Card Content",
+                    contents: [
+                        { uid: 5, order: 0, type: "TEXT", content: "test test" },
+                        { uid: 6, order: 1, type: "TEXT", content: "text test" },
+                        { uid: 7, order: 2, type: "TEXT", content: "test test" },
+                        { uid: 8, order: 3, type: "TEXT", content: "text test" },
+                        { uid: 9, order: 4, type: "TEXT", content: "test test" }
+                    ]
+                },
+                {
+                    uid: 2,
+                    order: 2,
+                    title: "Third Card",
+                    //
+                    content: "Third Card Content",
+                    contents: [
+                        { uid: 10, order: 0, type: "TEXT", content: "test test" },
+                        { uid: 11, order: 1, type: "TEXT", content: "text test" },
+                        { uid: 12, order: 2, type: "TEXT", content: "test test" },
+                        { uid: 13, order: 3, type: "TEXT", content: "text test" },
+                        { uid: 14, order: 4, type: "TEXT", content: "test test" }
+                    ]
+                }
+            ]
+        },
+        {
+            uid: 1,
+            order: 1,
+            title: "Seconde step",
+            cards: [
+                {
+                    uid: 3,
+                    order: 0,
+                    title: "First Card",
+                    //
+                    content: "First Card Content",
+                    contents: [
+                        { uid: 15, order: 0, type: "TEXT", content: "text test" },
+                        { uid: 16, order: 1, type: "TEXT", content: "text test" },
+                        { uid: 17, order: 2, type: "TEXT", content: "text test" },
+                        { uid: 18, order: 3, type: "TEXT", content: "text test" },
+                        { uid: 19, order: 4, type: "TEXT", content: "text test" }
+                    ]
+                },
+                {
+                    uid: 4,
+                    order: 1,
+                    title: "Second Card",
+                    //
+                    content: "Second Card Content",
+                    contents: [
+                        { uid: 20, order: 0, type: "TEXT", content: "test test" },
+                        { uid: 21, order: 1, type: "TEXT", content: "text test" },
+                        { uid: 22, order: 2, type: "TEXT", content: "test test" },
+                        { uid: 23, order: 3, type: "TEXT", content: "text test" },
+                        { uid: 24, order: 4, type: "TEXT", content: "test test" }
+                    ]
+                },
+                {
+                    uid: 5,
+                    order: 2,
+                    title: "Third Card",
+                    //
+                    content: "Third Card Content",
+                    contents: [
+                        { uid: 25, order: 0, type: "TEXT", content: "test test" },
+                        { uid: 26, order: 1, type: "TEXT", content: "text test" },
+                        { uid: 27, order: 2, type: "TEXT", content: "test test" },
+                        { uid: 28, order: 3, type: "TEXT", content: "text test" },
+                        { uid: 29, order: 4, type: "TEXT", content: "test test" }
+                    ]
+                }
+            ]
+        },
+    ]
+}
 
 export class LocalGridEditor extends Component {
     constructor(props) {
@@ -88,9 +194,8 @@ export class LocalGridEditor extends Component {
         this.RemoveStep = this.RemoveStep.bind(this);
         this.EditStep = this.EditStep.bind(this);
         this.NewStep = this.NewStep.bind(this);
-        this.requestReorder = this.requestReorder.bind(this);
-        this.requestCardReorder = this.requestCardReorder.bind(this);
         this.handleReturnNewCardData = this.handleReturnNewCardData.bind(this);
+        this.handleReturnChangedData = this.handleReturnChangedData.bind(this);
 
         // added //
         this.removeCard = this.removeCard.bind(this);
@@ -197,30 +302,6 @@ export class LocalGridEditor extends Component {
         }
     }
 
-    async requestCardReorder(items) {
-        const jobs = [];
-        let promiseAry = [];
-        items.forEach((element, index) => {
-            if (element.order !== index) jobs.push({ uid: element.uid, neworder: index });
-        });
-        if (jobs.length === 0) return;
-        promiseAry = jobs.map(job =>
-            this.props.UpdateCardTitleRequest({ order: job.neworder }, this.props.token, job.uid)
-        );
-        await Promise.all(promiseAry)
-            .then(() => this.props.GetDesignBoardRequest("local"))
-            .then(() => this.props.GetDesignCardRequest("local", this.state.boardId));
-    }
-    async requestReorder(items) {
-        const jobs = [];
-        let promiseAry = [];
-        items.forEach((element, index) => {
-            if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
-        });
-        if (jobs.length === 0) return;
-        promiseAry = jobs.map((job) => this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder }))
-        await Promise.all(promiseAry).then(() => this.props.GetDesignBoardRequest("local"))
-    }
     shouldComponentUpdate(nextProps) {
         if (this.props.DesignDetailStep !== nextProps.DesignDetailStep) {
             if (nextProps.DesignDetailStep.length) {
@@ -235,15 +316,33 @@ export class LocalGridEditor extends Component {
         }
         return true;
     }
+    async handleReturnChangedData(data) {
+        let copy = [...this.props.content];
+        for (let item of copy) {
+            if (item.uid === data.card.boardId) {
+                item = { ...data.card, nick_name: item.nick_name, contents: data.content.data.newContent }
+            }
+        }
+        this.props.returnContent(copy);
+        // await this.setState({ content: copy });
+        // this.props.returnContent(this.state.content);
+        this.updateReload();
+    }
     async handleReturnNewCardData(data) {
         let copy = [...this.props.content];
         console.log(copy, data);
         for (let item of copy) {
             if (item.uid === data.card.boardId) {
-                item.cards.push({ ...data.card, nick_name: this.props.userInfo.nickName });
+                item.cards.push({
+                    ...data.card,
+                    nick_name: this.props.userInfo.nickName,
+                    contents: data.content.data.newContent
+                });
             }
         }
-        await this.setState({ content: copy });
+        // await this.setState({ content: copy });
+        console.log("new-card",copy);
+        this.props.returnContent(copy);
         this.updateReload();
     }
 
@@ -257,101 +356,111 @@ export class LocalGridEditor extends Component {
     updateReload() {
         this.setState({ reload: (this.state.reload + 1) % 10 });
     }
+
+
     render() {
-        const { editor, content, userInfo } = this.props;
-        const { gap, h, /*row,*/reload, cardOrder, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const { editor, content, /*userInfo*/ } = this.props;
+        const { gap, h, /*row,*/ reload, cardOrder, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = content;
         console.log("steps:", content);
         return (
             <Wrapper>
-                <React.Fragment>
-                    {left ?
-                        <WhitePane width={138} height={h} left >
-                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
-                        </WhitePane> : null}
+                {/* <React.Fragment> */}
+                {left ?
+                    <WhitePane width={138} height={h} left >
+                        <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
+                    </WhitePane> : null}
 
-                    {right ?
-                        <WhitePane width={138} height={h} right={0} >
-                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
-                        </WhitePane> : null}
+                {right ?
+                    <WhitePane width={138} height={h} right={0} >
+                        <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
+                    </WhitePane> : null}
 
-                    {editor && newcard ?
-                        <LocalNewCardModal
-                            close={() => this.setState({ newcard: false })}
-                            open={newcard}
-                            designId={"local"}
-                            isTeam={editor}
-                            boardId={boardId}
-                            order={cardOrder}
-                            return={this.handleReturnNewCardData}
-                        /> : null}
+                {editor && newcard ?
+                    <LocalNewCardModal
+                        close={() => this.setState({ newcard: false })}
+                        open={newcard}
+                        designId={"local"}
+                        isTeam={editor}
+                        boardId={boardId}
+                        order={cardOrder}
+                        return={this.handleReturnNewCardData}
+                    /> : null}
 
-                    {card ?
-                        <LocalCardModal
-                            close={() => this.setState({ card: false })}
-                            open={card}
-                            designId={"local"}
-                            isTeam={editor}
-                            boardId={boardId}
-                            edit={true}
-                            card={cardDetail}
-                            title={title}
-                            
-                            removeCard={this.removeCard}
+                {card ?
+                    <LocalCardModal
+                        close={() => this.setState({ card: false })}
+                        open={card}
+                        designId={"local"}
+                        isTeam={editor}
+                        boardId={boardId}
+                        edit={true}
+                        card={cardDetail}
+                        title={title}
+                        return={this.handleReturnChangedData}
+                        removeCard={this.removeCard}
+                    /> : null}
 
-                        /> : null}
+                {editor && newstep ?
+                    <NewStepModal
+                        {...this.props}
+                        steps={steps}
+                        open={newstep}
+                        newStep={this.NewStep}
+                        close={this.CloseNewStep}
+                    /> : null}
 
-                    {editor && newstep ?
-                        <NewStepModal
-                            {...this.props}
-                            steps={steps}
-                            open={newstep}
-                            newStep={this.NewStep}
-                            close={this.CloseNewStep}
-                        /> : null}
+                {editor && editstep ?
+                    <EditStepModal
+                        close={this.CloseEditStep}
+                        open={editstep}
+                        title={title}
+                        where={where}
+                        steps={steps}
+                        RemoveStep={this.RemoveStep}
+                        EditStep={this.EditStep}
+                    /> : null}
 
-                    {editor && editstep ?
-                        <EditStepModal
-                            close={this.CloseEditStep}
-                            open={editstep}
-                            title={title}
-                            where={where}
-                            steps={steps}
-                            RemoveStep={this.RemoveStep}
-                            EditStep={this.EditStep}
-                        /> : null}
+                {/* alsdkjfaslkj */}
+                <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
+                    <GridEditorWrapper ref={this.grid} editorWidth={window.innerWidth}>
+                        <div className="Editor" ref={this.temp}>
+                            {/* ------------ 단계 ------------*/}
+                            {steps && steps.length > 0 ?
+                                <SortableDesignSteps
+                                    editStep={this.OpenEditStep}
+                                    designId={"local"}
+                                    editor={editor}
+                                    items={steps}
+                                    reload={reload}
+                                    createCard={this.createNewCard}
+                                    openCard={this.openCard}
+                                    disableReorder={true}
+                                // cardReorder={this.requestCardReorder}
+                                // reorder={this.requestReorder} 
+                                /> : null}
+
+                            {/* ------------ 추가 ------------*/}
+                            {editor ?
+                                <div className="plus">
+                                    <CreateStep onClick={this.OpenNewStep} step={"단계"} />
+                                    <div className="space">&nbsp;</div>
+                                </div> : null}
+
+                        </div>
+
+                    </GridEditorWrapper>
+
+                </ReactHeight>
 
 
-                    <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
-                        <GridEditorWrapper ref={this.grid} editorWidth={window.innerWidth}>
-                            <div className="Editor" ref={this.temp}>
-                                {/* ------------ 단계 ------------*/}
-                                {steps && steps.length > 0 ?
-                                    <SortableDesignSteps
-                                        editStep={this.OpenEditStep}
-                                        designId={"local"}
-                                        editor={editor}
-                                        items={steps}
-                                        reload={reload}
-                                        cardReorder={this.requestCardReorder}
-                                        createCard={this.createNewCard}
-                                        openCard={this.openCard}
-                                        reorder={this.requestReorder} /> : null}
-
-                                {/* ------------ 추가 ------------*/}
-                                {editor ?
-                                    <div className="plus">
-                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} />
-                                        <div className="space">&nbsp;</div>
-                                    </div> : null}
-
-                            </div>
-
-                        </GridEditorWrapper>
-
-                    </ReactHeight>
-
-                </React.Fragment>
+                {/* new editor */}
+                {/* {DUMMY ?
+                        <SortableDesignStep2
+                            steps={DUMMY.steps} />
+                        : null} */}
+                {/* end of new eidtor */}
+                {/* </React.Fragment> */}
             </Wrapper>)
     }
 }
