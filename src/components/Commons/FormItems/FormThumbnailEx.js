@@ -93,7 +93,7 @@ export class FormThumbnailEx extends Component {
         };
         reader.readAsDataURL(data.value[0]);
       } else {
-        await this.setState({ imageUrl: "" })
+        await this.setState({ imageUrl: "" });
       }
     } else {
       let image = "";
@@ -102,13 +102,15 @@ export class FormThumbnailEx extends Component {
       }
       await this.setState({ imageUrl: image });
     }
-    await this.setState({ ...data });
+    await this.setState({ ...data});
     this.returnData();
   };
 
   returnData = async e => {
-    if (this.props.getValue) await this.props.getValue(this.state);
-    if (e && this.props.onBlur) await this.props.onBlur();
+    if (this.props.getValue) 
+      await this.props.getValue(this.state);
+    if (e && this.props.onBlur) 
+      await this.props.onBlur();
   };
   render() {
     const { name, placeholder, id, validates, style } = this.props;

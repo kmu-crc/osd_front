@@ -393,7 +393,7 @@ export class LocalNewCardModal extends Component {
         this.saveTemporary = this.saveTemporary.bind(this);
         this.submit = this.submit.bind(this);
     };
-    handleCancel(obj){
+    handleCancel(obj) {
         if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
             if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
@@ -401,33 +401,33 @@ export class LocalNewCardModal extends Component {
         }
         this.onClose();
     };
-    onClose(){
+    onClose() {
         this.props.close();
     };
-    async onChangeValueThumbnail(data){
+    async onChangeValueThumbnail(data) {
         let obj = {};
         if (data.target) {
             obj[data.target.name] = data;
             await this.setState(obj);
         }
     };
-    onChangeTitle(event){
+    onChangeTitle(event) {
         if (event.target) {
             this.setState({ title: event.target.value });
         }
     };
-    onChangeContent(event){
+    onChangeContent(event) {
         if (event.target) {
             this.setState({ content: event.target.value });
         }
     };
-    async saveTemporary(obj){
+    async saveTemporary(obj) {
         console.log("zlzl", obj.content);
         const newObj = { deleteContent: [], newContent: obj.content, updateContent: [] };
         await this.setState({ card_content: newObj });
         // this.submit();
     };
-    async submit(){
+    async submit() {
         if (!this.state.title || this.state.title === "") {
             alert("컨텐츠의 제목을 입력하세요.");
             await this.setState({ loading: false });
@@ -438,7 +438,7 @@ export class LocalNewCardModal extends Component {
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
-                let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
+                let thumbnail = files ? { url: files && files[0].imageUrl, img: files && files[0].value, file_name: files && files[0].name } : null;
                 this.props.return && this.props.return({
                     card: { title: this.state.title, order: this.props.cardOrder, boardId: this.props.boardId },
                     content: {
@@ -470,7 +470,7 @@ export class LocalNewCardModal extends Component {
             })
         }
     };
-    
+
     render() {
         console.log("zlzl", this.state.card_content);
 
