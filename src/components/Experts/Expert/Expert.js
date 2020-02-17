@@ -106,7 +106,7 @@ class Expert extends Component {
     return (
       <Wrapper onClick={this.onClickItem}>
         {/* profile */}
-        <Profile face={(expert && expert.imgURL && expert.imgURL.m_img) || profile} />
+        <Profile face={(expert && expert.m_img) || profile} />
         {/* text */}
         <TextWrapper>
           <div className="nick"><TextFormat txt={expert.nick_name} chars={32} /></div>
