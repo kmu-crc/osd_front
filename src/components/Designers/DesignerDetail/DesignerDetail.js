@@ -509,9 +509,10 @@ class DesignerDetail extends Component {
 
     // 카테고리
     const categoryName =this.props.category1&&this.props.category2&&
-     this.state.secondCategory === 0? this.props.category1[this.state.firstCategory].text
-     :this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
-
+      this.state.secondCategory === 0?this.props.category1[this.state.firstCategory]&& this.props.category1[this.state.firstCategory].text
+      :this.props.category2[this.state.firstCategory]&&
+      this.props.category2[this.state.firstCategory][this.state.secondCategory]&&this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
+    
     console.log(categoryName);
     return (<Wrapper>
       <div className="contents_box"/>
