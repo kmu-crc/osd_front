@@ -225,8 +225,8 @@ export class LocalGridEditor extends Component {
             if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
         }
     }
-    createNewCard(data) {
-        this.setState({ newcard: true, boardId: data.id, cardOrder: data.order, content: data.content });
+    async createNewCard(data) {
+        await this.setState({ newcard: true, boardId: data.id, cardOrder: data.order, content: data.content });
         console.log("zlzl", data);
     }
     openCard = (card, row, boardId) => {
@@ -320,6 +320,7 @@ export class LocalGridEditor extends Component {
         let copy = [...this.props.content];
         for (let item of copy) {
             if (item.uid === data.card.boardId) {
+                
                 item = { ...data.card, nick_name: item.nick_name, contents: data.content.data.newContent }
             }
         }
@@ -335,13 +336,14 @@ export class LocalGridEditor extends Component {
             if (item.uid === data.card.boardId) {
                 item.cards.push({
                     ...data.card,
+                    title: data.content.title, thumbnail: data.content.thumbnail, content: data.content.content,
                     nick_name: this.props.userInfo.nickName,
                     contents: data.content.data.newContent
                 });
             }
         }
         // await this.setState({ content: copy });
-        console.log("new-card",copy);
+        console.log("new-card", copy);
         this.props.returnContent(copy);
         this.updateReload();
     }

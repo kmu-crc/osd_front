@@ -4,17 +4,14 @@ import host from "config";
 export const CreateDesignRequest = (data, token) => {
   return (dispatch) => {
     dispatch(CreateProduct());
-    return fetch(`${host}/item/create`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (res) {
-        console.log("insert detail", res.desing_id);
-        return dispatch(CreateDesignSuccess(res));
-      }).catch((error) => {
-        console.log("insert detail err", error);
-        return dispatch(CreateDesignFailure(error));
-      })
+    return fetch(`${host}/item/create`, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => dispatch(CreateDesignSuccess(res)) && res)
+      .catch(error => dispatch(CreateDesignFailure(error)))
   }
 }
 

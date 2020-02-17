@@ -242,7 +242,7 @@ class CreateProductForm extends Component {
       tag: [], category1: null, category2: null,
       itemType: -1,
       // send data - additional
-      additional: null, content: []
+      additional: null, content: [], steps: []
     };
     this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
     this.onClickSecondCategory = this.onClickSecondCategory.bind(this);
@@ -257,20 +257,21 @@ class CreateProductForm extends Component {
     event.preventDefault();
     let data = {
       //basic
-      title: this.state.title,
+      title: this.state.title, type: "item",
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
       tag: this.state.tag, category1: this.state.category1, category2: this.state.category2,
       itemType: this.state.itemType,
       //additional
-      additional: this.state.additional, content: this.state.content
+      additional: this.state.additional, content: this.state.content, step: this.state.steps
     };
-    // console.log("send-data:", data);
+    console.log("send-data:", data);
     // return;
     this.props.CreateDesignRequest(data, this.props.token)
       .then(result => {
         if (result.success) {
-          window.location.href = `/productDetail/${result.id}`
-        }else{
+          console.log("result", result);
+          // window.location.href = `/productDetail/${result.id}`
+        } else {
           alert("boom!");
         }
       })
@@ -381,8 +382,14 @@ class CreateProductForm extends Component {
       {/* 아이템 상세정보 입력 폼 */}
       <div className="contentsBox">
         {itemType > -1 ?
-          <ItemTypeForm userInfo={this.props.userInfo} returnState={obj => this.setState({ additional: obj.additional, content: obj.content })} itemType={this.state.itemType} />
-          : <InfoContentChooseItemType>아이템 유형을 선택하여 세부적인 <br />내용을 입력해주신 후 아이템을 등록해주세요.</InfoContentChooseItemType>}
+          <ItemTypeForm
+            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps })}
+            itemType={this.state.itemType}
+            userInfo={this.props.userInfo}
+          />
+          : <InfoContentChooseItemType>
+            아이템 유형을 선택하여 세부적인 <br />
+            내용을 입력해주신 후 아이템을 등록해주세요.</InfoContentChooseItemType>}
       </div>
 
       {/* 버튼 */}
@@ -390,8 +397,9 @@ class CreateProductForm extends Component {
         <div className="contentsBox">
           <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>
           <RedButton gray onClick={() => {
-            if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다."))
+            if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
+            }
           }}>취소</RedButton>
         </div>
       ) : null}
@@ -404,7 +412,7 @@ export default CreateProductForm;
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { additional: null, content: [] };
+    this.state = { additional: null, content: [], steps: [] };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -413,7 +421,7 @@ class ItemTypeForm extends Component {
   }
   componentDidUpdate(prevProps) {
     if (prevProps.itemType !== this.props.itemType)
-      this.setState({ additional: null, content: [] });
+      this.setState({ additional: null, content: [], steps: [] });
   }
   async returnState() {
     this.props.returnState && this.props.returnState(this.state);
@@ -423,12 +431,15 @@ class ItemTypeForm extends Component {
     this.returnState();
   }
   async onHandleGrid(value) {
-    await this.setState({ content: value });
+    await this.setState({ steps: value });
     this.returnState();
   }
   async onHandleAdditional(value) { //write additional state
     if (this.state.additional && this.state.additional.uploadType) {
-      if (value.uploadType !== this.state.additional.uploadType) {
+      if (value.uploadType === '블로그형') {
+        await this.setState({ steps: [] });
+      }
+      if (value.uploadType === '프로젝트형') {
         await this.setState({ content: [] });
       }
     }
@@ -438,7 +449,7 @@ class ItemTypeForm extends Component {
 
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
-    const { additional, content } = this.state;
+    const { additional, content, steps } = this.state;
 
     return (
       <MainBox>
@@ -470,7 +481,7 @@ class ItemTypeForm extends Component {
               <div className="contentsBox">
                 <LocalGridEditor
                   userInfo={this.props.userInfo}
-                  content={content}
+                  content={steps}
                   returnContent={this.onHandleGrid}
                   editor={true} />
               </div>
@@ -733,7 +744,7 @@ class ItemConsulting extends Component {
         <Field title="자문/상담 방법">
           <UploadType return={(value) => this.onHandleReturn("contactMethod", value)} name="contactMethod" Options={typeOnOff} /></Field>
         <Field title="내용 공개 여부">
-          <UploadType return={(value) => this.onHandleReturn("pulic", value)} name="public" Options={typeTF} /></Field>
+          <UploadType return={(value) => this.onHandleReturn("public", value)} name="public" Options={typeTF} /></Field>
         <Field title="자문/상담 비용">
           <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
       </React.Fragment>)
@@ -935,7 +946,8 @@ class ItemProduct extends Component {
     this.returnState();
   };
   async onHandleImageList(value) {
-    console.log(value);
+    await this.setState({ imageList: value.imageList });
+    this.returnState();
   }
   render() {
     const type = ["블로그형", "프로젝트형"];
