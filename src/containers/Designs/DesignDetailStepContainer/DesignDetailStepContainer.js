@@ -6,7 +6,6 @@ import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
 
 class DesignDetailStepContainer extends Component {
   render() {
-    console.log("?");
     return (
         <DetailStep {...this.props} />
     );

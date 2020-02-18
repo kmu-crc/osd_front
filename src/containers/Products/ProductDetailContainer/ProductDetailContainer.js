@@ -3,22 +3,26 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemDetail from "components/Items/ItemDetail";
 import {
-  GetProductDetailRequest, GetProductCountRequest, GetLikeProductRequest,
+  // GetProductDetailRequest,
+  GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest
 } from "actions/Product";
+import { GetItemDetailRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
 class ProductDetailContainer extends Component {
   componentDidMount() {
-    this.props.GetProductDetailRequest(this.props.id,this.props.token);
+    this.props.GetItemDetailRequest(this.props.id, this.props.token);
   }
   render() {
-    return (<ItemDetail item={this.props.ProductDetail} {...this.props} />)
+    console.log(this.props.ItemDetail);
+    return (<ItemDetail item={this.props.ItemDetail} {...this.props} />)
   }
 }
 
 const mapStateToProps = (state) => ({
-  ProductDetail: state.ProductDetail.status.ProductDetail,
+  ItemDetail: state.ItemDetail.status.ItemDetail,
+
   Count: state.ProductDetail.status.Count,
   like: state.ProductLike.status.like,
   userInfo: state.Authentication.status.userInfo,
@@ -27,7 +31,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetProductDetailRequest: (id, token) => dispatch(GetProductDetailRequest(id, token)),
+  GetItemDetailRequest: (id, token) => dispatch(GetItemDetailRequest(id, token)),
   GetProductCountRequest: (id) => dispatch(GetProductCountRequest(id)),
   GetLikeProductRequest: (id, token) => dispatch(GetLikeProductRequest(id, token)),
   LikeProductRequest: (id, token) => dispatch(LikeProductRequest(id, token)),

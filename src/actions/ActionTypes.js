@@ -84,6 +84,11 @@ export const FIND_PW_FAILURE = "FIND_PW_FAILURE";
 // ITEM 
 ////////////////////////////////////////////////////////////////////////////
 export const GET_ITEM_DETAIL = "GET_ITEM_DETAIL";
+export const GET_ITEM_CONTENT = "GET_ITE_CONTENT";
+export const GET_ITEM_STEP= "GET_ITE_STEP";
+export const UPDATE_ITEM_CONTENT = "UPDATE_ITEM_CONTENT";
+export const UPDATE_ITEM_CONTENT_SUCCESS = "UPDATE_ITEM_CONTENT_SUCCESS";
+export const UPDATE_ITEM_CONTENT_FAILURE = "UPDATE_ITEM_CONTENT_FAILURE";
 
 ////////////////////////////////////////////////////////////////////////////
 // PRODUCT 
