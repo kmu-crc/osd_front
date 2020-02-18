@@ -14,7 +14,9 @@ class ItemStepContainer extends Component {
   }
   render() {
     return (
-      <GridEditor {...this.props} item={{ uid: this.props.id }} />
+      <div style={{ height: "750px" }}>
+        <GridEditor {...this.props} item={{ uid: this.props.id }} />
+      </div>
     );
   }
 }

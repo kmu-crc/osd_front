@@ -98,7 +98,7 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
                 </div>
             </Fragment>}
         {editor &&
-            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
+            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "15spx" }}>
                 <CreateCard
                     onClick={() => createCard({ order: (step && step.cards) ? step.cards.length : 0, id: boardId })}
                     title={""} step={"카드 "}

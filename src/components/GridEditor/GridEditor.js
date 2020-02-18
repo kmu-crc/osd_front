@@ -45,12 +45,15 @@ const Wrapper = styled.div`
 `;
 const GridEditorWrapper = styled.div`
     display: flex;
-    margin-left:32px;
+    margin-left: 20px;
     margin-bottom: 75px;
     width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
+    
     .Editor{
+        overflow: auto;
+        height: 700px;
         padding-right: 250px;
-        overflow: hidden;
+        // overflow: hidden;
         white-space: nowrap;
         display: flex;
         margin-top: 90px;
@@ -258,8 +261,8 @@ class GridEditor extends Component {
         let copy = [...this.state.content];
         for (let item of copy) {
             // if (item)
-            if(item.uid === data.uid){
-                
+            if (item.uid === data.uid) {
+
             }
         }
     }
@@ -267,7 +270,7 @@ class GridEditor extends Component {
         const { editor, item, ItemStep, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = ItemStep;
-        console.log(steps,userInfo,cardDetail);
+        console.log(steps, userInfo, cardDetail);
 
         return (
             <Wrapper>
@@ -298,7 +301,7 @@ class GridEditor extends Component {
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>
-                                <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
+                                <div style={{width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {steps && steps.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} item_id={this.props.item.uid} editor={editor ? true : false} items={steps} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}

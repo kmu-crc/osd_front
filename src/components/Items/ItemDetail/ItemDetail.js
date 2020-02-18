@@ -296,7 +296,7 @@ const Content = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
-  padding: 90px 51px 45px 60px;
+  padding: 45px 25px 20px 30px;
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
@@ -356,18 +356,19 @@ const empty = {
   thumbnail: "",
   mainImage: "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/1550043018657-x200.jpg",
   subImages: ["", "", "", "", ""],
-
   // variety section
   detail: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 인간의 생명을 이상, 불어 바로 것이다. 대고, 방황하였으며, 가치를 봄날의 인간이 가진 설산에서 운다. 있는 착목한는 그들의 노래하며 원질이 대한 아름다우냐? 같은 찬미를 붙잡아 청춘 힘차게 두기 갑 속잎나고, 소담스러운 것이다. 몸이 원질이 가슴이 피가 반짝이는 소리다.이것은 이상의 예가 피다. 그들을 할지니, 품었기 가치를 보배를 남는 지혜는 약동하다. 목숨이 일월과 동력은 가는 청춘의 사라지지 더운지라 가는 있음으로써 것이다. 가치를 웅대한 대한 새 피가 품에 소담스러운 그들에게 오직 듣는다. 찾아다녀도, 들어 그들은 피어나기 것이다. 착목한는 되려니와, 그와 타오르고 커다란 가는 위하여서. 물방아 얼마나 것이다.보라, 바로 얼마나 남는 위하여서, 봄바람이다. 얼마나 그림자는 얼음에 보이는 새가 보내는 것이다. 가슴에 인간의 두기 끝까지 무엇이 것은 그리하였는가? 보이는 천지는 주며, 듣는다. 이상, 몸이 곧 두기 커다란 이것을 그들에게 위하여서, 가슴에 보라. 무한한 돋고, 많이 가슴에 있는 사막이다. 힘차게 무엇을 능히 되는 가치를 이 거선의 남는 부패뿐이다. 소금이라 얼음 긴지라 품었기 과실이 굳세게 끓는 봄바람이다. 인간의 갑 별과 사라지지 품에 같지 사막이다. 소금이라 듣기만 설레는 심장은 있으며, 것은 위하여서, 그리하였는가? 그들을 그러므로 물방아 우리의 있을 얼음과 청춘의 장식하는 보라. 이것은 끝까지 기관과 가진 인류의 그들은 힘있다. 붙잡아 뛰노는 실로 피고 피에 그것을 황금시대다. 그들의 위하여, 그것을 힘있다. 봄바람을 구하기 가슴이 풍부하게 주며, 무엇을 인도하겠다는 없으면, 봄바람이다. 청춘 방황하여도, 산야에 영원히 그들은 간에 하는 위하여서, 아니다. 사는가 얼마나 그들은 부패를 못할 하여도 무엇을 것이다. 찾아다녀도, 피는 위하여 약동하다."
 };
+
+const Won = N => '₩' + N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 class ItemDetail extends Component {
-  state = {
-    like: false,
+  constructor(props) {
+    super(props);
+    this.state = { like: false, };
   }
+
   render() {
-    const item = this.props.item;
-    console.log(item);
-    const Won = N => '₩' + N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const { item } = this.props;
 
     return !item ? (<div>loading...</div>) :
       (<Wrapper>
@@ -380,7 +381,8 @@ class ItemDetail extends Component {
               <ItemImages main={item.imageList ? item.thumbnail.l_img : noimg}>
                 <div className="sub-images line">
                   {item.images ?
-                    item.images.map((img, idx) => <div key={idx} img={img} className="sub nine-teen" />) : null}
+                    item.images.map((img, idx) =>
+                      <div key={idx} img={img} className="sub nine-teen" />) : null}
                   {/*
                     <div img={item.mainImage} className="sub eight-teen" />
                     <div img={item.mainImage} className="sub eight-teen" />
@@ -431,7 +433,7 @@ class ItemDetail extends Component {
         {/* very-variety-layout will be needed */}
         <div className="line">
           <div>
-            <div className="line" style={{ marginTop: "110px" }}>
+            <div className="line" style={{ marginTop: "35px" }}>
               <Detail mRight={101}>
                 <div className="title">상품 상세설명</div>
                 <div className="text">{item.description}</div>
@@ -471,7 +473,7 @@ class ItemDetail extends Component {
                 <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div> */}
               </Delivery>
             </div>
-            <div style={{ marginTop: "95px" }}>
+            <div style={{ marginTop: "50px" }}>
               <Board>
                 <div className="title">디자인 의뢰 게시판</div>
 
@@ -546,7 +548,7 @@ class ItemDetail extends Component {
             </div>
           </div>
 
-          <div style={{ marginTop: "110px" }}>
+          <div style={{ marginTop: "35px" }}>
             <Reviews>
               <div className="line">
                 <div className="title">리뷰</div>
@@ -573,7 +575,7 @@ class ItemDetail extends Component {
 
         {/* item-detail */}
         <div className="line">
-          <Content style={{ marginTop: "35px" }} width={item && item["upload-type"] === "proj" ? 1600 : 1094}>
+          <Content style={{ marginTop: "15px" }} width={item && item["upload-type"] === "proj" ? 1600 : 1094}>
             <div className="title">아이템 상세내용</div>
             {item && item["upload-type"] === "blog"
               ? <CardSourceDetailContainer isCancel cardId={item.cardId} edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
