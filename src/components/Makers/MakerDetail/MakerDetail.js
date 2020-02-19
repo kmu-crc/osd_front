@@ -28,6 +28,21 @@ const Profile = styled.div`
   background-size: cover;
   background-position: center center;
 `;
+const LikeWrapper = styled.div`
+  width:100%;
+  text-align:center;
+  margin-top:20px;
+  font-size:30px;
+  cursor:pointer;
+  .unlike{
+    color:#ff0000;
+    font-weight:200;
+  }
+  .like{
+    color:#ff0000;
+  }
+}
+`
 const TextWrapper = styled.div`
   margin-top: 27px;
   margin-left: auto;
@@ -51,7 +66,7 @@ const TextWrapper = styled.div`
   }
 `;
 const Counter = styled.div`
-  margin-top: 106px;
+  margin-top: 76px;
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -494,12 +509,14 @@ class MakerDetail extends Component {
   constructor(props) {
     super(props);
     this.state = { tab: true,
+      isLike:false,
       nick_name:"",
       thumbnail:null,thumbnail_name:null,
       firstCategory:0,secondCategory:0,location:"",
       explain:"",tag:[],equipment:[],technique:[],
       career:[{number:0,task:"",explain:"",during:""}], };
     this.onClickRequest = this.onClickRequest.bind(this);
+    this.onClickisLike = this.onClickisLike.bind(this);
   }
   componentWillUpdate(nextProps){
     if(
@@ -512,7 +529,8 @@ class MakerDetail extends Component {
       this.props.MakerViewDetail.category_level2!==nextProps.MakerViewDetail.category_level2||
       this.props.MakerViewDetail.tag !== nextProps.MakerViewDetail.tag||
       this.props.MakerViewDetail.experience!==nextProps.MakerViewDetail.experience||
-      this.props.MakerViewDetail.score!==nextProps.MakerViewDetail.score)
+      this.props.MakerViewDetail.score!==nextProps.MakerViewDetail.score||
+      this.props.like !== nextProps.like)
     {
 
       const careerRow = nextProps.MakerViewDetail.experience.split("/");
@@ -534,6 +552,7 @@ class MakerDetail extends Component {
       tag.pop();
 
       this.setState({
+        isLike:nextProps.like,
         thumbnail:nextProps.MakerViewDetail.image,
         nick_name:nextProps.MakerViewDetail.nick_name,
         user_id:nextProps.MakerViewDetail.user_id,
@@ -553,6 +572,14 @@ class MakerDetail extends Component {
   }
   onClickRequest(event){
     window.location.href = "/requestToMaker/"+ this.props.DesignerDetail.uid;
+  }
+  onClickisLike(event){
+    const isLike = !this.state.isLike;
+
+    isLike === false ? this.props.UnlikeMakerRequest(this.state.user_id,this.props.token)
+    :this.props.LikeMakerRequest(this.state.user_id,this.props.token);
+
+    this.setState({isLike:isLike});
   }
   render() {
     // const expert = this.props.MakerDetail || empty;
@@ -577,6 +604,15 @@ class MakerDetail extends Component {
             <div className="nick"><TextFormat txt={this.state.nick_name} chars={32} /></div>
             <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
           </TextWrapper>
+
+          <LikeWrapper>
+            {this.state.isLike === false?
+             <div onClick={this.onClickisLike} className="unlike">♡</div>
+             :
+             <div onClick={this.onClickisLike} className="like">♥</div>
+            }
+          {/* ♥ */}
+          </LikeWrapper>
           {/* Counter */}
           <Counter>
             <div className="items">

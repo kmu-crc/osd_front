@@ -329,8 +329,8 @@ class CreateMaker extends Component{
     // }
   this.props.InsertMakerDetailRequest(data, this.props.token)
     .then(res => {
-      console.log("res",res.res);
-      const result = res.res;
+      console.log("res",res);
+      const result = res;
       if (result.success) {
         alert("정보가 수정되었습니다.");
         //this.props.history.push(`/`);
