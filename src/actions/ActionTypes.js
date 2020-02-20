@@ -549,6 +549,16 @@ export const UNLIKE_DESIGNER = "UNLIKE_DESIGNER";
 export const UNLIKE_DESIGNER_SUCCESS = "UNLIKE_DESIGNER_SUCCESS";
 export const UNLIKE_DESIGNER_FAILURE = "UNLIKE_DESIGNER_FAILURE";
 
+export const GET_LIKE_MAKER = "GET_LIKE_MAKER";
+export const GET_LIKE_MAKER_SUCCESS = "GET_LIKE_MAKER_SUCCESS";
+export const GET_LIKE_MAKER_FAILURE = "GET_LIKE_MAKER_FAILURE";
+export const LIKE_MAKER = "LIKE_MAKER";
+export const LIKE_MAKER_SUCCESS = "LIKE_MAKER_SUCCESS";
+export const LIKE_MAKER_FAILURE = "LIKE_MAKER_FAILURE";
+export const UNLIKE_MAKER = "UNLIKE_MAKER";
+export const UNLIKE_MAKER_SUCCESS = "UNLIKE_MAKER_SUCCESS";
+export const UNLIKE_MAKER_FAILURE = "UNLIKE_MAKER_FAILURE";/////////////////////
+
 
 ////////////////////////////////////////////////////////////////////////////
 // commons

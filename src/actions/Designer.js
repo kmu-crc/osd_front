@@ -113,7 +113,7 @@ const DesignInDesignerFail = () => ({ type: types.DESIGN_IN_DESIGNER_FAIL, Desig
 // 디자이너가 좋아요 한 디자인 가져오기
 export function GetLikeInDesignerRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/designer/designerDetail/${id}/like/${page}`;
+    const sql = `${host}/expert/designerDetail/${id}/like/${page}`;
     return fetch(sql,
       { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
@@ -129,7 +129,7 @@ const LikeInDesignerFail = () => ({ type: types.LIKE_IN_DESIGNER_FAIL, LikeInDes
 export function GetLikeDesignerRequest(id, token) {
   return (dispatch) => {
     dispatch(GetLikeDesigner());
-    const sql = `${host}/Designer/getLike/${id}`;
+    const sql = `${host}/expert/getLikeDesigner/${id}`;
     return fetch(sql,
       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "get" })
       .then(res => res.json())
@@ -154,7 +154,7 @@ const GetLikeDesignerFailure = (data) => ({ type: types.GET_LIKE_DESIGNER_FAILUR
 export function LikeDesignerRequest(id, token) {
   return (dispatch) => {
     dispatch(LikeDesigner());
-    const sql = `${host}/Designer/like/${id}`;
+    const sql = `${host}/expert/likeDesigner/${id}`;
     return fetch(sql,
       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
       .then(res => res.json())
@@ -179,7 +179,7 @@ const LikeDesignerFailure = () => ({ type: types.LIKE_DESIGNER_FAILURE });
 export function UnlikeDesignerRequest(id, token) {
   return (dispatch) => {
     dispatch(UnlikeDesigner());
-    const sql = `${host}/Designer/unlike/${id}`;
+    const sql = `${host}/expert/unlikeDesigner/${id}`;
     return fetch(sql,
       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
       .then(res => res.json())

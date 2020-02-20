@@ -12,10 +12,12 @@ import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
 class ProductDetailContainer extends Component {
   componentDidMount() {
-    this.props.GetItemDetailRequest(this.props.id, this.props.token);
+    this.props.GetItemDetailRequest(this.props.id, this.props.token)
+    .then(this.props.GetLikeProductRequest(this.props.id,this.props.token));
   }
   render() {
-    return (<ItemDetail item={this.props.ItemDetail} {...this.props} />)
+    console.log(this.props);
+    return (<ItemDetail item={this.props.ProductDetail} {...this.props} />)
   }
 }
 

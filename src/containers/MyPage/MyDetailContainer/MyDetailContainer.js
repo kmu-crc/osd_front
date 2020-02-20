@@ -17,10 +17,11 @@ class MyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    userInfo: state.Authentication.status.userInfo,
     MyDetail: state.MyDetail.status.MyDetail,
     OrderList: state.OrderList.status.OrderList,
   };
-};
+}; 
 
 const mapDispatchToProps = (dispatch) => {
   return {

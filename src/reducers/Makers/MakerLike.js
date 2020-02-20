@@ -2,7 +2,7 @@ import * as types from "actions/ActionTypes";
 import update from "react-addons-update";
 
 const initialState = {
-  LikeDesigner: {
+  LikeMaker: {
     status: "INIT"
   },
   status: {
@@ -10,68 +10,68 @@ const initialState = {
   }
 };
 
-export function DesignerLike(state, action) {
+export function MakerLike(state, action) {
   if (typeof state === "undefined")
     state = initialState;
 
   switch (action.type) {
-    case types.GET_LIKE_DESIGNER:
+    case types.GET_LIKE_MAKER:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "WATTING" }
         }
       });
-    case types.GET_LIKE_DESIGNER_SUCCESS:
+    case types.GET_LIKE_MAKER_SUCCESS:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "SUCCESS" }
         },
         status: {
           like: { $set: action.like }
         }
       });
-    case types.GET_LIKE_DESIGNER_FAILURE:
+    case types.GET_LIKE_MAKER_FAILURE:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "FAILURE" }
         },
         status: {
           like: { $set: action.like }
         }
       });
-    case types.LIKE_DESIGNER:
+    case types.LIKE_MAKER:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "WATING"}
         }
       });
-    case types.LIKE_DESIGNER_SUCCESS:
+    case types.LIKE_MAKER_SUCCESS:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "SUCCESS"}
         }
       });
-    case types.LIKE_DESIGNER_FAILURE:
+    case types.LIKE_MAKER_FAILURE:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "FAILURE"}
         }
       });
-    case types.UNLIKE_DESIGNER:
+    case types.UNLIKE_MAKER:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "WATING"}
         }
       });
-    case types.UNLIKE_DESIGNER_SUCCESS:
+    case types.UNLIKE_MAKER_SUCCESS:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "SUCCESS"}
         }
       });
-    case types.UNLIKE_DESIGNER_FAILURE:
+    case types.UNLIKE_MAKER_FAILURE:
       return update(state, {
-        LikeDesigner: {
+        LikeMaker: {
           status: { $set: "FAILURE"}
         }
       });

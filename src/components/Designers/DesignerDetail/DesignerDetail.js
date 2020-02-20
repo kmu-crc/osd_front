@@ -19,6 +19,7 @@ const Expert = styled.div`
   border-radius: 20px;
 `;
 const Profile = styled.div`
+
   width: 227px;
   height: 228px;
   margin-top: 18px;
@@ -29,6 +30,21 @@ const Profile = styled.div`
   background-size: cover;
   background-position: center center;
 `;
+const LikeWrapper = styled.div`
+  width:100%;
+  text-align:center;
+  margin-top:20px;
+  font-size:30px;
+  cursor:pointer;
+  .unlike{
+    color:#ff0000;
+    font-weight:200;
+  }
+  .like{
+    color:#ff0000;
+  }
+}
+`
 const TextWrapper = styled.div`
   margin-top: 27px;
   margin-left: auto;
@@ -52,7 +68,7 @@ const TextWrapper = styled.div`
   }
 `;
 const Counter = styled.div`
-  margin-top: 106px;
+  margin-top: 76px;
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -448,6 +464,7 @@ class DesignerDetail extends Component {
   constructor(props) {
     super(props);
     this.state = { tab: true ,
+      isLike:false,
       nick_name:"",
       thumbnail:null,thumbnail_name:null,
       firstCategory:0,secondCategory:0,location:"",
@@ -455,6 +472,7 @@ class DesignerDetail extends Component {
       career:[{number:0,task:"",explain:"",during:""}],
     };
     this.onClickRequest = this.onClickRequest.bind(this);
+    this.onClickisLike = this.onClickisLike.bind(this);
   }
   componentWillUpdate(nextProps){
     if(
@@ -467,7 +485,8 @@ class DesignerDetail extends Component {
       this.props.DesignerViewDetail.category_level2!==nextProps.DesignerViewDetail.category_level2||
       this.props.DesignerViewDetail.tag !== nextProps.DesignerViewDetail.tag||
       this.props.DesignerViewDetail.experience!==nextProps.DesignerViewDetail.experience||
-      this.props.DesignerViewDetail.score!==nextProps.DesignerViewDetail.score)
+      this.props.DesignerViewDetail.score!==nextProps.DesignerViewDetail.score||
+      this.props.like !== nextProps.like)
     {
 
       const careerRow = nextProps.DesignerViewDetail.experience.split("/");
@@ -483,6 +502,7 @@ class DesignerDetail extends Component {
       tag.pop();
 
       this.setState({
+        isLike:nextProps.like,
         thumbnail:nextProps.DesignerViewDetail.image,
         nick_name:nextProps.DesignerViewDetail.nick_name,
         user_id:nextProps.DesignerViewDetail.user_id,
@@ -501,6 +521,14 @@ class DesignerDetail extends Component {
   onClickRequest(event){
       window.location.href = "/requestToDesigner/"+ this.props.DesignerViewDetail.uid;
   }
+  onClickisLike(event){
+    const isLike = !this.state.isLike;
+
+    isLike === false ? this.props.UnlikeDesignerRequest(this.state.user_id,this.props.token)
+    :this.props.LikeDesignerRequest(this.state.user_id,this.props.token);
+
+    this.setState({isLike:isLike});
+  }
   render() {
     // const expert = this.props.DesignerDetail || empty;
     const expert = empty;
@@ -509,9 +537,10 @@ class DesignerDetail extends Component {
 
     // 카테고리
     const categoryName =this.props.category1&&this.props.category2&&
-     this.state.secondCategory === 0? this.props.category1[this.state.firstCategory].text
-     :this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
-
+      this.state.secondCategory === 0?this.props.category1[this.state.firstCategory]&& this.props.category1[this.state.firstCategory].text
+      :this.props.category2[this.state.firstCategory]&&
+      this.props.category2[this.state.firstCategory][this.state.secondCategory]&&this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
+    
     console.log(categoryName);
     return (<Wrapper>
       <div className="contents_box"/>
@@ -525,12 +554,20 @@ class DesignerDetail extends Component {
             <div className="nick"><TextFormat txt={this.state.nick_name} chars={32} /></div>
             <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
           </TextWrapper>
+          <LikeWrapper>
+            {this.state.isLike === false?
+             <div onClick={this.onClickisLike} className="unlike">♡</div>
+             :
+             <div onClick={this.onClickisLike} className="like">♥</div>
+            }
+          {/* ♥ */}
+          </LikeWrapper>
           {/* Counter */}
           <Counter>
             <div className="items">
               {NumberFormat(expert.items) || 0}개의 아이템</div>
             <div className="v-line" />
-            <div className="likes">{/*♥*/}
+            <div className="likes">{/**/}
               <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likes) || 0}</div>
           </Counter>
         </Expert>

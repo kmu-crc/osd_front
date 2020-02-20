@@ -334,14 +334,35 @@ const empty = {
 
 // const Won = N => '₩' + N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 class ItemDetail extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.state = { like: false, };
+    this.state = {
+      isLike:false,
+    }
+    this.onClickLike = this.onClickLike.bind(this);
   }
-
+  componentWillUpdate(nextProps)
+  {
+    if(this.props.like !== nextProps.like)
+    {
+      this.setState({
+        isLike:nextProps.like,
+      })
+    }
+  }
+  onClickLike(event){
+    const isLike = !this.state.isLike;
+    this.setState({
+      isLike:isLike,
+    });
+    isLike === false?
+    this.props.UnlikeProductRequest(this.props.id,this.props.token)
+    :
+    this.props.LikeProductRequest(this.props.id,this.props.token)
+  }
   render() {
-    const { item } = this.props;
-    console.log(item);
+    const item = this.props.item;
+    // console.log(item);
     return !item ? (<div>loading...</div>) :
       (<Wrapper>
         <div className="line">
@@ -388,12 +409,17 @@ class ItemDetail extends Component {
 
             <div className="buttons line">
               <div className="button first">
-                <div className="text">아이템구매</div>
-              </div>
-              <div className={`button second ${this.state.like ? "active" : ""}`}
-                onClick={() => this.setState({ like: !this.state.like })}>
-                <div className="text">관심항목{this.state.like ? "" : "추가"}</div>
-              </div>
+
+                <div className="text">아이템구매</div></div>
+                {
+                  this.state.isLike === false?
+                  <div className="button second" onClick={this.onClickLike}>
+                  <div className="text">관심항목추가</div></div>
+                  :
+                  <div className="button first" onClick={this.onClickLike}>
+                  <div className="text">관심항목</div></div>
+                } 
+
             </div>
           </ItemInfo>
         </div>
