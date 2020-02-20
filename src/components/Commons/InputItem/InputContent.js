@@ -52,6 +52,7 @@ export class InputContent extends Component {
 
     render() {
         const { content } = this.props;
+        console.log("!!!",content);
         return (<React.Fragment>
             {content.length > 0 && content.map((item, index) =>
                 <Controller
@@ -64,7 +65,6 @@ export class InputContent extends Component {
                 name="addBasic" type="INIT"
                 order={content.length > 0 ? content.length : 0}
                 getValue={this.onAddValue} />
-
         </React.Fragment>);
     }
 }

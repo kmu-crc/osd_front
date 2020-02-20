@@ -17,22 +17,10 @@ export function ItemDetail(state, action) {
   }
 
   switch (action.type) {
-    case types.GET_PRODUCT_DETAIL:
+    case types.GET_ITEM_DETAIL:
       return update(state, {
         status: {
-          ProductDetail: { $set: action.ProductDetail }
-        }
-      });
-    case types.PRODUCT_DETAIL_RESET:
-      return update(state, {
-        status: {
-          ProductDetail: { $set: action.ProductDetail }
-        }
-      });
-    case types.GET_PRODUCT_COUNT:
-      return update(state, {
-        status: {
-          Count: { $set: action.Count }
+          ItemDetail: { $set: action.ItemDetail }
         }
       });
 
@@ -79,6 +67,7 @@ export function ItemDetail(state, action) {
               HaveInItemAdded: { $set: action.HaveInItemAdded }
             }
           });
+
     default:
       return state;
   }

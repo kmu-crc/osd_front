@@ -39,7 +39,7 @@ const LikeInItemFail = () => ({ type: types.LIKE_IN_ITEM_FAIL, LikeInItem: [], L
 // list
 export function GetProductListRequest(page, sort, cate1, cate2, keyword) {
   return (dispatch) => {
-    const sql = `${host}/product/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    const sql = `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
     return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch((page === 0) ? (ProductListClear(data || [])) : GetProductList(data || [])))
@@ -51,7 +51,7 @@ const ProductListClear = data => { return { type: types.PRODUCT_LIST_CLEAR, Prod
 const ProductListFail = () => { return { type: types.PRODUCT_LIST_FAIL, ProductList: [], ProductListAdded: [] } };
 export function GetProductTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
-    const sql = `${host}/product/Count/${cate1}/${cate2}`;
+    const sql = `${host}/item/list-count/${cate1}/${cate2}`;
     return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetProductTotalCount(data ? data["count(*)"] : 0)))
@@ -64,7 +64,7 @@ const ProductTotalCountFail = () => { return { type: types.GET_PRODUCT_TOTAL_COU
 // detail
 export function GetProductDetailRequest(id, token) {
   return (dispatch) => {
-    const sql = `${host}/product/detail/${id}`;
+    const sql = `${host}/item/detail/${id}`;
     return fetch(sql, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
@@ -323,5 +323,5 @@ export function getOrderListRequest(id) {
             .catch(error => dispatch(getOrderListFailure()))
   }
 };
-const getOrderList = data => {   return { type: types.GET_ORDER_LIST, OrderList: data.list } };
+const getOrderList = data => { return { type: types.GET_ORDER_LIST, OrderList: data.list } };
 const getOrderListFailure = () => { return { type: types.GET_ORDER_LIST_FAILURE, OrderList: null } };
