@@ -32,8 +32,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetExpertDesignerViewDetailRequest: (data) => {
-      return dispatch(GetExpertDesignerViewDetailRequest(data))
+    GetExpertDesignerViewDetailRequest: (id) => {
+      return dispatch(GetExpertDesignerViewDetailRequest(id))
     },
     LikeDesignerRequest: (id, token) => {//다자이너를 좋아요 눌렀을 때
       return dispatch(LikeDesignerRequest(id, token))

@@ -65,6 +65,8 @@ class DesignerList extends Component {
     this.changeState();
   }
   cate2Change = (cate1, value) => {
+    // console.log("cate2change",cate1,value);
+    // return;
     if (cate1 && this.props.cate1 !== cate1) {
       this.props.history.replace(`/designer/${this.props.sort}/${cate1}/${value}`);
     } else {
