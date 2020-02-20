@@ -15,7 +15,6 @@ class ProductDetailContainer extends Component {
     this.props.GetItemDetailRequest(this.props.id, this.props.token);
   }
   render() {
-    console.log(this.props.ItemDetail);
     return (<ItemDetail item={this.props.ItemDetail} {...this.props} />)
   }
 }

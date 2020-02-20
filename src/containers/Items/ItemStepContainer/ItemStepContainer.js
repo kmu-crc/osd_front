@@ -9,7 +9,6 @@ import { GetItemStepsRequest } from "actions/Item";
 
 class ItemStepContainer extends Component {
   componentDidMount() {
-    console.log(this.props);
     this.props.GetItemStepsRequest(this.props.id, this.props.token);
   }
   render() {

@@ -30,14 +30,14 @@ const ProductTotalCountFail = () => { return { type: types.GET_PRODUCT_TOTAL_COU
 export function GetItemDetailRequest(id, token) {
   return (dispatch) => {
     const url = `${host}/item/detail/${id}`;
-    console.log(url);
+    // console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         return dispatch(GetItemDetail(data))
       })
       .catch(error => console.log("err", error));
@@ -111,14 +111,14 @@ const UpdateItemContentsFailure = error => ({
 export function GetItemStepsRequest(id, token) {
   return (dispatch) => {
     const url = `${host}/item/detail/${id}/step`;
-    console.log(url);
+    // console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         return dispatch(GetItemStep(data.contents || []))
       })
       .catch(error => console.log("err", error));
@@ -146,26 +146,181 @@ export const CreateItemListRequest = (data, id, token) => {
       });
   };
 };
-
-export const CreateBoard = () => {
+const CreateBoard = () => {
   return {
     type: types.CREATE_BOARD
   };
 };
-
-export const CreateBoardSuccess = (res) => {
+const CreateBoardSuccess = (res) => {
   return {
     type: types.CREATE_BOARD_SUCCESS,
     success: res.success
   };
 };
-
-export const CreateBoardFailure = (error) => {
+const CreateBoardFailure = (error) => {
   return {
     type: types.CREATE_BOARD_FAILURE,
     success: error.success,
   };
 };
+
+
+
+// question
+
+// get question-list
+export const GetItemQuestionRequest = (id, page) => {
+  return dispatch => {
+    dispatch(GetItemQuestion());
+    const url = `${host}/item/detail/${id}/question/${page}`;
+    // console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetItemQuestionSuccess(data)))
+      .catch(error => dispatch(GetItemQuestionFailure(error)));
+  };
+};
+
+const GetItemQuestion = () => ({
+  type: types.GET_ITEM_QUESTION
+});
+const GetItemQuestionSuccess = data => ({
+  type: types.GET_ITEM_QUESTION_SUCCESS, payload: data,
+});
+const GetItemQuestionFailure = error => ({
+  type: types.GET_ITEM_QUESTION_FAILURE
+});
+
+// question or answer
+export const CreateItemQuestionRequest = (data, id, token) => {
+  return dispatch => {
+    dispatch(CreateItemQuestion());
+    const url = `${host}/item/detail/${id}/create-question`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(CreateItemQuestionSuccess(res)))
+      .catch(error => dispatch(CreateItemQuestionFailure(error)));
+  };
+};
+
+const CreateItemQuestion = () => ({
+  type: types.CREATE_ITEM_QUESTION
+});
+const CreateItemQuestionSuccess = res => ({
+  type: types.CREATE_ITEM_QUESTION_SUCCESS, data: res
+});
+const CreateItemQuestionFailure = error => ({
+  type: types.CREATE_ITEM_QUESTION_FAILURE
+});
+
+// remove question or answer
+export const DeleteItemQuestionRequest = (id, content_id, token) => {
+  return dispatch => {
+    dispatch(DeleteItemQuestion());
+    const url = `${host}/item/detail/${id}/delete-question/${content_id}`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(res => dispatch(DeleteItemQuestionSuccess(res)))
+      .catch(error => dispatch(DeleteItemQuestionFailure(error)));
+  };
+};
+
+const DeleteItemQuestion = () => ({
+  type: types.DELETE_ITEM_QUESTION
+});
+const DeleteItemQuestionSuccess = res => ({
+  type: types.DELETE_ITEM_QUESTION_SUCCESS, data: res
+});
+const DeleteItemQuestionFailure = error => ({
+  type: types.DELETE_ITEM_QUESTION_FAILURE
+});
+
+// REVIEWs
+// get review-list
+export const GetItemReviewRequest = (id, page) => {
+  return dispatch => {
+    dispatch(GetItemReview());
+    const url = `${host}/item/detail/${id}/review/${page}`;
+    // console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetItemReviewSuccess(data)))
+      .catch(error => dispatch(GetItemReviewFailure(error)));
+  };
+};
+const GetItemReview = () => ({
+  type: types.GET_ITEM_REVIEW
+});
+const GetItemReviewSuccess = data => ({
+  type: types.GET_ITEM_REVIEW_SUCCESS, payload: data,
+});
+const GetItemReviewFailure = error => ({
+  type: types.GET_ITEM_REVIEW_FAILURE
+});
+
+// review or answer
+export const CreateItemReviewRequest = (data, id, token) => {
+  return dispatch => {
+    dispatch(CreateItemReview());
+    const url = `${host}/item/detail/${id}/create-review`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(CreateItemReviewSuccess(res)))
+      .catch(error => dispatch(CreateItemReviewFailure(error)));
+  };
+};
+const CreateItemReview = () => ({
+  type: types.CREATE_ITEM_REVIEW
+});
+const CreateItemReviewSuccess = res => ({
+  type: types.CREATE_ITEM_REVIEW_SUCCESS, data: res
+});
+const CreateItemReviewFailure = error => ({
+  type: types.CREATE_ITEM_REVIEW_FAILURE
+});
+
+// remove review or answer
+export const DeleteItemReviewRequest = (id, content_id, token) => {
+  return dispatch => {
+    dispatch(DeleteItemReview());
+    const url = `${host}/item/detail/${id}/delete-review/${content_id}`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(res => dispatch(DeleteItemReviewSuccess(res)))
+      .catch(error => dispatch(DeleteItemReviewFailure(error)));
+  };
+};
+const DeleteItemReview = () => ({
+  type: types.DELETE_ITEM_REVIEW
+});
+const DeleteItemReviewSuccess = res => ({
+  type: types.DELETE_ITEM_REVIEW_SUCCESS, data: res
+});
+const DeleteItemReviewFailure = error => ({
+  type: types.DELETE_ITEM_REVIEW_FAILURE
+});
+
+
 
 // // update page-view count
 // export function UpdateProductViewRequest(id) {

@@ -198,7 +198,6 @@ class SortableDesignSteps extends Component {
         }
     }
     render() {
-        console.log("SortableDesignSteps:", this.state.items);
         const { items } = this.state;
         const { editor, designId, cardReorder, createCard, openCard } = this.props;
         return (<Container

@@ -270,7 +270,6 @@ class GridEditor extends Component {
         const { editor, item, ItemStep, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = ItemStep;
-        console.log(steps, userInfo, cardDetail);
 
         return (
             <Wrapper>
