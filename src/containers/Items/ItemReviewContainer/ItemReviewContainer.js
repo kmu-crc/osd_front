@@ -1,0 +1,44 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import ItemReview from "components/Items/ItemReview";
+import { GetItemReviewRequest, CreateItemReviewRequest, DeleteItemReviewRequest } from "actions/Item";
+
+
+class ItemReviewContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.requestReview = this.requestReview.bind(this);
+        this.getData = this.getData.bind(this);
+    }
+    componentDidMount() {
+        this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+    }
+    requestReview(data) {
+        this.props.CreateItemReviewRequest(data, this.props.match.params.id, this.props.token)
+            .then(res =>
+                res.data.success &&
+                    this.props.GetItemReviewRequest(this.props.match.params.id, 0))
+
+    }
+    getData(page) {
+        this.props.GetItemReviewRequest(this.props.match.params.id, page);
+    }
+    render() {
+        return (<ItemReview id={this.props.match.params.id} getData={this.getData} request={this.requestReview} {...this.props} />);
+    }
+}
+
+const mapStateToProps = (state) => ({
+    review: state.ItemReview.status.Review,
+    total: state.ItemReview.status.Total,
+    score: state.ItemReview.status.TotalScore,
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+});
+const mapDispatchToProps = (dispatch) => ({
+    GetItemReviewRequest: (id, page) => dispatch(GetItemReviewRequest(id, page)),
+    CreateItemReviewRequest: (data, id, token) => dispatch(CreateItemReviewRequest(data, id, token)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemReviewContainer));

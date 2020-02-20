@@ -12,24 +12,24 @@ export function ItemDetail(state, action) {
   }
 
   switch (action.type) {
-    case types.GET_PRODUCT_DETAIL:
+    case types.GET_ITEM_DETAIL:
       return update(state, {
         status: {
-          ProductDetail: { $set: action.ProductDetail }
+          ItemDetail: { $set: action.ItemDetail }
         }
       });
-    case types.PRODUCT_DETAIL_RESET:
-      return update(state, {
-        status: {
-          ProductDetail: { $set: action.ProductDetail }
-        }
-      });
-    case types.GET_PRODUCT_COUNT:
-      return update(state, {
-        status: {
-          Count: { $set: action.Count }
-        }
-      });
+    // case types.PRODUCT_DETAIL_RESET:
+    //   return update(state, {
+    //     status: {
+    //       ProductDetail: { $set: action.ProductDetail }
+    //     }
+    //   });
+    // case types.GET_PRODUCT_COUNT:
+    //   return update(state, {
+    //     status: {
+    //       Count: { $set: action.Count }
+    //     }
+    //   });
     default:
       return state;
   }

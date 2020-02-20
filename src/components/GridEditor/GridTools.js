@@ -178,7 +178,6 @@ const AuthorBox = styled.div`
 
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
-    console.log("card:",props);
     return (props.card
         ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
             <div className="icon-area">{props.children}</div>
