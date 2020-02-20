@@ -5,6 +5,8 @@ import Item from "components/Items/Item/Item"
 import Expert from "components/Experts/Expert";
 
 import {LikeItem} from "components/Users/MyDetail/MyDetailTab/likeItem";
+import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer"
+import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
 
 const MainBox = styled.div`
   width: 1790px;
@@ -373,30 +375,12 @@ class MyDetail extends Component {
               }
               {
                 this.state.selectMenu===2&&
-                <div className="wrap flex">
-                  {
-                    empty.likeDesigner.map((item,index)=>{
-                      return(
-                        <div className="wrapItem" key={index}>
-                          <Expert data={item} />
-                        </div>
-                      );
-                    })
-                  }
-                </div>
+                    <LikeInDesignerContainer id={this.props.userInfo.uid}/>
               }
               {
                 this.state.selectMenu===3&&
                 <div className="wrap flex">
-                  {
-                    empty.likeMaker.map((item,index)=>{
-                      return(
-                        <div className="wrapItem" key={index}>
-                          <Expert data={item} />
-                        </div>
-                      );
-                    })
-                  }
+                    <LikeInMakerContainer id={this.props.userInfo.uid}/>
                 </div>
               }
               {

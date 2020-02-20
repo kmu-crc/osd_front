@@ -90,7 +90,7 @@ export function DesignDetailViewReset() {
 export function GetLikeProductRequest(id, token) {
   return (dispatch) => {
     dispatch(GetLikeProduct());
-    const sql = `${host}/Design/getLike/${id}`;
+    const sql = `${host}/product/getLikeItem/${id}`;
     return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetLikeProductSuccess((data && data.like) || false)))
@@ -99,11 +99,11 @@ export function GetLikeProductRequest(id, token) {
 }
 const GetLikeProduct = () => { return { type: types.GET_LIKE_PRODUCT } };
 const GetLikeProductSuccess = data => { return { type: types.GET_LIKE_PRODUCT_SUCCESS, like: data } };
-const GetLikeProductFailure = data => { return { type: types.GET_LIKE_DESIGN_FAILURE, like: data } };
+const GetLikeProductFailure = data => { return { type: types.GET_LIKE_PRODUCT_FAILURE, like: data } };
 
 // 디자인 좋아요 하기 >>> 전체 디자인에 대한 좋아요
 export function LikeProductRequest(id, token) {
-  const sql = `${host}/product/like/${id}`;
+  const sql = `${host}/product/likeItem/${id}`;
   return (dispatch) => {
     dispatch(LikeProduct());
     return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "POST" })
@@ -120,7 +120,7 @@ const LikeProductFailure = () => { return { type: types.LIKE_PRODUCT_FAILURE } }
 export function UnlikeProductRequest(id, token) {
   return (dispatch) => {
     dispatch(UnlikeProduct());
-    const sql = `${host}/product/unlike/${id}`;
+    const sql = `${host}/product/unlikeItem/${id}`;
     return fetch(sql, {
       headers: { "Content-Type": "application/json", 'x-access-token': token },
       method: "POST"

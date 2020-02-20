@@ -101,84 +101,84 @@ const GetMakerCount = (data) => ({ type: types.GET_MAKER_COUNT, Count: data });
 // const DesignInMakerClear = (data) => ({ type: types.GET_DESIGN_IN_MAKER_CLEAR, DesignInMaker: data, DesignInMakerAdded: [] });
 // const DesignInMakerFail = () => ({ type: types.DESIGN_IN_MAKER_FAIL, DesignInMaker: [], DesignInMakerAdded: [] });
 
-// // 디자이너가 좋아요 한 디자인 가져오기
-// export function GetLikeInMakerRequest(id, page) {
-//   return (dispatch) => {
-//     const sql = `${host}/maker/detail/${id}/like/${page}`;
-//     return fetch(sql,
-//       { headers: { "Content-Type": "application/json" }, method: "GET" })
-//       .then(res => res.json())
-//       .then(data => dispatch(page === 0 ? LikeInMakerClear(data || []) : GetLikeInMaker(data || [])))
-//       .catch(err => dispatch(LikeInMakerFail()))
-//   }
-// };
-// const GetLikeInMaker = (data) => ({ type: types.GET_LIKE_IN_MAKER, LikeInMaker: data });
-// const LikeInMakerClear = (data) => ({ type: types.GET_LIKE_IN_MAKER_CLEAR, LikeInMaker: data, LikeInMakerAdded: [] });
-// const LikeInMakerFail = () => ({ type: types.LIKE_IN_MAKER_FAIL, LikeInMaker: [], LikeInMakerAdded: [] });
+// 디자이너가 좋아요 한 디자인 가져오기
+export function GetLikeInMakerRequest(id, page) {
+  return (dispatch) => {
+    const sql = `${host}/expert/makerDetail/${id}/like/${page}`;
+    return fetch(sql,
+      { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => dispatch(page === 0 ? LikeInMakerClear(data || []) : GetLikeInMaker(data || [])))
+      .catch(err => dispatch(LikeInMakerFail()))
+  }
+};
+const GetLikeInMaker = (data) => ({ type: types.GET_LIKE_IN_MAKER, LikeInMaker: data });
+const LikeInMakerClear = (data) => ({ type: types.GET_LIKE_IN_MAKER_CLEAR, LikeInMaker: data, LikeInMakerAdded: [] });
+const LikeInMakerFail = () => ({ type: types.LIKE_IN_MAKER_FAIL, LikeInMaker: [], LikeInMakerAdded: [] });
 
 // 로그인 했을때 내 좋아요 정보 가져오기
-// export function GetLikeMakerRequest(id, token) {
-//   return (dispatch) => {
-//     dispatch(GetLikeMaker());
-//     const sql = `${host}/maker/getLike/${id}`;
-//     return fetch(sql,
-//       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "get" })
-//       .then(res => res.json())
-//       .then(data => {
-//         console.log("Maker like >>", data);
-//         if (!data) {
-//           console.log("no like info");
-//           data = false;
-//         }
-//         dispatch(GetLikeMakerSuccess(data.like));
-//       }).catch((error) => {
-//         console.log("err", error);
-//         GetLikeMakerFailure(false);
-//       });
-//   }
-// }
-// const GetLikeMaker = () => ({ type: types.GET_LIKE_MAKER });
-// const GetLikeMakerSuccess = (data) => ({ type: types.GET_LIKE_MAKER_SUCCESS, like: data });
-// const GetLikeMakerFailure = (data) => ({ type: types.GET_LIKE_MAKER_FAILURE, like: data });
+export function GetLikeMakerRequest(id, token) {
+  return (dispatch) => {
+    dispatch(GetLikeMaker());
+    const sql = `${host}/expert/getLikeMaker/${id}`;
+    return fetch(sql,
+      { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "get" })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Maker like >>", data);
+        if (!data) {
+          console.log("no like info");
+          data = false;
+        }
+        dispatch(GetLikeMakerSuccess(data.like));
+      }).catch((error) => {
+        console.log("err", error);
+        GetLikeMakerFailure(false);
+      });
+  }
+}
+const GetLikeMaker = () => ({ type: types.GET_LIKE_MAKER });
+const GetLikeMakerSuccess = (data) => ({ type: types.GET_LIKE_MAKER_SUCCESS, like: data });
+const GetLikeMakerFailure = (data) => ({ type: types.GET_LIKE_MAKER_FAILURE, like: data });
 
-// // 디자이너 좋아요 하기
-// export function LikeMakerRequest(id, token) {
-//   return (dispatch) => {
-//     dispatch(LikeMaker());
-//     const sql = `${host}/maker/like/${id}`;
-//     return fetch(sql,
-//       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
-//       .then(res => res.json())
-//       .then((data) => {
-//         console.log("like >>>", data);
-//         if (!data) {
-//           console.log("no data");
-//         }
-//         dispatch(LikeMakerSuccess());
-//         return data;
-//       }).catch((error) => {
-//         console.log("err", error);
-//         LikeMakerFailure(error);
-//       });
-//   }
-// }
-// const LikeMaker = () => ({ type: types.LIKE_MAKER });
-// const LikeMakerSuccess = () => ({ type: types.LIKE_MAKER_SUCCESS });
-// const LikeMakerFailure = () => ({ type: types.LIKE_MAKER_FAILURE });
+// 디자이너 좋아요 하기
+export function LikeMakerRequest(id, token) {
+  return (dispatch) => {
+    dispatch(LikeMaker());
+    const sql = `${host}/expert/likeMaker/${id}`;
+    return fetch(sql,
+      { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
+      .then(res => res.json())
+      .then((data) => {
+        console.log("like >>>", data);
+        if (!data) {
+          console.log("no data");
+        }
+        dispatch(LikeMakerSuccess());
+        return data;
+      }).catch((error) => {
+        console.log("err", error);
+        LikeMakerFailure(error);
+      });
+  }
+}
+const LikeMaker = () => ({ type: types.LIKE_MAKER });
+const LikeMakerSuccess = () => ({ type: types.LIKE_MAKER_SUCCESS });
+const LikeMakerFailure = () => ({ type: types.LIKE_MAKER_FAILURE });
 
-// // 디자이너 좋아요 취소하기
-// export function UnlikeMakerRequest(id, token) {
-//   return (dispatch) => {
-//     dispatch(UnlikeMaker());
-//     const sql = `${host}/maker/unlike/${id}`;
-//     return fetch(sql,
-//       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
-//       .then(res => res.json())
-//       .then((data) => dispatch(UnlikeMakerSuccess(data)) && data)
-//       .catch(err => UnlikeMakerFailure(err));
-//   }
-// };
-// const UnlikeMaker = () => ({ type: types.UNLIKE_MAKER });
-// const UnlikeMakerSuccess = () => ({ type: types.UNLIKE_MAKER_SUCCESS });
-// const UnlikeMakerFailure = () => ({ type: types.UNLIKE_MAKER_FAILURE });
+// 디자이너 좋아요 취소하기
+export function UnlikeMakerRequest(id, token) {
+  return (dispatch) => {
+    dispatch(UnlikeMaker());
+    const sql = `${host}/expert/unlikeMaker/${id}`;
+    return fetch(sql,
+      { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
+      .then(res => res.json())
+      .then((data) => dispatch(UnlikeMakerSuccess(data)) && data)
+      .catch(err => UnlikeMakerFailure(err));
+  }
+};
+const UnlikeMaker = () => ({ type: types.UNLIKE_MAKER });
+const UnlikeMakerSuccess = () => ({ type: types.UNLIKE_MAKER_SUCCESS });
+const UnlikeMakerFailure = () => ({ type: types.UNLIKE_MAKER_FAILURE });
 
