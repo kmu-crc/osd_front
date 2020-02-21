@@ -3,11 +3,12 @@ import PaymentContainer from 'containers/Payment/PaymentContainer';
 
 class PaymentPage extends Component {
   render() {
-    console.log("thumbnail",this.props.match.params.thumbnail);
-    return(
-        <PaymentContainer id={this.props.match.params.id} token={this.props.token}>
-
-        </PaymentContainer>
+    return (
+      <PaymentContainer
+        id={this.props.match.params.id}
+        item={this.props.location.state && this.props.location.state.item}
+        options={this.props.location.state && this.props.location.state.options}
+      />
     );
   }
 }

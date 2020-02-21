@@ -186,7 +186,6 @@ class Header extends Component {
       try {
         Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", alarms => {
-          // console.log("alarm@@@@@@@@@@@@@@@@@@@");
           this.setState({ alarms: alarms });
         });
 
@@ -238,7 +237,7 @@ class Header extends Component {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
-    
+
     return (<HeaderContainer>
       {/*  */}
       <HeaderItem className="first">
@@ -265,36 +264,36 @@ class Header extends Component {
       </HeaderItem>
       {/*  */}
       {
-        (location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestToDesigner")!== -1||location.indexOf("/ModifyrequestToDesigner")!== -1||
-        location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) &&
+        (location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestToDesigner") !== -1 || location.indexOf("/ModifyrequestToDesigner") !== -1 ||
+          location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) &&
         <HeaderItem>
-        <Link to={`/requestDesigner`}
-          className={location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
-          디자이너 게시판
+          <Link to={`/requestDesigner`}
+            className={location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
+            디자이너 게시판
         </Link>
         </HeaderItem>
       }
       {
-        (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker")!== -1||location.indexOf("/ModifyrequestToMaker")!== -1||
-        location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
+        (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker") !== -1 || location.indexOf("/ModifyrequestToMaker") !== -1 ||
+          location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
         <HeaderItem>
-        <Link to={`/requestMaker`}
-          className={location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
-          메이커 게시판
+          <Link to={`/requestMaker`}
+            className={location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
+            메이커 게시판
         </Link>
         </HeaderItem>
       }
       {
-        (location.indexOf("/requestItem") !== -1 || location.indexOf("/createProduct")!== -1||location.indexOf("/productModify")!== -1||
-        location.indexOf("/productDetail") !== -1 || location.indexOf("/product") !== -1) &&
+        (location.indexOf("/requestItem") !== -1 || location.indexOf("/createProduct") !== -1 || location.indexOf("/productModify") !== -1 ||
+          location.indexOf("/productDetail") !== -1 || location.indexOf("/product") !== -1) &&
         <HeaderItem>
-        <Link to={`/requestItem`}
-          className={location.indexOf("/requestItem") !== -1 ? "active margin_left" : "margin_left"}>
-          아이템 게시판
+          <Link to={`/requestItem`}
+            className={location.indexOf("/requestItem") !== -1 ? "active margin_left" : "margin_left"}>
+            아이템 게시판
         </Link>
         </HeaderItem>
       }
-      
+
       {/*  */}
       {location.indexOf("/search") !== -1 ? null :
         <HeaderItem className="left search">
@@ -308,26 +307,22 @@ class Header extends Component {
       {/*  */}
       <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}>
         {valid && userInfo
-          ? (
-            <LoginBox>
-
-            <div className="iconBox"><Icon className="grey alarm" size="large"/></div>
-            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large"/></div>
-            <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
-            <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-            <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
-            {this.state.active ?
-              <UserMenu>
-                <Link to={`/mypage`}>
-                  <div className="item">마이페이지</div>
-                </Link>
-                <div onClick={this.logout} className="item">로그아웃</div>
-              </UserMenu>
-              : null}
-          </div>
-          </LoginBox>
-
-          )
+          ? (<LoginBox>
+              <div className="iconBox"><Icon className="grey alarm" size="large" /></div>
+              <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large" /></div>
+              <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+                <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
+                {this.state.active ?
+                  <UserMenu>
+                    <Link to={`/mypage`}>
+                      <div className="item">마이페이지</div>
+                    </Link>
+                    <div onClick={this.logout} className="item">로그아웃</div>
+                  </UserMenu>
+                  : null}
+              </div>
+            </LoginBox>)
           : (<Link to={`/signin`}>로그인</Link>)}
       </HeaderItem>
       {/* <HeaderItem className="cart">

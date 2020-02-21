@@ -55,6 +55,9 @@ class ItemReview extends Component {
             this_comment: "",
             this_reply: "",
             page: 0,
+            review_writing: false,
+            review_selected: -1,
+            score: 0,
             // ing: false
         };
         this.onChangeValue = this.onChangeValue.bind(this);
@@ -81,7 +84,11 @@ class ItemReview extends Component {
             targetId: null,
             this_comment: "",
             this_reply: "",
-            // ing: false 
+            page: 0,
+            review_writing: false,
+            review_selected: -1,
+            score: 0,
+            // ing: false
         });
     };
     checkPermission() {
@@ -105,11 +112,11 @@ class ItemReview extends Component {
         this.props.request({ comment: this.state.this_reply, group_id: origin.group_id, sort_in_group: origin.sort_in_group });
         this.reset();
     };
-    requestReview() {
+    requestReview(id) {
         if (this.checkPermission() === false)
             return;
         if (this.state.this_comment.length > 0)
-            this.props.request({ comment: this.state.this_comment, group_id: null });
+            this.props.request({ score: this.state.score > 5 ? 5 : this.state.score, comment: this.state.this_comment, payment_id: id });
         this.reset();
     };
     removeComment(commentId) {
@@ -139,33 +146,33 @@ class ItemReview extends Component {
     };
 
     render() {
-        const { review, userInfo, total, score, user_id } = this.props;
+        const { review, payment, userInfo, total, score, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
+
         const Review = (props) => {
-            console.log(props)
             return (
-                <div className="line element-reply">
-                    {!props.itsmine && props.sort_in_group && master ?
-                        <div onClick={() => this.reply(props.uid)}>[답변하기]</div> : null}
-                    {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
-                    <div className="line">
-                        {props.is_review ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
-                        {props.comment}</div>
-                    <div style={{ width: "max-content", marginLeft: "auto" }}>{props.nick_name}</div>
-                    <div style={{ width: "max-content", marginLeft: "15px" }}>{props.sort_in_group === 0 ? Star(props.score) : null}</div>
-                    <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
+                // <div className="line element-reply">
+                //     {!props.itsmine && props.sort_in_group && master ?
+                //         <div onClick={() => this.reply(props.uid)}>[답변하기]</div> : null}
+                //     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
+                //     <div className="line">
+                //         {props.is_review ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
+                //         {props.comment}</div>
+                //     <div style={{ width: "max-content", marginLeft: "auto" }}>{props.nick_name}</div>
+                //     <div style={{ width: "max-content", marginLeft: "15px" }}>{props.sort_in_group === 0 ? Star(props.score) : null}</div>
+                //     <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
+                // </div>
+                <div className="line list-element">
+                    <div className="pics" />
+                    <div>
+                        <div className="rate">{Star(props.score)}({props.score})</div>
+                        <div className="comment">{props.comment}</div>
+                        <div className="nickname">{props.nick_name}</div>
+                    </div>
                 </div>
             )
         }
-        //     <div className="line list-element">
-        //     <div className="pics" />
-        //     <div>
-        //       <div className="rate">{Star(4)}({30})</div>
-        //       <div className="comment">생각보다 튼튼하고 예쁩니다!</div>
-        //       <div className="nickname">fdnwodfowfdn</div>
-        //     </div>
-        //   </div>
 
         return (<React.Fragment>
             <Reviews>
@@ -173,19 +180,34 @@ class ItemReview extends Component {
                     <div className="title">리뷰</div>
                     <div className="rate">{Star(score)}({total})</div>
                 </div>
-                {master ?
-                    null
-                    : <div className="line" style={{ marginTop: "34px", }}>
-                        <div className="input-wrapper">
-                            <textarea
-                                value={this_comment || ""}
-                                onChange={this.onChangeValue}
-                                name="this_comment"
-                                onKeyDown={this.handleKeyDown} />
-                        </div>
-                        <div className="button" onClick={this.requestReview} >
-                            <div className="text" >리뷰작성</div></div>
-                    </div>}
+                {!master ?
+                    payment && payment.length > 0 ?
+                        payment.map((pay, index) => {
+                            console.log(pay);
+                            return <div key={index} onClick={() => this.setState({ review_selected: index, review_writing: true })}>
+                                {this.state.review_writing && this.state.review_selected === index ?
+                                    <div className="line" style={{ marginTop: "34px", }}>
+                                        <div className="input-wrapper">
+                                            <textarea
+                                                value={this_comment || ""}
+                                                onChange={this.onChangeValue}
+                                                name="this_comment"
+                                                onKeyDown={this.handleKeyDown} />
+                                            <input
+                                                style={{ width: "25px" }}
+                                                value={this.state.score || 0}
+                                                onChange={this.onChangeValue}
+                                                name="score" />
+                                        </div>
+                                        <div className="button" onClick={() => this.requestReview(pay.uid)} >
+                                            <div className="text" >리뷰작성</div></div>
+                                    </div>
+                                    : "작성하실 리뷰가 있습니다."}
+                            </div>
+                        }) : null
+                    : null}
+
+
                 <div>
                     {review && review.length > 0 ?
                         review.map((item, index) =>

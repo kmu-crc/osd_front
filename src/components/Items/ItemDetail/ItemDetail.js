@@ -9,6 +9,7 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import NumberFormat from "modules/NumberFormat";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   // * { border: 1px solid red; };
@@ -321,65 +322,65 @@ const Content = styled.div`
     }
   }
 `;
-const empty = {
-  title: "Lorem Ipsum", nickName: "fdnwodfowfdn", price: 18000, rate: 4, reviews: 30,
-  options: [{ type: "combo", text: "모양", data: ["세모", "네모", "동그라미"] }],
-  amount: 3000, who: "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/1574308943657-x200.PNG",
-  thumbnail: "",
-  mainImage: "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/1550043018657-x200.jpg",
-  subImages: ["", "", "", "", ""],
-  // variety section
-  detail: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 인간의 생명을 이상, 불어 바로 것이다. 대고, 방황하였으며, 가치를 봄날의 인간이 가진 설산에서 운다. 있는 착목한는 그들의 노래하며 원질이 대한 아름다우냐? 같은 찬미를 붙잡아 청춘 힘차게 두기 갑 속잎나고, 소담스러운 것이다. 몸이 원질이 가슴이 피가 반짝이는 소리다.이것은 이상의 예가 피다. 그들을 할지니, 품었기 가치를 보배를 남는 지혜는 약동하다. 목숨이 일월과 동력은 가는 청춘의 사라지지 더운지라 가는 있음으로써 것이다. 가치를 웅대한 대한 새 피가 품에 소담스러운 그들에게 오직 듣는다. 찾아다녀도, 들어 그들은 피어나기 것이다. 착목한는 되려니와, 그와 타오르고 커다란 가는 위하여서. 물방아 얼마나 것이다.보라, 바로 얼마나 남는 위하여서, 봄바람이다. 얼마나 그림자는 얼음에 보이는 새가 보내는 것이다. 가슴에 인간의 두기 끝까지 무엇이 것은 그리하였는가? 보이는 천지는 주며, 듣는다. 이상, 몸이 곧 두기 커다란 이것을 그들에게 위하여서, 가슴에 보라. 무한한 돋고, 많이 가슴에 있는 사막이다. 힘차게 무엇을 능히 되는 가치를 이 거선의 남는 부패뿐이다. 소금이라 얼음 긴지라 품었기 과실이 굳세게 끓는 봄바람이다. 인간의 갑 별과 사라지지 품에 같지 사막이다. 소금이라 듣기만 설레는 심장은 있으며, 것은 위하여서, 그리하였는가? 그들을 그러므로 물방아 우리의 있을 얼음과 청춘의 장식하는 보라. 이것은 끝까지 기관과 가진 인류의 그들은 힘있다. 붙잡아 뛰노는 실로 피고 피에 그것을 황금시대다. 그들의 위하여, 그것을 힘있다. 봄바람을 구하기 가슴이 풍부하게 주며, 무엇을 인도하겠다는 없으면, 봄바람이다. 청춘 방황하여도, 산야에 영원히 그들은 간에 하는 위하여서, 아니다. 사는가 얼마나 그들은 부패를 못할 하여도 무엇을 것이다. 찾아다녀도, 피는 위하여 약동하다."
-};
 
-// const Won = N => '₩' + N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 class ItemDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      isLike:false,
+      isLike: false,
     }
     this.onClickLike = this.onClickLike.bind(this);
-  }
-  componentWillUpdate(nextProps)
-  {
-    if(this.props.like !== nextProps.like)
-    {
+    this.buyThisItem = this.buyThisItem.bind(this);
+  };
+  componentWillUpdate(nextProps) {
+    if (this.props.like !== nextProps.like) {
       this.setState({
-        isLike:nextProps.like,
+        isLike: nextProps.like,
       })
     }
-  }
-  onClickLike(event){
+  };
+  onClickLike(event) {
     const isLike = !this.state.isLike;
     this.setState({
-      isLike:isLike,
+      isLike: isLike,
     });
-    isLike === false?
-    this.props.UnlikeProductRequest(this.props.id,this.props.token)
-    :
-    this.props.LikeProductRequest(this.props.id,this.props.token)
+    isLike === false ?
+      this.props.UnlikeProductRequest(this.props.id, this.props.token)
+      :
+      this.props.LikeProductRequest(this.props.id, this.props.token)
+  };
+  buyThisItem(event, item) {
+    if (!window.confirm(`${item.price} 포인트가 결제됩니다.`)) {
+      event.preventDefault();
+    }
   }
+  // 보유 포인트가 충분하지 않으면 “포인트가 부족합니다. 포인트 구매 후 결재하십시오.” 안내 문구를 보여주고 포인트 구매 절차로 진행
+  // 포인트 구매는 신용카드, 모바일폰 소액결재, 무통장 입금, 삼성/카카오 페이 등의 온라인 결재 수단 사용
+  // 결재 후 대금이 회사로 지불되고 구매자에게는 구매 확인 버튼이 보이며 구매자가 구매 확인 버튼을 클릭하거나 7일 동안 불만 사항이 접수되지 않으면 수수료 10%를 제외한 금액이 판매자에게 이체됨
+
+  // 결재 모듈을 이용한 온라인 결재 기능 관련하여 자세한 처리 절차와 결과에 관한 정보를 알아봐야 함 – 서비스 제공 회사와 비용, 조건 등
+  // 내정보 창에서 포인트를 구매하거나 보유한 포인트를 현금화할 수 있음 – 포인트 관리에 대한 보안을 철저히 하여야 함
+  // 고객의 불만이 접수되면 심사위원의 심사를 거쳐 환불 결정 – 10인 정도의 심사위원을 선정하여 아이템의 품질 평가 및 고객 불만을 처리할 계획임
+
   render() {
+    console.log(this.props);
     const item = this.props.item;
-    // console.log(item);
-    return !item ? (<div>loading...</div>) :
+    return !item ? <div>LoaDing...</div> :
       (<Wrapper>
         <div className="line">
-          {item.type !== 7 ? (
-            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
-              <div className="main-image"></div>
+          {item.imageList && item.imageList.length > 0 ? (
+            <ItemImages main={item.imageList ? item.thumbnail.l_img : noimg}>
+              <div className="sub-images line">
+                {item.images ?
+                  item.images.map((img, idx) =>
+                    <div key={idx} img={img} className="sub nine-teen" />) : null}
+              </div>
             </ItemImages>
           ) : (
-              <ItemImages main={item.imageList ? item.thumbnail.l_img : noimg}>
-                <div className="sub-images line">
-                  {item.images ?
-                    item.images.map((img, idx) =>
-                      <div key={idx} img={img} className="sub nine-teen" />) : null}
-                </div>
+              <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
+                <div className="main-image" />
               </ItemImages>
             )}
-
 
           <ItemInfo face={item.who || who}>
             <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
@@ -409,16 +410,18 @@ class ItemDetail extends Component {
 
             <div className="buttons line">
               <div className="button first">
-
-                <div className="text">아이템구매</div></div>
-                {
-                  this.state.isLike === false?
+                <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
+                  <div className="text">아이템구매</div>
+                </Link>
+              </div>
+              {
+                this.state.isLike === false ?
                   <div className="button second" onClick={this.onClickLike}>
-                  <div className="text">관심항목추가</div></div>
+                    <div className="text">관심항목추가</div></div>
                   :
                   <div className="button first" onClick={this.onClickLike}>
-                  <div className="text">관심항목</div></div>
-                } 
+                    <div className="text">관심항목</div></div>
+              }
 
             </div>
           </ItemInfo>
@@ -433,38 +436,16 @@ class ItemDetail extends Component {
                 <div className="text">{item.description}</div>
               </Detail>
               <Delivery mRight={102} style={{ background: "#EFEFEF", fontSize: "36px", fontWeight: "500", padding: "35px" }}>
-                선택사항들어갈공간
-                {item.type === 0 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 1 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 2 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 3 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 4 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 5 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 6 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {item.type === 7 ?
-                  <React.Fragment>
-                  </React.Fragment> : null}
-                {/* <div className="title">배송정보</div>
-                <div className="sub-title">제작기간</div>
-                <div className="text">3~5일</div>
-                <div className="sub-title">배송</div>
-                <div className="text">택배배송(무료)</div>
-                <div className="sub-title">반품</div>
-                <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div> */}
+                선택사항 들어갈 공간
+                {/*
+                  <div className="title">배송정보</div>
+                  <div className="sub-title">제작기간</div>
+                  <div className="text">3~5일</div>
+                  <div className="sub-title">배송</div>
+                  <div className="text">택배배송(무료)</div>
+                  <div className="sub-title">반품</div>
+                  <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div> 
+                */}
               </Delivery>
             </div>
             <div style={{ marginTop: "50px" }}>

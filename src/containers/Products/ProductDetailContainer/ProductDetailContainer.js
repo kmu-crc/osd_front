@@ -7,23 +7,22 @@ import {
   GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest
 } from "actions/Product";
-import { GetItemDetailRequest } from "actions/Item";
+import { GetItemDetailRequest, GetItemPaymentRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 
 class ProductDetailContainer extends Component {
   componentDidMount() {
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
-    .then(this.props.GetLikeProductRequest(this.props.id,this.props.token));
+      .then(this.props.GetLikeProductRequest(this.props.id, this.props.token));
   }
   render() {
     console.log(this.props);
-    return (<ItemDetail item={this.props.ProductDetail} {...this.props} />)
+    return (<ItemDetail item={this.props.ItemDetail} {...this.props} />)
   }
 }
 
 const mapStateToProps = (state) => ({
   ItemDetail: state.ItemDetail.status.ItemDetail,
-
   Count: state.ProductDetail.status.Count,
   like: state.ProductLike.status.like,
   userInfo: state.Authentication.status.userInfo,

@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemReview from "components/Items/ItemReview";
-import { GetItemReviewRequest, CreateItemReviewRequest, DeleteItemReviewRequest } from "actions/Item";
-
+import { GetItemPaymentRequest, GetItemReviewRequest, CreateItemReviewRequest, DeleteItemReviewRequest } from "actions/Item";
 
 class ItemReviewContainer extends Component {
     constructor(props) {
@@ -13,23 +12,30 @@ class ItemReviewContainer extends Component {
     }
     componentDidMount() {
         this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+        this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
     }
     requestReview(data) {
         this.props.CreateItemReviewRequest(data, this.props.match.params.id, this.props.token)
             .then(res =>
                 res.data.success &&
-                    this.props.GetItemReviewRequest(this.props.match.params.id, 0))
+                this.props.GetItemReviewRequest(this.props.match.params.id, 0))
 
     }
     getData(page) {
         this.props.GetItemReviewRequest(this.props.match.params.id, page);
     }
     render() {
-        return (<ItemReview id={this.props.match.params.id} getData={this.getData} request={this.requestReview} {...this.props} />);
+        return (<ItemReview
+
+            id={this.props.match.params.id}
+            getData={this.getData}
+            request={this.requestReview}
+            {...this.props} />);
     }
 }
 
 const mapStateToProps = (state) => ({
+    payment: state.Payment.status.Payment,
     review: state.ItemReview.status.Review,
     total: state.ItemReview.status.Total,
     score: state.ItemReview.status.TotalScore,
@@ -39,6 +45,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     GetItemReviewRequest: (id, page) => dispatch(GetItemReviewRequest(id, page)),
     CreateItemReviewRequest: (data, id, token) => dispatch(CreateItemReviewRequest(data, id, token)),
+    GetItemPaymentRequest: (id, token, page) => dispatch(GetItemPaymentRequest(id, token, page))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemReviewContainer));
