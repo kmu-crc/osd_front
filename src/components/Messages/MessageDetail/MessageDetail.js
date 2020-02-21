@@ -119,6 +119,8 @@ class MessageDetail extends Component {
 
   render() {
     const list = this.state.list_v1.length > 0 ? this.state.list_v1 : this.props.MessageDetail;
+
+    console.log("list======",list);
     // console.log("v1 : " + this.state.list_v1.length);
     // console.log("listlist : " + this.props.MessageDetail.length);
     const myId = this.props.userInfo.uid;
@@ -126,7 +128,7 @@ class MessageDetail extends Component {
       <MsgContent>
         <div className="ui comments" id="comments" ref={ref => this.list = ref}>
           <div style={{ bottom: "0px" }}>
-            {list.map(item => (
+            {list&&list.map(item => (
               <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
                 {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
                 <div className={item.from_user_id === myId ? "content my" : "content"}>

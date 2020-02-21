@@ -1,6 +1,41 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+
+//  좋아요 한 아이템 가져오기
+export function GetHaveInItemRequest(id, page) {
+  return (dispatch) => {
+    const sql = `${host}/item/itemDetail/${id}/have/${page}`;
+    return fetch(sql,
+      { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data =>{console.log("data",data);
+         dispatch(page === 0 ? HaveInItemClear(data || []) : GetHaveInItem(data || []))
+      }
+         )
+      .catch(err => dispatch(HaveInItemFail()))
+  }
+};
+const GetHaveInItem = (data) => ({ type: types.GET_HAVE_IN_ITEM, HaveInItem: data });
+const HaveInItemClear = (data) => ({ type: types.GET_HAVE_IN_ITEM_CLEAR, HaveInItem: data, HaveInItemAdded: [] });
+const HaveInItemFail = () => ({ type: types.HAVE_IN_ITEM_FAIL, HaveInItem: [], HaveInItemAdded: [] });
+//  좋아요 한 아이템 가져오기
+export function GetLikeInItemRequest(id, page) {
+  return (dispatch) => {
+    const sql = `${host}/item/itemDetail/${id}/like/${page}`;
+    return fetch(sql,
+      { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data =>{console.log("data",data);
+         dispatch(page === 0 ? LikeInItemClear(data || []) : GetLikeInItem(data || []))
+      }
+         )
+      .catch(err => dispatch(LikeInItemFail()))
+  }
+};
+const GetLikeInItem = (data) => ({ type: types.GET_LIKE_IN_ITEM, LikeInItem: data });
+const LikeInItemClear = (data) => ({ type: types.GET_LIKE_IN_ITEM_CLEAR, LikeInItem: data, LikeInItemAdded: [] });
+const LikeInItemFail = () => ({ type: types.LIKE_IN_ITEM_FAIL, LikeInItem: [], LikeInItemAdded: [] });
 // list
 export function GetProductListRequest(page, sort, cate1, cate2, keyword) {
   return (dispatch) => {
@@ -90,10 +125,16 @@ export function DesignDetailViewReset() {
 export function GetLikeProductRequest(id, token) {
   return (dispatch) => {
     dispatch(GetLikeProduct());
-    const sql = `${host}/product/getLikeItem/${id}`;
+    const sql = `${host}/item/getLikeItem/${id}`;
     return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "GET" })
-      .then(res => res.json())
-      .then(data => dispatch(GetLikeProductSuccess((data && data.like) || false)))
+      .then(res => 
+        res.json()
+      )
+      .then(data => {
+        console.log("GetLikeProductRequest",data);
+        dispatch(GetLikeProductSuccess((data && data.like) || false))
+         }
+        )
       .catch(error => GetLikeProductFailure(false));
   }
 }
@@ -103,7 +144,7 @@ const GetLikeProductFailure = data => { return { type: types.GET_LIKE_PRODUCT_FA
 
 // 디자인 좋아요 하기 >>> 전체 디자인에 대한 좋아요
 export function LikeProductRequest(id, token) {
-  const sql = `${host}/product/likeItem/${id}`;
+  const sql = `${host}/item/likeItem/${id}`;
   return (dispatch) => {
     dispatch(LikeProduct());
     return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "POST" })
@@ -120,7 +161,7 @@ const LikeProductFailure = () => { return { type: types.LIKE_PRODUCT_FAILURE } }
 export function UnlikeProductRequest(id, token) {
   return (dispatch) => {
     dispatch(UnlikeProduct());
-    const sql = `${host}/product/unlikeItem/${id}`;
+    const sql = `${host}/item/unlikeItem/${id}`;
     return fetch(sql, {
       headers: { "Content-Type": "application/json", 'x-access-token': token },
       method: "POST"

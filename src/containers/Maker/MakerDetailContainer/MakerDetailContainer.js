@@ -27,8 +27,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetExpertMakerViewDetailRequest: (data) => {
-    return dispatch(GetExpertMakerViewDetailRequest(data))
+  GetExpertMakerViewDetailRequest: (id) => {
+    return dispatch(GetExpertMakerViewDetailRequest(id))
   },
   LikeMakerRequest: (id,token) => {
     return dispatch(LikeMakerRequest(id,token))
