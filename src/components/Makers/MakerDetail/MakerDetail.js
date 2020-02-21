@@ -6,6 +6,7 @@ import TextFormat from "modules/TextFormat";
 import { Icon } from "semantic-ui-react";
 import Item from "components/Items/Item/Item"
 import noimg from "source/noimg.png";
+import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
 
 // CSS STYLING
 const Expert = styled.div`
@@ -221,6 +222,56 @@ const RequestBoard = styled.div`
       letter-spacing: 0;
       opacity: 1;
       margin-top: 12px;
+    }
+  }
+`;
+
+const ItemInfo = styled.div`
+  margin-right: ${prop => prop.mRight}px;
+  margin-top: ${props=>props.mTop==null?"0px":props.mTop+"px"};
+  width: ${props=>props.width==null?"468px":props.width+"px"};
+  height: ${props=>props.height==null?"491px":props.height+"px"};
+  background: #FFFFFF;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  opacity: 1;
+  font-family: Noto Sans KR;
+  padding: 30px;
+
+  .title {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: left;
+  }
+  .margin_bottom{
+    margin-bottom:10px;
+  }
+  .text {
+    width: 371px;
+    height: 86px;
+    margin-top: 20px;
+    margin-bottom: 34px;
+    font-size: 15px;
+    font-weight: 300;
+    line-weight: 27px;
+    text-align: left;
+    overflow: auto;
+  }
+  .wrapItem{
+    max-width:100%;
+    max-height:350px;
+    margin-top:30px;
+    width:100%;
+    height:max-content;
+    overflow:hidden;
+    overflow-y:overlay;
+    display:flex;
+  }
+  &:hover{
+    .wrapItem{
+      overflow:auto;
+      overflow-y:overlay;
     }
   }
 `;
@@ -582,9 +633,11 @@ class MakerDetail extends Component {
     this.setState({isLike:isLike});
   }
   render() {
+    console.log(this.props);
     // const expert = this.props.MakerDetail || empty;
     const expert = empty;
-    console.log("detail:", expert);
+    const {likeCount,itemCount} = this.props.MakerViewDetail;
+    // console.log("detail:", expert);
     const { tab } = this.state;
 
       // 카테고리
@@ -616,10 +669,10 @@ class MakerDetail extends Component {
           {/* Counter */}
           <Counter>
             <div className="items">
-              {NumberFormat(expert.items) || 0}개의 아이템</div>
+              {itemCount || 0}개의 아이템</div>
             <div className="v-line" />
             <div className="likes">{/*♥*/}
-              <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likes) || 0}</div>
+              <Icon className="heart" size="small" color="red" />{likeCount || 0}</div>
           </Counter>
         </Expert>
 
@@ -711,19 +764,14 @@ class MakerDetail extends Component {
         </AdditionalInfo>
 
         {/**보유아이템 */}
-        <AdditionalInfo width={1523} height={491} mTop={60}>
+        <ItemInfo width={1523} height={491} mTop={60}>
         <div className="title">제작 아이템</div>
         <div className="wrapItem">
           {
-            expert.itemlist.map((item,index)=>{
-              return(
-                <div style={{marginRight:"50px"}} key={index}><Item data={item}/></div>
-              );
-            })
+             <HaveInItemContainer id={this.props.id}/>
           }
-           
         </div>
-        </AdditionalInfo>
+        </ItemInfo>
 
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         

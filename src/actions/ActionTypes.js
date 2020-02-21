@@ -168,6 +168,17 @@ export const UNLIKE_PRODUCT = "UNLIKE_PRODUCT";
 export const UNLIKE_PRODUCT_SUCCESS = "UNLIKE_PRODUCT_SUCCESS";
 export const UNLIKE_PRODUCT_FAILURE = "UNLIKE_PRODUCT_FAILURE";
 
+////////////////////////////////////////////////////////////////////////////
+// item
+////////////////////////////////////////////////////////////////////////////
+
+export const GET_LIKE_IN_ITEM = "GET_LIKE_IN_ITEM";
+export const GET_LIKE_IN_ITEM_CLEAR = "GET_LIKE_IN_ITEM_CLEAR";
+export const LIKE_IN_ITEM_FAIL = "LIKE_IN_ITEM_FAIL";
+
+export const GET_HAVE_IN_ITEM = "GET_HAVE_IN_ITEM";
+export const GET_HAVE_IN_ITEM_CLEAR = "GET_HAVE_IN_ITEM_CLEAR";
+export const HAVE_IN_ITEM_FAIL = "HAVE_IN_ITEM_FAIL";
 
 ////////////////////////////////////////////////////////////////////////////
 // design

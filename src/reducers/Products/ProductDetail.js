@@ -12,7 +12,7 @@ const initialState = {
       member_count: 0,
       card_count: 0,
       view_count: 0
-    }
+    },
   }
 };
 

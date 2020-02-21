@@ -327,7 +327,7 @@ class ItemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLike: false,
+      isLike:this.props.like==null?false:this.props.like,
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
