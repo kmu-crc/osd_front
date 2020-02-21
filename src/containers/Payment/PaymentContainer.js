@@ -1,82 +1,54 @@
 import React, { Component } from "react";
 import Payment from 'components/Payment/Payment';
-import styled from "styled-components";
-import StyleGuide from "StyleGuide";
-import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
-
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
-import {addOrderRequest} from "actions/Product";
-
-const ImgWrapper = styled.div`
-  background-image: url(${mainSlide});
-  background-position: center;
-  background-size: cover;
-  width: 100%;
-  height: 200px;
-  position: relative;
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-  }
-`;
-
-const Title = styled.div`
-  width: 100%;
-  color: white;
-  position: absolute;
-  text-align: center;
-  top: 40%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
-  h1 {
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading2};
-    font-weight: bold;
-  }
-`;
-
-const Wrapper = styled(ContentBox)`
-  width:100%;
-  margin-top:60px;
-  margin-bottom: 100px;
-  position: relative;
-  z-index:3;
-`
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { GetMyPointRequest, } from "actions/Point";
+import { CreateItemPaymentRequest } from "actions/Item";
 
 class PaymentContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.Payment = this.Payment.bind(this);
+  }
+  componentDidMount() {
+    const { GetMyPointRequest, userInfo, token } = this.props;
+    GetMyPointRequest(userInfo.uid, token);
+  }
+  Payment(item, option) {
+    // user_id - token, item_id, payment_detail, payment_price //
+    this.props.CreateItemPaymentRequest(
+      { payment_detail: { ...option }, payment_price: option.total },
+      item["item-id"],
+      this.props.token)
+      .then(res => {
+        if (res.data.success) {
+          alert("구매가 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
+          window.location.href = `/productDetail/${this.props.item["item-id"]}`;
+        }
+      })
+  };
+  BadAccess() {
+    alert("잘못된 접근입니다.");
+    window.location.href = `/product`;
+  }
+
   render() {
-    return(
-        <div>
-        <Wrapper>
-          <Payment {...this.props}/>
-        </Wrapper>
-        {/* {this.state.loading && <Loading/>} */}
-        </div>
-
-    );
-  }
-}
-const mapStateToProps = (state) => {
-  return {
-    //  CartList: state.CartList.status.CartList,
-    token: state.Authentication.status.token,
-    userInfo: state.Authentication.status.userInfo,
+    const { item } = this.props;
+    if (item == null) {
+      this.BadAccess();
+    }
+    return (<Payment purchase={this.Payment} {...this.props} />);
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addOrderRequest: (items,token) => dispatch(addOrderRequest(items,token)),
-  }
-}
+const mapStateToProps = (state) => ({
+  Point: state.Point.status.Point,
+  token: state.Authentication.status.token,
+  userInfo: state.Authentication.status.userInfo,
+});
+const mapDispatchToProps = (dispatch) => ({
+  GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
+  CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token))
+});
+
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PaymentContainer));

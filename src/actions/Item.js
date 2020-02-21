@@ -270,7 +270,6 @@ const GetItemReviewSuccess = data => ({
 const GetItemReviewFailure = error => ({
   type: types.GET_ITEM_REVIEW_FAILURE
 });
-
 // review or answer
 export const CreateItemReviewRequest = (data, id, token) => {
   return dispatch => {
@@ -295,7 +294,6 @@ const CreateItemReviewSuccess = res => ({
 const CreateItemReviewFailure = error => ({
   type: types.CREATE_ITEM_REVIEW_FAILURE
 });
-
 // remove review or answer
 export const DeleteItemReviewRequest = (id, content_id, token) => {
   return dispatch => {
@@ -320,6 +318,133 @@ const DeleteItemReviewFailure = error => ({
   type: types.DELETE_ITEM_REVIEW_FAILURE
 });
 
+
+// Payment
+// purchase item
+export const CreateItemPaymentRequest = (data, id, token) => {
+  return dispatch => {
+    dispatch(CreateItemPayment());
+    const url = `${host}/item/detail/${id}/create-payment`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(CreateItemPaymentSuccess(res)))
+      .catch(error => dispatch(CreateItemPaymentFailure(error)));
+  };
+};
+const CreateItemPayment = () => ({
+  type: types.CREATE_ITEM_PAYMENT
+});
+const CreateItemPaymentSuccess = res => ({
+  type: types.CREATE_ITEM_PAYMENT_SUCCESS, data: res
+});
+const CreateItemPaymentFailure = error => ({
+  type: types.CREATE_ITEM_PAYMENT_FAILURE
+});
+// get payment-list
+export const GetItemPaymentRequest = (id, token, page) => {
+  return dispatch => {
+    dispatch(GetItemPayment());
+    const url = `${host}/item/detail/${id}/payment/${page}`;
+    // console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetItemPaymentSuccess(data)))
+      .catch(error => dispatch(GetItemPaymentFailure(error)));
+  };
+};
+const GetItemPayment = () => ({
+  type: types.GET_ITEM_PAYMENT
+});
+const GetItemPaymentSuccess = data => ({
+  type: types.GET_ITEM_PAYMENT_SUCCESS, payload: data,
+});
+const GetItemPaymentFailure = error => ({
+  type: types.GET_ITEM_PAYMENT_FAILURE
+});
+
+
+
+
+
+// // Payment
+// // get review-list
+// export const GetItemReviewRequest = (id, page) => {
+//   return dispatch => {
+//     dispatch(GetItemReview());
+//     const url = `${host}/item/detail/${id}/review/${page}`;
+//     // console.log(url);
+//     return fetch(url, {
+//       headers: { "Content-Type": "application/json" },
+//       method: "GET"
+//     })
+//       .then(res => res.json())
+//       .then(data => dispatch(GetItemReviewSuccess(data)))
+//       .catch(error => dispatch(GetItemReviewFailure(error)));
+//   };
+// };
+// const GetItemReview = () => ({
+//   type: types.GET_ITEM_REVIEW
+// });
+// const GetItemReviewSuccess = data => ({
+//   type: types.GET_ITEM_REVIEW_SUCCESS, payload: data,
+// });
+// const GetItemReviewFailure = error => ({
+//   type: types.GET_ITEM_REVIEW_FAILURE
+// });
+// // review or answer
+// export const CreateItemReviewRequest = (data, id, token) => {
+//   return dispatch => {
+//     dispatch(CreateItemReview());
+//     const url = `${host}/item/detail/${id}/create-review`;
+//     return fetch(url, {
+//       headers: { "x-access-token": token, "Content-Type": "application/json" },
+//       method: "POST",
+//       body: JSON.stringify(data)
+//     })
+//       .then(res => res.json())
+//       .then(res => res && dispatch(CreateItemReviewSuccess(res)))
+//       .catch(error => dispatch(CreateItemReviewFailure(error)));
+//   };
+// };
+// const CreateItemReview = () => ({
+//   type: types.CREATE_ITEM_REVIEW
+// });
+// const CreateItemReviewSuccess = res => ({
+//   type: types.CREATE_ITEM_REVIEW_SUCCESS, data: res
+// });
+// const CreateItemReviewFailure = error => ({
+//   type: types.CREATE_ITEM_REVIEW_FAILURE
+// });
+// // remove review or answer
+// export const DeleteItemReviewRequest = (id, content_id, token) => {
+//   return dispatch => {
+//     dispatch(DeleteItemReview());
+//     const url = `${host}/item/detail/${id}/delete-review/${content_id}`;
+//     return fetch(url, {
+//       headers: { "x-access-token": token, "Content-Type": "application/json" },
+//       method: "DELETE"
+//     })
+//       .then(res => res.json())
+//       .then(res => dispatch(DeleteItemReviewSuccess(res)))
+//       .catch(error => dispatch(DeleteItemReviewFailure(error)));
+//   };
+// };
+// const DeleteItemReview = () => ({
+//   type: types.DELETE_ITEM_REVIEW
+// });
+// const DeleteItemReviewSuccess = res => ({
+//   type: types.DELETE_ITEM_REVIEW_SUCCESS, data: res
+// });
+// const DeleteItemReviewFailure = error => ({
+//   type: types.DELETE_ITEM_REVIEW_FAILURE
+// });
 
 
 // // update page-view count

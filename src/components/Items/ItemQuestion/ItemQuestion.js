@@ -131,13 +131,14 @@ class ItemQuestion extends Component {
         const master = user_id === (userInfo && userInfo.uid);
 
         const Question = (props) => {
+            // console.log(props);
             return (
                 <div className="line element-reply">
-                    {!props.itsmine && props.sort_in_group && master ?
+                    {!props.itsmine && props.sort_in_group === 0 && master ?
                         <div onClick={() => this.reply(props.uid)}>[답변하기]</div> : null}
                     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
                     <div className="line">
-                        {props.is_question ? "" : <ReplyPrefix>답변</ReplyPrefix>}
+                        {props.is_question ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
                         {props.comment}</div>
                     <div style={{ width: "max-content", marginLeft: "auto" }}>{props.nick_name}</div>
                     <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>

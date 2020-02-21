@@ -18,12 +18,14 @@ import { DesignForked } from "reducers/Designs/DesignForked"
 import { Request, RequestDetail, RequestList, RequestComment } from "reducers/Request";
 import OpenDesign from "reducers/OpenDesign";
 import Point from "reducers/Point";
-
-import {MakerLike} from "reducers/Makers";
+import { Payment } from "reducers/Payments";
+import { MakerLike } from "reducers/Makers";
 
 import { combineReducers } from "redux";
 
 export default combineReducers({
+    //Payment
+    Payment,
     // ITEM
     ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview,
     // PRODUCT
@@ -40,7 +42,7 @@ export default combineReducers({
     // DESIGNER 
     DesignerList, DesignerLike, DesignerDetail,
     // MAKER
-    MakerList, MakerDetail,MakerLike,
+    MakerList, MakerDetail, MakerLike,
     // REQUEST
     Request, RequestDetail, RequestList, RequestComment,
     // MY
