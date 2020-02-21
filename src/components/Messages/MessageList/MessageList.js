@@ -57,12 +57,21 @@ const Peers = styled.div`
     }
   }
   .searchBox{
-    display:flex;
     align-items:center;
     padding-top:25px;
     padding-bottom:25px;
+    .searchRow{
+      display:flex;
+    }
     .heading{
       margin-right:10px;
+    }
+    .memberBox{
+      border-radius:10px;
+      border:1px solid white;
+      padding:5px;
+      margin-top:5px;
+      background-color:#E6E6E6;
     }
   }
   .list {
@@ -229,16 +238,22 @@ const Face = styled.div`
 //현 문제 : 특정 채팅방에 접속한 뒤 다른 채팅방에 접속한 직 후에 알람의 제어가 꼬인다. 
 let test = 1; //보낼 사람이 변경됐을 때 알람의 수를 제어하기 위한 변수. 같은 채팅방에서 메세지를 보내면 test가 증가되고 채팅방을 변경하면 test가 1로 초기화 된다. 
 class MessageList extends Component {
-  state = {
-    isDetailClicked: false,
-    msgId: -1,
-    selectId: null,
-    selectName: null,
-    openMember: false,
-    friendList: [],
-    render: true,
-    connectedCheck: false,//채팅을 받는 당사자가 접속돼있는지, 아닌지 판별하는 변수
+  constructor(props){
+    super(props);
+    this.state = {
+      isDetailClicked: false,
+      msgId: -1,
+      selectId: null,
+      selectName: null,
+      openMember: false,
+      friendList: [],
+      render: true,
+      connectedCheck: false,//채팅을 받는 당사자가 접속돼있는지, 아닌지 판별하는 변수
+      textmsg:"",
+    }
+    this.handleChange = this.handleChange.bind(this);
   }
+
 
   async componentDidMount() {
     Socket.on("connectedCheck", (sendingUserId) => {
@@ -375,12 +390,14 @@ class MessageList extends Component {
             </div>
 
             <div className="searchBox">
+              <div className="searchRow">
               <div className="heading">멤버 검색</div>
               <FormInput style={{borderRadius:"20px",outline:"none",border:"none",width:"380px",height:"29px",paddingLeft:"10px"}}
               type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
+              </div>
               <div style={this.state.openMember ? { display: "block" } : { display: "none" }}>
                 {this.props.members && this.props.members.map((item, index) => {
-                  return (<div key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</div>);
+                  return (<div className="memberBox" key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</div>);
                 })}
               </div >
             </div>

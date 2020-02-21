@@ -10,9 +10,9 @@ export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log("Designer data >>", data);
+      // console.log("Designer data >>", data);
       if (!data) {
-        console.log("no data");
+        // console.log("no data");
         data = [];
       }
       if (page === 0) {

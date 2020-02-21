@@ -7,7 +7,7 @@ import Expert from "components/Experts/Expert";
 import {LikeItem} from "components/Users/MyDetail/MyDetailTab/likeItem";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer"
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
-
+import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
 const MainBox = styled.div`
   width: 1790px;
   height: 1959px;
@@ -361,17 +361,7 @@ class MyDetail extends Component {
             <BoardBox>
               {
                 this.state.selectMenu===1&&
-                <div className="wrap flex">
-                  {
-                    empty.likeItem.map((item,index)=>{
-                      return(
-                        <div className="wrapItem" key={index}>
-                          <Item data={item} />
-                        </div>
-                      );
-                    })
-                  }
-                </div>
+                    <LikeInItemContainer id={this.props.userInfo.uid}/>
               }
               {
                 this.state.selectMenu===2&&
@@ -379,9 +369,7 @@ class MyDetail extends Component {
               }
               {
                 this.state.selectMenu===3&&
-                <div className="wrap flex">
                     <LikeInMakerContainer id={this.props.userInfo.uid}/>
-                </div>
               }
               {
                 this.state.selectMenu===5&&

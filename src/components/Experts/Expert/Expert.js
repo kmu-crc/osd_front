@@ -98,7 +98,11 @@ class Expert extends Component {
   }
 
   onClickItem(event){
-    window.location.href="/designerDetail/"+this.props.data.uid;
+    console.log(this.props);
+    this.props.type==="designer"?
+    window.location.href="/designerDetail/"+this.props.data.user_id
+    :
+    window.location.href="/makerDetail/"+this.props.data.user_id;
     console.log(this.props);
   }
   render() {
@@ -115,10 +119,10 @@ class Expert extends Component {
         {/* counter */}
         <Counter>
           <div className="items">
-            {NumberFormat(expert.items) || 0}개의 아이템</div>
+            {NumberFormat(expert.itemCount) || 0}개의 아이템</div>
           <div className="v-line" />
           <div className="likes">{/*♥*/}
-            <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likes) || 0}</div>
+            <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likeCount) || 0}</div>
         </Counter>
       </Wrapper>
     );

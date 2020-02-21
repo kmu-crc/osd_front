@@ -54,6 +54,15 @@ class Category extends Component {
     if (value === 0) {
       value = null;
     }
+    // let count =0;
+    // let result = 0;
+    // this.props.category2[cate1].map((item,idx)=>{
+    //   // console.log(item.value);
+    //   item.value == value ? result=count:null;
+    //   count++;
+    // })
+    // this.props.category2[cate1].value
+    // console.log(cate1,result);return;
     await this.props.handleCate2(cate1, value);
   };
   resetCate = () => {
