@@ -70,37 +70,41 @@ const NumberWrapper = styled.div`
 
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 };
 class Item extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.onClickItem = this.onClickItem.bind(this);
   }
 
-  onClickItem(event){
-    window.location.href="/productDetail/"+this.props.data.uid;
+  onClickItem(event) {
+    window.location.href = "/productDetail/" + this.props.data.uid;
     console.log(this.props);
   }
 
   render() {
     const item = this.props.data || empty;
-    return (
-      <Wrapper>
-        <NavLink to={"/productDetail/" + item.uid}>
-          {/* picture */}
-          <ItemPic img={(item && item.thumbnail) || noimg} />
-          {/* text */}
-          <TextWrapper>
-            <div className="title"><TextFormat txt={item.title} /></div>
-            <div className="author"><TextFormat txt={item.userName} /></div>
-          </TextWrapper>
-          {/* numbers */}
-          <NumberWrapper>
-            <div className="price">{PointFormat(item.price) || 0} won</div>
-            <div className="rate">
-              {Star(item.rate + 0.5)}({NumberFormat(item.reviews)})
+    const ItemContent = () =>
+      <Wrapper onClick={() => item.uid ? null : alert("이 아이템의 상세내용을 가져올 수 없습니다.")}>
+        {/* picture */}
+        <ItemPic img={(item && item.thumbnail) || noimg} />
+        {/* text */}
+        <TextWrapper>
+          <div className="title"><TextFormat txt={item.title} /></div>
+          <div className="author"><TextFormat txt={item.userName} /></div>
+        </TextWrapper>
+        {/* numbers */}
+        <NumberWrapper>
+          <div className="price">{PointFormat(item.price || 0)} won</div>
+          <div className="rate">
+            {Star(item.rate + 0.5)}({NumberFormat(item.reviews)})
           </div>
-          </NumberWrapper>
-        </NavLink>
+        </NumberWrapper>
       </Wrapper>
+    return (
+      item.uid ?
+        <NavLink to={"/productDetail/" + item.uid}>
+          <ItemContent />
+        </NavLink>
+        : <ItemContent />
     )
   }
 }

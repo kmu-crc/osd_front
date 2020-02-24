@@ -17,7 +17,7 @@ class PaymentContainer extends Component {
   Payment(item, option) {
     // user_id - token, item_id, payment_detail, payment_price //
     this.props.CreateItemPaymentRequest(
-      { payment_detail: { ...option }, payment_price: option.total, request_id: item.request_id },
+      { payment_detail: { ...option }, payment_title: item.request_title, payment_price: option.total, request_id: item.request_id },
       item["item-id"] || "custom",
       this.props.token)
       .then(res => {

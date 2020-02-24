@@ -302,7 +302,7 @@ class Detail extends Component {
               </FormBox>
             </div>
           </MainBox>
-          <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
+          <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
             <RedButton left={1444} bottom={-50}><div>구매하기</div></RedButton>
           </Link>
         </Wrapper>

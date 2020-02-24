@@ -1,41 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { GetMyPaymentRequest } from "actions/Payment";
-// import Designer from "components/Designers/Designer";
+import { GetMyPaymentRequest } from "actions/Item";
+import Item from "components/Items/Item";
 import ScrollList from "components/Commons/ScrollList";
 
 class MyPaymentContainer extends Component {
   componentWillMount() {
-    // this.props.GetMyLikeDesignerRequest(this.props.token, 0);
+    this.props.GetMyPaymentRequest(this.props.token, 0);
   }
 
   getList = (page) => {
-    // return this.props.GetMyLikeDesignerRequest(this.props.token, page);
+    return false;
+    // return this.props.GetMyPaymentRequest(this.props.token, page);
   }
 
   render() {
     return (
       <ScrollList
         getListRequest={this.getList}
-        // ListComponent={Item}
+        ListComponent={Item}
         type="item"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    dataList: state.MyDetail.status.MyLikeDesigner,
-    dataListAdded: state.MyDetail.status.MyLikeDesignerAdded
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // GetMyLikeDesignerRequest: (token, page) => {
-    // return dispatch(GetMyLikeDesignerRequest(token, page));
-  }
-};
+const mapStateToProps = (state) => ({
+  token: state.Authentication.status.token,
+  dataList: state.Payment.status.MyPayment,
+  dataListAdded: state.Payment.status.MyPaymentAdded,
+});
+const mapDispatchToProps = (dispatch) => ({
+  GetMyPaymentRequest: (token, page) => dispatch(GetMyPaymentRequest(token, page)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyPaymentContainer);

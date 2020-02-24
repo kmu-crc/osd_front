@@ -369,7 +369,28 @@ const GetItemPaymentFailure = error => ({
   type: types.GET_ITEM_PAYMENT_FAILURE
 });
 
-
+// get my payment-list
+export const GetMyPaymentRequest = (token, page) => {
+  return dispatch => {
+    const url = `${host}/payment/getmine/${page}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(page === 0 ? GetMyPaymentClear(data) : GetMyPayment(data)))
+      .catch(error => dispatch(GetMyPaymentFailure(error)));
+  };
+};
+const GetMyPaymentClear = data => ({
+  type: types.GET_MY_PAYMENT_CLEAR, MyPayment: data.data.payments, MyTotal: data.data.total
+});
+const GetMyPayment = data => ({
+  type: types.GET_MY_PAYMENT, MyPayment: data.payments, MyPaymentAdded: [], MyTotal: data.data.total
+});
+const GetMyPaymentFailure = error => ({
+  type: types.GET_MY_PAYMENT_FAILURE, MyPayment: [], MyPaymentAdded: []
+});
 
 
 
