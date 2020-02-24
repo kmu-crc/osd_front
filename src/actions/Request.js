@@ -67,6 +67,22 @@ export const GetRequestDetailRequest = (id) => {
 };
 const GetRequestDetail = (data) => ({ type: types.GET_REQUEST_DETAIL, Detail: data });
 
+export const GetDesignerRequestListRequest = (id, page) => {
+  return dispatch => {
+    const url = `${host}/request/designer-list/${id}/${page}`
+    console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetDesignerRequestList(data || [])))
+      .catch(err => dispatch(DesignerRequestListFail()))
+  }
+};
+const GetDesignerRequestList = data => ({ type: types.GET_DESIGNER_REQUEST_LIST, payload: data });
+// const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
+const DesignerRequestListFail = () => ({ type: types.DESIGNER_REQUEST_LIST_FAIL, List: [] });
 
 //COMMENT
 

@@ -130,8 +130,8 @@ class RequestList extends Component {
             {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
             {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
             {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
-            {/* view    */}<div style={{ marginRight: "15px" }}>조회수</div>
-            {/* like    */}<div style={{ marginRight: "15px" }}>좋아요</div>
+            {/* {/* view    <div style={{ marginRight: "15px" }}>조회수</div> */}
+            {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
           </ListElement>
           <Wrapper className="listWrap">
             {this.state.rendering &&

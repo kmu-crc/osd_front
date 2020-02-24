@@ -56,7 +56,7 @@ const NumberWrapper = styled.div`
     text-align: left;
     line-height: 25px;
   }
-  .rate {
+  .score {
     margin-left: auto;
     display: flex;
     flex-direction: row;
@@ -68,7 +68,7 @@ const NumberWrapper = styled.div`
   }
 `;
 
-const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 };
+const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
 class Item extends Component {
   constructor(props) {
     super(props);
@@ -94,8 +94,8 @@ class Item extends Component {
         {/* numbers */}
         <NumberWrapper>
           <div className="price">{PointFormat(item.price || 0)} won</div>
-          <div className="rate">
-            {Star(item.rate + 0.5)}({NumberFormat(item.reviews)})
+          <div className="score">
+            {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
           </div>
         </NumberWrapper>
       </Wrapper>

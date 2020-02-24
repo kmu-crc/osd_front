@@ -72,7 +72,7 @@ const ItemInfo = styled.div`
       color: #060000;
     }
   }
-  .price-and-rate {
+  .price-and-score {
     margin-top: 10px;
     font-weight: 500;
     font-size: 20px;
@@ -390,10 +390,10 @@ class ItemDetail extends Component {
               <div className="nick">{item.userName}</div>
             </div>
 
-            <div className="price-and-rate line">
+            <div className="price-and-score line">
               <div className="price" style={{ marginRight: "35px" }}>
                 {PointFormat(item.price || 0)} 포인트</div>
-              <div className="rate line" style={{ marginLeft: "auto", marginRight: "15px" }}>
+              <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                 {Star(item.score)}({item.total || 0})</div>
             </div>
 

@@ -238,8 +238,8 @@ const RoundButton = styled.div`
 const empty = {
 
   //등록아이템
-  likeItem: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
-  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+  likeItem: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
+  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
   likeDesigner: [
     {
       nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,

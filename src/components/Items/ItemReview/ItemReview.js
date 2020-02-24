@@ -166,7 +166,7 @@ class ItemReview extends Component {
                 <div className="line list-element">
                     <div className="pics" />
                     <div>
-                        <div className="rate">{Star(props.score)}({props.score})</div>
+                        <div className="score">{Star(props.score)}({props.score})</div>
                         <div className="comment">{props.comment}</div>
                         <div className="nickname">{props.nick_name}</div>
                     </div>
@@ -178,7 +178,7 @@ class ItemReview extends Component {
             <Reviews>
                 <div className="line">
                     <div className="title">리뷰</div>
-                    <div className="rate">{Star(score)}({total})</div>
+                    <div className="score">{Star(score)}({total})</div>
                 </div>
                 {!master ?
                     payment && payment.length > 0 ?
