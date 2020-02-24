@@ -12,7 +12,7 @@ export function SignUpRequest(data) {
       })
       .then(function (res) {
         if(res.success){
-          SetSession("opendesign_token", res.token);
+          SetSession("market", res.token);
         }
         return dispatch(SignUpSuccess());
       }).catch((error) => {
@@ -49,7 +49,7 @@ export function FBSignUpRequest(data) {
       })
       .then(function (res) {
         if (res.success) {
-          SetSession("opendesign_token", res.token);
+          SetSession("market", res.token);
           return dispatch(FBSignUpSuccess());
         } else {
           return dispatch(FBSignUpOverlapMember())

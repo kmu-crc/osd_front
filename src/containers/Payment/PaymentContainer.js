@@ -17,13 +17,18 @@ class PaymentContainer extends Component {
   Payment(item, option) {
     // user_id - token, item_id, payment_detail, payment_price //
     this.props.CreateItemPaymentRequest(
-      { payment_detail: { ...option }, payment_price: option.total },
-      item["item-id"],
+      { payment_detail: { ...option }, payment_price: option.total, request_id: item.request_id },
+      item["item-id"] || "custom",
       this.props.token)
       .then(res => {
         if (res.data.success) {
-          alert("구매가 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
-          window.location.href = `/productDetail/${this.props.item["item-id"]}`;
+          if (this.props.custom) {
+            alert("구매가 완료되었습니다. [마이페이지] > [의뢰상품]에서 확인하실 수 있습니다.");
+            window.location.href = `/myPage/`;
+          } else {
+            alert("구매가 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
+            window.location.href = `/productDetail/${this.props.item["item-id"]}`;
+          }
         }
       })
   };

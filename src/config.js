@@ -11,5 +11,4 @@ if (process.env.REACT_APP_TYPE === "local") {
 
 console.log("HOST:", host, "FRONT:", frontend);
 export const geturl = () => { return frontend; };
-export const token_name = "market";
 export default host;

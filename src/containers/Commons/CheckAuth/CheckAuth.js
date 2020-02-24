@@ -23,9 +23,9 @@ export default function CheckAuth(Components) {
 
     checkAuth() {
       if (this.props.token != null) {
-        SetSession("opendesign_token", this.props.token);
+        SetSession("market", this.props.token);
       }
-      GetSession("opendesign_token").then(token => {
+      GetSession("market").then(token => {
         this.props.CheckTokenRequest(token).then(data => {
           this.setState({ valid: true });
           // if (data && data.info) {

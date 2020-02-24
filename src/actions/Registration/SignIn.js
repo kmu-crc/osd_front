@@ -13,7 +13,7 @@ export function SignInRequest(data) {
       })
       .then(function (res) {
         if (res.isMember && res.isPassword) {
-          SetSession("opendesign_token", res.token);
+          SetSession("market", res.token);
           return dispatch(SignInSuccess());
         } else {
           if (!res.isMember) {
@@ -73,7 +73,7 @@ export function FBSignInRequest(data) {
       })
       .then(function (res) {
         if (res.isMember) {
-          SetSession("opendesign_token", res.token);
+          SetSession("market", res.token);
           return dispatch(FBSignInSuccess());
         } else {
           return dispatch(FBSignInIsNotMember())

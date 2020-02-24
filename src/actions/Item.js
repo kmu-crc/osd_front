@@ -324,7 +324,7 @@ const DeleteItemReviewFailure = error => ({
 export const CreateItemPaymentRequest = (data, id, token) => {
   return dispatch => {
     dispatch(CreateItemPayment());
-    const url = `${host}/item/detail/${id}/create-payment`;
+    const url = `${host}/payment/create/${id}`;
     return fetch(url, {
       headers: { "x-access-token": token, "Content-Type": "application/json" },
       method: "POST",
@@ -348,7 +348,7 @@ const CreateItemPaymentFailure = error => ({
 export const GetItemPaymentRequest = (id, token, page) => {
   return dispatch => {
     dispatch(GetItemPayment());
-    const url = `${host}/item/detail/${id}/payment/${page}`;
+    const url = `${host}/payment/get/${id}/${page}`;
     // console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token },

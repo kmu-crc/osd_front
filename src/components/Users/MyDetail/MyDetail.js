@@ -4,10 +4,12 @@ import noimg from "source/noimg.png";
 import Item from "components/Items/Item/Item"
 import Expert from "components/Experts/Expert";
 
-import {LikeItem} from "components/Users/MyDetail/MyDetailTab/likeItem";
+import { LikeItem } from "components/Users/MyDetail/MyDetailTab/likeItem";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer"
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
+import MyPaymentContainer from "containers/Payment/MyPaymentContainer"
+
 const MainBox = styled.div`
   width: 1790px;
   height: 1959px;
@@ -236,34 +238,52 @@ const RoundButton = styled.div`
 const empty = {
 
   //등록아이템
-  likeItem:[{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
-            { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
-  likeDesigner:[
-    {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
-    create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"},
-    {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
-    create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"}],
-  likeMaker:[
-      {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
-      create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"},
-      {nick_name: "Loading", categoryName: "카테고리",items: 300, likes: 5000000,
-      create_time: "2020-01-01T00:00:01.000Z",update_time: "2020-01-01T00:00:01.000Z"}],
-      // 게시판
-  designerRequest:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"designer_req",
-                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-                create_time:"1999.99.99",update_time:"1999.11.11"},
-                {uid:"1",user_id:"123",nick_name:"멍멍이",type:"designer_req",
-                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-                create_time:"1999.99.99",update_time:"1999.11.11"}],
-  makerRequest:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
-                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-                create_time:"1999.99.99",update_time:"1999.11.11"},
-                {uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
-                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-                create_time:"1999.99.99",update_time:"1999.11.11"},
-                {uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
-                title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-                create_time:"1999.99.99",update_time:"1999.11.11"}],
+  likeItem: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
+  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+  likeDesigner: [
+    {
+      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
+      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
+    },
+    {
+      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
+      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
+    }],
+  likeMaker: [
+    {
+      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
+      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
+    },
+    {
+      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
+      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
+    }],
+  // 게시판
+  designerRequest: [{
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "designer_req",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  },
+  {
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "designer_req",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  }],
+  makerRequest: [{
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  },
+  {
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  },
+  {
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  }],
 };
 
 class MyDetail extends Component {
@@ -272,48 +292,50 @@ class MyDetail extends Component {
     super(props);
     this.state = { selectMenu: -1, }
     this.onClickMenu = this.onClickMenu.bind(this);
-    this.onClickCreateDesigner=this.onClickCreateDesigner.bind(this);
-    this.onClickCreateMaker=this.onClickCreateMaker.bind(this);
+    this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
+    this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
   }
-  onClickCreateDesigner(event){
+  onClickCreateDesigner(event) {
     window.location.href = "/createDesigner";
   }
-  onClickCreateMaker(event){
+  onClickCreateMaker(event) {
     window.location.href = "/createMaker";
   }
   onClickMenu(event) {
     let selectMenu = -1;
 
-    switch(event.target.id){
-      case "orderlist":selectMenu=0; break;
-      case "interest_Item":selectMenu=1; break;
-      case "interest_Designer":selectMenu=2; break;
-      case "interest_Maker":selectMenu=3; break;
-      case "join_project":selectMenu=4; break;
-      case "request_designer":selectMenu=5; break;
-      case "request_maker":selectMenu=6; break;
+    switch (event.target.id) {
+      case "orderlist": selectMenu = 0; break;
+      case "interest_Item": selectMenu = 1; break;
+      case "interest_Designer": selectMenu = 2; break;
+      case "interest_Maker": selectMenu = 3; break;
+      case "join_project": selectMenu = 4; break;
+      case "request_designer": selectMenu = 5; break;
+      case "request_maker": selectMenu = 6; break;
 
     }
-    console.log(this.state.selectMenu);
+    console.log(selectMenu);
     this.setState({ selectMenu: selectMenu });
   }
   render() {
     console.log("myDetail", this.props);
+    const { MyDetail } = this.props;
+    const { selectMenu } = this.state;
     return (
       <React.Fragment>
         <MainBox>
           <div className="header">
             <ProfileBox>
               <div className="imageBox">
-                <Thumbnail URL={this.props.MyDetail.profileImg == null ? noimg : this.props.MyDetail.profileImg.m_img} />
+                <Thumbnail URL={MyDetail.profileImg == null ? noimg : MyDetail.profileImg.m_img} />
               </div>
-              <div className="LabelBox fontBig fontStyleNormal">{this.props.MyDetail.nick_name}</div>
+              <div className="LabelBox fontBig fontStyleNormal">{MyDetail.nick_name}</div>
               <div className="LabelBox fontSmall fontStyleLight red">카테고리</div>
               <EmptyBox height={32} />
               <div className="LabelBox">
-                <span className="fontSmall normal fontStyleLight">300개의 아이템 |</span>&nbsp;
+                <span className="fontSmall normal fontStyleLight">{(MyDetail && MyDetail.count) || 0}개의 아이템 |</span>&nbsp;
                   <span className="red">♥</span>
-                <span className="fontSmall normal fontStyleNormal">5000000</span>
+                <span className="fontSmall normal fontStyleNormal">{(MyDetail && MyDetail.like) || 0}</span>
               </div>
             </ProfileBox>
             <InformationBox>
@@ -339,46 +361,40 @@ class MyDetail extends Component {
           </div>
           <div className="contents">
             <MenuBox>
-                <div className="title_Label">아이템</div>
-                <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={this.state.selectMenu==0?"red":null}>구매 아이템 정보</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">아이템</div>
+              <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={selectMenu == 0 ? "red" : null}>구매 아이템 정보</MenuButton>
+              <div className="hrLine" />
 
-                <div className="title_Label">관심</div>
-                <MenuButton id="interest_Item" onClick={this.onClickMenu} fontColor={this.state.selectMenu==1?"red":null}>관심 아이템</MenuButton>
-                <MenuButton id="interest_Designer" onClick={this.onClickMenu} fontColor={this.state.selectMenu==2?"red":null}>관심 디자이너</MenuButton>
-                <MenuButton id="interest_Maker" onClick={this.onClickMenu} fontColor={this.state.selectMenu==3?"red":null}>관심 메이커</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">관심</div>
+              <MenuButton id="interest_Item" onClick={this.onClickMenu} fontColor={selectMenu == 1 ? "red" : null}>관심 아이템</MenuButton>
+              <MenuButton id="interest_Designer" onClick={this.onClickMenu} fontColor={selectMenu == 2 ? "red" : null}>관심 디자이너</MenuButton>
+              <MenuButton id="interest_Maker" onClick={this.onClickMenu} fontColor={selectMenu == 3 ? "red" : null}>관심 메이커</MenuButton>
+              <div className="hrLine" />
 
-                <div className="title_Label">참여</div>
-                <MenuButton id="join_project" onClick={this.onClickMenu} fontColor={this.state.selectMenu==4?"red":null}>프로젝트</MenuButton>
-                <div className="hrLine"/>
+              <div className="title_Label">참여</div>
+              <MenuButton id="join_project" onClick={this.onClickMenu} fontColor={selectMenu == 4 ? "red" : null}>프로젝트</MenuButton>
+              <div className="hrLine" />
 
 
-                <div className="title_Label">의뢰</div>
-                <MenuButton id="request_designer" onClick={this.onClickMenu} fontColor={this.state.selectMenu==5?"red":null}>디자이너 의뢰</MenuButton>
-                <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={this.state.selectMenu==6?"red":null}>메이커 의뢰</MenuButton>
+              <div className="title_Label">의뢰</div>
+              <MenuButton id="request_designer" onClick={this.onClickMenu} fontColor={selectMenu == 5 ? "red" : null}>디자이너 의뢰</MenuButton>
+              <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={selectMenu == 6 ? "red" : null}>메이커 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
-              {
-                this.state.selectMenu===1&&
-                    <LikeInItemContainer id={this.props.userInfo.uid}/>
-              }
-              {
-                this.state.selectMenu===2&&
-                    <LikeInDesignerContainer id={this.props.userInfo.uid}/>
-              }
-              {
-                this.state.selectMenu===3&&
-                    <LikeInMakerContainer id={this.props.userInfo.uid}/>
-              }
-              {
-                this.state.selectMenu===5&&
+              {selectMenu === 0 &&
+                <MyPaymentContainer id={this.props.userInfo.uid} />}
+              {selectMenu === 1 &&
+                <LikeInItemContainer id={this.props.userInfo.uid} />}
+              {selectMenu === 2 &&
+                <LikeInDesignerContainer id={this.props.userInfo.uid} />}
+              {selectMenu === 3 &&
+                <LikeInMakerContainer id={this.props.userInfo.uid} />}
+              {selectMenu === 5 &&
                 <div className="wrap flex">
-                  <div className="list"> 
-                  {
-                      empty.designerRequest.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                      const type = item.type=="designer_req"?<div className="circle red1" >디자이너의뢰</div>:<div className="circle red2" >디자이너응답</div>
-                      return(
+                  <div className="list">
+                    {empty.designerRequest.map((item, index) => {                 //"designer_req" "designer_res" "maker_req" "maker_res" 
+                      const type = item.type == "designer_req" ? <div className="circle red1" >디자이너의뢰</div> : <div className="circle red2" >디자이너응답</div>
+                      return (
                         <div className="line" key={index}>
                           {type}
                           <div className="title_text">{item.title}</div>
@@ -386,30 +402,27 @@ class MyDetail extends Component {
                           <div className="sub_text">{item.create_time}</div>
                         </div>
                       );
+                    })}
+                  </div>
+                </div>}
+              {selectMenu === 6 &&
+                <div className="wrap flex">
+                  <div className="list">
+                    {
+                      empty.makerRequest.map((item, index) => {                 //"designer_req" "designer_res" "maker_req" "maker_res" 
+                        const type = item.type == "maker_req" ? <div className="circle red1" >메이커의뢰</div> : <div className="circle red2" >메이커응답</div>
+                        return (
+                          <div className="line">
+                            {type}
+                            <div className="title_text">{item.title}</div>
+                            <div className="sub_text">{item.nick_name}</div>
+                            <div className="sub_text">{item.create_time}</div>
+                          </div>
+                        );
                       })
-                  }
+                    }
                   </div>
                 </div>
-              }
-              {
-                this.state.selectMenu===6&&
-                <div className="wrap flex">
-                <div className="list"> 
-                {
-                    empty.makerRequest.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                    const type = item.type=="maker_req"?<div className="circle red1" >메이커의뢰</div>:<div className="circle red2" >메이커응답</div>
-                    return(
-                      <div className="line">
-                        {type}
-                        <div className="title_text">{item.title}</div>
-                        <div className="sub_text">{item.nick_name}</div>
-                        <div className="sub_text">{item.create_time}</div>
-                      </div>
-                    );
-                    })
-                }
-                </div>
-              </div>
               }
             </BoardBox>
           </div>

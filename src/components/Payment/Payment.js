@@ -293,11 +293,11 @@ class Payment extends Component {
                             </div>
                             <div className="title">
                                 <div className="name">{item.title}</div>
-                                <div className="option">[옵션]{options.test}</div>
+                                <div className="option">{options && "[옵션]" + options.test || ""}</div>
                             </div>
-                            <div className="amount"><div>{options.amount || "1"}</div></div>
+                            <div className="amount"><div>{options && options.amount || "1"}</div></div>
                             <div className="price"><div>{NumberFormat(item.price) || 0}{unit}</div></div>
-                            <div className="delivery"><div>{options.delivery || ""}</div></div>
+                            <div className="delivery"><div>{options && options.delivery || ""}</div></div>
                         </HeaderBox>
                         <CustomBox width={1443} height={3} color={'#E9E9E9'} marginTop={65} />
                         <InfoBox width={1433} marginTop={28}>

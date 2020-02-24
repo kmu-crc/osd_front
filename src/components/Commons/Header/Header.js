@@ -222,7 +222,7 @@ class Header extends Component {
     }
   };
   logout = () => {
-    SetSession("opendesign_token", null)
+    SetSession("market", null)
       .then(data => {
         this.props.SignOutRequest();
         this.setState({ sign_modal: false, user_popup: null });
@@ -264,11 +264,11 @@ class Header extends Component {
       </HeaderItem>
       {/*  */}
       {
-        (location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestToDesigner") !== -1 || location.indexOf("/ModifyrequestToDesigner") !== -1 ||
+        (location.indexOf("/request/designer") !== -1 || location.indexOf("/requestToDesigner") !== -1 || location.indexOf("/ModifyrequestToDesigner") !== -1 ||
           location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) &&
         <HeaderItem>
-          <Link to={`/requestDesigner`}
-            className={location.indexOf("/requestDesigner") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
+          <Link to={`/request/designer`}
+            className={location.indexOf("/request/designer") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
             디자이너 게시판
         </Link>
         </HeaderItem>
@@ -277,18 +277,18 @@ class Header extends Component {
         (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker") !== -1 || location.indexOf("/ModifyrequestToMaker") !== -1 ||
           location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
         <HeaderItem>
-          <Link to={`/requestMaker`}
-            className={location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
+          <Link to={`/request/maker`}
+            className={location.indexOf("/request/maker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
             메이커 게시판
         </Link>
         </HeaderItem>
       }
       {
-        (location.indexOf("/requestItem") !== -1 || location.indexOf("/createProduct") !== -1 || location.indexOf("/productModify") !== -1 ||
+        (location.indexOf("/request/item") !== -1 || location.indexOf("/createProduct") !== -1 || location.indexOf("/productModify") !== -1 ||
           location.indexOf("/productDetail") !== -1 || location.indexOf("/product") !== -1) &&
         <HeaderItem>
-          <Link to={`/requestItem`}
-            className={location.indexOf("/requestItem") !== -1 ? "active margin_left" : "margin_left"}>
+          <Link to={`/request/item`}
+            className={location.indexOf("/request/item") !== -1 ? "active margin_left" : "margin_left"}>
             아이템 게시판
         </Link>
         </HeaderItem>

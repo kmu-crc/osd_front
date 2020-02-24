@@ -68,36 +68,37 @@ class RequestList extends Component {
     this.state = { rendering: true, path: "request" };
   }
   componentDidMount() {
-    this.props.GetRequestTotalCountRequest(this.props.cate1, this.props.cate2);
+    // this.props.GetRequestTotalCountRequest(this.props.cate1, this.props.cate2);
   }
   changeState = async () => {
     await this.setState({ rendering: false });
     await this.setState({ rendering: true });
   }
   cate1Change = (value) => {
-    this.props.history.replace(`/${this.state.path}/${this.props.sort}/${value}/null`);
-    this.props.GetRequestTotalCountRequest(value, null);
-    this.changeState();
+    // this.props.history.replace(`/${this.state.path}/${this.props.sort}/${value}/null`);
+    // this.props.GetRequestTotalCountRequest(value, null);
+    // this.changeState();
   }
   cate2Change = (cate1, value) => {
-    if (cate1 && this.props.cate1 !== cate1) {
-      this.props.history.replace(`/${this.state.path}/${this.props.sort}/${cate1}/${value}`);
-    } else {
-      this.props.history.replace(`/${this.state.path}/${this.props.sort}/${this.props.cate1}/${value}`);
-    }
-    this.props.GetRequestTotalCountRequest(this.props.cate1, value);
-    this.changeState();
+    // if (cate1 && this.props.cate1 !== cate1) {
+    //   this.props.history.replace(`/${this.state.path}/${this.props.sort}/${cate1}/${value}`);
+    // } else {
+    //   this.props.history.replace(`/${this.state.path}/${this.props.sort}/${this.props.cate1}/${value}`);
+    // }
+    // this.props.GetRequestTotalCountRequest(this.props.cate1, value);
+    // this.changeState();
   }
   sortChange = (e, { value }) => {
-    this.props.history.replace(`/${this.state.path}/${value}/${this.props.cate1}/${this.props.cate2}`);
-    this.changeState();
+    // this.props.history.replace(`/${this.state.path}/${value}/${this.props.cate1}/${this.props.cate2}`);
+    // this.changeState();
   }
   resetCate = () => {
-    this.props.history.replace(`/${this.state.path}/${this.props.sort}`);
-    this.changeState();
+    // this.props.history.replace(`/${this.state.path}/${this.props.sort}`);
+    // this.changeState();
   }
+
   render() {
-    const { sort, category1, category2, cate1, cate2 } = this.props;
+    const { type, sort, category1, category2, cate1, cate2 } = this.props;
     return (
       <React.Fragment>
         <Content top={116}>
@@ -113,15 +114,19 @@ class RequestList extends Component {
                 category2={category2}
                 which="게시판" /></div>
             <div className="sort">
-              <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
-            <div className="request"><RequestButton>
-              <Link to={`/createRequest/null`}>디자인 의뢰하기</Link></RequestButton></div>
+              <Sorting handleClick={this.sortChange} placeholder={sort} />
+            </div>
+            <div className="request">
+              <RequestButton>
+                <Link to={`/createRequest/null`}>디자인 의뢰하기</Link>
+              </RequestButton>
+            </div>
           </Container>
         </Content>
 
         <Content top={100}>
           <ListElement>
-            {/* no.     */}<div style={{ marginRight: "15px" }}>번호</div>
+            {/* no.    <div style={{ marginRight: "15px" }}>번호</div> */}
             {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
             {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
             {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
@@ -130,7 +135,10 @@ class RequestList extends Component {
           </ListElement>
           <Wrapper className="listWrap">
             {this.state.rendering &&
-              <ScrollRequestListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+              <ScrollRequestListContainer
+                type={type}
+              // sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} 
+              />}
           </Wrapper>
         </Content>
       </React.Fragment>);
