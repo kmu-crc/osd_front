@@ -9,6 +9,7 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import NumberFormat from "modules/NumberFormat";
+import PointFormat from "modules/PointFormat";
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -391,7 +392,7 @@ class ItemDetail extends Component {
 
             <div className="price-and-rate line">
               <div className="price" style={{ marginRight: "35px" }}>
-                {NumberFormat(item.price || 0)} 포인트</div>
+                {PointFormat(item.price || 0)} 포인트</div>
               <div className="rate line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                 {Star(item.score)}({item.total || 0})</div>
             </div>
