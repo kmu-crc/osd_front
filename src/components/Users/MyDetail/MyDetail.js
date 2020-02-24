@@ -295,11 +295,20 @@ class MyDetail extends Component {
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
   }
-  onClickCreateDesigner(event) {
-    window.location.href = "/createDesigner";
+  onClickCreateDesigner(event){
+    if(this.props.MyDetail.isDesigner == true){
+      window.location.href = "/modifyDesigner/"+this.props.MyDetail.uid;
+    }else{
+      window.location.href = "/createDesigner";
+    }
   }
-  onClickCreateMaker(event) {
-    window.location.href = "/createMaker";
+  onClickCreateMaker(event){
+    if(this.props.MyDetail.isMaker == true){
+      window.location.href = "/modifyMaker/"+this.props.MyDetail.uid;
+    }
+    else{
+      window.location.href = "/createMaker";
+    }
   }
   onClickMenu(event) {
     let selectMenu = -1;
