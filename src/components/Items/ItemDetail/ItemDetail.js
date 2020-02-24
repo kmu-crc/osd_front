@@ -205,6 +205,7 @@ const Delivery = styled.div`
   }
 `;
 const Board = styled.div`
+
   width: 1094px;
   height: 892px;
   background: #FFFFFF;
@@ -227,7 +228,8 @@ const Board = styled.div`
   }
   .element-reply {
     margin-top: 14px;
-  }
+    padding:10px;
+  
   .first {
     margin-top: 50px; 
   }

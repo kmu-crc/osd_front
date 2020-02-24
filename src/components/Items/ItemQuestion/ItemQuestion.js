@@ -23,6 +23,34 @@ const Page = styled.div`
     .another {}
     .more {}
 `;
+const QuestionForm = styled.textarea`
+    width:100%;
+    outline:none;
+`
+const ReplyForm = styled.textarea`
+        width:100%;
+        height:80px;
+        outline:none;
+        resize:none;
+        border-radius:20px;
+        background-color:#E6E6E6;
+        border:none;
+`
+const Button = styled.div`
+    display:flex;
+    min-width:150px;
+    justify-content:center;
+    align-items:center;
+    border:3px solid #707070;
+    border-radius:20px;
+    margin-left:20px;
+    .text{
+        font-weight:500;
+        font-size:20px
+        color:white;
+    }
+    
+`
 const ReplyPrefix = styled.div`
     width: max-content;
     padding: 3px 6px 3px 6px;
@@ -32,7 +60,19 @@ const ReplyPrefix = styled.div`
     background: blue;
     color: white;
 `;
-
+const ReplyButton = styled.div`
+    width:100%;
+    height:100%;
+    border-radius:20px;
+    background:#ff0000;
+    margin-right:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .text{
+        color:white;
+    }
+`
 class ItemQuestion extends Component {
     constructor(props) {
         super(props);
@@ -135,7 +175,7 @@ class ItemQuestion extends Component {
             return (
                 <div className="line element-reply">
                     {!props.itsmine && props.sort_in_group === 0 && master ?
-                        <div onClick={() => this.reply(props.uid)}>[답변하기]</div> : null}
+                        <div onClick={() => this.reply(props.uid)}><ReplyButton><div className="text">답변하기</div></ReplyButton></div> : null}
                     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
                     <div className="line">
                         {props.is_question ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
@@ -150,15 +190,15 @@ class ItemQuestion extends Component {
             {master ?
                 null
                 : <div className="line" style={{ marginTop: "34px", }}>
-                    <div className="input-wrapper">
-                        <textarea
+                    {/* <div className="input-wrapper"> */}
+                        <ReplyForm
                             value={this_comment || ""}
                             onChange={this.onChangeValue}
                             name="this_comment"
                             onKeyDown={this.handleKeyDown} />
-                    </div>
-                    <div className="button" onClick={this.requestQuestion} >
-                        <div className="text" >문의하기</div></div>
+                    {/* </div> */}
+                    <Button onClick={this.requestQuestion} >
+                        <div className="text" >문의하기</div></Button>
                 </div>}
             <div>
                 {question && question.length > 0 ?
@@ -172,15 +212,15 @@ class ItemQuestion extends Component {
                             />
                             {reply && item.uid === this.state.targetId ?
                                 <div className="line" style={{ marginTop: "34px", }}>
-                                    <div className="input-wrapper">
-                                        <textarea
+                                    {/* <div className="input-wrapper"> */}
+                                        <ReplyForm
                                             value={this_reply || ""}
                                             onChange={this.onChangeValue}
                                             name="this_reply"
                                             onKeyDown={this.handleKeyDown} />
-                                    </div>
-                                    <div className="button" onClick={() => this.requestAnswer(item)} >
-                                        <div className="text" >답변하기</div></div>
+                                    {/* </div> */}
+                                    <Button onClick={() => this.requestAnswer(item)} >
+                                        <div className="text" >답변하기</div></Button>
                                 </div> : null}
                         </div>) : null}
             </div>

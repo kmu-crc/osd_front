@@ -4,17 +4,81 @@ import DateFormat from "modules/DateFormat";
 import Star from "components/Commons/Star";
 
 const Reviews = styled.div`
+//   border:1px solid black;
   width: 468px;
   height: 1478px;
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
-  // padding: 
+  padding: 10px;
   .title {
     font-weight: 500;
+    font-size:15px;
+    margin-right:20px;
+  }
+  .line{
+      display:flex;
+    //   border:1px solid red;
+    //   justify-content:center;
+      padding:10px;
+  }
+  .rate{
+      display:flex;
   }
 `;
+const ReviewForm = styled.textarea`
+  padding:10px;
+  resize:none;
+  width:100%;
+  height:100px;
+  border:1px solid #E6E6E6;
+  outline:none;
+  border-radius:10px;
+`
+const ScoreForm = styled.input.attrs({type:"number"})`
+        min-width:50px;
+        height:100%;
+        outline:none;
+        border:1px solid #E6E6E6;
+        border-radius:10px;
+`
+const WriteReview = styled.div`
+// *{
+//     border:1px solid black;
+// }
+  margin-bottom:10px;
+  .form{
+      width:100%;
+      padding:10px;
+  }
+  .contents{
+      display:flex;
+      justify-content:space-between;
+      padding-left:10px;
+      padding-right:10px;
+      .score{
+
+      }
+      .buttonBox{
+          .button{
+              width:100px;
+              padding:10px;
+              border-radius:20px;
+              background-color:#707070;
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              cursor:pointer;
+              .text{
+                  color:white;
+              }
+          }
+
+      }
+  }
+
+`
 const Page = styled.div`
     width: max-content;
     margin-top: 87px;
@@ -45,6 +109,61 @@ const ReplyPrefix = styled.div`
     background: blue;
     color: white;
 `;
+
+const ReviewPiece = styled.div`
+    display:flex;
+    border:1px solid #E9E9E9;
+    background-color:#E6E6E6;
+    border-radius:20px;
+    padding:10px;
+    margin-bottom:10px;
+    .pics{
+        width:100px;
+        height:100px;
+        border:1px solid #E6E6E6;
+        background-color:white;
+        margin-right:20px;
+    }
+    .contents{
+        .rate{
+            font-size:15px;
+            margin-bottom:5px;
+        }
+        .comment{
+            font-size:17px;
+            margin-bottom:5px;
+        }
+        .nickname{
+            font-size:12px;
+        }
+
+    }
+`
+const CreateReview = styled.div`
+    // *{
+    //     border:1px solid black;
+    // }
+    // border:1px solid black;
+    width:100%;
+    height:30px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:center;
+    .button{
+        width:80%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:20px;
+        background-color:#707070;
+        cursor:pointer;
+    }
+    .font{
+        font-size:15px;
+        color:white;
+    }
+`
 
 class ItemReview extends Component {
     constructor(props) {
@@ -78,8 +197,10 @@ class ItemReview extends Component {
         this.setState({ [name]: value, ing: true });
         setTimeout(() => { this.setState({ ing: false }) }, 750);
     };
-    reset() {
-        this.setState({
+    async reset() {
+        console.log("change review writing");
+
+        await this.setState({
             reply: false,
             targetId: null,
             this_comment: "",
@@ -117,6 +238,7 @@ class ItemReview extends Component {
             return;
         if (this.state.this_comment.length > 0)
             this.props.request({ score: this.state.score > 5 ? 5 : this.state.score, comment: this.state.this_comment, payment_id: id });
+        console.log("change review writing");
         this.reset();
     };
     removeComment(commentId) {
@@ -146,6 +268,7 @@ class ItemReview extends Component {
     };
 
     render() {
+        console.log(this.state);
         const { review, payment, userInfo, total, score, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
@@ -163,14 +286,14 @@ class ItemReview extends Component {
                 //     <div style={{ width: "max-content", marginLeft: "15px" }}>{props.sort_in_group === 0 ? Star(props.score) : null}</div>
                 //     <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
                 // </div>
-                <div className="line list-element">
+                <ReviewPiece>
                     <div className="pics" />
                     <div>
                         <div className="score">{Star(props.score)}({props.score})</div>
                         <div className="comment">{props.comment}</div>
                         <div className="nickname">{props.nick_name}</div>
                     </div>
-                </div>
+                </ReviewPiece>
             )
         }
 
@@ -185,24 +308,35 @@ class ItemReview extends Component {
                         payment.map((pay, index) => {
                             console.log(pay);
                             return <div key={index} onClick={() => this.setState({ review_selected: index, review_writing: true })}>
-                                {this.state.review_writing && this.state.review_selected === index ?
-                                    <div className="line" style={{ marginTop: "34px", }}>
-                                        <div className="input-wrapper">
-                                            <textarea
-                                                value={this_comment || ""}
-                                                onChange={this.onChangeValue}
-                                                name="this_comment"
-                                                onKeyDown={this.handleKeyDown} />
-                                            <input
+                                {(this.state.review_writing && this.state.review_selected) === index ?
+                                    <WriteReview>
+                                        <div className="form">
+                                            <ReviewForm
+                                             value={this_comment || ""}
+                                             onChange={this.onChangeValue}
+                                             name="this_comment"
+                                             onKeyDown={this.handleKeyDown}
+                                             />
+                                        </div>
+                                        <div className="contents">
+                                            <div className="score">
+                                            <ScoreForm
                                                 style={{ width: "25px" }}
                                                 value={this.state.score || 0}
                                                 onChange={this.onChangeValue}
                                                 name="score" />
+                                            </div>
+                                            <div className="buttonBox">
+                                                <div className="button" onClick={() => this.requestReview(pay.uid)} >
+                                                <div className="text" >리뷰작성</div></div>
+                                            </div>
                                         </div>
-                                        <div className="button" onClick={() => this.requestReview(pay.uid)} >
-                                            <div className="text" >리뷰작성</div></div>
-                                    </div>
-                                    : "작성하실 리뷰가 있습니다."}
+                                    </WriteReview>
+                                    : 
+                                        <CreateReview>
+                                            <div className="button"><div className="font">리뷰 작성하기</div></div>
+                                        </CreateReview>
+                                    }
                             </div>
                         }) : null
                     : null}
