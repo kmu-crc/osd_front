@@ -72,6 +72,19 @@ const InputTextBox = styled.input.attrs({type:'text'})`
   
   color:#060000;
 `
+const InputPasswordBox = styled.input.attrs({type:'password'})`
+  border:none;
+  width:100%;
+  height:100%;
+  padding-left:20px;
+  background-color:#E9E9E9;
+  border-radius:21px;
+  display:flex;
+  justify-content:center;
+  outline:none;
+  
+  color:#060000;
+`
 const CustomButton = styled.div`
   width:${props=>props.width}px;
   height:${props=>props.height}px;
@@ -201,7 +214,7 @@ class SignInForm extends Component {
                   </div> 
                   <div className="row">
                     <div className="label" value={this.state.password}><div>비밀번호</div></div>
-                    <InputTextBox 
+                    <InputPasswordBox 
                     type="password"
                     placeholder="비밀번호를 입력하세요."
                     value={this.state.password}
