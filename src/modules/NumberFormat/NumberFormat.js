@@ -8,4 +8,4 @@ const NumberFormat = (num) => {
 }
 
 export default NumberFormat;
-// const Won = N => '₩' + N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// const Won = N => '₩' + N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");래

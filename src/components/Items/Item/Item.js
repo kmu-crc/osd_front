@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Star from "components/Commons/Star";
 import NumberFormat from "modules/NumberFormat";
+import PointFormat from "modules/PointFormat";
+
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
@@ -92,7 +94,7 @@ class Item extends Component {
           </TextWrapper>
           {/* numbers */}
           <NumberWrapper>
-            <div className="price">{NumberFormat(item.price) || 0} won</div>
+            <div className="price">{PointFormat(item.price) || 0} won</div>
             <div className="rate">
               {Star(item.rate + 0.5)}({NumberFormat(item.reviews)})
           </div>
