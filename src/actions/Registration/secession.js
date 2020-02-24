@@ -16,7 +16,7 @@ export function SecessionRequest(token) {
 };
 
 export function SecessionSuccess(res) {
-  SetSession("opendesign_token", null);
+  SetSession("market", null);
   window.location.href = "/";
   return {
     type: "SUCCESS",

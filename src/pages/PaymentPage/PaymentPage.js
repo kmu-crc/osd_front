@@ -7,6 +7,7 @@ class PaymentPage extends Component {
       <PaymentContainer
         id={this.props.match.params.id}
         item={this.props.location.state && this.props.location.state.item}
+        custom={this.props.location.state && this.props.location.state.custom}
         options={this.props.location.state && this.props.location.state.options}
       />
     );

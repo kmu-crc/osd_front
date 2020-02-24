@@ -12,7 +12,7 @@ export const CreateRequestRequest = (data, token) => {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(res => dispatch(CreateRequestSuccess(res)) && res.id)
+      .then(res => res && dispatch(CreateRequestSuccess(res)))
       .catch(error => dispatch(CreateRequestFail(error)));
   };
 };
@@ -21,22 +21,20 @@ const CreateRequestSuccess = res => ({ type: types.CREATE_REQUEST_SUCCESS, succe
 const CreateRequestFail = error => ({ type: types.CREATE_REQUEST_FAIL, success: error.success });
 
 
-export const GetRequestListRequest = (page, sort, cate1, cate2, keyword) => {
+export const GetRequestListRequest = (type, page) => {
   return dispatch => {
-    const url = `${host}/request/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`
+    const url = `${host}/request/list/${type}/${page}`
+    console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => {
-        console.log("list", data);
-        return dispatch(GetRequestList(data || []))
-      })
+      .then(data => dispatch(GetRequestList(data || [])))
       .catch(err => dispatch(RequestListFail()))
   }
 };
-const GetRequestList = data => ({ type: types.GET_REQUEST_LIST, List: data });
+const GetRequestList = data => ({ type: types.GET_REQUEST_LIST, payload: data });
 // const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
 const RequestListFail = () => ({ type: types.REQUEST_LIST_FAIL, List: [] });
 

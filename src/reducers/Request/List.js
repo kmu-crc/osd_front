@@ -3,7 +3,9 @@ import update from "react-addons-update";
 
 const initialState = {
   List: { status: "INIT" },
-  status: { List: [], Count: 0, success: null }
+  status: {
+    List: [], Total: 0, success: null
+  }
 };
 
 export const RequestList = (state, action) => {
@@ -13,7 +15,8 @@ export const RequestList = (state, action) => {
 
   switch (action.type) {
     case types.GET_REQUEST_LIST:
-      return update(state, { status: { List: { $set: action.List }, } });
+      console.log(action);
+      return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total } } });
 
     case types.REQUEST_LIST_CLEAR:
       return update(state, { status: { List: { $set: action.List }, } });

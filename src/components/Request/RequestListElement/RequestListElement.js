@@ -28,13 +28,20 @@ const ListElement = styled.div`
     width: max-content;
     height: 25px;
     line-height: 15px;
-    background: hotpink;
-    color: white;
     font-family: Noto Sans KR;
     font-weight: 500;
     padding: 3px 5px 2px 5px;
     border-radius: 15px;
     margin-right: 5px;
+    &.request {
+      background: hotpink;
+      color: white;
+    }
+    &.estimate {
+      margin-left: 35px;
+      background: blue;
+      color: white;
+    }
   }
 `;
 const ThumbnailWriter = styled.div`
@@ -50,33 +57,59 @@ class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
     console.log("item:", item);
-    const Element = () =>
-      <ListElement>
-        {/* no.*/}
-        <div style={{ marginRight: "15px" }}>{item.uid}</div>
-        {/* title */}
-        <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>{item.private === 0 ? "" : "[비공개]"}{item.status === "request" ? <div className="status-box">의뢰</div> : ""}{item.title || "글 제목"}</div>
-        {/* writer */}
-        <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
-          <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-          <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
-        </div>
-        {/* date */}
-        <div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
-        {/* view */}
-        <div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div>
-        {/* like */}
-        <div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div>
-      </ListElement>
+    // const Element = () =>
 
     return (
-      item.private === 0 ?
-        <NavLink to={"/requestDetail/" + item.uid}>
-          <Element />
-        </NavLink>
-        : <Element />
+      <NavLink to={"/requestDetail/" + item.uid}>
+        <ListElement>
+          {/* no.*/}
+          {/* <div style={{ marginRight: "15px" }}>{item.uid}</div> */}
+          {/* title */}
+          <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
+            {item.status === "request"
+              ? <div className="status-box request">의뢰</div>
+              : item.status === "estimate" ?
+                <div className="status-box estimate">견적</div> : " "}
+
+            {item.title || "글 제목"}</div>
+          {/* writer */}
+          <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
+            <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+          </div>
+          {/* date */}
+          <div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
+          {/* view */}
+          <div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div>
+          {/* like */}
+          <div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div>
+        </ListElement>
+      </NavLink>
+
+      // item.private === 0 ?
+      // <Element />
+      // : <Element />
     );
   }
 }
+// uid: 1
+// client_id: 1
+// expert_id: null
+// title: "zxcv"
+// category_level1: 2
+// category_level2: 3
+// tag: "zxcv,qwer,asdf"
+// price: 123
+// content: "adsfkjhfk"
+// amount: null
+// location: "a;lsfk"
+// type: "designer"
+// resale: null
+// ownership: "1"
+// offline_consultation: "0"
+// status: "request"
+// group_id: 1
+// sort_in_group: 0
+// nick_name: "develop"
 
 export default DesignerBoardElement;

@@ -1,35 +1,38 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
-import {Dropdown} from "semantic-ui-react"
-import {InputTag} from "components/Commons/InputItem/InputTag"
+import { Dropdown } from "semantic-ui-react"
+import { InputTag } from "components/Commons/InputItem/InputTag"
+import Loading from "components/Commons/Loading";
 
-const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
-                        {text:"커뮤니케이션",value:2},
-                        {text:"공간",value:3},
-                        {text:"엔터테인먼트",value:4},
-                        {text:"소프트웨어",value:5},
-                        {text:"새분야",value:6}];
-
-const EmptyCategory = [{text:"",value:-1}]
-
-const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1},{text:"엑세서리",value:2},{text:"패션모듈",value:3}],
-                        [{text:"스마트카",value:0},{text:"로봇",value:1},{text:"기계/기기/기구",value:2},{text:"센서모듈",value:3},{text:"공예",value:4}],
-                        [{text:"UI/UX",value:0},{text:"광고",value:1},{text:"웹",value:2},{text:"영상",value:3},{text:"타이포그래피",value:4}],
-                        [{text:"스마트시티",value:0},{text:"건축",value:1},{text:"인테리어",value:2},{text:"환경",value:3}],
-                        [{text:"스마트미디어",value:0},{text:"게임",value:1},{text:"디지털컨텐츠",value:2},{text:"서비스",value:3}],
-                        [{text:"인공지능",value:0},{text:"빅데이터",value:1},{text:"시스템SW",value:2},{text:"응용SW",value:3}],
-                        [{text:"새분야",value:0}]];
-const ItemType = [{text:"디자인",value:0},
-                        {text:"프로젝트",value:1},
-                        {text:"특허권",value:2},
-                        {text:"기술자문/상담",value:3},
-                        {text:"경험",value:4},
-                        {text:"정보/데이터",value:5},
-                        {text:"아이디어/노하우",value:6},
-                        {text:"제품",value:7}]; 
+const FirstCategory = [
+  { text: "패션", value: 0 },
+  { text: "제품", value: 1 },
+  { text: "커뮤니케이션", value: 2 },
+  { text: "공간", value: 3 },
+  { text: "엔터테인먼트", value: 4 },
+  { text: "소프트웨어", value: 5 },
+  { text: "새분야", value: 6 }];
+const EmptyCategory = [
+  { text: "", value: -1 }]
+const SecondCategory = [
+  [{ text: "스마트패션", value: 0 }, { text: "의상", value: 1 }, { text: "엑세서리", value: 2 }, { text: "패션모듈", value: 3 }],
+  [{ text: "스마트카", value: 0 }, { text: "로봇", value: 1 }, { text: "기계/기기/기구", value: 2 }, { text: "센서모듈", value: 3 }, { text: "공예", value: 4 }],
+  [{ text: "UI/UX", value: 0 }, { text: "광고", value: 1 }, { text: "웹", value: 2 }, { text: "영상", value: 3 }, { text: "타이포그래피", value: 4 }],
+  [{ text: "스마트시티", value: 0 }, { text: "건축", value: 1 }, { text: "인테리어", value: 2 }, { text: "환경", value: 3 }],
+  [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
+  [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
+  [{ text: "새분야", value: 0 }]];
+const ItemType = [
+  { text: "디자인", value: 0 },
+  { text: "프로젝트", value: 1 },
+  { text: "특허권", value: 2 },
+  { text: "기술자문/상담", value: 3 },
+  { text: "경험", value: 4 },
+  { text: "정보/데이터", value: 5 },
+  { text: "아이디어/노하우", value: 6 },
+  { text: "제품", value: 7 }];
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -69,13 +72,12 @@ const RedButton = styled.div`
   background-color:red;
 
   position:absolute;
-  left:${props=>props.left}px;
-  bottom:${props=>props.bottom}px;
+  left:${props => props.left}px;
+  bottom:${props => props.bottom}px;
 
   cursor:pointer;
 `
-
-const FormBox=styled.div`
+const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
@@ -125,8 +127,8 @@ const FormBox=styled.div`
   }
 
 `
-const InputText = styled.input.attrs({type:"text"})`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
@@ -139,8 +141,8 @@ const InputText = styled.input.attrs({type:"text"})`
 
 `
 const InputTextarea = styled.textarea`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
@@ -152,10 +154,9 @@ const InputTextarea = styled.textarea`
 
 `
 const Margin = styled.div`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"}
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `
-
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
     background-color:#E9E9E9 !important;
@@ -163,7 +164,7 @@ const DropBox = styled(Dropdown)`
 
     border-radius:20px !important;
 `
-const HRLine=styled.div`
+const HRLine = styled.div`
     width:93%;
     height:3px;
     background-color:#E9E9E9;
@@ -196,166 +197,163 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
-class ResponseToDesignerReq extends Component{
-  constructor(props){
+
+class ResponseToDesignerReq extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      category_level1:0,category_level2:0,
-      title:"",tag:[],price:0,content:"",location:"",offline:-1,amount:0,ownership:-1,
+      category_level1: 0, category_level2: 0,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1,
 
-      res_title:"",res_content:"",res_price:"",
+      res_title: "", res_content: "", res_price: "",
     }
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChangeResponseTitle=this.onChangeResponseTitle.bind(this);
-    this.onChangeResponseContent=this.onChangeResponseContent.bind(this);
-    this.onChangeResponsePrice=this.onChangeResponsePrice.bind(this);
+    this.onChangeResponseTitle = this.onChangeResponseTitle.bind(this);
+    this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
+    this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     //test 데이터 초기화
     this.setState({
-      category_level1:1,
-      category_level2:0,
-      title:"제작의뢰합니다.",
-      tag:["테스트1","테스트2","테스트3"],
-      price:12300,
-      content:"제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
-      location:"대한민국 서울특별시",
-      offline:0,
-      amount:1,
-      ownership:0,
+      category_level1: 1,
+      category_level2: 0,
+      title: "제작의뢰합니다.",
+      tag: ["테스트1", "테스트2", "테스트3"],
+      price: 12300,
+      content: "제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
+      location: "대한민국 서울특별시",
+      offline: 0,
+      amount: 1,
+      ownership: 0,
     });
   }
 
-  onChangeResponseTitle(event){
+  onChangeResponseTitle(event) {
     this.setState({
-      res_title:event.target.value,
+      res_title: event.target.value,
     })
   }
-  onChangeResponseContent(event){
+  onChangeResponseContent(event) {
     this.setState({
-      res_content:event.target.value,
+      res_content: event.target.value,
     })
   }
-  onChangeResponsePrice(event){
+  onChangeResponsePrice(event) {
     this.setState({
-      res_price:event.target.value,
+      res_price: event.target.value,
     })
   }
 
-  onSubmit(){
-
-    let tagList="";
-    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
-      return(
-        tagList+=item+","
-      );
-    });
-
-    
-    const Data = {
-      type:"designer_res", // "designer_req" "designer_res" "maker_req" "maker_res"
-      // user_id: this.props.userInfo.uid // 
-      title:this.state.res_title,
-      content:this.state.res_content,
-      price:this.state.res_price,
+  onSubmit() {
+    const data = {
+      type: "designer", // "designer_req" "designer_res" "maker_req" "maker_res"
+      status: "estimate",
+      group_id: this.props.detail.group_id,
+      sort_in_group: this.props.detail.sort_in_group,
+      title: this.state.res_title,
+      content: this.state.res_content,
+      price: this.state.res_price,
     }
-
-    // 페이지이동
-    window.location.href = "/request";
+    // // 페이지이동
+    this.props.CreateRequestRequest(data, this.props.token)
+      .then(res => {
+        if (res.data.success) {
+          window.location.href = "/request";
+        }
+      })
+      .catch(err => alert("에러가 발생했습니다." + err));
   }
 
-  render(){
-
-    const category_level1 = this.props.category1&&this.props.category1[this.state.category_level1]&&
-                            this.props.category1[this.state.category_level1].text;
-    const category2 = this.props.category2&&this.props.category2[this.state.category_level1];
-    const category_level2 = category2&&category2[this.state.category_level2].text;
-    return(
-      <React.Fragment>
+  render() {
+    const { detail } = this.props;
+    console.log(detail);
+    if (!detail) return (<Loading />);
+    const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
+      this.props.category1[detail.category_level1].text;
+    const category2 = this.props.category2 && this.props.category2[detail.category_level1];
+    const category_level2 = category2 && category2[detail.category_level2].text;
+    return (
       <Wrapper>
         <MainBox>
           <div className="title">디자이너 의뢰 답변</div>
+
           <div className="contentsBox">
             <FormBox>
-
               <div className="wrapper flex centering">
                 <div className="label">제목</div>
-                <div className="textBox">{this.state.title}</div>
+                <div className="textBox">{detail.title}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">카테고리</div>
-                <div className="textBox">{category_level1}>{category_level2}</div>
+                <div className="textBox">{category_level1 ? category_level1 + " > " : ""}{category_level2}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">태그</div>
                 <TagList>
-                  {
-                    this.state.tag.map((item, index) => {
-                      return (
-                      <TagPiece key={index}>
-                        {item}
-                    </TagPiece>);
-                    })
-                  }
-                  
+                  {detail.tag.split(",").map((item, index) =>
+                    <TagPiece key={index}>
+                      {item}
+                    </TagPiece>
+                  )}
                 </TagList>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">희망비용</div>
-                <div className="textBox">{this.state.price}</div>
+                <div className="textBox">{detail.price}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">내용</div>
-                <div className="textBox">{this.state.content}</div>
+                <div className="textBox">{detail.content}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">디자이너 위치</div>
-                <div className="textBox">{this.state.location}</div>
+                <div className="textBox">{detail.location}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">디자인 소유권</div>
-                <div className="textBox">{this.state.ownership<=0?"불가능":"가능"}</div>
+                <div className="textBox">{detail.ownership <= 0 ? "불가능" : "가능"}</div>
               </div>
 
               <div className="wrapper flex centering">
                 <div className="label">오프라인 상담</div>
-                <div className="textBox">{this.state.offline<=0?"불가능":"가능"}</div>
+                <div className="textBox">{detail.offline <= 0 ? "불가능" : "가능"}</div>
               </div>
 
             </FormBox>
-            <FormBox>
 
+            <FormBox>
               <div className="wrapper flex">
                 <div className="label">제목</div>
-                <InputText onChange={this.onChangeResponseTitle} value={this.state.res_title} width={483}/>
+                <InputText onChange={this.onChangeResponseTitle} value={this.state.res_title} width={483} />
               </div>
 
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700}/>
+                <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} />
               </div>
 
               <div className="wrapper flex">
                 <div className="label">희망비용</div>
-                <InputText onChange={this.onChangeResponsePrice} value={this.state.res_price} width={483}/>
+                <InputText onChange={this.onChangeResponsePrice} value={this.state.res_price} width={483} />
               </div>
 
             </FormBox>
-          </div>         
+          </div>
         </MainBox>
-        <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
-        </Wrapper>
-      </React.Fragment>
+        {/* <Lihk to={{}}> */}
+          <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
+        {/* </Lihk> */}
+      </Wrapper>
     );
   };
-}export default ResponseToDesignerReq;
+} export default ResponseToDesignerReq;
 
 // import React, { Component } from "react";
 // import { Grid } from "semantic-ui-react";

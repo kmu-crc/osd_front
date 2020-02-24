@@ -11,8 +11,6 @@ class RequestListContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    // RequestList: state.RequestList.status.List,
-    Count: state.RequestList.status.Count,
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
     category1: state.CategoryAll.status.category1,
