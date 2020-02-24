@@ -80,9 +80,9 @@ class DesignerBoardElement extends Component {
           {/* date */}
           <div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
           {/* view */}
-          <div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div>
+          {/* <div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div> */}
           {/* like */}
-          <div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div>
+          {/* <div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div> */}
         </ListElement>
       </NavLink>
 

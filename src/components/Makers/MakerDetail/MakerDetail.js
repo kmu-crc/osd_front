@@ -545,8 +545,8 @@ const empty = {
   experience:[{number:"1",task:"디자인업무",explain:"디자인업무입니다",during:"1999.99.99~1999.99.99"}],
 
   //등록아이템
-  itemlist:[{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
-            { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+  itemlist:[{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
+            { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
 
   // 게시판
   board:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",

@@ -288,8 +288,8 @@ class ItemReview extends Component {
                 // </div>
                 <ReviewPiece>
                     <div className="pics" />
-                    <div className="contents">
-                        <div className="rate">{Star(props.score)}({props.score})</div>
+                    <div>
+                        <div className="score">{Star(props.score)}({props.score})</div>
                         <div className="comment">{props.comment}</div>
                         <div className="nickname">{props.nick_name}</div>
                     </div>
@@ -300,8 +300,8 @@ class ItemReview extends Component {
         return (<React.Fragment>
             <Reviews>
                 <div className="line">
-                    <div className="title">리뷰 평점</div>
-                    <div className="rate">{Star(score)}({total})</div>
+                    <div className="title">리뷰</div>
+                    <div className="score">{Star(score)}({total})</div>
                 </div>
                 {!master ?
                     payment && payment.length > 0 ?

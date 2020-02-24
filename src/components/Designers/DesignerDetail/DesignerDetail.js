@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import profile from "source/thumbnail.png";
-import NumberFormat from "modules/NumberFormat";
-import TextFormat from "modules/TextFormat";
 import { Icon } from "semantic-ui-react";
-import Item from "components/Items/Item/Item"
 import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
+import DesignerRequestBoardContainer from "containers/Designer/DesignerRequestBoardContainer";
+import TextFormat from "modules/TextFormat";
+import NumberFormat from "modules/NumberFormat";
+import profile from "source/thumbnail.png";
+import Item from "components/Items/Item/Item"
 
 // CSS STYLING
 const Expert = styled.div`
@@ -43,8 +44,7 @@ const LikeWrapper = styled.div`
   .like{
     color:#ff0000;
   }
-}
-`
+`;
 const TextWrapper = styled.div`
   margin-top: 27px;
   margin-left: auto;
@@ -200,9 +200,9 @@ const RequestBoard = styled.div`
 `;
 const ItemInfo = styled.div`
   margin-right: ${prop => prop.mRight}px;
-  margin-top: ${props=>props.mTop==null?"0px":props.mTop+"px"};
-  width: ${props=>props.width==null?"468px":props.width+"px"};
-  height: ${props=>props.height==null?"491px":props.height+"px"};
+  margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+  width: ${props => props.width == null ? "468px" : props.width + "px"};
+  height: ${props => props.height == null ? "491px" : props.height + "px"};
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
@@ -249,9 +249,9 @@ const ItemInfo = styled.div`
 `;
 const AdditionalInfo = styled.div`
   margin-right: ${prop => prop.mRight}px;
-  margin-top: ${props=>props.mTop==null?"0px":props.mTop+"px"};
-  width: ${props=>props.width==null?"468px":props.width+"px"};
-  height: ${props=>props.height==null?"491px":props.height+"px"};
+  margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+  width: ${props => props.width == null ? "468px" : props.width + "px"};
+  height: ${props => props.height == null ? "491px" : props.height + "px"};
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
@@ -395,16 +395,15 @@ const Wrapper = styled.div`
     height:max-content;
   }
 `;
-
 const ExpTable = styled.div`
     *{
       font-family:Noto Sans KR;
       font-size:16px;
     }
-    width: ${props=>props.width==null?"100%":props.width+"px"};
-    height: ${props=>props.height==null?"max-content":props.height+"px"};
-    margin-left: ${props => props.mLeft==null?"0px":props.mLeft+"px"}px;
-    margin-top: ${props=>props.mTop==null?"0px":props.mTop+"px"};
+    width: ${props => props.width == null ? "100%" : props.width + "px"};
+    height: ${props => props.height == null ? "max-content" : props.height + "px"};
+    margin-left: ${props => props.mLeft == null ? "0px" : props.mLeft + "px"}px;
+    margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
     .row{
       width:100%;
       height:29px;
@@ -427,7 +426,7 @@ const ExpTable = styled.div`
       height:100%;
       font-weight:200;
     }
-`
+`;
 const ReviewBox = styled.div`
     width:100%;
     height:150px;
@@ -456,7 +455,7 @@ const ReviewBox = styled.div`
       overflow-y:overlay;
 
     }
-`
+`;
 const Thumbnail = styled.div`
   cursor:pointer;
   width:150px;
@@ -464,126 +463,131 @@ const Thumbnail = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-image: ${props => `url(${props.imageURL==null?noimg:props.imageURL})`};
+  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
   background-size: cover;
   background-position: center center;
-`
+`;
 const review = {
-  average_score:4,
-  review:[{
-    thumbnail:noimg,
-    nick_name:"닉네임",
-    explain:"리뷰입니다",
-    score:5,
-  },{
-    thumbnail:noimg,
-    nick_name:"닉네임",
-    explain:"리뷰입니다",
-    score:5,
-  },{
-    thumbnail:noimg,
-    nick_name:"닉네임",
-    explain:"리뷰입니다",
-    score:5,
+  average_score: 4,
+  review: [{
+    thumbnail: noimg,
+    nick_name: "닉네임",
+    explain: "리뷰입니다",
+    score: 5,
+  }, {
+    thumbnail: noimg,
+    nick_name: "닉네임",
+    explain: "리뷰입니다",
+    score: 5,
+  }, {
+    thumbnail: noimg,
+    nick_name: "닉네임",
+    explain: "리뷰입니다",
+    score: 5,
   }],
-}
+};
 const empty = {
   // 기본
   nick_name: "Loading", categoryName: "카테고리",
-  items: 300, likes: 5000000,score:4,
-  description:"",location:"",
-  maker_equipment:[],maker_technique:[],
+  items: 300, likes: 5000000, score: 4,
+  description: "", location: "",
+  maker_equipment: [], maker_technique: [],
   create_time: "2020-01-01T00:00:01.000Z",
   update_time: "2020-01-01T00:00:01.000Z",
 
   //경험
-  experience:[{number:"1",task:"디자인업무",explain:"디자인업무입니다",during:"1999.99.99~1999.99.99"}],
+  experience: [{ number: "1", task: "디자인업무", explain: "디자인업무입니다", during: "1999.99.99~1999.99.99" }],
 
   //등록아이템
-  itemlist:[{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
-            { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+  itemlist: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
+  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
 
   // 게시판
-  board:[{uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_req",
-  title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-  create_time:"1999.99.99",update_time:"1999.11.11"},
-  {uid:"1",user_id:"123",nick_name:"멍멍이",type:"maker_res",
-  title:"천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-  create_time:"1999.99.99",update_time:"1999.11.11"}],
+  board: [{
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  },
+  {
+    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_res",
+    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+    create_time: "1999.99.99", update_time: "1999.11.11"
+  }],
 };
+
 class DesignerDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { tab: true ,
-      isLike:false,
-      nick_name:"",user_id:null,
-      thumbnail:null,thumbnail_name:null,
-      firstCategory:0,secondCategory:0,location:"",
-      explain:"",tag:[],
-      career:[{number:0,task:"",explain:"",during:""}],
+    this.state = {
+      tab: true,
+      isLike: false,
+      nick_name: "", user_id: null,
+      thumbnail: null, thumbnail_name: null,
+      firstCategory: 0, secondCategory: 0, location: "",
+      explain: "", tag: [],
+      career: [{ number: 0, task: "", explain: "", during: "" }],
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
   }
-  componentWillUpdate(nextProps){
-    if(
-      this.props.DesignerViewDetail.image!==nextProps.DesignerViewDetail.image||
-      this.props.DesignerViewDetail.nick_name!==nextProps.DesignerViewDetail.nick_name||
-      this.props.DesignerViewDetail.user_id!==nextProps.DesignerViewDetail.user_id||
-      this.props.DesignerViewDetail.description!==nextProps.DesignerViewDetail.description||
-      this.props.DesignerViewDetail.location!==nextProps.DesignerViewDetail.location||
-      this.props.DesignerViewDetail.category_level1!==nextProps.DesignerViewDetail.category_level1||
-      this.props.DesignerViewDetail.category_level2!==nextProps.DesignerViewDetail.category_level2||
-      this.props.DesignerViewDetail.tag !== nextProps.DesignerViewDetail.tag||
-      this.props.DesignerViewDetail.experience!==nextProps.DesignerViewDetail.experience||
-      this.props.DesignerViewDetail.score!==nextProps.DesignerViewDetail.score||
-      this.props.like !== nextProps.like)
-    {
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.DesignerViewDetail.image !== nextProps.DesignerViewDetail.image ||
+      this.props.DesignerViewDetail.nick_name !== nextProps.DesignerViewDetail.nick_name ||
+      this.props.DesignerViewDetail.user_id !== nextProps.DesignerViewDetail.user_id ||
+      this.props.DesignerViewDetail.description !== nextProps.DesignerViewDetail.description ||
+      this.props.DesignerViewDetail.location !== nextProps.DesignerViewDetail.location ||
+      this.props.DesignerViewDetail.category_level1 !== nextProps.DesignerViewDetail.category_level1 ||
+      this.props.DesignerViewDetail.category_level2 !== nextProps.DesignerViewDetail.category_level2 ||
+      this.props.DesignerViewDetail.tag !== nextProps.DesignerViewDetail.tag ||
+      this.props.DesignerViewDetail.experience !== nextProps.DesignerViewDetail.experience ||
+      this.props.DesignerViewDetail.score !== nextProps.DesignerViewDetail.score ||
+      this.props.like !== nextProps.like) {
 
       const careerRow = nextProps.DesignerViewDetail.experience.split("/");
       careerRow.pop();
-      const careerList = careerRow.map((item,index)=>{
+      const careerList = careerRow.map((item, index) => {
         const piece = item.split(",");
         // console.log("piece:::",piece[0],piece[1],piece[2],piece[3]);
-        return(
-          {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
+        return (
+          { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
         );
       });
       const tag = nextProps.DesignerViewDetail.tag.split(",");
       tag.pop();
 
       this.setState({
-        isLike:nextProps.like,
-        thumbnail:nextProps.DesignerViewDetail.image,
-        nick_name:nextProps.DesignerViewDetail.nick_name,
-        user_id:nextProps.DesignerViewDetail.user_id,
-        explain:nextProps.DesignerViewDetail.description,
-        location:nextProps.DesignerViewDetail.location,
-        firstCategory:nextProps.DesignerViewDetail.category_level1,
-        secondCategory:nextProps.DesignerViewDetail.category_level2,
-        tag:tag,
-        career:careerList,
-        score:nextProps.DesignerViewDetail.score,
+        isLike: nextProps.like,
+        thumbnail: nextProps.DesignerViewDetail.image,
+        nick_name: nextProps.DesignerViewDetail.nick_name,
+        user_id: nextProps.DesignerViewDetail.user_id,
+        explain: nextProps.DesignerViewDetail.description,
+        location: nextProps.DesignerViewDetail.location,
+        firstCategory: nextProps.DesignerViewDetail.category_level1,
+        secondCategory: nextProps.DesignerViewDetail.category_level2,
+        tag: tag,
+        career: careerList,
+        score: nextProps.DesignerViewDetail.score,
       })
     };
 
     return true;
   }
-  onClickRequest(event){
-      window.location.href = "/requestToDesigner/"+ this.props.DesignerViewDetail.uid;
+  onClickRequest(event) {
+    window.location.href = "/requestToDesigner/" + this.props.DesignerViewDetail.uid;
   }
-  onClickisLike(event){
+  onClickisLike(event) {
     const isLike = !this.state.isLike;
 
-    isLike === false ? this.props.UnlikeDesignerRequest(this.state.user_id,this.props.token)
-    :this.props.LikeDesignerRequest(this.state.user_id,this.props.token);
+    isLike === false ? this.props.UnlikeDesignerRequest(this.state.user_id, this.props.token)
+      : this.props.LikeDesignerRequest(this.state.user_id, this.props.token);
 
-    this.setState({isLike:isLike});
+    this.setState({ isLike: isLike });
   }
   render() {
     // const expert = this.props.DesignerDetail || empty;
     const expert = empty;
-    const {likeCount,itemCount} = this.props.DesignerViewDetail;
+    const { likeCount, itemCount } = this.props.DesignerViewDetail;
 
     console.log("detail:", this.props);
 
@@ -591,15 +595,15 @@ class DesignerDetail extends Component {
     const { tab } = this.state;
 
     // 카테고리
-    const categoryName =this.props.category1&&this.props.category2&&
-      this.state.secondCategory === 0?this.props.category1[this.state.firstCategory]&& this.props.category1[this.state.firstCategory].text
-      :this.props.category2[this.state.firstCategory]&&
-      this.props.category2[this.state.firstCategory][this.state.secondCategory]&&this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
-    
+    const categoryName = this.props.category1 && this.props.category2 &&
+      this.state.secondCategory === 0 ? this.props.category1[this.state.firstCategory] && this.props.category1[this.state.firstCategory].text
+      : this.props.category2[this.state.firstCategory] &&
+      this.props.category2[this.state.firstCategory][this.state.secondCategory] && this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
+
     // console.log(categoryName);
     return (<Wrapper>
-      <div className="contents_box"/>
-      <div style={{ display: "flex", flexDirection: "row"}}>
+      <div className="contents_box" />
+      <div style={{ display: "flex", flexDirection: "row" }}>
         {/* Designer */}
         <Expert mRight={60}>
           {/* Profile */}
@@ -610,17 +614,17 @@ class DesignerDetail extends Component {
             <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
           </TextWrapper>
           <LikeWrapper>
-            {this.state.isLike === false?
-             <div onClick={this.onClickisLike} className="unlike">♡</div>
-             :
-             <div onClick={this.onClickisLike} className="like">♥</div>
+            {this.state.isLike === false ?
+              <div onClick={this.onClickisLike} className="unlike">♡</div>
+              :
+              <div onClick={this.onClickisLike} className="like">♥</div>
             }
-          {/* ♥ */}
+            {/* ♥ */}
           </LikeWrapper>
           {/* Counter */}
           <Counter>
             <div className="items">
-              {itemCount||0}개의 아이템</div>
+              {itemCount || 0}개의 아이템</div>
             <div className="v-line" />
             <div className="likes">{/**/}
               <Icon className="heart" size="small" color="red" />{likeCount || 0}</div>
@@ -644,91 +648,89 @@ class DesignerDetail extends Component {
         <div className="title margin_bottom">리뷰({review.review.length})</div>
         <ReviewBox>
 
-            {
-              review.review.map((item,index)=>{
-                return(
-                  <div className="review" key={index}>
-                      <Thumbnail imageURL={item.thumbnail}/>
-                      <div className="content">
-                        <div className="row">★★★★★</div>
-                        <div className="row">{item.nick_name}</div>
-                        <div className="row">{item.explain}</div>
-                      </div>
+          {
+            review.review.map((item, index) => {
+              return (
+                <div className="review" key={index}>
+                  <Thumbnail imageURL={item.thumbnail} />
+                  <div className="content">
+                    <div className="row">★★★★★</div>
+                    <div className="row">{item.nick_name}</div>
+                    <div className="row">{item.explain}</div>
                   </div>
-                );
-              })
-            }
+                </div>
+              );
+            })
+          }
         </ReviewBox>
       </AdditionalInfo>
 
       {/* 경험 */}
-        <AdditionalInfo width={1523} height={280} mTop={60}>
-            <div className="title margin_bottom">디자인 경험</div>
-            <ExpTable>
-              <div className="header">
-                <div className="th">경험</div>
-                <div className="th">기간</div>
-                <div className="th">업무내용</div>
+      <AdditionalInfo width={1523} height={280} mTop={60}>
+        <div className="title margin_bottom">디자인 경험</div>
+        <ExpTable>
+          <div className="header">
+            <div className="th">경험</div>
+            <div className="th">기간</div>
+            <div className="th">업무내용</div>
+          </div>
+          {this.state.career.map((item, index) => {
+            return (
+              <div className="row" key={index}>
+                <div className="td">{item.task}</div>
+                <div className="td">{item.during}</div>
+                <div className="td">{item.explain}</div>
               </div>
-              {
-                this.state.career.map((item,index)=>{
-                  return(
-                    <div className="row" key={index}>
-                      <div className="td">{item.task}</div>
-                      <div className="td">{item.during}</div>
-                      <div className="td">{item.explain}</div>
-                    </div>
-                  );
-                })
-              }
-            </ExpTable>
+            );
+          })}
+        </ExpTable>
 
-        </AdditionalInfo>
+      </AdditionalInfo>
 
-        {/**보유아이템 */}
-        <ItemInfo width={1523} height={491} mTop={60}>
+      {/**보유아이템 */}
+      <ItemInfo width={1523} height={491} mTop={60}>
         <div className="title">디자인 아이템</div>
         <div className="wrapItem">
-          {
-             <HaveInItemContainer id={this.props.id}/>
-          }
+          {<HaveInItemContainer id={this.props.id} />}
         </div>
-        </ItemInfo>
+
+      </ItemInfo>
+
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
-      <DesignerBoard>
-
-
-          <div className="title">디자이너 게시판</div>
+        <DesignerBoard>
+          <div className="title">디자이너 의뢰</div>
           <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>디자인 의뢰하기</div></div>
-          <div className="list"> 
-          {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
-
-            {
-                expert.board.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                  const type = item.type=="designer_req"?<div className="circle red1" >디자이너의뢰</div>:<div className="circle red2" >디자이너응답</div>
-                  return(
-                    <div className="line">
-                      {type}
-                      <div className="title_text">{item.title}</div>
-                      <div className="sub_text">{item.nick_name}</div>
-                      <div className="sub_text">{item.create_time}</div>
-                    </div>
-                  );
-                })
-              }
-         </div>
-          <div className="page">
+          <div className="list">
+            {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
+            <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />
+            {/* {expert.board.map((item, index) => {
+              //"designer_req" "designer_res" "maker_req" "maker_res" 
+              const type = item.type == "designer" ? item.sort_group_id === 0 ?
+                <div className="circle red1" >디자이너의뢰</div> :
+                <div className="circle red2" >디자이너응답</div> : null
+              console.log(item);
+              return (
+                <div key={index} className="line">
+                  {type}
+                  <div className="title_text">{item.title}</div>
+                  <div className="sub_text">{item.nick_name}</div>
+                  <div className="sub_text">{item.create_time}</div>
+                </div>
+              )
+            })} */}
+          </div>
+          {/* <div className="page">
             <div className="this number">1</div>
             <div className="another number">2</div>
             <div className="another number">3</div>
             <div className="another number">4</div>
             <div className="more">...</div>
-          </div>
-          </DesignerBoard>
+          </div> */}
+        </DesignerBoard>
       </div>
-      
+
     </Wrapper>);
   }
-}
+};
 
 export default DesignerDetail;

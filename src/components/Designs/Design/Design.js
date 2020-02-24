@@ -33,9 +33,9 @@ const ProductBox = styled.div`
             margin-left: 5px;
             margin-right: 5px;
         }
-        .rate-and-review {
+        .score-and-review {
             display: flex;
-            .rate {
+            .score {
                 
             }
             .review {
@@ -54,7 +54,7 @@ const ProductBox = styled.div`
         }
     }
 `;
-const loading = { thumbnailUrl: { m_img: '' }, name: '로딩중...', userName: "로딩중...", price: 0, unit: 'won', rate: 0, like: 0 };
+const loading = { thumbnailUrl: { m_img: '' }, name: '로딩중...', userName: "로딩중...", price: 0, unit: 'won', score: 0, like: 0 };
 class Design extends Component {
   constructor(props) {
     super(props);
@@ -71,8 +71,8 @@ class Design extends Component {
       <div className="info-box">
         <div className="title"><TextFormat chars="24" txt={product.title || ""} /></div>
         <div className="user">{product.userName}</div>
-        <div className="rate-and-review">
-          <div className="rate">{Star(product.rate)}</div>
+        <div className="score-and-review">
+          <div className="score">{Star(product.score)}</div>
           <div className="review">({NumberFormat(product.review)})</div>
         </div>
         <div className="price">{Exchange(product.unit || '₩', product.price)}</div>

@@ -118,7 +118,7 @@ class RequestList extends Component {
             </div>
             <div className="request">
               <RequestButton>
-                <Link to={`/createRequest/null`}>디자인 의뢰하기</Link>
+                <Link to={`/requestToDesigner/null`}>디자인 의뢰하기</Link>
               </RequestButton>
             </div>
           </Container>
@@ -130,8 +130,8 @@ class RequestList extends Component {
             {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
             {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
             {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
-            {/* view    */}<div style={{ marginRight: "15px" }}>조회수</div>
-            {/* like    */}<div style={{ marginRight: "15px" }}>좋아요</div>
+            {/* {/* view    <div style={{ marginRight: "15px" }}>조회수</div> */}
+            {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
           </ListElement>
           <Wrapper className="listWrap">
             {this.state.rendering &&

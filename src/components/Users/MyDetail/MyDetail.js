@@ -238,8 +238,8 @@ const RoundButton = styled.div`
 const empty = {
 
   //등록아이템
-  likeItem: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 },
-  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', rate: 4.0, reviews: 999 }],
+  likeItem: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
+  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
   likeDesigner: [
     {
       nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
@@ -295,18 +295,18 @@ class MyDetail extends Component {
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
   }
-  onClickCreateDesigner(event){
-    if(this.props.MyDetail.isDesigner == true){
-      window.location.href = "/modifyDesigner/"+this.props.MyDetail.uid;
-    }else{
+  onClickCreateDesigner(event) {
+    if (this.props.MyDetail.isDesigner == true) {
+      window.location.href = "/modifyDesigner/" + this.props.MyDetail.uid;
+    } else {
       window.location.href = "/createDesigner";
     }
   }
-  onClickCreateMaker(event){
-    if(this.props.MyDetail.isMaker == true){
-      window.location.href = "/modifyMaker/"+this.props.MyDetail.uid;
+  onClickCreateMaker(event) {
+    if (this.props.MyDetail.isMaker == true) {
+      window.location.href = "/modifyMaker/" + this.props.MyDetail.uid;
     }
-    else{
+    else {
       window.location.href = "/createMaker";
     }
   }
@@ -390,8 +390,8 @@ class MyDetail extends Component {
               <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={selectMenu == 6 ? "red" : null}>메이커 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
-              {selectMenu === 0 &&
-                <MyPaymentContainer id={this.props.userInfo.uid} />}
+              {selectMenu === 0 ?
+                <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
               {selectMenu === 1 &&
                 <LikeInItemContainer id={this.props.userInfo.uid} />}
               {selectMenu === 2 &&

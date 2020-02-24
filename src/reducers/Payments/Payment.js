@@ -5,8 +5,14 @@ const initialState = {
     Payment: {
         status: "INIT"
     },
+    MyPayment: {
+        status: "INIT"
+    },
     status: {
         Payment: [],
+        MyPayment: [],
+        MyPaymentAdded: [],
+        MyTotal: 0,
         Total: 0,
     }
 };
@@ -36,6 +42,29 @@ export function Payment(state, action) {
         case types.GET_ITEM_PAYMENT_FAILURE:
             return update(state, {
                 Payment: {
+                    status: { $set: "FAILURE" }
+                }
+            });
+        case types.GET_MY_PAYMENT:
+            return update(state, {
+                status: {
+                    MyPayment: { $set: action.MyPayment },
+                    MyPaymentAdded: { $push: action.MyPayment },
+                    MyTotal: { $set: action.MyTotal }
+                }
+            });
+        case types.GET_MY_PAYMENT_CLEAR:
+            console.log(action);
+            return update(state, {
+                status: {
+                    MyPayment: { $set: action.MyPayment },
+                    MyPaymentAdded: { $set: action.MyPayment },
+                    MyTotal: { $set: action.MyTotal }
+                }
+            });
+        case types.GET_MY_PAYMENT_FAILURE:
+            return update(state, {
+                MyPayment: {
                     status: { $set: "FAILURE" }
                 }
             });

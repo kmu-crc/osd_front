@@ -157,14 +157,14 @@ class Detail extends Component {
   render() {
     const { Detail, MyDetail } = this.props;
     if (Detail == null || Detail == []) return (<Loading />);
+    console.log(this.props, Detail, MyDetail);
     const category_level1
       = this.props.category1 && this.props.category1[Detail.category_level1] && this.props.category1[Detail.category_level1].text;
     const category2
       = this.props.category2 && this.props.category2[Detail.category_level1];
     const category_level2
       = category2 && category2[Detail.category_level2].text;
-    console.log(Detail);
-
+      
     return (
       Detail.sort_in_group === 0 ?
         <Wrapper>
@@ -180,7 +180,7 @@ class Detail extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <div className="textBox">{category_level1 ? category_level1 + ">" : "_"}{category_level2}</div>
+                  <div className="textBox">{category_level1 ? category_level1 + " > " : " _ "}{category_level2}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -302,7 +302,7 @@ class Detail extends Component {
               </FormBox>
             </div>
           </MainBox>
-          <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
+          <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
             <RedButton left={1444} bottom={-50}><div>구매하기</div></RedButton>
           </Link>
         </Wrapper>

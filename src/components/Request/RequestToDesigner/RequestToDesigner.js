@@ -263,7 +263,7 @@ class RequestToDesigner extends Component {
       <React.Fragment>
         <Wrapper>
           <MainBox>
-            <div className="title">디자이너 의뢰하기</div>
+            <div className="title">디자이너에게<br />의뢰하기</div>
             <div className="contentsBox">
               <FormBox>
 

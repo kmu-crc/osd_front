@@ -13,6 +13,7 @@ class ScrollDesignListContainer extends Component {
     return this.props.GetDesignListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
   }
   render() {
+    console.log(this.props.dataList);
     return (
       <React.Fragment>
         <ScrollList
