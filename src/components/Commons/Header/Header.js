@@ -236,8 +236,13 @@ class Header extends Component {
   render() {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
-    console.log(userInfo, userInfo && userInfo.thumbnail.s_img);
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
+
+    // active variables
+    const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const itemActive = (location.indexOf("/product") !== -1 || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const requestActive = (location.indexOf("/request") !== -1)
 
     return (<HeaderContainer>
       {/*  */}
@@ -248,33 +253,30 @@ class Header extends Component {
       <HeaderItem>
         <Link
           to={`/designer`}
-          className={location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1 ? "active" : ""}>
+          className={designerActive ? "active" : ""}>
           디자이너</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
         <Link to={`/maker`}
-          className={location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1 ? "active" : ""}>
+          className={makerActive ? "active" : ""}>
           메이커</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
         <Link to={`/product`}
-          className={location.indexOf("/product") !== -1 || location.indexOf("/productDetail") !== -1 ? "active" : ""}>
+          className={itemActive ? "active" : ""}>
           아이템</Link>
       </HeaderItem>
       {/*  */}
-      {
-        (location.indexOf("/request/designer") !== -1 || location.indexOf("/requestToDesigner") !== -1 || location.indexOf("/ModifyrequestToDesigner") !== -1 ||
-          location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) &&
-        <HeaderItem>
-          <Link to={`/request/designer`}
-            className={location.indexOf("/request/designer") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
-            디자이너 게시판
-        </Link>
-        </HeaderItem>
-      }
-      {
+      <HeaderItem>
+        <Link to={`/request/designer`}
+          className={requestActive ? "active" : ""}>
+          게시판
+          </Link>
+      </HeaderItem>
+
+      {/* {
         (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker") !== -1 || location.indexOf("/ModifyrequestToMaker") !== -1 ||
           location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
         <HeaderItem>
@@ -293,7 +295,7 @@ class Header extends Component {
             아이템 게시판
         </Link>
         </HeaderItem>
-      }
+      } */}
 
       {/*  */}
       {location.indexOf("/search") !== -1 ? null :
@@ -309,21 +311,21 @@ class Header extends Component {
       <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}>
         {valid && userInfo
           ? (<LoginBox>
-              <div className="iconBox"><Icon className="grey alarm" size="large" /></div>
-              <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large" /></div>
-              <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
-                <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-                <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
-                {this.state.active ?
-                  <UserMenu>
-                    <Link to={`/mypage`}>
-                      <div className="item">마이페이지</div>
-                    </Link>
-                    <div onClick={this.logout} className="item">로그아웃</div>
-                  </UserMenu>
-                  : null}
-              </div>
-            </LoginBox>)
+            <div className="iconBox"><Icon className="grey alarm" size="large" /></div>
+            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large" /></div>
+            <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+              <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
+              {this.state.active ?
+                <UserMenu>
+                  <Link to={`/mypage`}>
+                    <div className="item">마이페이지</div>
+                  </Link>
+                  <div onClick={this.logout} className="item">로그아웃</div>
+                </UserMenu>
+                : null}
+            </div>
+          </LoginBox>)
           : (<Link to={`/signin`}>로그인</Link>)}
       </HeaderItem>
       {/* <HeaderItem className="cart">

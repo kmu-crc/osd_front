@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MakerDetail from "components/Makers/MakerDetail";
-import { GetExpertMakerViewDetailRequest} from "actions/Expert"
-import { LikeMakerRequest,UnlikeMakerRequest,GetLikeMakerRequest } from "actions/Maker";
+import { GetExpertMakerViewDetailRequest } from "actions/Expert";
+import { LikeMakerRequest, UnlikeMakerRequest, GetLikeMakerRequest } from "actions/Maker";
+import { CreateRequestRequest, GetMakerRequestListRequest } from "actions/Request";
 
 class MakerDetailContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetExpertMakerViewDetailRequest(this.props.id)
-    .then(
-      this.props.GetLikeMakerRequest(this.props.id,this.props.token)
-    );
+      .then(
+        this.props.GetLikeMakerRequest(this.props.id, this.props.token)
+      );
   }
   render() {
-    console.log(this.props);
     return (<MakerDetail {...this.props} />);
   }
 }
@@ -27,18 +27,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetExpertMakerViewDetailRequest: (id) => {
-    return dispatch(GetExpertMakerViewDetailRequest(id))
-  },
-  LikeMakerRequest: (id,token) => {
-    return dispatch(LikeMakerRequest(id,token))
-  },
-  UnlikeMakerRequest: (id,token) => {
-    return dispatch(UnlikeMakerRequest(id,token))
-  },
-  GetLikeMakerRequest: (id,token) => {
-    return dispatch(GetLikeMakerRequest(id,token))
-  },
+  CreateRequestRequest: (data, token) => dispatch(CreateRequestRequest(data, token)),
+  GetMakerRequestListRequest: (id, page) => dispatch(GetMakerRequestListRequest(id, page)),
+  GetExpertMakerViewDetailRequest: (id) => dispatch(GetExpertMakerViewDetailRequest(id)),
+  LikeMakerRequest: (id, token) => dispatch(LikeMakerRequest(id, token)),
+  UnlikeMakerRequest: (id, token) => dispatch(UnlikeMakerRequest(id, token)),
+  GetLikeMakerRequest: (id, token) => dispatch(GetLikeMakerRequest(id, token)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakerDetailContainer);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
-import StyleGuide from 'StyleGuide';
-import { geturl } from 'config';
+// import StyleGuide from 'StyleGuide';
+// import { geturl } from 'config';
 
 const Container = styled.div`
   // width: 100%;

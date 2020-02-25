@@ -16,8 +16,13 @@ class ScrollRequestListContainer extends Component {
 
   render() {
     return (
-      <ScrollBoardList getListRequest={this.getList} ListComponent={RequestElement} dataList={this.props.dataList} total={this.props.Count}
-        mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom" />
+      <ScrollBoardList
+        total={this.props.Count}
+        dataList={this.props.dataList}
+        getListRequest={this.getList}
+        ListComponent={RequestElement}
+      // mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom" 
+      />
     );
   }
 }

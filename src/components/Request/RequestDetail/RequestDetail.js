@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ContentBox from "components/Commons/ContentBox";
 import Loading from "components/Commons/Loading";
-import { Grid, Icon } from "semantic-ui-react";
-import Button from "components/Commons/Button";
+// import { Grid, Icon } from "semantic-ui-react";
+// import Button from "components/Commons/Button";
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -128,30 +128,30 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
-const InputText = styled.input.attrs({ type: "text" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
-`;
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  padding: 0.67857143em 1em;
-`;
+// const InputText = styled.input.attrs({ type: "text" })`
+//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//   height:43px;
+//   border-radius:20px;
+//   font-family:Noto Sans KR;
+//   font-size:20px;
+//   background-color:#E9E9E9;
+//   margin-right:21px;
+//   outline:none;
+//   border:0px;
+//   padding: 0.67857143em 1em;
+// `;
+// const InputTextarea = styled.textarea`
+//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+//   border-radius:20px;
+//   font-family:Noto Sans KR;
+//   font-size:20px;
+//   background-color:#E9E9E9;
+//   outline:none;
+//   border:0px;
+//   readonly;
+//   padding: 0.67857143em 1em;
+// `;
 
 class Detail extends Component {
   render() {
@@ -163,8 +163,8 @@ class Detail extends Component {
     const category2
       = this.props.category2 && this.props.category2[Detail.category_level1];
     const category_level2
-      = category2 && category2[Detail.category_level2].text;
-      
+      = category2 && category2[Detail.category_level2] && category2[Detail.category_level2].text;
+
     return (
       Detail.sort_in_group === 0 ?
         <Wrapper>

@@ -4,7 +4,6 @@ import DateFormat from "modules/DateFormat";
 import Star from "components/Commons/Star";
 
 const Reviews = styled.div`
-//   border:1px solid black;
   width: 468px;
   height: 1478px;
   background: #FFFFFF;

@@ -248,7 +248,7 @@ class ResponseToDesignerReq extends Component {
   onSubmit() {
     const data = {
       type: "designer", // "designer_req" "designer_res" "maker_req" "maker_res"
-      status: "estimate",
+      status: "response",
       group_id: this.props.detail.group_id,
       sort_in_group: this.props.detail.sort_in_group,
       title: this.state.res_title,
@@ -258,8 +258,8 @@ class ResponseToDesignerReq extends Component {
     // // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
-        if (res.data.success) {
-          window.location.href = "/request";
+        if (res.success) {
+          window.location.href = "/request/designer";
         }
       })
       .catch(err => alert("에러가 발생했습니다." + err));
@@ -272,7 +272,7 @@ class ResponseToDesignerReq extends Component {
     const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
       this.props.category1[detail.category_level1].text;
     const category2 = this.props.category2 && this.props.category2[detail.category_level1];
-    const category_level2 = category2 && category2[detail.category_level2].text;
+    const category_level2 = category2 && category2[detail.category_level2] && category2[detail.category_level2].text;
     return (
       <Wrapper>
         <MainBox>
@@ -293,7 +293,7 @@ class ResponseToDesignerReq extends Component {
               <div className="wrapper flex centering">
                 <div className="label">태그</div>
                 <TagList>
-                  {detail.tag.split(",").map((item, index) =>
+                  {detail && detail.tag && detail.tag.split(",").map((item, index) =>
                     <TagPiece key={index}>
                       {item}
                     </TagPiece>
@@ -348,7 +348,7 @@ class ResponseToDesignerReq extends Component {
           </div>
         </MainBox>
         {/* <Lihk to={{}}> */}
-          <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
+        <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
         {/* </Lihk> */}
       </Wrapper>
     );
