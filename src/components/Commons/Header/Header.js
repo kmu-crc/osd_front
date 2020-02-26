@@ -236,7 +236,7 @@ class Header extends Component {
   render() {
     const location = window.location.pathname;
     const { valid, userInfo } = this.props;
-    console.log(userInfo, userInfo && userInfo.thumbnail.s_img);
+    // console.log(userInfo, userInfo && userInfo.thumbnail.s_img);
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
 
     return (<HeaderContainer>

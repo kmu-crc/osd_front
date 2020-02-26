@@ -530,7 +530,7 @@ class ItemDesign extends Component {
       <React.Fragment>
         <Field title="디자인 설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="가격">
+        <Field title="희망 비용">
           <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
         <Field title="업로드 유형">
           <UploadType name="type" return={this.onHandleReturn} Options={types} /></Field>
@@ -708,7 +708,7 @@ class ItemProject extends Component {
         </Field>
         <Field title="공개">
           <UploadType return={this.onHandleReturn} name="type" Options={types} /></Field>
-        <Field title="가격">
+        <Field title="희망 비용">
           <InputText onChange={this.onHandleChange} name="price" width={370} /></Field>
       </React.Fragment>)
   }

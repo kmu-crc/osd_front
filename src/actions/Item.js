@@ -392,7 +392,32 @@ const GetMyPaymentFailure = error => ({
   type: types.GET_MY_PAYMENT_FAILURE, MyPayment: [], MyPaymentAdded: []
 });
 
-
+// get my upload item list
+export const GetMyUploadItemRequest = (id,token, page) => {
+  return dispatch => {
+    const url = `${host}/item/getUploadItemList/${id}/${page}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(
+        data => {
+          dispatch(page === 0 ? GetMyUploadItemClear(data) : GetMyUploadItem(data))}
+        )
+      .catch(error => dispatch(GetMyUploadItemFailure(error)));
+  };
+};
+const GetMyUploadItemClear = data => ({
+  type: types.GET_MY_UPLOAD_ITEM_CLEAR, MyUploadItem: data
+});
+const GetMyUploadItem = data => (
+  {
+  type: types.GET_MY_UPLOAD_ITEM, MyUploadItem: data, MyUploadItemAdded: []
+});
+const GetMyUploadItemFailure = error => ({
+  type: types.GET_MY_UPLOAD_ITEM_FAILURE, MyUploadItem: [], MyUploadItemAdded: []
+});
 
 // // Payment
 // // get review-list

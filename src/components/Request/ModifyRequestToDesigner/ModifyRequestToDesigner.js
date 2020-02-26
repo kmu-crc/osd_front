@@ -276,7 +276,7 @@ class ModifyRequestToDesigner extends Component {
       <React.Fragment>
         <Wrapper>
           <MainBox>
-            <div className="title">디자이너에게<br /> 의뢰하기</div>
+            <div className="title">디자인 의뢰</div>
             <div className="contentsBox">
               <FormBox>
 

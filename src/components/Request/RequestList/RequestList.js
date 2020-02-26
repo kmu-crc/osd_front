@@ -118,7 +118,7 @@ class RequestList extends Component {
             </div>
             <div className="request">
               <RequestButton>
-                <Link to={`/requestToDesigner/null`}>디자인 의뢰하기</Link>
+                <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link>
               </RequestButton>
             </div>
           </Container>

@@ -8,6 +8,24 @@ import Item from "components/Items/Item/Item"
 import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
 
+const LocationList = [
+  {value:0,text:"서울특별시"},
+  {value:1,text:"부산광역시"},
+  {value:2,text:"대구광역시"},
+  {value:3,text:"인천광역시"},
+  {value:4,text:"광주광역시"},
+  {value:5,text:"대전광역시"},
+  {value:6,text:"울산광역시"},
+  {value:7,text:"경기도"},
+  {value:8,text:"강원도"},
+  {value:9,text:"충청북도"},
+  {value:10,text:"충청남도"},
+  {value:11,text:"전라북도"},
+  {value:12,text:"경상북도"},
+  {value:13,text:"경상남도"},
+  {value:14,text:"제주도"},
+];
+
 // CSS STYLING
 const Expert = styled.div`
   margin-right: ${prop => prop.mRight}px;
@@ -563,7 +581,7 @@ class MakerDetail extends Component {
       isLike:false,
       nick_name:"",
       thumbnail:null,thumbnail_name:null,
-      firstCategory:0,secondCategory:0,location:"",
+      firstCategory:0,secondCategory:0,location:null,
       explain:"",tag:[],equipment:[],technique:[],
       career:[{number:0,task:"",explain:"",during:""}], };
     this.onClickRequest = this.onClickRequest.bind(this);
@@ -639,6 +657,7 @@ class MakerDetail extends Component {
     const {likeCount,itemCount} = this.props.MakerViewDetail;
     // console.log("detail:", expert);
     const { tab } = this.state;
+    const Location = this.state.location==null?"":LocationList[this.state.location].text;
 
       // 카테고리
     const categoryName =this.props.category1&&this.props.category2&&
@@ -686,7 +705,7 @@ class MakerDetail extends Component {
         <AdditionalInfo>
           <div className="wrapText">
           <div className="title">거주지역</div>
-          <div className="text">{this.state.location}</div>
+          <div className="text">{Location}</div>
           <div className="title">보유기술</div>
           <div className="text flex">
             {
@@ -777,13 +796,13 @@ class MakerDetail extends Component {
         
         <MakerBoard>
           <div className="title">메이커 게시판</div>
-          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰하기</div></div>
+          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰</div></div>
           <div className="list"> 
           {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
 
             {
                 expert.board.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                  const type = item.type=="maker_req"?<div className="circle red1" >메이커의뢰</div>:<div className="circle red2" >메이커응답</div>
+                  const type = item.type=="maker_req"?<div className="circle red1" >제작 의뢰</div>:<div className="circle red2" >메이커응답</div>
                   return(
                     <div className="line">
                       {type}

@@ -64,7 +64,7 @@ class App extends Component {
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
             {/* ITEM */}
-            <Route path="/createProduct" component={CreateProductPage} />
+            <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} />
             {/* <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} /> */}
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />

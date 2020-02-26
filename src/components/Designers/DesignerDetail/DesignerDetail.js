@@ -9,6 +9,24 @@ import NumberFormat from "modules/NumberFormat";
 import profile from "source/thumbnail.png";
 import Item from "components/Items/Item/Item"
 
+const LocationList = [
+  {value:0,text:"서울특별시"},
+  {value:1,text:"부산광역시"},
+  {value:2,text:"대구광역시"},
+  {value:3,text:"인천광역시"},
+  {value:4,text:"광주광역시"},
+  {value:5,text:"대전광역시"},
+  {value:6,text:"울산광역시"},
+  {value:7,text:"경기도"},
+  {value:8,text:"강원도"},
+  {value:9,text:"충청북도"},
+  {value:10,text:"충청남도"},
+  {value:11,text:"전라북도"},
+  {value:12,text:"경상북도"},
+  {value:13,text:"경상남도"},
+  {value:14,text:"제주도"},
+];
+
 // CSS STYLING
 const Expert = styled.div`
   margin-right: ${prop => prop.mRight}px;
@@ -523,7 +541,7 @@ class DesignerDetail extends Component {
       isLike: false,
       nick_name: "", user_id: null,
       thumbnail: null, thumbnail_name: null,
-      firstCategory: 0, secondCategory: 0, location: "",
+      firstCategory: 0, secondCategory: 0, location: null,
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
     };
@@ -585,12 +603,10 @@ class DesignerDetail extends Component {
     this.setState({ isLike: isLike });
   }
   render() {
-    // const expert = this.props.DesignerDetail || empty;
     const expert = empty;
     const { likeCount, itemCount } = this.props.DesignerViewDetail;
 
-    console.log("detail:", this.props);
-
+    const Location = this.state.location==null?"":LocationList[this.state.location].text;
     const user_id = this.state.user_id;
     const { tab } = this.state;
 
@@ -640,7 +656,7 @@ class DesignerDetail extends Component {
         {/* 상세소개 */}
         <AdditionalInfo>
           <div className="title">거주 지역</div>
-          <div className="text">{this.state.location}</div>
+          <div className="text">{Location}</div>
         </AdditionalInfo>
       </div>
 
@@ -698,8 +714,8 @@ class DesignerDetail extends Component {
 
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         <DesignerBoard>
-          <div className="title">디자이너 의뢰</div>
-          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>디자인 의뢰하기</div></div>
+          <div className="title">디자이너 게시판</div>
+          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>디자인 의뢰</div></div>
           <div className="list">
             {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
             <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />

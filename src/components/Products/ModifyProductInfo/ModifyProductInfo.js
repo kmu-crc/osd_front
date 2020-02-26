@@ -382,10 +382,10 @@ class ModifyProductInfo extends Component {
             </ProductDescription >
 
             <ProductPrice>
-              <div className="title-wrapper"><div className="title">가격</div></div>
+              <div className="title-wrapper"><div className="title">희망 비용</div></div>
               <div className="price-wrapper">
                 <div className="option">
-                  <div className="text">가격</div>
+                  <div className="text">희망 비용</div>
                   <div className="input"><InputStyle name="price" onChange={this.handleChange} placeholder="내용을 입력해주세요" /></div></div>
                 <div className="option">
                   <div className="text">재고</div>

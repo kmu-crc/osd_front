@@ -5,6 +5,25 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 
+const LocationList = [
+  {value:0,text:"서울특별시"},
+  {value:1,text:"부산광역시"},
+  {value:2,text:"대구광역시"},
+  {value:3,text:"인천광역시"},
+  {value:4,text:"광주광역시"},
+  {value:5,text:"대전광역시"},
+  {value:6,text:"울산광역시"},
+  {value:7,text:"경기도"},
+  {value:8,text:"강원도"},
+  {value:9,text:"충청북도"},
+  {value:10,text:"충청남도"},
+  {value:11,text:"전라북도"},
+  {value:12,text:"경상북도"},
+  {value:13,text:"경상남도"},
+  {value:14,text:"제주도"},
+  {value:15,text:"제한없음"},
+];
+
 const FirstCategory = [{ text: "패션", value: 0 },
 { text: "제품", value: 1 },
 { text: "커뮤니케이션", value: 2 },
@@ -168,8 +187,8 @@ class RequestToDesigner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category_level1: -1, category_level2: -1,
-      title: "", tag: [], price: 0, content: "", location: "", ownership: -1, offline: -1,
+      category_level1: null, category_level2: null,
+      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -209,10 +228,8 @@ class RequestToDesigner extends Component {
       price: event.target.value,
     })
   }
-  onChangeLocation(event) {
-    this.setState({
-      location: event.target.value,
-    })
+  onChangeLocation(event,{value}){
+    this.setState({location:{value}.value});
   }
   onChangeContent(event) {
     this.setState({
@@ -263,7 +280,7 @@ class RequestToDesigner extends Component {
       <React.Fragment>
         <Wrapper>
           <MainBox>
-            <div className="title">디자이너에게<br />의뢰하기</div>
+            <div className="title">디자인 의뢰</div>
             <div className="contentsBox">
               <FormBox>
 
@@ -299,7 +316,11 @@ class RequestToDesigner extends Component {
                 <HRLine />
                 <div className="wrapper flex centering">
                   <div className="label">디자이너 위치</div>
-                  <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} />
+                  {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
+                  <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)}
+                  selection options={LocationList} placeholder="시/도" 
+                  onChange={this.onChangeLocation}/>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -324,159 +345,3 @@ class RequestToDesigner extends Component {
   };
 } export default RequestToDesigner;
 
-// import React, { Component } from "react";
-// import { Grid } from "semantic-ui-react";
-// import styled from 'styled-components';
-// import StyleGuide from "StyleGuide";
-// import mainSlide from "source/mainSlide.jpg";
-// import ContentBox from "components/Commons/ContentBox";
-// import { FormDropBox, FormFile, FormInput, FormCheckBox, FormTag, FormTextArea } from "components/Commons/FormItems";
-// import Button from "components/Commons/Button";
-// import Loading from "components/Commons/Loading";
-
-// const ImgWrapper = styled.div`
-//   background-image: url(${mainSlide});
-//   background-position: center;
-//   background-size: cover;
-//   width: 100%;
-//   height: 200px;
-//   position: relative;
-//   &::after {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     display: block;
-//     content: "";
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(0, 0, 0, 0.6);
-//     z-index: 1;
-//   }
-// `;
-// const Title = styled.div`
-//   width: 100%;
-//   color: white;
-//   position: absolute;
-//   text-align: center;
-//   top: 40%;
-//   left: 0;
-//   z-index: 2;
-//   transform: translateY(-50%);
-//   h1 {
-//     color: ${StyleGuide.color.geyScale.scale0};
-//     font-size: ${StyleGuide.font.size.heading2};
-//     font-weight: bold;
-//   }
-// `;
-// const Wrapper = styled(ContentBox)`
-//     width:100%;
-//     margin-top:60px;
-//     margin-bottom: 100px;
-//     position: relative;
-//     z-index:3;
-// `;
-// const FromFieldCard = styled.div`
-//   width: 100%;
-//   background-color: white;
-//   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-//   padding: 70px;
-//   margin-bottom: 30px;
-//   border-radius: 3px;
-//   @media only screen and (min-width: 1200px) {
-//     padding: 70px 100px 70px 100px;
-//   }
-// `;
-// const Label = styled.div`
-//   margin: 0 0 0.8rem 0;
-//   display: block;
-//   color: rgba(0,0,0,.87);
-//   font-size: .92857143em;
-//   font-weight: 700;
-//   text-transform: none;
-// `;
-
-// class CreateRequest extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { loading: false, };
-//     this.onSubmit = this.onSubmit.bind(this);
-//     this.onChangeTag = this.onChangeTag.bind(this);
-//     this.onChangeValue = this.onChangeValue.bind(this);
-//     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
-//     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
-//     this.onChangedPrivate = this.onChangedPrivate.bind(this);
-//     this.gotoDetailPage = this.gotoDetailPage.bind(this);
-//   }
-//   onChangeTag = v => { this.setState({ tag: v }); };
-//   onChangeValue = e => { this.setState({ [e.target.name]: e.target.value }); };
-//   onChangeCategory1 = v => { this.setState({ category_level1: v }); };
-//   onChangeCategory2 = v => { this.setState({ category_level2: v }); };
-//   onChangedPrivate = checkbox => { this.setState({ private: checkbox.value }); };
-//   gotoDetailPage = id => {
-//     if (id) {
-//       alert("완료되었습니다.");
-//       window.location.href = `/designerBoardDetail/${id}`
-//     } else {
-//       alert("글 작성에 실패하였습니다.");
-//     }
-//   };
-//   onSubmit = e => {
-//     e.preventDefault();
-//     this.setState({ loading: true });
-//     let data = { ...this.state, writer: this.props.userInfo.uid, type: "designer" };
-//     delete data.loading;
-//     console.log(data);
-//     this.props.CreateDesignerBoardArticleRequest &&
-//       this.props.CreateDesignerBoardArticleRequest(data, this.props.token)
-//         .then(id => this.gotoDetailPage(id))
-//         .catch(e => alert(e));
-//     this.setState({ loading: false });
-//   };
-
-//   render() {
-//     return (<React.Fragment>
-//       {this.state.loading ? <Loading /> : null}
-
-//       <Wrapper>
-//         <FromFieldCard>
-//           <Grid>
-//             <Grid.Column mobile={16} computer={16}>
-//               <Label>제목</Label>
-//               <FormInput name="title" placeholder="설명을 입력해주세요." getValue={this.onChangeValue} />
-//               <Label>카테고리</Label>
-//               <div style={{ display: "flex", flexDirection: "row" }}>
-//                 <FormDropBox
-//                   selection={true} name="category_level1"
-//                   onChangeValue={this.onChangeCategory1}
-//                   options={this.props.category1}
-//                 />&nbsp;&nbsp;
-//                   {this.state.category_level1 ?
-//                   <FormDropBox
-//                     selection={true} name="category_level2"
-//                     onChangeValue={this.onChangeCategory2}
-//                     options={this.props.category2[this.state.category_level1]} /> : null}
-//               </div>
-//               <Label>내용</Label>
-//               <FormTextArea name="content" placeholder="내용을 입력해주세요." getValue={this.onChangeValue} />
-
-//               {/* <Label>파일첨부</Label>
-//               <FormFile name="file" getValue={this.onChangeValue} /> */}
-
-//               <Label>태그</Label>
-//               <FormTag name="tag" getValue={this.onChangeTag} placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
-
-//               <Label>비공개여부</Label>
-//               <FormCheckBox name="private" value={false} getValue={this.onChangedPrivate} placeholder="비공개" />
-
-//             </Grid.Column>
-//           </Grid>
-//         </FromFieldCard>
-//         <div style={{ width: "max-content", marginLeft: "auto" }}>
-//           <Button color="Primary" onClick={this.onSubmit} type="submit">등록하기</Button>
-//         </div>
-//       </Wrapper>
-//     </React.Fragment>);
-//   }
-// }
-
-// export default CreateRequest;

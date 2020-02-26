@@ -103,7 +103,7 @@ class ProductList extends Component {
           <div className="sort">
             <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
           <div className="request"><RequestButton>
-            <Link to={`/createproduct`}>아이템 등록하기</Link></RequestButton></div>
+            <Link to={`/createproduct`}>{this.props.userInfo!=null&&(this.props.userInfo.isDesigner==1||this.props.userInfo.isMaker==1)?"아이템 등록":null}</Link></RequestButton></div>
         </Container>
       </Content>
 

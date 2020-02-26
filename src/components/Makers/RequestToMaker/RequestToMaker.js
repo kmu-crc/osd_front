@@ -5,6 +5,24 @@ import ContentBox from "components/Commons/ContentBox";
 import {Dropdown} from "semantic-ui-react"
 import {InputTag} from "components/Commons/InputItem/InputTag"
 
+const LocationList = [
+  {value:0,text:"서울특별시"},
+  {value:1,text:"부산광역시"},
+  {value:2,text:"대구광역시"},
+  {value:3,text:"인천광역시"},
+  {value:4,text:"광주광역시"},
+  {value:5,text:"대전광역시"},
+  {value:6,text:"울산광역시"},
+  {value:7,text:"경기도"},
+  {value:8,text:"강원도"},
+  {value:9,text:"충청북도"},
+  {value:10,text:"충청남도"},
+  {value:11,text:"전라북도"},
+  {value:12,text:"경상북도"},
+  {value:13,text:"경상남도"},
+  {value:14,text:"제주도"},
+  {value:15,text:"제한없음"},
+];
 const FirstCategory = [{text:"패션",value:0},
                         {text:"제품",value:1},
                         {text:"커뮤니케이션",value:2},
@@ -168,8 +186,8 @@ class RequestToDesigner extends Component{
   constructor(props){
     super(props);
     this.state = {
-      category_level1:-1,category_level2:-1,
-      title:"",tag:[],price:0,content:"",location:"",offline:-1,amount:0,resale:-1,
+      category_level1:null,category_level2:null,
+      title:"",tag:[],price:0,content:"",location:15,offline:0,amount:0,resale:0,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -215,10 +233,8 @@ class RequestToDesigner extends Component{
       amount:event.target.value,
     })
   }
-  onChangeLocation(event){
-    this.setState({
-      location:event.target.value,
-    })
+  onChangeLocation(event,{value}){
+    this.setState({location:{value}.value});
   }
   onChangeContent(event){
     this.setState({
@@ -269,7 +285,7 @@ class RequestToDesigner extends Component{
       <React.Fragment>
       <Wrapper>
         <MainBox>
-          <div className="title">메이커에게 의뢰하기</div>
+          <div className="title">제작 의뢰</div>
           <div className="contentsBox">
             <FormBox>
 
@@ -312,7 +328,10 @@ class RequestToDesigner extends Component{
 
               <div className="wrapper flex centering">
                 <div className="label">메이커 위치</div>
-                <InputText onChange={this.onChangeLocation} value={this.state.location} width={483}/>
+                <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)}
+                  selection options={LocationList} placeholder="시/도" 
+                  onChange={this.onChangeLocation}/>
               </div>
 
               <div className="wrapper flex centering">
