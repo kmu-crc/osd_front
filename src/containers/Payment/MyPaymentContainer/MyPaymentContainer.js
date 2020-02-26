@@ -10,11 +10,12 @@ class MyPaymentContainer extends Component {
   }
 
   getList = (page) => {
-    return false;
-    // return this.props.GetMyPaymentRequest(this.props.token, page);
+    // return false;
+    return this.props.GetMyPaymentRequest(this.props.token, page);
   }
 
   render() {
+    console.log(this.props);
     return (
       <ScrollList
         getListRequest={this.getList}

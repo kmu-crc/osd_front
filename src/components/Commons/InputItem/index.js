@@ -6,5 +6,5 @@ export * from "./FileController";
 export * from "./Controller";
 export * from "./EmbController";
 export * from "./TextControllerClassic";
-
+export * from "./InputPrice";
 export * from "./InputContent";

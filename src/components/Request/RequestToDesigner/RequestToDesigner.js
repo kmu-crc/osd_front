@@ -4,6 +4,7 @@ import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
+import {InputPrice} from "components/Commons/InputItem/InputPrice";
 
 const LocationList = [
   {value:0,text:"서울특별시"},
@@ -43,7 +44,7 @@ const SecondCategory = [[{ text: "스마트패션", value: 0 }, { text: "의상"
 [{ text: "새분야", value: 0 }]];
 const ItemType = [{ text: "디자인", value: 0 },
 { text: "프로젝트", value: 1 },
-{ text: "특허권", value: 2 },
+{ text: "지적재산권", value: 2 },
 { text: "기술자문/상담", value: 3 },
 { text: "경험", value: 4 },
 { text: "정보/데이터", value: 5 },
@@ -202,6 +203,7 @@ class RequestToDesigner extends Component {
     this.onChangeOffline = this.onChangeOffline.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
+    this.getPriceValue = this.getPriceValue.bind(this);
   }
 
   onClickCategorylevel1(event, { value }) {
@@ -217,6 +219,9 @@ class RequestToDesigner extends Component {
     this.setState({
       title: event.target.value,
     })
+  }
+  async getPriceValue(value){
+    await this.setState({price:value});
   }
   getTagValue(data) {
     this.setState({
@@ -306,7 +311,7 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  <InputText onChange={this.onChangePrice} value={this.state.price} width={483} />
+                  <InputPrice name="price" getValue={this.getPriceValue}/>
                 </div>
 
                 <div className="wrapper flex centering">

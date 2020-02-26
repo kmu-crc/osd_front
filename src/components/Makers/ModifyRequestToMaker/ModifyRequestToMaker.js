@@ -4,6 +4,7 @@ import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import {Dropdown} from "semantic-ui-react"
 import {InputTag} from "components/Commons/InputItem/InputTag"
+import {InputPrice} from "components/Commons/InputItem/InputPrice";
 
 const FirstCategory = [{text:"패션",value:0},
                         {text:"제품",value:1},
@@ -24,7 +25,7 @@ const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1
                         [{text:"새분야",value:0}]];
 const ItemType = [{text:"디자인",value:0},
                         {text:"프로젝트",value:1},
-                        {text:"특허권",value:2},
+                        {text:"지적재산권",value:2},
                         {text:"기술자문/상담",value:3},
                         {text:"경험",value:4},
                         {text:"정보/데이터",value:5},
@@ -182,7 +183,7 @@ class ModifyRequestToMaker extends Component{
     this.onChangeResale = this.onChangeResale.bind(this);
     this.onChangeOffline=this.onChangeOffline.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
-
+    this.getPriceValue = this.getPriceValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -202,7 +203,9 @@ class ModifyRequestToMaker extends Component{
     //   resale:this.props.RequestDetail.resale,
     // });
   }
-
+  async getPriceValue(value){
+    await this.setState({price:value});
+  }
   onClickCategorylevel1(event,{value}){
     this.setState({category_level1:{value}.value});
   }
@@ -312,7 +315,8 @@ class ModifyRequestToMaker extends Component{
 
               <div className="wrapper flex centering">
                 <div className="label ">희망 비용</div>
-                <InputText onChange={this.onChangePrice} value={this.state.price} width={483}/>
+                <InputPrice name="price" getValue={this.getPriceValue}/>
+                {/* <InputText onChange={this.onChangePrice} value={this.state.price} width={483}/> */}
               </div>
 
               <div className="wrapper flex centering">
