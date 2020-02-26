@@ -3,7 +3,9 @@ import CreateDesignerContainer from "containers/Designer/CreateDesignerContainer
 
 class CreateDesignerPage extends Component {
   render() {
-    return (<CreateDesignerContainer />);
+    return (<CreateDesignerContainer
+      keep={this.props.location.state && this.props.location.state.keep}
+    />);
   }
 }
 

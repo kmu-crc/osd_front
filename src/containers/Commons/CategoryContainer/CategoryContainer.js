@@ -7,8 +7,10 @@ import { Grid } from "semantic-ui-react";
 class CategoryContainer extends Component {
   render() {
     const { category1, category2 } = this.props;
+    console.log(category1, category2);
+
     return (
-      <Grid.Column tablet={10} computer={8} widescreen={12} largeScreen={12}>
+      <Grid.Column /*tablet={10} computer={8} widescreen={12} largeScreen={12}*/>
         {category1.length > 0 && category2.length > 0 ?
           <Category {...this.props} /> : null}
       </Grid.Column>

@@ -1,28 +1,10 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
-import {Dropdown} from "semantic-ui-react"
-import {InputTag} from "components/Commons/InputItem/InputTag"
+import { Dropdown } from "semantic-ui-react"
+import { InputTag } from "components/Commons/InputItem/InputTag"
 import noimg from "source/noimg.png";
-
-
-const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
-                        {text:"커뮤니케이션",value:2},
-                        {text:"공간",value:3},
-                        {text:"엔터테인먼트",value:4},
-                        {text:"소프트웨어",value:5},
-                        {text:"새분야",value:6}];
-
-const EmptyCategory = [{text:"",value:-1}]
-
-const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1},{text:"엑세서리",value:2},{text:"패션모듈",value:3}],
-                        [{text:"스마트카",value:0},{text:"로봇",value:1},{text:"기계/기기/기구",value:2},{text:"센서모듈",value:3},{text:"공예",value:4}],
-                        [{text:"UI/UX",value:0},{text:"광고",value:1},{text:"웹",value:2},{text:"영상",value:3},{text:"타이포그래피",value:4}],
-                        [{text:"스마트시티",value:0},{text:"건축",value:1},{text:"인테리어",value:2},{text:"환경",value:3}],
-                        [{text:"스마트미디어",value:0},{text:"게임",value:1},{text:"디지털컨텐츠",value:2},{text:"서비스",value:3}],
-                        [{text:"인공지능",value:0},{text:"빅데이터",value:1},{text:"시스템SW",value:2},{text:"응용SW",value:3}],
-                        [{text:"새분야",value:0}]];
 
 const MainBox = styled.div`
   width:100%;
@@ -40,25 +22,23 @@ const MainBox = styled.div`
     padding-top:36px;
   }
 
-`
+`;
 const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
-
-  position:absolute;
-  left:${props=>props.left};
-  bottom:${props=>props.bottom};
-
-  cursor:pointer;
-`
+  width: 290px;
+  height: 70px;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.gray ? "#EFEFEF" : "red"};
+  // position: absolute;
+  // left: ${props => props.left};
+  // bottom: ${props => props.bottom};
+  cursor: pointer;
+`;
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -87,7 +67,7 @@ const ThumbnailBox = styled.div`
     border-radius:50%;
     margin-left:110px;
   }
-`
+`;
 const Thumbnail = styled.div`
   cursor:pointer;
   width:256px;
@@ -95,14 +75,13 @@ const Thumbnail = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-image: ${props => `url(${props.imageURL==null?noimg:props.imageURL})`};
+  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
   background-size: cover;
   background-position: center center;
   border-radius:50%;
   margin-left:110px;
-`
-
-const FormBox=styled.div`
+`;
+const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
@@ -151,24 +130,24 @@ const FormBox=styled.div`
     color:#707070;
   }
 
-`
+`;
 const Button = styled.div`
-    width:${props=>props.width==null?100+"%":props.width+"px"};
-    height:${props=>props.height==null?100+"%":props.height+"px"};
+    width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+    height:${props => props.height == null ? 100 + "%" : props.height + "px"};
     background-color:white;
     font-family:Noto Sans KR;
     font-size:20px;
     display:flex;
     align-items:center;
     cursor:pointer;
-    margin-left:${props=>props.margin==null?0+"px":props.margin+"px"};
+    margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
     .label{
       margin-left:60px;
     }
     
-`
-const InputText = styled.input.attrs({type:"text"})`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
+`;
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
@@ -179,10 +158,10 @@ const InputText = styled.input.attrs({type:"text"})`
   border:0px;
   padding: 0.67857143em 1em;
 
-`
+`;
 const InputTextarea = styled.textarea`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
@@ -193,142 +172,121 @@ const InputTextarea = styled.textarea`
   resize:none;
   padding: 0.67857143em 1em;
 
-`
-
+`;
 const Margin = styled.div`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"}
-`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+`;
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
     background-color:#E9E9E9 !important;
     margin-right:10px;
 
     border-radius:20px !important;
-`
+`;
 
-class CreateDesigner extends Component{
-
-  constructor(props){
+class CreateDesigner extends Component {
+  constructor(props) {
     super(props);
-    this.state = { 
-      thumbnail:null,thumbnail_name:null,
-      firstCategory:0,secondCategory:-1,location:"",
-      explain:"",tag:[],
-      career:[{number:0,task:"",explain:"",during:""}],
+    this.state = {
+      getready: false,
+      thumbnail: null, thumbnail_name: null,
+      category_level1: 0, category_level2: -1, location: "",
+      explain: "", tag: [],
+      career: [{ number: 0, task: "", explain: "", during: "" }],
     }
-    this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
-    this.onClickSecondCategory = this.onClickSecondCategory.bind(this);
     this.onChangeCareer = this.onChangeCareer.bind(this);
     this.onClickAddCareer = this.onClickAddCareer.bind(this);
-    this.handleOnChangeThumbnail=this.handleOnChangeThumbnail.bind(this);
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.handleAddTag=this.handleAddTag.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
+    this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
   }
-  // componentDidMount(){
-  //     this.setState({
-  //     thumbnail:noimg,
-  //     thumbnail_name:"sh",
-  //     firstCategory:2,
-  //     secondCategory:2,
-  //     explain:"블라블라",
-  //     tag:["가","나","다"],
-  //     career:[{number:0,task:"테스트업무",explain:"테스트업무입니다",during:"1999~2001"}],
-  //   })
-  // }
-  onClickFirstCategory(event,{value}){
-    this.setState({firstCategory:{value}.value,secondCategory:-1});
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: { value }.value });
   }
-  onClickSecondCategory(event,{value}){
-    this.setState({secondCategory:{value}.value,});
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: { value }.value });
   }
-  async onChangeCareer(number,task,explain,during){
+  async onChangeCareer(number, task, explain, during) {
     let arr = this.state.career.slice();
-    await arr.splice(number,1,{number:number,task:task,explain:explain,during:during});
+    await arr.splice(number, 1, { number: number, task: task, explain: explain, during: during });
     this.setState({
-      career:arr,
+      career: arr,
     })
   }
-  onClickAddCareer(event){
+  onClickAddCareer(event) {
     this.setState({
-      career:this.state.career.concat({number:this.state.career.length,task:"",explain:"",during:""}),
+      career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
     })
   }
-  onChangeExplain(event){
-    this.setState({explain:event.target.value})
+  onChangeExplain(event) {
+    this.setState({ explain: event.target.value })
   }
-  onChangeLocation(event){
-    this.setState({location:event.target.value});
+  onChangeLocation(event) {
+    this.setState({ location: event.target.value });
   }
-  handleAddTag(tag){
+  handleAddTag(tag) {
     this.setState({
-      tag:tag.slice(),
+      tag: tag.slice(),
     });
   }
 
-  async handleOnChangeThumbnail(event)
-  {
-      event.preventDefault();
-      const reader = new FileReader();
-      const file =event.target.files[0];
-      reader.onloadend = ()=>{
-       this.setState({thumbnail:reader.result,thumbnail_name:file.name})
-      }
-      if(event.target.files[0])
-      {
-        await reader.readAsDataURL(file);
-      }
+  async handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    }
+    if (event.target.files[0]) {
+      await reader.readAsDataURL(file);
+    }
   }
 
   onSubmit = async e => {
 
     e.preventDefault();
-      let tagList="";
-      this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
-        return(
-          tagList+=item+","
-        );
-      });
-      let experienceList="";
-      this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
-        return(
-          experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
-        );
-      })
-      const data = {
-        files: [],
-        user_id:this.props.userInfo.uid,
-        // thumbnail:this.state.thumbnail,
-        type:"designer",
-        description:this.state.explain,
-        location:this.state.location,
-        category_level1:this.state.firstCategory,
-        category_level2:this.state.secondCategory,
-        tag:tagList,
-        experience:experienceList,
-      }
-      let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+    let experienceList = "";
+    this.state.career.map((item, index) => { // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+      return (
+        experienceList += item.number + "," + item.task + "," + item.explain + "," + item.during + "/"
+      );
+    })
+    const data = {
+      files: [],
+      user_id: this.props.userInfo.uid,
+      // thumbnail:this.state.thumbnail,
+      type: "designer",
+      description: this.state.explain,
+      location: this.state.location,
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      tag: this.state.tag.join(","),
+      experience: experienceList,
+    }
+    let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+    await data.files.push(file);
+    console.log(data);
+
+
+    if (this.state.thumbnail != null || this.state.thumbnail != "") {
       await data.files.push(file);
-      console.log(data);
-
-
-      if(this.state.thumbnail!=null||this.state.thumbnail!="")
-      {
-        await data.files.push(file);
-      }
-      // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
-      //   delete data.files;
-      // }
+    }
+    // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
+    //   delete data.files;
+    // }
     this.props.InsertDesignerDetailRequest(data, this.props.token)
       .then(res => {
-        console.log("res",res.res);
+        console.log("res", res.res);
         const result = res.res;
         if (result.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
-          window.location.href = "/designer";
+          // window.location.href = "/designer";
         } else {
           alert("다시 시도해주세요");
           this.setState({
@@ -336,6 +294,18 @@ class CreateDesigner extends Component{
           });
         }
       })
+      .then(
+        this.props.CreateDesignRequest(this.props.keep.item, this.props.token)
+          .then(result => {
+            if (result.success) {
+              alert("아이템이 등록되었습니다.");
+              console.log("result", result);
+              window.location.href = `/mypage`;
+            } else {
+              alert("아이템 등록에 실패했습니다.");
+            }
+          })
+      )
       .catch(e => {
         console.log("실패", e);
         alert("다시 시도해주세요");
@@ -343,278 +313,179 @@ class CreateDesigner extends Component{
           loading: false
         });
       });
-      // window.location.href = "/myPage"
+    // window.location.href = "/myPage"
 
   };
 
+  componentDidMount() {
+    if (this.props.keep) {
+      this.setState(this.props.keep.designer);
+      this.setState({ getready: true });
+    }
+  }
 
-  render(){
-    console.log(this.state);
-    return(
+  render() {
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+    console.log("category:", category1, this.state.category_level1, category2, this.props.category2);
+
+    return (
       <React.Fragment>
+        {this.props.keep ? "redirected" : null}
+
         <MainBox>
           <div className="title">디자이너 등록하기</div>
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
-              <Margin height={70}/>
-              <input hidden onChange = {this.handleOnChangeThumbnail} id="file" type="file"/>
+              <Margin height={70} />
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
-              {this.state.thumbnail==null?
-                <div className="thumbnail"><div>첨부하기</div></div>
-                :
-                <Thumbnail imageURL={this.state.thumbnail}/>
-              }
+                {this.state.thumbnail == null ?
+                  <div className="thumbnail"><div>첨부하기</div></div>
+                  :
+                  <Thumbnail imageURL={this.state.thumbnail} />
+                }
               </label>
             </ThumbnailBox>
-            <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
-            <FormBox>
 
+            <FormBox>
               <div className="wrapper flex">
                 <div className="label">카테고리</div>
-                <DropBox id="firstCategory" value={this.state.firstCategory} selection options={this.props.category1} placeholder="대분류" onChange={this.onClickFirstCategory}/>
-                <DropBox id="secondCategory" value={this.state.secondCategory} selection placeholder="소분류" onChange={this.onClickSecondCategory}
-                        options={this.props.category2[this.state.firstCategory]}/>
+                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
               </div>
 
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99}/>
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
               </div>
 
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">거주지역</div>
-                <InputText value={this.props.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
+                <InputText value={this.props.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요" />
               </div>
 
               <div className="wrapper_noflex ">
-                {
-                  this.state.career.map((item,index)=>{
-                    console.log("career",item)
-                    return(
-                      <CreateCareer item={item} number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
-                    );
-                  })
-                }
+                {this.state.career.map((item, index) => {
+                  console.log("career", item)
+                  return (
+                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                  );
+                })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button onClick={this.onSubmit} width ={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus"/><div className="label">경력 추가하기</div>
-                </Button>      
+                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                </Button>
               </div>
 
             </FormBox>
+
+          </div>
+
+          <div className="contentsBox">
+            <Link to={{
+              pathname: `/createProduct/redirected`,
+              state: { keep: this.state }
+            }}>
+              <RedButton >아이템 등록하기</RedButton>
+            </Link>
+          </div>
+          <div className="contentsBox">
+            {this.state.getready ?
+              <RedButton onClick={this.onSubmit} ><div>등록하기</div></RedButton>
+              :
+              <RedButton onClick={() => alert("아이템을 등록해야 진해할 수 있습니다.")} gray={true}><div>등록하기</div></RedButton>
+            }
           </div>
         </MainBox>
       </React.Fragment>
     );
   };
-}export default CreateDesigner;
+}
+export default CreateDesigner;
 
 // 경력 //
-class CreateCareer extends Component{
-  constructor(props){
+class CreateCareer extends Component {
+  constructor(props) {
     super(props);
-    this.state={
-      task:"",explain:"",during:"",
+    this.state = {
+      task: "", explain: "", during: "",
     }
-    this.onChangeTask=this.onChangeTask.bind(this);
-    this.onChangeExplain=this.onChangeExplain.bind(this);
-    this.onChangeDuring=this.onChangeDuring.bind(this);
+    this.onChangeTask = this.onChangeTask.bind(this);
+    this.onChangeExplain = this.onChangeExplain.bind(this);
+    this.onChangeDuring = this.onChangeDuring.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
 
-      this.setState({
-        task:this.props.item.task,
-        explain:this.props.item.explain,
-        during:this.props.item.during,
-      })
+    this.setState({
+      task: this.props.item.task,
+      explain: this.props.item.explain,
+      during: this.props.item.during,
+    })
   }
-  componentDidUpdate(prevProps){
-    if(prevProps.item !== this.props.item)
-    {
+  componentDidUpdate(prevProps) {
+    if (prevProps.item !== this.props.item) {
       this.setState({
-        task:this.props.item.task,
-        explain:this.props.item.explain,
-        during:this.props.item.during,
+        task: this.props.item.task,
+        explain: this.props.item.explain,
+        during: this.props.item.during,
       })
     }
     return true;
   }
-  onChangeTask(event){
-    this.setState({task:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,event.target.value,this.state.explain,this.state.during);
+  onChangeTask(event) {
+    this.setState({ task: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, event.target.value, this.state.explain, this.state.during);
   }
-  onChangeExplain(event){
-    this.setState({explain:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,event.target.value,this.state.during);
+  onChangeExplain(event) {
+    this.setState({ explain: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, this.state.task, event.target.value, this.state.during);
   }
-  onChangeDuring(event){
-    this.setState({during:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,event.target.value);
+  onChangeDuring(event) {
+    this.setState({ during: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, this.state.task, this.state.explain, event.target.value);
   }
-  
 
-  render(){
-    const leadingZeros = (n, digits) =>{ //0채우는 함수
+
+  render() {
+    const leadingZeros = (n, digits) => { //0채우는 함수
       var zero = '';
       n = n.toString();
-    
+
       if (n.length < digits) {
         for (var i = 0; i < digits - n.length; i++)
           zero += '0';
       }
       return zero + n;
     }
-    console.log("careerlog",this.state);
-    return(
+    console.log("careerlog", this.state);
+    return (
       <div className="wrapper flex margin_bottom ">
-      <div className="label">경력</div>
-      <div className="index">{leadingZeros(this.props.number,2)}</div>
-      <div>
+        <div className="label">경력</div>
+        <div className="index">{leadingZeros(this.props.number, 2)}</div>
+        <div>
           <div className="innerWraper">
             <div className="label label_centering">업무</div>
-            <InputText value={this.state.task} onChange={this.onChangeTask} width={370}/>
+            <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
           </div>
           <div className="innerWraper">
             <div className="label label_centering">내용</div>
-            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84}/>
+            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84} />
           </div>
           <div className="innerWraper">
             <div className="label label_centering">기간</div>
-            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370}/>
+            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
+        </div>
       </div>
-      </div>    
     );
   }
 }
-// import React, { Component } from "react";
-// import { Header, Grid } from "semantic-ui-react"
-// import styled from 'styled-components';
-// import StyleGuide from "StyleGuide";
-// import Button from "components/Commons/Button";
-// import { FormInput, FormAddress, FormExp, FormTag, FormThumbnail, FormDropBox } from "components/Commons/FormItems";
-
-// const category = [
-//   { text: "특허권", value: 0 },
-//   { text: "디자인권", value: 1 },
-//   { text: "기술자문", value: 2 },
-//   { text: "기술상담", value: 3 },
-//   { text: "경험", value: 4 },
-//   { text: "정보/데이터", value: 5 },
-//   { text: "아이디어/노하우", value: 6 },
-//   { text: "제품", value: 7 },
-// ];
-
-// const FromFieldCard = styled.div`
-//   width: 100%;
-//   background-color: white;
-//   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-//   padding: 70px;
-//   margin-bottom: 30px;
-//   border-radius: 3px;
-//   @media only screen and (min-width: 1200px) {
-//     padding: 70px 100px 70px 100px;
-//   }
-// `;
-
-// const FormHeader = styled(Header)`
-//   position: relative;
-//   padding-right: 2.5rem !important;
-//   @media only screen and (max-width: 991px) {
-//     padding-bottom: 2rem !important;
-//   }
-//   &::after {
-//     position: absolute;
-//     display: inline-block;
-//     content: "";
-//     height: 20px;
-//     width: 100%;
-//     border-bottom: 3px solid ${StyleGuide.color.geyScale.scale5};
-//     bottom: 10px;
-//     left: 0;
-
-//     @media only screen and (min-width: 992px) {
-//       width: 1px;
-//       display: block;
-//       position: absolute;
-//       right: 2rem;
-//       top: 50%;
-//       left: initial;
-//       bottom: initial;
-//       transform: translateY(-50%);
-//       border-bottom: 0;
-//       border-right: 3px solid #191919;
-//     }
-//   }
-// `;
-
-// const Label = styled.div`
-//   margin: 0 0 0.8rem 0;
-//   display: block;
-//   color: rgba(0,0,0,.87);
-//   font-size: .92857143em;
-//   font-weight: 700;
-//   text-transform: none;
-// `;
-
-// class CreateDesigner extends Component {
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <div>
-//           <form onSubmit={this.onSubmit}>
-//             <FromFieldCard>
-//               <Grid>
-//                 <Grid.Column mobile={16} computer={4}>
-//                   <FormHeader as="h2">디자이너 정보</FormHeader>
-//                 </Grid.Column>
-//                 <Grid.Column mobile={16} computer={12}>
-//                   <Label>썸네일 등록</Label>
-//                   <FormThumbnail
-//                     name="thumbnail"
-//                     placeholder="썸네일 등록"
-//                     getValue={this.onChangeValue}
-//                     onChange={() => { this.liveCheck("thumbnail") }}
-//                     validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
-//                   />
-//                   <Label>카테고리</Label>
-//                   <FormDropBox
-//                     name="explanation"
-//                     placeholder="디자이너 설명을 입력해주세요."
-//                     options={category}
-//                   />
-//                   <Label>태그</Label>
-//                   <FormTag
-//                     placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
-//                   <Label>설명</Label>
-//                   <FormInput
-//                     name="explanation"
-//                     placeholder="디자이너 설명을 입력해주세요."
-//                     getValue={this.onChangeValue} />
-//                   <Label>위치</Label>
-//                   <FormAddress />
-//                   <Label>경력</Label>
-//                   <FormExp />
-
-//                 </Grid.Column>
-//               </Grid>
-//             </FromFieldCard>
-//           </form>
-//           <div style={{ width: "max-content", marginLeft: "auto" }}>
-//             <Button color="Primary">등록하기</Button>
-//           </div>
-//         </div>
-//       </React.Fragment>
-//     );
-//   }
-// }
-
-// export default CreateDesigner;

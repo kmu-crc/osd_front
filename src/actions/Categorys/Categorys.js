@@ -13,12 +13,13 @@ export function GetCategoryAllRequest() {
         });
         category1.unshift({ text: "전체", value: 0 });
         let category2 = [];
-        category2 = res.data.category2.map(data => {
-          let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
-          arr.unshift({ text: "전체", value: 0 })
-          return (arr)
-        });
-        category2.unshift([{ text: "전체", value: 0 }]);
+        category2 = res.data.category2.map(cate2 => ({ text: cate2.name, value: cate2.uid, parent: cate2.parents_id }))
+        // res.data.category2.map(data => {
+        //   let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parent } })
+        //   arr.unshift({ text: "전체", value: 0 })
+        //   return (arr)
+        // });
+        // category2.unshift([{ text: "전체", value: 0 }]);
         return dispatch(GetCategoryAllSuccess(category1, category2));
       }).catch((error) => {
         console.log(error);

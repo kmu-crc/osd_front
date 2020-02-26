@@ -576,7 +576,8 @@ class DesignerDetail extends Component {
       isLike: false,
       nick_name: "", user_id: null,
       thumbnail: null, thumbnail_name: null,
-      firstCategory: 0, secondCategory: 0, location: "",
+      category_level1: 0, category_level2: 0, 
+      location: "",
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
     };
@@ -616,8 +617,8 @@ class DesignerDetail extends Component {
         user_id: nextProps.DesignerViewDetail.user_id,
         explain: nextProps.DesignerViewDetail.description,
         location: nextProps.DesignerViewDetail.location,
-        firstCategory: nextProps.DesignerViewDetail.category_level1,
-        secondCategory: nextProps.DesignerViewDetail.category_level2,
+        category_level1: nextProps.DesignerViewDetail.category_level1,
+        category_level2: nextProps.DesignerViewDetail.category_level2,
         tag: tag,
         career: careerList,
         score: nextProps.DesignerViewDetail.score,
@@ -669,9 +670,9 @@ class DesignerDetail extends Component {
     const { write } = this.state;
     // 카테고리
     const categoryName = this.props.category1 && this.props.category2 &&
-      this.state.secondCategory === 0 ? this.props.category1[this.state.firstCategory] && this.props.category1[this.state.firstCategory].text
-      : this.props.category2[this.state.firstCategory] &&
-      this.props.category2[this.state.firstCategory][this.state.secondCategory] && this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
+      this.state.category_level2 === 0 ? this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text
+      : this.props.category2[this.state.category_level1] &&
+      this.props.category2[this.state.category_level1][this.state.category_level2] && this.props.category2[this.state.category_level1][this.state.category_level2].text;
 
     // console.log(categoryName);
     return (<Wrapper>

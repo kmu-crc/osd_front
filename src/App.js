@@ -55,9 +55,8 @@ class App extends Component {
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
+            <Route path="/createDesigner/redirected" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/modifyDesigner/:id" component={RequiresAuth(ModifyDesignerPage)} />
-
-
             {/* MAKER */}
             <Route path="/maker/:sorting?/:cate1?/:cate2?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
@@ -65,6 +64,7 @@ class App extends Component {
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
             {/* ITEM */}
             <Route path="/createProduct" component={CreateProductPage} />
+            <Route path="/createProduct/redirected" component={CreateProductPage} />
             {/* <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} /> */}
             <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
@@ -72,11 +72,9 @@ class App extends Component {
             {/* REQUEST */}
             <Route path="/createRequest" component={RequiresAuth(CreateRequestPage)} />
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
-
             {/* <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />  */}
             {/* <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> */}
             <Route path="/request/:type/:sorting?/:cate1?/:cate2?" component={RequestListPage} />
-
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
             <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(ModifyrequestDesignerPage)} />

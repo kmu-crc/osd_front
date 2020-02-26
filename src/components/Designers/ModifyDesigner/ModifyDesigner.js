@@ -1,28 +1,10 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
-import {Dropdown} from "semantic-ui-react"
-import {InputTag} from "components/Commons/InputItem/InputTag"
+import { Dropdown } from "semantic-ui-react"
+import { InputTag } from "components/Commons/InputItem/InputTag"
 import noimg from "source/noimg.png";
 
-
-const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
-                        {text:"커뮤니케이션",value:2},
-                        {text:"공간",value:3},
-                        {text:"엔터테인먼트",value:4},
-                        {text:"소프트웨어",value:5},
-                        {text:"새분야",value:6}];
-
-const EmptyCategory = [{text:"",value:-1}]
-
-const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1},{text:"엑세서리",value:2},{text:"패션모듈",value:3}],
-                        [{text:"스마트카",value:0},{text:"로봇",value:1},{text:"기계/기기/기구",value:2},{text:"센서모듈",value:3},{text:"공예",value:4}],
-                        [{text:"UI/UX",value:0},{text:"광고",value:1},{text:"웹",value:2},{text:"영상",value:3},{text:"타이포그래피",value:4}],
-                        [{text:"스마트시티",value:0},{text:"건축",value:1},{text:"인테리어",value:2},{text:"환경",value:3}],
-                        [{text:"스마트미디어",value:0},{text:"게임",value:1},{text:"디지털컨텐츠",value:2},{text:"서비스",value:3}],
-                        [{text:"인공지능",value:0},{text:"빅데이터",value:1},{text:"시스템SW",value:2},{text:"응용SW",value:3}],
-                        [{text:"새분야",value:0}]];
 
 const MainBox = styled.div`
   width:100%;
@@ -54,8 +36,8 @@ const RedButton = styled.div`
   background-color:red;
 
   position:absolute;
-  left:${props=>props.left};
-  bottom:${props=>props.bottom};
+  left:${props => props.left};
+  bottom:${props => props.bottom};
 
   cursor:pointer;
 `
@@ -95,14 +77,14 @@ const Thumbnail = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-image: ${props => `url(${props.imageURL==null?noimg:props.imageURL})`};
+  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
   background-size: cover;
   background-position: center center;
   border-radius:50%;
   margin-left:110px;
 `
 
-const FormBox=styled.div`
+const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
@@ -153,22 +135,22 @@ const FormBox=styled.div`
 
 `
 const Button = styled.div`
-    width:${props=>props.width==null?100+"%":props.width+"px"};
-    height:${props=>props.height==null?100+"%":props.height+"px"};
+    width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+    height:${props => props.height == null ? 100 + "%" : props.height + "px"};
     background-color:white;
     font-family:Noto Sans KR;
     font-size:20px;
     display:flex;
     align-items:center;
     cursor:pointer;
-    margin-left:${props=>props.margin==null?0+"px":props.margin+"px"};
+    margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
     .label{
       margin-left:60px;
     }
     
 `
-const InputText = styled.input.attrs({type:"text"})`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
@@ -181,8 +163,8 @@ const InputText = styled.input.attrs({type:"text"})`
 
 `
 const InputTextarea = styled.textarea`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
@@ -196,8 +178,8 @@ const InputTextarea = styled.textarea`
 `
 
 const Margin = styled.div`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"}
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
@@ -207,187 +189,143 @@ const DropBox = styled(Dropdown)`
     border-radius:20px !important;
 `
 
-class ModifyDesigner extends Component{
+class ModifyDesigner extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { 
-      thumbnail:null,thumbnail_name:null,
-      firstCategory:0,secondCategory:-1,location:"",
-      explain:"",tag:[],
-      career:[{number:0,task:"",explain:"",during:""}],
+    this.state = {
+      thumbnail: null, thumbnail_name: null,
+      category_level1: -1, category_level2: -1,
+      location: "",
+      explain: "", tag: [],
+      career: [{ number: 0, task: "", explain: "", during: "" }],
     }
-    this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
-    this.onClickSecondCategory = this.onClickSecondCategory.bind(this);
+    this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
+    this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
     this.onChangeCareer = this.onChangeCareer.bind(this);
     this.onClickAddCareer = this.onClickAddCareer.bind(this);
-    this.handleOnChangeThumbnail=this.handleOnChangeThumbnail.bind(this);
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.handleAddTag=this.handleAddTag.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentWillUpdate(nextProps){
-    if(
-      this.props.DesignerDetail.image!==nextProps.DesignerDetail.image||
-      this.props.DesignerDetail.user_id!==nextProps.DesignerDetail.user_id||
-      this.props.DesignerDetail.description!==nextProps.DesignerDetail.description||
-      this.props.DesignerDetail.location!==nextProps.DesignerDetail.location||
-      this.props.DesignerDetail.category_level1!==nextProps.DesignerDetail.category_level1||
-      this.props.DesignerDetail.category_level2!==nextProps.DesignerDetail.category_level2||
-      this.props.DesignerDetail.tag !== nextProps.DesignerDetail.tag||
-      this.props.DesignerDetail.experience!==nextProps.DesignerDetail.experience||
-      this.props.DesignerDetail.score!==nextProps.DesignerDetail.score)
-    {
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.DesignerDetail.image !== nextProps.DesignerDetail.image ||
+      this.props.DesignerDetail.user_id !== nextProps.DesignerDetail.user_id ||
+      this.props.DesignerDetail.description !== nextProps.DesignerDetail.description ||
+      this.props.DesignerDetail.location !== nextProps.DesignerDetail.location ||
+      this.props.DesignerDetail.category_level1 !== nextProps.DesignerDetail.category_level1 ||
+      this.props.DesignerDetail.category_level2 !== nextProps.DesignerDetail.category_level2 ||
+      this.props.DesignerDetail.tag !== nextProps.DesignerDetail.tag ||
+      this.props.DesignerDetail.experience !== nextProps.DesignerDetail.experience ||
+      this.props.DesignerDetail.score !== nextProps.DesignerDetail.score) {
 
       const careerRow = nextProps.DesignerDetail.experience.split("/");
       careerRow.pop();
-      const careerList = careerRow.map((item,index)=>{
+      const careerList = careerRow.map((item, index) => {
         const piece = item.split(",");
-        console.log("piece:::",piece[0],piece[1],piece[2],piece[3]);
-        return(
-          {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
+        console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
+        return (
+          { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
         );
       });
       const tag = nextProps.DesignerDetail.tag.split(",");
       tag.pop();
 
       this.setState({
-        thumbnail:nextProps.DesignerDetail.image,
-        user_id:nextProps.DesignerDetail.user_id,
-        explain:nextProps.DesignerDetail.description,
-        location:nextProps.DesignerDetail.location,
-        firstCategory:nextProps.DesignerDetail.category_level1,
-        secondCategory:nextProps.DesignerDetail.category_level2,
-        tag:tag,
-        career:careerList,
-        score:nextProps.DesignerDetail.score,
+        thumbnail: nextProps.DesignerDetail.image,
+        user_id: nextProps.DesignerDetail.user_id,
+        explain: nextProps.DesignerDetail.description,
+        location: nextProps.DesignerDetail.location,
+        category_level1: nextProps.DesignerDetail.category_level1,
+        category_level2: nextProps.DesignerDetail.category_level2,
+        tag: tag,
+        career: careerList,
+        score: nextProps.DesignerDetail.score,
       })
     };
-
     return true;
   }
-  componentDidMount(){
-    console.log("this.props.componentdidmount");
-        // const careeritem = this.props.DesignerDetail.experience.split("/");
-    // const careerlist = careeritem.map((item,index)=>{
-    // const piece = item.split(",");
-    //   return(
-    //     {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
-    //   );
-    // })
-    // this.setState({
-    // thumbnail:this.props.DesignerDetail.image,
-    // firstCategory:this.props.DesignerDetail.category_level1,
-    // secondCategory:this.props.DesignerDetail.category_level2,
-    // explain:this.props.DesignerDetail.description,
-    // tag:this.props.DesignerDetail.tag.split(","),
-    // career:careerlist,
-  // })
-}
-  // componentDidMount(){
-  //   //modify :*** 데이터베이스 호출 시 주석해제 *****
-
-  //   // const arr = this.props.DesignerDetail.career.split('/');
-    
-  //   // const arrCareer = arr.map((item,index)=>{
-  //   //   const piece = item.split(',');
-  //   //   return(
-  //   //     {number:piece[0],task:piece[1],explain:piece[2],during:piece[3]}
-  //   //   );
-  //   // })
-
-  //   // this.setState({
-  //   //   thumbnail:this.props.DesignerDetail.thumbnail == null? noimg:this.props.DesignerDetail.thumbnail.m_img,
-  //   //   firstCategory:this.props.DesignerDetail.category_level1,
-  //   //   secondCategory:this.props.DesignerDetail.category_level2,
-  //   //   explain:this.props.DesignerDetail.description,
-  //   //   tag:this.props.DesignerDetail.tag.split(','),
-  //   //   career:arrCareer,
-  //   // })
-  // }
-
-  onClickFirstCategory(event,{value}){
-    this.setState({firstCategory:{value}.value,secondCategory:-1});
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: { value }.value });
   }
-  onClickSecondCategory(event,{value}){
-    this.setState({secondCategory:{value}.value,});
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: { value }.value });
   }
-  async onChangeCareer(number,task,explain,during){
+  async onChangeCareer(number, task, explain, during) {
     let arr = this.state.career.slice();
-    await arr.splice(number,1,{number:number,task:task,explain:explain,during:during});
+    await arr.splice(number, 1, { number: number, task: task, explain: explain, during: during });
     this.setState({
-      career:arr,
+      career: arr,
     })
   }
-  onClickAddCareer(event){
+  onClickAddCareer(event) {
     this.setState({
-      career:this.state.career.concat({number:this.state.career.length,task:"",explain:"",during:""}),
+      career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
     })
   }
-  onChangeExplain(event){
-    this.setState({explain:event.target.value})
+  onChangeExplain(event) {
+    this.setState({ explain: event.target.value })
   }
-  onChangeLocation(event){
-    this.setState({location:event.target.value});
+  onChangeLocation(event) {
+    this.setState({ location: event.target.value });
   }
-  handleAddTag(tag){
+  handleAddTag(tag) {
     this.setState({
-      tag:tag.slice(),
+      tag: tag.slice(),
     });
   }
 
-  handleOnChangeThumbnail(event)
-  {
-      event.preventDefault();
-      const reader = new FileReader();
-      const file =event.target.files[0];
-      reader.onloadend = ()=>{
-        this.setState({thumbnail:reader.result,thumbnail_name:file.name})
-      }
-      if(event.target.files[0])
-      {
-        reader.readAsDataURL(file);
-      }
+  handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(file);
+    }
   }
 
   onSubmit = async e => {
 
     e.preventDefault();
-    let tagList="";
-    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
-      return(
-        tagList+=item+","
+    let tagList = "";
+    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+      return (
+        tagList += item + ","
       );
     });
-    let experienceList="";
-    this.state.career.map((item,index)=>{ // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
-      return(
-        experienceList+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+    let experienceList = "";
+    this.state.career.map((item, index) => { // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+      return (
+        experienceList += item.number + "," + item.task + "," + item.explain + "," + item.during + "/"
       );
     })
     const data = {
       files: [],
-      user_id:this.props.userInfo.uid,
+      user_id: this.props.userInfo.uid,
       // thumbnail:this.state.thumbnail,
-      type:"designer",
-      description:this.state.explain,
-      location:this.state.location,
-      category_level1:this.state.firstCategory,
-      category_level2:this.state.secondCategory,
-      tag:tagList,
-      experience:experienceList,
+      type: "designer",
+      description: this.state.explain,
+      location: this.state.location,
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      tag: tagList,
+      experience: experienceList,
     }
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     data.files.push(file);
     console.log(data);
 
 
-    if(this.state.thumbnail!=null||this.state.thumbnail!="")
-    {
+    if (this.state.thumbnail != null || this.state.thumbnail != "") {
       data.files.push(file);
     }
-    if (data.files.length <= 0 || data.files[0].value === (this.props.DesignerDetail&&this.props.DesignerDetail.image)) {
+    if (data.files.length <= 0 || data.files[0].value === (this.props.DesignerDetail && this.props.DesignerDetail.image)) {
       delete data.files;
     }
     // 이미지 변동이 없을경우에 수정
@@ -418,23 +356,26 @@ class ModifyDesigner extends Component{
       });
   };
 
-  render(){
-    console.log("===========================",this.state);
-    return(
+  render() {
+    console.log("===========================", this.state);
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+
+    return (
       <React.Fragment>
         <MainBox>
           <div className="title">디자이너 등록하기</div>
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
-              <Margin height={70}/>
-              <input hidden onChange = {this.handleOnChangeThumbnail} id="file" type="file"/>
+              <Margin height={70} />
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
-              {this.state.thumbnail==null?
-                <div className="thumbnail"><div>첨부하기</div></div>
-                :
-                <Thumbnail imageURL={this.state.thumbnail}/>
-              }
+                {this.state.thumbnail == null ?
+                  <div className="thumbnail"><div>첨부하기</div></div>
+                  :
+                  <Thumbnail imageURL={this.state.thumbnail} />
+                }
               </label>
             </ThumbnailBox>
             <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
@@ -442,42 +383,41 @@ class ModifyDesigner extends Component{
 
               <div className="wrapper flex">
                 <div className="label">카테고리</div>
-                <DropBox id="firstCategory" value={this.state.firstCategory} selection options={this.props.category1} placeholder="대분류" onChange={this.onClickFirstCategory}/>
-                <DropBox id="secondCategory" value={this.state.secondCategory} selection placeholder="소분류" onChange={this.onClickSecondCategory}
-                        options={this.props.category2[this.state.firstCategory]}/>
+                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
               </div>
 
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99}/>
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
               </div>
 
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">거주지역</div>
-                <InputText value={this.props.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
+                <InputText value={this.props.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요" />
               </div>
 
 
               <div className="wrapper_noflex ">
                 {
-                  this.state.career.map((item,index)=>{
-                    console.log("career",item)
-                    return(
-                      <CreateCareer item={item} number={(item.number)+1} onChangeCareer={this.onChangeCareer} key={index}/>
+                  this.state.career.map((item, index) => {
+                    console.log("career", item)
+                    return (
+                      <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
                     );
                   })
                 }
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button onClick={this.onSubmit} width ={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus"/><div className="label">경력 추가하기</div>
-                </Button>      
+                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                </Button>
               </div>
 
             </FormBox>
@@ -486,82 +426,81 @@ class ModifyDesigner extends Component{
       </React.Fragment>
     );
   };
-}export default ModifyDesigner;
+} export default ModifyDesigner;
 // 경력 //
-class CreateCareer extends Component{
-  constructor(props){
+class CreateCareer extends Component {
+  constructor(props) {
     super(props);
-    this.state={
-      task:"",explain:"",during:"",
+    this.state = {
+      task: "", explain: "", during: "",
     }
-    this.onChangeTask=this.onChangeTask.bind(this);
-    this.onChangeExplain=this.onChangeExplain.bind(this);
-    this.onChangeDuring=this.onChangeDuring.bind(this);
+    this.onChangeTask = this.onChangeTask.bind(this);
+    this.onChangeExplain = this.onChangeExplain.bind(this);
+    this.onChangeDuring = this.onChangeDuring.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
 
-      this.setState({
-        task:this.props.item.task,
-        explain:this.props.item.explain,
-        during:this.props.item.during,
-      })
+    this.setState({
+      task: this.props.item.task,
+      explain: this.props.item.explain,
+      during: this.props.item.during,
+    })
   }
-  componentDidUpdate(prevProps){
-    if(prevProps.item !== this.props.item)
-    {
+  componentDidUpdate(prevProps) {
+    if (prevProps.item !== this.props.item) {
       this.setState({
-        task:this.props.item.task,
-        explain:this.props.item.explain,
-        during:this.props.item.during,
+        task: this.props.item.task,
+        explain: this.props.item.explain,
+        during: this.props.item.during,
       })
     }
     return true;
   }
-  onChangeTask(event){
-    this.setState({task:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,event.target.value,this.state.explain,this.state.during);
+  onChangeTask(event) {
+    this.setState({ task: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, event.target.value, this.state.explain, this.state.during);
   }
-  onChangeExplain(event){
-    this.setState({explain:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,event.target.value,this.state.during);
+  onChangeExplain(event) {
+    this.setState({ explain: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, this.state.task, event.target.value, this.state.during);
   }
-  onChangeDuring(event){
-    this.setState({during:event.target.value,})
-    this.props.onChangeCareer(this.props.number-1,this.state.task,this.state.explain,event.target.value);
+  onChangeDuring(event) {
+    this.setState({ during: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, this.state.task, this.state.explain, event.target.value);
   }
-  
 
-  render(){
-    const leadingZeros = (n, digits) =>{ //0채우는 함수
+
+  render() {
+    const leadingZeros = (n, digits) => { //0채우는 함수
       var zero = '';
       n = n.toString();
-    
+
       if (n.length < digits) {
         for (var i = 0; i < digits - n.length; i++)
           zero += '0';
       }
       return zero + n;
     }
-    console.log("careerlog",this.state);
-    return(
+    console.log("careerlog", this.state);
+    return (
       <div className="wrapper flex margin_bottom ">
-      <div className="label">경력</div>
-      <div className="index">{leadingZeros(this.props.number,2)}</div>
-      <div>
+        <div className="label">경력</div>
+        <div className="index">{leadingZeros(this.props.number, 2)}</div>
+        <div>
           <div className="innerWraper">
             <div className="label label_centering">업무</div>
-            <InputText value={this.state.task} onChange={this.onChangeTask} width={370}/>
+            <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
           </div>
           <div className="innerWraper">
             <div className="label label_centering">내용</div>
-            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84}/>
+            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84} />
           </div>
           <div className="innerWraper">
             <div className="label label_centering">기간</div>
-            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370}/>
+            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
+        </div>
       </div>
-      </div>    
     );
   }
 }

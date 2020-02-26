@@ -49,29 +49,18 @@ class Category extends Component {
     }
     await this.props.handleCate1(value);
   }
-  onChangeCategory2 = async (e, cate1, value,test) => {
-    console.log(cate1,value,test);
+  onChangeCategory2 = async (e, cate1, value) => {
     e.stopPropagation();
-    if (value === 0) {
-      value = null;
-    }
-    let count =0;
-    let result = 0;
-    this.props.category2[cate1].map((item,idx)=>{
-      item.value == value ? result=count:null;
-      count++;
-    })
-    this.props.category2[cate1].value
-    console.log(cate1,result);
-    await this.props.handleCate2(cate1, result);
+    await this.props.handleCate2(cate1, value);
   };
   resetCate = () => {
     this.props.resetCate();
   }
 
   render() {
+    const { category1, cate1, cate2 } = this.props;
+    const category2 = cate1 && this.props.category2 && this.props.category2.filter(item => item.parent === parseInt(cate1, 10));
 
-    const { category1, cate1, category2, cate2 } = this.props;
     return (
       <Container>
         <div className="over">
@@ -85,10 +74,10 @@ class Category extends Component {
           </CategoryMenu></div>
         <div className="under">
           <CategoryMenu className="fly">
-            {cate1 && category2 && category2[cate1] ? (
-              category2[cate1].map((cate, i) => cate.value !== 0 &&
+            {cate1 && category2 ? (
+              category2.map((cate, i) => cate.value !== 0 &&
                 <div
-                  onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value,cate2)}
+                  onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
                   key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</div>)) : null}
           </CategoryMenu>
         </div>

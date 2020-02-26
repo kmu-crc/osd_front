@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import CreateProduct from "components/Products/CreateDesign";
+import CreateItem from "components/Products/CreateItem";
 
 class CreateProductPage extends Component {
   render() {
-    return (<CreateProduct />);
+    return (<CreateItem
+      keep={this.props.location.state && this.props.location.state.keep}
+    />);
   }
 }
 

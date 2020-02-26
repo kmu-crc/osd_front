@@ -1,35 +1,9 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
-import {Dropdown} from "semantic-ui-react"
-import {InputTag} from "components/Commons/InputItem/InputTag"
+import { Dropdown } from "semantic-ui-react"
+import { InputTag } from "components/Commons/InputItem/InputTag"
 
-const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
-                        {text:"커뮤니케이션",value:2},
-                        {text:"공간",value:3},
-                        {text:"엔터테인먼트",value:4},
-                        {text:"소프트웨어",value:5},
-                        {text:"새분야",value:6}];
-
-const EmptyCategory = [{text:"",value:-1}]
-
-const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1},{text:"엑세서리",value:2},{text:"패션모듈",value:3}],
-                        [{text:"스마트카",value:0},{text:"로봇",value:1},{text:"기계/기기/기구",value:2},{text:"센서모듈",value:3},{text:"공예",value:4}],
-                        [{text:"UI/UX",value:0},{text:"광고",value:1},{text:"웹",value:2},{text:"영상",value:3},{text:"타이포그래피",value:4}],
-                        [{text:"스마트시티",value:0},{text:"건축",value:1},{text:"인테리어",value:2},{text:"환경",value:3}],
-                        [{text:"스마트미디어",value:0},{text:"게임",value:1},{text:"디지털컨텐츠",value:2},{text:"서비스",value:3}],
-                        [{text:"인공지능",value:0},{text:"빅데이터",value:1},{text:"시스템SW",value:2},{text:"응용SW",value:3}],
-                        [{text:"새분야",value:0}]];
-const ItemType = [{text:"디자인",value:0},
-                        {text:"프로젝트",value:1},
-                        {text:"특허권",value:2},
-                        {text:"기술자문/상담",value:3},
-                        {text:"경험",value:4},
-                        {text:"정보/데이터",value:5},
-                        {text:"아이디어/노하우",value:6},
-                        {text:"제품",value:7}]; 
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -69,13 +43,13 @@ const RedButton = styled.div`
   background-color:red;
 
   position:absolute;
-  left:${props=>props.left}px;
-  bottom:${props=>props.bottom}px;
+  left:${props => props.left}px;
+  bottom:${props => props.bottom}px;
 
   cursor:pointer;
 `
 
-const FormBox=styled.div`
+const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
@@ -119,8 +93,8 @@ const FormBox=styled.div`
   }
 
 `
-const InputText = styled.input.attrs({type:"text"})`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
@@ -133,8 +107,8 @@ const InputText = styled.input.attrs({type:"text"})`
 
 `
 const InputTextarea = styled.textarea`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
@@ -146,8 +120,8 @@ const InputTextarea = styled.textarea`
 
 `
 const Margin = styled.div`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"}
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `
 
 const DropBox = styled(Dropdown)`
@@ -157,36 +131,36 @@ const DropBox = styled(Dropdown)`
 
     border-radius:20px !important;
 `
-const HRLine=styled.div`
+const HRLine = styled.div`
     width:93%;
     height:3px;
     background-color:#E9E9E9;
     margin-top:35px;
     margin-bottom:35px;
 `
-class ModifyRequestToMaker extends Component{
-  constructor(props){
+class ModifyRequestToMaker extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      category_level1:-1,category_level2:-1,
-      title:"",tag:[],price:0,content:"",location:"",offline:-1,amount:0,resale:-1,
+      category_level1: -1, category_level2: -1,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
-    this.onClickItemType= this.onClickItemType.bind(this);
+    this.onClickItemType = this.onClickItemType.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.getTagValue = this.getTagValue.bind(this);
     this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeResale = this.onChangeResale.bind(this);
-    this.onChangeOffline=this.onChangeOffline.bind(this);
+    this.onChangeOffline = this.onChangeOffline.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     //modify :*** 데이터베이스 호출 시 주석해제 *****
 
     // this.setState({
@@ -202,157 +176,157 @@ class ModifyRequestToMaker extends Component{
     //   resale:this.props.RequestDetail.resale,
     // });
   }
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: { value }.value });
+  }
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: { value }.value });
+  }
+  onClickItemType(event, { value }) {
+    this.setState({ itemType: { value }.value });
+  }
+  onChangeTitle(event) {
+    this.setState({
+      title: event.target.value,
+    })
+  }
+  getTagValue(data) {
+    this.setState({
+      tag: data.slice(),
+    })
+  }
+  onChangePrice(event) {
+    this.setState({
+      price: event.target.value,
+    })
+  }
+  onChangeAmount(event) {
+    this.setState({
+      amount: event.target.value,
+    })
+  }
+  onChangeLocation(event) {
+    this.setState({
+      location: event.target.value,
+    })
+  }
+  onChangeContent(event) {
+    this.setState({
+      content: event.target.value,
+    })
+  }
+  onChangeOffline(event, { value }) {
+    this.setState({
+      offline: { value }.value,
+    })
+  }
+  onChangeResale(event, { value }) {
+    this.setState({
+      resale: { value }.value,
+    })
+  }
 
-  onClickCategorylevel1(event,{value}){
-    this.setState({category_level1:{value}.value});
-  }
-  onClickCategorylevel2(event,{value}){
-    this.setState({category_level2:{value}.value});
-  }
-  onClickItemType(event,{value}){
-    this.setState({itemType:{value}.value});
-  }
-  onChangeTitle(event){
-    this.setState({
-      title:event.target.value,
-    })
-  }
-  getTagValue(data){
-    this.setState({
-      tag:data.slice(),
-    })
-  }
-  onChangePrice(event){
-    this.setState({
-      price:event.target.value,
-    })
-  }
-  onChangeAmount(event){
-    this.setState({
-      amount:event.target.value,
-    })
-  }
-  onChangeLocation(event){
-    this.setState({
-      location:event.target.value,
-    })
-  }
-  onChangeContent(event){
-    this.setState({
-      content:event.target.value,
-    })
-  }
-  onChangeOffline(event,{value}){
-    this.setState({
-      offline:{value}.value,
-    })
-  }
-  onChangeResale(event,{value}){
-    this.setState({
-      resale:{value}.value,
-    })
-  }
+  onSubmit() {
 
-  onSubmit(){
-
-    let tagList="";
-    this.state.tag.map((item,index)=>{ // 태그,태그,태그 ...
-      return(
-        tagList+=item+","
+    let tagList = "";
+    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+      return (
+        tagList += item + ","
       );
     });
 
     const Data = {
-      type:"maker_req", // "designer_req" "designer_res" "maker_req" "maker_res"
+      type: "maker_req", // "designer_req" "designer_res" "maker_req" "maker_res"
       // user_id: this.props.userInfo.uid // 
-      title:this.state.title,
-      category_level1:this.state.category_level1,
-      category_level2:this.state.category_level2,
-      tag:tagList,
-      price:this.state.price,
-      content:this.state.content,
-      amount:this.state.amount,
-      location:this.state.location,
-      resale:this.state.resale,
-      offline_consultation:this.state.offline,
+      title: this.state.title,
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      tag: tagList,
+      price: this.state.price,
+      content: this.state.content,
+      amount: this.state.amount,
+      location: this.state.location,
+      resale: this.state.resale,
+      offline_consultation: this.state.offline,
     }
 
     // 페이지이동
     window.location.href = "/request";
   }
 
-  render(){
-    return(
+  render() {
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+
+    return (
       <React.Fragment>
-      <Wrapper>
-        <MainBox>
-          <div className="title">메이커에게 의뢰하기</div>
-          <div className="contentsBox">
-            <FormBox>
+        <Wrapper>
+          <MainBox>
+            <div className="title">메이커에게 의뢰하기</div>
+            <div className="contentsBox">
+              <FormBox>
 
-              <div className="wrapper flex centering">
-                <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
-                <InputText width={483} />
-              </div>
-
-              <div className="wrapper flex centering">
-                <div className="label">카테고리</div>
-                <DropBox id="firstCategory" value={this.state.category_level1} selection options={FirstCategory} 
-                        placeholder="대분류" onChange={this.onClickCategorylevel1}/>
-                <DropBox id="secondCategory" value={this.state.category_level2} selection placeholder="소분류" onChange={this.onClickCategorylevel2}
-                        options={this.state.category_level1>-1?SecondCategory[this.state.category_level1]:EmptyCategory}/>
-              </div>
-
-              <div className="wrapper flex centering">
-                <div className="label">태그</div>
-                <div>
-                <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
+                <div className="wrapper flex centering">
+                  <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
+                  <InputText width={483} />
                 </div>
-              </div>
 
-              <div className="wrapper flex centering">
-                <div className="label ">희망 비용</div>
-                <InputText onChange={this.onChangePrice} value={this.state.price} width={483}/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label">카테고리</div>
+                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                </div>
 
-              <div className="wrapper flex centering">
-                <div className="label">의뢰 내용</div>
-                <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344}/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label">태그</div>
+                  <div>
+                    <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                  </div>
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label ">희망 비용</div>
+                  <InputText onChange={this.onChangePrice} value={this.state.price} width={483} />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label">의뢰 내용</div>
+                  <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
+                </div>
 
 
-              <HRLine/>
-              <div className="wrapper flex centering">
-                <div className="label">수량</div>
-                <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80}/>
-              </div>
+                <HRLine />
+                <div className="wrapper flex centering">
+                  <div className="label">수량</div>
+                  <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80} />
+                </div>
 
-              <div className="wrapper flex centering">
-                <div className="label">메이커 위치</div>
-                <InputText onChange={this.onChangeLocation} value={this.state.location} width={483}/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label">메이커 위치</div>
+                  <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} />
+                </div>
 
-              <div className="wrapper flex centering">
-                <div className="label">메이커 재판매</div>
-                <DropBox id="resale" selection options={[{text:"가능",value:0},{text:"불가능",value:1}]} 
-                onChange={this.onChangeResale} value={this.state.resale} placeholder="선택"/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label">메이커 재판매</div>
+                  <DropBox id="resale" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
+                    onChange={this.onChangeResale} value={this.state.resale} placeholder="선택" />
+                </div>
 
-              <div className="wrapper flex centering">
-                <div className="label">오프라인 상담</div>
-                <DropBox id="offline" selection options={[{text:"가능",value:0},{text:"불가능",value:1}]} 
-                onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택"/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label">오프라인 상담</div>
+                  <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
+                    onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
+                </div>
 
-            </FormBox>
-            <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
-          </div>
-        </MainBox>
+              </FormBox>
+              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
+            </div>
+          </MainBox>
         </Wrapper>
       </React.Fragment>
     );
   };
-}export default ModifyRequestToMaker;
+} export default ModifyRequestToMaker;
 
 // import React, { Component } from "react";
 // import { Grid } from "semantic-ui-react";

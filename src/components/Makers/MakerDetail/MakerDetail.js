@@ -617,7 +617,8 @@ class MakerDetail extends Component {
       isLike: false,
       nick_name: "",
       thumbnail: null, thumbnail_name: null,
-      firstCategory: 0, secondCategory: 0, location: "",
+      category_level1: -1, category_level2: -1,
+      location: "",
       explain: "", tag: [], equipment: [], technique: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
     };
@@ -663,8 +664,8 @@ class MakerDetail extends Component {
         user_id: nextProps.MakerViewDetail.user_id,
         explain: nextProps.MakerViewDetail.description,
         location: nextProps.MakerViewDetail.location,
-        firstCategory: nextProps.MakerViewDetail.category_level1,
-        secondCategory: nextProps.MakerViewDetail.category_level2,
+        category_level1: nextProps.MakerViewDetail.category_level1,
+        category_level2: nextProps.MakerViewDetail.category_level2,
         tag: tag,
         career: careerList,
         equipment: equipment,
@@ -716,9 +717,9 @@ class MakerDetail extends Component {
     const { write } = this.state;
     // 카테고리
     const categoryName = this.props.category1 && this.props.category2 &&
-      this.state.secondCategory === 0 ? this.props.category1[this.state.firstCategory] && this.props.category1[this.state.firstCategory].text
-      : this.props.category2[this.state.firstCategory] &&
-      this.props.category2[this.state.firstCategory][this.state.secondCategory] && this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
+      this.state.secondCategory === 0 ? this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text
+      : this.props.category2[this.state.category_level1] &&
+      this.props.category2[this.state.category_level1][this.state.secondCategory] && this.props.category2[this.state.category_level1][this.state.secondCategory].text;
 
     return (<Wrapper>
       <div style={{ display: "flex", flexDirection: "row" }}>

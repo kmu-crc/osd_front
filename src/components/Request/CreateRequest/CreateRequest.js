@@ -1,34 +1,8 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
-import {Dropdown} from "semantic-ui-react"
+import { Dropdown } from "semantic-ui-react"
 
-const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
-                        {text:"커뮤니케이션",value:2},
-                        {text:"공간",value:3},
-                        {text:"엔터테인먼트",value:4},
-                        {text:"소프트웨어",value:5},
-                        {text:"새분야",value:6}];
-
-const EmptyCategory = [{text:"",value:-1}]
-
-const SecondCategory = [[{text:"스마트패션",value:0},{text:"의상",value:1},{text:"엑세서리",value:2},{text:"패션모듈",value:3}],
-                        [{text:"스마트카",value:0},{text:"로봇",value:1},{text:"기계/기기/기구",value:2},{text:"센서모듈",value:3},{text:"공예",value:4}],
-                        [{text:"UI/UX",value:0},{text:"광고",value:1},{text:"웹",value:2},{text:"영상",value:3},{text:"타이포그래피",value:4}],
-                        [{text:"스마트시티",value:0},{text:"건축",value:1},{text:"인테리어",value:2},{text:"환경",value:3}],
-                        [{text:"스마트미디어",value:0},{text:"게임",value:1},{text:"디지털컨텐츠",value:2},{text:"서비스",value:3}],
-                        [{text:"인공지능",value:0},{text:"빅데이터",value:1},{text:"시스템SW",value:2},{text:"응용SW",value:3}],
-                        [{text:"새분야",value:0}]];
-const ItemType = [{text:"디자인",value:0},
-                        {text:"프로젝트",value:1},
-                        {text:"특허권",value:2},
-                        {text:"기술자문/상담",value:3},
-                        {text:"경험",value:4},
-                        {text:"정보/데이터",value:5},
-                        {text:"아이디어/노하우",value:6},
-                        {text:"제품",value:7}]; 
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -68,11 +42,11 @@ const RedButton = styled.div`
   background-color:red;
 
   position:absolute;
-  left:${props=>props.left}px;
-  bottom:${props=>props.bottom}px;
+  left:${props => props.left}px;
+  bottom:${props => props.bottom}px;
 `
 
-const FormBox=styled.div`
+const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
@@ -114,23 +88,23 @@ const FormBox=styled.div`
 
 `
 const Button = styled.div`
-    width:${props=>props.width==null?100+"%":props.width+"px"};
-    height:${props=>props.height==null?100+"%":props.height+"px"};
-    background-color:${props=>props.color==null?"#111111":props.color};
-    border-radius:${props=>props.borderRadius==null?"0px":props.borderRadius+"px"};
+    width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+    height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+    background-color:${props => props.color == null ? "#111111" : props.color};
+    border-radius:${props => props.borderRadius == null ? "0px" : props.borderRadius + "px"};
     font-family:Noto Sans KR;
     font-size:20px;
     display:flex;
     justify-content:center;
     align-items:center;
-    margin-left:${props=>props.margin==null?0+"px":props.margin+"px"};
+    margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
     .label{
       margin-left:60px;
     }
     
 `
-const InputText = styled.input.attrs({type:"text"})`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
@@ -141,8 +115,8 @@ const InputText = styled.input.attrs({type:"text"})`
   border:0px;
 `
 const InputTextarea = styled.textarea`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"};
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
@@ -152,8 +126,8 @@ const InputTextarea = styled.textarea`
   readonly;
 `
 const Margin = styled.div`
-  width:${props=>props.width==null?100+"%":props.width+"px"};
-  height:${props=>props.height==null?100+"%":props.height+"px"}
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `
 
 const DropBox = styled(Dropdown)`
@@ -164,67 +138,72 @@ const DropBox = styled(Dropdown)`
     border-radius:20px !important;
 `
 
-class CreateRequest extends Component{
-  constructor(props){
+class CreateRequest extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      firstCategory:-1,secondCategory:-1,
+      category_level1: -1, category_level2: -1,
     }
-    this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
-    this.onClickItemType= this.onClickItemType.bind(this);
+    this.onClickItemType = this.onClickItemType.bind(this);
+    this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
+    this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
   }
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: { value }.value });
+  }
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: { value }.value });
+  }
+  onClickItemType(event, { value }) {
+    this.setState({ itemType: { value }.value });
+  }
+  render() {
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
 
-  onClickFirstCategory(event,{value}){
-    this.setState({firstCategory:{value}.value});
-  }
-  onClickItemType(event,{value}){
-    this.setState({itemType:{value}.value});
-  }
-  render(){
-    return(
+    return (
       <React.Fragment>
-      <Wrapper>
-        <MainBox>
-          <div className="title">의뢰하기</div>
-          <div className="contentsBox">
-            <FormBox>
+        <Wrapper>
+          <MainBox>
+            <div className="title">의뢰하기</div>
+            <div className="contentsBox">
+              <FormBox>
 
-              <div className="wrapper flex">
-                <div className="label">제목</div>
-                <InputText width={370}/>
-              </div>
+                <div className="wrapper flex">
+                  <div className="label">제목</div>
+                  <InputText width={370} />
+                </div>
 
-              <div className="wrapper flex">
-                <div className="label">카테고리</div>
-                <DropBox id="firstCategory" selection options={FirstCategory} placeholder="대분류" onChange={this.onClickFirstCategory}/>
-                <DropBox id="secondCategory" selection placeholder="소분류" 
-                        options={this.state.firstCategory>-1?SecondCategory[this.state.firstCategory]:EmptyCategory}/>
-              </div>
+                <div className="wrapper flex">
+                  <div className="label">카테고리</div>
+                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                </div>
 
-              <div className="wrapper flex">
-                <div className="label">내용</div>
-                <InputTextarea width={551} height={344}/>
-              </div>
+                <div className="wrapper flex">
+                  <div className="label">내용</div>
+                  <InputTextarea width={551} height={344} />
+                </div>
 
-              <div className="wrapper flex">
-                <div className="label">파일첨부</div>
-                <Button width={370} height={43} color={"#E9E9E9"} borderRadius={20}><div> 클릭하여 첨부하기 </div></Button>
-              </div>
+                <div className="wrapper flex">
+                  <div className="label">파일첨부</div>
+                  <Button width={370} height={43} color={"#E9E9E9"} borderRadius={20}><div> 클릭하여 첨부하기 </div></Button>
+                </div>
 
-              <div className="wrapper flex">
-                <div className="label">태그</div>
-                <InputText width={370}/>
-              </div>
+                <div className="wrapper flex">
+                  <div className="label">태그</div>
+                  <InputText width={370} />
+                </div>
 
-            </FormBox>
-            <RedButton left={1164} bottom={0}><div>등록하기</div></RedButton>
-          </div>
-        </MainBox>
+              </FormBox>
+              <RedButton left={1164} bottom={0}><div>등록하기</div></RedButton>
+            </div>
+          </MainBox>
         </Wrapper>
       </React.Fragment>
     );
   };
-}export default CreateRequest;
+} export default CreateRequest;
 
 // import React, { Component } from "react";
 // import { Grid } from "semantic-ui-react";
