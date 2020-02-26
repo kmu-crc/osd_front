@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyPaymentRequest } from "actions/Item";
+import { GetMyUploadItemRequest } from "actions/Item";
 import Item from "components/Items/Item";
 import ScrollList from "components/Commons/ScrollList";
 
-class MyPaymentContainer extends Component {
+class UploadItemContainer extends Component {
   componentWillMount() {
-    this.props.GetMyPaymentRequest(this.props.token, 0);
+    this.props.GetMyUploadItemRequest(this.props.id,this.props.token, 0);
   }
 
   getList = (page) => {
-    // return false;
-    return this.props.GetMyPaymentRequest(this.props.token, page);
+    return this.props.GetMyUploadItemRequest(this.props.id,this.props.token, page);
   }
 
   render() {
-    console.log(this.props);
     return (
       <ScrollList
         getListRequest={this.getList}
@@ -28,11 +26,11 @@ class MyPaymentContainer extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
-  dataList: state.Payment.status.MyPayment,
-  dataListAdded: state.Payment.status.MyPaymentAdded,
+  dataList: state.UploadItem.status.MyUploadItem,
+  dataListAdded: state.UploadItem.status.MyUploadItemAdded,
 });
 const mapDispatchToProps = (dispatch) => ({
-  GetMyPaymentRequest: (token, page) => dispatch(GetMyPaymentRequest(token, page)),
+  GetMyUploadItemRequest: (id, token, page) => dispatch(GetMyUploadItemRequest(id,token, page)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyPaymentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadItemContainer);

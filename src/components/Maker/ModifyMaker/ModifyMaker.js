@@ -5,6 +5,23 @@ import noimg from "source/noimg.png";
 import {Dropdown} from "semantic-ui-react"
 import {InputTag} from "components/Commons/InputItem/InputTag"
 
+const LocationList = [
+  {value:0,text:"서울특별시"},
+  {value:1,text:"부산광역시"},
+  {value:2,text:"대구광역시"},
+  {value:3,text:"인천광역시"},
+  {value:4,text:"광주광역시"},
+  {value:5,text:"대전광역시"},
+  {value:6,text:"울산광역시"},
+  {value:7,text:"경기도"},
+  {value:8,text:"강원도"},
+  {value:9,text:"충청북도"},
+  {value:10,text:"충청남도"},
+  {value:11,text:"전라북도"},
+  {value:12,text:"경상북도"},
+  {value:13,text:"경상남도"},
+  {value:14,text:"제주도"},
+];
 
 const MainBox = styled.div`
   width:100%;
@@ -242,7 +259,7 @@ class ModifyMaker extends Component{
         thumbnail:nextProps.MakerDetail.image,
         user_id:nextProps.MakerDetail.user_id,
         explain:nextProps.MakerDetail.description||"",
-        location:nextProps.MakerDetail.location||"",
+        location:nextProps.MakerDetail.location||null,
         firstCategory:nextProps.MakerDetail.category_level1,
         secondCategory:nextProps.MakerDetail.category_level2,
         tag:tag||[],
@@ -277,8 +294,8 @@ class ModifyMaker extends Component{
   onChangeExplain(event){
     this.setState({explain:event.target.value})
   }
-  onChangeLocation(event){
-    this.setState({location:event.target.value});
+  onChangeLocation(event,{value}){
+    this.setState({location:{value}.value});
   }
   handleAddTag(tag){
     this.setState({
@@ -390,6 +407,8 @@ class ModifyMaker extends Component{
   }
 
   render(){
+    
+    console.log(isNaN(parseInt(this.state.location,10)));
     return(
       <React.Fragment>
         <MainBox>
@@ -431,7 +450,9 @@ class ModifyMaker extends Component{
 
               <div className="wrapper flex">
                 <div className="label">거주지역</div>
-                <InputText value={this.state.location} onChange={this.onChangeLocation} width={483} placeholder="국가 또는 도시를 입력하세요"/>
+                <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
+                <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)} selection options={LocationList} placeholder="시/도" 
+                onChange={this.onChangeLocation}/>
               </div>
 
               <div className="wrapper_noflex ">

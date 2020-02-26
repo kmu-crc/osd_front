@@ -8,16 +8,46 @@ import {
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest
 } from "actions/Product";
 import { GetItemDetailRequest, GetItemPaymentRequest } from "actions/Item";
+import { CreateItemPaymentRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
+import { GetMyPointRequest, } from "actions/Point";
 
 class ProductDetailContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.Payment = this.Payment.bind(this);
+  }
   componentDidMount() {
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
-      .then(this.props.GetLikeProductRequest(this.props.id, this.props.token));
+      .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
+      .then(this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
+  }
+  Payment(item, option) {
+    console.log(item,item.request_title,item.request_title);
+    // user_id - token, item_id, payment_detail, payment_price //
+    this.props.CreateItemPaymentRequest(
+      { payment_title: item.title, payment_price: item.price },
+      item["item-id"],
+      this.props.token)
+      .then(res => {
+        if (res.data.success) {
+          if (this.props.custom) {
+            alert("구매가 완료되었습니다. [마이페이지] > [의뢰상품]에서 확인하실 수 있습니다.");
+            window.location.href = `/myPage/`;
+          } else {
+            alert("구매가 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
+            window.location.href = `/productDetail/${item["item-id"]}`;
+          }
+        }
+      })
+  };
+  BadAccess() {
+    alert("잘못된 접근입니다.");
+    window.location.href = `/product`;
   }
   render() {
     console.log(this.props);
-    return (<ItemDetail item={this.props.ItemDetail} {...this.props} />)
+    return (<ItemDetail purchase={this.Payment} item={this.props.ItemDetail} {...this.props} />)
   }
 }
 
@@ -28,6 +58,7 @@ const mapStateToProps = (state) => ({
   userInfo: state.Authentication.status.userInfo,
   valid: state.Authentication.status.valid,
   token: state.Authentication.status.token,
+  Point: state.Point.status.Point,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -39,6 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
   UnlikeProductRequest: (id, token) => dispatch(UnlikeProductRequest(id, token)),
   DeleteProductRequest: (id, token) => dispatch(DeleteProductRequest(id, token)),
   addCartRequest: (items, token) => dispatch(addCartRequest(items, token)),
+  GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
+  CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer));

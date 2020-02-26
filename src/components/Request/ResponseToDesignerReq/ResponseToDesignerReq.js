@@ -27,7 +27,7 @@ const SecondCategory = [
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
-  { text: "특허권", value: 2 },
+  { text: "지적재산권", value: 2 },
   { text: "기술자문/상담", value: 3 },
   { text: "경험", value: 4 },
   { text: "정보/데이터", value: 5 },
@@ -276,7 +276,7 @@ class ResponseToDesignerReq extends Component {
     return (
       <Wrapper>
         <MainBox>
-          <div className="title">디자이너 의뢰 답변</div>
+          <div className="title">디자인 의뢰 응답</div>
 
           <div className="contentsBox">
             <FormBox>
@@ -307,7 +307,7 @@ class ResponseToDesignerReq extends Component {
               </div>
 
               <div className="wrapper flex centering">
-                <div className="label">내용</div>
+                <div className="label">의뢰 내용</div>
                 <div className="textBox">{detail.content}</div>
               </div>
 
@@ -335,7 +335,7 @@ class ResponseToDesignerReq extends Component {
               </div>
 
               <div className="wrapper flex">
-                <div className="label">설명</div>
+                <div className="label">의뢰 응답</div>
                 <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} />
               </div>
 

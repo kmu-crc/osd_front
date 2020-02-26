@@ -103,7 +103,7 @@ class DesignerList extends Component {
           <div className="sort">
             <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
           <div className="request"><RequestButton>
-            <Link to={`/requestToDesigner/null`}>디자인 의뢰하기</Link></RequestButton></div>
+            <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link></RequestButton></div>
         </Container>
       </Content>
 

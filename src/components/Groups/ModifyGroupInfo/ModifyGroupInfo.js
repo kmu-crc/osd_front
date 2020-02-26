@@ -10,7 +10,7 @@ import Loading from "components/Commons/Loading";
 
 // css styling
 const category = [
-  {text:"특허권",value:0},
+  {text:"지적재산권",value:0},
   {text:"디자인권",value:1},
   {text:"기술자문",value:2},
   {text:"기술상담",value:3},

@@ -4,6 +4,7 @@ import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
+import {InputPrice} from "components/Commons/InputItem/InputPrice";
 
 const FirstCategory = [{ text: "패션", value: 0 },
 { text: "제품", value: 1 },
@@ -22,14 +23,15 @@ const SecondCategory = [[{ text: "스마트패션", value: 0 }, { text: "의상"
 [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
 [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
 [{ text: "새분야", value: 0 }]];
-const ItemType = [{ text: "디자인", value: 0 },
-{ text: "프로젝트", value: 1 },
-{ text: "특허권", value: 2 },
-{ text: "기술자문/상담", value: 3 },
-{ text: "경험", value: 4 },
-{ text: "정보/데이터", value: 5 },
-{ text: "아이디어/노하우", value: 6 },
-{ text: "제품", value: 7 }];
+const ItemType = [
+  { text: "디자인", value: 0 },
+  { text: "프로젝트", value: 1 },
+  { text: "지적재산권", value: 2 },
+  { text: "기술자문/상담", value: 3 },
+  { text: "경험", value: 4 },
+  { text: "정보/데이터", value: 5 },
+  { text: "아이디어/노하우", value: 6 },
+  { text: "제품", value: 7 }];
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -181,6 +183,7 @@ class ModifyRequestToDesigner extends Component {
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeOwnership = this.onChangeOwnership.bind(this);
     this.onChangeOffline = this.onChangeOffline.bind(this);
+    this.getPriceValue = this.getPriceValue.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -198,6 +201,9 @@ class ModifyRequestToDesigner extends Component {
     //   ownership:this.props.RequestDetail.ownership,
     //   offline:this.props.RequestDetail.offline_consultation,
     // });
+  }
+  async getPriceValue(value){
+    await this.setState({price:value});
   }
   onClickCategorylevel1(event, { value }) {
     this.setState({ category_level1: { value }.value });
@@ -276,7 +282,7 @@ class ModifyRequestToDesigner extends Component {
       <React.Fragment>
         <Wrapper>
           <MainBox>
-            <div className="title">디자이너에게<br /> 의뢰하기</div>
+            <div className="title">디자인 의뢰</div>
             <div className="contentsBox">
               <FormBox>
 
@@ -302,7 +308,7 @@ class ModifyRequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  <InputText onChange={this.onChangePrice} value={this.state.price} width={483} />
+                  <InputPrice name="price" getValue={this.getPriceValue}/>
                 </div>
 
                 <div className="wrapper flex centering">

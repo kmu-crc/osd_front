@@ -66,7 +66,7 @@ export default class DesignerRequestBoard extends Component {
 
     render() {
         return (<React.Fragment>
-            <Content top={100}>
+            <Content top={0}>
                 <ListElement>
                     {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
                     {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>

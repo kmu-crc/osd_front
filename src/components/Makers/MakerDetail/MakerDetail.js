@@ -8,6 +8,24 @@ import Item from "components/Items/Item/Item"
 import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
 
+const LocationList = [
+  {value:0,text:"서울특별시"},
+  {value:1,text:"부산광역시"},
+  {value:2,text:"대구광역시"},
+  {value:3,text:"인천광역시"},
+  {value:4,text:"광주광역시"},
+  {value:5,text:"대전광역시"},
+  {value:6,text:"울산광역시"},
+  {value:7,text:"경기도"},
+  {value:8,text:"강원도"},
+  {value:9,text:"충청북도"},
+  {value:10,text:"충청남도"},
+  {value:11,text:"전라북도"},
+  {value:12,text:"경상북도"},
+  {value:13,text:"경상남도"},
+  {value:14,text:"제주도"},
+];
+
 // CSS STYLING
 const Expert = styled.div`
   margin-right: ${prop => prop.mRight}px;
@@ -99,54 +117,65 @@ const Counter = styled.div`
 `;
 
 const Introduction = styled.div`
-      margin-right: ${prop => prop.mRight}px;
-      position:relative;
-      width: 468px;
-      height: 491px;
-      background: #FFFFFF;
-      box-shadow: 5px 5px 10px #00000029;
+  margin-right: ${prop => prop.mRight}px;
+  position:relative;
+  width: 982px;
+  height: 491px;
+  background: #FFFFFF;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  opacity: 1;
+  padding: 62px 59px 61px 60px;
+  font-family: Noto Sans KR;
+  .wrapItem{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    .flex{
+      display:flex;
+    }
+    .title {
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 28px;
+      text-align: left;
+    }
+    .text {
+      width: 349px;
+      margin-top: 15px;
+      margin-bottom:29px;
+      font-size: 15px;
+      font-weight: 300;
+      line-weight: 27px;
+      text-align: left;
+      overflow: hidden;
+    }
+    .gradient_box{
+      position:absolute;
+      left:0px;
+      top:0px;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      padding:10px;
       border-radius: 20px;
-      opacity: 1;
-      padding: 62px 59px 61px 60px;
-      font-family: Noto Sans KR;
-      .title {
-        font-size: 19px;
-        font-weight: 500;
-        line-height: 28px;
-        text-align: left;
-      }
-      .text {
-        height: 311px;
-        width: 349px;
-        margin-top: 29px;
-        font-size: 15px;
-        font-weight: 300;
-        line-weight: 27px;
-        text-align: left;
-        overflow: hidden;
-      }
-      .gradient_box{
-        position:absolute;
-        left:0px;
-        top:0px;
-        width:100%;
-        height:100%;
-        display:flex;
-        justify-content:center;
-        align-items:flex-end;
-        padding:10px;
-        border-radius: 20px;
-        background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
-      }
+      background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
+    }
+  }
+  
 
-      &:hover{
-        .gradient_box{
-          display:none;
-        }
-        .text {
-          overflow: auto;
-        }
-      }
+  &:hover{
+    .gradient_box{
+      display:none;
+    }
+    .wrapItem {
+      overflow: auto;
+    }
+  }
+
+
 `;
 const ReviewBox = styled.div`
     width:100%;
@@ -265,7 +294,6 @@ const ItemInfo = styled.div`
     width:100%;
     height:max-content;
     overflow:hidden;
-    overflow-y:overlay;
     display:flex;
   }
   &:hover{
@@ -439,6 +467,9 @@ const MakerBoard = styled.div`
       };
 `;
 const Wrapper = styled.div`
+// *{
+//   border:1px solid black;
+// }
     display:flex;
     align-items:center;
     flex-direction:column;
@@ -563,7 +594,7 @@ class MakerDetail extends Component {
       isLike:false,
       nick_name:"",
       thumbnail:null,thumbnail_name:null,
-      firstCategory:0,secondCategory:0,location:"",
+      firstCategory:0,secondCategory:0,location:null,
       explain:"",tag:[],equipment:[],technique:[],
       career:[{number:0,task:"",explain:"",during:""}], };
     this.onClickRequest = this.onClickRequest.bind(this);
@@ -639,6 +670,7 @@ class MakerDetail extends Component {
     const {likeCount,itemCount} = this.props.MakerViewDetail;
     // console.log("detail:", expert);
     const { tab } = this.state;
+    const Location = this.state.location==null?"":LocationList[this.state.location]&&LocationList[this.state.location].text;
 
       // 카테고리
     const categoryName =this.props.category1&&this.props.category2&&
@@ -677,16 +709,12 @@ class MakerDetail extends Component {
         </Expert>
 
         {/* Introduction */}
-        <Introduction mRight={60}>
+        <Introduction>
+          <div className="wrapItem">
           <div className="title">소개</div>
           <div className="text">{this.state.explain || "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 인간의 생명을 이상, 불어 바로 것이다. 대고, 방황하였으며, 가치를 봄날의 인간이 가진 설산에서 운다. 있는 착목한는 그들의 노래하며 원질이 대한 아름다우냐? 같은 찬미를 붙잡아 청춘 힘차게 두기 갑 속잎나고, 소담스러운 것이다. 몸이 원질이 가슴이 피가 반짝이는 소리다.이것은 이상의 예가 피다. 그들을 할지니, 품었기 가치를 보배를 남는 지혜는 약동하다. 목숨이 일월과 동력은 가는 청춘의 사라지지 더운지라 가는 있음으로써 것이다. 가치를 웅대한 대한 새 피가 품에 소담스러운 그들에게 오직 듣는다. 찾아다녀도, 들어 그들은 피어나기 것이다. 착목한는 되려니와, 그와 타오르고 커다란 가는 위하여서. 물방아 얼마나 것이다.보라, 바로 얼마나 남는 위하여서, 봄바람이다. 얼마나 그림자는 얼음에 보이는 새가 보내는 것이다. 가슴에 인간의 두기 끝까지 무엇이 것은 그리하였는가? 보이는 천지는 주며, 듣는다. 이상, 몸이 곧 두기 커다란 이것을 그들에게 위하여서, 가슴에 보라. 무한한 돋고, 많이 가슴에 있는 사막이다. 힘차게 무엇을 능히 되는 가치를 이 거선의 남는 부패뿐이다. 소금이라 얼음 긴지라 품었기 과실이 굳세게 끓는 봄바람이다. 인간의 갑 별과 사라지지 품에 같지 사막이다. 소금이라 듣기만 설레는 심장은 있으며, 것은 위하여서, 그리하였는가? 그들을 그러므로 물방아 우리의 있을 얼음과 청춘의 장식하는 보라. 이것은 끝까지 기관과 가진 인류의 그들은 힘있다. 붙잡아 뛰노는 실로 피고 피에 그것을 황금시대다. 그들의 위하여, 그것을 힘있다. 봄바람을 구하기 가슴이 풍부하게 주며, 무엇을 인도하겠다는 없으면, 봄바람이다. 청춘 방황하여도, 산야에 영원히 그들은 간에 하는 위하여서, 아니다. 사는가 얼마나 그들은 부패를 못할 하여도 무엇을 것이다. 찾아다녀도, 피는 위하여 약동하다."}</div>
-          <div className="gradient_box"><div>▾</div></div>
-        </Introduction>
-        {/** 상세소개*/}
-        <AdditionalInfo>
-          <div className="wrapText">
           <div className="title">거주지역</div>
-          <div className="text">{this.state.location}</div>
+          <div className="text">{Location}</div>
           <div className="title">보유기술</div>
           <div className="text flex">
             {
@@ -711,10 +739,42 @@ class MakerDetail extends Component {
               })
             }
           </div>
-        </div>
-        <div className="gradient_box"><div>▾</div></div>
+          <div className="gradient_box"><div>▾</div></div>
+          </div>
+        </Introduction>
+        {/** 상세소개*/}
+        {/* <AdditionalInfo> */}
+          {/* <div className="wrapText"> */}
+          {/* <div className="title">거주지역</div>
+          <div className="text">{Location}</div>
+          <div className="title">보유기술</div>
+          <div className="text flex">
+            {
+              this.state.technique.map((item,index)=>{
+                return(
+                  <TagPiece key={index}>
+                    {item}
+                  </TagPiece>
+                );
+              })
+            }
+          </div>
+          <div className="title">보유장비</div>
+          <div className="text flex">
+          {
+              this.state.equipment.map((item,index)=>{
+                return(
+                  <TagPiece key={index}>
+                    {item}
+                  </TagPiece>
+                );
+              })
+            }
+          </div> */}
+        {/* </div> */}
+        {/* <div className="gradient_box"><div>▾</div></div>
 
-        </AdditionalInfo>
+        </AdditionalInfo> */}
       </div>
 
 
@@ -744,9 +804,9 @@ class MakerDetail extends Component {
             <div className="title margin_bottom">제작 경험</div>
             <ExpTable>
               <div className="header">
-                <div className="th">경험</div>
+                <div className="th">업무</div>
                 <div className="th">기간</div>
-                <div className="th">업무내용</div>
+                <div className="th">내용</div>
               </div>
               {
                 this.state.career.map((item,index)=>{
@@ -777,13 +837,13 @@ class MakerDetail extends Component {
         
         <MakerBoard>
           <div className="title">메이커 게시판</div>
-          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰하기</div></div>
+          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰</div></div>
           <div className="list"> 
           {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
 
             {
                 expert.board.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                  const type = item.type=="maker_req"?<div className="circle red1" >메이커의뢰</div>:<div className="circle red2" >메이커응답</div>
+                  const type = item.type=="maker_req"?<div className="circle red1" >제작 의뢰</div>:<div className="circle red2" >메이커응답</div>
                   return(
                     <div className="line">
                       {type}
