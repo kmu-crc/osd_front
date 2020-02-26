@@ -15,20 +15,31 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   // * { border: 1px solid red; };
   margin-top: 50px;
-  .line { display: flex; }
+
+  .line { 
+    display: flex; 
+  };
+  .flex-align-column {
+    flex-direction: column;
+  };
+  .bottom {
+    background: blue;
+    align-self: flex-end;
+  };
 `;
 const ItemImages = styled.div`
-  width: 587px;
-  height: 605px;
-  margin-left: 175px;
+  width: 600px;
+  height: 600px;
+  margin-left: 25px; 
 
   .main-image {
     overflow-x: auto;
-    width: 587px;
-    height: 489px;
+    width: 100%;
+    height: 100%; 
     background-image: url(${prop => prop.main});
     background-size: cover;
     background-position: center center;
+    border-radius: 20px;
   }
   .sub-images {
     margin-top: 30px;
@@ -44,10 +55,17 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
-  margin-left: 400px;
-  height: 605px;
-  width: 453px;
+  margin-left: 50px;
+  width: 900px;
+  height: 600px;
   font-family: Noto Sans KR;
+  background: #FFFFFF;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px; 
+  padding: 20px 35px 10px 15px;
+
+  *{ border: 1px solid red; };
+
   .title {
     font-size: 34px;
     line-height: 50px;
@@ -330,7 +348,7 @@ class ItemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLike:this.props.like==null?false:this.props.like,
+      isLike: this.props.like == null ? false : this.props.like,
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -387,115 +405,74 @@ class ItemDetail extends Component {
   render() {
     console.log(this.props);
     const item = this.props.item;
-
-    return !item ? <div>LoaDing...</div> :
-      (<Wrapper>
+    return item ?
+      <Wrapper>
+        {/* thumbnail and item-info */}
         <div className="line">
-          {item.imageList && item.imageList.length > 0 ? (
-            <ItemImages main={item.imageList ? item.thumbnail.l_img : noimg}>
-              <div className="sub-images line">
-                {item.images ?
-                  item.images.map((img, idx) =>
-                    <div key={idx} img={img} className="sub nine-teen" />) : null}
-              </div>
-            </ItemImages>
-          ) : (
-              <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
-                <div className="main-image" />
-              </ItemImages>
-            )}
+          <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
+            <div className="main-image" />
+          </ItemImages>
 
           <ItemInfo face={item.who || who}>
-            <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
-            <div className="expert line">
-              <div className="who" />
-              <div className="nick">{item.userName}</div>
-            </div>
+            <div className="flex-align-column line">
 
-            <div className="price-and-score line">
-              <div className="price" style={{ marginRight: "35px" }}>
-                {PointFormat(item.price || 0)} 포인트</div>
-              <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                {Star(item.score)}({item.total || 0})</div>
-            </div>
+              <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+              <div className="expert line">
+                <div className="who" />
+                <div className="nick">{item.userName}</div>
+              </div>
 
-            {/* <div className="options">
+              <div className="price-and-score line">
+                <div className="price" style={{ marginRight: "35px" }}>
+                  {PointFormat(item.price || 0)} 포인트</div>
+                <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
+                  {Star(item.score)}({item.total || 0})</div>
+              </div>
+
+              {/* <div className="options">
               { / * {item.options.map(opt => <Options key={opt} data={opt} />)} * / }
               <div className="combo-wrapper line">
-                <div className="text">모양</div>
-                <div className="box WIDTH360"></div>
+              <div className="text">모양</div>
+              <div className="box WIDTH360"></div>
               </div>
               <div className="combo-wrapper line">
-                <div className="text">수량</div>
-                <div className="box WIDTH178"></div>
+              <div className="text">수량</div>
+              <div className="box WIDTH178"></div>
               </div>
             </div> */}
+              <div className="bottom">
+                <div className="buttons line">
+                  <div className="button first">
+                    <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
+                      <div className="text">아이템구매</div>
+                    </Link>
+                  </div>
+                  {
+                    this.state.isLike === false ?
+                      <div className="button second" onClick={this.onClickLike}>
+                        <div className="text">관심항목추가</div></div>
+                      :
+                      <div className="button first" onClick={this.onClickLike}>
+                        <div className="text">관심항목</div></div>
+                  }
 
-            <div className="buttons line">
-              <div className="button first">
-                {/* <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}> */}
-                  <div className="text" onClick={this.buyThisItem} >아이템구매</div>
-                {/* </Link> */}
+                </div>
               </div>
-              {
-                this.state.isLike === false ?
-                  <div className="button second" onClick={this.onClickLike}>
-                    <div className="text">관심항목추가</div></div>
-                  :
-                  <div className="button first" onClick={this.onClickLike}>
-                    <div className="text">관심항목</div></div>
-              }
-
             </div>
           </ItemInfo>
+
         </div>
 
-        {/* very-variety-layout will be needed */}
+        {/* review and board */}
         <div className="line">
-          <div>
-            <div className="line" style={{ marginTop: "35px" }}>
-              <Detail mRight={101}>
-                <div className="title">상품 상세설명</div>
-                <div className="text">{item.description}</div>
-              </Detail>
-              <Delivery mRight={102} style={{ background: "#EFEFEF", fontSize: "36px", fontWeight: "500", padding: "35px" }}>
-                선택사항 들어갈 공간
-                {/*
-                  <div className="title">배송정보</div>
-                  <div className="sub-title">제작기간</div>
-                  <div className="text">3~5일</div>
-                  <div className="sub-title">배송</div>
-                  <div className="text">택배배송(무료)</div>
-                  <div className="sub-title">반품</div>
-                  <div className="text">반품료는 5000원이며 반품시 택배 박스와 함께 현금을 동봉해주시기 바랍니다.</div> 
-                */}
-              </Delivery>
-            </div>
-            <div style={{ marginTop: "50px" }}>
-              <Board>
-                <div className="title">아이템 문의사항</div>
-                <ItemQuestionContainer user_id={item.user_id} />
-              </Board>
-            </div>
-          </div>
-
-          <div style={{ marginTop: "35px" }}>
-            <ItemReviewContainer user_id={item.user_id} />
-          </div>
         </div>
 
-        {/* item-detail */}
+        {/* item-contents */}
         <div className="line">
-          <Content style={{ marginTop: "15px" }} width={item && item["upload-type"] === "proj" ? 1600 : 1094}>
-            <div className="title">아이템 상세내용</div>
-            {item && item["upload-type"] === "blog"
-              ? <CardSourceDetailContainer isCancel cardId={item.cardId} edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
-            {item && item["upload-type"] === "proj"
-              ? <ItemStepContainer id={item["item-id"]} editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
-          </Content>
         </div>
-
-      </Wrapper>)
+      </Wrapper>
+      :
+      <div>LoaDing...</div>
   }
 }
 

@@ -5,13 +5,13 @@ import profile from "source/thumbnail.png";
 // import { Icon } from "semantic-ui-react";
 // import StyleGuide from "StyleGuide";
 // import TextFormat from "modules/TextFormat";
-import NumberFormat from "modules/NumberFormat";
+// import NumberFormat from "modules/NumberFormat";
 import DateFormat from "modules/DateFormat";
 
 // CSS STYLING
 const ListElement = styled.div`
-  width: 100%;
   margin: 0 auto 0.9rem;
+  margin-left: ${props => props.left || 0}px;
   font-size: 13px;
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
@@ -37,8 +37,8 @@ const ListElement = styled.div`
       background: hotpink;
       color: white;
     }
-    &.estimate {
-      margin-left: 35px;
+    &.response {
+      margin-left: 5px;
       background: blue;
       color: white;
     }
@@ -61,15 +61,16 @@ class DesignerBoardElement extends Component {
 
     return (
       <NavLink to={"/requestDetail/" + item.uid}>
-        <ListElement>
-          {/* no.*/}
-          {/* <div style={{ marginRight: "15px" }}>{item.uid}</div> */}
-          {/* title */}
+        <ListElement left={item.status === "response" ? 25 : 0}>
+
           <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
-            {item.status === "request"
-              ? <div className="status-box request">의뢰</div>
-              : item.status === "estimate" ?
-                <div className="status-box estimate">견적</div> : " "}
+            {
+              item.status === "normal"
+                ? <div className="status-box"></div>
+                : item.status === "request"
+                  ? <div className="status-box request">의뢰</div>
+                  : item.status === "response" ?
+                    <div className="status-box response">응답</div> : " "}
 
             {item.title || "글 제목"}</div>
           {/* writer */}

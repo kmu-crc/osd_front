@@ -1,6 +1,6 @@
 export * from "./InputTag";
 export * from "./ThumbnailList";
-export * from "./UploadType";
+export * from "./RadioType";
 export * from "./AddController";
 export * from "./FileController";
 export * from "./Controller";

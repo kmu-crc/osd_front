@@ -7,7 +7,7 @@ import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import { connect } from "react-redux";
 import { InsertDesignerDetailRequest } from "actions/Users/UserInfo";
-
+import { CreateDesignRequest } from "actions/Products/CreateProduct";
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -54,29 +54,23 @@ const Wrapper = styled(ContentBox)`
 `
 class CreateDesignerContainer extends Component {
   render() {
-    return(
-       <React.Fragment>
-         <Wrapper>
-         <CreateDesigner  {...this.props}/>
-         </Wrapper>
-       </React.Fragment>
+    return (
+      <Wrapper>
+        <CreateDesigner  {...this.props} />
+      </Wrapper>
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    token: state.Authentication.status.token,
-    userInfo: state.Authentication.status.userInfo,
-    category1: state.CategoryAll.status.category1,
-    category2: state.CategoryAll.status.category2,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    InsertDesignerDetailRequest: (data, token) => {
-      return dispatch(InsertDesignerDetailRequest(data, token))
-    },
-  };
-};
+
+const mapStateToProps = (state) => ({
+  token: state.Authentication.status.token,
+  userInfo: state.Authentication.status.userInfo,
+  category1: state.CategoryAll.status.category1,
+  category2: state.CategoryAll.status.category2,
+});
+const mapDispatchToProps = (dispatch) => ({
+  InsertDesignerDetailRequest: (data, token) => dispatch(InsertDesignerDetailRequest(data, token)),
+  CreateDesignRequest: (data, token) => dispatch(CreateDesignRequest(data, token))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateDesignerContainer);

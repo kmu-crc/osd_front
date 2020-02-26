@@ -56,8 +56,8 @@ class ScrollListHorizontal extends Component {
         <div className="arrow right" onClick={() => this.scrollHorizon(1 * this.state.scrollOffset)}>
           <Icon name="caret right" size="big" /></div>
 
-        {List.length ? List.map(item =>
-          <div key={item.uid} style={{ paddingRight: "10px", marginRight: "45px" }}>
+        {List.length ? List.map((item, index) =>
+          <div key={index} style={{ paddingRight: "10px", marginRight: "45px" }}>
             <ListComponent data={item} /></div>) : (
             <div style={{ marginLeft: "auto", marginRight: "auto" }}>노 데이타!</div>)}
       </ScrollContainer>

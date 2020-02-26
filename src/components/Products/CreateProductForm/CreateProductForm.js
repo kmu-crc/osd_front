@@ -1,33 +1,16 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 import CheckBox2 from "components/Commons/CheckBox";
 import noface from "source/thumbnail.png";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
-import { AddController, InputContent, Controller, InputTag, ThumbnailList, UploadType } from "components/Commons/InputItem";
+import { AddController, InputContent, Controller, InputTag, ThumbnailList, RadioType } from "components/Commons/InputItem";
 import SearchDesignMemverContainer from "containers/Commons/SearchMemberContainer";
 import {InputPrice} from "components/Commons/InputItem/InputPrice";
 // import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
 
-const FirstCategory = [
-  { text: "패션", value: 0 },
-  { text: "제품", value: 1 },
-  { text: "커뮤니케이션", value: 2 },
-  { text: "공간", value: 3 },
-  { text: "엔터테인먼트", value: 4 },
-  { text: "소프트웨어", value: 5 },
-  { text: "새분야", value: 6 }];
-const SecondCategory =
-  [[{ text: "스마트패션", value: 0 }, { text: "의상", value: 1 }, { text: "엑세서리", value: 2 }, { text: "패션모듈", value: 3 }],
-  [{ text: "스마트카", value: 0 }, { text: "로봇", value: 1 }, { text: "기계/기기/기구", value: 2 }, { text: "센서모듈", value: 3 }, { text: "공예", value: 4 }],
-  [{ text: "UI/UX", value: 0 }, { text: "광고", value: 1 }, { text: "웹", value: 2 }, { text: "영상", value: 3 }, { text: "타이포그래피", value: 4 }],
-  [{ text: "스마트시티", value: 0 }, { text: "건축", value: 1 }, { text: "인테리어", value: 2 }, { text: "환경", value: 3 }],
-  [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
-  [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
-  [{ text: "새분야", value: 0 }]];
-const EmptyCategory = [
-  { text: "", value: -1 }];
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
@@ -235,57 +218,54 @@ class CreateProductForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // local
-      firstCategory: 0, secondCategory: -1,
       // send data - basic
+      category_level1: -1, category_level2: -1,
       title: "",
       thumbnail: null, thumbnail_name: null,
       tag: [], category1: null, category2: null,
       itemType: -1,
       // send data - additional
-      additional: null, content: [], steps: []
+      additional: null, content: [], steps: [], type: "blog"
     };
-    this.onClickFirstCategory = this.onClickFirstCategory.bind(this);
-    this.onClickSecondCategory = this.onClickSecondCategory.bind(this);
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onHandleReturnedTags = this.onHandleReturnedTags.bind(this);
+    this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
+    this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
   };
   onSubmit(event) {
     event.preventDefault();
     let data = {
       //basic
-      title: this.state.title, type: "item",
+      title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
-      tag: this.state.tag, category1: this.state.category1, category2: this.state.category2,
+      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
       itemType: this.state.itemType,
       //additional
-      additional: this.state.additional, content: this.state.content, step: this.state.steps
+      additional: this.state.additional, content: this.state.content, step: this.state.steps, type: this.state.type
     };
-    console.log("send-data:", data);
-    return;
-    // return;
+
     this.props.CreateDesignRequest(data, this.props.token)
       .then(result => {
         if (result.success) {
-          console.log("result", result);
-          // window.location.href = `/productDetail/${result.id}`
+          alert("아이템이 등록 되었습니다. 아이템상세페이지로 이동합니다.");
+          window.location.href = `/productDetail/${result.id}`
         } else {
-          alert("boom!");
+          alert("아이템이 등록에 실패하였습니다.");
         }
       })
       .catch(error => {
         alert("오류내용:" + error.message);
       });
   };
-  onClickFirstCategory(_, { value }) {
-    this.setState({ firstCategory: { value }.value, category1: { value }.value });
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: value });
   };
-  onClickSecondCategory(_, { value }) {
-    this.setState({ secondCategory: { value }.value, category2: { value }.value });
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: value });
   };
   onClickItemType(_, { value }) {
     this.setState({ itemType: { value }.value, additional: null });
@@ -327,12 +307,14 @@ class CreateProductForm extends Component {
 
 
   render() {
-    // return 
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
 
     const { /* edit, */ itemType } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
     return (<MainBox>
+      {this.props.keep ? <div>REDIRECTED</div> : null}
       {/* 타이틀 */}
       <div className="title">아이템 등록하기</div>
 
@@ -359,9 +341,8 @@ class CreateProductForm extends Component {
 
             <div className="wrapper flex ">
               <div className="label">카테고리<Mandatory /></div>
-              <DropBox id="firstCategory" selection placeholder="대분류" onChange={this.onClickFirstCategory} options={FirstCategory} />
-              <DropBox id="secondCategory" selection placeholder="소분류" onChange={this.onClickSecondCategory}
-                options={this.state.firstCategory > -1 ? SecondCategory[this.state.firstCategory] : EmptyCategory} />
+              <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+              <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
 
             <div className="wrapper flex">
@@ -397,7 +378,26 @@ class CreateProductForm extends Component {
       {/* 버튼 */}
       {itemType > -1 ? (
         <div className="contentsBox">
-          <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>
+          {this.props.keep ?
+            <Link to={{
+              pathname: `/createdesigner/redirected`, state: {
+                keep: {
+                  designer: this.props.keep,
+                  item: {
+                    //basic
+                    title: this.state.title, type: "item",
+                    files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
+                    tag: this.state.tag, category1: this.state.category1, category2: this.state.category2,
+                    itemType: this.state.itemType,
+                    //additional
+                    additional: this.state.additional, content: this.state.content, step: this.state.steps
+                  }
+                }
+              }
+            }}>
+              <RedButton>디자인 등록 계속하기</RedButton>
+            </Link>
+            : <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>}
           <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
@@ -414,16 +414,20 @@ export default CreateProductForm;
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { additional: null, content: [], steps: [] };
+    this.state = { additional: null, content: [], steps: [], type: "blog" };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.returnState = this.returnState.bind(this);
     this.onHandleGrid = this.onHandleGrid.bind(this);
-    // this.onAddValue = this.onAddValue.bind(this); this.onChangValue = this.onChangValue.bind(this);
+    this.toProject = this.toProject.bind(this);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.itemType !== this.props.itemType)
-      this.setState({ additional: null, content: [], steps: [] });
+    if (prevProps.itemType !== this.props.itemType) {
+      this.setState({ additional: null, content: [], steps: [], type: "blog" });
+      if (this.props.itemType === 1) {
+        this.setState({ type: "project" });
+      }
+    }
   }
   async returnState() {
     this.props.returnState && this.props.returnState(this.state);
@@ -437,15 +441,11 @@ class ItemTypeForm extends Component {
     this.returnState();
   }
   async onHandleAdditional(value) { //write additional state
-    if (this.state.additional && this.state.additional.uploadType) {
-      if (value.uploadType === '블로그형') {
-        await this.setState({ steps: [] });
-      }
-      if (value.uploadType === '프로젝트형') {
-        await this.setState({ content: [] });
-      }
-    }
     await this.setState({ additional: value });
+    this.returnState();
+  }
+  async toProject() {
+    this.setState({ type: "project" });
     this.returnState();
   }
 
@@ -470,31 +470,29 @@ class ItemTypeForm extends Component {
         </FormBox>
 
         <FormBox boxShadow={true} width={1570}>
-          {additional && additional.uploadType === "블로그형" ?
+          {this.state.type === "blog" ?
             <div className="contentWrap">
               <InputContent
                 content={content}
+                toProject={this.toProject}
                 returnState={this.onHandleContent} />
-            </div> : null}
-
-          {itemType === 1 || additional && additional.uploadType === "프로젝트형" ?
-            <div className="contentWrap">
-              {/* 로컬 그리드 에디터 - */}
-              <div className="contentsBox">
-                <LocalGridEditor
-                  userInfo={this.props.userInfo}
-                  content={steps}
-                  returnContent={this.onHandleGrid}
-                  editor={true} />
-              </div>
-            </div> : null}
+            </div>
+            :
+            // {/* 로컬 그리드 에디터 - */}
+            <div className="contentsBox">
+              <LocalGridEditor
+                userInfo={this.props.userInfo}
+                content={steps}
+                returnContent={this.onHandleGrid}
+                editor={true} />
+            </div>
+          }
 
         </FormBox>
 
       </MainBox >);
   }
 };
-
 
 
 class Field extends Component {
@@ -510,9 +508,8 @@ class Field extends Component {
 class ItemDesign extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", uploadType: "", price: 0 }
+    this.state = { description: "", price: 0 }
     this.onHandleChange = this.onHandleChange.bind(this);
-    this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
@@ -541,8 +538,6 @@ class ItemDesign extends Component {
           <InputPrice name="price" getValue={this.getPriceValue}/>
           {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
           </Field>
-        <Field title="업로드 유형">
-          <UploadType name="type" return={this.onHandleReturn} Options={types} /></Field>
       </React.Fragment>)
   }
 };
@@ -670,7 +665,7 @@ function Peer(props) {
 class ItemProject extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", members: [], uploadType: "", price: 0, alone: false }
+    this.state = { description: "", members: [], price: 0, alone: false }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -679,12 +674,12 @@ class ItemProject extends Component {
   returnState() {
     this.props.return && this.props.return(this.state);
   }
-  async onHandleChange(event) {
-    await this.setState({ [event.target.name]: event.target.value });
+  async onHandleReturn(name, value) {
+    await this.setState({ [name]: value });
     this.returnState();
   }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
+  async onHandleChange(event) {
+    await this.setState({ [event.target.name]: event.target.value });
     this.returnState();
   }
   async getPriceValue(value){
@@ -720,7 +715,7 @@ class ItemProject extends Component {
           {/* <InputText onChange={this.onHandleChange} name="members" width={370} /> */}
         </Field>
         <Field title="공개">
-          <UploadType return={this.onHandleReturn} name="type" Options={types} /></Field>
+          <RadioType return={this.onHandleReturn} name="type" Options={types} /></Field>
         <Field title="구입 비용">
         <InputPrice name="price" getValue={this.getPriceValue}/>
           </Field>
@@ -760,9 +755,9 @@ class ItemConsulting extends Component {
         <Field title="자문/상담 설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="자문/상담 방법">
-          <UploadType return={(value) => this.onHandleReturn("contactMethod", value)} name="contactMethod" Options={typeOnOff} /></Field>
+          <RadioType return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /></Field>
         <Field title="내용 공개 여부">
-          <UploadType return={(value) => this.onHandleReturn("public", value)} name="public" Options={typeTF} /></Field>
+          <RadioType return={this.onHandleReturn} name="public" Options={typeTF} /></Field>
         <Field title="자문/상담 비용">
         <InputPrice name="price" getValue={this.getPriceValue}/>
           </Field>
@@ -774,7 +769,6 @@ class ItemExperience extends Component {
     super(props);
     this.state = { description: "", price: 0 };
     this.onHandleChange = this.onHandleChange.bind(this);
-    this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
@@ -794,7 +788,6 @@ class ItemExperience extends Component {
     this.returnState();
   }
   render() {
-    const type = ["블로그형", "프로젝트형"];
 
     return (
       <React.Fragment>
@@ -811,9 +804,8 @@ class ItemExperience extends Component {
 class ItemInfoData extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", uploadType: "", price: 0 };
+    this.state = { description: "", price: 0 };
     this.onHandleChange = this.onHandleChange.bind(this);
-    this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
@@ -833,8 +825,6 @@ class ItemInfoData extends Component {
     this.returnState();
   }
   render() {
-    const type = ["블로그형", "프로젝트형"];
-
     return (
       <React.Fragment>
         <Field title="정보/데이터에 관한 설명">
@@ -850,9 +840,8 @@ class ItemInfoData extends Component {
 class ItemIdea extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", uploadType: "", price: 0 };
+    this.state = { description: "", price: 0 };
     this.onHandleChange = this.onHandleChange.bind(this);
-    this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
@@ -872,8 +861,6 @@ class ItemIdea extends Component {
     this.returnState();
   }
   render() {
-    const type = ["블로그형", "프로젝트형"];
-
     return (
       <React.Fragment>
         <Field title="아이디어/노하우에 관한 설명">
@@ -889,7 +876,7 @@ class ItemIdea extends Component {
 class ItemPatent extends Component {
   constructor(props) {
     super(props);
-    this.state = { content: [], description: "", uploadType: "", price: 0 };
+    this.state = { content: [], description: "", price: 0 };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -903,8 +890,8 @@ class ItemPatent extends Component {
     await this.setState({ [event.target.name]: event.target.value });
     this.returnState();
   }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
+  async onHandleReturn(name, value) {
+    await this.setState({ [name]: value });
     this.returnState();
   }
   async getPriceValue(value){
@@ -952,7 +939,7 @@ class ItemPatent extends Component {
           </div></Field>
 
         <Field title="판매 방식 선택">
-          <UploadType return={this.onHandleReturn} name="uploadType" Options={kinds} /></Field>
+          <RadioType return={this.onHandleReturn} name="selling-type" Options={kinds} /></Field>
 
         <Field title="구입 비용">
         <InputPrice name="price" getValue={this.getPriceValue}/>
@@ -968,7 +955,7 @@ const Context = styled.p`
 class ItemProduct extends Component {
   constructor(props) {
     super(props);
-    this.state = { content: [], imageList: [], description: "", uploadType: "", price: 0 };
+    this.state = { content: [], imageList: [], description: "", price: 0 };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -982,8 +969,8 @@ class ItemProduct extends Component {
     await this.setState({ [event.target.name]: event.target.value });
     this.returnState();
   };
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
+  async onHandleReturn(name, value) {
+    await this.setState({ [name]: value });
     this.returnState();
   };
   async onHandleImageList(value) {
@@ -995,8 +982,6 @@ class ItemProduct extends Component {
     this.returnState();
   }
   render() {
-    const type = ["블로그형", "프로젝트형"];
-
     return (
       <React.Fragment>
         <Field title="설명">
@@ -1010,9 +995,6 @@ class ItemProduct extends Component {
         <Field title="구입 비용">
         <InputPrice name="price" getValue={this.getPriceValue}/>
           </Field>
-
-        <Field title="업로드 유형">
-          <UploadType return={this.onHandleReturn} name="uploadType" Options={type} /></Field>
 
       </React.Fragment>)
   }

@@ -19,14 +19,14 @@ const Radio = styled.input.attrs({ type: "radio" })`
     height: 20px;
 `;
 
-export class UploadType extends Component {
+export class RadioType extends Component {
     constructor(props) {
         super(props);
         this.onHandleClicked = this.onHandleClicked.bind(this);
     }
     onHandleClicked(_, item) {
         if (!item || !this.props.return || !this.props.Options.length) return;
-        this.props.return(item);
+        this.props.return(this.props.name, item);
     }
     render() {
         return (
@@ -34,7 +34,7 @@ export class UploadType extends Component {
                 <FormStyle>
                     {this.props.Options.map((item, key) => {
                         return (<div key={key} className="contentBox">
-                            <Radio name={this.props.name} onChange={_ => this.onHandleClicked(_, item)}/>
+                            <Radio name={this.props.name} onChange={_ => this.onHandleClicked(_, item)} />
                             <label >{item}</label>
                         </div>);
                     })}

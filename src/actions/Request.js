@@ -67,6 +67,7 @@ export const GetRequestDetailRequest = (id) => {
 };
 const GetRequestDetail = (data) => ({ type: types.GET_REQUEST_DETAIL, Detail: data });
 
+// GET DESIGNER REQUEST LIST
 export const GetDesignerRequestListRequest = (id, page) => {
   return dispatch => {
     const url = `${host}/request/designer-list/${id}/${page}`
@@ -83,6 +84,25 @@ export const GetDesignerRequestListRequest = (id, page) => {
 const GetDesignerRequestList = data => ({ type: types.GET_DESIGNER_REQUEST_LIST, payload: data });
 // const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
 const DesignerRequestListFail = () => ({ type: types.DESIGNER_REQUEST_LIST_FAIL, List: [] });
+
+// GET MAKER REQUEST LIST
+export const GetMakerRequestListRequest = (id, page) => {
+  return dispatch => {
+    const url = `${host}/request/maker-list/${id}/${page}`
+    console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetMakerRequestList(data || [])))
+      .catch(err => dispatch(MakerRequestListFail()))
+  }
+};
+const GetMakerRequestList = data => ({ type: types.GET_MAKER_REQUEST_LIST, payload: data });
+// const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
+const MakerRequestListFail = () => ({ type: types.MAKER_REQUEST_LIST_FAIL, List: [] });
+
 
 //COMMENT
 

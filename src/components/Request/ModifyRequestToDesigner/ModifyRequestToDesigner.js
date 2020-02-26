@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
@@ -32,6 +31,7 @@ const ItemType = [
   { text: "정보/데이터", value: 5 },
   { text: "아이디어/노하우", value: 6 },
   { text: "제품", value: 7 }];
+
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -202,14 +202,14 @@ class ModifyRequestToDesigner extends Component {
     //   offline:this.props.RequestDetail.offline_consultation,
     // });
   }
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: { value }.value });
   async getPriceValue(value){
     await this.setState({price:value});
   }
-  onClickCategorylevel1(event, { value }) {
-    this.setState({ category_level1: { value }.value });
-  }
-  onClickCategorylevel2(event, { value }) {
-    this.setState({ category_level2: { value }.value });
+
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: { value }.value });
   }
   onClickItemType(event, { value }) {
     this.setState({ itemType: { value }.value });
@@ -272,12 +272,14 @@ class ModifyRequestToDesigner extends Component {
       ownership: this.state.ownership,
       offline_consultation: this.state.offline,
     }
-
     // 페이지이동
-    window.location.href = "/request";
+    window.location.href = "/request/designer";
   }
 
   render() {
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+
     return (
       <React.Fragment>
         <Wrapper>
@@ -293,10 +295,9 @@ class ModifyRequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <DropBox id="firstCategory" value={this.state.category_level1} selection options={FirstCategory}
-                    placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                  <DropBox id="secondCategory" value={this.state.category_level2} selection placeholder="소분류" onChange={this.onClickCategorylevel2}
-                    options={this.state.category_level1 > -1 ? SecondCategory[this.state.category_level1] : EmptyCategory} />
+                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+
                 </div>
 
                 <div className="wrapper flex centering">

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
@@ -50,11 +49,12 @@ const ItemType = [{ text: "디자인", value: 0 },
 { text: "정보/데이터", value: 5 },
 { text: "아이디어/노하우", value: 6 },
 { text: "제품", value: 7 }];
+
 const Wrapper = styled(ContentBox)`
-    width:100%;
-    margin-top:60px;
-    margin-bottom: 100px;
-    z-index:3;
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 100px;
+  z-index: 3;
 `;
 const MainBox = styled.div`
   width:100%;
@@ -205,12 +205,11 @@ class RequestToDesigner extends Component {
     this.handleAddTag = this.handleAddTag.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
-
-  onClickCategorylevel1(event, { value }) {
-    this.setState({ category_level1: { value }.value });
+  async onClickCategorylevel1(event, { value }) {
+    await this.setState({ category_level1: { value }.value });
   }
-  onClickCategorylevel2(event, { value }) {
-    this.setState({ category_level2: { value }.value });
+  async onClickCategorylevel2(event, { value }) {
+    await this.setState({ category_level2: { value }.value });
   }
   onClickItemType(event, { value }) {
     this.setState({ itemType: { value }.value });
@@ -259,8 +258,9 @@ class RequestToDesigner extends Component {
 
   onSubmit() {
     const data = {
-      type: "designer", // "designer_req" "designer_res" "maker_req" "maker_res"
-      // user_id: this.props.userInfo.uid // 
+      type: "designer",
+      status: "request",
+      expert_id: this.props.id || null,
       title: this.state.title,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
@@ -273,14 +273,20 @@ class RequestToDesigner extends Component {
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
-        if (res.data.success) {
-          window.location.href = "/request";
+        if (res.success) {
+          if (this.props.id)
+            window.location.href = `/designerDetail/${this.props.id}`;
+          else
+            window.location.href = "/request/designer";
         }
       })
-      .catch(err => alert("의뢰 중 에러가 발생했습니다." + err));
+      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
 
   render() {
+    const category1 = this.props.category1 || [{ text: "_", value: -1 }];
+    const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+
     return (
       <React.Fragment>
         <Wrapper>
@@ -296,10 +302,8 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <DropBox id="firstCategory" value={this.state.category_level1} selection options={FirstCategory}
-                    placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                  <DropBox id="secondCategory" value={this.state.category_level2} selection placeholder="소분류" onChange={this.onClickCategorylevel2}
-                    options={this.state.category_level1 > -1 ? SecondCategory[this.state.category_level1] : EmptyCategory} />
+                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -341,7 +345,9 @@ class RequestToDesigner extends Component {
                 </div>
 
               </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
+              <RedButton onClick={this.onSubmit} left={1164} bottom={0}>
+                <div>의뢰하기</div>
+              </RedButton>
             </div>
           </MainBox>
         </Wrapper>

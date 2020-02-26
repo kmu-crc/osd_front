@@ -494,6 +494,84 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
 `;
+const TitleForm = styled.input`
+  padding: 10px;
+  resize: none;
+  width: 100%;
+  height: 30px;
+  border: 1px solid #E6E6E6;
+  outline: none;
+  border-radius: 10px;
+`
+const CommentForm = styled.textarea`
+  padding:10px;
+  resize:none;
+  width:100%;
+  height:100px;
+  border:1px solid #E6E6E6;
+  outline:none;
+  border-radius:10px;
+`
+const WriteReview = styled.div`
+  margin-bottom:10px;
+  .form{
+      width:100%;
+      padding:10px;
+  }
+  .contents{
+      display:flex;
+      justify-content:space-between;
+      padding-left:10px;
+      padding-right:10px;
+      .score{
+
+      }
+      .buttonBox{
+          .button{
+              width:100px;
+              padding:10px;
+              border-radius:20px;
+              background-color:#707070;
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              cursor:pointer;
+              .text{
+                  color:white;
+              }
+          }
+
+      }
+  }
+`;
+const CreateReview = styled.div`
+    // *{
+    //     border:1px solid black;
+    // }
+    // border:1px solid black;
+    width:100%;
+    height:30px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:center;
+    .button{
+        width:80%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:20px;
+        background-color:#707070;
+        cursor:pointer;
+    }
+    .font{
+        font-size:15px;
+        color:white;
+    }
+`;
+
+
+
 const review = {
   average_score: 4,
   review: [{
@@ -513,44 +591,19 @@ const review = {
     score: 5,
   }],
 };
-const empty = {
-  // 기본
-  nick_name: "Loading", categoryName: "카테고리",
-  items: 300, likes: 5000000, score: 4,
-  description: "", location: "",
-  maker_equipment: [], maker_technique: [],
-  create_time: "2020-01-01T00:00:01.000Z",
-  update_time: "2020-01-01T00:00:01.000Z",
 
-  //경험
-  experience: [{ number: "1", task: "디자인업무", explain: "디자인업무입니다", during: "1999.99.99~1999.99.99" }],
 
-  //등록아이템
-  itemlist: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
-  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
-
-  // 게시판
-  board: [{
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  },
-  {
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_res",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  }],
-};
 
 class DesignerDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      write: false, title: "", comment: "",
       tab: true,
       isLike: false,
       nick_name: "", user_id: null,
       thumbnail: null, thumbnail_name: null,
-      firstCategory: 0, secondCategory: 0, location: null,
+      category_level1: 0, category_level2: 0, location: null,
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
     };
@@ -590,8 +643,8 @@ class DesignerDetail extends Component {
         user_id: nextProps.DesignerViewDetail.user_id,
         explain: nextProps.DesignerViewDetail.description,
         location: nextProps.DesignerViewDetail.location,
-        firstCategory: nextProps.DesignerViewDetail.category_level1,
-        secondCategory: nextProps.DesignerViewDetail.category_level2,
+        category_level1: nextProps.DesignerViewDetail.category_level1,
+        category_level2: nextProps.DesignerViewDetail.category_level2,
         tag: tag,
         career: careerList,
         score: nextProps.DesignerViewDetail.score,
@@ -601,7 +654,7 @@ class DesignerDetail extends Component {
     return true;
   }
   onClickRequest(event) {
-    window.location.href = "/requestToDesigner/" + this.props.DesignerViewDetail.uid;
+    window.location.href = "/requestToDesigner/" + this.props.id;
   }
   onClickisLike(event) {
     const isLike = !this.state.isLike;
@@ -611,19 +664,42 @@ class DesignerDetail extends Component {
 
     this.setState({ isLike: isLike });
   }
+  createNoneRequest = () => {
+    const data = {
+      type: "designer",
+      status: "normal",
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      content: this.state.comment,
+      title: this.state.title,
+      expert_id: this.props.id,
+    };
+    this.props.CreateRequestRequest(data, this.props.token)
+      .then(res => {
+        if (res.success) {
+          alert("글이 등록되었습니다.");
+          this.props.GetDesignerRequestListRequest(this.props.id, 0);
+        }
+        this.setState({ write: false, title: "", comment: "" });
+      })
+      .catch(err => alert("에러발생" + err));
+  }
   render() {
+
     const expert = empty;
     const { likeCount, itemCount } = this.props.DesignerViewDetail;
 
     const Location = this.state.location==null?"":LocationList[this.state.location]&&LocationList[this.state.location].text;
     const user_id = this.state.user_id;
     const { tab } = this.state;
-
+    // const user_id = this.state.user_id;
+    // const { tab } = this.state;
+    const { write } = this.state;
     // 카테고리
     const categoryName = this.props.category1 && this.props.category2 &&
-      this.state.secondCategory === 0 ? this.props.category1[this.state.firstCategory] && this.props.category1[this.state.firstCategory].text
-      : this.props.category2[this.state.firstCategory] &&
-      this.props.category2[this.state.firstCategory][this.state.secondCategory] && this.props.category2[this.state.firstCategory][this.state.secondCategory].text;
+      this.state.category_level2 === 0 ? this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text
+      : this.props.category2[this.state.category_level1] &&
+      this.props.category2[this.state.category_level1][this.state.category_level2] && this.props.category2[this.state.category_level1][this.state.category_level2].text;
 
     // console.log(categoryName);
     return (<Wrapper>
@@ -755,6 +831,37 @@ class DesignerDetail extends Component {
             <div className="another number">4</div>
             <div className="more">...</div>
           </div> */}
+          {write ?
+            <WriteReview>
+              <div className="form">
+                제목:
+                <TitleForm
+                  value={this.state.title || ""}
+                  onChange={event => this.setState({ [event.target.name]: event.target.value })}
+                  name="title"
+                />
+                내용:
+                <CommentForm
+                  value={this.state.comment || ""}
+                  onChange={event => this.setState({ [event.target.name]: event.target.value })}
+                  name="comment"
+                />
+              </div>
+              <div className="contents">
+                <div className="buttonBox">
+                  <div className="button" onClick={this.createNoneRequest} >
+                    <div className="text" >작성</div>
+                  </div>
+                </div>
+              </div>
+            </WriteReview>
+            :
+            <CreateReview onClick={() => this.setState({ write: true })}>
+              <div className="button">
+                <div className="font">글 작성하기</div>
+              </div>
+            </CreateReview>
+          }
         </DesignerBoard>
       </div>
 
@@ -763,3 +870,31 @@ class DesignerDetail extends Component {
 };
 
 export default DesignerDetail;
+
+
+
+// const empty = {
+//   // 기본
+//   nick_name: "Loading", categoryName: "카테고리",
+//   items: 300, likes: 5000000, score: 4,
+//   description: "", location: "",
+//   maker_equipment: [], maker_technique: [],
+//   create_time: "2020-01-01T00:00:01.000Z",
+//   update_time: "2020-01-01T00:00:01.000Z",
+//   //경험
+//   experience: [{ number: "1", task: "디자인업무", explain: "디자인업무입니다", during: "1999.99.99~1999.99.99" }],
+//   //등록아이템
+//   itemlist: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
+//   { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
+//   // 게시판
+//   board: [{
+//     uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
+//     title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+//     create_time: "1999.99.99", update_time: "1999.11.11"
+//   },
+//   {
+//     uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_res",
+//     title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
+//     create_time: "1999.99.99", update_time: "1999.11.11"
+//   }],
+// };
