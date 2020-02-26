@@ -25,7 +25,7 @@ const counsel_option = [
 ]
 const newCategory = [
   {text:"디자인",value:0},
-  {text:"특허권",value:1},
+  {text:"지적재산권",value:1},
   {text:"디자인권",value:2},
   {text:"기술자문",value:3},
   {text:"기술상담",value:4},

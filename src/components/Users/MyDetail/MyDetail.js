@@ -9,6 +9,8 @@ import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
 import MyPaymentContainer from "containers/Payment/MyPaymentContainer"
+import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer"
+
 
 const MainBox = styled.div`
   width: 1790px;
@@ -105,7 +107,7 @@ const MenuBox = styled.div`
     border-radius:20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
-    padding-top:7px;
+    padding-top:35px;
     padding-left:25px;
     padding-bottom:30px;
     .title_Label{
@@ -122,6 +124,7 @@ const MenuBox = styled.div`
       width:230px;
       border:0.5px solid #707070;
       opacity:0.2;
+      margin-bottom:25px;
     }
 `
 const MenuButton = styled.div`
@@ -321,6 +324,7 @@ class MyDetail extends Component {
       case "join_project": selectMenu = 4; break;
       case "request_designer": selectMenu = 5; break;
       case "request_maker": selectMenu = 6; break;
+      case "upload_item": selectMenu=7;break;
 
     }
     console.log(selectMenu);
@@ -370,28 +374,34 @@ class MyDetail extends Component {
           </div>
           <div className="contents">
             <MenuBox>
-              <div className="title_Label">아이템</div>
-              <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={selectMenu == 0 ? "red" : null}>구매 아이템 정보</MenuButton>
+              {/* <div className="title_Label">아이템</div> */}
+              <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={selectMenu == 0 ? "red" : null}>구매 아이템</MenuButton>
               <div className="hrLine" />
-
-              <div className="title_Label">관심</div>
+              <MenuButton id="upload_item" onClick={this.onClickMenu} fontColor={selectMenu == 7 ? "red" : null}>등록 아이템</MenuButton>
+              <div className="hrLine" />
+              {/* <div className="title_Label">관심</div> */}
               <MenuButton id="interest_Item" onClick={this.onClickMenu} fontColor={selectMenu == 1 ? "red" : null}>관심 아이템</MenuButton>
+              <div className="hrLine" />
               <MenuButton id="interest_Designer" onClick={this.onClickMenu} fontColor={selectMenu == 2 ? "red" : null}>관심 디자이너</MenuButton>
+              <div className="hrLine" />
               <MenuButton id="interest_Maker" onClick={this.onClickMenu} fontColor={selectMenu == 3 ? "red" : null}>관심 메이커</MenuButton>
+              {/* <div className="hrLine" /> */}
               <div className="hrLine" />
-
-              <div className="title_Label">참여</div>
+              {/* <div className="title_Label">참여</div> */}
               <MenuButton id="join_project" onClick={this.onClickMenu} fontColor={selectMenu == 4 ? "red" : null}>프로젝트</MenuButton>
+              {/* <div className="hrLine" /> */}
+              <div className="hrLine" />
+              {/* <div className="title_Label">의뢰</div> */}
+              <MenuButton id="request_designer" onClick={this.onClickMenu} fontColor={selectMenu == 5 ? "red" : null}>디자인 의뢰</MenuButton>
               <div className="hrLine" />
 
-
-              <div className="title_Label">의뢰</div>
-              <MenuButton id="request_designer" onClick={this.onClickMenu} fontColor={selectMenu == 5 ? "red" : null}>디자이너 의뢰</MenuButton>
-              <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={selectMenu == 6 ? "red" : null}>메이커 의뢰</MenuButton>
+              <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={selectMenu == 6 ? "red" : null}>제작 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
               {selectMenu === 0 ?
                 <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
+              {selectMenu === 7 ?
+                <UploadItemContainer id={this.props.userInfo.uid} /> : null}  
               {selectMenu === 1 &&
                 <LikeInItemContainer id={this.props.userInfo.uid} />}
               {selectMenu === 2 &&
@@ -402,7 +412,7 @@ class MyDetail extends Component {
                 <div className="wrap flex">
                   <div className="list">
                     {empty.designerRequest.map((item, index) => {                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                      const type = item.type == "designer_req" ? <div className="circle red1" >디자이너의뢰</div> : <div className="circle red2" >디자이너응답</div>
+                      const type = item.type == "designer_req" ? <div className="circle red1" >디자인 의뢰</div> : <div className="circle red2" >디자이너응답</div>
                       return (
                         <div className="line" key={index}>
                           {type}
@@ -419,7 +429,7 @@ class MyDetail extends Component {
                   <div className="list">
                     {
                       empty.makerRequest.map((item, index) => {                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                        const type = item.type == "maker_req" ? <div className="circle red1" >메이커의뢰</div> : <div className="circle red2" >메이커응답</div>
+                        const type = item.type == "maker_req" ? <div className="circle red1" >제작 의뢰</div> : <div className="circle red2" >메이커응답</div>
                         return (
                           <div className="line">
                             {type}

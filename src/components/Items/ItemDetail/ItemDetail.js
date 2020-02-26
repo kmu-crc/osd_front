@@ -352,6 +352,9 @@ class ItemDetail extends Component {
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
+    this.selectMethod = this.selectMethod.bind(this);
+    this.gotoChargePoint = this.gotoChargePoint.bind(this);
+    this.purchaseThisItem = this.purchaseThisItem.bind(this);
   };
   componentWillUpdate(nextProps) {
     if (this.props.like !== nextProps.like) {
@@ -370,11 +373,27 @@ class ItemDetail extends Component {
       :
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
-  buyThisItem(event, item) {
-    if (!window.confirm(`${item.price} 포인트가 결제됩니다.`)) {
+  buyThisItem(event) {
+    if (!window.confirm(`${this.props.item.price} 포인트가 결제됩니다.`)) {
       event.preventDefault();
+    }else{
+      alert("go!");
+      this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
     }
   }
+
+   selectMethod(index) {
+        if (index !== 0)
+            alert("준비중입니다. 포인트로 결제해주세요.");
+    }
+    gotoChargePoint() {
+        if (window.confirm("포인트가 부족합니다. 충전하러 이동하시겠습니까?")) {
+            window.location.href = `/point`;
+        }
+    }
+    purchaseThisItem() {
+        this.props.purchase(this.props.item);
+    }
   // 보유 포인트가 충분하지 않으면 “포인트가 부족합니다. 포인트 구매 후 결재하십시오.” 안내 문구를 보여주고 포인트 구매 절차로 진행
   // 포인트 구매는 신용카드, 모바일폰 소액결재, 무통장 입금, 삼성/카카오 페이 등의 온라인 결재 수단 사용
   // 결재 후 대금이 회사로 지불되고 구매자에게는 구매 확인 버튼이 보이며 구매자가 구매 확인 버튼을 클릭하거나 7일 동안 불만 사항이 접수되지 않으면 수수료 10%를 제외한 금액이 판매자에게 이체됨

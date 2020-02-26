@@ -102,7 +102,7 @@ class MakerList extends Component {
           <div className="sort">
             <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
           <div className="request"><RequestButton>
-            <Link to={`/requestToMaker/null`}>제작 의뢰하기</Link></RequestButton></div>
+            <Link to={`/requestToMaker/null`}>제작 의뢰</Link></RequestButton></div>
         </Container>
       </Content>
 

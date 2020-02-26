@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import {Dropdown} from "semantic-ui-react"
+import {InputTag} from "components/Commons/InputItem/InputTag"
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -247,7 +248,7 @@ class ResponseToMakerReq extends Component{
       <React.Fragment>
       <Wrapper>
         <MainBox>
-          <div className="title">메이커 의뢰 답변</div>
+          <div className="title">제작 의뢰 응답</div>
           <div className="contentsBox">
             <FormBox>
 
@@ -282,7 +283,7 @@ class ResponseToMakerReq extends Component{
               </div>
 
               <div className="wrapper flex centering">
-                <div className="label">내용</div>
+                <div className="label">의뢰 내용</div>
                 <div className="textBox">{this.state.content}</div>
               </div>
 
@@ -315,7 +316,7 @@ class ResponseToMakerReq extends Component{
               </div>
 
               <div className="wrapper flex">
-                <div className="label">설명</div>
+                <div className="label">의뢰 응답</div>
                 <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700}/>
               </div>
 

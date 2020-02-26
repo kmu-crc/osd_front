@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
-import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag"
+import {Dropdown} from "semantic-ui-react"
+import {InputTag} from "components/Commons/InputItem/InputTag"
+import {InputPrice} from "components/Commons/InputItem/InputPrice";
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -156,7 +157,7 @@ class ModifyRequestToMaker extends Component {
     this.onChangeResale = this.onChangeResale.bind(this);
     this.onChangeOffline = this.onChangeOffline.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
-
+    this.getPriceValue = this.getPriceValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -176,9 +177,14 @@ class ModifyRequestToMaker extends Component {
     //   resale:this.props.RequestDetail.resale,
     // });
   }
+
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
   }
+  async getPriceValue(value){
+    await this.setState({price:value});
+  }
+
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: { value }.value });
   }
@@ -260,68 +266,71 @@ class ModifyRequestToMaker extends Component {
 
     return (
       <React.Fragment>
-        <Wrapper>
-          <MainBox>
-            <div className="title">메이커에게 의뢰하기</div>
-            <div className="contentsBox">
-              <FormBox>
+      <Wrapper>
+        <MainBox>
+          <div className="title">제작 의뢰</div>
+          <div className="contentsBox">
+            <FormBox>
 
-                <div className="wrapper flex centering">
-                  <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
-                  <InputText width={483} />
+              <div className="wrapper flex centering">
+                <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
+                <InputText width={483} />
+              </div>
+
+              <div className="wrapper flex centering">
+                <div className="label">카테고리</div>
+                <DropBox id="firstCategory" value={this.state.category_level1} selection options={FirstCategory} 
+                        placeholder="대분류" onChange={this.onClickCategorylevel1}/>
+                <DropBox id="secondCategory" value={this.state.category_level2} selection placeholder="소분류" onChange={this.onClickCategorylevel2}
+                        options={this.state.category_level1>-1?SecondCategory[this.state.category_level1]:EmptyCategory}/>
+              </div>
+
+              <div className="wrapper flex centering">
+                <div className="label">태그</div>
+                <div>
+                <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483}/>
                 </div>
+              </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-                </div>
+              <div className="wrapper flex centering">
+                <div className="label ">희망 비용</div>
+                <InputPrice name="price" getValue={this.getPriceValue}/>
+                {/* <InputText onChange={this.onChangePrice} value={this.state.price} width={483}/> */}
+              </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">태그</div>
-                  <div>
-                    <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
-                  </div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputText onChange={this.onChangePrice} value={this.state.price} width={483} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용</div>
-                  <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
-                </div>
+              <div className="wrapper flex centering">
+                <div className="label">의뢰 내용</div>
+                <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344}/>
+              </div>
 
 
-                <HRLine />
-                <div className="wrapper flex centering">
-                  <div className="label">수량</div>
-                  <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80} />
-                </div>
+              <HRLine/>
+              <div className="wrapper flex centering">
+                <div className="label">수량</div>
+                <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80}/>
+              </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">메이커 위치</div>
-                  <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} />
-                </div>
+              <div className="wrapper flex centering">
+                <div className="label">메이커 위치</div>
+                <InputText onChange={this.onChangeLocation} value={this.state.location} width={483}/>
+              </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">메이커 재판매</div>
-                  <DropBox id="resale" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
-                    onChange={this.onChangeResale} value={this.state.resale} placeholder="선택" />
-                </div>
+              <div className="wrapper flex centering">
+                <div className="label">메이커 재판매</div>
+                <DropBox id="resale" selection options={[{text:"가능",value:0},{text:"불가능",value:1}]} 
+                onChange={this.onChangeResale} value={this.state.resale} placeholder="선택"/>
+              </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
-                    onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
-                </div>
+              <div className="wrapper flex centering">
+                <div className="label">오프라인 상담</div>
+                <DropBox id="offline" selection options={[{text:"가능",value:0},{text:"불가능",value:1}]} 
+                onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택"/>
+              </div>
 
-              </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
-            </div>
-          </MainBox>
+            </FormBox>
+            <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
+          </div>
+        </MainBox>
         </Wrapper>
       </React.Fragment>
     );

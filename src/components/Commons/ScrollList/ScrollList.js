@@ -61,19 +61,20 @@ class ScrollList extends Component {
   // }
   // }
   getLoadData = page => {
-    // this.props.getListRequest &&
-    //   this.props.getListRequest(page)
-    //     .then(() => {
-    //       this.setState({
-    //         hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true,
-    //         loading: true
-    //       });
-    //     }).catch((err) => {
-    //       console.log(err);
-    //       this.setState({
-    //         hasMore: false
-    //       });
-    //     });
+    console.log(this.props);
+    this.props.getListRequest &&
+      this.props.getListRequest(page)
+        .then(() => {
+          this.setState({
+            hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true,
+            loading: true
+          });
+        }).catch((err) => {
+          console.log(err);
+          this.setState({
+            hasMore: false
+          });
+        });
   };
 
   render() {
@@ -90,7 +91,7 @@ class ScrollList extends Component {
             }>
             <ListContainer>
               {this.props.dataListAdded.map((content, index) => (
-                <div key={content.uid || index} className={`${type}`}>
+                <div key={index} className={`${type}`}>
                   <ListComponent data={content} type={type} />
                 </div>
               ))}
