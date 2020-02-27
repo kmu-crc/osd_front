@@ -51,7 +51,7 @@ const GridEditorWrapper = styled.div`
     
     .Editor{
         overflow: auto;
-        height: 700px;
+        // height: 700px;
         padding-right: 250px;
         // overflow: hidden;
         white-space: nowrap;
