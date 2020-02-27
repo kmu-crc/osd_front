@@ -883,8 +883,7 @@ class MakerDetail extends Component {
           <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰</div></div>
           <div className="list"> 
           {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
-
-            {
+            {/* {
                 expert.board.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
                   const type = item.type=="maker_req"?<div className="circle red1" >제작 의뢰</div>:<div className="circle red2" >메이커응답</div>
                   return(
@@ -896,7 +895,7 @@ class MakerDetail extends Component {
                     </div>
                   );
                 })
-              }
+              } */}
          </div>
           <div className="page">
             <div className="this number">1</div>
