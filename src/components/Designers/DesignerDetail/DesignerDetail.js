@@ -10,21 +10,21 @@ import profile from "source/thumbnail.png";
 import Item from "components/Items/Item/Item"
 
 const LocationList = [
-  {value:0,text:"서울특별시"},
-  {value:1,text:"부산광역시"},
-  {value:2,text:"대구광역시"},
-  {value:3,text:"인천광역시"},
-  {value:4,text:"광주광역시"},
-  {value:5,text:"대전광역시"},
-  {value:6,text:"울산광역시"},
-  {value:7,text:"경기도"},
-  {value:8,text:"강원도"},
-  {value:9,text:"충청북도"},
-  {value:10,text:"충청남도"},
-  {value:11,text:"전라북도"},
-  {value:12,text:"경상북도"},
-  {value:13,text:"경상남도"},
-  {value:14,text:"제주도"},
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
 ];
 
 // CSS STYLING
@@ -686,10 +686,10 @@ class DesignerDetail extends Component {
   }
   render() {
 
-    const expert = empty;
+    // const expert = empty;
     const { likeCount, itemCount } = this.props.DesignerViewDetail;
 
-    const Location = this.state.location==null?"":LocationList[this.state.location]&&LocationList[this.state.location].text;
+    const Location = this.state.location == null ? "" : LocationList[this.state.location] && LocationList[this.state.location].text;
     const user_id = this.state.user_id;
     const { tab } = this.state;
     // const user_id = this.state.user_id;
@@ -704,7 +704,7 @@ class DesignerDetail extends Component {
     // console.log(categoryName);
     return (<Wrapper>
       <div className="contents_box" />
-      <div style={{ display: "flex"}}>
+      <div style={{ display: "flex" }}>
         {/* Designer */}
         <Expert mRight={60}>
           {/* Profile */}
