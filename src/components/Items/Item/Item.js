@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   *{
     cursor:pointer;
   }
+  position: relative;
   border: 1px solid transparent;
   width: 247px;
   height: 335px;
@@ -67,23 +68,35 @@ const NumberWrapper = styled.div`
     line-height: 22px;
   }
 `;
-
+const PrivateLabel = styled.div`
+  position: absolute;
+  right: 10px;
+  bottom: 110px;
+  width: max-content;
+  padding: 5px 10px;
+  background-color: gray;
+  color: white;
+  border-radius: 15px;
+`;
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
 class Item extends Component {
-  constructor(props) {
-    super(props);
-    this.onClickItem = this.onClickItem.bind(this);
+  Keeper = () => {
+    const item = this.props.data;
+    if (item.uid) {
+      if (item.private) {
+        alert("비공개!");
+        return;
+      } else {
+        window.location.href = `/productDetail/${item.uid}`;
+      }
+    }
+    // () => item.uid ? item.private ? alert("비공개!") : null : alert("이 아이템의 상세내용을 가져올 수 없습니다.")
   }
-
-  onClickItem(event) {
-    window.location.href = "/productDetail/" + this.props.data.uid;
-    console.log(this.props);
-  }
-
   render() {
     const item = this.props.data || empty;
-    const ItemContent = () =>
-      <Wrapper onClick={() => item.uid ? null : alert("이 아이템의 상세내용을 가져올 수 없습니다.")}>
+    return (
+      // const ItemContent = () =>
+      <Wrapper onClick={this.Keeper}>
         {/* picture */}
         <ItemPic img={(item && item.thumbnail) || noimg} />
         {/* text */}
@@ -98,13 +111,13 @@ class Item extends Component {
             {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
           </div>
         </NumberWrapper>
+        {item.private ? <PrivateLabel>비공개</PrivateLabel> : null}
       </Wrapper>
-    return (
-      item.uid ?
-        <NavLink to={"/productDetail/" + item.uid}>
-          <ItemContent />
-        </NavLink>
-        : <ItemContent />
+      // item.uid ?
+      // <NavLink to={"/productDetail/" + item.uid}>
+      // <ItemContent />
+      // </NavLink>
+      // : <ItemContent />
     )
   }
 }

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
+import DesignerReviewContainer from "containers/Designer/DesignerReviewContainer";
 import DesignerRequestBoardContainer from "containers/Designer/DesignerRequestBoardContainer";
 import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
@@ -454,35 +455,7 @@ const ExpTable = styled.div`
       font-weight:200;
     }
 `;
-const ReviewBox = styled.div`
-    width:100%;
-    height:150px;
-    display:flex;
-    flex-wrap:wrap;
-    overflow:hidden;
 
-    .review{
-      min-width:650px;
-      height:150px;
-      margin-right:50px;
-      margin-bottom:50px;
-      display:flex;
-      .content{
-        width:100%;
-        height:100%;
-        padding:30px;
-        .row{
-          width:max-content;
-          margin-bottom:15px;
-        }
-      }
-    }
-    &:hover{
-      overflow:auto;
-      overflow-y:overlay;
-
-    }
-`;
 const Thumbnail = styled.div`
   cursor:pointer;
   width:150px;
@@ -545,10 +518,6 @@ const WriteReview = styled.div`
   }
 `;
 const CreateReview = styled.div`
-    // *{
-    //     border:1px solid black;
-    // }
-    // border:1px solid black;
     width:100%;
     height:30px;
     margin-bottom:10px;
@@ -569,30 +538,6 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
-
-
-
-const review = {
-  average_score: 4,
-  review: [{
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }, {
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }, {
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }],
-};
-
-
 
 class DesignerDetail extends Component {
   constructor(props) {
@@ -702,6 +647,7 @@ class DesignerDetail extends Component {
       this.props.category2[this.state.category_level1][this.state.category_level2] && this.props.category2[this.state.category_level1][this.state.category_level2].text;
 
     // console.log(categoryName);
+    console.log(this.props);
     return (<Wrapper>
       <div className="contents_box" />
       <div style={{ display: "flex" }}>
@@ -749,25 +695,10 @@ class DesignerDetail extends Component {
         </AdditionalInfo> */}
       </div>
 
+      {/* 리뷰 */}
       <AdditionalInfo width={1523} height={280} mTop={60}>
-        <div className="title margin_bottom">리뷰({review.review.length})</div>
-        <ReviewBox>
-
-          {
-            review.review.map((item, index) => {
-              return (
-                <div className="review" key={index}>
-                  <Thumbnail imageURL={item.thumbnail} />
-                  <div className="content">
-                    <div className="row">★★★★★</div>
-                    <div className="row">{item.nick_name}</div>
-                    <div className="row">{item.explain}</div>
-                  </div>
-                </div>
-              );
-            })
-          }
-        </ReviewBox>
+        <div className="title margin_bottom">리뷰({this.props.ReviewCount || 0})</div>
+        <DesignerReviewContainer id={parseInt(this.props.id, 10)} />
       </AdditionalInfo>
 
       {/* 경험 */}
@@ -870,31 +801,3 @@ class DesignerDetail extends Component {
 };
 
 export default DesignerDetail;
-
-
-
-// const empty = {
-//   // 기본
-//   nick_name: "Loading", categoryName: "카테고리",
-//   items: 300, likes: 5000000, score: 4,
-//   description: "", location: "",
-//   maker_equipment: [], maker_technique: [],
-//   create_time: "2020-01-01T00:00:01.000Z",
-//   update_time: "2020-01-01T00:00:01.000Z",
-//   //경험
-//   experience: [{ number: "1", task: "디자인업무", explain: "디자인업무입니다", during: "1999.99.99~1999.99.99" }],
-//   //등록아이템
-//   itemlist: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
-//   { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
-//   // 게시판
-//   board: [{
-//     uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
-//     title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-//     create_time: "1999.99.99", update_time: "1999.11.11"
-//   },
-//   {
-//     uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_res",
-//     title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-//     create_time: "1999.99.99", update_time: "1999.11.11"
-//   }],
-// };

@@ -30,6 +30,7 @@ const ItemImages = styled.div`
   margin-left: 25px; 
 
   .main-image {
+    border: 1px solid #EFEFEF;
     overflow-x: auto;
     width: 100%;
     height: 100%; 
@@ -175,6 +176,62 @@ const ItemInfo = styled.div`
       }
     }
   }
+`;
+const Introduction = styled.div`
+  position: relative;
+  height: 250px;
+  opacity: 1;
+  font-family: Noto Sans KR;
+  .wrapItem{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    .flex{
+      display:flex;
+    }
+    .title {
+      margin-top: 10px;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 28px;
+      text-align: left;
+    }
+    .text {
+      width: 349px;
+      margin-top: 15px;
+      margin-bottom:29px;
+      font-size: 15px;
+      font-weight: 300;
+      line-weight: 27px;
+      text-align: left;
+      overflow: hidden;
+    }
+    .gradient_box{
+      position:absolute;
+      left:0px;
+      top:0px;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      padding:10px;
+      border-radius: 20px;
+      background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
+    }
+  }
+  
+
+  &:hover{
+    .gradient_box{
+      display:none;
+    }
+    .wrapItem {
+      overflow: auto;
+    }
+  }
+
+
 `;
 const Board = styled.div`
   // *{border: 1px solid red;}
@@ -397,10 +454,13 @@ class ItemDetail extends Component {
                 <div className="who" />
                 <div className="nick">{item.userName}</div>
               </div>
-
-              <div className="expert line">
-                <div className="text">{item.description}</div>
-              </div>
+              <Introduction>
+                <div className="wrapItem">
+                  <div className="title">아이템 설명</div>
+                  <div className="text">{item.description}</div>
+                  <div className="gradient_box"><div>▾</div></div>
+                </div>
+              </Introduction>
 
               <div className="expert line">
                 <div className="price-and-score line">
@@ -486,9 +546,9 @@ class ItemDetail extends Component {
           >
             <div className="title">아이템 상세내용</div>
             {item && item.upload_type === "blog"
-              ? <CardSourceDetailContainer isCancel cardId={item.cardId} edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
+              ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
             {item && item.upload_type === "project"
-              ? <ItemStepContainer id={item["item-id"]} editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
+              ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
           </Content>
           <ExpandingButton width={1600}>
             <div onClick={() => this.setState({ expandingContent: !this.state.expandingContent })} className="button">

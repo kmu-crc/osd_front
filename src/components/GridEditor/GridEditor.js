@@ -291,6 +291,7 @@ class GridEditor extends Component {
 
                         {card &&
                             <CardModal
+                                bought={this.props.bought}
                                 open={card} close={() => this.setState({ card: false })}
                                 edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                                 card={cardDetail} isTeam={editor} title={title} boardId={boardId} itemId={this.props.item.uid} />}

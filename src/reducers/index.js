@@ -4,7 +4,7 @@ import {
     ProductDetail, ProductLike, ProductList, CartList, OrderList,
     //ProductDetailView, ProductDetailStep,// ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,// ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,// ProductWaitingList, ProductDetailComment
 } from "reducers/Products";
-import { ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview,UploadItem } from "reducers/Items";
+import { ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview, UploadItem } from "reducers/Items";
 import { DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail } from "reducers/Designers";
 import { MakerList, MakerDetail } from "reducers/Makers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
@@ -20,16 +20,17 @@ import OpenDesign from "reducers/OpenDesign";
 import Point from "reducers/Point";
 import { Payment } from "reducers/Payments";
 import { MakerLike } from "reducers/Makers";
-
+import { ReviewList } from "reducers/Reviews";
 
 import { combineReducers } from "redux";
 
 export default combineReducers({
-    
+    //Review
+    ReviewList,
     //Payment
     Payment,
     // ITEM
-    ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview,UploadItem,
+    ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview, UploadItem,
     // PRODUCT
     ProductDetail, ProductLike, ProductList,
     CartList, OrderList,

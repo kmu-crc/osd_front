@@ -20,8 +20,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    SearchMemberRequest: (data, token) => {
-      return dispatch(SearchMemberRequest(data, token));
+    SearchMemberRequest: (id, data, token) => {
+      return dispatch(SearchMemberRequest(id, data, token));
     }
   };
 };

@@ -52,14 +52,6 @@ const NoData = styled.div`
 
 class ScrollList extends Component {
   state = { hasMore: true, loading: false };
-  // componentDidMount() {
-  // console.log("mounted:", this.props);
-  // if (this.props.dataListAdded.length) {
-  // if (this.props.dataListAdded.length % this.props.cols !== 0) {
-  // this.getLoadData(1);
-  // }
-  // }
-  // }
   getLoadData = page => {
     console.log(this.props);
     this.props.getListRequest &&
@@ -81,9 +73,10 @@ class ScrollList extends Component {
     const { ListComponent, type } = this.props;
 
     return (
-      this.props.dataListAdded.length > 0 ?
+      this.props.dataListAdded &&
+        this.props.dataListAdded.length > 0 ?
         <ScrollContainer>
-          <InfiniteScroll threshold={100} pageStart={0}
+          <InfiniteScroll id={this.props.scrollId || "infi-scroll"} threshold={100} pageStart={0}
             loadMore={this.getLoadData} hasMore={this.state.hasMore}
             loader={
               <Loader className="loading" active={false}
