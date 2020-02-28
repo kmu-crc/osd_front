@@ -2,13 +2,17 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 // 멤버 검색
-export function SearchMemberRequest (id, data, token) {
+export function SearchMemberRequest(id, data, token) {
   return (dispatch) => {
     dispatch(SearchMember());
-    console.log(data);
-    console.log(id);
-
-    return fetch(`${host}/search/members/${id}`, { headers: { "Content-Type": "application/json", "x-access-token": token }, method: "POST", body: JSON.stringify(data) })
+    const sql = `${host}/search/members/${id}`;
+    console.log("get:", sql, data);
+    return fetch(sql,
+      {
+        headers: { "Content-Type": "application/json", "x-access-token": token },
+        method: "POST",
+        body: JSON.stringify(data)
+      })
       .then(function (res) {
         return res.json();
       })
@@ -21,20 +25,20 @@ export function SearchMemberRequest (id, data, token) {
   };
 };
 
-export function SearchMember () {
+export function SearchMember() {
   return {
     type: types.GET_SEARCH_MEMVER
   };
 };
 
-export function SearchMemberSuccess (members) {
+export function SearchMemberSuccess(members) {
   return {
     type: types.GET_SEARCH_MEMBER_SUCCESS,
     members
   };
 };
 
-export function SearchMemberFailure () {
+export function SearchMemberFailure() {
   return {
     type: types.GET_SEARCH_MEMBER_FAILURE
   };

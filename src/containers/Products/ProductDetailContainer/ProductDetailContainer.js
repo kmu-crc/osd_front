@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemDetail from "components/Items/ItemDetail";
+import Loading from "components/Commons/Loading";
 import {
   // GetProductDetailRequest,
   GetProductCountRequest, GetLikeProductRequest,
@@ -20,10 +21,13 @@ class ProductDetailContainer extends Component {
   componentDidMount() {
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
-      .then(this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
+      .then(
+        this.props.userInfo ?
+          this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token)
+          : null);
   }
   Payment(item, option) {
-    console.log(item,item.request_title,item.request_title);
+    console.log(item, item.request_title, item.request_title);
     // user_id - token, item_id, payment_detail, payment_price //
     this.props.CreateItemPaymentRequest(
       { payment_title: item.title, payment_price: item.price },
@@ -45,9 +49,17 @@ class ProductDetailContainer extends Component {
     alert("잘못된 접근입니다.");
     window.location.href = `/product`;
   }
+  ThisIsPrivateItem() {
+    alert("비공개 아이템입니다.");
+    window.location.href = `/product`;
+  }
   render() {
     console.log(this.props);
-    return (<ItemDetail purchase={this.Payment} item={this.props.ItemDetail} {...this.props} />)
+    return this.props.ItemDetail ?
+      this.props.ItemDetail.private === 1 ?
+        this.ThisIsPrivateItem() :
+        <ItemDetail purchase={this.Payment} item={this.props.ItemDetail} {...this.props} />
+      : <Loading />
   }
 }
 

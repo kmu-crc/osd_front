@@ -63,28 +63,28 @@ class SearchMember extends Component {
   }
 
   getValue = (value) => {
-    console.log("get", value);
-    this.setState({open: true});
-    if(!value) {
-      this.setState({open: false});
+    console.log("get:", value);
+    this.setState({ open: true });
+    if (!value) {
+      this.setState({ open: false });
       return;
     }
-    this.props.SearchMemberRequest({ key: value }, this.props.token).then(data => {
+    this.props.SearchMemberRequest(null, { key: value }, this.props.token).then(data => {
 
     })
   }
 
   addMember = async (data) => {
     let is_only = true;
-    if(this.state.member.length > 0) {
-      for( let item of this.state.member){
-        if(item.uid === data.uid){
+    if (this.state.member.length > 0) {
+      for (let item of this.state.member) {
+        if (item.uid === data.uid) {
           is_only = await false;
           break;
         }
       }
     }
-    if(is_only){
+    if (is_only) {
       this.setState({
         member: [...this.state.member, data],
         open: false
@@ -94,7 +94,7 @@ class SearchMember extends Component {
   }
   closeList = () => {
     console.log("close")
-    this.setState({open: false});
+    this.setState({ open: false });
   }
 
   deleteMember = (index) => {
@@ -108,14 +108,14 @@ class SearchMember extends Component {
 
   returnData = () => {
     setTimeout(() => {
-      if(this.props.onChangeMembers) this.props.onChangeMembers(this.state.member);
+      if (this.props.onChangeMembers) this.props.onChangeMembers(this.state.member);
     }, 100)
   }
   render() {
     return (
       <SearchWrap>
-        <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
-        <MemberList style={this.state.open ? {display: "block"} : {display: "none"}}>
+        <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+        <MemberList style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}

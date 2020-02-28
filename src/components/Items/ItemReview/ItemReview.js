@@ -4,11 +4,11 @@ import DateFormat from "modules/DateFormat";
 import Star from "components/Commons/Star";
 
 const Reviews = styled.div`
-  width: 468px;
-  height: 1478px;
+//   width: 468px;
+//   height: 1478px;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
+//   box-shadow: 5px 5px 10px #00000029;
+//   border-radius: 20px;
   opacity: 1;
   padding: 10px;
   .title {
