@@ -297,17 +297,11 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: 0,thumbnail:null}
+    this.state = { selectMenu: -1}
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
     this.onClickThumbnail = this.onClickThumbnail.bind(this);
-  }
-  componentWillUpdate(nextProps){
-    if(this.props.MyDetail.thumbnail!=nextProps.MyDetail.thumbnail){
-      this.setState({thumbnail:nextProps.MyDetail.thumbnail})
-    }
-    return true;
   }
   onClickCreateDesigner(event) {
     if (this.props.MyDetail.isDesigner == true) {
@@ -369,7 +363,7 @@ class MyDetail extends Component {
               <div className="imageBox">
                 <input hidden onChange={this.onClickThumbnail} id="file" type="file" />
                 <label htmlFor="file">
-                  <Thumbnail URL={this.state.thumbnail == null ? noimg : this.state.thumbnail} />
+                  <Thumbnail URL={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail} />
                 </label>
               </div>
               <div className="LabelBox fontBig fontStyleNormal">{MyDetail.nick_name}</div>

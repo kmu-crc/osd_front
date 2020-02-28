@@ -249,12 +249,12 @@ class RequestList extends Component {
               {type !== "normal" && type !== "item" ?
                 type === "designer" ?
                   <RequestButton>
-                    <Link to={`/requestToDesigner/null`}>디자인 의뢰하기</Link>
+                    <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link>
                   </RequestButton>
                   :
                   type === "maker" ?
                     <RequestButton>
-                      <Link to={`/requestToMaker/null`}>제작 의뢰하기</Link>
+                      <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
                     </RequestButton> : null
                 : null}
             </div>
@@ -304,7 +304,7 @@ class RequestList extends Component {
             :
             <CreateReview onClick={() => this.setState({ write: true })}>
               <div className="button">
-                <div className="font">글 작성하기</div>
+                <div className="font">게시글 작성</div>
               </div>
             </CreateReview>
           }

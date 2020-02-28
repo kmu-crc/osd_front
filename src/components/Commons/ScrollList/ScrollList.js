@@ -71,7 +71,6 @@ class ScrollList extends Component {
 
   render() {
     const { ListComponent, type } = this.props;
-
     return (
       this.props.dataListAdded &&
         this.props.dataListAdded.length > 0 ?
