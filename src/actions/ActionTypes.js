@@ -137,8 +137,13 @@ export const CREATE_ITEM_REVIEW_FAILURE = "CREATE_ITEM_REVIEW_FAILURE";
 export const DELETE_ITEM_REVIEW = "DELETE_ITEM_REVIEW";
 export const DELETE_ITEM_REVIEW_SUCCESS = "DELETE_ITEM_REVIEW_SUCCESS";
 export const DELETE_ITEM_REVIEW_FAILURE = "DELETE_ITEM_REVIEW_FAILURE";
+export const GET_DESIGNER_REVIEW = "GET_DESIGNER_REVIEW";
+export const GET_DESIGNER_REVIEW_CLEAR = "GET_DESIGNER_REVIEW_CLEAR";
+export const GET_DESIGNER_REVIEW_FAIL = "GET_DESIGNER_REVIEW_FAIL";
+export const GET_TOTAL_COUNT_DESIGNER_REVIEW = "GET_TOTAL_COUNT_DESIGNER_REVIEW";
+export const GET_TOTAL_COUNT_DESIGNER_REVIEW_FAIL = "GET_TOTAL_COUNT_DESIGNER_REVIEW_FAIL";
 
-
+////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 // PRODUCT 
 ////////////////////////////////////////////////////////////////////////////

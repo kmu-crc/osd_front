@@ -5,11 +5,9 @@ const Wrapper = styled.p`
     font-size: 15px;
     display: flex;
     flex-direction: row;
-    .score {
-        font-size: 10px;
-    }
+    font-size: ${props => props.sz || 15}px;
 `;
-const Star = (score) => {
+const Star = (score, sz) => {
     var star = [];
     for (var i = 0; i < 5; i++) {
         if (parseInt(score, 10) > i) {
@@ -21,7 +19,7 @@ const Star = (score) => {
         else { star.push("☆") }//<i key={i} className="icon star outline" />) }
     }
     return (
-        <Wrapper>{star}</Wrapper>
+        <Wrapper sz={sz}>{star}</Wrapper>
         // <Wrapper title={`5점 만점에 ${score}점`}>
         // <div >{star}</div>
         // {/* <div className="score">({score}/5)</div> */}

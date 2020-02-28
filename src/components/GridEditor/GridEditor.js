@@ -51,7 +51,7 @@ const GridEditorWrapper = styled.div`
     
     .Editor{
         overflow: auto;
-        height: 700px;
+        // height: 700px;
         padding-right: 250px;
         // overflow: hidden;
         white-space: nowrap;
@@ -291,6 +291,7 @@ class GridEditor extends Component {
 
                         {card &&
                             <CardModal
+                                bought={this.props.bought}
                                 open={card} close={() => this.setState({ card: false })}
                                 edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                                 card={cardDetail} isTeam={editor} title={title} boardId={boardId} itemId={this.props.item.uid} />}

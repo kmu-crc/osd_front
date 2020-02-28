@@ -22,10 +22,7 @@ const Wrapper = styled.div`
   .flex-align-column {
     flex-direction: column;
   };
-  .bottom {
-    background: blue;
-    align-self: flex-end;
-  };
+
 `;
 const ItemImages = styled.div`
   width: 600px;
@@ -33,6 +30,7 @@ const ItemImages = styled.div`
   margin-left: 25px; 
 
   .main-image {
+    border: 1px solid #EFEFEF;
     overflow-x: auto;
     width: 100%;
     height: 100%; 
@@ -55,6 +53,7 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
+  position: relative;
   margin-left: 50px;
   width: 900px;
   height: 600px;
@@ -64,7 +63,7 @@ const ItemInfo = styled.div`
   border-radius: 20px; 
   padding: 20px 35px 10px 15px;
 
-  *{ border: 1px solid red; };
+  // *{ border: 1px solid red; };
 
   .title {
     font-size: 34px;
@@ -89,9 +88,27 @@ const ItemInfo = styled.div`
       line-height: 29px;
       color: #060000;
     }
+   .text {
+     background-color: #FAFAFA;
+    margin-top: 29px;
+    height: 200px;
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
+    text-align: left;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 27px;
+    letter-spacing: 0;
+    color: #000000;
+    opacity: 1;
+    }
   }
   .price-and-score {
+    margin-left: auto;
+    margin-right: 20px;
     margin-top: 10px;
+    margin-bottom: 10px;
     font-weight: 500;
     font-size: 20px;
     line-height: 29px;
@@ -122,6 +139,12 @@ const ItemInfo = styled.div`
       .WIDTH178 { width: 178px; }
     }
   }
+  .bottom {
+    width: max-content;
+    position: absolute;
+    right: 35px;
+    bottom: 15px;
+  };
   .buttons {
     cursor: default;
     .button { 
@@ -137,7 +160,10 @@ const ItemInfo = styled.div`
         font-weight: 500;
       }
       &.first { 
-        color: #FFFFFF; background: #FF0000; margin-right: 27px; }
+        color: #FFFFFF; 
+        background: #FF0000; 
+        margin-right: 27px; 
+      }
       &.second {
         border: 1px solid red;
         color: #FF0000;
@@ -151,81 +177,66 @@ const ItemInfo = styled.div`
     }
   }
 `;
-const Detail = styled.div`
-  margin-right: ${props => props.mRight ? props.mRight : 0}px;
-  width: 468px;
-  height: 491px;
-  background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
+const Introduction = styled.div`
+  position: relative;
+  height: 250px;
   opacity: 1;
-  padding: 62px;
   font-family: Noto Sans KR;
+  .wrapItem{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    .flex{
+      display:flex;
+    }
+    .title {
+      margin-top: 10px;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 28px;
+      text-align: left;
+    }
+    .text {
+      width: 349px;
+      margin-top: 15px;
+      margin-bottom:29px;
+      font-size: 15px;
+      font-weight: 300;
+      line-weight: 27px;
+      text-align: left;
+      overflow: hidden;
+    }
+    .gradient_box{
+      position:absolute;
+      left:0px;
+      top:0px;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      padding:10px;
+      border-radius: 20px;
+      background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
+    }
+  }
+  
 
-  .title {
-    font-weight: 500;
-    font-size: 19px;
-    text-align: left:
-    line-height: 28px;
-    color: #060000;
-    letter-spacing: 0;
+  &:hover{
+    .gradient_box{
+      display:none;
+    }
+    .wrapItem {
+      overflow: auto;
+    }
   }
-  .text {
-    margin-top: 29px;
-    height: 311px;
-    overflow: auto;
-    text-align: left;
-    font-weight: 300;
-    font-size: 15px;
-    line-height: 27px;
-    letter-spacing: 0;
-    color: #000000;
-    opacity: 1;
-  }
-`;
-const Delivery = styled.div`
-  margin-right: ${props => props.mRight ? props.mRight : 0}px;
-  width: 468px;
-  height: 491px;
-  background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  opacity: 1;
-  padding: 62px;
-  font-family: Noto Sans KR;
 
-  .title {
-    font-weight: 500;
-    font-size: 19px;
-    text-align: left:
-    line-height: 28px;
-    color: #060000;
-    letter-spacing: 0;
-    margin-bottom: 58px;
-  }
-  .sub-title {
-    font-weight: 500;
-    font-size: 15px;
-    text-align: left:
-    line-height: 27px;
-    color: #000000;
-    letter-spacing: 0;
-    margin-bottom: 15px;
-  }
-  .text {
-    font-weight: 300;
-    font-size: 15px;
-    text-align: left:
-    line-height: 27px;
-    color: #000000;
-    letter-spacing: 0;
-    margin-bottom: 30px;
-  }
+
 `;
 const Board = styled.div`
-
-  width: 1094px;
-  height: 892px;
+  // *{border: 1px solid red;}
+  width: 1600px;
+  height: ${props => props.height};
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
@@ -285,7 +296,7 @@ const Board = styled.div`
 `;
 const Content = styled.div`
   width: ${props => props.width || 1094}px;
-  height: 892px;
+  height: ${props => props.height};
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
@@ -343,12 +354,33 @@ const Content = styled.div`
     }
   }
 `;
-
+const ExpandingButton = styled.div`
+    width:${props => props.width}px;
+    height:30px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:center;
+    .button{
+        width:80%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:20px;
+        background-color:#707070;
+        cursor:pointer;
+    }
+    .font{
+        font-size:15px;
+        color:white;
+    }
+`
 class ItemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLike: this.props.like == null ? false : this.props.like,
+      tab: "review", expandingContent: false, expandingReview: false,
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -376,24 +408,24 @@ class ItemDetail extends Component {
   buyThisItem(event) {
     if (!window.confirm(`${this.props.item.price} 포인트가 결제됩니다.`)) {
       event.preventDefault();
-    }else{
+    } else {
       alert("go!");
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
     }
   }
 
-   selectMethod(index) {
-        if (index !== 0)
-            alert("준비중입니다. 포인트로 결제해주세요.");
+  selectMethod(index) {
+    if (index !== 0)
+      alert("준비중입니다. 포인트로 결제해주세요.");
+  }
+  gotoChargePoint() {
+    if (window.confirm("포인트가 부족합니다. 충전하러 이동하시겠습니까?")) {
+      window.location.href = `/point`;
     }
-    gotoChargePoint() {
-        if (window.confirm("포인트가 부족합니다. 충전하러 이동하시겠습니까?")) {
-            window.location.href = `/point`;
-        }
-    }
-    purchaseThisItem() {
-        this.props.purchase(this.props.item);
-    }
+  }
+  purchaseThisItem() {
+    this.props.purchase(this.props.item);
+  }
   // 보유 포인트가 충분하지 않으면 “포인트가 부족합니다. 포인트 구매 후 결재하십시오.” 안내 문구를 보여주고 포인트 구매 절차로 진행
   // 포인트 구매는 신용카드, 모바일폰 소액결재, 무통장 입금, 삼성/카카오 페이 등의 온라인 결재 수단 사용
   // 결재 후 대금이 회사로 지불되고 구매자에게는 구매 확인 버튼이 보이며 구매자가 구매 확인 버튼을 클릭하거나 7일 동안 불만 사항이 접수되지 않으면 수수료 10%를 제외한 금액이 판매자에게 이체됨
@@ -403,8 +435,9 @@ class ItemDetail extends Component {
   // 고객의 불만이 접수되면 심사위원의 심사를 거쳐 환불 결정 – 10인 정도의 심사위원을 선정하여 아이템의 품질 평가 및 고객 불만을 처리할 계획임
 
   render() {
-    console.log(this.props);
+    console.log("itemdetail", this.props);
     const item = this.props.item;
+    const { tab, expandingContent, expandingReview } = this.state;
     return item ?
       <Wrapper>
         {/* thumbnail and item-info */}
@@ -421,38 +454,54 @@ class ItemDetail extends Component {
                 <div className="who" />
                 <div className="nick">{item.userName}</div>
               </div>
+              <Introduction>
+                <div className="wrapItem">
+                  <div className="title">아이템 설명</div>
+                  <div className="text">{item.description}</div>
+                  <div className="gradient_box"><div>▾</div></div>
+                </div>
+              </Introduction>
 
-              <div className="price-and-score line">
-                <div className="price" style={{ marginRight: "35px" }}>
-                  {PointFormat(item.price || 0)} 포인트</div>
-                <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                  {Star(item.score)}({item.total || 0})</div>
+              <div className="expert line">
+                <div className="price-and-score line">
+                  <div className="price" style={{ marginRight: "35px" }}>
+                    {PointFormat(item.price || 0)} 포인트</div>
+                  <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
+                    {Star(item.score, 28)}({item.total || 0})</div>
+                </div>
               </div>
 
-              {/* <div className="options">
-              { / * {item.options.map(opt => <Options key={opt} data={opt} />)} * / }
-              <div className="combo-wrapper line">
-              <div className="text">모양</div>
-              <div className="box WIDTH360"></div>
-              </div>
-              <div className="combo-wrapper line">
-              <div className="text">수량</div>
-              <div className="box WIDTH178"></div>
-              </div>
-            </div> */}
+              {/* 
+                <div className="options">
+                { / * {item.options.map(opt => <Options key={opt} data={opt} />)} * / }
+                <div className="combo-wrapper line">
+                <div className="text">모양</div>
+                <div className="box WIDTH360"></div>
+                </div>
+                <div className="combo-wrapper line">
+                <div className="text">수량</div>
+                <div className="box WIDTH178"></div>
+                </div>
+                </div>
+            */}
+
               <div className="bottom">
                 <div className="buttons line">
                   <div className="button first">
-                    <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
+                    {/* <Link 
+                          onClick={(event) => this.buyThisItem(event, item)} 
+                          to={{ pathname: `/payment`, state: { item: item, options: null } }}> */}
+                    {/* </Link> */}
+                    <div onClick={(event) => this.buyThisItem(event, item)} >
                       <div className="text">아이템구매</div>
-                    </Link>
+                    </div>
                   </div>
                   {
                     this.state.isLike === false ?
                       <div className="button second" onClick={this.onClickLike}>
                         <div className="text">관심항목추가</div></div>
                       :
-                      <div className="button first" onClick={this.onClickLike}>
+                      <div className="button second active" onClick={this.onClickLike}>
                         <div className="text">관심항목</div></div>
                   }
 
@@ -464,15 +513,55 @@ class ItemDetail extends Component {
         </div>
 
         {/* review and board */}
-        <div className="line">
+        <div style={{ marginTop: "35px" }}>
+          <Board style={{ marginTop: "15px", overflow: "hidden" }}
+            height={expandingReview ? "100%" : "250px"}>
+            <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
+              <div
+                onClick={() => this.setState({ tab: "review" })}
+                style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "review" ? "#FFFFFF" : "#EFEFEF" }}>리뷰보기</div>
+              <div
+                onClick={() => this.setState({ tab: "board" })}
+                style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "board" ? "#FFFFFF" : "#EFEFEF" }}>게시판</div>
+            </div>
+
+            {tab === "review" ?
+              <ItemReviewContainer user_id={item.user_id} />
+              : <ItemQuestionContainer user_id={item.user_id} />}
+          </Board>
+          <ExpandingButton width={1600}>
+            <div onClick={() => this.setState({ expandingReview: !this.state.expandingReview })} className="button">
+              <div className="font">
+                {expandingReview ? "접기" : "펼쳐보기"}
+              </div>
+            </div>
+          </ExpandingButton>
         </div>
 
         {/* item-contents */}
-        <div className="line">
+        <div style={{ marginTop: "35px" }}>
+          <Content style={{ marginTop: "15px", overflow: "hidden" }}
+            height={expandingContent ? "100%" : "175px"}
+            width={1600}
+          >
+            <div className="title">아이템 상세내용</div>
+            {item && item.upload_type === "blog"
+              ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
+            {item && item.upload_type === "project"
+              ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
+          </Content>
+          <ExpandingButton width={1600}>
+            <div onClick={() => this.setState({ expandingContent: !this.state.expandingContent })} className="button">
+              <div className="font">
+                {expandingContent ? "접기" : "펼쳐보기"}
+              </div>
+            </div>
+          </ExpandingButton>
         </div>
+
       </Wrapper>
       :
-      <div>LoaDing...</div>
+      <div>아이템정보를 가져오고 있습니다.</div>
   }
 }
 

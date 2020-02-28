@@ -509,10 +509,13 @@ class CardModal extends Component {
                                     </div>
                                 </React.Fragment>}
 
-                            <ContentBorder><div className="border-line" /></ContentBorder>
+                            <ContentBorder>
+                                <div className="border-line" />
+                            </ContentBorder>
 
                             <div className="content" >
                                 <CardSourceDetailContainer
+                                    bought={this.props.bought}
                                     isCancel
                                     handleSubmit={this.handleHeaderSubmit}
                                     handleCancel={this.onCloseEditMode}
@@ -525,7 +528,8 @@ class CardModal extends Component {
                                     openEdit={this.onChangeEditMode} />
                             </div>
 
-                            <ContentBorder><div className="border-line" /></ContentBorder>
+                            <ContentBorder>
+                                <div className="border-line" /></ContentBorder>
 
                             {/* 
                             <CommentWrapper>
