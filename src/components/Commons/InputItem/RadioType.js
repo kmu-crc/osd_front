@@ -29,12 +29,14 @@ export class RadioType extends Component {
         this.props.return(this.props.name, item);
     }
     render() {
+        let count =0;
         return (
             <React.Fragment>
                 <FormStyle>
                     {this.props.Options.map((item, key) => {
+                        count++;
                         return (<div key={key} className="contentBox">
-                            <Radio name={this.props.name} onChange={_ => this.onHandleClicked(_, item)} />
+                            <Radio checked={count==this.props.checked ? true:false} name={this.props.name} onChange={_ => this.onHandleClicked(_, item)} />
                             <label >{item}</label>
                         </div>);
                     })}

@@ -1,6 +1,50 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+
+/////////////////// 
+// 유저 정보 수정
+///////////////////
+export function ModifyUserDetailRequest(id,data,token) {
+  console.log("test:",id,data,token);
+  return (dispatch) => {
+    dispatch(ModifyUserDetail());
+
+    return fetch(`${host}/users/modifyUserDetail/${id}`, 
+    { headers: { "x-access-token": token, "Content-Type": "application/json" }, 
+    method: "POST", body: JSON.stringify(data) })
+      .then(function (res) {
+        console.log("res2:",res);
+        return res.json();
+      })
+      .then(function (res) {
+        console.log("modify user detail", res);
+        return dispatch(ModifyUserDetailSuccess(res));
+      }).catch((error) => {
+        console.log("modify user detail err", error);
+        return dispatch(ModifytUserDetailFailure());
+      })
+  }
+};
+
+export function ModifyUserDetail() {
+    return {
+      type: types.MODIFY_USER_DETAIL
+    }
+  };
+
+  export function ModifyUserDetailSuccess(res) {
+    return {
+      type: types.MODIFY_USER_DETAIL_SUCCESS,
+      res
+    }
+  };
+
+  export function ModifytUserDetailFailure() {
+    return {
+      type: types.MODIFY_USER_DETAIL_FAILURE
+    }
+  };
 // 내 기본 정보 불러오기
 export function GetMyDetailRequest(token) {
   return (dispatch) => {

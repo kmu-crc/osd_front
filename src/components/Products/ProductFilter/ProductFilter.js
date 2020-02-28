@@ -102,7 +102,7 @@ class ProductFilter extends Component {
             { value: "patent", text: "특허" },
             { value: "consort", text: "기술자문/상담" },
             { value: "info", text: "정보/아이디어/노하우" },
-            { value: "product", text: "제품" },
+            { value: "product", text: "제작품" },
         ];
         return (<FilterBox>
             <div className="wrapper">

@@ -19,7 +19,7 @@ const ItemType = [
   { text: "정보/데이터", value: 4 },
   { text: "아이디어/노하우", value: 5 },
   { text: "지적재산권", value: 6 },
-  { text: "제품", value: 7 }];
+  { text: "제작품", value: 7 }];
 
 const MainBox = styled.div`
   width:100%;
@@ -156,6 +156,10 @@ const Button = styled.div`
     margin-left: 60px;
   }
 `;
+const DescirptionText = styled.div`
+  font-size:13px;
+  color:#707070;
+`
 const InputText = styled.input`
   width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
   height: 43px;
@@ -532,7 +536,7 @@ class ItemDesign extends Component {
     const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
-        <Field title="디자인 설명">
+        <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
@@ -697,7 +701,7 @@ class ItemProject extends Component {
     console.log("MEM:", this.state.members);
     return (
       <React.Fragment>
-        <Field title="프로젝트 설명">
+        <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="팀원 초대">
           {this.state.alone ? undefined : <SearchDesignMemberContainer className="searchRect" onChangeMembers={this.changeMembers} />}
@@ -748,14 +752,15 @@ class ItemConsulting extends Component {
 
     return (
       <React.Fragment>
-        <Field title="자문/상담 설명">
+        <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="자문/상담 방법">
-          <RadioType return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /></Field>
+        <Field title="자문/상담 방법"> 온라인
+          {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
+        </Field>
         <Field title="내용 공개 여부">
-          <RadioType return={this.onHandleReturn} name="public" Options={typeTF} /></Field>
+          <RadioType checked={1} return={this.onHandleReturn} name="public" Options={typeTF} /></Field>
         <Field title="자문/상담 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPrice placeholder="시간당" name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
   }
@@ -763,68 +768,104 @@ class ItemConsulting extends Component {
 class ItemExperience extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", price: 0 };
+    this.state = { description: "", price: 0 }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
-  returnState() {
-    this.props.return && this.props.return(this.state);
+  async returnState() {
+    this.props.return && await this.props.return(this.state);
   }
   async onHandleChange(event) {
     await this.setState({ [event.target.name]: event.target.value });
-    this.returnState();
-  }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
     this.returnState();
   }
   async getPriceValue(value) {
     await this.setState({ price: value });
     this.returnState();
   }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
   render() {
-
+    const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
-        <Field title="경험 설명">
+        <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="자문/상담 비용">
+        <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
+          {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
   }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { description: "", price: 0 };
+  //   this.onHandleChange = this.onHandleChange.bind(this);
+  //   this.returnState = this.returnState.bind(this);
+  //   this.getPriceValue = this.getPriceValue.bind(this);
+  // }
+  // returnState() {
+  //   this.props.return && this.props.return(this.state);
+  // }
+  // async onHandleChange(event) {
+  //   await this.setState({ [event.target.name]: event.target.value });
+  //   this.returnState();
+  // }
+  // async onHandleReturn(value) {
+  //   await this.setState({ uploadType: value });
+  //   this.returnState();
+  // }
+  // async getPriceValue(value) {
+  //   await this.setState({ price: value });
+  //   this.returnState();
+  // }
+  // render() {
+
+  //   return (
+  //     <React.Fragment>
+  //       <Field title="경험 설명">
+  //         <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+  //       <Field title="자문/상담 비용">
+  //         <InputPrice name="price" getValue={this.getPriceValue} />
+  //       </Field>
+  //     </React.Fragment>)
+  // }
 };
 class ItemInfoData extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", price: 0 };
+    this.state = { description: "", price: 0 }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
-  returnState() {
-    this.props.return && this.props.return(this.state);
+  async returnState() {
+    this.props.return && await this.props.return(this.state);
   }
   async onHandleChange(event) {
     await this.setState({ [event.target.name]: event.target.value });
-    this.returnState();
-  }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
     this.returnState();
   }
   async getPriceValue(value) {
     await this.setState({ price: value });
     this.returnState();
   }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
   render() {
+    const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
-        <Field title="정보/데이터에 관한 설명">
+        <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
+          {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
   }
@@ -832,33 +873,35 @@ class ItemInfoData extends Component {
 class ItemIdea extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: "", price: 0 };
+    this.state = { description: "", price: 0 }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   }
-  returnState() {
-    this.props.return && this.props.return(this.state);
+  async returnState() {
+    this.props.return && await this.props.return(this.state);
   }
   async onHandleChange(event) {
     await this.setState({ [event.target.name]: event.target.value });
-    this.returnState();
-  }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
     this.returnState();
   }
   async getPriceValue(value) {
     await this.setState({ price: value });
     this.returnState();
   }
+  async onHandleReturn(value) {
+    await this.setState({ uploadType: value });
+    this.returnState();
+  }
   render() {
+    const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
-        <Field title="아이디어/노하우에 관한 설명">
+        <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
+          {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
   }
@@ -925,6 +968,7 @@ class ItemPatent extends Component {
               content.map((item, index) =>
                 <Controller key={index} type={item.type} item={item} order={index}
                   deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
+                  <DescirptionText>※ 특허청에 등록된 원본 파일을 올려주세요.</DescirptionText>
             <AddController onlyfile type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />
           </div></Field>
 
@@ -977,10 +1021,10 @@ class ItemProduct extends Component {
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
 
-        <Field title="상세 이미지">
+        {/* <Field title="상세 이미지">
           <div style={{ display: "flex", flexDirection: "column" }}>
             <ThumbnailList return={this.onHandleImageList} width={650} />
-            <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field>
+            <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field> */}
 
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />

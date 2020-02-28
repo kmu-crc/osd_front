@@ -33,6 +33,25 @@ export function UserInfo(state, action) {
           status: { $set: "FAILURE" }
         }
       });
+
+      case types.MODIFY_USER_DETAIL:
+        return update(state, {
+          userInfo: {
+            status: { $set: "WAITING" }
+          }
+        });
+      case types.MODIFY_USER_DETAIL_SUCCESS:
+        return update(state, {
+          userInfo: {
+            status: { $set: "SUCCESS" }
+          }
+        });
+      case types.MODIFY_USER_DETAIL_FAILURE:
+        return update(state, {
+          userInfo: {
+            status: { $set: "FAILURE" }
+          }
+        });
     default:
       return state;
   }

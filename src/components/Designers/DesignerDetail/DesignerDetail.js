@@ -139,7 +139,7 @@ const Introduction = styled.div`
       text-align: left;
     }
     .text {
-      width: 349px;
+      width: 100%;
       margin-top: 15px;
       margin-bottom:29px;
       font-size: 15px;
@@ -335,6 +335,7 @@ const DesignerBoard = styled.div`
   .redText{
     color:red;
     cursor:pointer;
+    margin:20px;
   }
   .title {
     color: #000000;
@@ -522,14 +523,14 @@ const CreateReview = styled.div`
     height:30px;
     margin-bottom:10px;
     display:flex;
-    justify-content:center;
     .button{
-        width:80%;
+        width:max-content;
         height:100%;
         display:flex;
+        padding:15px;
         justify-content:center;
         align-items:center;
-        border-radius:20px;
+        border-radius:5px;
         background-color:#707070;
         cursor:pointer;
     }
@@ -538,6 +539,27 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
+
+const review = {
+  average_score: 4,
+  review: [{
+    thumbnail: noimg,
+    nick_name: "닉네임",
+    explain: "리뷰입니다",
+    score: 5,
+  }, {
+    thumbnail: noimg,
+    nick_name: "닉네임",
+    explain: "리뷰입니다",
+    score: 5,
+  }, {
+    thumbnail: noimg,
+    nick_name: "닉네임",
+    explain: "리뷰입니다",
+    score: 5,
+  }],
+};
+
 
 class DesignerDetail extends Component {
   constructor(props) {

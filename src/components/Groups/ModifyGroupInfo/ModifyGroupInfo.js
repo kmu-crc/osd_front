@@ -17,7 +17,7 @@ const category = [
   {text:"경험",value:4},
   {text:"정보/데이터",value:5},
   {text:"아이디어/노하우",value:6},
-  {text:"제품",value:7},
+  {text:"제작품",value:7},
 ];
 const Wrapper = styled.div`
   width: 100%;

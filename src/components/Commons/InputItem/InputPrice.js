@@ -57,7 +57,7 @@ export class InputPrice extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { price:0 ,};
+        this.state = { price:null ,};
         this.onClickButton = this.onClickButton.bind(this);
         this.onChangePrice = this.onChangePrice.bind(this);
     }
@@ -76,7 +76,7 @@ export class InputPrice extends Component {
         this.props.getValue && await this.props.getValue(this.state.price);
     }
     init = async () => {
-        await this.setState({ price: this.props.price || 0 });
+        await this.setState({ price: this.props.price || null });
         this.returnData();
     }
     async onClickButton(value){
