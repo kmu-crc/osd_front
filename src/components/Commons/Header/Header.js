@@ -13,28 +13,32 @@ const LogoWrapper = styled.div`
   margin: 0;
   padding: 0;
   font-family: Noto Sans KR;
-  width: 200px;
+  width: 150px;
   height: 74px;
   .over {
     border: 1px solid red;
     background: #F00;
     height: 43px;
+    display:flex;
+    justify-content:center;
     .text {
-      width: max-content;
+      width: 130px;
       height: 29px;
       line-height: 29px;
-      margin-left: 8px;
       margin-top: 5px;
       color: #FFF;
       font-size: 20px;
       font-weight: 500;
+      text-align:center;
       letter-spacing: 0px;
     }
   }
   .under {
+    display:flex;
+    justify-content:center;
     height: 32px;
     .text {
-      width: 180px;
+      width: 130px;
       margin-top: 6px;
       margin-left: 10px;
       color: #F00;
@@ -42,14 +46,14 @@ const LogoWrapper = styled.div`
       font-size: 15px;
       text-align: center;
       line-height: 22px;
-      letter-spacing: 24px;
+      letter-spacing: 12px;
     }
   }
 `;
 const Logo = () => <React.Fragment>
   <LogoWrapper>
     <div className="over">
-      <div className="text">Opensource Design</div>
+      <div className="text">Open Design</div>
     </div>
     <div className="under">
       <div className="text">MARKET</div>

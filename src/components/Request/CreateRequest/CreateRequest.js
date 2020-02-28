@@ -5,7 +5,7 @@ import { Dropdown } from "semantic-ui-react"
 
 
 const FirstCategory = [{text:"패션",value:0},
-                        {text:"제품",value:1},
+                        {text:"제작품",value:1},
                         {text:"커뮤니케이션",value:2},
                         {text:"공간",value:3},
                         {text:"엔터테인먼트",value:4},
@@ -29,7 +29,7 @@ const ItemType = [
                           { text: "정보/데이터", value: 4 },
                           { text: "아이디어/노하우", value: 5 },
                           { text: "지적재산권", value: 6 },
-                          { text: "제품", value: 7 }];
+                          { text: "제작품", value: 7 }];
 
 const Wrapper = styled(ContentBox)`
     width:100%;

@@ -7,7 +7,15 @@ import styled from "styled-components";
 const ScrollContainer = styled.div`
   width: 100%;
 `;
-
+const NoPage = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  padding:50px;
+  .text{
+    font-size:15px;
+  }
+`
 class ScrollBoardList extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +45,7 @@ class ScrollBoardList extends Component {
       <ScrollContainer>
         {dataList && dataList.length > 0 ?
           dataList.map(content => <ListComponent key={content.uid} data={content} />)
-          : <p>등록된 게시글이 없습니다.</p>}
+          : <NoPage><div className="text">등록된 게시글이 없습니다.</div></NoPage>}
         <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", display: "flex", flexDirection: "row" }}>
           <div style={{ width: "50px" }}>
             {page > 0 ? <div onClick={this.goPrev}>prev</div> : null}

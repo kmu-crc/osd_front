@@ -221,6 +221,10 @@ const Thumbnail = styled.div`
     height:190px;
     border-radius:50%;
     background-image:url(${props => props.URL == null ? noimg : props.URL});
+    background-repeat:norepeat;
+    background-position:center;
+    background-size:cover;
+    cursor:pointer
 `
 const EmptyBox = styled.div`
     width:${props => props.width}px;
@@ -293,10 +297,17 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: -1, }
+    this.state = { selectMenu: 0,thumbnail:null}
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
+    this.onClickThumbnail = this.onClickThumbnail.bind(this);
+  }
+  componentWillUpdate(nextProps){
+    if(this.props.MyDetail.thumbnail!=nextProps.MyDetail.thumbnail){
+      this.setState({thumbnail:nextProps.MyDetail.thumbnail})
+    }
+    return true;
   }
   onClickCreateDesigner(event) {
     if (this.props.MyDetail.isDesigner == true) {
@@ -330,8 +341,24 @@ class MyDetail extends Component {
     console.log(selectMenu);
     this.setState({ selectMenu: selectMenu });
   }
+  
+  async onClickThumbnail(event){
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = async () => {
+      // await this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+      await this.props.ModifyUserDetailRequest(this.props.userInfo.uid,{files:[{value:reader.result,name:file.name,key:0}]},this.props.token)
+      .then(this.props.GetMyDetailRequest(this.props.token))
+      .then(window.location.reload())
+    }
+    if (event.target.files[0]) {
+      await reader.readAsDataURL(file);
+    }
+
+  }
   render() {
-    console.log("myDetail", this.props);
+    // console.log("myDetail", this.props);
     const { MyDetail } = this.props;
     const { selectMenu } = this.state;
     return (
@@ -340,7 +367,10 @@ class MyDetail extends Component {
           <div className="header">
             <ProfileBox>
               <div className="imageBox">
-                <Thumbnail URL={MyDetail.profileImg == null ? noimg : MyDetail.profileImg.m_img} />
+                <input hidden onChange={this.onClickThumbnail} id="file" type="file" />
+                <label htmlFor="file">
+                  <Thumbnail URL={this.state.thumbnail == null ? noimg : this.state.thumbnail} />
+                </label>
               </div>
               <div className="LabelBox fontBig fontStyleNormal">{MyDetail.nick_name}</div>
               <div className="LabelBox fontSmall fontStyleLight red">카테고리</div>

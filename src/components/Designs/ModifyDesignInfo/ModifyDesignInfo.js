@@ -32,7 +32,7 @@ const newCategory = [
   {text:"경험",value:5},
   {text:"정보/데이터",value:6},
   {text:"아이디어/노하우",value:7},
-  {text:"제품",value:8},
+  {text:"제작품",value:8},
 ];
 const TxtSz = { s: 12, m: 16, M: 20, l: 24, b: 28 };
 const MAX_PRODUCT_IMAGE_COUNT = 5;

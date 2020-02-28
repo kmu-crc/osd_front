@@ -138,7 +138,7 @@ const Introduction = styled.div`
       text-align: left;
     }
     .text {
-      width: 349px;
+      width: 100%;
       margin-top: 15px;
       margin-bottom:29px;
       font-size: 15px;
@@ -334,6 +334,7 @@ const DesignerBoard = styled.div`
   .redText{
     color:red;
     cursor:pointer;
+    margin:20px;
   }
   .title {
     color: #000000;
@@ -545,22 +546,18 @@ const WriteReview = styled.div`
   }
 `;
 const CreateReview = styled.div`
-    // *{
-    //     border:1px solid black;
-    // }
-    // border:1px solid black;
     width:100%;
     height:30px;
     margin-bottom:10px;
     display:flex;
-    justify-content:center;
     .button{
-        width:80%;
+        width:max-content;
         height:100%;
         display:flex;
+        padding:15px;
         justify-content:center;
         align-items:center;
-        border-radius:20px;
+        border-radius:5px;
         background-color:#707070;
         cursor:pointer;
     }
@@ -569,7 +566,6 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
-
 
 
 const review = {

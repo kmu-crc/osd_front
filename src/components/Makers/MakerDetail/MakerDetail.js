@@ -142,7 +142,7 @@ const Introduction = styled.div`
       text-align: left;
     }
     .text {
-      width: 349px;
+      width: 100%;
       margin-top: 15px;
       margin-bottom:29px;
       font-size: 15px;
@@ -379,7 +379,7 @@ const AdditionalInfo = styled.div`
       }
 `;
 const MakerBoard = styled.div`
-      width: 1523px;
+     width: 1523px;
       height: max-content;
       background: #FFFFFF;
       box-shadow: 5px 5px 10px #00000029;
@@ -394,6 +394,7 @@ const MakerBoard = styled.div`
       .redText{
         color:red;
         cursor:pointer;
+        margin:20px;
       }
       .title {
         color: #000000;
@@ -403,13 +404,13 @@ const MakerBoard = styled.div`
         text-align: left;
       };
       .list {
-        margin-top: 72px;
+        // margin-top: 72px;
         font-weight: 300;
         font-size: 19px;
         text-align: left;
         line-height: 27px;
         color: #000000;
-
+    
         display:flex;
         flex-direction:column;
         align-items:center;
@@ -466,7 +467,7 @@ const MakerBoard = styled.div`
         .another {}
         .more {}
       };
-`;
+    `;
 const Wrapper = styled.div`
 // *{
 //   border:1px solid black;
@@ -615,22 +616,18 @@ const WriteReview = styled.div`
   }
 `;
 const CreateReview = styled.div`
-    // *{
-    //     border:1px solid black;
-    // }
-    // border:1px solid black;
     width:100%;
     height:30px;
     margin-bottom:10px;
     display:flex;
-    justify-content:center;
     .button{
-        width:80%;
+        width:max-content;
         height:100%;
         display:flex;
+        padding:15px;
         justify-content:center;
         align-items:center;
-        border-radius:20px;
+        border-radius:5px;
         background-color:#707070;
         cursor:pointer;
     }
@@ -639,6 +636,8 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
+
+
 class MakerDetail extends Component {
   constructor(props) {
     super(props);
@@ -881,7 +880,7 @@ class MakerDetail extends Component {
         <MakerBoard>
           <div className="title">메이커 게시판</div>
           <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰</div></div>
-          <div className="list"> 
+          {/* <div className="list">  */}
           {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
             {/* {
                 expert.board.map((item,index)=>{                 //"designer_req" "designer_res" "maker_req" "maker_res" 
@@ -896,14 +895,14 @@ class MakerDetail extends Component {
                   );
                 })
               } */}
-         </div>
-          <div className="page">
+         {/* </div> */}
+          {/* <div className="page">
             <div className="this number">1</div>
             <div className="another number">2</div>
             <div className="another number">3</div>
             <div className="another number">4</div>
             <div className="more">...</div>
-          </div>
+          </div> */}
           <div className="list">
             <MakerRequestBoardContainer id={parseInt(this.props.id, 10)} />
           </div>
