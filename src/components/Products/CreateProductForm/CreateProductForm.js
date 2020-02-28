@@ -7,7 +7,7 @@ import CheckBox2 from "components/Commons/CheckBox";
 import noface from "source/thumbnail.png";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
 import { AddController, InputContent, Controller, InputTag, ThumbnailList, RadioType } from "components/Commons/InputItem";
-import SearchDesignMemverContainer from "containers/Commons/SearchMemberContainer";
+import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 // import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
 
@@ -670,6 +670,7 @@ class ItemProject extends Component {
     this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
+    this.changeMembers = this.changeMembers.bind(this);
   }
   returnState() {
     this.props.return && this.props.return(this.state);
@@ -686,26 +687,21 @@ class ItemProject extends Component {
     await this.setState({ price: value });
     this.returnState();
   }
+  async changeMembers(mem) {
+    await this.setState({ members: mem })
+    this.returnState();
+  }
+
   render() {
     const types = ["예", "아니오"];
+    console.log("MEM:", this.state.members);
     return (
       <React.Fragment>
         <Field title="프로젝트 설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="팀원 초대">
-          {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={mem => this.setState({ members: [] })} />}
-          {/* <SearchDesignMemverContainer className="searchRect" addMember={() => this.setState({ members: [] })} /> */}
+          {this.state.alone ? undefined : <SearchDesignMemberContainer className="searchRect" onChangeMembers={this.changeMembers} />}
           <div>
-            {/* INVITED MEMBER */}
-            <InviteMemberListBox>
-              <div className="memberList">{
-                (this.state.members.length > 0) ?
-                  this.state.members.map((item, index) =>
-                    <div onClick={() => this.removeMember(item.user_id)} key={index}>
-                      <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
-                    </div>) : null}</div>
-            </InviteMemberListBox>
-
             {/* LEAVE ME ALONE */}
             <NoInviteMemberBox>
               <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
