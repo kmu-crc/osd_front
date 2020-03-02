@@ -25,6 +25,9 @@ const LocationList = [
 ];
 
 const MainBox = styled.div`
+// *{
+//   border:1px solid black;
+// }
   width:100%;
   .title{
     width:170px;
@@ -33,12 +36,12 @@ const MainBox = styled.div`
     font-size:20px;
     font-weight:500;
   }
-  .contentsBox{
-    width:100%;
-    display:flex;
-    padding-left:130px;
-    padding-top:36px;
-  }
+    .contentsBox{
+      width:100%;
+      display:flex;
+      padding-left:130px;
+      padding-top:36px;
+    }
 
 `;
 const RedButton = styled.div`
@@ -99,6 +102,47 @@ const Thumbnail = styled.div`
   border-radius:50%;
   margin-left:110px;
 `;
+const ExperienceBox= styled.div`
+    width:1560px;
+    box-shadow: 5px 5px 10px #00000029;
+    border-radius: 20px;
+    padding-left:59px;
+    padding-top:49px;
+    padding:50px;
+    .title{
+      width:100%;
+      font-size:20px;
+      font-weight:500;
+      margin-bottom:15px;
+    }
+    .wrapper{
+      width:100%;
+    }
+    .labelBox{
+      width:100%;
+      display:flex;
+      padding-bottom:20px;
+      border-bottom:1px solid #E6E6E6;
+      margin-bottom:20px;
+
+      .number_label{
+        width:10%;
+      }
+      .text_label{
+        width:30%;
+      }
+    }
+    .careerBox{
+      display:flex;
+      margin-bottom:10px;
+      .number_wrapper{
+        width:10%;
+      }
+      .text_wrapper{
+        width:30%;
+      }
+    }
+`
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -115,7 +159,7 @@ const FormBox = styled.div`
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:70px;
+    margin-bottom:50px;
   }
   .wrapper_noflex{
     width:100%;
@@ -392,7 +436,33 @@ class CreateDesigner extends Component {
                   onChange={this.onChangeLocation} />
               </div>
 
-              <div className="wrapper_noflex ">
+              {/* <div className="wrapper_noflex ">
+                {this.state.career.map((item, index) => {
+                  console.log("career", item)
+                  return (
+                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                  );
+                })} */}
+                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+                {/* <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                </Button> */}
+              {/* </div> */}
+
+            </FormBox>
+
+
+          </div>
+          <div className="contentsBox">
+          <ExperienceBox>
+                <div className="title">경력</div>
+              <div className="labelBox">
+                <div className="number_label">번호</div>
+                <div className="text_label">업무</div>
+                <div className="text_label">기간</div>
+                <div className="text_label">내용</div>
+              </div>
+               <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
                   return (
@@ -403,12 +473,9 @@ class CreateDesigner extends Component {
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경력 추가하기</div>
                 </Button>
-              </div>
-
-            </FormBox>
-
+               </div>
+          </ExperienceBox>
           </div>
-
           <div className="contentsBox">
             <Link to={{
               pathname: `/createProduct/redirected`,
@@ -487,24 +554,21 @@ class CreateCareer extends Component {
     }
     console.log("careerlog", this.state);
     return (
-      <div className="wrapper flex margin_bottom ">
-        <div className="label">경력</div>
-        <div className="index">{leadingZeros(this.props.number, 2)}</div>
-        <div>
-          <div className="innerWraper">
-            <div className="label label_centering">업무</div>
+      <React.Fragment>
+
+        <div className="careerBox">
+          <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
+          <div className="text_wrapper">
             <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
           </div>
-          <div className="innerWraper">
-            <div className="label label_centering">내용</div>
-            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84} />
-          </div>
-          <div className="innerWraper">
-            <div className="label label_centering">기간</div>
+          <div className="text_wrapper">
             <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
+          <div className="text_wrapper">
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

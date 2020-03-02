@@ -329,8 +329,8 @@ export const GetMyUploadItemRequest = (id, token, page) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => dispatch(
-        page === 0
+      .then(data =>
+        dispatch((page === 0)
           ? GetMyUploadItemClear(data ? data : [])
           : GetMyUploadItem(data ? data : [])))
       .catch(error => dispatch(GetMyUploadItemFailure()));

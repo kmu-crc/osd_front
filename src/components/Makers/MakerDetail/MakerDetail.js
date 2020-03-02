@@ -935,7 +935,7 @@ class MakerDetail extends Component {
             :
             <CreateReview onClick={() => this.setState({ write: true })}>
               <div className="button">
-                <div className="font">글 작성하기</div>
+                <div className="font">게시글 작성</div>
               </div>
             </CreateReview>
           }
