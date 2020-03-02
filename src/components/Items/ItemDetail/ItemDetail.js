@@ -8,9 +8,9 @@ import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContai
 import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
-import NumberFormat from "modules/NumberFormat";
 import PointFormat from "modules/PointFormat";
-import { Link } from "react-router-dom";
+// import NumberFormat from "modules/NumberFormat";
+// import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   // * { border: 1px solid red; };

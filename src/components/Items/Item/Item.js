@@ -83,7 +83,8 @@ class Item extends Component {
   Keeper = () => {
     const item = this.props.data;
     if (item.uid) {
-      if (item.private) {
+      const yours = item.members && item.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
+      if (item.private && !yours) {
         alert("비공개!");
         return;
       } else {
