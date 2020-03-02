@@ -39,7 +39,6 @@ class ScrollBoardList extends Component {
     const { total, dataList, ListComponent } = this.props;
     const { page } = this.state;
     const lastPage = parseInt(total / 10, 10);
-    console.log("page;", this.props);
     // const { mobile, tablet, computer, largeScreen, widescreen, customClass, rerender } = this.props;
     return (
       <ScrollContainer>

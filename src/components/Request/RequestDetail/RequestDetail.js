@@ -34,22 +34,24 @@ const MainBox = styled.div`
 
 `
 const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
+  width: 290px;
+  height: 70px;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.inactive ? "gray" : "red"};
 
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
+  // position:absolute;
+  // left:${props => props.left}px;
+  // bottom:${props => props.bottom}px;
+  margin-left: 10px;
+  margin-top: 15px;
 
-  cursor:pointer;
+  cursor: pointer;
 `
 const FormBox = styled.div`
   *{
@@ -128,36 +130,13 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
-// const InputText = styled.input.attrs({ type: "text" })`
-//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//   height:43px;
-//   border-radius:20px;
-//   font-family:Noto Sans KR;
-//   font-size:20px;
-//   background-color:#E9E9E9;
-//   margin-right:21px;
-//   outline:none;
-//   border:0px;
-//   padding: 0.67857143em 1em;
-// `;
-// const InputTextarea = styled.textarea`
-//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-//   border-radius:20px;
-//   font-family:Noto Sans KR;
-//   font-size:20px;
-//   background-color:#E9E9E9;
-//   outline:none;
-//   border:0px;
-//   readonly;
-//   padding: 0.67857143em 1em;
-// `;
 
 class Detail extends Component {
   render() {
     const { Detail, MyDetail } = this.props;
     if (Detail == null || Detail == []) return (<Loading />);
-    console.log(this.props, Detail, MyDetail);
+    console.log("this.props:", this.props, "Detail:", Detail, "MyDetail:", MyDetail);
+
     const category_level1
       = this.props.category1 && this.props.category1[Detail.category_level1] && this.props.category1[Detail.category_level1].text;
     const category2
@@ -166,146 +145,175 @@ class Detail extends Component {
       = category2 && category2[Detail.category_level2] && category2[Detail.category_level2].text;
 
     return (
-      Detail.sort_in_group === 0 ?
-        <Wrapper>
-          <MainBox>
-            <div className="title">의뢰내용</div>
-            <div className="contentsBox">
-              <FormBox>
+      <React.Fragment>
+        {Detail.status === "normal" ?
+          <Wrapper>
+            <MainBox>
+              <div className="title">내용</div>
+              <div className="contentsBox">
+                <FormBox>
+                  <div className="wrapper flex centering">
+                    <div className="label">제목</div>
+                    <div className="textBox">{Detail.title || ""}</div>
+                  </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">제목</div>
-                  <div className="textBox">{Detail.title || ""}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <div className="textBox">{category_level1 ? category_level1 + " > " : " _ "}{category_level2}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">태그</div>
-                  <TagList>
-                    {Detail && Detail.tag && Detail.tag.split(",").map((item, index) =>
-                      <TagPiece key={index}>{item}</TagPiece>)}
-                  </TagList>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">희망비용</div>
-                  <div className="textBox">{Detail.price}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">내용</div>
-                  <div className="textBox">{Detail.content}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">디자이너 위치</div>
-                  <div className="textBox">{Detail.location}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">디자인 소유권</div>
-                  <div className="textBox">{Detail.ownership <= 0 ? "불가능" : "가능"}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <div className="textBox">{Detail.offline <= 0 ? "불가능" : "가능"}</div>
-                </div>
-
-              </FormBox>
+                  <div className="wrapper flex centering">
+                    <div className="label">내용</div>
+                    <div className="textBox">{Detail.content || ""}</div>
+                  </div>
+                </FormBox>
+              </div>
+            </MainBox>
+            <div style={{ display: "flex" }}>
+              <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
             </div>
-          </MainBox>
-          <div>
-            {/* <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
+          </Wrapper> :
+          Detail.sort_in_group === 0 ?
+            <Wrapper>
+              <MainBox>
+                <div className="title">의뢰내용</div>
+                <div className="contentsBox">
+                  <FormBox>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">제목</div>
+                      <div className="textBox">{Detail.title || ""}</div>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">카테고리</div>
+                      <div className="textBox">{category_level1 ? category_level1 + " > " : " _ "}{category_level2}</div>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">태그</div>
+                      <TagList>
+                        {Detail && Detail.tag && Detail.tag.split(",").map((item, index) =>
+                          <TagPiece key={index}>{item}</TagPiece>)}
+                      </TagList>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">희망비용</div>
+                      <div className="textBox">{Detail.price}</div>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">내용</div>
+                      <div className="textBox">{Detail.content}</div>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">디자이너 위치</div>
+                      <div className="textBox">{Detail.location}</div>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">디자인 소유권</div>
+                      <div className="textBox">{Detail.ownership <= 0 ? "불가능" : "가능"}</div>
+                    </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">오프라인 상담</div>
+                      <div className="textBox">{Detail.offline <= 0 ? "불가능" : "가능"}</div>
+                    </div>
+
+                  </FormBox>
+                </div>
+              </MainBox>
+              <div>
+                {/* <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
             <div className="text">아이템구매</div>
           </Link> */}
-            {!MyDetail ?
-              <Link to={{ pathname: `/responseToDesignerReq/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
-                <RedButton left={1444} bottom={-50}><div>의뢰응답</div></RedButton>
-              </Link>
-              : null}
-          </div>
-          {/* {this.props.MyDetail.isDesigner ? <RedButton onClick={this.onAccept} left={1444} bottom={-50}><div>Accept</div></RedButton> : null} */}
-        </Wrapper>
-        :
-        <Wrapper>
-          <MainBox>
-            <div className="title">디자인 의뢰 응답</div>
-
-            <div className="contentsBox">
-              <FormBox>
-                <div className="wrapper flex centering">
-                  <div className="label">제목</div>
-                  <div className="textBox">{Detail.title}</div>
+                <div style={{ display: "flex" }}>
+                  <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
+                  {!MyDetail ?
+                    <Link to={{ pathname: `/responseToDesignerReq/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
+                      <RedButton><div>의뢰응답</div></RedButton>
+                    </Link>
+                    : null}
                 </div>
+              </div>
+            </Wrapper>
+            :
+            <Wrapper>
+              <MainBox>
+                <div className="title">디자인 의뢰 응답</div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <div className="textBox">{category_level1 ? category_level1 + " > " : "-"}{category_level2}</div>
-                </div>
+                <div className="contentsBox">
+                  <FormBox>
+                    <div className="wrapper flex centering">
+                      <div className="label">제목</div>
+                      <div className="textBox">{Detail.title}</div>
+                    </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">태그</div>
-                  <TagList>
-                    {Detail && Detail.request && Detail.request.tag && Detail.request.tag.split(",").map((item, index) =>
-                      <TagPiece key={index}>{item}</TagPiece>)}
-                  </TagList>
-                </div>
+                    <div className="wrapper flex centering">
+                      <div className="label">카테고리</div>
+                      <div className="textBox">{category_level1 ? category_level1 + " > " : "-"}{category_level2}</div>
+                    </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">희망비용</div>
-                  <div className="textBox">{Detail && Detail.request && Detail.request.price}</div>
-                </div>
+                    <div className="wrapper flex centering">
+                      <div className="label">태그</div>
+                      <TagList>
+                        {Detail && Detail.request && Detail.request.tag && Detail.request.tag.split(",").map((item, index) =>
+                          <TagPiece key={index}>{item}</TagPiece>)}
+                      </TagList>
+                    </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">내용</div>
-                  <div className="textBox">{Detail && Detail.request && Detail.request.content}</div>
-                </div>
+                    <div className="wrapper flex centering">
+                      <div className="label">희망비용</div>
+                      <div className="textBox">{Detail && Detail.request && Detail.request.price}</div>
+                    </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">디자이너 위치</div>
-                  <div className="textBox">{Detail && Detail.request && Detail.request.location}</div>
-                </div>
+                    <div className="wrapper flex centering">
+                      <div className="label">내용</div>
+                      <div className="textBox">{Detail && Detail.request && Detail.request.content}</div>
+                    </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">디자인 소유권</div>
-                  <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "불가능" : "가능"}</div>
-                </div>
+                    <div className="wrapper flex centering">
+                      <div className="label">디자이너 위치</div>
+                      <div className="textBox">{Detail && Detail.request && Detail.request.location}</div>
+                    </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <div className="textBox">{Detail && Detail.request && Detail.request.offline <= 0 ? "불가능" : "가능"}</div>
-                </div>
+                    <div className="wrapper flex centering">
+                      <div className="label">디자인 소유권</div>
+                      <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "불가능" : "가능"}</div>
+                    </div>
 
-              </FormBox>
+                    <div className="wrapper flex centering">
+                      <div className="label">오프라인 상담</div>
+                      <div className="textBox">{Detail && Detail.request && Detail.request.offline <= 0 ? "불가능" : "가능"}</div>
+                    </div>
 
-              <FormBox>
-                {/* <div className="wrapper flex">
+                  </FormBox>
+
+                  <FormBox>
+                    {/* <div className="wrapper flex">
                   <div className="label">제목</div>
                   <div className="textBox">{Detail.title}</div>
                 </div> */}
 
-                <div className="wrapper flex">
-                  <div className="label">설명</div>
-                  <div className="textBox">{Detail.content}</div>
-                </div>
+                    <div className="wrapper flex">
+                      <div className="label">설명</div>
+                      <div className="textBox">{Detail.content}</div>
+                    </div>
 
-                <div className="wrapper flex">
-                  <div className="label">희망비용</div>
-                  <div className="textBox">{Detail.price}</div>
-                </div>
+                    <div className="wrapper flex">
+                      <div className="label">희망비용</div>
+                      <div className="textBox">{Detail.price}</div>
+                    </div>
 
-              </FormBox>
-            </div>
-          </MainBox>
-          <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
-            <RedButton left={1444} bottom={-50}><div>구매하기</div></RedButton>
-          </Link>
-        </Wrapper>
+                  </FormBox>
+                </div>
+              </MainBox>
+              <div style={{ display: "flex" }}>
+                <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
+                <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
+                  <RedButton ><div>구매하기</div></RedButton>
+                </Link>
+              </div>
+            </Wrapper>}
+      </React.Fragment>
     );
   }
 }
