@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
+import { InputPrice } from "components/Commons/InputItem/InputPrice";
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -164,6 +165,8 @@ class ResponseToDesignerReq extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
+    this.getPriceValue = this.getPriceValue.bind(this);
+
   }
   // componentDidMount() {
   //   // //test 데이터 초기화
@@ -191,7 +194,9 @@ class ResponseToDesignerReq extends Component {
       res_price: event.target.value,
     })
   }
-
+  async getPriceValue(value) {
+    await this.setState({ res_price: value });
+  }
   onSubmit() {
     const data = {
       type: "designer", // "designer_req" "designer_res" "maker_req" "maker_res"
@@ -293,7 +298,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex">
                 <div className="label">희망비용</div>
-                <InputText onChange={this.onChangeResponsePrice} value={this.state.res_price} width={483} />
+                <InputPrice name="price" getValue={this.getPriceValue} />
               </div>
 
             </FormBox>
