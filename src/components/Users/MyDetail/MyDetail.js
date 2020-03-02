@@ -10,6 +10,8 @@ import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMa
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
 import MyPaymentContainer from "containers/Payment/MyPaymentContainer"
 import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer"
+import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer"
+import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer"
 
 
 const MainBox = styled.div`
@@ -433,39 +435,10 @@ class MyDetail extends Component {
               {selectMenu === 3 &&
                 <LikeInMakerContainer id={this.props.userInfo.uid} />}
               {selectMenu === 5 &&
-                <div className="wrap flex">
-                  <div className="list">
-                    {empty.designerRequest.map((item, index) => {                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                      const type = item.type == "designer_req" ? <div className="circle red1" >디자인 의뢰</div> : <div className="circle red2" >디자이너응답</div>
-                      return (
-                        <div className="line" key={index}>
-                          {type}
-                          <div className="title_text">{item.title}</div>
-                          <div className="sub_text">{item.nick_name}</div>
-                          <div className="sub_text">{item.create_time}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>}
+                <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid}/>
+                }
               {selectMenu === 6 &&
-                <div className="wrap flex">
-                  <div className="list">
-                    {
-                      empty.makerRequest.map((item, index) => {                 //"designer_req" "designer_res" "maker_req" "maker_res" 
-                        const type = item.type == "maker_req" ? <div className="circle red1" >제작 의뢰</div> : <div className="circle red2" >메이커응답</div>
-                        return (
-                          <div className="line">
-                            {type}
-                            <div className="title_text">{item.title}</div>
-                            <div className="sub_text">{item.nick_name}</div>
-                            <div className="sub_text">{item.create_time}</div>
-                          </div>
-                        );
-                      })
-                    }
-                  </div>
-                </div>
+                <MyUploadMakerReqBoardContainer id={this.props.userInfo.uid}/>
               }
             </BoardBox>
           </div>

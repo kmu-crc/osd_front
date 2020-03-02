@@ -82,8 +82,26 @@ export const GetDesignerRequestListRequest = (id, page) => {
   }
 };
 const GetDesignerRequestList = data => ({ type: types.GET_DESIGNER_REQUEST_LIST, payload: data });
-// const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
 const DesignerRequestListFail = () => ({ type: types.DESIGNER_REQUEST_LIST_FAIL, List: [] });
+
+// my design request list
+export const GetMyDesignerRequestListRequest = (id, page) => {
+  return dispatch => {
+    const url = `${host}/request/My-designer-list/${id}/${page}`
+    console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetMyDesignerRequestList(data || [])))
+      .catch(err => dispatch(MyDesignerRequestListFail()))
+  }
+};
+const GetMyDesignerRequestList = data => ({ type: types.GET_MY_DESIGNER_REQUEST_LIST, payload: data });
+const MyDesignerRequestListFail = () => ({ type: types.MY_DESIGNER_REQUEST_LIST_FAIL, List: [] });
+
+
 
 // GET MAKER REQUEST LIST
 export const GetMakerRequestListRequest = (id, page) => {
@@ -102,6 +120,24 @@ export const GetMakerRequestListRequest = (id, page) => {
 const GetMakerRequestList = data => ({ type: types.GET_MAKER_REQUEST_LIST, payload: data });
 // const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
 const MakerRequestListFail = () => ({ type: types.MAKER_REQUEST_LIST_FAIL, List: [] });
+
+
+// GET MY MAKER REQUEST LIST
+export const GetMyMakerRequestListRequest = (id, page) => {
+  return dispatch => {
+    const url = `${host}/request/My-maker-list/${id}/${page}`
+    console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetMyMakerRequestList(data || [])))
+      .catch(err => dispatch(MyMakerRequestListFail()))
+  }
+};
+const GetMyMakerRequestList = data => ({ type: types.GET_MY_MAKER_REQUEST_LIST, payload: data });
+const MyMakerRequestListFail = () => ({ type: types.MY_MAKER_REQUEST_LIST_FAIL, List: [] });
 
 
 //COMMENT
