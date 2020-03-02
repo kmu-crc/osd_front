@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
+import { InputPrice } from "components/Commons/InputItem/InputPrice";
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -164,6 +165,7 @@ class ResponseToMakerReq extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
+    this.getPriceValue = this.getPriceValue.bind(this);
   };
   // componentDidMount() {
   //   // //test 데이터 초기화
@@ -191,7 +193,9 @@ class ResponseToMakerReq extends Component {
       res_price: event.target.value,
     })
   }
-
+  async getPriceValue(value) {
+    await this.setState({ res_price: value });
+  }
   onSubmit() {
     const data = {
       type: "maker", // "designer_req" "designer_res" "maker_req" "maker_res"
@@ -221,7 +225,7 @@ class ResponseToMakerReq extends Component {
 
     const category_level1 = this.props.category1 && this.props.category1[this.state.category_level1].text;
     const category2 = this.props.category2 && this.props.category2[this.state.category_level1];
-    const category_level2 = category2 && category2[this.state.category_level2].text;
+    const category_level2 = category2&&category2[this.state.category_level2] && category2[this.state.category_level2].text;
     console.log(this.props.detail);
     return (
       <React.Fragment>
@@ -301,7 +305,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex">
                   <div className="label">희망비용</div>
-                  <InputText onChange={this.onChangeResponsePrice} value={this.state.res_price} width={483} />
+                  <InputPrice name="price" getValue={this.getPriceValue} />
                 </div>
 
               </FormBox>
