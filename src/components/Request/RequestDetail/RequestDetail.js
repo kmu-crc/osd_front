@@ -234,7 +234,7 @@ class Detail extends Component {
         :
         <Wrapper>
           <MainBox>
-            <div className="title">디자인 의뢰 응답</div>
+            <div className="title">의뢰 응답</div>
 
             <div className="contentsBox">
               <FormBox>
