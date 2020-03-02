@@ -53,9 +53,9 @@ const RedButton = styled.div`
   align-items:center;
   background-color:red;
 
-  position:absolute;
-  left:${props => props.left};
-  bottom:${props => props.bottom};
+  // position:absolute;
+  // left:${props => props.left};
+  // bottom:${props => props.bottom};
 
   cursor:pointer;
 `
@@ -150,6 +150,47 @@ const FormBox = styled.div`
     color:#707070;
   }
 
+`
+const ExperienceBox= styled.div`
+    width:1560px;
+    box-shadow: 5px 5px 10px #00000029;
+    border-radius: 20px;
+    padding-left:59px;
+    padding-top:49px;
+    padding:50px;
+    .title{
+      width:100%;
+      font-size:20px;
+      font-weight:500;
+      margin-bottom:15px;
+    }
+    .wrapper{
+      width:100%;
+    }
+    .labelBox{
+      width:100%;
+      display:flex;
+      padding-bottom:20px;
+      border-bottom:1px solid #E6E6E6;
+      margin-bottom:20px;
+
+      .number_label{
+        width:10%;
+      }
+      .text_label{
+        width:30%;
+      }
+    }
+    .careerBox{
+      display:flex;
+      margin-bottom:10px;
+      .number_wrapper{
+        width:10%;
+      }
+      .text_wrapper{
+        width:30%;
+      }
+    }
 `
 const Button = styled.div`
     width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -390,7 +431,7 @@ class CreateMaker extends Component {
                 }
               </label>
             </ThumbnailBox>
-            <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
+            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
 
               <div className="wrapper flex">
@@ -418,7 +459,7 @@ class CreateMaker extends Component {
                 onChange={this.onChangeLocation}/>
               </div>
 
-              <div className="wrapper_noflex ">
+              {/* <div className="wrapper_noflex ">
                 {
                   this.state.career.map((item, index) => {
                     console.log("career", item)
@@ -427,11 +468,10 @@ class CreateMaker extends Component {
                     );
                   })
                 }
-                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경력 추가하기</div>
                 </Button>
-              </div>
+              </div> */}
 
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
@@ -448,7 +488,36 @@ class CreateMaker extends Component {
               </div>
 
             </FormBox>
+
+            
           </div>
+
+          <div className="contentsBox">
+          <ExperienceBox>
+                <div className="title">경력</div>
+              <div className="labelBox">
+                <div className="number_label">번호</div>
+                <div className="text_label">업무</div>
+                <div className="text_label">기간</div>
+                <div className="text_label">내용</div>
+              </div>
+               <div className="wrapper_noflex ">
+                {this.state.career.map((item, index) => {
+                  console.log("career", item)
+                  return (
+                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                  );
+                })}
+                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                </Button>
+               </div>
+          </ExperienceBox>
+          </div>
+          <div className="contentsBox">
+                        <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
+          </div>    
         </MainBox>
       </React.Fragment>
     );
@@ -512,24 +581,21 @@ class CreateCareer extends Component {
     }
     console.log("careerlog", this.state);
     return (
-      <div className="wrapper flex margin_bottom ">
-        <div className="label">경력</div>
-        <div className="index">{leadingZeros(this.props.number, 2)}</div>
-        <div>
-          <div className="innerWraper">
-            <div className="label label_centering">업무</div>
-            <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
-          </div>
-          <div className="innerWraper">
-            <div className="label label_centering">내용</div>
-            <InputTextarea value={this.state.explain} onChange={this.onChangeExplain} width={370} height={84} />
-          </div>
-          <div className="innerWraper">
-            <div className="label label_centering">기간</div>
-            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
-          </div>
+      <React.Fragment>
+
+      <div className="careerBox">
+        <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
+        <div className="text_wrapper">
+          <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
+        </div>
+        <div className="text_wrapper">
+          <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
+        </div>
+        <div className="text_wrapper">
+          <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
         </div>
       </div>
+    </React.Fragment>
     );
   }
 }

@@ -6,7 +6,7 @@ const FormBox = styled.div`
     display:flex;
     align-items:center;
 `
-const FormStyle = styled.input`
+const FormStyle = styled.input.attrs({type:"number"})`
     width: ${props=>props.width}px;
     margin: 0;
     -webkit-appearance: none;
@@ -80,7 +80,9 @@ export class InputPrice extends Component {
         this.returnData();
     }
     async onClickButton(value){
-        const price = parseInt(this.state.price,10) + value;
+        const money= this.state.price==null?0:this.state.price;
+        const price = parseInt(money,10) + value;
+        console.log(parseInt(money,10) ,value);
         await this.setState({price:price});
         this.returnData();
     }
@@ -94,7 +96,6 @@ export class InputPrice extends Component {
             <FormBox>
                 <FormStyle
                     id = "price"
-                    type="number"
                     width={this.props.width==null?"200":this.props.width}
                     placeholder={this.props.placeholder}
                     value={this.state.price}
