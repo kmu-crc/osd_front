@@ -2,14 +2,11 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
-import Cross from "components/Commons/Cross";
 import CheckBox2 from "components/Commons/CheckBox";
-import noface from "source/thumbnail.png";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
 import { AddController, InputContent, Controller, InputTag, ThumbnailList, RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
-// import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -19,8 +16,8 @@ const ItemType = [
   { text: "정보/데이터", value: 4 },
   { text: "아이디어/노하우", value: 5 },
   { text: "지적재산권", value: 6 },
-  { text: "제작품", value: 7 }];
-
+  { text: "제작품", value: 7 }
+];
 const MainBox = styled.div`
   width:100%;
   .title{
@@ -143,23 +140,10 @@ const FormBox = styled.div`
     color:#707070;
   }
 `;
-const Button = styled.div`
-  width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height: ${props => props.height == null ? 100 + "%" : props.height + "px"};
-  background-color: white;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  margin-left: ${props => props.margin == null ? 0 + "px" : props.margin + "px"};
-  .label{
-    margin-left: 60px;
-  }
-`;
 const DescirptionText = styled.div`
   font-size:13px;
   color:#707070;
-`
+`;
 const InputText = styled.input`
   width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
   height: 43px;
@@ -196,13 +180,6 @@ const Margin = styled.div`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `;
-const HRLine = styled.div`
-  width: 100%;
-  height: 3px;
-  background-color: #E9E9E9;
-  margin-top: 35px;
-  margin-bottom: 35px;
-`;
 const InfoContentChooseItemType = styled.div`
   border: 1px dashed gray;
   padding: 25px;
@@ -217,7 +194,6 @@ const InfoContentChooseItemType = styled.div`
   color: #707070;
 `;
 
-
 class CreateProductForm extends Component {
   constructor(props) {
     super(props);
@@ -229,7 +205,7 @@ class CreateProductForm extends Component {
       tag: [], category1: null, category2: null,
       itemType: -1,
       // send data - additional
-      additional: null, content: [], steps: [], type: "blog"
+      additional: null, content: [], steps: [], type: "blog", private: 0,
     };
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -240,16 +216,18 @@ class CreateProductForm extends Component {
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
   };
+
   onSubmit(event) {
     event.preventDefault();
     let data = {
-      //basic
+      // basic
       title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
       tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
       itemType: this.state.itemType,
-      //additional
-      additional: this.state.additional, content: this.state.content, step: this.state.steps, type: this.state.type
+      // additional
+      additional: this.state.additional, content: this.state.content, step: this.state.steps,
+      type: this.state.type, private: this.state.private
     };
 
     this.props.CreateDesignRequest(data, this.props.token)
@@ -265,6 +243,7 @@ class CreateProductForm extends Component {
         alert("오류내용:" + error.message);
       });
   };
+
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: value });
   };
@@ -272,7 +251,7 @@ class CreateProductForm extends Component {
     await this.setState({ category_level2: value });
   };
   onClickItemType(_, { value }) {
-    this.setState({ itemType: { value }.value, additional: null });
+    this.setState({ itemType: { value }.value, additional: null, type: { value }.value === 1 ? "project" : "blog" });
   };
   handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -414,7 +393,6 @@ class CreateProductForm extends Component {
 }
 export default CreateProductForm;
 
-
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
@@ -497,8 +475,6 @@ class ItemTypeForm extends Component {
       </MainBox >);
   }
 };
-
-
 class Field extends Component {
   render() {
     const { title } = this.props;
@@ -528,12 +504,7 @@ class ItemDesign extends Component {
     await this.setState({ price: value });
     this.returnState();
   }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
-    this.returnState();
-  }
   render() {
-    const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
         <Field title="설명">
@@ -545,70 +516,6 @@ class ItemDesign extends Component {
       </React.Fragment>)
   }
 };
-const InviteMemberBox = styled.div`
-  display:flex;
-  justify-content:flex-start;
-  flex-direction:row;
-  margin-top:120px;
-  .searchBox{
-  width:645px;
-  height:56px;
-  font-size:20px;
-  font-weight:500;
-  line-height:29px;
-  color:#707070;
-  border-radius:5px;
-  background-color:#EFEFEF;
-  }
-  .tipTitle{
-  width:27px;
-  height:25px;
-  margin-left:20px;
-  font-size:17px;
-  font-weight:500;
-  line-height:25px;
-  text-align:left;
-  color:#FF0000;
-  }
-  .tipDescription{  
-  margin-left:17px;
-  font-size:16px;
-  font-weight:100;
-  font-family:Noto Sans KR;
-  text-align:left;
-  line-height:25px;
-  color:#707070;
-  }      
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  flex-direction:column;
-  .searchBox{
-  }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-  flex-direction:column;
-  .searchBox{
-  width:92%;
-  }
-  }
-`;
-const InviteMemberListBox = styled.div`
-  margin-top:20px;
-  margin-left:167px;
-  width:645px;
-  .memberList{
-  display:flex;
-  flex-wrap:wrap;
-  flex-direction:row;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  margin-left:0px;
-  width:645px;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-  margin-left:0px;
-  width:92%;
-  }
-`;
 const NoInviteMemberBox = styled.div`
   margin-left: 167px;
   margin-top: 30px;
@@ -621,51 +528,6 @@ const NoInviteMemberBox = styled.div`
     vertical-align: top;
   }
 `;
-const PeerBox = styled.div`
-  display: flex;
-  margin-right: 25px;
-  margin-bottom: 10px;
-  .nameLabel{
-    width: 112px;
-    height: 29px;
-    margin-top: 1px;
-    margin-left: 10px;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Noto Sans KR;
-    color: #707070;
-    text-align: left;
-    line-height: 29px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .closeButton{
-    margin-top: 7px;
-    margin-left: 14px;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    margin-right: 15px;
-  }
-`;
-const PeerIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: ${props => `url(${props.imageURL})`};
-  background-size: cover;
-  background-position: center center;
-`;
-function Peer(props) {
-  return (
-    <PeerBox>
-      <PeerIcon imageURL={props.s_img} />
-      <div className="nameLabel">{props.nick_name}</div>
-      <div className="closeButton"><Cross angle={45} color={"#707070"} weight={3} width={16} height={16} /></div>
-    </PeerBox>
-  );
-};
-
 class ItemProject extends Component {
   constructor(props) {
     super(props);
@@ -697,25 +559,20 @@ class ItemProject extends Component {
   }
 
   render() {
-    const types = ["예", "아니오"];
-    console.log("MEM:", this.state.members);
     return (
       <React.Fragment>
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="팀원 초대">
           {this.state.alone ? undefined : <SearchDesignMemberContainer className="searchRect" onChangeMembers={this.changeMembers} />}
-          <div>
-            {/* LEAVE ME ALONE */}
-            <NoInviteMemberBox>
-              <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
-              <span className="textLabel">멤버를 초대하지 않습니다.</span>
-            </NoInviteMemberBox>
-          </div>
-          {/* <InputText onChange={this.onHandleChange} name="members" width={370} /> */}
+          {/* LEAVE ME ALONE */}
+          <NoInviteMemberBox>
+            <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
+            <span className="textLabel">멤버를 초대하지 않습니다.</span>
+          </NoInviteMemberBox>
         </Field>
         <Field title="공개">
-          <RadioType return={this.onHandleReturn} name="type" Options={types} /></Field>
+          <RadioType return={this.onHandleReturn} name="public" Options={["예", "아니오"]} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
         </Field>
@@ -784,55 +641,17 @@ class ItemExperience extends Component {
     await this.setState({ price: value });
     this.returnState();
   }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
-    this.returnState();
-  }
+
   render() {
-    const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
-          {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
   }
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { description: "", price: 0 };
-  //   this.onHandleChange = this.onHandleChange.bind(this);
-  //   this.returnState = this.returnState.bind(this);
-  //   this.getPriceValue = this.getPriceValue.bind(this);
-  // }
-  // returnState() {
-  //   this.props.return && this.props.return(this.state);
-  // }
-  // async onHandleChange(event) {
-  //   await this.setState({ [event.target.name]: event.target.value });
-  //   this.returnState();
-  // }
-  // async onHandleReturn(value) {
-  //   await this.setState({ uploadType: value });
-  //   this.returnState();
-  // }
-  // async getPriceValue(value) {
-  //   await this.setState({ price: value });
-  //   this.returnState();
-  // }
-  // render() {
-
-  //   return (
-  //     <React.Fragment>
-  //       <Field title="경험 설명">
-  //         <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-  //       <Field title="자문/상담 비용">
-  //         <InputPrice name="price" getValue={this.getPriceValue} />
-  //       </Field>
-  //     </React.Fragment>)
-  // }
 };
 class ItemInfoData extends Component {
   constructor(props) {
@@ -853,10 +672,7 @@ class ItemInfoData extends Component {
     await this.setState({ price: value });
     this.returnState();
   }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
-    this.returnState();
-  }
+
   render() {
     const types = ["블로그형", "프로젝트형"];
     return (
@@ -889,19 +705,14 @@ class ItemIdea extends Component {
     await this.setState({ price: value });
     this.returnState();
   }
-  async onHandleReturn(value) {
-    await this.setState({ uploadType: value });
-    this.returnState();
-  }
+
   render() {
-    const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
-          {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
   }
@@ -968,7 +779,7 @@ class ItemPatent extends Component {
               content.map((item, index) =>
                 <Controller key={index} type={item.type} item={item} order={index}
                   deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
-                  <DescirptionText>※ 특허청에 등록된 원본 파일을 올려주세요.</DescirptionText>
+            <DescirptionText>※ 특허청에 등록된 원본 파일을 올려주세요.</DescirptionText>
             <AddController onlyfile type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />
           </div></Field>
 
@@ -982,18 +793,13 @@ class ItemPatent extends Component {
       </React.Fragment >)
   }
 };
-const Context = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-`;
 class ItemProduct extends Component {
   constructor(props) {
     super(props);
     this.state = { content: [], imageList: [], description: "", price: 0 };
     this.onHandleChange = this.onHandleChange.bind(this);
-    this.onHandleReturn = this.onHandleReturn.bind(this);
     this.returnState = this.returnState.bind(this);
-    this.onHandleImageList = this.onHandleImageList.bind(this);
+    // this.onHandleImageList = this.onHandleImageList.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
   };
   returnState() {
@@ -1003,14 +809,10 @@ class ItemProduct extends Component {
     await this.setState({ [event.target.name]: event.target.value });
     this.returnState();
   };
-  async onHandleReturn(name, value) {
-    await this.setState({ [name]: value });
-    this.returnState();
-  };
-  async onHandleImageList(value) {
-    await this.setState({ imageList: value.imageList });
-    this.returnState();
-  }
+  // async onHandleImageList(value) {
+  //   await this.setState({ imageList: value.imageList });
+  //   this.returnState();
+  // }
   async getPriceValue(value) {
     await this.setState({ price: value });
     this.returnState();

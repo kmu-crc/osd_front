@@ -13,10 +13,10 @@ const FormStyle = styled.div`
         height: max-content;
         margin-right: 50px;
     }
-`;
-const Radio = styled.input.attrs({ type: "radio" })`
-    width: 20px;
-    height: 20px;
+    .radio {
+        width: 20px;
+        height: 20px;
+    }
 `;
 
 export class RadioType extends Component {
@@ -29,17 +29,16 @@ export class RadioType extends Component {
         this.props.return(this.props.name, item);
     }
     render() {
-        let count =0;
         return (
             <React.Fragment>
                 <FormStyle>
-                    {this.props.Options.map((item, key) => {
-                        count++;
-                        return (<div key={key} className="contentBox">
-                            <Radio checked={count==this.props.checked ? true:false} name={this.props.name} onChange={_ => this.onHandleClicked(_, item)} />
-                            <label >{item}</label>
-                        </div>);
-                    })}
+                    {this.props.Options.map((item, key) =>
+                        (<div key={key} className="contentBox">
+                            <label >
+                                <input type="radio" className="radio" name={this.props.name} onChange={_ => this.onHandleClicked(_, item)} />
+                                {item}</label>
+                        </div>)
+                    )}
                 </FormStyle>
             </React.Fragment>
         );

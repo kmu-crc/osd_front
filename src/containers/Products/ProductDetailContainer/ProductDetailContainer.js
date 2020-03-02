@@ -55,8 +55,9 @@ class ProductDetailContainer extends Component {
   }
   render() {
     console.log(this.props);
+    const yours = this.props.ItemDetail.members && this.props.ItemDetail.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
     return this.props.ItemDetail ?
-      this.props.ItemDetail.private === 1 ?
+      this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
         <ItemDetail purchase={this.Payment} item={this.props.ItemDetail} {...this.props} />
       : <Loading />
