@@ -57,7 +57,7 @@ export function GetMyDetailRequest(token) {
     }).then(response => {
       return response.json();
       }).then((data) => {
-        console.log("my detail info data >>", data);
+        // console.log("my detail info data >>", data);
         if (!data) {
           console.log("no data");
           data = [];

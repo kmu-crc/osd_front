@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyPaymentRequest } from "actions/Item";
+import { GetMyPaymentRequest } from "actions/Payment";
 import Item from "components/Items/Item";
 import ScrollList from "components/Commons/ScrollList";
 
@@ -9,19 +9,18 @@ class MyPaymentContainer extends Component {
     this.props.GetMyPaymentRequest(this.props.token, 0);
   }
 
-  getList = (page) => {
-    // return false;
-    return this.props.GetMyPaymentRequest(this.props.token, page);
-  }
+  getList = (page) =>
+    this.props.GetMyPaymentRequest(this.props.token, page);
+
 
   render() {
-    console.log(this.props);
     return (
       <ScrollList
         getListRequest={this.getList}
         ListComponent={Item}
         type="item"
-        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
+        dataList={this.props.dataList}
+        dataListAdded={this.props.dataListAdded} />
     );
   }
 }

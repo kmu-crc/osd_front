@@ -1,38 +1,29 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
-import {Dropdown} from "semantic-ui-react"
-import {InputTag} from "components/Commons/InputItem/InputTag"
-import {InputPrice} from "components/Commons/InputItem/InputPrice";
+import { Dropdown } from "semantic-ui-react"
+import { InputTag } from "components/Commons/InputItem/InputTag"
+import { InputPrice } from "components/Commons/InputItem/InputPrice";
 
 
 const LocationList = [
-  {value:0,text:"서울특별시"},
-  {value:1,text:"부산광역시"},
-  {value:2,text:"대구광역시"},
-  {value:3,text:"인천광역시"},
-  {value:4,text:"광주광역시"},
-  {value:5,text:"대전광역시"},
-  {value:6,text:"울산광역시"},
-  {value:7,text:"경기도"},
-  {value:8,text:"강원도"},
-  {value:9,text:"충청북도"},
-  {value:10,text:"충청남도"},
-  {value:11,text:"전라북도"},
-  {value:12,text:"경상북도"},
-  {value:13,text:"경상남도"},
-  {value:14,text:"제주도"},
-  {value:15,text:"제한없음"},
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
 ];
-
-const ItemType = [{text:"디자인",value:0},
-                        {text:"프로젝트",value:1},
-                        {text:"지적재산권",value:2},
-                        {text:"기술자문/상담",value:3},
-                        {text:"경험",value:4},
-                        {text:"정보/데이터",value:5},
-                        {text:"아이디어/노하우",value:6},
-                        {text:"제작품",value:7}]; 
 
 const Wrapper = styled(ContentBox)`
     width: 100%;
@@ -166,7 +157,7 @@ const HRLine = styled.div`
     margin-bottom:35px;
 `;
 
-class RequestToDesigner extends Component {
+class RequestToMaker extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -217,8 +208,8 @@ class RequestToDesigner extends Component {
       amount: event.target.value,
     })
   }
-  onChangeLocation(event,{value}){
-    this.setState({location:{value}.value});
+  onChangeLocation(event, { value }) {
+    this.setState({ location: { value }.value });
   }
   onChangeContent(event) {
     this.setState({
@@ -241,8 +232,8 @@ class RequestToDesigner extends Component {
       tag: tag.slice(),
     })
   }
-  async getPriceValue(value){
-    await this.setState({price:value});
+  async getPriceValue(value) {
+    await this.setState({ price: value });
   }
 
   onSubmit() {
@@ -250,6 +241,7 @@ class RequestToDesigner extends Component {
       type: "maker", // designer, maker
       status: "request",
       expert_id: this.props.id || null,
+      personal: this.props.id || null,
       title: this.state.title,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
@@ -264,8 +256,8 @@ class RequestToDesigner extends Component {
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
-          if (this.props.id)
-            window.location.href = `/makerDetail/${this.props.id}`;
+          if (res.id)
+            window.location.href = `/makerDetail/${res.id}`;
           else
             window.location.href = `/request/maker`;
         }
@@ -305,10 +297,10 @@ class RequestToDesigner extends Component {
                   </div>
                 </div>
 
-              <div className="wrapper flex centering">
-                <div className="label ">희망 비용</div>
-                <InputPrice name="price" getValue={this.getPriceValue}/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label ">희망 비용</div>
+                  <InputPrice name="price" getValue={this.getPriceValue} />
+                </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
@@ -321,13 +313,13 @@ class RequestToDesigner extends Component {
                   <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80} />
                 </div>
 
-              <div className="wrapper flex centering">
-                <div className="label">메이커 위치</div>
-                <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)}
-                  selection options={LocationList} placeholder="시/도" 
-                  onChange={this.onChangeLocation}/>
-              </div>
+                <div className="wrapper flex centering">
+                  <div className="label">메이커 위치</div>
+                  <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                    selection options={LocationList} placeholder="시/도"
+                    onChange={this.onChangeLocation} />
+                </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 재판매</div>
@@ -352,4 +344,4 @@ class RequestToDesigner extends Component {
     );
   };
 }
-export default RequestToDesigner;
+export default RequestToMaker;

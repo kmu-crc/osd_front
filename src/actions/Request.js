@@ -17,7 +17,7 @@ export const CreateRequestRequest = (data, token) => {
   };
 };
 const CreateRequest = () => ({ type: types.CREATE_REQUEST });
-const CreateRequestSuccess = res => ({ type: types.CREATE_REQUEST_SUCCESS, success: res.success });
+const CreateRequestSuccess = res => ({ type: types.CREATE_REQUEST_SUCCESS, id: res.id, success: res.success });
 const CreateRequestFail = error => ({ type: types.CREATE_REQUEST_FAIL, success: error.success });
 
 

@@ -225,7 +225,7 @@ class Detail extends Component {
           </Link> */}
             {!MyDetail ?
               <Link to={{ pathname: `/responseToDesignerReq/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
-                <RedButton left={1444} bottom={-50}><div>견적서작성</div></RedButton>
+                <RedButton left={1444} bottom={-50}><div>의뢰응답</div></RedButton>
               </Link>
               : null}
           </div>
@@ -284,10 +284,10 @@ class Detail extends Component {
               </FormBox>
 
               <FormBox>
-                <div className="wrapper flex">
+                {/* <div className="wrapper flex">
                   <div className="label">제목</div>
                   <div className="textBox">{Detail.title}</div>
-                </div>
+                </div> */}
 
                 <div className="wrapper flex">
                   <div className="label">설명</div>

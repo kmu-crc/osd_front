@@ -8,8 +8,8 @@ import {
   GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest
 } from "actions/Product";
-import { GetItemDetailRequest, GetItemPaymentRequest } from "actions/Item";
-import { CreateItemPaymentRequest } from "actions/Item";
+import { CreateItemPaymentRequest, /*GetItemPaymentRequest*/ } from "actions/Payment";
+import { GetItemDetailRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 

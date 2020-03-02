@@ -1,8 +1,98 @@
-// import * as types from "actions/ActionTypes";
-// import host from "config";
+import * as types from "actions/ActionTypes";
+import host from "config";
+
+// Payment
+// purchase item
+export const CreateItemPaymentRequest = (data, id, token) => {
+    return dispatch => {
+        dispatch(CreateItemPayment());
+        const url = `${host}/payment/create/${id}`;
+        return fetch(url, {
+            headers: { "x-access-token": token, "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(res => res && dispatch(CreateItemPaymentSuccess(res)))
+            .catch(error => dispatch(CreateItemPaymentFailure(error)));
+    };
+};
+const CreateItemPayment = () => ({
+    type: types.CREATE_ITEM_PAYMENT
+});
+const CreateItemPaymentSuccess = res => ({
+    type: types.CREATE_ITEM_PAYMENT_SUCCESS, data: res
+});
+const CreateItemPaymentFailure = error => ({
+    type: types.CREATE_ITEM_PAYMENT_FAILURE
+});
+// get payment-list
+export const GetItemPaymentRequest = (id, token, page) => {
+    return dispatch => {
+        dispatch(GetItemPayment());
+        const url = `${host}/payment/get/${id}/${page}`;
+        // console.log(url);
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => dispatch(GetItemPaymentSuccess(data)))
+            .catch(error => dispatch(GetItemPaymentFailure(error)));
+    };
+};
+const GetItemPayment = () => ({
+    type: types.GET_ITEM_PAYMENT
+});
+const GetItemPaymentSuccess = data => ({
+    type: types.GET_ITEM_PAYMENT_SUCCESS, payload: data,
+});
+const GetItemPaymentFailure = error => ({
+    type: types.GET_ITEM_PAYMENT_FAILURE
+});
+
+// get my payment-list
+export const GetMyPaymentRequest = (token, page) => {
+    return dispatch => {
+        const url = `${host}/payment/getmine/${page}`;
+        // console.log(url, token)
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => dispatch(
+                page === 0
+                    ? GetMyPaymentClear(data)
+                    : GetMyPayment(data)))
+            .catch(error => dispatch(GetMyPaymentFailure(error)));
+    };
+};
+const GetMyPayment = data => ({
+    type: types.GET_MY_PAYMENT,
+    MyPayment: data.data.payments,
+    MyTotal: data.data.total
+});
+const GetMyPaymentClear = data => ({
+    type: types.GET_MY_PAYMENT_CLEAR,
+    MyPayment: data.data.payments,
+    MyPaymentAdded: [],
+    MyTotal: data.data.total
+});
+const GetMyPaymentFailure = error => ({
+    type: types.GET_MY_PAYMENT_FAILURE,
+    MyPayment: [],
+    MyPaymentAdded: []
+});
+
+
+
+
 
 
 // // list
+
+
 // export function GetProductListRequest(page, sort, cate1, cate2, keyword) {
 //   return (dispatch) => {
 //     const url = `${host}/product/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;

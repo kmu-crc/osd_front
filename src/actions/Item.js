@@ -319,81 +319,9 @@ const DeleteItemReviewFailure = error => ({
 });
 
 
-// Payment
-// purchase item
-export const CreateItemPaymentRequest = (data, id, token) => {
-  return dispatch => {
-    dispatch(CreateItemPayment());
-    const url = `${host}/payment/create/${id}`;
-    return fetch(url, {
-      headers: { "x-access-token": token, "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(res => res && dispatch(CreateItemPaymentSuccess(res)))
-      .catch(error => dispatch(CreateItemPaymentFailure(error)));
-  };
-};
-const CreateItemPayment = () => ({
-  type: types.CREATE_ITEM_PAYMENT
-});
-const CreateItemPaymentSuccess = res => ({
-  type: types.CREATE_ITEM_PAYMENT_SUCCESS, data: res
-});
-const CreateItemPaymentFailure = error => ({
-  type: types.CREATE_ITEM_PAYMENT_FAILURE
-});
-// get payment-list
-export const GetItemPaymentRequest = (id, token, page) => {
-  return dispatch => {
-    dispatch(GetItemPayment());
-    const url = `${host}/payment/get/${id}/${page}`;
-    // console.log(url);
-    return fetch(url, {
-      headers: { "Content-Type": "application/json", "x-access-token": token },
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(data => dispatch(GetItemPaymentSuccess(data)))
-      .catch(error => dispatch(GetItemPaymentFailure(error)));
-  };
-};
-const GetItemPayment = () => ({
-  type: types.GET_ITEM_PAYMENT
-});
-const GetItemPaymentSuccess = data => ({
-  type: types.GET_ITEM_PAYMENT_SUCCESS, payload: data,
-});
-const GetItemPaymentFailure = error => ({
-  type: types.GET_ITEM_PAYMENT_FAILURE
-});
-
-// get my payment-list
-export const GetMyPaymentRequest = (token, page) => {
-  return dispatch => {
-    const url = `${host}/payment/getmine/${page}`;
-    return fetch(url, {
-      headers: { "Content-Type": "application/json", "x-access-token": token },
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(data => dispatch(page === 0 ? GetMyPaymentClear(data) : GetMyPayment(data)))
-      .catch(error => dispatch(GetMyPaymentFailure(error)));
-  };
-};
-const GetMyPaymentClear = data => ({
-  type: types.GET_MY_PAYMENT_CLEAR, MyPayment: data.data.payments, MyTotal: data.data.total
-});
-const GetMyPayment = data => ({
-  type: types.GET_MY_PAYMENT, MyPayment: data.payments, MyPaymentAdded: [], MyTotal: data.data.total
-});
-const GetMyPaymentFailure = error => ({
-  type: types.GET_MY_PAYMENT_FAILURE, MyPayment: [], MyPaymentAdded: []
-});
 
 // get my upload item list
-export const GetMyUploadItemRequest = (id,token, page) => {
+export const GetMyUploadItemRequest = (id, token, page) => {
   return dispatch => {
     const url = `${host}/item/getUploadItemList/${id}/${page}`;
     return fetch(url, {
@@ -401,23 +329,17 @@ export const GetMyUploadItemRequest = (id,token, page) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(
-        data => {
-          dispatch(page === 0 ? GetMyUploadItemClear(data) : GetMyUploadItem(data))}
-        )
-      .catch(error => dispatch(GetMyUploadItemFailure(error)));
+      .then(data => dispatch(
+        page === 0
+          ? GetMyUploadItemClear(data ? data : [])
+          : GetMyUploadItem(data ? data : [])))
+      .catch(error => dispatch(GetMyUploadItemFailure()));
   };
 };
-const GetMyUploadItemClear = data => ({
-  type: types.GET_MY_UPLOAD_ITEM_CLEAR, MyUploadItem: data
-});
-const GetMyUploadItem = data => (
-  {
-  type: types.GET_MY_UPLOAD_ITEM, MyUploadItem: data, MyUploadItemAdded: []
-});
-const GetMyUploadItemFailure = error => ({
-  type: types.GET_MY_UPLOAD_ITEM_FAILURE, MyUploadItem: [], MyUploadItemAdded: []
-});
+const GetMyUploadItem = (data) => ({ type: types.GET_MY_UPLOAD_ITEM, MyUploadItem: data });
+const GetMyUploadItemClear = (data) => ({ type: types.GET_MY_UPLOAD_ITEM_CLEAR, MyUploadItem: data, MyUploadItemAdded: [] });
+const GetMyUploadItemFailure = () => ({ type: types.GET_MY_UPLOAD_ITEM_FAILURE, MyUploadItem: [], MyUploadItemAdded: [] });
+
 
 // // Payment
 // // get review-list

@@ -297,15 +297,15 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: 0,thumbnail:null}
+    this.state = { selectMenu: 7/*0*/, thumbnail: null }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
     this.onClickThumbnail = this.onClickThumbnail.bind(this);
   }
-  componentWillUpdate(nextProps){
-    if(this.props.MyDetail.thumbnail!=nextProps.MyDetail.thumbnail){
-      this.setState({thumbnail:nextProps.MyDetail.thumbnail})
+  componentWillUpdate(nextProps) {
+    if (this.props.MyDetail.thumbnail != nextProps.MyDetail.thumbnail) {
+      this.setState({ thumbnail: nextProps.MyDetail.thumbnail })
     }
     return true;
   }
@@ -335,22 +335,22 @@ class MyDetail extends Component {
       case "join_project": selectMenu = 4; break;
       case "request_designer": selectMenu = 5; break;
       case "request_maker": selectMenu = 6; break;
-      case "upload_item": selectMenu=7;break;
+      case "upload_item": selectMenu = 7; break;
 
     }
     console.log(selectMenu);
     this.setState({ selectMenu: selectMenu });
   }
-  
-  async onClickThumbnail(event){
+
+  async onClickThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
     reader.onloadend = async () => {
       // await this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
-      await this.props.ModifyUserDetailRequest(this.props.userInfo.uid,{files:[{value:reader.result,name:file.name,key:0}]},this.props.token)
-      .then(this.props.GetMyDetailRequest(this.props.token))
-      .then(window.location.reload())
+      await this.props.ModifyUserDetailRequest(this.props.userInfo.uid, { files: [{ value: reader.result, name: file.name, key: 0 }] }, this.props.token)
+        .then(this.props.GetMyDetailRequest(this.props.token))
+        .then(window.location.reload())
     }
     if (event.target.files[0]) {
       await reader.readAsDataURL(file);
@@ -431,7 +431,7 @@ class MyDetail extends Component {
               {selectMenu === 0 ?
                 <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
               {selectMenu === 7 ?
-                <UploadItemContainer id={this.props.userInfo.uid} /> : null}  
+                <UploadItemContainer id={this.props.userInfo.uid} /> : null}
               {selectMenu === 1 &&
                 <LikeInItemContainer id={this.props.userInfo.uid} />}
               {selectMenu === 2 &&

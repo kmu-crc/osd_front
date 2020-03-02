@@ -639,7 +639,8 @@ class DesignerDetail extends Component {
       category_level2: this.state.category_level2,
       content: this.state.comment,
       title: this.state.title,
-      expert_id: this.props.id,
+      expert_id: this.props.id || null,
+      personal: this.props.id || null,
     };
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
