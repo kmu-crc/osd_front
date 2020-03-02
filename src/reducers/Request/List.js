@@ -26,7 +26,14 @@ export const RequestList = (state, action) => {
       return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total } } });
     case types.MAKER_REQUEST_LIST_FAIL:
       return update(state, { status: { List: { $set: action.List }, } });
-
+    case types.GET_MY_DESIGNER_REQUEST_LIST:
+      return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total } } });
+    case types.MY_DESIGNER_REQUEST_LIST_FAIL:
+      return update(state, { status: { List: { $set: action.List }, } });
+    case types.GET_MY_MAKER_REQUEST_LIST:
+      return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total } } });
+    case types.MY_MAKER_REQUEST_LIST_FAIL:
+      return update(state, { status: { List: { $set: action.List }, } });  
     default:
       return state;
   }
