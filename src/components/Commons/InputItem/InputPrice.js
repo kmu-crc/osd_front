@@ -6,8 +6,8 @@ const FormBox = styled.div`
     display:flex;
     align-items:center;
 `
-const FormStyle = styled.input.attrs({type:"number"})`
-    width: ${props=>props.width}px;
+const FormStyle = styled.input.attrs({ type: "number" })`
+    width: ${props => props.width}px;
     margin: 0;
     -webkit-appearance: none;
     padding: 0.67857143em 1em;
@@ -57,18 +57,18 @@ export class InputPrice extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { price:null ,};
+        this.state = { price: 0, };
         this.onClickButton = this.onClickButton.bind(this);
         this.onChangePrice = this.onChangePrice.bind(this);
     }
     componentDidMount() {
         this.init();
     }
-    componentDidUpdate(prevProps){
-        if(prevProps.price !== this.props.price){
+    componentDidUpdate(prevProps) {
+        if (prevProps.price !== this.props.price) {
             console.log(this.props.price);
             this.setState({
-                price:this.props.price,
+                price: this.props.price,
             })
         }
     }
@@ -76,38 +76,38 @@ export class InputPrice extends Component {
         this.props.getValue && await this.props.getValue(this.state.price);
     }
     init = async () => {
-        await this.setState({ price: this.props.price || null });
+        await this.setState({ price: this.props.price || 0 });
         this.returnData();
     }
-    async onClickButton(value){
-        const money= this.state.price==null?0:this.state.price;
-        const price = parseInt(money,10) + value;
-        console.log(parseInt(money,10) ,value);
-        await this.setState({price:price});
+    async onClickButton(value) {
+        const money = this.state.price == 0 ? 0 : this.state.price;
+        const price = parseInt(money, 10) + value;
+        console.log(parseInt(money, 10), value);
+        await this.setState({ price: price });
         this.returnData();
     }
-    async onChangePrice(event){
-        await this.setState({price:event.target.value});
+    async onChangePrice(event) {
+        await this.setState({ price: event.target.value });
         this.returnData();
     }
     render() {
         return (
             <React.Fragment>
-            <FormBox>
-                <FormStyle
-                    id = "price"
-                    width={this.props.width==null?"200":this.props.width}
-                    placeholder={this.props.placeholder}
-                    value={this.state.price}
-                    onChange = {this.onChangePrice}
-                />
+                <FormBox>
+                    <FormStyle
+                        id="price"
+                        width={this.props.width == null ? "200" : this.props.width}
+                        placeholder={this.props.placeholder}
+                        value={this.state.price}
+                        onChange={this.onChangePrice}
+                    />
 
-                <Button onClick={()=>this.onClickButton(1000)}><div className="text">+1천</div></Button>
-                <Button onClick={()=>this.onClickButton(10000)}><div className="text">+1만</div></Button>
-                <Button onClick={()=>this.onClickButton(50000)}><div className="text">+5만</div></Button>
-                <Button onClick={()=>this.onClickButton(100000)}><div className="text">+10만</div></Button>
-                <Button onClick={()=>this.onClickButton(1000000)}><div className="text">+100만</div></Button>
-            </FormBox>
+                    <Button onClick={() => this.onClickButton(1000)}><div className="text">+1천</div></Button>
+                    <Button onClick={() => this.onClickButton(10000)}><div className="text">+1만</div></Button>
+                    <Button onClick={() => this.onClickButton(50000)}><div className="text">+5만</div></Button>
+                    <Button onClick={() => this.onClickButton(100000)}><div className="text">+10만</div></Button>
+                    <Button onClick={() => this.onClickButton(1000000)}><div className="text">+100만</div></Button>
+                </FormBox>
             </React.Fragment>
         );
     }

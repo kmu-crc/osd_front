@@ -235,7 +235,7 @@ class RequestList extends Component {
 
         <Content top={58}>
           <Container>
-            <div className="category">
+            {/* <div className="category">
               <Category
                 handleCate2={this.cate2Change} handleCate1={this.cate1Change}
                 cate1={cate1} cate2={cate2}
@@ -246,8 +246,8 @@ class RequestList extends Component {
             </div>
             <div className="sort">
               <Sorting handleClick={this.sortChange} placeholder={sort} />
-            </div>
-            <div className="request">
+            </div> */}
+            <div className="request" style={{ marginLeft: "auto" }}>
               {type !== "normal" && type !== "item" ?
                 type === "designer" ?
                   <RequestButton>

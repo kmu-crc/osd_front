@@ -53,7 +53,7 @@ export class InputContent extends Component {
     };
 
     render() {
-        const { content } = this.props;
+        const { content, projectable } = this.props;
         return (<React.Fragment>
             {content.length > 0 && content.map((item, index) =>
                 <Controller
@@ -63,6 +63,7 @@ export class InputContent extends Component {
                     deleteItem={this.deleteItem} getValue={this.onChangValue} />)}
 
             <AddContent
+                projectable={projectable}
                 name="addBasic" type="INIT"
                 order={content.length > 0 ? content.length : 0}
                 getValue={this.onAddValue}
@@ -182,12 +183,13 @@ class AddContent extends Component {
         }
     }
     render() {
+        console.log(this.props);
         return (
             <ControllerWrap>
                 <div className="innerBox">
                     <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
                     <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
-                    {this.props.order === 0 ? <NewController className="txt" className="complecated" width="max-content" height="29px">
+                    {this.props.order === 0 && this.props.projectable ? <NewController className="txt" className="complecated" width="max-content" height="29px">
                         <div onClick={this.changeType} className="txt">단계 생성하기</div>
                         <Tip>
                             <sup>&nbsp;?</sup>

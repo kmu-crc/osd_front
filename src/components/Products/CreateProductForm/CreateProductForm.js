@@ -349,7 +349,7 @@ class CreateProductForm extends Component {
       <div className="contentsBox">
         {itemType > -1 ?
           <ItemTypeForm
-            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps })}
+            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, type: obj.type })}
             itemType={this.state.itemType}
             userInfo={this.props.userInfo}
           />
@@ -367,13 +367,14 @@ class CreateProductForm extends Component {
                 keep: {
                   designer: this.props.keep,
                   item: {
-                    //basic
-                    title: this.state.title, type: "item",
+                    // basic
+                    title: this.state.title,
                     files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
-                    tag: this.state.tag, category1: this.state.category1, category2: this.state.category2,
+                    tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
                     itemType: this.state.itemType,
-                    //additional
-                    additional: this.state.additional, content: this.state.content, step: this.state.steps
+                    // additional
+                    additional: this.state.additional, content: this.state.content, step: this.state.steps,
+                    type: this.state.type, private: this.state.private
                   }
                 }
               }
@@ -427,7 +428,7 @@ class ItemTypeForm extends Component {
     this.returnState();
   }
   async toProject() {
-    this.setState({ type: "project" });
+    this.setState({ type: "project", content: [] });
     this.returnState();
   }
 
@@ -455,6 +456,7 @@ class ItemTypeForm extends Component {
           {this.state.type === "blog" ?
             <div className="contentWrap">
               <InputContent
+                projectable={true}
                 content={content}
                 toProject={this.toProject}
                 returnState={this.onHandleContent} />
