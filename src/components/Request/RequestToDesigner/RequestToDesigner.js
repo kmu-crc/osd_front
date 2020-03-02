@@ -3,52 +3,26 @@ import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
-import {InputPrice} from "components/Commons/InputItem/InputPrice";
+import { InputPrice } from "components/Commons/InputItem/InputPrice";
 
 const LocationList = [
-  {value:0,text:"서울특별시"},
-  {value:1,text:"부산광역시"},
-  {value:2,text:"대구광역시"},
-  {value:3,text:"인천광역시"},
-  {value:4,text:"광주광역시"},
-  {value:5,text:"대전광역시"},
-  {value:6,text:"울산광역시"},
-  {value:7,text:"경기도"},
-  {value:8,text:"강원도"},
-  {value:9,text:"충청북도"},
-  {value:10,text:"충청남도"},
-  {value:11,text:"전라북도"},
-  {value:12,text:"경상북도"},
-  {value:13,text:"경상남도"},
-  {value:14,text:"제주도"},
-  {value:15,text:"제한없음"},
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
 ];
-
-const FirstCategory = [{ text: "패션", value: 0 },
-{ text: "제작품", value: 1 },
-{ text: "커뮤니케이션", value: 2 },
-{ text: "공간", value: 3 },
-{ text: "엔터테인먼트", value: 4 },
-{ text: "소프트웨어", value: 5 },
-{ text: "새분야", value: 6 }];
-
-const EmptyCategory = [{ text: "", value: -1 }]
-
-const SecondCategory = [[{ text: "스마트패션", value: 0 }, { text: "의상", value: 1 }, { text: "엑세서리", value: 2 }, { text: "패션모듈", value: 3 }],
-[{ text: "스마트카", value: 0 }, { text: "로봇", value: 1 }, { text: "기계/기기/기구", value: 2 }, { text: "센서모듈", value: 3 }, { text: "공예", value: 4 }],
-[{ text: "UI/UX", value: 0 }, { text: "광고", value: 1 }, { text: "웹", value: 2 }, { text: "영상", value: 3 }, { text: "타이포그래피", value: 4 }],
-[{ text: "스마트시티", value: 0 }, { text: "건축", value: 1 }, { text: "인테리어", value: 2 }, { text: "환경", value: 3 }],
-[{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
-[{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
-[{ text: "새분야", value: 0 }]];
-const ItemType = [{ text: "디자인", value: 0 },
-{ text: "프로젝트", value: 1 },
-{ text: "지적재산권", value: 2 },
-{ text: "기술자문/상담", value: 3 },
-{ text: "경험", value: 4 },
-{ text: "정보/데이터", value: 5 },
-{ text: "아이디어/노하우", value: 6 },
-{ text: "제작품", value: 7 }];
 
 const Wrapper = styled(ContentBox)`
   width: 100%;
@@ -75,7 +49,7 @@ const MainBox = styled.div`
     padding-top:36px;
   }
 
-`
+`;
 const RedButton = styled.div`
   width:290px;
   height:70px;
@@ -93,8 +67,7 @@ const RedButton = styled.div`
   bottom:${props => props.bottom}px;
 
   cursor:pointer;
-`
-
+`;
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -138,7 +111,7 @@ const FormBox = styled.div`
     color:#707070;
   }
 
-`
+`;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
@@ -151,7 +124,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   border:0px;
   padding: 0.67857143em 1em;
 
-`
+`;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
@@ -164,26 +137,26 @@ const InputTextarea = styled.textarea`
   readonly;
   padding: 0.67857143em 1em;
 
-`
+`;
 const Margin = styled.div`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`
-
+`;
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
     background-color:#E9E9E9 !important;
     margin-right:10px;
 
     border-radius:20px !important;
-`
+`;
 const HRLine = styled.div`
     width:93%;
     height:3px;
     background-color:#E9E9E9;
     margin-top:35px;
     margin-bottom:35px;
-`
+`;
+
 class RequestToDesigner extends Component {
   constructor(props) {
     super(props);
@@ -219,8 +192,8 @@ class RequestToDesigner extends Component {
       title: event.target.value,
     })
   }
-  async getPriceValue(value){
-    await this.setState({price:value});
+  async getPriceValue(value) {
+    await this.setState({ price: value });
   }
   getTagValue(data) {
     this.setState({
@@ -232,8 +205,8 @@ class RequestToDesigner extends Component {
       price: event.target.value,
     })
   }
-  onChangeLocation(event,{value}){
-    this.setState({location:{value}.value});
+  onChangeLocation(event, { value }) {
+    this.setState({ location: { value }.value });
   }
   onChangeContent(event) {
     this.setState({
@@ -261,6 +234,7 @@ class RequestToDesigner extends Component {
       type: "designer",
       status: "request",
       expert_id: this.props.id || null,
+      personal: this.props.id || null,
       title: this.state.title,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
@@ -274,8 +248,8 @@ class RequestToDesigner extends Component {
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
-          if (this.props.id)
-            window.location.href = `/designerDetail/${this.props.id}`;
+          if (res.id)
+            window.location.href = `/designerDetail/${res.id}`;
           else
             window.location.href = "/request/designer";
         }
@@ -315,7 +289,7 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  <InputPrice name="price" getValue={this.getPriceValue}/>
+                  <InputPrice name="price" getValue={this.getPriceValue} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -326,10 +300,10 @@ class RequestToDesigner extends Component {
                 <div className="wrapper flex centering">
                   <div className="label">디자이너 위치</div>
                   {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
-                  <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)}
-                  selection options={LocationList} placeholder="시/도" 
-                  onChange={this.onChangeLocation}/>
+                  <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                    selection options={LocationList} placeholder="시/도"
+                    onChange={this.onChangeLocation} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -354,5 +328,5 @@ class RequestToDesigner extends Component {
       </React.Fragment>
     );
   };
-} export default RequestToDesigner;
-
+}
+export default RequestToDesigner;

@@ -3,7 +3,7 @@ import Payment from 'components/Payment/Payment';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GetMyPointRequest, } from "actions/Point";
-import { CreateItemPaymentRequest } from "actions/Item";
+import { CreateItemPaymentRequest } from "actions/Payment";
 
 class PaymentContainer extends Component {
   constructor(props) {

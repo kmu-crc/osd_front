@@ -46,6 +46,7 @@ export function Payment(state, action) {
                 }
             });
         case types.GET_MY_PAYMENT:
+            console.log(action);
             return update(state, {
                 status: {
                     MyPayment: { $set: action.MyPayment },
@@ -54,7 +55,6 @@ export function Payment(state, action) {
                 }
             });
         case types.GET_MY_PAYMENT_CLEAR:
-            console.log(action);
             return update(state, {
                 status: {
                     MyPayment: { $set: action.MyPayment },
@@ -64,8 +64,9 @@ export function Payment(state, action) {
             });
         case types.GET_MY_PAYMENT_FAILURE:
             return update(state, {
-                MyPayment: {
-                    status: { $set: "FAILURE" }
+                status: {
+                    MyPayment: { $set: action.MyPayment },
+                    MyPaymentAdded: { $set: action.MyPayment }
                 }
             });
         default:

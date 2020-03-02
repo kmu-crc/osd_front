@@ -1,38 +1,8 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag"
 import Loading from "components/Commons/Loading";
-
-const FirstCategory = [
-  { text: "패션", value: 0 },
-  { text: "제작품", value: 1 },
-  { text: "커뮤니케이션", value: 2 },
-  { text: "공간", value: 3 },
-  { text: "엔터테인먼트", value: 4 },
-  { text: "소프트웨어", value: 5 },
-  { text: "새분야", value: 6 }];
-const EmptyCategory = [
-  { text: "", value: -1 }]
-const SecondCategory = [
-  [{ text: "스마트패션", value: 0 }, { text: "의상", value: 1 }, { text: "엑세서리", value: 2 }, { text: "패션모듈", value: 3 }],
-  [{ text: "스마트카", value: 0 }, { text: "로봇", value: 1 }, { text: "기계/기기/기구", value: 2 }, { text: "센서모듈", value: 3 }, { text: "공예", value: 4 }],
-  [{ text: "UI/UX", value: 0 }, { text: "광고", value: 1 }, { text: "웹", value: 2 }, { text: "영상", value: 3 }, { text: "타이포그래피", value: 4 }],
-  [{ text: "스마트시티", value: 0 }, { text: "건축", value: 1 }, { text: "인테리어", value: 2 }, { text: "환경", value: 3 }],
-  [{ text: "스마트미디어", value: 0 }, { text: "게임", value: 1 }, { text: "디지털컨텐츠", value: 2 }, { text: "서비스", value: 3 }],
-  [{ text: "인공지능", value: 0 }, { text: "빅데이터", value: 1 }, { text: "시스템SW", value: 2 }, { text: "응용SW", value: 3 }],
-  [{ text: "새분야", value: 0 }]];
-const ItemType = [
-  { text: "디자인", value: 0 },
-  { text: "프로젝트", value: 1 },
-  { text: "지적재산권", value: 2 },
-  { text: "기술자문/상담", value: 3 },
-  { text: "경험", value: 4 },
-  { text: "정보/데이터", value: 5 },
-  { text: "아이디어/노하우", value: 6 },
-  { text: "제작품", value: 7 }];
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -59,7 +29,7 @@ const MainBox = styled.div`
     padding-top:36px;
   }
 
-`
+`;
 const RedButton = styled.div`
   width:290px;
   height:70px;
@@ -77,7 +47,7 @@ const RedButton = styled.div`
   bottom:${props => props.bottom}px;
 
   cursor:pointer;
-`
+`;
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -127,7 +97,7 @@ const FormBox = styled.div`
     color:#707070;
   }
 
-`
+`;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
@@ -140,7 +110,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   border:0px;
   padding: 0.67857143em 1em;
 
-`
+`;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
@@ -153,25 +123,7 @@ const InputTextarea = styled.textarea`
   readonly;
   padding: 0.67857143em 1em;
 
-`
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`
-const DropBox = styled(Dropdown)`
-    min-width:200px !important;
-    background-color:#E9E9E9 !important;
-    margin-right:10px;
-
-    border-radius:20px !important;
-`
-const HRLine = styled.div`
-    width:93%;
-    height:3px;
-    background-color:#E9E9E9;
-    margin-top:35px;
-    margin-bottom:35px;
-`
+`;
 const TagList = styled.div`
     width: 100%;
     display: flex;
@@ -206,35 +158,29 @@ class ResponseToDesignerReq extends Component {
       category_level1: 0, category_level2: 0,
       title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1,
 
-      res_title: "", res_content: "", res_price: "",
+      res_content: "", res_price: "",
     }
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChangeResponseTitle = this.onChangeResponseTitle.bind(this);
     this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
   }
-  componentDidMount() {
-    //test 데이터 초기화
-    this.setState({
-      category_level1: 1,
-      category_level2: 0,
-      title: "제작의뢰합니다.",
-      tag: ["테스트1", "테스트2", "테스트3"],
-      price: 12300,
-      content: "제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
-      location: "대한민국 서울특별시",
-      offline: 0,
-      amount: 1,
-      ownership: 0,
-    });
-  }
+  // componentDidMount() {
+  //   // //test 데이터 초기화
+  //   // this.setState({
+  //   //   category_level1: 1,
+  //   //   category_level2: 0,
+  //   //   title: "제작의뢰합니다.",
+  //   //   tag: ["테스트1", "테스트2", "테스트3"],
+  //   //   price: 12300,
+  //   //   content: "제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
+  //   //   location: "대한민국 서울특별시",
+  //   //   offline: 0,
+  //   //   amount: 1,
+  //   //   ownership: 0,
+  //   // });
+  // };
 
-  onChangeResponseTitle(event) {
-    this.setState({
-      res_title: event.target.value,
-    })
-  }
   onChangeResponseContent(event) {
     this.setState({
       res_content: event.target.value,
@@ -252,15 +198,20 @@ class ResponseToDesignerReq extends Component {
       status: "response",
       group_id: this.props.detail.group_id,
       sort_in_group: this.props.detail.sort_in_group,
-      title: this.state.res_title,
+      title: this.props.detail.title,
       content: this.state.res_content,
       price: this.state.res_price,
+      expert_id: this.props.userInfo.uid || null,
+      personal: this.props.detail.personal || null,
     }
     // // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
-          window.location.href = "/request/designer";
+          if (this.props.detail.personal)
+            window.location.href = `/designerDetail/${this.props.detail.personal}`;
+          else
+            window.location.href = "/request/designer";
         }
       })
       .catch(err => alert("에러가 발생했습니다." + err));
@@ -330,10 +281,10 @@ class ResponseToDesignerReq extends Component {
             </FormBox>
 
             <FormBox>
-              <div className="wrapper flex">
+              {/* <div className="wrapper flex">
                 <div className="label">제목</div>
                 <InputText onChange={this.onChangeResponseTitle} value={this.state.res_title} width={483} />
-              </div>
+              </div> */}
 
               <div className="wrapper flex">
                 <div className="label">의뢰 응답</div>
@@ -354,161 +305,6 @@ class ResponseToDesignerReq extends Component {
       </Wrapper>
     );
   };
-} export default ResponseToDesignerReq;
+}
 
-// import React, { Component } from "react";
-// import { Grid } from "semantic-ui-react";
-// import styled from 'styled-components';
-// import StyleGuide from "StyleGuide";
-// import mainSlide from "source/mainSlide.jpg";
-// import ContentBox from "components/Commons/ContentBox";
-// import { FormDropBox, FormFile, FormInput, FormCheckBox, FormTag, FormTextArea } from "components/Commons/FormItems";
-// import Button from "components/Commons/Button";
-// import Loading from "components/Commons/Loading";
-
-// const ImgWrapper = styled.div`
-//   background-image: url(${mainSlide});
-//   background-position: center;
-//   background-size: cover;
-//   width: 100%;
-//   height: 200px;
-//   position: relative;
-//   &::after {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     display: block;
-//     content: "";
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(0, 0, 0, 0.6);
-//     z-index: 1;
-//   }
-// `;
-// const Title = styled.div`
-//   width: 100%;
-//   color: white;
-//   position: absolute;
-//   text-align: center;
-//   top: 40%;
-//   left: 0;
-//   z-index: 2;
-//   transform: translateY(-50%);
-//   h1 {
-//     color: ${StyleGuide.color.geyScale.scale0};
-//     font-size: ${StyleGuide.font.size.heading2};
-//     font-weight: bold;
-//   }
-// `;
-// const Wrapper = styled(ContentBox)`
-//     width:100%;
-//     margin-top:60px;
-//     margin-bottom: 100px;
-//     position: relative;
-//     z-index:3;
-// `;
-// const FromFieldCard = styled.div`
-//   width: 100%;
-//   background-color: white;
-//   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-//   padding: 70px;
-//   margin-bottom: 30px;
-//   border-radius: 3px;
-//   @media only screen and (min-width: 1200px) {
-//     padding: 70px 100px 70px 100px;
-//   }
-// `;
-// const Label = styled.div`
-//   margin: 0 0 0.8rem 0;
-//   display: block;
-//   color: rgba(0,0,0,.87);
-//   font-size: .92857143em;
-//   font-weight: 700;
-//   text-transform: none;
-// `;
-
-// class CreateRequest extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { loading: false, };
-//     this.onSubmit = this.onSubmit.bind(this);
-//     this.onChangeTag = this.onChangeTag.bind(this);
-//     this.onChangeValue = this.onChangeValue.bind(this);
-//     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
-//     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
-//     this.onChangedPrivate = this.onChangedPrivate.bind(this);
-//     this.gotoDetailPage = this.gotoDetailPage.bind(this);
-//   }
-//   onChangeTag = v => { this.setState({ tag: v }); };
-//   onChangeValue = e => { this.setState({ [e.target.name]: e.target.value }); };
-//   onChangeCategory1 = v => { this.setState({ category_level1: v }); };
-//   onChangeCategory2 = v => { this.setState({ category_level2: v }); };
-//   onChangedPrivate = checkbox => { this.setState({ private: checkbox.value }); };
-//   gotoDetailPage = id => {
-//     if (id) {
-//       alert("완료되었습니다.");
-//       window.location.href = `/designerBoardDetail/${id}`
-//     } else {
-//       alert("글 작성에 실패하였습니다.");
-//     }
-//   };
-//   onSubmit = e => {
-//     e.preventDefault();
-//     this.setState({ loading: true });
-//     let data = { ...this.state, writer: this.props.userInfo.uid, type: "designer" };
-//     delete data.loading;
-//     console.log(data);
-//     this.props.CreateDesignerBoardArticleRequest &&
-//       this.props.CreateDesignerBoardArticleRequest(data, this.props.token)
-//         .then(id => this.gotoDetailPage(id))
-//         .catch(e => alert(e));
-//     this.setState({ loading: false });
-//   };
-
-//   render() {
-//     return (<React.Fragment>
-//       {this.state.loading ? <Loading /> : null}
-
-//       <Wrapper>
-//         <FromFieldCard>
-//           <Grid>
-//             <Grid.Column mobile={16} computer={16}>
-//               <Label>제목</Label>
-//               <FormInput name="title" placeholder="설명을 입력해주세요." getValue={this.onChangeValue} />
-//               <Label>카테고리</Label>
-//               <div style={{ display: "flex", flexDirection: "row" }}>
-//                 <FormDropBox
-//                   selection={true} name="category_level1"
-//                   onChangeValue={this.onChangeCategory1}
-//                   options={this.props.category1}
-//                 />&nbsp;&nbsp;
-//                   {this.state.category_level1 ?
-//                   <FormDropBox
-//                     selection={true} name="category_level2"
-//                     onChangeValue={this.onChangeCategory2}
-//                     options={this.props.category2[this.state.category_level1]} /> : null}
-//               </div>
-//               <Label>내용</Label>
-//               <FormTextArea name="content" placeholder="내용을 입력해주세요." getValue={this.onChangeValue} />
-
-//               {/* <Label>파일첨부</Label>
-//               <FormFile name="file" getValue={this.onChangeValue} /> */}
-
-//               <Label>태그</Label>
-//               <FormTag name="tag" getValue={this.onChangeTag} placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
-
-//               <Label>비공개여부</Label>
-//               <FormCheckBox name="private" value={false} getValue={this.onChangedPrivate} placeholder="비공개" />
-
-//             </Grid.Column>
-//           </Grid>
-//         </FromFieldCard>
-//         <div style={{ width: "max-content", marginLeft: "auto" }}>
-//           <Button color="Primary" onClick={this.onSubmit} type="submit">등록하기</Button>
-//         </div>
-//       </Wrapper>
-//     </React.Fragment>);
-//   }
-// }
-
-// export default CreateRequest;
+export default ResponseToDesignerReq;

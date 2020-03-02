@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemReview from "components/Items/ItemReview";
-import { GetItemPaymentRequest, GetItemReviewRequest, CreateItemReviewRequest, DeleteItemReviewRequest } from "actions/Item";
+import { GetItemReviewRequest, CreateItemReviewRequest, DeleteItemReviewRequest } from "actions/Item";
+import { GetItemPaymentRequest } from "actions/Payment";
 
 class ItemReviewContainer extends Component {
     constructor(props) {

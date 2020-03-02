@@ -14,6 +14,8 @@ class RequestToMakerContainer extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
+  category1: state.CategoryAll.status.category1,
+  category2: state.CategoryAll.status.category2,
 });
 const mapDispatchToProps = (dispatch) => ({
   CreateRequestRequest: (data, token) => dispatch(CreateRequestRequest(data, token)),
