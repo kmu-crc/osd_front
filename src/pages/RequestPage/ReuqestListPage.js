@@ -6,10 +6,11 @@ class RequestListPage extends Component {
     return (
       <RequestListContainer
         type={this.props.match.params.type || "designer"}
-        // sort={this.props.match.params.sorting ? this.props.match.params.sorting : "update"}
+        sort={this.props.match.params.sort ? this.props.match.params.sort : "update"}
         cate1={this.props.match.params.cate1 ? this.props.match.params.cate1 : null}
         cate2={this.props.match.params.cate2 ? this.props.match.params.cate2 : null}
-      // Îhistory={this.props.history} 
+        keyword={this.props.match.params.keyword ? this.props.match.params.keyword : null}
+        history={this.props.history}
       />
     );
   }

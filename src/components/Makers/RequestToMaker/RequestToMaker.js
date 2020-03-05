@@ -327,11 +327,11 @@ class RequestToMaker extends Component {
                     onChange={this.onChangeResale} value={this.state.resale} placeholder="선택" />
                 </div>
 
-                <div className="wrapper flex centering">
+                {/* <div className="wrapper flex centering">
                   <div className="label">오프라인 상담</div>
                   <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
                     onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
-                </div>
+                </div> */}
 
               </FormBox>
               <RedButton onClick={this.onSubmit} left={1164} bottom={0}>

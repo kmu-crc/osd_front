@@ -6,12 +6,10 @@ import RequestElement from "components/Request/RequestListElement";
 
 class ScrollRequestListContainer extends Component {
   componentWillMount() {
-    this.props.GetRequestListRequest(this.props.type, 0);
-    // this.props.GetRequestListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+    this.props.GetRequestListRequest(this.props.type, 0, this.props.cate1, this.props.cate2, this.props.sort, this.props.keyword);
   }
   getList = (page) =>
-    this.props.GetRequestListRequest(this.props.type, page);
-  // return this.props.GetRequestListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+    this.props.GetRequestListRequest(this.props.type, page, this.props.cate1, this.props.cate2, this.props.sort, this.props.keyword);
 
 
   render() {
@@ -21,7 +19,6 @@ class ScrollRequestListContainer extends Component {
         dataList={this.props.dataList}
         getListRequest={this.getList}
         ListComponent={RequestElement}
-      // mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom" 
       />
     );
   }
@@ -32,8 +29,8 @@ const mapStateToProps = (state) => ({
   Count: state.RequestList.status.Total,
 });
 const mapDispatchToProps = (dispatch) => ({
-  GetRequestListRequest: (type, page) =>//page, sort, categoryLevel1, categoryLevel2, keyword) =>
-    dispatch(GetRequestListRequest(type, page)),//page, sort, categoryLevel1, categoryLevel2, keyword)),
+  GetRequestListRequest: (type, page, cate1, cate2, sort, keyword) =>
+    dispatch(GetRequestListRequest(type, page, cate1, cate2, sort, keyword)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollRequestListContainer);

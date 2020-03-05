@@ -2,19 +2,57 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import RequestDetail from "components/Request/RequestDetail";
 import { GetRequestDetailRequest } from "actions/Request";
+import { GetThisPurchasedRequest, UpdatePaymentRequest, CreateItemPaymentRequest } from "actions/Payment";
 
 class RequestDetailContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.ConfirmPayment = this.ConfirmPayment.bind(this);
+    this.Purchase = this.Purchase.bind(this);
+
+  }
   componentDidMount() {
     this.props.GetRequestDetailRequest(this.props.id)
-    // .then(data => {
-    //   if (data.private === 1) {
-    //     // alert("비공개글입니다.");
-    //     // window.history.go(-1);
-    //   }
-    // })
+      .then(
+        this.props.userInfo &&
+        this.props.GetThisPurchasedRequest(this.props.id, this.props.token)
+      )
+  }
+  ConfirmPayment() {
+    const { Detail } = this.props;
+    this.props.UpdatePaymentRequest(Detail.uid, this.props.token)
+      .then(result => {
+        if (result.success) {
+          this.props.userInfo &&
+            this.props.GetThisPurchasedRequest(this.props.id, this.props.token)
+        }
+      });
+
+    // window.location.reload();
   };
+  Purchase() {
+    const { Detail } = this.props;
+    console.log(this.props);
+
+    this.props.CreateItemPaymentRequest(
+      {
+        payment_title: Detail.title,
+        payment_price: Detail.price,
+        response_id: Detail.uid
+      },
+      "custom",
+      this.props.token)
+      .then(res => {
+        if (res.data.success) {
+          alert("구매하였습니다. [구매확인]버튼을 눌러야 거래가 완료됩니다.");
+          window.location.href = `/myPage/`;
+        }
+      })
+  };
+
   render() {
-    return (<RequestDetail {...this.props} />)
+    console.log(this.props);
+    return (<RequestDetail purchase={this.Purchase} confirm={this.ConfirmPayment} {...this.props} />)
   }
 }
 
@@ -23,11 +61,15 @@ const mapStateToProps = (state) => ({
   Detail: state.RequestDetail.status.Detail,
   token: state.Authentication.status.token,
   category1: state.CategoryAll.status.category1,
-  category2: state.CategoryAll.status.category2
+  category2: state.CategoryAll.status.category2,
+  isPurchased: state.Payment.status.isPurchased,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   GetRequestDetailRequest: (id) => dispatch(GetRequestDetailRequest(id)),
+  GetThisPurchasedRequest: (id, token) => dispatch(GetThisPurchasedRequest(id, token)),
+  UpdatePaymentRequest: (id, token) => dispatch(UpdatePaymentRequest(id, token)),
+  CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestDetailContainer);
