@@ -3,12 +3,12 @@ import styled from "styled-components";
 import noimg from "source/noimg.png";
 import Item from "components/Items/Item/Item"
 import Expert from "components/Experts/Expert";
-
 import { LikeItem } from "components/Users/MyDetail/MyDetailTab/likeItem";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer"
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
 import MyPaymentContainer from "containers/Payment/MyPaymentContainer"
+import MyRequestItemContainer from "containers/Payment/MyRequestItemContainer"
 import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer"
 import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer"
 import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer"
@@ -234,72 +234,22 @@ const EmptyBox = styled.div`
 `
 
 const RoundButton = styled.div`
-    width:${props => props.width}px;
-    height:${props => props.height}px;
-    color:${props => props.color};
-    border:1px solid ${props => props.borderColor};
-    border-radius:21px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-`
-const empty = {
-
-  //등록아이템
-  likeItem: [{ thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 },
-  { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 }],
-  likeDesigner: [
-    {
-      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
-      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
-    },
-    {
-      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
-      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
-    }],
-  likeMaker: [
-    {
-      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
-      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
-    },
-    {
-      nick_name: "Loading", categoryName: "카테고리", items: 300, likes: 5000000,
-      create_time: "2020-01-01T00:00:01.000Z", update_time: "2020-01-01T00:00:01.000Z"
-    }],
-  // 게시판
-  designerRequest: [{
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "designer_req",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  },
-  {
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "designer_req",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  }],
-  makerRequest: [{
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  },
-  {
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  },
-  {
-    uid: "1", user_id: "123", nick_name: "멍멍이", type: "maker_req",
-    title: "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 ",
-    create_time: "1999.99.99", update_time: "1999.11.11"
-  }],
-};
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  color:${props => props.color};
+  border:1px solid ${props => props.borderColor};
+  border-radius:21px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+`;
 
 class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: -1}
+    this.state = { selectMenu: -1 }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
@@ -332,7 +282,7 @@ class MyDetail extends Component {
       case "request_designer": selectMenu = 5; break;
       case "request_maker": selectMenu = 6; break;
       case "upload_item": selectMenu = 7; break;
-
+      case "request_item": selectMenu = 8; break;
     }
     console.log(selectMenu);
     this.setState({ selectMenu: selectMenu });
@@ -401,31 +351,32 @@ class MyDetail extends Component {
           <div className="contents">
             <MenuBox>
               {/* <div className="title_Label">아이템</div> */}
-              <MenuButton id="orderlist" onClick={this.onClickMenu} fontColor={selectMenu == 0 ? "red" : null}>구매 아이템</MenuButton>
-              <div className="hrLine" />
-              <MenuButton id="upload_item" onClick={this.onClickMenu} fontColor={selectMenu == 7 ? "red" : null}>등록 아이템</MenuButton>
-              <div className="hrLine" />
               {/* <div className="title_Label">관심</div> */}
-              <MenuButton id="interest_Item" onClick={this.onClickMenu} fontColor={selectMenu == 1 ? "red" : null}>관심 아이템</MenuButton>
-              <div className="hrLine" />
-              <MenuButton id="interest_Designer" onClick={this.onClickMenu} fontColor={selectMenu == 2 ? "red" : null}>관심 디자이너</MenuButton>
-              <div className="hrLine" />
-              <MenuButton id="interest_Maker" onClick={this.onClickMenu} fontColor={selectMenu == 3 ? "red" : null}>관심 메이커</MenuButton>
-              {/* <div className="hrLine" /> */}
-              <div className="hrLine" />
               {/* <div className="title_Label">참여</div> */}
-              <MenuButton id="join_project" onClick={this.onClickMenu} fontColor={selectMenu == 4 ? "red" : null}>프로젝트</MenuButton>
-              {/* <div className="hrLine" /> */}
-              <div className="hrLine" />
               {/* <div className="title_Label">의뢰</div> */}
-              <MenuButton id="request_designer" onClick={this.onClickMenu} fontColor={selectMenu == 5 ? "red" : null}>디자인 의뢰</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구매 아이템</MenuButton>
               <div className="hrLine" />
-
-              <MenuButton id="request_maker" onClick={this.onClickMenu} fontColor={selectMenu == 6 ? "red" : null}>제작 의뢰</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰아이템</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">프로젝트</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
               {selectMenu === 0 ?
                 <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
+              {selectMenu === 8 ?
+                <MyRequestItemContainer id={this.props.userInfo.uid} /> : null}
               {selectMenu === 7 ?
                 <UploadItemContainer id={this.props.userInfo.uid} /> : null}
               {selectMenu === 1 &&
@@ -435,10 +386,10 @@ class MyDetail extends Component {
               {selectMenu === 3 &&
                 <LikeInMakerContainer id={this.props.userInfo.uid} />}
               {selectMenu === 5 &&
-                <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid}/>
-                }
+                <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid} />
+              }
               {selectMenu === 6 &&
-                <MyUploadMakerReqBoardContainer id={this.props.userInfo.uid}/>
+                <MyUploadMakerReqBoardContainer id={this.props.userInfo.uid} />
               }
             </BoardBox>
           </div>

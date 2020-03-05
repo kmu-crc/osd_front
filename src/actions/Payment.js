@@ -2,6 +2,37 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 // Payment
+export const GetThisPurchasedRequest = (id, token) => {
+    return dispatch => {
+        const url = `${host}/payment/is-purchased/${id}`;
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET",
+        })
+            .then(res => res.json())
+            .then(res => dispatch(GetThisItemPurchased(res.data)))
+            .catch(error => dispatch(GetThisItemPurchasedFailed(error)));
+    };
+};
+const GetThisItemPurchased = (data) => ({
+    type: types.GET_THIS_ITEM_PURCHAED, isPurchased: data
+});
+const GetThisItemPurchasedFailed = () => ({
+    type: types.GET_THIS_ITEM_PURCHAED_FAILED, isPurchased: false
+});
+export const UpdatePaymentRequest = (id, token) => {
+    return dispatch => {
+        const url = `${host}/payment/confirm-purchased/${id}`;
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "POST",
+        })
+            .then(res => res.json())
+            .then(res => (res))
+            .catch(error => alert(error));
+    }
+};
+
 // purchase item
 export const CreateItemPaymentRequest = (data, id, token) => {
     return dispatch => {
@@ -63,8 +94,8 @@ export const GetMyPaymentRequest = (token, page) => {
             .then(res => res.json())
             .then(data => dispatch(
                 page === 0
-                    ? GetMyPaymentClear(data)
-                    : GetMyPayment(data)))
+                    ? GetMyPaymentClear(data || [])
+                    : GetMyPayment(data || [])))
             .catch(error => dispatch(GetMyPaymentFailure(error)));
     };
 };
@@ -84,10 +115,38 @@ const GetMyPaymentFailure = error => ({
     MyPayment: [],
     MyPaymentAdded: []
 });
-
-
-
-
+// get my request payment-list
+export const GetMyRequestItemRequest = (token, page) => {
+    return dispatch => {
+        const url = `${host}/payment/getmine-request-item/${page}`;
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => dispatch(
+                page === 0
+                    ? GetMyRequestItemClear(data || [])
+                    : GetMyRequestItem(data || [])))
+            .catch(error => dispatch(GetMyRequestItemFailure(error)));
+    };
+};
+const GetMyRequestItem = data => ({
+    type: types.GET_MY_REQUST_ITEM,
+    MyRequestItem: data.data.requestItems,
+    MyRequestItemTotal: data.data.total
+});
+const GetMyRequestItemClear = data => ({
+    type: types.GET_MY_REQUEST_ITEM_CLEAR,
+    MyRequestItem: data.data.requestItems,
+    MyRequestItemAdded: [],
+    MyTotal: data.data.total
+});
+const GetMyRequestItemFailure = error => ({
+    type: types.GET_MY_REQUEST_ITEM_FAILURE,
+    MyRequestItem: [],
+    MyRequestItemAdded: []
+});
 
 
 // // list

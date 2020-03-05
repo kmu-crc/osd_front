@@ -20,10 +20,10 @@ const CreateRequest = () => ({ type: types.CREATE_REQUEST });
 const CreateRequestSuccess = res => ({ type: types.CREATE_REQUEST_SUCCESS, id: res.id, success: res.success });
 const CreateRequestFail = error => ({ type: types.CREATE_REQUEST_FAIL, success: error.success });
 
-
-export const GetRequestListRequest = (type, page) => {
+// type page cate1 cate2 sort keyword
+export const GetRequestListRequest = (type, page, cate1, cate2, sort, keyword) => {
   return dispatch => {
-    const url = `${host}/request/list/${type}/${page}`
+    const url = `${host}/request/list/${type}/${page}/${cate1}/${cate2}/${sort}/${keyword}`
     console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },

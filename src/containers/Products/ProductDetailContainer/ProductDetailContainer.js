@@ -8,7 +8,7 @@ import {
   GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest
 } from "actions/Product";
-import { CreateItemPaymentRequest, /*GetItemPaymentRequest*/ } from "actions/Payment";
+import { CreateItemPaymentRequest,  /*GetItemPaymentRequest*/ } from "actions/Payment";
 import { GetItemDetailRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
@@ -22,9 +22,8 @@ class ProductDetailContainer extends Component {
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
       .then(
-        this.props.userInfo ?
-          this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token)
-          : null);
+        this.props.userInfo &&
+        this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
   }
   Payment(item, option) {
     console.log(item, item.request_title, item.request_title);
@@ -53,6 +52,7 @@ class ProductDetailContainer extends Component {
     alert("비공개 아이템입니다.");
     window.location.href = `/product`;
   }
+
   render() {
     console.log(this.props);
     const yours = this.props.ItemDetail.members && this.props.ItemDetail.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
   DeleteProductRequest: (id, token) => dispatch(DeleteProductRequest(id, token)),
   addCartRequest: (items, token) => dispatch(addCartRequest(items, token)),
   GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
-  CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token))
+  CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer));

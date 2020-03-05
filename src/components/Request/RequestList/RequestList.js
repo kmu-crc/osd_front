@@ -52,7 +52,7 @@ const TitleForm = styled.input`
   border: 1px solid #E6E6E6;
   outline: none;
   border-radius: 10px;
-`
+`;
 const CommentForm = styled.textarea`
   padding:10px;
   resize:none;
@@ -61,7 +61,7 @@ const CommentForm = styled.textarea`
   border:1px solid #E6E6E6;
   outline:none;
   border-radius:10px;
-`
+`;
 const WriteReview = styled.div`
   margin-bottom:10px;
   .form{
@@ -115,8 +115,6 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
-
-
 const RequestButton = styled.div`
   margin-left: 100px;
   width: 150px;
@@ -165,34 +163,36 @@ class RequestList extends Component {
       comment: "",
     };
   }
-  componentDidMount() {
-    // this.props.GetRequestTotalCountRequest(this.props.cate1, this.props.cate2);
-  }
   changeState = async () => {
     await this.setState({ rendering: false });
     await this.setState({ rendering: true });
   }
   cate1Change = (value) => {
-    // this.props.history.replace(`/${this.state.path}/${this.props.sort}/${value}/null`);
-    // this.props.GetRequestTotalCountRequest(value, null);
-    // this.changeState();
+    const path = `/${this.state.path}/${this.props.type}/0/${value}/null/${this.props.sort}/null`;
+    this.props.history.replace(path);
+    // type, page, cate1, cate2, sort, keyword
+    this.props.GetRequestTotalCountRequest(value, null);
+    this.changeState();
   }
   cate2Change = (cate1, value) => {
-    // if (cate1 && this.props.cate1 !== cate1) {
-    //   this.props.history.replace(`/${this.state.path}/${this.props.sort}/${cate1}/${value}`);
-    // } else {
-    //   this.props.history.replace(`/${this.state.path}/${this.props.sort}/${this.props.cate1}/${value}`);
-    // }
-    // this.props.GetRequestTotalCountRequest(this.props.cate1, value);
-    // this.changeState();
+    if (cate1 && this.props.cate1 !== cate1) {
+      const path = `/${this.state.path}/${this.props.type}/0/${cate1}/${value}/${this.props.sort}/null`;
+      this.props.history.replace(path);
+    } else {
+      const path = `/${this.state.path}/${this.props.type}/0/${this.props.cate1}/${value}/${this.props.sort}/null`;
+      this.props.history.replace(path);
+    }
+    this.props.GetRequestTotalCountRequest(this.props.cate1, value);
+    this.changeState();
   }
   sortChange = (e, { value }) => {
-    // this.props.history.replace(`/${this.state.path}/${value}/${this.props.cate1}/${this.props.cate2}`);
-    // this.changeState();
+    const path = `/${this.state.path}/${this.props.type}/0/${this.props.cate1}/${this.props.cate2}/${value}/null`;
+    this.props.history.replace(path);
+    this.changeState();
   }
   resetCate = () => {
-    // this.props.history.replace(`/${this.state.path}/${this.props.sort}`);
-    // this.changeState();
+    this.props.history.replace(`/${this.state.path}/${this.props.type}`);
+    this.changeState();
   }
   changeType = (type) => {
     window.location.href = `/request/${type}`;
@@ -212,14 +212,16 @@ class RequestList extends Component {
       .then(res => {
         if (res.success) {
           alert("글이 등록되었습니다.");
-          this.props.GetRequestListRequest(this.props.type, 0);
+          this.props.GetRequestListRequest(this.props.type, 0, this.props.cate1, this.props.cate2, this.props.sort, null);
         }
         this.setState({ write: false, title: "", comment: "" });
       })
       .catch(err => alert("에러발생" + err));
   }
+
   render() {
     const { type, sort, category1, category2, cate1, cate2 } = this.props;
+    console.log(category1, category2, cate1, cate2, sort);
     const { write } = this.state;
     return (
       <React.Fragment>
@@ -235,18 +237,19 @@ class RequestList extends Component {
 
         <Content top={58}>
           <Container>
-            {/* <div className="category">
+            <div className="category">
               <Category
-                handleCate2={this.cate2Change} handleCate1={this.cate1Change}
-                cate1={cate1} cate2={cate2}
-                category1={category1} category2={category2}
-                which={`${type === "designer" ? "디자이너" : type === "maker" ? "메이커" : type === "item" ? "아이템" : "일반"} 게시판`}
+                handleCate2={this.cate2Change}
+                handleCate1={this.cate1Change}
                 resetCate={this.resetCate}
-              />
-            </div>
+                cate1={cate1}
+                cate2={cate2}
+                category1={category1}
+                category2={category2}
+                which="게시판" /></div>
             <div className="sort">
-              <Sorting handleClick={this.sortChange} placeholder={sort} />
-            </div> */}
+              <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
+
             <div className="request" style={{ marginLeft: "auto" }}>
               {type !== "normal" && type !== "item" ?
                 type === "designer" ?
@@ -275,7 +278,7 @@ class RequestList extends Component {
           </ListElement>
           <Wrapper className="listWrap">
             {this.state.rendering &&
-              <ScrollRequestListContainer type={type} /* sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} */ />}
+              <ScrollRequestListContainer type={type} sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
           </Wrapper>
         </Content>
 

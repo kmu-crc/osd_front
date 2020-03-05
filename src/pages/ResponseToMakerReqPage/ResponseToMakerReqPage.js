@@ -3,7 +3,10 @@ import ResponseToMakerReqContainer from "containers/Request/ResponseToMakerReqCo
 
 class ResponseToMakerReqPage extends Component {
   render() {
-    return (<ResponseToMakerReqContainer id={this.props.match.params.id} />);
+    return (<ResponseToMakerReqContainer
+      detail={this.props.location.state && this.props.location.state.detail}
+      expert={this.props.location.state && this.props.location.state.expert}
+      id={this.props.match.params.id} />);
   }
 }
 
