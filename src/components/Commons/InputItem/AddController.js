@@ -58,11 +58,12 @@ export class AddController extends Component {
   state = {
     type: null,
     content: "",
-    order: null
+    order: null,
+    private: 0
   }
   addContent = async (type) => {
     if (type === "FILE") {
-      await this.setState({ type, order: this.props.order, content: "", initClick: true });
+      await this.setState({ type, order: this.props.order, content: "", initClick: true, private: 0 });
       // 처음 fileController가 동작하기 위해서는 initClick가 true여야 하지만 한번 동작한 후에는 false 바뀌어야
       // 최종적으로 저장을 눌렀을때 파일 선택창이 반복해서 뜨지않는다.
       // 조금 걱정되는것은 현재 타이머를 걸어 0.1초 뒤에 initClick를 false로 바꿔주게 해놨는데
@@ -79,7 +80,7 @@ export class AddController extends Component {
 
   returnData = async (data) => {
     if (data) {
-      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+      await this.setState({ type: null, order: this.props.order, content: "", initClick: false, private: 0 })
       this.props.getValue(data);
     } else {
       if (this.props.getValue) this.props.getValue(this.state);

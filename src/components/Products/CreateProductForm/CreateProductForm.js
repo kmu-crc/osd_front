@@ -7,6 +7,7 @@ import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
 import { AddController, InputContent, Controller, InputTag, ThumbnailList, RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import Loading from "components/Commons/Loading";
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -219,6 +220,7 @@ class CreateProductForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
+    this.setState({ loading: true });
     let data = {
       // basic
       title: this.state.title,
@@ -229,9 +231,11 @@ class CreateProductForm extends Component {
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
       type: this.state.type, private: this.state.private
     };
-
+    // console.log("sent:", data);
+    // return;
     this.props.CreateDesignRequest(data, this.props.token)
       .then(result => {
+        this.setState({ loading: false });
         if (result.success) {
           alert("아이템이 등록 되었습니다. 아이템상세페이지로 이동합니다.");
           window.location.href = `/productDetail/${result.id}`
@@ -297,6 +301,7 @@ class CreateProductForm extends Component {
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
     return (<MainBox>
+      {this.state.loading ? <Loading /> : null}
       {this.props.keep ? <div>REDIRECTED</div> : null}
       {/* 타이틀 */}
       <div className="title">아이템 등록하기</div>
@@ -607,15 +612,15 @@ class ItemConsulting extends Component {
   }
   render() {
     const typeTF = ["예", "아니오"];
-    const typeOnOff = ["온라인", "오프라인"];
+    // const typeOnOff = ["온라인", "오프라인"];
 
     return (
       <React.Fragment>
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="자문/상담 방법"> 온라인
-          {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
-        </Field>
+        {/* <Field title="자문/상담 방법"> 온라인 */}
+        {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
+        {/* </Field> */}
         <Field title="내용 공개 여부">
           <RadioType checked={1} return={this.onHandleReturn} name="public" Options={typeTF} /></Field>
         <Field title="자문/상담 비용">
