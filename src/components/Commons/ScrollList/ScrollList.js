@@ -36,6 +36,12 @@ const ListContainer = styled.div`
     // background: #707070;
     // border: 1px solid #FAFAFA;
   }
+  .gallery{
+    flex: 0 0 180px;
+    justify-content: space-around;
+    margin: 0px 45px 45px 0px;
+    padding: 0px;
+  }
 `;
 const NoData = styled.div`
   margin-top: 75px;

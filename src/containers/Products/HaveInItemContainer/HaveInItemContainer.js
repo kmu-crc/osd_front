@@ -19,15 +19,7 @@ class HaveInItemContainer extends Component {
       <div>
         <ScrollList
           cols={6} type="item" getListRequest={this.getList} ListComponent={Item}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-      {/* <ScrollList
-          type="item"
-          getListRequest={this.getList}
-          ListComponent={Item}
-          dataList={this.props.dataList}
-          dataListAdded={this.props.dataListAdded}
-          /> */}
-                    
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />       
       </div>
 
       

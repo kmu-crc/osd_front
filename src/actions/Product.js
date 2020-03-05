@@ -2,7 +2,6 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 
-//  좋아요 한 아이템 가져오기
 export function GetHaveInItemRequest(id, page) {
   return (dispatch) => {
     const sql = `${host}/item/itemDetail/${id}/have/${page}`;
@@ -319,9 +318,30 @@ export function getOrderListRequest(id) {
       const url = `${host}/product/getOrderList/${id}`;
           return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
             .then(res => res.json())
-            .then(data => dispatch(getOrderList(data)))
+            .then(data => dispatch(getOrderList(data.data)))
             .catch(error => dispatch(getOrderListFailure()))
   }
 };
 const getOrderList = data => { return { type: types.GET_ORDER_LIST, OrderList: data.list } };
 const getOrderListFailure = () => { return { type: types.GET_ORDER_LIST_FAILURE, OrderList: null } };
+
+
+
+///////////////// 내 상품 목록 가져오기 
+export function GetAllHaveInItemRequest(id,token) {
+  console.log("id:::",id);
+  return(dispatch)=>{
+    const sql = `${host}/group/itemDetail/${id}/haveAll`;
+          return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token },
+          method: "get"})
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              dispatch(GetAllHaveInItem(data.data))}
+            )
+            .catch(error => dispatch(AllHaveInItemFail()))
+  }
+};
+const GetAllHaveInItem = (data) => ({ type: types.GET_ALL_HAVE_IN_ITEM, AllHaveInItem: data });
+const AllHaveInItemFail = () => ({ type: types.ALL_HAVE_IN_ITEM_FAIL, AllHaveInItem: [] });
+

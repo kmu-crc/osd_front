@@ -6,6 +6,7 @@ const initialState = {
   status: { ItemDetail: [], 
     LikeInItem: [],
     LikeInItemAdded: [],
+    AllHaveInItem: [],
     HaveInItem: [],
     HaveInItemAdded: []
   }
@@ -67,6 +68,21 @@ export function ItemDetail(state, action) {
               HaveInItemAdded: { $set: action.HaveInItemAdded }
             }
           });
+
+        case types.GET_ALL_HAVE_IN_ITEM:
+          console.log(action.AllHaveInItem)
+          return update(state, {
+            status: {
+              AllHaveInItem: { $set: action.AllHaveInItem },
+            }
+          });
+
+          case types.ALL_HAVE_IN_ITEM_FAIL:
+            return update(state, {
+              status: {
+                AllHaveInItem: { $set: action.AllHaveInItem },
+              }
+            });
 
     default:
       return state;

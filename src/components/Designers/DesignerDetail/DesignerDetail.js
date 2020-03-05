@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
+import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
+
 import DesignerReviewContainer from "containers/Designer/DesignerReviewContainer";
 import DesignerRequestBoardContainer from "containers/Designer/DesignerRequestBoardContainer";
 import TextFormat from "modules/TextFormat";
@@ -258,6 +260,16 @@ const ItemInfo = styled.div`
   .wrapItem{
     max-width:100%;
     max-height:350px;
+    margin-top:30px;
+    width:100%;
+    height:max-content;
+    overflow:hidden;
+    // overflow-y:overlay;
+    display:flex;
+  }
+  .wrapGallery{
+    max-width:100%;
+    max-height:300px;
     margin-top:30px;
     width:100%;
     height:max-content;
@@ -751,6 +763,15 @@ class DesignerDetail extends Component {
         <div className="title">디자인 아이템</div>
         <div className="wrapItem">
           {<HaveInItemContainer id={this.props.id} />}
+        </div>
+
+      </ItemInfo>
+      
+      {/**갤러리 아이템 */}
+      <ItemInfo width={1523} height={491} mTop={60}>
+        <div className="title">갤러리</div>
+        <div className="wrapGallery">
+          {<HaveInGalleryContainer id={this.props.id} />}
         </div>
 
       </ItemInfo>
