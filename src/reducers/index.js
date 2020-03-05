@@ -5,6 +5,7 @@ import {
     //ProductDetailView, ProductDetailStep,// ProductDetailStepCard, ProductCardComment, ProductIssueList, ProductIssueComment,// ProductLike, DeleteProduct, ChangeToProject, UpdateProduct, ProductSourceDetail,// ProductWaitingList, ProductDetailComment
 } from "reducers/Products";
 import { ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview, UploadItem } from "reducers/Items";
+import {GalleryList,GalleryDetail} from "reducers/Gallery";
 import { DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail } from "reducers/Designers";
 import { MakerList, MakerDetail } from "reducers/Makers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
@@ -31,6 +32,8 @@ export default combineReducers({
     Payment,
     // ITEM
     ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview, UploadItem,
+    //Gallery
+    GalleryList,GalleryDetail,
     // PRODUCT
     ProductDetail, ProductLike, ProductList,
     CartList, OrderList,

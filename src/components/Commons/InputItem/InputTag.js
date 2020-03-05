@@ -87,6 +87,7 @@ const WarningBox = styled.div`
     }
 `;
 
+
 const CheckedCharLength = text => {
     let str = text;
     let charLength = 0;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GroupListContainer from 'containers/Groups/GroupListContainer';
 
-class GroupListPage extends Component {
+class GalleryListPage extends Component {
   render() {
     return(
         <GroupListContainer sort={this.props.match.params.sorting? this.props.match.params.sorting : null}
@@ -10,4 +10,4 @@ class GroupListPage extends Component {
   }
 }
 
-export default GroupListPage;
+export default GalleryListPage;

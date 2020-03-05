@@ -200,6 +200,23 @@ export const GET_HAVE_IN_ITEM = "GET_HAVE_IN_ITEM";
 export const GET_HAVE_IN_ITEM_CLEAR = "GET_HAVE_IN_ITEM_CLEAR";
 export const HAVE_IN_ITEM_FAIL = "HAVE_IN_ITEM_FAIL";
 
+export const GET_ALL_HAVE_IN_ITEM = "GET_ALL_HAVE_IN_ITEM";
+export const ALL_HAVE_IN_ITEM_FAIL = "ALL_HAVE_IN_ITEM_FAIL";
+////////////////////////////////////////////////////////////////////////////
+// gallery
+////////////////////////////////////////////////////////////////////////////
+
+export const GET_HAVE_IN_GALLERY = "GET_HAVE_IN_GALLERY";
+export const GET_HAVE_IN_GALLERY_CLEAR = "GET_HAVE_IN_GALLERY_CLEAR";
+export const HAVE_IN_GALLERY_FAIL = "HAVE_IN_GALLERY_FAIL";
+
+export const GET_GALLERY_DETAIL = "GET_GALLERY_DETAIL";
+
+export const GET_GALLERY_LIST_DETAIL = "GET_GALLERY_LIST_DETAIL";
+export const GET_GALLERY_LIST_DETAIL_CLEAR = "GET_GALLERY_LIST_DETAIL_CLEAR";
+export const GET_GALLERY_LIST_DETAIL_FAIL = "GET_GALLERY_LIST_DETAIL_FAIL";
+
+
 ////////////////////////////////////////////////////////////////////////////
 // design
 ////////////////////////////////////////////////////////////////////////////

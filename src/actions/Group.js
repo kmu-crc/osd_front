@@ -675,7 +675,7 @@ export function CreateNewGroup() {
 export function CreateNewGroupSuccess(id) {
   return {
     type: types.CREATE_NEW_GROUP_SUCCESS,
-    id
+    id,
   }
 };
 

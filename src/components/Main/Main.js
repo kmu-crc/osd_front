@@ -3,9 +3,6 @@ import styled from "styled-components";
 import MainSlide from "./Slide";
 import ScrollTopDesignerContainer from "containers/Commons/ScrollTopDesignerContainer";
 import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
-// import StyleGuide from "StyleGuide";
-// import ScrollTopMakerContainer from "containers/Commons/ScrollTopMakerContainer";
-// import ContentBox from "components/Commons/ContentBox";
 
 // CSS STYLE
 const MainContainer = styled.div`

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import CreateGroup from "components/Groups/CreateGroup";
 import { CreateNewGroupRequest } from "actions/Group";
+import { GetAllHaveInItemRequest } from "actions/Product"
 import styled from 'styled-components';
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
@@ -45,30 +46,34 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
+  width:100%;
+  margin-top:60px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
-`;
+`
 
 class CreateGroupContainer extends Component {
+  componentDidMount(){
+    this.props.GetAllHaveInItemRequest(this.props.userInfo.uid,this.props.userInfo.token)
+  }
   render() {
+    console.log(this.props);
+
     return(
-      <React.Fragment>
-        <ImgWrapper>
-        <Title><h1>갤러리 등록</h1></Title>
-        </ImgWrapper>
-        <Wrapper>
-        <CreateGroup {...this.props}/>
-        </Wrapper>
-      </React.Fragment>
+      <Wrapper>
+        <CreateGroup  {...this.props} />
+      </Wrapper>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    token: state.Authentication.status.token
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+    dataList: state.ItemDetail.status.AllHaveInItem,
+
   };
 };
 
@@ -76,7 +81,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     CreateNewGroupRequest: (data, token) => {
         return dispatch(CreateNewGroupRequest(data, token))
-      }
+      },
+      GetAllHaveInItemRequest: (id, token) => {
+        return dispatch(GetAllHaveInItemRequest(id,token))
+      },
   };
 };
 

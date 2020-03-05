@@ -1,165 +1,352 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { Header, Grid } from "semantic-ui-react";
-import Button from "components/Commons/Button";
-// import ValidateForm from "components/Commons/ValidateForm";
-// import { FormInput, FormTextArea, FormFile } from "components/Commons/FormItem";
-// import { FormField } from "components/Commons/FormField";
-import { FormInput, FormThumbnail,FormDropBox } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-import StyleGuide from "StyleGuide";
-// import ContentBox from "components/Commons/ContentBox";
-// import mainSlide from "source/mainSlide.jpg";
-import Loading from "components/Commons/Loading";
+import { Icon } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react"
+import { InputTag } from "components/Commons/InputItem/InputTag";
+import noimg from "source/noimg.png";
 
-// css styling
-const category = [
-  {text:"특허권",value:0},
-  {text:"디자인권",value:1},
-  {text:"기술자문",value:2},
-  {text:"기술상담",value:3},
-  {text:"경험",value:4},
-  {text:"정보/데이터",value:5},
-  {text:"아이디어/노하우",value:6},
-  {text:"제작품",value:7},
-];
-const FromFieldCard = styled.div`
-  width: 100%;
-  background-color: white;
-  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  padding: 70px;
-  margin-bottom: 30px;
-  border-radius: 3px;
-  @media only screen and (min-width: 1200px) {
-    padding: 70px 100px 70px 100px;
+const MainBox = styled.div`
+  width:100%;
+  .title{
+    width:170px;
+    height:29px;
+    font-family:Noto Sans KR, Medium;
+    font-size:20px;
+    font-weight:500;
+  }
+    .contentsBox{
+      width:100%;
+      display:flex;
+      padding-left:130px;
+      padding-top:36px;
+    }
+
+`;
+const RedButton = styled.div`
+  width: 290px;
+  height: 70px;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.gray ? "#EFEFEF" : "red"};
+  cursor: pointer;
+`;
+const ThumbnailBox = styled.div`
+  *{
+    font-family:Noto Sans KR;
+    font-weight:500;
+    font-size:20px;
+  }
+  width:562px;
+  height:540px;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  padding-left:42px;
+  padding-top:54px;
+  margin-right:63px;
+  .label{
+    width:100%;
+    height:29px;
+  }
+  .thumbnail{
+    cursor:pointer;
+    width:256px;
+    height:256px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#E9E9E9;
+    border-radius:50%;
+    margin-left:110px;
   }
 `;
-
-const FormHeader = styled(Header) `
-  position: relative;
-  padding-right: 2.5rem !important;
-  @media only screen and (max-width: 991px) {
-    padding-bottom: 2rem !important;
+const Thumbnail = styled.div`
+  cursor:pointer;
+  width:256px;
+  height:256px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+  background-size: cover;
+  background-position: center center;
+  border-radius:50%;
+  margin-left:110px;
+`;
+const FormBox = styled.div`
+  *{
+    font-family:Noto Sans KR;
+    font-weight:500;
+    font-size:20px;
   }
-  &::after {
-    position: absolute;
-    display: inline-block;
-    content: "";
-    height: 20px;
+  width:939px;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  padding-left:59px;
+  padding-top:49px;
+
+  .wrapper{
+    width:100%;
+    display:flex;
+    align-items:center;
+    margin-bottom:50px;
+  }
+  .wrapper_noflex{
+    width:100%;
+    margin-bottom:70px;
+  }
+  .margin_zero{
+    margin:0px;
+  }
+  .margin_bottom{
+    margin-bottom:30px;
+  }
+  .flex{
+    display:flex;
+  }
+  .innerWraper{
+    width:100%;
+    margin-bottom:26px;
+    display:flex;
+  }
+  .label{
+    min-width:157px;
+    height:29px;
+  }
+  .label_centering{
+    text-align:center;
+  }
+  .index{
+    width:30px;
+    height:30px;
+    color:#707070;
+  }
+
+`;
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:43px;
+  border-radius:20px;
+  font-family:Noto Sans KR;
+  font-size:20px;
+  background-color:#E9E9E9;
+  margin-right:21px;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+
+`;
+const InputTextarea = styled.textarea`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+  border-radius:20px;
+  font-family:Noto Sans KR;
+  font-size:20px;
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
+  readonly;
+  resize:none;
+  padding: 0.67857143em 1em;
+
+`;
+const TagPiece = styled.div`
+    width: max-content;
+    min-width: 30px;
+    background-color: #EFEFEF;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: #707070;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    .close {
+        margin-left: 10px;
+        width: max-content;
+        height: max-content;
+        padding: 0px 2px;
+    }
+`;
+
+const Margin = styled.div`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+`;
+const DropBox = styled(Dropdown)`
+    min-width:200px !important;
+    background-color:#E9E9E9 !important;
+    margin-right:10px;
+
+    border-radius:20px !important;
+`;
+const TagList = styled.div`
     width: 100%;
-    border-bottom: 3px solid ${StyleGuide.color.geyScale.scale5};
-    bottom: 10px;
-    left: 0;
-
-    @media only screen and (min-width: 992px) {
-      width: 1px;
-      display: block;
-      position: absolute;
-      right: 2rem;
-      top: 50%;
-      left: initial;
-      bottom: initial;
-      transform: translateY(-50%);
-      border-bottom: 0;
-      border-right: 3px solid #191919;
-    }
-  }
+    display: flex;
+    padding: 10px;
+    flex-wrap: wrap;
 `;
-
-const Label = styled.div`
-  margin: 0 0 0.8rem 0;
-  display: block;
-  color: rgba(0,0,0,.87);
-  font-size: .92857143em;
-  font-weight: 700;
-  text-transform: none;
-`;
-
-
 class CreateGroup extends Component {
-  state = {
-    loading: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectItemList:[],
+      title:null, thumbnail: null, thumbnail_name: null, explain: "",
+    }
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+    this.onChangeExplain = this.onChangeExplain.bind(this);
+    this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onSelectItem = this.onSelectItem.bind(this);
   }
 
-  onChangeValue = async data => {
-    let obj = {};
-    if(data.target){
-      obj[data.target.name] = data;
+  componentDidMount() {
+    if (this.props.keep) {
+      this.setState(this.props.keep.designer);
+      this.setState({ getready: true });
     }
-    await this.setState(obj);
-    console.log(this.state);
-  };
+  }
 
-  liveCheck = (target) => {
-    FormControl(this.state[target]);
-  };
+  onChangeExplain(event) {
+    this.setState({ explain: event.target.value })
+  }
+  onChangeTitle(event) {
+    this.setState({ title: event.target.value })
+  }
+  async handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    }
+    if (event.target.files[0]) {
+      await reader.readAsDataURL(file);
+    }
+  }
 
   onSubmit = async e => {
+
     e.preventDefault();
-    ValidationGroup(this.state, false).then(async data => {
-      console.log("성공", data);
-      await this.setState({
-        loading: true
-      });
-      return;
-      this.props.CreateNewGroupRequest(data, this.props.token)
+    const data = {
+      files: [],
+      user_id: this.props.userInfo.uid,
+      title:this.state.title,
+      description: this.state.explain,
+      itemList:this.state.selectItemList,
+    }
+    let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+    await data.files.push(file);
+    console.log(data);
+
+
+    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+      await data.files.push(file);
+    }
+    this.props.CreateNewGroupRequest(data, this.props.token)
       .then(res => {
-        this.props.history.push(`/groupDetail/${res.id}`);
+        console.log("res", res.res);
+        const result = res.type;
+        console.log(res);
+        if (result === "CREATE_NEW_GROUP_SUCCESS") {
+          alert("정보가 수정되었습니다.");
+        } else {
+          alert("다시 시도해주세요");
+        }
+      })
+      .catch(e => {
+        console.log("실패", e);
+        alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
       });
-    }).catch(e => {
-      console.log("실패", e);
-      this.setState({
-        loading: false
-      });
-    });
   };
-
-  render(){
-    return(
-      <div>
-          <form onSubmit={this.onSubmit}>
-            <FromFieldCard>
-              <Grid>
-                <Grid.Column mobile={16} computer={4}>
-                  <FormHeader as="h2">갤러리 정보</FormHeader>
-                </Grid.Column>
-                <Grid.Column mobile={16} computer={12}>
-                <Label>썸네일 등록</Label>
-                  <FormThumbnail
-                    name="thumbnail"
-                    placeholder="썸네일 등록"
-                    getValue={this.onChangeValue}
-                    onChange={()=>{this.liveCheck("thumbnail")}}
-                    validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
-                  />
-                  <Label>갤러리 이름</Label>
-                  <FormInput
-                    name="title"
-                    placeholder="갤러리의 이름을 입력해주세요."
-                    getValue={this.onChangeValue}
-                    validates={["Required"]}
-                    onBlur={()=>{this.liveCheck("title")}}
-                  />
-                  <Label>갤러리 카테고리</Label>
-                  <FormDropBox
-                    options={category}
-                  />
-                  <Label>갤러리 설명</Label>
-                  <FormInput
-                    name="explanation"
-                    placeholder="갤러리의 설명을 입력해주세요."
-                    getValue={this.onChangeValue}
-                  />
-
-                </Grid.Column>
-              </Grid>
-            </FromFieldCard>
-            <Button type="submit">등록</Button>
-          </form>
-        {this.state.loading && <Loading/>}
-      </div>
-    );
+  
+  onSelectItem(event,{value}){
+    console.log({value});
+    this.setState({selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
+    // this.setState({selectItemList:this.state.selectItemList.concat({value:{value}.value,text:{value}.text})});
   }
+  onDeleteTag = async (event) => {
+    const deleteIdx = event.target.id;
+    const length = this.state.selectItemList.length;
+    let list = [];
+    list = list.concat(this.state.selectItemList);
+    this.setState({
+      selectItemList: list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length))
+    });
 }
+  render() {
+    let count = 0;
+    console.log(this.props.dataList);
+    const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
+      return({value:count++,text:item.title,key:item.uid});
+    })
+    console.log(itemList);
 
+    const TagBox = this.state.selectItemList.map((item, index) => {
+      return (
+          <TagPiece key={index}>
+              {this.props.dataList[item.number].title}
+              <div id={index} onClick={this.onDeleteTag} className="close">x</div>
+          </TagPiece>
+      );
+    })
+
+    return (
+      <React.Fragment>
+        {this.props.keep ? "redirected" : null}
+
+        <MainBox>
+          <div className="title">갤러리 등록하기</div>
+          <div className="contentsBox">
+            <ThumbnailBox>
+              <div className="label">썸네일 등록</div>
+              <Margin height={70} />
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+              <label htmlFor="file">
+                {this.state.thumbnail == null ?
+                  <div className="thumbnail"><div>첨부하기</div></div>
+                  :
+                  <Thumbnail imageURL={this.state.thumbnail} />
+                }
+              </label>
+            </ThumbnailBox>
+
+
+            {/* <div className="contentsBox"> */}
+            <FormBox>
+            <div className="wrapper flex">
+                <div className="label">이름</div>
+                <InputText onChange={this.onChangeTitle} value={this.state.title} placeholder="설명을 입력해주세요" width={483} height={99} />
+              </div>
+              <div className="wrapper flex">
+                <div className="label">설명</div>
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={330} />
+              </div>
+              <div className="wrapper flex">
+                <div className="label">아이템</div>
+                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList}/>
+                <TagList>
+                    {TagBox}
+                </TagList>
+              </div>
+            </FormBox>
+            </div>
+            <div className="contentsBox">
+            <RedButton onClick={this.onSubmit} ><div>등록하기</div></RedButton>
+            </div>
+        </MainBox>
+      </React.Fragment>
+    );
+  };
+}
 export default CreateGroup;

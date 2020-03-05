@@ -35,6 +35,7 @@ import ModifyrequestDesignerPage from "pages/ModifyRequestToDesignerPage";
 import ModifyrequestMakerPage from "pages/ModifyRequestToMakerPage";
 import ResponseToDesignerReqPage from "pages/ResponseToDesignerReqPage";
 import ResponseToMakerReqPage from "pages/ResponseToMakerReqPage";
+import {GalleryDetailPage} from "pages/GalleryPage/GalleryDetailPage";
 
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
@@ -83,6 +84,7 @@ class App extends Component {
             <Route path="/responseToMakerReq/:id" component={RequiresAuth(ResponseToMakerReqPage)} />
             {/* GALLERY */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
+            <Route path="/galleryDetail/:id" component={GalleryDetailPage}/>
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
