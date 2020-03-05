@@ -73,11 +73,11 @@ const DownBtn = styled.button`
   }
 `;
 const DelBtn = styled.button`
-  display: none;
+  // display: none;
   position: absolute;
   top: 0;
   left: 100%;
-  transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
   width: 45px;
@@ -86,7 +86,7 @@ const DelBtn = styled.button`
   line-height: 25px;
   box-sizing: border-box;
   font-size: 12px;
-  background-color: #E72327;
+  background-color: ${props => props.bgcolor || "#E72327"};
   color: white;
   text-align: center;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -99,16 +99,16 @@ const DelBtn = styled.button`
   }
 `;
 
-
 export class Controller extends Component {
   constructor(props) {
     super(props);
-    this.state = { type: "INIT", order: 0, click: false };
+    this.state = { type: "INIT", order: 0, click: false, private: 0 };
     this.InitClick = this.InitClick.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.moveDownItem = this.moveDownItem.bind(this);
     this.moveUpItem = this.moveUpItem.bind(this);
+    this.privateItem = this.privateItem.bind(this);
   }
   async shouldComponentUpdate(nextProps) {
     if (nextProps.content !== this.props.content)
@@ -133,7 +133,13 @@ export class Controller extends Component {
     // };
     // console.log("updated:(changed):", this.props.item.content, this.state.content);
   };
-
+  async privateItem() {
+    if (this.props.privateItem) {
+      if (window.confirm("선택하신 항목을 비공개로 설정하시겠습니까?")) {
+        this.props.privateItem(this.props.item);
+      }
+    }
+  }
   async deleteItem() {
     if (this.props.deleteItem) {
       if (window.confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
@@ -153,16 +159,21 @@ export class Controller extends Component {
   };
 
   render() {
-    const { item, name, /* maxOrder*/ } = this.props;
+    const { item, name, /* maxOrder */ } = this.props;
+    console.log("item:", item);
     return (
       <ControllerWrap>
         <div className="contentWrap">
-          {item.type === "FILE" ? (
-            <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
-          ) : item.type === "TEXT" ? (
-            <TextControllerClassic item={item} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
-          ) : item.type === "EMBED" ? (<EmbController />) : null}
+          {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" :
+            item.type === "FILE" ? (
+              <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
+            ) : item.type === "TEXT" ? (
+              <TextControllerClassic item={item} private={item.private} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
+            ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
+        {item.private === 1
+          ? <DelBtn type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></DelBtn>
+          : <DelBtn type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></DelBtn>}
         {/* <DelBtn type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></DelBtn> */}
         {/* {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null} */}
         {/* {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null} */}
