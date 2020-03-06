@@ -112,7 +112,11 @@ class Item extends Component {
             {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
           </div>
         </NumberWrapper>
-        {item.private ? <PrivateLabel>비공개</PrivateLabel> : null}
+        {item.custom && item.isPurchased === 0 ?
+          <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
+            <div>구매확인</div>
+          </PrivateLabel> : null}
+        {/* {item.private ? <PrivateLabel>비공개</PrivateLabel> : null} */}
       </Wrapper>
       // item.uid ?
       // <NavLink to={"/productDetail/" + item.uid}>

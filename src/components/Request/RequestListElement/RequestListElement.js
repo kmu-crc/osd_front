@@ -42,6 +42,10 @@ const ListElement = styled.div`
       background: blue;
       color: white;
     }
+    &.completed {
+      background: gray;
+      color: white;
+    }
   }
 `;
 const ThumbnailWriter = styled.div`
@@ -56,7 +60,7 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    // console.log("item:", item);
+    console.log("item:", item);
     // const Element = () =>
 
     return (
@@ -64,13 +68,15 @@ class DesignerBoardElement extends Component {
         <ListElement left={item.status === "response" ? 25 : 0}>
 
           <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
-            {
-              item.status === "normal"
-                ? <div className="status-box"></div>
-                : item.status === "request"
-                  ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
-                  : item.status === "response" ?
-                    <div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> : " "}
+            {item.completed === 1 && item.status === "request" ?
+              <div className="status-box completed" >완료</div> : null}
+
+            {item.status === "normal"
+              ? <div className="status-box"></div>
+              : item.status === "request"
+                ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
+                : item.status === "response" ?
+                  <div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> : ""}
 
             {item.title || "글 제목"}</div>
           {/* writer */}

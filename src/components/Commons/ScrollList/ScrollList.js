@@ -59,7 +59,7 @@ const NoData = styled.div`
 class ScrollList extends Component {
   state = { hasMore: true, loading: false };
   getLoadData = page => {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.getListRequest &&
       this.props.getListRequest(page)
         .then(() => {
@@ -90,7 +90,7 @@ class ScrollList extends Component {
             <ListContainer>
               {this.props.dataListAdded.map((content, index) => (
                 <div key={index} className={`${type}`}>
-                  <ListComponent data={content} type={type} />
+                  <ListComponent data={content} type={type} confirm={this.props.confirm} />
                 </div>
               ))}
             </ListContainer>

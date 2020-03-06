@@ -84,7 +84,7 @@ class ProductList extends Component {
   }
   render() {
     const { sort, category1, category2, cate1, cate2 } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
 
     return (<React.Fragment>
       <Content top={30}>

@@ -19,7 +19,7 @@ class RequestDetailContainer extends Component {
       )
   }
   ConfirmPayment() {
-    const { Detail } = this.props;
+   const { Detail } = this.props;
     this.props.UpdatePaymentRequest(Detail.uid, this.props.token)
       .then(result => {
         if (result.success) {
