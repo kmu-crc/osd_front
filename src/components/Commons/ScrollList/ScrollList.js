@@ -89,7 +89,7 @@ class ScrollList extends Component {
             <ListContainer>
               {this.props.dataListAdded.map((content, index) => (
                 <div key={index} className={`${type}`}>
-                  <ListComponent data={content} type={type} />
+                  <ListComponent data={content} type={type} confirm={this.props.confirm} />
                 </div>
               ))}
             </ListContainer>

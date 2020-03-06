@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyDetailRequest, GetMyDesignListRequest,ModifyUserDetailRequest } from "actions/Users/MyDetail";
+import { GetMyDetailRequest, GetMyDesignListRequest, ModifyUserDetailRequest } from "actions/Users/MyDetail";
 import MyDetail from "components/Users/MyDetail";
-import {getOrderListRequest} from "actions/Product";
+import { getOrderListRequest } from "actions/Product";
 
 class MyDetailContainer extends Component {
   componentWillMount() {
@@ -10,7 +10,7 @@ class MyDetailContainer extends Component {
   }
 
   render() {
-    return(<MyDetail {...this.props}/>);
+    return (<MyDetail {...this.props} />);
   }
 }
 
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
     MyDetail: state.MyDetail.status.MyDetail,
     OrderList: state.OrderList.status.OrderList,
   };
-}; 
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -34,8 +34,8 @@ const mapDispatchToProps = (dispatch) => {
     getOrderListRequest: (id) => {
       return dispatch(getOrderListRequest(id));
     },
-    ModifyUserDetailRequest: (id,data,token) => {
-      return dispatch(ModifyUserDetailRequest(id,data,token));
+    ModifyUserDetailRequest: (id, data, token) => {
+      return dispatch(ModifyUserDetailRequest(id, data, token));
     },
   };
 };

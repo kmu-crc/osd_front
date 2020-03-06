@@ -314,9 +314,9 @@ class Detail extends Component {
                 <RedButton onClick={this.props.purchase} >
                   <div>아이템구매</div>
                 </RedButton>
-                {isPurchased ? <RedButton onClick={this.props.confirm}>
+                {/* {isPurchased ? <RedButton onClick={this.props.confirm}>
                   <div>구매확인</div>
-                </RedButton> : null}
+                </RedButton> : null} */}
               </div>
             </Wrapper>}
       </React.Fragment>
