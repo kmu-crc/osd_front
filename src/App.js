@@ -35,7 +35,7 @@ import ModifyrequestDesignerPage from "pages/ModifyRequestToDesignerPage";
 import ModifyrequestMakerPage from "pages/ModifyRequestToMakerPage";
 import ResponseToDesignerReqPage from "pages/ResponseToDesignerReqPage";
 import ResponseToMakerReqPage from "pages/ResponseToMakerReqPage";
-import {GalleryDetailPage} from "pages/GalleryPage/GalleryDetailPage";
+import { GalleryDetailPage } from "pages/GalleryPage/GalleryDetailPage";
 
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
@@ -75,7 +75,7 @@ class App extends Component {
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
             {/* <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />  */}
             {/* <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> */}
-            <Route path="/request/:type/:sorting?/:cate1?/:cate2?" component={RequestListPage} />
+            <Route path="/request/:type/:page?/:cate1?/:cate2?/:sort?/:keyword?" component={RequestListPage} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
             <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(ModifyrequestDesignerPage)} />
@@ -84,7 +84,7 @@ class App extends Component {
             <Route path="/responseToMakerReq/:id" component={RequiresAuth(ResponseToMakerReqPage)} />
             {/* GALLERY */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
-            <Route path="/galleryDetail/:id" component={GalleryDetailPage}/>
+            <Route path="/galleryDetail/:id" component={GalleryDetailPage} />
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />

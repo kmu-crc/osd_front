@@ -303,10 +303,10 @@ class ResponseToDesignerReq extends Component {
                 <div className="textBox">{detail.ownership <= 0 ? "불가능" : "가능"}</div>
               </div>
 
-              <div className="wrapper flex centering">
+              {/* <div className="wrapper flex centering">
                 <div className="label">오프라인 상담</div>
                 <div className="textBox">{detail.offline <= 0 ? "불가능" : "가능"}</div>
-              </div>
+              </div> */}
 
             </FormBox>
 

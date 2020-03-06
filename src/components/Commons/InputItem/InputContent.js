@@ -3,6 +3,14 @@ import { Controller, FileController } from "components/Commons/InputItem";
 import StyleGuide from "StyleGuide";
 import styled from "styled-components";
 
+const PrivateItem = styled.div`
+    padding: 25px 10px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 25px;
+    color: #707070;
+    background-color: #EFEFEF;
+`;
 export class InputContent extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +19,7 @@ export class InputContent extends Component {
         this.onChangValue = this.onChangValue.bind(this);
         this.returnState = this.returnState.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
+        this.privateItem = this.privateItem.bind(this);
     };
     async onAddValue(data) {
         let copyContent = [...this.state.content];
@@ -48,19 +57,65 @@ export class InputContent extends Component {
     async deleteItem(data) {
         alert("not implemented yet");
     };
-    returnState() {
-        this.props.returnState && this.props.returnState(this.state);
+    async privateItem(data) {
+        let copyContent = [...this.props.content];
+        const copyData = { ...data };
+        for (let item of copyContent) {
+            if (item.order === copyData.order) {
+                item.private = copyData.private === 0 ? 1 : 0;
+            }
+        }
+        await this.setState({ content: copyContent });
+        this.returnState();
     };
+    returnState() {
+        this.props.returnState &&
+            this.props.returnState(this.state);
+    };
+    // bindPrivateContent(data) {
+    //     let newData = [];
+    //     data && data.map(item => {
+    //         if (item.private === 1) {
+    //             if (newData.length > 0) {
+    //                 if (newData[length - 1].private === 1) {
+
+    //                 }
+    //             }
+    //         }
+    //     })
+    //     return newData;
+    // };
 
     render() {
         const { content, projectable } = this.props;
+        // const contentBinded = this.bindPrivateContent(content);
         return (<React.Fragment>
-            {content.length > 0 && content.map((item, index) =>
-                <Controller
-                    name={`content${index}`} type={item.type}
-                    order={index} maxOrder={content.length - 1}
-                    key={index} item={item}
-                    deleteItem={this.deleteItem} getValue={this.onChangValue} />)}
+            {/* {contentBinded && contentBinded.length > 0 ?
+                contentBinded.map((item, index) => item.bind
+                    ? <PrivateItem key={index}>{item.count}개의 항목이 비공개입니다.</PrivateItem>
+                    : <Controller
+                        name={`content${index}`}
+                        type={item.type}
+                        order={index}
+                        maxOrder={content.length - 1}
+                        key={index}
+                        item={item}
+                        deleteItem={this.deleteItem}
+                        privateItem={this.privateItem}
+                        getValue={this.onChangValue} />) : null} */}
+
+            {content.length > 0 &&
+                content.map((item, index) =>
+                    <Controller
+                        name={`content${index}`}
+                        type={item.type}
+                        order={index}
+                        maxOrder={content.length - 1}
+                        key={index}
+                        item={item}
+                        deleteItem={this.deleteItem}
+                        privateItem={this.privateItem}
+                        getValue={this.onChangValue} />)}
 
             <AddContent
                 projectable={projectable}
@@ -162,12 +217,12 @@ class AddContent extends Component {
     }
     addContent = async (type) => {
         if (type === "FILE") {
-            await this.setState({ type, order: this.props.order, content: "", initClick: true });
+            await this.setState({ type, order: this.props.order, content: "", initClick: true, private: 0 });
             setTimeout(() => {
                 this.setState({ initClick: false });
             }, 100);
         } else {
-            await this.setState({ type, order: this.props.order, content: "" });
+            await this.setState({ type, order: this.props.order, content: "", private: 0 });
             this.returnData();
         }
     }
@@ -183,7 +238,6 @@ class AddContent extends Component {
         }
     }
     render() {
-        console.log(this.props);
         return (
             <ControllerWrap>
                 <div className="innerBox">
@@ -194,14 +248,16 @@ class AddContent extends Component {
                         <Tip>
                             <sup>&nbsp;?</sup>
                             <div className="wrapper">
-                                <div className="tip-txt">단계를 가지는 디자인을 생성합니다.<br /> <font style={{ color: "pink" }}>*&nbsp;</font>이 과정을 진행하면 되 돌릴 수 없습니다.</div>
+                                <div className="tip-txt">단계를 가지는 디자인을 생성합니다.<br />
+                                    <font style={{ color: "pink" }}>*&nbsp;</font>이 과정을 진행하면 되 돌릴 수 없습니다.
+                                </div>
                             </div>
                         </Tip>
                     </NewController> : null}
                 </div>
-                {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
+                {this.state.type === "FILE" &&
+                    <FileController item={this.state} getValue={this.returnData} />}
             </ControllerWrap>
         );
     }
-}
-
+};

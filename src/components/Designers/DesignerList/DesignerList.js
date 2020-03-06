@@ -79,7 +79,6 @@ class DesignerList extends Component {
     this.props.history.replace(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.changeState();
   }
-
   resetCate = () => {
     this.props.history.replace(`/designer/${this.props.sort}`);
     this.changeState();

@@ -133,8 +133,9 @@ const TagPiece = styled.div`
 
 class Detail extends Component {
   render() {
-    const { Detail, MyDetail } = this.props;
+    const { Detail, MyDetail, isPurchased } = this.props;
     if (Detail == null || Detail == []) return (<Loading />);
+    const TypeText = Detail.type === "maker" ? "제작" : "디자인";
     console.log("this.props:", this.props, "Detail:", Detail, "MyDetail:", MyDetail);
 
     const category_level1
@@ -204,19 +205,19 @@ class Detail extends Component {
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">디자이너 위치</div>
+                      <div className="label">{TypeText} 위치</div>
                       <div className="textBox">{Detail.location}</div>
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">디자인 소유권</div>
+                      <div className="label">{TypeText} 소유권</div>
                       <div className="textBox">{Detail.ownership <= 0 ? "불가능" : "가능"}</div>
                     </div>
 
-                    <div className="wrapper flex centering">
+                    {/* <div className="wrapper flex centering">
                       <div className="label">오프라인 상담</div>
                       <div className="textBox">{Detail.offline <= 0 ? "불가능" : "가능"}</div>
-                    </div>
+                    </div> */}
 
                   </FormBox>
                 </div>
@@ -227,7 +228,7 @@ class Detail extends Component {
                 <div style={{ display: "flex" }}>
                   <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
                   {!MyDetail ?
-                    <Link to={{ pathname: `/responseToDesignerReq/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
+                    <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                       <RedButton><div>의뢰응답</div></RedButton>
                     </Link>
                     : null}
@@ -275,14 +276,14 @@ class Detail extends Component {
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">디자인 소유권</div>
+                      <div className="label">소유권</div>
                       <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "불가능" : "가능"}</div>
                     </div>
 
-                    <div className="wrapper flex centering">
+                    {/* <div className="wrapper flex centering">
                       <div className="label">오프라인 상담</div>
                       <div className="textBox">{Detail && Detail.request && Detail.request.offline <= 0 ? "불가능" : "가능"}</div>
-                    </div>
+                    </div> */}
 
                   </FormBox>
 
@@ -306,10 +307,16 @@ class Detail extends Component {
                 </div>
               </MainBox>
               <div style={{ display: "flex" }}>
-                <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
-                <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} >
-                  <RedButton ><div>구매하기</div></RedButton>
-                </Link>
+                <RedButton onClick={() => window.history.back()} inactive={true}>
+                  <div>뒤로가기</div>
+                </RedButton>
+                {/* <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} > */}{/* <RedButton ><div>구매하기</div></RedButton> */}{/* </Link> */}
+                <RedButton onClick={this.props.purchase} >
+                  <div>아이템구매</div>
+                </RedButton>
+                {isPurchased ? <RedButton onClick={this.props.confirm}>
+                  <div>구매확인</div>
+                </RedButton> : null}
               </div>
             </Wrapper>}
       </React.Fragment>

@@ -232,18 +232,18 @@ class ResponseToMakerReq extends Component {
           if (this.props.detail.personal)
             window.location.href = `/designerDetail/${this.props.detail.personal}`;
           else
-            window.location.href = "/request/designer";
+            window.location.href = "/request/maker";
         }
       })
       .catch(err => alert("에러가 발생했습니다." + err));
   }
 
   render() {
-
+    const { detail } = this.props;
+    if (!detail) return <Loading />;
     const category_level1 = this.props.category1 && this.props.category1[this.state.category_level1].text;
     const category2 = this.props.category2 && this.props.category2[this.state.category_level1];
-    const category_level2 = category2&&category2[this.state.category_level2] && category2[this.state.category_level2].text;
-    console.log(this.props.detail);
+    const category_level2 = category2 && category2[this.state.category_level2] && category2[this.state.category_level2].text;
     return (
       <React.Fragment>
         <Wrapper>
@@ -259,42 +259,38 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">제목</div>
-                  <div className="textBox">{this.state.title}</div>
+                  <div className="textBox">{detail.title}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <div className="textBox">{category_level1}>{category_level2}</div>
+                  <div className="textBox">{category_level1 ? category_level1 + " > " : ""}{category_level2}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">태그</div>
                   <TagList>
-                    {
-                      this.state.tag.map((item, index) => {
-                        return (
-                          <TagPiece key={index}>
-                            {item}
-                          </TagPiece>);
-                      })
-                    }
-
+                    {detail && detail.tag && detail.tag.split(",").map((item, index) =>
+                      <TagPiece key={index}>
+                        {item}
+                      </TagPiece>
+                    )}
                   </TagList>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">희망비용</div>
-                  <div className="textBox">{this.state.price}</div>
+                  <div className="textBox">{detail.price}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
-                  <div className="textBox">{this.state.content}</div>
+                  <div className="textBox">{detail.content}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">수량</div>
-                  <div className="textBox">{this.state.amount}</div>
+                  <div className="textBox">{detail.amount}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -304,13 +300,13 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 재판매</div>
-                  <div className="textBox">{this.state.resale <= 0 ? "불가능" : "가능"}</div>
+                  <div className="textBox">{detail.resale <= 0 ? "불가능" : "가능"}</div>
                 </div>
 
-                <div className="wrapper flex centering">
+                {/* <div className="wrapper flex centering">
                   <div className="label">오프라인 상담</div>
                   <div className="textBox">{this.state.offline <= 0 ? "불가능" : "가능"}</div>
-                </div>
+                </div> */}
 
               </FormBox>
               <FormBox>

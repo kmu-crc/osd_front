@@ -76,7 +76,7 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    console.log("item:", item);
+    // console.log("item:", item);
     // const Element = () =>
 
     return (
@@ -88,10 +88,9 @@ class DesignerBoardElement extends Component {
               item.status === "normal"
                 ? <div className="status-box"></div>
                 : item.status === "request"
-                  ? <div className="status-box request"><div>의뢰</div></div>
+                  ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
                   : item.status === "response" ?
-                    <div className="status-box response"><div>응답</div></div> : " "}
-
+                    <div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> : " "}
             {item.title || "글 제목"}</div>
           {/* writer */}
           <div className="writer">

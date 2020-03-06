@@ -409,7 +409,6 @@ class ItemDetail extends Component {
     if (!window.confirm(`${this.props.item.price/1000}천원이 결제됩니다.`)) {
       event.preventDefault();
     } else {
-      alert("go!");
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
     }
   }
@@ -426,17 +425,11 @@ class ItemDetail extends Component {
   purchaseThisItem() {
     this.props.purchase(this.props.item);
   }
-  // 보유 포인트가 충분하지 않으면 “포인트가 부족합니다. 포인트 구매 후 결재하십시오.” 안내 문구를 보여주고 포인트 구매 절차로 진행
-  // 포인트 구매는 신용카드, 모바일폰 소액결재, 무통장 입금, 삼성/카카오 페이 등의 온라인 결재 수단 사용
-  // 결재 후 대금이 회사로 지불되고 구매자에게는 구매 확인 버튼이 보이며 구매자가 구매 확인 버튼을 클릭하거나 7일 동안 불만 사항이 접수되지 않으면 수수료 10%를 제외한 금액이 판매자에게 이체됨
-
-  // 결재 모듈을 이용한 온라인 결재 기능 관련하여 자세한 처리 절차와 결과에 관한 정보를 알아봐야 함 – 서비스 제공 회사와 비용, 조건 등
-  // 내정보 창에서 포인트를 구매하거나 보유한 포인트를 현금화할 수 있음 – 포인트 관리에 대한 보안을 철저히 하여야 함
-  // 고객의 불만이 접수되면 심사위원의 심사를 거쳐 환불 결정 – 10인 정도의 심사위원을 선정하여 아이템의 품질 평가 및 고객 불만을 처리할 계획임
 
   render() {
     console.log("itemdetail", this.props);
     const item = this.props.item;
+    const { isPurchased } = this.props;
     const { tab, expandingContent, expandingReview } = this.state;
     return item ?
       <Wrapper>
@@ -485,26 +478,21 @@ class ItemDetail extends Component {
                 </div>
             */}
 
+
               <div className="bottom">
                 <div className="buttons line">
                   <div className="button first">
-                    {/* <Link 
-                          onClick={(event) => this.buyThisItem(event, item)} 
-                          to={{ pathname: `/payment`, state: { item: item, options: null } }}> */}
-                    {/* </Link> */}
                     <div onClick={(event) => this.buyThisItem(event, item)} >
                       <div className="text">아이템구매</div>
                     </div>
                   </div>
-                  {
-                    this.state.isLike === false ?
-                      <div className="button second" onClick={this.onClickLike}>
-                        <div className="text">관심항목추가</div></div>
-                      :
-                      <div className="button second active" onClick={this.onClickLike}>
-                        <div className="text">관심항목</div></div>
-                  }
 
+                  {this.state.isLike === false ?
+                    <div className="button second" onClick={this.onClickLike}>
+                      <div className="text">관심항목추가</div></div>
+                    :
+                    <div className="button second active" onClick={this.onClickLike}>
+                      <div className="text">관심항목</div></div>}
                 </div>
               </div>
             </div>
