@@ -4,7 +4,24 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
-
+const LocationList = [
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
+];
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -235,6 +252,11 @@ class ResponseToMakerReq extends Component {
             <div className="contentsBox">
               <FormBox>
 
+                <div className="wrapper flex centering" >
+                      <div className="label">의뢰인</div>
+                      <div>{this.props.detail&&this.props.detail.nick_name||null}</div>
+                </div>
+
                 <div className="wrapper flex centering">
                   <div className="label">제목</div>
                   <div className="textBox">{detail.title}</div>
@@ -273,7 +295,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 위치</div>
-                  <div className="textBox">{detail.location}</div>
+                  <div className="textBox">{LocationList[this.state.location]}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -293,6 +315,11 @@ class ResponseToMakerReq extends Component {
                 <div className="label">제목</div>
                 <InputText onChange={this.onChangeResponseTitle} value={this.state.res_title} width={483}/>
               </div> */}
+
+                <div className="wrapper flex centering" >
+                      <div className="label">응답자</div>
+                      <div>{this.props.userInfo&&this.props.userInfo.nickName||null}</div>
+                </div>
 
                 <div className="wrapper flex">
                   <div className="label">의뢰 응답</div>

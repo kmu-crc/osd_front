@@ -222,7 +222,6 @@ class Detail extends Component {
                   </FormBox>
                 </div>
               </MainBox>
-              <div>
                 {/* <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
             <div className="text">아이템구매</div>
           </Link> */}
@@ -233,20 +232,19 @@ class Detail extends Component {
                       <RedButton><div>의뢰응답</div></RedButton>
                     </Link>
                     : null}
-                </div>
-              </div>
-              {/* {this.props.MyDetail.isDesigner ? <RedButton onClick={this.onAccept} left={1444} bottom={-50}><div>Accept</div></RedButton> : null} */}
-            </Wrapper>
-            :
-            <Wrapper>
-              <MainBox>
-                <div className="title">의뢰 응답</div>
+                  </div>
+          {/* {this.props.MyDetail.isDesigner ? <RedButton onClick={this.onAccept} left={1444} bottom={-50}><div>Accept</div></RedButton> : null} */}
+        </Wrapper>
+        :
+        <Wrapper>
+          <MainBox>
+            <div className="title">의뢰 응답</div>
 
-                <div className="contentsBox">
-                  <FormBox>
-                    <div className="wrapper flex centering">
-                      <div className="label">제목</div>
-                      <div className="textBox">{Detail.title}</div>
+            <div className="contentsBox">
+              <FormBox>
+                <div className="wrapper flex centering">
+                  <div className="label">제목</div>
+                  <div className="textBox">{Detail.title}</div>
                     </div>
 
                     <div className="wrapper flex centering">

@@ -260,7 +260,7 @@ class RequestToDesigner extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-
+    // console.log(this.props);
     return (
       <React.Fragment>
         <Wrapper>
@@ -268,6 +268,11 @@ class RequestToDesigner extends Component {
             <div className="title">디자인 의뢰</div>
             <div className="contentsBox">
               <FormBox>
+
+              <div className="wrapper flex centering" >
+                  <div className="label">의뢰인</div>
+                  <div>{this.props.userInfo.nickName||null}</div>
+                </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">제목</div>

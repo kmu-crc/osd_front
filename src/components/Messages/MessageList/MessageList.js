@@ -17,6 +17,7 @@ import TextSlicer from 'modules/TextSlicer'
 
 // CSS STYLING
 const Container = styled.div`
+height:750px;
 *{
   font-family:Noto Sans KR;
 }
@@ -65,6 +66,8 @@ const Peers = styled.div`
     }
     .heading{
       margin-right:10px;
+      display:flex;
+      align-items:center;
     }
     .memberBox{
       border-radius:10px;
@@ -167,7 +170,7 @@ const Chatting = styled.div`
   }
   .chat-list {
     margin-top: 15px;
-    height: 750px;
+    height: 530px;
     overflow:hidden;
   }
   .chat-input {
@@ -380,18 +383,18 @@ class MessageList extends Component {
       <Container>
         <Wrapper>
           <Peers>
-            <div className="self">
+            {/* <div className="self">
               <Face img={userInfo && userInfo.thumbnail && userInfo.thumbnail.m_img} />
               <div style={{ marginLeft: "15px" }}>
                 <div>{userInfo.nickName}</div>
                 <div>{userInfo.email}</div>
               </div>
               <div style={{ marginLeft: "auto" }}><i className="edit icon" /></div>
-            </div>
+            </div> */}
 
             <div className="searchBox">
               <div className="searchRow">
-              <div className="heading">멤버 검색</div>
+              <div className="heading"><div>대화상대 검색</div></div>
               <FormInput style={{borderRadius:"20px",outline:"none",border:"none",width:"380px",height:"29px",paddingLeft:"10px"}}
               type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
               </div>
@@ -441,7 +444,7 @@ class MessageList extends Component {
                     <div className="input-wrapper line">
                       <div className="input-style"><input style={{border:"none",outline:"none"}} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
                       <div className="button-style">
-                        <button type="button" onClick={this.sendText}><div style={{color:"white"}}>SEND</div></button></div>
+                        <button type="button" onClick={this.sendText}><div style={{color:"white"}}>전송하기</div></button></div>
                     </div>
                   </React.Fragment>}
                 </div>

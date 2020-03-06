@@ -107,7 +107,7 @@ class Item extends Component {
         </TextWrapper>
         {/* numbers */}
         <NumberWrapper>
-          <div className="price">{PointFormat(item.price || 0)} won</div>
+          <div className="price">{PointFormat(item.price/1000 || 0)}천원</div>
           <div className="score">
             {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
           </div>

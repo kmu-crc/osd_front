@@ -255,7 +255,7 @@ class Payment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Method: [{ type: "Point", text: "포인트" }, { type: "Credit", text: "신용카드" }, { type: "Bank", text: "계좌이체" }, { type: "BankDeposit", text: "무통장입금" }],
+            Method: [{ type: "Point", text: "현금 충전" }, { type: "Credit", text: "신용카드" }, { type: "Bank", text: "계좌이체" }, { type: "BankDeposit", text: "무통장입금" }],
             selected_method: 0,
             discount: 0,
             unit: "포인트",
@@ -266,10 +266,10 @@ class Payment extends Component {
     }
     selectMethod(index) {
         if (index !== 0)
-            alert("준비중입니다. 포인트로 결제해주세요.");
+            alert("준비중입니다. 현금 충전 후 결제해주세요.");
     }
     gotoChargePoint() {
-        if (window.confirm("포인트가 부족합니다. 충전하러 이동하시겠습니까?")) {
+        if (window.confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
             window.location.href = `/point`;
         }
     }

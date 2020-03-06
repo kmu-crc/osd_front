@@ -58,6 +58,23 @@ const ListElement = styled.div`
   list-style: none;
   display: flex;
   fiex-direction: row;
+
+  .title{
+    min-width:70%;
+    padding:5px;
+  }
+  .writer{
+    min-width:10%;
+    padding:5px;
+    display:flex;
+    // justify-content:center;
+  }
+  .date{
+    min-width:20%;
+    padding:5px;
+    display:flex;
+    // justify-content:center;
+  }
 `;
 
 export default class DesignerRequestBoard extends Component {
@@ -68,9 +85,9 @@ export default class DesignerRequestBoard extends Component {
         return (<React.Fragment>
             <Content top={0}>
                 <ListElement>
-                    {/* title   */}<div style={{ marginRight: "15px" }}>제목</div>
-                    {/* writer  */}<div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>글쓴이</div>
-                    {/* date    */}<div style={{ marginRight: "15px" }}>작성일</div>
+                    {/* title   */}<div className="title">제목</div>
+                    {/* writer  */}<div className="writer">글쓴이</div>
+                    {/* date    */}<div className="date">작성일</div>
                 </ListElement>
                 <Wrapper className="listWrap">
                     {/* {this.state.rendering ? */}
