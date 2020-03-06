@@ -12,7 +12,7 @@ export default function RequiresAuth(Component) {
       }
       GetSession("market").then( token => {
         this.props.CheckTokenRequest(token).then((data) => {
-          if (data.type === "AUTH_CHECK_TOKEN_FAILURE") {
+          if (data&&data.type === "AUTH_CHECK_TOKEN_FAILURE") {
             // SetSession("market", null);
             return this._checkAndRedirect();
           }

@@ -51,6 +51,7 @@ class Category extends Component {
   }
   onChangeCategory2 = async (e, cate1, value) => {
     e.stopPropagation();
+    console.log("onChangeCategory",cate1,value);
     await this.props.handleCate2(cate1, value);
   };
   resetCate = () => {
@@ -60,7 +61,6 @@ class Category extends Component {
   render() {
     const { category1, cate1, cate2 } = this.props;
     const category2 = cate1 && this.props.category2 && this.props.category2.filter(item => item.parent === parseInt(cate1, 10));
-
     return (
       <Container>
         <div className="over">

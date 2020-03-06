@@ -9,7 +9,7 @@ class MakerDetailContainer extends Component {
   componentWillMount() {
     this.props.GetExpertMakerViewDetailRequest(this.props.id)
       .then(
-        this.props.GetLikeMakerRequest(this.props.id, this.props.token)
+        this.props.userInfo&&this.props.GetLikeMakerRequest(this.props.id, this.props.token)
       );
   }
   render() {
