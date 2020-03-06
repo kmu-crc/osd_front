@@ -834,7 +834,7 @@ class DesignerDetail extends Component {
 
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         <DesignerBoard>
-          <div className="title">판</div>
+          <div className="title">디자이너 게시판</div>
           <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>디자인 의뢰</div></div>
           <div className="list">
             {/* board:[{uid:"",user_id:"",nick_name:"",type:"",title:"",create_time:"",update_time:""}], */}
