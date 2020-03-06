@@ -303,10 +303,28 @@ class MyDetail extends Component {
     }
 
   }
+
+  
   render() {
-    // console.log("myDetail", this.props);
+
+    
+    console.log("myDetail", this.props);
     const { MyDetail } = this.props;
     const { selectMenu } = this.state;
+
+
+    // let categoryName = this.props.category1&& this.props.category2 &&
+    // this.state.category_level2<1?
+    // this.props.category1[parseInt(this.state.category_level1,10)]
+    // &&this.props.category1[parseInt(this.state.category_level1,10)].text
+    // :null;
+
+    // this.props.category2&&this.props.category2.map((item,index)=>{
+    //   if(item.parent == this.state.category_level1&&item.value == this.state.category_level2){
+    //     categoryName=item.text;
+    //   }
+    // })
+
     return (
       <React.Fragment>
         <MainBox>
@@ -319,7 +337,7 @@ class MyDetail extends Component {
                 </label>
               </div>
               <div className="LabelBox fontBig fontStyleNormal">{MyDetail.nick_name}</div>
-              <div className="LabelBox fontSmall fontStyleLight red">카테고리</div>
+              {/* <div className="LabelBox fontSmall fontStyleLight red">카테고리</div> */}
               <EmptyBox height={32} />
               <div className="LabelBox">
                 <span className="fontSmall normal fontStyleLight">{(MyDetail && MyDetail.count) || 0}개의 아이템 |</span>&nbsp;

@@ -6,6 +6,7 @@ import Expert from "components/Experts/Expert";
 
 class ScrollDesignerListContainer extends Component {
   componentWillMount() {
+    console.log("?~!",this.props.sort, this.props.cate1, this.props.cate2);
     this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
     // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }

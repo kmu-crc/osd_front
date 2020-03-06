@@ -24,15 +24,18 @@ const ListElement = styled.div`
   display: flex;
   fiex-direction: row;
   cursor: default;
+  // width:100%;
   .status-box{
     width: max-content;
-    height: 25px;
     line-height: 15px;
     font-family: Noto Sans KR;
     font-weight: 500;
-    padding: 3px 5px 2px 5px;
+    padding: 7px 15px 7px 15px;
     border-radius: 15px;
-    margin-right: 5px;
+    margin-right: 10px;
+    display:flex;
+    justify-content:center;
+    align-itmes:center;
     &.request {
       background: hotpink;
       color: white;
@@ -42,6 +45,23 @@ const ListElement = styled.div`
       background: blue;
       color: white;
     }
+  }
+  .title{
+    min-width:70%;
+    display:flex;
+    align-items:center;
+    padding:5px;
+  }
+  .writer{
+    min-width:10%;
+    display:flex;
+    align-items:center;
+    padding:5px;
+  }
+  .date{
+    min-width:20%;
+    align-items:center;
+    padding:5px;
   }
 `;
 const ThumbnailWriter = styled.div`
@@ -63,7 +83,7 @@ class DesignerBoardElement extends Component {
       <NavLink to={"/requestDetail/" + item.uid}>
         <ListElement left={item.status === "response" ? 25 : 0}>
 
-          <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
+          <div className="title">
             {
               item.status === "normal"
                 ? <div className="status-box"></div>
@@ -71,15 +91,14 @@ class DesignerBoardElement extends Component {
                   ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
                   : item.status === "response" ?
                     <div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> : " "}
-
             {item.title || "글 제목"}</div>
           {/* writer */}
-          <div style={{ marginLeft: "auto", marginRight: "15px", display: "flex" }}>
+          <div className="writer">
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
             <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
           </div>
           {/* date */}
-          <div style={{ marginRight: "15px" }}>{DateFormat(item.create_time)}</div>
+          <div className="date">{DateFormat(item.create_time)}</div>
           {/* view */}
           {/* <div style={{ marginRight: "15px" }}>{NumberFormat(item.views || 0)}</div> */}
           {/* like */}

@@ -116,7 +116,7 @@ const CheckBox = styled.input.attrs({type:"checkbox"})`
   border:0.5px solid #707070;
   margin-right:11px;
 `
-const InputTextBox = styled.input.attrs({type:'text'})`
+const InputTextBox = styled.input`
   border:none;
   width:100%;
   height:100%;
