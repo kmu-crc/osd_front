@@ -117,7 +117,7 @@ export class InputTag extends Component {
     }
     componentDidUpdate(prevProps){
         if(prevProps.taglist !== this.props.taglist){
-            console.log(this.props.taglist);
+            // console.log(this.props.taglist);
             this.setState({
                 tag:this.props.taglist,
             })

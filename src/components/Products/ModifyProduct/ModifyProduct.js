@@ -24,7 +24,6 @@ const ImgWrapper = styled.div`
     z-index: 1;
   }
 `;
-
 const Title = styled.div`
   width: 100%;
   color: white;
@@ -50,16 +49,16 @@ const Wrapper = styled(ContentBox)`
 
 class ModifyDesign extends Component {
   render() {
-    console.log("props", this.props)
+    console.log("props::::", this.props)
     return (
-      <div>
-        <ImgWrapper>
-          <Title><h1>상품 정보 수정</h1></Title>
-        </ImgWrapper>
+      <React.Fragment>
+        {/* <ImgWrapper> */}
+        {/* <Title><h1>상품 정보 수정</h1></Title> */}
+        {/* </ImgWrapper> */}
         <Wrapper>
-          <ModifyDesignFormContainer history={this.props.history} id={this.props.id}/>
+          <ModifyDesignFormContainer history={this.props.history} id={this.props.id} />
         </Wrapper>
-      </div>
+      </React.Fragment>
     );
   }
 }

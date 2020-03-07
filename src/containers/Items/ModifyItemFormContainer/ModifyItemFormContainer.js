@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { UpdateItemRequest, GetItemDetailRequest } from "actions/Item";
-import { SearchMemberRequest } from "actions/Commons/Search";
-import ModifyProductForm from "components/Products/ModifyProductForm";
+// import { SearchMemberRequest } from "actions/Commons/Search";
+import ModifyItemInfo from "components/Items/ModifyItemInfo";
 
-class ModifyProudctFormContainer extends Component {
+class ModifyItemFormContainer extends Component {
   state = {
     valid: false
-  }
+  };
   componentDidMount() {
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
       .then(() => {
@@ -20,15 +20,16 @@ class ModifyProudctFormContainer extends Component {
           this.setState({ valid: true });
         }
       })
-  }
+  };
+
   render() {
     const { valid } = this.state;
     return (
-      <div>
+      <React.Fragment>
         {valid
-          ? <ModifyProductForm {...this.props} />
+          ? <ModifyItemInfo {...this.props} />
           : <p style={{ color: "#FFF" }}> 수정권한을 확인 중입니다.</p>}
-      </div>
+      </React.Fragment>
     )
   }
 }
@@ -45,4 +46,4 @@ const mapDispatchToProps = (dispatch) => ({
   UpdateItemRequest: (data, id, token) => dispatch(UpdateItemRequest(data, id, token)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyProudctFormContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyItemFormContainer));

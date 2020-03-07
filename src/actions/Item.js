@@ -341,6 +341,51 @@ const GetMyUploadItemClear = (data) => ({ type: types.GET_MY_UPLOAD_ITEM_CLEAR, 
 const GetMyUploadItemFailure = () => ({ type: types.GET_MY_UPLOAD_ITEM_FAILURE, MyUploadItem: [], MyUploadItemAdded: [] });
 
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export const UpdateItemRequest = (data, id, token) => {
+  return dispatch => {
+    dispatch(UpdateItem());
+    return fetch(`${host}/item/update/${id}`, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log("update item result: ", res);
+        return dispatch(UpdateItemSuccess(res));
+      })
+      .catch(error => {
+        console.log("insert detail result: ", error);
+        return dispatch(UpdateItemFailure(error));
+      });
+  };
+};
+export const UpdateItem = () => ({ type: types.UPDATE_ITEM });
+export const UpdateItemSuccess = res => ({ type: types.UPDATE_ITEM_SUCCESS, res });
+export const UpdateItemFailure = error => ({ type: types.UPDATE_ITEM_FAILURE, error });
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // Payment
 // // get review-list
 // export const GetItemReviewRequest = (id, page) => {
