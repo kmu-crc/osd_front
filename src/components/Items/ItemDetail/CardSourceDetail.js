@@ -268,81 +268,103 @@ class CardSourceDetail extends Component {
         .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
 
     await this.setState({ loading: false });
+  };
+
+  bindPrivate = contents => {
+    let binded = [];
+    for (let item of contents) {
+      if (item.private) {
+        const last = binded.length > 0 ? binded.length - 1 : 0;
+        if (binded.length > 0 && binded[last].private) {
+          binded[last].count++;
+        } else {
+          item.count = 1;
+          binded.push(item);
+        }
+      } else {
+        binded.push(item);
+      }
+    }
+    return binded;
   }
 
-
   render() {
-    const { /*edit,*/ content } = this.state;
+    const { loading, /*edit,*/ content } = this.state;
 
-    const PrivateContent = () =>
+    const PrivateContent = (props) =>
       <div style={{ padding: "25px 10px", borderRadius: "15px", textAlign: "center", fontSize: "25px", color: "#707070", backgroundColor: "#EFEFEF" }}>
-        비공개 아이템 항목입니다. 이 항목을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
+        {props.count}개의 비공개 아이템 항목입니다.<br/>
+        이 항목(들)을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
           </div>
-    console.log(this.props);
+    // console.log(this.props);
+
     return (
-      <CardSrcWrap>
-        {this.props.edit ? (
-          <form onSubmit={this.onSubmit}>
-            {content.length > 0 && content.map((item, index) =>
-              <Controller
-                name={`content${index}`} type={item.type}
-                order={index} maxOrder={content.length - 1}
-                key={index} item={item}
-                deleteItem={this.deleteItem} getValue={this.onChangValue} />)}
+      <React.Fragment>
+        {loading ? <Loading /> : null}
 
-            <AddController
-              name="addBasic" type="INIT"
-              order={content.length > 0 ? content.length : 0}
-              getValue={this.onAddValue} />
+        <CardSrcWrap>
+          {this.props.edit ? (
+            <form onSubmit={this.onSubmit}>
+              {content.length > 0 && content.map((item, index) =>
+                <Controller
+                  name={`content${index}`} type={item.type}
+                  order={index} maxOrder={content.length - 1}
+                  key={index} item={item}
+                  deleteItem={this.deleteItem} getValue={this.onChangValue} />)}
 
-            <ButtonContainer >
-              <EditorBottonWrapper>
-                <button onClick={this.onSubmit} className="submit" type="button">
-                  <i className="icon outline save" />저장</button>
-                <button onClick={() => this.setState({ content: "" })} className="cancel" type="button">
-                  <i className="icon trash" />취소</button>
-              </EditorBottonWrapper>
-            </ButtonContainer>
-          </form>
-        ) : null}
+              <AddController
+                name="addBasic" type="INIT"
+                order={content.length > 0 ? content.length : 0}
+                getValue={this.onAddValue} />
 
-        {!this.props.edit ?
-          content.length > 0 ? (
-            <ViewContent>
-              {content.map((item, index) =>
-                item.private === 1 && !this.props.bought ?
-                  <PrivateContent key={index} /> :
-                  item.content_type === "FILE" && item.data_type === "image" ? (
-                    <div className="imgContent" key={index}>
-                      <img key={index} src={item.content} alt="이미지" download={item.file_name} />
-                    </div>
-                  ) : item.content_type === "FILE" && item.data_type === "video" ? (
-                    <span>
-                      <span className="LinkFileName">{item.file_name}</span>
-                      <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
-                        <source src={item.content} type="video/mp4" download={item.file_name}></source>
-                      </video>
-                    </span>
-                  ) : item.content_type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
-                    <a key={index} href={item.content} download={item.file_name} className="iconWrap">
-                      <FileIcon type={item.data_type} extension={item.extension} />
-                      <span className="LinkFileName">{item.file_name}</span>
-                    </a>
-                  ) : item.content_type === "TEXT" ? (
-                    <div
-                      className="textWrap"
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: `${item.content}` }}
-                    />
-                  ) : null
-              )}
-            </ViewContent>
-          ) : (<Nodata>
-            {/* {this.props.isTeam === 1 ?<Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>:<div>등록된 컨텐츠가 없습니다.</div>} */}
-          </Nodata>) : null}
+              <ButtonContainer >
+                <EditorBottonWrapper>
+                  <button onClick={this.onSubmit} className="submit" type="button">
+                    <i className="icon outline save" />저장</button>
+                  <button onClick={() => this.setState({ content: "" })} className="cancel" type="button">
+                    <i className="icon trash" />취소</button>
+                </EditorBottonWrapper>
+              </ButtonContainer>
+            </form>
+          ) : null}
 
-        {this.state.loading && <Loading />}
-      </CardSrcWrap>
+          {!this.props.edit ?
+            content.length > 0 ? (
+              <ViewContent>
+                {this.bindPrivate(content).map((item, index) =>
+                  item.private === 1 && !this.props.bought ?
+                    <PrivateContent count={item.count} key={index} /> :
+                    item.content_type === "FILE" && item.data_type === "image" ? (
+                      <div className="imgContent" key={index}>
+                        <img key={index} src={item.content} alt="이미지" download={item.file_name} />
+                      </div>
+                    ) : item.content_type === "FILE" && item.data_type === "video" ? (
+                      <span>
+                        <span className="LinkFileName">{item.file_name}</span>
+                        <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                          <source src={item.content} type="video/mp4" download={item.file_name}></source>
+                        </video>
+                      </span>
+                    ) : item.content_type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
+                      <a key={index} href={item.content} download={item.file_name} className="iconWrap">
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
+                    ) : item.content_type === "TEXT" ? (
+                      <div
+                        className="textWrap"
+                        key={index}
+                        dangerouslySetInnerHTML={{ __html: `${item.content}` }}
+                      />
+                    ) : null
+                )}
+              </ViewContent>
+            ) : (<Nodata>
+              {/* {this.props.isTeam === 1 ?<Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>:<div>등록된 컨텐츠가 없습니다.</div>} */}
+            </Nodata>) : null}
+
+        </CardSrcWrap>
+      </React.Fragment>
     );
   }
 }

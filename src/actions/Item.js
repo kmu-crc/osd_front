@@ -356,11 +356,11 @@ export const UpdateItemRequest = (data, id, token) => {
     })
       .then(res => res.json())
       .then(res => {
-        console.log("update item result: ", res);
+        // console.log("update item result: ", res);
         return dispatch(UpdateItemSuccess(res));
       })
       .catch(error => {
-        console.log("insert detail result: ", error);
+        // console.log("insert detail result: ", error);
         return dispatch(UpdateItemFailure(error));
       });
   };
@@ -369,6 +369,27 @@ export const UpdateItem = () => ({ type: types.UPDATE_ITEM });
 export const UpdateItemSuccess = res => ({ type: types.UPDATE_ITEM_SUCCESS, res });
 export const UpdateItemFailure = error => ({ type: types.UPDATE_ITEM_FAILURE, error });
 
+export const DeleteItemRequest = (id, token) => {
+  return dispatch => {
+    dispatch(DeleteItem());
+    return fetch(`${host}/item/delete/${id}`, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "DELETE",
+    })
+      .then(res => res.json())
+      .then(res => {
+        // console.log("delete item result: ", res);
+        return res && dispatch(DeleteItemSuccess(res));
+      })
+      .catch(error => {
+        // console.log("delete error detail result: ", error);
+        return dispatch(DeleteItemFailure(error));
+      });
+  };
+};
+export const DeleteItem = () => ({ type: types.DELETE_ITEM });
+export const DeleteItemSuccess = res => ({ type: types.DELETE_ITEM_SUCCESS, res });
+export const DeleteItemFailure = error => ({ type: types.DELETE_ITEM_FAILURE, error });
 
 
 

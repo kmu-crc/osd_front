@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { UpdateItemRequest, GetItemDetailRequest } from "actions/Item";
+import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest } from "actions/Item";
 // import { SearchMemberRequest } from "actions/Commons/Search";
 import ModifyItemInfo from "components/Items/ModifyItemInfo";
 
@@ -44,6 +44,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   GetItemDetailRequest: (id, token) => dispatch(GetItemDetailRequest(id, token)),
   UpdateItemRequest: (data, id, token) => dispatch(UpdateItemRequest(data, id, token)),
+  DeleteItemRequest: (id, token) => dispatch(DeleteItemRequest(id, token))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyItemFormContainer));

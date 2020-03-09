@@ -194,7 +194,22 @@ const InfoContentChooseItemType = styled.div`
   font-size: 24px;
   color: #707070;
 `;
-
+const NaviMenu = styled.div`
+  position: abolute;
+  width: max-content;
+  padding: 25px;
+  border: 1px solid blue;
+  border-radius: 25px;
+  background: white;
+  font-size: 28px;
+  line-height: 56px;
+  text-align: center;
+  font-family: Noto Sans KR;
+  
+  .active{
+    color: red;
+  }
+`;
 class ModifyItemInfo extends Component {
   constructor(props) {
     super(props);
@@ -207,6 +222,9 @@ class ModifyItemInfo extends Component {
       itemType: -1,
       // send data - additional
       additional: null, content: [], steps: [], type: "blog", private: 0,
+
+      //ui
+      tab: "basic",
     };
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -216,6 +234,7 @@ class ModifyItemInfo extends Component {
     this.onHandleReturnedTags = this.onHandleReturnedTags.bind(this);
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
+    this.deleteThisItem = this.deleteThisItem.bind(this);
   };
 
   onSubmit(event) {
@@ -228,7 +247,7 @@ class ModifyItemInfo extends Component {
         value: this.state.thumbnail,
         name: this.state.thumbnail_name
       }],
-      tag: this.state.tag && this.state.tag.join(','),
+      tag: this.state.tag,
       category1: this.state.category_level1,
       category2: this.state.category_level2,
       itemType: this.state.itemType,
@@ -237,12 +256,14 @@ class ModifyItemInfo extends Component {
       type: this.state.type,
       private: this.state.private
     };
-    
-    this.props.UpdateItemRequest(data, this.props.ItemDetail.uid, this.props.token)
+    console.log(data);
+    // return;
+
+    this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
       .then(result => {
-        this.setState({ loading: false });
-        if (result.success) {
-          alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
+        if (result.res.success) {
+          // alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
+          this.props.GetItemDetailRequest(this.props.id, this.props.token);
           // window.location.href = `/productDetail/${result.id}`
         } else {
           alert("아이템 수정을 실패하였습니다.");
@@ -251,6 +272,7 @@ class ModifyItemInfo extends Component {
       .catch(error => {
         alert("오류내용:" + error.message);
       });
+    this.setState({ loading: false });
   };
 
   async onClickCategorylevel1(event, { value }) {
@@ -294,9 +316,23 @@ class ModifyItemInfo extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   onHandleReturnedTags(param) {
+    console.log(param);
     this.setState({ tag: param });
   };
-
+  async deleteThisItem() {
+    this.setState({ loading: true });
+    this.props.DeleteItemRequest &&
+      window.confirm("이 아이템을 삭제하시겠습니까?") &&
+      await this.props.DeleteItemRequest(this.props.ItemDetail["item-id"], this.props.token)
+        .then(data => {
+          console.log(data);
+          if (data.res.success) {
+            alert("아이템 삭제성공");
+            window.location.href = `/product`;
+          }
+        })
+    this.setState({ loading: false });
+  };
   async componentDidMount() {
     const { ItemDetail } = this.props;
     const additional = await {
@@ -319,7 +355,7 @@ class ModifyItemInfo extends Component {
     }
     this.setState(item);
     console.log(this.state);
-  }
+  };
 
   render() {
     // uid: 93
@@ -338,85 +374,122 @@ class ModifyItemInfo extends Component {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
 
-    const { /* edit, */ itemType } = this.state;
+    const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
 
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
+
       {/* 타이틀 */}
       <div className="title">아이템 수정하기</div>
 
+      <NaviMenu>
+        <div className={tab === "basic" ? "active" : ""} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보변경</div>
+        <div className={tab === "contents" ? "active" : ""} onClick={() => this.setState({ tab: "contents" })}>컨텐츠변경</div>
+      </NaviMenu>
+
       {/* 공통/기본입력사항 */}
-      <div className="contentsBox">
-        <ThumbnailBox>
-          <div className="label">썸네일 이미지 등록<Mandatory /></div>
-          <Margin height={50} />
-          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
-          <label htmlFor="file">
-            <Thumbnail img={this.state.thumbnail} width={334} height={334}>
-              {this.state.thumbnail ? null : <div>첨부하기</div>}
-            </Thumbnail>
-          </label>
-          <Margin height={75} />
-        </ThumbnailBox>
+      {tab === "basic" ?
+        <div className="contentsBox">
+          <ThumbnailBox>
+            <div className="label">썸네일 이미지 등록<Mandatory /></div>
+            <Margin height={50} />
+            <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
+            <label htmlFor="file">
+              <Thumbnail img={this.state.thumbnail} width={334} height={334}>
+                {this.state.thumbnail ? null : <div>첨부하기</div>}
+              </Thumbnail>
+            </label>
+            <Margin height={75} />
+          </ThumbnailBox>
 
-        <FormBox height="550px" boxShadow={true}>
-          <div className="contentWrap">
-            <div className="wrapper flex">
-              <div className="label">아이템명<Mandatory /></div>
-              <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
-            </div>
+          <FormBox height="550px" boxShadow={true}>
+            <div className="contentWrap">
+              <div className="wrapper flex">
+                <div className="label">아이템명<Mandatory /></div>
+                <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
+              </div>
 
-            <div className="wrapper flex ">
-              <div className="label">카테고리<Mandatory /></div>
-              <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-              <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-            </div>
+              <div className="wrapper flex ">
+                <div className="label">카테고리<Mandatory /></div>
+                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+              </div>
 
-            <div className="wrapper flex">
-              <div className="label">태그</div>
-              <div>
-                <InputTag width={370} taglist={this.state.tag.toString().split(',')} getValue={this.onHandleReturnedTags} />
+              <div className="wrapper flex">
+                <div className="label">태그</div>
+                <div>
+                  <InputTag width={370} taglist={this.state.tag.toString().split(',')} getValue={this.onHandleReturnedTags} />
+                </div>
+              </div>
+
+              <div className="wrapper flex">
+                <div className="label">아이템 유형<span className="font_red">*</span></div>
+                <div title={"(아이템 유형을 변경하실 수 없습니다.)"}>
+                  {ItemType.map(itemtype => (itemtype.value === this.state.itemType && itemtype.text))}
+                </div>
+                {/* <DropBox selection value={this.state.itemType} options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} /> */}
+              </div>
+
+              <div className="wrapper flex">
+                <div onClick={this.deleteThisItem}
+                  style={{ cursor: "default", width: "max-content", marginLeft: "auto", marginRight: "60px" }}>
+                  <div style={{ textAlign: "center", fontSize: "28px", color: "red" }}>아이템삭제</div>
+                </div>
               </div>
             </div>
+          </FormBox>
+        </div> : null}
 
-            <div className="wrapper flex">
-              <div className="label">아이템 유형<span className="font_red">*</span></div>
-              <DropBox selection value={this.state.itemType} options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} />
-            </div>
+      {/* additional */}
+      {tab === "basic" ?
+        <div className="contentsBox">
+          <MainBox>
+            <FormBox boxShadow={true} width={1570}>
+              <div className="contentWrap">
+                {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
+                {itemType === 1 ? <ItemProject return={this.onHandleAdditional} /> : null}
+                {itemType === 2 ? <ItemConsulting return={this.onHandleAdditional} /> : null}
+                {itemType === 3 ? <ItemExperience return={this.onHandleAdditional} /> : null}
+                {itemType === 4 ? <ItemInfoData return={this.onHandleAdditional} /> : null}
+                {itemType === 5 ? <ItemIdea return={this.onHandleAdditional} /> : null}
+                {itemType === 6 ? <ItemPatent return={this.onHandleAdditional} /> : null}
+                {itemType === 7 ? <ItemProduct return={this.onHandleAdditional} /> : null}
+              </div>
+            </FormBox>
+          </MainBox>
+        </div>
+        : null}
 
-          </div>
-        </FormBox>
-
-      </div>
-
-      {/* // 아이템 상세정보 입력 폼
-      <div className="contentsBox">
-        {itemType > -1 ?
-          <ItemTypeForm
-            additional={this.state.addditional}
-            // "contact-type": this.state["contact-type"],
-            // description: this.state.description,
-            // members: this.state.members,
-            // public: this.state.public,
-            // price: this.state.price,
-            returnState={(obj) => {
-              this.setState({
-                additional: obj.additional,
-                content: obj.content,
-                steps: obj.steps,
-                type: obj.type
-              })
-              // console.log(this.state);
-            }}
-            itemType={this.state.itemType}
-            userInfo={this.props.userInfo}
-          />
-          : <InfoContentChooseItemType>
-            아이템 유형을 선택하여 세부적인 <br />
-            내용을 입력해주신 후 아이템을 등록해주세요.
+      {/* // 아이템 상세정보 입력 폼 */}
+      {tab === "contents" ?
+        <div className="contentsBox">
+          {itemType > -1 ?
+            <ItemTypeForm
+              additional={this.state.addditional}
+              // "contact-type": this.state["contact-type"],
+              // description: this.state.description,
+              // members: this.state.members,
+              // public: this.state.public,
+              // price: this.state.price,
+              returnState={(obj) => {
+                this.setState({
+                  additional: obj.additional,
+                  content: obj.content,
+                  steps: obj.steps,
+                  type: obj.type
+                })
+                // console.log(this.state);
+              }}
+              itemType={this.state.itemType}
+              userInfo={this.props.userInfo}
+            />
+            : <InfoContentChooseItemType>
+              아이템 유형을 선택하여 세부적인 <br />
+              내용을 입력해주신 후 아이템을 등록해주세요.
             </InfoContentChooseItemType>}
-      </div> */}
+        </div>
+        : null}
 
       {/* 버튼 */}
       {itemType > -1 ? (
@@ -429,7 +502,7 @@ class ModifyItemInfo extends Component {
           }}>취소</RedButton>
         </div>
       ) : null}
-    </MainBox>);
+    </MainBox >);
   };
 }
 export default ModifyItemInfo;
@@ -456,7 +529,7 @@ class ItemTypeForm extends Component {
     }
   }
   async returnState() {
-    console.log("return state");
+    // console.log("return state");
     this.props.returnState && this.props.returnState(this.state);
   }
   async onHandleContent(value) { //write content state
@@ -485,20 +558,6 @@ class ItemTypeForm extends Component {
 
     return (
       <MainBox>
-        <FormBox boxShadow={true} width={1570}>
-          <div className="contentWrap">
-            {itemType === 0 ? <ItemDesign {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 1 ? <ItemProject {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 2 ? <ItemConsulting {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 3 ? <ItemExperience {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 4 ? <ItemInfoData {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 5 ? <ItemIdea {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 6 ? <ItemPatent {...additional} return={this.onHandleAdditional} /> : null}
-            {itemType === 7 ? <ItemProduct {...additional} return={this.onHandleAdditional} /> : null}
-
-          </div>
-        </FormBox>
-
         <FormBox boxShadow={true} width={1570}>
           {this.state.type === "blog" ?
             <div className="contentWrap">
@@ -580,10 +639,10 @@ const NoInviteMemberBox = styled.div`
   font-family: Noto Sans KR;
   color: #707070;
   .textLabel {
-    margin-left: 35px;
-    vertical-align: top;
-  }
-`;
+        margin - left: 35px;
+      vertical-align: top;
+    }
+  `;
 class ItemProject extends Component {
   constructor(props) {
     super(props);

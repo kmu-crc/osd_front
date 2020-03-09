@@ -3,7 +3,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 
 const FormStyle = styled.input`
-    width: ${props=>props.width}px;
+    width: ${props => props.width}px;
     margin: 0;
     -webkit-appearance: none;
     padding: 0.67857143em 1em;
@@ -115,11 +115,11 @@ export class InputTag extends Component {
     componentDidMount() {
         this.init();
     }
-    componentDidUpdate(prevProps){
-        if(prevProps.taglist !== this.props.taglist){
+    componentDidUpdate(prevProps) {
+        if (prevProps.taglist !== this.props.taglist) {
             // console.log(this.props.taglist);
             this.setState({
-                tag:this.props.taglist,
+                tag: this.props.taglist,
             })
         }
     }
@@ -160,19 +160,17 @@ export class InputTag extends Component {
     }
     onChangeValue = (event) => {
         var pattern = /^[a-zA-Zㄱ-힣0-9]*$/;
-        if(event.target.value.match(pattern))
-        {
+        if (event.target.value.match(pattern)) {
             this.setState({ value: event.target.value });
         }
-        else{
+        else {
             let warningMsg1 = document.getElementById("wariningBox3");
             warningMsg1.className = "showani";
             return;
         }
-        
+
     }
     onDeleteTag = async (event) => {
-        console.log(event.target.id);
         const deleteIdx = event.target.id;
         const length = this.state.tag.length;
         let list = [];
@@ -180,6 +178,7 @@ export class InputTag extends Component {
         this.setState({
             tag: list.slice(0, deleteIdx).concat(this.state.tag.slice(parseInt(deleteIdx, 10) + 1, length))
         });
+        // this.returnData();
     }
     render() {
         const TagBox = this.state.tag.map((item, index) => {
@@ -209,7 +208,7 @@ export class InputTag extends Component {
             <React.Fragment>
 
                 <FormStyle
-                    width={this.props.width==null?"100":this.props.width}
+                    width={this.props.width == null ? "100" : this.props.width}
                     placeholder={this.props.placeholder}
                     onKeyDown={this.onEnterKeyDown}
                     onChange={this.onChangeValue}
