@@ -9,7 +9,7 @@ import ProductListPage, { ProductDetailPage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import MakerListPage, { MakerDetailPage } from "pages/MakerPage";
 import CreateProductPage from "pages/CreateProductPage";
-import ModifyProductPage from "pages/ModifyProductPage";
+import ModifyItemPage from "pages/ModifyItemPage";
 import CreateGalleryPage from "pages/CreateGroupPage";
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
@@ -67,7 +67,7 @@ class App extends Component {
             <Route path="/createProduct" component={CreateProductPage} />
             <Route path="/createProduct/redirected" component={CreateProductPage} />
             {/* <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} /> */}
-            <Route path="/productModify/:id" component={RequiresAuth(ModifyProductPage)} />
+            <Route path="/productModify/:id" component={RequiresAuth(ModifyItemPage)} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
             <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
             {/* REQUEST */}

@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import ModifyProductInfo from "components/Products/ModifyProductInfo";
+import ModifyItemInfo from "components/Items/ModifyItemInfo";
 import { GetDesignDetailRequest } from "actions/Design";
 import { UpdateDesignInfoRequest } from "actions/Designs/UpdateDesign";
 // import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
 import { SearchMemberRequest } from "actions/Commons/Search";
 
-class ModifyProductInfoContainer extends Component {
+class ModifyItemInfoContainer extends Component {
   render() {
     return (
-      <ModifyProductInfo {...this.props} />
+      <ModifyItemInfo {...this.props} />
     );
   }
 }
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
-  DesignDetail: state.DesignDetail.status.DesignDetail,
+  ItemDetail: state.ItemDetail.status.ItemDetail,
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,
   members: state.Search.status.members
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyProductInfoContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyItemInfoContainer));

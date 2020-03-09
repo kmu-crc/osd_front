@@ -164,12 +164,12 @@ export class Controller extends Component {
     return (
       <ControllerWrap>
         <div className="contentWrap">
-          {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" :
-            item.type === "FILE" ? (
-              <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
-            ) : item.type === "TEXT" ? (
-              <TextControllerClassic item={item} private={item.private} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
-            ) : item.type === "EMBED" ? (<EmbController />) : null}
+          {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" : null}
+          {item.type === "FILE" ? (
+            <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
+          ) : item.type === "TEXT" ? (
+            <TextControllerClassic item={item} private={item.private} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
+          ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
         {item.private === 1
           ? <DelBtn type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></DelBtn>
