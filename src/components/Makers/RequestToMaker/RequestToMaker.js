@@ -279,6 +279,11 @@ class RequestToMaker extends Component {
             <div className="contentsBox">
               <FormBox>
 
+              <div className="wrapper flex centering" >
+                  <div className="label">의뢰인</div>
+                  <div>{this.props.userInfo.nickName||null}</div>
+                </div>
+
                 <div className="wrapper flex centering">
                   <div className="label">제목</div>
                   <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />

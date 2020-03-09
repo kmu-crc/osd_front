@@ -59,7 +59,6 @@ const NoData = styled.div`
 class ScrollList extends Component {
   state = { hasMore: true, loading: false };
   getLoadData = page => {
-    // console.log(this.props);
     this.props.getListRequest &&
       this.props.getListRequest(page)
         .then(() => {

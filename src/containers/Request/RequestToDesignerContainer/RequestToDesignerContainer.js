@@ -11,6 +11,7 @@ class RequestToDesignerContainer extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
+  userInfo: state.Authentication.status.userInfo,
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,
 });

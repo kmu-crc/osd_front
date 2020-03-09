@@ -25,8 +25,8 @@ const LocationList = [
   { value: 12, text: "경상북도" },
   { value: 13, text: "경상남도" },
   { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
 ];
-
 // CSS STYLING
 const Expert = styled.div`
   margin-right: ${prop => prop.mRight}px;
@@ -132,6 +132,7 @@ const Introduction = styled.div`
     width:100%;
     height:100%;
     overflow:hidden;
+    overflow-y:scroll;
     .flex{
       display:flex;
     }
@@ -149,7 +150,8 @@ const Introduction = styled.div`
       font-weight: 300;
       line-weight: 27px;
       text-align: left;
-      overflow: hidden;
+      // overflow: hidden;
+      // overflow-y:scroll;
     }
     .gradient_box{
       position:absolute;
@@ -167,14 +169,14 @@ const Introduction = styled.div`
   }
   
 
-  &:hover{
-    .gradient_box{
-      display:none;
-    }
-    .wrapItem {
-      overflow: auto;
-    }
-  }
+  // &:hover{
+  //   .gradient_box{
+  //     display:none;
+  //   }
+  //   .wrapItem {
+  //     overflow: auto;
+  //   }
+  // }
 
 
 `;
@@ -184,7 +186,8 @@ const ReviewBox = styled.div`
     display:flex;
     flex-wrap:wrap;
     overflow:hidden;
-
+    overflow-y:scroll;
+    overflow-y:overlay;
     .review{
       min-width:650px;
       height:150px;
@@ -201,11 +204,11 @@ const ReviewBox = styled.div`
         }
       }
     }
-    &:hover{
-      overflow:auto;
-      overflow-y:overlay;
+    // &:hover{
+    //   overflow:auto;
+    //   overflow-y:overlay;
 
-    }
+    // }
 `
 const RequestBoard = styled.div`
   margin-right: ${prop => prop.mRight}px;
@@ -286,7 +289,8 @@ const ItemInfo = styled.div`
     font-weight: 300;
     line-weight: 27px;
     text-align: left;
-    overflow: auto;
+    // overflow: auto;
+    overflow:hidden;
   }
   .wrapItem{
     max-width:100%;
@@ -295,6 +299,7 @@ const ItemInfo = styled.div`
     width:100%;
     height:max-content;
     overflow:hidden;
+    overflow-y:scroll;
     display:flex;
   }
   &:hover{
@@ -745,11 +750,17 @@ class MakerDetail extends Component {
     // console.log("detail:", expert);
     const { write } = this.state;
     // 카테고리
-    const categoryName = this.props.category1 && this.props.category2 &&
-      this.state.secondCategory === 0 ? this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text
-      : this.props.category2[this.state.category_level1] &&
-      this.props.category2[this.state.category_level1][this.state.secondCategory] && this.props.category2[this.state.category_level1][this.state.secondCategory].text;
+    let categoryName = this.props.category1&& this.props.category2 &&
+    this.state.category_level2<1?
+    this.props.category1[parseInt(this.state.category_level1,10)]
+    &&this.props.category1[parseInt(this.state.category_level1,10)].text
+    :null;
 
+    this.props.category2&&this.props.category2.map((item,index)=>{
+      if(item.parent == this.state.category_level1&&item.value == this.state.category_level2){
+        categoryName=item.text;
+      }
+    })
     const { tab } = this.state;
     const Location = this.state.location == null ? "" : LocationList[this.state.location] && LocationList[this.state.location].text;
 
@@ -786,10 +797,22 @@ class MakerDetail extends Component {
         {/* Introduction */}
         <Introduction>
           <div className="wrapItem">
-            <div className="title">소개</div>
+            <div className="title"><TextFormat txt={this.state.nick_name} chars={32} /></div>
             <div className="text">{this.state.explain || "천지는 맺어, 끓는 밥을 곧 것이다. 영원히 고동을 불러 심장은 피가 봄바람을 인생에 있으랴? 불어 커다란 할지라도 부패를 인간의 생명을 이상, 불어 바로 것이다. 대고, 방황하였으며, 가치를 봄날의 인간이 가진 설산에서 운다. 있는 착목한는 그들의 노래하며 원질이 대한 아름다우냐? 같은 찬미를 붙잡아 청춘 힘차게 두기 갑 속잎나고, 소담스러운 것이다. 몸이 원질이 가슴이 피가 반짝이는 소리다.이것은 이상의 예가 피다. 그들을 할지니, 품었기 가치를 보배를 남는 지혜는 약동하다. 목숨이 일월과 동력은 가는 청춘의 사라지지 더운지라 가는 있음으로써 것이다. 가치를 웅대한 대한 새 피가 품에 소담스러운 그들에게 오직 듣는다. 찾아다녀도, 들어 그들은 피어나기 것이다. 착목한는 되려니와, 그와 타오르고 커다란 가는 위하여서. 물방아 얼마나 것이다.보라, 바로 얼마나 남는 위하여서, 봄바람이다. 얼마나 그림자는 얼음에 보이는 새가 보내는 것이다. 가슴에 인간의 두기 끝까지 무엇이 것은 그리하였는가? 보이는 천지는 주며, 듣는다. 이상, 몸이 곧 두기 커다란 이것을 그들에게 위하여서, 가슴에 보라. 무한한 돋고, 많이 가슴에 있는 사막이다. 힘차게 무엇을 능히 되는 가치를 이 거선의 남는 부패뿐이다. 소금이라 얼음 긴지라 품었기 과실이 굳세게 끓는 봄바람이다. 인간의 갑 별과 사라지지 품에 같지 사막이다. 소금이라 듣기만 설레는 심장은 있으며, 것은 위하여서, 그리하였는가? 그들을 그러므로 물방아 우리의 있을 얼음과 청춘의 장식하는 보라. 이것은 끝까지 기관과 가진 인류의 그들은 힘있다. 붙잡아 뛰노는 실로 피고 피에 그것을 황금시대다. 그들의 위하여, 그것을 힘있다. 봄바람을 구하기 가슴이 풍부하게 주며, 무엇을 인도하겠다는 없으면, 봄바람이다. 청춘 방황하여도, 산야에 영원히 그들은 간에 하는 위하여서, 아니다. 사는가 얼마나 그들은 부패를 못할 하여도 무엇을 것이다. 찾아다녀도, 피는 위하여 약동하다."}</div>
-            <div className="title">거주지역</div>
+            <div className="title">위치</div>
             <div className="text">{Location}</div>
+            <div className="title">태그</div>
+            <div className="text flex">
+              {
+                this.state.tag.map((item, index) => {
+                  return (
+                    <TagPiece key={index}>
+                      {item}
+                    </TagPiece>
+                  );
+                })
+              }
+            </div>
             <div className="title">보유기술</div>
             <div className="text flex">
               {
@@ -814,7 +837,7 @@ class MakerDetail extends Component {
                 })
               }
             </div>
-            <div className="gradient_box"><div>▾</div></div>
+            {/* <div className="gradient_box"><div>▾</div></div> */}
           </div>
         </Introduction>
         {/** 상세소개*/}

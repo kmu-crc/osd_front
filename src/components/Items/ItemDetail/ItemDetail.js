@@ -407,7 +407,7 @@ class ItemDetail extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   buyThisItem(event) {
-    if (!window.confirm(`${this.props.item.price} 포인트가 결제됩니다.`)) {
+    if (!window.confirm(`${this.props.item.price/1000}천원이 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -421,10 +421,10 @@ class ItemDetail extends Component {
 
   selectMethod(index) {
     if (index !== 0)
-      alert("준비중입니다. 포인트로 결제해주세요.");
+      alert("준비중입니다. 충전 후 결제해주세요.");
   }
   gotoChargePoint() {
-    if (window.confirm("포인트가 부족합니다. 충전하러 이동하시겠습니까?")) {
+    if (window.confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
       window.location.href = `/point`;
     }
   }
@@ -464,7 +464,7 @@ class ItemDetail extends Component {
               <div className="expert line">
                 <div className="price-and-score line">
                   <div className="price" style={{ marginRight: "35px" }}>
-                    {PointFormat(item.price || 0)} 포인트</div>
+                    {PointFormat(item.price/1000 || 0)} 천원</div>
                   <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                     {Star(item.score, 28)}({item.total || 0})</div>
                 </div>

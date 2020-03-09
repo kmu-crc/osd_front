@@ -13,6 +13,7 @@ class RequestToMakerContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  userInfo: state.Authentication.status.userInfo,
   token: state.Authentication.status.token,
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,

@@ -5,6 +5,9 @@ import StyleGuide from "StyleGuide";
 const FormBox = styled.div`
     display:flex;
     align-items:center;
+    .won{
+        margin-right:50px;
+    }
 `
 const FormStyle = styled.input.attrs({ type: "number" })`
     width: ${props => props.width}px;
@@ -18,8 +21,9 @@ const FormStyle = styled.input.attrs({ type: "number" })`
     background-color:#E9E9E9;
     outline:none;
     border:0px;
-    margin-right:10px;
+    margin-right:5px;
     transition: color 0.1s ease, border-color 0.1s ease;
+
     &::placeholder {
         color: ${StyleGuide.color.geyScale.scale5};
     }
@@ -73,7 +77,7 @@ export class InputPrice extends Component {
         }
     }
     returnData = async e => {
-        this.props.getValue && await this.props.getValue(this.state.price);
+        this.props.getValue && await this.props.getValue(this.state.price*1000);
     }
     init = async () => {
         await this.setState({ price: this.props.price || 0 });
@@ -96,17 +100,17 @@ export class InputPrice extends Component {
                 <FormBox>
                     <FormStyle
                         id="price"
-                        width={this.props.width == null ? "200" : this.props.width}
+                        width={this.props.width == null ? "150" : this.props.width}
                         placeholder={this.props.placeholder}
                         value={this.state.price || 0}
                         onChange={this.onChangePrice}
-                    />
+                    /><div className="won">천원</div>
 
-                    <Button onClick={() => this.onClickButton(1000)}><div className="text">+1천</div></Button>
-                    <Button onClick={() => this.onClickButton(10000)}><div className="text">+1만</div></Button>
-                    <Button onClick={() => this.onClickButton(50000)}><div className="text">+5만</div></Button>
-                    <Button onClick={() => this.onClickButton(100000)}><div className="text">+10만</div></Button>
-                    <Button onClick={() => this.onClickButton(1000000)}><div className="text">+100만</div></Button>
+                    <Button onClick={() => this.onClickButton(1000/1000)}><div className="text">+1천</div></Button>
+                    <Button onClick={() => this.onClickButton(10000/1000)}><div className="text">+1만</div></Button>
+                    <Button onClick={() => this.onClickButton(50000/1000)}><div className="text">+5만</div></Button>
+                    <Button onClick={() => this.onClickButton(100000/1000)}><div className="text">+10만</div></Button>
+                    <Button onClick={() => this.onClickButton(1000000/1000)}><div className="text">+100만</div></Button>
                 </FormBox>
             </React.Fragment>
         );

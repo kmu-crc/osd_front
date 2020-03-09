@@ -8,7 +8,6 @@ import host from "config";
 
 // css styling
 const MsgContent = styled.div`
-
   & .ui.comments .comment {
     position: relative;
     padding: 0.3rem 0;
