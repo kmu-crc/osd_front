@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CreateGroupContainer from "containers/Groups/CreateGroupContainer";
 
-class CreateGroupPage extends Component {
+class CreateGalleryPage extends Component {
   render() {
     return(
         <CreateGroupContainer />
@@ -9,4 +9,4 @@ class CreateGroupPage extends Component {
   }
 }
 
-export default CreateGroupPage;
+export default CreateGalleryPage;

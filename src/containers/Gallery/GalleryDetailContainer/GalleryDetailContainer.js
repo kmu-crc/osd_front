@@ -6,7 +6,7 @@ import GalleryDetail from "components/Gallery/GalleryDetail/GalleryDetail";
 
 class GalleryDetailContainer extends Component {
   componentDidMount(){
-    this.props.GetGalleryDetailRequest(this.props.id);
+    this.props.GetGalleryDetailRequest(this.props.id)
   }
   render() {
     return(
