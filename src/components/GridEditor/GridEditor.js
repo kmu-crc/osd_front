@@ -293,15 +293,19 @@ class GridEditor extends Component {
                             <CardModal
                                 bought={this.props.bought}
                                 open={card} close={() => this.setState({ card: false })}
-                                edit={userInfo && (userInfo.uid === cardDetail.user_id)}
-                                card={cardDetail} isTeam={editor} title={title} boardId={boardId} itemId={this.props.item.uid} />}
+                                edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
+                                card={cardDetail}
+                                isTeam={editor}
+                                title={title}
+                                boardId={boardId}
+                                itemId={this.props.item.uid} />}
 
                         {editor && newstep && <NewStepModal {...this.props} steps={steps} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
                         {editor && editstep && <EditStepModal open={editstep} title={title} where={where} steps={steps} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>
-                                <div style={{width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
+                                <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {steps && steps.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} item_id={this.props.item.uid} editor={editor ? true : false} items={steps} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
@@ -312,7 +316,7 @@ class GridEditor extends Component {
                             </GridEditorWrapper>
                         </ReactHeight>
                     </React.Fragment>
-                    : <div>o</div>
+                    : <div>FAILED TO LOAD DATA :( <br />PLEASE, REFRESH THIS PAGE... :)</div>
                 }
             </Wrapper>)
     }

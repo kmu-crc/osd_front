@@ -72,11 +72,11 @@ const DownBtn = styled.button`
     display: block;
   }
 `;
-const DelBtn = styled.button`
+const FuncButton = styled.button`
   // display: none;
   position: absolute;
   top: 0;
-  left: 100%;
+  left: ${props => props.left || "100%"};
   // transform: translate(-50%, -50%);
   border: 0;
   padding: 0;
@@ -123,7 +123,8 @@ export class Controller extends Component {
   };
   async onChangeValue(data) {
     let newObj = { ...this.props.item };
-    await this.setState({ ...newObj, data });
+    newObj.content = data.content;
+    await this.setState({ ...newObj });
     // this.returnDate();
     // returnDate = async e => {
     if (this.props.getValue)
@@ -160,7 +161,6 @@ export class Controller extends Component {
 
   render() {
     const { item, name, /* maxOrder */ } = this.props;
-    console.log("item:", item);
     return (
       <ControllerWrap>
         <div className="contentWrap">
@@ -172,9 +172,9 @@ export class Controller extends Component {
           ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
         {item.private === 1
-          ? <DelBtn type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></DelBtn>
-          : <DelBtn type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></DelBtn>}
-        {/* <DelBtn type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></DelBtn> */}
+          ? <FuncButton left="90%" type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>
+          : <FuncButton left="90%" type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>}
+        <FuncButton left="95%" type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></FuncButton>
         {/* {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null} */}
         {/* {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null} */}
       </ControllerWrap>

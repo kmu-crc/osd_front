@@ -35,10 +35,15 @@ export class RadioType extends Component {
                     {this.props.Options.map((item, key) =>
                         (<div key={key} className="contentBox">
                             <label >
-                                <input type="radio" className="radio" name={this.props.name} onChange={_ => this.onHandleClicked(_, item)} />
-                                {item}</label>
-                        </div>)
-                    )}
+                                <input
+                                    className="radio"
+                                    type="radio"
+                                    name={this.props.name}
+                                    checked={item === this.props.default}
+                                    onChange={_ => this.onHandleClicked(_, item)} />
+                                {item}
+                            </label>
+                        </div>))}
                 </FormStyle>
             </React.Fragment>
         );

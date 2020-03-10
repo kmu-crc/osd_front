@@ -122,7 +122,7 @@ class SearchMember extends Component {
         </MemberList>
         <MemberWrap>
           {this.state.member.map((data, index) => {
-            console.log(data);
+            // console.log(data);
             return (<MemberItem key={index}>
               {data.nick_name}
               <span>

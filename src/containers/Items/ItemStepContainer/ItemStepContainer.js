@@ -9,16 +9,17 @@ import { GetItemStepsRequest } from "actions/Item";
 
 class ItemStepContainer extends Component {
   componentDidMount() {
-    this.props.GetItemStepsRequest(this.props.id, this.props.token);
+    this.props.GetItemStepsRequest(this.props.ItemDetail["item-id"], this.props.token);
   }
   render() {
     return (
-      <GridEditor {...this.props} item={{ uid: this.props.id }} />
+      <GridEditor {...this.props} item={this.props.ItemDetail} />
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  ItemDetail: state.ItemDetail.status.ItemDetail,
   ItemStep: state.ItemStep.status.ItemStep,
   token: state.Authentication.status.token,
   userInfo: state.Authentication.status.userInfo,

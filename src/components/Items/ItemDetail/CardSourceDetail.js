@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Button from "components/Commons/Button";
+// import Button from "components/Commons/Button";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 import { AddController, Controller } from "components/Commons/InputItem";
 
-const ContentForm = async (data) => {
+const ContentForm = async (data, oldData) => {
   let formData = {
     updateContent: [],
     newContent: [],
@@ -14,16 +14,18 @@ const ContentForm = async (data) => {
   formData.deleteContent = await [...data.deleteContent];
   await data.content.map(async item => {
     delete item.target;
-    console.log(item, item.uid)
     if (item.uid) {
-      await formData.updateContent.push(item);
+      const oldItem = oldData.filter(oldItem => oldItem.uid === item.uid)[0];
+      if (item.content !== oldItem.content || item.order !== oldItem.order || item.private !== oldItem.private) {
+        console.log(item, oldItem)
+        await formData.updateContent.push(item);
+      }
     } else {
       await formData.newContent.push(item);
     }
   });
   return formData;
 }
-
 const CardSrcWrap = styled.div`
   background-color: #fff;
   margin: auto;
@@ -35,7 +37,6 @@ const CardSrcWrap = styled.div`
     bottom: 70vh;
   }
 `;
-
 const ViewContent = styled.div`
   position: relative;
   .imgContent{
@@ -71,7 +72,6 @@ const ViewContent = styled.div`
     display: block;
   }
 `;
-
 const Nodata = styled.div`
   text-align: center;
 `;
@@ -114,7 +114,6 @@ const ButtonContainer = styled.div`
     cursor: pointer;
   }
 `;
-
 const EditorBottonWrapper = styled.div`
     width: max-content;
     margin: auto;
@@ -156,6 +155,15 @@ const EditorBottonWrapper = styled.div`
       }
     }
 `;
+const PrivateContentWrapper = styled.div`
+  padding: 25px 10px;
+  border-radius: 15px;
+  line-height: 35px;
+  text-align: center;
+  font-size: 25px;
+  color: #707070;
+  background-color: #EFEFEF;
+`;
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
@@ -192,10 +200,10 @@ class CardSourceDetail extends Component {
 
     await this.setState({ content: copyContent });
   };
-
   onAddValue = async data => {
     let copyContent = [...this.state.content];
     let copyData = { ...data };
+    console.log("on add value:", copyData);
     copyData.initClick = true;
     for (let item of copyContent) {
       if ((item.content_type === "FILE" && item.fileUrl == null) && (item.content_type === "FILE" && item.content === "")) {
@@ -222,7 +230,6 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: newContent });
   };
-
   deleteItem = async index => {
     let copyContent = [...this.state.content];
     let copyDelete = [...this.state.deleteContent];
@@ -240,7 +247,6 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: copyContent, deleteContent: copyDelete });
   };
-
   onSubmit = async e => {
     e.preventDefault();
     let copyContent = [...this.state.content];
@@ -257,19 +263,20 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: copyContent });
-    let formData = await ContentForm(this.state);
+    let formData = await ContentForm(this.state, this.props.content);
     await this.setState({ loading: true });
     await setTimeout(() => { }, 500);
     if (this.props.uid === "local") {
       this.props.upDateRequest(formData);
     }
-    else
-      this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+    else {
+      console.log(formData);
+      this.props.upDateRequest(formData, this.props.cardId, this.props.token)
+    }
+    // .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
 
     await this.setState({ loading: false });
   };
-
   bindPrivate = contents => {
     let binded = [];
     for (let item of contents) {
@@ -286,17 +293,21 @@ class CardSourceDetail extends Component {
       }
     }
     return binded;
-  }
+  };
+  privateItem = async data => {
+    let copyContent = [...this.props.content];
+    const copyData = { ...data };
+    for (let item of copyContent) {
+      if (item.order === copyData.order) {
+        item.private = copyData.private === 0 ? 1 : 0;
+      }
+    }
+    await this.setState({ content: copyContent });
+    // this.returnState();
+  };
 
   render() {
     const { loading, /*edit,*/ content } = this.state;
-
-    const PrivateContent = (props) =>
-      <div style={{ padding: "25px 10px", borderRadius: "15px", textAlign: "center", fontSize: "25px", color: "#707070", backgroundColor: "#EFEFEF" }}>
-        {props.count}개의 비공개 아이템 항목입니다.<br/>
-        이 항목(들)을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
-          </div>
-    // console.log(this.props);
 
     return (
       <React.Fragment>
@@ -310,18 +321,21 @@ class CardSourceDetail extends Component {
                   name={`content${index}`} type={item.type}
                   order={index} maxOrder={content.length - 1}
                   key={index} item={item}
-                  deleteItem={this.deleteItem} getValue={this.onChangValue} />)}
+                  privateItem={this.privateItem}
+                  deleteItem={this.deleteItem}
+                  getValue={this.onChangValue}
+                />)}
 
               <AddController
                 name="addBasic" type="INIT"
                 order={content.length > 0 ? content.length : 0}
                 getValue={this.onAddValue} />
 
-              <ButtonContainer >
+              <ButtonContainer>
                 <EditorBottonWrapper>
                   <button onClick={this.onSubmit} className="submit" type="button">
                     <i className="icon outline save" />저장</button>
-                  <button onClick={() => this.setState({ content: "" })} className="cancel" type="button">
+                  <button onClick={() => this.setState({ content: this.props.content || "" })} className="cancel" type="button">
                     <i className="icon trash" />취소</button>
                 </EditorBottonWrapper>
               </ButtonContainer>
@@ -333,7 +347,10 @@ class CardSourceDetail extends Component {
               <ViewContent>
                 {this.bindPrivate(content).map((item, index) =>
                   item.private === 1 && !this.props.bought ?
-                    <PrivateContent count={item.count} key={index} /> :
+                    <PrivateContentWrapper>
+                      {item.count}개의 비공개 아이템 항목입니다.<br />이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
+                      </PrivateContentWrapper> :
+                    // <PrivateContent count={item.count} key={index} /> :
                     item.content_type === "FILE" && item.data_type === "image" ? (
                       <div className="imgContent" key={index}>
                         <img key={index} src={item.content} alt="이미지" download={item.file_name} />
