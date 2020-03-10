@@ -245,7 +245,7 @@ class CreateGroup extends Component {
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     await data.files.push(file);
     console.log(data);
-
+// return;
 
     if (this.state.thumbnail != null || this.state.thumbnail != "") {
       await data.files.push(file);
@@ -257,6 +257,7 @@ class CreateGroup extends Component {
         console.log(res);
         if (result === "CREATE_NEW_GROUP_SUCCESS") {
           alert("정보가 수정되었습니다.");
+          
         } else {
           alert("다시 시도해주세요");
         }

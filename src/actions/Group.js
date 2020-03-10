@@ -658,7 +658,8 @@ export function CreateNewGroupRequest(data, token) {
       return response.json();
     })
       .then((res) => {
-        return dispatch(CreateNewGroupSuccess(res.id));
+        console.log("createnewgroupreq");
+        return res&&dispatch(CreateNewGroupSuccess(res.id));
       }).catch((error) => {
         dispatch(CreateGroupFailure());
         console.log(error);

@@ -9,8 +9,10 @@ import ProductListPage, { ProductDetailPage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import MakerListPage, { MakerDetailPage } from "pages/MakerPage";
 import CreateProductPage from "pages/CreateProductPage";
+import CreateGalleryPage from "pages/CreateGalleryPage";
+import ModifyGalleryPage from "pages/ModifyGalleryPage";
 import ModifyItemPage from "pages/ModifyItemPage";
-import CreateGalleryPage from "pages/CreateGroupPage";
+
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
@@ -84,6 +86,7 @@ class App extends Component {
             <Route path="/responseToMakerReq/:id" component={RequiresAuth(ResponseToMakerReqPage)} />
             {/* GALLERY */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
+            <Route path="/modifyGallery/:id" component={RequiresAuth(ModifyGalleryPage)} />
             <Route path="/galleryDetail/:id" component={GalleryDetailPage} />
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
