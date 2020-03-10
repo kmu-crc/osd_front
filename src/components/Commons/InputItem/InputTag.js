@@ -171,14 +171,10 @@ export class InputTag extends Component {
 
     }
     onDeleteTag = async (event) => {
-        const deleteIdx = event.target.id;
-        const length = this.state.tag.length;
-        let list = [];
-        list = list.concat(this.state.tag);
-        this.setState({
-            tag: list.slice(0, deleteIdx).concat(this.state.tag.slice(parseInt(deleteIdx, 10) + 1, length))
-        });
-        // this.returnData();
+        let copy = [...this.state.tag];
+        copy.splice(event.target.id, 1);
+        await this.setState({ tag: copy });
+        this.returnData();
     }
     render() {
         const TagBox = this.state.tag.map((item, index) => {

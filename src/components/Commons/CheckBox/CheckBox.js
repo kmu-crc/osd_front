@@ -71,7 +71,7 @@ class CheckBox extends Component {
         return (<CheckboxContainer>
             <label className="control control-checkbox">
                 {/* label here */}
-                <input id={this.props.id} onChange={this.props.onChange} type="checkbox" checked={this.props.checked} />
+                <input id={this.props.id} onChange={this.props.onChange} type="checkbox" checked={this.props.checked || false} />
                 <div className="control_indicator"></div>
             </label>
         </CheckboxContainer>)

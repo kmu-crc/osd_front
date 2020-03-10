@@ -48,14 +48,17 @@ export class InputContent extends Component {
         const copyData = { ...data };
         for (let item of copyContent) {
             if (item.order === copyData.order) {
-                item.content = data.data.content
+                item.content = data.content
             }
         }
         await this.setState({ content: copyContent });
         this.returnState();
     };
     async deleteItem(data) {
-        alert("not implemented yet");
+        let copyContent = [...this.props.content];
+        copyContent.splice(data, 1);
+        await this.setState({ content: copyContent });
+        this.returnState();
     };
     async privateItem(data) {
         let copyContent = [...this.props.content];
@@ -72,38 +75,11 @@ export class InputContent extends Component {
         this.props.returnState &&
             this.props.returnState(this.state);
     };
-    // bindPrivateContent(data) {
-    //     let newData = [];
-    //     data && data.map(item => {
-    //         if (item.private === 1) {
-    //             if (newData.length > 0) {
-    //                 if (newData[length - 1].private === 1) {
 
-    //                 }
-    //             }
-    //         }
-    //     })
-    //     return newData;
-    // };
 
     render() {
         const { content, projectable } = this.props;
-        // const contentBinded = this.bindPrivateContent(content);
         return (<React.Fragment>
-            {/* {contentBinded && contentBinded.length > 0 ?
-                contentBinded.map((item, index) => item.bind
-                    ? <PrivateItem key={index}>{item.count}개의 항목이 비공개입니다.</PrivateItem>
-                    : <Controller
-                        name={`content${index}`}
-                        type={item.type}
-                        order={index}
-                        maxOrder={content.length - 1}
-                        key={index}
-                        item={item}
-                        deleteItem={this.deleteItem}
-                        privateItem={this.privateItem}
-                        getValue={this.onChangValue} />) : null} */}
-
             {content.length > 0 &&
                 content.map((item, index) =>
                     <Controller
@@ -220,7 +196,7 @@ class AddContent extends Component {
             await this.setState({ type, order: this.props.order, content: "", initClick: true, private: 0 });
             setTimeout(() => {
                 this.setState({ initClick: false });
-            }, 100);
+            }, 500);
         } else {
             await this.setState({ type, order: this.props.order, content: "", private: 0 });
             this.returnData();

@@ -407,7 +407,7 @@ class ItemDetail extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   buyThisItem(event) {
-    if (!window.confirm(`${this.props.item.price/1000}천원이 결제됩니다.`)) {
+    if (!window.confirm(`${this.props.item.price / 1000}천원이 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -464,7 +464,7 @@ class ItemDetail extends Component {
               <div className="expert line">
                 <div className="price-and-score line">
                   <div className="price" style={{ marginRight: "35px" }}>
-                    {PointFormat(item.price/1000 || 0)} 천원</div>
+                    {PointFormat(item.price / 1000 || 0)} 천원</div>
                   <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                     {Star(item.score, 28)}({item.total || 0})</div>
                 </div>
@@ -492,7 +492,7 @@ class ItemDetail extends Component {
                         <div className="text">아이템 수정/삭제</div>
                       </div>
                     </div>
-                  :null}
+                    : null}
                   <div className="button first">
                     <div onClick={_ => this.buyThisItem(_, item)} >
                       <div className="text">아이템구매</div>
@@ -540,10 +540,10 @@ class ItemDetail extends Component {
 
         {/* item-contents */}
         <div style={{ marginTop: "35px" }}>
-          <Content style={{ marginTop: "15px", overflow: "hidden" }}
+          <Content
+            style={{ marginTop: "15px", overflow: "hidden" }}
             height={expandingContent ? "100%" : "175px"}
-            width={1600}
-          >
+            width={1600}>
             <div className="title">아이템 상세내용</div>
             {item && item.upload_type === "blog"
               ? <CardSourceDetailContainer
@@ -557,7 +557,7 @@ class ItemDetail extends Component {
                 item={item}
                 id={item["item-id"]}
                 bought={item.bought}
-                editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+              // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
               /> : null}
           </Content>
           <ExpandingButton width={1600}>

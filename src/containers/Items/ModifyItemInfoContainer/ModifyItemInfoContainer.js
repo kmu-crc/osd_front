@@ -9,9 +9,7 @@ import { SearchMemberRequest } from "actions/Commons/Search";
 
 class ModifyItemInfoContainer extends Component {
   render() {
-    return (
-      <ModifyItemInfo {...this.props} />
-    );
+    return (<ModifyItemInfo {...this.props} />);
   }
 }
 const mapStateToProps = (state) => ({
