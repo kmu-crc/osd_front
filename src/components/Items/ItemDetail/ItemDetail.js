@@ -384,6 +384,7 @@ class ItemDetail extends Component {
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
+    this.modifyThisItem = this.modifyThisItem.bind(this);
     this.selectMethod = this.selectMethod.bind(this);
     this.gotoChargePoint = this.gotoChargePoint.bind(this);
     this.purchaseThisItem = this.purchaseThisItem.bind(this);
@@ -410,6 +411,11 @@ class ItemDetail extends Component {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
+    }
+  }
+  modifyThisItem() {
+    if (window.confirm("아이템을 수정하시겠습니까?")) {
+      window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
     }
   }
 
@@ -478,11 +484,17 @@ class ItemDetail extends Component {
                 </div>
             */}
 
-
               <div className="bottom">
                 <div className="buttons line">
+                  {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
+                    <div className="button first">
+                      <div onClick={this.modifyThisItem}>
+                        <div className="text">아이템 수정/삭제</div>
+                      </div>
+                    </div>
+                  :null}
                   <div className="button first">
-                    <div onClick={(event) => this.buyThisItem(event, item)} >
+                    <div onClick={_ => this.buyThisItem(_, item)} >
                       <div className="text">아이템구매</div>
                     </div>
                   </div>
@@ -534,9 +546,19 @@ class ItemDetail extends Component {
           >
             <div className="title">아이템 상세내용</div>
             {item && item.upload_type === "blog"
-              ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
+              ? <CardSourceDetailContainer
+                bought={item.bought}
+                isCancel
+                cardId={item.cardId}
+              // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+              /> : null}
             {item && item.upload_type === "project"
-              ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)} /> : null}
+              ? <ItemStepContainer
+                item={item}
+                id={item["item-id"]}
+                bought={item.bought}
+                editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+              /> : null}
           </Content>
           <ExpandingButton width={1600}>
             <div onClick={() => this.setState({ expandingContent: !this.state.expandingContent })} className="button">

@@ -70,7 +70,7 @@ export class InputPrice extends Component {
     }
     componentDidUpdate(prevProps) {
         if (prevProps.price !== this.props.price) {
-            console.log(this.props.price);
+            // console.log(this.props.price);
             this.setState({
                 price: this.props.price,
             })
@@ -86,7 +86,7 @@ export class InputPrice extends Component {
     async onClickButton(value) {
         const money = this.state.price == 0 ? 0 : this.state.price;
         const price = parseInt(money, 10) + value;
-        console.log(parseInt(money, 10), value);
+        // console.log(parseInt(money, 10), value);
         await this.setState({ price: price });
         this.returnData();
     }
@@ -102,7 +102,7 @@ export class InputPrice extends Component {
                         id="price"
                         width={this.props.width == null ? "150" : this.props.width}
                         placeholder={this.props.placeholder}
-                        value={this.state.price}
+                        value={this.state.price || 0}
                         onChange={this.onChangePrice}
                     /><div className="won">천원</div>
 
