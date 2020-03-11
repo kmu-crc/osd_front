@@ -10,7 +10,7 @@ import CardSourceDetail from "components/Items/ItemDetail/CardSourceDetail";
 
 class CardSourceDetailContainer extends Component {
   componentDidMount() {
-    this.props.GetItemContentsRequest(this.props.cardId, this.props.token);
+    this.props.cardId && this.props.GetItemContentsRequest(this.props.cardId, this.props.token);
   }
   render() {
     return (
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
   return {
     token: state.Authentication.status.token,
     content: state.ItemContent.status.content,
-
+    ItemDetail: state.ItemDetail.status.ItemDetail,
     status: state.ItemContent.ItemContentEdit.status,
     editStatus: state.ItemContent.ItemContentEdit.status
   };

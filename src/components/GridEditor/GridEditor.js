@@ -114,8 +114,8 @@ class GridEditor extends Component {
         }
     }
     createNewCard(row, boardId) {
-        alert(row);
-        this.setState({ row: row, boardId: boardId, newcard: true });
+        console.log("create new card:", row, boardId);
+        this.setState({ row: row, boardId: row.id, newcard: true });
     }
     openCard = (card, row, boardId) => {
         this.setState({ cardDetail: card, title: card.title, row: row, boardId: boardId, card: true });
@@ -141,55 +141,29 @@ class GridEditor extends Component {
         return list;
     }
     async RemoveStep(data) {
-        if (this.props.item.uid === "new") {
-            let copyContent = [...this.state.content];
-            copyContent.splice(data, 1);
-            copyContent = this.sorting(copyContent);
-            this.setState({ content: copyContent });
-        }
-        else
-            await this.props.DeleteDesignBoardRequest(this.props.item.uid, data, this.props.token)
-                .then(() => { this.props.UpdateDesignTime(this.props.item.uid, this.props.token) })
-                .then(() => {
-                    this.props.GetDesignBoardRequest(this.props.item.uid);
-                    // console.log("1", this.props.DesignDetailStep) 
-                })
-                .then(() => { this.props.GetDesignDetailRequest(this.props.item.uid, this.props.token) })
-                .catch((err) => { console.error(err) });
+        await this.props.DeleteItemListRequest(this.props.item["item-id"], data, this.props.token)
+            .then(res => {
+                console.log(res);
+                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+            })
+            .catch((err) => { alert("Failed to delete the STEP"); console.error(err) });
     }
     async EditStep(data) {
-        if (this.props.item.uid === "new") {
-            let copyContent = [...this.state.content];
-            copyContent.splice(data.where, 1, { uid: data.where, title: data.title, where: data.where });
-            copyContent = this.sorting(copyContent);
-            this.setState({ content: copyContent });
-        }
-        else
-            await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
-                .then(() => { this.props.UpdateDesignTime(this.props.item.uid, this.props.token) })
-                .then(() => {
-                    this.props.GetDesignBoardRequest(this.props.item.uid);
-                    // console.log("2", this.props.DesignDetailStep) 
-                })
-                .then(() => { this.props.GetDesignDetailRequest(this.props.item.uid, this.props.token) })
-                .catch((err) => { console.error(err) });
+        await this.props.UpdateItemListRequest(this.props.item["item-id"], data.where, this.props.token, { title: data.title })
+            .then(res => {
+                console.log(res);
+                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+            })
         this.CloseEditStep();
     }
-    async NewStep(data) {
-        if (this.props.item.uid === "new") {
-            let copyContent = [...this.state.content];
-            copyContent.push({ uid: data.where, title: data.title, where: data.where });
-            copyContent = this.sorting(copyContent);
-            this.setState({ content: copyContent });
-        }
-        else
-            await this.props.CreateDesignBoardRequest(data, this.props.item.uid, this.props.token)
-                .then(() => { this.props.UpdateDesignTime(this.props.item.uid, this.props.token) })
-                .then(() => {
-                    this.props.GetDesignBoardRequest(this.props.item.uid);
-                })
-                .then(() => { this.props.GetDesignDetailRequest(this.props.item.uid, this.props.token) })
-                .catch((err) => { console.error(err) });
+    async NewStep(_data) {
+        const data = { title: _data.title, order: _data.where, type: "item", content_id: this.props.item["item-id"], }
+        await this.props.CreateItemListRequest(data, this.props.item["item-id"], this.props.token)
+            .then(res => {
+                console.log(res);
+                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+            })
+            .catch((err) => { alert("Failed to create new STEP"); console.error(err) });
         this.CloseNewStep();
     }
     ScrollLeft() {
@@ -239,8 +213,14 @@ class GridEditor extends Component {
             if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
         });
         if (jobs.length === 0) return;
-        promiseAry = jobs.map((job) => this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder }))
-        await Promise.all(promiseAry).then(() => this.props.GetDesignBoardRequest(this.props.item.uid))
+        promiseAry = jobs.map(job =>
+            this.props.UpdateItemListRequest(this.props.itemId, job.uid, this.props.token, { order: job.neworder }))
+
+        await Promise
+            .all(promiseAry)
+            .then(() =>
+                this.props.GetItemStepsRequest(this.props.itemId, this.props.token)
+            )
     }
     shouldComponentUpdate(nextProps) {
         if (this.props.DesignDetailStep !== nextProps.DesignDetailStep) {
@@ -268,12 +248,12 @@ class GridEditor extends Component {
     }
     render() {
         const { editor, item, ItemStep, userInfo } = this.props;
-        const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = ItemStep;
 
         return (
             <Wrapper>
-                {item.uid ?
+                {item["item-id"] ?
                     <React.Fragment>
                         {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
@@ -283,13 +263,19 @@ class GridEditor extends Component {
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
-                        {editor && newcard &&
+                        {editor && newcard ?
                             <NewCardModal
-                                isTeam={editor} boardId={boardId} itemId={this.props.item.uid}
-                                order={steps.length} open={newcard} return={this.handleReturn}
-                                close={() => this.setState({ newcard: false })} />}
+                                isTeam={editor}
+                                // boardId={boardId}
+                                itemId={this.props.item.uid}
+                                // order={steps.length}
+                                open={newcard}
+                                row={row}
+                                return={this.handleReturn}
+                                close={() => this.setState({ newcard: false })}
+                            /> : null}
 
-                        {card &&
+                        {card ?
                             <CardModal
                                 bought={this.props.bought}
                                 open={card} close={() => this.setState({ card: false })}
@@ -298,20 +284,51 @@ class GridEditor extends Component {
                                 isTeam={editor}
                                 title={title}
                                 boardId={boardId}
-                                itemId={this.props.item.uid} />}
+                                itemId={this.props.item["item-id"]}
+                            /> : null}
 
-                        {editor && newstep && <NewStepModal {...this.props} steps={steps} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
-                        {editor && editstep && <EditStepModal open={editstep} title={title} where={where} steps={steps} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
+                        {editor && newstep ?
+                            <NewStepModal
+                                {...this.props}
+                                steps={steps}
+                                open={newstep}
+                                newStep={this.NewStep}
+                                close={this.CloseNewStep}
+                            /> : null}
+
+                        {editor && editstep ?
+                            <EditStepModal
+                                open={editstep}
+                                title={title}
+                                where={where}
+                                steps={steps}
+                                RemoveStep={this.RemoveStep}
+                                EditStep={this.EditStep}
+                                close={this.CloseEditStep}
+                            /> : null}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>
                                 <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
-                                    {steps && steps.length > 0 &&
-                                        <SortableDesignSteps editStep={this.OpenEditStep} item_id={this.props.item.uid} editor={editor ? true : false} items={steps} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
-                                    {editor && <div style={{ display: "flex" }}>
-                                        <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
-                                    </div>}
+                                    {steps && steps.length > 0 ?
+                                        <SortableDesignSteps
+                                            editStep={this.OpenEditStep}
+                                            item_id={this.props.item.uid}
+                                            editor={editor ? true : false}
+                                            items={steps}
+                                            cardReorder={this.requestCardReorder}
+                                            createCard={this.createNewCard}
+                                            openCard={this.openCard}
+                                            reorder={this.requestReorder}
+                                        /> : null}
+                                    {editor ?
+                                        <div style={{ display: "flex" }}>
+                                            <CreateStep
+                                                onClick={this.OpenNewStep}
+                                                step={"단계"} />
+                                            <div style={{ width: "300px" }}>&nbsp;</div>
+                                        </div> : null}
                                 </div>
                             </GridEditorWrapper>
                         </ReactHeight>
