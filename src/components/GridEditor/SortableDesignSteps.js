@@ -79,8 +79,8 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
             id="stepcard"
             marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
 
-        {step.cards && step.cards.length > 0 &&
-            <Fragment>
+        {step.cards && step.cards.length > 0 ?
+            <React.Fragment>
                 <div style={{ marginTop: "25px" }}>
                     <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
                 </div>
@@ -96,14 +96,20 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
                         reorder={reorder}
                         disableReorder={disableReorder} />
                 </div>
-            </Fragment>}
-        {editor &&
-            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "15spx" }}>
-                <CreateCard
-                    onClick={() => createCard({ order: (step && step.cards) ? step.cards.length : 0, id: boardId })}
-                    title={""} step={"카드 "}
-                    marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
-            </div>}
+            </React.Fragment> : null}
+
+        {editor ?
+            <React.Fragment>
+                <div style={{ marginTop: "25px" }}>
+                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
+                </div>
+                <div style={{ marginTop: "25px" }}>
+                    <CreateCard
+                        onClick={() => createCard({ order: (step && step.cards) ? step.cards.length : 0, id: boardId })}
+                        title={""} step={"카드 "}
+                        marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
+                </div>
+            </React.Fragment> : null}
     </div>));
 
 class SortableDesignCards extends Component {

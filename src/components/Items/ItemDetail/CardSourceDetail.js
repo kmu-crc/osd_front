@@ -270,8 +270,18 @@ class CardSourceDetail extends Component {
       this.props.upDateRequest(formData);
     }
     else {
-      console.log(formData);
-      this.props.upDateRequest(formData, this.props.cardId, this.props.token)
+      // console.log(formData);
+      if (formData && (formData.newContent.length == 0 && formData.updateContent.length === 0 && formData.newContent.length === 0)) {
+        alert("변경된 사항이 없습니다.");
+      } else {
+        this.props.upDateRequest(formData, this.props.cardId, this.props.token)
+          .then(res => {
+            if (res.data.success) {
+              alert("아이템 컨텐츠를 수정하였습니다.");
+              window.location.href = `/productDetail/${this.props.ItemDetail["item-id"]}`
+            }
+          })
+      }
     }
     // .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
 

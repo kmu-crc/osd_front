@@ -8,7 +8,7 @@ import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
-import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
+import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContainer";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";

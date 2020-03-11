@@ -1,54 +1,7 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export const CreateDesignCardRequest = (data, design_id, board_id, token) => {
-  return dispatch => {
-    dispatch(CreateCard());
-    console.log("request", data);
-    return fetch(
-      `${host}/design/designDetail/${design_id}/${board_id}/createCard`,
-      {
-        headers: {
-          "x-access-token": token,
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(data)
-      }
-    )
-      .then(function(res) {
-        return res.json();
-      })
-      .then(function(res) {
-        console.log("insert detail", res.desing_id);
-        return dispatch(CreateCardSuccess(res));
-      })
-      .catch(error => {
-        console.log("insert detail err", error);
-        return dispatch(CreateCardFailure(error));
-      });
-  };
-};
 
-export const CreateCard = () => {
-  return {
-    type: types.CREATE_CARD
-  };
-};
-
-export const CreateCardSuccess = res => {
-  return {
-    type: types.CREATE_CARD_SUCCESS,
-    success: res.success
-  };
-};
-
-export const CreateCardFailure = error => {
-  return {
-    type: types.CREATE_CARD_FAILURE,
-    success: error.success
-  };
-};
 
 export const GetDesignCardRequest = (id, board_id) => {
   return dispatch => {
@@ -57,10 +10,10 @@ export const GetDesignCardRequest = (id, board_id) => {
       headers: { "Content-Type": "application/json" },
       method: "GET"
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         console.log(res);
         return dispatch(GetCardSuccess(res, board_id));
       })
@@ -101,10 +54,10 @@ export const GetCardDetailRequest = id => {
       headers: { "Content-Type": "application/json" },
       method: "GET"
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         console.log(res);
         return dispatch(GetCardDetailSuccess(res));
       })
@@ -145,10 +98,10 @@ export const UpdateCardTitleRequest = (data, token, id) => {
       method: "POST",
       body: JSON.stringify(data)
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         console.log(res);
         return dispatch(UpdateCardTitleSuccess(res));
       })
@@ -190,10 +143,10 @@ export const UpdateCardContentRequest = (data, token, id) => {
       method: "POST",
       body: JSON.stringify(data)
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         console.log(res);
         return dispatch(UpdateCardContentSuccess(res));
       })
@@ -235,10 +188,10 @@ export const UpdateCardImagesRequest = (data, token, id) => {
       method: "POST",
       body: data
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         console.log(res);
         return dispatch(UpdateCardImagesSuccess(res));
       })
@@ -277,10 +230,10 @@ export const UpdateCardSourcesRequest = (data, token, id) => {
       method: "POST",
       body: data
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         console.log(res);
         return dispatch(UpdateCardSourcesSuccess(res));
       })
@@ -311,53 +264,6 @@ export const UpdateCardSourcesFailure = error => {
   };
 };
 
-export const DeleteDesignCardRequest = (board_id, card_id, token) => {
-  return dispatch => {
-    dispatch(DeleteCard());
-    return fetch(
-      `${host}/design/designDetail/deleteCard/${board_id}/${card_id}`,
-      {
-        headers: {
-          "x-access-token": token,
-          "Content-Type": "application/json"
-        },
-        method: "DELETE"
-      }
-    )
-      .then(function(res) {
-        return res.json();
-      })
-      .then(function(res) {
-        console.log(res);
-        return dispatch(DeleteCardSuccess(res));
-      })
-      .catch(error => {
-        console.log("DeleteDesignCardRequest err", error);
-        return dispatch(DeleteCardFailure(error));
-      });
-  };
-};
-
-export const DeleteCard = () => {
-  return {
-    type: types.DELETE_CARD
-  };
-};
-
-export const DeleteCardSuccess = res => {
-  return {
-    type: types.DELETE_CARD_SUCCESS,
-    success: res.success
-  };
-};
-
-export const DeleteCardFailure = error => {
-  return {
-    type: types.DELETE_CARD_FAILURE,
-    success: error.success
-  };
-};
-
 // 카드 댓글 가져오기
 export const GetCardCommentRequest = (design_id, card_id) => {
   return dispatch => {
@@ -371,7 +277,7 @@ export const GetCardCommentRequest = (design_id, card_id) => {
         method: "GET"
       }
     )
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
       .then(res => {
@@ -419,10 +325,10 @@ export const CreateCardCommentRequest = (data, design_id, card_id, token) => {
         body: JSON.stringify(data)
       }
     )
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         return dispatch(CreateCardCommentSuccess(res));
       })
       .catch(error => {
@@ -470,10 +376,10 @@ export const DeleteCardCommentRequest = (
         method: "DELETE"
       }
     )
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         return dispatch(DeleteCardCommentSuccess(res));
       })
       .catch(error => {
@@ -502,77 +408,6 @@ export const DeleteCardCommentFailure = error => {
   };
 };
 
-// design source update
-export const UpdateDesignSourceRequest = (data, card_id, token) => {
-  return dispatch => {
-    dispatch(UpdateDesignSource());
-    console.log("request", data);
-    return fetch(`${host}/design/designDetail/updateCardSource/${card_id}`, {
-      headers: {
-        "x-access-token": token,
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-      .then(function(res) {
-        return res.json();
-      })
-      .then(function(res) {
-        return dispatch(UpdateDesignSourceSuccess(res));
-      })
-      .catch(error => {
-        console.log("insert issue err", error);
-        return dispatch(UpdateDesignSourceFailure(error));
-      });
-  };
-};
-
-// design source update
-export const UpdateCardSourceRequest = (data, card_id, token) => {
-  return dispatch => {
-    dispatch(UpdateDesignSource());
-    console.log("request", data);
-    return fetch(`${host}/design/designDetail/updateCardAllData/${card_id}`, {
-      headers: {
-        "x-access-token": token,
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-      .then(function(res) {
-        return res.json();
-      })
-      .then(function(res) {
-        return dispatch(UpdateDesignSourceSuccess(res));
-      })
-      .catch(error => {
-        console.log("insert issue err", error);
-        return dispatch(UpdateDesignSourceFailure(error));
-      });
-  };
-};
-
-export const UpdateDesignSource = () => {
-  return {
-    type: types.UPDATE_DESIGN_SOURCE
-  };
-};
-
-export const UpdateDesignSourceSuccess = res => {
-  return {
-    type: types.UPDATE_DESIGN_SOURCE_SUCCESS,
-    data: res
-  };
-};
-
-export const UpdateDesignSourceFailure = error => {
-  return {
-    type: types.UPDATE_DESIGN_SOURCE_FAILURE
-  };
-};
-
 // design source get
 export const GetDesignSourceRequest = id => {
   return dispatch => {
@@ -580,10 +415,10 @@ export const GetDesignSourceRequest = id => {
     return fetch(`${host}/design/designDetail/getCardSource/${id}`, {
       method: "GET"
     })
-      .then(function(res) {
+      .then(function (res) {
         return res.json();
       })
-      .then(function(res) {
+      .then(function (res) {
         return dispatch(GetDesignSourceSuccess(res));
       })
       .catch(error => {

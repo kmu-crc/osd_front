@@ -20,19 +20,19 @@ export function ItemContent(state, action) {
                 }
             });
 
-        case types.UPDATE_DESIGN_SOURCE:
+        case types.UPDATE_ITEM_SOURCE:
             return update(state, {
                 ItemContentEdit: {
                     status: { $set: "WATTING" }
                 }
             });
-        case types.UPDATE_DESIGN_SOURCE_SUCCESS:
+        case types.UPDATE_ITEM_SOURCE_SUCCESS:
             return update(state, {
                 ItemContentEdit: {
                     status: { $set: "SUCCESS" }
                 }
             });
-        case types.UPDATE_DESIGN_SOURCE_FAILURE:
+        case types.UPDATE_ITEM_SOURCE_FAILURE:
             return update(state, {
                 ItemContentEdit: {
                     status: { $set: "FAILURE" }

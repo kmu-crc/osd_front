@@ -7,13 +7,15 @@ import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import { GetDesignDetailRequest, } from "actions/Design";
 import {
-    UpdateCardSourceRequest, UpdateCardImagesRequest, UpdateCardContentRequest, UpdateCardTitleRequest,
-    GetCardDetailRequest, DeleteDesignCardRequest
+    UpdateCardImagesRequest, UpdateCardContentRequest, UpdateCardTitleRequest,
+    GetCardDetailRequest
 } from "actions/Designs/DesignCard";
 import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
 
-import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
+import { GetItemStepsRequest, UpdateCardSourceRequest, DeleteItemCardRequest } from "actions/Item";
+
+import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
 // import CardComment from './CardComment';
 
 import { FormThumbnailEx } from "components/Commons/FormItems";
@@ -416,13 +418,15 @@ class CardModal extends Component {
         e.stopPropagation();
         const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
         if (confirm) {
-            this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
-                .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                .then(async () => {
-                    await this.setState({ edit: false });
-                    this.props.GetDesignBoardRequest(this.props.designId);
-                    this.onClose();
-                });
+            this.props.DeleteItemCardRequest(this.props.itemId, this.props.card.uid, this.props.token)
+                .then(res => {
+                    if (res.success) {
+                        this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+                        this.setState({ edit: false });
+                        this.onClose();
+                    }
+                })
+                .catch(err => alert(err))
         }
     };
     onClose = async () => {
@@ -553,36 +557,18 @@ const mapStateToProps = state => ({
     detail: state.ItemContent.status.ItemContent,
 });
 
-const mapDispatchToProps = dispatch => {
-    return {
-        UpdateCardSourceRequest: (data, card_id, token) => {
-            return dispatch(UpdateCardSourceRequest(data, card_id, token));
-        },
-        UpdateCardTitleRequest: (data, token, id) => {
-            return dispatch(UpdateCardTitleRequest(data, token, id));
-        },
-        UpdateCardContentRequest: (data, token, id) => {
-            return dispatch(UpdateCardContentRequest(data, token, id));
-        },
-        UpdateCardImagesRequest: (data, token, id) => {
-            return dispatch(UpdateCardImagesRequest(data, token, id));
-        },
-        DeleteDesignCardRequest: (board_id, card_id, token) => {
-            return dispatch(DeleteDesignCardRequest(board_id, card_id, token));
-        },
-        GetDesignBoardRequest: (id) => {
-            return dispatch(GetDesignBoardRequest(id));
-        },
-        GetCardDetailRequest: id => {
-            return dispatch(GetCardDetailRequest(id));
-        },
-        UpdateDesignTime: (id, token) => {
-            return dispatch(UpdateDesignTime(id, token));
-        },
-        GetDesignDetailRequest: (id, token) => {
-            return dispatch(GetDesignDetailRequest(id, token));
-        },
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    DeleteItemCardRequest: (board_id, card_id, token) => dispatch(DeleteItemCardRequest(board_id, card_id, token)),
+    GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
+
+    UpdateCardSourceRequest: (data, card_id, token) => { return dispatch(UpdateCardSourceRequest(data, card_id, token)); },
+    UpdateCardTitleRequest: (data, token, id) => { return dispatch(UpdateCardTitleRequest(data, token, id)); },
+    UpdateCardContentRequest: (data, token, id) => { return dispatch(UpdateCardContentRequest(data, token, id)); },
+    UpdateCardImagesRequest: (data, token, id) => { return dispatch(UpdateCardImagesRequest(data, token, id)); },
+    GetDesignBoardRequest: (id) => { return dispatch(GetDesignBoardRequest(id)); },
+    GetCardDetailRequest: id => { return dispatch(GetCardDetailRequest(id)); },
+    UpdateDesignTime: (id, token) => { return dispatch(UpdateDesignTime(id, token)); },
+    GetDesignDetailRequest: (id, token) => { return dispatch(GetDesignDetailRequest(id, token)); },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
