@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GridEditor from "components/GridEditor";
-import { GetItemStepsRequest } from "actions/Item";
+import { GetItemStepsRequest, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
 
-// CreateDesignBoardRequest, DeleteDesignBoardRequest,
-// GetDesignDetailRequest, GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
-// UpdateCardTitleRequest, UpdateDesignBoardRequest, UpdateDesignTime
+// , ,
+// , GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
+// UpdateCardTitleRequest, UpdateDesignBoardRequest, 
 
 class ItemStepContainer extends Component {
   componentDidMount() {
     this.props.GetItemStepsRequest(this.props.ItemDetail["item-id"], this.props.token);
   }
   render() {
+    console.log(this.props.ItemStep);
     return (
-      <GridEditor {...this.props} item={this.props.ItemDetail} />
+      <GridEditor {...this.props} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} />
     );
   }
 }
@@ -27,6 +28,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
+  CreateItemListRequest: (data, id, token) => dispatch(CreateItemListRequest(data, id, token)),
+  DeleteItemListRequest: (id, list_id, token) => dispatch(DeleteItemListRequest(id, list_id, token)),
+  UpdateItemListRequest: (id, list_id, token, data) => dispatch(UpdateItemListRequest(id, list_id, token, data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemStepContainer);

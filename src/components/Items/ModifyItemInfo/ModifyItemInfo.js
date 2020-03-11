@@ -8,7 +8,7 @@ import { AddController, InputContent, Controller, InputTag, RadioType } from "co
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
-import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
+import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
 
 const ItemType = [
@@ -23,6 +23,7 @@ const ItemType = [
 ];
 const MainBox = styled.div`
   width:100%;
+  margin-bottom: ${props => props.marginBottom || 0}px;
   .title{
     width:170px;
     height:29px;
@@ -249,8 +250,8 @@ class ModifyItemInfo extends Component {
       additional: null, content: [], steps: [], type: "blog", private: 0,
 
       //ui 
-      tab: "basic",
-      // tab: "contents",
+      // tab: "basic",
+      tab: "contents",
       alone: false,
     };
     this.onClickItemType = this.onClickItemType.bind(this);
@@ -678,14 +679,14 @@ class ModifyItemInfo extends Component {
         </div>) : null}
 
       {/* 버튼 */}
-      {itemType > -1 ?
+      {itemType > -1 && tab === "basic" ?
         (<div className="contentsBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "25px" }}>
-          <RedButton onClick={this.onSubmit}>아이템 수정</RedButton>
-          <RedButton gray onClick={() => {
+          <RedButton onClick={this.onSubmit}>수정</RedButton>
+          {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
-          }}>취소</RedButton>
+          }}>취소</RedButton> */}
         </div>) : null}
     </MainBox >);
   };
@@ -695,7 +696,7 @@ export default ModifyItemInfo;
 class ItemContentEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = { content: [], steps: [], type: "blog", item: null };
+    this.state = { content: [], steps: [], type: "", item: null };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -741,7 +742,7 @@ class ItemContentEditor extends Component {
     const { content, steps } = this.state;
     // console.log(this.props);
     return (
-      <MainBox>
+      <MainBox marginBottom={75}>
         <FormBox boxShadow={true} width={1570}>
           {this.state.type === "blog"
             ? <CardSourceDetailContainer

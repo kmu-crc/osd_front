@@ -29,7 +29,6 @@ const CreateCardContainer = styled.div`
         line-height: 29px;
     }
 `;
-
 const CreateStepContainer = styled.div`
     position: relative;
     display: flex;
@@ -57,26 +56,26 @@ const CreateStepContainer = styled.div`
         line-height: 29px;
     }
 `;
-export const CreateStep = (props) => {
-    return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
-        <div className="close-box">
-            <Cross angle={90} width={33} height={33} disabled={false} /></div>
-        <div className="create-button">{props.step} 생성</div>
-    </CreateStepContainer>)
-}
-export const CreateCard = (props) => {
-    return (<CreateCardContainer marginRight={props.marginRight} onClick={props.onClick} disabled={props.disabled}>
-        <div className="cross-wrapper" >
-            <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
-        <div className="text">컨텐츠 등록</div>
-    </CreateCardContainer>)
-}
-export const TipDiv = (props) => {
-    return (<div>
-        <div style={{ color: "#FF0000" }}>TIP</div>
-        <div style={{ color: "#707070", fontSize: "17px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
-    </div>)
-}
+// export const CreateStep = (props) => {
+//     return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
+//         <div className="close-box">
+//             <Cross angle={90} width={33} height={33} disabled={false} /></div>
+//         <div className="create-button">{props.step} 생성</div>
+//     </CreateStepContainer>)
+// }
+// export const CreateCard = (props) => {
+//     return (<CreateCardContainer marginRight={props.marginRight} onClick={props.onClick} disabled={props.disabled}>
+//         <div className="cross-wrapper" >
+//             <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
+//         <div className="text">컨텐츠 등록</div>
+//     </CreateCardContainer>)
+// }
+// export const TipDiv = (props) => {
+//     return (<div>
+//         <div style={{ color: "#FF0000" }}>TIP</div>
+//         <div style={{ color: "#707070", fontSize: "17px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
+//     </div>)
+// }
 const StepCardStyle = styled.div`
     position: relative;
     cursor: pointer;
@@ -116,17 +115,6 @@ const StepCardStyle = styled.div`
         margin-top: 25px;
     }
 `;
-export const StepCard = (props) => {
-    return (<StepCardStyle 
-                marginTop={props.marginTop} marginRight={props.marginRight} marginBottom={props.marginBottom} marginLeft={props.marginLeft} 
-                title={props.title}
-                id={props.id} uid={props.uid} 
-                onClick={props.onClick} 
-                >
-        <div className="icon-area">{props.children}</div>
-        <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
-    </StepCardStyle >)
-}
 const CardContainer = styled.div`
     position: relative;
     z-index: 700;
@@ -159,7 +147,6 @@ const CardContainer = styled.div`
         margin-left: 165px;
         margin-top: 25px;
     }
-}}>
 `;
 const AuthorBox = styled.div`
   z-index: 702;
@@ -176,6 +163,37 @@ const AuthorBox = styled.div`
   padding: 8px;
 `;
 
+export const CreateStep = (props) => {
+    return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
+        <div className="close-box">
+            <Cross angle={90} width={33} height={33} disabled={false} /></div>
+        <div className="create-button">{props.step} 생성하기</div>
+    </CreateStepContainer>)
+}
+export const CreateCard = (props) => {
+    return (<CreateCardContainer marginRight={props.marginRight} onClick={props.onClick} disabled={props.disabled}>
+        <div className="cross-wrapper" >
+            <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
+        <div className="text">컨텐츠 등록하기</div>
+    </CreateCardContainer>)
+}
+export const TipDiv = (props) => {
+    return (<div>
+        <div style={{ color: "#FF0000" }}>TIP</div>
+        <div style={{ color: "#707070", fontSize: "17px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
+    </div>)
+}
+export const StepCard = (props) => {
+    return (<StepCardStyle 
+                marginTop={props.marginTop} marginRight={props.marginRight} marginBottom={props.marginBottom} marginLeft={props.marginLeft} 
+                title={props.title}
+                id={props.id} uid={props.uid} 
+                onClick={props.onClick} 
+                >
+        <div className="icon-area">{props.children}</div>
+        <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
+    </StepCardStyle >)
+}
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
