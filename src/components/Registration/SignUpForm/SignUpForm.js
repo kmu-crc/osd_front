@@ -341,7 +341,7 @@ class SignUpForm extends Component {
                   height={43} 
                   bgColor={"#FF0000"} 
                   borderRadius={21} 
-                  fontColor={"white"}>가입하기</CustomButton>
+                  fontColor={"white"}>가입</CustomButton>
               </div>
             </MainBox>
       </React.Fragment>

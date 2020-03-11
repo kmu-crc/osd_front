@@ -827,7 +827,7 @@ class DesignerDetail extends Component {
       <ItemInfo width={1523} height={491} mTop={60}>
         <div className="title">갤러리</div>
         <div className="wrapGallery">
-          {<HaveInGalleryContainer id={this.props.id} />}
+          {<HaveInGalleryContainer id={this.props.id} isModify={false}/>}
         </div>
 
       </ItemInfo>

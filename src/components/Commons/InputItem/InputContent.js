@@ -217,10 +217,10 @@ class AddContent extends Component {
         return (
             <ControllerWrap>
                 <div className="innerBox">
-                    <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
-                    <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
+                    <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록</NewController>
+                    <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력</NewController>
                     {this.props.order === 0 && this.props.projectable ? <NewController className="txt" className="complecated" width="max-content" height="29px">
-                        <div onClick={this.changeType} className="txt">단계 생성하기</div>
+                        <div onClick={this.changeType} className="txt">단계 생성</div>
                         <Tip>
                             <sup>&nbsp;?</sup>
                             <div className="wrapper">

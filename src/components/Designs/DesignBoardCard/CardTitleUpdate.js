@@ -78,7 +78,7 @@ export class CardTitleUpdate extends Component {
             {this.props.isTeam > 0 &&
               this.props.active !== "title" && (
                 <EditBtn onClick={this.onActive}>
-                  <Icon name="edit" />수정하기
+                  <Icon name="edit" />수정
                 </EditBtn>
               )}
           </TitleWrap>

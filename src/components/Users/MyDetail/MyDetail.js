@@ -361,7 +361,7 @@ class MyDetail extends Component {
               <div className="grayBox">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal red">본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div>
-                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">본인 인증 하기</div></RoundButton>
+                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">본인 인증</div></RoundButton>
                 </div>
               </div>
             </InformationBox>
@@ -384,7 +384,7 @@ class MyDetail extends Component {
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">프로젝트</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">참여 프로젝트</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰</MenuButton>
               <div className="hrLine" />

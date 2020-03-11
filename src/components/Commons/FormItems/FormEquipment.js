@@ -131,7 +131,7 @@ export class FormEquipment extends Component{
         })
         return(
             <React.Fragment>
-                <Button onClick={this.onClickAddRow}>추가하기</Button>
+                <Button onClick={this.onClickAddRow}>추가</Button>
                 <EquipmentList>
                    {EquipmentData}
                 </EquipmentList>

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { GetHaveInGalleryRequest } from "actions/Gallery";
 import ScrollList from "components/Commons/ScrollList";
 import Gallery from "components/Gallery/Gallery/Gallery";
+import ModifyGallery from "components/Gallery/ModifyGallery/ModifyGallery";
+
 
 class HaveInGalleryContainer extends Component {
   componentWillMount() {
@@ -17,7 +19,7 @@ class HaveInGalleryContainer extends Component {
     return(
       <div>
         <ScrollList
-          cols={6} type="gallery" getListRequest={this.getList} ListComponent={Gallery}
+          cols={6} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify==true?ModifyGallery:Gallery}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
       </div>
 

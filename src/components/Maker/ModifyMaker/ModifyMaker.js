@@ -4,6 +4,8 @@ import { Icon } from "semantic-ui-react";
 import noimg from "source/noimg.png";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
+import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
+import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -52,7 +54,7 @@ const RedButton = styled.div`
   align-items:center;
   background-color:red;
 
-  position:absolute;
+  // position:absolute;
   left:${props => props.left};
   bottom:${props => props.bottom};
 
@@ -99,18 +101,30 @@ const Thumbnail = styled.div`
   border-radius:50%;
   margin-left:110px;
 `
-const ExperienceBox= styled.div`
+const SubBox= styled.div`
     width:1560px;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
     padding-left:59px;
     padding-top:49px;
     padding:50px;
-    .title{
+    .titleBox{
       width:100%;
+      display:flex;
+      justify-content:space-between;
+    }
+    .title{
+      width:max-content;
       font-size:20px;
       font-weight:500;
       margin-bottom:15px;
+    }
+    .redText{
+      color:red;
+      cursor:pointer;
+    }
+    .contensts{
+      width:103%;
     }
     .wrapper{
       width:100%;
@@ -264,6 +278,7 @@ class ModifyMaker extends Component {
     this.handleAddEquipment = this.handleAddEquipment.bind(this);
     this.handleAddTechnique = this.handleAddTechnique.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
   }
   componentWillUpdate(nextProps) {
     if (this.props.MakerDetail.image !== nextProps.MakerDetail.image ||
@@ -352,7 +367,9 @@ class ModifyMaker extends Component {
       technique: technique.slice(),
     })
   }
-
+  handleShowModal(value){
+    this.setState({open:value})
+  }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
@@ -450,8 +467,9 @@ class ModifyMaker extends Component {
 
     return (
       <React.Fragment>
+        {this.state.open&&<CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
         <MainBox>
-          <div className="title">메이커 등록하기</div>
+          <div className="title">메이커 관리</div>
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
@@ -459,7 +477,7 @@ class ModifyMaker extends Component {
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
-                  <div className="thumbnail"><div>첨부하기</div></div>
+                  <div className="thumbnail"><div>첨부</div></div>
                   :
                   <Thumbnail imageURL={this.state.thumbnail} />
                 }
@@ -525,7 +543,7 @@ class ModifyMaker extends Component {
             </FormBox>
           </div>
           <div className="contentsBox">
-          <ExperienceBox>
+          <SubBox>
                 <div className="title">경력</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
@@ -542,11 +560,25 @@ class ModifyMaker extends Component {
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                  <Icon name="plus" /><div className="label">경력 추가</div>
                 </Button>
                </div>
-          </ExperienceBox>
+          </SubBox>
           </div>
+          <div className="contentsBox">
+            <SubBox>
+              <div className="titleBox">
+              <div className="title">갤러리</div>
+              <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
+              </div>
+              <div className="contensts">
+              {<HaveInGalleryContainer id={this.props.id} isModify={true}/>}
+              </div>
+            </SubBox>
+          </div>
+          <div className="contentsBox">
+          <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton>
+          </div>  
         </MainBox>
       </React.Fragment>
     );

@@ -117,7 +117,7 @@ export class CardImageUpdate extends Component {
             <div>
               <TitleWrap>
                 <h3>컨텐츠 등록</h3>
-                {this.props.isTeam > 0 && (<EditBtn onClick={this.onActive}><Icon name="edit" />수정하기</EditBtn>)}
+                {this.props.isTeam > 0 && (<EditBtn onClick={this.onActive}><Icon name="edit" />수정</EditBtn>)}
               </TitleWrap>
               {this.props.images && this.props.images.length > 0 ? (
                 this.props.images.map(img => { return (<ModalImg key={`img${img.uid}`} src={img.link} alt={img.name} />); })) : (

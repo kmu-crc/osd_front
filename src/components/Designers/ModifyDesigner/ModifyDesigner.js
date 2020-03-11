@@ -4,6 +4,8 @@ import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import noimg from "source/noimg.png";
+import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
+import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -102,18 +104,30 @@ const Thumbnail = styled.div`
   border-radius:50%;
   margin-left:110px;
 `
-const ExperienceBox= styled.div`
+const SubBox= styled.div`
     width:1560px;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
     padding-left:59px;
     padding-top:49px;
     padding:50px;
-    .title{
+    .titleBox{
       width:100%;
+      display:flex;
+      justify-content:space-between;
+    }
+    .title{
+      width:max-content;
       font-size:20px;
       font-weight:500;
       margin-bottom:15px;
+    }
+    .redText{
+      color:red;
+      cursor:pointer;
+    }
+    .contensts{
+      width:103%;
     }
     .wrapper{
       width:100%;
@@ -253,6 +267,7 @@ class ModifyDesigner extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open:false,
       thumbnail: null, thumbnail_name: null,
       category_level1: -1, category_level2: -1,
       location: "",
@@ -268,6 +283,7 @@ class ModifyDesigner extends Component {
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -321,6 +337,7 @@ class ModifyDesigner extends Component {
       career: arr,
     })
   }
+  ㅕㅔㅇ
   onClickAddCareer(event) {
     this.setState({
       career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
@@ -336,6 +353,9 @@ class ModifyDesigner extends Component {
     this.setState({
       tag: tag.slice(),
     });
+  }
+  handleShowModal(value){
+    this.setState({open:value})
   }
 
   handleOnChangeThumbnail(event) {
@@ -424,8 +444,9 @@ class ModifyDesigner extends Component {
     return (
 
       <React.Fragment>
+        {this.state.open&&<CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
         <MainBox>
-          <div className="title">디자이너 등록하기</div>
+          <div className="title">디자이너 관리</div>
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
@@ -433,7 +454,7 @@ class ModifyDesigner extends Component {
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
-                  <div className="thumbnail"><div>첨부하기</div></div>
+                  <div className="thumbnail"><div>첨부</div></div>
                   :
                   <Thumbnail imageURL={this.state.thumbnail} />
                 }
@@ -471,7 +492,7 @@ class ModifyDesigner extends Component {
 
           </div>
           <div className="contentsBox">
-          <ExperienceBox>
+          <SubBox>
                 <div className="title">경력</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
@@ -488,13 +509,24 @@ class ModifyDesigner extends Component {
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                  <Icon name="plus" /><div className="label">경력 추가</div>
                 </Button>
                </div>
-          </ExperienceBox>
+          </SubBox>
           </div>
           <div className="contentsBox">
-          <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
+            <SubBox>
+              <div className="titleBox">
+              <div className="title">갤러리</div>
+              <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
+              </div>
+              <div className="contensts">
+              {<HaveInGalleryContainer id={this.props.id} isModify={true}/>}
+              </div>
+            </SubBox>
+          </div>
+          <div className="contentsBox">
+          <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton>
           </div>    
         </MainBox>
       </React.Fragment>
@@ -575,126 +607,3 @@ class CreateCareer extends Component {
     );
   }
 }
-// import React, { Component } from "react";
-// import { Header, Grid } from "semantic-ui-react"
-// import styled from 'styled-components';
-// import StyleGuide from "StyleGuide";
-// import Button from "components/Commons/Button";
-// import { FormInput, FormAddress, FormExp, FormTag, FormThumbnail, FormDropBox } from "components/Commons/FormItems";
-
-// const category = [
-//   { text: "특허권", value: 0 },
-//   { text: "디자인권", value: 1 },
-//   { text: "기술자문", value: 2 },
-//   { text: "기술상담", value: 3 },
-//   { text: "경험", value: 4 },
-//   { text: "정보/데이터", value: 5 },
-//   { text: "아이디어/노하우", value: 6 },
-//   { text: "제품", value: 7 },
-// ];
-
-// const FromFieldCard = styled.div`
-//   width: 100%;
-//   background-color: white;
-//   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-//   padding: 70px;
-//   margin-bottom: 30px;
-//   border-radius: 3px;
-//   @media only screen and (min-width: 1200px) {
-//     padding: 70px 100px 70px 100px;
-//   }
-// `;
-
-// const FormHeader = styled(Header)`
-//   position: relative;
-//   padding-right: 2.5rem !important;
-//   @media only screen and (max-width: 991px) {
-//     padding-bottom: 2rem !important;
-//   }
-//   &::after {
-//     position: absolute;
-//     display: inline-block;
-//     content: "";
-//     height: 20px;
-//     width: 100%;
-//     border-bottom: 3px solid ${StyleGuide.color.geyScale.scale5};
-//     bottom: 10px;
-//     left: 0;
-
-//     @media only screen and (min-width: 992px) {
-//       width: 1px;
-//       display: block;
-//       position: absolute;
-//       right: 2rem;
-//       top: 50%;
-//       left: initial;
-//       bottom: initial;
-//       transform: translateY(-50%);
-//       border-bottom: 0;
-//       border-right: 3px solid #191919;
-//     }
-//   }
-// `;
-
-// const Label = styled.div`
-//   margin: 0 0 0.8rem 0;
-//   display: block;
-//   color: rgba(0,0,0,.87);
-//   font-size: .92857143em;
-//   font-weight: 700;
-//   text-transform: none;
-// `;
-
-// class CreateDesigner extends Component {
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <div>
-//           <form onSubmit={this.onSubmit}>
-//             <FromFieldCard>
-//               <Grid>
-//                 <Grid.Column mobile={16} computer={4}>
-//                   <FormHeader as="h2">디자이너 정보</FormHeader>
-//                 </Grid.Column>
-//                 <Grid.Column mobile={16} computer={12}>
-//                   <Label>썸네일 등록</Label>
-//                   <FormThumbnail
-//                     name="thumbnail"
-//                     placeholder="썸네일 등록"
-//                     getValue={this.onChangeValue}
-//                     onChange={() => { this.liveCheck("thumbnail") }}
-//                     validates={["Required", "OnlyImages", "MaxFileSize(10000000)"]}
-//                   />
-//                   <Label>카테고리</Label>
-//                   <FormDropBox
-//                     name="explanation"
-//                     placeholder="디자이너 설명을 입력해주세요."
-//                     options={category}
-//                   />
-//                   <Label>태그</Label>
-//                   <FormTag
-//                     placeholder="태그를 입력해주세요(한글10자 영문20자 이내)" />
-//                   <Label>설명</Label>
-//                   <FormInput
-//                     name="explanation"
-//                     placeholder="디자이너 설명을 입력해주세요."
-//                     getValue={this.onChangeValue} />
-//                   <Label>위치</Label>
-//                   <FormAddress />
-//                   <Label>경력</Label>
-//                   <FormExp />
-
-//                 </Grid.Column>
-//               </Grid>
-//             </FromFieldCard>
-//           </form>
-//           <div style={{ width: "max-content", marginLeft: "auto" }}>
-//             <Button color="Primary">등록하기</Button>
-//           </div>
-//         </div>
-//       </React.Fragment>
-//     );
-//   }
-// }
-
-// export default CreateDesigner;

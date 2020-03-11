@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import CreateGroup from "components/Groups/CreateGroup";
 import { CreateNewGroupRequest } from "actions/Group";
-import { GetAllHaveInItemRequest } from "actions/Product"
+import { GetAllHaveInItemRequest } from "actions/Product";
+import { GetHaveInGalleryRequest } from "actions/Gallery";
 import styled from 'styled-components';
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import Modal from 'react-awesome-modal';
+
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -47,23 +50,37 @@ const Title = styled.div`
 
 const Wrapper = styled(ContentBox)`
   width:100%;
-  margin-top:60px;
-  margin-bottom: 100px;
   position: relative;
   z-index:3;
 `
 
 class CreateGroupContainer extends Component {
+  constructor(props){
+    super(props);
+    this.state = {open:false}
+    this.handleShowModal = this.handleShowModal.bind(this);
+  }
   componentDidMount(){
     this.props.GetAllHaveInItemRequest(this.props.userInfo.uid,this.props.userInfo.token)
+  }
+  componentWillUpdate(nextProps){
+    if(this.props.open!==nextProps.open){
+      this.setState({open:nextProps.open})
+    }
+  }
+  handleShowModal(value){
+    this.setState({open:value});
+    this.props.handleShowModal(value);
   }
   render() {
     console.log(this.props);
 
     return(
-      <Wrapper>
-        <CreateGroup  {...this.props} />
-      </Wrapper>
+      <Modal onLoad visible={this.props.open} effect="fadeInLeft">
+        <Wrapper>
+          <CreateGroup handleShowModal={this.handleShowModal}   {...this.props} />
+        </Wrapper>
+      </Modal>
     );
   }
 }
@@ -73,7 +90,6 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
     dataList: state.ItemDetail.status.AllHaveInItem,
-
   };
 };
 
@@ -84,6 +100,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       GetAllHaveInItemRequest: (id, token) => {
         return dispatch(GetAllHaveInItemRequest(id,token))
+      },
+      GetHaveInGalleryRequest: (id, page) => {
+        return dispatch(GetHaveInGalleryRequest(id,page))
       },
   };
 };

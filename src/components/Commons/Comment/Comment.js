@@ -263,7 +263,7 @@ class Comment extends Component {
                                 <div className="create-time">({DateFormat(item.create_time)})</div>
                                 <div className="button-wrapper">
                                     {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
-                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
+                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제</div>}
                                 </div>
                             </div>
                             <div className="comment">{item.comment}</div>
@@ -283,7 +283,7 @@ class Comment extends Component {
                                 <div className="comment">{repli.comment}</div>
                             </div>
                             <div className="button-wrapper">
-                                {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}
+                                {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제</div>}
                             </div>
                         </CommentInner>)
                     })}

@@ -89,7 +89,7 @@ class ModifyStatus extends Component {
             <Modal.Content>
               <ModalContent>
                 <Icon name="close" size="big" onClick={this.handleCloseModal} />
-                <Title>그룹 탈퇴하기</Title>
+                <Title>그룹 탈퇴</Title>
                 <ExitTab>
                   <TabItem
                     className={this.state.active === "design" && "active"}

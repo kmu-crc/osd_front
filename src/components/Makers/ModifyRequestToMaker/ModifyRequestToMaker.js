@@ -330,7 +330,7 @@ class ModifyRequestToMaker extends Component {
                 </div> */}
 
               </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록하기</div></RedButton>
+              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록</div></RedButton>
             </div>
           </MainBox>
         </Wrapper>

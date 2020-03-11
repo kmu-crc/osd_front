@@ -8,3 +8,4 @@ export * from "./EmbController";
 export * from "./TextControllerClassic";
 export * from "./InputPrice";
 export * from "./InputContent";
+export * from "./InputCalendar";

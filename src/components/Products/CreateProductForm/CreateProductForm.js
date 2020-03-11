@@ -304,7 +304,7 @@ class CreateProductForm extends Component {
       {this.state.loading ? <Loading /> : null}
       {this.props.keep ? <div>REDIRECTED</div> : null}
       {/* 타이틀 */}
-      <div className="title">아이템 등록하기</div>
+      <div className="title">아이템 등록</div>
 
       {/* 공통/기본입력사항 */}
       <div className="contentsBox">
@@ -314,7 +314,7 @@ class CreateProductForm extends Component {
           <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
           <label htmlFor="file">
             <Thumbnail img={this.state.thumbnail} width={334} height={334}>
-              {this.state.thumbnail ? null : <div>첨부하기</div>}
+              {this.state.thumbnail ? null : <div>첨부</div>}
             </Thumbnail>
           </label>
           <Margin height={75} />
@@ -384,7 +384,7 @@ class CreateProductForm extends Component {
                 }
               }
             }}>
-              <RedButton>디자인 등록 계속하기</RedButton>
+              <RedButton>디자인 등록 계속</RedButton>
             </Link>
             : <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>}
           <RedButton gray onClick={() => {

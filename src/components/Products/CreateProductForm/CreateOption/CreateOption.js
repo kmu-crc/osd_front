@@ -201,7 +201,7 @@ class CreateOption extends React.Component {
                         <div className="mainbox">
                             <div className="innerbox add_flex add_fixed white_color add_betweencontent">
                                 <div className="mainbox_label">
-                                    옵션 추가하기
+                                    옵션 추가
                                 </div>
                                 <div className="buttonbox add_flex">
                                     <Button onClick={this.onCloseOptionWindow} width={50} height={30} padding={5} backgroundColor={"#dddddd"}>취소</Button>

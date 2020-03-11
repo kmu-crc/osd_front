@@ -166,7 +166,7 @@ class CreateRequest extends Component {
       <React.Fragment>
         <Wrapper>
           <MainBox>
-            <div className="title">의뢰하기</div>
+            <div className="title">의뢰</div>
             <div className="contentsBox">
               <FormBox>
 
@@ -188,7 +188,7 @@ class CreateRequest extends Component {
 
                 <div className="wrapper flex">
                   <div className="label">파일첨부</div>
-                  <Button width={370} height={43} color={"#E9E9E9"} borderRadius={20}><div> 클릭하여 첨부하기 </div></Button>
+                  <Button width={370} height={43} color={"#E9E9E9"} borderRadius={20}><div> 클릭하여 첨부</div></Button>
                 </div>
 
                 <div className="wrapper flex">
@@ -197,7 +197,7 @@ class CreateRequest extends Component {
                 </div>
 
               </FormBox>
-              <RedButton left={1164} bottom={0}><div>등록하기</div></RedButton>
+              <RedButton left={1164} bottom={0}><div>등록</div></RedButton>
             </div>
           </MainBox>
         </Wrapper>

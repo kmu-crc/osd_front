@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     galleryDetail: state.GalleryDetail.status.galleryDetail,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
+    dataList: state.ItemDetail.status.AllHaveInItem,
   };
 };
 

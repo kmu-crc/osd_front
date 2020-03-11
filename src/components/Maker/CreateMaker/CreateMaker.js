@@ -417,7 +417,7 @@ class CreateMaker extends Component {
     return (
       <React.Fragment>
         <MainBox>
-          <div className="title">메이커 등록하기</div>
+          <div className="title">메이커 등록</div>
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
@@ -425,7 +425,7 @@ class CreateMaker extends Component {
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
-                  <div className="thumbnail"><div>첨부하기</div></div>
+                  <div className="thumbnail"><div>첨부</div></div>
                   :
                   <Thumbnail imageURL={this.state.thumbnail} />
                 }
@@ -510,13 +510,13 @@ class CreateMaker extends Component {
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                  <Icon name="plus" /><div className="label">경력 추가</div>
                 </Button>
                </div>
           </ExperienceBox>
           </div>
           <div className="contentsBox">
-                        <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton>
+                        <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록</div></RedButton>
           </div>    
         </MainBox>
       </React.Fragment>

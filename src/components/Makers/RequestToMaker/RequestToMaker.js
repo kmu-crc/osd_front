@@ -340,7 +340,7 @@ class RequestToMaker extends Component {
 
               </FormBox>
               <RedButton onClick={this.onSubmit} left={1164} bottom={0}>
-                <div>의뢰하기</div>
+                <div>의뢰</div>
               </RedButton>
             </div>
           </MainBox>
