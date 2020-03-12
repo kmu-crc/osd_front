@@ -4,8 +4,8 @@ import host from "config";
 export function GetCategoryAllRequest() {
   return (dispatch) => {
     dispatch(GetCategoryAll());
-    const sql = `${host}/categorys/getCategoryAll`;
-    return fetch(sql, { method: "GET" })
+    const url =  `${host}/categorys/getCategoryAll`;
+    return fetch(url, { method: "GET" })
       .then(res => res.json())
       .then(res => {
         let category1 = res.data.category1.map(data => {

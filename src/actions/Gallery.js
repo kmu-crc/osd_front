@@ -4,9 +4,9 @@ import host from "config";
 // 갤러리
 export function GetHaveInGalleryRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/gallery/gallerylist/${id}/${page}`;
-    console.log(sql);
-    return fetch(sql,
+    const url =  `${host}/gallery/gallerylist/${id}/${page}`;
+    console.log(url);
+    return fetch(url,
       { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data =>{console.log("data",data);
@@ -22,9 +22,9 @@ const HaveInGalleryFail = () => ({ type: types.HAVE_IN_GALLERY_FAIL, HaveInGalle
 
 export function GetGalleryListDetailRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/gallery/galleryItemList/${id}/${page}`;
-    console.log(sql);
-    return fetch(sql,
+    const url =  `${host}/gallery/galleryItemList/${id}/${page}`;
+    console.log(url);
+    return fetch(url,
       { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data =>{console.log("data",data);

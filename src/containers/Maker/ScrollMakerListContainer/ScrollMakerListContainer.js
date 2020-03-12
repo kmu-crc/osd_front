@@ -12,7 +12,6 @@ class ScrollMakerListContainer extends Component {
     this.props.GetMakerListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
 
   render() {
-    console.log(this.props);
     return (
       <ScrollList
         getListRequest={this.getList}

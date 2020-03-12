@@ -5,9 +5,9 @@ import host from "config";
 export function SearchMemberRequest(id, data, token) {
   return (dispatch) => {
     dispatch(SearchMember());
-    const sql = `${host}/search/members/${id}`;
-    console.log("get:", sql, data);
-    return fetch(sql,
+    const url =  `${host}/search/members/${id}`;
+    console.log("get:", url, data);
+    return fetch(url,
       {
         headers: { "Content-Type": "application/json", "x-access-token": token },
         method: "POST",

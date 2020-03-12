@@ -6,9 +6,7 @@ import Expert from "components/Experts/Expert";
 
 class ScrollDesignerListContainer extends Component {
   componentWillMount() {
-    console.log("?~!",this.props.sort, this.props.cate1, this.props.cate2);
     this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
-    // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
 
   getList = (page) => {
@@ -21,7 +19,7 @@ class ScrollDesignerListContainer extends Component {
         ListComponent={Expert}
         type="designer"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-        mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} customClass="largeCustom" />
+      />
     );
   }
 }

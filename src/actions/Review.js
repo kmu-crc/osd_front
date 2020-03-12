@@ -4,9 +4,9 @@ import host from "config";
 // GET DESIGNER REVIEW LIST
 export function GetDesignerReviewListRequest(id, page) {
     return (dispatch) => {
-        const sql = `${host}/designer/get-review/${id}/${page}`;
-        console.log(sql);
-        return fetch(sql,
+        const url =  `${host}/designer/get-review/${id}/${page}`;
+        console.log(url);
+        return fetch(url,
             { headers: { "Content-Type": "application/json" }, method: "GET" })
             .then(res => res.json())
             .then(data => {
@@ -24,9 +24,9 @@ const DesignerReviewFail = () => ({ type: types.GET_DESIGNER_REVIEW_FAIL, List: 
 // GET DESIGNER REVIEW TOTAL COUNT
 export function GetTotalCountDesignerReviewRequest(id) {
     return (dispatch) => {
-        const sql = `${host}/designer/get-review-count/${id}`;
-        console.log(sql);
-        return fetch(sql,
+        const url =  `${host}/designer/get-review-count/${id}`;
+        console.log(url);
+        return fetch(url,
             { headers: { "Content-Type": "application/json" }, method: "GET" })
             .then(res => res.json())
             .then(data => dispatch(GetTotalDesignerReview(data)))
@@ -41,8 +41,8 @@ const TotalDesignerReviewFail = (err) => ({ type: types.GET_TOTAL_COUNT_DESIGNER
 // GET MAKER REVIEW LIST
 export function GetMakerReviewListRequest(id, page) {
     return (dispatch) => {
-        const sql = `${host}/Maker/get-review/${id}/${page}`;
-        return fetch(sql,
+        const url =  `${host}/Maker/get-review/${id}/${page}`;
+        return fetch(url,
             { headers: { "Content-Type": "application/json" }, method: "GET" })
             .then(res =>
                 res.json())
@@ -59,8 +59,8 @@ const MakerReviewFail = () => ({ type: types.GET_MAKER_REVIEW_FAIL, List: [], Li
 // GET MAKER REVIEW TOTAL COUNT
 export function GetTotalCountMakerReviewRequest(id) {
     return (dispatch) => {
-        const sql = `${host}/maker/get-review-count/${id}`;
-        return fetch(sql,
+        const url =  `${host}/maker/get-review-count/${id}`;
+        return fetch(url,
             { headers: { "Content-Type": "application/json" }, method: "GET" })
             .then(res => res.json())
             .then(data => dispatch(TotalMakerReview(data)))

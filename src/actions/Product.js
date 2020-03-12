@@ -4,8 +4,8 @@ import host from "config";
 
 export function GetHaveInItemRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/item/itemDetail/${id}/have/${page}`;
-    return fetch(sql,
+    const url =  `${host}/item/itemDetail/${id}/have/${page}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data =>{console.log("data",data);
@@ -21,8 +21,8 @@ const HaveInItemFail = () => ({ type: types.HAVE_IN_ITEM_FAIL, HaveInItem: [], H
 //  좋아요 한 아이템 가져오기
 export function GetLikeInItemRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/item/itemDetail/${id}/like/${page}`;
-    return fetch(sql,
+    const url =  `${host}/item/itemDetail/${id}/like/${page}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data =>{console.log("data",data);
@@ -38,8 +38,8 @@ const LikeInItemFail = () => ({ type: types.LIKE_IN_ITEM_FAIL, LikeInItem: [], L
 // list
 export function GetProductListRequest(page, sort, cate1, cate2, keyword) {
   return (dispatch) => {
-    const sql = `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
+    const url =  `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch((page === 0) ? (ProductListClear(data || [])) : GetProductList(data || [])))
       .catch(error => dispatch(ProductListFail()))
@@ -50,8 +50,8 @@ const ProductListClear = data => { return { type: types.PRODUCT_LIST_CLEAR, Prod
 const ProductListFail = () => { return { type: types.PRODUCT_LIST_FAIL, ProductList: [], ProductListAdded: [] } };
 export function GetProductTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
-    const sql = `${host}/item/list-count/${cate1}/${cate2}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
+    const url =  `${host}/item/list-count/${cate1}/${cate2}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetProductTotalCount(data ? data["count(*)"] : 0)))
       .catch(error => dispatch(ProductTotalCountFail()))
@@ -63,8 +63,8 @@ const ProductTotalCountFail = () => { return { type: types.GET_PRODUCT_TOTAL_COU
 // detail
 export function GetProductDetailRequest(id, token) {
   return (dispatch) => {
-    const sql = `${host}/item/detail/${id}`;
-    return fetch(sql, {
+    const url =  `${host}/item/detail/${id}`;
+    return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
     })
@@ -79,8 +79,8 @@ const GetProductDetail = (data) => {
 };
 export function GetProductCountRequest(id) {
   return (dispatch) => {
-    const sql = `${host}/product/getCount/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
+    const url =  `${host}/product/getCount/${id}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetDesignCount(data || { like_count: 0, member_count: 0, card_count: 0, view_count: 0 })))
       .catch(err => console.log("err", err));
@@ -91,8 +91,8 @@ function GetDesignCount(data) { return { type: types.GET_PRODUCT_COUNT, Count: d
 // update page-view count
 export function UpdateProductViewRequest(id) {
   return (dispatch) => {
-    const sql = `${host}/product/updateViewCount/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "POST" })
+    const url =  `${host}/product/updateViewCount/${id}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "POST" })
       .then(res => res.json())
       .then(data => dispatch(UpdateProductView()))
       .catch(error => console.log("err", error))
@@ -124,8 +124,8 @@ export function DesignDetailViewReset() {
 export function GetLikeProductRequest(id, token) {
   return (dispatch) => {
     dispatch(GetLikeProduct());
-    const sql = `${host}/item/getLikeItem/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "GET" })
+    const url =  `${host}/item/getLikeItem/${id}`;
+    return fetch(url, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "GET" })
       .then(res => 
         res.json()
       )
@@ -143,10 +143,10 @@ const GetLikeProductFailure = data => { return { type: types.GET_LIKE_PRODUCT_FA
 
 // 디자인 좋아요 하기 >>> 전체 디자인에 대한 좋아요
 export function LikeProductRequest(id, token) {
-  const sql = `${host}/item/likeItem/${id}`;
+  const url =  `${host}/item/likeItem/${id}`;
   return (dispatch) => {
     dispatch(LikeProduct());
-    return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "POST" })
+    return fetch(url, { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "POST" })
       .then(res => res.json())
       .then(data => { dispatch(LikeProductSuccess()); return data; })
       .catch(error => LikeProductFailure(error));
@@ -160,8 +160,8 @@ const LikeProductFailure = () => { return { type: types.LIKE_PRODUCT_FAILURE } }
 export function UnlikeProductRequest(id, token) {
   return (dispatch) => {
     dispatch(UnlikeProduct());
-    const sql = `${host}/item/unlikeItem/${id}`;
-    return fetch(sql, {
+    const url =  `${host}/item/unlikeItem/${id}`;
+    return fetch(url, {
       headers: { "Content-Type": "application/json", 'x-access-token': token },
       method: "POST"
     })
@@ -331,8 +331,8 @@ const getOrderListFailure = () => { return { type: types.GET_ORDER_LIST_FAILURE,
 export function GetAllHaveInItemRequest(id,token) {
   console.log("id:::",id);
   return(dispatch)=>{
-    const sql = `${host}/group/itemDetail/${id}/haveAll`;
-          return fetch(sql, { headers: { "Content-Type": "application/json", 'x-access-token': token },
+    const url =  `${host}/group/itemDetail/${id}/haveAll`;
+          return fetch(url, { headers: { "Content-Type": "application/json", 'x-access-token': token },
           method: "get"})
             .then(res => res.json())
             .then(data => {
