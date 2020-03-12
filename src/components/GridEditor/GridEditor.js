@@ -114,7 +114,6 @@ class GridEditor extends Component {
         }
     }
     createNewCard(row, boardId) {
-        console.log("create new card:", row, boardId);
         this.setState({ row: row, boardId: row.id, newcard: true });
     }
     openCard = (card, row, boardId) => {
@@ -134,25 +133,31 @@ class GridEditor extends Component {
     }
     sorting = (list) => {
         list.map((item, index) => {
-            item.uid = index;
-            item.where = index;
+            item.order = index;
             return item;
         })
         return list;
     }
     async RemoveStep(data) {
-        await this.props.DeleteItemListRequest(this.props.item["item-id"], data, this.props.token)
+        await this.props.DeleteItemListRequest(this.props.itemId, data, this.props.token)
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+                this.requestReorder(this.sorting(this.props.ItemStep));
             })
-            .catch((err) => { alert("Failed to delete the STEP"); console.error(err) });
-    }
-    async EditStep(data) {
-        await this.props.UpdateItemListRequest(this.props.item["item-id"], data.where, this.props.token, { title: data.title })
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+                this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Failed to delete the STEP");
+            });
+    };
+    async EditStep(data) {
+        await this.props.UpdateItemListRequest(this.props.itemId, data.where, this.props.token, { title: data.title })
+            .then(res => {
+                console.log(res);
+                this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
             })
         this.CloseEditStep();
     }
@@ -207,6 +212,7 @@ class GridEditor extends Component {
             .then(() => this.props.GetDesignCardRequest(this.props.item.uid, this.state.boardId));
     }
     async requestReorder(items) {
+        console.log(items);
         const jobs = [];
         let promiseAry = [];
         items.forEach((element, index) => {
@@ -247,13 +253,13 @@ class GridEditor extends Component {
         }
     }
     render() {
-        const { editor, item, ItemStep, userInfo } = this.props;
+        const { editor, ItemStep, itemId } = this.props;
         const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = ItemStep;
 
         return (
             <Wrapper>
-                {item["item-id"] ?
+                {itemId ?
                     <React.Fragment>
                         {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
@@ -267,7 +273,7 @@ class GridEditor extends Component {
                             <NewCardModal
                                 isTeam={editor}
                                 // boardId={boardId}
-                                itemId={this.props.item.uid}
+                                itemId={this.props.itemId}
                                 // order={steps.length}
                                 open={newcard}
                                 row={row}
@@ -277,14 +283,14 @@ class GridEditor extends Component {
 
                         {card ?
                             <CardModal
-                                bought={this.props.bought}
+                                bought={false}//this.props.bought}
                                 open={card} close={() => this.setState({ card: false })}
                                 edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
                                 card={cardDetail}
                                 isTeam={editor}
-                                title={title}
+                                // title={title}
                                 boardId={boardId}
-                                itemId={this.props.item["item-id"]}
+                                itemId={itemId}
                             /> : null}
 
                         {editor && newstep ?
@@ -333,7 +339,8 @@ class GridEditor extends Component {
                             </GridEditorWrapper>
                         </ReactHeight>
                     </React.Fragment>
-                    : <div>FAILED TO LOAD DATA :( <br />PLEASE, REFRESH THIS PAGE... :)</div>
+                    : <div>FAILED TO LOAD DATA :( <br />
+                    PLEASE, REFRESH THIS PAGE... :)</div>
                 }
             </Wrapper>)
     }
