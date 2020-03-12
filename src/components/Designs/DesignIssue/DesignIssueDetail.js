@@ -169,7 +169,7 @@ class DesignIssueDetail extends Component {
                 상태 : { data.is_complete === 0? "진행중" : "완료" }
                 {user && user.uid === data.user_id &&
                   <Button size="small" color="Primary" onClick={this.updateIssueStatus}>
-                    {data.is_complete === 0? "완료하기" : "진행중으로 변경"}
+                    {data.is_complete === 0? "완료" : "진행중으로 변경"}
                   </Button>
                 }
               </span>

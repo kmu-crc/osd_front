@@ -8,17 +8,24 @@ import noimg from "source/noimg.png";
 
 const MainBox = styled.div`
   width:100%;
+  padding:30px;
+  .titleBox{
+    display:flex;
+    justify-content:space-between;
+  }
+  .pointer{
+    cursor:pointer;
+  }
   .title{
-    width:170px;
+    width:max-content;
     height:29px;
     font-family:Noto Sans KR, Medium;
     font-size:20px;
     font-weight:500;
   }
-    .contentsBox{
+    .contentBox{
       width:100%;
       display:flex;
-      padding-left:130px;
       padding-top:36px;
     }
 
@@ -205,6 +212,8 @@ class ModifyGroup extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSelectItem = this.onSelectItem.bind(this);
+    this.onClickClose = this.onClickClose.bind(this);
+
   }
 
   componentDidMount() {
@@ -274,7 +283,9 @@ class ModifyGroup extends Component {
       await reader.readAsDataURL(file);
     }
   }
-
+  onClickClose(event){
+    this.props.handleShowModal(false);
+  }
   onSubmit = async e => {
 
     e.preventDefault();
@@ -302,6 +313,8 @@ class ModifyGroup extends Component {
         const result = res.type;
         // console.log(res);
         if (result === "UPDATE_GROUP_SUCCESS") {
+          console.log(this.props.id);
+          this.props.GetHaveInGalleryRequest(this.props.userInfo.uid,0);
           alert("정보가 수정되었습니다.");
         } else {
           alert("다시 시도해주세요");
@@ -331,6 +344,7 @@ class ModifyGroup extends Component {
     });
 }
   render() {
+    console.log(this.props);
     let count = 0;
     // console.log(this.props.dataList);
     const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
@@ -339,7 +353,7 @@ class ModifyGroup extends Component {
     // console.log(itemList);
 
     const TagBox = this.props.dataList.length>0&&this.state.selectItemList.map((item, index) => {
-      console.log(item.number);
+      // console.log(item.number);
       return (
           <TagPiece key={index}>
               {this.props.dataList[item.number].title}
@@ -353,15 +367,18 @@ class ModifyGroup extends Component {
         {this.props.keep ? "redirected" : null}
 
         <MainBox>
-          <div className="title">갤러리 등록하기</div>
-          <div className="contentsBox">
+          <div className="titleBox">
+            <div className="title">갤러리 수정</div>
+            <div className="title pointer" onClick={this.onClickClose}>x</div>
+          </div>
+          <div className="contentBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
               <Margin height={70} />
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
-                  <div className="thumbnail"><div>첨부하기</div></div>
+                  <div className="thumbnail"><div>첨부</div></div>
                   :
                   <Thumbnail imageURL={this.state.thumbnail} />
                 }
@@ -388,8 +405,8 @@ class ModifyGroup extends Component {
               </div>
             </FormBox>
             </div>
-            <div className="contentsBox">
-            <RedButton onClick={this.onSubmit} ><div>등록하기</div></RedButton>
+            <div className="contentBox">
+            <RedButton onClick={this.onSubmit} ><div>등록</div></RedButton>
             </div>
         </MainBox>
       </React.Fragment>

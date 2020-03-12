@@ -378,7 +378,7 @@ class Payment extends Component {
                                 fontColor={total > Point ? 'black' : 'white'}
                                 backgroundColor={total > Point ? '#E9E9E9' : '#ff0000'}
                                 onClick={() => total > Point ? this.gotoChargePoint() : this.purchaseThisItem(total)}
-                            ><div>결제하기</div></CustomButton>
+                            ><div>결제</div></CustomButton>
                         </div>
                     </div>
                 </MainBox>

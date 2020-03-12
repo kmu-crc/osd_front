@@ -4,6 +4,8 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
+
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -162,7 +164,7 @@ class RequestToDesigner extends Component {
     super(props);
     this.state = {
       category_level1: null, category_level2: null,
-      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,
+      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,endDate:null,dayDate:null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -177,7 +179,9 @@ class RequestToDesigner extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
-  }
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getDayDateValue=this.getDayDateValue.bind(this);
+    }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
   }
@@ -194,6 +198,13 @@ class RequestToDesigner extends Component {
   }
   async getPriceValue(value) {
     await this.setState({ price: value });
+  }
+  async getEndDateValue(value) {
+    await console.log("endDate",value);
+    await this.setState({ endDate: value });
+  }
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
   }
   getTagValue(data) {
     this.setState({
@@ -293,14 +304,20 @@ class RequestToDesigner extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputPrice name="price" getValue={this.getPriceValue} />
-                </div>
-
-                <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
                   <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
                 </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label ">희망 비용</div>
+                  < InputPrice name="price" getValue={this.getPriceValue} />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label ">기간</div>
+                  <InputCalendar name="price" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
+                </div>
+
                 <HRLine />
                 <div className="wrapper flex centering">
                   <div className="label">디자이너 위치</div>
@@ -325,7 +342,7 @@ class RequestToDesigner extends Component {
 
               </FormBox>
               <RedButton onClick={this.onSubmit} left={1164} bottom={0}>
-                <div>의뢰하기</div>
+                <div>의뢰</div>
               </RedButton>
             </div>
           </MainBox>

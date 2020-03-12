@@ -175,7 +175,7 @@ class ItemQuestion extends Component {
             return (
                 <div className="line element-reply">
                     {!props.itsmine && props.sort_in_group === 0 && master ?
-                        <div onClick={() => this.reply(props.uid)}><ReplyButton><div className="text">답변하기</div></ReplyButton></div> : null}
+                        <div onClick={() => this.reply(props.uid)}><ReplyButton><div className="text">답변</div></ReplyButton></div> : null}
                     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
                     <div className="line">
                         {props.is_question ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
@@ -198,7 +198,7 @@ class ItemQuestion extends Component {
                             onKeyDown={this.handleKeyDown} />
                     {/* </div> */}
                     <Button onClick={this.requestQuestion} >
-                        <div className="text" >문의하기</div></Button>
+                        <div className="text" >문의</div></Button>
                 </div>}
             <div>
                 {question && question.length > 0 ?
@@ -220,7 +220,7 @@ class ItemQuestion extends Component {
                                             onKeyDown={this.handleKeyDown} />
                                     {/* </div> */}
                                     <Button onClick={() => this.requestAnswer(item)} >
-                                        <div className="text" >답변하기</div></Button>
+                                        <div className="text" >답변</div></Button>
                                 </div> : null}
                         </div>) : null}
             </div>

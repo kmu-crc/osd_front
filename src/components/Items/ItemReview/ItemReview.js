@@ -333,7 +333,7 @@ class ItemReview extends Component {
                                     </WriteReview>
                                     : 
                                         <CreateReview>
-                                            <div className="button"><div className="font">리뷰 작성하기</div></div>
+                                            <div className="button"><div className="font">리뷰 작성</div></div>
                                         </CreateReview>
                                     }
                             </div>
@@ -361,7 +361,7 @@ class ItemReview extends Component {
                                                 onKeyDown={this.handleKeyDown} />
                                         </div>
                                         <div className="button" onClick={() => this.requestAnswer(item)} >
-                                            <div className="text" >답변하기</div></div>
+                                            <div className="text" >답변</div></div>
                                     </div> : null}
                             </div>) : null}
                 </div>

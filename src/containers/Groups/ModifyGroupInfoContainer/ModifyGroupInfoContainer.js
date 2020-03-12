@@ -5,10 +5,12 @@ import ModifyGorup from "components/Groups/ModifyGroup/ModifyGroup";
 import { UpdateGroupRequest } from "actions/Group";
 import { GetAllHaveInItemRequest } from "actions/Product"
 import { GetGalleryDetailRequest } from "actions/Gallery";
+import { GetHaveInGalleryRequest } from "actions/Gallery";
 import styled from 'styled-components';
 import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
+import Modal from 'react-awesome-modal';
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});
@@ -48,25 +50,42 @@ const Title = styled.div`
 
 const Wrapper = styled(ContentBox)`
   width:100%;
-  margin-top:60px;
-  margin-bottom: 100px;
   position: relative;
   z-index:3;
 `
 
 class ModifyGroupInfoContainer extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {open:false}
+    this.handleShowModal = this.handleShowModal.bind(this);
+  }
+
   async componentDidMount(){
-    console.log("?!");
+    console.log("?",this.props.id);
     await this.props.GetAllHaveInItemRequest(this.props.userInfo.uid,this.props.userInfo.token)
     .then(this.props.GetGalleryDetailRequest(this.props.id));
   }
-  render() {
-    console.log(this.props);
 
+  componentWillUpdate(nextProps){
+    if(this.props.open!==nextProps.open){
+      this.setState({open:nextProps.open})
+    }
+  }
+  async handleShowModal(value){
+
+    this.setState({open:value});
+    this.props.handleShowModal(value);
+  }
+
+  render() {
     return(
-      <Wrapper>
-        <ModifyGorup  {...this.props} />
-      </Wrapper>
+      <Modal onLoad visible={this.props.open} effect="fadeInLeft">
+        <Wrapper>
+          <ModifyGorup  handleShowModal={this.handleShowModal}   {...this.props}  />
+        </Wrapper>
+      </Modal>
     );
   }
 }
@@ -90,6 +109,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       GetGalleryDetailRequest: (id) => {
         return dispatch(GetGalleryDetailRequest(id))
+      },
+      GetHaveInGalleryRequest: (id, page) => {
+        return dispatch(GetHaveInGalleryRequest(id,page))
       },
   };
 };

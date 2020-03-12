@@ -161,7 +161,7 @@ class NewStepModal extends Component {
                 </div>
             </InputWrapper>
             <div className="edit-step-name-button-container">
-                <div className="edit-step-name-button-submit" onClick={this.onSubmit} >생성하기</div>
+                <div className="edit-step-name-button-submit" onClick={this.onSubmit} >생성</div>
                 <div className="edit-step-name-button-cancel" onClick={this.onClose} >취소</div>
             </div>
         </NewStepDialog>)

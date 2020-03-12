@@ -55,7 +55,7 @@ export class CardContentUpdate extends Component {
           {this.props.isTeam > 0 &&
             this.props.active !== "content" && (
               <EditBtn onClick={this.onActive}>
-                <Icon name="edit" />수정하기
+                <Icon name="edit" />수정
               </EditBtn>
             )}
         </TitleWrap>

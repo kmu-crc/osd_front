@@ -438,7 +438,7 @@ class ModifyItemInfo extends Component {
       {this.state.loading ? <Loading /> : null}
 
       {/* 타이틀 */}
-      <div className="title">아이템 수정하기</div>
+      <div className="title">아이템 수정</div>
 
       <NaviMenu>
         <div className={tab === "basic" ? "active" : ""} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보변경</div>

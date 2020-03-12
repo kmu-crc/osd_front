@@ -444,7 +444,7 @@ class MessageList extends Component {
                     <div className="input-wrapper line">
                       <div className="input-style"><input style={{border:"none",outline:"none"}} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
                       <div className="button-style">
-                        <button type="button" onClick={this.sendText}><div style={{color:"white"}}>전송하기</div></button></div>
+                        <button type="button" onClick={this.sendText}><div style={{color:"white"}}>전송</div></button></div>
                     </div>
                   </React.Fragment>}
                 </div>

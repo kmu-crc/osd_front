@@ -322,7 +322,7 @@ class ResponseToMakerReq extends Component {
                 </div>
 
                 <div className="wrapper flex">
-                  <div className="label">의뢰 응답</div>
+                  <div className="label">응답 내용</div>
                   <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} />
                 </div>
 
@@ -334,7 +334,7 @@ class ResponseToMakerReq extends Component {
               </FormBox>
             </div>
           </MainBox>
-          <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
+          <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록</div></RedButton>
         </Wrapper>
       </React.Fragment>
     );

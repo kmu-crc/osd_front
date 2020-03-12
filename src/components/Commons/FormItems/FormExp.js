@@ -202,7 +202,7 @@ export class FormExp extends Component{
                         <div className="label"><div><InputText value={this.state.job} id="job" onChange={this.onChangeJobValue} onKeyDown={this.onKeyPressEnter}/></div></div>
                         <div className="label"><div><InputText value={this.state.duration} id="duration" onChange={this.onChangeDurationValue} onKeyDown={this.onKeyPressEnter}/></div></div>
                         <div className="label"><div><InputText value={this.state.explain} id="explain" onChange={this.onChangeExplainValue} onKeyDown={this.onKeyPressEnter}/></div></div>
-                        <Button onClick={this.onAddTag}>추가하기</Button>
+                        <Button onClick={this.onAddTag}>추가</Button>
                     </div>
                     <div className="list_box">
                         {TagBox}

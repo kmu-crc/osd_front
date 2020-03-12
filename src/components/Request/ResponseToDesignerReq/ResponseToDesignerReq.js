@@ -323,7 +323,7 @@ class ResponseToDesignerReq extends Component {
               </div>
 
               <div className="wrapper flex">
-                <div className="label">의뢰 응답</div>
+                <div className="label">응답 내용</div>
                 <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} />
               </div>
 
@@ -336,7 +336,7 @@ class ResponseToDesignerReq extends Component {
           </div>
         </MainBox>
         {/* <Lihk to={{}}> */}
-        <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록하기</div></RedButton>
+        <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록</div></RedButton>
         {/* </Lihk> */}
       </Wrapper>
     );

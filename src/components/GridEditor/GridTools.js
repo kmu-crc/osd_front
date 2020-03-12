@@ -56,6 +56,26 @@ const CreateStepContainer = styled.div`
         line-height: 29px;
     }
 `;
+// export const CreateStep = (props) => {
+//     return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
+//         <div className="close-box">
+//             <Cross angle={90} width={33} height={33} disabled={false} /></div>
+//         <div className="create-button">{props.step} 생성</div>
+//     </CreateStepContainer>)
+// }
+// export const CreateCard = (props) => {
+//     return (<CreateCardContainer marginRight={props.marginRight} onClick={props.onClick} disabled={props.disabled}>
+//         <div className="cross-wrapper" >
+//             <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
+//         <div className="text">컨텐츠 등록</div>
+//     </CreateCardContainer>)
+// }
+// export const TipDiv = (props) => {
+//     return (<div>
+//         <div style={{ color: "#FF0000" }}>TIP</div>
+//         <div style={{ color: "#707070", fontSize: "17px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
+//     </div>)
+// }
 const StepCardStyle = styled.div`
     position: relative;
     cursor: pointer;

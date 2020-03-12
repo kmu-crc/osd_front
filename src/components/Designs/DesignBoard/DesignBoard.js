@@ -324,7 +324,7 @@ class DesignBoard extends Component {
         {this.state.sortable && cardList.length > 1 ? (
           <CustomModal style={{ width: "350px" }} open={this.state.sortable} onClose={this.closeSortableModal}>
             <Modal.Content>
-              <h3>카드목록 편집하기</h3>
+              <h3>카드목록 편집</h3>
               <div style={{ padding: "3px 6px 3px 6px", margin: "0 0 10px 0", borderRadius: "10px 10px 10px 10px", width: "100%", backgroundColor: "#FF6F7F" }}><h3>{board.title}</h3></div>
               <div>
                 <SortableComponent getCardList={this.handleGetCardList} items={cardList} />

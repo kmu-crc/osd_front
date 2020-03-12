@@ -12,6 +12,7 @@ const Wrapper = styled(ContentBox)`
     margin-bottom: 100px;
     z-index:3;
     // *{border:1px solid red;}
+    padding-left:130px;
 `;
 const MainBox = styled.div`
   width:100%;
@@ -21,14 +22,14 @@ const MainBox = styled.div`
     font-family:Noto Sans KR, Medium;
     font-size:20px;
     font-weight:500;
-    margin-left:130px;
+    // margin-left:130px;
 
   }
   .contentsBox{
     position: relative;
     width:100%;
     display:flex;
-    padding-left:130px;
+    // padding-left:130px;
     padding-top:36px;
   }
 
@@ -166,7 +167,7 @@ class Detail extends Component {
               </div>
             </MainBox>
             <div style={{ display: "flex" }}>
-              <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
+              {/* <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton> */}
             </div>
           </Wrapper> :
           Detail.sort_in_group === 0 ?
@@ -226,7 +227,7 @@ class Detail extends Component {
             <div className="text">아이템구매</div>
           </Link> */}
                 <div style={{ display: "flex" }}>
-                  <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton>
+                  {/* <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton> */}
                   {!MyDetail ?
                     <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                       <RedButton><div>의뢰응답</div></RedButton>
@@ -266,7 +267,7 @@ class Detail extends Component {
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">내용</div>
+                      <div className="label">의뢰 내용</div>
                       <div className="textBox">{Detail && Detail.request && Detail.request.content}</div>
                     </div>
 
@@ -307,9 +308,9 @@ class Detail extends Component {
                 </div>
               </MainBox>
               <div style={{ display: "flex" }}>
-                <RedButton onClick={() => window.history.back()} inactive={true}>
-                  <div>뒤로가기</div>
-                </RedButton>
+                {/* <RedButton onClick={() => window.history.back()} inactive={true}> */}
+                  {/* <div>뒤로가기</div> */}
+                {/* </RedButton> */}
                 {/* <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} > */}{/* <RedButton ><div>구매하기</div></RedButton> */}{/* </Link> */}
                 <RedButton onClick={this.props.purchase} >
                   <div>아이템구매</div>

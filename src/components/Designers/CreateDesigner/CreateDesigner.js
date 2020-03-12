@@ -394,7 +394,7 @@ class CreateDesigner extends Component {
         {this.props.keep ? "redirected" : null}
 
         <MainBox>
-          <div className="title">디자이너 등록하기</div>
+          <div className="title">디자이너 등록</div>
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
@@ -402,7 +402,7 @@ class CreateDesigner extends Component {
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
-                  <div className="thumbnail"><div>첨부하기</div></div>
+                  <div className="thumbnail"><div>첨부</div></div>
                   :
                   <Thumbnail imageURL={this.state.thumbnail} />
                 }
@@ -471,7 +471,7 @@ class CreateDesigner extends Component {
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경력 추가하기</div>
+                  <Icon name="plus" /><div className="label">경력 추가</div>
                 </Button>
                </div>
           </ExperienceBox>
@@ -481,14 +481,14 @@ class CreateDesigner extends Component {
               pathname: `/createProduct/redirected`,
               state: { keep: this.state }
             }}>
-              <RedButton >아이템 등록하기</RedButton>
+              <RedButton >아이템 등록</RedButton>
             </Link>
           </div>
           <div className="contentsBox">
             {this.state.getready ?
-              <RedButton onClick={this.onSubmit} ><div>등록하기</div></RedButton>
+              <RedButton onClick={this.onSubmit} ><div>등록</div></RedButton>
               :
-              <RedButton onClick={() => alert("아이템을 등록해야 진해할 수 있습니다.")} gray={true}><div>등록하기</div></RedButton>
+              <RedButton onClick={() => alert("아이템을 등록해야 진해할 수 있습니다.")} gray={true}><div>등록</div></RedButton>
             }
           </div>
         </MainBox>
