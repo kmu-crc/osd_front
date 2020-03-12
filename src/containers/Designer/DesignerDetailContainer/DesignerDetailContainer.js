@@ -9,7 +9,7 @@ import { GetTotalCountDesignerReviewRequest } from "actions/Review";
 class GroupDetailContainer extends Component {
   componentWillMount() {
     this.props.GetExpertDesignerViewDetailRequest(this.props.id)
-      .then(this.props.GetLikeDesignerRequest(this.props.id, this.props.token))
+      .then(this.props.userInfo && this.props.GetLikeDesignerRequest(this.props.id, this.props.token))
       .then(this.props.GetTotalCountDesignerReviewRequest(this.props.id))
   }
   render() {

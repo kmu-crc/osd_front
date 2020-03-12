@@ -8,6 +8,7 @@ import Item from "components/Items/Item/Item"
 import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
 import MakerRequestBoardContainer from "containers/Maker/MakerRequestBoardContainer";
+import MakerReviewContainer from "containers/Maker/MakerReviewContainer";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -258,7 +259,6 @@ const RequestBoard = styled.div`
     }
   }
 `;
-
 const ItemInfo = styled.div`
   margin-right: ${prop => prop.mRight}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
@@ -551,25 +551,6 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
 `
-const review = {
-  average_score: 4,
-  review: [{
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }, {
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }, {
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }],
-}
 const TitleForm = styled.input`
   padding: 10px;
   resize: none;
@@ -750,15 +731,15 @@ class MakerDetail extends Component {
     // console.log("detail:", expert);
     const { write } = this.state;
     // 카테고리
-    let categoryName = this.props.category1&& this.props.category2 &&
-    this.state.category_level2<1?
-    this.props.category1[parseInt(this.state.category_level1,10)]
-    &&this.props.category1[parseInt(this.state.category_level1,10)].text
-    :null;
+    let categoryName = this.props.category1 && this.props.category2 &&
+      this.state.category_level2 < 1 ?
+      this.props.category1[parseInt(this.state.category_level1, 10)]
+      && this.props.category1[parseInt(this.state.category_level1, 10)].text
+      : null;
 
-    this.props.category2&&this.props.category2.map((item,index)=>{
-      if(item.parent == this.state.category_level1&&item.value == this.state.category_level2){
-        categoryName=item.text;
+    this.props.category2 && this.props.category2.map((item, index) => {
+      if (item.parent == this.state.category_level1 && item.value == this.state.category_level2) {
+        categoryName = item.text;
       }
     })
     const { tab } = this.state;
@@ -846,24 +827,8 @@ class MakerDetail extends Component {
 
 
       <AdditionalInfo width={1523} height={280} mTop={60}>
-        <div className="title margin_bottom">리뷰({review.review.length})</div>
-        <ReviewBox>
-
-          {
-            review.review.map((item, index) => {
-              return (
-                <div className="review" key={index}>
-                  <Thumbnail imageURL={item.thumbnail} />
-                  <div className="content">
-                    <div className="row">★★★★★</div>
-                    <div className="row">{item.nick_name}</div>
-                    <div className="row">{item.explain}</div>
-                  </div>
-                </div>
-              );
-            })
-          }
-        </ReviewBox>
+        <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+        <MakerReviewContainer id={parseInt(this.props.id, 10)} />
       </AdditionalInfo>
 
 

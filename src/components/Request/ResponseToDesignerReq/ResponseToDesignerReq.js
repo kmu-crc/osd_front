@@ -256,10 +256,10 @@ class ResponseToDesignerReq extends Component {
           <div className="contentsBox">
             <FormBox>
 
-            <div className="wrapper flex centering" >
-                  <div className="label">의뢰인</div>
-                  <div>{detail.nick_name||null}</div>
-             </div>
+              <div className="wrapper flex centering" >
+                <div className="label">의뢰인</div>
+                <div>{detail.nick_name || null}</div>
+              </div>
 
 
               <div className="wrapper flex centering">
@@ -295,7 +295,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering">
                 <div className="label">디자이너 위치</div>
-                <div className="textBox">{LocationList[detail.location]}</div>
+                <div className="textBox">{LocationList[detail.location || 0].text}</div>
               </div>
 
               <div className="wrapper flex centering">
@@ -318,8 +318,8 @@ class ResponseToDesignerReq extends Component {
 
 
               <div className="wrapper flex centering" >
-                    <div className="label">응답자</div>
-                    <div>{this.props.userInfo&&this.props.userInfo.nickName||null}</div>
+                <div className="label">응답자</div>
+                <div>{this.props.userInfo && this.props.userInfo.nickName || null}</div>
               </div>
 
               <div className="wrapper flex">
