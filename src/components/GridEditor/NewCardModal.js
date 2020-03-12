@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 import { GetDesignDetailRequest } from "actions/Design";
 import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 
-import { CreateItemCardRequest, UpdateCardSourceRequest } from "actions/Item";
+import { CreateItemCardRequest, UpdateCardSourceRequest, GetItemStepsRequest } from "actions/Item";
 
 import { ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 // import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
-// import CardSourceDetail from 'components/Items/ItemDetail/CardSourcDetail';
+import CardSourceDetail from "components/Items/ItemDetail/CardSourceDetail";
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
 
@@ -302,8 +302,8 @@ const BlankSpace = styled.div`
 
 class NewCardModal extends Component {
     state = {
-        loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
-        card_content: { deleteContent: [], newContent: [], updateContent: [] }
+        loading: false, scroll: false, edit: false, title: "", description: "", hook: false,
+        content: [],
     };
     handleCancel = (obj) => {
         if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
@@ -328,9 +328,9 @@ class NewCardModal extends Component {
             this.setState({ title: event.target.value });
         }
     };
-    onChangeContent = event => {
+    onChangeDescription = event => {
         if (event.target) {
-            this.setState({ content: event.target.value });
+            this.setState({ description: event.target.value });
         }
     };
     saveTemporary = async (obj) => {
@@ -347,22 +347,28 @@ class NewCardModal extends Component {
         }
         // new card
         let files = null;
+        this.setState({ loading: true });
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
-                let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
+                // let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
 
-                await this.props.CreateItemCardRequest({ title: this.state.title, order: this.props.row.order }, this.props.ItemDetail["item-id"], this.props.row.id, this.props.token)
+                await this.props.CreateItemCardRequest({ title: this.state.title, order: this.props.row.order }, this.props.itemId, this.props.row.id, this.props.token)
                     .then(res => {
                         console.log(res);
                         if (res.success) {
                             const card_id = res.card;
-                            this.props.UpdateCardSourceRequest({
-                                title: this.state.title, thumbnail: thumbnail, content: this.state.content,
-                                data: { deleteContent: this.state.card_content.deleteContent, newContent: this.state.card_content.newContent, updateContent: this.state.card_content.updateContent }
-                            }, card_id, this.props.token)
+                            const send_data = {
+                                title: this.state.title,
+                                files: files,
+                                // thumbnail: thumbnail, 
+                                description: this.state.description,
+                                data: { deleteContent: [], newContent: this.state.content, updateContent: [] }
+                            };
+                            this.props.UpdateCardSourceRequest(send_data, card_id, this.props.token)
                                 .then(async () => {
                                     await this.setState({ loading: false });
+                                    await this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
                                     this.onClose();
                                 })
                                 .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
@@ -373,21 +379,16 @@ class NewCardModal extends Component {
                     .catch(err => alert(err));
             });
     };
-    // handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     if (!this.state.title) {
-    //         alert("컨텐츠의 제목을 입력하세요.");
-    //         return;
-    //     }
-    //     await this.setState({ loading: true, hook: true });
-    // };
-
+    handleCapture = (data) => {
+        this.setState({ content: data });
+    }
     render() {
         const { hook } = this.state;
         return (
             <React.Fragment>
-                {this.state.loading && <Loading />}
                 <NewCardDialogWrapper open={this.props.open} onClose={this.props.close}>
+                    {this.state.loading && <Loading />}
+
                     <div className="close-box" onClick={this.onClose} >
                         <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                     </div>
@@ -411,7 +412,7 @@ class NewCardModal extends Component {
                             <div className="edit-header-description">
                                 <div className="description-txt">설명</div>
                                 <div className="description-input-container">
-                                    <input className="description-input-style" name="content" onChange={this.onChangeContent} maxLength="1000" placeholder="설명을 입력해주세요." />
+                                    <input className="description-input-style" name="description" onChange={this.onChangeDescription} maxLength="1000" placeholder="설명을 입력해주세요." />
                                 </div>
                             </div>
                         </EditCardHeaderContainer>
@@ -420,32 +421,24 @@ class NewCardModal extends Component {
                         <div className="content" >
                             <div className="title">내용</div>
                             <div className="content" >
-                                {/* <CardSourceDetailContainer
-                                    bought={true}
-                                    isCancel
-                                    // handleSubmit={this.handleHeaderSubmit}
-                                    // handleCancel={this.onCloseEditMode}
-                                    // designId={this.props.designId}
-                                    // card={card}
-                                    // cardId={card.uid}
-                                    // isTeam={isTeam}
-                                    // edit={this.state.edit}
-                                    // closeEdit={this.onCloseEditMode}
-                                    // openEdit={this.onChangeEditMode} 
-                                    /> */}
+                                <CardSourceDetail
+                                    fromNewCardModal={this.handleCapture}
+                                    submit={this.submit}
+                                    content={this.state.content || []}
+                                    {...this.props}
+                                    uid={"new"}
+                                    isTeam={true}
+                                    edit={true}
+                                    handleCancel={this.handleCancel}
+                                    closeEdit={this.onCloseEditMode}
+                                    openEdit={this.onChangeEditMode}
+                                    hook={hook}
+                                    handleResetHook={this.handleResetHook}
+                                    upDateRequest={this.saveTemporary} />
                             </div>
-                            {/* <CardSourceDetail
-                                {...this.props}
-                                uid={"new"}
-                                isTeam={true} edit={true}
-                                handleCancel={this.handleCancel}
-                                closeEdit={this.onCloseEditMode}
-                                openEdit={this.onChangeEditMode}
-                                hook={hook} handleResetHook={this.handleResetHook}
-                                upDateRequest={this.saveTemporary} /> */}
                         </div>
                     </div>
-                    <div onClick={this.submit}>click!</div>
+                    {/* <div onClick={this.submit}>click!</div> */}
                 </NewCardDialogWrapper>
                 <BlankSpace />
             </React.Fragment >
@@ -460,6 +453,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     CreateItemCardRequest: (data, id, list_id, token) => dispatch(CreateItemCardRequest(data, id, list_id, token)),
     UpdateCardSourceRequest: (data, card_id, token) => dispatch(UpdateCardSourceRequest(data, card_id, token)),
+    GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
 
     GetDesignBoardRequest: (id) => dispatch(GetDesignBoardRequest(id)),
     GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),

@@ -112,14 +112,14 @@ const CardContainer = styled.div`
     background-clip: padding-box;
     background-size: cover;
     background-position: 50%;
-    background-image: url(${props => props.first_img && props.first_img.m_img});
+    background-image: url(${props => props.thumbnail});
     :hover{
         .icon-area{
             display: block;
         }
     }
     .icon-area{
-        color: ${props => props.first_img ? "white" : "black"};
+        color: ${props => props.thumbnail ? "white" : "black"};
         z-index: 720;
         opacity: 0.5;
         display: none;
@@ -164,12 +164,12 @@ export const TipDiv = (props) => {
     </div>)
 }
 export const StepCard = (props) => {
-    return (<StepCardStyle 
-                marginTop={props.marginTop} marginRight={props.marginRight} marginBottom={props.marginBottom} marginLeft={props.marginLeft} 
-                title={props.title}
-                id={props.id} uid={props.uid} 
-                onClick={props.onClick} 
-                >
+    return (<StepCardStyle
+        marginTop={props.marginTop} marginRight={props.marginRight} marginBottom={props.marginBottom} marginLeft={props.marginLeft}
+        title={props.title}
+        id={props.id} uid={props.uid}
+        onClick={props.onClick}
+    >
         <div className="icon-area">{props.children}</div>
         <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
     </StepCardStyle >)
@@ -177,9 +177,9 @@ export const StepCard = (props) => {
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
-        ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
+        ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} thumbnail={props.card.thumbnail}>
             <div className="icon-area">{props.children}</div>
-            {props.card.first_img ?
+            {props.card.thumbnail ?
                 <React.Fragment>
                     {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
                     <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />

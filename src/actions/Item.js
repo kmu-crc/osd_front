@@ -111,7 +111,7 @@ const UpdateItemContentsFailure = error => ({
 export function GetItemStepsRequest(id, token) {
   return (dispatch) => {
     const url = `${host}/item/detail/${id}/step`;
-    // console.log(url);
+    console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
