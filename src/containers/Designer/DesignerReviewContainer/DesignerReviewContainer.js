@@ -18,6 +18,7 @@ const ReviewBox = styled.div`
     }
 `;
 class DesignerReviewContainer extends Component {
+
   componentDidMount() {
     this.props.GetDesignerReviewListRequest(this.props.id, 0);
   }
@@ -26,12 +27,20 @@ class DesignerReviewContainer extends Component {
 
   render() {
     return (
-      <ReviewBox>
-        <ScrollList
-          scrollId={"review-scroller"}
-          cols={2} type="review" getListRequest={this.getList} ListComponent={Review}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-      </ReviewBox>
+      <React.Fragment>
+        {/*리뷰목록*/}
+        <ReviewBox>
+          <ScrollList
+            handler={this.props.handler}
+            scrollId={"review-scroller"}
+            cols={2}
+            type="review"
+            getListRequest={this.getList}
+            ListComponent={Review}
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded} />
+        </ReviewBox>
+      </React.Fragment>
     )
   }
 }

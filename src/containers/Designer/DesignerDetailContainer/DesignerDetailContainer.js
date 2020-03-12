@@ -6,7 +6,7 @@ import { LikeDesignerRequest, UnlikeDesignerRequest, GetLikeDesignerRequest } fr
 import { CreateRequestRequest, GetDesignerRequestListRequest } from "actions/Request";
 import { GetTotalCountDesignerReviewRequest } from "actions/Review";
 
-class GroupDetailContainer extends Component {
+class DesignerDetailContainer extends Component {
   componentWillMount() {
     this.props.GetExpertDesignerViewDetailRequest(this.props.id)
       .then(this.props.userInfo && this.props.GetLikeDesignerRequest(this.props.id, this.props.token))
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch) => ({
   GetLikeDesignerRequest: (id, token) => dispatch(GetLikeDesignerRequest(id, token)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DesignerDetailContainer);
