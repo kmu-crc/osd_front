@@ -27,8 +27,7 @@ class DesignerReviewContainer extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        {/*리뷰목록*/}
+        // 리뷰목록
         <ReviewBox>
           <ScrollList
             handler={this.props.handler}
@@ -40,7 +39,6 @@ class DesignerReviewContainer extends Component {
             dataList={this.props.dataList}
             dataListAdded={this.props.dataListAdded} />
         </ReviewBox>
-      </React.Fragment>
     )
   }
 }

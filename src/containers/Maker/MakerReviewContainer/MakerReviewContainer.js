@@ -25,13 +25,17 @@ class MakerReviewContainer extends Component {
     this.props.GetMakerReviewListRequest(this.props.id, page);
 
   render() {
-    console.log("1329", this.props);
     return (
       <ReviewBox>
         <ScrollList
+          handler={this.props.handler}
           scrollId={"review-scroller"}
-          cols={2} type="review" getListRequest={this.getList} ListComponent={Review}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
+          cols={2}
+          type="review"
+          getListRequest={this.getList}
+          ListComponent={Review}
+          dataList={this.props.dataList}
+          dataListAdded={this.props.dataListAdded} />
       </ReviewBox>
     )
   }

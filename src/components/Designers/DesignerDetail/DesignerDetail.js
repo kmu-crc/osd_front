@@ -791,7 +791,7 @@ class DesignerDetail extends Component {
       {/*  */}
       <AdditionalInfo width={1523} height={280} mTop={60}>
         <div className="wrapItem">
-          <div className="title margin_bottom">리뷰({this.props.ReviewCount || 0})</div>
+          <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
           <DesignerReviewContainer
             id={parseInt(this.props.id, 10)}
             handler={detail => this.setState({ reviewdetail: true, detail: detail })} />

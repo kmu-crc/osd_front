@@ -9,6 +9,8 @@ import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
 import MakerRequestBoardContainer from "containers/Maker/MakerRequestBoardContainer";
 import MakerReviewContainer from "containers/Maker/MakerReviewContainer";
+import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -636,6 +638,8 @@ class MakerDetail extends Component {
       category_level1: -1, category_level2: -1, location: null,
       explain: "", tag: [], equipment: [], technique: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
+      //for review detail
+      reviewdetail: false, detail: null,
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
@@ -825,12 +829,15 @@ class MakerDetail extends Component {
 
       </div>
 
-
+      {/* 리뷰 */}
       <AdditionalInfo width={1523} height={280} mTop={60}>
         <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
-        <MakerReviewContainer id={parseInt(this.props.id, 10)} />
+        <MakerReviewContainer
+          id={parseInt(this.props.id, 10)}
+          handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
       </AdditionalInfo>
-
+      {/* 리뷰자세히 모달*/}
+      {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
       <AdditionalInfo width={1523} height={280} mTop={60}>
         <div className="title margin_bottom">제작 경험</div>
