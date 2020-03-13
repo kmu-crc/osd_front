@@ -372,7 +372,7 @@ class MyDetail extends Component {
               {/* <div className="title_Label">관심</div> */}
               {/* <div className="title_Label">참여</div> */}
               {/* <div className="title_Label">의뢰</div> */}
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구매 아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입아이템</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰아이템</MenuButton>
               <div className="hrLine" />

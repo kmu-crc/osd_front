@@ -489,7 +489,7 @@ class ProductDetail extends Component {
                 </div>
                 <div className="product_buy_button">
                   <div className="gray_button" onClick={this.onClickCart}>장바구니</div>
-                  <div className="gray_button" onClick={this.onClickPayment}>즉시구매</div>
+                  <div className="gray_button" onClick={this.onClickPayment}>즉시구입</div>
                 </div>
               </div>
               <div className="detail_box">

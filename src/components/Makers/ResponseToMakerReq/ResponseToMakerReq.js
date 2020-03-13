@@ -4,6 +4,8 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
+
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -48,24 +50,7 @@ const MainBox = styled.div`
   }
 
 `;
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
 
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
-
-  cursor:pointer;
-`;
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -116,7 +101,7 @@ const FormBox = styled.div`
   }
 
 `;
-const InputText = styled.input.attrs({ type: "text" })`
+const InputText = styled.input`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
@@ -176,29 +161,15 @@ class ResponseToMakerReq extends Component {
       category_level1: 0, category_level2: 0,
       title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,
 
-      res_content: "", res_price: "",
+      res_content: "", res_price: "",res_amount:null,
     }
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
+    this.onChangeReponseAmount = this.onChangeReponseAmount.bind(this);
   };
-  // componentDidMount() {
-  //   // //test 데이터 초기화
-  //   // this.setState({
-  //   //   category_level1: 1,
-  //   //   category_level2: 0,
-  //   //   title: "제작의뢰합니다.",
-  //   //   tag: ["테스트1", "테스트2", "테스트3"],
-  //   //   price: 12300,
-  //   //   content: "제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
-  //   //   location: "대한민국 서울특별시",
-  //   //   offline: 0,
-  //   //   amount: 1,
-  //   //   resale: 0,
-  //   // });
-  // };
 
   onChangeResponseContent(event) {
     this.setState({
@@ -208,6 +179,11 @@ class ResponseToMakerReq extends Component {
   onChangeResponsePrice(event) {
     this.setState({
       res_price: event.target.value,
+    })
+  }
+  onChangeReponseAmount(event){
+    this.setState({
+      res_amount:event.target.value,
     })
   }
   async getPriceValue(value) {
@@ -224,6 +200,7 @@ class ResponseToMakerReq extends Component {
       price: this.state.res_price,
       expert_id: this.props.userInfo.uid || null,
       personal: this.props.detail.personal || null,
+      amount:this.state.res_amount||null,
     }
     // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
@@ -241,7 +218,7 @@ class ResponseToMakerReq extends Component {
   render() {
     const { detail } = this.props;
     if (!detail) return <Loading />;
-    const category_level1 = this.props.category1 && this.props.category1[this.state.category_level1].text;
+    const category_level1 = this.props.category1&&this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text;
     const category2 = this.props.category2 && this.props.category2[this.state.category_level1];
     const category_level2 = category2 && category2[this.state.category_level2] && category2[this.state.category_level2].text;
     return (
@@ -323,7 +300,12 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex">
                   <div className="label">응답 내용</div>
-                  <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} />
+                  <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={483} />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label">수량</div>
+                  <InputText type="number" onChange={this.onChangeReponseAmount} value={this.state.res_amount} width={100} />
                 </div>
 
                 <div className="wrapper flex">
@@ -333,8 +315,11 @@ class ResponseToMakerReq extends Component {
 
               </FormBox>
             </div>
+            <div className="contentsBox">
+            <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
+            <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+            </div>
           </MainBox>
-          <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록</div></RedButton>
         </Wrapper>
       </React.Fragment>
     );

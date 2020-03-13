@@ -259,7 +259,7 @@ class Cart extends Component {
             </MainBox>
                 <div>
                     <Button>쇼핑계속</Button>
-                    <Button>구매</Button>
+                    <Button>구입</Button>
                 </div>
         </React.Fragment>
       );

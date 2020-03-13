@@ -500,13 +500,12 @@ class ItemDetail extends Component {
                           <div className="text">아이템 수정/삭제</div>
                         </div>
                       </div>
-                      : null}
-                    <div className="button first">
-                      <div onClick={_ => this.buyThisItem(_, item)} >
-                        <div className="text">아이템구매</div>
-                      </div>
+                    : null}
+                  <div className="button first">
+                    <div onClick={_ => this.buyThisItem(_, item)} >
+                      <div className="text">아이템구입</div>
                     </div>
-
+                  </div>
                     {this.state.isLike === false ?
                       <div className="button second" onClick={this.onClickLike}>
                         <div className="text">관심항목추가</div></div>

@@ -8,6 +8,7 @@ import { AddController, InputContent, Controller, InputTag, ThumbnailList, Radio
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -41,21 +42,7 @@ const MainBox = styled.div`
     cursor: default;
   }
 `;
-const RedButton = styled.div`
-  width: 290px;
-  height: 70px;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  font-weight: 500;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.gray ? "gray" : "red"};
-  // position: absolute;
-  // left:${props => props.left};
-  // bottom:${props => props.bottom};
-`;
+
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -384,14 +371,15 @@ class CreateProductForm extends Component {
                 }
               }
             }}>
-              <RedButton>디자인 등록 계속</RedButton>
+             <RedButton value={"디자인 등록 계속"} isConfirm={false}/>
             </Link>
-            : <RedButton onClick={this.onSubmit}>아이템 등록</RedButton>}
-          <RedButton gray onClick={() => {
+            :<RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
+            }
+          <GrayButton value={"취소"} onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
-          }}>취소</RedButton>
+          }}>취소</GrayButton>
         </div>
       ) : null}
     </MainBox>);

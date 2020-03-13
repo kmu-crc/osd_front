@@ -5,6 +5,25 @@ import ContentBox from "components/Commons/ContentBox";
 import Loading from "components/Commons/Loading";
 // import { Grid, Icon } from "semantic-ui-react";
 // import Button from "components/Commons/Button";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
+const LocationList = [
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
+];
 
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -33,26 +52,6 @@ const MainBox = styled.div`
     padding-top:36px;
   }
 
-`
-const RedButton = styled.div`
-  width: 290px;
-  height: 70px;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  font-weight: 500;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.inactive ? "gray" : "red"};
-
-  // position:absolute;
-  // left:${props => props.left}px;
-  // bottom:${props => props.bottom}px;
-  margin-left: 10px;
-  margin-top: 15px;
-
-  cursor: pointer;
 `
 const FormBox = styled.div`
   *{
@@ -148,7 +147,7 @@ class Detail extends Component {
 
     return (
       <React.Fragment>
-        {Detail.status === "normal" ?
+        {Detail.status === "normal" ? // 게시글
           <Wrapper>
             <MainBox>
               <div className="title">내용</div>
@@ -167,7 +166,6 @@ class Detail extends Component {
               </div>
             </MainBox>
             <div style={{ display: "flex" }}>
-              {/* <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton> */}
             </div>
           </Wrapper> :
           Detail.sort_in_group === 0 ?
@@ -176,6 +174,11 @@ class Detail extends Component {
                 <div className="title">의뢰내용</div>
                 <div className="contentsBox">
                   <FormBox>
+
+                  <div className="wrapper flex centering">
+                      <div className="label">의뢰인</div>
+                      <div className="textBox">{Detail.nick_name || ""}</div>
+                    </div>
 
                     <div className="wrapper flex centering">
                       <div className="label">제목</div>
@@ -195,10 +198,6 @@ class Detail extends Component {
                       </TagList>
                     </div>
 
-                    <div className="wrapper flex centering">
-                      <div className="label">희망비용</div>
-                      <div className="textBox">{Detail.price}</div>
-                    </div>
 
                     <div className="wrapper flex centering">
                       <div className="label">내용</div>
@@ -206,9 +205,28 @@ class Detail extends Component {
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">{TypeText} 위치</div>
-                      <div className="textBox">{Detail.location}</div>
+                      <div className="label">희망비용</div>
+                      <div className="textBox">{parseInt(Detail.price,10)/1000+"천원"}</div>
                     </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">기간</div>
+                      <div className="textBox">~{Detail.term}</div>
+                    </div>
+                    
+                    {
+                      Detail.type == "maker" &&
+                      <div className="wrapper flex centering">
+                      <div className="label">수량</div>
+                      <div className="textBox">{Detail.amount}</div>
+                    </div>
+                    }
+
+                    <div className="wrapper flex centering">
+                      <div className="label">{TypeText} 위치</div>
+                      <div className="textBox">{LocationList[Detail.location].text}</div>
+                    </div>
+
 
                     <div className="wrapper flex centering">
                       <div className="label">{TypeText} 소유권</div>
@@ -230,7 +248,7 @@ class Detail extends Component {
                   {/* <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton> */}
                   {!MyDetail ?
                     <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
-                      <RedButton><div>의뢰응답</div></RedButton>
+                      <RedButton value={"의뢰응답"} isConfirm={false}></RedButton>
                     </Link>
                     : null}
                   </div>
@@ -263,7 +281,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">희망비용</div>
-                      <div className="textBox">{Detail && Detail.request && Detail.request.price}</div>
+                      <div className="textBox">{Detail && Detail.request && parseInt(Detail.request.price,10)/1000+"천원"}</div>
                     </div>
 
                     <div className="wrapper flex centering">
@@ -273,7 +291,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">디자이너 위치</div>
-                      <div className="textBox">{Detail && Detail.request && Detail.request.location}</div>
+                      <div className="textBox">{Detail && Detail.request && LocationList[Detail.request.location].text}</div>
                     </div>
 
                     <div className="wrapper flex centering">
@@ -295,13 +313,25 @@ class Detail extends Component {
                 </div> */}
 
                     <div className="wrapper flex">
-                      <div className="label">설명</div>
-                      <div className="textBox">{Detail.content}</div>
+                      <div className="label">응답자</div>
+                      <div className="textBox">{Detail.nick_name}</div>
                     </div>
 
                     <div className="wrapper flex">
+                      <div className="label">설명</div>
+                      <div className="textBox">{Detail.content}</div>
+                    </div>
+                    {
+                      Detail.type=="maker"&&
+                      <div className="wrapper flex">
+                      <div className="label">수량</div>
+                      <div className="textBox">{Detail.amount}</div>
+                    </div>
+                    }
+
+                    <div className="wrapper flex">
                       <div className="label">희망비용</div>
-                      <div className="textBox">{Detail.price}</div>
+                      <div className="textBox">{parseInt(Detail.price,10)/1000+"천원"}</div>
                     </div>
 
                   </FormBox>
@@ -312,9 +342,7 @@ class Detail extends Component {
                   {/* <div>뒤로가기</div> */}
                 {/* </RedButton> */}
                 {/* <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} > */}{/* <RedButton ><div>구매하기</div></RedButton> */}{/* </Link> */}
-                <RedButton onClick={this.props.purchase} >
-                  <div>아이템구매</div>
-                </RedButton>
+                <RedButton value={"아이템 구입"} onClick={this.props.purchase} isConfirm={true}/>
                 {/* {isPurchased ? <RedButton onClick={this.props.confirm}>
                   <div>구매확인</div>
                 </RedButton> : null} */}
