@@ -4,13 +4,13 @@ import MakerDetail from "components/Makers/MakerDetail";
 import { GetExpertMakerViewDetailRequest } from "actions/Expert";
 import { LikeMakerRequest, UnlikeMakerRequest, GetLikeMakerRequest } from "actions/Maker";
 import { CreateRequestRequest, GetMakerRequestListRequest } from "actions/Request";
+import { GetTotalCountMakerReviewRequest } from "actions/Review";
 
 class MakerDetailContainer extends Component {
   componentWillMount() {
     this.props.GetExpertMakerViewDetailRequest(this.props.id)
-      .then(
-        this.props.userInfo&&this.props.GetLikeMakerRequest(this.props.id, this.props.token)
-      );
+      .then(this.props.userInfo && this.props.GetLikeMakerRequest(this.props.id, this.props.token))
+      .then(this.props.GetTotalCountMakerReviewRequest(this.props.id));
   }
   render() {
     return (<MakerDetail {...this.props} />);
@@ -24,6 +24,7 @@ const mapStateToProps = (state) => ({
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,
   MakerViewDetail: state.MakerDetail.status.MakerViewDetail,
+  ReviewCount: state.ReviewList.status.MakerTotal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -33,6 +34,7 @@ const mapDispatchToProps = (dispatch) => ({
   LikeMakerRequest: (id, token) => dispatch(LikeMakerRequest(id, token)),
   UnlikeMakerRequest: (id, token) => dispatch(UnlikeMakerRequest(id, token)),
   GetLikeMakerRequest: (id, token) => dispatch(GetLikeMakerRequest(id, token)),
+  GetTotalCountMakerReviewRequest: (id) => dispatch(GetTotalCountMakerReviewRequest(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakerDetailContainer);

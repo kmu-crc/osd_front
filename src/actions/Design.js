@@ -4,6 +4,7 @@ import host from "config";
 export const GetDesignListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
     const url = `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "get"

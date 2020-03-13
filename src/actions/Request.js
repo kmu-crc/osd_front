@@ -56,8 +56,8 @@ const RequestTotalCountFail = () => ({ type: types.GET_REQUEST_TOTAL_COUNT_FAIL,
 
 export const GetRequestDetailRequest = (id) => {
   return dispatch => {
-    const sql = `${host}/request/detail/${id}`;
-    return fetch(sql, {
+    const url =  `${host}/request/detail/${id}`;
+    return fetch(url, {
       headers: { "Content-Type": "application/json" }, method: "GET"
     })
       .then(res => res.json())

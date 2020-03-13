@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import DateFormat from "modules/DateFormat";
+// import DateFormat from "modules/DateFormat";
 import Star from "components/Commons/Star";
+import noimg from "source/noimg.png";
 
 const Reviews = styled.div`
 //   width: 468px;
@@ -35,7 +36,7 @@ const ReviewForm = styled.textarea`
   outline:none;
   border-radius:10px;
 `
-const ScoreForm = styled.input.attrs({type:"number"})`
+const ScoreForm = styled.input.attrs({ type: "number" })`
         min-width:50px;
         height:100%;
         outline:none;
@@ -117,11 +118,14 @@ const ReviewPiece = styled.div`
     padding:10px;
     margin-bottom:10px;
     .pics{
-        width:100px;
-        height:100px;
-        border:1px solid #E6E6E6;
-        background-color:white;
-        margin-right:20px;
+        width: 100px;
+        height: 100px;
+        border: 1px solid #E6E6E6;
+        margin-right: 20px;
+        background-color: white;
+        background-image: url(${props => props.img});
+        background-size: cover;
+        background-repeat: none;
     }
     .contents{
         .rate{
@@ -285,12 +289,14 @@ class ItemReview extends Component {
                 //     <div style={{ width: "max-content", marginLeft: "15px" }}>{props.sort_in_group === 0 ? Star(props.score) : null}</div>
                 //     <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
                 // </div>
-                <ReviewPiece>
+                <ReviewPiece onClick={() => this.props.handler(props)} img={props.m_img || noimg}>
                     <div className="pics" />
                     <div>
-                        <div className="score">{Star(props.score)}({props.score})</div>
-                        <div className="comment">{props.comment}</div>
                         <div className="nickname">{props.nick_name}</div>
+                        <div className="score">{Star(props.score)}({props.score})</div>
+                        <div className="comment">
+                            {props.comment && props.comment.slice(0, 64)}
+                            {props.comment && props.comment.length > 64 ? "..." : ""}</div>
                     </div>
                 </ReviewPiece>
             )
@@ -311,31 +317,31 @@ class ItemReview extends Component {
                                     <WriteReview>
                                         <div className="form">
                                             <ReviewForm
-                                             value={this_comment || ""}
-                                             onChange={this.onChangeValue}
-                                             name="this_comment"
-                                             onKeyDown={this.handleKeyDown}
-                                             />
+                                                value={this_comment || ""}
+                                                onChange={this.onChangeValue}
+                                                name="this_comment"
+                                                onKeyDown={this.handleKeyDown}
+                                            />
                                         </div>
                                         <div className="contents">
                                             <div className="score">
-                                            <ScoreForm
-                                                style={{ width: "25px" }}
-                                                value={this.state.score || 0}
-                                                onChange={this.onChangeValue}
-                                                name="score" />
+                                                <ScoreForm
+                                                    style={{ width: "25px" }}
+                                                    value={this.state.score || 0}
+                                                    onChange={this.onChangeValue}
+                                                    name="score" />
                                             </div>
                                             <div className="buttonBox">
                                                 <div className="button" onClick={() => this.requestReview(pay.uid)} >
-                                                <div className="text" >리뷰작성</div></div>
+                                                    <div className="text" >리뷰작성</div></div>
                                             </div>
                                         </div>
                                     </WriteReview>
-                                    : 
-                                        <CreateReview>
-                                            <div className="button"><div className="font">리뷰 작성</div></div>
-                                        </CreateReview>
-                                    }
+                                    :
+                                    <CreateReview>
+                                        <div className="button"><div className="font">리뷰 작성</div></div>
+                                    </CreateReview>
+                                }
                             </div>
                         }) : null
                     : null}

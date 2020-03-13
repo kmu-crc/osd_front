@@ -4,26 +4,18 @@ import host from "config";
 // NORMAL
 export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
-    return fetch(`${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`, {
+    const url =  `${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
+    console.log(url);
+    return fetch(url, {
       headers: { "Content-Type": "application/json" },
-      method: "get"
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      // console.log("Designer data >>", data);
-      if (!data) {
-        // console.log("no data");
-        data = [];
-      }
-      if (page === 0) {
-        dispatch(DesignerListClear(data));
-        return;
-      }
-      dispatch(GetDesignerList(data));
-    }).catch((error) => {
-      dispatch(DesignerListFail());
-      console.log("err", error);
+      method: "GET"
     })
+      .then(response => response.json())
+      .then((data) => dispatch(page === 0 ? DesignerListClear(data || []) : GetDesignerList(data || [])))
+      .catch((error) => {
+        dispatch(DesignerListFail());
+        console.log("err", error);
+      })
   }
 };
 const GetDesignerList = (data) => ({ type: types.GET_DESIGNER_LIST, DesignerList: data });
@@ -33,8 +25,8 @@ const DesignerListFail = () => ({ type: types.DESIGNER_LIST_FAIL, DesignerList: 
 
 export function GetDesignerTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
-    const sql = `${host}/designer/designerCount/${cate1}/${cate2}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
+    const url =  `${host}/designer/designerCount/${cate1}/${cate2}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetDesignerTotalCount(data ? data["count(*)"] : 0)))
       .catch(err => dispatch(DesignerTotalCountFail()))
@@ -44,8 +36,8 @@ const GetDesignerTotalCount = (data) => ({ type: types.GET_DESIGNER_TOTAL_COUNT,
 const DesignerTotalCountFail = () => ({ type: types.GET_DESIGNER_TOTAL_COUNT_FAIL, Count: 0 });
 export const GetDesignerDetailRequest = (id) => {
   return (dispatch) => {
-    const sql = `${host}/designer/designerDetail/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
+    const url =  `${host}/designer/designerDetail/${id}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetDesignerDetail(data ? data : [])))
       .catch(err => { console.log("err", err); })
@@ -54,8 +46,8 @@ export const GetDesignerDetailRequest = (id) => {
 const GetDesignerDetail = (data) => ({ type: types.GET_DESIGNER_DETAIL, DesignerDetail: data });
 export function GetDesignerCountRequest(id) {
   return (dispatch) => {
-    const sql = `${host}/designer/getCount/${id}`;
-    return fetch(sql, { headers: { "Content-Type": "application/json" }, method: "GET" })
+    const url =  `${host}/designer/getCount/${id}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(GetDesignerCount(data ? data : { total_like: 0, total_design: 0, total_group: 0, total_view: 0 })))
       .catch(err => { console.log("err", err) });
@@ -95,8 +87,8 @@ const MyDesignInDesignerFail = () => ({ type: types.MY_DESIGN_IN_DESIGNER_FAIL, 
 // 디자이너의 참여 리스트 가져오기
 export function GetDesignInDesignerRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/designer/designerDetail/${id}/design/${page}`;
-    return fetch(sql,
+    const url =  `${host}/designer/designerDetail/${id}/design/${page}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json" }, method: "get" })
       .then(res => res.json())
       .then(data => dispatch(page === 0 ? DesignInDesignerClear(data || []) : GetDesignInDesigner(data || [])))
@@ -113,8 +105,8 @@ const DesignInDesignerFail = () => ({ type: types.DESIGN_IN_DESIGNER_FAIL, Desig
 // 디자이너가 좋아요 한 디자인 가져오기
 export function GetLikeInDesignerRequest(id, page) {
   return (dispatch) => {
-    const sql = `${host}/expert/designerDetail/${id}/like/${page}`;
-    return fetch(sql,
+    const url =  `${host}/expert/designerDetail/${id}/like/${page}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
       .then(data => dispatch(page === 0 ? LikeInDesignerClear(data || []) : GetLikeInDesigner(data || [])))
@@ -129,8 +121,8 @@ const LikeInDesignerFail = () => ({ type: types.LIKE_IN_DESIGNER_FAIL, LikeInDes
 export function GetLikeDesignerRequest(id, token) {
   return (dispatch) => {
     dispatch(GetLikeDesigner());
-    const sql = `${host}/expert/getLikeDesigner/${id}`;
-    return fetch(sql,
+    const url =  `${host}/expert/getLikeDesigner/${id}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "get" })
       .then(res => res.json())
       .then(data => {
@@ -154,8 +146,8 @@ const GetLikeDesignerFailure = (data) => ({ type: types.GET_LIKE_DESIGNER_FAILUR
 export function LikeDesignerRequest(id, token) {
   return (dispatch) => {
     dispatch(LikeDesigner());
-    const sql = `${host}/expert/likeDesigner/${id}`;
-    return fetch(sql,
+    const url =  `${host}/expert/likeDesigner/${id}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
       .then(res => res.json())
       .then((data) => {
@@ -179,8 +171,8 @@ const LikeDesignerFailure = () => ({ type: types.LIKE_DESIGNER_FAILURE });
 export function UnlikeDesignerRequest(id, token) {
   return (dispatch) => {
     dispatch(UnlikeDesigner());
-    const sql = `${host}/expert/unlikeDesigner/${id}`;
-    return fetch(sql,
+    const url =  `${host}/expert/unlikeDesigner/${id}`;
+    return fetch(url,
       { headers: { "Content-Type": "application/json", 'x-access-token': token }, method: "post" })
       .then(res => res.json())
       .then((data) => dispatch(UnlikeDesignerSuccess(data)) && data)

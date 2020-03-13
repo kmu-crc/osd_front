@@ -8,9 +8,10 @@ import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/Ha
 import DesignerReviewContainer from "containers/Designer/DesignerReviewContainer";
 import DesignerRequestBoardContainer from "containers/Designer/DesignerRequestBoardContainer";
 import TextFormat from "modules/TextFormat";
-import NumberFormat from "modules/NumberFormat";
-import profile from "source/thumbnail.png";
-import Item from "components/Items/Item/Item"
+// import NumberFormat from "modules/NumberFormat";
+// import profile from "source/thumbnail.png";
+// import Item from "components/Items/Item/Item"
+import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -32,6 +33,7 @@ const LocationList = [
 ];
 
 // CSS STYLING
+
 const Expert = styled.div`
   margin-right: ${prop => prop.mRight}px;
   border: 1px solid transparent;
@@ -616,6 +618,7 @@ class DesignerDetail extends Component {
       category_level1: 0, category_level2: 0, location: null,
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
+      reviewdetail: false, detail: null
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
@@ -711,15 +714,15 @@ class DesignerDetail extends Component {
     //   this.state.category_level2 === 0 ? this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text
     //   : this.props.category2[this.state.category_level1] &&
     //   this.props.category2[this.state.category_level1][this.state.category_level2] && this.props.category2[this.state.category_level1][this.state.category_level2].text;
-    let categoryName = this.props.category1&& this.props.category2 &&
-    this.state.category_level2<1?
-    this.props.category1[parseInt(this.state.category_level1,10)]
-    &&this.props.category1[parseInt(this.state.category_level1,10)].text
-    :null;
+    let categoryName = this.props.category1 && this.props.category2 &&
+      this.state.category_level2 < 1 ?
+      this.props.category1[parseInt(this.state.category_level1, 10)]
+      && this.props.category1[parseInt(this.state.category_level1, 10)].text
+      : null;
 
-    this.props.category2&&this.props.category2.map((item,index)=>{
-      if(item.parent == this.state.category_level1&&item.value == this.state.category_level2){
-        categoryName=item.text;
+    this.props.category2 && this.props.category2.map((item, index) => {
+      if (item.parent == this.state.category_level1 && item.value == this.state.category_level2) {
+        categoryName = item.text;
       }
     })
 
@@ -785,13 +788,18 @@ class DesignerDetail extends Component {
       </div>
 
       {/* 리뷰 */}
+      {/*  */}
       <AdditionalInfo width={1523} height={280} mTop={60}>
-      <div className="wrapItem">
-        <div className="title margin_bottom">리뷰({this.props.ReviewCount || 0})</div>
-        <DesignerReviewContainer id={parseInt(this.props.id, 10)} />
+        <div className="wrapItem">
+          <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+          <DesignerReviewContainer
+            id={parseInt(this.props.id, 10)}
+            handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
         </div>
       </AdditionalInfo>
-
+      {/*리뷰자세히*/}
+      {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
+      
       {/* 경험 */}
       <AdditionalInfo width={1523} height={280} mTop={60}>
         <div className="title margin_bottom">디자인 경험</div>
@@ -822,12 +830,12 @@ class DesignerDetail extends Component {
         </div>
 
       </ItemInfo>
-      
+
       {/**갤러리 아이템 */}
       <ItemInfo width={1523} height={491} mTop={60}>
         <div className="title">갤러리</div>
         <div className="wrapGallery">
-          {<HaveInGalleryContainer id={this.props.id} isModify={false}/>}
+          {<HaveInGalleryContainer id={this.props.id} isModify={false} />}
         </div>
 
       </ItemInfo>

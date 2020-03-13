@@ -247,7 +247,7 @@ class Header extends Component {
     const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const itemActive = (location.indexOf("/product") !== -1 || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const requestActive = (location.indexOf("/request") !== -1)
-
+    const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
     return (<HeaderContainer>
       {/*  */}
       <HeaderItem className="first">
@@ -306,7 +306,7 @@ class Header extends Component {
         <HeaderItem className="left search">
           <div className="search-icon-wrapper">
             <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/null/null/${this.state.keyword}`} id="searchLink">
+            <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink">
               <img alt="icon" src={Zoom} className="search-icon" />
             </Link>
           </div>

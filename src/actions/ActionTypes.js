@@ -156,9 +156,6 @@ export const CREATE_ITEM_REVIEW_FAILURE = "CREATE_ITEM_REVIEW_FAILURE";
 export const DELETE_ITEM_REVIEW = "DELETE_ITEM_REVIEW";
 export const DELETE_ITEM_REVIEW_SUCCESS = "DELETE_ITEM_REVIEW_SUCCESS";
 export const DELETE_ITEM_REVIEW_FAILURE = "DELETE_ITEM_REVIEW_FAILURE";
-export const GET_DESIGNER_REVIEW = "GET_DESIGNER_REVIEW";
-export const GET_DESIGNER_REVIEW_CLEAR = "GET_DESIGNER_REVIEW_CLEAR";
-export const GET_DESIGNER_REVIEW_FAIL = "GET_DESIGNER_REVIEW_FAIL";
 export const GET_TOTAL_COUNT_DESIGNER_REVIEW = "GET_TOTAL_COUNT_DESIGNER_REVIEW";
 export const GET_TOTAL_COUNT_DESIGNER_REVIEW_FAIL = "GET_TOTAL_COUNT_DESIGNER_REVIEW_FAIL";
 
@@ -543,10 +540,9 @@ export const UNLIKE_GROUP_FAILURE = "UNLIKE_GROUP_FAILURE";
 
 
 ////////////////////////////////////////////////////////////////////////////
-// designer
+// DESIGNER
 ////////////////////////////////////////////////////////////////////////////
-
-// designer List
+// DESIGNER LIST
 export const GET_DESIGNER_LIST = "GET_DESIGNER_LIST";
 export const DESIGNER_LIST_CLEAR = "DESIGNER_LIST_CLEAR";
 export const DESIGNER_LIST_FAIL = "DESIGNER_LIST_FAIL";
@@ -565,10 +561,14 @@ export const LIKE_IN_DESIGNER_FAIL = "LIKE_IN_DESIGNER_FAIL";
 export const GET_DESIGNER_TOTAL_COUNT = "GET_DESIGNER_TOTAL_COUNT";
 export const GET_DESIGNER_TOTAL_COUNT_FAIL = "GET_DESIGNER_TOTAL_COUNT_FAIL";
 
+export const GET_DESIGNER_REVIEW = "GET_DESIGNER_REVIEW";
+export const GET_DESIGNER_REVIEW_CLEAR = "GET_DESIGNER_REVIEW_CLEAR";
+export const GET_DESIGNER_REVIEW_FAIL = "GET_DESIGNER_REVIEW_FAIL";
+
 ////////////////////////////////////////////////////////////////////////////
-// maker
+// MAKER
 ////////////////////////////////////////////////////////////////////////////
-// maker List
+// MAKER LIST
 export const GET_MAKER_LIST = "GET_MAKER_LIST";
 export const MAKER_LIST_CLEAR = "MAKER_LIST_CLEAR";
 export const MAKER_LIST_FAIL = "MAKER_LIST_FAIL";
@@ -586,6 +586,12 @@ export const GET_LIKE_IN_MAKER_CLEAR = "GET_LIKE_IN_MAKER_CLEAR";
 export const LIKE_IN_MAKER_FAIL = "LIKE_IN_MAKER_FAIL";
 export const GET_MAKER_TOTAL_COUNT = "GET_MAKER_TOTAL_COUNT";
 export const GET_MAKER_TOTAL_COUNT_FAIL = "GET_MAKER_TOTAL_COUNT_FAIL";
+
+export const GET_MAKER_REVIEW = "GET_MAKER_REVIEW";
+export const GET_MAKER_REVIEW_CLEAR = "GET_MAKER_REVIEW_CLEAR";
+export const GET_MAKER_REVIEW_FAIL = "GET_MAKER_REVIEW_FAIL";
+export const GET_TOTAL_COUNT_MAKER_REVIEW = "GET_TOTAL_COUNT_MAKER_REVIEW";
+export const GET_TOTAL_COUNT_MAKER_REVIEW_FAIL = "GET_TOTAL_COUNT_MAKER_REVIEW_FAIL";
 
 ////////////////////////////////////////////////////////////////////////////
 // REQUEST 

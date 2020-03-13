@@ -5,8 +5,8 @@ import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
-import ScrollDesignListContainer from "containers/Products/ScrollProductListContainer";
-import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
+import ScrollItemListContainer from "containers/Products/ScrollProductListContainer";
+import ScrollMakerListContainer from "containers/Maker/ScrollMakerListContainer";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 
 // css styling
@@ -16,6 +16,11 @@ const Wrapper = styled.div`
   margin-bottom: 50px;
   & ul {
     margin-top: 30px;
+  }
+  display: flex;
+  .left{
+    margin-left: auto;
+    margin-right: 25px;
   }
 `;
 
@@ -95,9 +100,9 @@ const MenuWrap = styled.div`
 `;
 
 const type = [
-  { key: "design", value: "design", text: "디자인" },
-  { key: "group", value: "group", text: "그룹" },
-  { key: "designer", value: "designer", text: "디자이너" }
+  { key: "item", value: "item", text: "아이템" },
+  { key: "designer", value: "designer", text: "디자이너" },
+  { key: "maker", value: "maker", text: "메이커" }
 ];
 
 class SearchList extends Component {
@@ -117,12 +122,8 @@ class SearchList extends Component {
   }
 
   changeState = async () => { // 리렌더링을 위한 state값 변경
-    await this.setState({
-      rendering: false
-    });
-    await this.setState({
-      rendering: true
-    });
+    await this.setState({ rendering: false });
+    await this.setState({ rendering: true });
   }
 
   getSearchValue = (e) => {
@@ -157,6 +158,7 @@ class SearchList extends Component {
 
   typeChange = (e, { value }) => {
     this.props.history.replace(`/search/${value}/${this.props.sort}/${this.props.keyword}`);
+    this.changeState();
   }
 
   sortChange = (e, { value }) => {
@@ -164,16 +166,20 @@ class SearchList extends Component {
     this.changeState();
   }
 
-  render(){
-    return(
+  render() {
+    const typetext =
+      this.props.type && this.props.type === "designer" ? "디자이너"
+        : this.props.type && this.props.type === "maker" ? "메이커"
+          : "아이템"
+    return (
       <div>
         <ImgWrapper>
           <Title>
             <input id="searchInput"
-                   placeholder="검색어를 입력하세요"
-                   onChange={this.getSearchValue}
-                   onKeyDown={this.submitEnter}
-                   />
+              placeholder="검색어를 입력하세요"
+              onChange={this.getSearchValue}
+              onKeyDown={this.submitEnter}
+            />
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>
             </button>
@@ -182,34 +188,28 @@ class SearchList extends Component {
         <MenuWrap>
           <Content>
             <Wrapper>
-              <MenuContainer devided="vertically" padded={true} columns={2}>
-                <Grid.Row>
-                  <Grid.Column widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8}>
-                    <Dropdown placeholder={this.props.type && this.props.type === "designer"
-                                          ? "디자이너"
-                                          : this.props.type && this.props.type === "group"
-                                          ? "그룹"
-                                          : "디자인"}
-                              options={type}
-                              onChange={this.typeChange}/>
-                  </Grid.Column>
-                  {/* <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2}/> */}
-                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8} handleClick={this.sortChange} placeholder={this.props.sort}/>
-                </Grid.Row>
-              </MenuContainer>
+              <div style={{ fontSize: "20px" }}>
+                <Dropdown
+                  placeholder={typetext}
+                  options={type}
+                  onChange={this.typeChange} />
+              </div>
+
+              <div className="left">
+                <Sorting
+                  handleClick={this.sortChange}
+                  placeholder={this.props.sort} />
+              </div>
             </Wrapper>
           </Content>
         </MenuWrap>
         <Content>
           {this.state.rendering &&
-          <Wrapper>
-            {this.props.type === "designer"
-            ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-            : this.props.type === "group"
-            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-            }
-          </Wrapper>
+            <Wrapper>
+              {this.props.type === "designer" ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "maker" ? <ScrollMakerListContainer sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "item" ? <ScrollItemListContainer sort={this.props.sort} keyword={this.props.keyword} /> : null}
+            </Wrapper>
           }
         </Content>
       </div>

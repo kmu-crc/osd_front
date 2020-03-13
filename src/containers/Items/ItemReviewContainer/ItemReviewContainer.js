@@ -27,7 +27,7 @@ class ItemReviewContainer extends Component {
     }
     render() {
         return (<ItemReview
-
+            handler={this.props.handler}
             id={this.props.match.params.id}
             getData={this.getData}
             request={this.requestReview}

@@ -4,8 +4,8 @@ import host from "config";
 export const DeleteProductRequest = (id, token) => {
   return (dispatch) => {
     dispatch(DeleteProduct());
-    const sql = `${host}/product/delete/${id}`;
-    return fetch(sql, { headers: { "x-access-token": token }, method: "DELETE" })
+    const url =  `${host}/product/delete/${id}`;
+    return fetch(url, { headers: { "x-access-token": token }, method: "DELETE" })
       .then(res => res.json())
       .then(res => dispatch(DeleteProductSuccess(res)))
       .catch(error => dispatch(DeleteProductFailure(error)));

@@ -59,7 +59,7 @@ class ProductDetailContainer extends Component {
     return this.props.ItemDetail ?
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
-        <ItemDetail purchase={this.Payment} item={this.props.ItemDetail} {...this.props} />
+        <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
       : <Loading />
   }
 }
