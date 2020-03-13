@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import 'react-dropdown/style.css';
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 import who from "source/thumbnail.png";
@@ -9,6 +8,9 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
+import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
+
 // import NumberFormat from "modules/NumberFormat";
 // import { Link } from "react-router-dom";
 
@@ -374,13 +376,16 @@ const ExpandingButton = styled.div`
         font-size:15px;
         color:white;
     }
-`
+`;
+
 class ItemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLike: this.props.like == null ? false : this.props.like,
       tab: "review", expandingContent: false, expandingReview: false,
+      //for review detail
+      reviewdetail: false, detail: null
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -435,42 +440,45 @@ class ItemDetail extends Component {
   render() {
     console.log("itemdetail", this.props);
     const item = this.props.item;
-    const { isPurchased } = this.props;
     const { tab, expandingContent, expandingReview } = this.state;
     return item ?
-      <Wrapper>
-        {/* thumbnail and item-info */}
-        <div className="line">
-          <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
-            <div className="main-image" />
-          </ItemImages>
+      <React.Fragment>
+        {(this.props.userInfo && item.members && item.members.length > 1)
+          ? <ConnectedMemberContainer id={this.props.itemId} members={item.members} userInfo={this.props.userInfo} />
+          : null}
+        <Wrapper>
+          {/* thumbnail and item-info */}
+          <div className="line">
+            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
+              <div className="main-image" />
+            </ItemImages>
 
-          <ItemInfo face={item.who || who}>
-            <div className="flex-align-column line">
+            <ItemInfo face={item.who || who}>
+              <div className="flex-align-column line">
 
-              <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
-              <div className="expert line">
-                <div className="who" />
-                <div className="nick">{item.userName}</div>
-              </div>
-              <Introduction>
-                <div className="wrapItem">
-                  <div className="title">아이템 설명</div>
-                  <div className="text">{item.description}</div>
-                  <div className="gradient_box"><div>▾</div></div>
+                <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+                <div className="expert line">
+                  <div className="who" />
+                  <div className="nick">{item.userName}</div>
                 </div>
-              </Introduction>
+                <Introduction>
+                  <div className="wrapItem">
+                    <div className="title">아이템 설명</div>
+                    <div className="text">{item.description}</div>
+                    <div className="gradient_box"><div>▾</div></div>
+                  </div>
+                </Introduction>
 
-              <div className="expert line">
-                <div className="price-and-score line">
-                  <div className="price" style={{ marginRight: "35px" }}>
-                    {PointFormat(item.price / 1000 || 0)} 천원</div>
-                  <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                    {Star(item.score, 28)}({item.total || 0})</div>
+                <div className="expert line">
+                  <div className="price-and-score line">
+                    <div className="price" style={{ marginRight: "35px" }}>
+                      {PointFormat(item.price / 1000 || 0)} 천원</div>
+                    <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
+                      {Star(item.score, 28)}({item.total || 0})</div>
+                  </div>
                 </div>
-              </div>
 
-              {/* 
+                {/* 
                 <div className="options">
                 { / * {item.options.map(opt => <Options key={opt} data={opt} />)} * / }
                 <div className="combo-wrapper line">
@@ -484,92 +492,103 @@ class ItemDetail extends Component {
                 </div>
             */}
 
-              <div className="bottom">
-                <div className="buttons line">
-                  {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
+                <div className="bottom">
+                  <div className="buttons line">
+                    {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
+                      <div className="button first">
+                        <div onClick={this.modifyThisItem}>
+                          <div className="text">아이템 수정/삭제</div>
+                        </div>
+                      </div>
+                      : null}
                     <div className="button first">
-                      <div onClick={this.modifyThisItem}>
-                        <div className="text">아이템 수정/삭제</div>
+                      <div onClick={_ => this.buyThisItem(_, item)} >
+                        <div className="text">아이템구매</div>
                       </div>
                     </div>
-                    : null}
-                  <div className="button first">
-                    <div onClick={_ => this.buyThisItem(_, item)} >
-                      <div className="text">아이템구매</div>
-                    </div>
-                  </div>
 
-                  {this.state.isLike === false ?
-                    <div className="button second" onClick={this.onClickLike}>
-                      <div className="text">관심항목추가</div></div>
-                    :
-                    <div className="button second active" onClick={this.onClickLike}>
-                      <div className="text">관심항목</div></div>}
+                    {this.state.isLike === false ?
+                      <div className="button second" onClick={this.onClickLike}>
+                        <div className="text">관심항목추가</div></div>
+                      :
+                      <div className="button second active" onClick={this.onClickLike}>
+                        <div className="text">관심항목</div></div>}
+                  </div>
                 </div>
               </div>
-            </div>
-          </ItemInfo>
+            </ItemInfo>
 
-        </div>
+          </div>
 
-        {/* review and board */}
-        <div style={{ marginTop: "35px" }}>
-          <Board style={{ marginTop: "15px", overflow: "hidden" }}
-            height={expandingReview ? "100%" : "250px"}>
-            <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-              <div
-                onClick={() => this.setState({ tab: "review" })}
-                style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "review" ? "#FFFFFF" : "#EFEFEF" }}>리뷰보기</div>
-              <div
-                onClick={() => this.setState({ tab: "board" })}
-                style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "board" ? "#FFFFFF" : "#EFEFEF" }}>게시판</div>
-            </div>
-
-            {tab === "review" ?
-              <ItemReviewContainer user_id={item.user_id} />
-              : <ItemQuestionContainer user_id={item.user_id} />}
-          </Board>
-          <ExpandingButton width={1600}>
-            <div onClick={() => this.setState({ expandingReview: !this.state.expandingReview })} className="button">
-              <div className="font">
-                {expandingReview ? "접기" : "펼쳐보기"}
+          {/* review and board */}
+          <div style={{ marginTop: "35px" }}>
+            <Board style={{ marginTop: "15px", overflow: "hidden" }}
+              height={expandingReview ? "100%" : "250px"}>
+              <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
+                <div
+                  onClick={() => this.setState({ tab: "review" })}
+                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "review" ? "#FFFFFF" : "#EFEFEF" }}>리뷰보기</div>
+                <div
+                  onClick={() => this.setState({ tab: "board" })}
+                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "board" ? "#FFFFFF" : "#EFEFEF" }}>게시판</div>
               </div>
-            </div>
-          </ExpandingButton>
-        </div>
 
-        {/* item-contents */}
-        <div style={{ marginTop: "35px" }}>
-          <Content
-            style={{ marginTop: "15px", overflow: "hidden" }}
-            height={expandingContent ? "100%" : "175px"}
-            width={1600}>
-            <div className="title">아이템 상세내용</div>
-            {item && item.upload_type === "blog"
-              ? <CardSourceDetailContainer
-                bought={item.bought}
-                isCancel
-                cardId={item.cardId}
-              // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-              /> : null}
-            {item && item.upload_type === "project"
-              ? <ItemStepContainer
-                item={item}
-                id={item["item-id"]}
-                bought={item.bought}
-              // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-              /> : null}
-          </Content>
-          <ExpandingButton width={1600}>
-            <div onClick={() => this.setState({ expandingContent: !this.state.expandingContent })} className="button">
-              <div className="font">
-                {expandingContent ? "접기" : "펼쳐보기"}
+              {tab === "review" ?
+                <ItemReviewContainer
+                  user_id={item.user_id}
+                  handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
+                : <ItemQuestionContainer
+                  user_id={item.user_id} />}
+
+              {tab === "review" && this.state.reviewdetail ?
+                <ReviewDetailModal
+                  open={this.state.reviewdetail}
+                  close={() => this.setState({ reviewdetail: false })}
+                  detail={this.state.detail} /> : null}
+
+            </Board>
+            <ExpandingButton width={1600}>
+              <div onClick={() => this.setState({ expandingReview: !this.state.expandingReview })} className="button">
+                <div className="font">
+                  {expandingReview ? "접기" : "펼쳐보기"}
+                </div>
               </div>
-            </div>
-          </ExpandingButton>
-        </div>
+            </ExpandingButton>
+          </div>
 
-      </Wrapper>
+          {/* item-contents */}
+          <div style={{ marginTop: "35px" }}>
+            <Content
+              style={{ marginTop: "15px", overflow: "hidden" }}
+              height={expandingContent ? "100%" : "175px"}
+              width={1600}>
+              <div className="title">아이템 상세내용</div>
+              {item && item.upload_type === "blog"
+                ? <CardSourceDetailContainer
+                  bought={item.bought}
+                  isCancel
+                  cardId={item.cardId}
+                // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+                /> : null}
+              {item && item.upload_type === "project"
+                ? <ItemStepContainer
+                  item={item}
+                  id={item["item-id"]}
+                  bought={item.bought}
+                // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+                /> : null}
+            </Content>
+            <ExpandingButton width={1600}>
+              <div onClick={() => this.setState({ expandingContent: !this.state.expandingContent })} className="button">
+                <div className="font">
+                  {expandingContent ? "접기" : "펼쳐보기"}
+                </div>
+              </div>
+            </ExpandingButton>
+          </div>
+
+        </Wrapper>
+      </React.Fragment>
       :
       <div>아이템정보를 가져오고 있습니다.</div>
   }

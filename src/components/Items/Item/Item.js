@@ -40,6 +40,9 @@ const TextWrapper = styled.div`
     line-height: 25px;
   }
   .author {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin-top: 8px;
     font-weight: 300;
     font-size: 12px;
@@ -95,6 +98,7 @@ class Item extends Component {
   }
   render() {
     const item = this.props.data || empty;
+    const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
     return (
       // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
@@ -103,11 +107,14 @@ class Item extends Component {
         {/* text */}
         <TextWrapper>
           <div className="title"><TextFormat txt={item.title} /></div>
-          <div className="author"><TextFormat txt={item.userName} /></div>
+          <div className="author">
+            <TextFormat txt={item.userName} />
+            <div className="date">{date}</div>
+          </div>
         </TextWrapper>
         {/* numbers */}
         <NumberWrapper>
-          <div className="price">{PointFormat(item.price/1000 || 0)}천원</div>
+          <div className="price">{PointFormat(item.price / 1000 || 0)}천원</div>
           <div className="score">
             {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
           </div>
