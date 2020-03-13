@@ -44,7 +44,7 @@ class RequestDetailContainer extends Component {
       this.props.token)
       .then(res => {
         if (res.data.success) {
-          alert("구매하였습니다. [구매확인]버튼을 눌러야 거래가 완료됩니다.");
+          alert("구입하였습니다. [구입확인]버튼을 눌러야 거래가 완료됩니다.");
           window.location.href = `/myPage/`;
         }
       })

@@ -14,7 +14,7 @@ class MyRequestItemContainer extends Component {
     this.props.UpdatePaymentRequest(id, this.props.token)
       .then(res => {
         if (res.success) {
-          alert("구매가 완료되었습니다.");
+          alert("구입이 완료되었습니다.");
           window.location.reload();
         }
       })

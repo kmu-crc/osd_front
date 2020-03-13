@@ -125,12 +125,13 @@ const RequestButton = styled.div`
 `;
 const Container = styled.div`
   display: flex;
+  justify-content:space-between;
   .categoy {
     width: max-content;
   }
   .sort {
     width: max-content;
-    margin-left: auto;
+    // margin-left: auto;
   }
   .request {
     width: max-content;
@@ -267,8 +268,8 @@ class RequestList extends Component {
             <div className="sort">
               <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
 
-            <div className="request" style={{ marginLeft: "auto" }}>
-              {type !== "normal" && type !== "item" ?
+            {/* <div className="request" style={{ marginLeft: "auto" }}> */}
+              {/* {type !== "normal" && type !== "item" ?
                 type === "designer" ?
                   <RequestButton>
                     <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link>
@@ -278,8 +279,8 @@ class RequestList extends Component {
                     <RequestButton>
                       <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
                     </RequestButton> : null
-                : null}
-            </div>
+                : null} */}
+            {/* </div> */}
           </Container>
         </Content>
 

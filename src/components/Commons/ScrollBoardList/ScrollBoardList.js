@@ -16,6 +16,7 @@ const NoPage = styled.div`
     font-size:15px;
   }
 `
+
 class ScrollBoardList extends Component {
   constructor(props) {
     super(props);

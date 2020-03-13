@@ -348,7 +348,7 @@ class CardSourceDetail extends Component {
                 {this.bindPrivate(content).map((item, index) =>
                   item.private === 1 && !this.props.bought ?
                     <PrivateContentWrapper>
-                      {item.count}개의 비공개 아이템 항목입니다.<br />이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
+                      {item.count}개의 비공개 아이템 항목입니다.<br />이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구입해주세요.
                       </PrivateContentWrapper> :
                     // <PrivateContent count={item.count} key={index} /> :
                     item.content_type === "FILE" && item.data_type === "image" ? (

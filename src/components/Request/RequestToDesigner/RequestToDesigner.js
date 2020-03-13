@@ -5,7 +5,7 @@ import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
-
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -52,24 +52,7 @@ const MainBox = styled.div`
   }
 
 `;
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
 
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
-
-  cursor:pointer;
-`;
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -255,6 +238,7 @@ class RequestToDesigner extends Component {
       location: this.state.location,
       ownership: this.state.ownership,
       offline_consultation: this.state.offline,
+      term:this.state.endDate,
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -315,7 +299,7 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar name="price" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
+                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
                 </div>
 
                 <HRLine />
@@ -341,10 +325,11 @@ class RequestToDesigner extends Component {
                 </div> */}
 
               </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}>
-                <div>의뢰</div>
-              </RedButton>
             </div>
+              <div className="contentsBox">
+                <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
+                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+              </div>
           </MainBox>
         </Wrapper>
       </React.Fragment>

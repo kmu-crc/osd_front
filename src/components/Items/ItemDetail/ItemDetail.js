@@ -495,7 +495,7 @@ class ItemDetail extends Component {
                     : null}
                   <div className="button first">
                     <div onClick={_ => this.buyThisItem(_, item)} >
-                      <div className="text">아이템구매</div>
+                      <div className="text">아이템구입</div>
                     </div>
                   </div>
 

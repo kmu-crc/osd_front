@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ModifyRequestToDesignerContainer from "containers/Request/ModifyReqeustToDesignerContainer/RequestToDesignerContainer";
+import ModifyRequestToDesignerContainer from "containers/Request/ModifyRequestToDesignerContainer/ModifyRequestToDesignerContainer";
 
 class ModifyRequestToDesignerPage extends Component {
   render() {
