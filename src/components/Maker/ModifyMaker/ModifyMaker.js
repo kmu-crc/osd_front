@@ -6,6 +6,7 @@ import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
 import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -42,24 +43,7 @@ const MainBox = styled.div`
   }
 
 `
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
 
-  // position:absolute;
-  left:${props => props.left};
-  bottom:${props => props.bottom};
-
-  cursor:pointer;
-`
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -279,6 +263,7 @@ class ModifyMaker extends Component {
     this.handleAddTechnique = this.handleAddTechnique.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
+    this.onClickCancel = this.onClickCancel.bind(this);
   }
   componentWillUpdate(nextProps) {
     if (this.props.MakerDetail.image !== nextProps.MakerDetail.image ||
@@ -381,7 +366,9 @@ class ModifyMaker extends Component {
       reader.readAsDataURL(file);
     }
   }
-
+  onClickCancel(event){
+    window.location.href = "/mypage"
+  }
   onSubmit() {
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
@@ -441,7 +428,7 @@ class ModifyMaker extends Component {
         if (result.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
-          // window.location.href = "/maker";
+          window.location.href = "/mypage";
         } else {
           alert("다시 시도해주세요");
           this.setState({
@@ -485,16 +472,21 @@ class ModifyMaker extends Component {
             </ThumbnailBox>
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
+              
+              <div className="wrapper flex">
+                <div className="label">닉네임</div>
+                {this.props.userInfo.nickName}
+              </div>
+              
+              <div className="wrapper flex">
+                <div className="label">설명</div>
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
+              </div>
 
               <div className="wrapper flex">
                 <div className="label">카테고리</div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-              </div>
-
-              <div className="wrapper flex">
-                <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
               </div>
 
               <div className="wrapper flex">
@@ -544,7 +536,7 @@ class ModifyMaker extends Component {
           </div>
           <div className="contentsBox">
           <SubBox>
-                <div className="title">경력</div>
+                <div className="title">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
@@ -560,7 +552,7 @@ class ModifyMaker extends Component {
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
                 <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경력 추가</div>
+                  <Icon name="plus" /><div className="label">경험 추가</div>
                 </Button>
                </div>
           </SubBox>
@@ -577,7 +569,8 @@ class ModifyMaker extends Component {
             </SubBox>
           </div>
           <div className="contentsBox">
-          <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton>
+          <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true}/>
+          <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
           </div>  
         </MainBox>
       </React.Fragment>
@@ -770,7 +763,7 @@ class CreateCareer extends Component {
 //                   />
 //                   <Label>위치</Label>
 //                   <FormAddress />
-//                   <Label>경력</Label>
+//                   <Label>p</Label>
 //                   <FormExp />
 //                   <Label>태그</Label>
 //                   <FormTag

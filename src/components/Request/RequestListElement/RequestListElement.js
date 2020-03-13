@@ -86,7 +86,7 @@ class DesignerBoardElement extends Component {
     return (
       <NavLink to={"/requestDetail/" + item.uid}>
         <ListElement left={item.status === "response" ? 25 : 0}>
-          <div style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
+          <div className="title" style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
             {item.completed === 1 && item.status === "request" ?
               <div className="status-box completed" >완료</div> : null}
 

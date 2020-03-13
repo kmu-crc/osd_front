@@ -4,6 +4,7 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -49,24 +50,7 @@ const MainBox = styled.div`
   }
 
 `;
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
 
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
-
-  cursor:pointer;
-`;
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -295,7 +279,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering">
                 <div className="label">디자이너 위치</div>
-                <div className="textBox">{LocationList[detail.location]}</div>
+                <div className="textBox">{LocationList[detail.location || 0].text}</div>
               </div>
 
               <div className="wrapper flex centering">
@@ -334,9 +318,12 @@ class ResponseToDesignerReq extends Component {
 
             </FormBox>
           </div>
+        <div className="contentsBox">
+        <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
+        <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+        </div>
         </MainBox>
         {/* <Lihk to={{}}> */}
-        <RedButton onClick={this.onSubmit} left={1444} bottom={-50}><div>등록</div></RedButton>
         {/* </Lihk> */}
       </Wrapper>
     );

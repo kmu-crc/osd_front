@@ -4,6 +4,8 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
 
 
 const LocationList = [
@@ -49,24 +51,6 @@ const MainBox = styled.div`
     padding-left: 130px;
     padding-top: 36px;
   }
-`;
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
-
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
-
-  cursor:pointer;
 `;
 const FormBox = styled.div`
   *{
@@ -162,7 +146,7 @@ class RequestToMaker extends Component {
     super(props);
     this.state = {
       category_level1: -1, category_level2: -1,
-      title: "", tag: [], price: 0, content: "", location: 15, offline: 0, amount: 0, resale: 0,
+      title: "", tag: [], price: 0, content: "", location: 15, offline: 0, amount: 0, resale: 0,endDate:null,dayDate:null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -178,6 +162,8 @@ class RequestToMaker extends Component {
     this.handleAddTag = this.handleAddTag.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getDayDateValue=this.getDayDateValue.bind(this);
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
@@ -192,6 +178,13 @@ class RequestToMaker extends Component {
     this.setState({
       title: event.target.value,
     })
+  }
+  async getEndDateValue(value) {
+    await console.log("endDate",value);
+    await this.setState({ endDate: value });
+  }
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
   }
   getTagValue(data) {
     this.setState({
@@ -252,6 +245,7 @@ class RequestToMaker extends Component {
       location: this.state.location,
       resale: this.state.resale,
       offline_consultation: this.state.offline,
+      term:this.state.endDate,
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -303,13 +297,18 @@ class RequestToMaker extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
+                  <div className="label">의뢰 내용</div>
+                  <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
+                </div>
+
+                <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
                   <InputPrice name="price" getValue={this.getPriceValue} />
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용</div>
-                  <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
+                  <div className="label ">기간</div>
+                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
                 </div>
 
                 <HRLine />
@@ -339,10 +338,11 @@ class RequestToMaker extends Component {
                 </div> */}
 
               </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}>
-                <div>의뢰</div>
-              </RedButton>
             </div>
+            <div className="contentsBox">
+                <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
+                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+              </div>
           </MainBox>
         </Wrapper>
       </React.Fragment>
