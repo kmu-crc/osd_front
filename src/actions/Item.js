@@ -93,7 +93,7 @@ export const UpdateItemContentsRequest = (data, card_id, token) => {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(res => dispatch(UpdateItemContentsSuccess(res)))
+      .then(res => res && dispatch(UpdateItemContentsSuccess(res)))
       .catch(error => dispatch(UpdateItemContentsFailure((error))));
   };
 };
@@ -111,7 +111,7 @@ const UpdateItemContentsFailure = error => ({
 export function GetItemStepsRequest(id, token) {
   return (dispatch) => {
     const url = `${host}/item/detail/${id}/step`;
-    // console.log(url);
+    console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
@@ -128,46 +128,123 @@ const GetItemStep = step => (
   { type: types.GET_ITEM_STEP, step: step }
 )
 
-
+// NEW LIST
 export const CreateItemListRequest = (data, id, token) => {
   return (dispatch) => {
-    dispatch(CreateBoard());
+    dispatch(CreateStep());
     console.log("request", data);
     return fetch(`${host}/item/detail/${id}/createList`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(data) })
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (res) {
-        console.log("insert detail", res.desing_id);
-        return dispatch(CreateBoardSuccess(res));
-      }).catch((error) => {
+      .then(res => res.json())
+      .then(res => res && dispatch(CreateStepSuccess(res)))
+      .catch(error => {
         console.log("insert detail err", error);
-        return dispatch(CreateBoardFailure(error));
+        return dispatch(CreateStepFailure(error));
       });
   };
 };
-const CreateBoard = () => {
-  return {
-    type: types.CREATE_BOARD
+const CreateStep = () => ({ type: types.CREATE_BOARD });
+const CreateStepSuccess = (res) => ({ type: types.CREATE_BOARD_SUCCESS, success: res.success });
+const CreateStepFailure = (error) => ({ type: types.CREATE_BOARD_FAILURE, success: error.success, });
+// DELETE LIST
+export const DeleteItemListRequest = (id, list_id, token) => {
+  return (dispatch) => {
+    dispatch(DeleteItemList());
+    return fetch(`${host}/item/detail/${id}/deleteList/${list_id}`, {
+      headers: { "x-access-token": token, 'Content-Type': 'application/json' },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(DeleteItemListSuccess(res)))
+      .catch(error => dispatch(DeleteItemListFailure(error)));
   };
 };
-const CreateBoardSuccess = (res) => {
-  return {
-    type: types.CREATE_BOARD_SUCCESS,
-    success: res.success
-  };
-};
-const CreateBoardFailure = (error) => {
-  return {
-    type: types.CREATE_BOARD_FAILURE,
-    success: error.success,
-  };
-};
+export const DeleteItemList = () => ({ type: types.DELETE_BOARD });
+export const DeleteItemListSuccess = (res) => ({ type: types.DELETE_BOARD_SUCCESS, success: res.success });
+export const DeleteItemListFailure = (error) => ({ type: types.DELETE_BOARD_FAILURE, success: error.success, });
 
+// MODIFY LIST
+export const UpdateItemListRequest = (id, list_id, token, data) => {
+  return (dispatch) => {
+    dispatch(UpdateItemList());
+    console.log(data);
+    return fetch(`${host}/item/detail/${id}/updateList/${list_id}`, {
+      headers: { "x-access-token": token, 'Content-Type': 'application/json' },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(UpdateItemListSuccess(res)))
+      .catch(error => dispatch(UpdateItemListFailure(error)));
+  };
+};
+export const UpdateItemList = () => ({ type: types.UPDATE_BOARD });
+export const UpdateItemListSuccess = (res) => ({ type: types.UPDATE_BOARD_SUCCESS, success: res.success });
+export const UpdateItemListFailure = (error) => ({ type: types.UPDATE_BOARD_FAILURE, success: error.success, });
+
+// NEW CARD
+export const CreateItemCardRequest = (data, id, list_id, token) => {
+  return dispatch => {
+    dispatch(CreateItemCard());
+    return fetch(`${host}/item/detail/${id}/${list_id}/createCard`, {
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => { console.log(res); return res && dispatch(CreateItemCardSuccess(res)) })
+      .catch(error => dispatch(CreateItemCardFailure(error)));
+  };
+}
+const CreateItemCard = () => ({ type: types.CREATE_CARD });
+const CreateItemCardSuccess = res => ({ type: types.CREATE_CARD_SUCCESS, success: res.success, card: res.card });
+const CreateItemCardFailure = error => ({ type: types.CREATE_CARD_FAILURE, success: error.success });
+
+// MODIFY CARD
+export const UpdateCardSourceRequest = (data, card_id, token) => {
+  return dispatch => {
+    dispatch(UpdateItemSource());
+    console.log("request", data);
+    return fetch(`${host}/item/detail/updateCardAllData/${card_id}`, {
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => dispatch(UpdateItemSourceSuccess(res)))
+      .catch(error => dispatch(UpdateItemSourceFailure(error)));
+  };
+};
+export const UpdateItemSource = () => ({ type: types.UPDATE_ITEM_SOURCE });
+export const UpdateItemSourceSuccess = res => ({ type: types.UPDATE_ITEM_SOURCE_SUCCESS, data: res });
+export const UpdateItemSourceFailure = error => ({ type: types.UPDATE_ITEM_SOURCE_FAILURE, error: error });
+
+// DELETE CARD
+export const DeleteItemCardRequest = (id, card_id, token) => {
+  return dispatch => {
+    dispatch(DeleteItemCard());
+    return fetch(`${host}/item/detail/${id}/deleteCard/${card_id}`, {
+      headers: {
+        "x-access-token": token, "Content-Type": "application/json"
+      },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(DeleteItemCardSuccess(res)))
+      .catch(error => dispatch(DeleteItemCardFailure(error)));
+  };
+};
+const DeleteItemCard = () => ({ type: types.DELETE_CARD });
+const DeleteItemCardSuccess = res => ({ type: types.DELETE_CARD_SUCCESS, success: res.success });
+const DeleteItemCardFailure = error => ({ type: types.DELETE_CARD_FAILURE, success: error.success });
 
 
 // question
-
 // get question-list
 export const GetItemQuestionRequest = (id, page) => {
   return dispatch => {

@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 // } from "actions/Designs/DesignCard";
 import { GetItemContentsRequest, UpdateItemContentsRequest } from "actions/Item";
 import CardSourceDetail from "components/Items/ItemDetail/CardSourceDetail";
-// import { UpdateDesignTime } from "actions/Designs/UpdateDesign"
+
 
 class CardSourceDetailContainer extends Component {
   componentDidMount() {
-    this.props.GetItemContentsRequest(this.props.cardId, this.props.token);
+    this.props.cardId && this.props.GetItemContentsRequest(this.props.cardId, this.props.token);
   }
   render() {
     return (
@@ -19,15 +19,14 @@ class CardSourceDetailContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    token: state.Authentication.status.token,
-    content: state.ItemContent.status.content,
 
-    status: state.ItemContent.ItemContentEdit.status,
-    editStatus: state.ItemContent.ItemContentEdit.status
-  };
-};
+const mapStateToProps = (state) => ({
+  token: state.Authentication.status.token,
+  content: state.ItemContent.status.content,
+  ItemDetail: state.ItemDetail.status.ItemDetail,
+  status: state.ItemContent.ItemContentEdit.status,
+  editStatus: state.ItemContent.ItemContentEdit.status
+});
 
 const mapDispatchToProps = (dispatch) => ({
   GetItemContentsRequest: (id) => dispatch(GetItemContentsRequest(id)),
@@ -35,6 +34,6 @@ const mapDispatchToProps = (dispatch) => ({
 
   // DesignSourceResetRequest: () => { return dispatch(DesignSourceResetRequest()); },
   // UpdateDesignTime: (design_id, token) => { return dispatch(UpdateDesignTime(design_id, token)) }
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardSourceDetailContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(CardSourceDetailContainer);

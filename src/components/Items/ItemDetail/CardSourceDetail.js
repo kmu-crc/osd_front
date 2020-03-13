@@ -16,8 +16,11 @@ const ContentForm = async (data, oldData) => {
     delete item.target;
     if (item.uid) {
       const oldItem = oldData.filter(oldItem => oldItem.uid === item.uid)[0];
-      if (item.content !== oldItem.content || item.order !== oldItem.order || item.private !== oldItem.private) {
-        console.log(item, oldItem)
+      if (
+        item.content !== oldItem.content ||
+        item.order !== oldItem.order ||
+        item.private !== oldItem.private) {
+        console.log("20200312:", item, oldItem);
         await formData.updateContent.push(item);
       }
     } else {
@@ -169,37 +172,24 @@ class CardSourceDetail extends Component {
     super(props);
     this.state = {
       edit: false,
-      content: this.props.content,
+      content: [...this.props.content] || [],
       deleteContent: [],
       loading: false
     };
-  }
+  };
   componentDidMount() {
     this.setState({ content: this.props.content });
-  }
+  };
   componentDidUpdate(prevProps, prevState) {
     if (this.props.content !== prevProps.content) {
       this.setState({ content: this.props.content });
       return true;
     }
-  }
-
-  onChangValue = async data => {
-    console.log(data, "1");
-    let copyContent = [...this.state.content];
-    delete data.initClick;
-    delete data.target;
-    await copyContent.splice(data.order, 1, data);
-
-    copyContent = await Promise.all(
-      copyContent.map(async (item, index) => {
-        delete item.initClick;
-        return item;
-      })
-    );
-
-    await this.setState({ content: copyContent });
+    if (this.props.fromNewCardModal && (this.state.content !== prevState.content)) {
+      this.props.fromNewCardModal(this.state.content);
+    }
   };
+
   onAddValue = async data => {
     let copyContent = [...this.state.content];
     let copyData = { ...data };
@@ -230,23 +220,6 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: newContent });
   };
-  deleteItem = async index => {
-    let copyContent = [...this.state.content];
-    let copyDelete = [...this.state.deleteContent];
-    if (copyContent[index].uid) {
-      copyDelete.push(copyContent[index]);
-    }
-    await copyContent.splice(index, 1);
-    copyContent = await Promise.all(
-      copyContent.map(async (item, index) => {
-        delete item.initClick;
-        delete item.target;
-        item.order = await index;
-        return item;
-      })
-    );
-    await this.setState({ content: copyContent, deleteContent: copyDelete });
-  };
   onSubmit = async e => {
     e.preventDefault();
     let copyContent = [...this.state.content];
@@ -266,15 +239,25 @@ class CardSourceDetail extends Component {
     let formData = await ContentForm(this.state, this.props.content);
     await this.setState({ loading: true });
     await setTimeout(() => { }, 500);
-    if (this.props.uid === "local") {
-      this.props.upDateRequest(formData);
-    }
-    else {
-      console.log(formData);
-      this.props.upDateRequest(formData, this.props.cardId, this.props.token)
-    }
-    // .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
 
+    // PROJECT-TYPE
+    if (this.props.submit) {
+      this.props.submit(formData);
+    }
+    //BLOG-TYPE
+    else {
+      if (formData && (formData.newContent.length == 0 && formData.updateContent.length === 0 && formData.newContent.length === 0)) {
+        alert("변경된 사항이 없습니다.");
+      } else {
+        this.props.upDateRequest(formData, this.props.cardId, this.props.token)
+          .then(res => {
+            if (res.data.success) {
+              alert("아이템 컨텐츠를 수정하였습니다.");
+              window.location.href = `/productDetail/${this.props.ItemDetail["item-id"]}`
+            }
+          })
+      }
+    }
     await this.setState({ loading: false });
   };
   bindPrivate = contents => {
@@ -295,19 +278,51 @@ class CardSourceDetail extends Component {
     return binded;
   };
   privateItem = async data => {
-    let copyContent = [...this.props.content];
-    const copyData = { ...data };
+    let copyContent = JSON.parse(JSON.stringify(this.state.content || []));
     for (let item of copyContent) {
-      if (item.order === copyData.order) {
-        item.private = copyData.private === 0 ? 1 : 0;
+      if (item.order === data.order) {
+        item.private = data.private === 0 ? 1 : 0;
       }
     }
     await this.setState({ content: copyContent });
-    // this.returnState();
+  };
+  deleteItem = async index => {
+    let copyContent = [...this.state.content];
+    let copyDelete = [...this.state.deleteContent];
+    if (copyContent[index].uid) {
+      copyDelete.push(copyContent[index]);
+    }
+    await copyContent.splice(index, 1);
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        delete item.initClick;
+        delete item.target;
+        item.order = await index;
+        return item;
+      })
+    );
+    await this.setState({ content: copyContent, deleteContent: copyDelete });
+  };
+  onChangValue = async data => {
+    console.log(data, "1");
+    let copyContent = [...this.state.content];
+    delete data.initClick;
+    delete data.target;
+    await copyContent.splice(data.order, 1, data);
+
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        delete item.initClick;
+        return item;
+      })
+    );
+
+    await this.setState({ content: copyContent });
   };
 
   render() {
-    const { loading, /*edit,*/ content } = this.state;
+    const { loading, content } = this.state;
+    console.log(this.props);
 
     return (
       <React.Fragment>
@@ -347,8 +362,9 @@ class CardSourceDetail extends Component {
               <ViewContent>
                 {this.bindPrivate(content).map((item, index) =>
                   item.private === 1 && !this.props.bought ?
-                    <PrivateContentWrapper>
-                      {item.count}개의 비공개 아이템 항목입니다.<br />이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구입해주세요.
+                    <PrivateContentWrapper key={index}>
+                      {item.count}개의 비공개 아이템 항목입니다.<br />
+                      이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
                       </PrivateContentWrapper> :
                     // <PrivateContent count={item.count} key={index} /> :
                     item.content_type === "FILE" && item.data_type === "image" ? (

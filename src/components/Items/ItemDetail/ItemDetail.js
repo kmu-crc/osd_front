@@ -4,7 +4,7 @@ import 'react-dropdown/style.css';
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 import who from "source/thumbnail.png";
-import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
+import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";

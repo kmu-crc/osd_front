@@ -7,13 +7,15 @@ import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import { GetDesignDetailRequest, } from "actions/Design";
 import {
-    UpdateCardSourceRequest, UpdateCardImagesRequest, UpdateCardContentRequest, UpdateCardTitleRequest,
-    GetCardDetailRequest, DeleteDesignCardRequest
+    UpdateCardImagesRequest, UpdateCardContentRequest, UpdateCardTitleRequest,
+    GetCardDetailRequest
 } from "actions/Designs/DesignCard";
 import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
 
-import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
+import { GetItemStepsRequest, UpdateCardSourceRequest, DeleteItemCardRequest } from "actions/Item";
+
+import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
 // import CardComment from './CardComment';
 
 import { FormThumbnailEx } from "components/Commons/FormItems";
@@ -359,50 +361,61 @@ const BlankSpace = styled.div`
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", content: "" }
-    }
+        this.state = { sroll: false, edit: false, title: "", description: "", content: [], }
+    };
+    componentDidMount() {
+        const { card } = this.props;
+        this.setState({ thumbnail: card.thumbnail, title: card.title, description: card.description });
+    };
     componentDidUpdate(prevProps) {
         if (prevProps.card !== this.props.card) {
             alert("card");
             return true;
         }
-    }
-
+    };
     onChangeValueThumbnail = async data => {
         let obj = {};
         if (data.target) {
             obj[data.target.name] = data;
             await this.setState(obj);
         }
-    }
+    };
     onChangeTitle = event => {
+        this.setState({ [event.target.name]: event.target.value });
+        console.log(this.state.title);
+    };
+    onChangeDescription = event => {
         if (event.target) {
-            this.setState({ title: event.target.value });
+            this.setState({ description: event.target.value });
         }
-    }
-    onChangeContent = event => {
-        if (event.target) {
-            this.setState({ content: event.target.value });
-        }
-    }
-    handleHeaderSubmit = (_) => {
-        // _.preventDefault(_);
+    };
+    handleHeaderSubmit = passingContent => {
+        console.log("20200312", passingContent, this.state);
         let files = null;
         ValidationGroup(this.state, false)
             .then(async data => {
                 files = data && data.files;
-                let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-                const pack = { title: this.state.title, thumbnail: files && thumbnail, content: this.state.content, data: { deleteContent: [], newContent: [], updateContent: [] } };
+                // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
+                const pack = {
+                    title: this.state.title,
+                    // thumbnail: files && thumbnail, 
+                    files: files,
+                    description: this.state.description,
+                    data: {
+                        deleteContent: passingContent.deleteContent || [],
+                        newContent: passingContent.newContent || [],
+                        updateContent: passingContent.updateContent || []
+                    }
+                };
+                // console.log(pack);
+                // return;
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
-                    .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
-                    .catch(err => alert(err + ''));
-                // this.onClose();
-            }).catch(err => alert(err + ''));
+                    .then(this.props.GetItemStepsRequest(this.props.itemId, this.props.token))
+                    .catch(err => alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
+                this.onClose();
+            }).catch(err => alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
         this.setState({ edit: !this.state.edit })
-    }
+    };
     onCloseEditMode = () => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
             if (!window.confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
@@ -411,18 +424,22 @@ class CardModal extends Component {
         }
         this.setState({ edit: false });
     };
-    onChangeEditMode = () => { this.setState({ edit: this.state.edit }) };
+    onChangeEditMode = () => {
+        this.setState({ edit: this.state.edit })
+    };
     removeCard = e => {
         e.stopPropagation();
         const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
         if (confirm) {
-            this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
-                .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                .then(async () => {
-                    await this.setState({ edit: false });
-                    this.props.GetDesignBoardRequest(this.props.designId);
-                    this.onClose();
-                });
+            this.props.DeleteItemCardRequest(this.props.itemId, this.props.card.uid, this.props.token)
+                .then(res => {
+                    if (res.success) {
+                        this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+                        this.setState({ edit: false });
+                        this.onClose();
+                    }
+                })
+                .catch(err => alert(err))
         }
     };
     onClose = async () => {
@@ -431,14 +448,9 @@ class CardModal extends Component {
         }
         await this.setState({ sroll: false, edit: false, title: "", content: "" });
         this.props.close();
-    }
+    };
     render() {
-        const imgURL = this.props.card && this.props.card.thumbnail == null ? null : this.props.card.thumbnail.l_img;
-        const card = this.props.card;
-        const { isTeam/*, edit*/ } = this.props;
-        // const movablePrev = this.props.row > 0
-        // const movableNext = this.props.row < this.props.maxRow - 1;
-        // console.log("debug - CardModal:", this.state);
+        const { card } = this.props;
         console.log(this.state, this.props);
 
         return (
@@ -449,11 +461,6 @@ class CardModal extends Component {
                     <CardDialog open={this.props.open} onClose={this.onClose}>
                         {this.state.loading && <Loading />}
 
-                        {/* {movablePrev && <div className="prevPane" />} */}
-                        {/* {movablePrev && <div className="prevArrow"></div>} */}
-                        {/* {movableNext && <div className="nextPane" />} */}
-                        {/* {movableNext && <div className="nextArrow"></div>} */}
-
                         <div className="close-box" onClick={this.onClose} >
                             <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                         </div>
@@ -463,23 +470,23 @@ class CardModal extends Component {
                                 ? <React.Fragment>
                                     <EditCardHeaderContainer>
                                         <div className="edit-header-container">
-                                            <div className="edit-card-info">컨텐츠 정보 수정</div>
+                                            <div className="edit-card-info">컨텐츠 정보수정</div>
                                         </div>
                                         <div className="edit-header-thumbnail">
-                                            <div className="thumbnail-txt">컨텐츠 이미지</div>
+                                            <div className="thumbnail-txt">이미지</div>
                                             <FormThumbnailEx style={{ width: "210px", height: "210px", marginLeft: "30px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
-                                                name="thumbnail" image={imgURL} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
+                                                name="thumbnail" image={this.state.thumbnail} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
                                         </div>
                                         <div className="edit-header-title">
-                                            <div className="title-txt">컨텐츠 제목</div>
+                                            <div className="title-txt">제목</div>
                                             <div className="title-input-container">
                                                 <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
                                             </div>
                                         </div>
                                         <div className="edit-header-description">
-                                            <div className="description-txt">컨텐츠 설명</div>
+                                            <div className="description-txt">설명</div>
                                             <div className="description-input-container">
-                                                <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="1000" placeholder="설명을 입력해주세요." />
+                                                <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
                                             </div>
                                         </div>
                                         {
@@ -513,25 +520,24 @@ class CardModal extends Component {
                                 <div className="border-line" />
                             </ContentBorder>
 
-                            <div className="content" >
+                            <div className="content">
                                 <CardSourceDetailContainer
                                     bought={this.props.bought}
-                                    isCancel
-                                    handleSubmit={this.handleHeaderSubmit}
+                                    isTeam={this.props.isTeam}
+                                    submit={this.handleHeaderSubmit}
                                     handleCancel={this.onCloseEditMode}
-                                    designId={this.props.designId}
+                                    edit={this.state.edit}
                                     card={card}
                                     cardId={card.uid}
-                                    isTeam={isTeam}
-                                    edit={this.state.edit}
                                     closeEdit={this.onCloseEditMode}
-                                    openEdit={this.onChangeEditMode} />
+                                    openEdit={this.onChangeEditMode}
+                                    isCancel
+                                />
                             </div>
 
+                            {/* 
                             <ContentBorder>
                                 <div className="border-line" /></ContentBorder>
-
-                            {/* 
                             <CommentWrapper>
                                 <div className="comment-title"><h3>댓글</h3></div>
                                 <div className="comment-body">
@@ -553,36 +559,18 @@ const mapStateToProps = state => ({
     detail: state.ItemContent.status.ItemContent,
 });
 
-const mapDispatchToProps = dispatch => {
-    return {
-        UpdateCardSourceRequest: (data, card_id, token) => {
-            return dispatch(UpdateCardSourceRequest(data, card_id, token));
-        },
-        UpdateCardTitleRequest: (data, token, id) => {
-            return dispatch(UpdateCardTitleRequest(data, token, id));
-        },
-        UpdateCardContentRequest: (data, token, id) => {
-            return dispatch(UpdateCardContentRequest(data, token, id));
-        },
-        UpdateCardImagesRequest: (data, token, id) => {
-            return dispatch(UpdateCardImagesRequest(data, token, id));
-        },
-        DeleteDesignCardRequest: (board_id, card_id, token) => {
-            return dispatch(DeleteDesignCardRequest(board_id, card_id, token));
-        },
-        GetDesignBoardRequest: (id) => {
-            return dispatch(GetDesignBoardRequest(id));
-        },
-        GetCardDetailRequest: id => {
-            return dispatch(GetCardDetailRequest(id));
-        },
-        UpdateDesignTime: (id, token) => {
-            return dispatch(UpdateDesignTime(id, token));
-        },
-        GetDesignDetailRequest: (id, token) => {
-            return dispatch(GetDesignDetailRequest(id, token));
-        },
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    DeleteItemCardRequest: (board_id, card_id, token) => dispatch(DeleteItemCardRequest(board_id, card_id, token)),
+    GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
+
+    UpdateCardSourceRequest: (data, card_id, token) => { return dispatch(UpdateCardSourceRequest(data, card_id, token)); },
+    UpdateCardTitleRequest: (data, token, id) => { return dispatch(UpdateCardTitleRequest(data, token, id)); },
+    UpdateCardContentRequest: (data, token, id) => { return dispatch(UpdateCardContentRequest(data, token, id)); },
+    UpdateCardImagesRequest: (data, token, id) => { return dispatch(UpdateCardImagesRequest(data, token, id)); },
+    GetDesignBoardRequest: (id) => { return dispatch(GetDesignBoardRequest(id)); },
+    GetCardDetailRequest: id => { return dispatch(GetCardDetailRequest(id)); },
+    UpdateDesignTime: (id, token) => { return dispatch(UpdateDesignTime(id, token)); },
+    GetDesignDetailRequest: (id, token) => { return dispatch(GetDesignDetailRequest(id, token)); },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardModal);

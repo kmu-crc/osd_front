@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Grid, Form } from "semantic-ui-react";
-import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
+import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 
 // css styling
 
