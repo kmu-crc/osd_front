@@ -3,7 +3,7 @@ import 'core-js/es6/set'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import 'react-app-polyfill/ie9';
 import 'semantic-ui-css/semantic.min.css'
 import './index.css'
 

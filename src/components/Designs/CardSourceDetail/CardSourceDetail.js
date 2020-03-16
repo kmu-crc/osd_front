@@ -27,58 +27,58 @@ const ControllerWrap = styled.div`
     clear: both;
   }
 `;
-//const UpBtn = styled.button`
-//  display: none;
-//  position: absolute;
-//  top: 0;
-//  left: 85%;
-//  transform: translate(-50%, -50%);
-//  border: 0;
-//  padding: 0;
-//  width: 45px;
-//  height: 45px;
-//  border-radius: 25px;
-//  line-height: 25px;
-//  box-sizing: border-box;
-//  font-size: 12px;
-//  background-color: blue;
-//  color: white;
-//  text-align: center;
-//  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-//  outline: 0;
-//  i.icon {
-//    margin: 0;
-//  }
-//  &:focus .subMenu {
-//    display: block;
-//  }
-//`;
-//const DownBtn = styled.button`
-//  display: none;
-//  position: absolute;
-//  top: 0;
-//  left: 90%;
-//  transform: translate(-50%, -50%);
-//  border: 0;
-//  padding: 0;
-//  width: 45px;
-//  height: 45px;
-//  border-radius: 25px;
-//  line-height: 25px;
-//  box-sizing: border-box;
-//  font-size: 12px;
-//  background-color: blue;
-//  color: white;
-//  text-align: center;
-//  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-//  outline: 0;
-//  i.icon {
-//    margin: 0;
-//  }
-//  &:focus .subMenu {
-//    display: block;
-//  }
-//`;
+const UpBtn = styled.button`
+ display: none;
+ position: absolute;
+ top: 0;
+ left: 85%;
+ transform: translate(-50%, -50%);
+ border: 0;
+ padding: 0;
+ width: 45px;
+ height: 45px;
+ border-radius: 25px;
+ line-height: 25px;
+ box-sizing: border-box;
+ font-size: 12px;
+ background-color: blue;
+ color: white;
+ text-align: center;
+ box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+ outline: 0;
+ i.icon {
+   margin: 0;
+ }
+ &:focus .subMenu {
+   display: block;
+ }
+`;
+const DownBtn = styled.button`
+ display: none;
+ position: absolute;
+ top: 0;
+ left: 90%;
+ transform: translate(-50%, -50%);
+ border: 0;
+ padding: 0;
+ width: 45px;
+ height: 45px;
+ border-radius: 25px;
+ line-height: 25px;
+ box-sizing: border-box;
+ font-size: 12px;
+ background-color: blue;
+ color: white;
+ text-align: center;
+ box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+ outline: 0;
+ i.icon {
+   margin: 0;
+ }
+ &:focus .subMenu {
+   display: block;
+ }
+`;
 const DelBtn = styled.button`
   display: none;
   position: absolute;
@@ -253,8 +253,12 @@ class CardSourceDetail extends Component {
       this.props.handleResetHook && await this.props.handleResetHook();
       await this.onSubmit();
     }
+    if (this.props.closed === false && nextProps.closed === true) {
+      this.props.handleClosed && this.props.handleClosed(this.state.content);
+    }
   }
   async onChangeFile(data) {
+    await this.setState({ loading: !this.state.loading });
     let copyContent = [...this.state.content];
     delete data.initClick;
     delete data.target;
@@ -266,6 +270,7 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: copyContent });
+    await this.setState({ loading: !this.state.loading });
   }
   async onChangeValue(data, order) {
     this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
@@ -422,7 +427,7 @@ class CardSourceDetail extends Component {
   }
   render() {
     const { edit, content, loading } = this.state;
-    console.log("debug - CardSourceDetail:", this.state);
+    console.log("debug - CardSourceDetail:", this.state.loading, "loading");
     return (<div>
       {loading ? <Loading /> : null}
       {/* <ButtonContainer>
@@ -461,24 +466,26 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
-        content && content.length > 0 ? (<Fragment>
-          {content.map(item => {
-            return (<ControllerWrap key={item.order}>
-              <div className="contentWrap">
-                {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
-                {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
-                {item.type === "EMBED" ? (<EmbController />) : null}
-              </div>
+      <form form method="POST" enctype="multipart/form-data">
+        {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+          content && content.length > 0 ? (<Fragment>
+            {content.map(item => {
+              return (<ControllerWrap key={item.order}>
+                <div className="contentWrap">
+                  {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
+                  {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
+                  {item.type === "EMBED" ? (<EmbController />) : null}
+                </div>
 
-              <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
-              {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
-              {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
-            </ControllerWrap>)
-          })}
-          <AddContent getValue={this.onAddValue} order={content.length} />
-        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-      ) : null}
+                <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
+                {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null}
+                {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null}
+              </ControllerWrap>)
+            })}
+            <AddContent getValue={this.onAddValue} order={content.length} />
+          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+        ) : null}
+      </form>
 
       <ButtonContainer >
         {(this.props.edit && this.props.uid) &&

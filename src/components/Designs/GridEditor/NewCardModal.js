@@ -297,19 +297,26 @@ const BlankSpace = styled.div`
 class NewCardModal extends Component {
     state = {
         loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
-        card_content: { deleteContent: [], newContent: [], updateContent: [] }
+        card_content: { deleteContent: [], newContent: [], updateContent: [] },
+        closed: false,
     };
     handleCancel = (obj) => {
         if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
             if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
-                return;
+                return "keep";
             }
         }
-        this.onClose();
+        // this.onClose();
     };
-    onClose = () => {
-        this.props.close();
+    onClose = async () => {
+        await this.setState({ closed: true });
     };
+    handleClosed = (obj) => {
+        console.log(obj);
+        if (this.handleCancel(obj) !== "keep")
+            this.props.close();
+        this.setState({ closed: false });
+    }
     onChangeValueThumbnail = async data => {
         let obj = {};
         if (data.target) {
@@ -327,14 +334,14 @@ class NewCardModal extends Component {
             this.setState({ content: event.target.value });
         }
     };
-    saveTemporary = async (obj) => {
-        await this.setState({ card_content: obj });
-        this.submit();
-    };
+    // saveTemporary = async (obj) => {
+    // await this.setState({ card_content: obj });
+    // this.submit();
+    // };
     handleResetHook = async () => {
         await this.setState({ hook: false });
     };
-    submit = async () => {
+    submit = async (obj) => {
         let files = null;
         if (!this.state.title || this.state.title === "") {
             alert("컨텐츠의 제목을 입력하세요.");
@@ -353,14 +360,13 @@ class NewCardModal extends Component {
                             let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
                             this.props.UpdateCardSourceRequest({
                                 title: this.state.title, thumbnail: thumbnail, content: this.state.content,
-                                data: { deleteContent: this.state.card_content.deleteContent, newContent: this.state.card_content.newContent, updateContent: this.state.card_content.updateContent }
+                                data: { deleteContent: [], newContent: obj.newContent, updateContent: [] }
                             }, card_id, this.props.token)
                                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                                 .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
                                 .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
                                 .then(async () => {
                                     await this.setState({ loading: false });
-                                    this.onClose();
                                 })
                                 .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
                         } else {
@@ -368,6 +374,7 @@ class NewCardModal extends Component {
                         }
                     });
             });
+        this.props.close();
     };
     handleSubmit = async (event) => {
         event.preventDefault();
@@ -381,7 +388,7 @@ class NewCardModal extends Component {
         const { hook } = this.state;
         return (
             <React.Fragment>
-                <NewCardDialogWrapper open={this.props.open} onClose={this.props.close}>
+                <NewCardDialogWrapper open={this.props.open} onClose={this.onClose}>
                     <div className="close-box" onClick={this.onClose} >
                         <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                     </div>
@@ -419,11 +426,14 @@ class NewCardModal extends Component {
                                 {...this.props}
                                 uid={"new"}
                                 isTeam={true} edit={true}
-                                handleCancel={this.handleCancel}
+                                closed={this.state.closed}
+                                handleClosed={this.handleClosed}
+                                handleCancel={this.onClose}//this.handleCancel}
                                 closeEdit={this.onCloseEditMode}
                                 openEdit={this.onChangeEditMode}
-                                hook={hook} handleResetHook={this.handleResetHook}
-                                upDateRequest={this.saveTemporary} />
+                                hook={hook}
+                                handleResetHook={this.handleResetHook}
+                                upDateRequest={this.submit} />
                             {/*<CardSourceDetailContainer*/}
                             {/*    handleSubmit={this.handleHeaderSubmit}*/}
                             {/*    handleCancel={this.onCloseEditMode}*/}
