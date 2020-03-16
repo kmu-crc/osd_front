@@ -77,6 +77,7 @@ class SearchMember extends Component {
       this.setState({ open: false });
       return;
     }
+    console.log("search:", value);
     this.props.SearchMemberRequest(null, { key: value }, this.props.token).then(data => { })
   }
 
@@ -102,7 +103,7 @@ class SearchMember extends Component {
     return (
       <SearchWrap className="searchRect">
         <FormInput className="form-input" type="text" name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
-        <div style={{width:"100%",height:"100%",paddingLeft:"50px"}}><MemberList display={this.state.open ? "block" : "none"}>
+        <div style={{ width: "100%", height: "100%", paddingLeft: "50px" }}><MemberList display={this.state.open ? "block" : "none"}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
