@@ -18,11 +18,11 @@ const patent_option = [
   {text:"독점 사용권",value:1},
   {text:"일반 사용권",value:2}
 ]
-const counsel_option = [
-  {text:"온/오프라인",value:0},
-  {text:"방문지도",value:1},
-  {text:"팀/개인교육",value:2}
-]
+// const counsel_option = [
+//   {text:"온/오프라인",value:0},
+//   {text:"방문지도",value:1},
+//   {text:"팀/개인교육",value:2}
+// ]
 const newCategory = [
   {text:"디자인",value:0},
   {text:"지적재산권",value:1},

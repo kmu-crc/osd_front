@@ -142,7 +142,7 @@ class SignInForm extends Component {
 
   onSubmit = async e => {
     //아이디저장
-    const { cookies } = this.props;
+    // const { cookies } = this.props;
 
     if(this.state.saveID===true)
     {
@@ -169,9 +169,10 @@ class SignInForm extends Component {
         } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
           alert("비밀번호가 일치하지 않습니다.");
         } else {
-          this.props.history.go(-1);
+          window.location.reload();
         }
-      });
+      }).then(window.history.back());
+
     
   }
 

@@ -302,6 +302,12 @@ class CreateDesigner extends Component {
   onSubmit = async e => {
 
     e.preventDefault();
+    let tagList = "";
+    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+      return (
+        tagList += item + ","
+      );
+    });
     let experienceList = "";
     this.state.career.map((item, index) => { // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
       return (
@@ -317,7 +323,7 @@ class CreateDesigner extends Component {
       location: this.state.location,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      tag: this.state.tag.join(","),
+      tag: tagList,
       experience: experienceList,
     }
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
@@ -484,7 +490,7 @@ class CreateDesigner extends Component {
             {this.state.getready ?
             <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
             :
-            <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진해할 수 있습니다.")} isConfirm={false}></GrayButton>
+            <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>
             }
             <GrayButton value={"취소"} onClick={()=>{window.location.href="/mypage"}}isConfirm={false}></GrayButton>
           </div>

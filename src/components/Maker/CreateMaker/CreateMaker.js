@@ -330,19 +330,19 @@ class CreateMaker extends Component {
       );
     });
 
-    let equipmentList = "";
-    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-      return (
-        equipmentList += item + ","
-      );
-    });
+    // let equipmentList = "";
+    // this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+    //   return (
+    //     equipmentList += item + ","
+    //   );
+    // });
 
-    let techniqueList = "";
-    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-      return (
-        techniqueList += item + ","
-      );
-    });
+    // let techniqueList = "";
+    // this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+    //   return (
+    //     techniqueList += item + ","
+    //   );
+    // });
     const data = {
       files: [],
       user_id: this.props.userInfo.uid,
@@ -351,10 +351,10 @@ class CreateMaker extends Component {
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
       location: this.state.location,
-      tag: tagList,
+      tag: this.state.tag.join(","),
       experience: experienceList,
-      maker_equipment: equipmentList,
-      maker_technique: techniqueList
+      maker_equipment: this.state.equipment.join(","),
+      maker_technique: this.state.technique.join(","),
 
     }
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
