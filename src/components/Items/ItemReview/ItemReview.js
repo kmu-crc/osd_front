@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // import DateFormat from "modules/DateFormat";
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
+import { Rating } from 'semantic-ui-react'
 
 const Reviews = styled.div`
 //   width: 468px;
@@ -193,6 +194,10 @@ class ItemReview extends Component {
         this.removeComment = this.removeComment.bind(this);
         this.removeReply = this.removeReply.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleRate = this.handleRate.bind(this);
+    }
+    handleRate(e,{rating,maxRating}){
+        this.setState({score:rating});
     }
     onChangeValue(event) {
         const name = event.target.name;
@@ -325,11 +330,12 @@ class ItemReview extends Component {
                                         </div>
                                         <div className="contents">
                                             <div className="score">
-                                                <ScoreForm
+                                                <Rating name="score" icon='star' onRate={this.handleRate} value={this.state.score || 0} maxRating={5} />
+                                                {/* <ScoreForm
                                                     style={{ width: "25px" }}
                                                     value={this.state.score || 0}
                                                     onChange={this.onChangeValue}
-                                                    name="score" />
+                                                    name="score" /> */}
                                             </div>
                                             <div className="buttonBox">
                                                 <div className="button" onClick={() => this.requestReview(pay.uid)} >

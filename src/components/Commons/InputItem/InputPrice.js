@@ -6,6 +6,7 @@ const FormBox = styled.div`
     display:flex;
     align-items:center;
     .won{
+        width:max-content;
         margin-right:50px;
     }
 `

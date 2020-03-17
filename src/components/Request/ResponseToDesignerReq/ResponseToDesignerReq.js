@@ -5,6 +5,7 @@ import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -159,7 +160,7 @@ class ResponseToDesignerReq extends Component {
     super(props);
     this.state = {
       category_level1: 0, category_level2: 0,
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1,endDate:null,dayDate:null,
 
       res_content: "", res_price: "",
     }
@@ -168,6 +169,8 @@ class ResponseToDesignerReq extends Component {
     this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getDayDateValue=this.getDayDateValue.bind(this);
 
   }
   // componentDidMount() {
@@ -199,6 +202,13 @@ class ResponseToDesignerReq extends Component {
   async getPriceValue(value) {
     await this.setState({ res_price: value });
   }
+  async getEndDateValue(value) {
+    await console.log("endDate",value);
+    await this.setState({ endDate: value });
+  }
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
+  }
   onSubmit() {
     const data = {
       type: "designer", // "designer_req" "designer_res" "maker_req" "maker_res"
@@ -210,6 +220,7 @@ class ResponseToDesignerReq extends Component {
       price: this.state.res_price,
       expert_id: this.props.userInfo.uid || null,
       personal: this.props.detail.personal || null,
+      term:this.state.endDate,
     }
     // // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
@@ -273,6 +284,11 @@ class ResponseToDesignerReq extends Component {
               </div>
 
               <div className="wrapper flex centering">
+                      <div className="label">기간</div>
+                      <div className="textBox">~{detail.term}</div>
+              </div>
+
+              <div className="wrapper flex centering">
                 <div className="label">의뢰 내용</div>
                 <div className="textBox">{detail.content}</div>
               </div>
@@ -314,6 +330,11 @@ class ResponseToDesignerReq extends Component {
               <div className="wrapper flex">
                 <div className="label">희망비용</div>
                 <InputPrice name="price" getValue={this.getPriceValue} />
+              </div>
+
+              <div className="wrapper flex centering">
+                  <div className="label ">기간</div>
+                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
               </div>
 
             </FormBox>
