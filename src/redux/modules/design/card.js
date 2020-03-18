@@ -103,7 +103,7 @@ const initialState = {
     DesignSourceDetail: { status: "INIT" },
     DesignSourceEdit: { status: "INIT" },
     DesignDetailStepCard: { status: "INIT" },
-    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: []  }
+    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: [] }
 }
 
 export function DesignCard(state, action) {
@@ -235,11 +235,26 @@ export const GetDesignSourceRequest = id => {
             });
     };
 }
+export const FileUploadRequest = file => {
+    return new Promise(async (resolve, reject) => {
+        const formData = new FormData();
+        await formData.append('source', file[0]);
+        console.log(formData);
+        fetch(`${host}/upload/tmp`, {
+            header: { 'Content-Type': 'multipart/form-data' },
+            method: "POST",
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(data => resolve(data || null))
+            .catch(err => reject(err));
+    });
+}
 export const UpdateCardSourceRequest = (data, card_id, token) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(UpdateDesignSource());
         console.log("request", data);
-        return fetch(`${host}/design/designDetail/updateCardAllData/${card_id}`, {
+        return fetch(`${host}/design/designDetail/updateCardAllData_temp/${card_id}`, {
             headers: {
                 "x-access-token": token,
                 "Content-Type": "application/json"
@@ -247,23 +262,16 @@ export const UpdateCardSourceRequest = (data, card_id, token) => {
             method: "POST",
             body: JSON.stringify(data)
         })
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (res) {
-                return dispatch(UpdateDesignSourceSuccess(res));
-            })
-            .catch(error => {
-                console.log("insert issue err", error);
-                return dispatch(UpdateDesignSourceFailure(error));
-            });
+            .then(res => res.json())
+            .then(res => dispatch(UpdateDesignSourceSuccess(res)))
+            .catch(error => dispatch(UpdateDesignSourceFailure(error)))
     };
 }
 export const UpdateDesignSourceRequest = (data, card_id, token) => {
     return dispatch => {
         dispatch(UpdateDesignSource());
         console.log("request", data);
-        return fetch(`${host}/design/designDetail/updateCardSource/${card_id}`, {
+        return fetch(`${host}/design/designDetail/updateCardSource_temp/${card_id}`, {
             headers: {
                 "x-access-token": token,
                 "Content-Type": "application/json"
