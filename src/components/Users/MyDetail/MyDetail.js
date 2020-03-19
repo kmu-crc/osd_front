@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
-import Item from "components/Items/Item/Item"
-import Expert from "components/Experts/Expert";
-import { LikeItem } from "components/Users/MyDetail/MyDetailTab/likeItem";
+// import Item from "components/Items/Item/Item"
+// import Expert from "components/Experts/Expert";
+// import { LikeItem } from "components/Users/MyDetail/MyDetailTab/likeItem";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer"
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
 import MyPaymentContainer from "containers/Payment/MyPaymentContainer"
 import MyRequestItemContainer from "containers/Payment/MyRequestItemContainer"
 import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer"
+import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyProjectItemContainer"
 import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer"
 import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer"
 
@@ -58,7 +59,7 @@ const ProfileBox = styled.div`
     justify-content: center;
     align-items: center;
   }
-`
+`;
 const InformationBox = styled.div`
     *{}
     .fontBig{font-size:20px;}
@@ -99,7 +100,7 @@ const InformationBox = styled.div`
       }
 
     }
-`
+`;
 const MenuBox = styled.div`
     *{
       color:#060000;
@@ -128,7 +129,7 @@ const MenuBox = styled.div`
       opacity:0.2;
       margin-bottom:25px;
     }
-`
+`;
 const MenuButton = styled.div`
   width:100%;
   height:20px;
@@ -139,7 +140,7 @@ const MenuButton = styled.div`
   margin-bottom:30px;
   cursor:pointer;
   color:${props => props.fontColor == null ? "#060000" : props.fontColor};
-`
+`;
 const BoardBox = styled.div`
     width:1388px;
     border-radius: 20px;
@@ -217,7 +218,7 @@ const BoardBox = styled.div`
       
       .another {}
       .more {}
-`
+`;
 const Thumbnail = styled.div`
     width:190px;
     height:190px;
@@ -227,12 +228,11 @@ const Thumbnail = styled.div`
     background-position:center;
     background-size:cover;
     cursor:pointer
-`
+`;
 const EmptyBox = styled.div`
     width:${props => props.width}px;
     height:${props => props.height}px;
-`
-
+`;
 const RoundButton = styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
@@ -304,10 +304,10 @@ class MyDetail extends Component {
 
   }
 
-  
+
   render() {
 
-    
+
     console.log("myDetail", this.props);
     const { MyDetail } = this.props;
     const { selectMenu } = this.state;
@@ -403,9 +403,10 @@ class MyDetail extends Component {
                 <LikeInDesignerContainer id={this.props.userInfo.uid} />}
               {selectMenu === 3 &&
                 <LikeInMakerContainer id={this.props.userInfo.uid} />}
+              {selectMenu === 4 &&
+                <MyProjectItemContainer id={this.props.userInfo.uid} />}
               {selectMenu === 5 &&
-                <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid} />
-              }
+                <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid} />}
               {selectMenu === 6 &&
                 <MyUploadMakerReqBoardContainer id={this.props.userInfo.uid} />
               }

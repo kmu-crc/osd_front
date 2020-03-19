@@ -8,7 +8,7 @@ import { AddController, InputContent, Controller, InputTag, ThumbnailList, Radio
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -42,7 +42,6 @@ const MainBox = styled.div`
     cursor: default;
   }
 `;
-
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -371,10 +370,10 @@ class CreateProductForm extends Component {
                 }
               }
             }}>
-             <RedButton value={"디자인 등록 계속"} isConfirm={false}/>
+              <RedButton value={"디자인 등록 계속"} isConfirm={false} />
             </Link>
-            :<RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
-            }
+            : <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+          }
           <GrayButton value={"취소"} onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
@@ -567,7 +566,7 @@ class ItemProject extends Component {
           </NoInviteMemberBox>
         </Field>
         <Field title="공개">
-          <RadioType return={this.onHandleReturn} name="public" Options={["예", "아니오"]} /></Field>
+          <RadioType return={this.onHandleReturn} default={this.state["public"]} name="public" Options={["예", "아니오"]} /></Field>
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
         </Field>
@@ -599,7 +598,6 @@ class ItemConsulting extends Component {
     this.returnState();
   }
   render() {
-    const typeTF = ["예", "아니오"];
     // const typeOnOff = ["온라인", "오프라인"];
 
     return (
@@ -610,7 +608,7 @@ class ItemConsulting extends Component {
         {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
         {/* </Field> */}
         <Field title="내용 공개 여부">
-          <RadioType checked={1} return={this.onHandleReturn} name="public" Options={typeTF} /></Field>
+          <RadioType return={this.onHandleReturn} default={this.state["public"]} name="public" Options={["예", "아니오"]} /></Field>
         <Field title="자문/상담 비용">
           <InputPrice placeholder="시간당" name="price" getValue={this.getPriceValue} />
         </Field>
@@ -761,7 +759,6 @@ class ItemPatent extends Component {
     await this.setState({ content: newContent });
   };
   render() {
-    const kinds = ["양도", "독점 사용권", "일반 사용권"];
     const { content } = this.state;
     return (
       <React.Fragment>
@@ -779,7 +776,7 @@ class ItemPatent extends Component {
           </div></Field>
 
         <Field title="판매 방식 선택">
-          <RadioType return={this.onHandleReturn} name="selling-type" Options={kinds} /></Field>
+          <RadioType return={this.onHandleReturn} default={this.state["selling-type"]} name="selling-type" Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>
 
         <Field title="구입 비용">
           <InputPrice name="price" getValue={this.getPriceValue} />
