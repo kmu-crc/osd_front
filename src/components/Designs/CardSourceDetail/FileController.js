@@ -60,7 +60,7 @@ class FileController extends Component {
       await this.setInit({ ...this.props.item });
       if (this.props.item.initClick) {
         console.log("1");
-        // this.state.target.click();
+        this.state.target.click();
       }
     }
   }
