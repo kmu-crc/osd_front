@@ -5,6 +5,7 @@ import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -159,7 +160,7 @@ class ResponseToMakerReq extends Component {
     super(props);
     this.state = {
       category_level1: 0, category_level2: 0,
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,endDate:null,dayDate:null,
 
       res_content: "", res_price: "",res_amount:null,
     }
@@ -169,6 +170,8 @@ class ResponseToMakerReq extends Component {
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onChangeReponseAmount = this.onChangeReponseAmount.bind(this);
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getDayDateValue=this.getDayDateValue.bind(this);
   };
 
   onChangeResponseContent(event) {
@@ -201,6 +204,7 @@ class ResponseToMakerReq extends Component {
       expert_id: this.props.userInfo.uid || null,
       personal: this.props.detail.personal || null,
       amount:this.state.res_amount||null,
+      term:this.state.endDate,
     }
     // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
@@ -214,13 +218,26 @@ class ResponseToMakerReq extends Component {
       })
       .catch(err => alert("에러가 발생했습니다." + err));
   }
+  async getEndDateValue(value) {
+    await console.log("endDate",value);
+    await this.setState({ endDate: value });
+  }
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
+  }
 
   render() {
     const { detail } = this.props;
     if (!detail) return <Loading />;
-    const category_level1 = this.props.category1&&this.props.category1[this.state.category_level1] && this.props.category1[this.state.category_level1].text;
-    const category2 = this.props.category2 && this.props.category2[this.state.category_level1];
-    const category_level2 = category2 && category2[this.state.category_level2] && category2[this.state.category_level2].text;
+    const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
+      this.props.category1[detail.category_level1].text;
+    let category_level2 = "";
+    this.props.category2&& this.props.category2.map((item,index)=>{
+      console.log(item.parent,detail.category_level1,item.value,detail.category_level2);
+      if(item.parent == detail.category_level1 && item.value == detail.category_level2){
+        category_level2 = item.text;
+      }
+    })
     return (
       <React.Fragment>
         <Wrapper>
@@ -230,7 +247,7 @@ class ResponseToMakerReq extends Component {
               <FormBox>
 
                 <div className="wrapper flex centering" >
-                      <div className="label">의뢰인</div>
+                      <div className="label">의뢰자</div>
                       <div>{this.props.detail&&this.props.detail.nick_name||null}</div>
                 </div>
 
@@ -261,6 +278,11 @@ class ResponseToMakerReq extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
+                      <div className="label">기간</div>
+                      <div className="textBox">~{detail.term}</div>
+                </div>
+
+                <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
                   <div className="textBox">{detail.content}</div>
                 </div>
@@ -272,7 +294,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 위치</div>
-                  <div className="textBox">{LocationList[this.state.location]}</div>
+                  <div className="textBox">{detail.location&&LocationList[parseInt(detail.location,10)].text}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -312,6 +334,12 @@ class ResponseToMakerReq extends Component {
                   <div className="label">희망비용</div>
                   <InputPrice name="price" getValue={this.getPriceValue} />
                 </div>
+
+
+              <div className="wrapper flex centering">
+                  <div className="label ">기간</div>
+                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
+              </div>
 
               </FormBox>
             </div>

@@ -274,7 +274,7 @@ class RequestToMaker extends Component {
               <FormBox>
 
               <div className="wrapper flex centering" >
-                  <div className="label">의뢰인</div>
+                  <div className="label">의뢰자</div>
                   <div>{this.props.userInfo.nickName||null}</div>
                 </div>
 

@@ -51,7 +51,7 @@ const ImgWrapper = styled.div`
   width: 100%;
   height: 160px;
   position: relative;
-  border-top: 1px solid rgba(0,0,0,0.2);
+  // border-top: 1px solid rgba(0,0,0,0.2);
 `;
 
 const Title = styled.div`
@@ -95,8 +95,8 @@ const Title = styled.div`
 const MenuWrap = styled.div`
   background-color: white;
   margin-bottom: 30px;
-  border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
+  // border-top: 1px solid rgba(0,0,0,0.2);
+  // box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
 `;
 
 const type = [

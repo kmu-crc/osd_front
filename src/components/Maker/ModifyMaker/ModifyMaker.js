@@ -384,14 +384,14 @@ class ModifyMaker extends Component {
     });
 
     let equipmentList = "";
-    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+    this.state.equipment.map((item, index) => { // 태그,태그,태그 ...
       return (
         equipmentList += item + ","
       );
     });
 
     let techniqueList = "";
-    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+    this.state.technique.map((item, index) => { // 태그,태그,태그 ...
       return (
         techniqueList += item + ","
       );

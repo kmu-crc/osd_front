@@ -220,13 +220,16 @@ class SignUpForm extends Component {
       return;
     }
     // 
+    if(window.confirm("회원가입을 하시겠습니까?")==false){
+      return;
+    }
     e.preventDefault();
     const data = {email:this.state.email,password:this.state.password,nick_name:this.state.name,phone:this.state.phone};
   
       this.props.SignUpRequest(data).then(res => {
         if (res.type === "AUTH_SIGNUP_SUCCESS") {
           this.setState({ success: true });
-          // window.location.href="/";
+          window.location.href="/";
         } else {
           alert("다시 시도해주세요")
         }

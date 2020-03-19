@@ -94,7 +94,7 @@ export class InputCalendar extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { endDate:null,dayDate:null };
+        this.state = { startDate:null,endDate:null,dayDate:null };
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
         this.onChangeDayDate = this.onChangeDayDate.bind(this);
     }
@@ -115,8 +115,9 @@ export class InputCalendar extends Component {
         this.props.getDayDateValue && await this.props.getDayDateValue(this.state.dayDate);
     }
     init = async () => {
-        await this.setState({ dayDate: this.props.dayDate || 1 });
+        await this.setState({ dayDate: this.props.dayDate || 0 });
         await this.setState({ endDate: this.props.endDate || new Date().toISOString().substring(0,10) });
+        await this.setState({ startDate: new Date().toISOString().substring(0,10) });
         this.returnData();
     }
 
@@ -146,6 +147,14 @@ export class InputCalendar extends Component {
     render() {
         return (
             <React.Fragment>
+                <FormBox>
+                    <FormStyle
+                        id="startDate"
+                        // placeholder={this.props.placeholder}
+                        value={this.state.startDate}
+                        // onChange={this.onChangeEndDate}
+                    />
+                </FormBox>
                 <FormBox>
                     <FormStyle
                         id="endDate"
