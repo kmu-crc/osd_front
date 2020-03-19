@@ -241,8 +241,13 @@ class ResponseToDesignerReq extends Component {
     if (!detail) return (<Loading />);
     const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
       this.props.category1[detail.category_level1].text;
-    const category2 = this.props.category2 && this.props.category2[detail.category_level1];
-    const category_level2 = category2 && category2[detail.category_level2] && category2[detail.category_level2].text;
+    let category_level2 = "";
+    this.props.category2&& this.props.category2.map((item,index)=>{
+        console.log(item.parent,detail.category_level1,item.value,detail.category_level2);
+        if(item.parent == detail.category_level1 && item.value == detail.category_level2){
+          category_level2 = item.text;
+        }
+      })
     return (
       <Wrapper>
         <MainBox>
@@ -252,7 +257,7 @@ class ResponseToDesignerReq extends Component {
             <FormBox>
 
               <div className="wrapper flex centering" >
-                <div className="label">의뢰인</div>
+                <div className="label">의뢰자</div>
                 <div>{detail.nick_name || null}</div>
               </div>
 
