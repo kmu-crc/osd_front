@@ -4,3 +4,4 @@ export * from "./ItemStep";
 export * from "./ItemQuestion";
 export * from "./ItemReview";
 export * from "./UploadItem";
+export * from "./MyProjectItem";

@@ -418,7 +418,25 @@ const GetMyUploadItemClear = (data) => ({ type: types.GET_MY_UPLOAD_ITEM_CLEAR, 
 const GetMyUploadItemFailure = () => ({ type: types.GET_MY_UPLOAD_ITEM_FAILURE, MyUploadItem: [], MyUploadItemAdded: [] });
 
 
-
+// get my project item list
+export const GetMyProjectItemRequest = (id, token, page) => {
+  return dispatch => {
+    const url = `${host}/item/getMyProjectItemList/${id}/${page}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data =>
+        dispatch((page === 0)
+          ? GetMyProjectItemClear(data ? data : [])
+          : GetMyProjectItem(data ? data : [])))
+      .catch(error => dispatch(GetMyProjectItemFailure()));
+  };
+};
+const GetMyProjectItem = (data) => ({ type: types.GET_MY_PROJECT_ITEM, MyProjectItem: data });
+const GetMyProjectItemClear = (data) => ({ type: types.GET_MY_PROJECT_ITEM_CLEAR, MyProjectItem: data, MyProjectItemAdded: [] });
+const GetMyProjectItemFailure = () => ({ type: types.GET_MY_PROJECT_ITEM_FAILURE, MyProjectItem: [], MyProjectItemAdded: [] });
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
