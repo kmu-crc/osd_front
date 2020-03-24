@@ -7,7 +7,7 @@ import SearchMemberContainer from "containers/Commons/SearchMemberContainer/Sear
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Socket from "modules/Socket"
 
-const MainBox=styled.div`
+const MainBox = styled.div`
 width:100%;
 height:870px;
 display:flex;
@@ -34,7 +34,7 @@ flex-direction:column;
     justify-content:center;
   }
 `
-const MessageBox=styled.div`
+const MessageBox = styled.div`
   width:91%;
   height:100%;
   background-color:#EFEFEF;
@@ -92,7 +92,7 @@ const NavSection = styled.div`
 
   }
 `
-const PlusIcon=styled.div`
+const PlusIcon = styled.div`
   width: 50px;
   height: 50px;
   color: #707070;
@@ -392,8 +392,8 @@ class Messages extends React.Component {
     });
     this.setState({ render: true });
     setTimeout(async () => {
-      await this.props.GetMyMsgListRequest(this.props.token)
-      this.setState({ render: true })
+      await this.props.GetMyChatRoomsListRequest(this.props.token);
+      this.setState({ render: true });
     }, 250)
   }
   onSubmitForm = async (data) => {
@@ -442,63 +442,55 @@ class Messages extends React.Component {
     this.setState({ w: w });
   }
   render() {
-    let arrSummaryList = [];
-    if (this.props.MessageList.length > 0) {
-      console.log("message-list", this.props.MessageList);
-      arrSummaryList = this.props.MessageList.map((item, index) => {
-        let SelectedItem = false;
-        if (this.state.selectId === item.friend_id) SelectedItem = true;
-        return (
-          <div key={index} onClick={() => this.setMsgId(item.uid, item.friend_id, item.friend_name)}>
-            <SummaryItem noti={item.noti && item.noti > 0} s_img={item.s_img == null ? noImage : item.s_img} friend_name={item.friend_name} message={item.message} opacityON={SelectedItem} />
-          </div>
-        )
-      });
-    }
-    arrSummaryList.reverse();
-
-    const { w } = this.state;
+    // const { w } = this.state;
     const maxH = 869 + 25 + 48 + 8 + 55
     const H = window.innerHeight < maxH ? window.innerHeight - 200 : 869
     return (
-     <React.Fragment>
-      <MainBox>
-        <div className="mainBanner">
-          <div className="mainBanner_label">메시지함</div>
-        </div>
-        <div className="mainContent">
-          <MessageBox>
+      <React.Fragment>
+        <MainBox>
+          <div className="mainBanner">
+            <div className="mainBanner_label">메시지함</div>
+          </div>
+          <div className="mainContent">
+            <MessageBox>
               <NavSection >
-                  <div className="NavHeader">
-                    <div className="Nav_label">받은 메세지함</div>
-                    <PlusIcon onClick={this.handleOpenMember}/>
-                  </div>
-                  <div className="NavContent">
-                      {this.state.showSearch &&
-                        (<div>
-                          {this.state.hideSearch === true ? null :
-                            <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+                <div className="NavHeader">
+                  <div className="Nav_label">받은 메세지함</div>
+                  <PlusIcon onClick={this.handleOpenMember} />
+                </div>
+                <div className="NavContent">
+                  {this.state.showSearch &&
+                    (<div>
+                      {this.state.hideSearch === true ? null :
+                        <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+                    </div>)}
+
+                  <SummaryList id="searchRect">
+                    {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
+                      this.props.ChatRooms.map(chat =>
+                        <div key={chat.uid} onClick={() => this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}>
+                          <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
                         </div>)}
-                      <SummaryList id="searchRect">{arrSummaryList}</SummaryList>
-                  </div>
+                  </SummaryList>
+                </div>
               </NavSection>
-              <WhiteLine/>
+              <WhiteLine />
               <AsideSection>
-                  <div className="asideHeader"><div className="asideHeader_label">{this.state.selectName}</div></div>
-                  <div className="asideContent">
-                    <div className="aside_messageList">
-                      {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
-                    </div>
+                <div className="asideHeader"><div className="asideHeader_label">{this.state.selectName}</div></div>
+                <div className="asideContent">
+                  <div className="aside_messageList">
+                    {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
                   </div>
-                  <div className="asideSend">
-                      <div className="sendBox"><SendMessageTextarea id="box" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}/></div>
-                      <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
-                  </div>
+                </div>
+                <div className="asideSend">
+                  <div className="sendBox"><SendMessageTextarea id="box" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                  <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
+                </div>
               </AsideSection>
-          </MessageBox>
-        </div>
-      </MainBox>
-     </React.Fragment>
+            </MessageBox>
+          </div>
+        </MainBox>
+      </React.Fragment>
     );
   }
 }

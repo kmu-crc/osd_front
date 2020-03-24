@@ -158,7 +158,6 @@ class MessageDetail extends Component {
     this.ScrollDown = this.ScrollDown.bind(this);
   }
   componentDidMount() {
-    console.log("messagID", this.props.id);
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
   }
   componentWillUnmount() {
@@ -177,7 +176,7 @@ class MessageDetail extends Component {
   render() {
     const list = this.props.MessageDetail;
     const myId = this.props.userInfo.uid;
-    const arrMsg = list.map(item => {
+    const arrMsg = list && list.length > 0 ? list.map(item => {
       let isMyMsg = true;
       if (item.from_user_id !== myId) isMyMsg = false;
       return (
@@ -185,14 +184,14 @@ class MessageDetail extends Component {
           <LoadMessage isMyMsg={isMyMsg} msgText={item.message === "" ? "\u00a0" : item.message} updateTime={CheckedTime(item.create_time)} />
         </React.Fragment>
       );
-    })
+    }) : <div style={{ fontFamily: "Noto Sans KR", fontSize: "28px", fontWeight: 500, lineHeight: "29px", color: "#707070" }}> 메시지는 1년간 보관됩니다.</div>
 
     return (
       <React.Fragment>
         <MsgSectionBoard height={this.props.height} id="MsgBox" onClick={this.ScrollDown}>
           {arrMsg}
         </MsgSectionBoard>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
