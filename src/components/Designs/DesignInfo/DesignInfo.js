@@ -327,10 +327,11 @@ const RightSide = styled.div`
         }
     }
     .update-time {
+        margin-top: 5px;
         width: 200px;
         height: 25px;
         // right: 3px;
-        margin-bottom: 8px;
+        // margin-bottom: 5px;
         text-align: right;
         color: #707070;
         font-size: 17px;
@@ -959,6 +960,7 @@ class DesignInfo extends Component {
                                     </div>
                                     <div>
                                         <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                                        <div className="update-time">{DateFormat(DesignDetail.create_time)} 등록</div>
                                     </div>
                                 </RightSide>
                             </div>
