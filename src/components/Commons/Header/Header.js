@@ -188,7 +188,7 @@ class Header extends Component {
   componentDidMount() {
     if (this.props.valid) {
       try {
-        Socket.emit("INIT", this.props.userInfo.uid)
+        // Socket.emit("INIT", this.props.userInfo.uid)
         Socket.on("getNoti", alarms => {
           this.setState({ alarms: alarms });
         });

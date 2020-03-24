@@ -9,6 +9,9 @@ import SearchDesignMemberContainer from "containers/Commons/SearchMemberContaine
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
 import {RedButton,GrayButton} from "components/Commons/CustomButton"
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
+
 
 const ItemType = [
   { text: "디자인", value: 0 },

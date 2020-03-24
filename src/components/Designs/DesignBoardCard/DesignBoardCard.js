@@ -128,6 +128,17 @@ class DesignBoardCard extends Component {
   }
 
   onClose = () => {
+  //   confirmAlert(options("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
+  //   ,()=>{
+  // this.setState({
+  //       open: false,
+  //       active: "INIT",
+  //       edit: false,
+  //       modify: false
+  //     });
+  //     this.props.GetDesignBoardRequest(this.props.match.params.id);
+  //   }
+  //   ,event));
     let confirm = true;
     if (this.state.modify && this.state.edit) {
       confirm = window.confirm(

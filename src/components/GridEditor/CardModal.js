@@ -23,6 +23,9 @@ import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
+
 const ContentBorder = styled.div`
     height: 29px;
     font-family: Noto Sans KR;
@@ -52,14 +55,15 @@ const CommentWrapper = styled.div`
     }
 `;
 const CardDialog = styled(Modal)`
-    margin-top: 50px !important;
-    margin-bottom: 50px !important;
-    height: max-content;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #000000;
-    border: 1px solid #EFEFEF;
-    border-radius: 10px;
-    opacity: 1;
+
+        margin-top: 50px !important;
+        margin-bottom: 50px !important;
+        height: max-content;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #000000;
+        border: 1px solid #EFEFEF;
+        border-radius: 10px;
+        opacity: 1;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
@@ -364,6 +368,7 @@ class CardModal extends Component {
         this.state = { sroll: false, edit: false, title: "", description: "", content: [], }
     };
     componentDidMount() {
+        
         const { card } = this.props;
         this.setState({ thumbnail: card.thumbnail, title: card.title, description: card.description });
     };
@@ -442,7 +447,13 @@ class CardModal extends Component {
                 .catch(err => alert(err))
         }
     };
-    onClose = async () => {
+    onClose = async (event) => {
+        // confirmAlert(options("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?"
+        // ,async()=>{
+        //     await this.setState({ sroll: false, edit: false, title: "", content: "" });
+        //     this.props.close();
+        // }
+        // ,event));
         if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
             return;
         }
@@ -458,8 +469,9 @@ class CardModal extends Component {
                 <div>{card}loading</div>
             ) :
                 <React.Fragment>
+                    <div style={{zIndex:100}}>
                     <CardDialog open={this.props.open} onClose={this.onClose}>
-                        {this.state.loading && <Loading />}
+                        {/* {this.state.loading && <Loading />}
 
                         <div className="close-box" onClick={this.onClose} >
                             <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
@@ -489,12 +501,6 @@ class CardModal extends Component {
                                                 <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
                                             </div>
                                         </div>
-                                        {
-                                            // <div className="edit-header-button-container">
-                                            //     <button className="edit-header-submit-button" onClick={this.handleHeaderSubmit} >적용하기</button>
-                                            //     <button className="edit-header-cancel-button" onClick={() => this.setState({ edit: !this.state.edit })}>취소</button>
-                                            // </div>
-                                        }
                                     </EditCardHeaderContainer>
                                 </React.Fragment>
                                 :
@@ -534,20 +540,10 @@ class CardModal extends Component {
                                     isCancel
                                 />
                             </div>
-
-                            {/* 
-                            <ContentBorder>
-                                <div className="border-line" /></ContentBorder>
-                            <CommentWrapper>
-                                <div className="comment-title"><h3>댓글</h3></div>
-                                <div className="comment-body">
-                                    <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
-                                </div>
-                            </CommentWrapper> 
-                            */}
-                        </div>
+                        </div> */}
                     </CardDialog>
                     <BlankSpace />
+                    </div>
                 </React.Fragment>
         )
     }

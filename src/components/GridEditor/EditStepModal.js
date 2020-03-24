@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
 const InputWrapper = styled.div`
     display: flex;
@@ -144,6 +146,8 @@ class EditStepModal extends Component {
         if (confirm) {
             this.props.RemoveStep(step.uid)
         }
+        // confirmAlert(options("단계를 삭제하시겠습니까?",()=>{this.props.RemoveStep(step.uid)},event));
+
         this.onClose();
     }
     componentWillReceiveProps(nextProps) {

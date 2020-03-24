@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import ModifyGorup from "components/Groups/ModifyGroup/ModifyGroup";
-import { UpdateGroupRequest } from "actions/Group";
+import { UpdateGroupRequest,DeleteGroupRequest } from "actions/Group";
 import { GetAllHaveInItemRequest } from "actions/Product"
 import { GetGalleryDetailRequest } from "actions/Gallery";
 import { GetHaveInGalleryRequest } from "actions/Gallery";
@@ -101,8 +101,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    UpdateGroupRequest: (id, data, token) => {
+      UpdateGroupRequest: (id, data, token) => {
         return dispatch(UpdateGroupRequest(id, data, token))
+      },
+      DeleteGroupRequest: (id, token) => {
+        return dispatch(DeleteGroupRequest(id, token))
       },
       GetAllHaveInItemRequest: (id, token) => {
         return dispatch(GetAllHaveInItemRequest(id,token))

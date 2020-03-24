@@ -53,6 +53,7 @@ const TextWrapper = styled.div`
   }
 `;
 const Counter = styled.div`
+
   margin-top: 35px;
   display: flex;
   flex-direction: row;
@@ -81,6 +82,9 @@ const Counter = styled.div`
     font-size: 12px;
     font-weight: 500;
     line-height: 18px;
+    .heart{
+      margin-right:10px;
+    }
   }
 `;
 

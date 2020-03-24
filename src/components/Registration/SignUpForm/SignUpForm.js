@@ -7,6 +7,8 @@ import { FormControl, ValidationGroup } from "modules/FormControl"
 import SignUpModal from "./SignUpModal"
 import StyleGuide from "StyleGuide"
 import FooterPara from "components/Commons/FooterTerm/FooterPara";
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
 const MainBox = styled.div`
   *{
@@ -179,64 +181,64 @@ class SignUpForm extends Component {
     console.log("qwer", returnvalue);
     return returnvalue;
 }
-  onSubmit = async e => {
+onSubmit = async e => {
 
-    e.persist();
-    //유효성검사
-    if(this.state.email==="")
-    {
-      alert("아이디를 입력해주세요");
-    }
-    else if(this.state.password==="")
-    {
-      alert("비밀번호를 입력해주세요");
-    }
-    else if(this.state.passwordCheck==="")
-    {
-      alert("비밀번호 확인을 입력해주세요");
-    }
-    else if(this.state.name==="")
-    {
-      alert("이름을 입력해주세요");
-    }
-    else if(this.state.phone==="")
-    {
-      alert("휴대폰 번호를 입력해주세요");
-    }
-    else if(await this.checkEmail()===false)
-    {      
-        alert("중복된 아이디입니다.");
-        return;
-    }
-    else if(await this.checkNickname()===false)
-    {      
-        alert("중복된 닉네임입니다.");
-        return;
-    }
-    //약관동의
-    if(this.state.checkTerms===false || this.state.checkPersonalInfo_ess===false)
-    {
-      alert("필수 이용약관에 동의해주세요!");
+  e.persist();
+  //유효성검사
+  if(this.state.email==="")
+  {
+    alert("아이디를 입력해주세요");
+  }
+  else if(this.state.password==="")
+  {
+    alert("비밀번호를 입력해주세요");
+  }
+  else if(this.state.passwordCheck==="")
+  {
+    alert("비밀번호 확인을 입력해주세요");
+  }
+  else if(this.state.name==="")
+  {
+    alert("이름을 입력해주세요");
+  }
+  else if(this.state.phone==="")
+  {
+    alert("휴대폰 번호를 입력해주세요");
+  }
+  else if(await this.checkEmail()===false)
+  {      
+      alert("중복된 아이디입니다.");
       return;
-    }
-    // 
-    if(window.confirm("회원가입을 하시겠습니까?")==false){
+  }
+  else if(await this.checkNickname()===false)
+  {      
+      alert("중복된 닉네임입니다.");
       return;
-    }
-    e.preventDefault();
-    const data = {email:this.state.email,password:this.state.password,nick_name:this.state.name,phone:this.state.phone};
-  
-      this.props.SignUpRequest(data).then(res => {
-        if (res.type === "AUTH_SIGNUP_SUCCESS") {
-          this.setState({ success: true });
-          window.location.href="/";
-        } else {
-          alert("다시 시도해주세요")
-        }
-      }).catch(e => {
-        console.log("실패", e);
-      });
-    }
+  }
+  //약관동의
+  if(this.state.checkTerms===false || this.state.checkPersonalInfo_ess===false)
+  {
+    alert("필수 이용약관에 동의해주세요!");
+    return;
+  }
+  // 
+  if(window.confirm("회원가입을 하시겠습니까?")==false){
+    return;
+  }
+  e.preventDefault();
+  const data = {email:this.state.email,password:this.state.password,nick_name:this.state.name,phone:this.state.phone};
+
+    this.props.SignUpRequest(data).then(res => {
+      if (res.type === "AUTH_SIGNUP_SUCCESS") {
+        this.setState({ success: true });
+        window.location.href="/";
+      } else {
+        alert("다시 시도해주세요")
+      }
+    }).catch(e => {
+      console.log("실패", e);
+    });
+  }
   onChangeID(event){
     this.setState({email:event.target.value});
   }

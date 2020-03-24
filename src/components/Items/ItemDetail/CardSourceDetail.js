@@ -5,6 +5,7 @@ import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 import { AddController, Controller } from "components/Commons/InputItem";
 
+
 const ContentForm = async (data, oldData) => {
   let formData = {
     updateContent: [],
@@ -246,7 +247,7 @@ class CardSourceDetail extends Component {
     }
     //BLOG-TYPE
     else {
-      if (formData && (formData.newContent.length == 0 && formData.updateContent.length === 0 && formData.newContent.length === 0)) {
+      if (formData && (formData.newContent.length == 0 && formData.updateContent.length === 0 && formData.deleteContent.length === 0)) {
         alert("변경된 사항이 없습니다.");
       } else {
         this.props.upDateRequest(formData, this.props.cardId, this.props.token)
