@@ -117,7 +117,8 @@ const StepCardStyle = styled.div`
 `;
 const CardContainer = styled.div`
     position: relative;
-    z-index: 700;
+    // z-index: 700;
+    z-index:1;
     cursor: pointer;
     width: ${PxtoRem(200)};
     height: ${PxtoRem(200)};

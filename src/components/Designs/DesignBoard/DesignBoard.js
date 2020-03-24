@@ -7,6 +7,8 @@ import BoardUpdate from "components/Designs/DesignBoard/BoardUpdate";
 import StyleGuide from "StyleGuide";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
 import TextFormat from "modules/TextFormat";
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
 const CustomModal = styled(Modal)`
   border: "1px solid";
@@ -230,6 +232,17 @@ class DesignBoard extends Component {
           this.props.GetDesignBoardRequest(this.props.board.design_id);
         });
     }
+    // confirmAlert(options("단계를 삭제하시겠습니까?",()=>{ 
+    //     this.props
+    //       .DeleteDesignBoardRequest(
+    //         this.props.board.design_id,
+    //         this.props.board.uid,
+    //         this.props.token
+    //       )
+    //       .then(() => {
+    //         this.props.GetDesignBoardRequest(this.props.board.design_id);
+    //       });},event));
+
   };
   handleGetCardList = (list) => {
     this.setState({ cards: list })

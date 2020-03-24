@@ -10,6 +10,7 @@ import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 
+
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },

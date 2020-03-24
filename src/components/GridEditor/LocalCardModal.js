@@ -9,7 +9,8 @@ import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 import { AddController, Controller, InputContent } from "components/Commons/InputItem";
-
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
 const ContentBorder = styled.div`
     height: 29px;
@@ -514,7 +515,18 @@ export class LocalCardModal extends Component {
     async onSave() {
         await this.submit();
     };
-    onCancel() {
+    onCancel(event) {
+        // confirmAlert(options("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?"
+        // ,()=>{
+        //         this.setState({
+        //         loading: false, scroll: false, edit: false, hook: false,
+        //         title: "", content: "",
+        //         card_content: {
+        //             deleteContent: [], newContent: [], updateContent: []
+        //         }
+        //     })
+        // }
+        // ,event));
         const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
         if (confirm) {
             this.setState({

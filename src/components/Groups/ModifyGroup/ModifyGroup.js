@@ -5,6 +5,7 @@ import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
+import {RedButton,GrayButton} from "components/Commons/CustomButton";
 
 const MainBox = styled.div`
   width:100%;
@@ -30,19 +31,7 @@ const MainBox = styled.div`
     }
 
 `;
-const RedButton = styled.div`
-  width: 290px;
-  height: 70px;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  font-weight: 500;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.gray ? "#EFEFEF" : "red"};
-  cursor: pointer;
-`;
+
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -286,6 +275,25 @@ class ModifyGroup extends Component {
   onClickClose(event){
     this.props.handleShowModal(false);
   }
+  onDelete = async e=>{
+    this.props.DeleteGroupRequest(this.props.id,this.props.token)
+    .then(res => {
+      const result = res.type;
+      if (result === "DETELE_GROUP_SUCCESS") {
+        console.log(this.props.id);
+        this.props.GetHaveInGalleryRequest(this.props.userInfo.uid,0);
+      } else {
+        alert("다시 시도해주세요");
+      }
+    })
+    .catch(e => {
+      alert("다시 시도해주세요");
+      this.setState({
+        loading: false
+      });
+    });
+
+  }
   onSubmit = async e => {
 
     e.preventDefault();
@@ -406,7 +414,8 @@ class ModifyGroup extends Component {
             </FormBox>
             </div>
             <div className="contentBox">
-            <RedButton onClick={this.onSubmit} ><div>등록</div></RedButton>
+            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
+            <GrayButton value={"삭제"} onClick={this.onDelete} isConfirm={true}/>
             </div>
         </MainBox>
       </React.Fragment>

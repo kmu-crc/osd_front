@@ -5,6 +5,8 @@ import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 import mainSlide from "source/mainSlide.jpg";
 import NumberFormat from "modules/NumberFormat";
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
 const ImgWrapper = styled.div`
   background-image: url(${mainSlide});

@@ -132,19 +132,38 @@ const TagPiece = styled.div`
 `;
 
 class Detail extends Component {
+  constructor(props){
+    super(props);
+    this.onClickResponse = this.onClickResponse.bind(this);
+  }
+  onClickResponse(){
+    console.log(this.props);
+    if(this.props.Detail.status=="request"){
+      // console.log(this.props.Detail.type == "designer_req");
+      if(this.props.Detail.type=="designer_req"||this.props.Detail.type=="designer"){
+        window.location.href="/ModifyrequestToDesigner/"+this.props.id;
+      }
+      else if(this.props.Detail.type=="maker"||this.props.Detail.type=="maker_req"){ 
+        window.location.href="/ModifyrequestToMaker/"+this.props.id;
+      }
+    }
+    else if(this.props.Detail.status=="response"){
+
+    }
+  }
   render() {
     const { Detail, MyDetail, isPurchased } = this.props;
     if (Detail == null || Detail == []) return (<Loading />);
     const TypeText = Detail.type === "maker" ? "제작" : "디자인";
     console.log("this.props:", this.props, "Detail:", Detail, "MyDetail:", MyDetail);
-
+    console.log("===========",Detail.tag);
     const category_level1
       = this.props.category1 && this.props.category1[Detail.category_level1] && this.props.category1[Detail.category_level1].text;
     // const category2
     //   = this.props.category2 && this.props.category2[Detail.category_level1];
     let category_level2 = "";
     this.props.category2&& this.props.category2.map((item,index)=>{
-      console.log(item.parent,Detail.category_level1,item.value,Detail.category_level2);
+      // console.log(item.parent,Detail.category_level1,item.value,Detail.category_level2);
       if(item.parent == Detail.category_level1 && item.value == Detail.category_level2){
         category_level2 = item.text;
       }
@@ -216,7 +235,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">기간</div>
-                      <div className="textBox">~{Detail.term}</div>
+                      <div className="textBox">{Detail.start_date}~{Detail.end_date}</div>
                     </div>
                     
                     {
@@ -233,10 +252,19 @@ class Detail extends Component {
                     </div>
 
 
+
+                    {Detail.type=="designer"?
                     <div className="wrapper flex centering">
-                      <div className="label">{TypeText} 소유권</div>
-                      <div className="textBox">{Detail.ownership <= 0 ? "불가능" : "가능"}</div>
+                    <div className="label">{TypeText} 소유권</div>
+                    <div className="textBox">{Detail.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
                     </div>
+                    :
+                    <div className="wrapper flex centering">
+                    <div className="label">{TypeText} 재판매</div>
+                    <div className="textBox">{Detail.resale <= 0 ? "가능" : "불가능"}</div>
+                    </div>
+                    }
+
 
                     {/* <div className="wrapper flex centering">
                       <div className="label">오프라인 상담</div>
@@ -246,18 +274,14 @@ class Detail extends Component {
                   </FormBox>
                 </div>
               </MainBox>
-                {/* <Link onClick={(event) => this.buyThisItem(event, item)} to={{ pathname: `/payment`, state: { item: item, options: { "test": "test" } } }}>
-            <div className="text">아이템구매</div>
-          </Link> */}
-                <div style={{ display: "flex" }}>
-                  {/* <RedButton onClick={() => window.history.back()} inactive={true}><div>뒤로가기</div></RedButton> */}
                   {!MyDetail ?
+                    <div style={{ marginTop:"30px",display: "flex" }}>
                     <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                       <RedButton value={"의뢰응답"} isConfirm={false}></RedButton>
                     </Link>
+                      {this.props.userInfo&&Detail&&Detail.client_id==this.props.userInfo.uid?<RedButton onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton>:null}
+                      </div>
                     : null}
-                  </div>
-          {/* {this.props.MyDetail.isDesigner ? <RedButton onClick={this.onAccept} left={1444} bottom={-50}><div>Accept</div></RedButton> : null} */}
         </Wrapper>
         :
         <Wrapper>
@@ -306,7 +330,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">소유권</div>
-                      <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "불가능" : "가능"}</div>
+                      <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
                     </div>
 
                     {/* <div className="wrapper flex centering">

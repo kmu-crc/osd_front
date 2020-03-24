@@ -20,6 +20,43 @@ const CreateRequest = () => ({ type: types.CREATE_REQUEST });
 const CreateRequestSuccess = res => ({ type: types.CREATE_REQUEST_SUCCESS, id: res.id, success: res.success });
 const CreateRequestFail = error => ({ type: types.CREATE_REQUEST_FAIL, success: error.success });
 
+
+export const UpdateRequestRequest = (id,data, token) => {
+  return dispatch => {
+    dispatch(UpdateRequest());
+    const url = `${host}/request/update/${id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(UpdateRequestSuccess(res)))
+      .catch(error => dispatch(UpdateRequestFail(error)));
+  };
+};
+const UpdateRequest = () => ({ type: types.UPDATE_REQUEST });
+const UpdateRequestSuccess = res => ({ type: types.UPDATE_REQUEST_SUCCESS, id: res.id, success: res.success });
+const UpdateRequestFail = error => ({ type: types.UPDATE_REQUEST_FAIL, success: error.success });
+
+export const DeleteRequestRequest = (id,token) => {
+  return dispatch => {
+    dispatch(DeleteRequest());
+    const url = `${host}/request/delete/${id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "delete"
+      // body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(DeleteRequestSuccess(res)))
+      .catch(error => dispatch(DeleteRequestFail(error)));
+  };
+};
+const DeleteRequest = () => ({ type: types.DELETE_REQUEST });
+const DeleteRequestSuccess = res => ({ type: types.DELETE_REQUEST_SUCCESS, id: res.id, success: res.success });
+const DeleteRequestFail = error => ({ type: types.DELETE_REQUEST_FAIL, success: error.success });
+
 // type page cate1 cate2 sort keyword
 export const GetRequestListRequest = (type, page, cate1, cate2, sort, keyword) => {
   return dispatch => {

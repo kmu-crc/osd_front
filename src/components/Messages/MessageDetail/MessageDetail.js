@@ -92,7 +92,7 @@ class MessageDetail extends Component {
     // var divdiv = document.getElementById("comments");
     this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
     try {
-      Socket.emit("INIT", this.props.userInfo.uid)
+      // Socket.emit("INIT", this.props.userInfo.uid)
       Socket.on("getNewMsg", (msgList, groupId) => {
         if (groupId == this.props.targetUid) {
           this.setState({ list_v1: msgList }) // get

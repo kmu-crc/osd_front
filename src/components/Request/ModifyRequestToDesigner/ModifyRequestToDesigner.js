@@ -4,12 +4,36 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
+
+const LocationList = [
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
+];
 
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
     margin-bottom: 100px;
     z-index:3;
+    // *{
+    //   border:1px solid black;
+    // }
 `;
 const MainBox = styled.div`
   width:100%;
@@ -31,24 +55,6 @@ const MainBox = styled.div`
   }
 
 `
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
-
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
-
-  cursor:pointer;
-`
 
 const FormBox = styled.div`
   *{
@@ -60,6 +66,7 @@ const FormBox = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
+  padding-right:59px;
   padding-top:49px;
 
   .wrapper{
@@ -143,8 +150,8 @@ class ModifyRequestToDesigner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category_level1: -1, category_level2: -1,
-      title: "", tag: [], price: 0, content: "", location: "", ownership: -1, offline: -1,
+      category_level1: null, category_level2: null,
+      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,endDate:null,dayDate:null,start_date:null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -157,22 +164,45 @@ class ModifyRequestToDesigner extends Component {
     this.onChangeOwnership = this.onChangeOwnership.bind(this);
     this.onChangeOffline = this.onChangeOffline.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
-
+    this.getStartDateValue = this.getStartDateValue.bind(this);
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getDayDateValue = this.getDayDateValue.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
+    this.onClickDelete = this.onClickDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
-    //modify :*** 데이터베이스 호출 시 주석해제 *****
-    // this.setState({
-    //   category_level1:this.props.RequestDetail.category_level1,
-    //   category_level2:this.props.RequestDetail.category_level2,
-    //   title:this.props.RequestDetail.title,
-    //   tag:this.props.RequestDetail.tag.split(','),
-    //   price:this.props.RequestDetail.price,
-    //   content:this.props.RequestDetail.content,
-    //   location:this.props.RequestDetail.location,
-    //   ownership:this.props.RequestDetail.ownership,
-    //   offline:this.props.RequestDetail.offline_consultation,
+    // modify :*** 데이터베이스 호출 시 주석해제 *****
+    // this.props.Detail&&this.setState({
+    //   category_level1:this.props.Detail.category_level1,
+    //   category_level2:this.props.Detail.category_level2,
+    //   title:this.props.Detail.title,
+    //   tag:this.props.Detail.tag.split(','),
+    //   price:this.props.Detail.price,
+    //   content:this.props.Detail.content,
+    //   location:this.props.Detail.location,
+    //   ownership:this.props.Detail.ownership,
+    //   offline:this.props.Detail.offline_consultation,
     // });
+  }
+  componentWillUpdate(nextProps){
+    if(nextProps.Detail!=this.props.Detail)
+    {
+      console.log(nextProps.Detail.tag);
+      this.setState({
+        category_level1:nextProps.Detail.category_level1,
+        category_level2:nextProps.Detail.category_level1,
+        title:nextProps.Detail.title,
+        tag:nextProps.Detail.tag.split(","),
+        price:nextProps.Detail.price,
+        content:nextProps.Detail.content,
+        location:nextProps.Detail.location,
+        ownership:parseInt(nextProps.Detail.ownership,10),
+        startDate:nextProps.Detail.start_date,
+        endDate:nextProps.Detail.end_date,
+
+      })
+    }
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
@@ -201,6 +231,26 @@ class ModifyRequestToDesigner extends Component {
       price: event.target.value,
     })
   }
+  onClickDelete(event){
+    this.props.DeleteRequestRequest(this.props.id,this.props.token)
+    .then(res => {
+      if (res.success) {
+          window.location.href = `/request/designer`;
+      }
+    })
+    .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+  }
+  async getStartDateValue(value){
+    await console.log("startDate",value);
+    await this.setState({ startDate: value });
+  }
+  async getEndDateValue(value) {
+    await console.log("endDate",value);
+    await this.setState({ endDate: value });
+  }
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
+  }
   onChangeLocation(event) {
     this.setState({
       location: event.target.value,
@@ -221,37 +271,55 @@ class ModifyRequestToDesigner extends Component {
       offline: { value }.value,
     })
   }
-
+  handleAddTag(tag) {
+    this.setState({
+      tag: tag.slice(),
+    })
+  }
   onSubmit() {
 
-    let tagList = "";
-    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-      return (
-        tagList += item + ","
-      );
-    });
+    // let tagList = "";
+    // this.state.tag.map((item, index) => { // 태그,태그,태그 ...
+    //   return (
+    //     tagList += item + ","
+    //   );
+    // });
 
-    const Data = {
-      type: "designer_req", // "designer_req" "designer_res" "maker_req" "maker_res"
-      // user_id: this.props.userInfo.uid // 
+    const data = {
+      type: "designer",
+      status: "request",
+      // expert_id: this.props.id || null,
+      // personal: this.props.id || null,
       title: this.state.title,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      tag: tagList,
+      tag: this.state.tag.join(","),
       price: this.state.price,
       content: this.state.content,
       location: this.state.location,
       ownership: this.state.ownership,
       offline_consultation: this.state.offline,
+      start_date:this.state.startDate,
+      end_date:this.state.endDate,
     }
     // 페이지이동
-    window.location.href = "/request/designer";
+    // window.location.href = "/request/designer";
+    this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
+      .then(res => {
+        if (res.success) {
+          if (res.id)
+            window.location.href = `/designerDetail/${res.id}`;
+          else
+            window.location.href = "/request/designer";
+        }
+      })
+      .catch(err => alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
   }
 
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-
+    console.log(this.props);
     return (
       <React.Fragment>
         <Wrapper>
@@ -260,44 +328,54 @@ class ModifyRequestToDesigner extends Component {
             <div className="contentsBox">
               <FormBox>
 
-              {/* <div className="wrapper flex centering" >
-                  <div className="label">의뢰인</div>
-                  <div>{this.props.userInfo.nickName||null}</div>
-                </div> */}
-
+              <div className="wrapper flex centering" >
+                  <div className="label">의뢰자</div>
+                  <div>{this.props.userInfo&&this.props.userInfo.nickName||null}</div>
+                </div>
 
                 <div className="wrapper flex centering">
-                  <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
-                  <InputText width={483} />
+                  <div className="label">제목</div>
+                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
                   <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                   <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">태그</div>
                   <div>
-                    <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                    <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                   </div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputPrice name="price" getValue={this.getPriceValue} />
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
                   <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
                 </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label ">희망 비용</div>
+                  < InputPrice name="price" getValue={this.getPriceValue} price={parseInt(this.state.price,10)}/>
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label ">기간</div>
+                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
+                  getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} getStartDateValue={this.getStartDateValue}/>
+
+                </div>
+
                 <HRLine />
                 <div className="wrapper flex centering">
                   <div className="label">디자이너 위치</div>
-                  <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} />
+                  {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
+                  <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                    selection options={LocationList} placeholder="시/도"
+                    onChange={this.onChangeLocation} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -313,8 +391,12 @@ class ModifyRequestToDesigner extends Component {
                 </div> */}
 
               </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록</div></RedButton>
             </div>
+              <div className="contentsBox">
+                <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
+                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+                <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true}/>
+              </div>
           </MainBox>
         </Wrapper>
       </React.Fragment>
