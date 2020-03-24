@@ -405,7 +405,7 @@ class Alarm extends Component {
                                         </div>
                                     </div>
                                 </ListItem>)
-                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
+                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>최근 3개월 동안의 알림이 없습니다.</div>}
                     </div>
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
