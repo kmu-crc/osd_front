@@ -47,7 +47,7 @@ export class FileController extends Component {
     type: "",
     value: [],
     target: null,
-    validates: ["MaxFileSize(99999999)"]
+    validates: ["MaxFileSize(199999999)"]
   };
 
   async componentDidMount() {
