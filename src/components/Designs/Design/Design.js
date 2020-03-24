@@ -15,7 +15,7 @@ import { geturl } from "config"
 // CSS 
 const DesignElement = styled.div`
   position: relative;
-  z-index:700;
+  z-index: 700;
   width: 330px;
   height: 330px;
   border-radius: 15px;
@@ -26,8 +26,9 @@ const DesignElement = styled.div`
   color: white;
   font-size: 20px;
   font-family: "Noto Sans KR";
+  cursor: pointer;
   .cover {
-    // cursor: pointer;
+    cursor: pointer;
     z-index: 701;
     position: absolute;
     border-radius: 15px;
@@ -175,8 +176,8 @@ class Design extends Component {
     const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design;
     return (
-      <DesignElement img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
-        <div className="cover" onClick={this.gotoDetailPage} />
+      <DesignElement onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
+        {/* <div className="cover" /> */}
         {isForked && <div className="forked" />}
         <div className="categoryName">{data.categoryName}</div>
         <div className="innerbox">
