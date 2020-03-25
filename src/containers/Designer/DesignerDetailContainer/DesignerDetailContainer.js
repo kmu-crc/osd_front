@@ -14,8 +14,8 @@ class DesignerDetailContainer extends Component {
 
   componentWillMount() {
     this.props.GetDesignerDetailRequest(this.props.id)
-      .then(() => { this.props.GetDesignerCountRequest(this.props.id) })
-      .then(() => { if (this.props.token) { this.props.GetLikeDesignerRequest(this.props.id, this.props.token) } })
+      .then(this.props.GetDesignerCountRequest(this.props.id))
+      .then(this.props.userInfo && this.props.GetLikeDesignerRequest(this.props.id, this.props.token))
   }
   render() {
     return (
@@ -49,42 +49,23 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetDesignerDetailRequest: (id) => {
-      return dispatch(GetDesignerDetailRequest(id))
-    },
-    GetLikeDesignerRequest: (id, token) => {//이 디자이너를 내가 관심있는지 없는지
-      return dispatch(GetLikeDesignerRequest(id, token))
-    },
-    LikeDesignerRequest: (id, token) => {//다자이너를 좋아요 눌렀을 때
-      return dispatch(LikeDesignerRequest(id, token))
-    },
-    UnlikeDesignerRequest: (id, token) => {
-      return dispatch(UnlikeDesignerRequest(id, token))
-    },
-    GetDesignerCountRequest: (id) => {
-      return dispatch(GetDesignerCountRequest(id))
-    },
-    GetLikeInDesignerRequest: (id, page) => {
-      return dispatch(GetLikeInDesignerRequest(id, page));
-    },
-    GetMyDesignInDesignerRequest: (id, page) => {
-      return dispatch(GetMyDesignInDesignerRequest(id, page));
-    },
-    GetGroupInDesignerRequest: (id, page) => {
-      return dispatch(GetGroupInDesignerRequest(id, page));
-    },
-    GetRelatedGroupInDesignerRequest: (id, page) => {
-      return dispatch(GetRelatedGroupInDesignerRequest(id, page));
-    },
-    GetLikeGroupInDesignerRequest: (id, page) => {
-      return dispatch(GetLikeGroupInDesignerRequest(id, page));
-    },
-    GetLikeDesignerInDesignerRequest: (id, page) => {//디자이너가 관심있는 디자이너
-      return dispatch(GetLikeDesignerInDesignerRequest(id, page));
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  // get info
+  GetDesignerDetailRequest: (id) => dispatch(GetDesignerDetailRequest(id)),
+  GetDesignerCountRequest: (id) => dispatch(GetDesignerCountRequest(id)),
+  GetLikeDesignerRequest: (id, token) => dispatch(GetLikeDesignerRequest(id, token)),//이 디자이너를 내가 관심있는지 없는지
+
+  // operating
+  LikeDesignerRequest: (id, token) => dispatch(LikeDesignerRequest(id, token)),//다자이너를 좋아요 눌렀을 때
+  UnlikeDesignerRequest: (id, token) => dispatch(UnlikeDesignerRequest(id, token)),
+
+  // get list
+  GetLikeInDesignerRequest: (id, page, sort) => dispatch(GetLikeInDesignerRequest(id, page, sort)),
+  GetMyDesignInDesignerRequest: (id, page, sort) => dispatch(GetMyDesignInDesignerRequest(id, page, sort)),
+  GetGroupInDesignerRequest: (id, page, sort) => dispatch(GetGroupInDesignerRequest(id, page, sort)),
+  GetRelatedGroupInDesignerRequest: (id, page, sort) => dispatch(GetRelatedGroupInDesignerRequest(id, page, sort)),
+  GetLikeGroupInDesignerRequest: (id, page, sort) => dispatch(GetLikeGroupInDesignerRequest(id, page, sort)),
+  GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort))//디자이너가 관심있는 디자이너
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DesignerDetailContainer);

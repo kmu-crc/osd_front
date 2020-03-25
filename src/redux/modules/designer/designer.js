@@ -171,9 +171,9 @@ export function Designer(state, action) {
 }
 
 // 디자이너가 좋아요 한 디자인 가져오기
-export function GetLikeInDesignerRequest(id, page) {
+export function GetLikeInDesignerRequest(id, page, sort) {
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/` + id + "/like/" + page, {
+        return fetch(`${host}/designer/designerDetail/` + id + "/like/" + page + "/" + sort, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
@@ -221,9 +221,9 @@ export function GetDesignInDesignerRequest(id, page) {
     }
 }
 // 디자이너가 속한 그룹 가져오기
-export function GetRelatedGroupInDesignerRequest(id, page) {
+export function GetRelatedGroupInDesignerRequest(id, page, sort) {
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/${id}/relatedGroup/${page}`, {
+        return fetch(`${host}/designer/designerDetail/${id}/relatedGroup/${page}/${sort}`, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
@@ -246,9 +246,9 @@ export function GetRelatedGroupInDesignerRequest(id, page) {
     }
 }
 // 디자이너가 만든 그룹 가져오기
-export function GetGroupInDesignerRequest(id, page) {
+export function GetGroupInDesignerRequest(id, page, sort) {
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/${id}/myGroup/${page}`, {
+        return fetch(`${host}/designer/designerDetail/${id}/myGroup/${page}/${sort}`, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
@@ -271,9 +271,9 @@ export function GetGroupInDesignerRequest(id, page) {
     }
 }
 //디자이너가 좋아요 누른 그룹 가졍기
-export function GetLikeGroupInDesignerRequest(id, page) {
+export function GetLikeGroupInDesignerRequest(id, page, sort) {
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/` + id + "/likeGroup/" + page, {
+        return fetch(`${host}/designer/designerDetail/` + id + "/likeGroup/" + page + "/" + sort, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
@@ -299,9 +299,9 @@ export function GetLikeGroupInDesignerRequest(id, page) {
     }
 }
 //디자이너가 좋아요 누른 디자이너 가져오기
-export function GetLikeDesignerInDesignerRequest(id, page) {
+export function GetLikeDesignerInDesignerRequest(id, page, sort) {
     return (dispatch) => {
-        return fetch(`${host}/designer/designerDetail/` + id + "/likeDesigner/" + page, {
+        return fetch(`${host}/designer/designerDetail/` + id + "/likeDesigner/" + page + "/" + sort, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
@@ -324,8 +324,8 @@ export function GetLikeDesignerInDesignerRequest(id, page) {
 }
 
 // 디자이너의 디자인 리스트 가져오기
-export function GetMyDesignInDesignerRequest(id, page) {
-    const sql = `${host}/designer/designerDetail/${id}/allDesignDesigner/${page}`;
+export function GetMyDesignInDesignerRequest(id, page, sort) {
+    const sql = `${host}/designer/designerDetail/${id}/allDesignDesigner/${page}/${sort}`;
     console.log("sql:", sql);
     // const sql = `${host}/designer/designerDetail/` + id + "/myDesign/" + page
     console.log(sql);

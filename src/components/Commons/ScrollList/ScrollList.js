@@ -192,6 +192,7 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
     const { hasMore, loading, cols } = this.state;
+    console.log(this.props);
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer cols={cols} type={type} ref={this.myRef} >
         {dataListAdded.map((item, i) => {

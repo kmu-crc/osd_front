@@ -102,12 +102,15 @@ class DesignListContainer extends Component {
     return (<React.Fragment>
       <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
         category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
-      <div style={{width:"100%",height:"1px",position:"relative"}}>
-      <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-      </div>
+     
       <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
         <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
       </TextWrapper>
+
+      <div style={{ width: "100%", marginTop: "50px",  height: "1px", position: "relative" }}>
+        <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+      </div>
+      
       <ScrollListContainer>
         {status === "INIT"
           ? <Loading />

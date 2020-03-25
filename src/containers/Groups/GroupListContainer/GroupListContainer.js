@@ -24,7 +24,7 @@ const TextWrapper = styled.div`
       text-align:center;
       position:absolute;
       @media only screen {
-        right:${props=>(props.centerPos-300)/2}px;
+        right:${props => (props.centerPos - 300) / 2}px;
       }
     }
 `;
@@ -53,11 +53,10 @@ const ScrollListContainer = styled.div`
 
 class GroupListContainer extends Component {
 
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     this.state = {
-      screenWidth:window.innerWidth,
+      screenWidth: window.innerWidth,
       reload: false,
       search: null,
       count: 0,
@@ -65,21 +64,21 @@ class GroupListContainer extends Component {
     }
     this.handleResize = this.handleResize.bind(this);
   }
-  
-  componentDidMount(){
+
+  componentDidMount() {
     this.props.GetGroupTotalCountRequest()
       .then(() => { this.setState({ count: this.props.Count }) })
       .then(() => { this.props.GetGroupListRequest(0, null, null) });
     window.addEventListener("resize", this.handleResize, false);
 
-    }
+  }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize, false);
   };
-  handleResize(){
+  handleResize() {
     console.log(window.innerWidth);
-    this.setState({screenWidth:window.innerWidth})
-   }
+    this.setState({ screenWidth: window.innerWidth })
+  }
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
@@ -104,12 +103,18 @@ class GroupListContainer extends Component {
     const { dataList, dataListAdded } = this.props
     return (
       <React.Fragment>
-        <div style={{width:"100%",height:"1px",position:"relative"}}>
-        <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-        </div>
-        <TextWrapper centerPos={this.state.screenWidth}><div className="title">그룹({count})</div></TextWrapper>
 
-        <JoinGroupContainer><JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup></JoinGroupContainer>
+        <TextWrapper centerPos={this.state.screenWidth}>
+          <div className="title">그룹({count})</div>
+        </TextWrapper>
+
+        <JoinGroupContainer>
+          <JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup>
+        </JoinGroupContainer>
+
+        <div style={{ width: "100%", marginTop: "50px", height: "1px", position: "relative" }}>
+          <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
+        </div>
 
         <ScrollListContainer id="list">
           {this.props.status === "INIT" ?
@@ -117,7 +122,7 @@ class GroupListContainer extends Component {
             <ScrollList {...osdstyle.group_margin} type="group" reload={reload} handleReload={this.handleReload}
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
         </ScrollListContainer>
-s      </React.Fragment>
+      </React.Fragment>
     )
   }
 }
