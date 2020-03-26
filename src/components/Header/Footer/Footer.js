@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { Link } from 'react-router-dom'
+import GitInfo from 'react-git-info/macro';
 
 const FooterContainer = styled.div`
     width:100%;
@@ -18,52 +18,44 @@ const FooterContainer = styled.div`
     background-color:white;
     z-index: 999;
     .origin{
+        cursor: pointer;
         margin-left:15px;
         float:left;
     }
     .term{
-        cursor:pointer;
+        cursor: pointer;
         margin-left:auto;
         margin-right:17px;
     }
     .security{
-        cursor:pointer;
-        margin-right:13px;
+        cursor: pointer;
+        margin-right: 13px;
     }
 `
 
+const gitInfo = GitInfo();
+
 class Footer extends Component {
-    
-    // constructor(props)
-    // {
-    //     super(props);
-    // }
-    gotoPrivacy()
-    {
-        window.location.href="/footerPrivacy";
+    constructor(props) {
+        super(props);
+        this.gotoPrivacy = this.gotoPrivacy.bind(this);
+        this.gotoTerm = this.gotoTerm.bind(this);
     }
-    gotoTerm()
-    {
-        window.location.href="/footerPara";
+    gotoPrivacy() {
+        window.location.href = "/footerPrivacy";
+    }
+    gotoTerm() {
+        window.location.href = "/footerPara";
     }
     render() {
         return (
             <FooterContainer>
-                <div className="origin">Copyright @ 2019 Open Design Inc.</div>
-                <div className="term" onClick = {this.gotoTerm}>이용약관</div>
-                <div className="security" onClick = {this.gotoPrivacy}>개인 정보 보호 방책</div>
+                <div className="origin" title={`${gitInfo.commit.date}`} onClick={() => alert(`현재 버전: ${gitInfo.commit.date}`)}>Copyright @ 2019 Open Design Inc.</div>
+                <div className="term" onClick={this.gotoTerm}>이용약관</div>
+                <div className="security" onClick={this.gotoPrivacy}>개인 정보 보호 방책</div>
             </FooterContainer>
         )
     }
 }
-//<FooterContainer>
-//    <div className="copyright">copyright @ 2019 Open Design Inc.</div>
-//    <div className="links">
-//        {/* <Link to="">사이트 소개</Link> */}
-//        <Link to="/Term/term">이용약관</Link>
-//        <Link to="/Privacy/privacy">개인정보보호정책</Link>
-//        {/* <Link to="">문의</Link> */}
-//    </div>
-//</FooterContainer>
-//
-export default Footer
+
+export default Footer;
