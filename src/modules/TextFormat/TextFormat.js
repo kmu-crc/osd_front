@@ -6,7 +6,7 @@ const TextFormatContainer = styled.div`
   cursor: pointer;
   overflow: hidden; 
   text-overflow: ellipsis;
-  width: ${props => props.width || "max-content"};
+  width: ${props => props.width+"%" || "max-content"};
   background-color: ${props => props.backgroundColor || "transparent"};
   &.multi {
     display: -webkit-box;
@@ -21,6 +21,7 @@ const TextFormatContainer = styled.div`
 class TextFormat extends Component {
   render() {
     const { backgroundColor, width, txt, id, lines, chars } = this.props;
+    // console.log(this.props);
     return (
       <TextFormatContainer backgroundColor={backgroundColor} width={width} title={txt} id={id} lines={lines} className={lines ? "multi" : "single"}>
 

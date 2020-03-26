@@ -214,7 +214,7 @@ class Alarm extends Component {
                         .then(res => {console.log("getURL",geturl()+this.getLink(item));
                             //     if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid);
-                             alert("승인되었습니다. 해당페이지로 이동합니다.");
+                            //  alert("승인되었습니다. 해당페이지로 이동합니다.");
                             this.props.history.push(this.getLink(item))
                             //           } else { alert("다시 시도해주세요.") }
 
@@ -368,8 +368,8 @@ class Alarm extends Component {
                             const alarmKind = item.kinds;
                             const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
                             let msg = this.getMessageText(item);
-
                             const itemTitle = item.title.length>10?item.title.slice(0,10)+"...":item.title;
+                            console.log(item.title);
                             return (
                                 <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
                                     <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
@@ -391,8 +391,8 @@ class Alarm extends Component {
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={itemTitle} /></div>
-                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "22.5px", fontSize: "17px", fontWeight: '500', width: "225px" }}><TextFormat width={100} txt={item.title} /></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "22.5px", fontSize: "17px", fontWeight: "300", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }
                                             </div>

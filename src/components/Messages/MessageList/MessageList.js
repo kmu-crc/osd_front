@@ -50,11 +50,12 @@ const MessageBox=styled.div`
   }
 `
 const NavSection = styled.div`
-  min-width:300px;
+  min-width:400px;
   width:25%;
   height:100%;
   display:flex;
   flex-direction:column;
+  overflow:hidden;
   .NavHeader{
     width:100%;
     height:8.5%;
@@ -225,7 +226,10 @@ const SummaryList = styled.div`
   }
 `;
 const SummaryItemBox = styled.div`
-
+  *{
+    cursor:pointer;
+  }
+  cursor:pointer;
   position:relative;
   overflow:hidden;
   width:336px;
@@ -327,7 +331,7 @@ class Messages extends React.Component {
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
     }
-    document.getElementById("box").focus();
+    document.getElementById("sendMsgBox")&&document.getElementById("sendMsgBox").focus();
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
@@ -383,6 +387,8 @@ class Messages extends React.Component {
     console.log("1111111111" + this.state.selectId);
   }
   setMsgId = async (group_id, user_id, user_name) => {
+    
+    console.log(group_id, user_id, user_name)
     await this.setState({
       msgId: group_id,
       selectId: user_id,
@@ -395,6 +401,8 @@ class Messages extends React.Component {
       await this.props.GetMyMsgListRequest(this.props.token)
       this.setState({ render: true })
     }, 250)
+    await this.handleCloseMember();
+    await document.getElementById("sendMsgBox").focus();
   }
   onSubmitForm = async (data) => {
     if (this.state.selectId === null) {
@@ -424,18 +432,16 @@ class Messages extends React.Component {
   handleSelectMsgSummary(select_id, select_name, msgID) {
     this.setState(state => ({ selectId: select_id, selectName: select_name, msgId: msgID }));
   }
-  handleOpenMember(event) {
+  handleOpenMember() {
     const isOpen = this.state.showSearch;
-    this.setState(state => ({ showSearch: !isOpen }));
+    this.setState({ showSearch: true });
   }
-  handleClickSearchMemberItem(id, name) {
+  handleClickSearchMemberItem(id, name,event) {
     this.setMsgId(-1, id, name);
 
   }
-  handleCloseMember(event) {
-    if (event.target.id !== "searchRect") {
+  handleCloseMember() {
       this.setState({ showSearch: false })
-    }
   }
   handleResize() {
     const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;
@@ -477,7 +483,7 @@ class Messages extends React.Component {
                       {this.state.showSearch &&
                         (<div>
                           {this.state.hideSearch === true ? null :
-                            <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+                            <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} setMsgID = {this.setMsgId} />}
                         </div>)}
                       <SummaryList id="searchRect">{arrSummaryList}</SummaryList>
                   </div>
@@ -491,7 +497,7 @@ class Messages extends React.Component {
                     </div>
                   </div>
                   <div className="asideSend">
-                      <div className="sendBox"><SendMessageTextarea id="box" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}/></div>
+                      <div className="sendBox"><SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue}/></div>
                       <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
                   </div>
               </AsideSection>

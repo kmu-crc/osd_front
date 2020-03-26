@@ -71,7 +71,7 @@ const CommentInner = styled.div`
             font-weight: 500;
             margin-left: 5px;
             pointer: default;
-        }
+       }
         .del {
             width: max-content;
             font-size: 13px;
@@ -79,6 +79,7 @@ const CommentInner = styled.div`
             margin-left: 5px;
             color: red;
             pointer: default;
+            cursor:pointer;
         }
     };
 `;
