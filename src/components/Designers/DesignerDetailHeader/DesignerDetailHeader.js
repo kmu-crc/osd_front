@@ -107,16 +107,35 @@ const CategoryLabel = styled.div`
     text-align:left;
 `;
 const ExplainBox01 = styled.div`
-    width:479px;
-    height:149px;
-    overflow:hidden;
-    font-size:20px;
-    font-weight:200;
-    font-family:Noto Sans KR;
-    color:#707070;
-    text-align:left;
-    line-height:35px;
-    word-wrap:break-word;
+    // width:479px;
+    // height:149px;
+    // overflow:hidden;
+    // font-size:20px;
+    // font-weight:200;
+    // font-family:Noto Sans KR;
+    // color:#707070;
+    // text-align:left;
+    // line-height:35px;
+    // word-wrap:break-word;
+    display: inline-block; 
+    width: 100%;
+    height: 140px;
+    font-size: 20px;
+    font-weight: 200;
+    font-family: Noto Sans KR;
+    line-height: 35px;
+    margin-top: 20px;
+    color: #707070;
+
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    text-align: left; 
+    word-wrap: break-word; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 4; 
+    -webkit-box-orient: vertical;
 `;
 const ExplainBox02 = styled.div`
     width:479px;
@@ -276,7 +295,8 @@ const DesignerInfo3 = styled.div`
   }
   .box2 { 
     order: 2;
-    width: 479px;
+    // width: 479px;
+    width:1100px;
     margin-top: 41px;
     margin-left: 103px;
     &.secondary {
@@ -367,12 +387,13 @@ class DesignerPageHeader extends Component {
         const { about_me, likeDialog } = this.state;
         const thumbnailInfo = DesignerDetail.thumbnail ? DesignerDetail.thumbnailUrl.m_img : noface;
         const isMyProfile = this.props.userInfo && DesignerDetail && this.props.userInfo.uid === DesignerDetail.uid ? true : false;
+        const MypageInfo = this.props.DesignerDetail;
 
         console.log("DesignerDetail::", this.props);
 
         return (<React.Fragment>
             {likeDialog ?
-                <LikeDialog><div className="dialog-context">관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></LikeDialog> : null}
+                <LikeDialog><div className="dialog-context">관심 디자이너로 등록되었습니다.<br />내 정보에서 확인 가능합니다.</div></LikeDialog> : null}
 
             <DesignerInfo3>
                 <div className="grid">
@@ -383,9 +404,9 @@ class DesignerPageHeader extends Component {
                         </div>
                     </div>
                     <div className="box box2">
-                        <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex",width:"100%", flexDirection: "column" }}>
                             <CategoryLabel>{DesignerDetail.categoryName}</CategoryLabel>
-                            <ExplainBox01>{about_me[0]}</ExplainBox01>
+                            <ExplainBox01>{MypageInfo.about_me}</ExplainBox01>
                             <CountBox>
                                 <div className="innerWrapper">
                                     <div style={{ display: "flex", marginRight: "20px" }}>
@@ -406,10 +427,10 @@ class DesignerPageHeader extends Component {
                             </CountBox>
                         </div>
                     </div>
-                    <div className="box box2 secondary">
+                    {/* <div className="box box2 secondary">
                         <ExplainBox02>{about_me[1]}</ExplainBox02>
 
-                    </div>
+                    </div> */}
                     <div className="box box4">
                         <SideMenuBox>
                             <div>

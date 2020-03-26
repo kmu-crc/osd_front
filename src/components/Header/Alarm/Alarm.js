@@ -214,7 +214,7 @@ class Alarm extends Component {
                             console.log("getURL", geturl() + this.getLink(item));
                             //     if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid);
-                            alert("승인되었습니다. 해당페이지로 이동합니다.");
+                            //  alert("승인되었습니다. 해당페이지로 이동합니다.");
                             this.props.history.push(this.getLink(item))
                             //           } else { alert("다시 시도해주세요.") }
 
@@ -371,7 +371,6 @@ class Alarm extends Component {
                             let msg = this.getMessageText(item);
                             const MAXLENGTH = 32;
                             // const title = item.title && item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
-
                             // const itemTitle = item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
                             return (
                                 <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>

@@ -1013,7 +1013,7 @@ class ModifyDesign extends Component {
                 </React.Fragment>}
                 {step === 2 && <React.Fragment>
                   <BackButton onClick={this.gotoPrevStep} isComplete={true}><BtnText>뒤로</BtnText></BackButton>
-                  <CompleteButton onClick={this.submit} isComplete={true}><BtnText>완료</BtnText></CompleteButton>
+                  <CompleteButton onClick={this.submit} isComplete={true}><BtnText>수정</BtnText></CompleteButton>
                 </React.Fragment>}
               </ButtonBox>
               {/* </form> */}

@@ -103,7 +103,7 @@ class SignNav extends Component {
         return (<React.Fragment>
             {user_popup &&
                 <UserMenu ref={this.myRef} display={"block"} top={user_popup.top} left={userinfo.userMenuLeft} >
-                    <div><UserMenuItem onClick={this.gotoMyPage}>마이페이지</UserMenuItem></div>
+                    <div><UserMenuItem onClick={this.gotoMyPage}>내 정보</UserMenuItem></div>
                     <hr color="#EFEFEF" width="166px" noshade="none" />
                     <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
                 </UserMenu>}
