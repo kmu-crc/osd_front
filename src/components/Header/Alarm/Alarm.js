@@ -225,7 +225,7 @@ class Alarm extends Component {
                     this.props.UpdateGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //if (res.data && res.data.success) {
-                            alert("승인되었습니다.")
+                            // alert("승인되었습니다.")
                             this.alarmConfirm(item.uid)
                             //} else { alert("다시 시도해주세요.") }
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))

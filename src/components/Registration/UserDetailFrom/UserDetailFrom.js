@@ -163,6 +163,7 @@ class ModifyMyDetail extends Component {
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",screenWidth: window.innerWidth,
+      careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -175,6 +176,7 @@ class ModifyMyDetail extends Component {
     this.updateCareer = this.updateCareer.bind(this);
     this.updateLocation = this.updateLocation.bind(this);
     this.updateContact = this.updateContact.bind(this);
+    this.updateCareerlist = this.updateCareerlist.bind(this);
 
   }
 
@@ -209,6 +211,9 @@ class ModifyMyDetail extends Component {
   }
   updateContact(modifyvalue) {
     this.setState({ contact: modifyvalue });
+  }
+  updateCareerlist(modifyvalue) {
+    this.setState({ careerlist: modifyvalue });
   }
 
   componentDidMount() {
@@ -261,6 +266,12 @@ class ModifyMyDetail extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
+    let careerlist = "";
+    this.state.careerlist.map((item, index) => { // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+      return (
+        careerlist += item.number + "," + item.task + "," + item.explain + "," + item.during + "/"
+      );
+    })
     let formData = {
       uid: this.props.uid, nick_name: this.state.nick_name,
       about_me: this.state.about_me,
@@ -268,9 +279,10 @@ class ModifyMyDetail extends Component {
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
       is_designer: this.state.is_designer,
-      team: this.state.team, career: this.state.career,
-      location: this.state.location, contact: this.state.contact,
+      // team: this.state.team, career: this.state.career,
+      // location: this.state.location, contact: this.state.contact,
       change_password: this.state.change_password,
+      careerlist:careerlist,
       files: []
     };
     let file = {
@@ -375,10 +387,10 @@ class ModifyMyDetail extends Component {
               updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
             <HRline/>
             <SectionBuziness  MyDetail={this.props.MyDetail}
-              updateIsDesigner={this.updateIsDesigner}
+              updateIsDesigner={this.updateIsDesigner} updateCareerlist={this.updateCareerlist}
               updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
           </form>
-          <CompleteButton id="additional" isComplete  ={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
+          <CompleteButton id="additional" isComplete  ={true} onClick={this.onSubmit}><BtnText>등록</BtnText></CompleteButton>
         </InputBoard>
       </MainSection>
     </React.Fragment>)

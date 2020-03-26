@@ -161,6 +161,7 @@ class ModifyMyDetail extends Component {
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
+      careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -170,11 +171,12 @@ class ModifyMyDetail extends Component {
     this.updateCategory1 = this.updateCategory1.bind(this);
     this.updateCategory2 = this.updateCategory2.bind(this);
     this.updateIsDesigner = this.updateIsDesigner.bind(this);
-    this.updateTeam = this.updateTeam.bind(this);
-    this.updateCareer = this.updateCareer.bind(this);
-    this.updateLocation = this.updateLocation.bind(this);
-    this.updateContact = this.updateContact.bind(this);
+    // this.updateTeam = this.updateTeam.bind(this);
+    // this.updateCareer = this.updateCareer.bind(this);
+    // this.updateLocation = this.updateLocation.bind(this);
+    // this.updateContact = this.updateContact.bind(this);
     this.handleClickModifyMyProfile = this.handleClickModifyMyProfile.bind(this);
+    this.updateCareerlist = this.updateCareerlist.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail && this.props.MyDetail !== nextProps.MyDetail) {
@@ -184,6 +186,7 @@ class ModifyMyDetail extends Component {
         nick_name: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         about_me: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
         password: "", passwordCheck: "",screenWidth: window.innerWidth,
+        careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
       });
     }
     return true;
@@ -216,17 +219,20 @@ class ModifyMyDetail extends Component {
   updateIsDesigner(modifyvalue) {
     this.setState({ is_designer: modifyvalue });
   }
-  updateTeam(modifyvalue) {
-    this.setState({ team: modifyvalue });
-  }
-  updateCareer(modifyvalue) {
-    this.setState({ career: modifyvalue });
-  }
-  updateLocation(modifyvalue) {
-    this.setState({ location: modifyvalue });
-  }
-  updateContact(modifyvalue) {
-    this.setState({ contact: modifyvalue });
+  // updateTeam(modifyvalue) {
+  //   this.setState({ team: modifyvalue });
+  // }
+  // updateCareer(modifyvalue) {
+  //   this.setState({ career: modifyvalue });
+  // }
+  // updateLocation(modifyvalue) {
+  //   this.setState({ location: modifyvalue });
+  // }
+  // updateContact(modifyvalue) {
+  //   this.setState({ contact: modifyvalue });
+  // }
+  updateCareerlist(modifyvalue) {
+    this.setState({ careerlist: modifyvalue });
   }
 
   componentDidMount() {
@@ -291,17 +297,29 @@ class ModifyMyDetail extends Component {
     return returnvalue;
   }
   onSubmit = async e => {
-
     e.preventDefault();
+
+    let careerlist = "";
+    this.state.careerlist.map((item, index) => { // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+      return (
+        careerlist += item.number + "," + item.task + "," + item.explain + "," + item.during + "/"
+      );
+    })
+
 
     let formData = {
       change_password: this.change_password,
       nick_name: this.state.nick_name, about_me: this.state.about_me,
       password: this.state.password,thumbnail:"",
       category_level1: this.state.category_level1, category_level2: this.state.category_level2,
-      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career,
-      location: this.state.location, contact: this.state.contact, files: []
+      is_designer: this.state.is_designer, 
+      // team: this.state.team, career: this.state.career,
+      // location: this.state.location, contact: this.state.contact, 
+      careerlist:careerlist,
+      files: []
     };
+    console.log(careerlist);
+    // return;
 
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     if(this.state.thumbnail!=null||this.state.thumbnail!="")
@@ -343,13 +361,15 @@ class ModifyMyDetail extends Component {
       return;
     }
 
+    // console.log(formData);
+    // return;
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
       .then(res => {
         if (res.success) {
           alert("정보가 수정되었습니다.");
-          //this.props.history.push(`/`);
-          window.location.href = "/designer";
+
+          // window.location.href = "/designer";
         } else {
           alert("다시 시도해주세요");
           this.setState({
@@ -437,14 +457,16 @@ class ModifyMyDetail extends Component {
             <SectionBuziness
               MyDetail={this.props.MyDetail}
               updateIsDesigner={this.updateIsDesigner}
-              updateTeam={this.updateTeam}
-              updateCareer={this.updateCareer}
-              updateLocation={this.updateLocation}
-              updateContact={this.updateContact} />
+              updateCareerlist={this.updateCareerlist}
+              // updateTeam={this.updateTeam}
+              // updateCareer={this.updateCareer}
+              // updateLocation={this.updateLocation}
+              // updateContact={this.updateContact} 
+              />
           </form>
           <div className="buttonBox">
             <CompleteButton isComplete={true} onClick={this.onSubmit}>
-              <BtnText>등록하기</BtnText>
+              <BtnText>등록</BtnText>
             </CompleteButton>
           </div>
         </InputBoard>
