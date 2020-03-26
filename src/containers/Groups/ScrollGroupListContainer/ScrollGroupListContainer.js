@@ -24,7 +24,7 @@ class ScrollGroupListContainer extends Component {
 
   render() {
     const { dataListAdded } = this.props;
-    
+
     return (
 
       <div>
@@ -33,6 +33,7 @@ class ScrollGroupListContainer extends Component {
             {this.props.message || "등록된 그룹이 없습니다."}</NoDataMsg>
           :
           <ScrollList
+            manual={this.props.manual || false}
             {...opendesign_style.group_margin}
             getListRequest={this.getList}
             type="group"

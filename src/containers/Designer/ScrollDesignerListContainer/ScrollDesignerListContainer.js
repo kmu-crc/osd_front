@@ -6,13 +6,13 @@ import opendesign_style from "opendesign_style";
 import styled from "styled-components";
 
 const NoDataMsg = styled.div`
-  width:100%;
-  height:500px;
-  padding:100px;
-  font-size:30pt;
-  color:#707070;
-  font-family:Noto Sans KR;
-  text-align:center;
+  width: 100%;
+  height: 250px; // 500px;
+  padding: 50px; // 100px;
+  font-size: 30px;
+  color: #707070;
+  font-family: Noto Sans KR;
+  text-align: center;
 `
 class ScrollDesignerListContainer extends Component {
   constructor(props) {
@@ -54,6 +54,7 @@ class ScrollDesignerListContainer extends Component {
           <NoDataMsg>{this.props.message || "등록된 디자이너가 없습니다."}</NoDataMsg>
           :
           <ScrollList
+            manual={this.props.manual || false}
             type="designer"
             getListRequest={this.getList}
             dataList={this.props.dataList}

@@ -182,13 +182,22 @@ class SearchListRe extends Component {
     async handleChangeOrderOps(order) {
         await this.setState({ this_order: order })
     }
-
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            if (this.props.groups !== prevProps.groups) {
+                this.setState({ group: true });
+            }
+            if (this.props.designs !== prevProps.designs) {
+                this.setState({ design: true });
+            }
+            if (this.props.designers !== prevProps.designers) {
+                this.setState({ designer: true });
+            }
+        }
+    }
     render() {
         const { category1, category2 } = this.props;
         const { main_category, sub_category } = this.state;
-
-        console.log(this.props);
-        console.log(this.state.urlCate === "group", this.props.group_status !== "INIT", this.props.groups.length === 0);
 
         return (
             <SearchContainer>
@@ -220,17 +229,17 @@ class SearchListRe extends Component {
                     {/* box position */}
                     <div style={{ display: "flex" }}>
                         <div style={{ marginLeft: "35px", width: "max-content", zIndex: "800", display: "flex" }}>
-                            <div style={{ diplay: "flex" }}>
-                                <CheckBox2 type="checkbox" id="designcheckbox" onChange={() => this.setState({ design: !this.state.design })} checked={this.state.design} /><div style={{ marginLeft: "27px", }}>디자인</div>
-                            </div>
-                            <div style={{ diplay: "flex" }}>
+                            <div style={{ diplay: "flex", marginRight: "15px" }}>
                                 <CheckBox2 type="checkbox" id="groupcheckbox" onChange={() => this.setState({ group: !this.state.group })} checked={this.state.group} /><div style={{ marginLeft: "27px", }}>그룹</div>
+                            </div>
+                            <div style={{ diplay: "flex", marginRight: "15px" }}>
+                                <CheckBox2 type="checkbox" id="designcheckbox" onChange={() => this.setState({ design: !this.state.design })} checked={this.state.design} /><div style={{ marginLeft: "27px", }}>디자인</div>
                             </div>
                             <div style={{ diplay: "flex" }}>
                                 <CheckBox2 type="checkbox" id="designercheckbox" onChange={() => this.setState({ designer: !this.state.designer })} checked={this.state.designer} /><div style={{ marginLeft: "27px", }}>디자이너</div>
                             </div>
                         </div>
-                        {/* <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} value={this.state.selectCate} /> */}
+
                         <div style={{ marginLeft: "auto", marginRight: "35px", width: "max-content" }}>
                             <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
                         </div>
@@ -243,6 +252,7 @@ class SearchListRe extends Component {
                     <div style={{ marginTop: "35px", minHeight: "350px" }}>
                         {this.state.group ?
                             <ScrollGroupListContainer
+                                manual
                                 message={`'${this.props.keyword}'에 대한 그룹을 찾을 수 없습니다.`}
                                 sort={this.props.sort}
                                 keyword={this.props.keyword}
@@ -252,6 +262,7 @@ class SearchListRe extends Component {
 
                         {this.state.design ?
                             <ScrollDesignListContainer
+                                manual
                                 message={`'${this.props.keyword}'에 대한 디자인을 찾을 수 없습니다.`}
                                 sort={this.props.sort}
                                 keyword={this.props.keyword}
@@ -261,6 +272,7 @@ class SearchListRe extends Component {
 
                         {this.state.designer ?
                             <ScrollDesignerListContainer
+                                manual
                                 message={`'${this.props.keyword}'에 대한 디자이너를 찾을 수 없습니다.`}
                                 sort={this.props.sort}
                                 keyword={this.props.keyword}
