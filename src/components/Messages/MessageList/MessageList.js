@@ -489,7 +489,7 @@ class Messages extends React.Component {
                   </div>
                 </div>
                 <div className="asideSend">
-                  <div className="sendBox"><SendMessageTextarea id="box" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                  <div className="sendBox"><SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
                   <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
                 </div>
               </AsideSection>
