@@ -147,6 +147,10 @@ const ProfileBox = styled.div`
     }
 `;
 const ExplainBox = styled.div`
+// *{
+//     border:1px solid black;
+// }
+    width:100%;
     margin-left: 10px;
     position: relative;
     
@@ -170,10 +174,29 @@ const ExplainBox = styled.div`
             line-height: 30px;
             // margin-top: 10px;
             .explaination{
-                width: 500px;
+                // width: 500px;
                 margin-right: 41px;
-                word-wrap: break-word;
-                overflow: hidden;
+                // word-wrap: break-word;
+                // overflow: hidden;
+                display: inline-block; 
+                width: 100%;
+                height: 100%;
+                font-size: 20px;
+                font-weight: 200;
+                font-family: Noto Sans KR;
+                line-height: 30px;
+                // margin-top: 20px;
+                color: #707070;
+            
+                white-space: nowrap; 
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: normal; 
+                text-align: left; 
+                word-wrap: break-word; 
+                display: -webkit-box; 
+                -webkit-line-clamp: 3; 
+                -webkit-box-orient: vertical;
             }
         }
     }
@@ -351,7 +374,7 @@ const GroupInfo3 = styled.div`
     }
     .box3 { 
         order: 2;
-        width: 621px;
+        width: 1100px;
         margin-left: 55px;
         margin-top: 65px;
         @media only screen and (min-width: 0px) and (max-width: 1250px) {
@@ -530,12 +553,13 @@ class GroupInfoComponent extends Component {
                         {/* box3 */}
                         <div className="box box3">
                             <ExplainBox>
-                                <div style={{ display: "flex" }}>
+                                <div style={{ display: "flex",width:"100%" }}>
                                     <div className="board">
                                         <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
                                         <div className="explanationRegion">
                                             <div className="explaination">
-                                                {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
+                                                {info.explanation}
+                                                {/* {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`} */}
                                             </div>
                                         </div>
                                         <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
@@ -558,13 +582,13 @@ class GroupInfoComponent extends Component {
                         </div>
 
                         {/* box3`*/}
-                        {parentName ? null : <div className="box box3 secondary">
+                        {/* {parentName ? null : <div className="box box3 secondary">
                             <ExplainBox>
                                 
                                 <div className="explaination" style={{fontSize:"17px",color:"#707070"}}>{info.explanation && info.explanation.slice(200, 400)}{info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}</div>
                                 
                             </ExplainBox>
-                        </div>}
+                        </div>} */}
 
                         {/* box4 */}
                         <div className="box box4">
@@ -615,7 +639,7 @@ class GroupInfoComponent extends Component {
         const info = this.props.GroupInfo;
         return (
             <React.Fragment>
-                {this.state.likeDialog && <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>}
+                {this.state.likeDialog && <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />내 정보에서 확인 가능합니다.</div></PopupBox>}
                 <Header width={w}>
                     {info
                         ? <GroupInfo GroupInfo={info} />

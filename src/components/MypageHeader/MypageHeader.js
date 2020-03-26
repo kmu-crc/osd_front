@@ -42,17 +42,45 @@ const CategoryLabel = styled.div`
     text-align: left;
 `;
 const ExplainBox01 = styled.div`
-    margin-top: 20px;
-    width: 479px;
-    height: 149px;
-    overflow: hidden;
+    // column-width:300px;
+    // column-fill:auto;
+    // column-count:2;
+    // column-gap:100px;
+    // border:1px solid black;
+    // display:block;
+    // margin-top: 20px;
+    // width: 100%;
+    // height: 140px;
+    // font-size: 20px;
+    // font-weight: 200;
+    // font-family: Noto Sans KR;
+    // color: #707070;
+    // text-align: left;
+    // line-height: 35px;
+    // word-wrap: break-word;
+    // overflow: hidden;    
+    // text-overflow:ellipsis;
+    display: inline-block; 
+    width: 100%;
+    height: 140px;
     font-size: 20px;
     font-weight: 200;
     font-family: Noto Sans KR;
-    color: #707070;
-    text-align: left;
     line-height: 35px;
-    word-wrap: break-word;
+    margin-top: 20px;
+    color: #707070;
+
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    text-align: left; 
+    word-wrap: break-word; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 4; 
+    -webkit-box-orient: vertical;
+
+    
 `;
 const ExplainBox02 = styled.div`
     margin-top: 20px;
@@ -220,7 +248,7 @@ const DesignerInfo3 = styled.div`
   }
   .box2 { 
     order: 2;
-    width: 479px;
+    width: 1100px;
     margin-top: 41px;
     margin-left: 148px;
     &.secondary {
@@ -271,9 +299,9 @@ class MypageHeader extends Component {
         const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
 
         if (MypageInfo && MypageInfo.about_me != null) {
-            about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
-            descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
-            about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
+            descriptionLengthCheck = MypageInfo.about_me.length < 230 ? "" : " ...";
+            about_me[0] = MypageInfo.about_me.length < 230 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 230)+descriptionLengthCheck;
+            // about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
 
         return (
@@ -287,9 +315,9 @@ class MypageHeader extends Component {
                             </div>
                         </div>
                         <div className="box box2">
-                            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+                            <div style={{ width:"100%",display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
                                 <CategoryLabel>{MypageInfo.categoryName}</CategoryLabel>
-                                <ExplainBox01>{about_me[0]}</ExplainBox01>
+                                <ExplainBox01>{MypageInfo.about_me}</ExplainBox01>
                                 <CountBox>
                                     <div className="countItem">
                                         <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>
@@ -306,11 +334,11 @@ class MypageHeader extends Component {
                                 </CountBox>
                             </div>
                         </div>
-                        <div className="box box2 secondary">
+                        {/* <div className="box box2 secondary">
                             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
                                 <ExplainBox02>{about_me[1]}</ExplainBox02>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="box box4">
                             <SideMenuBox>
                                 <div>
@@ -329,7 +357,7 @@ class MypageHeader extends Component {
 
                 {this.state.likeDialog === false ? null :
                     <LikeDialog>
-                        <div className="message">관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
+                        <div className="message">관심 디자이너로 등록되었습니다.<br />내 정보에서 확인 가능합니다.
                         </div>
                     </LikeDialog>}
             </React.Fragment>

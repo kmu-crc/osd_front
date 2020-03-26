@@ -431,7 +431,7 @@ class SignUpModal extends Component {
                             <div className="Decoline" />
                         </div>
                         <div className="subText">오직 한 단계밖에 남지 않았습니다!</div>
-                        <div className="guideText">더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 마이페이지로 이동합니다<br /><br /><br /><br /> 이동 중...</div>
+                        <div className="guideText">더 편한 이용을 위해 회원님의 프로필을 더 작성해주세요!<br /> 내 정보로 이동합니다<br /><br /><br /><br /> 이동 중...</div>
                     </CustomModal>)
                     :
                     (<CustomModal open={open} onClose={this.onClose}>

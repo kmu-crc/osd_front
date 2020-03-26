@@ -23,6 +23,10 @@ import DesignComment from "components/Designs/GridEditor/DesignComment";
 //     width: ${window.innerWidth > 1920 ? 1920 : window.innerWidth};
 //     height: 237px;
 // `;
+const Button = styled.button`
+    outline:none;
+    border:none;
+`
 const ThumbnailWrapper = styled.div`
     .fork-mark {
         position: absolute;
@@ -183,6 +187,8 @@ const LeftSide = styled.div`
 const DescriptionContainer = styled.div`
     display: flex;
     flex-direction: column !important;
+    width:100%;
+    height:150px;
     .category-name {
         width: max-content;
         height: 25px;
@@ -194,15 +200,34 @@ const DescriptionContainer = styled.div`
         font-family: Noto Sans KR;
     }
     .txt {
-        width: 423px;
-        height: 125px;
-        margin-top: 10px;
-        word-wrap: break-word;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 300;
-        line-height: 29px;
-        font-family: Noto Sans KR;
+        display: inline-block; 
+    width: 100%;
+    height: 140px;
+    font-size: 20px;
+    font-weight: 200;
+    font-family: Noto Sans KR;
+    line-height: 35px;
+    margin-top: 20px;
+    color: #707070;
+
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    text-align: left; 
+    word-wrap: break-word; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+        // width: 423px;
+        // height: 125px;
+        // margin-top: 10px;
+        // word-wrap: break-word;
+        // color: #707070;
+        // font-size: 20px;
+        // font-weight: 300;
+        // line-height: 29px;
+        // font-family: Noto Sans KR;
     }
 `;
 const RightSide = styled.div`
@@ -632,7 +657,8 @@ const DesignInfo3 = styled.div`
   }
   .box3 { 
     order: 3;
-    width: 423px;
+    // width: 423px;
+    width:1050px;
     margin-left: 65px;
     margin-top: 65px;
     @media only screen and (min-width: 0px) and (max-width: 1250px) {
@@ -669,6 +695,14 @@ class DesignInfo extends Component {
         this.getMemberList = this.getMemberList.bind(this);
         this.getDesignComment = this.getDesignComment.bind(this);
         this.onMoveForkDesign = this.onMoveForkDesign.bind(this);
+        this.onBlurMemberList = this.onBlurMemberList.bind(this);
+        this.onBlurForkDesign = this.onBlurForkDesign.bind(this);
+    }
+    onBlurMemberList(event){
+        this.setState({memberList:false});
+    }
+    onBlurForkDesign(event){
+        this.setState({forkDesignList:false});
     }
     onMoveForkDesign(designID) {
         window.location.href = "/designDetail/" + designID;
@@ -695,7 +729,7 @@ class DesignInfo extends Component {
             alert("가입 대기중인 디자인입니다.");
         } else {
             const data = [{ uid: this.props.userInfo.uid }];
-            if (window.confirm("해당 디자인에 가입 신청하시겠습니까?")) {
+            if (window.confirm("해당 디자인에 멤버로 가입 신청하시겠습니까?")) {
                 this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
                     .then(res => {
                         if (res && res.data && res.data.success) {
@@ -789,7 +823,7 @@ class DesignInfo extends Component {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
                     <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                        <Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
+                        <Cross angle={45} color={"#707070"} weight={3} width={20} height={20} />
                     </div>
                     <Modal.Content>
                         <DesignMemberContainer mine={isMyDesign} DesignDetail={DesignDetail} />
@@ -801,7 +835,7 @@ class DesignInfo extends Component {
             return (
                 <DesignCommentModalContainer open={this.state.comment} onClose={() => this.setState({ comment: false })}>
                     <div className="close-box" onClick={() => this.setState({ comment: false })} >
-                        <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
+                        <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
                     </div>
                     {/* <Modal.Content> */}
                     <div className="header-txt"><h2>댓글</h2></div>
@@ -833,7 +867,7 @@ class DesignInfo extends Component {
 
                 {this.state.likeDialog &&
                     <LikeDialogContainer>
-                        <div className="txt">관심 디자인으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></LikeDialogContainer>}
+                        <div className="txt">관심 디자인으로 등록되었습니다.<br />내 정보에서 확인 가능합니다.</div></LikeDialogContainer>}
 
                 {/*  */}
                 <DesignInfo3>
@@ -855,7 +889,7 @@ class DesignInfo extends Component {
                                             <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>
                                                 {DesignDetail.parent_title.slice(0, 4)} {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>
                                             : <div className="goto-parent no"></div>}
-                                        <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
+                                        <button className="member-list-btn" onBlur={this.onBlurMemberList} onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
                                             <div className="design_member"> {DesignDetail.userName.length > 7 ? DesignDetail.userName.slice(0, 7) + "..." : DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외" + (DesignDetail.member.length - 1).toString() + "명"}</div>
                                         </button>
                                         {!isMyDesign && this.state.memberList &&
@@ -880,7 +914,7 @@ class DesignInfo extends Component {
                                         </div>
 
                                         {DesignDetail.children_count["count(*)"] > 0
-                                            ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onClick={(event) => { this.getForkDesignList(event) }}>
+                                            ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onBlur={this.onBlurForkDesign} onClick={(event) => { this.getForkDesignList(event) }}>
                                                 <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
                                             </button>
                                             : <button className="fork-list-btn no" disabled></button>}
@@ -888,7 +922,7 @@ class DesignInfo extends Component {
                                         {this.state.forkDesignList &&
                                             <DesignMemberList top={this.state.posY} left={this.state.posX}>
                                                 <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
-                                                    <Cross angle={45} color={"#000000"} weight={3} width={45} height={45} />
+                                                    <Cross angle={45} color={"#000000"} weight={3} width={30} height={30} />
                                                 </div>
                                                 <div className="list">
                                                     {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
@@ -918,16 +952,19 @@ class DesignInfo extends Component {
                             {/* DESCRIPTION */}
                             <DescriptionContainer>
                                 <div className="category-name">{DesignDetail.categoryName}</div>
-                                <div className="txt">{DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : (``)}</div>
+                                <div className="txt">
+                                    {/* {DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : (``)} */}
+                                    {DesignDetail.explanation}
+                                </div>
                             </DescriptionContainer>
                         </div>
-                        <div className="box box3 secondary">
+                        {/* <div className="box box3 secondary"> */}
                             {/* DESCRIPTION */}
-                            <DescriptionContainer>
+                            {/* <DescriptionContainer>
                                 <div className="category-name"></div>
                                 <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation && DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
                             </DescriptionContainer>
-                        </div>
+                        </div> */}
                         <div className="box box4">
                             <div>
                                 {/* RIGHT */}

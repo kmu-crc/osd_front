@@ -384,7 +384,7 @@ class CreateGroup extends Component {
             <div className="buttonBox">
               <CompleteButton isComplete={true}
                 onClick={this.onSubmit} >
-                <BtnText>완료</BtnText>
+                <BtnText>수정</BtnText>
               </CompleteButton>
             </div>
           </form>

@@ -402,7 +402,7 @@ class ModifyMyDetail extends Component {
             updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
           <HRline />
           <SectionBuziness MyDetail={this.props.MyDetail} updateIsDesigner={this.updateIsDesigner} updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
-          <CompleteButton id="additional" isComplete={true} onClick={this.onSubmit}><BtnText>등록하기</BtnText></CompleteButton>
+          <CompleteButton id="additional" isComplete={true} onClick={this.onSubmit}><BtnText>수정</BtnText></CompleteButton>
         </InputBoard>
       </MainSection>
     </React.Fragment>)
