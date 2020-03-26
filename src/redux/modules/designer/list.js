@@ -25,6 +25,7 @@ export function DesignerList(state, action) {
   switch (action.type) {
     case GET_DESIGNER_LIST:
       return update(state, {
+        DesignerList: { status: { $set: action.type } },
         status: {
           DesignerList: { $set: action.DesignerList },
           DesignerListAdded: { $push: action.DesignerList }
@@ -32,6 +33,7 @@ export function DesignerList(state, action) {
       });
     case DESIGNER_LIST_CLEAR:
       return update(state, {
+        DesignerList: { status: { $set: action.type } },
         status: {
           DesignerList: { $set: [] },
           DesignerListAdded: { $set: [] }
@@ -39,6 +41,7 @@ export function DesignerList(state, action) {
       });
     case DESIGNER_LIST_FAIL:
       return update(state, {
+        DesignerList: { status: { $set: action.type } },
         status: {
           DesignerList: { $set: action.DesignerList },
           DesignerListAdded: { $set: action.DesignerListAdded }

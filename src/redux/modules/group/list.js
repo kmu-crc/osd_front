@@ -31,6 +31,7 @@ export function GroupList(state, action) {
   switch (action.type) {
     case GET_GROUP_LIST:
       return update(state, {
+        GroupList: { status: { $set: action.type } },
         status: {
           GroupList: { $set: action.GroupList },
           GroupListAdded: { $push: action.GroupList }
@@ -38,6 +39,7 @@ export function GroupList(state, action) {
       })
     case GROUP_LIST_CLEAR:
       return update(state, {
+        GroupList: { status: { $set: action.type } },
         status: {
           GroupList: { $set: action.GroupList },
           GroupListAdded: { $set: action.GroupList }
@@ -45,6 +47,7 @@ export function GroupList(state, action) {
       })
     case GROUP_LIST_FAIL:
       return update(state, {
+        GroupList: { status: { $set: action.type } },
         status: {
           GroupList: { $set: action.GroupList },
           GroupListAdded: { $set: action.GroupListAdded }

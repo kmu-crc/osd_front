@@ -68,14 +68,15 @@ export function DesignList(state, action) {
             })
         case GET_DESIGN_LIST:
             return update(state, {
+                DesignList: { status: { $set: action.type } },
                 status: {
                     DesignList: { $set: action.DesignList },
                     DesignListAdded: { $push: action.DesignList }
                 }
             })
         case DESIGN_LIST_CLEAR:
-            console.log(action.DesignList);
             return update(state, {
+                DesignList: { status: { $set: action.type } },
                 status: {
                     DesignList: { $set: action.DesignList },
                     DesignListAdded: { $set: action.DesignList }
@@ -83,6 +84,7 @@ export function DesignList(state, action) {
             })
         case DESIGN_LIST_FAIL:
             return update(state, {
+                DesignList: { status: { $set: action.type } },
                 status: {
                     DesignList: { $set: action.DesignList },
                     DesignListAdded: { $set: action.DesignListAdded }
@@ -161,7 +163,7 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
 //             if (!data) 
 //             {
 //                 data = 0
-            
+
 //             }    
 //             else 
 //             {
@@ -176,22 +178,22 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
 // }
 export function GetDesignListCountRequest(cate1, cate2) {
     return (dispatch) => {
-      return fetch(`${host}/design/designCount/${cate1}/${cate2}`, {
-        headers: { "Content-Type": "application/json" },
-        method: "get"
-      }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        if (!data) {
-          console.log("no data");
-          data = 0;
-        } else {
-          data = data["count(*)"];
-        }
-        dispatch(GetDesignTotalCount(data));
-      }).catch((error) => {
-        dispatch(DesignTotalCountFail());
-        console.log("err", error);
-      })
+        return fetch(`${host}/design/designCount/${cate1}/${cate2}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (!data) {
+                console.log("no data");
+                data = 0;
+            } else {
+                data = data["count(*)"];
+            }
+            dispatch(GetDesignTotalCount(data));
+        }).catch((error) => {
+            dispatch(DesignTotalCountFail());
+            console.log("err", error);
+        })
     }
-  };
+};

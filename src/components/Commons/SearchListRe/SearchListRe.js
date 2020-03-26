@@ -8,8 +8,9 @@ import Category from "components/Commons/Category"
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer"
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
-
+import CheckBox2 from "components/Commons/CheckBox";
 const SearchForm = styled.div`
+    // div{ border:1px solid blue; }
     width:100%;
     font-family: Noto Sans KR;
     position:relative;
@@ -63,9 +64,13 @@ const SearchForm = styled.div`
         top: 250px;
         left: 44px;
         z-index: 10001;
+        border: 1px solid red;
     }
     .OrderBox{
-
+        border: 1px solid red;
+        width: max-content;
+        margin-left: auto;
+        margin-right: 35px;
     }
     .CategoryBox{
         position: relative;
@@ -116,14 +121,21 @@ class SearchListRe extends Component {
             this_category: { text: null, value: null },
             sub_category: { text: null, value: null },
             main_category: { text: null, value: null },
+            group: true,
+            design: true,
+            designer: true,
         }
         if (this.props.type == null) {
             this.setState({ type: "design" });
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
         this.onChangeSearchkey = this.onChangeSearchkey.bind(this);
+        this.submitEnter = this.submitEnter.bind(this);
+        this.onSearchSubmit = this.onSearchSubmit.bind(this);
+        this.handleChangeCategory = this.handleChangeCategory.bind(this);
+        this.handleChangeSubCategory = this.handleChangeSubCategory.bind(this);
+        this.handleChangeOrderOps = this.handleChangeOrderOps.bind(this);
     };
-
     componentDidMount() {
         this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignListCountRequest() });
@@ -133,7 +145,7 @@ class SearchListRe extends Component {
         else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
         else { this.setState({ selectCate: 1 }) }
         this.setState({ searchKeyword: this.props.keyword == null ? "" : this.props.keyword });
-    }
+    };
     onChangeSearchkey(event) {
         let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
         const searchKey = event.target.value;
@@ -142,73 +154,56 @@ class SearchListRe extends Component {
             return;
         }
         this.setState({ searchKeyword: event.target.value })
-    }
-    submitEnter = (e) => {
+    };
+    onChangeDropBox(event, { value }) {
+        this.setState({ selectCate: { value }.value });
+        const types = ["all", "design", "group", "designer"];
+        window.location.href = `/search/${types[{ value }.value]}/${this.props.sort}/${this.props.keyword}`;
+    };
+    submitEnter(e) {
         if (e.keyCode === 13) {
             this.setState({ searchKeyword: e.target.value });
             this.onSearchSubmit(this.state.searchKeyword);
         }
     };
-
-    onSearchSubmit = (data) => {
+    onSearchSubmit(data) {
         if (this.state.searchKeyword == null || this.state.searchKeyword === "") {
             alert("키워드를 입력해주세요");
         } else {
-            const urll = encodeURIComponent(`${this.state.searchKeyword}`);
-            //alert(decodeURIComponent(`${this.state.searchKeyword}`));
-            this.props.history.replace(urll);
-            window.location.href = urll;
+            window.location.href = `/search/${this.props.type}/${this.props.sort}/${this.state.searchKeyword}`;
         }
     };
-    onChangeDropBox(event, { value }) {
-        this.setState({ selectCate: { value }.value });
-
-        let urlCate = "design";
-
-        switch ({ value }.value) {
-            case 0:
-                urlCate = "all";
-                this.setState({ urlCate: "all" });
-                break;
-            case 1:
-                urlCate = "design";
-                this.setState({ urlCate: "design" });
-                break;
-            case 2:
-                urlCate = "group";
-                this.setState({ urlCate: "group" });
-                break;
-            case 3:
-                urlCate = "designer";
-                this.setState({ urlCate: "designer" });
-                break;
-            default:
-                break;
-        }
-        this.props.history.replace(`/search/${urlCate}/${this.props.sort}/${this.props.keyword}`);
-    };
-
-    //    this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
-    handleChangeCategory = async (category) => {
+    async handleChangeCategory(category) {
         await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
     }
-    handleChangeSubCategory = async (parent, category) => {
+    async handleChangeSubCategory(parent, category) {
         await this.setState({ main_category: this.props.category1[parent.value - 1], this_category: category, sub_category: category })
     }
-    handleChangeOrderOps = async (order) => {
+    async handleChangeOrderOps(order) {
         await this.setState({ this_order: order })
-
     }
 
     render() {
         const { category1, category2 } = this.props;
         const { main_category, sub_category } = this.state;
+
+        console.log(this.props);
+        console.log(this.state.urlCate === "group", this.props.group_status !== "INIT", this.props.groups.length === 0);
+
         return (
             <SearchContainer>
-                {this.state.urlCate !== "group" ?
-                    <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                        category1={category1} category2={category2[this.state.main_category.value - 1]} main_selected={main_category} sub_selected={sub_category} /> : <React.Fragment></React.Fragment>}
+                {this.state.urlCate !== "group"
+                    ? <Category
+                        subcategory_clicked={this.handleChangeSubCategory}
+                        category_clicked={this.handleChangeCategory}
+                        category1={category1}
+                        category2={category2[this.state.main_category.value - 1]}
+                        main_selected={main_category}
+                        sub_selected={sub_category} />
+                    : null}
+
                 <SearchForm>
+                    {/*  */}
                     <div className="searchBox">
                         <div className="inputBox">
                             <div className="zoomImg"><img src={zoom} alt="" /></div>
@@ -221,29 +216,61 @@ class SearchListRe extends Component {
                             />
                         </div>
                     </div>
-                    {/*box position*/}
-                    <div className="Box">
-                        <div className="InnerBox">
-                            <div className="SelectBox">
-                                <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} value={this.state.selectCate} />
+
+                    {/* box position */}
+                    <div style={{ display: "flex" }}>
+                        <div style={{ marginLeft: "35px", width: "max-content", zIndex: "800", display: "flex" }}>
+                            <div style={{ diplay: "flex" }}>
+                                <CheckBox2 type="checkbox" id="designcheckbox" onChange={() => this.setState({ design: !this.state.design })} checked={this.state.design} /><div style={{ marginLeft: "27px", }}>디자인</div>
                             </div>
-                            <div className="OrderBox">
-                                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
+                            <div style={{ diplay: "flex" }}>
+                                <CheckBox2 type="checkbox" id="groupcheckbox" onChange={() => this.setState({ group: !this.state.group })} checked={this.state.group} /><div style={{ marginLeft: "27px", }}>그룹</div>
                             </div>
+                            <div style={{ diplay: "flex" }}>
+                                <CheckBox2 type="checkbox" id="designercheckbox" onChange={() => this.setState({ designer: !this.state.designer })} checked={this.state.designer} /><div style={{ marginLeft: "27px", }}>디자이너</div>
+                            </div>
+                        </div>
+                        {/* <Dropdown id="dropbox" options={this.state.mainCate} selection name="searchcate" onChange={this.onChangeDropBox} value={this.state.selectCate} /> */}
+                        <div style={{ marginLeft: "auto", marginRight: "35px", width: "max-content" }}>
+                            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this.state.this_order} />
                         </div>
                     </div>
 
-                    <div className="CategoryBox">
-                        {this.state.urlCate === "designer" && <ScrollDesignerListContainer 
-                            sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}
-                        {this.state.urlCate === "group" && <ScrollGroupListContainer
-                            sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}
-                        {this.state.urlCate === "design" && <ScrollDesignListContainer
-                            sort={this.props.sort} keyword={this.state.searchKeyword} cate1={this.state.main_category.value} cate2={this.state.sub_category.value} orderOption={this.state.this_order} />}
+                    {/* 
+                        1.검색페이지 수정 - 그룹없으면, 디자인, 디자인없으면, 디자이너, 디자이너없으면, "검색된 내용이 없습니다.", 
+                        2.검색되지않는경우가 있음 
+                    */}
+                    <div style={{ marginTop: "35px", minHeight: "350px" }}>
+                        {this.state.group ?
+                            <ScrollGroupListContainer
+                                message={`'${this.props.keyword}'에 대한 그룹을 찾을 수 없습니다.`}
+                                sort={this.props.sort}
+                                keyword={this.props.keyword}
+                                cate1={this.state.main_category.value}
+                                cate2={this.state.sub_category.value}
+                                orderOption={this.state.this_order} /> : null}
+
+                        {this.state.design ?
+                            <ScrollDesignListContainer
+                                message={`'${this.props.keyword}'에 대한 디자인을 찾을 수 없습니다.`}
+                                sort={this.props.sort}
+                                keyword={this.props.keyword}
+                                cate1={this.state.main_category.value}
+                                cate2={this.state.sub_category.value}
+                                orderOption={this.state.this_order} /> : null}
+
+                        {this.state.designer ?
+                            <ScrollDesignerListContainer
+                                message={`'${this.props.keyword}'에 대한 디자이너를 찾을 수 없습니다.`}
+                                sort={this.props.sort}
+                                keyword={this.props.keyword}
+                                cate1={this.state.main_category.value}
+                                cate2={this.state.sub_category.value}
+                                orderOption={this.state.this_order} /> : null}
 
                     </div>
                 </SearchForm>
-            </SearchContainer>
+            </SearchContainer >
         )
     }
 }

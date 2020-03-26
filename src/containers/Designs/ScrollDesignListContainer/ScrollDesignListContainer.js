@@ -16,59 +16,58 @@ const NoDataMsg = styled.div`
   text-align:center;
 `
 class ScrollDesignListContainer extends Component {
-  state = {
-    reload: false, category1: 0, category2: 0, orderOption: "update"
+  constructor(props) {
+    super(props);
+    this.state = { reload: false, category1: 0, category2: 0, orderOption: "update" };
+    this.getList = this.getList.bind(this);
+    this.handleReload = this.handleReload.bind(this);
   }
   componentDidMount() {
     this.props.keyword.length > 0 && this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
-    // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
   }
-  shouldComponentUpdate(nextProps) {
-    if (this.props.cate1 !== nextProps.cate1) {
-      this.props.GetDesignListRequest(0, nextProps.sort, nextProps.cate1, nextProps.cate2, nextProps.keyword);
+  componentDidUpdate(nextProps) {
+    if (this.props.cate1 !== nextProps.cate1 || this.props.cate2 !== nextProps.cate2) {
+      this.getList(0);
     }
-    else if (this.props.cate2 !== nextProps.cate2) {
-      this.props.GetDesignListRequest(0, nextProps.sort, nextProps.cate1, nextProps.cate2, nextProps.keyword);
-    }
-    return true;
   }
-  getList = async (page) => {
-    console.log(window.location.href);
-    var st = window.location.href;
-    var ks_li = st.split('/');
-    var url_lkeyword = ks_li[ks_li.length - 1];
-
-    console.log(decodeURIComponent(`${url_lkeyword}`));
-    this.props.GetDesignListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, decodeURIComponent(`${url_lkeyword}`));
-
-  };
-  handleReload = () => {
+  async getList(page) {
+    this.props.GetDesignListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.keyword);
+  }
+  handleReload() {
     this.setState({ reload: !this.state.reload });
   }
+
   render() {
-    const { cate1, cate2, orderOption,dataListAdded } = this.props;
+    const { cate1, cate2, orderOption, dataListAdded } = this.props;
     if (cate1 !== undefined || cate2 !== undefined) {
       if (this.state.category1 !== cate1) {
-        this.getList(0);
         this.setState({ category1: cate1 });
+        this.getList(0);
       }
     }
     if (orderOption !== undefined) {
       if (this.state.orderOption !== orderOption) {
-        this.getList(0);
         this.setState({ orderOption: orderOption })
+        this.getList(0);
       }
     }
     return (
-      <div>
-      {dataListAdded.length<=0?
-      <NoDataMsg>등록된 디자인이 없습니다.</NoDataMsg>
-      :
-      this.props.status === "INIT" ?
-        <Loading /> : <ScrollList {...opendesign_style.design_margin} getListRequest={this.getList} reload={this.state.reload} type="design" handleReload={this.handleReload} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-      } </div>
-       )
-    }
+      dataListAdded.length <= 0 ?
+        <NoDataMsg>{this.props.message || "등록된 디자인이 없습니다."}</NoDataMsg> :
+
+        this.props.status === "INIT" ?
+          <Loading /> :
+
+          <ScrollList
+            {...opendesign_style.design_margin}
+            getListRequest={this.getList}
+            reload={this.state.reload}
+            type="design"
+            handleReload={this.handleReload}
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded} />
+    )
+  }
 }
 
 const mapStateToProps = (state) => {

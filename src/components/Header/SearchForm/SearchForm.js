@@ -66,6 +66,10 @@ class SearchForm extends Component {
 
     submitEnter = (e) => {
         if (e.keyCode === 13) {
+            if (this.state.searchKeyword.trim() === "") {
+                alert("검색할 내용을 입력하세요.");
+                return;
+            }
             this.goSearch();
         }
     };
