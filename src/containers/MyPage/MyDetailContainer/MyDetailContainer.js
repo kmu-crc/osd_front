@@ -4,11 +4,11 @@ import MypageHeader from 'components/MypageHeader';
 import MypageBody from 'components/MypageBody';
 import {
   GetMyDetailRequest,
-  GetMyDesignListRequest,
-  GetMyLikeDesignRequest,
-  GetMyLikeDesignerRequest,
+  // GetMyDesignListRequest,
+  // GetMyLikeDesignRequest,
+  // GetMyLikeDesignerRequest,
   // GetMyGroupListRequest, 
-  GetMyLikeGroupRequest
+  // GetMyLikeGroupRequest
 } from "redux/modules/personal";
 import {
   GetDesignerCountRequest,
@@ -57,48 +57,16 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetDesignerCountRequest: (id) => {
-      return dispatch(GetDesignerCountRequest(id))
-    },
-    GetMyDetailRequest: (token) => {
-      return dispatch(GetMyDetailRequest(token))
-    },
-    GetMyDesignListRequest: (token, page) => {
-      return dispatch(GetMyDesignListRequest(token, page))
-    },
-    GetMyLikeDesignRequest: (token, page) => {
-      return dispatch(GetMyLikeDesignRequest(token, page))
-    },
-    GetMyLikeDesignerRequest: (token, page) => {
-      return dispatch(GetMyLikeDesignerRequest(token, page))
-    },
-    GetGroupInDesignerRequest: (id, page) => {
-      return dispatch(GetGroupInDesignerRequest(id, page))
-    },
-    GetRelatedGroupInDesignerRequest: (id, page) => {
-      return dispatch(GetRelatedGroupInDesignerRequest(id, page))
-    },
-    // GetMyGroupListRequest: (token, page) => {
-    // return dispatch(GetMyGroupListRequest(token, page))
-    // },
-    GetLikeInDesignerRequest: (id, page) => {
-      return dispatch(GetLikeInDesignerRequest(id, page))
-    },
-    GetMyDesignInDesignerRequest: (id, page) => {
-      return dispatch(GetMyDesignInDesignerRequest(id, page))
-    },
-    GetLikeGroupInDesignerRequest: (id, page) => {
-      return dispatch(GetLikeGroupInDesignerRequest(id, page))
-    },
-    GetLikeDesignerInDesignerRequest: (id, page) => {
-      return dispatch(GetLikeDesignerInDesignerRequest(id, page))
-    },
-    GetMyLikeGroupRequest: (token, page) => {
-      return dispatch(GetMyLikeGroupRequest(token, page));
-    }
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  GetDesignerCountRequest: (id) => dispatch(GetDesignerCountRequest(id)),
+  GetMyDetailRequest: (token) => dispatch(GetMyDetailRequest(token)),
+
+  GetGroupInDesignerRequest: (id, page, sort) => dispatch(GetGroupInDesignerRequest(id, page, sort)),
+  GetRelatedGroupInDesignerRequest: (id, page, sort) => dispatch(GetRelatedGroupInDesignerRequest(id, page, sort)),
+  GetLikeInDesignerRequest: (id, page, sort) => dispatch(GetLikeInDesignerRequest(id, page, sort)),
+  GetMyDesignInDesignerRequest: (id, page, sort) => dispatch(GetMyDesignInDesignerRequest(id, page, sort)),
+  GetLikeGroupInDesignerRequest: (id, page, sort) => dispatch(GetLikeGroupInDesignerRequest(id, page, sort)),
+  GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer)

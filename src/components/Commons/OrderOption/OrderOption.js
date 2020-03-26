@@ -6,10 +6,10 @@ const OrderWrapper = styled.div`
     z-index:820;
     display:flex;
     justify-content:flex-end;
-    top: 180px;
+    // top: 180px;
     font-size: 20px;
     font-family: Noto Sans KR;
-    position:absolute;
+    // position:absolute;
     // z-index:1000;
     // display: flex;
     // justify-content: flex-end;
@@ -45,17 +45,18 @@ class OrderOption extends Component {
             [{ text: "인기순", keyword: "like", marginRight: "30px" },
             { text: "최신순", keyword: "update", marginRight: "44px" }]
     }
+
     handleClicked = (order) => {
         console.log(order);
         this.props.order_clicked(order)
     }
     render() {
         const { options } = this.state
-        const { selected } = this.props
+        const { selected, style } = this.props
         return (
-
-            <OrderWrapper>
-
+            
+            <OrderWrapper style={style}>
+                
                 {options.map(opt => {
                     return (<OrderElement
                         marginRight={opt.marginRight}

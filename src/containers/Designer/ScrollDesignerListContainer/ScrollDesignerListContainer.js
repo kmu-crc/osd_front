@@ -15,11 +15,11 @@ const NoDataMsg = styled.div`
   text-align:center;
 `
 class ScrollDesignerListContainer extends Component {
-  state = {
-    reload: false,
-    category1:0,
-    category2:0,
-    orderOption:"update"
+  constructor(props) {
+    super(props);
+    this.state = { reload: false, category1: 0, category2: 0, orderOption: "update" }
+    this.getList = this.getList.bind(this);
+    this.handleReload = this.handleReload.bind(this);
   }
 
   componentDidMount() {
@@ -34,51 +34,46 @@ class ScrollDesignerListContainer extends Component {
   }
 
   render() {
-    const {cate1, cate2, orderOption,dataListAdded} = this.props;
-    if(cate1 !== undefined || cate2 !== undefined){
-      if(this.state.category1 !== cate1){
+    const { cate1, cate2, orderOption, dataListAdded } = this.props;
+    if (cate1 !== undefined || cate2 !== undefined) {
+      if (this.state.category1 !== cate1) {
         this.getList(0);
-        this.setState({category1:cate1});
+        this.setState({ category1: cate1 });
       }
     }
     console.log(orderOption);
-    if(orderOption !== undefined){
-      if(this.state.orderOption !== orderOption){
+    if (orderOption !== undefined) {
+      if (this.state.orderOption !== orderOption) {
         this.getList(0);
-        this.setState({orderOption:orderOption})
+        this.setState({ orderOption: orderOption })
       }
     }
     return (
       <div>
-        {dataListAdded.length<=0?
-        <NoDataMsg>등록된 디자이너가 없습니다.</NoDataMsg>
-        :
-      <ScrollList
-        getListRequest={this.getList}
-        type="designer"
-        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-        {...opendesign_style.designer_margin}
-      />
+        {dataListAdded.length <= 0 ?
+          <NoDataMsg>{this.props.message || "등록된 디자이너가 없습니다."}</NoDataMsg>
+          :
+          <ScrollList
+            type="designer"
+            getListRequest={this.getList}
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded}
+            {...opendesign_style.designer_margin} />
         }
-        </div>
+      </div>
     );
   }
-  
+
 }
 
-const mapStateToProps = (state) => {
-  return {
-    dataList: state.DesignerList.status.DesignerList,
-    dataListAdded: state.DesignerList.status.DesignerListAdded
-  };
-};
+const mapStateToProps = (state) => ({
+  dataList: state.DesignerList.status.DesignerList,
+  dataListAdded: state.DesignerList.status.DesignerListAdded
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetDesignerListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
-      return dispatch(GetDesignerListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  GetDesignerListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) =>
+    dispatch(GetDesignerListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollDesignerListContainer);

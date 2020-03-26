@@ -1,7 +1,6 @@
 import host from "config"
 import update from "react-addons-update"
 
-
 //
 const GET_MY_MSG_LIST = "GET_MY_MSG_LIST"
 const GET_MY_MSG_LIST_SUCCESS = "GET_MY_MSG_LIST_SUCCESS"
@@ -14,12 +13,21 @@ const GET_MY_MSG_DETAIL_SUCCESS = "GET_MY_MSG_DETAIL_SUCCESS"
 const GET_MY_MSG_DETAIL_FAILURE = "GET_MY_MSG_DETAIL_FAILURE"
 const GET_MY_MSG_DETAIL_CLEAR = "GET_MY_MSG_DETAIL_CLEAR"
 
+const GET_MY_CHAT_ROOMS = "GET_MY_CHAT_ROOMS";
+const GET_MY_CHAT_ROOMS_SUCCESS = "GET_MY_CHAT_ROOMS_SUCCESS";
+const GET_MY_CHAT_ROOMS_FAILURE = "GET_MY_CHAT_ROOMS_FAILURE";
 
 //const ADD_MSG_MEMBER = "ADD_MSG_MEMBER"
 //
 const GetMyMsgList = () => ({ type: GET_MY_MSG_LIST })
 const GetMyMsgListSuccess = (data) => ({ type: GET_MY_MSG_LIST_SUCCESS, MsgList: data })
 const GetMyMsgListFailure = () => ({ type: GET_MY_MSG_LIST_FAILURE })
+
+const GetMyChatRooms = () => ({ type: GET_MY_CHAT_ROOMS });
+const GetMyChatRoomsSuccess = data => ({ type: GET_MY_CHAT_ROOMS_SUCCESS, Rooms: data.rooms });
+const GetMyChatRoomsFailure = err => ({ type: GET_MY_CHAT_ROOMS_FAILURE, Error: err });
+
+
 const GetMyMsgDetail = () => ({ type: GET_MY_MSG_DETAIL })
 const GetMyMsgDetailSuccess = (data) => ({ type: GET_MY_MSG_DETAIL_SUCCESS, MsgDetail: data })
 const GetMyMsgDetailFailure = () => ({ type: GET_MY_MSG_DETAIL_FAILURE })
@@ -33,19 +41,18 @@ const SendMessageFailure = () => ({ type: SEND_MESSAGE_FAILURE })
 
 //
 const initialState = {
-    status: { MsgDetail: [],MsgList: [] },
+    status: { MsgDetail: [], MsgList: [], Rooms: [], Error: "" },
     SendMessage: { status: "INIT" },
     GetMsgDetail: { status: "INIT", },
     GetMsgList: { status: "INIT" },
+    GetChatRooms: { status: "INIT" }
 }
-
 
 //
 export default function Message(state, action) {
-    
-    if (typeof state === "undefined")
+    if (typeof state === "undefined") {
         state = initialState;
-        
+    }
 
     switch (action.type) {
         case SEND_MESSAGE:
@@ -66,6 +73,25 @@ export default function Message(state, action) {
                     status: { $set: "FAILURE" }
                 }
             })
+
+        case GET_MY_CHAT_ROOMS:
+            return update(state, {
+                GetChatRooms: {
+                    status: { $set: "WATTING" }
+                }
+            })
+        case GET_MY_CHAT_ROOMS_SUCCESS:
+            return update(state, {
+                GetChatRooms: {
+                    status: { $set: "SUCCESS" }
+                },
+                status: { Rooms: { $set: action.Rooms } }
+            })
+        case GET_MY_CHAT_ROOMS_FAILURE:
+            return update(state, {
+                GetChatRooms: { status: { $set: "FAILURE" } }
+            })
+
         case GET_MY_MSG_LIST:
             return update(state, {
                 GetMsgList: {
@@ -73,11 +99,11 @@ export default function Message(state, action) {
                 }
             })
         case GET_MY_MSG_LIST_SUCCESS:
-            
             return update(state, {
                 GetMsgList: {
                     status: { $set: "SUCCESS" }
-                }, status: { MsgList: { $set: action.MsgList } }
+                },
+                status: { MsgList: { $set: action.MsgList } }
             })
         case GET_MY_MSG_LIST_FAILURE:
             return update(state, {
@@ -85,32 +111,32 @@ export default function Message(state, action) {
             })
         case GET_MY_MSG_DETAIL:
             return update(state, {
-              GetMsgDetail: {
-                status: { $set: "WATTING" }
-              }
+                GetMsgDetail: {
+                    status: { $set: "WATTING" }
+                }
             });
-          case GET_MY_MSG_DETAIL_SUCCESS:
+        case GET_MY_MSG_DETAIL_SUCCESS:
             return update(state, {
-              GetMsgDetail: {
-                status: { $set: "SUCCESS" }
-              },
-              status: {
-                MsgDetail: { $set: action.MsgDetail }
-              }
+                GetMsgDetail: {
+                    status: { $set: "SUCCESS" }
+                },
+                status: {
+                    MsgDetail: { $set: action.MsgDetail }
+                }
             });
-          case GET_MY_MSG_DETAIL_FAILURE:
+        case GET_MY_MSG_DETAIL_FAILURE:
             return update(state, {
-              GetMsgDetail: {
-                status: { $set: "FAILURE" }
-              }
+                GetMsgDetail: {
+                    status: { $set: "FAILURE" }
+                }
             });
-          case GET_MY_MSG_DETAIL_CLEAR:
+        case GET_MY_MSG_DETAIL_CLEAR:
             return update(state, {
-              status: {
-                MsgDetail: { $set: action.MsgDetail }
-              }
+                status: {
+                    MsgDetail: { $set: action.MsgDetail }
+                }
             });
-                default:
+        default:
             return state
     }
 }
@@ -149,44 +175,53 @@ export function GetMyMsgListRequest(token) {
                 "Content-Type": "application/json",
                 "x-access-token": token
             },
-            method: "get"
+            method: "GET"
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("message list data >>", data)
-            if (!data) {
-                console.log("no message")
-                data = []
-            }
-            return dispatch(GetMyMsgListSuccess(data))
+            return dispatch(GetMyMsgListSuccess(data || []))
         }).catch((error) => {
             dispatch(GetMyMsgListFailure())
             console.log("err", error)
         })
     }
 }
-
+export const GetMyChatRoomsListRequest = token => {
+    return (dispatch) => {
+        dispatch(GetMyChatRooms());
+        return fetch(`${host}/users/chatRooms`, {
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": token
+            },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => dispatch(GetMyChatRoomsSuccess(data ? data : [])))
+            .catch(error => dispatch(GetMyChatRoomsFailure()));
+    }
+}
 export function GetMyMsgDetailRequest(token, id) {
     return (dispatch) => {
-      dispatch(GetMyMsgDetail());
-      return fetch(`${host}/users/msgDetail/${id}`, {
-        headers: { 
-          "Content-Type": "application/json",
-          "x-access-token": token
-        },
-        method: "get"
-      }).then((response) => {
-          return response.json();
+        dispatch(GetMyMsgDetail());
+        return fetch(`${host}/users/msgDetail/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": token
+            },
+            method: "get"
+        }).then((response) => {
+            return response.json();
         }).then((data) => {
-          console.log("message detail data >>", data);
-          if (!data) {
-            console.log("no detail message");
-            data = [];
-          }
-          return dispatch(GetMyMsgDetailSuccess(data));
+            console.log("message detail data >>", data);
+            if (!data) {
+                console.log("no detail message");
+                data = [];
+            }
+            return dispatch(GetMyMsgDetailSuccess(data));
         }).catch((error) => {
-          dispatch(GetMyMsgDetailFailure());
-          console.log("err", error);
+            dispatch(GetMyMsgDetailFailure());
+            console.log("err", error);
         });
     }
-  };
+};

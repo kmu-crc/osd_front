@@ -372,8 +372,13 @@ class DesignerPageHeader extends Component {
     async componentWillReceiveProps(nextProps) {
         if (this.props.DesignerDetail !== nextProps.DesignerDetail) {
             const DesignerDetail = nextProps.DesignerDetail;
-            await this.setState({ descriptionLengthCheck: DesignerDetail.about_me.length < 199 + 199 ? "" : " ..." });
-            await this.setState({ about_me: [DesignerDetail.about_me.length < 199 ? DesignerDetail.about_me : DesignerDetail.about_me.slice(0, 199), DesignerDetail.about_me.length < 199 ? "" : DesignerDetail.about_me.slice(200, 399) + this.state.descriptionLengthCheck] });
+            await this.setState({ descriptionLengthCheck: DesignerDetail.about_me && DesignerDetail.about_me.length < 199 + 199 ? "" : " ..." });
+            await this.setState({
+                about_me: [DesignerDetail.about_me && DesignerDetail.about_me.length < 199 ?
+                    DesignerDetail.about_me :
+                    DesignerDetail.about_me && DesignerDetail.about_me.slice(0, 199),
+                DesignerDetail.about_me && DesignerDetail.about_me.length < 199 ? "" : DesignerDetail.about_me && DesignerDetail.about_me.slice(200, 399) + this.state.descriptionLengthCheck]
+            });
         }
         return true;
     }

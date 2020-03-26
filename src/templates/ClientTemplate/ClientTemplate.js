@@ -46,7 +46,6 @@ const ChildrenContainer = styled.div`
 class ClientTemplate extends Component {
   state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0,screenWidth: window.innerWidth }
   componentDidMount() {
-    console.log("isActive", this.props.isActive);
     window.addEventListener("resize", this.handleResize, false);
   }
   onClose = e => {

@@ -6,6 +6,7 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from 'components/Commons/Loading'
 import opendesign_style from "opendesign_style";
 import NumberFormat from 'modules/NumberFormat';
+import OrderOption from "components/Commons/OrderOption";
 
 //css
 const DesignerDetailBody = styled.div`
@@ -62,7 +63,23 @@ const CategoryItems = styled.div`
 class DesignerPageBody extends Component {
     constructor(props) {
         super(props);
-        this.state = { reload: false, cateIndex: 0, };
+        this.state = {
+            reload: false,
+            cateIndex: 0,
+            this_order: { text: "최신순", keyword: "update" },
+        };
+        this.handleReload = this.handleReload.bind(this);
+        this.getInitData = this.getInitData.bind(this);
+        this.setTab = this.setTab.bind(this);
+        this.getMyDesignInDesignerRequest = this.getMyDesignInDesignerRequest.bind(this);
+        this.getGroupInDesignerRequest = this.getGroupInDesignerRequest.bind(this);
+        this.getRelatedGroupInDesignerRequest = this.getRelatedGroupInDesignerRequest.bind(this);
+        this.getLikeInDesignerRequest = this.getLikeInDesignerRequest.bind(this);
+        this.getLikeGroupInDesignerRequest = this.getLikeGroupInDesignerRequest.bind(this);
+        this.getLikeDesignerInDesignerRequest = this.getLikeDesignerInDesignerRequest.bind(this);
+        this.changeCategory = this.changeCategory.bind(this);
+        this.handleChangeOrderOps = this.handleChangeOrderOps.bind(this);
+
     }
     handleReload = () => {
         this.setState({ reload: false });
@@ -105,31 +122,34 @@ class DesignerPageBody extends Component {
         this.getLikeDesignerInDesignerRequest(0);
     }
     getMyDesignInDesignerRequest = async (page) => {
-        this.props.id && this.props.GetMyDesignInDesignerRequest(this.props.id, page);
+        this.props.id && this.props.GetMyDesignInDesignerRequest(this.props.id, page, this.state.this_order.keyword);
     }
     getGroupInDesignerRequest = async (page) => {
-        this.props.id && this.props.GetGroupInDesignerRequest(this.props.id, page);
+        this.props.id && this.props.GetGroupInDesignerRequest(this.props.id, page, this.state.this_order.keyword);
     }
     getRelatedGroupInDesignerRequest = async (page) => {
-        this.props.id && this.props.GetRelatedGroupInDesignerRequest(this.props.id, page);
+        this.props.id && this.props.GetRelatedGroupInDesignerRequest(this.props.id, page, this.state.this_order.keyword);
     }
     getLikeInDesignerRequest = async (page) => {
-        this.props.id && this.props.GetLikeInDesignerRequest(this.props.id, page);
+        this.props.id && this.props.GetLikeInDesignerRequest(this.props.id, page, this.state.this_order.keyword);
     }
     getLikeGroupInDesignerRequest = async (page) => {
-        this.props.id && this.props.GetLikeGroupInDesignerRequest(this.props.id, page);
+        this.props.id && this.props.GetLikeGroupInDesignerRequest(this.props.id, page, this.state.this_order.keyword);
     }
     getLikeDesignerInDesignerRequest = async (page) => {
-        this.props.id && this.props.GetLikeDesignerInDesignerRequest(this.props.id, page);
+        this.props.id && this.props.GetLikeDesignerInDesignerRequest(this.props.id, page, this.state.this_order.keyword);
     }
     changeCategory = (index) => {
-        this.setState({ cateIndex: index });
+        this.setState({ cateIndex: index, this_order: { text: "최신순", keyword: "update" } });
     }
-
+    handleChangeOrderOps = async (order, getfunc) => {
+        await this.setState({ this_order: order });
+        getfunc(0);
+    }
     render() {
         const { Count, MyDesignInDesigner, MyDesignInDesignerAdded, GroupInDesigner, GroupInDesignerAdded, RelatedGroupInDesigner, RelatedGroupInDesignerAdded,
             LikeInDesigner, LikeInDesignerAdded, LikeGroupInDesigner, LikeGroupInDesignerAdded, LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
-        const { reload } = this.state;
+        const { reload, this_order } = this.state;
         return (
             <DesignerDetailBody>
                 <div className="MypageCategory">
@@ -142,22 +162,31 @@ class DesignerPageBody extends Component {
                 {this.state.cateIndex === 0 &&
                     <div className="compWrapper" >
                         {this.props.status === "INIT" ? <Loading /> :
-                            <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
-                                dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />}
+                            <div>
+                                <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupInDesignerRequest)} selected={this_order} />
+                                <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
+                                    dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />
+                            </div>}
                     </div>}
 
                 {this.state.cateIndex === 1 &&
                     <div className="compWrapper" >
                         {this.props.status === "INIT" ? <Loading /> :
-                            <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
-                                dataList={RelatedGroupInDesigner} dataListAdded={RelatedGroupInDesignerAdded} getListRequest={this.getRelatedGroupInDesignerRequest} />}
+                            <div>
+                                <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getRelatedGroupInDesignerRequest)} selected={this_order} />
+                                <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
+                                    dataList={RelatedGroupInDesigner} dataListAdded={RelatedGroupInDesignerAdded} getListRequest={this.getRelatedGroupInDesignerRequest} />
+                            </div>}
                     </div>}
 
                 {this.state.cateIndex === 2 &&
                     <div className="compWrapper" >
                         {this.props.status === "INIT" ? <Loading /> :
-                            <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design"
-                                dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
+                            <div>
+                                <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyDesignInDesignerRequest)} selected={this_order} />
+                                <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design"
+                                    dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />
+                            </div>}
                     </div>}
 
                 {this.state.cateIndex === 3 &&

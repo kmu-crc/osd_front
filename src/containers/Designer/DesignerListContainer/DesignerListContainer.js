@@ -27,7 +27,7 @@ const TextWrapper = styled.div`
     text-align:center;
     position:absolute;
     @media only screen {
-        right:${props=>(props.centerPos-300)/2}px;
+        right:${props => (props.centerPos - 300) / 2}px;
   }
 }
 `;
@@ -55,7 +55,7 @@ class DesignerListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            screenWidth:window.innerWidth,
+            screenWidth: window.innerWidth,
             reload: false,
             this_order: { text: "최신순", keyword: "update" },
             this_category: { text: null, value: null },
@@ -79,13 +79,13 @@ class DesignerListContainer extends Component {
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
-      };
+    };
     handleReload() {
         this.setState({ reload: !this.state.reload });
     }
-    handleResize(){
-        this.setState({screenWidth:window.innerWidth})
-       }
+    handleResize() {
+        this.setState({ screenWidth: window.innerWidth })
+    }
     async handleChangeCategory(category) {
         await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
         this.props.GetDesignerTotalCountRequest(category.value, null);
@@ -124,13 +124,19 @@ class DesignerListContainer extends Component {
         return (<React.Fragment>
             <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
                 category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
-            <div style={{width:"100%",height:"1px",position:"relative"}}>
-            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-            </div>
+
             <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
-            <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
+                <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
             </TextWrapper>
-            <JoinDesignerContainer><JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner></JoinDesignerContainer>
+
+            <JoinDesignerContainer>
+                <JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner>
+            </JoinDesignerContainer>
+
+            <div style={{ width: "100%", marginTop: "50px",  height: "1px", position: "relative" }}>
+                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+            </div>
+
             <ScrollListContainer>
                 {status === "INIT"
                     ? <Loading />

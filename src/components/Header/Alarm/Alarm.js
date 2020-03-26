@@ -69,8 +69,7 @@ const userinfo = {
 let alarmlist = [];
 class Alarm extends Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.state = {
             profile: false,
@@ -120,14 +119,14 @@ class Alarm extends Component {
         } else if (item.type === "GROUP") {
             link = `/groupDetail/${item.content_id}`
         }
-        console.log("link",link);
+        console.log("link", link);
         return link
     }
     getMessageText = item => {
         let msg = ""
         const from = item.from //? TextSlicer(item.from, 4) : "유저"
         const to = item.to //? TextSlicer(item.to, 4) : "유저"
-        const title = item.title //? TextSlicer(item.title, 16) : item.type === "DESIGN" ? "디자인" : "그룹"
+        const title = item.title && item.title.length > 32 ? item.title.slice(0, 32) + "..." : item.title;
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
                 msg = `${from}님이 이 디자인에 초대하였습니다.`
@@ -170,7 +169,7 @@ class Alarm extends Component {
                 if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 그룹을 좋아합니다.`;
                 else msg = `${from}님의 이 그룹을 좋아합니다.`;
             } else if (item.kinds === "GROUP_DESIGN_OUT") {
-                msg = `${title.slice(0, 8)}그룹으로부터 디자인이 분리되었습니다.`;
+                msg = `${title}그룹으로부터 아래 디자인이 삭제되었습니다.`;
             }
         } else if (item.type === "DESIGNER") {
             if (item.kinds === "LIKE") {
@@ -211,7 +210,8 @@ class Alarm extends Component {
                     console.log(item, item.content_id, item.sub_content_id, item.user_id, item.uid);
                     // return;
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
-                        .then(res => {console.log("getURL",geturl()+this.getLink(item));
+                        .then(res => {
+                            console.log("getURL", geturl() + this.getLink(item));
                             //     if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid);
                             //  alert("승인되었습니다. 해당페이지로 이동합니다.");
@@ -348,6 +348,7 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         const alarmscombined = this.combine(alarms && alarms.list);
+
         return (
             <React.Fragment>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
@@ -368,8 +369,9 @@ class Alarm extends Component {
                             const alarmKind = item.kinds;
                             const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
                             let msg = this.getMessageText(item);
-                            const itemTitle = item.title.length>10?item.title.slice(0,10)+"...":item.title;
-                            console.log(item.title);
+                            const MAXLENGTH = 32;
+                            // const title = item.title && item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
+                            // const itemTitle = item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
                             return (
                                 <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
                                     <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
@@ -377,29 +379,32 @@ class Alarm extends Component {
                                         <TextFormat txt={msg} />
                                     </div>
                                     <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
-                                         <div style={{ display: "flex", justifyContent: "space-start" }}>
+                                        <div style={{ display: "flex", justifyContent: "space-start" }}>
                                             <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
-                                            <div style={{ display: "flex"
-                                                          }}>
+                                            <div style={{
+                                                display: "flex"
+                                            }}>
                                                 {alarmtype ?
                                                     (<React.Fragment>
-                                                        <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}><TextFormat txt={itemTitle} /></div>
-                                                        <div style={{display: "flex",position:"absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
+                                                        <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}>
+                                                        <TextFormat txt={item.title} chars={MAXLENGTH}/>
+                                                            </div>
+                                                        <div style={{ display: "flex", position: "absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
                                                             <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
                                                         </div>
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "22.5px", fontSize: "17px", fontWeight: '500', width: "225px" }}><TextFormat width={100} txt={item.title} /></div>
-                                                        : <div style={{ paddingLeft: "15px", paddingTop: "22.5px", fontSize: "17px", fontWeight: "300", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} chars={MAXLENGTH}/></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }
                                             </div>
                                         </div>
                                     </div>
                                 </ListItem>)
-                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>알림이 없습니다.</div>}
+                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>최근 3개월 동안의 알림이 없습니다.</div>}
                     </div>
                 </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
