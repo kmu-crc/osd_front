@@ -3,6 +3,9 @@ import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import { FormControl } from "modules/FormControl";
 
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+
 const FileWrap = styled.div`
   width: 100%;
   text-align: center;
@@ -47,7 +50,7 @@ class FileController extends Component {
     type: "",
     value: [],
     target: null,
-    validates: ["MaxFileSize(2147483648)"],
+    validates: ["MaxFileSize(199999999)"],
     // validates: ["MaxFileSize(99,999,999)"]
   };
 
@@ -139,11 +142,19 @@ class FileController extends Component {
     if (data[0]) {
       let type = null;
       if (data[0].type) type = await data[0].type.split("/")[0];
+      console.log(data[0]);
       let extension = await data[0].name.split(".");
       extension = await extension[extension.length - 1];
 
-      const fileUrl = await this.readUploadedFileAsText(data[0]);
-      if (type === "image") {
+      await this.setState({ file: this.input.files });
+      if (
+        data[0].type.search("jpeg") > -1
+        || data[0].type.search("jpg") > -1
+        || data[0].type.search("gif") > -1
+        || data[0].type.search("png") > -1
+        || data[0].type.search("bmp") > -1
+      ) {
+        const fileUrl = await this.readUploadedFileAsText(data[0]);
         await this.setState({
           fileUrl: fileUrl,
           is_image: true,
@@ -151,16 +162,18 @@ class FileController extends Component {
           extension: extension,
           file_name: data[0].name
         });
-      } else {
+      }
+      else {
         await this.setState({
-          fileUrl: fileUrl,
+          // fileUrl: fileUrl,
           is_image: false,
           file_type: type,
           extension: extension,
           file_name: data[0].name
         });
       }
-    } else {
+    }
+    else {
       await this.setState({
         fileUrl: "",
         is_image: false,
@@ -213,13 +226,36 @@ class FileController extends Component {
                 <span className="LinkFileName">{this.props.item.file_name}</span>
               </div>
             ) : null}
+
+        {/* {<form action="" enctype="multipart/form-data" method="post">
+          <input type="file" name="file-to-upload" />
+          <input type="submit" value="Upload" />
+        </form>} */}
+
+        {/* 
+        <FilePond
+          // name="file-to-upload"
+          ref={ref => (this.pond = ref)}
+          files={this.state.files}
+          allowMultiple={false}
+          maxFiles={3}
+          server="https://https.opensrcdesign.com/upload/tmp/11"
+          // oninit={() => this.handleInit()}
+          onupdatefiles={fileItems => {
+            // Set currently active file objects to this.state
+            console.log(fileItems);
+            // this.setState({
+            // files: fileItems.map(fileItem => fileItem.file)
+            // });
+          }}
+        /> */}
+
         <File>
           <input
             type="file"
             name="source"
             onChange={this.onChangeValue}
             ref={ref => (this.input = ref)}
-
           />
           <span></span>
         </File>

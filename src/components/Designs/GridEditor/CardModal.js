@@ -386,12 +386,19 @@ class CardModal extends Component {
     }
     handleHeaderSubmit = (_) => {
         // _.preventDefault(_);
+        console.log(_); return;
         let files = null;
         ValidationGroup(this.state, false)
             .then(async data => {
                 files = data && data.files;
                 let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-                const pack = { title: this.state.title, thumbnail: files && thumbnail, content: this.state.content, data: { deleteContent: [], newContent: [], updateContent: [] } };
+                const pack = {
+                    title: this.state.title,
+                    thumbnail: files && thumbnail,
+                    content: this.state.content,
+                    data: { deleteContent: [], newContent: [], updateContent: [] }
+                };
+
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
                     .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                     .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })

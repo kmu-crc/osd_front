@@ -27,7 +27,7 @@ const DesignElement = styled.div`
   font-size: 20px;
   font-family: "Noto Sans KR";
   .cover {
-    cursor: pointer;
+    // cursor: pointer;
     z-index: 701;
     position: absolute;
     border-radius: 15px;
@@ -90,7 +90,7 @@ const DesignElement = styled.div`
       font-size: 20px;
       font-weight: 300;
       text-shadow:2px 2px 6px gray;
-      cursor: pointer;
+      cursor: default;
     }  
     .user-update-wrapper {
       width: 285px;

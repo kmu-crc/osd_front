@@ -352,12 +352,13 @@ class NewCardModal extends Component {
             .then(async data => {
                 files = await data && data.files;
                 await this.props.CreateDesignCardRequest({ title: this.state.title, order: this.props.order }, this.props.designId, this.props.boardId, this.props.token)
-                    .then((res) => {
+                    .then(async (res) => {
                         if (res.success) {
                             // and get new card id
                             // directly update contents stored tempolarly
                             const card_id = res.card;
                             let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
+
                             this.props.UpdateCardSourceRequest({
                                 title: this.state.title, thumbnail: thumbnail, content: this.state.content,
                                 data: { deleteContent: [], newContent: obj.newContent, updateContent: [] }

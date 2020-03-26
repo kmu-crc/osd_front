@@ -4,6 +4,7 @@ import update from "react-addons-update";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
+import { FileUploadRequest } from "redux/modules/design";
 
 import osdcss from "opendesign_style";
 import FileController from "./FileController";
@@ -397,6 +398,18 @@ class CardSourceDetail extends Component {
 
     // edit
     await this.setState({ loading: true });
+
+    if (formData && formData.newContent) {
+      await Promise.all(
+        formData.newContent.map(async content => {
+          if (content.type === "FILE") {
+            const s3path = await FileUploadRequest(content);
+            content.content = s3path.path || null;
+            content.data_type = content.file_type;
+          }
+        })
+      );
+    }
     if (this.props.uid !== "new") {
       this.props.handleSubmit && await this.props.handleSubmit(event);
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
@@ -412,7 +425,6 @@ class CardSourceDetail extends Component {
       await this.props.upDateRequest(formData);
     }
     await this.setState({ edit: false, loading: false });
-    return;
   }
   async onCancel() {
     if (this.props.uid !== "new") {
@@ -466,26 +478,24 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      <form form method="POST" enctype="multipart/form-data">
-        {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
-          content && content.length > 0 ? (<Fragment>
-            {content.map(item => {
-              return (<ControllerWrap key={item.order}>
-                <div className="contentWrap">
-                  {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
-                  {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
-                  {item.type === "EMBED" ? (<EmbController />) : null}
-                </div>
+      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+        content && content.length > 0 ? (<Fragment>
+          {content.map(item => {
+            return (<ControllerWrap key={item.order}>
+              <div className="contentWrap">
+                {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
+                {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
+                {item.type === "EMBED" ? (<EmbController />) : null}
+              </div>
 
-                <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
-                {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null}
-                {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null}
-              </ControllerWrap>)
-            })}
-            <AddContent getValue={this.onAddValue} order={content.length} />
-          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-        ) : null}
-      </form>
+              <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
+              {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null}
+              {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null}
+            </ControllerWrap>)
+          })}
+          <AddContent getValue={this.onAddValue} order={content.length} />
+        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+      ) : null}
 
       <ButtonContainer >
         {(this.props.edit && this.props.uid) &&
