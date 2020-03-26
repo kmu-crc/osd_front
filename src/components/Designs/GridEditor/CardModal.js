@@ -357,7 +357,7 @@ const BlankSpace = styled.div`
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", content: "" }
+        this.state = { sroll: false, edit: false, title: "", content: "", closed: false }
     }
     componentWillReceiveProps(nextProps) {
         console.log("card:", nextProps.card);
@@ -366,6 +366,27 @@ class CardModal extends Component {
 
             return true;
         }
+    }
+    handleCancel = (obj) => {
+        if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
+            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+                return "keep";
+            }
+        }
+        // this.onClose();
+    };
+    handleClosed = (obj) => {
+        if (
+            JSON.stringify(obj.content) !== JSON.stringify(obj.origin) ||
+            this.state.title !== this.props.card.title ||
+            this.state.content !== this.props.card.content
+        ) {
+            if (!window.confirm("작업중인 데이터가 있습니다. 창을 닫게되면 작업중인 데이터가 사라집니다. 계속 진행하시겠습니까?")) {
+                return;
+            }
+        }
+        this.setState({ closed: false });
+        this.props.close();
     }
     onChangeValueThumbnail = async data => {
         let obj = {};
@@ -432,11 +453,17 @@ class CardModal extends Component {
         }
     };
     onClose = async () => {
-        if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
-            return;
+        // if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
+        // return;
+        // }
+        // await this.setState({ sroll: false, edit: false, title: "", content: "" });
+        // this.props.close();
+        if (this.state.edit) {
+            await this.setState({ closed: true });
         }
-        await this.setState({ sroll: false, edit: false, title: "", content: "" });
-        this.props.close();
+        else {
+            this.props.close();
+        }
     }
     render() {
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.l_img;
@@ -512,16 +539,21 @@ class CardModal extends Component {
 
                         <div className="content" >
                             <CardSourceDetailContainer
-                                isCancel
-                                handleSubmit={this.handleHeaderSubmit}
-                                handleCancel={this.onCloseEditMode}
-                                designId={this.props.designId}
-                                card={card}
                                 uid={card.uid}
                                 isTeam={isTeam}
                                 edit={this.state.edit}
-                                closeEdit={this.onCloseEditMode}
-                                openEdit={this.onChangeEditMode} />
+                                handleClosed={this.handleClosed}
+                                handleCancel={this.handleClosed}
+                                closeEdit={this.handleClosed}
+                                openEdit={this.onChangeEditMode}
+                                closed={this.state.closed}
+                            // hook={hook}
+                            // handleResetHook={this.handleResetHook}
+                            // designId={this.props.designId}
+                            // card={card}
+                            // closed={this.state.closed}
+                            // handleSubmit={this.handleHeaderSubmit}
+                            />
                         </div>
 
                         <ContentBorder><div className="border-line" /></ContentBorder>

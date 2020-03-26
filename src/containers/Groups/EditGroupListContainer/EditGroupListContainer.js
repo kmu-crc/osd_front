@@ -24,14 +24,18 @@ class EditGroupListContainer extends Component {
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
-  setOut = (id) => {
-    this.props.DeleteGroupInGroupRequest(this.props.id, id)
+  setOut = target => {
+    const confirm = window.confirm("선택하신 그룹을 이 그룹에서 삭제하시겠습니까?");
+    if (!confirm) {
+      return;
+    }
+    this.props.DeleteGroupInGroupRequest(this.props.id, target)
       .then(res => {
         if (res.data.success === true) {
           this.props.GetGroupInGroupRequest(this.props.id, null, null);
         }
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   }
   render() {
@@ -40,13 +44,15 @@ class EditGroupListContainer extends Component {
       <GroupBox>
         <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
         {this.props.status === "INIT" ?
-          <Loading /> : <ScrollList
+          <Loading /> :
+          <ScrollList
             {...osdstyle.group_margin}
             reload={reload}
             handleReload={this.handleReload}
             type="group"
             dataListAdded={this.props.EditGroupList}
             getListRequest={null}
+            rejectText={"삭제"}
             handleReject={this.setOut} />}
       </GroupBox>
     );

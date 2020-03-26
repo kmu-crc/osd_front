@@ -23,9 +23,12 @@ class EditDesignListContainer extends Component {
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
-  setOut = async (id) => {
-    console.log(id)
-    this.props.DeleteDesignInGroupRequest(this.props.id, id)
+  setOut = async (target) => {
+    const confirm = window.confirm("이 디자인을 그룹에서 삭제하시겠습니까?");
+    if (!confirm) {
+      return;
+    }
+    this.props.DeleteDesignInGroupRequest(this.props.id, target)
       .then(res => {
         if (res.data.success === true) {
           this.props.GetDesignInGroupRequest(this.props.id, null, null)
