@@ -188,7 +188,8 @@ class Header extends Component {
             <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
                 <RightMenu>
                     <li className="searchItem">
-                        <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
+                        <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} />
+                    </li>
                     {this.props.userInfo != null ? (
                         <React.Fragment>
                             <li className="IconItem"><Message noti={this.state.alarm} /></li>

@@ -426,7 +426,8 @@ class NewCardModal extends Component {
                             <CardSourceDetail
                                 {...this.props}
                                 uid={"new"}
-                                isTeam={true} edit={true}
+                                isTeam={true}
+                                edit={true}
                                 closed={this.state.closed}
                                 handleClosed={this.handleClosed}
                                 handleCancel={this.onClose}//this.handleCancel}

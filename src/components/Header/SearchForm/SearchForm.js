@@ -73,6 +73,13 @@ class SearchForm extends Component {
             this.goSearch();
         }
     };
+    onClickedIcon = (e) => {
+        if (this.state.searchKeyword.trim() === "") {
+            alert("검색할 내용을 입력하세요.");
+            return;
+        }
+        this.goSearch();
+    }
     handleKeyDown = (e) => {
         if (e.keyCode === 13) {
             this.goSearch();
@@ -93,7 +100,7 @@ class SearchForm extends Component {
     render() {
         return (
             <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
-                <div className="shadow_button" onClick={this.goSearch} />
+                <div className="shadow_button" onClick={this.onClickedIcon} />
                 <input type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
             </SearchContainer>)
     }

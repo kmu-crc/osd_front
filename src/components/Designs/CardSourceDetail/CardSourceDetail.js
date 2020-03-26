@@ -255,7 +255,7 @@ class CardSourceDetail extends Component {
       await this.onSubmit();
     }
     if (this.props.closed === false && nextProps.closed === true) {
-      this.props.handleClosed && this.props.handleClosed(this.state.content);
+      this.props.handleClosed && this.props.handleClosed(this.props.uid ? this.state : this.state.content);
     }
   }
   async onChangeFile(data) {

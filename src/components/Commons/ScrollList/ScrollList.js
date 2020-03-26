@@ -190,7 +190,7 @@ class ScrollList extends Component {
 
   myRef = React.createRef();
   render() {
-    const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded } = this.props;
+    const { type, manual, handleAccept, handleReject, width, height, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
     // console.log(this.props);
     return (dataListAdded && dataListAdded.length > 0 ?
@@ -200,7 +200,7 @@ class ScrollList extends Component {
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
           return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
             {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
-            {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>삭제</OutBtn>}
+            {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
             {type === "design" ? <Design data={item} /> : null}
             {type === "group" ? <Group data={item} /> : null}
             {type === "designer" ? <Designer data={item} /> : null}
