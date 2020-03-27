@@ -301,7 +301,7 @@ class NewCardModal extends Component {
         closed: false,
     };
     handleCancel = (obj) => {
-        if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
+        if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
             if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return "keep";
             }

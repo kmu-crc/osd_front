@@ -331,7 +331,7 @@ class Messages extends React.Component {
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
     }
-    document.getElementById("sendMsgBox")&&document.getElementById("sendMsgBox").focus();
+    document.getElementById("sendMsgBox") && document.getElementById("sendMsgBox").focus();
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
@@ -387,7 +387,7 @@ class Messages extends React.Component {
     console.log("1111111111" + this.state.selectId);
   }
   setMsgId = async (group_id, user_id, user_name) => {
-    
+
     console.log(group_id, user_id, user_name)
     await this.setState({
       msgId: group_id,
@@ -433,15 +433,14 @@ class Messages extends React.Component {
     this.setState(state => ({ selectId: select_id, selectName: select_name, msgId: msgID }));
   }
   handleOpenMember() {
-    const isOpen = this.state.showSearch;
     this.setState({ showSearch: true });
   }
-  handleClickSearchMemberItem(id, name,event) {
+  handleClickSearchMemberItem(id, name, event) {
     this.setMsgId(-1, id, name);
 
   }
   handleCloseMember() {
-      this.setState({ showSearch: false })
+    this.setState({ showSearch: false })
   }
   handleResize() {
     const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;

@@ -82,19 +82,6 @@ const ExplainBox01 = styled.div`
 
     
 `;
-const ExplainBox02 = styled.div`
-    margin-top: 20px;
-    width: 479px;
-    height: 149px;
-    overflow: hidden;
-    font-size: 20px;
-    font-weight: 200;
-    font-family: Noto Sans KR;
-    color: #707070;
-    text-align: left;
-    line-height: 35px;
-    word-wrap: break-word;
-`;
 const CountBox = styled.div`
     width: 300px;
     height: 22px;
@@ -300,7 +287,7 @@ class MypageHeader extends Component {
 
         if (MypageInfo && MypageInfo.about_me != null) {
             descriptionLengthCheck = MypageInfo.about_me.length < 230 ? "" : " ...";
-            about_me[0] = MypageInfo.about_me.length < 230 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 230)+descriptionLengthCheck;
+            about_me[0] = MypageInfo.about_me.length < 230 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 230) + descriptionLengthCheck;
             // about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
         }
 
@@ -315,7 +302,7 @@ class MypageHeader extends Component {
                             </div>
                         </div>
                         <div className="box box2">
-                            <div style={{ width:"100%",display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+                            <div style={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
                                 <CategoryLabel>{MypageInfo.categoryName}</CategoryLabel>
                                 <ExplainBox01>{MypageInfo.about_me}</ExplainBox01>
                                 <CountBox>

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import zoom from "source/zoom.svg";
 import OrderOption from "components/Commons/OrderOption"
-import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css'
 import Category from "components/Commons/Category"
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"

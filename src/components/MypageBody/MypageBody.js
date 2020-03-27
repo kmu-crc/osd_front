@@ -126,7 +126,7 @@ class MypageBody extends Component {
 
     render() {
         const { Count, MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded } = this.props;
-        const { this_order, orders } = this.state;
+        const { this_order } = this.state;
         return (
             <MypageBodyComp>
                 <div className="MypageCategory">

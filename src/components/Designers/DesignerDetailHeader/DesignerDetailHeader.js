@@ -137,18 +137,6 @@ const ExplainBox01 = styled.div`
     -webkit-line-clamp: 4; 
     -webkit-box-orient: vertical;
 `;
-const ExplainBox02 = styled.div`
-    width:479px;
-    height:149px;
-    overflow:hidden;
-    font-size:20px;
-    font-weight:200;
-    font-family:Noto Sans KR;
-    color:#707070;
-    text-align:left;
-    line-height:35px;
-    word-wrap:break-word;
-`;
 const CountBox = styled.div`
     width: 300px;
     display: flex;
@@ -332,7 +320,7 @@ class DesignerPageHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            about_me: ["", ""], descriptionLengthCheck: "", joinDialog: false, likeDialog: false, manager: false, tmpLike: false
+            descriptionLengthCheck: "", joinDialog: false, likeDialog: false, manager: false, tmpLike: false
         };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
@@ -384,7 +372,7 @@ class DesignerPageHeader extends Component {
     }
     render() {
         const { DesignerDetail, Count, like } = this.props;
-        const { about_me, likeDialog } = this.state;
+        const { likeDialog } = this.state;
         const thumbnailInfo = DesignerDetail.thumbnail ? DesignerDetail.thumbnailUrl.m_img : noface;
         const isMyProfile = this.props.userInfo && DesignerDetail && this.props.userInfo.uid === DesignerDetail.uid ? true : false;
         const MypageInfo = this.props.DesignerDetail;
@@ -404,7 +392,7 @@ class DesignerPageHeader extends Component {
                         </div>
                     </div>
                     <div className="box box2">
-                        <div style={{ display: "flex",width:"100%", flexDirection: "column" }}>
+                        <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
                             <CategoryLabel>{DesignerDetail.categoryName}</CategoryLabel>
                             <ExplainBox01>{MypageInfo.about_me}</ExplainBox01>
                             <CountBox>

@@ -193,13 +193,12 @@ class GroupBasicInfo extends Component {
         }
 
     }
-    onKeyDownEnter(event){
-        if(event.key=="Enter")
-        {
-          document.getElementById("explainBox").focus();
+    onKeyDownEnter(event) {
+        if (event.key === "Enter") {
+            document.getElementById("explainBox").focus();
         }
-    
-      }
+
+    }
     render() {
         console.log("THUMBNAIL", this.props);
         //const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
@@ -207,19 +206,19 @@ class GroupBasicInfo extends Component {
             <ContentsBox>
                 {/* thumbnail */}
                 <ThumbnailBox>
-                    <div className="title">{GroupImageText}<sup style={{color:"red"}}>*</sup></div>
+                    <div className="title">{GroupImageText}<sup style={{ color: "red" }}>*</sup></div>
                     <ImageBox imageURL={this.props.groupThumbnail} ></ImageBox>
                     <div className="findThumbnailBox">
                         <div className="findThumbnailBtn">
                             <label for="file" className="findThumbnailText" onClick={this.handleFileUploadModal}>찾아보기</label>
                             <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" value={null} />
                         </div>
-                    <div className="thumbnailExplainText">{GroupImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                        <div className="thumbnailExplainText">{GroupImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                 </ThumbnailBox>
                 {/* title */}
                 <TitleBox>
-                    <div className="title">제목<sup style={{color:"red"}}>*</sup></div>
+                    <div className="title">제목<sup style={{ color: "red" }}>*</sup></div>
                     <input type="text" onKeyDown={this.onKeyDownEnter} className="inputText" onChange={this.handleOnChangeTitle} value={this.props.groupTitle} />
                 </TitleBox>
                 {/* description */}

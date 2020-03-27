@@ -365,17 +365,17 @@ class CardSourceDetail extends Component {
       }
     }
     //content
-    for (i = 0; i < newContent.length; i++) {
-      if (newContent[i].uid == null) continue;
-      let found = oldContent.filter(item => {
-        return (item.uid === newContent[i].uid
-          && ((item.content !== newContent[i].content))
-        )
-      });
-      if (found.length > 0) {
-        formData.updateContent.push(newContent[i]);
+    newContent.map(newItem => {
+      if (newItem.uid != null) {
+        let found = oldContent.filter(oldItem =>
+          (oldItem.uid === newItem.uid &&
+            oldItem.content !== newItem.content))
+        if (found.length > 0) {
+          formData.updateContent.push(newItem);
+        }
       }
-    }
+      return newItem;
+    })
 
     // get newcontent
     newContent.map(item => {
@@ -384,17 +384,19 @@ class CardSourceDetail extends Component {
         if (item.type === "TEXT") {
           item = { type: item.type, content: item.content, order: item.order, extension: item.extension, data_type: item.data_type, file_name: null };
         }
-        console.log("item:", item);
         formData.newContent.push(item);
       }
+      return item;
     })
+
     // get deletecontent
-    for (i = 0; i < oldContent.length; i++) {
-      let found = newContent.filter(item => { return item.uid === oldContent[i].uid });
+    oldContent.map(oldItem => {
+      let found = newContent.filter(newItem => newItem.uid === oldItem.uid);
       if (found.length === 0) {
-        formData.deleteContent.push(oldContent[i]);
+        formData.deleteContent.push(oldItem);
       }
-    }
+      return oldItem;
+    });
 
     // edit
     await this.setState({ loading: true });
@@ -474,6 +476,7 @@ class CardSourceDetail extends Component {
             if (item.type === "TEXT") {
               return <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
             }
+            return <div>올바른형식의 아이템이 아닙니다.</div>;
           })}
         </ViewContent>}
 
