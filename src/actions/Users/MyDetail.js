@@ -5,16 +5,18 @@ import host from "config";
 /////////////////// 
 // 유저 정보 수정
 ///////////////////
-export function ModifyUserDetailRequest(id,data,token) {
-  console.log("test:",id,data,token);
+export function ModifyUserDetailRequest(id, data, token) {
+  console.log("test:", id, data, token);
   return (dispatch) => {
     dispatch(ModifyUserDetail());
 
-    return fetch(`${host}/users/modifyUserDetail/${id}`, 
-    { headers: { "x-access-token": token, "Content-Type": "application/json" }, 
-    method: "POST", body: JSON.stringify(data) })
+    return fetch(`${host}/users/modifyUserDetail/${id}`,
+      {
+        headers: { "x-access-token": token, "Content-Type": "application/json" },
+        method: "POST", body: JSON.stringify(data)
+      })
       .then(function (res) {
-        console.log("res2:",res);
+        console.log("res2:", res);
         return res.json();
       })
       .then(function (res) {
@@ -28,26 +30,26 @@ export function ModifyUserDetailRequest(id,data,token) {
 };
 
 export function ModifyUserDetail() {
-    return {
-      type: types.MODIFY_USER_DETAIL
-    }
-  };
+  return {
+    type: types.MODIFY_USER_DETAIL
+  }
+};
 
-  export function ModifyUserDetailSuccess(res) {
-    return {
-      type: types.MODIFY_USER_DETAIL_SUCCESS,
-      res
-    }
-  };
+export function ModifyUserDetailSuccess(res) {
+  return {
+    type: types.MODIFY_USER_DETAIL_SUCCESS,
+    res
+  }
+};
 
-  export function ModifytUserDetailFailure() {
-    return {
-      type: types.MODIFY_USER_DETAIL_FAILURE
-    }
-  };
+export function ModifytUserDetailFailure() {
+  return {
+    type: types.MODIFY_USER_DETAIL_FAILURE
+  }
+};
 // 내 기본 정보 불러오기
 export function GetMyDetailRequest(token) {
-  return (dispatch) => {
+   return (dispatch) => {
     return fetch(`${host}/users/myPage`, {
       headers: {
         "Content-Type": "application/json",
@@ -56,23 +58,23 @@ export function GetMyDetailRequest(token) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        // console.log("my detail info data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        return dispatch(GetMyDetail(data));
-      }).catch((error) => {
-        console.log("err", error);
-      });
+    }).then((data) => {
+      // console.log("my detail info data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      return dispatch(GetMyDetail(data));
+    }).catch((error) => {
+      console.log("err", error);
+    });
   }
 };
 
 export function GetMyDetail(data) {
   return {
     type: types.GET_MY_DETAIL,
-    MyDetail : data
+    MyDetail: data
   }
 };
 
@@ -87,21 +89,21 @@ export function GetMyDesignListRequest(token, page) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        console.log("my design list data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(MyDesignListClear(data));
-          return;
-        }
-        dispatch(GetMyDesignList(data));
-      }).catch((error) => {
-        dispatch(MyDesignListFail());
-        console.log("err", error);
-      });
+    }).then((data) => {
+      console.log("my design list data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(MyDesignListClear(data));
+        return;
+      }
+      dispatch(GetMyDesignList(data));
+    }).catch((error) => {
+      dispatch(MyDesignListFail());
+      console.log("err", error);
+    });
   }
 };
 
@@ -139,21 +141,21 @@ export function GetMyGroupListRequest(token, page) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        console.log("my group list data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(MyGroupListClear(data));
-          return;
-        }
-        dispatch(GetMyGroupList(data));
-      }).catch((error) => {
-        dispatch(MyGroupListFail());
-        console.log("err", error);
-      });
+    }).then((data) => {
+      console.log("my group list data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(MyGroupListClear(data));
+        return;
+      }
+      dispatch(GetMyGroupList(data));
+    }).catch((error) => {
+      dispatch(MyGroupListFail());
+      console.log("err", error);
+    });
   }
 };
 
@@ -191,21 +193,21 @@ export function GetMyLikeDesignRequest(token, page) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        console.log("my like list data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(MyLikeDesignClear(data));
-          return;
-        }
-        dispatch(GetMyLikeDesign(data));
-      }).catch((error) => {
-        dispatch(MyLikeDesignFail());
-        console.log("err", error);
-      });
+    }).then((data) => {
+      console.log("my like list data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(MyLikeDesignClear(data));
+        return;
+      }
+      dispatch(GetMyLikeDesign(data));
+    }).catch((error) => {
+      dispatch(MyLikeDesignFail());
+      console.log("err", error);
+    });
   }
 };
 
@@ -243,21 +245,21 @@ export function GetMyLikeDesignerRequest(token, page) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        console.log("my like list data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        if (page === 0) {
-          dispatch(MyLikeDesignerClear(data));
-          return;
-        }
-        dispatch(GetMyLikeDesigner(data));
-      }).catch((error) => {
-        dispatch(MyLikeDesignerFail());
-        console.log("err", error);
-      });
+    }).then((data) => {
+      console.log("my like list data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      if (page === 0) {
+        dispatch(MyLikeDesignerClear(data));
+        return;
+      }
+      dispatch(GetMyLikeDesigner(data));
+    }).catch((error) => {
+      dispatch(MyLikeDesignerFail());
+      console.log("err", error);
+    });
   }
 };
 
@@ -296,17 +298,17 @@ export function GetMyInvitedListRequest(token) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        console.log("my invited list data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        dispatch(GetMyInvitedListSuccess(data));
-      }).catch((error) => {
-        dispatch(GetMyInvitedListFailure());
-        console.log("err", error);
-      });
+    }).then((data) => {
+      console.log("my invited list data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetMyInvitedListSuccess(data));
+    }).catch((error) => {
+      dispatch(GetMyInvitedListFailure());
+      console.log("err", error);
+    });
   }
 };
 
@@ -342,17 +344,17 @@ export function GetMyInvitingListRequest(token) {
       method: "get"
     }).then(response => {
       return response.json();
-      }).then((data) => {
-        console.log("my inviting list data >>", data);
-        if (!data) {
-          console.log("no data");
-          data = [];
-        }
-        dispatch(GetMyInvitingListSuccess(data));
-      }).catch((error) => {
-        dispatch(GetMyInvitingListFailure());
-        console.log("err", error);
-      });
+    }).then((data) => {
+      console.log("my inviting list data >>", data);
+      if (!data) {
+        console.log("no data");
+        data = [];
+      }
+      dispatch(GetMyInvitingListSuccess(data));
+    }).catch((error) => {
+      dispatch(GetMyInvitingListFailure());
+      console.log("err", error);
+    });
   }
 };
 

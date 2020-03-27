@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
-// import Item from "components/Items/Item/Item"
-// import Expert from "components/Experts/Expert";
-// import { LikeItem } from "components/Users/MyDetail/MyDetailTab/likeItem";
-import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer"
-import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer"
-import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer"
-import MyPaymentContainer from "containers/Payment/MyPaymentContainer"
-import MyRequestItemContainer from "containers/Payment/MyRequestItemContainer"
-import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer"
-import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyProjectItemContainer"
-import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer"
-import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer"
-
+import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer";
+import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer";
+import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer";
+import MyPaymentContainer from "containers/Payment/MyPaymentContainer";
+import MyRequestItemContainer from "containers/Payment/MyRequestItemContainer";
+import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer";
+import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyProjectItemContainer";
+import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer";
+import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer";
+import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/ModifyMyDetailContainer";
 
 const MainBox = styled.div`
   width: 1790px;
@@ -271,59 +268,42 @@ class MyDetail extends Component {
     }
   }
   onClickMenu(event) {
-    let selectMenu = -1;
-
-    switch (event.target.id) {
-      case "orderlist": selectMenu = 0; break;
-      case "interest_Item": selectMenu = 1; break;
-      case "interest_Designer": selectMenu = 2; break;
-      case "interest_Maker": selectMenu = 3; break;
-      case "join_project": selectMenu = 4; break;
-      case "request_designer": selectMenu = 5; break;
-      case "request_maker": selectMenu = 6; break;
-      case "upload_item": selectMenu = 7; break;
-      case "request_item": selectMenu = 8; break;
-    }
-    console.log(selectMenu);
-    this.setState({ selectMenu: selectMenu });
+    const menuNames = [
+      "orderlist",
+      "interest_Item",
+      "interest_Designer",
+      "interest_Maker",
+      "join_project",
+      "request_designer",
+      "request_maker",
+      "upload_item",
+      "request_item",
+      "modify_myinfo",
+    ]
+    this.setState({ selectMenu: menuNames.indexOf(event.target.id) });
   }
 
   async onClickThumbnail(event) {
-    event.preventDefault();
-    const reader = new FileReader();
-    const file = event.target.files[0];
-    reader.onloadend = async () => {
-      // await this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
-      await this.props.ModifyUserDetailRequest(this.props.userInfo.uid, { files: [{ value: reader.result, name: file.name, key: 0 }] }, this.props.token)
-        .then(this.props.GetMyDetailRequest(this.props.token))
-        .then(window.location.reload())
-    }
-    if (event.target.files[0]) {
-      await reader.readAsDataURL(file);
-    }
-
+    //event.preventDefault();
+    //const reader = new FileReader();
+    //const file = event.target.files[0];
+    //reader.onloadend = async () => {
+    //  // await this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    //  await this.props.ModifyUserDetailRequest(this.props.userInfo.uid, { files: [{ value: reader.result, name: file.name, key: 0 }] }, this.props.token)
+    //    .then(this.props.GetMyDetailRequest(this.props.token))
+    //    .then(window.location.reload())
+    //}
+    //if (event.target.files[0]) {
+    //  await reader.readAsDataURL(file);
+    //}
   }
 
 
   render() {
 
-
-    console.log("myDetail", this.props);
+    // console.log("myDetail", this.props);
     const { MyDetail } = this.props;
     const { selectMenu } = this.state;
-
-
-    // let categoryName = this.props.category1&& this.props.category2 &&
-    // this.state.category_level2<1?
-    // this.props.category1[parseInt(this.state.category_level1,10)]
-    // &&this.props.category1[parseInt(this.state.category_level1,10)].text
-    // :null;
-
-    // this.props.category2&&this.props.category2.map((item,index)=>{
-    //   if(item.parent == this.state.category_level1&&item.value == this.state.category_level2){
-    //     categoryName=item.text;
-    //   }
-    // })
 
     return (
       <React.Fragment>
@@ -331,10 +311,10 @@ class MyDetail extends Component {
           <div className="header">
             <ProfileBox>
               <div className="imageBox">
-                <input hidden onChange={this.onClickThumbnail} id="file" type="file" />
-                <label htmlFor="file">
-                  <Thumbnail URL={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail} />
-                </label>
+                {/* <input hidden onChange={this.onClickThumbnail} id="file" type="file" /> */}
+                {/* <label htmlFor="file"> */}
+                <Thumbnail URL={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail} />
+                {/* </label> */}
               </div>
               <div className="LabelBox fontBig fontStyleNormal">{MyDetail.nick_name}</div>
               {/* <div className="LabelBox fontSmall fontStyleLight red">카테고리</div> */}
@@ -372,6 +352,8 @@ class MyDetail extends Component {
               {/* <div className="title_Label">관심</div> */}
               {/* <div className="title_Label">참여</div> */}
               {/* <div className="title_Label">의뢰</div> */}
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>
+              <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입아이템</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰아이템</MenuButton>
@@ -391,6 +373,7 @@ class MyDetail extends Component {
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
+              {selectMenu === 9 ? <ModifyMyDetailContainer /> : null}
               {selectMenu === 0 ?
                 <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
               {selectMenu === 8 ?
@@ -413,7 +396,7 @@ class MyDetail extends Component {
             </BoardBox>
           </div>
         </MainBox>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 } export default MyDetail;

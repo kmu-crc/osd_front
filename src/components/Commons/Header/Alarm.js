@@ -166,11 +166,11 @@ export default class Alarm extends Component {
     }
   }
   render() {
-    console.log(this.props, "props");
+    // console.log(this.props, "props");
     const { alarms } = this.props;
     const unread = alarms && alarms.length > 0 && alarms.filter(item => item.confirm === 0).length || 0;
     const converted = this.parseAlarms(alarms);
-    console.log(converted);
+    // console.log(converted);
     return (
       <button type="button" style={{ background: "none", border: "none", }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         {/* {this.props.children} */}

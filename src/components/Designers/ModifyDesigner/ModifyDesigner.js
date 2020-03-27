@@ -41,27 +41,7 @@ const MainBox = styled.div`
     padding-left:130px;
     padding-top:36px;
   }
-
 `
-
-// const RedButton = styled.div`
-//   width:290px;
-//   height:70px;
-//   font-family:Noto Sans KR;
-//   font-size:20px;
-//   font-weight:500;
-//   color:white;
-//   display:flex;
-//   justify-content:center;
-//   align-items:center;
-//   background-color:red;
-
-//   // position:absolute;
-//   // left:${props => props.left};
-//   // bottom:${props => props.bottom};
-
-//   cursor:pointer;
-// `
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
