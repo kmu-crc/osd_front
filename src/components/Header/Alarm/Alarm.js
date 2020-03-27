@@ -1,10 +1,14 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import noimg from "source/noimg.png"
-import TextFormat from 'modules/TextFormat'
+import React, { Component } from "react";
+import styled from "styled-components";
+import TextFormat from 'modules/TextFormat';
+import iAlarm from "source/alarm.png";
+import noimg from "source/noimg.png";
+// import { geturl } from "config";
 
-import iAlarm from "source/alarm.png"
-import { geturl } from "config"
+import Modal from 'react-awesome-modal';
+import { setTimeout } from 'timers';
+
+
 const AlarmIcon = styled.div`
     width: 34px;
     height: 34px;
@@ -13,7 +17,7 @@ const AlarmIcon = styled.div`
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
-`
+`;
 const AlarmList = styled.div`
     display: ${props => props.display};
     z-index: 999;
@@ -62,27 +66,29 @@ const ListItem = styled.div`
         background-color: #EFEFEF;
         opacity: 0.95;
     }
-`
+`;
 const userinfo = {
     alarmLeft: "1512px",
-}
+};
 let alarmlist = [];
+
 class Alarm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            profile: false,
-            active: false,
-            keyword: null,
-            msg: null,
-            top: 0, left: 0,
-            alarmLeft: userinfo.alarmLeft,
+            profile: false, active: false, keyword: null, msg: null,
+            top: 0, left: 0, alarmLeft: userinfo.alarmLeft,
+            movepopup: false,
         }
         this.accept = this.accept.bind(this);
-
     }
-    myRef = React.createRef()
+    myRef = React.createRef();
+    componentDidUpdate(prevProps) {
+        if (JSON.stringify(prevProps.alarm) !== JSON.stringify(this.props.alarm)) {
+            return true;
+        }
+    }
     openAlarmList = (e) => {
         document.addEventListener("mousedown", this.checkClickOutside)
         const top = e.clientY + 10
@@ -98,13 +104,23 @@ class Alarm extends Component {
         }
     }
     alarmConfirm = (userID, alarmID) => {
-        console.log("alarm-confirm:", userID, ",", alarmID)
+        // console.log("alarm-confirm:", userID, ",", alarmID)
         this.props.handleAlarmConfirm(userID, alarmID)
     }
     allAlarmConfirm = () => {
         if (this.props.alarm && this.props.alarm.count) {
             alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.');
-            this.props.handleAllAlarmConfirm(this.props.uid);
+            this.props.alarm.list.map(async alarm => {
+                if (!(alarm.type === "MESSAGE" &&
+                    alarm.type === "DESIGN" && alarm.kinds === "REQUEST" ||
+                    alarm.type === "DESIGN" && alarm.kinds === "INVITE" ||
+                    alarm.type === "GROUP" && alarm.kinds === "JOIN_withDESIGN" ||
+                    alarm.type === "GROUP" && alarm.kinds === "JOIN_withGROUP"
+                )) {
+                    await this.alarmConfirm(alarm.user_id, alarm.uid);
+                }
+                return alarm;
+            })
         }
     }
     getLink = item => {
@@ -195,7 +211,7 @@ class Alarm extends Component {
                         .then(res => {
                             // if (res.data && res.data.success) {
                             alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
-                            this.alarmConfirm(item.user_id, item.uid)
+                            // this.alarmConfirm(item.user_id, item.uid)
                             // } else {
                             // alert("다시 시도해주세요.");
                             // }
@@ -207,15 +223,16 @@ class Alarm extends Component {
         else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
                 if (window.confirm("가입을 승인하시겠습니까?")) {
-                    console.log(item, item.content_id, item.sub_content_id, item.user_id, item.uid);
+                    // console.log(item, item.content_id, item.sub_content_id, item.user_id, item.uid);
                     // return;
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
-                        .then(res => {
-                            console.log("getURL", geturl() + this.getLink(item));
+                        .then(async res => {
+                            // console.log("getURL", geturl() + this.getLink(item));
                             //     if (res.data && res.data.success) {
-                            this.alarmConfirm(item.user_id, item.uid);
-                            //  alert("승인되었습니다. 해당페이지로 이동합니다.");
-                            this.props.history.push(this.getLink(item))
+                            // this.alarmConfirm(item.user_id, item.uid);
+                            // alert("승인되었습니다. 해당페이지로 이동합니다.");
+                            // this.props.history.push(this.getLink(item))
+                            this.setState({ movepopup: true, path: await this.getLink(item), text: "승인되었습니다.", to: "해당페이지" });
                             //           } else { alert("다시 시도해주세요.") }
 
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
@@ -223,10 +240,11 @@ class Alarm extends Component {
             } else if (item.kinds === "JOIN_withGROUP") {
                 if (window.confirm("가입을 승인하시겠습니까?")) {
                     this.props.UpdateGroupInGroupRequest(item.content_id, item.sub_content_id)
-                        .then(res => {
+                        .then(async res => {
                             //if (res.data && res.data.success) {
                             // alert("승인되었습니다.")
-                            this.alarmConfirm(item.uid)
+                            this.setState({ movepopup: true, path: await this.getLink(item), text: "승인되었습니다.", to: "해당페이지" });
+                            // this.alarmConfirm(item.uid)
                             //} else { alert("다시 시도해주세요.") }
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
@@ -339,7 +357,7 @@ class Alarm extends Component {
             return;
         }
         alarmlist.map(alarm => {
-            const item = this.props.alarm.list.filter(e => e.uid === alarm)[0];
+            const item = this.props.alarm.list.filter(e => e.uid === parseInt(alarm, 10))[0];
             this.accept(null, item);
             return item;
         });
@@ -351,63 +369,70 @@ class Alarm extends Component {
         const alarmscombined = this.combine(alarms && alarms.list);
 
         return (
-            <React.Fragment>{this.state.active &&
-                <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
-                    <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
-                        <div onClick={this.acceptChecked}
-                            style={{
-                                zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
-                                marginTop: "13px", marginLeft: "10px"
-                            }}>선택 알람 승인</div>
-                        {/* {alarms && alarms.count > 0 ? */}
-                        <div onClick={this.allAlarmConfirm} style={{ zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px" }}>모두 읽음</div>
-                        {/* : <div style={{ zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />} */}
-                    </div>
-                    <div className="list">
-                        {alarmscombined && alarmscombined.length ? alarmscombined.map((item, index) => {
-                            if (item == null) return <div key={"undefined" + index}></div>;
-                            const alarmtype = this.showButton(item);
-                            const alarmKind = item.kinds;
-                            const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
-                            let msg = this.getMessageText(item);
-                            const MAXLENGTH = 32;
-                            // const title = item.title && item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
-                            // const itemTitle = item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
-                            return (
-                                <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
-                                    <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
-                                        {alarmtype ? <div><input type="checkbox" id="alarm-checkbox" value={item.uid} onChange={this.checkedAlarm} /></div> : null}
-                                        <TextFormat txt={msg} />
-                                    </div>
-                                    <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
-                                        <div style={{ display: "flex", justifyContent: "space-start" }}>
-                                            <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
-                                            <div style={{
-                                                display: "flex"
-                                            }}>
-                                                {alarmtype ?
-                                                    (<React.Fragment>
-                                                        <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}>
-                                                            <TextFormat txt={item.title} chars={MAXLENGTH} />
-                                                        </div>
-                                                        <div style={{ display: "flex", position: "absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
-                                                            <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
-                                                            <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
-                                                        </div>
-                                                    </React.Fragment>)
-                                                    :
-                                                    (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} chars={MAXLENGTH} /></div>
-                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
-                                                    )
-                                                }
+            <React.Fragment>
+                {this.state.movepopup ? <MoveOnModal path={this.state.path} text={this.state.text} to={this.state.to} /> : null}
+                {this.state.active &&
+                    <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
+                        <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
+                            <div onClick={this.acceptChecked}
+                                style={{
+                                    zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
+                                    marginTop: "13px", marginLeft: "10px"
+                                }}>선택 알람 승인</div>
+                            <div onClick={this.allAlarmConfirm}
+                                style={{
+                                    zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
+                                    backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px"
+                                }}>모두 읽음</div>
+                        </div>
+                        <div className="list">
+                            {alarmscombined && alarmscombined.length ? alarmscombined.map((item, index) => {
+                                if (item == null) return <div key={"undefined" + index}></div>;
+                                const alarmtype = this.showButton(item);
+                                const alarmKind = item.kinds;
+                                const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
+                                let msg = this.getMessageText(item);
+                                const MAXLENGTH = 32;
+                                return (
+                                    <ListItem
+                                        onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)}
+                                        confirm={item.confirm} key={item.uid}>
+                                        <div
+                                            style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
+                                            {alarmtype ? <div>
+                                                <input type="checkbox" id="alarm-checkbox" value={item.uid} onChange={this.checkedAlarm} /></div> : null}
+                                            <TextFormat txt={msg} />
+                                        </div>
+                                        <div
+                                            style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
+                                            <div style={{ display: "flex", justifyContent: "space-start" }}>
+                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
+                                                <div style={{
+                                                    display: "flex"
+                                                }}>
+                                                    {alarmtype ?
+                                                        (<React.Fragment>
+                                                            <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}>
+                                                                <TextFormat txt={item.title} chars={MAXLENGTH} />
+                                                            </div>
+                                                            <div style={{ display: "flex", position: "absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
+                                                                <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
+                                                                <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
+                                                            </div>
+                                                        </React.Fragment>)
+                                                        :
+                                                        (alarmKind !== "COMMENT"
+                                                            ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} chars={MAXLENGTH} /></div>
+                                                            : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        )
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </ListItem>)
-                        }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>최근 3개월 동안의 알림이 없습니다.</div>}
-                    </div>
-                </AlarmList>}
+                                    </ListItem>)
+                            }) : <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>최근 3개월 동안의 알림이 없습니다.</div>}
+                        </div>
+                    </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
                         {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
@@ -420,3 +445,47 @@ class Alarm extends Component {
 }
 export default Alarm
 
+class MoveOnModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: true
+        }
+    }
+    componentDidMount() {
+        setTimeout(
+            () => {
+                window.location.href = this.props.path;
+                this.setState({
+                    visible: false
+                });
+            }, 1500);
+    }
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
+
+    render() {
+        const ModalStyle = {
+            textAlign: 'center',
+            margin: 100,
+            zIndex: 999,
+        }
+
+        return (
+            <Modal
+                onLoad
+                visible={this.state.visible}
+                width="400"
+                height="300"
+                effect="fadeInDown">
+                <div style={ModalStyle}>
+                    <h1>{this.props.text}</h1>
+                    <p>{this.props.to}로 이동합니다.</p>
+                </div>
+            </Modal>
+        );
+    }
+}
