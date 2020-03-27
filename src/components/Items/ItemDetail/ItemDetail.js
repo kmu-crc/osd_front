@@ -383,7 +383,7 @@ class ItemDetail extends Component {
     super(props);
     this.state = {
       isLike: this.props.like == null ? false : this.props.like,
-      tab: "review", expandingContent: false, expandingReview: false,
+      expandingContent: false, expandingReview: false, expandingBoard: false,
       //for review detail
       reviewdetail: false, detail: null
     }
@@ -440,7 +440,8 @@ class ItemDetail extends Component {
   render() {
     console.log("itemdetail", this.props);
     const item = this.props.item;
-    const { tab, expandingContent, expandingReview } = this.state;
+    const { expandingContent, expandingReview, expandingBoard } = this.state;
+
     return item ?
       <React.Fragment>
         {(this.props.userInfo && item.members && item.members.length > 1)
@@ -500,12 +501,12 @@ class ItemDetail extends Component {
                           <div className="text">아이템 수정/삭제</div>
                         </div>
                       </div>
-                    : null}
-                  <div className="button first">
-                    <div onClick={_ => this.buyThisItem(_, item)} >
-                      <div className="text">아이템구입</div>
+                      : null}
+                    <div className="button first">
+                      <div onClick={_ => this.buyThisItem(_, item)} >
+                        <div className="text">아이템구입</div>
+                      </div>
                     </div>
-                  </div>
                     {this.state.isLike === false ?
                       <div className="button second" onClick={this.onClickLike}>
                         <div className="text">관심항목추가</div></div>
@@ -521,31 +522,22 @@ class ItemDetail extends Component {
 
           {/* review and board */}
           <div style={{ marginTop: "35px" }}>
-            <Board style={{ marginTop: "15px", overflow: "hidden" }}
-              height={expandingReview ? "100%" : "250px"}>
+            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingReview ? "100%" : "250px"}>
               <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-                <div
-                  onClick={() => this.setState({ tab: "review" })}
-                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "review" ? "#FFFFFF" : "#EFEFEF" }}>리뷰보기</div>
-                <div
-                  onClick={() => this.setState({ tab: "board" })}
-                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: tab === "board" ? "#FFFFFF" : "#EFEFEF" }}>게시판</div>
+                <div style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>리뷰</div>
               </div>
 
-              {tab === "review" ?
-                <ItemReviewContainer
-                  user_id={item.user_id}
-                  handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
-                : <ItemQuestionContainer
-                  user_id={item.user_id} />}
+              <ItemReviewContainer
+                user_id={item.user_id}
+                handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
 
-              {tab === "review" && this.state.reviewdetail ?
+              {this.state.reviewdetail ?
                 <ReviewDetailModal
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
                   detail={this.state.detail} /> : null}
-
             </Board>
+
             <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingReview: !this.state.expandingReview })} className="button">
                 <div className="font">
@@ -553,6 +545,24 @@ class ItemDetail extends Component {
                 </div>
               </div>
             </ExpandingButton>
+          </div>
+
+          <div style={{ marginTop: "35px" }}>
+            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
+              <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
+                <div
+                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
+              </div>
+              <ItemQuestionContainer user_id={item.user_id} />
+            </Board>
+            <ExpandingButton width={1600}>
+              <div onClick={() => this.setState({ expandingBoard: !this.state.expandingBoard })} className="button">
+                <div className="font">
+                  {expandingReview ? "접기" : "펼쳐보기"}
+                </div>
+              </div>
+            </ExpandingButton>
+
           </div>
 
           {/* item-contents */}

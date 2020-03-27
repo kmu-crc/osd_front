@@ -311,7 +311,7 @@ class Header extends Component {
               {this.state.active ?
                 <UserMenu>
                   <Link to={`/mypage`}>
-                    <div className="item">마이페이지</div>
+                    <div className="item">내 정보</div>
                   </Link>
                   <div onClick={this.logout} className="item">로그아웃</div>
                 </UserMenu>

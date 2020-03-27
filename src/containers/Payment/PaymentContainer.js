@@ -23,7 +23,7 @@ class PaymentContainer extends Component {
       .then(res => {
         if (res.data.success) {
           if (this.props.custom) {
-            alert("구입이 완료되었습니다. [마이페이지] > [의뢰상품]에서 확인하실 수 있습니다.");
+            alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
           } else {
             alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
