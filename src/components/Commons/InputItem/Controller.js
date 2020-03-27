@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import { FileController } from "components/Commons/InputItem/FileController";
 import { EmbController } from "components/Commons/InputItem/EmbController";
-
+// import {confirmAlert} from "react-confirm-alert";
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 // css styling
 const ControllerWrap = styled.div`
   position: relative;
@@ -134,18 +135,20 @@ export class Controller extends Component {
     // };
     // console.log("updated:(changed):", this.props.item.content, this.state.content);
   };
-  async privateItem() {
+  async privateItem(event) {
     if (this.props.privateItem) {
       if (window.confirm("선택하신 항목을 비공개로 설정하시겠습니까?")) {
         this.props.privateItem(this.props.item);
       }
+      // confirmAlert(options("선택하신 항목을 비공개로 설정하시겠습니까?",()=>{this.props.privateItem(this.props.item);},event));
     }
   }
-  async deleteItem() {
+  async deleteItem(event) {
     if (this.props.deleteItem) {
       if (window.confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
         this.props.deleteItem(this.props.item.order)
       }
+      // confirmAlert(options("선택된 항목을 정말 삭제하시겠습니까?",()=>{this.props.deleteItem(this.props.item.order);},event));
     }
   };
   async moveUpItem() {

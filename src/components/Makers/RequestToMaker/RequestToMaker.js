@@ -62,6 +62,7 @@ const FormBox = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
+  padding-right:59px;
   padding-top:49px;
 
   .wrapper{
@@ -147,6 +148,7 @@ class RequestToMaker extends Component {
     this.state = {
       category_level1: -1, category_level2: -1,
       title: "", tag: [], price: 0, content: "", location: 15, offline: 0, amount: 0, resale: 0,endDate:null,dayDate:null,
+      ownership: 1,startDate:null,endDate:null,dayDate:null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -162,6 +164,7 @@ class RequestToMaker extends Component {
     this.handleAddTag = this.handleAddTag.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getDayDateValue=this.getDayDateValue.bind(this);
   }
@@ -179,8 +182,12 @@ class RequestToMaker extends Component {
       title: event.target.value,
     })
   }
+  async getStartDateValue(value){
+    // await console.log("startDate",value);
+    await this.setState({ startDate: value });
+  }
   async getEndDateValue(value) {
-    await console.log("endDate",value);
+    // await console.log("endDate",value);
     await this.setState({ endDate: value });
   }
   async getDayDateValue(value){
@@ -245,7 +252,8 @@ class RequestToMaker extends Component {
       location: this.state.location,
       resale: this.state.resale,
       offline_consultation: this.state.offline,
-      term:this.state.endDate,
+      start_date:this.state.startDate,
+      end_date:this.state.endDate,
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -308,7 +316,8 @@ class RequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
+                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
+                  getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
                 </div>
 
                 <HRLine />
@@ -339,7 +348,7 @@ class RequestToMaker extends Component {
 
               </FormBox>
             </div>
-            <div className="contentsBox">
+              <div className="contentsBox">
                 <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
                 <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
               </div>

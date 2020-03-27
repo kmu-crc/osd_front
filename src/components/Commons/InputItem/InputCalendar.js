@@ -95,53 +95,121 @@ export class InputCalendar extends Component {
     constructor(props) {
         super(props);
         this.state = { startDate:null,endDate:null,dayDate:null };
+        this.onChangeStartDate = this.onChangeStartDate.bind(this)
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
         this.onChangeDayDate = this.onChangeDayDate.bind(this);
+        this.onClickDayDate = this.onClickDayDate.bind(this);
     }
     componentDidMount() {
         this.init();
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.price !== this.props.price) {
-            // console.log(this.props.price);
+        if (prevProps.startDate!==this.props.startDate){
+            this.setState({
+                startDate:this.props.startDate})
+        }
+        if( prevProps.endDate!==this.props.endDate) {
+                console.log(this.props.startDate,this.props.endDate)
+            if(this.props.startDate&&this.props.endDate){
+                const end = this.props.endDate.split("-");
+                const endDay = new Date(end[0],end[1]-1,end[2]);
+        
+                const start = this.props.startDate.split("-");
+                const startDay = new Date(start[0],start[1]-1,start[2]);
+                let timestamp = endDay - startDay;
+                const oneDay = 24* 60* 60* 1000;
+        
+                const dDay = Math.floor(timestamp/oneDay+1);
+                this.setState({dayDate:dDay})
+            }
+
+
             this.setState({
                 endDate: this.props.endDate,
-                dayDate:this.props.dayDate,
             })
         }
     }
     returnData = async e => {
+        this.props.getStartDateValue && await this.props.getStartDateValue(this.state.startDate);
         this.props.getEndDateValue && await this.props.getEndDateValue(this.state.endDate);
         this.props.getDayDateValue && await this.props.getDayDateValue(this.state.dayDate);
     }
     init = async () => {
-        await this.setState({ dayDate: this.props.dayDate || 0 });
+        console.log("init",this.props.startDate,this.props.endDate);
+        await this.setState({ startDate: this.props.startDate||new Date().toISOString().substring(0,10) });
         await this.setState({ endDate: this.props.endDate || new Date().toISOString().substring(0,10) });
-        await this.setState({ startDate: new Date().toISOString().substring(0,10) });
+        await this.setState({ dayDate: this.props.dayDate || 0 });
         this.returnData();
     }
+    async onChangeStartDate(event) {
+        
+        // //일수
+        const end = this.state.endDate.split("-");
+        const endDay = new Date(end[0],end[1]-1,end[2]);
 
-    async onChangeEndDate(event) {
-        const now = new Date();
-        const value = event.target.value.split("-");
-        const endDay = new Date(value[0],value[1]-1,value[2]);
+        const start = event.target.value.split("-");
+        const startDay = new Date(start[0],start[1]-1,start[2]);
 
-        let timestamp = endDay - now;
+        // console.log("onChangeStartDate:",startDay,endDay);
+
+        let timestamp =  endDay-startDay;
         const oneDay = 24* 60* 60* 1000;
 
-        //일수
-        await this.setState({ endDate: event.target.value, dayDate:Math.floor(timestamp/oneDay+1) });
+        const dDay = Math.floor(timestamp/oneDay+1);
+        console.log(start,end);
+        if(dDay <1){
+            await this.setState({ startDate:this.state.startDate,dayDate:this.state.dayDate });
+            return;
+        }
+        await this.setState({ startDate:event.target.value,dayDate:Math.floor(timestamp/oneDay) });
+        this.returnData();
+    }
+    async onChangeEndDate(event) {
+        const now = new Date();
+        const end = event.target.value.split("-");
+        const endDay = new Date(end[0],end[1]-1,end[2]);
+
+        const start = this.state.startDate.split("-");
+        const startDay = new Date(start[0],start[1]-1,start[2]);
+        // console.log("onChangeEndDate:",startDay,endDay);
+        let timestamp = endDay - startDay;
+        const oneDay = 24* 60* 60* 1000;
+
+        const dDay = Math.floor(timestamp/oneDay);
+
+        console.log("end:::",dDay);
+        if(dDay <1){
+            await this.setState({ endDate:this.state.endDate,dayDate:this.state.dayDate });
+            return;
+        }
+
+        // //일수
+        await this.setState({ endDate: event.target.value, dayDate:Math.floor(timestamp/oneDay) });
         this.returnData();
     }
     async onChangeDayDate(event){
-        let now = new Date();
+        if(isNaN(parseInt(event.target.value,10))){
+            return;
+        }
+        const start = this.state.startDate.split("-");
+        const startDay = new Date(start[0],start[1]-1,start[2]);
+
         const dday = parseInt(event.target.value,10);
         const oneDay = 24* 60* 60* 1000;
-        now.setDate(now.getDate()+dday);
-
-        await this.setState({ endDate:now.toISOString().substring(0,10),
+        startDay.setDate(startDay.getDate()+dday);
+        console.log(event.target.value);
+        if(dday <1){
+            return;
+        }
+        
+        await this.setState({ endDate:startDay.toISOString().substring(0,10),
         dayDate: event.target.value });
         this.returnData();
+
+    }
+    onClickDayDate(event){
+        document.getElementById(event.target.id).focus();
+        document.getElementById(event.target.id).select();
 
     }
     render() {
@@ -150,9 +218,9 @@ export class InputCalendar extends Component {
                 <FormBox>
                     <FormStyle
                         id="startDate"
-                        // placeholder={this.props.placeholder}
+                        placeholder={this.props.placeholder}
                         value={this.state.startDate}
-                        // onChange={this.onChangeEndDate}
+                        onChange={this.onChangeStartDate}
                     />
                 </FormBox>
                 <FormBox>
@@ -168,7 +236,8 @@ export class InputCalendar extends Component {
                     width={80}
                     value={this.state.dayDate}
                     onChange={this.onChangeDayDate}
-                />일간
+                    onClick={this.onClickDayDate}
+                />일
             </React.Fragment>
         );
     }

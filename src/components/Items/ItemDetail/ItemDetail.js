@@ -10,7 +10,8 @@ import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
-
+// import {confirmAlert} from "react-confirm-alert";
+// import {options} from "components/Commons/InputItem/AlertConfirm"
 // import NumberFormat from "modules/NumberFormat";
 // import { Link } from "react-router-dom";
 

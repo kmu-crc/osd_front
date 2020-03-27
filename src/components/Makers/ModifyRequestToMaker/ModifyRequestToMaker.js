@@ -4,12 +4,17 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
     margin-bottom: 100px;
     z-index:3;
+    // *{
+    //   border:1px solid black;
+    // }
 `;
 const MainBox = styled.div`
   width:100%;
@@ -31,25 +36,6 @@ const MainBox = styled.div`
   }
 
 `
-const RedButton = styled.div`
-  width:290px;
-  height:70px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  font-weight:500;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:red;
-
-  position:absolute;
-  left:${props => props.left}px;
-  bottom:${props => props.bottom}px;
-
-  cursor:pointer;
-`
-
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -60,6 +46,7 @@ const FormBox = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
+  padding-right:59px;
   padding-top:49px;
 
   .wrapper{
@@ -139,12 +126,30 @@ const HRLine = styled.div`
     margin-top:35px;
     margin-bottom:35px;
 `
+const LocationList = [
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
+];
 class ModifyRequestToMaker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category_level1: -1, category_level2: -1,
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,ownership: 1
+      ,startDate:null,endDate:null,dayDate:null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -159,23 +164,32 @@ class ModifyRequestToMaker extends Component {
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
+    this.onClickDelete = this.onClickDelete.bind(this);
+    this.getStartDateValue = this.getStartDateValue.bind(this);
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getDayDateValue=this.getDayDateValue.bind(this);
   }
 
-  componentDidMount() {
-    //modify :*** 데이터베이스 호출 시 주석해제 *****
-
-    // this.setState({
-    //   category_level1:this.props.RequestDetail.category_level1,
-    //   category_level2:this.props.RequestDetail.category_level2,
-    //   title:this.props.RequestDetail.title,
-    //   tag:this.props.RequestDetail.tag.split(','),
-    //   price:this.props.RequestDetail.price,
-    //   content:this.props.RequestDetail.content,
-    //   location:this.props.RequestDetail.location,
-    //   offline:this.props.RequestDetail.offline_consultation,
-    //   amount:this.props.RequestDetail.amount,
-    //   resale:this.props.RequestDetail.resale,
-    // });
+  componentWillUpdate(nextProps){
+    if(nextProps.Detail!=this.props.Detail)
+    {
+      console.log(nextProps.Detail.tag);
+      this.setState({
+        category_level1:nextProps.Detail.category_level1,
+        category_level2:nextProps.Detail.category_level1,
+        title:nextProps.Detail.title,
+        tag:nextProps.Detail.tag.split(","),
+        price:nextProps.Detail.price,
+        content:nextProps.Detail.content,
+        location:nextProps.Detail.location,
+        ownership:parseInt(nextProps.Detail.ownership,10),
+        startDate:nextProps.Detail.start_date,
+        endDate:nextProps.Detail.end_date,
+        amount:nextProps.Detail.amount,
+        resale:parseInt(nextProps.Detail.resale,10),
+      })
+    }
   }
 
   async onClickCategorylevel1(event, { value }) {
@@ -186,6 +200,15 @@ class ModifyRequestToMaker extends Component {
   }
   async getPriceValue(value) {
     await this.setState({ price: value });
+  }
+  onClickDelete(event){
+    this.props.DeleteRequestRequest(this.props.id,this.props.token)
+    .then(res => {
+      if (res.success) {
+          window.location.href = `/request/maker`;
+      }
+    })
+    .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
   onClickItemType(event, { value }) {
     this.setState({ itemType: { value }.value });
@@ -204,6 +227,17 @@ class ModifyRequestToMaker extends Component {
     this.setState({
       price: event.target.value,
     })
+  }
+  async getStartDateValue(value){
+    await console.log("startDate",value);
+    await this.setState({ startDate: value });
+  }
+  async getEndDateValue(value) {
+    await console.log("endDate",value);
+    await this.setState({ endDate: value });
+  }
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
   }
   onChangeAmount(event) {
     this.setState({
@@ -230,33 +264,42 @@ class ModifyRequestToMaker extends Component {
       resale: { value }.value,
     })
   }
-
+  handleAddTag(tag) {
+    this.setState({
+      tag: tag.slice(),
+    })
+  }
   onSubmit() {
 
-    let tagList = "";
-    this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-      return (
-        tagList += item + ","
-      );
-    });
-
-    const Data = {
-      type: "maker_req", // "designer_req" "designer_res" "maker_req" "maker_res"
-      // user_id: this.props.userInfo.uid // 
+    const data = {
+      type: "maker", // designer, maker
+      status: "request",
+      // expert_id: this.props.id || null,
+      // personal: this.props.id || null,
       title: this.state.title,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      tag: tagList,
+      tag: this.state.tag.join(","),
       price: this.state.price,
       content: this.state.content,
       amount: this.state.amount,
       location: this.state.location,
       resale: this.state.resale,
       offline_consultation: this.state.offline,
+      start_date:this.state.startDate,
+      end_date:this.state.endDate,
     }
 
-    // 페이지이동
-    window.location.href = "/request";
+    this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
+      .then(res => {
+        if (res.success) {
+          if (res.id)
+            window.location.href = `/makerDetail/${res.id}`;
+          else
+            window.location.href = "/request/maker";
+        }
+      })
+      .catch(err => alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
   }
 
   render() {
@@ -271,14 +314,14 @@ class ModifyRequestToMaker extends Component {
             <div className="contentsBox">
               <FormBox>
 
-              {/* <div className="wrapper flex centering" >
-                  <div className="label">의뢰인</div>
+              <div className="wrapper flex centering" >
+                  <div className="label">의뢰자</div>
                   <div>{this.props.userInfo.nickName||null}</div>
-                </div> */}
+                </div>
 
                 <div className="wrapper flex centering">
-                  <div onChange={this.onChangeTitle} value={this.state.title} className="label">제목</div>
-                  <InputText width={483} />
+                  <div className="label">제목</div>
+                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -295,16 +338,20 @@ class ModifyRequestToMaker extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputPrice name="price" getValue={this.getPriceValue} />
-                  {/* <InputText onChange={this.onChangePrice} value={this.state.price} width={483}/> */}
-                </div>
-
-                <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
                   <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
                 </div>
 
+                <div className="wrapper flex centering">
+                  <div className="label ">희망 비용</div>
+                  <InputPrice name="price" getValue={this.getPriceValue} />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label ">기간</div>
+                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
+                  getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
+                </div>
 
                 <HRLine />
                 <div className="wrapper flex centering">
@@ -314,7 +361,10 @@ class ModifyRequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 위치</div>
-                  <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} />
+                  <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                    selection options={LocationList} placeholder="시/도"
+                    onChange={this.onChangeLocation} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -328,11 +378,15 @@ class ModifyRequestToMaker extends Component {
                   <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
                     onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
                 </div> */}
-
               </FormBox>
-              <RedButton onClick={this.onSubmit} left={1164} bottom={0}><div>등록</div></RedButton>
             </div>
+              <div className="contentsBox">
+                <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
+                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+                <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true}/>
+              </div>
           </MainBox>
+
         </Wrapper>
       </React.Fragment>
     );

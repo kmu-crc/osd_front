@@ -63,6 +63,7 @@ const FormBox = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
+  padding-right:59px;
   padding-top:49px;
 
   .wrapper{
@@ -147,7 +148,7 @@ class RequestToDesigner extends Component {
     super(props);
     this.state = {
       category_level1: null, category_level2: null,
-      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,endDate:null,dayDate:null,
+      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,startDate:null,endDate:null,dayDate:null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -162,6 +163,7 @@ class RequestToDesigner extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
+    this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getDayDateValue=this.getDayDateValue.bind(this);
     }
@@ -182,8 +184,12 @@ class RequestToDesigner extends Component {
   async getPriceValue(value) {
     await this.setState({ price: value });
   }
+  async getStartDateValue(value){
+    // await console.log("startDate",value);
+    await this.setState({ startDate: value });
+  }
   async getEndDateValue(value) {
-    await console.log("endDate",value);
+    // await console.log("endDate",value);
     await this.setState({ endDate: value });
   }
   async getDayDateValue(value){
@@ -238,7 +244,8 @@ class RequestToDesigner extends Component {
       location: this.state.location,
       ownership: this.state.ownership,
       offline_consultation: this.state.offline,
-      term:this.state.endDate,
+      start_date:this.state.startDate,
+      end_date:this.state.endDate,
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -299,7 +306,8 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
+                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
+                  getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
                 </div>
 
                 <HRLine />

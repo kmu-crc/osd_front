@@ -73,7 +73,7 @@ export class InputPrice extends Component {
         if (prevProps.price !== this.props.price) {
             // console.log(this.props.price);
             this.setState({
-                price: this.props.price,
+                price: this.props.price/1000,
             })
         }
     }
@@ -85,9 +85,10 @@ export class InputPrice extends Component {
         this.returnData();
     }
     async onClickButton(value) {
-        const money = this.state.price == 0 ? 0 : this.state.price;
-        const price = parseInt(money, 10) + value;
-        // console.log(parseInt(money, 10), value);
+
+        const money = parseInt(this.state.price,10);
+        const price = parseInt(money,10) + parseInt(value,10);
+        console.log(this.state.price,price,money,value);
         await this.setState({ price: price });
         this.returnData();
     }
