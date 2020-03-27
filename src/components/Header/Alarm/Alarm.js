@@ -339,8 +339,9 @@ class Alarm extends Component {
             return;
         }
         alarmlist.map(alarm => {
-            const item = this.props.alarm.list.filter(e => e.uid == alarm)[0];
+            const item = this.props.alarm.list.filter(e => e.uid === alarm)[0];
             this.accept(null, item);
+            return item;
         });
         alarmlist = [];
     }
@@ -387,8 +388,8 @@ class Alarm extends Component {
                                                 {alarmtype ?
                                                     (<React.Fragment>
                                                         <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}>
-                                                        <TextFormat txt={item.title} chars={MAXLENGTH}/>
-                                                            </div>
+                                                            <TextFormat txt={item.title} chars={MAXLENGTH} />
+                                                        </div>
                                                         <div style={{ display: "flex", position: "absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
                                                             <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
@@ -396,7 +397,7 @@ class Alarm extends Component {
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
-                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} chars={MAXLENGTH}/></div>
+                                                        ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} chars={MAXLENGTH} /></div>
                                                         : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
                                                     )
                                                 }

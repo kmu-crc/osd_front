@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CheckBox2 from "components/Commons/CheckBox";
 import { Icon } from "semantic-ui-react";
 
-const ExperienceBox= styled.div`
+const ExperienceBox = styled.div`
   *{
     font-size:20px;
     color: #707070;
@@ -144,45 +144,8 @@ const IsDesignerBox = styled.div`
       flex-direction:column;
   }
 `
-const DesignerInfoBox = styled.div`
-  margin-left: 20px;
-  .itemBox{
-    display: flex;
-    position: relative;
-    margin-top: 46px;
-    .designerInfoTitle{
-      min-width: 47px;
-      margin-left: 150px;
-      font-size: 20px;
-      font-weight: 500;
-      font-family: Noto Sans KR;
-      color: #707070;
-      text-align: left;
-      opacity: 0.5;
-    }
-  }
-
-  @media only screen and (min-width : 780px) and (max-width:1440px) {   
-    .itemBox{
-      flex-direction:column;
-      .designerInfoTitle{
-        margin-left:0px;
-        margin-bottom:10px;
-      }
-    }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    .itemBox{
-      flex-direction:column;
-      .designerInfoTitle{
-        margin-left:0px;
-        margin-bottom:10px;
-      }
-    }
-  }
-`
 const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
-  width: ${props=>props.width==null?"505px":props.width+"px"};
+  width: ${props => props.width == null ? "505px" : props.width + "px"};
   height: 56px;
   padding-left: 15px;
   font-size: 20px;
@@ -205,9 +168,11 @@ const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
 class SectionBuziness extends Component {
   constructor(props) {
     super(props);
-    this.state = { isDesigner: false, 
+    this.state = {
+      isDesigner: false,
       // team: "", career: "", location: "", contact: "" };
-      career: [{ number: 0, task: "", explain: "", during: "" }], };
+      career: [{ number: 0, task: "", explain: "", during: "" }],
+    };
     this.onChangeIsDesigner = this.onChangeIsDesigner.bind(this);
     // this.onChangeCareer = this.onChangeCareer.bind(this);
     // this.onChangeContact = this.onChangeContact.bind(this);
@@ -218,46 +183,45 @@ class SectionBuziness extends Component {
     this.onClickAddCareer = this.onClickAddCareer.bind(this);
   }
   componentWillUpdate(nextProps) {
-      // this.setState({
-      //   isDesigner: nextProps.MyDetail.is_designer, team: nextProps.MyDetail.team, career: nextProps.MyDetail.career,
-      //   contact: nextProps.MyDetail.contact, location: nextProps.MyDetail.location
-      // })
-      console.log(nextProps.MyDetail);
-      if(nextProps.MyDetail!=this.props.MyDetail){
+    // this.setState({
+    //   isDesigner: nextProps.MyDetail.is_designer, team: nextProps.MyDetail.team, career: nextProps.MyDetail.career,
+    //   contact: nextProps.MyDetail.contact, location: nextProps.MyDetail.location
+    // })
+    // console.log(nextProps.MyDetail);
+    if (nextProps.MyDetail !== this.props.MyDetail) {
 
-      
-      if(nextProps.MyDetail.careerlist!=null){
-        console.log(nextProps.MyDetail.careerlist);
+      if (nextProps.MyDetail.careerlist !== null) {
+        // console.log(nextProps.MyDetail.careerlist);
         const careerRow = nextProps.MyDetail.careerlist.split("/");
         careerRow.pop();
         const careerList = careerRow.map((item, index) => {
           const piece = item.split(",");
-          console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
+          // console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
           return (
             { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
           );
         });
         this.setState({
-          isDesigner: nextProps.MyDetail.is_designer, 
+          isDesigner: nextProps.MyDetail.is_designer,
           career: careerList,
         })
         this.props.updateCareerlist(careerList);
       }
-      else{
+      else {
         this.setState({
-          isDesigner: nextProps.MyDetail.is_designer, 
-          career:  [{ number: 0, task: "", explain: "", during: "" }], 
+          isDesigner: nextProps.MyDetail.is_designer,
+          career: [{ number: 0, task: "", explain: "", during: "" }],
         })
       }
-     
+
       this.props.updateIsDesigner(nextProps.MyDetail.is_designer);
     }
-      // this.props.updateTeam(nextProps.MyDetail.team);
-      // this.props.updateCareer(nextProps.MyDetail.career);
-      // this.props.updateLocation(nextProps.MyDetail.location);
-      // this.props.updateContact(nextProps.MyDetail.contact);
-      return true;
-      
+    // this.props.updateTeam(nextProps.MyDetail.team);
+    // this.props.updateCareer(nextProps.MyDetail.career);
+    // this.props.updateLocation(nextProps.MyDetail.location);
+    // this.props.updateContact(nextProps.MyDetail.contact);
+    return true;
+
   }
   async onChangeCareer(number, task, explain, during) {
     let arr = this.state.career.slice();
@@ -304,24 +268,18 @@ class SectionBuziness extends Component {
   //   this.setState({ contact: event.target.value });
   //   this.props.updateContact(event.target.value);
   // }
-  onFocusNext(event)
-  {
-    const arrID = ["team","career","location","contact"];
-    if(event.key=="Enter")
-    {
-      if(event.target.id == arrID[0])
-      {
+  onFocusNext(event) {
+    const arrID = ["team", "career", "location", "contact"];
+    if (event.key === "Enter") {
+      if (event.target.id === arrID[0]) {
         document.getElementById(arrID[1]).focus();
       }
-      else if(event.target.id == arrID[1])
-      {
+      else if (event.target.id === arrID[1]) {
         document.getElementById(arrID[2]).focus();
       }
-      else if(event.target.id == arrID[2])
-      {
+      else if (event.target.id === arrID[2]) {
         document.getElementById(arrID[3]).focus();
       }
-      
     }
   }
   render() {
@@ -337,54 +295,33 @@ class SectionBuziness extends Component {
 
         <IsDesignerBox>
           <div className="isDesignerText"><div>디자이너 활동 여부</div>
-          <CheckBox2 type="checkbox" id="designercheckbox" className="cuteCheckBox"
-            onChange={this.isDesignerCheck} onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
+            <CheckBox2 type="checkbox" id="designercheckbox" className="cuteCheckBox"
+              onChange={this.isDesignerCheck} onClick={this.isDesignerCheck} checked={this.state.isDesigner} />
           </div>
           <div className="tipTitle">TIP</div>
         </IsDesignerBox>
         <div className="tipDescription">{description[0]}<br />{description[1]}<br />{description[2]}</div>
         <ExperienceBox>
           <div className="title">경험</div>
-              <div className="labelBox">
-                <div className="number_label">번호</div>
-                <div className="text_label">업무</div>
-                <div className="text_label">기간</div>
-                <div className="text_label">내용</div>
-              </div>
-               <div className="wrapper_noflex ">
-                {this.state.career.map((item, index) => {
-                  console.log("career", item)
-                  return (
-                    <CreateCareer item={item} number={parseInt(item.number,10) + 1} onChangeCareer={this.onChangeCareer} key={index} />
-                  );
-                })}
-                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경험 추가</div>
-                </Button>
-               </div>
-          </ExperienceBox>
-        {/* <DesignerInfoBox>
-          <div className="itemBox">
-            <div className="designerInfoTitle">팀</div>
-            <InputText id="team" onKeyDown={this.onFocusNext}  onChange={this.onChangeTeam} value={this.state.team == null ? "" : this.state.team} />
+          <div className="labelBox">
+            <div className="number_label">번호</div>
+            <div className="text_label">업무</div>
+            <div className="text_label">기간</div>
+            <div className="text_label">내용</div>
           </div>
-
-          <div className="itemBox">
-            <div className="designerInfoTitle">경력</div>
-            <InputText id="career" onKeyDown={this.onFocusNext}  onChange={this.onChangeCareer} value={this.state.career == null ? "" : this.state.career} />
+          <div className="wrapper_noflex ">
+            {this.state.career.map((item, index) => {
+              console.log("career", item)
+              return (
+                <CreateCareer item={item} number={parseInt(item.number, 10) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+              );
+            })}
+            {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+            <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+              <Icon name="plus" /><div className="label">경험 추가</div>
+            </Button>
           </div>
-
-          <div className="itemBox">
-            <div className="designerInfoTitle">위치</div>
-            <InputText id="location" onKeyDown={this.onFocusNext}  onChange={this.onChangeLocation} value={this.state.location == null ? "" : this.state.location} />
-          </div>
-
-          <div className="itemBox">
-            <div className="designerInfoTitle">연락</div>
-            <InputText id="contact" onChange={this.onChangeContact}  onChange={this.onChangeContact} value={this.state.contact == null ? "" : this.state.contact} />
-          </div>
-        </DesignerInfoBox> */}
+        </ExperienceBox>
       </ContentsBox>
     );
   }
@@ -458,7 +395,7 @@ class CreateCareer extends Component {
             <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
           </div>
         </div>
       </React.Fragment>

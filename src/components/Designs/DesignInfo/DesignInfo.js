@@ -16,17 +16,6 @@ import { Modal } from "semantic-ui-react";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "components/Designs/GridEditor/DesignComment";
 
-// const DesignInfoComp = styled.div`
-//     marginTop: 21px;
-//     display: flex;
-//     background-color: #EFEFEF;
-//     width: ${window.innerWidth > 1920 ? 1920 : window.innerWidth};
-//     height: 237px;
-// `;
-const Button = styled.button`
-    outline:none;
-    border:none;
-`
 const ThumbnailWrapper = styled.div`
     .fork-mark {
         position: absolute;
@@ -699,11 +688,11 @@ class DesignInfo extends Component {
         this.onBlurMemberList = this.onBlurMemberList.bind(this);
         this.onBlurForkDesign = this.onBlurForkDesign.bind(this);
     }
-    onBlurMemberList(event){
-        this.setState({memberList:false});
+    onBlurMemberList(event) {
+        this.setState({ memberList: false });
     }
-    onBlurForkDesign(event){
-        this.setState({forkDesignList:false});
+    onBlurForkDesign(event) {
+        this.setState({ forkDesignList: false });
     }
     onMoveForkDesign(designID) {
         window.location.href = "/designDetail/" + designID;
@@ -960,8 +949,8 @@ class DesignInfo extends Component {
                             </DescriptionContainer>
                         </div>
                         {/* <div className="box box3 secondary"> */}
-                            {/* DESCRIPTION */}
-                            {/* <DescriptionContainer>
+                        {/* DESCRIPTION */}
+                        {/* <DescriptionContainer>
                                 <div className="category-name"></div>
                                 <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation && DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
                             </DescriptionContainer>

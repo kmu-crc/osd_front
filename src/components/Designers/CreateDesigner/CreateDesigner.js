@@ -105,7 +105,7 @@ const Arrow = styled.span`
     font-size:15px;
 `
 const InputBoard = styled.div`
-  width:${window.innerWidth>1920?1422+'px':100+'%'};
+  width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
   padding-bottom:100px;
   margin-bottom:100px;
   position:relative;
@@ -161,7 +161,7 @@ class ModifyMyDetail extends Component {
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
-      careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
+      careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -185,8 +185,8 @@ class ModifyMyDetail extends Component {
         thumbnail: nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img == null ? "" : nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img,
         nick_name: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         about_me: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
-        password: "", passwordCheck: "",screenWidth: window.innerWidth,
-        careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
+        password: "", passwordCheck: "", screenWidth: window.innerWidth,
+        careerlist: [{ number: 0, task: "", explain: "", during: "" }],
       });
     }
     return true;
@@ -310,23 +310,18 @@ class ModifyMyDetail extends Component {
     let formData = {
       change_password: this.change_password,
       nick_name: this.state.nick_name, about_me: this.state.about_me,
-      password: this.state.password,thumbnail:"",
+      password: this.state.password, thumbnail: "",
       category_level1: this.state.category_level1, category_level2: this.state.category_level2,
-      is_designer: this.state.is_designer, 
-      // team: this.state.team, career: this.state.career,
-      // location: this.state.location, contact: this.state.contact, 
-      careerlist:careerlist,
+      is_designer: this.state.is_designer,
+      careerlist: careerlist,
       files: []
     };
-    console.log(careerlist);
-    // return;
 
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
-    if(this.state.thumbnail!=null||this.state.thumbnail!="")
-    {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       formData.files.push(file);
     }
-    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
+    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img)) {
       delete formData.files;
     }
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
@@ -458,11 +453,11 @@ class ModifyMyDetail extends Component {
               MyDetail={this.props.MyDetail}
               updateIsDesigner={this.updateIsDesigner}
               updateCareerlist={this.updateCareerlist}
-              // updateTeam={this.updateTeam}
-              // updateCareer={this.updateCareer}
-              // updateLocation={this.updateLocation}
-              // updateContact={this.updateContact} 
-              />
+            // updateTeam={this.updateTeam}
+            // updateCareer={this.updateCareer}
+            // updateLocation={this.updateLocation}
+            // updateContact={this.updateContact} 
+            />
           </form>
           <div className="buttonBox">
             <CompleteButton isComplete={true} onClick={this.onSubmit}>

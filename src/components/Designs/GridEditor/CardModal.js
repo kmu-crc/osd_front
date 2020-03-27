@@ -15,7 +15,6 @@ import {
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
-import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 
@@ -357,23 +356,22 @@ const BlankSpace = styled.div`
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", content: "", closed: false }
-    }
+        this.state = {
+            sroll: false, edit: false, closed: false,
+            title: "", content: "",
+        }
+    };
     componentWillReceiveProps(nextProps) {
-        console.log("card:", nextProps.card);
         if (nextProps.card !== this.props.card) {
-            // alert("!");
-
             return true;
         }
-    }
+    };
     handleCancel = (obj) => {
-        if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
+        if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
             if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return "keep";
             }
         }
-        // this.onClose();
     };
     handleClosed = (obj) => {
         if (
@@ -407,28 +405,27 @@ class CardModal extends Component {
     }
     handleHeaderSubmit = (_) => {
         // _.preventDefault(_);
-        console.log(_); return;
-        let files = null;
-        ValidationGroup(this.state, false)
-            .then(async data => {
-                files = data && data.files;
-                let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-                const pack = {
-                    title: this.state.title,
-                    thumbnail: files && thumbnail,
-                    content: this.state.content,
-                    data: { deleteContent: [], newContent: [], updateContent: [] }
-                };
-
-                await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
-                    .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
-                    .catch(err => alert(err + ''));
-                // this.onClose();
-            }).catch(err => alert(err + ''));
-        this.setState({ edit: !this.state.edit })
+        // console.log(_); return;
+        // let files = null;
+        // ValidationGroup(this.state, false)
+        // .then(async data => {
+        // files = data && data.files;
+        // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
+        // const pack = {
+        // title: this.state.title,
+        // thumbnail: files && thumbnail,
+        // content: this.state.content,
+        // data: { deleteContent: [], newContent: [], updateContent: [] }
+        // };
+        // await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
+        // .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
+        // .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
+        // .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
+        // .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
+        // .catch(err => alert(err + ''));
+        // this.onClose();
+        // }).catch(err => alert(err + ''));
+        // this.setState({ edit: !this.state.edit })
     }
     onCloseEditMode = () => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {

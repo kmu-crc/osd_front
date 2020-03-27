@@ -103,7 +103,7 @@ const MenuText = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-width:${window.innerWidth>1920?1422+'px':100+'%'};
+width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
 padding-bottom:100px;
 margin-bottom:100px;
 position:relative;
@@ -162,8 +162,8 @@ class ModifyMyDetail extends Component {
       thumbnail: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
-      is_designer: false, team: "", career: "", location: "", contact: "",screenWidth: window.innerWidth,
-      careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
+      is_designer: false, team: "", career: "", location: "", contact: "", screenWidth: window.innerWidth,
+      careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -187,9 +187,8 @@ class ModifyMyDetail extends Component {
   updateIntroduce(modifyvalue) {
     this.setState({ about_me: modifyvalue })
   }
-  updateThumbnail(imgInfo,imgName)
-  {
-    this.setState(state=>({thumbnail:imgInfo,thumbnail_name:imgName}));
+  updateThumbnail(imgInfo, imgName) {
+    this.setState(state => ({ thumbnail: imgInfo, thumbnail_name: imgName }));
   }
   updateCategory1(modifyvalue) {
     this.setState({ category_level1: modifyvalue });
@@ -282,7 +281,7 @@ class ModifyMyDetail extends Component {
       // team: this.state.team, career: this.state.career,
       // location: this.state.location, contact: this.state.contact,
       change_password: this.state.change_password,
-      careerlist:careerlist,
+      careerlist: careerlist,
       files: []
     };
     let file = {
@@ -290,14 +289,12 @@ class ModifyMyDetail extends Component {
       name: this.state.thumbnail_name,
       key: 0
     };
-    if(this.state.thumbnail!=null)
-    {
-      if(this.state.thumbnail!="")
-      {      
-        formData.files.push(file);  
+    if (this.state.thumbnail != null) {
+      if (this.state.thumbnail !== "") {
+        formData.files.push(file);
       }
     }
-    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
+    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img)) {
       delete formData.files;
     }
 
@@ -368,10 +365,10 @@ class ModifyMyDetail extends Component {
         <NavMenu>
           <div className="menuBox">
             {scrollmenu.map((menu, index) => {
-              return (<div onClick={() => this.scrollMove(menu, index)} 
-                           className="menuItem"
-                           borderBottom={index+1===scrollmenu.length}
-                           key={menu.txt}>
+              return (<div onClick={() => this.scrollMove(menu, index)}
+                className="menuItem"
+                borderBottom={index + 1 === scrollmenu.length}
+                key={menu.txt}>
                 <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
               </div>)
             })}
@@ -381,16 +378,16 @@ class ModifyMyDetail extends Component {
         <InputBoard isModifyAnother={true}>
           <form>
             {/* <input type="hidden" id="user_id" value={} /> */}
-            <SectionBasic  updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
-            <HRline/>
-            <SectionAdditional  MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
+            <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
+            <HRline />
+            <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
               updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
-            <HRline/>
-            <SectionBuziness  MyDetail={this.props.MyDetail}
+            <HRline />
+            <SectionBuziness MyDetail={this.props.MyDetail}
               updateIsDesigner={this.updateIsDesigner} updateCareerlist={this.updateCareerlist}
               updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
           </form>
-          <CompleteButton id="additional" isComplete  ={true} onClick={this.onSubmit}><BtnText>등록</BtnText></CompleteButton>
+          <CompleteButton id="additional" isComplete={true} onClick={this.onSubmit}><BtnText>등록</BtnText></CompleteButton>
         </InputBoard>
       </MainSection>
     </React.Fragment>)

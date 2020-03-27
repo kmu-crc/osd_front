@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CheckBox2 from "components/Commons/CheckBox";
 import { Icon } from "semantic-ui-react";
 
-const ExperienceBox= styled.div`
+const ExperienceBox = styled.div`
   *{
     font-size:20px;
     color: #707070;
@@ -125,145 +125,84 @@ const ContentsBox = styled.div`
     }
 `;
 const IsDesignerBox = styled.div`
-display:flex;
-flex-direction:row;
-.isDesignerText {
   display:flex;
-  max-width: 200px;
-  min-width:200px;
-  font-size: 20px;
-  font-weight: 500;
-  line-height:29px;
-  color: #707070;
-}
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-}
-
-
-// const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-//       width:25px;
-//       height:25px;
-//       margin-left:10px;
-//       background-color:#EFEFEF !important;
-//       border:1px solid #707070 !important;
-//       border-radius:5px !important;  
-// `
-
-const DesignerInfoBox = styled.div`
-margin-left: 20px;
-.itemBox{
-  display: flex;
-  position: relative;
-  margin-top: 46px;
-  .designerInfoTitle{
-    min-width: 47px;
-    margin-left: 150px;
+  flex-direction:row;
+  .isDesignerText {
+    display:flex;
+    max-width: 200px;
+    min-width:200px;
     font-size: 20px;
     font-weight: 500;
-    font-family: Noto Sans KR;
+    line-height:29px;
     color: #707070;
-    text-align: left;
-    opacity: 0.5;
   }
-}
-
-@media only screen and (min-width : 780px) and (max-width:1440px) {   
-  .itemBox{
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
     flex-direction:column;
-    .designerInfoTitle{
-      margin-left:0px;
-      margin-bottom:10px;
-    }
   }
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  .itemBox{
-    flex-direction:column;
-    .designerInfoTitle{
-      margin-left:0px;
-      margin-bottom:10px;
-    }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+      flex-direction:column;
   }
-}
-`
+`;
 const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
-width: ${props=>props.width==null?"505px":props.width+"px"};
-height: 56px;
-padding-left: 15px;
-font-size: 20px;
-font-weight: 500;
-font-family: Noto Sans KR;
-opacity: 0.5;
-background-color: #EFEFEF;
-border: none;
-border-radius: 5px;
-outline: none;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  width:505px;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  width:80%
-}
-
-`
+  width: ${props => props.width == null ? "505px" : props.width + "px"};
+  height: 56px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  opacity: 0.5;
+  background-color: #EFEFEF;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    width:505px;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    width:80%
+  }
+`;
 
 class SectionBuziness extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      isDesigner: false, 
-      career: [{ number: 0, task: "", explain: "", during: "" }], };
+    this.state = {
+      isDesigner: false,
+      career: [{ number: 0, task: "", explain: "", during: "" }],
+    };
     this.onChangeCareer = this.onChangeCareer.bind(this);
-    // this.onChangeContact = this.onChangeContact.bind(this);
-    // this.onChangeIsDesigner = this.onChangeIsDesigner.bind(this);
-    // this.onChangeLocation = this.onChangeLocation.bind(this);
-    // this.onChangeTeam = this.onChangeTeam.bind(this);
     this.isDesignerCheck = this.isDesignerCheck.bind(this);
-    this.onFocusNext=this.onFocusNext.bind(this);
+    this.onFocusNext = this.onFocusNext.bind(this);
     this.onChangeCareer = this.onChangeCareer.bind(this);
     this.onClickAddCareer = this.onClickAddCareer.bind(this);
   }
   componentWillUpdate(nextProps) {
-    if (this.props.MyDetail != nextProps.MyDetail) {
-      // this.setState({
-      //   isDesigner: nextProps.MyDetail.is_designer, team: nextProps.MyDetail.team, career: nextProps.MyDetail.career,
-      //   contact: nextProps.MyDetail.contact, location: nextProps.MyDetail.location
-      // })
-      console.log(nextProps.MyDetail);
-      if(nextProps.MyDetail.careerlist!=null){
+    if (this.props.MyDetail !== nextProps.MyDetail) {
+
+      if (nextProps.MyDetail.careerlist !== null) {
         const careerRow = nextProps.MyDetail.careerlist.split("/");
         careerRow.pop();
         const careerList = careerRow.map((item, index) => {
           const piece = item.split(",");
-          console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
           return (
             { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
           );
         });
         this.setState({
-          isDesigner: nextProps.MyDetail.is_designer, 
+          isDesigner: nextProps.MyDetail.is_designer,
           career: careerList,
         })
         this.props.updateCareerlist(careerList);
       }
-      else{
+      else {
         this.setState({
-          isDesigner: nextProps.MyDetail.is_designer, 
-          career:  [{ number: 0, task: "", explain: "", during: "" }], 
+          isDesigner: nextProps.MyDetail.is_designer,
+          career: [{ number: 0, task: "", explain: "", during: "" }],
         })
       }
-     
+
       this.props.updateIsDesigner(nextProps.MyDetail.is_designer);
 
-      // this.props.updateTeam(nextProps.MyDetail.team);
-      // this.props.updateCareer(nextProps.MyDetail.career);
-      // this.props.updateLocation(nextProps.MyDetail.location);
-      // this.props.updateContact(nextProps.MyDetail.contact);
-      
     }
     return true;
   }
@@ -296,40 +235,20 @@ class SectionBuziness extends Component {
     this.setState({ isDesigner: event.target.checked });
 
   }
-  // onChangeTeam(event) {
-  //   this.setState({ team: event.target.value });
-  //   this.props.updateTeam(event.target.value);
-  // }
-  // onChangeCareer(event) {
-  //   this.setState({ career: event.target.value });
-  //   this.props.updateCareer(event.target.value);
-  // }
-  // onChangeLocation(event) {
-  //   this.setState({ location: event.target.value });
-  //   this.props.updateLocation(event.target.value);
-  // }
-  // onChangeContact(event) {
-  //   this.setState({ contact: event.target.value });
-  //   this.props.updateContact(event.target.value);
-  // }
-  onFocusNext(event)
-  {
-    const arrID = ["team","career","location","contact"];
-    if(event.key=="Enter")
-    {
-      if(event.target.id == arrID[0])
-      {
+
+  onFocusNext(event) {
+    const arrID = ["team", "career", "location", "contact"];
+    if (event.key === "Enter") {
+      if (event.target.id === arrID[0]) {
         document.getElementById(arrID[1]).focus();
       }
-      else if(event.target.id == arrID[1])
-      {
+      else if (event.target.id === arrID[1]) {
         document.getElementById(arrID[2]).focus();
       }
-      else if(event.target.id == arrID[2])
-      {
+      else if (event.target.id === arrID[2]) {
         document.getElementById(arrID[3]).focus();
       }
-      
+
     }
   }
   render() {
@@ -350,27 +269,27 @@ class SectionBuziness extends Component {
           {description[0]}<br />
           {description[1]}<br />
           {description[2]}</div>
-          <ExperienceBox>
+        <ExperienceBox>
           <div className="title">경험</div>
-              <div className="labelBox">
-                <div className="number_label">번호</div>
-                <div className="text_label">업무</div>
-                <div className="text_label">기간</div>
-                <div className="text_label">내용</div>
-              </div>
-               <div className="wrapper_noflex ">
-                {this.state.career.map((item, index) => {
-                  console.log("career", item)
-                  return (
-                    <CreateCareer item={item} number={parseInt(item.number,10) + 1} onChangeCareer={this.onChangeCareer} key={index} />
-                  );
-                })}
-                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경험 추가</div>
-                </Button>
-               </div>
-          </ExperienceBox>
+          <div className="labelBox">
+            <div className="number_label">번호</div>
+            <div className="text_label">업무</div>
+            <div className="text_label">기간</div>
+            <div className="text_label">내용</div>
+          </div>
+          <div className="wrapper_noflex ">
+            {this.state.career.map((item, index) => {
+              console.log("career", item)
+              return (
+                <CreateCareer item={item} number={parseInt(item.number, 10) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+              );
+            })}
+            {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+            <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+              <Icon name="plus" /><div className="label">경험 추가</div>
+            </Button>
+          </div>
+        </ExperienceBox>
         {/* <DesignerInfoBox>
           <div className="itemBox">
             <div className="designerInfoTitle" >팀</div>
@@ -464,7 +383,7 @@ class CreateCareer extends Component {
             <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
           </div>
         </div>
       </React.Fragment>
