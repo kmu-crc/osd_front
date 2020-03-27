@@ -28,14 +28,14 @@ class ConnectedMemberContainer extends Component {
     this.state = { members: [] }
   }
   componentDidMount() {
-    Socket.emit("REQUEST-THIS-ITEM-MEMBER", this.props.id);
-    Socket.on("GET-ONLINE-MEMBER", list => {
-      console.log("connected user:", list);
-      this.setState({ members: list });
-    });
-    Socket.on("SOMEONE-LOGOUT", () => {
-      Socket.emit("REQUEST-THIS-ITEM-MEMBER", this.props.id);
-    })
+    // Socket.emit("REQUEST-THIS-ITEM-MEMBER", this.props.id);
+    // Socket.on("GET-ONLINE-MEMBER", list => {
+    // console.log("connected user:", list);
+    // this.setState({ members: list });
+    // });
+    // Socket.on("SOMEONE-LOGOUT", () => {
+    // Socket.emit("REQUEST-THIS-ITEM-MEMBER", this.props.id);
+    // })
   }
   // componentWillUnmount() {
   // alert("out!");

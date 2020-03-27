@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Zoom from "source/baseline_search_black_48dp.png";
-import Socket from "modules/socket";
 import host from "config";
 import { Link } from "react-router-dom";
 import NoFace from "source/thumbnail.png";
 import TextFormat from "modules/TextFormat";
 import { SetSession } from "modules/Sessions";
 import { Icon } from "semantic-ui-react";
+import AlarmContainer from "containers/Commons/AlarmContainer";
 
 const LogoWrapper = styled.div`
   margin: 0;
@@ -128,18 +128,7 @@ const HeaderItem = styled.li`
     color: #F00;
   }
 `;
-const RedCircle = styled.div`
-  position: absolute;
-  font-size: 8px;
-  margin-left: 20px;
-  line-height: 12px;
-  text-align: center;
-  color: #FFF;
-  width: 15px;
-  height: 15px;
-  background: #F00;
-  border-radius: 50%;
-`;
+
 const UserMenu = styled.div`
   z-index: 999;
   position: absolute;
@@ -186,19 +175,8 @@ class Header extends Component {
     this.onClickMessageIcon = this.onClickMessageIcon.bind(this);
   }
   componentDidMount() {
-    if (this.props.valid) {
-      try {
-        Socket.emit("INIT", this.props.userInfo.uid)
-        Socket.on("getNoti", alarms => {
-          this.setState({ alarms: alarms });
-        });
-
-      } catch (err) {
-        console.log(err);
-      }
-    }
     this.getNews();
-  };
+  }
   getNews = () => {
     const url = `${host}/common/notice`;
     return fetch(url, {
@@ -248,6 +226,8 @@ class Header extends Component {
     const itemActive = (location.indexOf("/product") !== -1 || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const requestActive = (location.indexOf("/request") !== -1)
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
+
+    // active alarm icon
     return (<HeaderContainer>
       {/*  */}
       <HeaderItem className="first">
@@ -315,8 +295,16 @@ class Header extends Component {
       <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}>
         {valid && userInfo
           ? (<LoginBox>
-            <div className="iconBox"><Icon className="grey alarm" size="large" /></div>
-            <div className="iconBox" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large" /></div>
+
+            {/* alarm container */}
+            <div className="iconBox" >
+              <AlarmContainer />
+            </div>
+
+            <div className="iconBox" onClick={this.onClickMessageIcon}>
+              <Icon className="grey envelope" size="large" />
+            </div>
+
             <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
               <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
               <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
@@ -335,9 +323,6 @@ class Header extends Component {
       {/* <HeaderItem className="cart">
         <Link to={'/cart'}>
           {this.props.cart ?
-            <RedCircle>
-              <div style={{ width: "4", height: "12px" }}>{this.props.cart.count}</div>
-            </RedCircle>
             : null}
           <i style={{ width: "29px", height: "29px" }} className="cart icon" />
         </Link>

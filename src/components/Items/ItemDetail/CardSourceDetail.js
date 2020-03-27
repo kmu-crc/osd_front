@@ -246,7 +246,7 @@ class CardSourceDetail extends Component {
     }
     //BLOG-TYPE
     else {
-      if (formData && (formData.newContent.length == 0 && formData.updateContent.length === 0 && formData.newContent.length === 0)) {
+      if (formData && (formData.newContent.length == 0 && formData.updateContent.length === 0 && formData.delContent.length === 0)) {
         alert("변경된 사항이 없습니다.");
       } else {
         this.props.upDateRequest(formData, this.props.cardId, this.props.token)

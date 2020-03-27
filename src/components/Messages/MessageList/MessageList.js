@@ -356,7 +356,7 @@ class MessageList extends Component {
   }
 
   comfirmMsgAlarm = (from) => {
-    Socket.emit("confirmMsgAlarm", { uid: this.props.userInfo, fromID: from })
+    // Socket.emit("confirmMsgAlarm", { uid: this.props.userInfo, fromID: from })
   }
   sendText = async (event) => {
     event.preventDefault();
