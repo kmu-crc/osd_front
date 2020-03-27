@@ -1,286 +1,319 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Grid, Form } from "semantic-ui-react";
-import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
+import noimg from "source/noimg.png";
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import Loading from "components/Commons/Loading";
-import Button from "components/Commons/Button";
-import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
-
-// css styling
-
-const ImgWrapper = styled.div`
-  background-image: url(${mainSlide});
-  background-position: center;
-  background-size: cover;
-  width: 100%;
-  height: 200px;
-  position: relative;
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-  }
-`;
-
-const Title = styled.div`
-  width: 100%;
-  color: white;
-  position: absolute;
-  text-align: center;
-  top: 40%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
-  h1 {
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading2};
-    font-weight: bold;
-  }
-`;
 
 const Wrapper = styled(ContentBox)`
-  margin-top: -70px;
+  width:100%;
+  margin-top:60px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
 `;
-
-const FromFieldCard = styled.div`
-  width: 100%;
-  background-color: white;
-  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  margin-bottom: 30px;
-  & .profileImg {
-    margin-bottom: 3rem;
+const MainBox = styled.div`
+  width:100%;
+  .title{
+    width:170px;
+    height:29px;
+    font-family:Noto Sans KR, Medium;
+    font-size:20px;
+    font-weight:500;
   }
-  & .two.fields {
-    margin-top: 3rem;
+  .contentsBox{
+    width:100%;
+    display:flex;
+    padding-left: 10px;
+    padding-top: 13px;
   }
 `;
+const InputTextBox = styled.input`
+  border:none;
+  width: ${props => props.width || "100%"};
+  height:100%;
+  padding-left:20px;
+  background-color:#E9E9E9;
+  border-radius:21px;
+  display:flex;
+  justify-content:center;
+  outline:none;
+  
+  color:#060000;
+`;
+const ThumbnailBox = styled.div`
+  *{
+    font-family:Noto Sans KR;
+    font-weight:500;
+    font-size:20px;
+  }
+  width:562px;
+  height:540px;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  padding-left: 10px;
+  padding-top: 25px;
+  margin-right: 30px;
+  .label{
+    width:100%;
+    height:29px;
+    margin-left: 25px;
+  }
+  .thumbnail{
+    cursor:pointer;
+    width:256px;
+    height:256px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#E9E9E9;
+    border-radius:50%;
+    margin-left:auto;
+    margin-right:auto;
+  }
+`;
+const Thumbnail = styled.div`
+  cursor:pointer;
+  width:256px;
+  height:256px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+  background-size: cover;
+  background-position: center center;
+  border-radius:50%;
+  margin-left:50px;
+`;
+const FormBox = styled.div`
+  *{
+    font-family:Noto Sans KR;
+    font-weight:500;
+    font-size:20px;
+  }
+  width:939px;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  padding-left:59px;
+  padding-top:49px;
 
-const Label = styled.div`
-  margin: 0 0 0.8rem 0;
-  display: block;
-  color: rgba(0,0,0,.87);
-  font-size: .92857143em;
-  font-weight: 700;
-  text-transform: none;
+  .wrapper{
+    width:100%;
+    display:flex;
+    align-items:center;
+    margin-bottom:70px;
+  }
+  .wrapper_noflex{
+    width:100%;
+    margin-bottom:70px;
+  }
+  .margin_zero{
+    margin:0px;
+  }
+  .margin_bottom{
+    margin-bottom:30px;
+  }
+  .flex{
+    display:flex;
+  }
+  .innerWraper{
+    width:100%;
+    margin-bottom:26px;
+    display:flex;
+  }
+  .label{
+    min-width:157px;
+    height:29px;
+  }
+  .label_centering{
+    text-align:center;
+  }
+  .index{
+    width:30px;
+    height:30px;
+    color:#707070;
+  }
+
+`;
+const Margin = styled.div`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `;
 
 class ModifyMyDetail extends Component {
-  state = {
-    change_password: false,
-    loading: false
-  }
-
-  componentWillMount() {
-    this.props.GetMyDetailRequest(this.props.token)
-    // .then(data => {
-    //   this.props.GetCategoryLevel2Request(data.MyDetail.category_level1);
-    // });
-  }
-
-  onChangeValue = async data => {
-    let obj = {};
-    if (data.target) {
-      obj[data.target.name] = data;
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      nickName: "",
+      password: "",
+      passwordCheck: "",
+      phone: "",
+      thumbnail: null,
+      thumbnail_name: null,
     }
-    await this.setState(obj);
-
-    if (data && data.target && data.target.name === "nick_name") {
-      if (data.value === this.props.MyDetail.nick_name) {
-        data.validates = ["required", "NotSpecialCharacters"];
-      } else {
-        data.validates = ["required", "NotSpecialCharacters", "CheckNickName"];
-      }
+    this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onClickCancel = this.onClickCancel.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
+  };
+  componentWillUpdate(prevProps) {
+    if (this.props.MyDetail !== prevProps.MyDetail) {
+      const { MyDetail } = this.props;
+      const newInfo = { nickName: MyDetail.nick_name, thumbnail: MyDetail.thumbnail, phone: MyDetail.phone };
+      this.setState(newInfo);
+    };
+    return true;
+  };
+  handleOnChangeThumbnail(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(file);
     }
   };
-
-  liveCheck = (target) => {
-    FormControl(this.state[target]);
+  onClickCancel(event) {
+    window.location.href = "/mypage"
   };
-
-  samePwCheck = () => {
-    FormControl({
-      value: [this.state.password.value, this.state.password2.value],
-      target: this.state.password2.target,
-      validates: this.state.password2.validates
-    });
-  }
-
   onSubmit = async e => {
+    this.setState({ loading: true });
     e.preventDefault();
-    let formData = this.state;
-    if (this.state.change_password) {
-      var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<>?])/;
-      if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-        alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
-        return false;
-      }
-      if (formData.password.value !== formData.password2.value) {
-        alert("비밀번호 확인을 다시 해주십시오");
-        return false;
-      }
-      delete formData.password2;
+
+    if (this.state.password !== this.state.passwordCheck) {
+      alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
+      return;
     }
-    ValidationGroup(formData, false).then(async data => {
-      console.log("성공", data);
-      // return
-      await this.setState({
-        loading: true
-      });
-      this.props.UpdateUserDetailRequest(data, this.props.token)
-        .then(res => {
-          if (res.success) {
-            alert("정보가 수정되었습니다.");
-            this.props.history.push(`/`);
-          } else {
-            alert("다시 시도해주세요");
-            this.setState({
-              loading: false
-            });
-          }
-        });
-    }).catch(e => {
-      console.log("실패", e);
-      alert("다시 시도해주세요");
+    let data = null
+    if (this.state.nickName !== this.props.MyDetail.nick_name) {
+      data = { ...data, nick_name: this.state.nickName };
+    }
+    if (this.state.password) {
+      data = { ...data, password: this.state.password };
+    }
+    if (this.state.phone !== this.props.MyDetail.phone) {
+      data = { ...data, phone: this.state.phone };
+    }
+    if (this.state.thumbnail_name != null) {
+      let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
+      data = { ...data, files: [] };
+      data.files.push(file);
+    }
+    if (data == null) {
+      alert("변경된사항이 없습니다.");
       this.setState({
         loading: false
       });
+      return;
+    }
+    this.props.ModifyUserDetailRequest(this.props.MyDetail.uid, data, this.props.token)
+      .then(res => {
+        if (res.res.success) {
+          alert("정보가 수정되었습니다.");
+          window.location.href = `/myPage`;
+        } else {
+          alert("다시 시도해주세요");
+        }
+      })
+      .catch(e => {
+        console.log("실패", e);
+        alert("다시 시도해주세요");
+      });
+    this.setState({
+      loading: false
     });
   };
-  onCancal = () => {
-    this.props.history.push('/myPage')
-  }
-  onChangePassword = () => {
-    this.setState({ change_password: true })
-  }
-  onDeleteUser = () => {
-    let confirm = window.confirm("정말 탈퇴하시겠습니까?");
-    if (confirm) {
-      this.props.SecessionRequest(this.props.token);
-    }
+  onChangeValue(event) {
+    this.setState({ [event.target.id]: event.target.value })
+  };
+  onChangePhone(event) {
+    const index = event.target.value.length > 1 ? event.target.value.length - 1 : 0
+    "0123456789".includes(event.target.value[index]) ?
+      this.onChangeValue(event) :
+      alert("숫자만 입력가능합니다.")
   }
 
   render() {
-    const myInfo = this.props.MyDetail;
-    console.log("tiger", this.props);
+    console.log("!!!!", this.props.MyDetail);
+
     return (
-      <div>
-        <ImgWrapper>
-          <Title><h1>내 정보 수정</h1></Title>
-        </ImgWrapper>
-        {myInfo.length !== 0 &&
-          <Wrapper>
-            <form onSubmit={this.onSubmit} encType="multipart/form-data">
-              <FromFieldCard>
-                <Grid padded={false}>
-                  <Grid.Column width={4}>
-                    <Label>썸네일 변경</Label>
-                    <FormThumbnail
-                      name="thumbnail"
-                      placeholder="썸네일 변경"
-                      getValue={this.onChangeValue}
-                      onChange={() => { this.liveCheck("thumbnail") }}
-                      validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                      image={myInfo.profileImg && myInfo.profileImg.m_img}
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={12}>
-                    <Label>닉네임 변경</Label>
-                    <FormInput
-                      name="nick_name"
-                      value={myInfo.nick_name}
-                      maxLength="20"
-                      placeholder="닉네임을 입력해주세요.(20자 이내)"
-                      getValue={this.onChangeValue}
-                      validates={["required", "NotSpecialCharacters"]}
-                      onBlur={() => { this.liveCheck("nick_name") }}
-                    />
-                    <Label>자기소개 변경</Label>
-                    <FormInput
-                      name="about_me"
-                      value={myInfo.about_me}
-                      maxLength="1000"
-                      placeholder="자기소개를 입력해주세요.(1000자 이내)"
-                      getValue={this.onChangeValue}
-                    />
-                    {this.state.change_password ? (
-                      <div>
-                        <Label>비밀번호 변경</Label>
-                        <FormInput
-                          name="password"
-                          type="password"
-                          placeholder="비밀번호를 입력해주세요."
-                          getValue={this.onChangeValue}
-                          validates={["Required", "NotBlank"]}
-                          onBlur={() => { this.liveCheck("password") }}
-                        />
-                        <Label>비밀번호 확인</Label>
-                        <FormInput
-                          name="password2"
-                          type="password"
-                          placeholder="비밀번호를 다시 한번 입력해주세요."
-                          getValue={this.onChangeValue}
-                          validates={["SamePassword"]}
-                          onBlur={this.samePwCheck}
-                        />
-                      </div>
-                    ) : (
-                        <div>
-                          <Button type="button" onClick={this.onChangePassword}>비밀번호 변경</Button>
-                        </div>
-                      )}
-                    <Form.Group widths={2}>
-                      <Label>카테고리</Label>
-                      <FormSelect
-                        selection={true}
-                        options={this.props.category1}
-                        name="category_level1"
-                        value={myInfo.category_level1}
-                        getValue={this.onChangeValue}
-                        // onChange={() => this.props.GetCategoryLevel2Request(this.state.category_level1.value)}
-                      />
-                      <FormSelect
-                        selection={true}
-                        options={this.props.category2}
-                        name="category_level2"
-                        value={myInfo.category_level2}
-                        getValue={this.onChangeValue}
-                      />
-                    </Form.Group>
-                    <Label>디자이너 활동 여부</Label>
-                    <FormCheckBox
-                      name="is_designer"
-                      placeholder="디자이너로 활동하시겠습니까?"
-                      getValue={this.onChangeValue}
-                      value={myInfo.is_designer}
-                    />
 
+      <Wrapper>
 
-                  </Grid.Column>
-                </Grid>
-              </FromFieldCard>
-              {/* <Button type="button" style={{float: "right"}} color="Solid" onClick={this.onDeleteUser}>회원탈퇴</Button> */}
-              <Button type="button" onClick={this.onSubmit}>수정</Button>
-              <Button type="button" onClick={this.onCancal}>취소</Button>
-            </form>
-          </Wrapper>
-        }
-        {this.state.loading && <Loading />}
-      </div>
+        {this.state.loading ? <Loading /> : null}
+
+        <MainBox>
+          <div className="title">내 정보 수정</div>
+          <div className="contentsBox">
+            <ThumbnailBox>
+              <div className="label">썸네일 등록</div>
+              <Margin height={70} />
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+              <label htmlFor="file">
+                {this.state.thumbnail == null ?
+                  <div className="thumbnail"><div>첨부</div></div>
+                  :
+                  <Thumbnail imageURL={this.state.thumbnail} />
+                }
+              </label>
+            </ThumbnailBox>
+            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
+            <FormBox>
+
+              <div className="wrapper flex">
+                <div className="label">닉네임</div>
+                <InputTextBox
+                  id="nickName"
+                  width={"250px"}
+                  value={this.state.nickName || ""}
+                  placeholder="닉네임을 입력하세요."
+                  onChange={this.onChangeValue} />
+              </div>
+              <div className="wrapper flex">
+                <div className="label">비밀번호</div>
+                <InputTextBox type="password"
+                  id="password"
+                  width={"450px"}
+                  value={this.state.password || ""}
+                  placeholder="비밀번호를 입력하세요."
+                  onChange={this.onChangeValue} />
+              </div>
+              <div className="wrapper flex">
+                <div className="label">비밀번호 확인</div>
+                <InputTextBox
+                  id="passwordCheck"
+                  width={"450px"}
+                  type="password"
+                  value={this.state.passwordCheck || ""}
+                  placeholder="비밀번호를 한번 더 입력하세요."
+                  onChange={this.onChangeValue} />
+              </div>
+              <div className="wrapper flex">
+                <div className="label">휴대폰</div>
+                <InputTextBox
+                  id="phone"
+                  width={"450px"}
+                  value={this.state.phone || ""}
+                  placeholder="휴대폰 번호를 입력하세요."
+                  onChange={this.onChangePhone} />
+              </div>
+            </FormBox>
+
+          </div>
+
+          <div className="contentsBox">
+            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
+            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
+          </div>
+        </MainBox>
+      </Wrapper>
     );
-  }
+  };
 }
 
 export default ModifyMyDetail;

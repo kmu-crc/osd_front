@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CreateRequestRequest, GetRequestTotalCountRequest } from "actions/Request";
+import { CreateRequestRequest, GetRequestListRequest, GetRequestTotalCountRequest } from "actions/Request";
 import RequestList from "components/Request/RequestList";
 
 
@@ -18,6 +18,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   CreateRequestRequest: (data, token) => dispatch(CreateRequestRequest(data, token)),
+  GetRequestListRequest: (type, page, cate1, cate2, sort, keyword) => dispatch(GetRequestListRequest(type, page, cate1, cate2, sort, keyword)),
   GetRequestTotalCountRequest: (category1, category2) => dispatch(GetRequestTotalCountRequest(category1, category2))
 });
 

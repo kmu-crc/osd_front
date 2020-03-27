@@ -8,36 +8,23 @@ class MyDetailContainer extends Component {
   componentWillMount() {
     this.props.GetMyDetailRequest(this.props.token);
   }
-
   render() {
     return (<MyDetail {...this.props} />);
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    token: state.Authentication.status.token,
-    userInfo: state.Authentication.status.userInfo,
-    MyDetail: state.MyDetail.status.MyDetail,
-    OrderList: state.OrderList.status.OrderList,
-  };
-};
+const mapStateToProps = (state) => ({
+  token: state.Authentication.status.token,
+  userInfo: state.Authentication.status.userInfo,
+  MyDetail: state.MyDetail.status.MyDetail,
+  OrderList: state.OrderList.status.OrderList,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetMyDetailRequest: (token) => {
-      return dispatch(GetMyDetailRequest(token));
-    },
-    GetMyDesignListRequest: (token, page) => {
-      return dispatch(GetMyDesignListRequest(token, page));
-    },
-    getOrderListRequest: (id) => {
-      return dispatch(getOrderListRequest(id));
-    },
-    ModifyUserDetailRequest: (id, data, token) => {
-      return dispatch(ModifyUserDetailRequest(id, data, token));
-    },
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  GetMyDetailRequest: (token) => dispatch(GetMyDetailRequest(token)),
+  GetMyDesignListRequest: (token, page) => dispatch(GetMyDesignListRequest(token, page)),
+  getOrderListRequest: (id) => dispatch(getOrderListRequest(id)),
+  ModifyUserDetailRequest: (id, data, token) => dispatch(ModifyUserDetailRequest(id, data, token)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer);

@@ -44,7 +44,7 @@ export default class SignUpModal extends Component {
         >
         <div style={ModalStyle}>
           <h1>회원가입이<br></br> 완료되었습니다.</h1>
-          <p>마이페이지로 이동합니다.</p>
+          <p>내 정보로 이동합니다.</p>
         </div>
         </Modal>
       </section>
