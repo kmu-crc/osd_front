@@ -111,12 +111,11 @@ class Alarm extends Component {
         if (this.props.alarm && this.props.alarm.count) {
             alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.');
             this.props.alarm.list.map(async alarm => {
-                if (!(alarm.type === "MESSAGE" &&
-                    alarm.type === "DESIGN" && alarm.kinds === "REQUEST" ||
-                    alarm.type === "DESIGN" && alarm.kinds === "INVITE" ||
-                    alarm.type === "GROUP" && alarm.kinds === "JOIN_withDESIGN" ||
-                    alarm.type === "GROUP" && alarm.kinds === "JOIN_withGROUP"
-                )) {
+                if (
+                    (alarm.type === "DESIGN" && alarm.kinds === "REQUEST") ||
+                    (alarm.type === "DESIGN" && alarm.kinds === "INVITE") ||
+                    (alarm.type === "GROUP" && alarm.kinds === "JOIN_withDESIGN") ||
+                    (alarm.type === "GROUP" && alarm.kinds === "JOIN_withGROUP")) {
                     await this.alarmConfirm(alarm.user_id, alarm.uid);
                 }
                 return alarm;
