@@ -4,7 +4,7 @@ import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 
 const Wrapper = styled(ContentBox)`
@@ -107,10 +107,10 @@ const InputTextarea = styled.textarea`
   padding: 0.67857143em 1em;
 
 `
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`
+//const Margin = styled.div`
+//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+//`
 
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
@@ -148,8 +148,8 @@ class ModifyRequestToMaker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,ownership: 1
-      ,startDate:null,endDate:null,dayDate:null,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1, ownership: 1
+      , startDate: null, endDate: null, dayDate: null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -168,26 +168,25 @@ class ModifyRequestToMaker extends Component {
     this.onClickDelete = this.onClickDelete.bind(this);
     this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
-    this.getDayDateValue=this.getDayDateValue.bind(this);
+    this.getDayDateValue = this.getDayDateValue.bind(this);
   }
 
-  componentWillUpdate(nextProps){
-    if(nextProps.Detail!=this.props.Detail)
-    {
+  componentWillUpdate(nextProps) {
+    if (nextProps.Detail !== this.props.Detail) {
       console.log(nextProps.Detail.tag);
       this.setState({
-        category_level1:nextProps.Detail.category_level1,
-        category_level2:nextProps.Detail.category_level1,
-        title:nextProps.Detail.title,
-        tag:nextProps.Detail.tag.split(","),
-        price:nextProps.Detail.price,
-        content:nextProps.Detail.content,
-        location:nextProps.Detail.location,
-        ownership:parseInt(nextProps.Detail.ownership,10),
-        startDate:nextProps.Detail.start_date,
-        endDate:nextProps.Detail.end_date,
-        amount:nextProps.Detail.amount,
-        resale:parseInt(nextProps.Detail.resale,10),
+        category_level1: nextProps.Detail.category_level1,
+        category_level2: nextProps.Detail.category_level1,
+        title: nextProps.Detail.title,
+        tag: nextProps.Detail.tag.split(","),
+        price: nextProps.Detail.price,
+        content: nextProps.Detail.content,
+        location: nextProps.Detail.location,
+        ownership: parseInt(nextProps.Detail.ownership, 10),
+        startDate: nextProps.Detail.start_date,
+        endDate: nextProps.Detail.end_date,
+        amount: nextProps.Detail.amount,
+        resale: parseInt(nextProps.Detail.resale, 10),
       })
     }
   }
@@ -201,14 +200,14 @@ class ModifyRequestToMaker extends Component {
   async getPriceValue(value) {
     await this.setState({ price: value });
   }
-  onClickDelete(event){
-    this.props.DeleteRequestRequest(this.props.id,this.props.token)
-    .then(res => {
-      if (res.success) {
+  onClickDelete(event) {
+    this.props.DeleteRequestRequest(this.props.id, this.props.token)
+      .then(res => {
+        if (res.success) {
           window.location.href = `/request/maker`;
-      }
-    })
-    .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+        }
+      })
+      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
   onClickItemType(event, { value }) {
     this.setState({ itemType: { value }.value });
@@ -228,16 +227,16 @@ class ModifyRequestToMaker extends Component {
       price: event.target.value,
     })
   }
-  async getStartDateValue(value){
-    await console.log("startDate",value);
+  async getStartDateValue(value) {
+    await console.log("startDate", value);
     await this.setState({ startDate: value });
   }
   async getEndDateValue(value) {
-    await console.log("endDate",value);
+    await console.log("endDate", value);
     await this.setState({ endDate: value });
   }
-  async getDayDateValue(value){
-    await this.setState({dayDate:value})
+  async getDayDateValue(value) {
+    await this.setState({ dayDate: value })
   }
   onChangeAmount(event) {
     this.setState({
@@ -286,8 +285,8 @@ class ModifyRequestToMaker extends Component {
       location: this.state.location,
       resale: this.state.resale,
       offline_consultation: this.state.offline,
-      start_date:this.state.startDate,
-      end_date:this.state.endDate,
+      start_date: this.state.startDate,
+      end_date: this.state.endDate,
     }
 
     this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
@@ -314,9 +313,9 @@ class ModifyRequestToMaker extends Component {
             <div className="contentsBox">
               <FormBox>
 
-              <div className="wrapper flex centering" >
+                <div className="wrapper flex centering" >
                   <div className="label">의뢰자</div>
-                  <div>{this.props.userInfo.nickName||null}</div>
+                  <div>{this.props.userInfo.nickName || null}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -349,8 +348,8 @@ class ModifyRequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
-                  getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
+                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar"
+                    getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue} getDayDateValue={this.getDayDateValue} />
                 </div>
 
                 <HRLine />
@@ -362,7 +361,7 @@ class ModifyRequestToMaker extends Component {
                 <div className="wrapper flex centering">
                   <div className="label">메이커 위치</div>
                   <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                     selection options={LocationList} placeholder="시/도"
                     onChange={this.onChangeLocation} />
                 </div>
@@ -380,11 +379,11 @@ class ModifyRequestToMaker extends Component {
                 </div> */}
               </FormBox>
             </div>
-              <div className="contentsBox">
-                <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
-                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
-                <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true}/>
-              </div>
+            <div className="contentsBox">
+              <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true} />
+            </div>
           </MainBox>
 
         </Wrapper>

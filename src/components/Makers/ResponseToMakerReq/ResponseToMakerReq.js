@@ -234,7 +234,7 @@ class ResponseToMakerReq extends Component {
     let category_level2 = "";
     this.props.category2 && this.props.category2.map((item, index) => {
       console.log(item.parent, detail.category_level1, item.value, detail.category_level2);
-      if (item.parent == detail.category_level1 && item.value == detail.category_level2) {
+      if (item.parent === detail.category_level1 && item.value === detail.category_level2) {
         category_level2 = item.text;
       }
       return item;
@@ -249,7 +249,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering" >
                   <div className="label">의뢰자</div>
-                  <div>{this.props.detail && this.props.detail.nick_name || null}</div>
+                  <div>{(this.props.detail && this.props.detail.nick_name) || null}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -318,7 +318,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering" >
                   <div className="label">응답자</div>
-                  <div>{this.props.userInfo && this.props.userInfo.nickName || null}</div>
+                  <div>{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
                 </div>
 
                 <div className="wrapper flex">

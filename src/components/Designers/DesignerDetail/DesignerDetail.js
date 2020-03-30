@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
-import noimg from "source/noimg.png";
+// import noimg from "source/noimg.png";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
 import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
 
@@ -184,54 +184,54 @@ const Introduction = styled.div`
 
 
 `;
-const RequestBoard = styled.div`
-  margin-right: ${prop => prop.mRight}px;
-  width: ${prop => prop.large ? 1094 : 566}px;
-  height: ${prop => prop.large ? 1168 : 491}px;
-  background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  opacity: 1;
-  padding: 62px 65px 35px 60px;
-  font-family: Noto Sans KR;
-  .line {
-    display: flex;
-    flex-direction: row;
-    .title {
-      font-weight: 500;
-      font-size: 19px;
-      text-align: left;
-      line-height: 27px;
-      letter-spacing: 0;
-      color: #000000;
-      opacity: 1;
-    }
-    .button {
-      margin-left: auto;
-      font-weight: 500;
-      font-size: 19px;
-      text-align: left;
-      line-height: 27px;
-      letter-spacing: 0;
-      color: #FF0000;
-      opacity: 1;
-      cursor: default;
-    }
-  }
-  .board {
-    margin-top: 42px;
-    width: 441px;
-    .lement {
-      font-size: 15px;
-      text-align: left;
-      line-height: 20px;
-      color: #707070;
-      letter-spacing: 0;
-      opacity: 1;
-      margin-top: 12px;
-    }
-  }
-`;
+//const RequestBoard = styled.div`
+//  margin-right: ${prop => prop.mRight}px;
+//  width: ${prop => prop.large ? 1094 : 566}px;
+//  height: ${prop => prop.large ? 1168 : 491}px;
+//  background: #FFFFFF;
+//  box-shadow: 5px 5px 10px #00000029;
+//  border-radius: 20px;
+//  opacity: 1;
+//  padding: 62px 65px 35px 60px;
+//  font-family: Noto Sans KR;
+//  .line {
+//    display: flex;
+//    flex-direction: row;
+//    .title {
+//      font-weight: 500;
+//      font-size: 19px;
+//      text-align: left;
+//      line-height: 27px;
+//      letter-spacing: 0;
+//      color: #000000;
+//      opacity: 1;
+//    }
+//    .button {
+//      margin-left: auto;
+//      font-weight: 500;
+//      font-size: 19px;
+//      text-align: left;
+//      line-height: 27px;
+//      letter-spacing: 0;
+//      color: #FF0000;
+//      opacity: 1;
+//      cursor: default;
+//    }
+//  }
+//  .board {
+//    margin-top: 42px;
+//    width: 441px;
+//    .lement {
+//      font-size: 15px;
+//      text-align: left;
+//      line-height: 20px;
+//      color: #707070;
+//      letter-spacing: 0;
+//      opacity: 1;
+//      margin-top: 12px;
+//    }
+//  }
+//`;
 const ItemInfo = styled.div`
   margin-right: ${prop => prop.mRight}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
@@ -482,17 +482,17 @@ const ExpTable = styled.div`
     }
 `;
 
-const Thumbnail = styled.div`
-  cursor:pointer;
-  width:150px;
-  height:150px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
-  background-size: cover;
-  background-position: center center;
-`;
+// const Thumbnail = styled.div`
+// cursor:pointer;
+// width:150px;
+// height:150px;
+// display:flex;
+// justify-content:center;
+// align-items:center;
+// background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+// background-size: cover;
+// background-position: center center;
+// `;
 const TitleForm = styled.input`
   padding: 10px;
   resize: none;
@@ -585,25 +585,25 @@ const CreateReview = styled.div`
     }
 `;
 
-const review = {
-  average_score: 4,
-  review: [{
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }, {
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }, {
-    thumbnail: noimg,
-    nick_name: "닉네임",
-    explain: "리뷰입니다",
-    score: 5,
-  }],
-};
+// const review = {
+// average_score: 4,
+// review: [{
+// thumbnail: noimg,
+// nick_name: "닉네임",
+// explain: "리뷰입니다",
+// score: 5,
+// }, {
+// thumbnail: noimg,
+// nick_name: "닉네임",
+// explain: "리뷰입니다",
+// score: 5,
+// }, {
+// thumbnail: noimg,
+// nick_name: "닉네임",
+// explain: "리뷰입니다",
+// score: 5,
+// }],
+// };
 
 
 class DesignerDetail extends Component {
@@ -704,8 +704,8 @@ class DesignerDetail extends Component {
     const { likeCount, itemCount } = this.props.DesignerViewDetail;
 
     const Location = this.state.location == null ? "" : LocationList[this.state.location] && LocationList[this.state.location].text;
-    const user_id = this.state.user_id;
-    const { tab } = this.state;
+    // const user_id = this.state.user_id;
+    // const { tab } = this.state;
     // const user_id = this.state.user_id;
     // const { tab } = this.state;
     const { write } = this.state;
@@ -721,9 +721,10 @@ class DesignerDetail extends Component {
       : null;
 
     this.props.category2 && this.props.category2.map((item, index) => {
-      if (item.parent == this.state.category_level1 && item.value == this.state.category_level2) {
+      if (item.parent === this.state.category_level1 && item.value === this.state.category_level2) {
         categoryName = item.text;
       }
+      return item;
     })
 
     console.log(categoryName);
@@ -801,7 +802,7 @@ class DesignerDetail extends Component {
       </AdditionalInfo>
       {/*리뷰자세히*/}
       {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
-      
+
       {/* 경험 */}
       <AdditionalInfo width={1523} height={280} mTop={60}>
         <div className="title margin_bottom">디자인 경험</div>

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import StyleGuide from "StyleGuide";
+// import StyleGuide from "StyleGuide";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import {confirmAlert} from "react-confirm-alert";
-import {options} from "components/Commons/InputItem/AlertConfirm"
+import { confirmAlert } from "react-confirm-alert";
+import { options } from "components/Commons/InputItem/AlertConfirm"
 const StyleButton = styled.div`
   width:290px;
   height:70px;
@@ -29,28 +29,28 @@ export class RedButton extends Component {
         super(props);
         this.onClickButton = this.onClickButton.bind(this);
     }
-    onClickButton(event){
-        if(this.props.isConfirm===false){
+    onClickButton(event) {
+        if (this.props.isConfirm === false) {
             this.props.onClick(event);
         }
-        else{
-            confirmAlert(options(this.props.value+"하시겠습니까?",this.props.onClick,event));
+        else {
+            confirmAlert(options(this.props.value + "하시겠습니까?", this.props.onClick, event));
         }
     }
-    onClickOk(event){
+    onClickOk(event) {
         this.props.onClick(event);
-        this.setState({open:false});
+        this.setState({ open: false });
     }
-    onClickCancel(event){
-        this.setState({open:false});
+    onClickCancel(event) {
+        this.setState({ open: false });
     }
 
     render() {
         return (
             <React.Fragment>
-            <StyleButton onClick={this.onClickButton}>
-                <div className="text">{this.props.value}</div>
-            </StyleButton>
+                <StyleButton onClick={this.onClickButton}>
+                    <div className="text">{this.props.value}</div>
+                </StyleButton>
             </React.Fragment>
         );
     }

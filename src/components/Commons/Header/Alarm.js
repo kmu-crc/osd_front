@@ -6,22 +6,21 @@ import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextSlicer from "modules/TextSlicer"
 
-
-const Btn = styled.button`
-  padding: 0.75em 1.5em;
-  width: 50%;
-  font-size: 11px;
-  border-radius: 5px;
-  color: white;
-  margin-top: 1px;
-  margin-right: 1px;
-  background-color: ${StyleGuide.color.geyScale.scale5};
-  border: 1px solid ${StyleGuide.color.geyScale.scale5};
-  &:hover{
-    background-color: ${StyleGuide.color.geyScale.scale7};
-    border: 1px solid ${StyleGuide.color.geyScale.scale7};
-  }
-`;
+// const Btn = styled.button`
+//   padding: 0.75em 1.5em;
+//   width: 50%;
+//   font-size: 11px;
+//   border-radius: 5px;
+//   color: white;
+//   margin-top: 1px;
+//   margin-right: 1px;
+//   background-color: ${StyleGuide.color.geyScale.scale5};
+//   border: 1px solid ${StyleGuide.color.geyScale.scale5};
+//   &:hover{
+//     background-color: ${StyleGuide.color.geyScale.scale7};
+//     border: 1px solid ${StyleGuide.color.geyScale.scale7};
+//   }
+// `;
 const AlarmDropDown = styled.ul`
   position: absolute;
   min-height: 50px;
@@ -138,7 +137,7 @@ export default class Alarm extends Component {
     console.log(item);
     const from = item.detail && item.detail.fromName && item.detail.fromName.nick_name ? TextSlicer(item.detail.fromName.nick_name, 5) : "유저";
     const name = item.detail && item.detail.itemName && item.detail.itemName.title ? TextSlicer(item.detail.itemName.title, 6) : "이름없음";
-    const to = item.detail && item.detail.toName && item.detail.toName.nick_name ? TextSlicer(item.detail.toName.nick_name, 5) : "유저"
+    // const to = item.detail && item.detail.toName && item.detail.toName.nick_name ? TextSlicer(item.detail.toName.nick_name, 5) : "유저"
     switch (item.type) {
       case "ITEM_PURCHASED_TO_EXPERT": msg = `${from}님이 아이템을 구매하였습니다.`; break;
       case "ITEM_PURCHASED_TO_USER": msg = `아이템'${name}'을 구매하였습니다`; break;
@@ -153,10 +152,9 @@ export default class Alarm extends Component {
     return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP"))
   };
   parseAlarms = (items) => {
-    // if (items.length === 0)
-    // return items;
     items.map(item => {
       item.detail = item.content && JSON.parse(item.content);
+      return item;
     });
     return items;
   };
@@ -168,7 +166,7 @@ export default class Alarm extends Component {
   render() {
     // console.log(this.props, "props");
     const { alarms } = this.props;
-    const unread = alarms && alarms.length > 0 && alarms.filter(item => item.confirm === 0).length || 0;
+    const unread = (alarms && alarms.length > 0 && alarms.filter(item => item.confirm === 0).length) || 0;
     const converted = this.parseAlarms(alarms);
     // console.log(converted);
     return (

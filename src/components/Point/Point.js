@@ -129,10 +129,10 @@ const Button = styled.div`
 const Won = N => N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 class Point extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      point:null,
+      point: null,
     }
     this.PointUp = this.PointUp.bind(this);
     this.PointToMoney = this.PointToMoney.bind(this);
@@ -148,27 +148,27 @@ class Point extends Component {
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
     })
   };
-  PointToMoney(type){
-    if(this.props.Point<this.state.point){
+  PointToMoney(type) {
+    if (this.props.Point < this.state.point) {
       alert("금액이 부족합니다.");
       return;
     }
     this.props.PointUpRequest(
       { id: this.props.userInfo.uid, token: this.props.token },
-      { point: this.state.point*-1, type: type }
+      { point: this.state.point * -1, type: type }
     ).then(() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
-    }).then(()=>{
+    }).then(() => {
       alert("현금 전환이 완료되었습니다!");
-      this.setState({point:null});
+      this.setState({ point: null });
     })
   }
-  onChangePoint(event){
+  onChangePoint(event) {
     this.setState({
-      point:event.target.value,
+      point: event.target.value,
     })
-    
+
   }
   render() {
     const { Point, History, HistoryCount } = this.props;
@@ -188,16 +188,16 @@ class Point extends Component {
           <div className="item"><button onClick={() => alert("찬호가 안하고 입해했데요...")} className="charge not-yet">ㅇㅇㅇ으로 충전</button></div>
           <div className="item"><button onClick={() => alert("찬호가 안하고 입해했데요...")} className="charge not-yet">ㅇㅇㅇ으로 충전</button></div>
         </Charge>
-{
-        this.props.userInfo.isDesigner==1||this.props.userInfo.isMaker==1?
-        <React.Fragment>
-        <Title className="smaller">현금전환</Title>
-        <Charge>
-          <div className="item flex"><FormStyle value={this.state.point} onChange={this.onChangePoint} type="number"/>
-          <Button onClick={()=>this.PointToMoney("CLICK")}><div className="text">클릭으로 전환</div></Button></div>
-        </Charge>
-        </React.Fragment>:null
-}
+        {
+          (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ?
+            <React.Fragment>
+              <Title className="smaller">현금전환</Title>
+              <Charge>
+                <div className="item flex"><FormStyle value={this.state.point} onChange={this.onChangePoint} type="number" />
+                  <Button onClick={() => this.PointToMoney("CLICK")}><div className="text">클릭으로 전환</div></Button></div>
+              </Charge>
+            </React.Fragment> : null
+        }
         <Title className="smaller">충전내역</Title>
         <HistoryContainer>
           <div className="history-element">

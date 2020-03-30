@@ -253,14 +253,14 @@ class MyDetail extends Component {
     this.onClickThumbnail = this.onClickThumbnail.bind(this);
   }
   onClickCreateDesigner(event) {
-    if (this.props.MyDetail.isDesigner == true) {
+    if (this.props.MyDetail.isDesigner === true) {
       window.location.href = "/modifyDesigner/" + this.props.MyDetail.uid;
     } else {
       window.location.href = "/createDesigner";
     }
   }
   onClickCreateMaker(event) {
-    if (this.props.MyDetail.isMaker == true) {
+    if (this.props.MyDetail.isMaker === true) {
       window.location.href = "/modifyMaker/" + this.props.MyDetail.uid;
     }
     else {

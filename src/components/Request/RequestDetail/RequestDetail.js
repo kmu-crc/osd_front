@@ -147,13 +147,13 @@ class Detail extends Component {
         window.location.href = "/ModifyrequestToMaker/" + this.props.id;
       }
     }
-    else if (this.props.Detail.status == "response") {
+    else if (this.props.Detail.status === "response") {
 
     }
   }
   render() {
-    const { Detail, MyDetail, isPurchased } = this.props;
-    if (Detail == null || Detail == []) return (<Loading />);
+    const { Detail, MyDetail, } = this.props;
+    if (Detail == null || Detail === []) return (<Loading />);
     const TypeText = Detail.type === "maker" ? "제작" : "디자인";
     console.log("this.props:", this.props, "Detail:", Detail, "MyDetail:", MyDetail);
     console.log("===========", Detail.tag);
@@ -164,9 +164,10 @@ class Detail extends Component {
     let category_level2 = "";
     this.props.category2 && this.props.category2.map((item, index) => {
       // console.log(item.parent,Detail.category_level1,item.value,Detail.category_level2);
-      if (item.parent == Detail.category_level1 && item.value == Detail.category_level2) {
+      if (item.parent === Detail.category_level1 && item.value === Detail.category_level2) {
         category_level2 = item.text;
       }
+      return item;
     })
 
     return (
@@ -239,7 +240,7 @@ class Detail extends Component {
                     </div>
 
                     {
-                      Detail.type == "maker" &&
+                      Detail.type === "maker" &&
                       <div className="wrapper flex centering">
                         <div className="label">수량</div>
                         <div className="textBox">{Detail.amount}</div>
@@ -253,7 +254,7 @@ class Detail extends Component {
 
 
 
-                    {Detail.type == "designer" ?
+                    {Detail.type === "designer" ?
                       <div className="wrapper flex centering">
                         <div className="label">{TypeText} 소유권</div>
                         <div className="textBox">{Detail.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
@@ -279,7 +280,7 @@ class Detail extends Component {
                   <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                     <RedButton value={"의뢰응답"} isConfirm={false}></RedButton>
                   </Link>
-                  {this.props.userInfo && Detail && Detail.client_id == this.props.userInfo.uid ? <RedButton onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> : null}
+                  {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? <RedButton onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> : null}
                 </div>
                 : null}
             </Wrapper>
@@ -356,7 +357,7 @@ class Detail extends Component {
                       <div className="textBox">{Detail.content}</div>
                     </div>
                     {
-                      Detail.type == "maker" &&
+                      Detail.type === "maker" &&
                       <div className="wrapper flex">
                         <div className="label">수량</div>
                         <div className="textBox">{Detail.amount}</div>

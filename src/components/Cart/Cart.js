@@ -169,6 +169,7 @@ class Cart extends Component {
     onClickDeleteAll(event) {
         this.props.CartList.map((item, index) => {
             document.getElementById(index).checked = true;
+            return item;
         });
         this.props.deleteCartAllItem(this.props.userInfo.uid, this.props.token);
         window.location.reload();
@@ -181,6 +182,7 @@ class Cart extends Component {
                 console.log(this.props.CartList[index].uid + "제거");
                 this.props.deleteCartItem(this.props.CartList[index].uid, this.props.token)
             }
+            return item;
         });
         window.location.reload();
     }

@@ -6,7 +6,7 @@ import MakerRequestBoardContainer from "containers/Maker/MakerRequestBoardContai
 import MakerReviewContainer from "containers/Maker/MakerReviewContainer";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import { Icon } from "semantic-ui-react";
-import noimg from "source/noimg.png";
+// import noimg from "source/noimg.png";
 
 // import profile from "source/thumbnail.png";
 // import NumberFormat from "modules/NumberFormat";
@@ -183,84 +183,84 @@ const Introduction = styled.div`
 
 
 `;
-const ReviewBox = styled.div`
-    width:100%;
-    height:150px;
-    display:flex;
-    flex-wrap:wrap;
-    overflow:hidden;
-    overflow-y:scroll;
-    overflow-y:overlay;
-    .review{
-      min-width:650px;
-      height:150px;
-      margin-right:50px;
-      margin-bottom:50px;
-      display:flex;
-      .content{
-        width:100%;
-        height:100%;
-        padding:30px;
-        .row{
-          width:max-content;
-          margin-bottom:15px;
-        }
-      }
-    }
-    // &:hover{
-    //   overflow:auto;
-    //   overflow-y:overlay;
-
-    // }
-`
-const RequestBoard = styled.div`
-  margin-right: ${prop => prop.mRight}px;
-  width: ${prop => prop.large ? 1094 : 566}px;
-  height: ${prop => prop.large ? 1168 : 491}px;
-  background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  opacity: 1;
-  padding: 62px 65px 35px 60px;
-  font-family: Noto Sans KR;
-  .line {
-    display: flex;
-    flex-direction: row;
-    .title {
-      font-weight: 500;
-      font-size: 19px;
-      text-align: left;
-      line-height: 27px;
-      letter-spacing: 0;
-      color: #000000;
-      opacity: 1;
-    }
-    .button {
-      margin-left: auto;
-      font-weight: 500;
-      font-size: 19px;
-      text-align: left;
-      line-height: 27px;
-      letter-spacing: 0;
-      color: #FF0000;
-      opacity: 1;
-      cursor: default;
-    }
-  }
-  .board {
-    margin-top: 42px;
-    width: 441px;
-    .lement {
-      font-size: 15px;
-      text-align: left;
-      line-height: 20px;
-      color: #707070;
-      letter-spacing: 0;
-      opacity: 1;
-      margin-top: 12px;
-    }
-  }
-`;
+//const ReviewBox = styled.div`
+//    width:100%;
+//    height:150px;
+//    display:flex;
+//    flex-wrap:wrap;
+//    overflow:hidden;
+//    overflow-y:scroll;
+//    overflow-y:overlay;
+//    .review{
+//      min-width:650px;
+//      height:150px;
+//      margin-right:50px;
+//      margin-bottom:50px;
+//      display:flex;
+//      .content{
+//        width:100%;
+//        height:100%;
+//        padding:30px;
+//        .row{
+//          width:max-content;
+//          margin-bottom:15px;
+//        }
+//      }
+//    }
+//    // &:hover{
+//    //   overflow:auto;
+//    //   overflow-y:overlay;
+//
+//    // }
+//`
+//const RequestBoard = styled.div`
+//  margin-right: ${prop => prop.mRight}px;
+//  width: ${prop => prop.large ? 1094 : 566}px;
+//  height: ${prop => prop.large ? 1168 : 491}px;
+//  background: #FFFFFF;
+//  box-shadow: 5px 5px 10px #00000029;
+//  border-radius: 20px;
+//  opacity: 1;
+//  padding: 62px 65px 35px 60px;
+//  font-family: Noto Sans KR;
+//  .line {
+//    display: flex;
+//    flex-direction: row;
+//    .title {
+//      font-weight: 500;
+//      font-size: 19px;
+//      text-align: left;
+//      line-height: 27px;
+//      letter-spacing: 0;
+//      color: #000000;
+//      opacity: 1;
+//    }
+//    .button {
+//      margin-left: auto;
+//      font-weight: 500;
+//      font-size: 19px;
+//      text-align: left;
+//      line-height: 27px;
+//      letter-spacing: 0;
+//      color: #FF0000;
+//      opacity: 1;
+//      cursor: default;
+//    }
+//  }
+//  .board {
+//    margin-top: 42px;
+//    width: 441px;
+//    .lement {
+//      font-size: 15px;
+//      text-align: left;
+//      line-height: 20px;
+//      color: #707070;
+//      letter-spacing: 0;
+//      opacity: 1;
+//      margin-top: 12px;
+//    }
+//  }
+//`;
 const ItemInfo = styled.div`
   margin-right: ${prop => prop.mRight}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
@@ -542,17 +542,17 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
-const Thumbnail = styled.div`
-  cursor:pointer;
-  width:150px;
-  height:150px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
-  background-size: cover;
-  background-position: center center;
-`
+// const Thumbnail = styled.div`
+// cursor:pointer;
+// width:150px;
+// height:150px;
+// display:flex;
+// justify-content:center;
+// align-items:center;
+// background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+// background-size: cover;
+// background-position: center center;
+// `
 const TitleForm = styled.input`
   padding: 10px;
   resize: none;
@@ -698,9 +698,10 @@ class MakerDetail extends Component {
       : null;
 
     this.props.category2 && this.props.category2.map((item, index) => {
-      if (item.parent == this.state.category_level1 && item.value == this.state.category_level2) {
+      if (item.parent === this.state.category_level1 && item.value === this.state.category_level2) {
         categoryName = item.text;
       }
+      return item;
     })
     const Location = this.state.location == null ? "" : LocationList[this.state.location] && LocationList[this.state.location].text;
 

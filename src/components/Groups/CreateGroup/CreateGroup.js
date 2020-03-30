@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
+// import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag";
+// import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
 
 const MainBox = styled.div`
@@ -261,7 +261,7 @@ class CreateGroup extends Component {
     console.log(data);
 // return;
 
-    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       await data.files.push(file);
     }
     this.props.CreateNewGroupRequest(data, this.props.token)

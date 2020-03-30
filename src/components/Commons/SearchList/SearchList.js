@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid } from "semantic-ui-react";
+// import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
@@ -32,20 +32,20 @@ const Content = styled(ContentBox)`
   }
 `;
 
-const MenuContainer = styled(Grid)`
-  font-size: 1.2rem;
-  & .sorting {
-    text-align: right;
-  }
-  & .ui.default.dropdown:not(.button)>.text,
-  & .ui.dropdown:not(.button)>.default.text {
-    color: inherit;
-  }
-  &.ui.grid > .row {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-`;
+//const MenuContainer = styled(Grid)`
+//  font-size: 1.2rem;
+//  & .sorting {
+//    text-align: right;
+//  }
+//  & .ui.default.dropdown:not(.button)>.text,
+//  & .ui.dropdown:not(.button)>.default.text {
+//    color: inherit;
+//  }
+//  &.ui.grid > .row {
+//    padding-top: 2rem;
+//    padding-bottom: 2rem;
+//  }
+//`;
 
 const ImgWrapper = styled.div`
   width: 100%;

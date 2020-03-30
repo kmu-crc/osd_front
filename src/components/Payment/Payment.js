@@ -1,47 +1,47 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import noimg from "source/noimg.png";
-import StyleGuide from "StyleGuide";
+// import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
-import mainSlide from "source/mainSlide.jpg";
+// import mainSlide from "source/mainSlide.jpg";
 import NumberFormat from "modules/NumberFormat";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
-const ImgWrapper = styled.div`
-  background-image: url(${mainSlide});
-  background-position: center;
-  background-size: cover;
-  width: 100%;
-  height: 200px;
-  position: relative;
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-  }
-`;
-const Title = styled.div`
-  width: 100%;
-  color: white;
-  position: absolute;
-  text-align: center;
-  top: 40%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
-  h1 {
-    color: ${StyleGuide.color.geyScale.scale0};
-    font-size: ${StyleGuide.font.size.heading2};
-    font-weight: bold;
-  }
-`;
+//const ImgWrapper = styled.div`
+//  background-image: url(${mainSlide});
+//  background-position: center;
+//  background-size: cover;
+//  width: 100%;
+//  height: 200px;
+//  position: relative;
+//  &::after {
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    display: block;
+//    content: "";
+//    width: 100%;
+//    height: 100%;
+//    background-color: rgba(0, 0, 0, 0.6);
+//    z-index: 1;
+//  }
+//`;
+//const Title = styled.div`
+//  width: 100%;
+//  color: white;
+//  position: absolute;
+//  text-align: center;
+//  top: 40%;
+//  left: 0;
+//  z-index: 2;
+//  transform: translateY(-50%);
+//  h1 {
+//    color: ${StyleGuide.color.geyScale.scale0};
+//    font-size: ${StyleGuide.font.size.heading2};
+//    font-weight: bold;
+//  }
+//`;
 const Wrapper = styled(ContentBox)`
   width:100%;
   margin-top:60px;
@@ -201,28 +201,28 @@ const Thumbnail = styled.div`
     margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
     margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
 `;
-const InputText = styled.input.attrs({ type: "text" })`
-    width:${props => props.width == null ? 100 : props.width}px;
-    height:${props => props.height == null ? 100 : props.height}px;
-    background-color:${props => props.backgroundColor == null ? "#E9E9E9" : props.backgroundColor};
-    margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
-    margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
-    margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
-    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
-    outline:none;
-    border:none;
-`;
-const InputTextarea = styled.textarea`
-    width:${props => props.width == null ? 100 : props.width}px;
-    height:${props => props.height == null ? 100 : props.height}px;
-    background-color:${props => props.backgroundColor == null ? "#E9E9E9" : props.backgroundColor};
-    margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
-    margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
-    margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
-    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
-    outline:none;
-    border:none;
-`;
+//const InputText = styled.input.attrs({ type: "text" })`
+//    width:${props => props.width == null ? 100 : props.width}px;
+//    height:${props => props.height == null ? 100 : props.height}px;
+//    background-color:${props => props.backgroundColor == null ? "#E9E9E9" : props.backgroundColor};
+//    margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
+//    margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
+//    margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
+//    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
+//    outline:none;
+//    border:none;
+//`;
+//const InputTextarea = styled.textarea`
+//    width:${props => props.width == null ? 100 : props.width}px;
+//    height:${props => props.height == null ? 100 : props.height}px;
+//    background-color:${props => props.backgroundColor == null ? "#E9E9E9" : props.backgroundColor};
+//    margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
+//    margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
+//    margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
+//    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
+//    outline:none;
+//    border:none;
+//`;
 const CustomBox = styled.div`
     width:${props => props.width == null ? 100 : props.width}px;
     height:${props => props.height == null ? 100 : props.height}px;
@@ -295,11 +295,11 @@ class Payment extends Component {
                             </div>
                             <div className="title">
                                 <div className="name">{item.title}</div>
-                                <div className="option">{options && "[옵션]" + options.test || ""}</div>
+                                <div className="option">{(options && "[옵션]" + options.test) || ""}</div>
                             </div>
-                            <div className="amount"><div>{options && options.amount || "1"}</div></div>
+                            <div className="amount"><div>{(options && options.amount) || "1"}</div></div>
                             <div className="price"><div>{NumberFormat(item.price) || 0}{unit}</div></div>
-                            <div className="delivery"><div>{options && options.delivery || ""}</div></div>
+                            <div className="delivery"><div>{(options && options.delivery) || ""}</div></div>
                         </HeaderBox>
                         <CustomBox width={1443} height={3} color={'#E9E9E9'} marginTop={65} />
                         <InfoBox width={1433} marginTop={28}>

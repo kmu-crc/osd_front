@@ -241,7 +241,7 @@ const Face = styled.div`
 //현 문제 : 특정 채팅방에 접속한 뒤 다른 채팅방에 접속한 직 후에 알람의 제어가 꼬인다. 
 let test = 1; //보낼 사람이 변경됐을 때 알람의 수를 제어하기 위한 변수. 같은 채팅방에서 메세지를 보내면 test가 증가되고 채팅방을 변경하면 test가 1로 초기화 된다. 
 class MessageList extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isDetailClicked: false,
@@ -252,7 +252,7 @@ class MessageList extends Component {
       friendList: [],
       render: true,
       connectedCheck: false,//채팅을 받는 당사자가 접속돼있는지, 아닌지 판별하는 변수
-      textmsg:"",
+      textmsg: "",
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -377,7 +377,7 @@ class MessageList extends Component {
   render() {
     // console.log(this.props, this.state);
     const { isDetailClicked } = this.state;
-    const { MessageList, userInfo } = this.props;
+    const { MessageList, /*userInfo*/ } = this.props;
 
     return (
       <Container>
@@ -394,9 +394,9 @@ class MessageList extends Component {
 
             <div className="searchBox">
               <div className="searchRow">
-              <div className="heading"><div>대화상대 검색</div></div>
-              <FormInput style={{borderRadius:"20px",outline:"none",border:"none",width:"380px",height:"29px",paddingLeft:"10px"}}
-              type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
+                <div className="heading"><div>대화상대 검색</div></div>
+                <FormInput style={{ borderRadius: "20px", outline: "none", border: "none", width: "380px", height: "29px", paddingLeft: "10px" }}
+                  type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
               </div>
               <div style={this.state.openMember ? { display: "block" } : { display: "none" }}>
                 {this.props.members && this.props.members.map((item, index) => {
@@ -442,9 +442,9 @@ class MessageList extends Component {
                   {this.state.render && <React.Fragment>
                     <div className="border"></div>
                     <div className="input-wrapper line">
-                      <div className="input-style"><input style={{border:"none",outline:"none"}} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
+                      <div className="input-style"><input style={{ border: "none", outline: "none" }} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
                       <div className="button-style">
-                        <button type="button" onClick={this.sendText}><div style={{color:"white"}}>전송</div></button></div>
+                        <button type="button" onClick={this.sendText}><div style={{ color: "white" }}>전송</div></button></div>
                     </div>
                   </React.Fragment>}
                 </div>

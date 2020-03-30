@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, } from 'react';
 import styled from 'styled-components';
 import { CreateCard, StepCard, ContentCard } from "./GridTools";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";

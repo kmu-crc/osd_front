@@ -101,15 +101,15 @@ const Page = styled.div`
     .another {}
     .more {}
 `;
-const ReplyPrefix = styled.div`
-    width: max-content;
-    padding: 3px 6px 3px 6px;
-    border-radius: 25px;
-    margin-left: 25px;
-    margin-right: 5px;
-    background: blue;
-    color: white;
-`;
+//const ReplyPrefix = styled.div`
+//    width: max-content;
+//    padding: 3px 6px 3px 6px;
+//    border-radius: 25px;
+//    margin-left: 25px;
+//    margin-right: 5px;
+//    background: blue;
+//    color: white;
+//`;
 
 const ReviewPiece = styled.div`
     display:flex;

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Modal, Icon } from "semantic-ui-react";
+// import { Modal, Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import Button from "components/Commons/Button";
-import { FormInput } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl"
-import SignUpModal from "./SignUpModal"
-import StyleGuide from "StyleGuide"
-import FooterPara from "components/Commons/FooterTerm/FooterPara";
+// import Button from "components/Commons/Button";
+// import { FormInput } from "components/Commons/FormItems";
+// import { FormControl, ValidationGroup } from "modules/FormControl"
+// import SignUpModal from "./SignUpModal"
+// import StyleGuide from "StyleGuide"
+// import FooterPara from "components/Commons/FooterTerm/FooterPara";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
@@ -212,7 +212,7 @@ class SignUpForm extends Component {
       return;
     }
     // 
-    if (window.confirm("회원가입을 하시겠습니까?") == false) {
+    if (window.confirm("회원가입을 하시겠습니까?") === false) {
       return;
     }
     e.preventDefault();

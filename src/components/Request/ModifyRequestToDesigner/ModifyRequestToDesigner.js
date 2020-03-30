@@ -5,7 +5,7 @@ import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -127,10 +127,10 @@ const InputTextarea = styled.textarea`
   padding: 0.67857143em 1em;
 
 `
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`
+//const Margin = styled.div`
+//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+//`
 
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
@@ -151,7 +151,7 @@ class ModifyRequestToDesigner extends Component {
     super(props);
     this.state = {
       category_level1: null, category_level2: null,
-      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,endDate:null,dayDate:null,start_date:null,
+      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0, endDate: null, dayDate: null, start_date: null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -185,21 +185,20 @@ class ModifyRequestToDesigner extends Component {
     //   offline:this.props.Detail.offline_consultation,
     // });
   }
-  componentWillUpdate(nextProps){
-    if(nextProps.Detail!=this.props.Detail)
-    {
+  componentWillUpdate(nextProps) {
+    if (nextProps.Detail !== this.props.Detail) {
       console.log(nextProps.Detail.tag);
       this.setState({
-        category_level1:nextProps.Detail.category_level1,
-        category_level2:nextProps.Detail.category_level1,
-        title:nextProps.Detail.title,
-        tag:nextProps.Detail.tag.split(","),
-        price:nextProps.Detail.price,
-        content:nextProps.Detail.content,
-        location:nextProps.Detail.location,
-        ownership:parseInt(nextProps.Detail.ownership,10),
-        startDate:nextProps.Detail.start_date,
-        endDate:nextProps.Detail.end_date,
+        category_level1: nextProps.Detail.category_level1,
+        category_level2: nextProps.Detail.category_level1,
+        title: nextProps.Detail.title,
+        tag: nextProps.Detail.tag.split(","),
+        price: nextProps.Detail.price,
+        content: nextProps.Detail.content,
+        location: nextProps.Detail.location,
+        ownership: parseInt(nextProps.Detail.ownership, 10),
+        startDate: nextProps.Detail.start_date,
+        endDate: nextProps.Detail.end_date,
 
       })
     }
@@ -231,25 +230,25 @@ class ModifyRequestToDesigner extends Component {
       price: event.target.value,
     })
   }
-  onClickDelete(event){
-    this.props.DeleteRequestRequest(this.props.id,this.props.token)
-    .then(res => {
-      if (res.success) {
+  onClickDelete(event) {
+    this.props.DeleteRequestRequest(this.props.id, this.props.token)
+      .then(res => {
+        if (res.success) {
           window.location.href = `/request/designer`;
-      }
-    })
-    .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+        }
+      })
+      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
-  async getStartDateValue(value){
-    await console.log("startDate",value);
+  async getStartDateValue(value) {
+    await console.log("startDate", value);
     await this.setState({ startDate: value });
   }
   async getEndDateValue(value) {
-    await console.log("endDate",value);
+    await console.log("endDate", value);
     await this.setState({ endDate: value });
   }
-  async getDayDateValue(value){
-    await this.setState({dayDate:value})
+  async getDayDateValue(value) {
+    await this.setState({ dayDate: value })
   }
   onChangeLocation(event) {
     this.setState({
@@ -299,8 +298,8 @@ class ModifyRequestToDesigner extends Component {
       location: this.state.location,
       ownership: this.state.ownership,
       offline_consultation: this.state.offline,
-      start_date:this.state.startDate,
-      end_date:this.state.endDate,
+      start_date: this.state.startDate,
+      end_date: this.state.endDate,
     }
     // 페이지이동
     // window.location.href = "/request/designer";
@@ -328,9 +327,9 @@ class ModifyRequestToDesigner extends Component {
             <div className="contentsBox">
               <FormBox>
 
-              <div className="wrapper flex centering" >
+                <div className="wrapper flex centering" >
                   <div className="label">의뢰자</div>
-                  <div>{this.props.userInfo&&this.props.userInfo.nickName||null}</div>
+                  <div>{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -358,13 +357,13 @@ class ModifyRequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  < InputPrice name="price" getValue={this.getPriceValue} price={parseInt(this.state.price,10)}/>
+                  < InputPrice name="price" getValue={this.getPriceValue} price={parseInt(this.state.price, 10)} />
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
-                  getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} getStartDateValue={this.getStartDateValue}/>
+                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar"
+                    getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} getStartDateValue={this.getStartDateValue} />
 
                 </div>
 
@@ -373,7 +372,7 @@ class ModifyRequestToDesigner extends Component {
                   <div className="label">디자이너 위치</div>
                   {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
                   <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                     selection options={LocationList} placeholder="시/도"
                     onChange={this.onChangeLocation} />
                 </div>
@@ -392,11 +391,11 @@ class ModifyRequestToDesigner extends Component {
 
               </FormBox>
             </div>
-              <div className="contentsBox">
-                <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
-                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
-                <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true}/>
-              </div>
+            <div className="contentsBox">
+              <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true} />
+            </div>
           </MainBox>
         </Wrapper>
       </React.Fragment>
