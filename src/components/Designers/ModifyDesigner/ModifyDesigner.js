@@ -6,7 +6,7 @@ import { InputTag } from "components/Commons/InputItem/InputTag"
 import noimg from "source/noimg.png";
 import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
 import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -84,7 +84,7 @@ const Thumbnail = styled.div`
   border-radius:50%;
   margin-left:110px;
 `
-const SubBox= styled.div`
+const SubBox = styled.div`
     width:1560px;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
@@ -247,7 +247,7 @@ class ModifyDesigner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open:false,
+      open: false,
       thumbnail: null, thumbnail_name: null,
       category_level1: -1, category_level2: -1,
       location: "",
@@ -289,7 +289,7 @@ class ModifyDesigner extends Component {
       });
       const tag = nextProps.DesignerDetail.tag.split(",");
       tag.pop();
-    
+
 
       this.setState({
         thumbnail: nextProps.DesignerDetail.image,
@@ -327,16 +327,16 @@ class ModifyDesigner extends Component {
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
   }
-  onChangeLocation(event,{value}){
-    this.setState({location:{value}.value});
+  onChangeLocation(event, { value }) {
+    this.setState({ location: { value }.value });
   }
   handleAddTag(tag) {
     this.setState({
       tag: tag.slice(),
     });
   }
-  handleShowModal(value){
-    this.setState({open:value})
+  handleShowModal(value) {
+    this.setState({ open: value })
   }
 
   handleOnChangeThumbnail(event) {
@@ -350,7 +350,7 @@ class ModifyDesigner extends Component {
       reader.readAsDataURL(file);
     }
   }
-  onClickCancel(event){
+  onClickCancel(event) {
     window.location.href = "/mypage"
   }
   onSubmit = async e => {
@@ -384,7 +384,7 @@ class ModifyDesigner extends Component {
     console.log(data);
 
 
-    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       data.files.push(file);
     }
     if (data.files.length <= 0 || data.files[0].value === (this.props.DesignerDetail && this.props.DesignerDetail.image)) {
@@ -418,7 +418,7 @@ class ModifyDesigner extends Component {
       });
   };
 
- render() {
+  render() {
     console.log("===========================", this.state);
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
@@ -426,7 +426,7 @@ class ModifyDesigner extends Component {
     return (
 
       <React.Fragment>
-        {this.state.open&&<CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
+        {this.state.open && <CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
         <MainBox>
           <div className="title">디자이너 관리</div>
           <div className="contentsBox">
@@ -471,24 +471,24 @@ class ModifyDesigner extends Component {
 
               <div className="wrapper flex">
                 <div className="label">위치</div>
-                <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
-                <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)}
-                selection options={LocationList} placeholder="시/도" 
-                onChange={this.onChangeLocation}/>
+                <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
+                  selection options={LocationList} placeholder="시/도"
+                  onChange={this.onChangeLocation} />
               </div>
             </FormBox>
 
           </div>
           <div className="contentsBox">
-          <SubBox>
-                <div className="title">경험</div>
+            <SubBox>
+              <div className="title">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
                 <div className="text_label">기간</div>
                 <div className="text_label">내용</div>
               </div>
-               <div className="wrapper_noflex ">
+              <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
                   return (
@@ -496,28 +496,28 @@ class ModifyDesigner extends Component {
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                <Button /* onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경험 추가</div>
                 </Button>
-               </div>
-          </SubBox>
-          </div>
-          <div className="contentsBox">
-            <SubBox>
-              <div className="titleBox">
-              <div className="title">갤러리</div>
-              <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
-              </div>
-              <div className="contensts">
-              {<HaveInGalleryContainer id={this.props.id} isModify={true}/>}
               </div>
             </SubBox>
           </div>
           <div className="contentsBox">
-          {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-          <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
-          <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true}/>
-          </div>    
+            <SubBox>
+              <div className="titleBox">
+                <div className="title">갤러리</div>
+                <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
+              </div>
+              <div className="contensts">
+                {<HaveInGalleryContainer id={this.props.id} isModify={true} />}
+              </div>
+            </SubBox>
+          </div>
+          <div className="contentsBox">
+            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
+            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
+          </div>
         </MainBox>
       </React.Fragment>
     );
@@ -590,7 +590,7 @@ class CreateCareer extends Component {
             <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
           </div>
         </div>
       </React.Fragment>

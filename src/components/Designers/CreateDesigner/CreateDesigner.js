@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -89,7 +89,7 @@ const Thumbnail = styled.div`
   border-radius:50%;
   margin-left:110px;
 `;
-const ExperienceBox= styled.div`
+const ExperienceBox = styled.div`
     width:1560px;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
@@ -296,7 +296,7 @@ class CreateDesigner extends Component {
       await reader.readAsDataURL(file);
     }
   }
-  onClickCancel(event){
+  onClickCancel(event) {
     window.location.href = "/mypage"
   }
   onSubmit = async e => {
@@ -331,7 +331,7 @@ class CreateDesigner extends Component {
     console.log(data);
 
 
-    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       await data.files.push(file);
     }
     // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
@@ -433,7 +433,7 @@ class CreateDesigner extends Component {
               <div className="wrapper flex">
                 <div className="label">위치</div>
                 <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
-                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                   selection options={LocationList} placeholder="시/도"
                   onChange={this.onChangeLocation} />
               </div>
@@ -445,8 +445,8 @@ class CreateDesigner extends Component {
                     <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
                   );
                 })} */}
-                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                {/* <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+              {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+              {/* <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경력 추가하기</div>
                 </Button> */}
               {/* </div> */}
@@ -456,15 +456,15 @@ class CreateDesigner extends Component {
 
           </div>
           <div className="contentsBox">
-          <ExperienceBox>
-                <div className="title">경험</div>
+            <ExperienceBox>
+              <div className="title">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
                 <div className="text_label">기간</div>
                 <div className="text_label">내용</div>
               </div>
-               <div className="wrapper_noflex ">
+              <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
                   return (
@@ -472,27 +472,27 @@ class CreateDesigner extends Component {
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경험 추가</div>
                 </Button>
-               </div>
-          </ExperienceBox>
+              </div>
+            </ExperienceBox>
           </div>
           <div className="contentsBox">
             <Link to={{
               pathname: `/createProduct/redirected`,
               state: { keep: this.state }
             }}>
-              <RedButton value={"아이템 등록"} isConfirm={false}/>
+              <RedButton value={"아이템 등록"} isConfirm={false} />
             </Link>
-          {/* </div>
+            {/* </div>
           <div className="contentsBox"> */}
             {this.state.getready ?
-            <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
-            :
-            <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>
+              <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+              :
+              <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>
             }
-            <GrayButton value={"취소"} onClick={()=>{window.location.href="/mypage"}}isConfirm={false}></GrayButton>
+            <GrayButton value={"취소"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>
       </React.Fragment>
@@ -568,7 +568,7 @@ class CreateCareer extends Component {
             <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
           </div>
         </div>
       </React.Fragment>

@@ -126,10 +126,10 @@ const InputTextarea = styled.textarea`
   border:0px;
   readonly;
 `
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`
+//const Margin = styled.div`
+//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+//`
 
 const DropBox = styled(Dropdown)`
     min-width:200px !important;

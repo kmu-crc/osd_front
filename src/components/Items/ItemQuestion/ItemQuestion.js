@@ -23,10 +23,10 @@ const Page = styled.div`
     .another {}
     .more {}
 `;
-const QuestionForm = styled.textarea`
-    width:100%;
-    outline:none;
-`
+//const QuestionForm = styled.textarea`
+//    width:100%;
+//    outline:none;
+//`
 const ReplyForm = styled.textarea`
         width:100%;
         height:80px;

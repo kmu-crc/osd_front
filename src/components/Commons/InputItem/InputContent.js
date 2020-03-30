@@ -3,14 +3,14 @@ import { Controller, FileController } from "components/Commons/InputItem";
 import StyleGuide from "StyleGuide";
 import styled from "styled-components";
 
-const PrivateItem = styled.div`
-    padding: 25px 10px;
-    border-radius: 15px;
-    text-align: center;
-    font-size: 25px;
-    color: #707070;
-    background-color: #EFEFEF;
-`;
+//const PrivateItem = styled.div`
+//    padding: 25px 10px;
+//    border-radius: 15px;
+//    text-align: center;
+//    font-size: 25px;
+//    color: #707070;
+//    background-color: #EFEFEF;
+//`;
 export class InputContent extends Component {
     constructor(props) {
         super(props);
@@ -219,17 +219,18 @@ class AddContent extends Component {
                 <div className="innerBox">
                     <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록</NewController>
                     <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력</NewController>
-                    {this.props.order === 0 && this.props.projectable ? <NewController className="txt" className="complecated" width="max-content" height="29px">
-                        <div onClick={this.changeType} className="txt">단계 생성</div>
-                        <Tip>
-                            <sup>&nbsp;?</sup>
-                            <div className="wrapper">
-                                <div className="tip-txt">단계를 가지는 디자인을 생성합니다.<br />
-                                    <font style={{ color: "pink" }}>*&nbsp;</font>이 과정을 진행하면 되 돌릴 수 없습니다.
+                    {this.props.order === 0 && this.props.projectable ?
+                        <NewController className="txt complecated" width="max-content" height="29px">
+                            <div onClick={this.changeType} className="txt">단계 생성</div>
+                            <Tip>
+                                <sup>&nbsp;?</sup>
+                                <div className="wrapper">
+                                    <div className="tip-txt">단계를 가지는 디자인을 생성합니다.<br />
+                                        <font style={{ color: "pink" }}>*&nbsp;</font>이 과정을 진행하면 되 돌릴 수 없습니다.
                                 </div>
-                            </div>
-                        </Tip>
-                    </NewController> : null}
+                                </div>
+                            </Tip>
+                        </NewController> : null}
                 </div>
                 {this.state.type === "FILE" &&
                     <FileController item={this.state} getValue={this.returnData} />}

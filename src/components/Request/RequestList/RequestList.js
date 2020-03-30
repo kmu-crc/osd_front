@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Sorting from "components/Commons/Sorting";
 import ScrollRequestListContainer from "containers/Request/ScrollRequestListContainer";
@@ -115,14 +115,14 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
-const RequestButton = styled.div`
-  margin-left: 100px;
-  width: 150px;
-  color: #FF0000;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  line-height: 29px;
-`;
+//const RequestButton = styled.div`
+//  margin-left: 100px;
+//  width: 150px;
+//  color: #FF0000;
+//  font-family: Noto Sans KR;
+//  font-size: 20px;
+//  line-height: 29px;
+//`;
 const Container = styled.div`
   display: flex;
   justify-content:space-between;

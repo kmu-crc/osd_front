@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
-import { Dropdown } from "semantic-ui-react"
+// import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 
 const LocationList = [
@@ -102,19 +102,19 @@ const FormBox = styled.div`
   }
 
 `;
-const InputText = styled.input.attrs({ type: "text" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
-
-`;
+//const InputText = styled.input.attrs({ type: "text" })`
+//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//  height:43px;
+//  border-radius:20px;
+//  font-family:Noto Sans KR;
+//  font-size:20px;
+//  background-color:#E9E9E9;
+//  margin-right:21px;
+//  outline:none;
+//  border:0px;
+//  padding: 0.67857143em 1em;
+//
+//`;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
@@ -160,7 +160,7 @@ class ResponseToDesignerReq extends Component {
     super(props);
     this.state = {
       category_level1: 0, category_level2: 0,
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1,endDate:null,dayDate:null,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1, endDate: null, dayDate: null,
 
       res_content: "", res_price: "",
     }
@@ -170,7 +170,7 @@ class ResponseToDesignerReq extends Component {
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
-    this.getDayDateValue=this.getDayDateValue.bind(this);
+    this.getDayDateValue = this.getDayDateValue.bind(this);
 
   }
   // componentDidMount() {
@@ -203,11 +203,11 @@ class ResponseToDesignerReq extends Component {
     await this.setState({ res_price: value });
   }
   async getEndDateValue(value) {
-    await console.log("endDate",value);
+    await console.log("endDate", value);
     await this.setState({ endDate: value });
   }
-  async getDayDateValue(value){
-    await this.setState({dayDate:value})
+  async getDayDateValue(value) {
+    await this.setState({ dayDate: value })
   }
   onSubmit() {
     const data = {
@@ -220,7 +220,7 @@ class ResponseToDesignerReq extends Component {
       price: this.state.res_price,
       expert_id: this.props.userInfo.uid || null,
       personal: this.props.detail.personal || null,
-      term:this.state.endDate,
+      term: this.state.endDate,
     }
     // // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
@@ -242,12 +242,13 @@ class ResponseToDesignerReq extends Component {
     const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
       this.props.category1[detail.category_level1].text;
     let category_level2 = "";
-    this.props.category2&& this.props.category2.map((item,index)=>{
-        console.log(item.parent,detail.category_level1,item.value,detail.category_level2);
-        if(item.parent == detail.category_level1 && item.value == detail.category_level2){
-          category_level2 = item.text;
-        }
-      })
+    this.props.category2 && this.props.category2.map((item, index) => {
+      console.log(item.parent, detail.category_level1, item.value, detail.category_level2);
+      if (item.parent === detail.category_level1 && item.value === detail.category_level2) {
+        category_level2 = item.text;
+      }
+      return item;
+    })
     return (
       <Wrapper>
         <MainBox>
@@ -289,8 +290,8 @@ class ResponseToDesignerReq extends Component {
               </div>
 
               <div className="wrapper flex centering">
-                      <div className="label">기간</div>
-                      <div className="textBox">~{detail.term}</div>
+                <div className="label">기간</div>
+                <div className="textBox">~{detail.term}</div>
               </div>
 
               <div className="wrapper flex centering">
@@ -324,7 +325,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering" >
                 <div className="label">응답자</div>
-                <div>{this.props.userInfo && this.props.userInfo.nickName || null}</div>
+                <div>{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
               </div>
 
               <div className="wrapper flex">
@@ -338,16 +339,16 @@ class ResponseToDesignerReq extends Component {
               </div>
 
               <div className="wrapper flex centering">
-                  <div className="label ">기간</div>
-                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
+                <div className="label ">기간</div>
+                <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} />
               </div>
 
             </FormBox>
           </div>
-        <div className="contentsBox">
-        <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
-        <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
-        </div>
+          <div className="contentsBox">
+            <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+          </div>
         </MainBox>
         {/* <Lihk to={{}}> */}
         {/* </Lihk> */}

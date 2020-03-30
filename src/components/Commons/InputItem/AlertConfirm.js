@@ -1,6 +1,6 @@
-import React,{useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import {Modal} from "semantic-ui-react"
+import { Modal } from "semantic-ui-react"
 const ModalBox = styled(Modal)`
 *{
     // border:1px solid black;
@@ -39,7 +39,7 @@ const Button = styled.div`
     z-index:1200;
     width:max-content;
     height:100%;
-    background-color:${props=>props.color=="red"?"red":"gray"};
+    background-color:${props => props.color === "red" ? "red" : "gray"};
     color:white;
     display:flex;
     justify-content:center;
@@ -54,61 +54,61 @@ const Button = styled.div`
     }
 `
 
-export const options = (message,func,event)=> {
+export const options = (message, func, event) => {
 
     // const {open,setOpen}=useState(true);
-    return(
-       {
-        message: message,
-        childrenElement: () => <div />,
-        customUI: ({message,onClose})=>{
-            console.log(this.props);
-            return (
-                <ModalBox open={true}>
-                  <div className="messageBox">
-                  <div className="message">
-                  {message}
-                  </div>
-                  </div>
-                  <div className="buttonBox">
-                  <Button color="gray" onClick={()=>{onClose()}}><div className="text">취소</div></Button>
-                  <Button color="red" onClick={async() => {
-                      await func(event);
-                      await onClose();
-                  }}><div className="text">확인</div></Button>
-                  </div>
-                </ModalBox>
-              )
-        },     
-        willUnmount: () => {}
-    }
+    return (
+        {
+            message: message,
+            childrenElement: () => <div />,
+            customUI: ({ message, onClose }) => {
+                console.log(this.props);
+                return (
+                    <ModalBox open={true}>
+                        <div className="messageBox">
+                            <div className="message">
+                                {message}
+                            </div>
+                        </div>
+                        <div className="buttonBox">
+                            <Button color="gray" onClick={() => { onClose() }}><div className="text">취소</div></Button>
+                            <Button color="red" onClick={async () => {
+                                await func(event);
+                                await onClose();
+                            }}><div className="text">확인</div></Button>
+                        </div>
+                    </ModalBox>
+                )
+            },
+            willUnmount: () => { }
+        }
     );
-    
-  }
 
-  export const optionsAlter = (message)=> {
+}
 
-    return(
-       {
-        message: message,
-        childrenElement: () => <div />,
-        customUI: ({message,onClose})=>{
-            console.log(this.props);
-            return (
-                <ModalBox className='custom-ui'>
-                  <div className="messageBox">
-                  <div className="message">
-                  {message}
-                  </div>
-                  </div>
-                  <div className="buttonBox">
-                  <Button color="red" onClick={()=>{onClose();}}><div className="text">확인</div></Button>
-                  </div>
-                </ModalBox>
-              )
-        },     
-        willUnmount: () => {}
-    }
+export const optionsAlter = (message) => {
+
+    return (
+        {
+            message: message,
+            childrenElement: () => <div />,
+            customUI: ({ message, onClose }) => {
+                console.log(this.props);
+                return (
+                    <ModalBox className='custom-ui'>
+                        <div className="messageBox">
+                            <div className="message">
+                                {message}
+                            </div>
+                        </div>
+                        <div className="buttonBox">
+                            <Button color="red" onClick={() => { onClose(); }}><div className="text">확인</div></Button>
+                        </div>
+                    </ModalBox>
+                )
+            },
+            willUnmount: () => { }
+        }
     );
-    
-  }
+
+}

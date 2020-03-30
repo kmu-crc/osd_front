@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeaderContainer from "containers/Commons/HeaderContainer";
-import Footer from "components/Commons/Footer";
+// import Footer from "components/Commons/Footer";
 import styled from "styled-components";
 
 const Container = styled.div`

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import CheckBox2 from "components/Commons/CheckBox";
-import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
-import { AddController, InputContent, Controller, InputTag, RadioType } from "components/Commons/InputItem";
+// import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
+import { AddController, /*InputContent,*/ Controller, InputTag, RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
@@ -277,38 +277,38 @@ class ModifyItemInfo extends Component {
     };
     additional.members = members;
 
-    const data = {
-      // basic
-      title: this.state.title,
-      files: [{
-        value: this.state.thumbnail,
-        name: this.state.thumbnail_name
-      }],
-      tag: this.state.tag,
-      category1: this.state.category_level1,
-      category2: this.state.category_level2,
-      itemType: this.state.itemType,
-      // additional
-      additional: additional, // content: this.state.content, step: this.state.steps,
-      type: this.state.type,
-      private: this.state.private
-    };
-    console.log(data);
-    return;
+    //const data = {
+    //  // basic
+    //  title: this.state.title,
+    //  files: [{
+    //    value: this.state.thumbnail,
+    //    name: this.state.thumbnail_name
+    //  }],
+    //  tag: this.state.tag,
+    //  category1: this.state.category_level1,
+    //  category2: this.state.category_level2,
+    //  itemType: this.state.itemType,
+    //  // additional
+    //  additional: additional, // content: this.state.content, step: this.state.steps,
+    //  type: this.state.type,
+    //  private: this.state.private
+    //};
+    // console.log(data);
+    // return;
 
-    this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
-      .then(result => {
-        if (result.res.success) {
-          alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
-          // this.props.GetItemDetailRequest(this.props.id, this.props.token);
-          window.location.href = `/productDetail/${result.id}`
-        } else {
-          alert("아이템 수정을 실패하였습니다.");
-        }
-      })
-      .catch(error => {
-        alert("오류내용:" + error.message);
-      });
+    //    this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
+    //      .then(result => {
+    //        if (result.res.success) {
+    //          alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
+    //          // this.props.GetItemDetailRequest(this.props.id, this.props.token);
+    //          window.location.href = `/productDetail/${result.id}`
+    //        } else {
+    //          alert("아이템 수정을 실패하였습니다.");
+    //        }
+    //      })
+    //      .catch(error => {
+    //        alert("오류내용:" + error.message);
+    //      });
     this.setState({ loading: false });
   };
   async onClickCategorylevel1(event, { value }) {
@@ -511,7 +511,7 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea
                         onChange={this.onHandleAdditionalText}
-                        value={this.state.additional && this.state.additional.description || ""}
+                        value={(this.state.additional && this.state.additional.description) || ""}
                         name="description"
                         width={483} height={99}
                       />
@@ -531,7 +531,7 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea
                         onChange={this.onHandleAdditionalText}
-                        value={this.state.additional && this.state.additional.description || ""}
+                        value={(this.state.additional && this.state.additional.description) || ""}
                         name="description"
                         width={483} height={99} />
                     </Field>
@@ -539,7 +539,7 @@ class ModifyItemInfo extends Component {
                       {!this.state.alone ?
                         <SearchDesignMemberContainer
                           originalMember={
-                            this.state.additional && this.state.additional.members.filter(user => user.uid !== this.props.userInfo.uid) || []}
+                            (this.state.additional && this.state.additional.members.filter(user => user.uid !== this.props.userInfo.uid)) || []}
                           className="searchRect"
                           onChangeMembers={this.onHandleAdditionalMember} />
                         : null}
@@ -739,7 +739,7 @@ class ItemContentEditor extends Component {
   }
 
   render() {
-    const { content, steps } = this.state;
+    // const { content, steps } = this.state;
     // console.log(this.props);
     return (
       <MainBox marginBottom={75}>

@@ -6,7 +6,7 @@ import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
 import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -85,7 +85,7 @@ const Thumbnail = styled.div`
   border-radius:50%;
   margin-left:110px;
 `
-const SubBox= styled.div`
+const SubBox = styled.div`
     width:1560px;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
@@ -296,17 +296,17 @@ class ModifyMaker extends Component {
       technique.pop();
 
       this.setState({
-        thumbnail:nextProps.MakerDetail.image,
-        user_id:nextProps.MakerDetail.user_id,
-        explain:nextProps.MakerDetail.description||"",
-        location:nextProps.MakerDetail.location||null,
+        thumbnail: nextProps.MakerDetail.image,
+        user_id: nextProps.MakerDetail.user_id,
+        explain: nextProps.MakerDetail.description || "",
+        location: nextProps.MakerDetail.location || null,
         category_level1: nextProps.MakerDetail.category_level1,
         category_level2: nextProps.MakerDetail.category_level2,
-        tag:tag||[],
-        career:careerList,
-        score:nextProps.MakerDetail.score||0,
-        equipment:equipment,
-        technique:technique,
+        tag: tag || [],
+        career: careerList,
+        score: nextProps.MakerDetail.score || 0,
+        equipment: equipment,
+        technique: technique,
       })
     };
 
@@ -319,7 +319,7 @@ class ModifyMaker extends Component {
     await this.setState({ category_level2: { value }.value });
   }
   async onChangeCareer(number, task, explain, during) {
-    console.log("arr", arr);
+    // console.log("arr", arr);
     let arr = this.state.career.slice();
     await arr.splice(number, 1, { number: number, task: task, explain: explain, during: during });
     this.setState({
@@ -334,8 +334,8 @@ class ModifyMaker extends Component {
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
   }
-  onChangeLocation(event,{value}){
-    this.setState({location:{value}.value});
+  onChangeLocation(event, { value }) {
+    this.setState({ location: { value }.value });
   }
   handleAddTag(tag) {
     this.setState({
@@ -352,8 +352,8 @@ class ModifyMaker extends Component {
       technique: technique.slice(),
     })
   }
-  handleShowModal(value){
-    this.setState({open:value})
+  handleShowModal(value) {
+    this.setState({ open: value })
   }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -366,7 +366,7 @@ class ModifyMaker extends Component {
       reader.readAsDataURL(file);
     }
   }
-  onClickCancel(event){
+  onClickCancel(event) {
     window.location.href = "/mypage"
   }
   onSubmit() {
@@ -415,7 +415,7 @@ class ModifyMaker extends Component {
     console.log(data);
 
 
-    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       data.files.push(file);
     }
     if (data.files.length <= 0 || data.files[0].value === (this.props.MakerDetail && this.props.MakerDetail.image)) {
@@ -454,7 +454,7 @@ class ModifyMaker extends Component {
 
     return (
       <React.Fragment>
-        {this.state.open&&<CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
+        {this.state.open && <CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
         <MainBox>
           <div className="title">메이커 관리</div>
           <div className="contentsBox">
@@ -472,12 +472,12 @@ class ModifyMaker extends Component {
             </ThumbnailBox>
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
-              
+
               <div className="wrapper flex">
                 <div className="label">닉네임</div>
                 {this.props.userInfo.nickName}
               </div>
-              
+
               <div className="wrapper flex">
                 <div className="label">설명</div>
                 <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
@@ -498,9 +498,9 @@ class ModifyMaker extends Component {
 
               <div className="wrapper flex">
                 <div className="label">위치</div>
-                <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
-                <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)} selection options={LocationList} placeholder="시/도" 
-                onChange={this.onChangeLocation}/>
+                <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)} selection options={LocationList} placeholder="시/도"
+                  onChange={this.onChangeLocation} />
               </div>
 
               {/* <div className="wrapper_noflex ">
@@ -513,10 +513,10 @@ class ModifyMaker extends Component {
                   })
                 }
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                {/* <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+              {/* <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경력 추가하기</div>
                 </Button>
-              </div> */} 
+              </div> */}
 
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
@@ -535,15 +535,15 @@ class ModifyMaker extends Component {
             </FormBox>
           </div>
           <div className="contentsBox">
-          <SubBox>
-                <div className="title">경험</div>
+            <SubBox>
+              <div className="title">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
                 <div className="text_label">기간</div>
                 <div className="text_label">내용</div>
               </div>
-               <div className="wrapper_noflex ">
+              <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
                   return (
@@ -551,27 +551,27 @@ class ModifyMaker extends Component {
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경험 추가</div>
                 </Button>
-               </div>
-          </SubBox>
-          </div>
-          <div className="contentsBox">
-            <SubBox>
-              <div className="titleBox">
-              <div className="title">갤러리</div>
-              <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
-              </div>
-              <div className="contensts">
-              {<HaveInGalleryContainer id={this.props.id} isModify={true}/>}
               </div>
             </SubBox>
           </div>
           <div className="contentsBox">
-          <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true}/>
-          <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
-          </div>  
+            <SubBox>
+              <div className="titleBox">
+                <div className="title">갤러리</div>
+                <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
+              </div>
+              <div className="contensts">
+                {<HaveInGalleryContainer id={this.props.id} isModify={true} />}
+              </div>
+            </SubBox>
+          </div>
+          <div className="contentsBox">
+            <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+          </div>
         </MainBox>
       </React.Fragment>
     );
@@ -645,7 +645,7 @@ class CreateCareer extends Component {
             <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
           </div>
         </div>
       </React.Fragment>

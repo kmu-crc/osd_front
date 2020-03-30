@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import Button from "components/Commons/Button";
-import noimg from "source/noimg.png";
+// import noimg from "source/noimg.png";
 import cookie from 'react-cookies';
 
 const MainBox = styled.div`
@@ -141,128 +141,129 @@ const MainBox = styled.div`
 const SmallImage = styled.div`
     width:100px;
     height:100px;
-    background-image:url(${props=>props.imageURL});
+    background-image:url(${props => props.imageURL});
     background-size:contain;
     background-position:center center;
     border:1px solid #EFEFEF;
 `
 
 class Cart extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={};
+        this.state = {};
         this.onChangeCheck = this.onChangeCheck.bind(this);
         this.onClickDeleteAll = this.onClickDeleteAll.bind(this);
         this.onClickDeleteSelect = this.onClickDeleteSelect.bind(this);
     }
-    componentDidMount(){
-        this.state = {token:cookie.load("cart")};
+    componentDidMount() {
+        this.setState({ token: cookie.load("cart") });
     }
-    componentDidUpdate(prevProps){
-        if(prevProps.CartList !== this.props.CartList)
-        {
-            console.log("CartContainer",this.props);
+    componentDidUpdate(prevProps) {
+        if (prevProps.CartList !== this.props.CartList) {
+            console.log("CartContainer", this.props);
         }
         return true;
     }
-    onChangeCheck(event){
+    onChangeCheck(event) {
     }
-    onClickDeleteAll(event){
-        this.props.CartList.map((item,index)=>{
-            document.getElementById(index).checked=true;
+    onClickDeleteAll(event) {
+        this.props.CartList.map((item, index) => {
+            document.getElementById(index).checked = true;
+            return item;
         });
-        this.props.deleteCartAllItem(this.props.userInfo.uid,this.props.token);
+        this.props.deleteCartAllItem(this.props.userInfo.uid, this.props.token);
         window.location.reload();
     }
-    onClickDeleteSelect(event){
-        this.props.CartList.map((item,index)=>{
+    onClickDeleteSelect(event) {
+        this.props.CartList.map((item, index) => {
             // console.log(document.getElementById(index).checked);
-            if(document.getElementById(index)&&document.getElementById(index).checked === true){
-                
-                console.log(this.props.CartList[index].uid+"제거");
-                this.props.deleteCartItem(this.props.CartList[index].uid,this.props.token)
+            if (document.getElementById(index) && document.getElementById(index).checked === true) {
+
+                console.log(this.props.CartList[index].uid + "제거");
+                this.props.deleteCartItem(this.props.CartList[index].uid, this.props.token)
             }
+            return item;
         });
         window.location.reload();
     }
     render() {
-        console.log("CART::",this.props);
-    const CartList = (item,index)=>{
-        return(
-                    <div className="value_box">
-                        <div className="checkbox_value"><input id={index} type="checkbox"/></div>
-                        <div className="product_info_value">
-                            <SmallImage imageURL={item.s_img}/>
-                            <div className="information_text">
-                               {item.title}<br/>
-                               [옵션]{item.product_option}<br/>
-                               [수량]{item.amount} <br/> 
+        console.log("CART::", this.props);
+        const CartList = (item, index) => {
+            return (
+                <div className="value_box">
+                    <div className="checkbox_value"><input id={index} type="checkbox" /></div>
+                    <div className="product_info_value">
+                        <SmallImage imageURL={item.s_img} />
+                        <div className="information_text">
+                            {item.title}<br />
+                               [옵션]{item.product_option}<br />
+                               [수량]{item.amount} <br />
+                        </div>
+                    </div>
+                    <div className="product_price_value"><div>{item.price}</div></div>
+                    <div className="product_delivery_value"><div>2500</div></div>
+                </div>
+            );
+        }
+        let AllPrice = 0;
+        for (let idx = 0; idx < this.props.CartList.length; idx++) {
+            AllPrice += this.props.CartList[idx].price * this.props.CartList[idx].amount;
+        }
+        return (
+            <React.Fragment>
+                <MainBox>
+                    <div className="content_box">
+                        <div className="label_box">
+                            <div className="checkbox_label"><input type="checkbox" /></div>
+                            <div className="product_info_label">상품정보</div>
+                            <div className="product_price_label">상품금액</div>
+                            <div className="product_delivery_label">배송비</div>
+                        </div>
+                        {
+                            this.props.CartList.map((item, index) => {
+                                return (
+                                    CartList(item, index)
+                                );
+                            })
+                        }
+                        {/* <CartList/>
+                    <CartList/> */}
+                    </div>
+                    <div className="product_delete_button_box">
+                        <div className="button" onClick={this.onClickDeleteAll}>전체삭제</div>
+                        <div className="button" onClick={this.onClickDeleteSelect}>선택삭제</div>
+                    </div>
+
+                    <div className="payment_price_box">
+                        <div className="title">
+                            <div>결제 예정 금액</div>
+                        </div>
+                        <div className="calculate">
+                            <div className="item_row">
+                                <div>상품금액</div>
+                                <div>{AllPrice}원</div>
+                            </div>
+                            <div className="item_row">
+                                <div>배송비</div>
+                                <div>(+)2500원</div>
+                            </div>
+                            <div className="item_row">
+                                <div>할인금액</div>
+                                <div>(-)0원</div>
                             </div>
                         </div>
-                        <div className="product_price_value"><div>{item.price}</div></div>
-                        <div className="product_delivery_value"><div>2500</div></div>
+                        <div className="result">
+                            <div>={AllPrice + 2500}원</div>
+                        </div>
                     </div>
-        );
-    }
-    let AllPrice = 0;
-    for(let idx=0;idx<this.props.CartList.length;idx++){
-        AllPrice+=this.props.CartList[idx].price*this.props.CartList[idx].amount;
-    }
-      return(
-        <React.Fragment>
-            <MainBox>
-                <div className="content_box">
-                    <div className="label_box">
-                        <div className="checkbox_label"><input type="checkbox"/></div>
-                        <div className="product_info_label">상품정보</div>
-                        <div className="product_price_label">상품금액</div>
-                        <div className="product_delivery_label">배송비</div>
-                    </div>
-                    {
-                        this.props.CartList.map((item,index)=>{
-                            return(
-                                CartList(item,index)
-                            );
-                        })
-                    }
-                    {/* <CartList/>
-                    <CartList/> */}
-                </div>
-                <div className="product_delete_button_box">
-                    <div className="button" onClick={this.onClickDeleteAll}>전체삭제</div>
-                    <div className="button" onClick={this.onClickDeleteSelect}>선택삭제</div>
-                </div>
 
-                <div className="payment_price_box">
-                     <div className="title">
-                         <div>결제 예정 금액</div>
-                    </div>
-                    <div className="calculate">
-                        <div className="item_row">
-                            <div>상품금액</div>
-                            <div>{AllPrice}원</div>
-                        </div>
-                        <div className="item_row">
-                            <div>배송비</div>
-                            <div>(+)2500원</div>
-                        </div>
-                        <div className="item_row">
-                            <div>할인금액</div>
-                            <div>(-)0원</div>
-                        </div>
-                    </div>
-                    <div className="result">
-                        <div>={AllPrice+2500}원</div>
-                    </div> 
-                </div>
-
-            </MainBox>
+                </MainBox>
                 <div>
                     <Button>쇼핑계속</Button>
                     <Button>구입</Button>
                 </div>
-        </React.Fragment>
-      );
+            </React.Fragment>
+        );
     }
-  }
-  export default Cart;
+}
+export default Cart;

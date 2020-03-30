@@ -37,19 +37,19 @@ const PointWrapper = styled.div`
   width: 500px;
  
   .text {
-    margin-left: auto;
+    margin-right: 10px;
     font-size: 20px;
     font-weight: 300;
   }
   .point {
+    margin-left: auto;
     margin-left: 50px;
-    margin-right: 5px;
+    margin-right: 15px;
     font-size: 26px;
     font-weight: 500;
   }
   .unit {
     font-weight: 500;
-    margin-right: 30px;
     width: 25px;
     height: 25px;
     padding: 5px;
@@ -98,6 +98,10 @@ const HistoryContainer = styled.div`
 `;
 const FormStyle = styled.input.attrs({ type: "number" })`
     width: ${props => props.width}px;
+    ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
     margin: 0;
     -webkit-appearance: none;
     padding: 0.67857143em 1em;
@@ -129,10 +133,10 @@ const Button = styled.div`
 const Won = N => N.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 class Point extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      point:null,
+      point: null,
     }
     this.PointUp = this.PointUp.bind(this);
     this.PointToMoney = this.PointToMoney.bind(this);
@@ -148,27 +152,30 @@ class Point extends Component {
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
     })
   };
-  PointToMoney(type){
-    if(this.props.Point<this.state.point){
+  PointToMoney(type) {
+    if (this.props.Point < this.state.point) {
       alert("금액이 부족합니다.");
+      return;
+    }
+    if (this.state.point === 0) {
+      alert("현금으로 전환하고자 하는 금액이 0원입니다. 전환하고자하는 금액을 지정해주세요.");
       return;
     }
     this.props.PointUpRequest(
       { id: this.props.userInfo.uid, token: this.props.token },
-      { point: this.state.point*-1, type: type }
+      { point: this.state.point * -1 * 1000, type: type }
     ).then(() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
-    }).then(()=>{
+    }).then(() => {
       alert("현금 전환이 완료되었습니다!");
-      this.setState({point:null});
+      this.setState({ point: 0 });
     })
   }
-  onChangePoint(event){
-    this.setState({
-      point:event.target.value,
-    })
-    
+  async onChangePoint(event) {
+    await this.setState({
+      point: event.target.value,
+    });
   }
   render() {
     const { Point, History, HistoryCount } = this.props;
@@ -178,8 +185,8 @@ class Point extends Component {
         <Title>현금 충전</Title>
         <PointWrapper>
           <div className="text">사용가능한 금액:</div>
+          <div className="unit">₩</div>
           <div className="point">{Won(Point || 0)}</div>
-          <div className="unit">OD</div>
         </PointWrapper>
 
         <Title className="smaller">충전수단</Title>
@@ -188,16 +195,24 @@ class Point extends Component {
           <div className="item"><button onClick={() => alert("찬호가 안하고 입해했데요...")} className="charge not-yet">ㅇㅇㅇ으로 충전</button></div>
           <div className="item"><button onClick={() => alert("찬호가 안하고 입해했데요...")} className="charge not-yet">ㅇㅇㅇ으로 충전</button></div>
         </Charge>
-{
-        this.props.userInfo.isDesigner==1||this.props.userInfo.isMaker==1?
-        <React.Fragment>
-        <Title className="smaller">현금전환</Title>
-        <Charge>
-          <div className="item flex"><FormStyle value={this.state.point} onChange={this.onChangePoint} type="number"/>
-          <Button onClick={()=>this.PointToMoney("CLICK")}><div className="text">클릭으로 전환</div></Button></div>
-        </Charge>
-        </React.Fragment>:null
-}
+        {
+          (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ?
+            <React.Fragment>
+              <Title className="smaller">현금전환</Title>
+              <Charge>
+                <div className="item flex">
+                  {/* <FormStyle value={this.state.point} onChange={this.onChangePoint} type="number" /> */}
+                  <FormStyle type="number" value={this.state.point} />
+                  <Button onClick={() => this.setState({ point: this.state.point + 1 })}>
+                    <div className="text">+</div></Button>
+                  <Button onClick={() => this.state.point > 0 ? this.setState({ point: this.state.point - 1 }) : this.setState({ point: 0 })}>
+                    <div className="text">-</div></Button>
+                  <Button onClick={() => this.PointToMoney("CLICK")}>
+                    <div className="text">클릭으로 전환</div></Button>
+                </div>
+              </Charge>
+            </React.Fragment> : null
+        }
         <Title className="smaller">충전내역</Title>
         <HistoryContainer>
           <div className="history-element">

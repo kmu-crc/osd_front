@@ -8,7 +8,7 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
-import { AddController, Controller, InputContent } from "components/Commons/InputItem";
+import { InputContent } from "components/Commons/InputItem";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
@@ -26,20 +26,20 @@ const ContentBorder = styled.div`
         border-bottom: 1px solid #707070;
     }
 `;
-const CommentWrapper = styled.div`
-    .comment-title {
-        margin-left: 45px;
-    }
-    .comment-body{
-        margin-left: 52px;
-        margin-top: 15px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 29px;
-    }
-`;
+//const CommentWrapper = styled.div`
+//    .comment-title {
+//        margin-left: 45px;
+//    }
+//    .comment-body{
+//        margin-left: 52px;
+//        margin-top: 15px;
+//        color: #707070;
+//        font-size: 20px;
+//        font-weight: 500;
+//        font-family: Noto Sans KR;
+//        line-height: 29px;
+//    }
+//`;
 const CardDialog = styled(Modal)`
     margin-top: 50px !important;
     margin-bottom: 50px !important;
@@ -341,12 +341,12 @@ const EditCardHeaderContainer = styled.div`
         }
     }
 `;
-const BlankSpace = styled.div`
-    width: 250px;
-    height: 250px;
-    background-color: "white";
-    borderRadius: 15px
-`;
+//const BlankSpace = styled.div`
+//    width: 250px;
+//    height: 250px;
+//    background-color: "white";
+//    borderRadius: 15px
+//`;
 const ButtonContainer = styled.div`
   margin-bottom: 35px;
   margin-left: auto;
@@ -449,7 +449,7 @@ export class LocalCardModal extends Component {
         this.submit = this.submit.bind(this);
     };
     handleCancel(obj) {
-        if (obj.length > 0 || this.state.title != "" || this.state.content != "") {
+        if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
             if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
             }
@@ -479,7 +479,7 @@ export class LocalCardModal extends Component {
     async saveTemporary(obj) {
         // console.log("zlzl change", obj);
         // if exists
-        
+
         // const newObj = { deleteContent: [], newContent: obj.content, updateContent: [] };
         // await this.setState({ card_content: newObj });
         // this.submit();
@@ -542,7 +542,7 @@ export class LocalCardModal extends Component {
     render() {
         const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.l_img;
         const { card } = this.props;
-        const { isTeam /*, edit*/ } = this.props;
+        // const { isTeam /*, edit*/ } = this.props;
 
         console.log("local-card-modal:", this.props);
 

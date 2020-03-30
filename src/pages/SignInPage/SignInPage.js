@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import SignInContainer from "containers/Registration/SignInContainer";
-import open_bg from "source/open_bg.jpg";
+// import open_bg from "source/open_bg.jpg";
 
 const SignUpContent = styled.div`
   width: 100%;

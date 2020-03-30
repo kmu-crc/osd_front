@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Button from "components/Commons/Button";
-import { FormInput } from "components/Commons/FormItems";
-import { FormControl, ValidationGroup } from "modules/FormControl";
+// import Button from "components/Commons/Button";
+// import { FormInput } from "components/Commons/FormItems";
+// import { FormControl, ValidationGroup } from "modules/FormControl";
 import cookie from 'react-cookies';
 
 const MainBox = styled.div`
@@ -59,7 +59,7 @@ const MainBox = styled.div`
 
   }
 `
-const InputTextBox = styled.input.attrs({type:'text'})`
+const InputTextBox = styled.input.attrs({ type: 'text' })`
   border:none;
   width:100%;
   height:100%;
@@ -72,7 +72,7 @@ const InputTextBox = styled.input.attrs({type:'text'})`
   
   color:#060000;
 `
-const InputPasswordBox = styled.input.attrs({type:'password'})`
+const InputPasswordBox = styled.input.attrs({ type: 'password' })`
   border:none;
   width:100%;
   height:100%;
@@ -86,12 +86,12 @@ const InputPasswordBox = styled.input.attrs({type:'password'})`
   color:#060000;
 `
 const CustomButton = styled.div`
-  width:${props=>props.width}px;
-  height:${props=>props.height}px;
-  border:1px solid ${props=>props.borderColor};
-  border-radius:${props=>props.borderRadius}px;
-  background-color:${props=>props.bgColor};
-  color:${props=>props.fontColor};
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  border:1px solid ${props => props.borderColor};
+  border-radius:${props => props.borderRadius}px;
+  background-color:${props => props.bgColor};
+  color:${props => props.fontColor};
   display:flex;
   justify-content:center;
   align-items:center;
@@ -102,41 +102,41 @@ const CustomButton = styled.div`
   }
 
   `
-const CheckBox = styled.input.attrs({type:"checkbox"})`
+const CheckBox = styled.input.attrs({ type: "checkbox" })`
   width:17px;
   height:17px;
   border:0.5px solid #707070;
   margin-right:11px;
 `
 const CustomBox = styled.div`
-  width:${props=>props.width==null?100:props.width}%;
-  height:${props=>props.height==null?100:props.height}%;
+  width:${props => props.width == null ? 100 : props.width}%;
+  height:${props => props.height == null ? 100 : props.height}%;
   display:flex;
-  margin-top:${props=>props.marginTop == null?0:props.marginTop}px;
-  margin-bottom:${props=>props.marginBottom == null?0:props.marginBottom}px;
-  margin-left:${props=>props.marginLeft == null?0:props.marginLeft}px;
-  margin-right:${props=>props.marginRight == null?0:props.marginRight}px;
+  margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
+  margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
+  margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
+  margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
 `
 
 class SignInForm extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    const { cookies } = props;
-    this.state={email:cookie.load('saveid')||"",password:cookie.load('savepassword')||"",saveID:cookie.load('saveid')!=null?true:false,saveLogin:cookie.load('savepassword')!=null?true:false,};
+    // const { cookies } = props;
+    this.state = { email: cookie.load('saveid') || "", password: cookie.load('savepassword') || "", saveID: cookie.load('saveid') != null ? true : false, saveLogin: cookie.load('savepassword') != null ? true : false, };
     this.onChangeID = this.onChangeID.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit=this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onCheckSaveID = this.onCheckSaveID.bind(this);
-    this.onCheckSaveLogin=this.onCheckSaveLogin.bind(this);
+    this.onCheckSaveLogin = this.onCheckSaveLogin.bind(this);
     this.onClickSignUp = this.onClickSignUp.bind(this);
   }
 
-  onChangeID(event){
-    this.setState({email:event.target.value});
+  onChangeID(event) {
+    this.setState({ email: event.target.value });
   }
-  onChangePassword(event){
-    this.setState({password:event.target.value});
+  onChangePassword(event) {
+    this.setState({ password: event.target.value });
   }
 
 
@@ -144,15 +144,13 @@ class SignInForm extends Component {
     //아이디저장
     // const { cookies } = this.props;
 
-    if(this.state.saveID===true)
-    {
+    if (this.state.saveID === true) {
       cookie.save("saveid", this.state.email, {
         path: '/',
       });
     }
     //로그인저장
-    if(this.state.saveLogin===true)
-    {
+    if (this.state.saveLogin === true) {
       cookie.save("saveid", this.state.email, {
         path: '/',
       });
@@ -162,84 +160,83 @@ class SignInForm extends Component {
     }
 
     e.preventDefault();
-    const data = {email:this.state.email,password:this.state.password};
-     this.props.SignInRequest(data).then(data => {
-        if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
-          alert("opendesign회원이 아닙니다.");
-        } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
-          alert("비밀번호가 일치하지 않습니다.");
-        } else {
-          window.location.reload();
-        }
-      }).then(window.history.back());
+    const data = { email: this.state.email, password: this.state.password };
+    this.props.SignInRequest(data).then(data => {
+      if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
+        alert("opendesign회원이 아닙니다.");
+      } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
+        alert("비밀번호가 일치하지 않습니다.");
+      } else {
+        window.location.reload();
+      }
+    }).then(window.history.back());
 
-    
+
   }
 
-  onCheckSaveID(event){
+  onCheckSaveID(event) {
     const result = document.getElementById(event.target.id).checked;
-    if(result===false)
-    { 
-      cookie.remove(('saveid'),{path:'/'});
+    if (result === false) {
+      cookie.remove(('saveid'), { path: '/' });
     }
-     
-    this.setState({saveID:result});
+
+    this.setState({ saveID: result });
   }
-  onCheckSaveLogin(event){
+  onCheckSaveLogin(event) {
     const result = document.getElementById(event.target.id).checked;
-    { 
-      cookie.remove(('saveid'),{path:'/'});
-      cookie.remove(('savepassword'),{path:'/'});
+    {
+      cookie.remove(('saveid'), { path: '/' });
+      cookie.remove(('savepassword'), { path: '/' });
     }
-    this.setState({saveLogin:result});
+    this.setState({ saveLogin: result });
   }
 
-  onClickSignUp(event){
-    window.location.href="/signup";
+  onClickSignUp(event) {
+    window.location.href = "/signup";
   }
 
   render() {
     return (
-        <React.Fragment>
-          <form onSubmit={this.onSubmit}>
-            <MainBox>
-              <div className="contentsBox">
-                <div className="titleBox"><div className="title">로그인</div></div>
-                  <CustomBox height={14.8}/>
-                  <div className="row">
-                    <div className="label"><div>아이디</div></div>
-                    <InputTextBox 
-                    placeholder="아이디를 입력하세요." 
-                    value={this.state.email}
-                    onChange={this.onChangeID}/>
-                  </div> 
-                  <div className="row">
-                    <div className="label" value={this.state.password}><div>비밀번호</div></div>
-                    <InputPasswordBox 
-                    type="password"
-                    placeholder="비밀번호를 입력하세요."
-                    value={this.state.password}
-                    onChange={this.onChangePassword}/>
-                  </div>
-                  <div className="row">
-                    <div className="label"/>
-                    <CustomBox  width={29} ><CheckBox  checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID"/>아이디 저장</CustomBox>
-                    <CustomBox  width={29}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 저장</CustomBox>
-                  </div>
-                  <div className="row">
-                  <CustomButton onClick={this.onSubmit}  width={498} height={43} 
+      <React.Fragment>
+        <form onSubmit={this.onSubmit}>
+          <MainBox>
+            <div className="contentsBox">
+              <div className="titleBox"><div className="title">로그인</div></div>
+              <CustomBox height={14.8} />
+              <div className="row">
+                <div className="label"><div>아이디</div></div>
+                <InputTextBox
+                  placeholder="아이디를 입력하세요."
+                  value={this.state.email}
+                  onChange={this.onChangeID} />
+              </div>
+              <div className="row">
+                <div className="label" value={this.state.password}><div>비밀번호</div></div>
+                <InputPasswordBox
+                  type="password"
+                  placeholder="비밀번호를 입력하세요."
+                  value={this.state.password}
+                  onChange={this.onChangePassword} />
+              </div>
+              <div className="row">
+                <div className="label" />
+                <CustomBox width={29} ><CheckBox checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID" />아이디 저장</CustomBox>
+                <CustomBox width={29}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 저장</CustomBox>
+              </div>
+              <div className="row">
+                <CustomButton onClick={this.onSubmit} width={498} height={43}
                   bgColor={"#FF0000"} borderRadius={21} fontColor={"white"}>로그인</CustomButton>
-                  </div>
-                  <div className="row spaceBetween">
-                    <CustomButton onClick={this.onClickSignUp} width={251} height={43} 
-                    bgColor={"white"} borderRadius={21} borderColor={"red"} fontColor={"red"}>회원가입</CustomButton>
-                    <div className="label red_text ">아이디/비밀번호 찾기</div>
-                  </div>
-                </div>
+              </div>
+              <div className="row spaceBetween">
+                <CustomButton onClick={this.onClickSignUp} width={251} height={43}
+                  bgColor={"white"} borderRadius={21} borderColor={"red"} fontColor={"red"}>회원가입</CustomButton>
+                <div className="label red_text ">아이디/비밀번호 찾기</div>
+              </div>
+            </div>
 
-            </MainBox>
-          </form>
-        </React.Fragment>
+          </MainBox>
+        </form>
+      </React.Fragment>
     );
   }
 }

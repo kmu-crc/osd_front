@@ -124,10 +124,10 @@ const InputTextarea = styled.textarea`
   padding: 0.67857143em 1em;
 
 `;
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`;
+//const Margin = styled.div`
+//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+//`;
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
     background-color:#E9E9E9 !important;
@@ -315,7 +315,7 @@ class RequestToDesigner extends Component {
                   <div className="label">디자이너 위치</div>
                   {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
                   <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) == true ? null : parseInt(this.state.location, 10)}
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                     selection options={LocationList} placeholder="시/도"
                     onChange={this.onChangeLocation} />
                 </div>

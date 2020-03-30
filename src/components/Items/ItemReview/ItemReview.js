@@ -24,7 +24,7 @@ const Reviews = styled.div`
     //   justify-content:center;
       padding:10px;
   }
-  .rate{
+  .score{
       display:flex;
   }
 `;
@@ -37,13 +37,13 @@ const ReviewForm = styled.textarea`
   outline:none;
   border-radius:10px;
 `
-const ScoreForm = styled.input.attrs({ type: "number" })`
-        min-width:50px;
-        height:100%;
-        outline:none;
-        border:1px solid #E6E6E6;
-        border-radius:10px;
-`
+//const ScoreForm = styled.input.attrs({ type: "number" })`
+//        min-width:50px;
+//        height:100%;
+//        outline:none;
+//        border:1px solid #E6E6E6;
+//        border-radius:10px;
+//`
 const WriteReview = styled.div`
 // *{
 //     border:1px solid black;
@@ -101,15 +101,15 @@ const Page = styled.div`
     .another {}
     .more {}
 `;
-const ReplyPrefix = styled.div`
-    width: max-content;
-    padding: 3px 6px 3px 6px;
-    border-radius: 25px;
-    margin-left: 25px;
-    margin-right: 5px;
-    background: blue;
-    color: white;
-`;
+//const ReplyPrefix = styled.div`
+//    width: max-content;
+//    padding: 3px 6px 3px 6px;
+//    border-radius: 25px;
+//    margin-left: 25px;
+//    margin-right: 5px;
+//    background: blue;
+//    color: white;
+//`;
 
 const ReviewPiece = styled.div`
     display:flex;
@@ -196,8 +196,8 @@ class ItemReview extends Component {
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleRate = this.handleRate.bind(this);
     }
-    handleRate(e,{rating,maxRating}){
-        this.setState({score:rating});
+    handleRate(e, { rating, maxRating }) {
+        this.setState({ score: rating });
     }
     onChangeValue(event) {
         const name = event.target.name;
@@ -298,7 +298,7 @@ class ItemReview extends Component {
                     <div className="pics" />
                     <div>
                         <div className="nickname">{props.nick_name}</div>
-                        <div className="score">{Star(props.score)}({props.score})</div>
+                        <div className="score">{Star(props.score)}</div>
                         <div className="comment">
                             {props.comment && props.comment.slice(0, 64)}
                             {props.comment && props.comment.length > 64 ? "..." : ""}</div>
@@ -309,8 +309,8 @@ class ItemReview extends Component {
 
         return (<React.Fragment>
             <Reviews>
-                <div className="line">
-                    <div className="title">리뷰</div>
+                <div className="line" style={{ width: "max-content", marginLeft: "auto", marginRight: "15px" }}>
+                    <div className="title">총점(리뷰수): </div>
                     <div className="score">{Star(score)}({total})</div>
                 </div>
                 {!master ?

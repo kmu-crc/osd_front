@@ -11,7 +11,7 @@ class PaymentContainer extends Component {
     this.Payment = this.Payment.bind(this);
   }
   componentDidMount() {
-    const { GetMyPointRequest, userInfo, token } = this.props;
+    const { GetMyPointRequest, token } = this.props;
     GetMyPointRequest(this.props.userInfo.uid, token);
   }
   Payment(item, option) {

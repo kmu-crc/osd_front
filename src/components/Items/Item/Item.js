@@ -7,7 +7,7 @@ import PointFormat from "modules/PointFormat";
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   *{

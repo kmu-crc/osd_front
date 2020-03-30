@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Star from "components/Commons/Star";
-import NumberFormat from "modules/NumberFormat";
-import PointFormat from "modules/PointFormat";
+// import Star from "components/Commons/Star";
+// import NumberFormat from "modules/NumberFormat";
+// import PointFormat from "modules/PointFormat";
 
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer/ModifyGroupInfoContainer"
 
 const Wrapper = styled.div`
@@ -52,22 +52,22 @@ const TextWrapper = styled.div`
     line-height: 18px;
   }
 `;
-const empty = { thumbnail: '', group_id:null,user_id:null,nick_name:"",title: '로딩중...',description:'로딩중...'};
+const empty = { thumbnail: '', group_id: null, user_id: null, nick_name: "", title: '로딩중...', description: '로딩중...' };
 class ModifyGallery extends Component {
-   constructor(props){
-       super(props);
-       this.state={
-         open:false,
-       }
-       this.onClickCard = this.onClickCard.bind(this);
-       this.handleShowModal = this.handleShowModal.bind(this);
-   }
-   onClickCard(event){
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    }
+    this.onClickCard = this.onClickCard.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
+  }
+  onClickCard(event) {
     console.log(this.state.open);
-     this.setState({open:true})
-   }
-   handleShowModal(value){
-    this.setState({open:false})
+    this.setState({ open: true })
+  }
+  handleShowModal(value) {
+    this.setState({ open: false })
   }
 
   render() {
@@ -75,15 +75,15 @@ class ModifyGallery extends Component {
     const item = this.props.data || empty;
     return (
       <React.Fragment>
-        {this.state.open?<ModifyGroupInfoContainer handleShowModal={this.handleShowModal} id={this.props.data.uid} open={this.state.open} />:null}
-      <Wrapper onClick={this.onClickCard}>
-        {/* picture */}
-        <ItemPic img={(item && item.thumbnail) || noimg} />
-        {/* text */}
-        <TextWrapper>
-          <div className="title"><TextFormat txt={item.title||"...로딩중"} /></div>
-        </TextWrapper>
-      </Wrapper>
+        {this.state.open ? <ModifyGroupInfoContainer handleShowModal={this.handleShowModal} id={this.props.data.uid} open={this.state.open} /> : null}
+        <Wrapper onClick={this.onClickCard}>
+          {/* picture */}
+          <ItemPic img={(item && item.thumbnail) || noimg} />
+          {/* text */}
+          <TextWrapper>
+            <div className="title"><TextFormat txt={item.title || "...로딩중"} /></div>
+          </TextWrapper>
+        </Wrapper>
       </React.Fragment>
     )
   }

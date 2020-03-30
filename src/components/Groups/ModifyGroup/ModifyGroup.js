@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { Icon } from "semantic-ui-react";
+// import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag";
+// import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
-import {RedButton,GrayButton} from "components/Commons/CustomButton";
+import { RedButton, GrayButton } from "components/Commons/CustomButton";
 
 const MainBox = styled.div`
   width:100%;
@@ -193,8 +193,8 @@ class ModifyGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectItemList:[],
-      title:null, thumbnail: null, thumbnail_name: null, explain: "",
+      selectItemList: [],
+      title: null, thumbnail: null, thumbnail_name: null, explain: "",
     }
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
@@ -211,34 +211,36 @@ class ModifyGroup extends Component {
     //   this.setState({ getready: true });
     // }
   }
-  componentWillUpdate(nextProps){
-    if(this.props.galleryDetail&&(
-      this.props.galleryDetail.title!==nextProps.galleryDetail.title||
-      this.props.galleryDetail.explain!==nextProps.galleryDetail.explain||
-      this.props.galleryDetail.thumbnail!==nextProps.galleryDetail.thumbnail||
-      this.props.galleryDetail.itemList!==nextProps.galleryDetail.itemList
-      )){
+  componentWillUpdate(nextProps) {
+    if (this.props.galleryDetail && (
+      this.props.galleryDetail.title !== nextProps.galleryDetail.title ||
+      this.props.galleryDetail.explain !== nextProps.galleryDetail.explain ||
+      this.props.galleryDetail.thumbnail !== nextProps.galleryDetail.thumbnail ||
+      this.props.galleryDetail.itemList !== nextProps.galleryDetail.itemList
+    )) {
 
 
       this.setState({
-        title:nextProps.galleryDetail.title,
-        explain:nextProps.galleryDetail.description,
-        thumbnail:nextProps.galleryDetail.thumbnail,
+        title: nextProps.galleryDetail.title,
+        explain: nextProps.galleryDetail.description,
+        thumbnail: nextProps.galleryDetail.thumbnail,
       })
-      if(nextProps.dataList.length>0){
-              let number=0;
-                let arr = [];
-                nextProps.dataList.map((data,index)=>{
-                  nextProps.galleryDetail.itemList.map((item,index)=>{
-                    if(item.value == data.uid){
-                      arr.push({value:item.value,number});
-                    }
-                  })
-                  number++;
-                })
-                this.setState({selectItemList:arr});
-              }
-      
+      if (nextProps.dataList.length > 0) {
+        let number = 0;
+        let arr = [];
+        nextProps.dataList.map((data, index) => {
+          nextProps.galleryDetail.itemList.map((item, index) => {
+            if (item.value === data.uid) {
+              arr.push({ value: item.value, number });
+            }
+            return item;
+          })
+          number++;
+          return data;
+        })
+        this.setState({ selectItemList: arr });
+      }
+
     }
     // if(nextProps.galleryDetail&&(this.props.dataList!==nextProps.dataList)){
 
@@ -272,26 +274,26 @@ class ModifyGroup extends Component {
       await reader.readAsDataURL(file);
     }
   }
-  onClickClose(event){
+  onClickClose(event) {
     this.props.handleShowModal(false);
   }
-  onDelete = async e=>{
-    this.props.DeleteGroupRequest(this.props.id,this.props.token)
-    .then(res => {
-      const result = res.type;
-      if (result === "DETELE_GROUP_SUCCESS") {
-        console.log(this.props.id);
-        this.props.GetHaveInGalleryRequest(this.props.userInfo.uid,0);
-      } else {
+  onDelete = async e => {
+    this.props.DeleteGroupRequest(this.props.id, this.props.token)
+      .then(res => {
+        const result = res.type;
+        if (result === "DETELE_GROUP_SUCCESS") {
+          console.log(this.props.id);
+          this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
+        } else {
+          alert("다시 시도해주세요");
+        }
+      })
+      .catch(e => {
         alert("다시 시도해주세요");
-      }
-    })
-    .catch(e => {
-      alert("다시 시도해주세요");
-      this.setState({
-        loading: false
+        this.setState({
+          loading: false
+        });
       });
-    });
 
   }
   onSubmit = async e => {
@@ -300,15 +302,15 @@ class ModifyGroup extends Component {
     const data = {
       files: [],
       user_id: this.props.userInfo.uid,
-      title:this.state.title,
+      title: this.state.title,
       description: this.state.explain,
-      itemList:this.state.selectItemList,
+      itemList: this.state.selectItemList,
     }
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     await data.files.push(file);
     // console.log(data);
 
-    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       await data.files.push(file);
     }
 
@@ -322,7 +324,7 @@ class ModifyGroup extends Component {
         // console.log(res);
         if (result === "UPDATE_GROUP_SUCCESS") {
           console.log(this.props.id);
-          this.props.GetHaveInGalleryRequest(this.props.userInfo.uid,0);
+          this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
           alert("정보가 수정되었습니다.");
         } else {
           alert("다시 시도해주세요");
@@ -336,10 +338,10 @@ class ModifyGroup extends Component {
         });
       });
   };
-  
-  onSelectItem(event,{value}){
+
+  onSelectItem(event, { value }) {
     // console.log({value});
-    this.setState({selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
+    this.setState({ selectItemList: this.state.selectItemList.concat({ value: this.props.dataList[{ value }.value].uid, number: { value }.value }) });
     // this.setState({selectItemList:this.state.selectItemList.concat({value:{value}.value,text:{value}.text})});
   }
   onDeleteTag = async (event) => {
@@ -350,23 +352,23 @@ class ModifyGroup extends Component {
     this.setState({
       selectItemList: list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length))
     });
-}
+  }
   render() {
     console.log(this.props);
     let count = 0;
     // console.log(this.props.dataList);
-    const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
-      return({value:count++,text:item.title,key:item.uid});
+    const itemList = this.props.dataList.length < 0 ? { value: 0, text: "없음" } : this.props.dataList.map((item, index) => {
+      return ({ value: count++, text: item.title, key: item.uid });
     })
     // console.log(itemList);
 
-    const TagBox = this.props.dataList.length>0&&this.state.selectItemList.map((item, index) => {
+    const TagBox = this.props.dataList.length > 0 && this.state.selectItemList.map((item, index) => {
       // console.log(item.number);
       return (
-          <TagPiece key={index}>
-              {this.props.dataList[item.number].title}
-              <div id={index} onClick={this.onDeleteTag} className="close">x</div>
-          </TagPiece>
+        <TagPiece key={index}>
+          {this.props.dataList[item.number].title}
+          <div id={index} onClick={this.onDeleteTag} className="close">x</div>
+        </TagPiece>
       );
     })
 
@@ -396,7 +398,7 @@ class ModifyGroup extends Component {
 
             {/* <div className="contentsBox"> */}
             <FormBox>
-            <div className="wrapper flex">
+              <div className="wrapper flex">
                 <div className="label">이름</div>
                 <InputText onChange={this.onChangeTitle} value={this.state.title} placeholder="이름을 입력해주세요" width={483} height={99} />
               </div>
@@ -406,17 +408,17 @@ class ModifyGroup extends Component {
               </div>
               <div className="wrapper flex">
                 <div className="label">아이템</div>
-                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList}/>
+                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList} />
                 <TagList>
-                    {TagBox}
+                  {TagBox}
                 </TagList>
               </div>
             </FormBox>
-            </div>
-            <div className="contentBox">
-            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true}/>
-            <GrayButton value={"삭제"} onClick={this.onDelete} isConfirm={true}/>
-            </div>
+          </div>
+          <div className="contentBox">
+            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"삭제"} onClick={this.onDelete} isConfirm={true} />
+          </div>
         </MainBox>
       </React.Fragment>
     );

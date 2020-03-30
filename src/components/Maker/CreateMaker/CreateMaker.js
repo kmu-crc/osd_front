@@ -4,7 +4,7 @@ import { Icon } from "semantic-ui-react";
 import noimg from "source/noimg.png";
 import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 
 
 const LocationList = [
@@ -135,7 +135,7 @@ const FormBox = styled.div`
   }
 
 `
-const ExperienceBox= styled.div`
+const ExperienceBox = styled.div`
     width:1560px;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
@@ -235,9 +235,9 @@ class CreateMaker extends Component {
 
     this.state = {
       thumbnail: null, thumbnail_name: null,
-      category_level1: -1, category_level2: -1,location:null,
-      explain:"",tag:[],equipment:[],technique:[],
-      career:[{number:0,task:"",explain:"",during:""}],
+      category_level1: -1, category_level2: -1, location: null,
+      explain: "", tag: [], equipment: [], technique: [],
+      career: [{ number: 0, task: "", explain: "", during: "" }],
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -285,8 +285,8 @@ class CreateMaker extends Component {
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
   }
-  onChangeLocation(event,{value}){
-    this.setState({location:{value}.value});
+  onChangeLocation(event, { value }) {
+    this.setState({ location: { value }.value });
   }
   handleAddTag(tag) {
     this.setState({
@@ -362,7 +362,7 @@ class CreateMaker extends Component {
     console.log(data);
 
 
-    if (this.state.thumbnail != null || this.state.thumbnail != "") {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       data.files.push(file);
     }
     // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
@@ -443,9 +443,9 @@ class CreateMaker extends Component {
 
               <div className="wrapper flex">
                 <div className="label">위치</div>
-                <DropBox id="country" disabled selection options={[{value:0,text:"대한민국"}]} value={0}/>
-                <DropBox id="location" value={isNaN(parseInt(this.state.location,10))==true?null:parseInt(this.state.location,10)} selection options={LocationList} placeholder="시/도" 
-                onChange={this.onChangeLocation}/>
+                <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)} selection options={LocationList} placeholder="시/도"
+                  onChange={this.onChangeLocation} />
               </div>
 
               {/* <div className="wrapper_noflex ">
@@ -478,19 +478,19 @@ class CreateMaker extends Component {
 
             </FormBox>
 
-            
+
           </div>
 
           <div className="contentsBox">
-          <ExperienceBox>
-                <div className="title">경험</div>
+            <ExperienceBox>
+              <div className="title">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
                 <div className="text_label">기간</div>
                 <div className="text_label">내용</div>
               </div>
-               <div className="wrapper_noflex ">
+              <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
                   return (
@@ -498,16 +498,16 @@ class CreateMaker extends Component {
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button onClick={this.onSubmit} width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경험 추가</div>
                 </Button>
-               </div>
-          </ExperienceBox>
+              </div>
+            </ExperienceBox>
           </div>
           <div className="contentsBox">
-          <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
-          <GrayButton value={"취소"} onClick={()=>{window.location.href="/mypage"}}isConfirm={false}></GrayButton>
-          </div>    
+            <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"취소"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
+          </div>
         </MainBox>
       </React.Fragment>
     );
@@ -573,19 +573,19 @@ class CreateCareer extends Component {
     return (
       <React.Fragment>
 
-      <div className="careerBox">
-        <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
-        <div className="text_wrapper">
-          <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
+        <div className="careerBox">
+          <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
+          <div className="text_wrapper">
+            <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
+          </div>
+          <div className="text_wrapper">
+            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
+          </div>
+          <div className="text_wrapper">
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
+          </div>
         </div>
-        <div className="text_wrapper">
-          <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
-        </div>
-        <div className="text_wrapper">
-          <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370}/>
-        </div>
-      </div>
-    </React.Fragment>
+      </React.Fragment>
     );
   }
 }

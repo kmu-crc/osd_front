@@ -23,27 +23,27 @@ const Content = styled(ContentBox)`
   }
   background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
-const RequestButton = styled.div`
-  margin-left: 100px;
-  width: 150px;
-  color: #FF0000;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  line-height: 29px;
-`;
-const Container = styled.div`
-  display: flex;
-  .categoy {
-    width: max-content;
-  }
-  .sort {
-    width: max-content;
-    margin-left: auto;
-  }
-  .request {
-    width: max-content;
-  }
-`;
+//const RequestButton = styled.div`
+//  margin-left: 100px;
+//  width: 150px;
+//  color: #FF0000;
+//  font-family: Noto Sans KR;
+//  font-size: 20px;
+//  line-height: 29px;
+//`;
+//const Container = styled.div`
+//  display: flex;
+//  .categoy {
+//    width: max-content;
+//  }
+//  .sort {
+//    width: max-content;
+//    margin-left: auto;
+//  }
+//  .request {
+//    width: max-content;
+//  }
+//`;
 const ListElement = styled.div`
   width: 100%;
   margin: 0 auto 0.9rem;

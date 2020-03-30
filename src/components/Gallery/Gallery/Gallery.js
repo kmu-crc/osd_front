@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Star from "components/Commons/Star";
-import NumberFormat from "modules/NumberFormat";
-import PointFormat from "modules/PointFormat";
+// import Star from "components/Commons/Star";
+// import NumberFormat from "modules/NumberFormat";
+// import PointFormat from "modules/PointFormat";
 
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   *{
@@ -51,15 +51,15 @@ const TextWrapper = styled.div`
     line-height: 18px;
   }
 `;
-const empty = { thumbnail: '', group_id:null,user_id:null,nick_name:"",title: '로딩중...',description:'로딩중...'};
+const empty = { thumbnail: '', group_id: null, user_id: null, nick_name: "", title: '로딩중...', description: '로딩중...' };
 class Gallery extends Component {
-   constructor(props){
-       super(props);
-       this.onClickCard = this.onClickCard.bind(this);
-   }
-   onClickCard(event){
-       window.location.href = "/galleryDetail/"+this.props.data.uid;
-   }
+  constructor(props) {
+    super(props);
+    this.onClickCard = this.onClickCard.bind(this);
+  }
+  onClickCard(event) {
+    window.location.href = "/galleryDetail/" + this.props.data.uid;
+  }
   render() {
 
     const item = this.props.data || empty;
@@ -69,7 +69,7 @@ class Gallery extends Component {
         <ItemPic img={(item && item.thumbnail) || noimg} />
         {/* text */}
         <TextWrapper>
-          <div className="title"><TextFormat txt={item.title||"...로딩중"} /></div>
+          <div className="title"><TextFormat txt={item.title || "...로딩중"} /></div>
         </TextWrapper>
       </Wrapper>
     )

@@ -8,7 +8,7 @@ import { LocalCardModal } from "./LocalCardModal";
 import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
-import SortableDesignSteps2 from "./SortableDesignSteps2";
+// import SortableDesignSteps2 from "./SortableDesignSteps2";
 import osdcss from "StyleGuide";
 
 const WhitePane = styled.div`
@@ -64,112 +64,6 @@ const GridEditorWrapper = styled.div`
         }
     }
 `;
-
-const DUMMY = {
-    //info
-
-    // data(steps)
-    steps: [
-        {
-            uid: 0,
-            order: 0,
-            title: "First step",
-            cards: [
-                {
-                    uid: 0,
-                    order: 0,
-                    title: "First Card",
-                    //
-                    content: "First Card Content",
-                    contents: [
-                        { uid: 0, order: 0, type: "TEXT", content: "text test" },
-                        { uid: 1, order: 1, type: "TEXT", content: "text test" },
-                        { uid: 2, order: 2, type: "TEXT", content: "text test" },
-                        { uid: 3, order: 3, type: "TEXT", content: "text test" },
-                        { uid: 4, order: 4, type: "TEXT", content: "text test" }
-                    ]
-                },
-                {
-                    uid: 1,
-                    order: 1,
-                    title: "Second Card",
-                    //
-                    content: "Second Card Content",
-                    contents: [
-                        { uid: 5, order: 0, type: "TEXT", content: "test test" },
-                        { uid: 6, order: 1, type: "TEXT", content: "text test" },
-                        { uid: 7, order: 2, type: "TEXT", content: "test test" },
-                        { uid: 8, order: 3, type: "TEXT", content: "text test" },
-                        { uid: 9, order: 4, type: "TEXT", content: "test test" }
-                    ]
-                },
-                {
-                    uid: 2,
-                    order: 2,
-                    title: "Third Card",
-                    //
-                    content: "Third Card Content",
-                    contents: [
-                        { uid: 10, order: 0, type: "TEXT", content: "test test" },
-                        { uid: 11, order: 1, type: "TEXT", content: "text test" },
-                        { uid: 12, order: 2, type: "TEXT", content: "test test" },
-                        { uid: 13, order: 3, type: "TEXT", content: "text test" },
-                        { uid: 14, order: 4, type: "TEXT", content: "test test" }
-                    ]
-                }
-            ]
-        },
-        {
-            uid: 1,
-            order: 1,
-            title: "Seconde step",
-            cards: [
-                {
-                    uid: 3,
-                    order: 0,
-                    title: "First Card",
-                    //
-                    content: "First Card Content",
-                    contents: [
-                        { uid: 15, order: 0, type: "TEXT", content: "text test" },
-                        { uid: 16, order: 1, type: "TEXT", content: "text test" },
-                        { uid: 17, order: 2, type: "TEXT", content: "text test" },
-                        { uid: 18, order: 3, type: "TEXT", content: "text test" },
-                        { uid: 19, order: 4, type: "TEXT", content: "text test" }
-                    ]
-                },
-                {
-                    uid: 4,
-                    order: 1,
-                    title: "Second Card",
-                    //
-                    content: "Second Card Content",
-                    contents: [
-                        { uid: 20, order: 0, type: "TEXT", content: "test test" },
-                        { uid: 21, order: 1, type: "TEXT", content: "text test" },
-                        { uid: 22, order: 2, type: "TEXT", content: "test test" },
-                        { uid: 23, order: 3, type: "TEXT", content: "text test" },
-                        { uid: 24, order: 4, type: "TEXT", content: "test test" }
-                    ]
-                },
-                {
-                    uid: 5,
-                    order: 2,
-                    title: "Third Card",
-                    //
-                    content: "Third Card Content",
-                    contents: [
-                        { uid: 25, order: 0, type: "TEXT", content: "test test" },
-                        { uid: 26, order: 1, type: "TEXT", content: "text test" },
-                        { uid: 27, order: 2, type: "TEXT", content: "test test" },
-                        { uid: 28, order: 3, type: "TEXT", content: "text test" },
-                        { uid: 29, order: 4, type: "TEXT", content: "test test" }
-                    ]
-                }
-            ]
-        },
-    ]
-}
 
 export class LocalGridEditor extends Component {
     constructor(props) {
@@ -320,7 +214,7 @@ export class LocalGridEditor extends Component {
         let copy = [...this.props.content];
         for (let item of copy) {
             if (item.uid === data.card.boardId) {
-                
+
                 item = { ...data.card, nick_name: item.nick_name, contents: data.content.data.newContent }
             }
         }

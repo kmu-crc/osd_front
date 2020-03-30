@@ -16,14 +16,14 @@ class HaveInGalleryContainer extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
         <ScrollList
-          cols={6} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify==true?ModifyGallery:Gallery}
+          cols={6} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
       </div>
 
-      
+
     );
   }
 }
@@ -38,8 +38,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     GetHaveInGalleryRequest: (id, page) => {
-        return dispatch(GetHaveInGalleryRequest(id, page))
-      }
+      return dispatch(GetHaveInGalleryRequest(id, page))
+    }
   };
 };
 
