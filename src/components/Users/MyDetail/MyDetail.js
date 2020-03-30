@@ -11,6 +11,7 @@ import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyPr
 import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer";
 import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer";
 import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/ModifyMyDetailContainer";
+import MyPointStatusContainer from "containers/Point/PointContainer";
 
 const MainBox = styled.div`
   width: 1790px;
@@ -279,6 +280,7 @@ class MyDetail extends Component {
       "upload_item",
       "request_item",
       "modify_myinfo",
+      "my_point_status",
     ]
     this.setState({ selectMenu: menuNames.indexOf(event.target.id) });
   }
@@ -352,6 +354,8 @@ class MyDetail extends Component {
               {/* <div className="title_Label">관심</div> */}
               {/* <div className="title_Label">참여</div> */}
               {/* <div className="title_Label">의뢰</div> */}
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 10 ? "red" : null} id="my_point_status">내 포인트 관리</MenuButton>
+              <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입아이템</MenuButton>
@@ -373,6 +377,7 @@ class MyDetail extends Component {
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰</MenuButton>
             </MenuBox>
             <BoardBox>
+              {selectMenu === 10 ? <MyPointStatusContainer /> : null}
               {selectMenu === 9 ? <ModifyMyDetailContainer /> : null}
               {selectMenu === 0 ?
                 <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
