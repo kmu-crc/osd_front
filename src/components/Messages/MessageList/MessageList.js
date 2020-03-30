@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import who from "source/thumbnail.png";
-import FormDataToJson from "modules/FormDataToJson";
+// import FormDataToJson from "modules/FormDataToJson";
 import DateFormat from "modules/DateFormat";
 import Socket from "modules/socket";
 
-import StyleGuide from "StyleGuide";
-import { FormField } from "components/Commons/FormField";
-import ValidateForm from "components/Commons/ValidateForm";
-import { FormTextArea } from "components/Commons/FormItem";
+// import StyleGuide from "StyleGuide";
+// import { FormField } from "components/Commons/FormField";
+// import ValidateForm from "components/Commons/ValidateForm";
+// import { FormTextArea } from "components/Commons/FormItem";
 import { FormInput } from "components/Commons/FormItem";
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
-import Button from "components/Commons/Button";
-import NumberFormat from 'modules/NumberFormat';
-import TextSlicer from 'modules/TextSlicer'
+// import Button from "components/Commons/Button";
+// import NumberFormat from 'modules/NumberFormat';
+// import TextSlicer from 'modules/TextSlicer'
 
 // CSS STYLING
 const Container = styled.div`
@@ -219,16 +219,16 @@ const Chatting = styled.div`
     }
   }
 `;
-const ProfileDetail = styled.div`
-  width: 100px;
-  background: #F9F9F9;
-  display: none;
-  &.expand {
-    display: block;
-    border-radius: 0 25px 25px 0;
-  }
-
-`;
+//const ProfileDetail = styled.div`
+//  width: 100px;
+//  background: #F9F9F9;
+//  display: none;
+//  &.expand {
+//    display: block;
+//    border-radius: 0 25px 25px 0;
+//  }
+//
+//`;
 const Face = styled.div`
   background-image: url(${props => props.img ? props.img : who});
   width: 45px;

@@ -75,26 +75,26 @@ const FormText = styled.input.attrs({ type: "number" })`
         }
     }
 `;
-const Button = styled.div`
-    width:60px;
-    height:30px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background-color:#707070;
-    border-radius:10px;
-    margin:5px;
-    cursor:pointer;
-    .text{
-        font-size:13px;
-        color:#ffffff;
-    }
-`
+// const Button = styled.div`
+//     width:60px;
+//     height:30px;
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     background-color:#707070;
+//     border-radius:10px;
+//     margin:5px;
+//     cursor:pointer;
+//     .text{
+//         font-size:13px;
+//         color:#ffffff;
+//     }
+// `
 export class InputCalendar extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { startDate:null,endDate:null,dayDate:null };
+        this.state = { startDate: null, endDate: null, dayDate: null };
         this.onChangeStartDate = this.onChangeStartDate.bind(this)
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
         this.onChangeDayDate = this.onChangeDayDate.bind(this);
@@ -104,23 +104,24 @@ export class InputCalendar extends Component {
         this.init();
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.startDate!==this.props.startDate){
+        if (prevProps.startDate !== this.props.startDate) {
             this.setState({
-                startDate:this.props.startDate})
+                startDate: this.props.startDate
+            })
         }
-        if( prevProps.endDate!==this.props.endDate) {
-                console.log(this.props.startDate,this.props.endDate)
-            if(this.props.startDate&&this.props.endDate){
+        if (prevProps.endDate !== this.props.endDate) {
+            console.log(this.props.startDate, this.props.endDate)
+            if (this.props.startDate && this.props.endDate) {
                 const end = this.props.endDate.split("-");
-                const endDay = new Date(end[0],end[1]-1,end[2]);
-        
+                const endDay = new Date(end[0], end[1] - 1, end[2]);
+
                 const start = this.props.startDate.split("-");
-                const startDay = new Date(start[0],start[1]-1,start[2]);
+                const startDay = new Date(start[0], start[1] - 1, start[2]);
                 let timestamp = endDay - startDay;
-                const oneDay = 24* 60* 60* 1000;
-        
-                const dDay = Math.floor(timestamp/oneDay+1);
-                this.setState({dayDate:dDay})
+                const oneDay = 24 * 60 * 60 * 1000;
+
+                const dDay = Math.floor(timestamp / oneDay + 1);
+                this.setState({ dayDate: dDay })
             }
 
 
@@ -135,79 +136,81 @@ export class InputCalendar extends Component {
         this.props.getDayDateValue && await this.props.getDayDateValue(this.state.dayDate);
     }
     init = async () => {
-        console.log("init",this.props.startDate,this.props.endDate);
-        await this.setState({ startDate: this.props.startDate||new Date().toISOString().substring(0,10) });
-        await this.setState({ endDate: this.props.endDate || new Date().toISOString().substring(0,10) });
+        console.log("init", this.props.startDate, this.props.endDate);
+        await this.setState({ startDate: this.props.startDate || new Date().toISOString().substring(0, 10) });
+        await this.setState({ endDate: this.props.endDate || new Date().toISOString().substring(0, 10) });
         await this.setState({ dayDate: this.props.dayDate || 0 });
         this.returnData();
     }
     async onChangeStartDate(event) {
-        
+
         // //일수
         const end = this.state.endDate.split("-");
-        const endDay = new Date(end[0],end[1]-1,end[2]);
+        const endDay = new Date(end[0], end[1] - 1, end[2]);
 
         const start = event.target.value.split("-");
-        const startDay = new Date(start[0],start[1]-1,start[2]);
+        const startDay = new Date(start[0], start[1] - 1, start[2]);
 
         // console.log("onChangeStartDate:",startDay,endDay);
 
-        let timestamp =  endDay-startDay;
-        const oneDay = 24* 60* 60* 1000;
+        let timestamp = endDay - startDay;
+        const oneDay = 24 * 60 * 60 * 1000;
 
-        const dDay = Math.floor(timestamp/oneDay+1);
-        console.log(start,end);
-        if(dDay <1){
-            await this.setState({ startDate:this.state.startDate,dayDate:this.state.dayDate });
+        const dDay = Math.floor(timestamp / oneDay + 1);
+        console.log(start, end);
+        if (dDay < 1) {
+            await this.setState({ startDate: this.state.startDate, dayDate: this.state.dayDate });
             return;
         }
-        await this.setState({ startDate:event.target.value,dayDate:Math.floor(timestamp/oneDay) });
+        await this.setState({ startDate: event.target.value, dayDate: Math.floor(timestamp / oneDay) });
         this.returnData();
     }
     async onChangeEndDate(event) {
-        const now = new Date();
+        // const now = new Date();
         const end = event.target.value.split("-");
-        const endDay = new Date(end[0],end[1]-1,end[2]);
+        const endDay = new Date(end[0], end[1] - 1, end[2]);
 
         const start = this.state.startDate.split("-");
-        const startDay = new Date(start[0],start[1]-1,start[2]);
+        const startDay = new Date(start[0], start[1] - 1, start[2]);
         // console.log("onChangeEndDate:",startDay,endDay);
         let timestamp = endDay - startDay;
-        const oneDay = 24* 60* 60* 1000;
+        const oneDay = 24 * 60 * 60 * 1000;
 
-        const dDay = Math.floor(timestamp/oneDay);
+        const dDay = Math.floor(timestamp / oneDay);
 
-        console.log("end:::",dDay);
-        if(dDay <1){
-            await this.setState({ endDate:this.state.endDate,dayDate:this.state.dayDate });
+        console.log("end:::", dDay);
+        if (dDay < 1) {
+            await this.setState({ endDate: this.state.endDate, dayDate: this.state.dayDate });
             return;
         }
 
         // //일수
-        await this.setState({ endDate: event.target.value, dayDate:Math.floor(timestamp/oneDay) });
+        await this.setState({ endDate: event.target.value, dayDate: Math.floor(timestamp / oneDay) });
         this.returnData();
     }
-    async onChangeDayDate(event){
-        if(isNaN(parseInt(event.target.value,10))){
+    async onChangeDayDate(event) {
+        if (isNaN(parseInt(event.target.value, 10))) {
             return;
         }
         const start = this.state.startDate.split("-");
-        const startDay = new Date(start[0],start[1]-1,start[2]);
+        const startDay = new Date(start[0], start[1] - 1, start[2]);
 
-        const dday = parseInt(event.target.value,10);
-        const oneDay = 24* 60* 60* 1000;
-        startDay.setDate(startDay.getDate()+dday);
+        const dday = parseInt(event.target.value, 10);
+        // const oneDay = 24* 60* 60* 1000;
+        startDay.setDate(startDay.getDate() + dday);
         console.log(event.target.value);
-        if(dday <1){
+        if (dday < 1) {
             return;
         }
-        
-        await this.setState({ endDate:startDay.toISOString().substring(0,10),
-        dayDate: event.target.value });
+
+        await this.setState({
+            endDate: startDay.toISOString().substring(0, 10),
+            dayDate: event.target.value
+        });
         this.returnData();
 
     }
-    onClickDayDate(event){
+    onClickDayDate(event) {
         document.getElementById(event.target.id).focus();
         document.getElementById(event.target.id).select();
 

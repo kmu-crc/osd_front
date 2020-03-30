@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import CheckBox2 from "components/Commons/CheckBox";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
-import { AddController, InputContent, Controller, InputTag, ThumbnailList, RadioType } from "components/Commons/InputItem";
+import { AddController, InputContent, Controller, InputTag, /*ThumbnailList,*/ RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
@@ -427,7 +427,7 @@ class ItemTypeForm extends Component {
 
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
-    const { additional, content, steps } = this.state;
+    const {/* additional, */content, steps } = this.state;
 
     return (
       <MainBox>
@@ -668,7 +668,7 @@ class ItemInfoData extends Component {
   }
 
   render() {
-    const types = ["블로그형", "프로젝트형"];
+    // const types = ["블로그형", "프로젝트형"];
     return (
       <React.Fragment>
         <Field title="설명">

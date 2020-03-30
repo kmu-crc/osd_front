@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
-import { Dropdown } from "semantic-ui-react"
+// import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 
 const LocationList = [
@@ -160,9 +160,9 @@ class ResponseToMakerReq extends Component {
     super(props);
     this.state = {
       category_level1: 0, category_level2: 0,
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1,endDate:null,dayDate:null,
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1, endDate: null, dayDate: null,
 
-      res_content: "", res_price: "",res_amount:null,
+      res_content: "", res_price: "", res_amount: null,
     }
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -171,7 +171,7 @@ class ResponseToMakerReq extends Component {
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onChangeReponseAmount = this.onChangeReponseAmount.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
-    this.getDayDateValue=this.getDayDateValue.bind(this);
+    this.getDayDateValue = this.getDayDateValue.bind(this);
   };
 
   onChangeResponseContent(event) {
@@ -184,9 +184,9 @@ class ResponseToMakerReq extends Component {
       res_price: event.target.value,
     })
   }
-  onChangeReponseAmount(event){
+  onChangeReponseAmount(event) {
     this.setState({
-      res_amount:event.target.value,
+      res_amount: event.target.value,
     })
   }
   async getPriceValue(value) {
@@ -203,8 +203,8 @@ class ResponseToMakerReq extends Component {
       price: this.state.res_price,
       expert_id: this.props.userInfo.uid || null,
       personal: this.props.detail.personal || null,
-      amount:this.state.res_amount||null,
-      term:this.state.endDate,
+      amount: this.state.res_amount || null,
+      term: this.state.endDate,
     }
     // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
@@ -219,11 +219,11 @@ class ResponseToMakerReq extends Component {
       .catch(err => alert("에러가 발생했습니다." + err));
   }
   async getEndDateValue(value) {
-    await console.log("endDate",value);
+    await console.log("endDate", value);
     await this.setState({ endDate: value });
   }
-  async getDayDateValue(value){
-    await this.setState({dayDate:value})
+  async getDayDateValue(value) {
+    await this.setState({ dayDate: value })
   }
 
   render() {
@@ -232,11 +232,12 @@ class ResponseToMakerReq extends Component {
     const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
       this.props.category1[detail.category_level1].text;
     let category_level2 = "";
-    this.props.category2&& this.props.category2.map((item,index)=>{
-      console.log(item.parent,detail.category_level1,item.value,detail.category_level2);
-      if(item.parent == detail.category_level1 && item.value == detail.category_level2){
+    this.props.category2 && this.props.category2.map((item, index) => {
+      console.log(item.parent, detail.category_level1, item.value, detail.category_level2);
+      if (item.parent == detail.category_level1 && item.value == detail.category_level2) {
         category_level2 = item.text;
       }
+      return item;
     })
     return (
       <React.Fragment>
@@ -247,8 +248,8 @@ class ResponseToMakerReq extends Component {
               <FormBox>
 
                 <div className="wrapper flex centering" >
-                      <div className="label">의뢰자</div>
-                      <div>{this.props.detail&&this.props.detail.nick_name||null}</div>
+                  <div className="label">의뢰자</div>
+                  <div>{this.props.detail && this.props.detail.nick_name || null}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -278,8 +279,8 @@ class ResponseToMakerReq extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                      <div className="label">기간</div>
-                      <div className="textBox">~{detail.term}</div>
+                  <div className="label">기간</div>
+                  <div className="textBox">~{detail.term}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -294,7 +295,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 위치</div>
-                  <div className="textBox">{detail.location&&LocationList[parseInt(detail.location,10)].text}</div>
+                  <div className="textBox">{detail.location && LocationList[parseInt(detail.location, 10)].text}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -316,8 +317,8 @@ class ResponseToMakerReq extends Component {
               </div> */}
 
                 <div className="wrapper flex centering" >
-                      <div className="label">응답자</div>
-                      <div>{this.props.userInfo&&this.props.userInfo.nickName||null}</div>
+                  <div className="label">응답자</div>
+                  <div>{this.props.userInfo && this.props.userInfo.nickName || null}</div>
                 </div>
 
                 <div className="wrapper flex">
@@ -336,16 +337,16 @@ class ResponseToMakerReq extends Component {
                 </div>
 
 
-              <div className="wrapper flex centering">
+                <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue}/>
-              </div>
+                  <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} />
+                </div>
 
               </FormBox>
             </div>
             <div className="contentsBox">
-            <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
-            <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
+              <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>

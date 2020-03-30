@@ -37,13 +37,13 @@ const ReviewForm = styled.textarea`
   outline:none;
   border-radius:10px;
 `
-const ScoreForm = styled.input.attrs({ type: "number" })`
-        min-width:50px;
-        height:100%;
-        outline:none;
-        border:1px solid #E6E6E6;
-        border-radius:10px;
-`
+//const ScoreForm = styled.input.attrs({ type: "number" })`
+//        min-width:50px;
+//        height:100%;
+//        outline:none;
+//        border:1px solid #E6E6E6;
+//        border-radius:10px;
+//`
 const WriteReview = styled.div`
 // *{
 //     border:1px solid black;

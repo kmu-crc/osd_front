@@ -6,7 +6,7 @@ import {
 } from "reducers/Products";
 import { ItemDetail, ItemContent, ItemStep, ItemQuestion, ItemReview, UploadItem, MyProjectItem } from "reducers/Items";
 import { GalleryList, GalleryDetail } from "reducers/Gallery";
-import { DesignerList, DesignerLike, DesignerDetail, DesignerBoardList, DesignerBoardDetail } from "reducers/Designers";
+import { DesignerList, DesignerLike, DesignerDetail, /*DesignerBoardList, DesignerBoardDetail */ } from "reducers/Designers";
 import { MakerList, MakerDetail } from "reducers/Makers";
 import { CreateGroup, GroupLike, GroupList, GroupDetail, GroupWaitingList, MyList, DeleteGroup, GroupIssue, MyExistList } from "reducers/Groups";
 import { SignIn, SignUp, FindPw } from "reducers/Registration";

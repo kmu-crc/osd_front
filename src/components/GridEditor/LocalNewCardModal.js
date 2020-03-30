@@ -5,8 +5,8 @@ import { ValidationGroup } from "modules/FormControl";
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
-import { InputContent, AddController, Controller } from "components/Commons/InputItem";
-import CardSourceDetail from 'components/Designs/CardSourceDetail';
+import { InputContent, /*AddController, Controller */ } from "components/Commons/InputItem";
+// import CardSourceDetail from 'components/Designs/CardSourceDetail';
 
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;

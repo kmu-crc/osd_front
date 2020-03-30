@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemQuestion from "components/Items/ItemQuestion";
-import { GetItemQuestionRequest, CreateItemQuestionRequest, DeleteItemQuestionRequest } from "actions/Item";
+import { GetItemQuestionRequest, CreateItemQuestionRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
 
 
 class ItemQuestionContainer extends Component {
