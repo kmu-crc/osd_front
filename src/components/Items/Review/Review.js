@@ -4,7 +4,7 @@ import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 
 const Wrapper = styled.div`
-  min-width:650px;
+  min-width:600px;
   height:150px;
   margin-right:50px;
   margin-bottom:50px;

@@ -263,24 +263,24 @@ const ItemInfo = styled.div`
   }
   .wrapItem{
     max-width:100%;
-    max-height:350px;
+    max-height:390px;
     margin-top:30px;
     width:100%;
     height:max-content;
     overflow:hidden;
-    overflow-y:scroll;
-    // overflow-y:overlay;
+    overflow:auto;
+    overflow-y:overlay;
     display:flex;
   }
+
   .wrapGallery{
     max-width:100%;
     max-height:300px;
     margin-top:30px;
     width:100%;
     height:max-content;
-    overflow:hidden;
-    overflow-y:scroll;
-    // overflow-y:overlay;
+    overflow:auto;
+    overflow-y:overlay;
     display:flex;
   }
   &:hover{
@@ -324,6 +324,14 @@ const AdditionalInfo = styled.div`
     overflow-y:scroll;
     // overflow: auto;
   }
+  .reviewItem{
+    margin-top:30px;
+    width:100%;
+    max-height:200px;
+    overflow:hidden;
+    overflow-y:auto;
+    display:flex;
+  }
   .wrapItem{
     max-width:100%;
     max-height:100%;
@@ -333,7 +341,7 @@ const AdditionalInfo = styled.div`
     display:flex;
     overflow:hidden;
     overflow-y:scroll;
-  }
+    }
   // &:hover{
   //   .wrapItem{
   //     verflow:auto;
