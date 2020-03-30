@@ -523,7 +523,7 @@ class ItemDetail extends Component {
 
           {/* review and board */}
           <div style={{ marginTop: "35px" }}>
-            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingReview ? "100%" : "250px"}>
+            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingReview ? "100%" : "315px"}>
               <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
                 <div style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>리뷰</div>
               </div>
