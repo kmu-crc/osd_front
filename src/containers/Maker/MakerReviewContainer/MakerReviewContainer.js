@@ -10,9 +10,10 @@ const ReviewBox = styled.div`
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    overflow: hidden;
+    overflow-y: scroll;
+    overflow-y: overlay;
     &:hover {
-      overflow: auto;
+      overflow-y: scroll;
       overflow-y: overlay;
     }
 `;

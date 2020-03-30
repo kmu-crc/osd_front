@@ -267,32 +267,32 @@ const ItemInfo = styled.div`
   }
   .wrapItem{
     max-width:100%;
-    max-height:350px;
+    max-height:390px;
     margin-top:30px;
     width:100%;
     height:max-content;
     overflow:hidden;
-    overflow-y:scroll;
-    // overflow-y:overlay;
+    overflow:auto;
+    overflow-y:overlay;
     display:flex;
   }
+
   .wrapGallery{
     max-width:100%;
     max-height:300px;
     margin-top:30px;
     width:100%;
     height:max-content;
-    overflow:hidden;
-    overflow-y:scroll;
-    // overflow-y:overlay;
+    overflow:auto;
+    overflow-y:overlay;
     display:flex;
   }
-  // &:hover{
-  //   .wrapItem{
-  //     overflow:auto;
-  //     overflow-y:overlay;
-  //   }
-  // }
+  &:hover{
+    .wrapItem{
+      overflow:auto;
+      overflow-y:overlay;
+    }
+  }
 `;
 const AdditionalInfo = styled.div`
   margin-right: ${prop => prop.mRight}px;
@@ -328,6 +328,14 @@ const AdditionalInfo = styled.div`
     overflow-y:scroll;
     // overflow: auto;
   }
+  .reviewItem{
+    margin-top:30px;
+    width:100%;
+    max-height:200px;
+    overflow:hidden;
+    overflow-y:auto;
+    display:flex;
+  }
   .wrapItem{
     max-width:100%;
     max-height:100%;
@@ -337,7 +345,7 @@ const AdditionalInfo = styled.div`
     display:flex;
     overflow:hidden;
     overflow-y:scroll;
-  }
+    }
   // &:hover{
   //   .wrapItem{
   //     verflow:auto;
@@ -791,9 +799,9 @@ class DesignerDetail extends Component {
 
       {/* 리뷰 */}
       {/*  */}
-      <AdditionalInfo width={1523} height={280} mTop={60}>
-        <div className="wrapItem">
+      <AdditionalInfo width={1523} height={350} mTop={60}>
           <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+        <div className="reviewItem">
           <DesignerReviewContainer
             id={parseInt(this.props.id, 10)}
             handler={detail => this.setState({ reviewdetail: true, detail: detail })} />

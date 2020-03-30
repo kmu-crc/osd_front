@@ -135,7 +135,7 @@ const Introduction = styled.div`
     width:100%;
     height:100%;
     overflow:hidden;
-    overflow-y:scroll;
+    overflow-y:auto;
     .flex{
       display:flex;
     }
@@ -296,12 +296,12 @@ const ItemInfo = styled.div`
   }
   .wrapItem{
     max-width:100%;
-    max-height:350px;
+    max-height:390px;
     margin-top:30px;
     width:100%;
     height:max-content;
-    overflow:hidden;
-    overflow-y:scroll;
+    overflow:auto;
+    overflow-y:overlay;
     display:flex;
   }
   &:hover{
