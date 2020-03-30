@@ -272,9 +272,11 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: copyContent });
     await this.setState({ loading: !this.state.loading });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
     this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onDelete(order) {
     if (window.confirm("선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
@@ -290,6 +292,7 @@ class CardSourceDetail extends Component {
       copyContent[i].order = i;
     }
     await this.setState({ content: copyContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onAddValue(data) {
     let copyContent = [...this.state.content];
@@ -312,6 +315,7 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: newContent })
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async moveItem(data) {
     if (!this.state.content) {
@@ -334,6 +338,7 @@ class CardSourceDetail extends Component {
     copyContent[indexNew].order = data.new;
     copyContent[indexOld].order = data.old;
     await this.setState({ content: copyContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async moveUpItem(order) {
     this.moveItem({ old: order, new: order - 1 });
@@ -415,7 +420,7 @@ class CardSourceDetail extends Component {
     if (this.props.uid !== "new") {
       this.props.handleSubmit && await this.props.handleSubmit(event);
       await this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
         .then(() => {
           this.props.GetDesignSourceRequest(this.props.uid)
             .then(async () => {
