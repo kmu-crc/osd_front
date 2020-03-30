@@ -11,7 +11,8 @@ const ReviewBox = styled.div`
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-
+    overflow: auto;
+    overflow-y: overlay;
     &:hover {
       overflow: auto;
       overflow-y: overlay;
