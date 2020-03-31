@@ -26,9 +26,9 @@ const DesignElement = styled.div`
   color: white;
   font-size: 20px;
   font-family: "Noto Sans KR";
-  cursor: pointer;
+  cursor: default;
   .cover {
-    cursor: pointer;
+    cursor: default;
     z-index: 701;
     position: absolute;
     border-radius: 15px;
@@ -78,7 +78,8 @@ const DesignElement = styled.div`
     .update-time { 
       margin-top: 5px;
       font-weight: 300;
-      width: 80px;
+      border: 1px solid red;
+      width: max-content;
       height: 25px;
       font-size: 17px;
       font-family: Noto Sans KR;
@@ -150,8 +151,6 @@ const DesignElement = styled.div`
     margin-right: 0px;
     cursor: default;
   }
-
-
 `;
 
 const DesignEmpty = {
@@ -185,9 +184,12 @@ class Design extends Component {
             <TextFormat width="100%" txt={data.title} single />
           </div>
           <div className="user-update-wrapper">
-            <div className="user-name">
-              <TextFormat width="200px" txt={data.userName} /></div>
-            <div className="update-time">{DateFormat(data.update_time)}</div>
+            <div style={{ width: "200px" }}>
+              <TextFormat txt={data.userName} width="100%" />
+            </div>
+            <div style={{ width: "max-content" }}>
+              {DateFormat(data.update_time)}
+            </div>
           </div>
         </div>
         <div className="counter">

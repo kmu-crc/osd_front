@@ -18,7 +18,7 @@ const DesignerComp = styled.div`
     width: 587px;
     height: 150px;
     font-family: Noto Sans KR;
-    cursor: pointer;
+    cursor: default;
 
     .ImageBox{
         position: absolute;
@@ -28,7 +28,7 @@ const DesignerComp = styled.div`
         border: 1.5px solid #EFEFEF;
         background-color: #D6D6D6;
         background-size: cover;
-        cursor: pointer;
+        cursor: cursor;
         z-index: 1;
     }
     .TextBox{
@@ -151,7 +151,7 @@ class Designer extends Component {
             <DesignerComp onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
                 <div className="ImageBox" style={{ backgroundImage: `url(${designer && designer.imgURL != null ? designer.imgURL.m_img : noimg})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
                 <div className="TextBox">
-                    <div className="userName">{designer.nick_name}</div>
+                    <div className="userName"><TextFormat txt={designer.nick_name} width={"max-content"}></TextFormat></div>
                     <div className="description"><TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
                     <div className="update">{DateFormat(designer.update_time)}</div>
                     <div className="cate">{designer.categoryName || "전체"}</div>

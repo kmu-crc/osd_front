@@ -10,6 +10,8 @@ import EditDesignListContainer from "containers/Groups/EditDesignListContainer";
 
 import Loading from 'components/Commons/Loading';
 import ScrollList from "components/Commons/ScrollList";
+import OrderOption from "components/Commons/OrderOption";
+
 import osdstyle from "opendesign_style";
 import NumberFormat from "modules/NumberFormat";
 
@@ -37,7 +39,16 @@ const Tab = styled.div`
 `;
 
 class GroupDetail extends Component {
-  state = { reload: false, uid: undefined, currentTab: "group", manager: false }
+  constructor(props) {
+    super(props);
+    this.state = {
+      this_order: { text: "최신순", keyword: "update" },
+      reload: false,
+      uid: undefined,
+      currentTab: "group",
+      manager: false
+    }
+  }
   initTab = async () => {
     let tab = "group";
     if (this.props.GroupDetail) {
@@ -76,13 +87,13 @@ class GroupDetail extends Component {
     if (!this.state.uid) {
       return;
     }
-    this.props.GetDesignInGroupRequest(this.state.uid, page, "update")
+    this.props.GetDesignInGroupRequest(this.state.uid, page, this.state.this_order.keyword)
   }
   getGroupList = async (page) => {
     if (!this.state.uid) {
       return;
     }
-    this.props.GetGroupInGroupRequest(this.state.uid, page, "update")
+    this.props.GetGroupInGroupRequest(this.state.uid, page, this.state.this_order.keyword)
   }
   componentWillReceiveProps = async (nextProps) => {
     if (nextProps.GroupDetail.uid !== this.props.GroupDetail.uid) {
@@ -90,12 +101,18 @@ class GroupDetail extends Component {
       await this.getInitData();
     }
   }
+  handleChangeOrderOps = async (order, getfunc) => {
+    await this.setState({ this_order: order });
+    getfunc(0);
+  }
 
   render() {
     const { status, GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
-    const { currentTab, manager, reload } = this.state
+    const { currentTab, manager, reload, this_order } = this.state
+
     return (<React.Fragment>
-      <GroupInfo handleSwitchMode={this.switchMode} GroupInfo={GroupDetail} {...this.props} />
+
+      <GroupInfo handleSwitchMode={this.switchMode} {...this.props} />
       {manager ?
         <div style={{ marginTop: "32px" }}>
           <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />
@@ -109,13 +126,29 @@ class GroupDetail extends Component {
             <Tab onClick={() => this.switchTab("group")} marginRight={54} className={currentTab === "group" ? "selected" : ""}>그룹({NumberFormat(Count.group)})</Tab>
             <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인({NumberFormat(Count.design)})</Tab>
           </Tabs>
-          {GroupDetail && currentTab === "group" && <React.Fragment>
-            {status === "INIT" ? <Loading /> : <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />}</React.Fragment>}
-          {GroupDetail && currentTab === "design" && <React.Fragment>
-            {status === "INIT" ? <Loading /> : <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />}</React.Fragment>}
-        </React.Fragment>}
-    </React.Fragment>)
 
+          {(GroupDetail && currentTab === "group") ?
+            <React.Fragment>
+              {status === "INIT" ? <Loading /> :
+                <React.Fragment>
+                  <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
+                  <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />
+                </React.Fragment>}
+            </React.Fragment> : null
+          }
+
+          {(GroupDetail && currentTab === "design") ?
+            <React.Fragment>
+              {status === "INIT" ? <Loading /> :
+                <React.Fragment>
+                  <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getDesignList)} selected={this_order} />
+                  <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />
+                </React.Fragment>}
+            </React.Fragment> : null
+          }
+        </React.Fragment>}
+
+    </React.Fragment>)
   }
 }
 

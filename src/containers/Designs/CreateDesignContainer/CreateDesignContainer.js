@@ -15,23 +15,23 @@ class CreateDesignFormContainer extends Component {
     this.gotoMyModify = this.gotoMyModify.bind(this);
   }
   componentDidMount() {
-    if (this.props.userInfo.is_designer === 0) {
-      alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
-      this.props.history.push("/myModify")
-    }
-    this.props.GetCategoryAllRequest()
+    // if (this.props.userInfo.is_designer === 0) {
+    // alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
+    // this.props.history.push("/myModify")
+    // }
+    // this.props.GetCategoryAllRequest()
   }
   gotoMyModify() {
-    alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
-    this.props.history.push("/myModify")
+    // alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
+    // this.props.history.push("/myModify")
   }
   render() {
-    console.log("props:", this.props)
+    // console.log("props:", this.props)
     return (<React.Fragment>
       {
-        this.props.userInfo.is_designer === 1 ?
-          <CreateDesign {...this.props} />
-          : this.gotoMyModify()
+        // this.props.userInfo.is_designer === 1 ?
+        <CreateDesign {...this.props} />
+        // : this.gotoMyModify()
       }
     </React.Fragment>)
   }
