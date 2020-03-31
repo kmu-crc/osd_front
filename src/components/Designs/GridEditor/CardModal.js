@@ -17,6 +17,7 @@ import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
+import { ValidationGroup } from "modules/FormControl";
 
 const ContentBorder = styled.div`
     height: 29px;
@@ -378,20 +379,22 @@ class CardModal extends Component {
         }
     };
     handleClosed = (obj) => {
-        if (this.state.title !== this.props.card.title) {
-            if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
-                this.setState({ edit: false });
+        if (this.state.edit) {
+            if (this.state.title !== this.props.card.title) {
+                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
+                    this.setState({ edit: false });
+                }
+                else {
+                    return;
+                }
             }
-            else {
-                return;
-            }
-        }
-        if (this.state.content !== this.props.card.content) {
-            if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
-                this.setState({ edit: false });
-            }
-            else {
-                return;
+            if (this.state.content !== this.props.card.content) {
+                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
+                    this.setState({ edit: false });
+                }
+                else {
+                    return;
+                }
             }
         }
         this.setState({ edit: false });
@@ -413,29 +416,28 @@ class CardModal extends Component {
             this.setState({ content: event.target.value });
         }
     };
-    handleHeaderSubmit = (_) => {
-        // _.preventDefault(_);
-        // console.log(_); return;
-        // let files = null;
-        // ValidationGroup(this.state, false)
-        // .then(async data => {
-        // files = data && data.files;
-        // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
-        // const pack = {
-        // title: this.state.title,
-        // thumbnail: files && thumbnail,
-        // content: this.state.content,
-        // data: { deleteContent: [], newContent: [], updateContent: [] }
-        // };
-        // await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
-        // .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-        // .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-        // .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-        // .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
-        // .catch(err => alert(err + ''));
-        // this.onClose();
-        // }).catch(err => alert(err + ''));
-        // this.setState({ edit: !this.state.edit })
+    handleHeaderSubmit = (formData) => {
+        // console.log(formData);
+        let files = null;
+        ValidationGroup(this.state, false)
+            .then(async data => {
+                files = data && data.files;
+                let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
+                const pack = {
+                    title: this.state.title,
+                    thumbnail: files && thumbnail,
+                    content: this.state.content,
+                    data: { deleteContent: formData.deleteContent, newContent: formData.newContent, updateContent: formData.updateContent }
+                };
+                await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
+                    .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
+                    .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
+                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
+                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
+                    .catch(err => alert(err + ''));
+                this.onClose();
+            }).catch(err => alert(err + ''));
+        this.setState({ edit: !this.state.edit })
     };
     onCloseEditMode = () => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
@@ -463,37 +465,40 @@ class CardModal extends Component {
     };
     onClose = async () => {
 
-        if (this.state.title !== this.props.card.title) {
-            if (window.confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
-                this.props.close();
-            }
-            else {
-                return;
-            }
-        }
+        if (this.state.edit) {
 
-        if (this.state.content !== this.props.card.content) {
-            if (window.confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
-                this.props.close();
+            if (this.state.title !== this.props.card.title) {
+                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                    this.props.close();
+                }
+                else {
+                    return;
+                }
             }
-            else {
-                return;
-            }
-        }
 
-        if (this.state.isEdited) {
-            if (window.confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
-                this.props.close();
+            if (this.state.content !== this.props.card.content) {
+                if (window.confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                    this.props.close();
+                }
+                else {
+                    return;
+                }
             }
-            else {
-                return;
+
+            if (this.state.isEdited) {
+                if (window.confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                    this.props.close();
+                }
+                else {
+                    return;
+                }
             }
         }
         this.props.close();
     };
 
     render() {
-        const imgURL = this.props.card && this.props.card.first_img && this.props.card.first_img.l_img || null;
+        const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
         const { card, isTeam } = this.props;
 
         return (
@@ -555,7 +560,9 @@ class CardModal extends Component {
 
                         <div className="content" >
                             <CardSourceDetailContainer
+                                design_id={this.props.designId}
                                 handleUpdate={this.handleUpdate}
+                                handleSubmit={this.handleHeaderSubmit}
                                 uid={card.uid}
                                 isTeam={isTeam}
                                 edit={this.state.edit}

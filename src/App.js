@@ -45,7 +45,7 @@ class App extends Component {
           <Switch>
             {/* GROUP A - main */}
             <Route exact path="/" component={MainPage} />
-            <Route path="/tour" component={TourPage} />
+            {/* <Route path="/tour" component={TourPage} /> */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
             <Route path="/insertUserDetail" component={RequiresAuth(InsertUserDetailPage)} />
