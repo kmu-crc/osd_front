@@ -184,7 +184,8 @@ class MessageDetail extends Component {
           <LoadMessage isMyMsg={isMyMsg} msgText={item.message === "" ? "\u00a0" : item.message} updateTime={CheckedTime(item.create_time)} />
         </React.Fragment>
       );
-    }) : <div style={{ fontFamily: "Noto Sans KR", fontSize: "28px", fontWeight: 500, lineHeight: "29px", color: "#707070" }}> 메시지는 1년간 보관됩니다.</div>
+    }) :null
+    //  <div style={{ fontFamily: "Noto Sans KR", fontSize: "28px", fontWeight: 500, lineHeight: "29px", color: "#707070" }}> 메시지는 1년간 보관됩니다.</div>
 
     return (
       <React.Fragment>

@@ -103,7 +103,7 @@ class Alarm extends Component {
     }
     allAlarmConfirm = () => {
         if (this.props.alarm && this.props.alarm.count) {
-            alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.');
+            alert('초대받은 디자인 및 그룹에 대한 알림을 제외한 모든 알림을 읽음으로 표시합니다.');
             this.props.handleAllAlarmConfirm(this.props.uid);
         }
     }
@@ -129,17 +129,17 @@ class Alarm extends Component {
         const title = item.title && item.title.length > 32 ? item.title.slice(0, 32) + "..." : item.title;
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
-                msg = `${from}님이 이 디자인에 초대하였습니다.`
+                msg = `${from}님이 아래 디자인에 초대하였습니다.`
             } else if (item.kinds === "REQUEST") {
-                msg = `${from}님이 가입요청을 하였습니다.`
+                msg = `${from}님이 멤버 가입 신청을 하였습니다.`
             } else if (item.kinds === "INVITE_TRUE") {
                 msg = `${from}님이 ${to}님의 초대를 수락했습니다.`
             } else if (item.kinds === "REQUEST_TRUE") {
-                msg = `${to}님이 이 디자인의 멤버가 되었습니다.`
+                msg = `${to}님이 아래 디자인의 멤버가 되었습니다.`
             } else if (item.kinds === "GETOUT") {
                 msg = `${title}에서 탈퇴되셨습니다.`;
             } else if (item.kinds === "REFUSE") {
-                msg = `${from}님이 가입요청을 거절하였습니다.`;
+                msg = `${from}님이 멤버 가입 신청을 거절하였습니다.`;
             } else if (item.kinds === "INVITE_REJECT") {
                 msg = `${from}님이 초대를 거절하였습니다.`;
             } else if (item.kinds === "LIKE") {
@@ -154,20 +154,20 @@ class Alarm extends Component {
             }
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
+                msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
             } else if (item.kinds === "JOIN_withDESIGN") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
+                msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
             } else if (item.kinds === "JOIN_withGROUP") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
+                msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
             } else if (item.kinds === "JOINSUCCESS") {
                 msg = `${to}님이 그룹에 가입되었습니다.`;
             } else if (item.kinds === "JOINREFUSE") {
-                msg = `${to}님의 그룹가입요청이 거절되었습니다.`;
+                msg = `${to}님의 그룹 가입 신청이 거절되었습니다.`;
             } else if (item.kinds === "GROUP_GETOUT") {
                 msg = `${to}님께서 그룹에서 활동이 중단되셨습니다.`;
             } else if (item.kinds === "LIKE") {
-                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 그룹을 좋아합니다.`;
-                else msg = `${from}님의 이 그룹을 좋아합니다.`;
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 그룹을 좋아합니다.`;
+                else msg = `${from}님이 그룹을 좋아합니다.`;
             } else if (item.kinds === "GROUP_DESIGN_OUT") {
                 msg = `${title}그룹으로부터 아래 디자인이 삭제되었습니다.`;
             }
@@ -194,7 +194,7 @@ class Alarm extends Component {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
                             // if (res.data && res.data.success) {
-                            alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                            // alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
                             this.alarmConfirm(item.user_id, item.uid)
                             // } else {
                             // alert("다시 시도해주세요.");
@@ -238,12 +238,12 @@ class Alarm extends Component {
         e.stopPropagation()
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
-                if (window.confirm(item.kinds === "REQUEST" ? "가입요청을 거절하시겠습니까?" : "초대를 거절하시겠습니까?")) {
+                if (window.confirm(item.kinds === "REQUEST" ? "멤버 가입 신청을 거절하시겠습니까?" : "멤버 초대를 거절하시겠습니까?")) {
                     this.props.GetoutDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token,
                         item.kinds === "REQUEST" ? "DesignRefuse" : "DesignInviteReject")
                         .then(res => {
                             // if (res.data && res.data.success) {
-                            alert(item.kinds === "REQUEST" ? "요청을 거절하였습니다." : "초대를 거절하였습니다.");
+                            // alert(item.kinds === "REQUEST" ? "요청을 거절하였습니다." : "초대를 거절하였습니다.");
                             this.alarmConfirm(item.user_id, item.uid)
                             //           } else {
                             //               alert("다시 시도해주세요.");
@@ -254,12 +254,12 @@ class Alarm extends Component {
             }
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
-                if (window.confirm("가입요청을 거절하시겠습니까?")) {
+                if (window.confirm("그룹 가입 신청을 거절하시겠습니까?")) {
                     this.props.DeleteDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //           if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid)
-                            alert(`거절하셨습니다.`)
+                            // alert(`거절하셨습니다.`)
                             //            } else {
                             //               alert(`다시 시도해주세요.`)
                             //           }
@@ -267,12 +267,12 @@ class Alarm extends Component {
                         .catch((err) => alert(err + `와 같은 이유로 거절하는 데 실패하였습니다. 관리자에게 문의하시기 바랍니다.`))
                 }
             } else if (item.kinds === "JOIN_withGROUP") {
-                if (window.confirm("가입요청을 거절하시겠습니까?")) {
+                if (window.confirm("그룹 가입 신청을 거절하시겠습니까?")) {
                     this.props.DeleteGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //         if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid)
-                            alert(`거절하셨습니다.`)
+                            // alert(`거절하셨습니다.`)
                             //           } else {
                             //               alert(`다시 시도해주세요.`)
                             //           }
@@ -348,16 +348,16 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm;
         const alarmscombined = this.combine(alarms && alarms.list);
-
+        console.log("alarm:",alarmscombined);
         return (
             <React.Fragment>{this.state.active &&
                 <AlarmList display={"block"} ref={this.myRef} top={this.state.top} left={userinfo.alarmLeft}>
                     <div style={{ zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px", color: "#707070", fontWeight: "300" }}>
-                        <div onClick={this.acceptChecked}
+                        {/* <div onClick={this.acceptChecked}
                             style={{
                                 zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
                                 marginTop: "13px", marginLeft: "10px"
-                            }}>선택 알람 승인</div>
+                            }}>선택 알람 승인</div> */}
                         {/* {alarms && alarms.count > 0 ? */}
                         <div onClick={this.allAlarmConfirm} style={{ zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px" }}>모두 읽음</div>
                         {/* : <div style={{ zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0", backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "183px" }} />} */}
@@ -375,7 +375,7 @@ class Alarm extends Component {
                             return (
                                 <ListItem onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)} confirm={item.confirm} key={item.uid}>
                                     <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
-                                        {alarmtype ? <div><input type="checkbox" id="alarm-checkbox" value={item.uid} onChange={this.checkedAlarm} /></div> : null}
+                                        {/* {alarmtype ? <div><input type="checkbox" id="alarm-checkbox" value={item.uid} onChange={this.checkedAlarm} /></div> : null} */}
                                         <TextFormat txt={msg} />
                                     </div>
                                     <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
@@ -389,15 +389,15 @@ class Alarm extends Component {
                                                         <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}>
                                                         <TextFormat txt={item.title} chars={MAXLENGTH}/>
                                                             </div>
-                                                        <div style={{ display: "flex", position: "absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
+                                                        {/* <div style={{ display: "flex", position: "absolute", justifyContent: "space-start", paddingLeft: "225px", paddingTop: "35px", fontSize: "17px", fontWeight: "500" }}>
                                                             <div onClick={(event) => this.accept(event, item)} style={{ cursor: "pointer", color: "#FF0000" }}>승인</div>
                                                             <div onClick={(event) => this.reject(event, item)} style={{ cursor: "pointer", marginLeft: "10px" }}>거절</div>
-                                                        </div>
+                                                        </div> */}
                                                     </React.Fragment>)
                                                     :
                                                     (alarmKind !== "COMMENT"
                                                         ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}><TextFormat txt={item.title} chars={MAXLENGTH}/></div>
-                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.reply_preview} /></div>
+                                                        : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}><TextFormat txt={item.title} /></div>
                                                     )
                                                 }
                                             </div>

@@ -91,7 +91,7 @@ class MyInvitedContainer extends Component {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token, "DesignInviteReject")
       .then(res => {
         if (res.data && res.data.success) {
-          alert("가입 요청을 거절하였습니다.");
+          // alert("가입 요청을 거절하였습니다.");
           this.props.GetMyInvitedListRequest(this.props.token);
         } else {
           alert("다시 시도해주세요.");
@@ -109,7 +109,7 @@ class MyInvitedContainer extends Component {
       this.props.AcceptDesignRequest(id, this.props.userInfo.uid, this.props.token)
       .then(res => {
         if (res.data && res.data.success) {
-          alert("승인되었습니다.");
+          // alert("승인되었습니다.");
           this.props.GetMyInvitedListRequest(this.props.token);
         } else {
           alert("다시 시도해주세요.");

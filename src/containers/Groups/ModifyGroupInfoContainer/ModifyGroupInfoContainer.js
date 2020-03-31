@@ -12,7 +12,7 @@ class ModifyGroupInfoContainer extends Component {
     this.props.GetGroupDetailRequest(this.props.id)
       .then(() => {
         if (this.props.userInfo.uid !== this.props.GroupDetail.user_id) {
-          alert("이 그룹에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.")
+          alert("그룹에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.")
           this.props.history.go(-1)
         } else { this.setState({ isAuthor: true }) }
       })

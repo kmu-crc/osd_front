@@ -99,11 +99,11 @@ class ModifyDesignMember extends Component {
         console.log("res:", res);
         if (res.data && res.data.success) {
           if (flag === "DesignGetout") {
-            alert("탈퇴 처리되었습니다.");
+            // alert("탈퇴 처리되었습니다.");
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
               .then(this.props.GetDesignCountRequest(this.props.match.params.id));
           } else if (flag === "DesignRefuse") {
-            alert("가입 요청을 거절하였습니다.");
+            // alert("가입 요청을 거절하였습니다.");
             this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
           }
         } else {
@@ -118,7 +118,7 @@ class ModifyDesignMember extends Component {
       this.props.AcceptDesignRequest(this.props.match.params.id, id, this.props.token)
         .then(res => {
           if (res.data && res.data.success) {
-            alert("승인되었습니다.");
+            // alert("승인되었습니다.");
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
               .then(this.props.GetDesignCountRequest(this.props.match.params.id))
               .then(this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token));

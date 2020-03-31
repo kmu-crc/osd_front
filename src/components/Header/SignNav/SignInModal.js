@@ -186,6 +186,7 @@ class SignInModal extends Component {
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
                     this.props.signin()
+                    .then(window.history.back());
                 }
                 else {
                     alert('로그인에 실패하였습니다');
