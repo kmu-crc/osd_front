@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 // pages
 // + main
 import MainPage from "pages/MainPage"
-import TourPage from "pages/TourPage"
+// import TourPage from "pages/TourPage"
 import SignUpPage from "pages/SignUpPage"
 import InsertUserDetailPage from "pages/InsertUserDetailPage"
 import SignInPage from "pages/SignInPage"
@@ -24,7 +24,7 @@ import CreateGroupPage from "pages/CreateGroupPage"
 import ModifyGroupPage from "pages/ModifyGroupPage"
 
 // + designer
-import DesignerListPage,{DesignerDetailPage} from "pages/DesignerPage"
+import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage"
 import CreateDesigner from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer"
 
 // + etc.
@@ -65,7 +65,7 @@ class App extends Component {
             <Route path="/group/:sorting?" component={GroupListPage} />
             <Route path="/groupDetail/:id/" component={GroupDetailPage} />
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
-            <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} /> 
+            <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} />
 
             {/* GROUP D - designer */}
             <Route path="/designerDetail/:id" component={DesignerDetailPage} />
@@ -74,7 +74,7 @@ class App extends Component {
 
             {/* GROUP E - etc. */}
             <Route path="/resetPw" component={ResetPwPage} />
-            
+
             <Route path="/footerPrivacy" component={FooterPrivacy} />
             <Route path="/footerPara" component={FooterPara} />
             <Route component={NotFoundPage} />

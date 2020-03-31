@@ -2,18 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
-import {  CheckNickNameRequest } from "redux/modules/auth"
+import { CheckNickNameRequest } from "redux/modules/auth"
 
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
 
 class ModifyMyDetailContainer extends Component {
-componentDidMount()
-{
-  this.props.GetCategoryAllRequest();
-  this.props.GetMyDetailRequest(this.props.token);
-}
+  componentDidMount() {
+    this.props.GetCategoryAllRequest();
+    this.props.GetMyDetailRequest(this.props.token);
+  }
   render() {
-    console.log("MYDETAIL::::::",this.props);
+    console.log("MYDETAIL::::::", this.props);
     return (<ModifyMyDetail {...this.props} />)
   }
 }

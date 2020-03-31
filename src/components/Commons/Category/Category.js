@@ -61,7 +61,7 @@ const MainCateElement = styled.div`
 const SubCategory = styled.div`
     z-index: 810;
     position: fixed;
-    width:${props=>props.screenWidth<1920?window.innerWidth+"px":"1920px"};
+    width:${props => props.screenWidth < 1920 ? window.innerWidth + "px" : "1920px"};
     top: 70px;
     padding-top: 17px;
     height:70px;
@@ -136,7 +136,7 @@ class Category extends Component {
                         onClick={() => this.clickedSubCategory(element)}
                         key={element.value}>{element.text}</SubCateElement>
                 })}
-                </SubCategory>
+            </SubCategory>
         </Container>)
     }
 }
