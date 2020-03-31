@@ -4,7 +4,7 @@ import SignInContainer from "containers/Registration/SignInContainer";
 class SignInPage extends Component {
   render() {
     return (
-          <SignInContainer history={this.props.history}/>
+      <SignInContainer history={this.props.history} />
     )
   }
 }

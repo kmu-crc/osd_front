@@ -249,6 +249,12 @@ class CardSourceDetail extends Component {
         })
     }
   }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps !== this.props) {
+  //     alert("got changed");
+  //     console.log(this.props);
+  //   }
+  // }
   async shouldComponentUpdate(nextProps) {
     if (nextProps.hook === true) {
       this.props.handleResetHook && await this.props.handleResetHook();
@@ -275,6 +281,13 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
+    // let copyContent = [...this.state.content];
+    // for (var i = 0; i < copyContent.length; i++) {
+    // if (copyContent[i].order === order) {
+    // copyContent[i].content = data.content;
+    // }
+    // }
+    // this.setState({ content: copyContent });
     this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
@@ -418,16 +431,22 @@ class CardSourceDetail extends Component {
       );
     }
     if (this.props.uid !== "new") {
-      this.props.handleSubmit && await this.props.handleSubmit(event);
-      await this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
-        .then(() => {
-          this.props.GetDesignSourceRequest(this.props.uid)
-            .then(async () => {
-              await this.setState({ content: this.props.content, origin: this.props.origin });
-            })
-        })
-      await this.props.GetCardDetailRequest(this.props.uid);
+      console.log(formData);
+      if (this.props.handleSubmit) {
+        await this.props.handleSubmit(formData);
+      }
+      else {
+        await this.props.upDateRequest(formData, this.props.uid, this.props.token)
+          .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+          .then(() => {
+            this.props.GetDesignSourceRequest(this.props.uid)
+              .then(async () => {
+                await this.setState({ content: this.props.content, origin: this.props.origin });
+              })
+          })
+        await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
+        await this.props.GetCardDetailRequest(this.props.uid);
+      }
     } else { // new
       await this.props.upDateRequest(formData);
     }

@@ -100,7 +100,7 @@ const MenuText = styled.div`
   border-bottom:${props => props.borderBottom};
 `
 const InputBoard = styled.div`
-width:${window.innerWidth>1920?1422+'px':100+'%'};
+width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
 padding-bottom:100px;
 margin-bottom:100px;
 position:relative;
@@ -186,11 +186,11 @@ class CreateGroup extends Component {
     e.preventDefault();
     const warning = "필수 입력항목을 모두 입력하지 않아 작업을 완료할 수 없습니다.\n";
     if (this.state.groupThumbnail === "" || this.state.groupThumbnail == null) {
-      alert(warning+"섬네일 이미지를 등록해주세요!");
+      alert(warning + "섬네일 이미지를 등록해주세요!");
       return;
     }
     else if (this.state.groupTitle === "" || this.state.groupTitle == null) {
-      alert(warning+"그룹의 이름을 입력해주세요!");
+      alert(warning + "그룹의 이름을 입력해주세요!");
       return;
     }
     // else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
