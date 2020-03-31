@@ -70,11 +70,9 @@ const SendMessageImg = styled.div`
     background-image: url(${props => props.icon});
 `;
 const ProfileBox = styled.div`
-    // position: absolute;
+    min-width: 200px;
     width: 200px;
     height: 200px;
-    top: 90px;
-    left: 70px;
     border-radius: 200px;
     background: #D6D6D6;
     background-repeat: no-repeat;
@@ -83,11 +81,9 @@ const ProfileBox = styled.div`
     background-image: url(${props => props.img});
 `;
 const NameLabel = styled.div`
-    width: 200px;
+    width: max-content;
+    min-width: 200px;
     height: 29px;
-    // position: absolute;
-    top: 41px;
-    left: 70px;
     font-size: 20px;
     font-weignt: 500;
     font-family: Noto Sans KR;
@@ -97,9 +93,6 @@ const NameLabel = styled.div`
 const CategoryLabel = styled.div`
     width:479px;
     height:29px;
-    // position:absolute;
-    top:41px;
-    left:418px;
     font-size:20px;
     font-weight:200;
     font-family:Noto Sans KR;
@@ -107,24 +100,12 @@ const CategoryLabel = styled.div`
     text-align:left;
 `;
 const ExplainBox01 = styled.div`
-    // width:479px;
-    // height:149px;
-    // overflow:hidden;
-    // font-size:20px;
-    // font-weight:200;
-    // font-family:Noto Sans KR;
-    // color:#707070;
-    // text-align:left;
-    // line-height:35px;
-    // word-wrap:break-word;
-    display: inline-block; 
     width: 100%;
-    height: 140px;
+    height: 130px;
     font-size: 20px;
     font-weight: 200;
     font-family: Noto Sans KR;
     line-height: 35px;
-    margin-top: 20px;
     color: #707070;
 
     white-space: nowrap; 
@@ -140,8 +121,6 @@ const ExplainBox01 = styled.div`
 const CountBox = styled.div`
     width: 300px;
     display: flex;
-    left: 418px;
-    bottom: 50px;
     .innerWrapper {
         background-color: #EFEFEF;
         width: 200px;
@@ -150,44 +129,14 @@ const CountBox = styled.div`
         display: flex;
         justify-content: space-start;
         text-align: left;
-        line-height: 40px;
+        line-height: 35px;
         font-size: 15px;
         font-weight: 500;
         align-items: center;
+        cursor: default;
     }
 `;
-const SideMenuBox = styled.div`
-    display: flex;
-    height: 247px;
-    flex-direction: column !important;
-    .sideItemBox {
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        width: 100%;
-        height: 36px;
-    }
-    .sideMenu_label {
-        cursor: pointer;
-        width: 164px;
-        height: 25px;
-        color: #707070;
-        font-family: Noto Sans KR;
-        font-size: 17px;
-        font-weight: 200;
-        text-align: right;
-    }
-    .UpdateTimeLabel {
-        width: max-content;
-        height: 25px;
-        margin-left: auto;
-        font-size: 17px;
-        font-weight: 200;
-        font-family: Noto Sans KR;
-        color: #707070;
-        text-align: right;
-    }
-`;
+
 const SideItemIcon = styled.div`
     cursor:pointer;
     height:36px;
@@ -222,110 +171,77 @@ const LikeDialog = styled.div`
         text-align:center;
     }
 `;
-const DesignerInfo3 = styled.div`
-    position: relative;
-    overflow: hidden;
-    background-color: #EFEFEF;    
-    padding-bottom: 18px;    
-    @media only screen and (min-width: 0px) and (max-width: 900px) {    
-      margin-top: 55px;    
-    }
-  .grid {
-    min-height: 100%;
+// new
+const Header = styled.div`
+    // div{border:1px solid red;}
+    width: ${props => props.width}px;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    .title {
-        display: none;
-        @media only screen and (min-width: 0px) and (max-width: 1250px) {    
-            display: block;
-            margin-left: 25px;
-        }
-        position: absolute;
-        height: 29px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        text-align: left;
-        line-height: 29px;
-        cursor: pointer;
-    }
-  }
-  .grid > div {
-    display: flex; 
-    justify-content: center;
-    flex-direction: row;//column;
-  }
-  .grid > div:last-child {
-    display: flex; 
-    justify-content: center;
-    flex-direction: column;
-  }
-  .grid > div > div {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-  }
-  .box {
-    // border: 1px solid red;
-  }
-  .box1 { 
-    order: 1;
-    width: 200px;
-    margin-left: 115px;
-    margin-top: 41px;
-    @media only screen and (min-width: 0px) and (max-width: 500px) {
-        margin-left: 25px;
-    }
-    @media only screen and (min-width: 500px) and (max-width: 1250px) {
-        margin-left: 25px;
-    }
-  }
-  .box2 { 
-    order: 2;
-    // width: 479px;
-    width:1100px;
-    margin-top: 41px;
-    margin-left: 103px;
-    &.secondary {
-        margin-top: 90px;
-        @media only screen and (min-width: 0px) and (max-width: 1775px) {
-            display: none;
-        }
-    }
-    @media only screen and (min-width: 0px) and (max-width: 1250px) {
-        order: 4;
-        margin-left: 15px;
-    }
-  }
-  .box4 { 
-    order: 4;
-    width: 224px;
-    margin-left: auto;
-    margin-right: 72px;
-    margin-top: 90px;
-    @media only screen and (min-width: 0px) and (max-width: 500px) {
-        order: 3;
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-    @media only screen and (min-width: 500px) and (max-width: 1250px) {
-      order: 3;
-      margin-left: 15px;
-      margin-right: 10px;
+    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
+        margin-top: 50px;
     }
 `;
+const ButtonRegion = styled.div`
+    display: flex;
+    height: 250px;
+    padding: 15px 0px;
+    flex-direction: column !important;
+    .sideItemBox {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 100%;
+        height: 36px;
+    }
+    .sideMenu_label {
+        cursor: pointer;
+        width: 164px;
+        height: 25px;
+        color: #707070;
+        font-family: Noto Sans KR;
+        font-size: 17px;
+        font-weight: 200;
+        text-align: right;
+    }
+    .UpdateTimeLabel {
+        width: max-content;
+        height: 25px;
+        margin-left: auto;
+        font-size: 17px;
+        font-weight: 200;
+        font-family: Noto Sans KR;
+        color: #707070;
+        text-align: right;
+    }
+`;
+const LeftSide = styled.div`
+    margin-left: 35px;
+    display: flex;
+    flex-direction: column;
 
+    @media only screen and (min-width : ${0}px) and (max-width : ${750}px) {
+        display: none;
+    }
+`;
 class DesignerPageHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
             descriptionLengthCheck: "", joinDialog: false, likeDialog: false, manager: false, tmpLike: false
         };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.gotoMyModify = this.gotoMyModify.bind(this);
+    }
+    handleResize = () => {
+        this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize);
     }
     gotoMyModify() {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
@@ -372,80 +288,93 @@ class DesignerPageHeader extends Component {
     }
     render() {
         const { DesignerDetail, Count, like } = this.props;
-        const { likeDialog } = this.state;
+        const { likeDialog, w } = this.state;
         const thumbnailInfo = DesignerDetail.thumbnail ? DesignerDetail.thumbnailUrl.m_img : noface;
         const isMyProfile = this.props.userInfo && DesignerDetail && this.props.userInfo.uid === DesignerDetail.uid ? true : false;
         const MypageInfo = this.props.DesignerDetail;
 
         console.log("DesignerDetail::", this.props);
 
-        return (<React.Fragment>
-            {likeDialog ?
-                <LikeDialog><div className="dialog-context">관심 디자이너로 등록되었습니다.<br />내 정보에서 확인 가능합니다.</div></LikeDialog> : null}
+        return (
 
-            <DesignerInfo3>
-                <div className="grid">
-                    <div className="box box1">
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                            <NameLabel>{DesignerDetail.nick_name}</NameLabel>
-                            <ProfileBox img={thumbnailInfo} />
+            <React.Fragment>
+
+                {likeDialog ?
+                    <LikeDialog>
+                        <div className="dialog-context">
+                            관심 디자이너로 등록되었습니다.<br />
+                        내 정보에서 확인 가능합니다.
                         </div>
-                    </div>
-                    <div className="box box2">
-                        <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
-                            <CategoryLabel>{DesignerDetail.categoryName}</CategoryLabel>
-                            <ExplainBox01>{MypageInfo.about_me}</ExplainBox01>
-                            <CountBox>
-                                <div className="innerWrapper">
-                                    <div style={{ display: "flex", marginRight: "20px" }}>
-                                        <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(Count.total_view || 0)}</div>
-                                    </div>
+                    </LikeDialog>
+                    : null}
 
-                                    <div style={{ display: "flex", marginRight: "20px" }}>
-                                        <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(Count.total_like || 0)}</div>
-                                    </div>
+                <Header width={w}>
+                    {DesignerDetail ?
+                        <div style={{ width: `${w}px`, height: "250px", backgroundColor: "#EFEFEF", display: "flex", flexDirection: "row" }}>
+                            {/* left */}
+                            <div style={{ display: "flex", flexDirection: "row" }}>
 
-                                    <div style={{ display: "flex" }}>
-                                        <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(Count.total_design || 0 + Count.total_group || 0)}</div>
+                                <div style={{ marginLeft: "15px", marginTop: "15px", display: "flex", flexDirection: "column" }}>
+                                    <NameLabel>{DesignerDetail.nick_name}</NameLabel>
+                                    <div style={{ display: "flex", flexDirection: "row" }}>
+                                        <ProfileBox img={thumbnailInfo} />
+                                        <LeftSide >
+                                            {DesignerDetail.categoryName ?
+                                                <CategoryLabel>{DesignerDetail.categoryName}</CategoryLabel>
+                                                : null}
+                                            <ExplainBox01>{MypageInfo.about_me}</ExplainBox01>
+                                            <CountBox>
+                                                <div className="innerWrapper">
+                                                    <div style={{ display: "flex", marginRight: "20px" }}>
+                                                        <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
+                                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(Count.total_view || 0)}</div>
+                                                    </div>
+
+                                                    <div style={{ display: "flex", marginRight: "20px" }}>
+                                                        <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
+                                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(Count.total_like || 0)}</div>
+                                                    </div>
+
+                                                    <div style={{ display: "flex" }}>
+                                                        <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
+                                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(Count.total_design || 0 + Count.total_group || 0)}</div>
+                                                    </div>
+                                                </div>
+                                            </CountBox>
+                                        </LeftSide>
                                     </div>
                                 </div>
-                            </CountBox>
-                        </div>
-                    </div>
-                    {/* <div className="box box2 secondary">
-                        <ExplainBox02>{about_me[1]}</ExplainBox02>
-
-                    </div> */}
-                    <div className="box box4">
-                        <SideMenuBox>
-                            <div>
-                                {isMyProfile ?
-                                    <div onClick={this.gotoMyModify} className="sideItemBox">
-                                        <div className="sideMenu_label">정보 수정하기</div>
-                                        <SideItemIcon imageURL={iEdit} />
+                            </div>
+                            {/* right */}
+                            <div style={{ marginLeft: "auto", marginRight: "15px" }}>
+                                <ButtonRegion>
+                                    <div>
+                                        {isMyProfile ?
+                                            <div onClick={this.gotoMyModify} className="sideItemBox">
+                                                <div className="sideMenu_label">정보 수정하기</div>
+                                                <SideItemIcon imageURL={iEdit} />
+                                            </div>
+                                            : <React.Fragment>
+                                                <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
+                                                    <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
+                                                    <InterestDesignerIcon opacity={like ? "0.5" : "0.25"} img={iThumbUp} />
+                                                </InterestDesignerBox>
+                                                <SendMessageBox onClick={this.sendMessage}>
+                                                    <SendMessagTitle>메시지 보내기</SendMessagTitle>
+                                                    <SendMessageImg icon={iMessage} />
+                                                </SendMessageBox>
+                                            </React.Fragment>}
                                     </div>
-                                    : <React.Fragment>
-                                        <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
-                                            <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
-                                            <InterestDesignerIcon opacity={like ? "0.5" : "0.25"} img={iThumbUp} />
-                                        </InterestDesignerBox>
-                                        <SendMessageBox onClick={this.sendMessage}>
-                                            <SendMessagTitle>메시지 보내기</SendMessagTitle>
-                                            <SendMessageImg icon={iMessage} />
-                                        </SendMessageBox>
-                                    </React.Fragment>}
+                                    <div style={{ marginTop: "auto" }}>
+                                        <div className="UpdateTimeLabel">최근 업데이트 {DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
+                                    </div>
+                                </ButtonRegion>
                             </div>
-                            <div style={{ marginTop: "auto" }}>
-                                <div className="UpdateTimeLabel">최근 업데이트 {DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
-                            </div>
-                        </SideMenuBox>
-                    </div>
-                </div>
-            </DesignerInfo3>
-        </React.Fragment>);
+                        </div>
+                        : // case of no DesignerDetail
+                        <div></div>}
+                </Header>
+            </React.Fragment >);
     };
 }
 export default DesignerPageHeader;
