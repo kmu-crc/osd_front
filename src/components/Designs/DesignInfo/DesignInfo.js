@@ -51,7 +51,7 @@ const LeftSide = styled.div`
         }
         .design_member {
             width: max-content;
-            max-width: 150px;
+            max-width: 156px;
             font-size: 16px;
             font-weight: 300;            
         }
@@ -816,7 +816,7 @@ class DesignInfo extends Component {
                                         </div>
 
 
-                                        <div style={{ marginLeft: "35px" }}>
+                                        <div style={{ marginLeft: "30px" }}>
                                             {/* detail + description  */}
                                             <LeftSide>
                                                 <div>
@@ -828,7 +828,15 @@ class DesignInfo extends Component {
                                                             : null}
                                                         {/* <div className="goto-parent no"></div>} */}
                                                         <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
-                                                            <div className="design_member"> {DesignDetail.userName.length > 15 ? DesignDetail.userName.slice(0, 15) + "..." : DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외" + (DesignDetail.member.length - 1).toString() + "명"}</div>
+                                                            <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
+                                                                <TextFormat txt={DesignDetail.userName} single />
+                                                                {(DesignDetail.member && DesignDetail.member.length > 1) ? ` 외 ${(DesignDetail.member.length - 1).toString()}명` : null}
+                                                                {/* 
+                                                            {DesignDetail.userName.length > 10 ?
+                                                            DesignDetail.userName.slice(0, 10) + "..." :
+                                                            DesignDetail.userName}
+                                                        */}
+                                                            </div>
                                                         </button>
                                                         {!isMyDesign && this.state.memberList &&
                                                             <DesignMemberList top={this.state.posY} left={this.state.posX}>
@@ -850,7 +858,7 @@ class DesignInfo extends Component {
                                                             <div className="txt">댓글</div>
                                                             <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                                                         </div>
-                                                        
+
 
                                                         {DesignDetail.children_count["count(*)"] > 0
                                                             ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onBlur={this.onBlurForkDesign} onClick={(event) => { this.getForkDesignList(event) }}>
@@ -889,7 +897,7 @@ class DesignInfo extends Component {
                                             </LeftSide>
                                         </div>
 
-                                        <div style={{ marginLeft: "35px" }}>
+                                        <div style={{ marginLeft: "30px" }}>
                                             <DescriptionContainer w={w - 750}>
                                                 <div className="category-name">{DesignDetail.categoryName}</div>
                                                 <p className="txt">
