@@ -143,8 +143,8 @@ class Alarm extends Component {
             } else if (item.kinds === "INVITE_REJECT") {
                 msg = `${from}님이 초대를 거절하였습니다.`;
             } else if (item.kinds === "LIKE") {
-                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 디자인을 좋아합니다.`;
-                else msg = `${from}님께서 디자인을 좋아합니다.`;
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 디자인을 좋아합니다.`;
+                else msg = `${from}님이 디자인을 좋아합니다.`;
             } else if (item.kinds === "COMMENT") {
                 msg = `${from}님이 디자인에 댓글을 달았습니다.`;
             } else if (item.kinds === "CARD_COMMENT") {
@@ -169,12 +169,12 @@ class Alarm extends Component {
                 if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 그룹을 좋아합니다.`;
                 else msg = `${from}님이 그룹을 좋아합니다.`;
             } else if (item.kinds === "GROUP_DESIGN_OUT") {
-                msg = `${title}그룹으로부터 아래 디자인이 삭제되었습니다.`;
+                msg = `${title}그룹에서 디자인이 삭제되었습니다.`;
             }
         } else if (item.type === "DESIGNER") {
             if (item.kinds === "LIKE") {
                 if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 ${to}님을 좋아합니다.`;
-                else msg = `${from}님의 ${to}님을 좋아합니다.`;
+                else msg = `${from}님이 ${to}님을 좋아합니다.`;
             }
         }
         return msg;

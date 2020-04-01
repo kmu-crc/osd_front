@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const MsgSectionBoard = styled.div`
   width:100%;
-  // height: ${props => props.height}px;
   height:100%;
+  padding-top:50px;
   position: relative;
   flex-direction: column-reverse;
   justify-content: flex-end;
@@ -154,27 +154,63 @@ function LoadMessage(props) {
 class MessageDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { render: true };
+    this.state = { nowScroll:0,scrollLocation:null,reach:false,loading:false,render: true,gap:50,addList:[],nowList:[],page:0,hasMore:true};
     this.ScrollDown = this.ScrollDown.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.checkHasMore = this.checkHasMore.bind(this);
+    this.getLoadData = this.getLoadData.bind(this);
   }
-  componentDidMount() {
-    this.props.GetMyMsgDetailRequest(this.props.token, this.props.id);
+  async componentDidMount() {
+    await this.getLoadData();
   }
   componentWillUnmount() {
     this.props.GetMyMessageDetailClear();
   }
-  ScrollDown() {
-    document.getElementById("MsgBox").scrollTo(0, document.getElementById("MsgBox").scrollHeight);
-  }
-  shouldComponentUpdate(nextProps) {
-    setTimeout(() => {
-      this.ScrollDown();
-    }, 100);
-    return true;
-  }
 
+  getLoadData = async () => {
+    console.log("testlog:getloaddata");
+
+    if (!this.props.GetMyMsgDetailRequest) return;
+    await this.setState({ loading: true }, () => {
+      this.props.GetMyMsgDetailRequest(this.props.token,this.props.id,this.state.page)
+        .then(() => {
+          this.setState({ loading: false,page: this.state.page + 1 
+            ,hasMore: this.checkHasMore(this.props.MessageDetail)
+            ,addList:this.props.MessageDetail,nowList:this.props.MessageDetail.reverse().concat(this.state.nowList)});
+            this.state.page==1&&this.ScrollDown();
+        }).catch((err) => {
+          console.log(err);
+          this.setState({ loading: false,hasMore: false });
+        });
+    });
+  }
+  ScrollDown() {
+    document.getElementById("MsgBox").scrollTo(0, document.getElementById("MsgBox").scrollHeight-10);
+  }
+  handleScroll = async (e) => {
+    const reach = e.target.scrollTop<=this.state.gap;
+    const scrollHeight =e.target.scrollHeight;
+    const scrollTop = e.target.scrollTop;
+    if(scrollTop==0)e.target.scrollTop=5;
+    this.setState({scrollLocation:scrollHeight,nowScroll:scrollHeight-this.state.scrollLocation})
+    // if(this.state.scrollLocation!=nowScroll)reach&& await (()=>e.target.scrollTop = nowScroll);
+    // this.setState({scrollLocation:this.state.scrollLocation==nowScroll?this.state.scrollLocation:nowScroll});
+    console.log("testlog:",scrollHeight-this.state.scrollLocation+50);
+    reach&& this.state.hasMore && this.state.loading==false &&  await this.getLoadData();
+    // await (()=>{e.target.scrollTo(0,scrollHeight-this.state.scrollLocation+50)});
+  };
+  // shouldComponentUpdate(nextProps) {
+  //   setTimeout(() => {
+  //     this.ScrollDown();
+  //   }, 100);
+  //   return true;
+  // }
+  checkHasMore = (list) => {
+    if (list == null) return false;
+    return list && list.length < 10 ? false : true;
+  };
   render() {
-    const list = this.props.MessageDetail;
+    const list = this.state.nowList;
     const myId = this.props.userInfo.uid;
     const arrMsg = list && list.length > 0 ? list.map(item => {
       let isMyMsg = true;
@@ -189,7 +225,7 @@ class MessageDetail extends Component {
 
     return (
       <React.Fragment>
-        <MsgSectionBoard height={this.props.height} id="MsgBox" onClick={this.ScrollDown}>
+        <MsgSectionBoard onScroll={this.handleScroll} height={this.props.height} id="MsgBox" onClick={this.ScrollDown}>
           {arrMsg}
         </MsgSectionBoard>
       </React.Fragment >
