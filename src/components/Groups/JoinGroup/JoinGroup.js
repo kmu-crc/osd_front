@@ -23,7 +23,9 @@ const ModalContent = styled.div`
 
 const JoinGroupWrap = styled.div`
   display: inline-block;
-  width:100px;
+  width:max-content;
+  .header{
+  }
 `;
 
 const Title = styled.h2`
@@ -80,8 +82,8 @@ class JoinGroup extends Component {
     const { open, active } = this.state;
     return (
       <JoinGroupWrap>
-        <div onClick={this.handleModal}>
-          가입 신청
+        <div className="header" onClick={this.handleModal}>
+          그룹 가입 신청
         </div>
         <Modal
           open={open}

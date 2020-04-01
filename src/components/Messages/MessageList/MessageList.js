@@ -331,7 +331,15 @@ class Messages extends React.Component {
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
     }
-    document.getElementById("sendMsgBox") && document.getElementById("sendMsgBox").focus();
+    if(this.props.ChatRooms&&this.props.ChatRooms.length>0){
+      for(let i=0;i<this.props.ChatRooms.length;i++){
+        if(this.props.ChatRooms[i].count!=null){
+          this.setMsgId(this.props.ChatRooms[i].uid,this.props.ChatRooms[i].friend_id,this.props.ChatRooms[i].friend_name);
+          break;
+        }
+      }
+    }
+    document.getElementById("sendMsgBox")&&document.getElementById("sendMsgBox").focus();
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
@@ -388,7 +396,7 @@ class Messages extends React.Component {
   }
   setMsgId = async (group_id, user_id, user_name) => {
 
-    console.log(group_id, user_id, user_name)
+
     await this.setState({
       msgId: group_id,
       selectId: user_id,
@@ -402,7 +410,8 @@ class Messages extends React.Component {
       this.setState({ render: true });
     }, 250)
     await this.handleCloseMember();
-    await document.getElementById("sendMsgBox").focus();
+    await document.getElementById("sendMsgBox")&&await document.getElementById("sendMsgBox").focus();
+    await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
   }
   onSubmitForm = async (data) => {
     if (this.state.selectId === null) {
@@ -472,10 +481,10 @@ class Messages extends React.Component {
 
                   <SummaryList id="searchRect">
                     {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-                      this.props.ChatRooms.map(chat =>
+                      this.props.ChatRooms.map(chat =>chat.recent!=null?
                         <div key={chat.uid} onClick={() => this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}>
                           <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-                        </div>)}
+                        </div>:null)}
                   </SummaryList>
                 </div>
               </NavSection>

@@ -92,7 +92,7 @@ class MyInvitingContainer extends Component {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token)
         .then(res => {
           if (res.data && res.data.success) {
-            alert("가입 신청이 취소되었습니다.");
+            // alert("가입 신청이 취소되었습니다.");
             this.props.GetMyInvitingListRequest(this.props.token);
           } else {
             alert("다시 시도해주세요.");

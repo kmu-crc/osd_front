@@ -14,6 +14,9 @@ import { geturl } from "config"
 
 // CSS 
 const DesignElement = styled.div`
+  *{
+    cursor:pointer;
+  }
   position: relative;
   z-index: 700;
   width: 330px;

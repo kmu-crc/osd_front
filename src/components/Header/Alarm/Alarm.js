@@ -103,17 +103,8 @@ class Alarm extends Component {
     }
     allAlarmConfirm = () => {
         if (this.props.alarm && this.props.alarm.count) {
-            alert('초대받은 디자인 및 그룹에 대한 알람을 제외한 모든 알람들을 읽음으로 표시합니다.');
-            this.props.alarm.list.map(async alarm => {
-                if (
-                    (alarm.type === "DESIGN" && alarm.kinds === "REQUEST") ||
-                    (alarm.type === "DESIGN" && alarm.kinds === "INVITE") ||
-                    (alarm.type === "GROUP" && alarm.kinds === "JOIN_withDESIGN") ||
-                    (alarm.type === "GROUP" && alarm.kinds === "JOIN_withGROUP")) {
-                    await this.alarmConfirm(alarm.user_id, alarm.uid);
-                }
-                return alarm;
-            })
+            alert('초대받은 디자인 및 그룹에 대한 알림을 제외한 모든 알림을 읽음으로 표시합니다.');
+            this.props.handleAllAlarmConfirm(this.props.uid);
         }
     }
     getLink = item => {
@@ -138,22 +129,22 @@ class Alarm extends Component {
         const title = item.title && item.title.length > 32 ? item.title.slice(0, 32) + "..." : item.title;
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
-                msg = `${from}님이 이 디자인에 초대하였습니다.`
+                msg = `${from}님이 아래 디자인에 초대하였습니다.`
             } else if (item.kinds === "REQUEST") {
-                msg = `${from}님이 가입요청을 하였습니다.`
+                msg = `${from}님이 멤버 가입 신청을 하였습니다.`
             } else if (item.kinds === "INVITE_TRUE") {
                 msg = `${from}님이 ${to}님의 초대를 수락했습니다.`
             } else if (item.kinds === "REQUEST_TRUE") {
-                msg = `${to}님이 이 디자인의 멤버가 되었습니다.`
+                msg = `${to}님이 아래 디자인의 멤버가 되었습니다.`
             } else if (item.kinds === "GETOUT") {
                 msg = `${title}에서 탈퇴되셨습니다.`;
             } else if (item.kinds === "REFUSE") {
-                msg = `${from}님이 가입요청을 거절하였습니다.`;
+                msg = `${from}님이 멤버 가입 신청을 거절하였습니다.`;
             } else if (item.kinds === "INVITE_REJECT") {
                 msg = `${from}님이 초대를 거절하였습니다.`;
             } else if (item.kinds === "LIKE") {
-                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 디자인을 좋아합니다.`;
-                else msg = `${from}님께서 디자인을 좋아합니다.`;
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 디자인을 좋아합니다.`;
+                else msg = `${from}님이 디자인을 좋아합니다.`;
             } else if (item.kinds === "COMMENT") {
                 msg = `${from}님이 디자인에 댓글을 달았습니다.`;
             } else if (item.kinds === "CARD_COMMENT") {
@@ -163,27 +154,27 @@ class Alarm extends Component {
             }
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
+                msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
             } else if (item.kinds === "JOIN_withDESIGN") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
+                msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
             } else if (item.kinds === "JOIN_withGROUP") {
-                msg = `${from}님이 이 그룹에서 활동하길 원합니다.`;
+                msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
             } else if (item.kinds === "JOINSUCCESS") {
                 msg = `${to}님이 그룹에 가입되었습니다.`;
             } else if (item.kinds === "JOINREFUSE") {
-                msg = `${to}님의 그룹가입요청이 거절되었습니다.`;
+                msg = `${to}님의 그룹 가입 신청이 거절되었습니다.`;
             } else if (item.kinds === "GROUP_GETOUT") {
                 msg = `${to}님께서 그룹에서 활동이 중단되셨습니다.`;
             } else if (item.kinds === "LIKE") {
-                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 이 그룹을 좋아합니다.`;
-                else msg = `${from}님의 이 그룹을 좋아합니다.`;
+                if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 그룹을 좋아합니다.`;
+                else msg = `${from}님이 그룹을 좋아합니다.`;
             } else if (item.kinds === "GROUP_DESIGN_OUT") {
-                msg = `${title}그룹으로부터 아래 디자인이 삭제되었습니다.`;
+                msg = `${title}그룹에서 디자인이 삭제되었습니다.`;
             }
         } else if (item.type === "DESIGNER") {
             if (item.kinds === "LIKE") {
                 if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 ${to}님을 좋아합니다.`;
-                else msg = `${from}님의 ${to}님을 좋아합니다.`;
+                else msg = `${from}님이 ${to}님을 좋아합니다.`;
             }
         }
         return msg;
@@ -203,7 +194,8 @@ class Alarm extends Component {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
                             // if (res.data && res.data.success) {
-                            alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+
+//                             alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
                             // this.alarmConfirm(item.user_id, item.uid)
                             // } else {
                             // alert("다시 시도해주세요.");
@@ -249,12 +241,12 @@ class Alarm extends Component {
         e.stopPropagation()
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
-                if (window.confirm(item.kinds === "REQUEST" ? "가입요청을 거절하시겠습니까?" : "초대를 거절하시겠습니까?")) {
+                if (window.confirm(item.kinds === "REQUEST" ? "멤버 가입 신청을 거절하시겠습니까?" : "멤버 초대를 거절하시겠습니까?")) {
                     this.props.GetoutDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token,
                         item.kinds === "REQUEST" ? "DesignRefuse" : "DesignInviteReject")
                         .then(res => {
                             // if (res.data && res.data.success) {
-                            alert(item.kinds === "REQUEST" ? "요청을 거절하였습니다." : "초대를 거절하였습니다.");
+                            // alert(item.kinds === "REQUEST" ? "요청을 거절하였습니다." : "초대를 거절하였습니다.");
                             this.alarmConfirm(item.user_id, item.uid)
                             //           } else {
                             //               alert("다시 시도해주세요.");
@@ -265,12 +257,12 @@ class Alarm extends Component {
             }
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
-                if (window.confirm("가입요청을 거절하시겠습니까?")) {
+                if (window.confirm("그룹 가입 신청을 거절하시겠습니까?")) {
                     this.props.DeleteDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //           if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid)
-                            alert(`거절하셨습니다.`)
+                            // alert(`거절하셨습니다.`)
                             //            } else {
                             //               alert(`다시 시도해주세요.`)
                             //           }
@@ -278,12 +270,12 @@ class Alarm extends Component {
                         .catch((err) => alert(err + `와 같은 이유로 거절하는 데 실패하였습니다. 관리자에게 문의하시기 바랍니다.`))
                 }
             } else if (item.kinds === "JOIN_withGROUP") {
-                if (window.confirm("가입요청을 거절하시겠습니까?")) {
+                if (window.confirm("그룹 가입 신청을 거절하시겠습니까?")) {
                     this.props.DeleteGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //         if (res.data && res.data.success) {
                             this.alarmConfirm(item.user_id, item.uid)
-                            alert(`거절하셨습니다.`)
+                            // alert(`거절하셨습니다.`)
                             //           } else {
                             //               alert(`다시 시도해주세요.`)
                             //           }

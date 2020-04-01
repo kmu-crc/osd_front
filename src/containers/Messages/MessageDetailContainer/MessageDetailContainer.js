@@ -21,8 +21,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetMyMsgDetailRequest: (token, id) => {
-      return dispatch(GetMyMsgDetailRequest(token, id));
+    GetMyMsgDetailRequest: (token, id, page) => {
+      return dispatch(GetMyMsgDetailRequest(token, id, page));
     },
     GetMyMessageDetailClear: () => {
       return dispatch(GetMyMessageDetailClear());

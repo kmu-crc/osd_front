@@ -649,7 +649,7 @@ class DesignInfo extends Component {
                 this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
                     .then(res => {
                         if (res && res.data && res.data.success) {
-                            alert("가입 신청이 완료되었습니다.");
+                            // alert("가입 신청이 완료되었습니다.");
                             this.props.GetDesignDetailRequest(this.props.id, this.props.token);
                         } else {
                             alert("다시 시도해주세요");
@@ -918,7 +918,7 @@ class DesignInfo extends Component {
                                             {editor === false ?
                                                 DesignDetail && DesignDetail.waitingStatus === 1 ?
                                                     <div className="waiting-txt">가입승인 대기중</div>
-                                                    : <div className="join-txt" onClick={this.joinMember} >가입 신청</div> : undefined}
+                                                    : <div className="join-txt" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
                                         </div>}
                                         {isMyDesign === true ?
                                             <div className="design-edit-box" onClick={this.gotoDesignModify}  >

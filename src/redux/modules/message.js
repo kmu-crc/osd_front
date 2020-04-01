@@ -201,10 +201,10 @@ export const GetMyChatRoomsListRequest = token => {
             .catch(error => dispatch(GetMyChatRoomsFailure()));
     }
 }
-export function GetMyMsgDetailRequest(token, id) {
+export function GetMyMsgDetailRequest(token, id,page) {
     return (dispatch) => {
         dispatch(GetMyMsgDetail());
-        return fetch(`${host}/users/msgDetail/${id}`, {
+        return fetch(`${host}/users/msgDetail/${id}/${page}`, {
             headers: {
                 "Content-Type": "application/json",
                 "x-access-token": token
