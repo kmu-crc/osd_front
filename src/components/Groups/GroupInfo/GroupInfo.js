@@ -181,7 +181,7 @@ const ButtonRegion = styled.div`
         margin-top:46px;
     }
     .Join_label {
-        width: 79px;
+        // width: 79px;
         height: 40px;
         margin-top: 15px;
         margin-left: auto;
