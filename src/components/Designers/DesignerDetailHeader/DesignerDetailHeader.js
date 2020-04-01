@@ -273,19 +273,6 @@ class DesignerPageHeader extends Component {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'message/' + this.props.DesignerDetail.uid + '/' + this.props.DesignerDetail.nick_name;
     }
-    async componentWillReceiveProps(nextProps) {
-        if (this.props.DesignerDetail !== nextProps.DesignerDetail) {
-            const DesignerDetail = nextProps.DesignerDetail;
-            await this.setState({ descriptionLengthCheck: DesignerDetail.about_me && DesignerDetail.about_me.length < 199 + 199 ? "" : " ..." });
-            await this.setState({
-                about_me: [DesignerDetail.about_me && DesignerDetail.about_me.length < 199 ?
-                    DesignerDetail.about_me :
-                    DesignerDetail.about_me && DesignerDetail.about_me.slice(0, 199),
-                DesignerDetail.about_me && DesignerDetail.about_me.length < 199 ? "" : DesignerDetail.about_me && DesignerDetail.about_me.slice(200, 399) + this.state.descriptionLengthCheck]
-            });
-        }
-        return true;
-    }
     render() {
         const { DesignerDetail, Count, like } = this.props;
         const { likeDialog, w } = this.state;
