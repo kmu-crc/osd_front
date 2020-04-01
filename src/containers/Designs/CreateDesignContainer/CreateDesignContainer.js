@@ -19,7 +19,7 @@ class CreateDesignFormContainer extends Component {
     // alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
     // this.props.history.push("/myModify")
     // }
-    // this.props.GetCategoryAllRequest()
+    this.props.GetCategoryAllRequest()
   }
   gotoMyModify() {
     // alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
