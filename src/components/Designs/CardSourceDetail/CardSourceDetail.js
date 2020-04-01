@@ -249,13 +249,19 @@ class CardSourceDetail extends Component {
         })
     }
   }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps !== this.props) {
+  //     alert("got changed");
+  //     console.log(this.props);
+  //   }
+  // }
   async shouldComponentUpdate(nextProps) {
     if (nextProps.hook === true) {
       this.props.handleResetHook && await this.props.handleResetHook();
       await this.onSubmit();
     }
     if (this.props.closed === false && nextProps.closed === true) {
-      this.props.handleClosed && this.props.handleClosed(this.state.content);
+      this.props.handleClosed && this.props.handleClosed(this.props.uid ? this.state : this.state.content);
     }
   }
   async onChangeFile(data) {
@@ -272,9 +278,18 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: copyContent });
     await this.setState({ loading: !this.state.loading });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
+    // let copyContent = [...this.state.content];
+    // for (var i = 0; i < copyContent.length; i++) {
+    // if (copyContent[i].order === order) {
+    // copyContent[i].content = data.content;
+    // }
+    // }
+    // this.setState({ content: copyContent });
     this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onDelete(order) {
     if (window.confirm("선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
@@ -290,6 +305,7 @@ class CardSourceDetail extends Component {
       copyContent[i].order = i;
     }
     await this.setState({ content: copyContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onAddValue(data) {
     let copyContent = [...this.state.content];
@@ -312,6 +328,7 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: newContent })
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async moveItem(data) {
     if (!this.state.content) {
@@ -334,6 +351,7 @@ class CardSourceDetail extends Component {
     copyContent[indexNew].order = data.new;
     copyContent[indexOld].order = data.old;
     await this.setState({ content: copyContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async moveUpItem(order) {
     this.moveItem({ old: order, new: order - 1 });
@@ -365,17 +383,17 @@ class CardSourceDetail extends Component {
       }
     }
     //content
-    for (i = 0; i < newContent.length; i++) {
-      if (newContent[i].uid == null) continue;
-      let found = oldContent.filter(item => {
-        return (item.uid === newContent[i].uid
-          && ((item.content !== newContent[i].content))
-        )
-      });
-      if (found.length > 0) {
-        formData.updateContent.push(newContent[i]);
+    newContent.map(newItem => {
+      if (newItem.uid != null) {
+        let found = oldContent.filter(oldItem =>
+          (oldItem.uid === newItem.uid &&
+            oldItem.content !== newItem.content))
+        if (found.length > 0) {
+          formData.updateContent.push(newItem);
+        }
       }
-    }
+      return newItem;
+    })
 
     // get newcontent
     newContent.map(item => {
@@ -384,17 +402,19 @@ class CardSourceDetail extends Component {
         if (item.type === "TEXT") {
           item = { type: item.type, content: item.content, order: item.order, extension: item.extension, data_type: item.data_type, file_name: null };
         }
-        console.log("item:", item);
         formData.newContent.push(item);
       }
+      return item;
     })
+
     // get deletecontent
-    for (i = 0; i < oldContent.length; i++) {
-      let found = newContent.filter(item => { return item.uid === oldContent[i].uid });
+    oldContent.map(oldItem => {
+      let found = newContent.filter(newItem => newItem.uid === oldItem.uid);
       if (found.length === 0) {
-        formData.deleteContent.push(oldContent[i]);
+        formData.deleteContent.push(oldItem);
       }
-    }
+      return oldItem;
+    });
 
     // edit
     await this.setState({ loading: true });
@@ -411,16 +431,22 @@ class CardSourceDetail extends Component {
       );
     }
     if (this.props.uid !== "new") {
-      this.props.handleSubmit && await this.props.handleSubmit(event);
-      await this.props.upDateRequest(formData, this.props.uid, this.props.token)
-        .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
-        .then(() => {
-          this.props.GetDesignSourceRequest(this.props.uid)
-            .then(async () => {
-              await this.setState({ content: this.props.content, origin: this.props.origin });
-            })
-        })
-      await this.props.GetCardDetailRequest(this.props.uid);
+      console.log(formData);
+      if (this.props.handleSubmit) {
+        await this.props.handleSubmit(formData);
+      }
+      else {
+        await this.props.upDateRequest(formData, this.props.uid, this.props.token)
+          .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+          .then(() => {
+            this.props.GetDesignSourceRequest(this.props.uid)
+              .then(async () => {
+                await this.setState({ content: this.props.content, origin: this.props.origin });
+              })
+          })
+        await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
+        await this.props.GetCardDetailRequest(this.props.uid);
+      }
     } else { // new
       await this.props.upDateRequest(formData);
     }
@@ -474,6 +500,7 @@ class CardSourceDetail extends Component {
             if (item.type === "TEXT") {
               return <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
             }
+            return <div>올바른형식의 아이템이 아닙니다.</div>;
           })}
         </ViewContent>}
 

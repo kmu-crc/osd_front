@@ -68,7 +68,7 @@ class Group extends Component {
                             backgroundColor: "#EFEFEF", lineHeight: "35px", height: "69px", textAlign: "left", fontWeight: "100", fontSize: "20px", width: "516px",
                             wordWrap: "break-word", overflow: "hidden", whiteSpace: "pre-wrap", textOverflow: "ellipsis"
                         }}>{group.explanation}</div>
-                        <div id="whosgroup" style={{ backgroundColor: "#EFEFEF", width: "max-content", maxWidth: "275px", lineHeight: "40px", textAlign: "left", fontWeight: "300", fontSize: "20px", cursor: "default", display: "flex" }}><TextFormat chars={32} txt={group.userName} id="userName" />님의 그룹</div>
+                        <div id="whosgroup" style={{ backgroundColor: "#EFEFEF", width: "max-content", maxWidth: "275px", lineHeight: "40px", textAlign: "left", fontWeight: "300", fontSize: "20px", cursor: "default", display: "flex" }}><TextFormat chars={14} txt={group.userName} id="userName" />님의 그룹</div>
                     </div>
                     <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", marginLeft: "17px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
                         <div className="view" style={{ display: "flex", marginRight: "20px" }}>

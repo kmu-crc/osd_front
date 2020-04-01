@@ -3,9 +3,6 @@ import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import { FormControl } from "modules/FormControl";
 
-import { FilePond, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-
 const FileWrap = styled.div`
   width: 100%;
   text-align: center;

@@ -15,9 +15,9 @@ import {
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
-import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
+import { ValidationGroup } from "modules/FormControl";
 
 const ContentBorder = styled.div`
     height: 29px;
@@ -357,36 +357,67 @@ const BlankSpace = styled.div`
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", content: "" }
-    }
+        this.state = {
+            sroll: false, edit: false, closed: false,
+            title: "", content: "", isEdited: false,
+        }
+    };
     componentWillReceiveProps(nextProps) {
-        console.log("card:", nextProps.card);
         if (nextProps.card !== this.props.card) {
-            // alert("!");
-
             return true;
         }
-    }
+    };
+    handleUpdate = (obj) => {
+        const modified = JSON.stringify(obj.content) !== JSON.stringify(obj.origin);
+        this.setState({ isEdited: modified });
+    };
+    handleCancel = (obj) => {
+        if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
+            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+                return "keep";
+            }
+        }
+    };
+    handleClosed = (obj) => {
+        if (this.state.edit) {
+            if (this.state.title !== this.props.card.title) {
+                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
+                    this.setState({ edit: false });
+                }
+                else {
+                    return;
+                }
+            }
+            if (this.state.content !== this.props.card.content) {
+                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
+                    this.setState({ edit: false });
+                }
+                else {
+                    return;
+                }
+            }
+        }
+        this.setState({ edit: false });
+    };
     onChangeValueThumbnail = async data => {
         let obj = {};
         if (data.target) {
             obj[data.target.name] = data;
             await this.setState(obj);
         }
-    }
+    };
     onChangeTitle = event => {
         if (event.target) {
             this.setState({ title: event.target.value });
         }
-    }
+    };
     onChangeContent = event => {
         if (event.target) {
             this.setState({ content: event.target.value });
         }
-    }
-    handleHeaderSubmit = (_) => {
-        // _.preventDefault(_);
-        console.log(_); return;
+    };
+    handleHeaderSubmit = (formData) => {
+        // console.log(formData);
         let files = null;
         ValidationGroup(this.state, false)
             .then(async data => {
@@ -396,19 +427,18 @@ class CardModal extends Component {
                     title: this.state.title,
                     thumbnail: files && thumbnail,
                     content: this.state.content,
-                    data: { deleteContent: [], newContent: [], updateContent: [] }
+                    data: { deleteContent: formData.deleteContent, newContent: formData.newContent, updateContent: formData.updateContent }
                 };
-
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
                     .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                     .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
                     .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
                     .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
                     .catch(err => alert(err + ''));
-                // this.onClose();
+                this.onClose();
             }).catch(err => alert(err + ''));
         this.setState({ edit: !this.state.edit })
-    }
+    };
     onCloseEditMode = () => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
             if (!window.confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
@@ -417,9 +447,11 @@ class CardModal extends Component {
         }
         this.setState({ edit: false });
     };
-    onChangeEditMode = () => { this.setState({ edit: this.state.edit }) };
-    removeCard = e => {
-        e.stopPropagation();
+    onChangeEditMode = () => {
+        this.setState({ edit: this.state.edit })
+    };
+    removeCard = event => {
+        event.stopPropagation();
         const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
         if (confirm) {
             this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
@@ -432,28 +464,48 @@ class CardModal extends Component {
         }
     };
     onClose = async () => {
-        if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
-            return;
+
+        if (this.state.edit) {
+
+            if (this.state.title !== this.props.card.title) {
+                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                    this.props.close();
+                }
+                else {
+                    return;
+                }
+            }
+
+            if (this.state.content !== this.props.card.content) {
+                if (window.confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                    this.props.close();
+                }
+                else {
+                    return;
+                }
+            }
+
+            if (this.state.isEdited) {
+                if (window.confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                    this.props.close();
+                }
+                else {
+                    return;
+                }
+            }
         }
-        await this.setState({ sroll: false, edit: false, title: "", content: "" });
         this.props.close();
-    }
+    };
+
     render() {
-        const imgURL = this.props.card && this.props.card.first_img == null ? null : this.props.card.first_img.l_img;
-        const { card } = this.props;
-        const { isTeam/*, edit*/ } = this.props;
-        // const movablePrev = this.props.row > 0
-        // const movableNext = this.props.row < this.props.maxRow - 1;
-        console.log("debug - CardModal:", this.state);
+        const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
+        const { card, isTeam } = this.props;
+
         return (
             <React.Fragment>
                 <CardDialog open={this.props.open} onClose={this.onClose}>
-                    {this.state.loading && <Loading />}
 
-                    {/* {movablePrev && <div className="prevPane" />} */}
-                    {/* {movablePrev && <div className="prevArrow"></div>} */}
-                    {/* {movableNext && <div className="nextPane" />} */}
-                    {/* {movableNext && <div className="nextArrow"></div>} */}
+                    {this.state.loading && <Loading />}
 
                     <div className="close-box" onClick={this.onClose} >
                         <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
@@ -501,10 +553,6 @@ class CardModal extends Component {
                                             <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="1000" placeholder="설명을 입력해주세요." />
                                         </div>
                                     </div>
-                                    {/* <div className="edit-header-button-container">
-                                    <button className="edit-header-submit-button" onClick={this.handleHeaderSubmit} >적용하기</button>
-                                    <button className="edit-header-cancel-button" onClick={() => this.setState({ edit: !this.state.edit })}>취소</button>
-                                </div> */}
                                 </EditCardHeaderContainer>
                             </React.Fragment>}
 
@@ -512,16 +560,18 @@ class CardModal extends Component {
 
                         <div className="content" >
                             <CardSourceDetailContainer
-                                isCancel
+                                design_id={this.props.designId}
+                                handleUpdate={this.handleUpdate}
                                 handleSubmit={this.handleHeaderSubmit}
-                                handleCancel={this.onCloseEditMode}
-                                designId={this.props.designId}
-                                card={card}
                                 uid={card.uid}
                                 isTeam={isTeam}
                                 edit={this.state.edit}
-                                closeEdit={this.onCloseEditMode}
-                                openEdit={this.onChangeEditMode} />
+                                handleClosed={this.handleClosed}
+                                handleCancel={this.handleClosed}
+                                closeEdit={this.handleClosed}
+                                openEdit={this.onChangeEditMode}
+                                closed={this.state.closed}
+                            />
                         </div>
 
                         <ContentBorder><div className="border-line" /></ContentBorder>

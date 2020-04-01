@@ -62,7 +62,9 @@ class WaitingGroupContainer extends Component {
             type="group"
             dataListAdded={this.props.waitingGroup}
             getListRequest={null}
-            handleReject={this.setOut} handleAccept={this.setAccept} />
+            rejectText={"거절"}
+            handleReject={this.setOut} 
+            handleAccept={this.setAccept} />
         }
       </GroupBox>
     );

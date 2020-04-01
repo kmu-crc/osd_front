@@ -3183,7 +3183,7 @@ babel-plugin-macros@2.6.1:
     cosmiconfig "^5.2.0"
     resolve "^1.10.0"
 
-babel-plugin-macros@2.8.0:
+babel-plugin-macros@2.8.0, babel-plugin-macros@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-macros/-/babel-plugin-macros-2.8.0.tgz#0f958a7cc6556b1e65344465d99111a1e5e10138"
   integrity sha512-SEP5kJpfGYqYKpBrj5XU3ahw5p5GOHJ0U5ssOSQ/WBVdwkD2Dzlce95exQTs3jOVWPPKLBN2rlEWkCK7dSmLvg==
@@ -10151,6 +10151,13 @@ react-filepond@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-filepond/-/react-filepond-7.0.1.tgz#caf96526287140884a31a1476b8328d9d6ecdee2"
   integrity sha512-PitNM44JP0K5hXnkSYV3HRlkObsWbhqaJRWizMrdHpS3pPz9/iyiOGmRpc+4T4ST3vblmiUTLRYq/+1bDcSqQw==
+
+react-git-info@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-git-info/-/react-git-info-1.0.1.tgz#b49bb296af7dc7f5504dbabfc058e7878120fe71"
+  integrity sha512-zVvc4PEKMvMX6xtNKgczypRy98aes6U247X+i117js0Kqf9KyhH0t57FR04qsYrUNRpc/AKpOk9ozk157blQNQ==
+  dependencies:
+    babel-plugin-macros "^2.8.0"
 
 react-height@^3.0.0:
   version "3.0.1"

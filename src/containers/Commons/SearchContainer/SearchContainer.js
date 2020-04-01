@@ -7,8 +7,12 @@ import { GetCategoryAllRequest } from "redux/modules/category"
 class SearchContainer extends Component {
   render() {
     return (
-      <SearchListRe {...this.props} />
-    );
+      <SearchListRe
+        {...this.props}
+      // designs={this.props.designs ? this.props.designs.length : 0}
+      // groups={this.props.groups ? this.props.groups.length : 0}
+      // designers={this.props.designers ? this.props.designers.length : 0}
+      />);
   }
 }
 

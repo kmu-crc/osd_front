@@ -6,25 +6,42 @@ import opendesign_style from "opendesign_style";
 import styled from "styled-components";
 
 const NoDataMsg = styled.div`
-  width:100%;
-  height:500px;
-  padding:100px;
-  font-size:30pt;
-  color:#707070;
-  font-family:Noto Sans KR;
-  text-align:center;
+  width: 100%;
+  height: 250px; // 500px;
+  padding: 50px; // 100px;
+  font-size: 30px;
+  color: #707070;
+  font-family: Noto Sans KR;
+  text-align: center;
 `
 class ScrollDesignerListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { reload: false, category1: 0, category2: 0, orderOption: "update" }
     this.getList = this.getList.bind(this);
+    this.getInitList = this.getInitList.bind(this);
     this.handleReload = this.handleReload.bind(this);
   }
-
   componentDidMount() {
-    this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
-    // props가 바뀌면 제일 첫번째 페이지 리스트부터 새로 불러옴
+    this.getInitList();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.keyword !== prevProps.keyword) {
+      this.getInitList();
+    }
+    if (this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2) {
+      this.setState({ category1: this.props.cate1, category2: this.props.cate2 });
+      this.getList(0);
+    }
+    if (this.props.orderOption !== prevProps.orderOption && this.props.orderOption !== undefined) {
+      this.setState({ orderOption: this.props.orderOption })
+      this.getList(0);
+    }
+  }
+  getInitList = () => {
+    this.props.keyword &&
+      this.props.keyword.length &&
+      this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
   }
   getList = async (page) => {
     this.props.GetDesignerListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.keyword);
@@ -34,26 +51,15 @@ class ScrollDesignerListContainer extends Component {
   }
 
   render() {
-    const { cate1, cate2, orderOption, dataListAdded } = this.props;
-    if (cate1 !== undefined || cate2 !== undefined) {
-      if (this.state.category1 !== cate1) {
-        this.getList(0);
-        this.setState({ category1: cate1 });
-      }
-    }
-    console.log(orderOption);
-    if (orderOption !== undefined) {
-      if (this.state.orderOption !== orderOption) {
-        this.getList(0);
-        this.setState({ orderOption: orderOption })
-      }
-    }
+    const { dataListAdded } = this.props;
+
     return (
       <div>
         {dataListAdded.length <= 0 ?
           <NoDataMsg>{this.props.message || "등록된 디자이너가 없습니다."}</NoDataMsg>
           :
           <ScrollList
+            manual={this.props.manual || false}
             type="designer"
             getListRequest={this.getList}
             dataList={this.props.dataList}

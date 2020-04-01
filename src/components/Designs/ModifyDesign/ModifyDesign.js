@@ -703,9 +703,8 @@ class ModifyDesign extends Component {
     }
     this.checkFinishBasic();
   };
-  onKeyDownEnter(event){
-    if(event.key=="Enter")
-    {
+  onKeyDownEnter(event) {
+    if (event.key === "Enter") {
       document.getElementById("explainBox").focus();
     }
 
@@ -724,7 +723,7 @@ class ModifyDesign extends Component {
     this.setState({ step: menu.step });
   }
   checkFinishBasic = async () => {
-    const { title, thumbnail, explanation } = this.state;
+    const { title, thumbnail, } = this.state;
     if (title && title.length > 0 && thumbnail && thumbnail.img) {
       await this.setState({ basic: true });
     } else {
@@ -797,7 +796,7 @@ class ModifyDesign extends Component {
     });
     // console.log("members[]====", this.state.members, this.state.addmem);
     this.checkFinishAdditional();
-    this.setState({alone:false});
+    this.setState({ alone: false });
   }
   removeMember = async (user_id) => {
     // remove from addmem
@@ -809,9 +808,8 @@ class ModifyDesign extends Component {
     // display member list
     await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
 
-    if(this.state.members.length===0)
-    {
-      this.setState({alone:true})
+    if (this.state.members.length === 0) {
+      this.setState({ alone: true })
     }
   }
   deleteDesign = () => {
@@ -821,7 +819,7 @@ class ModifyDesign extends Component {
         window.location.href = geturl() + `/design`;
       })
   }
-  cancelDeleteDesign=()=>{
+  cancelDeleteDesign = () => {
     this.setState({ deleteModal: !this.state.deleteModal })
   }
   deleteDialog = () => {
@@ -846,9 +844,9 @@ class ModifyDesign extends Component {
         <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.title}(을)를<br />삭제하시겠습니까?</div>
         <div style={{ fontWeight: "500", width: "100%", height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px" }}>
           <div style={{ marginLeft: "auto", marginRight: "auto", width: "max-content", cursor: "pointer", }} >
-            <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteDesign}>확인</span>
-            <span style={{color:"#707070"}} onClick={this.cancelDeleteDesign}>취소</span>
-        </div>
+            <span style={{ marginRight: "10px", color: "#FF0000" }} onClick={this.deleteDesign}>확인</span>
+            <span style={{ color: "#707070" }} onClick={this.cancelDeleteDesign}>취소</span>
+          </div>
         </div>
         <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div>
       </Modal>
@@ -894,7 +892,7 @@ class ModifyDesign extends Component {
                 {/* THUMBNAIL */}
                 <ContentsBox>
                   <ThumbnailBox>
-              <div className="title">{designImageText}<sup style={{color:"red"}}>*</sup></div>
+                    <div className="title">{designImageText}<sup style={{ color: "red" }}>*</sup></div>
                     <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL}>
                       {this.props.DesignDetail && this.props.DesignDetail.parent_design &&
                         <div className="forkedImg" />}
@@ -910,7 +908,7 @@ class ModifyDesign extends Component {
 
                   {/* TITLE */}
                   <TitleBox>
-                    <div className="title">제목<sup style={{color:"red"}}>*</sup></div>
+                    <div className="title">제목<sup style={{ color: "red" }}>*</sup></div>
                     <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
                       className="inputText" name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)"
                       onBlur={this.checkFinishBasic} />
@@ -940,7 +938,7 @@ class ModifyDesign extends Component {
                     : <p>카테고리를 가져오고 있습니다.</p>}
                   {/* invite member*/}
                   <InviteMemberBox>
-                    <div className="additionalTitle ">멤버 초대하기<sup style={{color:"red"}}>*</sup></div>
+                    <div className="additionalTitle ">멤버 초대하기<sup style={{ color: "red" }}>*</sup></div>
                     <div className="searchBox" >
                       <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
                     </div>
@@ -959,7 +957,7 @@ class ModifyDesign extends Component {
                     </InviteMemberListBox>
                     {/* LEAVE ME ALONE */}
                     <NoInviteMemberBox>
-                       <div><CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" checked={this.state.alone}/></div>
+                      <div><CheckBox2 onChange={this.LeaveMeAlone} type="checkbox" checked={this.state.alone} /></div>
 
                       <div className="textLabel">멤버를 초대하지 않습니다.</div>
                     </NoInviteMemberBox>

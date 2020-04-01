@@ -105,7 +105,7 @@ const MenuText = styled.div`
 //  font-size:15px;
 //`
 const InputBoard = styled.div`
-  width:${window.innerWidth>1920?1422+'px':100+'%'};
+  width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
   padding-bottom:100px;
   margin-bottom:100px;
   position:relative;
@@ -157,8 +157,8 @@ class ModifyMyDetail extends Component {
       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
       category_level1: 0, category_level2: 0,
-      is_designer: false, team: "", career: "", location: "", contact: "",screenWidth: window.innerWidth,
-      careerlist:[{ number: 0, task: "", explain: "", during: "" }], 
+      is_designer: false, team: "", career: "", location: "", contact: "", screenWidth: window.innerWidth,
+      careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -301,7 +301,7 @@ class ModifyMyDetail extends Component {
       // team: this.state.team, career: this.state.career,
       // location: this.state.location, contact: this.state.contact,
       change_password: this.state.change_password,
-      careerlist:careerlist,
+      careerlist: careerlist,
       files: [],
     };
 
@@ -311,11 +311,9 @@ class ModifyMyDetail extends Component {
       key: 0
     };
 
-    if(this.state.thumbnail!=null)
-    {
-      if(this.state.thumbnail!="")
-      {      
-        formData.files.push(file);  
+    if (this.state.thumbnail != null) {
+      if (this.state.thumbnail !== "") {
+        formData.files.push(file);
       }
     }
     if (formData.files.length === 0 ||
@@ -409,7 +407,7 @@ class ModifyMyDetail extends Component {
 
         {/* form */}
         <InputBoard isModifyAnother={true}>
-          <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} /> 
+          <SectionBasic updateThumbnail={this.updateThumbnail} updateNickName={this.updateNickName} updateIntroduce={this.updateIntroduce} MyDetail={this.props.MyDetail} />
           <HRline />
           <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
           <HRline />

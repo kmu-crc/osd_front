@@ -58,6 +58,7 @@ class WaitingDesignContainer extends Component {
           dataListAdded={this.props.waitingDesign}
           getListRequest={null}
           handleReject={this.setOut}
+          rejectText={"거절"}
           handleAccept={this.setAccept} />
       </DesignBox>
     );

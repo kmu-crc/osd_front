@@ -16,40 +16,6 @@ import { Modal } from "semantic-ui-react";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "components/Designs/GridEditor/DesignComment";
 
-// const DesignInfoComp = styled.div`
-//     marginTop: 21px;
-//     display: flex;
-//     background-color: #EFEFEF;
-//     width: ${window.innerWidth > 1920 ? 1920 : window.innerWidth};
-//     height: 237px;
-// `;
-const Button = styled.button`
-    outline:none;
-    border:none;
-`
-const ThumbnailWrapper = styled.div`
-    .fork-mark {
-        position: absolute;
-        margin-left: 70px;
-        width: 32px;
-        height: 70px;
-        background-image: url(${forked});
-        background-size: cover; 
-    }
-    .thumbnail {
-        @media only screen and (min-width: 0px) and (max-width: 1250px) {
-            margin-top: 20px;
-        }
-        width: 200px;
-        height: 200px;
-        background-size: cover;
-        background-position: center center;
-        background-image: url(${props => props.img});
-        background-color: #D6D6D6;
-        border-radius: 15px;
-        background-repeat: no-repeat;
-    }
-`;
 const LeftSide = styled.div`
     display: flex;
     height: 220px;
@@ -57,9 +23,6 @@ const LeftSide = styled.div`
     flex-direction: column !important;
     .title {
         display: block !important;
-        @media only screen and (min-width: 0px) and (max-width: 1250px) {
-            display: none !important;
-        }
         position: absolute;
         height: 29px;
         color: #707070;
@@ -88,7 +51,7 @@ const LeftSide = styled.div`
         }
         .design_member {
             width: max-content;
-            max-width: 150px;
+            max-width: 156px;
             font-size: 16px;
             font-weight: 300;            
         }
@@ -185,11 +148,15 @@ const LeftSide = styled.div`
     }
 `;
 const DescriptionContainer = styled.div`
+    @media only screen and (min-width : ${0}px) and (max-width : ${750}px) {
+        display: none;
+    }
     display: flex;
     flex-direction: column !important;
-    width:100%;
-    height:150px;
+    width: ${props => props.w}px;
+    height: 200px;
     .category-name {
+        margin-top: 42px;
         width: max-content;
         height: 25px;
         color: #FF0000;
@@ -201,167 +168,24 @@ const DescriptionContainer = styled.div`
     }
     .txt {
         display: inline-block; 
-    width: 100%;
-    height: 140px;
-    font-size: 20px;
-    font-weight: 200;
-    font-family: Noto Sans KR;
-    line-height: 35px;
-    margin-top: 20px;
-    color: #707070;
-
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: normal; 
-    text-align: left; 
-    word-wrap: break-word; 
-    display: -webkit-box; 
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical;
-        // width: 423px;
-        // height: 125px;
-        // margin-top: 10px;
-        // word-wrap: break-word;
-        // color: #707070;
-        // font-size: 20px;
-        // font-weight: 300;
-        // line-height: 29px;
-        // font-family: Noto Sans KR;
-    }
-`;
-const RightSide = styled.div`
-    display: flex;
-    height: 220px;
-    justify-content: space-between;
-    flex-direction: column !important;
-    .do-fork-btn {
-        width: max-content;
-        margin-top: 15px;
-        margin-left: auto;
-        text-align: right;
-        color: #FF0000;
+        width: 100%;
+        height: 200px;
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 200;
         font-family: Noto Sans KR;
-        cursor: pointer;
-    }
-    .join-box {
-        width: max-content;
-        height: 25px;
-        display: flex;
-        margin-top: 15px;
-        margin-left: auto;
-        .waiting-txt {
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 20px;
-            color: #FF0000;
-            text-align: right;
-            margin-left: auto;
-            font-weight: 300;
-        }
-        .join-txt {
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 20px;
-            color: #FF0000;
-            text-align: right;
-            margin-left: auto;
-            font-weight: 300;
-            cursor: pointer;
-        }
-    }
-    .design-edit-box {
-        width: max-content;
-        height: 35px;
-        display: flex;
-        margin-top: 15px;
-        margin-left: auto;
-        cursor: pointer;
-        .edit-txt {
-            margin-top: 15px;
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 17px;
-            font-weight: 300;
-            color: #707070;
-            text-align: right;
-        }
-        .edit-icon {
-            width: 35px; 
-            height: 35px; 
-            margin-left: 15px; 
-            background: url(${iEdit}); 
-            background-size: 45px 45px; 
-            background-position: center center; 
-            background-repeat: no-repeat;
-        }
-    }
-    .design-like-box {
-        width: max-content;
-        height: 35px;
-        display: flex;
-        margin-top: 10px;
-        margin-left: auto;
-        cursor: pointer;
-        .like-txt {
-            margin-top: 15px;
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 17px;
-            font-weight: 300;
-            color: #707070;
-            text-align: right;
-        }
-        .like-icon {
-            width: 35px;
-            height: 35px;
-            margin-left: 15px;
-            opacity: ${props => props.like_opacity};
-            background: url(${thumbup});
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    }
-    .msg-icon-box {
-        width: max-content;
-        display: flex;
-        height: 35px;
-        margin-top: 15px;
-        margin-left: auto;
-        cursor: pointer;
-        .msg-txt {
-            height: 25px;
-            margin-top: 10px;
-            margin-left: auto;
-            text-align: right;
-            color: #707070;
-            font-size: 17px;
-            font-weight: 300;
-            font-family: Noto Sans KR;
-        }
-        .msg-icon {
-            margin-left: 15px;
-            width: 33px;
-            height: 33px;
-            background: url(${email});
-            background-size: cover;
-            background-position: center center;
-        }
-    }
-    .update-time {
-        margin-top: 5px;
-        width: 200px;
-        height: 25px;
-        // right: 3px;
-        // margin-bottom: 5px;
-        text-align: right;
+        line-height: 35px;
+        margin-top: 20px;
         color: #707070;
-        font-size: 17px;
-        font-weight: 300;
-        font-family: Noto Sans KR;
+
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        white-space: normal; 
+        text-align: left; 
+        word-wrap: break-word; 
+        display: -webkit-box; 
+        -webkit-line-clamp: 3; 
+        -webkit-box-orient: vertical;
     }
 `;
 const DesignMemberList = styled.div`
@@ -574,12 +398,12 @@ const LikeDialogContainer = styled.div`
     }
 `;
 const DesignMemberModalContainer = styled(Modal)`
-.close-box {
-    cursor:pointer;
-    position: absolute;
-    right:10px;
-    top:10px;
-}
+    .close-box {
+        cursor:pointer;
+        position: absolute;
+        right:10px;
+        top:10px;
+    }
 `;
 const DesignCommentModalContainer = styled(Modal)`
     padding: 60px;
@@ -600,94 +424,176 @@ const DesignCommentModalContainer = styled(Modal)`
     }
 `;
 
-const DesignInfo3 = styled.div`
-    margin-top: 21px;
-    width: 100%;
-    background-color: #EFEFEF;    
-    padding-bottom: 18px;    
-    @media only screen and (min-width: 0px) and (max-width: 900px) {    
-      margin-top: 55px;    
-    }
-  .grid {
-    min-height: 100%;
+// new
+const Header = styled.div`
+    width: ${props => props.width}px;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    .title {
-        display: none;
-        @media only screen and (min-width: 0px) and (max-width: 1250px) {    
-            display: block;
-            margin-left: 25px;
-        }
+    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
+        margin-top: 50px;
+    }
+`;
+const ThumbnailBox = styled.div`
+    .fork-mark {
         position: absolute;
-        height: 29px;
-        color: #707070;
+        margin-left: 175px;
+        width: 32px;
+        height: 70px;
+        background-image: url(${forked});
+        background-size: cover; 
+    }
+    width: 220px;
+    min-width: 220px;
+    height: 220px;
+    border-radius: 15px;
+    background-color: #D6D6D6;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-image: ${props => `url(${props.imageURL})`};
+`;
+const RightSide = styled.div`
+    display: flex;
+    height: 220px;
+    justify-content: space-between;
+    flex-direction: column !important;
+    .do-fork-btn {
+        width: max-content;
+        margin-top: 15px;
+        margin-left: auto;
+        text-align: right;
+        color: #FF0000;
         font-size: 20px;
         font-weight: 500;
-        text-align: left;
-        line-height: 29px;
+        font-family: Noto Sans KR;
         cursor: pointer;
     }
-  }
-  .grid > div {
-    display: flex; 
-    justify-content: center;
-    flex-direction: row;//column;
-  }
-  .grid > div:last-child {
-    display: flex; 
-    justify-content: center;
-    flex-direction: column;
-  }
-  .grid > div > div {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-  }
-  .box1 { 
-    order: 1;
-    width: 200px;
-    margin-left: 65px;
-    margin-top: 19px;
-  }
-  .box2 { 
-    order: 2;
-    width: 165px;
-    margin-top: 19px;
-    margin-left: 42px;
-  }
-  .box3 { 
-    order: 3;
-    // width: 423px;
-    width:1050px;
-    margin-left: 65px;
-    margin-top: 65px;
-    @media only screen and (min-width: 0px) and (max-width: 1250px) {
-      order: 4;
+    .join-box {
+        width: max-content;
+        height: 25px;
+        display: flex;
+        margin-top: 15px;
+        margin-left: auto;
+        .waiting-txt {
+            height: 25px;
+            font-family: Noto Sans KR;
+            font-size: 20px;
+            color: #FF0000;
+            text-align: right;
+            margin-left: auto;
+            font-weight: 300;
+        }
+        .join-txt {
+            height: 25px;
+            font-family: Noto Sans KR;
+            font-size: 20px;
+            color: #FF0000;
+            text-align: right;
+            margin-left: auto;
+            font-weight: 300;
+            cursor: pointer;
+        }
     }
-    &.secondary {
-      @media only screen and (min-width: 0px) and (max-width: 1760px) {
-        display: none;
-      }
+    .design-edit-box {
+        width: max-content;
+        height: 35px;
+        display: flex;
+        margin-top: 15px;
+        margin-left: auto;
+        cursor: pointer;
+        .edit-txt {
+            margin-top: 15px;
+            height: 25px;
+            font-family: Noto Sans KR;
+            font-size: 17px;
+            font-weight: 300;
+            color: #707070;
+            text-align: right;
+        }
+        .edit-icon {
+            width: 35px; 
+            height: 35px; 
+            margin-left: 15px; 
+            background: url(${iEdit}); 
+            background-size: 45px 45px; 
+            background-position: center center; 
+            background-repeat: no-repeat;
+        }
     }
-  }
-  .box4 { 
-    order: 4;
-    width: 208px;
-    margin-left: auto;
-    margin-right: 72px;
-    margin-top: 19px;
-    @media only screen and (min-width: 0px) and (max-width: 1250px) {
-      order: 3;
-      margin-left: 25px;
+    .design-like-box {
+        width: max-content;
+        height: 35px;
+        display: flex;
+        margin-top: 10px;
+        margin-left: auto;
+        cursor: pointer;
+        .like-txt {
+            margin-top: 15px;
+            height: 25px;
+            font-family: Noto Sans KR;
+            font-size: 17px;
+            font-weight: 300;
+            color: #707070;
+            text-align: right;
+        }
+        .like-icon {
+            width: 35px;
+            height: 35px;
+            margin-left: 15px;
+            opacity: ${props => props.like_opacity};
+            background: url(${thumbup});
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
     }
-
+    .msg-icon-box {
+        width: max-content;
+        display: flex;
+        height: 35px;
+        margin-top: 15px;
+        margin-left: auto;
+        cursor: pointer;
+        .msg-txt {
+            height: 25px;
+            margin-top: 10px;
+            margin-left: auto;
+            text-align: right;
+            color: #707070;
+            font-size: 17px;
+            font-weight: 300;
+            font-family: Noto Sans KR;
+        }
+        .msg-icon {
+            margin-left: 15px;
+            width: 33px;
+            height: 33px;
+            background: url(${email});
+            background-size: cover;
+            background-position: center center;
+        }
+    }
+    .update-time {
+        margin-top: 5px;
+        width: 200px;
+        height: 25px;
+        // right: 3px;
+        // margin-bottom: 5px;
+        text-align: right;
+        color: #707070;
+        font-size: 17px;
+        font-weight: 300;
+        font-family: Noto Sans KR;
+    }
 `;
-
 class DesignInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = { posX: -1, posY: -1, likeDialog: false, forkDialog: 0, forkDesignList: false, memberList: false, comment: false };
+        this.state = {
+            posX: -1, posY: -1, w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+            likeDialog: false, forkDialog: 0, memberDialog: false,
+            forkDesignList: false, memberList: false,
+            comment: false
+        };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);
@@ -699,14 +605,20 @@ class DesignInfo extends Component {
         this.onBlurMemberList = this.onBlurMemberList.bind(this);
         this.onBlurForkDesign = this.onBlurForkDesign.bind(this);
     }
-    onBlurMemberList(event){
-        if(!this.props.isMyDesign){
-            this.setState({memberList:false});
-        }
-        
+    handleResize = () => {
+        this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
     }
-    onBlurForkDesign(event){
-        this.setState({forkDesignList:false});
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize);
+    }
+    onBlurMemberList(event) {
+        this.setState({ memberList: false });
+    }
+    onBlurForkDesign(event) {
+        this.setState({ forkDesignList: false });
     }
     onMoveForkDesign(designID) {
         window.location.href = "/designDetail/" + designID;
@@ -821,6 +733,7 @@ class DesignInfo extends Component {
     }
     render() {
         const { isMyDesign, editor, DesignDetail, Count, like } = this.props
+        const { w } = this.state;
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
         const MemberModal = () => {
@@ -850,9 +763,16 @@ class DesignInfo extends Component {
                 </DesignCommentModalContainer>)
         }
 
+        console.log(this.props);
+
         return (
             <React.Fragment>
-                {this.state.forkDialog > 0 &&
+                {/* modals */}
+                <MemberModal />
+                <DesignCommentModal />
+
+                {/* dialog */}
+                {this.state.forkDialog > 0 ?
                     <ForkDialogContainer>
                         {this.state.forkDialog === 1 && <React.Fragment>
                             <div className="close-box" onClick={() => this.closeFork()} >
@@ -864,114 +784,133 @@ class DesignInfo extends Component {
                         {this.state.forkDialog === 2 && <React.Fragment>
                             <div className="ing-txt" >
                                 파생 디자인 생성중입니다.
-                                <p >디자인 수정 페이지로 이동합니다.</p>
-                                추가 정보를 입력해 주세요!</div>
+                                     <p >디자인 수정 페이지로 이동합니다.</p>
+                                     추가 정보를 입력해 주세요!</div>
                         </React.Fragment>}
-                    </ForkDialogContainer>}
+                    </ForkDialogContainer>
+                    : null}
 
-                {this.state.likeDialog &&
+                {/* dialog */}
+                {this.state.likeDialog ?
                     <LikeDialogContainer>
-                        <div className="txt">관심 디자인으로 등록되었습니다.<br />내 정보에서 확인 가능합니다.</div></LikeDialogContainer>}
+                        <div className="txt">
+                            관심 디자인으로 등록되었습니다.<br />
+                            내 정보에서 확인 가능합니다.</div>
+                    </LikeDialogContainer>
+                    : null}
 
-                {/*  */}
-                <DesignInfo3>
-                    <div className="grid">
-                        <div className="title" title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
-                        <div className="box box1">
-                            {/* THUMBNAIL */}
-                            <ThumbnailWrapper img={thumbnail}>
-                                {DesignDetail.parent_design && <div className="fork-mark" />}
-                                <div className="thumbnail" />
-                            </ThumbnailWrapper></div>
-                        <div className="box box2">
-                            {/* LEFT */}
-                            <LeftSide>
-                                <div>
-                                    <div className="title" title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
-                                    <div className="box">
-                                        {DesignDetail.parent_design ?
-                                            <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>
-                                                {DesignDetail.parent_title.slice(0, 4)} {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>
-                                            : <div className="goto-parent no"></div>}
-                                        <button className="member-list-btn" onBlur={this.onBlurMemberList} onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
-                                            <div className="design_member"> {DesignDetail.userName.length > 7 ? DesignDetail.userName.slice(0, 7) + "..." : DesignDetail.userName}{(DesignDetail.member && DesignDetail.member.length > 1) && "외" + (DesignDetail.member.length - 1).toString() + "명"}</div>
-                                        </button>
-                                        {!isMyDesign && this.state.memberList &&
-                                            <DesignMemberList top={this.state.posY} left={this.state.posX}>
-                                                <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                                                    <Cross angle={45} width={30} height={30} />
-                                                </div>
-                                                <div className="list">
-                                                    {DesignDetail.member && DesignDetail.member.length > 0 &&
-                                                        DesignDetail.member.map((mem, i) =>
-                                                            <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
-                                                                <div className="face" />
-                                                                <div className="nick-name">{mem.nick_name}</div>
-                                                                {DesignDetail.user_id === mem.user_id &&
-                                                                    <div title={"팀장"} ><i className="star icon" /></div>}
-                                                            </DesignMemberListElement>)}</div>
-                                            </DesignMemberList>}
 
-                                        <div className="comment-box" onClick={this.getDesignComment} >
-                                            <div className="txt">댓글</div>
-                                            <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
+                <Header width={w}>
+                    {DesignDetail ?
+                        <div style={{ width: `${w}px`, height: "250px", backgroundColor: "#EFEFEF", display: "flex", flexDirection: "row" }}>
+                            {/* left */}
+                            <div >
+                                {/* thumbnail + detail + description */}
+                                <div >
+                                    <div style={{ width: "max-content", marginTop: "15px", marginLeft: "25px", display: "flex", flexDirection: "row" }}>
+                                        <div>
+                                            {/* thumbnail */}
+                                            <ThumbnailBox imageURL={thumbnail}>
+                                                {DesignDetail.parent_design && <div className="fork-mark" />}
+                                            </ThumbnailBox>
                                         </div>
 
-                                        {DesignDetail.children_count["count(*)"] > 0
-                                            ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onBlur={this.onBlurForkDesign} onClick={(event) => { this.getForkDesignList(event) }}>
-                                                <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
-                                            </button>
-                                            : <button className="fork-list-btn no" disabled></button>}
 
-                                        {this.state.forkDesignList &&
-                                            <DesignMemberList top={this.state.posY} left={this.state.posX}>
-                                                <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
-                                                    <Cross angle={45} color={"#000000"} weight={3} width={30} height={30} />
+                                        <div style={{ marginLeft: "30px" }}>
+                                            {/* detail + description  */}
+                                            <LeftSide>
+                                                <div>
+                                                    <div className="title" title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
+                                                    <div className="box">
+                                                        {DesignDetail.parent_design ?
+                                                            <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>
+                                                                {DesignDetail.parent_title.slice(0, 4)} {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>
+                                                            : null}
+                                                        {/* <div className="goto-parent no"></div>} */}
+                                                        <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
+                                                            <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
+                                                                <TextFormat txt={DesignDetail.userName} single />
+                                                                {(DesignDetail.member && DesignDetail.member.length > 1) ? ` 외 ${(DesignDetail.member.length - 1).toString()}명` : null}
+                                                                {/* 
+                                                            {DesignDetail.userName.length > 10 ?
+                                                            DesignDetail.userName.slice(0, 10) + "..." :
+                                                            DesignDetail.userName}
+                                                        */}
+                                                            </div>
+                                                        </button>
+                                                        {!isMyDesign && this.state.memberList &&
+                                                            <DesignMemberList top={this.state.posY} left={this.state.posX}>
+                                                                <div className="close-box" onClick={() => this.setState({ memberList: false })} >
+                                                                    <Cross angle={45} width={30} height={30} />
+                                                                </div>
+                                                                <div className="list">
+                                                                    {DesignDetail.member && DesignDetail.member.length > 0 &&
+                                                                        DesignDetail.member.map((mem, i) =>
+                                                                            <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
+                                                                                <div className="face" />
+                                                                                <div className="nick-name">{mem.nick_name}</div>
+                                                                                {DesignDetail.user_id === mem.user_id &&
+                                                                                    <div title={"팀장"} ><i className="star icon" /></div>}
+                                                                            </DesignMemberListElement>)}</div>
+                                                            </DesignMemberList>}
+
+                                                        <div className="comment-box" onClick={this.getDesignComment} >
+                                                            <div className="txt">댓글</div>
+                                                            <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
+                                                        </div>
+
+
+                                                        {DesignDetail.children_count["count(*)"] > 0
+                                                            ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onBlur={this.onBlurForkDesign} onClick={(event) => { this.getForkDesignList(event) }}>
+                                                                <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
+                                                            </button>
+                                                            : null}
+                                                        {/* <button className="fork-list-btn no" disabled></button>} */}
+
+                                                        {this.state.forkDesignList &&
+                                                            <DesignMemberList top={this.state.posY} left={this.state.posX}>
+                                                                <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
+                                                                    <Cross angle={45} color={"#000000"} weight={3} width={30} height={30} />
+                                                                </div>
+                                                                <div className="list">
+                                                                    {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
+                                                                        return (<ListItem key={item + idx} img={item.p_s_img}>
+                                                                            <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
+                                                                                <div className="design-thumbnail" />
+                                                                                <div className="design-title">
+                                                                                    <TextFormat txt={item.title} chars={23} />
+                                                                                    <div>{item.nick_name}</div></div>
+                                                                            </div></ListItem>);
+                                                                    })}</div>
+                                                            </DesignMemberList>}
+                                                    </div>
                                                 </div>
-                                                <div className="list">
-                                                    {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
-                                                        return (<ListItem key={item + idx} img={item.p_s_img}>
-                                                            <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
-                                                                <div className="design-thumbnail" />
-                                                                <div className="design-title">
-                                                                    <TextFormat txt={item.title} chars={23} />
-                                                                    <div>{item.nick_name}</div></div>
-                                                            </div></ListItem>);
-                                                    })}</div>
-                                            </DesignMemberList>}
-                                    </div>
-                                </div>
 
-                                <div>
-                                    <div className="count-box">
-                                        <div className="view"><IconView width="20px" height="17px" fill="#707070" /></div>
-                                        <div className="view-count">{NumberFormat(Count.view_count)}</div>
-                                        <div className="like"><i className="material-icons">&#xE8DC;</i></div>
-                                        <div className="like-count">{NumberFormat(Count.like_count)}</div>
+                                                <div>
+                                                    <div className="count-box">
+                                                        <div className="view"><IconView width="20px" height="17px" fill="#707070" /></div>
+                                                        <div className="view-count">{NumberFormat(Count.view_count)}</div>
+                                                        <div className="like"><i className="material-icons">&#xE8DC;</i></div>
+                                                        <div className="like-count">{NumberFormat(Count.like_count)}</div>
+                                                    </div>
+                                                </div>
+                                            </LeftSide>
+                                        </div>
+
+                                        <div style={{ marginLeft: "30px" }}>
+                                            <DescriptionContainer w={w - 750}>
+                                                <div className="category-name">{DesignDetail.categoryName}</div>
+                                                <p className="txt">
+                                                    {DesignDetail.explanation}
+                                                </p>
+                                            </DescriptionContainer>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </LeftSide>
-                        </div>
-                        <div className="box box3">
-                            {/* DESCRIPTION */}
-                            <DescriptionContainer>
-                                <div className="category-name">{DesignDetail.categoryName}</div>
-                                <div className="txt">
-                                    {/* {DesignDetail.explanation ? (<p>{DesignDetail.explanation.slice(0, 88)}</p>) : (``)} */}
-                                    {DesignDetail.explanation}
-                                </div>
-                            </DescriptionContainer>
-                        </div>
-                        {/* <div className="box box3 secondary"> */}
-                            {/* DESCRIPTION */}
-                            {/* <DescriptionContainer>
-                                <div className="category-name"></div>
-                                <div className="txt">{DesignDetail.explanation && DesignDetail.explanation.slice(88, 170 - 3)}{(DesignDetail.explanation && DesignDetail.explanation.length > 170 - 3) ? "..." : ""}</div>
-                            </DescriptionContainer>
-                        </div> */}
-                        <div className="box box4">
-                            <div>
-                                {/* RIGHT */}
+                            </div>
+                            {/* right */}
+                            <div style={{ marginLeft: "auto", marginRight: "15px" }}>
                                 <RightSide like_opacity={like ? 1 : 0.45}>
                                     <div>
                                         <div className="do-fork-btn" onClick={() => this.forkDesign()}>파생 디자인 생성</div>
@@ -1003,14 +942,16 @@ class DesignInfo extends Component {
                                         <div className="update-time">{DateFormat(DesignDetail.create_time)} 등록</div>
                                     </div>
                                 </RightSide>
+
                             </div>
                         </div>
-                    </div>
-                </DesignInfo3>
+                        : // case of no DesignDetail
+                        <div>
 
-                <MemberModal />
-                <DesignCommentModal />
-            </React.Fragment >
+                        </div>}
+                </Header>
+
+            </React.Fragment>
         )
     }
 };

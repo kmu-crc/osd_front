@@ -639,11 +639,11 @@ class CreateDesign extends Component {
     const warning = "필수 입력항목을 모두 입력하지 않아 다음 단계를 진행할 수 없습니다.\n";
     if (this.state.step === 0) {
 
-      if (this.state.thumbnail == noimg) {
+      if (this.state.thumbnail === noimg) {
         alert(warning + designImageText + "를 등록해주세요");
         return;
       }
-      else if (this.state.title == "") {
+      else if (this.state.title === "") {
         alert(warning + "제목을 입력해주세요.");
         return;
       }
@@ -685,7 +685,7 @@ class CreateDesign extends Component {
     //this.checkFinishBasic();
   };
   onKeyDownEnter(event) {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       document.getElementById("explainBox").focus();
     }
 
@@ -742,7 +742,7 @@ class CreateDesign extends Component {
     this.setState({ step: menu.step });
   };
   checkFinishBasic = async () => {
-    const { title, thumbnail, explanation } = this.state;
+    const { title, thumbnail, } = this.state;
     if (title && thumbnail !== noimg) {
       await this.setState({ basic: true });
     } else {
@@ -766,6 +766,7 @@ class CreateDesign extends Component {
       thumbnail, thumbnail_name } = this.state;
     contents && contents.map(content => {
       delete content.initClick;
+      return content;
     });
     let data = {
       uid: this.props.userInfo.uid,
@@ -1319,7 +1320,7 @@ class AddContent extends Component {
         <div className="innerBox">
           <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
           <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
-          {this.props.order === 0 ? <NewController className="txt" className="complecated" width="max-content" height="29px">
+          {this.props.order === 0 ? <NewController className="txt complecated" width="max-content" height="29px">
             <div onClick={this.changeType} className="txt">단계 생성하기</div>
             <Tip>
               <sup>&nbsp;?</sup>

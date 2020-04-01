@@ -17,14 +17,25 @@ const NoDataMsg = styled.div`
 
 class ScrollGroupListContainer extends Component {
   componentWillMount() {
-    this.props.GetGroupListRequest(0, this.props.sort, this.props.keyword);
+    this.getInitList();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.keyword !== prevProps.keyword) {
+      this.getInitList();
+    }
+  }
+  getInitList = () => {
+    this.props.keyword &&
+      this.props.keyword.length &&
+      this.props.GetGroupListRequest(0, this.props.sort, this.props.keyword);
   }
   getList = (page) =>
     this.props.GetGroupListRequest(page, this.props.sort, this.props.keyword);
 
+    
   render() {
     const { dataListAdded } = this.props;
-    
+
     return (
 
       <div>
@@ -33,6 +44,7 @@ class ScrollGroupListContainer extends Component {
             {this.props.message || "등록된 그룹이 없습니다."}</NoDataMsg>
           :
           <ScrollList
+            manual={this.props.manual || false}
             {...opendesign_style.group_margin}
             getListRequest={this.getList}
             type="group"

@@ -212,9 +212,8 @@ class SectionBasic extends Component {
       this.props.completed && this.props.completed(false);
     }
   }
-  onKeyDownEnter(event){
-    if(event.key=="Enter")
-    {
+  onKeyDownEnter(event) {
+    if (event.key === "Enter") {
       document.getElementById("explainBox").focus();
     }
 
@@ -224,19 +223,19 @@ class SectionBasic extends Component {
       <ContentsBox  >
         {/* thumbnail */}
         <ThumbnailBox>
-    <div className="title">{GroupImageText}<sup style={{color:"red"}}>*</sup></div>
+          <div className="title">{GroupImageText}<sup style={{ color: "red" }}>*</sup></div>
           <ImageBox imageURL={this.props.groupThumbnail}></ImageBox>
           <div className="findThumbnailBox">
             <div className="findThumbnailBtn">
               <label className="findThumbnailText" htmlFor="file">찾아보기</label>
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
             </div>
-        <div className="thumbnailExplainText">{GroupImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+            <div className="thumbnailExplainText">{GroupImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
           </div>
         </ThumbnailBox>
         {/* title */}
         <TitleBox>
-          <div className="title">제목<sup style={{color:"red"}}>*</sup></div>
+          <div className="title">제목<sup style={{ color: "red" }}>*</sup></div>
           <input type="text" className="inputText" placeholder="그룹 제목을 입력하세요." onChange={this.handleOnChangeTitle}
             onKeyDown={this.onKeyDownEnter} value={this.props.groupTitle || ""} maxLength="50" />
         </TitleBox>

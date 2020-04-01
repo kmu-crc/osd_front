@@ -396,7 +396,6 @@ class Messages extends React.Component {
   }
   setMsgId = async (group_id, user_id, user_name) => {
 
-    console.log(this.props.ChatRooms)
 
     await this.setState({
       msgId: group_id,
@@ -443,15 +442,14 @@ class Messages extends React.Component {
     this.setState(state => ({ selectId: select_id, selectName: select_name, msgId: msgID }));
   }
   handleOpenMember() {
-    const isOpen = this.state.showSearch;
     this.setState({ showSearch: true });
   }
-  handleClickSearchMemberItem(id, name,event) {
+  handleClickSearchMemberItem(id, name, event) {
     this.setMsgId(-1, id, name);
 
   }
   handleCloseMember() {
-      this.setState({ showSearch: false })
+    this.setState({ showSearch: false })
   }
   handleResize() {
     const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;
@@ -499,7 +497,7 @@ class Messages extends React.Component {
                   </div>
                 </div>
                 <div className="asideSend">
-                  <div className="sendBox"><SendMessageTextarea id="box" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                  <div className="sendBox"><SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
                   <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
                 </div>
               </AsideSection>

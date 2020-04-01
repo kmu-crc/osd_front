@@ -212,12 +212,10 @@ class SectionBasic extends Component {
     this.setState({ nickname: event.target.value })
     this.props.updateNickName(event.target.value);
   }
-  onKeyDownEnter(event){
-    if(event.key=="Enter")
-    {
+  onKeyDownEnter(event) {
+    if (event.key === "Enter") {
       document.getElementById("explainBox").focus();
     }
-
   }
   render() {
     const thumbnailURL = this.state.thumbnail;
