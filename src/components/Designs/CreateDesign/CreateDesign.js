@@ -984,7 +984,8 @@ class CreateDesign extends Component {
 
     const { step, is_project, contents } = this.state;
     const thumbnailURL = this.state.thumbnail;
-    console.log(this.state.contents);
+    // console.log(this.state.contents);
+    console.log(this.props, this.state);
     return (
       <div onClick={this.handleCloseMember}>
         <MainBanner>
