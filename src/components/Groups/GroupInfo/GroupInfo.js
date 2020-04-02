@@ -15,6 +15,7 @@ import NumberFormat from "modules/NumberFormat";
 import { geturl } from 'config';
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
+import TextFormat from 'modules/TextFormat';
 
 const PopupBox = styled.div`
     position:absolute;
@@ -58,6 +59,7 @@ const GroupTitleWrapper = styled.div`
     line-height: 25px;
     margin-top: 15px;
     margin-left: 10px;
+    cursor: default;
 `;
 const Arrow = styled.div`
     width: 12px;
@@ -289,6 +291,7 @@ class GroupInfoComponent extends Component {
                                 {/* title */}
                                 <div
                                     style={{ display: "flex", flexDirection: "row", }}>
+
                                     {GroupDetail.grand_parentTitle ?
                                         <React.Fragment>
                                             <div
@@ -302,10 +305,11 @@ class GroupInfoComponent extends Component {
                                                     flexDirection: "row",
                                                 }}
                                             >
-                                                {GroupDetail.grand_parentTitle} <Arrow />
+                                                <TextFormat txt={GroupDetail.grand_parentTitle} /> <Arrow />
                                             </div>
                                         </React.Fragment>
                                         : null}
+
                                     {GroupDetail.parentName ?
                                         <React.Fragment>
                                             <div
@@ -319,11 +323,14 @@ class GroupInfoComponent extends Component {
                                                     flexDirection: "row",
                                                 }}
                                             >
-                                                {GroupDetail.parentName} <Arrow />
+                                                <TextFormat txt={GroupDetail.parentName} /> <Arrow />
                                             </div>
                                         </React.Fragment>
-                                        : null}
-                                    <GroupTitleWrapper>{GroupDetail.title}</GroupTitleWrapper>
+                                        : <div style={{ marginLeft: "15px" }}>&nbsp;</div>}
+
+                                    <GroupTitleWrapper>
+                                        <TextFormat txt={GroupDetail.title} />
+                                    </GroupTitleWrapper>
 
                                 </div>
 
@@ -340,7 +347,9 @@ class GroupInfoComponent extends Component {
                                         <ExplainBox w={w - 450}>
                                             <div className="board">
                                                 {/*  */}
-                                                <div className="creater">개설자 : {GroupDetail.userName && GroupDetail.userName.slice(0, 32)}</div>
+                                                <div className="creater">
+                                                    <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
+                                                </div>
                                                 <div className="explanationRegion">
                                                     <p className="explaination">
                                                         {GroupDetail.explanation}

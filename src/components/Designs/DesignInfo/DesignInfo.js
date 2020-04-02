@@ -774,19 +774,27 @@ class DesignInfo extends Component {
                 {/* dialog */}
                 {this.state.forkDialog > 0 ?
                     <ForkDialogContainer>
-                        {this.state.forkDialog === 1 && <React.Fragment>
-                            <div className="close-box" onClick={() => this.closeFork()} >
-                                <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} /></div>
-                            <div className="txt">
-                                {DesignDetail.userName.slice(0, 12)}님의 디자인 <br />"{DesignDetail.title.slice(0, 16)}{DesignDetail.title.length > 16 && "..."}"<br />파생 디자인을 생성하시겠습니까?</div>
-                            <div className="confirm" onClick={() => this.doFork()} >
-                                네, 생성합니다.</div></React.Fragment>}
-                        {this.state.forkDialog === 2 && <React.Fragment>
-                            <div className="ing-txt" >
-                                파생 디자인 생성중입니다.
-                                     <p >디자인 수정 페이지로 이동합니다.</p>
-                                     추가 정보를 입력해 주세요!</div>
-                        </React.Fragment>}
+                        {this.state.forkDialog === 1 ?
+                            <React.Fragment>
+                                <div className="close-box" onClick={() => this.closeFork()} >
+                                    <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} /></div>
+                                <div className="txt">
+                                    {DesignDetail.userName.slice(0, 12)}님의 디자인 <br />
+                                    "{DesignDetail.title.slice(0, 16)}{DesignDetail.title.length > 16 && "..."}"<br />
+                                    파생 디자인을 생성하시겠습니까?</div>
+                                <div className="confirm" onClick={() => this.doFork()} >
+                                    네, 생성합니다.</div>
+                            </React.Fragment>
+                            : null}
+
+                        {this.state.forkDialog === 2
+                            ? <React.Fragment>
+                                <div className="ing-txt" >
+                                    파생 디자인 생성중입니다.
+                                <p >디자인 수정 페이지로 이동합니다.</p>
+                                추가 정보를 입력해 주세요!</div>
+                            </React.Fragment>
+                            : null}
                     </ForkDialogContainer>
                     : null}
 
@@ -820,7 +828,8 @@ class DesignInfo extends Component {
                                             {/* detail + description  */}
                                             <LeftSide>
                                                 <div>
-                                                    <div className="title" title={DesignDetail.title}>{DesignDetail.title.slice(0, 64)}{DesignDetail.title.length > 64 ? "..." : ""}</div>
+                                                    <div className="title" title={DesignDetail.title}>
+                                                        <TextFormat txt={DesignDetail.title} /></div>
                                                     <div className="box">
                                                         {DesignDetail.parent_design ?
                                                             <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>
@@ -831,11 +840,6 @@ class DesignInfo extends Component {
                                                             <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
                                                                 <TextFormat txt={DesignDetail.userName} single />
                                                                 {(DesignDetail.member && DesignDetail.member.length > 1) ? ` 외 ${(DesignDetail.member.length - 1).toString()}명` : null}
-                                                                {/* 
-                                                            {DesignDetail.userName.length > 10 ?
-                                                            DesignDetail.userName.slice(0, 10) + "..." :
-                                                            DesignDetail.userName}
-                                                        */}
                                                             </div>
                                                         </button>
                                                         {!isMyDesign && this.state.memberList &&

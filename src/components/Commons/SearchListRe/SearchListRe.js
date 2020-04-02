@@ -104,6 +104,8 @@ const SearchContainer = styled.div`
     overflow: hidden;
 `;
 
+// 검색페이지에서 공백에 대한 특수문자처리를 제거하고 키워드 검색으로 변경(띄워쓰기 기준으로 split해서 and결과 값 보여주기)
+
 class SearchListRe extends Component {
     constructor(props) {
         super(props);
@@ -153,7 +155,7 @@ class SearchListRe extends Component {
         }
     }
     onChangeSearchkey(event) {
-        let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
+        let regExp = /^[a-zA-Zㄱ-힣0-9\s"_-]*$/i;
         if (regExp.test(event.target.value) === false) {
             alert("특수문자는 사용할 수 없습니다.");
             return;
