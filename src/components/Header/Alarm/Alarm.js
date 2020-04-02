@@ -14,6 +14,7 @@ const AlarmIcon = styled.div`
     background-position: center center;
 `;
 const AlarmList = styled.div`
+    // div{border:1px solid red;}
     display: ${props => props.display};
     z-index: 999;
     position: absolute;
@@ -22,7 +23,7 @@ const AlarmList = styled.div`
     right:300px;
     left: ${props => props.left + "px"};
     z-index: 904;
-    height: 550px;
+    height: 520px;
     width: 380px;
     border-radius: 15px;
     background-color: #FFFFFF;
@@ -66,7 +67,26 @@ const userinfo = {
     alarmLeft: "1512px",
 };
 let alarmlist = [];
-
+const ArrowLtoR = styled.div`
+    width: 12px;
+    height: 14px;
+    bacgkground: ${props => props.color || "#707070"};
+    opacity: 0.55;
+    border-left: 14px solid ${props => props.color || "#707070"};
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    margin: 3px 3px;
+`;
+const ArrowRtoL = styled.div`
+    width: 12px;
+    height: 14px;
+    bacgkground: ${props => props.color || "#707070"};
+    opacity: 0.55;
+    border-right: 14px solid ${props => props.color || "#707070"};
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    margin: 3px 3px;
+`;
 class Alarm extends Component {
 
     constructor(props) {
@@ -195,7 +215,7 @@ class Alarm extends Component {
                         .then(res => {
                             // if (res.data && res.data.success) {
 
-//                             alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                            //                             alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
                             // this.alarmConfirm(item.user_id, item.uid)
                             // } else {
                             // alert("다시 시도해주세요.");
@@ -361,68 +381,98 @@ class Alarm extends Component {
                             zIndex: "999", display: "flex", lineHeight: "25px", marginBottom: "11.5px", fontSize: "17px",
                             color: "#707070", fontWeight: "300"
                         }}>
-                            <div onClick={this.allAlarmConfirm}
-                                style={{
-                                    zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
-                                    backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px"
-                                }}>모두 읽음으로 처리</div>
+                            {this.props.alarm.count ?
+                                <div onClick={this.allAlarmConfirm}
+                                    style={{
+                                        zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
+                                        backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px"
+                                    }}>모두 읽음으로 처리</div>
+                                : null}
                         </div>
                         <div className="list">
                             {alarms && alarms.length ? alarms.map((item, index) => {
-                                // {alarmscombined && alarmscombined.length ? alarmscombined.map((item, index) => {
                                 if (item == null) return <div key={"undefined" + index}></div>;
-                                const alarmtype = this.showButton(item);
                                 const alarmKind = item.kinds;
-                                const thumbnail = item.thumbnail == null ? noimg : item.thumbnail;
+                                const thumbnail = item.thumbnail || noimg;
+                                const targetThumbnail = item.targetThumbnail || noimg;
                                 let msg = this.getMessageText(item);
                                 const MAXLENGTH = 32;
+
                                 return (
                                     <ListItem
-                                        onClick={() => alarmtype ? null : this.alarmConfirm(item.user_id, item.uid)}
-                                        confirm={item.confirm} key={item.uid}>
-                                        <div style={{ display: "flex", alignItems: "middle", fontSize: "17px", fontWeight: "300", paddingTop: "16.5px", width: "325px", position: "relative" }}>
-                                            {alarmtype ?
-                                                <div>
-                                                    <input type="checkbox" id="alarm-checkbox" value={item.uid} onChange={this.checkedAlarm} />
-                                                </div> : null}
+                                        key={item.uid}
+                                        confirm={item.confirm}
+                                        onClick={() => item.confirm ? null : this.alarmConfirm(item.user_id, item.uid)}>
+
+                                        <div style={{
+                                            display: "flex",
+                                            alignItems: "middle",
+                                            fontSize: "17px",
+                                            fontWeight: "300",
+                                            paddingTop: "16.5px",
+                                            width: "325px",
+                                            position: "relative"
+                                        }}>
                                             <TextFormat txt={msg} />
                                         </div>
                                         <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                             <div style={{ display: "flex", justifyContent: "space-start" }}>
-                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", width: "50px", height: "50px", borderRadius: "15%" }} />
-                                                <div style={{ display: "flex" }}>
-                                                    {alarmtype ?
-                                                        (
-                                                            <div style={{ paddingLeft: "15px", paddingTop: "15px", opacity: "1", fontSize: "17px", fontWeight: '500', width: "190px" }}>
-                                                                <TextFormat txt={item.title} chars={MAXLENGTH} />
+                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} title={item.title} />
+                                                {alarmKind === "COMMENT"
+                                                    ? <React.Fragment>
+                                                        &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
+                                                    </React.Fragment>
+                                                    : alarmKind === "JOIN_withDESIGN" || alarmKind === "JOIN_withGROUP"
+                                                        ?
+                                                        <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                                                            <ArrowRtoL color={"#404040"} />가입요청
+                                                            <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
+                                                        </div>
+                                                        : alarmKind === "GETOUT"
+                                                            ?
+                                                            <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                                                                탈퇴&nbsp;<ArrowLtoR color={"red"} />
+                                                                &nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
                                                             </div>
-                                                        )
-                                                        :
-                                                        (
-                                                            alarmKind !== "COMMENT"
-                                                                ? <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: '500', lineHeight: "20px", height: "20px", width: "225px" }}>
-                                                                    <TextFormat txt={item.title} chars={MAXLENGTH} />
+                                                            : alarmKind === "GROUP_DESIGN_OUT"
+                                                                ?
+                                                                <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                                                                    삭제&nbsp;<ArrowLtoR color={"red"} />
+                                                                    <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
                                                                 </div>
-                                                                : <div style={{ paddingLeft: "15px", paddingTop: "12.5px", fontSize: "17px", fontWeight: "300", lineHeight: "20px", height: "20px", width: "240px" }}>
-                                                                    <TextFormat txt={item.reply_preview} />
-                                                                </div>
-                                                        )
-                                                    }
-                                                </div>
+                                                                : <React.Fragment>
+                                                                    &nbsp;&nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
+                                                                </React.Fragment>}
                                             </div>
                                         </div>
                                     </ListItem>)
                             }) :
                                 <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>
-                                    최근 3개월 동안의 알림이 없습니다.</div>}
+                                    최근 알림이 없습니다.</div>}
                         </div>
                     </AlarmList>}
-                <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
-                    <div style={{ width: "48px", position: "absolute" }}>
-                        {this.props.alarm && this.props.alarm.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
-                        <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}><AlarmIcon /></i>
+                {/*  */}
+
+
+                {/* red circle icon */}
+                <div
+                    style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }}
+                    onClick={this.openAlarmList} >
+                    <div
+                        style={{ width: "48px", position: "absolute" }}>
+                        {this.props.alarm && this.props.alarm.count > 0 ?
+                            <div
+                                style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />
+                            : null}
+                        <i
+                            style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }}
+                            className="material-icons"
+                            onClick={this.openList}>
+                            <AlarmIcon />
+                        </i>
                     </div>
                 </div>
+
             </React.Fragment>
         )
     }
