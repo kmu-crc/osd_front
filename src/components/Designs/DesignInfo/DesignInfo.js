@@ -641,7 +641,6 @@ class DesignInfo extends Component {
         }
     }
 
-
     handleResize = () => {
         this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
     }
@@ -657,14 +656,12 @@ class DesignInfo extends Component {
     needLogin() {
         alert("로그인 해주세요.");
     }
-
     closeMemberList() {
         this.setState({ memberList: false });
     }
     closeForkList() {
         this.setState({ forkDesignList: false });
     }
-
     joinMember = () => {
         if (!this.props.userInfo || !this.props.token) {
             alert("로그인을 해주세요.");
@@ -895,7 +892,8 @@ class DesignInfo extends Component {
 
                                                         {DesignDetail.children_count["count(*)"] > 0
                                                             ? <button className="fork-list-btn" onClick={this.openForkList}>
-                                                                <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
+                                                                파생된 디자인
+                                                                    <div className="fork-count">{DesignDetail.children_count["count(*)"]}</div>
                                                             </button>
                                                             : null}
 
@@ -911,8 +909,10 @@ class DesignInfo extends Component {
                                                                                 <div className="design-thumbnail" />
                                                                                 <div className="design-title">
                                                                                     <TextFormat txt={item.title} chars={23} />
-                                                                                    <div>{item.nick_name}</div></div>
-                                                                            </div></ListItem>);
+                                                                                    <div>{item.nick_name}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ListItem>)
                                                                     })}</div>
                                                             </DesignMemberList>}
                                                     </div>
