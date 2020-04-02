@@ -350,9 +350,8 @@ class Alarm extends Component {
 
     render() {
         const alarms = this.props.alarm && this.props.alarm.list;
-        alarms && alarms.length > 0 && alarms.sort((a, b) => (a.create_time > b.create_time) ? 1 : -1);
+        alarms && alarms.length > 0 && alarms.sort((a, b) => (a.confirm > b.confirm) ? 1 : (a.create_time < b.create_time) ? 1 : -1);
         console.log(alarms);
-        // const alarmscombined = this.combine(alarms && alarms.list);
 
         return (
             <React.Fragment>
@@ -420,7 +419,7 @@ class Alarm extends Component {
                     </AlarmList>}
                 <div style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }} onClick={this.openAlarmList} >
                     <div style={{ width: "48px", position: "absolute" }}>
-                        {alarms && alarms.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
+                        {this.props.alarm && this.props.alarm.count > 0 && <div style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />}
                         <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons" onClick={this.openList}><AlarmIcon /></i>
                     </div>
                 </div>
