@@ -586,6 +586,7 @@ const RightSide = styled.div`
     }
 `;
 class DesignInfo extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -597,14 +598,49 @@ class DesignInfo extends Component {
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
         this.forkDesign = this.forkDesign.bind(this);
-        this.getForkDesignList = this.getForkDesignList.bind(this);
         this.joinMember = this.joinMember.bind(this);
         this.getMemberList = this.getMemberList.bind(this);
         this.getDesignComment = this.getDesignComment.bind(this);
         this.onMoveForkDesign = this.onMoveForkDesign.bind(this);
-        this.onBlurMemberList = this.onBlurMemberList.bind(this);
-        this.onBlurForkDesign = this.onBlurForkDesign.bind(this);
+
     }
+    memberRef = React.createRef();
+    forkRef = React.createRef();
+
+    // open member list not master
+    openMemberList = (e) => {
+        document.addEventListener("mousedown", this.checkClickOutSideMemberList)
+        const top = e.clientY + 10
+        const left = e.clientX - (e.clientX + 150 > window.screenLeft ? 250 : 175)
+        this.setState({ memberList: true, posY: top, posX: left })
+    };
+    checkClickOutSideMemberList = (e) => {
+        if (this.memberRef.current === null)
+            return
+
+        if (!this.memberRef.current.contains(e.target)) {
+            this.setState({ memberList: false, posY: 0, posX: 0 });
+            document.removeEventListener("mousedown", this.checkClickOutSideMemberList);
+        }
+    }
+    // open fork list not master
+    openForkList = (e) => {
+        this.props.ForkDesignListRequest(this.props.DesignDetail.uid);
+        document.addEventListener("mousedown", this.checkClickOutSideForkList)
+        const top = e.clientY + 10;
+        const left = e.clientX - (e.clientX + 150 > window.screenLeft ? 250 : 175);
+        this.setState({ forkDesignList: true, posY: top, posX: left });
+    };
+    checkClickOutSideForkList = (e) => {
+        if (this.forkRef.current === null)
+            return
+
+        if (!this.forkRef.current.contains(e.target)) {
+            this.setState({ forkDesignList: false, posY: 0, posX: 0 });
+            document.removeEventListener("mousedown", this.checkClickOutSideForkList);
+        }
+    }
+
     handleResize = () => {
         this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
     }
@@ -614,29 +650,17 @@ class DesignInfo extends Component {
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
     }
-    onBlurMemberList(event) {
-        this.setState({ memberList: false });
-    }
-    onBlurForkDesign(event) {
-        this.setState({ forkDesignList: false });
-    }
     onMoveForkDesign(designID) {
         window.location.href = "/designDetail/" + designID;
     }
     needLogin() {
         alert("로그인 해주세요.");
     }
-
     closeMemberList() {
         this.setState({ memberList: false });
     }
     closeForkList() {
         this.setState({ forkDesignList: false });
-    }
-    async getForkDesignList(event) {
-        await this.setState({ posX: event.clientX, posY: event.clientY });
-        this.props.ForkDesignListRequest(this.props.DesignDetail.uid);
-        await this.setState({ forkDesignList: true });
     }
     joinMember = () => {
         if (!this.props.userInfo || !this.props.token) {
@@ -731,6 +755,7 @@ class DesignInfo extends Component {
     getMemberList() {
         this.setState({ memberList: true });
     }
+
     render() {
         const { isMyDesign, editor, DesignDetail, Count, like } = this.props
         const { w } = this.state;
@@ -835,15 +860,16 @@ class DesignInfo extends Component {
                                                             <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)} title={DesignDetail.parent_title}>
                                                                 {DesignDetail.parent_title.slice(0, 4)} {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>
                                                             : null}
-                                                        {/* <div className="goto-parent no"></div>} */}
-                                                        <button className="member-list-btn" onClick={this.getMemberList} ref={ref => (this.memberlist = ref)}>
+
+                                                        <button className="member-list-btn" onClick={this.openMemberList} >
                                                             <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
                                                                 <TextFormat txt={DesignDetail.userName} single />
                                                                 {(DesignDetail.member && DesignDetail.member.length > 1) ? ` 외 ${(DesignDetail.member.length - 1).toString()}명` : null}
                                                             </div>
                                                         </button>
+
                                                         {!isMyDesign && this.state.memberList &&
-                                                            <DesignMemberList top={this.state.posY} left={this.state.posX}>
+                                                            <DesignMemberList ref={this.memberRef} top={this.state.posY} left={this.state.posX} >
                                                                 <div className="close-box" onClick={() => this.setState({ memberList: false })} >
                                                                     <Cross angle={45} width={30} height={30} />
                                                                 </div>
@@ -865,14 +891,14 @@ class DesignInfo extends Component {
 
 
                                                         {DesignDetail.children_count["count(*)"] > 0
-                                                            ? <button className="fork-list-btn" ref={ref => (this.forkDesignRef = ref)} onBlur={this.onBlurForkDesign} onClick={(event) => { this.getForkDesignList(event) }}>
-                                                                <React.Fragment>파생된 디자인<div className="fork-count">{DesignDetail.children_count["count(*)"]}</div></React.Fragment>
+                                                            ? <button className="fork-list-btn" onClick={this.openForkList}>
+                                                                파생된 디자인
+                                                                    <div className="fork-count">{DesignDetail.children_count["count(*)"]}</div>
                                                             </button>
                                                             : null}
-                                                        {/* <button className="fork-list-btn no" disabled></button>} */}
 
                                                         {this.state.forkDesignList &&
-                                                            <DesignMemberList top={this.state.posY} left={this.state.posX}>
+                                                            <DesignMemberList ref={this.forkRef} top={this.state.posY} left={this.state.posX}>
                                                                 <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
                                                                     <Cross angle={45} color={"#000000"} weight={3} width={30} height={30} />
                                                                 </div>
@@ -883,8 +909,10 @@ class DesignInfo extends Component {
                                                                                 <div className="design-thumbnail" />
                                                                                 <div className="design-title">
                                                                                     <TextFormat txt={item.title} chars={23} />
-                                                                                    <div>{item.nick_name}</div></div>
-                                                                            </div></ListItem>);
+                                                                                    <div>{item.nick_name}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ListItem>)
                                                                     })}</div>
                                                             </DesignMemberList>}
                                                     </div>
@@ -955,7 +983,7 @@ class DesignInfo extends Component {
                         </div>}
                 </Header>
 
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 };

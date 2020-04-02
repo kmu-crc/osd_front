@@ -87,6 +87,7 @@ const ArrowRtoL = styled.div`
     border-top: 6px solid transparent;
     margin: 3px 3px;
 `;
+
 class Alarm extends Component {
 
     constructor(props) {
