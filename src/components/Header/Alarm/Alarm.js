@@ -150,7 +150,7 @@ class Alarm extends Component {
         const title = item.title && item.title.length > 32 ? item.title.slice(0, 32) + "..." : item.title;
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
-                msg = `${from}님이 아래 디자인에 초대하였습니다.`
+                msg = `${from}님이 디자인에 초대하였습니다.`
             } else if (item.kinds === "REQUEST") {
                 msg = `${from}님이 멤버 가입 신청을 하였습니다.`
             } else if (item.kinds === "INVITE_TRUE") {
@@ -214,13 +214,12 @@ class Alarm extends Component {
                 if (confirm) {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(res => {
-                            // if (res.data && res.data.success) {
-
-                            //                             alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
-                            // this.alarmConfirm(item.user_id, item.uid)
-                            // } else {
-                            // alert("다시 시도해주세요.");
-                            // }
+                            if (res.data && res.data.success) {
+                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                                this.alarmConfirm(item.user_id, item.uid)
+                            } else {
+                                alert("다시 시도해주세요.");
+                            }
                         })
                         .catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
@@ -403,7 +402,7 @@ class Alarm extends Component {
                                     <ListItem
                                         key={item.uid}
                                         confirm={item.confirm}
-                                        onClick={() => item.confirm ? null : this.alarmConfirm(item.user_id, item.uid)}>
+                                        onClick={() => item.confirm || alarmKind === "INVITE" ? null : this.alarmConfirm(item.user_id, item.uid)}>
 
                                         <div style={{
                                             display: "flex",
@@ -441,9 +440,17 @@ class Alarm extends Component {
                                                                     삭제&nbsp;<ArrowLtoR color={"red"} />
                                                                     <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
                                                                 </div>
-                                                                : <React.Fragment>
-                                                                    &nbsp;&nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
-                                                                </React.Fragment>}
+                                                                : alarmKind === "INVITE"
+                                                                    ? <div style={{ marginLeft: "5px" }}>
+                                                                        <TextFormat txt={item.title} />
+                                                                        <div style={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
+                                                                            <div onClick={e => this.accept(e, item)} style={{ cursor: "point", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
+                                                                            <div onClick={e => this.reject(e, item)} style={{ cursor: "point", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    : <React.Fragment>
+                                                                        &nbsp;&nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
+                                                                    </React.Fragment>}
                                             </div>
                                         </div>
                                     </ListItem>)
