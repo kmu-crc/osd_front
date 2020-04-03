@@ -408,7 +408,7 @@ class GroupInfoComponent extends Component {
 
                                     <div className="time_label">
                                         <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.child_update_time)}</div>
-                                        <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString().substring(0,new Date(GroupDetail.create_time).toLocaleDateString().length-1)}</div>
+                                        <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
                                         </div> 
 
                                 </ButtonRegion>
