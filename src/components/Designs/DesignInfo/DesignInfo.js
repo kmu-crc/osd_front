@@ -865,7 +865,7 @@ class DesignInfo extends Component {
                                                             <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
                                                                 <TextFormat txt={DesignDetail.userName} chars={11} />
                                                                 <div style={{ fontSize: "0.95rem" }}>
-                                                                    {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 1${(DesignDetail.member.length - 1).toString()}명` : null}
+                                                                    {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명` : null}
                                                                 </div>
                                                             </div>
                                                         </button>
