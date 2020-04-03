@@ -270,7 +270,9 @@ class GroupInfoComponent extends Component {
         const isEditor = group_user_id === user_id;
         const { w, manager } = this.state;
 
-        console.log("::GROUPINFO::\n", this.props, this.state);
+        console.log("::GROUPINFO::\n", this.props, );
+        // console.log(new Date(GroupDetail.create_time).toLocaleDateString());
+
 
         return (
             <React.Fragment>
@@ -406,7 +408,8 @@ class GroupInfoComponent extends Component {
 
                                     <div className="time_label">
                                         <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.child_update_time)}</div>
-                                        <div>{GroupDetail && DateFormat(GroupDetail.create_time)} 등록</div></div>
+                                        <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString().substring(0,new Date(GroupDetail.create_time).toLocaleDateString().length-1)}</div>
+                                        </div> 
 
                                 </ButtonRegion>
                             </div>
