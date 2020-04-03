@@ -247,6 +247,7 @@ class MypageHeader extends Component {
                                     </div>
                                     <div style={{ marginTop: "auto" }}>
                                         <div className="UpdateTimeLabel">최근 업데이트 {MyDetail && DateFormat(MyDetail.update_time)}</div>
+                                        <div className="UpdateTimeLabel">등록 일자 {MyDetail&&new Date(MyDetail.create_time).toLocaleDateString().substring(0,new Date(MyDetail.create_time).toLocaleDateString().length-1)}</div>
                                     </div>
                                 </ButtonRegion>
                             </div>

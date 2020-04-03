@@ -788,7 +788,7 @@ class DesignInfo extends Component {
                 </DesignCommentModalContainer>)
         }
 
-        console.log(this.props);
+        console.log(new Date(DesignDetail.update_time));
 
         return (
             <React.Fragment>
@@ -972,8 +972,9 @@ class DesignInfo extends Component {
                                             </div>}
                                     </div>
                                     <div>
+                                        {/* <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div> */}
                                         <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                                        <div className="update-time">{DateFormat(DesignDetail.create_time)} 등록</div>
+                                        <div className="update-time">등록 일자 {DesignDetail&&new Date(DesignDetail.create_time).toLocaleDateString().substring(0,new Date(DesignDetail.create_time).toLocaleDateString().length-1)}</div>
                                     </div>
                                 </RightSide>
 
