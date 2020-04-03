@@ -354,7 +354,7 @@ class DesignerPageHeader extends Component {
                                     </div>
                                     <div style={{ marginTop: "auto" }}>
                                         <div className="UpdateTimeLabel">최근 업데이트 {DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
-                                        <div className="UpdateTimeLabel">등록 일자 {DesignerDetail&&new Date(DesignerDetail.create_time).toLocaleDateString().substring(0,new Date(DesignerDetail.create_time).toLocaleDateString().length-1)}</div>
+                                        <div className="UpdateTimeLabel">등록 일자 {DesignerDetail&&new Date(DesignerDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(DesignerDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
                                     </div>
                                 </ButtonRegion>
                             </div>
