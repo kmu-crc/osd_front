@@ -98,7 +98,7 @@ class Alarm extends Component {
         }
         this.accept = this.accept.bind(this);
     }
-    
+
     myRef = React.createRef();
     componentDidUpdate(prevProps) {
         if (JSON.stringify(prevProps.alarm) !== JSON.stringify(this.props.alarm)) {
@@ -404,17 +404,23 @@ class Alarm extends Component {
             </div>
 
         else if (item.type === "DESIGN" && item.kinds === "INVITE")
-            return <div style={{ marginLeft: "5px" }}>
-                <TextFormat txt={item.title} />
-                {item.confirm === 0 ?
-                    <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
-                        <div onClick={e => this.accept(e, item)} style={{ cursor: "point !important", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
-                        <div onClick={e => this.reject(e, item)} style={{ cursor: "point !important", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
-                    </div>
-                    : null}
+            return <div style={{ marginLeft: "5px", diplay: "flex", flexDirection: "column" }}>
+                <div style={{ fontSize: "16px" }}>
+                    <TextFormat txt={item.title} chars={MAXLENGTH} />
+                </div>
+                <div>
+                    {item.confirm === 0 ?
+                        <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
+                            <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
+                            <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+                        </div>
+                        : null}
+                </div>
             </div>
         // else if (item.type === "DESIGN" && item.kinds === "LIKE")
-        //     return <div></div>
+        //     return <div>
+        //...
+        //</div>
         else {
             return <TextFormat txt={item.title} chars={MAXLENGTH} />
         }
