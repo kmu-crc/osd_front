@@ -14,13 +14,13 @@ const AlarmIcon = styled.div`
     background-position: center center;
 `;
 const AlarmList = styled.div`
-    // div{border:1px solid red;}
+    // div{ border:1px solid red; }
     display: ${props => props.display};
     z-index: 999;
     position: absolute;
     pointer-events: auto;
     top: 60px;
-    right:300px;
+    right: 300px;
     left: ${props => props.left + "px"};
     z-index: 904;
     height: 520px;
@@ -41,7 +41,7 @@ const AlarmList = styled.div`
     .list {
         padding-right: 36px;
         padding-bottom: 5px;
-        height: 490px;
+        height: 450px;
         overflow-y: hidden;
         overflow-x: hidden;
         &:hover{
@@ -50,9 +50,9 @@ const AlarmList = styled.div`
     }
 `;
 const ListItem = styled.div`
-    display:flex;
-    padding-left:15px;
-    flex-direction:column;
+    display: flex;
+    padding-left: 15px;
+    flex-direction: column;
     opacity: ${props => props.confirm ? 0.5 : 1};
     width: 380px;
     height: 118px;
@@ -98,6 +98,7 @@ class Alarm extends Component {
         }
         this.accept = this.accept.bind(this);
     }
+    
     myRef = React.createRef();
     componentDidUpdate(prevProps) {
         if (JSON.stringify(prevProps.alarm) !== JSON.stringify(this.props.alarm)) {
@@ -184,13 +185,17 @@ class Alarm extends Component {
                 msg = `${to}님이 그룹에 가입되었습니다.`;
             } else if (item.kinds === "JOINREFUSE") {
                 msg = `${to}님의 그룹 가입 신청이 거절되었습니다.`;
+            } else if (item.kinds === "GROUP_JOINREFUSE") {
+                msg = `그룹 가입요청이 거절되었습니다.`;
             } else if (item.kinds === "GROUP_GETOUT") {
-                msg = `${to}님께서 그룹에서 활동이 중단되셨습니다.`;
+                msg = `${title}그룹에서 그룹이 삭제되었습니다.`;
             } else if (item.kinds === "LIKE") {
                 if (item.count > 1) msg = `${from}님외 ${item.count - 1}명이 그룹을 좋아합니다.`;
                 else msg = `${from}님이 그룹을 좋아합니다.`;
             } else if (item.kinds === "GROUP_DESIGN_OUT") {
                 msg = `${title}그룹에서 디자인이 삭제되었습니다.`;
+            } else if (item.kinds === "GROUP_GROUP_OUT") {
+                msg = `${title}그룹에서 그룹이 삭제되었습니다.`;
             }
         } else if (item.type === "DESIGNER") {
             if (item.kinds === "LIKE") {
@@ -368,6 +373,65 @@ class Alarm extends Component {
         alarmlist = [];
     }
 
+    getAlarmItem = (item) => {
+        const MAXLENGTH = 32;
+        const targetThumbnail = item.targetThumbnail || noimg;
+
+        if (item.type === "DESIGN" && item.kinds === "COMMENT") {
+            return <React.Fragment>
+                &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
+            </React.Fragment>
+        }
+        else if ((item.type === "GROUP" && item.kinds === "JOIN_withDESIGN") || (item.type === "GROUP" && item.kinds === "JOIN_withGROUP")) {
+            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <ArrowRtoL color={"#404040"} />
+                <div style={{ width: "max-content", cursor: "default" }}>가입요청</div>
+                <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
+            </div>
+        }
+        else if (item.type === "DESIGN" && item.kinds === "GETOUT")
+            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div>
+                <ArrowLtoR color={"red"} />
+                <TextFormat txt={item.title} chars={MAXLENGTH} />
+            </div>
+        else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT"))
+            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <div style={{ width: "max-content", cursor: "default" }}>삭제</div>
+                <ArrowLtoR color={"red"} />
+                <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
+                <TextFormat txt={item.targetTitle} chars={MAXLENGTH - 15} />
+            </div>
+
+        else if (item.type === "DESIGN" && item.kinds === "INVITE")
+            return <div style={{ marginLeft: "5px" }}>
+                <TextFormat txt={item.title} />
+                {item.confirm === 0 ?
+                    <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
+                        <div onClick={e => this.accept(e, item)} style={{ cursor: "point !important", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
+                        <div onClick={e => this.reject(e, item)} style={{ cursor: "point !important", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+                    </div>
+                    : null}
+            </div>
+        // else if (item.type === "DESIGN" && item.kinds === "LIKE")
+        //     return <div></div>
+        else {
+            return <TextFormat txt={item.title} chars={MAXLENGTH} />
+        }
+        // (item.type === "DESIGN" && item.kinds === "REQUEST")
+        // (item.type === "DESIGN" && item.kinds === "INVITE_TRUE")
+        // (item.type === "DESIGN" && item.kinds === "REQUEST_TRUE")
+        // (item.type === "DESIGN" && item.kinds === "REFUSE")
+        // (item.type === "DESIGN" && item.kinds === "INVITE_REJECT")
+        // (item.type === "DESIGN" && item.kinds === "CARD_COMMENT")
+        // (item.type === "DESIGN" && item.kinds === "COMMENT_COMMENT")
+        // (item.type === "GROUP" && item.kinds === "JOIN")
+        // (item.type === "GROUP" && item.kinds === "JOINSUCCESS")
+        // (item.type === "GROUP" && item.kinds === "JOINREFUSE")
+        // (item.type === "GROUP" && item.kinds === "GROUP_JOINREFUSE")
+        // (item.type === "GROUP" && item.kinds === "GROUP_GETOUT")
+        // (item.type === "GROUP" && item.kinds === "LIKE")
+    }
     render() {
         const alarms = this.props.alarm && this.props.alarm.list;
         alarms && alarms.length > 0 && alarms.sort((a, b) => (a.confirm > b.confirm) ? 1 : (a.create_time < b.create_time) ? 1 : -1);
@@ -391,68 +455,28 @@ class Alarm extends Component {
                         </div>
                         <div className="list">
                             {alarms && alarms.length ? alarms.map((item, index) => {
-                                if (item == null) return <div key={"undefined" + index}></div>;
-                                const alarmKind = item.kinds;
+                                if (item == null)
+                                    return <div key={"undefined" + index}></div>;
                                 const thumbnail = item.thumbnail || noimg;
-                                const targetThumbnail = item.targetThumbnail || noimg;
                                 let msg = this.getMessageText(item);
-                                const MAXLENGTH = 32;
 
                                 return (
                                     <ListItem
                                         key={item.uid}
                                         confirm={item.confirm}
-                                        onClick={() => item.confirm || alarmKind === "INVITE" ? null : this.alarmConfirm(item.user_id, item.uid)}>
+                                        onClick={() => (item.confirm || item.kinds === "INVITE") ? null : this.alarmConfirm(item.user_id, item.uid)}>
 
                                         <div style={{
-                                            display: "flex",
-                                            alignItems: "middle",
-                                            fontSize: "17px",
-                                            fontWeight: "300",
-                                            paddingTop: "16.5px",
-                                            width: "325px",
-                                            position: "relative"
+                                            position: "relative", display: "flex", alignItems: "middle",
+                                            width: "325px", paddingTop: "16.5px",
+                                            fontSize: "17px", fontWeight: "300",
                                         }}>
                                             <TextFormat txt={msg} />
                                         </div>
                                         <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                             <div style={{ display: "flex", justifyContent: "space-start" }}>
                                                 <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} title={item.title} />
-                                                {alarmKind === "COMMENT"
-                                                    ? <React.Fragment>
-                                                        &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
-                                                    </React.Fragment>
-                                                    : alarmKind === "JOIN_withDESIGN" || alarmKind === "JOIN_withGROUP"
-                                                        ?
-                                                        <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                                                            <ArrowRtoL color={"#404040"} />가입요청
-                                                            <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
-                                                        </div>
-                                                        : alarmKind === "GETOUT"
-                                                            ?
-                                                            <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                                                                탈퇴&nbsp;<ArrowLtoR color={"red"} />
-                                                                &nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
-                                                            </div>
-                                                            : alarmKind === "GROUP_DESIGN_OUT"
-                                                                ?
-                                                                <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                                                                    삭제&nbsp;<ArrowLtoR color={"red"} />
-                                                                    <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
-                                                                </div>
-                                                                : alarmKind === "INVITE"
-                                                                    ? <div style={{ marginLeft: "5px" }}>
-                                                                        <TextFormat txt={item.title} />
-                                                                        {item.confirm ?
-                                                                            <div style={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
-                                                                                <div onClick={e => this.accept(e, item)} style={{ cursor: "point", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
-                                                                                <div onClick={e => this.reject(e, item)} style={{ cursor: "point", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
-                                                                            </div>
-                                                                            : null}
-                                                                    </div>
-                                                                    : <React.Fragment>
-                                                                        &nbsp;&nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
-                                                                    </React.Fragment>}
+                                                {this.getAlarmItem(item)}
                                             </div>
                                         </div>
                                     </ListItem>)
