@@ -151,7 +151,7 @@ class Alarm extends Component {
         const title = item.title && item.title.length > 32 ? item.title.slice(0, 32) + "..." : item.title;
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
-                msg = `${from}님이 디자인에 초대하였습니다.`
+                msg = `${item.title}디자인 멤버로 초대하였습니다.`;
             } else if (item.kinds === "REQUEST") {
                 msg = `${from}님이 멤버 가입 신청을 하였습니다.`
             } else if (item.kinds === "INVITE_TRUE") {
@@ -384,26 +384,27 @@ class Alarm extends Component {
         }
         else if ((item.type === "GROUP" && item.kinds === "JOIN_withDESIGN") || (item.type === "GROUP" && item.kinds === "JOIN_withGROUP")) {
             return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                <ArrowRtoL color={"#404040"} />
-                <div style={{ width: "max-content", cursor: "default" }}>가입요청</div>
+                {/* <ArrowRtoL color={"#404040"} /> */}
+                {/* <div style={{ width: "max-content", cursor: "default" }}>가입요청</div> */}
                 <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
             </div>
         }
-        else if (item.type === "DESIGN" && item.kinds === "GETOUT")
+        else if (item.type === "DESIGN" && item.kinds === "GETOUT") {
             return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div>
-                <ArrowLtoR color={"red"} />
+                {/* <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div> */}
+                {/* <ArrowLtoR color={"red"} /> */}
                 <TextFormat txt={item.title} chars={MAXLENGTH} />
             </div>
-        else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT"))
+        }
+        else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT")) {
             return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                <div style={{ width: "max-content", cursor: "default" }}>삭제</div>
-                <ArrowLtoR color={"red"} />
+                {/* <div style={{ width: "max-content", cursor: "default" }}>삭제</div> */}
+                {/* <ArrowLtoR color={"red"} /> */}
                 <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
                 <TextFormat txt={item.targetTitle} chars={MAXLENGTH - 15} />
             </div>
-
-        else if (item.type === "DESIGN" && item.kinds === "INVITE")
+        }
+        else if (item.type === "DESIGN" && item.kinds === "INVITE") {
             return <div style={{ marginLeft: "5px", diplay: "flex", flexDirection: "column" }}>
                 <div style={{ fontSize: "16px" }}>
                     <TextFormat txt={item.title} chars={MAXLENGTH} />
@@ -411,19 +412,18 @@ class Alarm extends Component {
                 <div>
                     {item.confirm === 0 ?
                         <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
-                            <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
-                            <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+                            <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "19px" }}>승인</div>
+                            <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
                         </div>
                         : null}
                 </div>
             </div>
-        // else if (item.type === "DESIGN" && item.kinds === "LIKE")
-        //     return <div>
-        //...
-        //</div>
+        }
         else {
             return <TextFormat txt={item.title} chars={MAXLENGTH} />
         }
+        // else if (item.type === "DESIGN" && item.kinds === "LIKE")
+        //     return <div>...</div>
         // (item.type === "DESIGN" && item.kinds === "REQUEST")
         // (item.type === "DESIGN" && item.kinds === "INVITE_TRUE")
         // (item.type === "DESIGN" && item.kinds === "REQUEST_TRUE")
