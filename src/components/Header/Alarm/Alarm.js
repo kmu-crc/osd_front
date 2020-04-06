@@ -443,10 +443,12 @@ class Alarm extends Component {
                                                                 : alarmKind === "INVITE"
                                                                     ? <div style={{ marginLeft: "5px" }}>
                                                                         <TextFormat txt={item.title} />
-                                                                        <div style={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
-                                                                            <div onClick={e => this.accept(e, item)} style={{ cursor: "point", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
-                                                                            <div onClick={e => this.reject(e, item)} style={{ cursor: "point", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
-                                                                        </div>
+                                                                        {item.confirm ?
+                                                                            <div style={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
+                                                                                <div onClick={e => this.accept(e, item)} style={{ cursor: "point", marginLeft: "auto", marginRight: "15px", color: "#FF0000", fontSize: "19px" }}>승인</div>
+                                                                                <div onClick={e => this.reject(e, item)} style={{ cursor: "point", marginRight: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+                                                                            </div>
+                                                                            : null}
                                                                     </div>
                                                                     : <React.Fragment>
                                                                         &nbsp;&nbsp;<TextFormat txt={item.title} chars={MAXLENGTH} />
