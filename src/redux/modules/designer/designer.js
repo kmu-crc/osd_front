@@ -325,12 +325,10 @@ export function GetLikeDesignerInDesignerRequest(id, page, sort) {
 
 // 디자이너의 디자인 리스트 가져오기
 export function GetMyDesignInDesignerRequest(id, page, sort) {
-    const sql = `${host}/designer/designerDetail/${id}/allDesignDesigner/${page}/${sort}`;
-    console.log("sql:", sql);
-    // const sql = `${host}/designer/designerDetail/` + id + "/myDesign/" + page
-    console.log(sql);
+    const url = `${host}/designer/designerDetail/${id}/allDesignDesigner/${page}/${sort}`;
+    console.log("sql:", url);
     return (dispatch) => {
-        return fetch(sql, {
+        return fetch(url, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {
