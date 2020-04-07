@@ -166,41 +166,19 @@ class SearchListRe extends Component {
         }
     };
 
-    onSearchSubmit = (data) => {
+    onSearchSubmit = (_) => {
         if (this.state.keyword == null || this.state.keyword === "") {
             alert("키워드를 입력해주세요");
         } else {
             const urll = encodeURIComponent(`${this.state.keyword}`);
-            //alert(decodeURIComponent(`${this.state.searchKeyword}`));
             this.props.history.replace(urll);
             window.location.href = urll;
         }
     };
-    onChangeDropBox(event, { value }) {
-        this.setState({ selectCate: { value }.value });
-
-        let urlCate = "design";
-
-        switch ({ value }.value) {
-            case 0:
-                urlCate = "all";
-                this.setState({ urlCate: "all" });
-                break;
-            case 1:
-                urlCate = "design";
-                this.setState({ urlCate: "design" });
-                break;
-            case 2:
-                urlCate = "group";
-                this.setState({ urlCate: "group" });
-                break;
-            case 3:
-                urlCate = "designer";
-                this.setState({ urlCate: "designer" });
-                break;
-            default:
-                break;
-        }
+    onChangeDropBox(_, { value }) {
+        const typevalue = { value }.value;
+        const cates = ["all", "design", "group", "designer"];
+        this.setState({ selectCate: typevalue, urlCate: cates[typevalue] || 1 });
         this.props.history.replace(`/search/${this.props.sort}/${this.props.keyword}`);
     };
 
