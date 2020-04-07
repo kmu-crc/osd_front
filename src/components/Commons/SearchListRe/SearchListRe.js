@@ -104,8 +104,6 @@ const SearchContainer = styled.div`
     overflow: hidden;
 `;
 
-// 검색페이지에서 공백에 대한 특수문자처리를 제거하고 키워드 검색으로 변경(띄워쓰기 기준으로 split해서 and결과 값 보여주기)
-
 class SearchListRe extends Component {
     constructor(props) {
         super(props);
@@ -127,11 +125,11 @@ class SearchListRe extends Component {
     componentDidMount() {
         this.props.GetCategoryAllRequest()
             .then(() => { this.props.GetDesignListCountRequest() });
-        const addrText = window.location.href.toString();
-        if (addrText.indexOf('group') !== -1) { this.setState({ selectCate: 2, urlCate: "group" }) }
-        else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3, urlCate: "designer" }) }
-        else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
-        else { this.setState({ selectCate: 1 }) }
+        // const addrText = window.location.href.toString();
+        // if (addrText.indexOf('group') !== -1) { this.setState({ selectCate: 2, urlCate: "group" }) }
+        // else if (addrText.indexOf('designer') !== -1) { this.setState({ selectCate: 3, urlCate: "designer" }) }
+        // else if (addrText.indexOf('design') !== -1) { this.setState({ selectCate: 1, urlCate: "design" }) }
+        // else { this.setState({ selectCate: 1 }) }
         const keyword = this.props.keyword == null ? "" : this.props.keyword;
         this.setState({ searchKeyword: keyword, keyword: keyword });
     }
@@ -142,13 +140,12 @@ class SearchListRe extends Component {
         ) {
             const designs = this.props.designs.length || 0
                 , groups = this.props.groups.length || 0
-            // , designers = this.props.designers.length || 0;
-            // console.log(designs, groups, designers);
-            if (this.state.selectCate === 1 && designs === 0) {
-                this.setState({ selectCate: 2, urlCate: "group" });
-            } else if (this.state.selectCate === 2 && groups === 0) {
-                this.setState({ selectCate: 3, urlCate: "designer" });
-            }
+                , designers = this.props.designers.length || 0;
+
+            console.log(designs, groups, designers);
+            if (designs) { this.setState({ selectCate: 1, urlCate: "design" }); }
+            else if (groups) { this.setState({ selectCate: 2, urlCate: "group" }); }
+            else if (designers) { this.setState({ selectCate: 3, urlCate: "designer" }); }
         }
         if (prevState.searchKeyword !== this.state.searchKeyword) {
             this.setState({ searchKeyword: this.state.searchKeyword });
@@ -204,7 +201,7 @@ class SearchListRe extends Component {
             default:
                 break;
         }
-        this.props.history.replace(`/search/${urlCate}/${this.props.sort}/${this.props.keyword}`);
+        this.props.history.replace(`/search/${this.props.sort}/${this.props.keyword}`);
     };
 
     handleChangeCategory = async (category) => {
@@ -215,7 +212,6 @@ class SearchListRe extends Component {
     }
     handleChangeOrderOps = async (order) => {
         await this.setState({ this_order: order })
-
     }
 
     render() {

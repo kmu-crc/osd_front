@@ -128,7 +128,7 @@ class SearchList extends Component {
   getSearchValue = (e) => {
     const target = e.target;
     const value = target.value;
-    let regExp =  /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
+    let regExp = /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
     if (!value.match(regExp)) {
       alert("특수문자는 사용할 수 없습니다.");
       target.value = "";
@@ -150,31 +150,33 @@ class SearchList extends Component {
     if (this.state.keyword === null || this.state.keyword === "") {
       alert("키워드를 입력해주세요");
     } else {
-      this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`);
+      this.props.history.replace(`/${this.props.sort}/${this.state.keyword}`);
       this.changeState();
     }
   }
 
   typeChange = (e, { value }) => {
-    this.props.history.replace(`/search/${value}/${this.props.sort}/${this.props.keyword}`);
+    alert(value);
+    return;
+    this.props.history.replace(`/search/${this.props.sort}/${this.props.keyword}`);
   }
 
   sortChange = (e, { value }) => {
-    this.props.history.replace(`/search/${this.props.type}/${value}/${this.props.keyword}`);
+    this.props.history.replace(`/search/${value}/${this.props.keyword}`);
     this.changeState();
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
         <ImgWrapper>
           <Title>
             <input id="searchInput"
-                   placeholder="검색어를 입력하세요"
-                   onChange={this.getSearchValue}
-                   onKeyDown={this.submitEnter}
-                   maxLength = "100"
-                   />
+              placeholder="검색어를 입력하세요"
+              onChange={this.getSearchValue}
+              onKeyDown={this.submitEnter}
+              maxLength="100"
+            />
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>
             </button>
@@ -187,15 +189,15 @@ class SearchList extends Component {
                 <Grid.Row>
                   <Grid.Column widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8}>
                     <Dropdown placeholder={this.props.type && this.props.type === "designer"
-                                          ? "디자이너"
-                                          : this.props.type && this.props.type === "group"
-                                          ? "그룹"
-                                          : "디자인"}
-                              options={type}
-                              onChange={this.typeChange}/>
+                      ? "디자이너"
+                      : this.props.type && this.props.type === "group"
+                        ? "그룹"
+                        : "디자인"}
+                      options={type}
+                      onChange={this.typeChange} />
                   </Grid.Column>
                   {/* <CategoryContainer widescreen={8} largeScreen={8} computer={8} tablet={10} mobile={11} handleCate1={this.cate1Change} handleCate2={this.cate2Change} cate1={this.props.cate1} cate2={this.props.cate2}/> */}
-                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8} handleClick={this.sortChange} placeholder={this.props.sort}/>
+                  <Sorting widescreen={8} largeScreen={8} computer={8} tablet={8} mobile={8} handleClick={this.sortChange} placeholder={this.props.sort} />
                 </Grid.Row>
               </MenuContainer>
             </Wrapper>
@@ -203,14 +205,14 @@ class SearchList extends Component {
         </MenuWrap>
         <Content>
           {this.state.rendering &&
-          <Wrapper>
-            {this.props.type === "designer"
-            ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-            : this.props.type === "group"
-            ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-            : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword}/>
-            }
-          </Wrapper>
+            <Wrapper>
+              {this.props.type === "designer"
+                ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} />
+                : this.props.type === "group"
+                  ? <ScrollGroupListContainer sort={this.props.sort} keyword={this.props.keyword} />
+                  : <ScrollDesignListContainer sort={this.props.sort} keyword={this.props.keyword} />
+              }
+            </Wrapper>
           }
         </Content>
       </div>
