@@ -184,11 +184,11 @@ class Design extends Component {
         <div className="categoryName">{data.categoryName}</div>
         <div className="innerbox">
           <div className="design-title">
-            <TextFormat width="100%" txt={data.title} single />
+            <TextFormat tip width="100%" txt={data.title} single />
           </div>
           <div className="user-update-wrapper">
             <div style={{ width: "200px" }}>
-              <TextFormat txt={data.userName} width="100%" />
+              <TextFormat tip txt={data.userName} width="100%" />
             </div>
             <div style={{ width: "max-content" }}>
               {DateFormat(data.update_time)}
