@@ -124,7 +124,9 @@ function MsgReceiveBox(props) {
   return (
     <ReceiveMessageBox>
       <div className="messageReceiveBubble">
-        <div className="messageText">{props.msgText}</div>
+        <div className="messageText" dangerouslySetInnerHTML={{ __html: props.msgText }}>
+          {/* {props.msgText} */}
+        </div>
       </div>
       <div className="messageReceiveTime">{props.updateTime}</div>
     </ReceiveMessageBox>
@@ -136,7 +138,9 @@ function MsgSendBox(props) {
       <div className="messageSendTime">{props.updateTime}</div>
 
       <div className="messageSendBubble">
-        <div className="messageText">{props.msgText}</div>
+        <div className="messageText" dangerouslySetInnerHTML={{ __html: props.msgText }}>
+          {/* {props.msgText} */}
+        </div>
       </div>
     </SendMessageBox>
   );
@@ -227,7 +231,11 @@ class MessageDetail extends Component {
 
     return (
       <React.Fragment>
-        <MsgSectionBoard onScroll={this.handleScroll} height={this.props.height} id="MsgBox" onClick={this.ScrollDown}>
+        <MsgSectionBoard
+          onScroll={this.handleScroll}
+          height={this.props.height}
+          id="MsgBox"
+          onClick={this.ScrollDown}>
           {arrMsg}
         </MsgSectionBoard>
       </React.Fragment >
