@@ -10068,6 +10068,11 @@ react-awesome-modal@^2.0.5:
   resolved "https://registry.yarnpkg.com/react-awesome-modal/-/react-awesome-modal-2.0.5.tgz#d19702f7e3bc1f43e734f5a60814c2d1593c693a"
   integrity sha512-H+0xKBhcGJCoDtMww5K+XUzQtK+oRNpXr1VZoN1tbBgu+fzrLrF+ZkdRC1XiPLJ5gpVd9uR90yg8nyPTtYj/OQ==
 
+react-confirm@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/react-confirm/-/react-confirm-0.1.20.tgz#fad38ae75bf02d612566eeba3f6a4f9aa1042d7a"
+  integrity sha512-DNd3TixaLq9r/wm3tL9rcGnAafVtlWxWGqLPI5ipXzrSDk3d7pjlvZl4WwGr4gmVGT1h8q2xwtXE+9LIo0YlzQ==
+
 react-dev-utils@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.1.0.tgz#3ad2bb8848a32319d760d0a84c56c14bdaae5e81"
