@@ -30,6 +30,23 @@ const UPDATE_USER_DETAIL_SUCCESS = "UPDATE_USER_DETAIL_SUCCESS"
 const UPDATE_USER_DETAIL_FAILURE = "UPDATE_USER_DETAIL_FAILURE"
 const MY_LIKE_GROUP_FAIL = "MY_LIKE_GROUP_FAIL";
 
+
+const GET_MY_MAIN_DESIGN_LIST = "GET_MY_MAIN_DESIGN_LIST";
+const MY_MAIN_DESIGN_LIST_CLEAR = "MY_MAIN_DESIGN_LIST_CLEAR";
+const MY_MAIN_DESIGN_LIST_FAIL = "MY_MAIN_DESIGN_LIST_FAIL";
+
+const GET_MY_MAIN_GROUP_LIST = "GET_MY_MAIN_GROUP_LIST";
+const MY_MAIN_GROUP_LIST_CLEAR = "MY_MAIN_GROUP_LIST_CLEAR";
+const MY_MAIN_GROUP_LIST_FAIL = "MY_MAIN_GROUP_LIST_FAIL";
+
+const GetMyMainGroupList = (data) => ({ type: GET_MY_MAIN_GROUP_LIST, MyMainGroup: data })
+const MyMainGroupListClear = (data) => ({ type: MY_MAIN_GROUP_LIST_CLEAR, MyMainGroup: data, MyMainGroupAdded: [] })
+const MyMainGroupListFail = () => ({ type: MY_MAIN_GROUP_LIST_FAIL, MyMainGroup: [], MyMainGroupAdded: [] })
+
+const GetMyMainDesignList = (data) => ({ type: GET_MY_MAIN_DESIGN_LIST, MyMainDesign: data })
+const MyMainDesignListClear = (data) => ({ type: MY_MAIN_DESIGN_LIST_CLEAR, MyMainDesign: data, MyMainDesignAdded: [] })
+const MyMainDesignListFail = () => ({ type: MY_MAIN_DESIGN_LIST_FAIL, MyMainDesign: [], MyMainDesignAdded: [] })
+
 const GetMyDetail = (data) => ({ type: GET_MY_DETAIL, MyDetail: data })
 const GetMyDesignList = (data) => ({ type: GET_MY_DESIGN, MyDesign: data })
 const MyDesignListClear = (data) => ({ type: GET_MY_DESIGN_CLEAR, MyDesign: data, MyDesignAdded: [] })
@@ -244,6 +261,29 @@ export default function Personal(state, action) {
                     MyLikeDesignerAdded: { $set: action.MyLikeDesignerAdded }
                 }
             })
+
+        case GET_MY_MAIN_DESIGN_LIST:
+            return update(state, {
+                status: {
+                    MyMainDesign: { $set: action.MyMainDesign },
+                    MyMainDesignAdded: { $push: action.MyMainDesign }
+                }
+            })
+        case MY_MAIN_DESIGN_LIST_CLEAR:
+            return update(state, {
+                status: {
+                    MyMainDesign: { $set: action.MyMainDesign },
+                    MyMainDesignAdded: { $set: action.MyMainDesign }
+                }
+            })
+        case MY_MAIN_DESIGN_LIST_FAIL:
+            return update(state, {
+                status: {
+                    MyMainDesign: { $set: action.MyMainDesign },
+                    MyMainDesignAdded: { $set: action.MyMainDesignAdded }
+                }
+            })
+
         default:
             return state
     }
@@ -258,6 +298,8 @@ const initialState = {
         InvitingList: [],
         MyDetail: [],
         MyDesign: [], MyDesignAdded: [],
+        MyMainDesign: [], MyMainDesignAdded: [],
+        MyMainGroup: [], MyMainDesignGroup: [],
         MyGroup: [], MyGroupAdded: [],
         MyLikeDesign: [], MyLikeDesignAdded: [],
         MyLikeDesigner: [], MyLikeDesignerAdded: [],
@@ -511,5 +553,44 @@ export function UpdateUserDetailRequest(data, token) {
             console.log("update detail err", error)
             return dispatch(UpdateUserDetailFailure())
         })
+    }
+}
+
+
+
+
+/////// 메인페이지 ///////
+export function GetMyMainDesignListRequest(token, page) {
+    return (dispatch) => {
+        // https://https.opensrcdesign.com/users/myMain/0
+        const url = `${host}/users/myMainDesign/${page}`;
+        console.log("url:", url);
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        }).then(res => res.json())
+            .then(data => {
+                dispatch(page === 0 ? MyMainDesignListClear(data || []) : GetMyMainDesignList(data || []))
+            }).catch(error => {
+                console.error("err:", error)
+                dispatch(MyMainDesignListFail())
+            })
+    }
+}
+
+export function GetMyMainGroupListRequest(token, page) {
+    return (dispatch) => {
+        const url = `${host}/users/myMainGroup/${page}`;
+        console.log("url:", url);
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        }).then(res => res.json())
+            .then(data => {
+                dispatch(page === 0 ? MyMainGroupListClear(data || []) : GetMyMainGroupList(data || []))
+            }).catch(error => {
+                console.error("err:", error)
+                dispatch(MyMainGroupListFail())
+            })
     }
 }

@@ -1333,9 +1333,7 @@ class AddContent extends Component {
             <Tip>
               <sup>&nbsp;?</sup>
               <div className="wrapper">
-                <div className="tip-txt">
-                  {/* 단계를 가지는 디자인을 생성합니다.<br /> */}
-                   <font style={{ color: "pink" }}>*&nbsp;</font>디자인 수행 단계를 생성합니다.</div>
+                <div className="tip-txt"><font style={{ color: "pink" }}>*&nbsp;</font>디자인 수행 단계를 생성합니다.</div>
               </div>
             </Tip>
           </NewController> : null}
@@ -1345,4 +1343,3 @@ class AddContent extends Component {
     );
   }
 }
-

@@ -53,7 +53,7 @@ class App extends Component {
             <Route path="/myPage" component={RequiresAuth(MyDetailPage)} />
             <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)} />
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
-            <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
+            <Route path="/search/:sort?/:keyword?" component={SearchPage} />
 
             {/* GROUP B - design */}
             <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage} />

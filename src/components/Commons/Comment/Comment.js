@@ -217,14 +217,20 @@ class Comment extends Component {
     requestReply(where) {
         if (this.checkPermission() === false)
             return;
-        this.props.comment({ comment: this.state.this_reply, d_flag: where });
+        if (this.state.this_reply.length > 0) {
+            const comment = this.state.this_reply.replace(/\n/g, "<br/>");
+            this.props.comment({ comment: comment, d_flag: where });
+        }
+        // this.props.comment({ comment: this.state.this_reply, d_flag: where });
         this.reset();
     };
     requestComment() {
         if (this.checkPermission() === false)
             return;
-        if (this.state.this_comment.length > 0)
-            this.props.comment({ comment: this.state.this_comment, d_flag: null });
+        if (this.state.this_comment.length > 0) {
+            const comment = this.state.this_comment.replace(/\n/g, "<br/>");
+            this.props.comment({ comment: comment, d_flag: null });
+        }
         this.reset();
     };
     removeComment(commentId) {
@@ -267,7 +273,9 @@ class Comment extends Component {
                                     {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
                                 </div>
                             </div>
-                            <div className="comment">{item.comment}</div>
+                            <div className="comment"
+                                dangerouslySetInnerHTML={{ __html: item.comment }}></div>
+                            {/* <div className="comment">{item.comment}</div> */}
                         </div>
                     </CommentInner>
 
@@ -281,7 +289,7 @@ class Comment extends Component {
                                     <div className="nick">{repli.nick_name}</div>
                                     <div className="create-time">({DateFormat(item.create_time)})</div>
                                 </div>
-                                <div className="comment">{repli.comment}</div>
+                                <div className="comment" dangerouslySetInnerHTML={{ __html: repli.comment }}></div>
                             </div>
                             <div className="button-wrapper">
                                 {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}

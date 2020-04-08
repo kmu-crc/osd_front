@@ -6,7 +6,7 @@ const TextFormatContainer = styled.div`
   cursor: default;
   overflow: hidden; 
   text-overflow: ellipsis;
-  width: ${props => props.width+"%" || "max-content"};
+  width: ${props => props.width + "%" || "max-content"};
   background-color: ${props => props.backgroundColor || "transparent"};
   &.multi {
     display: -webkit-box;
@@ -17,15 +17,49 @@ const TextFormatContainer = styled.div`
   &.single {
     white-space: nowrap;
   }
+  .wrapper {
+    z-index: 999;
+    position: absolute;
+    display: flex;
+    visibility: hidden;
+  }
+  .tip-txt {
+    display: none;
+    width: max-content;
+    background-color: #707070;
+    color: #EFEFEF;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 3px;
+    // margin-top: -5px;
+    font-size: 14px;
+  }
+  :hover {
+    .wrapper {
+        visibility: visible;
+    }
+    .tip-txt {
+        display: block;
+    }
+  }
 `;
 class TextFormat extends Component {
   render() {
-    const { backgroundColor, width, txt, id, lines, chars } = this.props;
-    // console.log(this.props);
+    const { backgroundColor, width, txt, id, lines, chars/*, tip*/ } = this.props;
     return (
-      <TextFormatContainer backgroundColor={backgroundColor} width={width} title={txt} id={id} lines={lines} className={lines ? "multi" : "single"}>
+      <TextFormatContainer
+        backgroundColor={backgroundColor}
+        width={width}
+        title={txt}
+        id={id}
+        lines={lines}
+        className={lines ? "multi" : "single"}>
 
         {chars ? (txt && txt.length < chars ? txt : txt && txt.slice(0, chars - 3) + "...") : txt}
+
+        {/* {tip ? <div className="wrapper">
+          <div className="tip-txt">{txt}</div>
+        </div> : null} */}
       </TextFormatContainer>)
   }
 }

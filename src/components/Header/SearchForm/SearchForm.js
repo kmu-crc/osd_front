@@ -50,18 +50,7 @@ class SearchForm extends Component {
         searchKeyword: "",
     };
     goSearch = () => {
-        const addrText = window.location.href.toString();
-        let thisCate = "/design";
-        if (addrText.indexOf('/group') !== -1) {
-            thisCate = "/group"
-        }
-        else if (addrText.indexOf('/designer') !== -1) {
-            thisCate = "/designer"
-        }
-        else {
-            thisCate = "/design"
-        }
-        window.location.href = '/search' + thisCate + '/null/' + this.state.searchKeyword;
+        window.location.href = `/search/update/${this.state.searchKeyword}`;
     };
 
     submitEnter = (e) => {

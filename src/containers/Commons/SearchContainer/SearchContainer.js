@@ -9,9 +9,6 @@ class SearchContainer extends Component {
     return (
       <SearchListRe
         {...this.props}
-      // designs={this.props.designs ? this.props.designs.length : 0}
-      // groups={this.props.groups ? this.props.groups.length : 0}
-      // designers={this.props.designers ? this.props.designers.length : 0}
       />);
   }
 }

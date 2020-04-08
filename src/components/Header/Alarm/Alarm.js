@@ -67,26 +67,6 @@ const userinfo = {
     alarmLeft: "1512px",
 };
 let alarmlist = [];
-const ArrowLtoR = styled.div`
-    width: 12px;
-    height: 14px;
-    bacgkground: ${props => props.color || "#707070"};
-    opacity: 0.55;
-    border-left: 14px solid ${props => props.color || "#707070"};
-    border-bottom: 6px solid transparent;
-    border-top: 6px solid transparent;
-    margin: 3px 3px;
-`;
-const ArrowRtoL = styled.div`
-    width: 12px;
-    height: 14px;
-    bacgkground: ${props => props.color || "#707070"};
-    opacity: 0.55;
-    border-right: 14px solid ${props => props.color || "#707070"};
-    border-bottom: 6px solid transparent;
-    border-top: 6px solid transparent;
-    margin: 3px 3px;
-`;
 
 class Alarm extends Component {
 
@@ -385,26 +365,19 @@ class Alarm extends Component {
             </React.Fragment>
         }
         else if ((item.type === "GROUP" && item.kinds === "JOIN_withDESIGN") || (item.type === "GROUP" && item.kinds === "JOIN_withGROUP")) {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                {/* <ArrowRtoL color={"#404040"} /> */}
-                {/* <div style={{ width: "max-content", cursor: "default" }}>가입요청</div> */}
-                {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
-                <TextFormat txt={item.title} chars={MAXLENGTH} />
+            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "GETOUT") {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                {/* <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div> */}
-                {/* <ArrowLtoR color={"red"} /> */}
+            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
                 <TextFormat txt={item.title} chars={MAXLENGTH} />
             </div>
         }
         else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT")) {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                {/* <div style={{ width: "max-content", cursor: "default" }}>삭제</div> */}
-                {/* <ArrowLtoR color={"red"} /> */}
-                {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
-                <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
+            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
+                <TextFormat txt={item.targetTitle} chars={MAXLENGTH - 15} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "INVITE") {

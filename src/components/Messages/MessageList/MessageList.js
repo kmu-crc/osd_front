@@ -288,7 +288,7 @@ function SummaryItem(props) {
         {props.noti ? <div className="noti" /> : undefined}
       </SummaryIcon>
       <div className="summary_Name">{props.friend_name}</div>
-      <div className="summary_message">{props.message}</div>
+      <div className="summary_message">{props.message && props.message.replace(/<br\/>/g, "")}</div>
     </SummaryItemBox>);
 }
 
@@ -331,15 +331,15 @@ class Messages extends React.Component {
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
     }
-    if(this.props.ChatRooms&&this.props.ChatRooms.length>0){
-      for(let i=0;i<this.props.ChatRooms.length;i++){
-        if(this.props.ChatRooms[i].count!=null){
-          this.setMsgId(this.props.ChatRooms[i].uid,this.props.ChatRooms[i].friend_id,this.props.ChatRooms[i].friend_name);
+    if (this.props.ChatRooms && this.props.ChatRooms.length > 0) {
+      for (let i = 0; i < this.props.ChatRooms.length; i++) {
+        if (this.props.ChatRooms[i].count != null) {
+          this.setMsgId(this.props.ChatRooms[i].uid, this.props.ChatRooms[i].friend_id, this.props.ChatRooms[i].friend_name);
           break;
         }
       }
     }
-    document.getElementById("sendMsgBox")&&document.getElementById("sendMsgBox").focus();
+    document.getElementById("sendMsgBox") && document.getElementById("sendMsgBox").focus();
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
@@ -410,7 +410,7 @@ class Messages extends React.Component {
       this.setState({ render: true });
     }, 250)
     await this.handleCloseMember();
-    await document.getElementById("sendMsgBox")&&await document.getElementById("sendMsgBox").focus();
+    await document.getElementById("sendMsgBox") && await document.getElementById("sendMsgBox").focus();
     await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
   }
   onSubmitForm = async (data) => {
@@ -418,7 +418,15 @@ class Messages extends React.Component {
       alert("받는 사람을 지정해주세요.")
       return
     }
-    this.props.SendMessageRequest(this.props.token, { message: this.state.msgValue }, this.state.selectId)
+    let msg = ``;
+    if (this.state.msgValue && this.state.msgValue.length > 0) {
+      msg = this.state.msgValue.replace(/\n/g, "<br/>");
+    } else {
+      alert("텍스트를 입력해주세요.");
+      return;
+    }
+
+    this.props.SendMessageRequest(this.props.token, { message: msg }, this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {
           await this.props.GetMyMsgListRequest(this.props.token)
@@ -481,10 +489,10 @@ class Messages extends React.Component {
 
                   <SummaryList id="searchRect">
                     {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-                      this.props.ChatRooms.map(chat =>chat.recent!=null?
+                      this.props.ChatRooms.map(chat => chat.recent != null ?
                         <div key={chat.uid} onClick={() => this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}>
                           <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-                        </div>:null)}
+                        </div> : null)}
                   </SummaryList>
                 </div>
               </NavSection>
@@ -497,8 +505,10 @@ class Messages extends React.Component {
                   </div>
                 </div>
                 <div className="asideSend">
-                  <div className="sendBox"><SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
-                  <SendButton onClick={this.onSubmitForm}><div className="sendButton_label">전송하기</div></SendButton>
+                  <div className="sendBox">
+                    <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                  <SendButton onClick={this.onSubmitForm}>
+                    <div className="sendButton_label">전송하기</div></SendButton>
                 </div>
               </AsideSection>
             </MessageBox>

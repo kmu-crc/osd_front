@@ -1,63 +1,72 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-import ContentBox from "components/Commons/ContentBox";
-import opendesign_style from "opendesign_style";
-import ScrollTopDesignContainer from "containers/Commons/ScrollTopDesignContainer";
-import MainSlide from "./Slide";
+import hero1920 from "source/hero1920.png";
+import hero1440 from "source/hero1440.png";
+import hero360 from "source/hero360.png";
+import context from "source/context_banner.png";
+import styled from 'styled-components';
+import TopDesignListContainer from "containers/Designs/TopDesignListContainer";
+import MainMyDesignListContainer from "containers/Designs/MainMyDesignContainer";
+import MainMyGroupListContainer from "containers/Groups/MainMyGroupContainer";
 
-
-// css styling
-
-const ImgWrapper = styled.div`
+const BannerWrapper = styled.div`
+  width: ${props => props.width}px;
+  height: 349.5px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  background: url(${props => props.img});
+  background-repeat: no-repeat;
+  background-size: 100% 349.5px;
+`;
+const Context = styled.div`
+  width: 504px;
+  height: 196px;
+  top: 40px;
+  position: relative;
+  background: url(${context});
+  background-repeat: no-repeat;
+  background-size: 504px 196px;
+  margin: auto;
 `;
 
-const TextWrapper = styled.div `
-  padding-bottom: 50px;
-`;
-
-const Content = styled(ContentBox)`
-@media only screen and (max-width: 991px) and (min-width: 768px){
-  & .ui.grid>.row{
-    margin-left: 6.25% !important;
+export default class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { heroSize: 'l'/* l,m,s */, };
+    this.handleResize = this.handleResize.bind(this);
   }
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize, false);
   }
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  margin: 3rem 0;
-`;
-
-const Head = styled.div`
-  color: ${opendesign_style.color.grayScale.scale7};
-  font-size: ${opendesign_style.font.size.heading3};
-  text-align: center;
-  margin-bottom: 1rem;
-`;
-
-
-class Main extends Component {
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize, false);
+  }
+  handleResize = (event) => {
+    if (window.innerWidth > 1440 && window.innerWidth <= 1920) {
+      this.setState({ heroSize: 'l' });
+    }
+    if (window.innerWidth > 360 && window.innerWidth <= 1440) {
+      this.setState({ heroSize: 'm' });
+    };
+    if (window.innerWidth > 0 && window.innerWidth <= 360) {
+      this.setState({ heroSize: 's' });
+    }
+  }
   render() {
+    const { heroSize } = this.state;
     return (
-      <div>
-        <ImgWrapper>
-          <MainSlide/>
-        </ImgWrapper>
-        <TextWrapper>
-          <Content>
-            <Wrapper>
-              <Head>추천 디자인</Head>
-              <ScrollTopDesignContainer/>
-            </Wrapper>
-          </Content>
-        </TextWrapper>
-      </div>
-    );
+      <React.Fragment>
+        <BannerWrapper width={heroSize === 'l' ? 1920 : heroSize === 'm' ? 1440 : 360} img={heroSize === 'l' ? hero1920 : heroSize === 'm' ? hero1440 : hero360}>
+          <Context /> {/* <LinkWrapper><a href="/tour">이용 가이드 보러가기</a></LinkWrapper> */}
+        </BannerWrapper> {/* const Textwrapper = styled.div`float: center;margin-top: 60.5px;// margin-bottom: 60px;text-align: center;font-size: 25px;font-family: Noto Sans KR;font-weight: 700;line-height: 37px;color: #FF0000;cursor: default;`;<Textwrapper>인기 디자인</Textwrapper> */}
+
+        {this.props.userInfo
+          ? <MainMyDesignListContainer /> : null}
+
+        {this.props.userInfo
+          ? <MainMyGroupListContainer /> : null}
+
+        <TopDesignListContainer />
+      </React.Fragment>
+    )
   }
 }
-
-export default Main;
-
-
-
-
