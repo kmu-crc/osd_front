@@ -7,12 +7,14 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Link from '@ckeditor/ckeditor5-link/src/link';
+import Link from 'components/Commons/ckeditor5-link/src/link';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import noimg from "source/noimg.png"
+
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
 ClassicEditor.defaultConfig = {
@@ -20,10 +22,9 @@ ClassicEditor.defaultConfig = {
   alignment: { options: ['left', 'center', 'justify', 'right'] },
   toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
-  fontSize: { options: [9, 10, 11, 12, 14, 18, 24, 30, 36, 48] },
+  fontSize: { options: [10, 12, 14, 18, 24, 30, 36, 48] },
   language: 'en'
 };
-
 
 class TextControllerPlus extends Component {
   state = {};
