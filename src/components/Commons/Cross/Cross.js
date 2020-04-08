@@ -5,6 +5,7 @@ const Cross = styled.div`
     opacity: ${props => props.disabled ? "0.5" : "1.0"};
     width: ${props => props.width}px;
     height: ${props => props.height}px;
+    cursor:pointer;
     :hover {
        opacity: 0.75; 
     }

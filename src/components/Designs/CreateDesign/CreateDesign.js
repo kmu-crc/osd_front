@@ -551,10 +551,15 @@ const SectionContainer = styled.section`
 `;
 const CropperDialog = styled(Modal)`
   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
-  height: ${props => props.ratio < 1.0 ? 650 : 450}px;
+  // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
+  height: max-content;
+  padding:20px;
   border-radius: 5px;
   background-color: #FFFFFF;
   box-shadow: 0px 3px 6px #FF0000;
+  .imagebox{
+
+  }
   .edit-step-name-button-container {
     display: flex;
     width: 576px;
@@ -1016,14 +1021,16 @@ class CreateDesign extends Component {
               <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>{designImageText} 등록</div>
               <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
               <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
-              <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "10px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: this.state.ratio > 1.0 ? "240px" : "370px" }}>
+              <div className="imagebox">
+              <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px",marginBottom:"20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height:"max-content" }}>
                 <ReactCrop
                   src={this.state.thumbnail} crop={this.state.crop}
                   onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
               </div>
-              <div style={{ marginTop: "10px", display: "flex" }} >
+              <div style={{ marginTop: "20px", display: "flex" }} >
                 <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
                 <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
+              </div>
               </div>
             </CropperDialog> : null}
 

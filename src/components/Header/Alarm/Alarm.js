@@ -166,7 +166,7 @@ class Alarm extends Component {
             } else if (item.kinds === "JOINREFUSE") {
                 msg = `${to}님의 그룹 가입 신청이 거절되었습니다.`;
             } else if (item.kinds === "GROUP_JOINREFUSE") {
-                msg = `그룹 가입요청이 거절되었습니다.`;
+                msg = `그룹 가입신청이 거절되었습니다.`;
             } else if (item.kinds === "GROUP_GETOUT") {
                 msg = `${title}그룹에서 그룹이 삭제되었습니다.`;
             } else if (item.kinds === "LIKE") {
@@ -359,7 +359,9 @@ class Alarm extends Component {
 
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>
+                <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
                 &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
+                </div>
             </React.Fragment>
         }
         else if ((item.type === "GROUP" && item.kinds === "JOIN_withDESIGN") || (item.type === "GROUP" && item.kinds === "JOIN_withGROUP")) {
@@ -379,22 +381,40 @@ class Alarm extends Component {
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "INVITE") {
-            return <div style={{ marginLeft: "5px", diplay: "flex", flexDirection: "column" }}>
-                <div style={{ fontSize: "16px" }}>
-                    <TextFormat txt={item.title} chars={MAXLENGTH} />
-                </div>
-                <div>
+            return<React.Fragment>
+                <div style={{width:"75%",display:"flex",justifyContent:"space-between"}}>
+                <div style={{display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                    <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
+                 </div>
+                 <div style={{width:"max-content",display:"flex",alignItems:"flex-end"}}>
                     {item.confirm === 0 ?
-                        <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
-                            <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "19px" }}>승인</div>
-                            <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+                        <div style={{width:"max-content",height:"max-content", display: "flex", flexDirection: "row", justifyContent:"flex-end" }}>
+                            <div onClick={e => this.accept(e, item)} style={{cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "15px" }}>승인</div>
+                            <div onClick={e => this.reject(e, item)} style={{cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "15px" }}>거절</div>
                         </div>
                         : null}
                 </div>
-            </div>
+                </div>
+                 </React.Fragment> 
+
+        //    return <div style={{ marginLeft: "5px", diplay: "flex", flexDirection: "column" }}>
+        //         <div style={{ fontSize: "16px" }}>
+        //             <TextFormat txt={item.title} chars={MAXLENGTH} />
+        //         </div>
+        //         <div>
+        //             {item.confirm === 0 ?
+        //                 <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
+        //                     <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "19px" }}>승인</div>
+        //                     <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+        //                 </div>
+        //                 : null}
+        //         </div>
+        //     </div>
         }
         else {
-            return <TextFormat txt={item.title} chars={MAXLENGTH} />
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <TextFormat txt={item.title} chars={MAXLENGTH} />
+            </div>
         }
         // else if (item.type === "DESIGN" && item.kinds === "LIKE")
         //     return <div>...</div>
@@ -455,7 +475,7 @@ class Alarm extends Component {
                                         </div>
                                         <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                             <div style={{ display: "flex", justifyContent: "space-start" }}>
-                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} title={item.title} />
+                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%", marginRight:"15px"}} title={item.title} />
                                                 {this.getAlarmItem(item)}
                                             </div>
                                         </div>
