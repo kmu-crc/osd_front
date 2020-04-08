@@ -360,56 +360,63 @@ class Alarm extends Component {
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>
                 <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
+                    &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
                 </div>
             </React.Fragment>
         }
         else if ((item.type === "GROUP" && item.kinds === "JOIN_withDESIGN") || (item.type === "GROUP" && item.kinds === "JOIN_withGROUP")) {
-            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                {/* <ArrowRtoL color={"#404040"} /> */}
+                {/* <div style={{ width: "max-content", cursor: "default" }}>가입요청</div> */}
+                {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
+                <TextFormat txt={item.title} chars={MAXLENGTH} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "GETOUT") {
-            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                {/* <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div> */}
+                {/* <ArrowLtoR color={"red"} /> */}
                 <TextFormat txt={item.title} chars={MAXLENGTH} />
             </div>
         }
         else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT")) {
-            return <div style={{ alignItems: "center", display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} />
-                <TextFormat txt={item.targetTitle} chars={MAXLENGTH - 15} />
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                {/* <div style={{ width: "max-content", cursor: "default" }}>삭제</div> */}
+                {/* <ArrowLtoR color={"red"} /> */}
+                {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
+                <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "INVITE") {
-            return<React.Fragment>
-                <div style={{width:"75%",display:"flex",justifyContent:"space-between"}}>
-                <div style={{display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                    <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
-                 </div>
-                 <div style={{width:"max-content",display:"flex",alignItems:"flex-end"}}>
-                    {item.confirm === 0 ?
-                        <div style={{width:"max-content",height:"max-content", display: "flex", flexDirection: "row", justifyContent:"flex-end" }}>
-                            <div onClick={e => this.accept(e, item)} style={{cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "15px" }}>승인</div>
-                            <div onClick={e => this.reject(e, item)} style={{cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "15px" }}>거절</div>
-                        </div>
-                        : null}
+            return <React.Fragment>
+                <div style={{ width: "75%", display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                        <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
+                    </div>
+                    <div style={{ width: "max-content", display: "flex", alignItems: "flex-end" }}>
+                        {item.confirm === 0 ?
+                            <div style={{ width: "max-content", height: "max-content", display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+                                <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "15px" }}>승인</div>
+                                <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "15px" }}>거절</div>
+                            </div>
+                            : null}
+                    </div>
                 </div>
-                </div>
-                 </React.Fragment> 
+            </React.Fragment>
 
-        //    return <div style={{ marginLeft: "5px", diplay: "flex", flexDirection: "column" }}>
-        //         <div style={{ fontSize: "16px" }}>
-        //             <TextFormat txt={item.title} chars={MAXLENGTH} />
-        //         </div>
-        //         <div>
-        //             {item.confirm === 0 ?
-        //                 <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
-        //                     <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "19px" }}>승인</div>
-        //                     <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
-        //                 </div>
-        //                 : null}
-        //         </div>
-        //     </div>
+            //    return <div style={{ marginLeft: "5px", diplay: "flex", flexDirection: "column" }}>
+            //         <div style={{ fontSize: "16px" }}>
+            //             <TextFormat txt={item.title} chars={MAXLENGTH} />
+            //         </div>
+            //         <div>
+            //             {item.confirm === 0 ?
+            //                 <div style={{ alignItems: "center", display: "flex", flexDirection: "row", marginTop: "10px" }}>
+            //                     <div onClick={e => this.accept(e, item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "19px" }}>승인</div>
+            //                     <div onClick={e => this.reject(e, item)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "19px" }}>거절</div>
+            //                 </div>
+            //                 : null}
+            //         </div>
+            //     </div>
         }
         else {
             return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
@@ -475,7 +482,7 @@ class Alarm extends Component {
                                         </div>
                                         <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
                                             <div style={{ display: "flex", justifyContent: "space-start" }}>
-                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%", marginRight:"15px"}} title={item.title} />
+                                                <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%", marginRight: "15px" }} title={item.title} />
                                                 {this.getAlarmItem(item)}
                                             </div>
                                         </div>
