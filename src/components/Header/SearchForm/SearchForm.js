@@ -58,7 +58,7 @@ class SearchForm extends Component {
         else if (addrText.indexOf('/designer') !== -1) {
             thisCate = "/designer"
         }
-        else if (addrText.indexOf('/design') !== -1) {
+        else {
             thisCate = "/design"
         }
         window.location.href = '/search' + thisCate + '/null/' + this.state.searchKeyword;

@@ -101,7 +101,7 @@ const CategoryLabel = styled.div`
 `;
 const ExplainBox01 = styled.div`
     width: 100%;
-    height: 130px;
+    height: 140px;
     font-size: 20px;
     font-weight: 200;
     font-family: Noto Sans KR;
@@ -124,7 +124,6 @@ const CountBox = styled.div`
     .innerWrapper {
         background-color: #EFEFEF;
         width: 200px;
-        margin-top: 19px;
         height: 22px;
         display: flex;
         justify-content: space-start;

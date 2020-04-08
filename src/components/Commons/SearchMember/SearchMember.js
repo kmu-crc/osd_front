@@ -60,6 +60,11 @@ const MemberListItem = styled.li`
   color:#707070;
   border-radius: 10px;
   margin-bottom: 5px;
+  cursor:pointer;
+  opacity:0.8;
+  &:hover{
+    opacity:1;
+  }
 `
 const SearchInputText = styled(FormInput)`
     box-shadow:0px 1px 2px #000000 ;
