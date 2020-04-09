@@ -120,13 +120,13 @@ class EditStepModal extends Component {
         const target = event.target
         this.setState({ [target.name]: target.value })
     }
-    onSubmit = async() => {
+    onSubmit = async () => {
         if (!this.state.title) {
             this.props.close();
             return;
         }
         if (this.state.title === this.props.title) {
-            await alert("제목이 변경되지 않았습니다.","확인");
+            await alert("제목이 변경되지 않았습니다.", "확인");
             return;
         }
         let data = this.state;
@@ -139,12 +139,11 @@ class EditStepModal extends Component {
         event.stopPropagation();
         const step = steps.find(step => { return (step.uid === parseInt(where, 10)) });
         if (step && step.cards && step.cards.length > 0) {
-            await alert("카드가 존재하는 단계는 삭제할 수 없습니다.","확인");
+            await alert("카드가 존재하는 단계는 삭제할 수 없습니다.", "확인");
             return;
         }
-        const confirm = await confirm("단계를 삭제하시겠습니까?","예","아니오");
-        if (confirm) {
-            this.props.RemoveStep(step.uid)
+        if (await confirm("단계를 삭제하시겠습니까?", "예", "아니오")) {
+            this.props.RemoveStep(step.uid);
         }
         this.onClose();
     }
@@ -164,7 +163,7 @@ class EditStepModal extends Component {
                 <InputWrapper>
                     <div className="title">제목</div>
                     <div className="wrapper">
-                        <input className="input-tag" name="title" onChange={this.onChange} autoComplete="off"  value={this.state.title || ""} />
+                        <input className="input-tag" name="title" onChange={this.onChange} autoComplete="off" value={this.state.title || ""} />
                     </div>
                 </InputWrapper>
                 <div className="edit-step-name-button-container">

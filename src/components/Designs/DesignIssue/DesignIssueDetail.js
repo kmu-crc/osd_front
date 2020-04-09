@@ -86,8 +86,8 @@ class DesignIssueDetail extends Component {
   }
 
   deleteIssue = async () => {
-    const confirm = await confirm("이 이슈를 삭제하시겠습니까?","예","아니오");
-    if (confirm) {
+    const isconfirm = await confirm("이 이슈를 삭제하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
       .then(data => {
         this.props.history.push(`/designDetail/${this.props.match.params.id}/issue`);

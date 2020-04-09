@@ -89,8 +89,8 @@ class MyInvitingContainer extends Component {
 
   getoutMember = async (e, id) => {
     e.stopPropagation();
-    const confirm = await confirm("가입 신청을 취소하시겠습니까?","예","아니오");
-    if (confirm) {
+    const isconfirm = await confirm("가입 신청을 취소하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token)
         .then(async res => {
           if (res.data && res.data.success) {

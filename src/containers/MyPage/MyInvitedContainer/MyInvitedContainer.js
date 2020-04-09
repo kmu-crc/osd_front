@@ -88,8 +88,8 @@ class MyInvitedContainer extends Component {
 
   getoutMember = async (e, id) => {
     e.stopPropagation();
-    const confirm = await confirm("가입을 거절하시겠습니까?","예","아니오");
-    if (confirm) {
+    const isconfirm = await confirm("가입을 거절하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token, "DesignInviteReject")
       .then(async res => {
         if (res.data && res.data.success) {
@@ -106,8 +106,8 @@ class MyInvitedContainer extends Component {
 
   acceptMember = async (e, id) => {
     e.stopPropagation();
-    const confirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
-    if (confirm) {
+    const isconfirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.AcceptDesignRequest(id, this.props.userInfo.uid, this.props.token)
       .then(async res => {
         if (res.data && res.data.success) {

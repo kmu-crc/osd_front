@@ -137,14 +137,14 @@ class DesignBoardCard extends Component {
   }
 
   onClose = async () => {
-    let confirm = true;
+    let isconfirm = true;
     if (this.state.modify && this.state.edit) {
-      confirm = await confirm(
-        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?","예","아니오"
+      isconfirm = await confirm(
+        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?", "예", "아니오"
       );
     }
     // confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
-    if (confirm) {
+    if (isconfirm) {
       this.setState({
         open: false,
         active: "INIT",
@@ -183,8 +183,8 @@ class DesignBoardCard extends Component {
 
   onDelete = async (e) => {
     e.stopPropagation();
-    const confirm = await confirm("컨텐츠를 삭제하시겠습니까?","예","아니오");
-    if (confirm) {
+    const isconfirm = await confirm("컨텐츠를 삭제하시겠습니까?", "예", "아니오");
+    if (isconfirm) {
       this.props
         .DeleteDesignCardRequest(
           this.props.boardId,
@@ -202,11 +202,11 @@ class DesignBoardCard extends Component {
 
   onSubmitCmtForm = async data => {
     if (!this.props.token) {
-      await alert("로그인을 해주세요.","확인");
+      await alert("로그인을 해주세요.", "확인");
       return;
     }
     if (FormDataToJson(data) && FormDataToJson(data).comment === "") {
-      await alert("내용을 입력해 주세요.","확인");
+      await alert("내용을 입력해 주세요.", "확인");
       return;
     }
     this.props
@@ -283,10 +283,10 @@ class DesignBoardCard extends Component {
             <img src={card.first_img.m_img} alt="thumbnail" />
           ) : null}
           <div className="content">
-            <div className="cardTitle"><TextFormat txt={card.title}/></div>
+            <div className="cardTitle"><TextFormat txt={card.title} /></div>
             <div className="cardInfo">
-              <div className="first"><TextFormat txt={card.nick_name} chars={6}/></div>
-              <div className="second">&nbsp;<Icon name="comment outline"/>{card.comment_count?NumberFormat(card.comment_count):0}</div>
+              <div className="first"><TextFormat txt={card.nick_name} chars={6} /></div>
+              <div className="second">&nbsp;<Icon name="comment outline" />{card.comment_count ? NumberFormat(card.comment_count) : 0}</div>
               <div className="cardUpdateTime">&nbsp;{DateFormat(card.update_time)}</div>
             </div>
           </div>
@@ -313,39 +313,39 @@ class DesignBoardCard extends Component {
                   />
                 </div>
               ) : (
-                <div>
-                  {this.props.userInfo &&
-                  this.props.userInfo.uid === this.props.card.user_id &&
-                  !this.state.edit ? (
-                    <div>
-                      <Button
-                        type="button"
-                        size="small"
-                        onClick={this.onChangeEditMode}
-                      >
-                        수정
+                  <div>
+                    {this.props.userInfo &&
+                      this.props.userInfo.uid === this.props.card.user_id &&
+                      !this.state.edit ? (
+                        <div>
+                          <Button
+                            type="button"
+                            size="small"
+                            onClick={this.onChangeEditMode}
+                          >
+                            수정
                       </Button>
-                      <Button
-                        type="button"
-                        color="Solid"
-                        size="small"
-                        onClick={this.onDelete}
-                      >
-                        삭제
+                          <Button
+                            type="button"
+                            color="Solid"
+                            size="small"
+                            onClick={this.onDelete}
+                          >
+                            삭제
                       </Button>
-                    </div>
-                  ) : null}
-                  <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
-                  <p>{detail.content ? detail.content : ""}</p>
-                  <CardSourceDetailContainer
-                    uid={card.uid}
-                    isTeam={this.props.isTeam}
-                    edit={this.state.edit}
-                    closeEdit={this.onCloseEditMode}
-                    openEdit={this.onChangeEditMode}
-                  />
-                </div>
-              )}
+                        </div>
+                      ) : null}
+                    <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
+                    <p>{detail.content ? detail.content : ""}</p>
+                    <CardSourceDetailContainer
+                      uid={card.uid}
+                      isTeam={this.props.isTeam}
+                      edit={this.state.edit}
+                      closeEdit={this.onCloseEditMode}
+                      openEdit={this.onChangeEditMode}
+                    />
+                  </div>
+                )}
 
               {/* --------------------- 댓글 섹션 ---------------------- */}
               <CommentContainer className="ui comments">
@@ -386,8 +386,8 @@ class DesignBoardCard extends Component {
                     </div>
                   ))
                 ) : (
-                  <p>{/*등록된 코멘트가 없습니다.*/}</p>
-                )}
+                    <p>{/*등록된 코멘트가 없습니다.*/}</p>
+                  )}
                 {this.state.render ? <CommentForm /> : null}
               </CommentContainer>
             </Modal.Content>

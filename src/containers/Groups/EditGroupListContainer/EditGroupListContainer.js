@@ -27,8 +27,8 @@ class EditGroupListContainer extends Component {
     this.setState({ reload: !this.state.reload });
   }
   setOut = async (target) => {
-    const confirm = await confirm("선택하신 그룹을 이 그룹에서 삭제하시겠습니까?","예","아니오");
-    if (!confirm) {
+    const isconfirm = await confirm("선택하신 그룹을 이 그룹에서 삭제하시겠습니까?","예","아니오");
+    if (!isconfirm) {
       return;
     }
     this.props.DeleteGroupInGroupRequest(this.props.id, target)

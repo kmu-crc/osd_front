@@ -374,7 +374,7 @@ class CardModal extends Component {
     };
     handleCancel = async (obj) => {
         if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?","예","아니오")) {
+            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?", "예", "아니오")) {
                 return "keep";
             }
         }
@@ -382,7 +382,7 @@ class CardModal extends Component {
     handleClosed = async (obj) => {
         if (this.state.edit) {
             if (this.state.title !== this.props.card.title) {
-                if (await confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?","예","아니오")) {
+                if (await confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?", "예", "아니오")) {
                     this.setState({ edit: false });
                 }
                 else {
@@ -390,7 +390,7 @@ class CardModal extends Component {
                 }
             }
             if (this.state.content !== this.props.card.content) {
-                if (await confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?","예","아니오")) {
+                if (await confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?", "예", "아니오")) {
                     this.setState({ edit: false });
                 }
                 else {
@@ -442,7 +442,7 @@ class CardModal extends Component {
     };
     onCloseEditMode = async () => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
-            if (!await confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?","예","아니오")) {
+            if (!await confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?", "예", "아니오")) {
                 return;
             }
         }
@@ -453,8 +453,7 @@ class CardModal extends Component {
     };
     removeCard = async (event) => {
         event.stopPropagation();
-        const confirm = await confirm("컨텐츠를 삭제하시겠습니까?","예","아니오");
-        if (confirm) {
+        if (await confirm("컨텐츠를 삭제하시겠습니까?", "예", "아니오")) {
             this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
                 .then(async () => {
@@ -469,8 +468,9 @@ class CardModal extends Component {
         if (this.state.edit) {
 
             if (this.state.title !== this.props.card.title) {
-                if (await confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?","예","아니오")) {
+                if (await confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?", "예", "아니오")) {
                     this.props.close();
+                    return;
                 }
                 else {
                     return;
@@ -478,8 +478,9 @@ class CardModal extends Component {
             }
 
             if (this.state.content !== this.props.card.content) {
-                if (await confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?","예","아니오")) {
+                if (await confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?", "예", "아니오")) {
                     this.props.close();
+                    return;
                 }
                 else {
                     return;
@@ -487,8 +488,9 @@ class CardModal extends Component {
             }
 
             if (this.state.isEdited) {
-                if (await confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?","예","아니오")) {
+                if (await confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?", "예", "아니오")) {
                     this.props.close();
+                    return;
                 }
                 else {
                     return;

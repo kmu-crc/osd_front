@@ -277,8 +277,7 @@ class DesignBoard extends Component {
       await alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.","확인");
       return;
     }
-    const confirm = await confirm("단계를 삭제하시겠습니까?","예","아니오");
-    if (confirm) {
+    if (confirm("단계를 삭제하시겠습니까?","예","아니오")) {
       this.props
         .DeleteDesignBoardRequest(
           this.props.board.design_id,

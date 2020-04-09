@@ -115,8 +115,8 @@ class ModifyDesignMember extends Component {
   }
 
   acceptMember = async (id) => {
-    const confirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
-    if (confirm) {
+    const isconfirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.AcceptDesignRequest(this.props.match.params.id, id, this.props.token)
         .then(async(res) => {
           if (res.data && res.data.success) {

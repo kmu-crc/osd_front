@@ -389,8 +389,7 @@ class ModifyMyDetail extends Component {
     this.setState({ change_password: true })
   }
   onDeleteUser = async () => {
-    let confirm = await confirm("정말 탈퇴하시겠습니까?","예","아니오");
-    if (confirm) {
+    if (await confirm("정말 탈퇴하시겠습니까?","예","아니오") {
       this.props.SecessionRequest(this.props.token);
     }
   }

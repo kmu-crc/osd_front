@@ -193,12 +193,12 @@ class Alarm extends Component {
         return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP" || kinds === "JOIN"))
     }
     accept = async (e, item) => {
-        let confirm = false;
+        let isconfirm = false;
         e && e.stopPropagation();
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
-                confirm = await confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?","예","아니오");
-                if (confirm) {
+                isconfirm = await confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?","예","아니오");
+                if (isconfirm) {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
                         .then(async(res) => {
                             if (res.data && res.data.success) {
