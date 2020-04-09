@@ -8,6 +8,8 @@ import Category from "components/Commons/Category"
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer"
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const SearchForm = styled.div`
     width:100%;
@@ -151,10 +153,10 @@ class SearchListRe extends Component {
             this.setState({ searchKeyword: this.state.searchKeyword });
         }
     }
-    onChangeSearchkey(event) {
+    async onChangeSearchkey(event) {
         let regExp = /^[a-zA-Zㄱ-힣0-9\s"_-]*$/i;
         if (regExp.test(event.target.value) === false) {
-            alert("특수문자는 사용할 수 없습니다.");
+            await alert("특수문자는 사용할 수 없습니다.");
             return;
         }
         this.setState({ searchKeyword: event.target.value })
@@ -166,9 +168,9 @@ class SearchListRe extends Component {
         }
     };
 
-    onSearchSubmit = (_) => {
+    onSearchSubmit = async (_) => {
         if (this.state.keyword == null || this.state.keyword === "") {
-            alert("키워드를 입력해주세요");
+            await alert("키워드를 입력해주세요");
         } else {
             const urll = encodeURIComponent(`${this.state.keyword}`);
             this.props.history.replace(urll);

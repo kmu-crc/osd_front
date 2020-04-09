@@ -24,7 +24,7 @@ class EditDesignListContainer extends Component {
     this.setState({ reload: !this.state.reload });
   }
   setOut = async (target) => {
-    const confirm = window.confirm("이 디자인을 그룹에서 삭제하시겠습니까?");
+    const confirm = await confirm("이 디자인을 그룹에서 삭제하시겠습니까?","예","아니오");
     if (!confirm) {
       return;
     }

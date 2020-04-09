@@ -7,7 +7,8 @@ import opendesign_style from "opendesign_style";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 import Cross from "components/Commons/Cross";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const ModalContent = styled.div`
   & .icon.close {
@@ -60,9 +61,9 @@ class JoinGroup extends Component {
     active: "design"
   };
 
-  handleModal = () => {
+  handleModal = async () => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.","확인");
       return;
     } else {
       this.setState({ open: true });

@@ -3,7 +3,8 @@ import styled from "styled-components";
 import noimg from "source/noimg.png";
 import SectionBasic from "components/Groups/CreateGroup/SectionBasic";
 import Loading from "components/Commons/Loading";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 
 const MainBanner = styled.div`
@@ -186,11 +187,11 @@ class CreateGroup extends Component {
     e.preventDefault();
     const warning = "필수 입력항목을 모두 입력하지 않아 작업을 완료할 수 없습니다.\n";
     if (this.state.groupThumbnail === "" || this.state.groupThumbnail == null) {
-      alert(warning + "섬네일 이미지를 등록해주세요!");
+      await alert(warning + "섬네일 이미지를 등록해주세요","확인");
       return;
     }
     else if (this.state.groupTitle === "" || this.state.groupTitle == null) {
-      alert(warning + "그룹의 이름을 입력해주세요!");
+      await alert(warning + "그룹의 이름을 입력해주세요","확인");
       return;
     }
     // else if (this.state.groupExplain === "" || this.state.groupExplain == null) {

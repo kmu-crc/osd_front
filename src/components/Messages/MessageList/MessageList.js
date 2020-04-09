@@ -7,6 +7,9 @@ import SearchMemberContainer from "containers/Commons/SearchMemberContainer/Sear
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Socket from "modules/Socket"
 
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
+
 const MainBox = styled.div`
 width:100%;
 height:870px;
@@ -415,14 +418,14 @@ class Messages extends React.Component {
   }
   onSubmitForm = async (data) => {
     if (this.state.selectId === null) {
-      alert("받는 사람을 지정해주세요.")
+      await alert("받는 사람을 지정해주세요.","확인")
       return
     }
     let msg = ``;
     if (this.state.msgValue && this.state.msgValue.length > 0) {
       msg = this.state.msgValue.replace(/\n/g, "<br/>");
     } else {
-      alert("텍스트를 입력해주세요.");
+      await alert("텍스트를 입력해주세요.","확인");
       return;
     }
 

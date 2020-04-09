@@ -11,16 +11,17 @@ import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
 import { geturl } from "config"
 import Loading from "components/Commons/Loading"
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 class ModifyDesignInfoContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: true };
     this.gotoMyModify = this.gotoMyModify.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.userInfo.is_designer === 0) {
-      alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
+      await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.","확인")
       this.props.history.push("/myModify")
     }
     this.props.GetCategoryAllRequest()
@@ -28,12 +29,12 @@ class ModifyDesignInfoContainer extends Component {
         this.props.GetDesignDetailRequest(this.props.id, this.props.token)
       })
   }
-  gotoMyModify() {
-    alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
+  async gotoMyModify() {
+    await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.","확인")
     this.props.history.push("/myModify")
   }
-  goBack() {
-    alert("디자인 수정 권한이 없습니다");
+  async goBack() {
+    await alert("디자인 수정 권한이 없습니다","확인");
     window.location.href = geturl() + '/designDetail/' + this.props.id;
   }
   componentWillReceiveProps(nextProps) {

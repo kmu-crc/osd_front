@@ -6,6 +6,8 @@ import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const GroupBox = styled.div`
   margin-bottom: 1rem;
@@ -24,8 +26,8 @@ class EditGroupListContainer extends Component {
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
-  setOut = target => {
-    const confirm = window.confirm("선택하신 그룹을 이 그룹에서 삭제하시겠습니까?");
+  setOut = async (target) => {
+    const confirm = await confirm("선택하신 그룹을 이 그룹에서 삭제하시겠습니까?","예","아니오");
     if (!confirm) {
       return;
     }

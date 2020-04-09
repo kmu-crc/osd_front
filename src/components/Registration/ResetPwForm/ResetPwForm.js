@@ -5,7 +5,8 @@ import { FormInput } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import Button from "components/Commons/Button";
 import ResetPwModal from "./ResetPwModal";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 const Bg = styled.div`
   width: 100vw;
   height: 100vh;
@@ -48,17 +49,17 @@ class ResetPwForm extends Component {
     loading: false
   };
 
-  shouldComponentUpdate(nextProps) {
+  async shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)) {
       if (nextProps.status === "SUCCESS") {
         this.setState({ loading: false });
         this.props.history.push('./signin');
         console.log("this loading state success >> ", this.state.loading);
-        alert(nextProps.message);
+        await alert(nextProps.message,"확인");
       } else if (nextProps.status === "FAILURE") {
         this.setState({ loading: false });
         console.log("this loading state failure >> ", this.state.loading);
-        alert(nextProps.message);
+        await alert(nextProps.message,"확인");
       }
     }
     return true;

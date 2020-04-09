@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ModifyDesignForm from "components/Designs/ModifyDesignForm";
 import { GetDesignDetailRequest } from "redux/modules/design";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 class ModifyDesignFormContainer extends Component {
   state = {
@@ -10,9 +12,9 @@ class ModifyDesignFormContainer extends Component {
   }
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token)
-      .then(()=>{
+      .then(async ()=>{
         if(this.props.userInfo.uid !== this.props.DesignDetail.user_id){
-          alert("이 디자인에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.")
+          await alert("이 디자인에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.","확인")
           this.props.history.go(-1)
         } else { this.setState({isAuthor:true})}
       })

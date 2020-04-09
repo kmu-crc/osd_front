@@ -10,7 +10,8 @@ import IconView from "source/IconView";
 import iEdit from 'source/edit_1.png';
 import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 // CSS
 const InterestDesignerBox = styled.div`
     display:flex;
@@ -246,8 +247,8 @@ class DesignerPageHeader extends Component {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'mymodify';
     }
-    needLogin() {
-        alert("로그인을 해주세요.");
+    async needLogin() {
+        await alert("로그인을 해주세요.","확인");
     }
     async like() {
         if (!this.props.userInfo) {

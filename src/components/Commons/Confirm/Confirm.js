@@ -23,8 +23,9 @@ const ModalBox = styled(Modal)`
         width: 100%;
         display:flex;
         align-items:center;
+        padding:20px;
         .message{
-            font-size:22px;
+            font-size:20px;
             font-weight:500;
             line-height:30px;
         }
@@ -36,7 +37,18 @@ const ModalBox = styled(Modal)`
         display:flex;
         justify-content:flex-end;
     }
-
+    animation:modalSlide 0.5s ease-out forwards;
+    @keyframes modalSlide {
+        from {
+          transform: translateY(-10%);
+          opacity: 0;
+        }
+      
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
 `
 const Button = styled.div`
     z-index:1200;

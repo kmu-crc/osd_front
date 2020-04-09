@@ -18,7 +18,8 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 import { ValidationGroup } from "modules/FormControl";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 const ContentBorder = styled.div`
     height: 29px;
     font-family: Noto Sans KR;
@@ -371,17 +372,17 @@ class CardModal extends Component {
         const modified = JSON.stringify(obj.content) !== JSON.stringify(obj.origin);
         this.setState({ isEdited: modified });
     };
-    handleCancel = (obj) => {
+    handleCancel = async (obj) => {
         if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?","예","아니오")) {
                 return "keep";
             }
         }
     };
-    handleClosed = (obj) => {
+    handleClosed = async (obj) => {
         if (this.state.edit) {
             if (this.state.title !== this.props.card.title) {
-                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
+                if (await confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?","예","아니오")) {
                     this.setState({ edit: false });
                 }
                 else {
@@ -389,7 +390,7 @@ class CardModal extends Component {
                 }
             }
             if (this.state.content !== this.props.card.content) {
-                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?")) {
+                if (await confirm("제목이 변경되었습니다, 저장하지 않고 수정모드를 종료하시겠습니까?","예","아니오")) {
                     this.setState({ edit: false });
                 }
                 else {
@@ -439,9 +440,9 @@ class CardModal extends Component {
             }).catch(err => alert(err + ''));
         this.setState({ edit: !this.state.edit })
     };
-    onCloseEditMode = () => {
+    onCloseEditMode = async () => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
-            if (!window.confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
+            if (!await confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?","예","아니오")) {
                 return;
             }
         }
@@ -450,9 +451,9 @@ class CardModal extends Component {
     onChangeEditMode = () => {
         this.setState({ edit: this.state.edit })
     };
-    removeCard = event => {
+    removeCard = async (event) => {
         event.stopPropagation();
-        const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
+        const confirm = await confirm("컨텐츠를 삭제하시겠습니까?","예","아니오");
         if (confirm) {
             this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
@@ -468,7 +469,7 @@ class CardModal extends Component {
         if (this.state.edit) {
 
             if (this.state.title !== this.props.card.title) {
-                if (window.confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                if (await confirm("제목이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?","예","아니오")) {
                     this.props.close();
                 }
                 else {
@@ -477,7 +478,7 @@ class CardModal extends Component {
             }
 
             if (this.state.content !== this.props.card.content) {
-                if (window.confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                if (await confirm("설명이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?","예","아니오")) {
                     this.props.close();
                 }
                 else {
@@ -486,7 +487,7 @@ class CardModal extends Component {
             }
 
             if (this.state.isEdited) {
-                if (window.confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?")) {
+                if (await confirm("내용이 변경되었습니다, 저장하지 않고 창을 닫으시겠습니까?","예","아니오")) {
                     this.props.close();
                 }
                 else {

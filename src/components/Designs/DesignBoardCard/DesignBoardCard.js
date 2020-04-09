@@ -13,6 +13,8 @@ import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContai
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -134,11 +136,11 @@ class DesignBoardCard extends Component {
     return true;
   }
 
-  onClose = () => {
+  onClose = async () => {
     let confirm = true;
     if (this.state.modify && this.state.edit) {
-      confirm = window.confirm(
-        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
+      confirm = await confirm(
+        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?","예","아니오"
       );
     }
     // confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
@@ -179,9 +181,9 @@ class DesignBoardCard extends Component {
     // console.log(data);
   };
 
-  onDelete = e => {
+  onDelete = async (e) => {
     e.stopPropagation();
-    const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
+    const confirm = await confirm("컨텐츠를 삭제하시겠습니까?","예","아니오");
     if (confirm) {
       this.props
         .DeleteDesignCardRequest(
@@ -200,11 +202,11 @@ class DesignBoardCard extends Component {
 
   onSubmitCmtForm = async data => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.","확인");
       return;
     }
     if (FormDataToJson(data) && FormDataToJson(data).comment === "") {
-      alert("내용을 입력해 주세요.");
+      await alert("내용을 입력해 주세요.","확인");
       return;
     }
     this.props

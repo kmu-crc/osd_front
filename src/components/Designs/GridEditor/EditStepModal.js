@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 const InputWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -119,13 +120,13 @@ class EditStepModal extends Component {
         const target = event.target
         this.setState({ [target.name]: target.value })
     }
-    onSubmit = () => {
+    onSubmit = async() => {
         if (!this.state.title) {
             this.props.close();
             return;
         }
         if (this.state.title === this.props.title) {
-            alert("제목이 변경되지 않았습니다.");
+            await alert("제목이 변경되지 않았습니다.","확인");
             return;
         }
         let data = this.state;
@@ -134,14 +135,14 @@ class EditStepModal extends Component {
     onClose = () => {
         this.props.close()
     }
-    removeStep = (event, steps, where) => {
+    removeStep = async (event, steps, where) => {
         event.stopPropagation();
         const step = steps.find(step => { return (step.uid === parseInt(where, 10)) });
         if (step && step.cards && step.cards.length > 0) {
-            alert("카드가 존재하는 단계는 삭제할 수 없습니다.");
+            await alert("카드가 존재하는 단계는 삭제할 수 없습니다.","확인");
             return;
         }
-        const confirm = window.confirm("단계를 삭제하시겠습니까?");
+        const confirm = await confirm("단계를 삭제하시겠습니까?","예","아니오");
         if (confirm) {
             this.props.RemoveStep(step.uid)
         }
