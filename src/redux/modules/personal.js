@@ -283,6 +283,27 @@ export default function Personal(state, action) {
                     MyMainDesignAdded: { $set: action.MyMainDesignAdded }
                 }
             })
+        case GET_MY_MAIN_GROUP_LIST:
+            return update(state, {
+                status: {
+                    MyMainGroup: { $set: action.MyMainGroup },
+                    MyMainGroupAdded: { $push: action.MyMainGroup }
+                }
+            })
+        case MY_MAIN_GROUP_LIST_CLEAR:
+            return update(state, {
+                status: {
+                    MyMainGroup: { $set: action.MyMainGroup },
+                    MyMainGroupAdded: { $set: action.MyMainGroup }
+                }
+            })
+        case MY_MAIN_GROUP_LIST_FAIL:
+            return update(state, {
+                status: {
+                    MyMainGroup: { $set: action.MyMainGroup },
+                    MyMainGroupAdded: { $set: action.MyMainGroupAdded }
+                }
+            })
 
         default:
             return state
