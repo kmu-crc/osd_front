@@ -3,6 +3,8 @@ import styled from "styled-components";
 import TextFormat from 'modules/TextFormat';
 import iAlarm from "source/alarm.png";
 import noimg from "source/noimg.png";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const AlarmIcon = styled.div`
     width: 34px;
@@ -103,9 +105,9 @@ class Alarm extends Component {
         // console.log("alarm-confirm:", userID, ",", alarmID)
         this.props.handleAlarmConfirm(userID, alarmID)
     }
-    allAlarmConfirm = () => {
+    allAlarmConfirm = async() => {
         if (this.props.alarm && this.props.alarm.count) {
-            alert('초대받은 디자인 및 그룹에 대한 알림을 제외한 모든 알림을 읽음으로 표시합니다.');
+            await alert('초대받은 디자인 및 그룹에 대한 알림을 제외한 모든 알림을 읽음으로 표시합니다.',"확인");
             this.props.handleAllAlarmConfirm(this.props.uid);
         }
     }
@@ -190,20 +192,20 @@ class Alarm extends Component {
         if (confirm === 1) return false
         return (type === "DESIGN" && (kinds === "INVITE" || kinds === "REQUEST")) || (type === "GROUP" && (kinds === "JOIN_withDESIGN" || kinds === "JOIN_withGROUP" || kinds === "JOIN"))
     }
-    accept = (e, item) => {
+    accept = async (e, item) => {
         let confirm = false;
         e && e.stopPropagation();
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
-                confirm = window.confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?");
+                confirm = await confirm(item.kinds === "REQUEST" ? "가입을 승인하시겠습니까?" : "초대를 수락하시겠습니까?","예","아니오");
                 if (confirm) {
                     this.props.AcceptDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token)
-                        .then(res => {
+                        .then(async(res) => {
                             if (res.data && res.data.success) {
-                                alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.");
+                                await alert(item.kinds === "REQUEST" ? "승인되었습니다." : "초대를 수락하였습니다.","확인");
                                 this.alarmConfirm(item.user_id, item.uid)
                             } else {
-                                alert("다시 시도해주세요.");
+                                await alert("다시 시도해주세요.","확인");
                             }
                         })
                         .catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
@@ -212,7 +214,7 @@ class Alarm extends Component {
         }
         else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
-                if (window.confirm("가입을 승인하시겠습니까?")) {
+                if (await confirm("가입을 승인하시겠습니까?","예","아니오")) {
                     // console.log(item, item.content_id, item.sub_content_id, item.user_id, item.uid);
                     // return;
                     this.props.UpdateDesignInGroupRequest(item.content_id, item.sub_content_id)
@@ -228,7 +230,7 @@ class Alarm extends Component {
                         }).catch((err) => alert(err + '와 같은 이유로 승인하는데 실패하였습니다. 관리자에게 문의하시기 바랍니다.'))
                 }
             } else if (item.kinds === "JOIN_withGROUP") {
-                if (window.confirm("가입을 승인하시겠습니까?")) {
+                if (await confirm("가입을 승인하시겠습니까?","예","아니오")) {
                     this.props.UpdateGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(async res => {
                             //if (res.data && res.data.success) {
@@ -242,11 +244,11 @@ class Alarm extends Component {
         }
         // window.location.reload()
     }
-    reject = (e, item) => {
+    reject = async (e, item) => {
         e.stopPropagation()
         if (item.type === "DESIGN") {
             if (item.kinds === "REQUEST" || item.kinds === "INVITE") {
-                if (window.confirm(item.kinds === "REQUEST" ? "멤버 가입 신청을 거절하시겠습니까?" : "멤버 초대를 거절하시겠습니까?")) {
+                if (await confirm(item.kinds === "REQUEST" ? "멤버 가입 신청을 거절하시겠습니까?" : "멤버 초대를 거절하시겠습니까?","예","아니오")) {
                     this.props.GetoutDesignRequest(item.content_id, item.kinds === "REQUEST" ? item.from_user_id : item.user_id, this.props.token,
                         item.kinds === "REQUEST" ? "DesignRefuse" : "DesignInviteReject")
                         .then(res => {
@@ -262,7 +264,7 @@ class Alarm extends Component {
             }
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN_withDESIGN") {
-                if (window.confirm("그룹 가입 신청을 거절하시겠습니까?")) {
+                if (await confirm("그룹 가입 신청을 거절하시겠습니까?","예","아니오")) {
                     this.props.DeleteDesignInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //           if (res.data && res.data.success) {
@@ -275,7 +277,7 @@ class Alarm extends Component {
                         .catch((err) => alert(err + `와 같은 이유로 거절하는 데 실패하였습니다. 관리자에게 문의하시기 바랍니다.`))
                 }
             } else if (item.kinds === "JOIN_withGROUP") {
-                if (window.confirm("그룹 가입 신청을 거절하시겠습니까?")) {
+                if (await confirm("그룹 가입 신청을 거절하시겠습니까?","예","아니오")) {
                     this.props.DeleteGroupInGroupRequest(item.content_id, item.sub_content_id)
                         .then(res => {
                             //         if (res.data && res.data.success) {

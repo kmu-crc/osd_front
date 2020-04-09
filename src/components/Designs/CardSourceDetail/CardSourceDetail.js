@@ -11,6 +11,8 @@ import FileController from "./FileController";
 // import TextController from "./TextControllerClassic";
 import TextController from "./TextControllerPlus";
 import EmbController from "./EmbController";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 // css styling
 const ControllerWrap = styled.div`
@@ -292,7 +294,7 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onDelete(order) {
-    if (window.confirm("선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
+    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?","예","아니오") === false) {
       return;
     }
     let copyContent = [...this.state.content];
@@ -364,7 +366,7 @@ class CardSourceDetail extends Component {
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
     if (newContent === oldContent) {
-      alert("변경된 내용이 없습니다.")
+      await alert("변경된 내용이 없습니다.","확인");
       return;
     }
     if (event != null) event.preventDefault();

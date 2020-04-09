@@ -16,7 +16,8 @@ import { geturl } from 'config';
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import TextFormat from 'modules/TextFormat';
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 const PopupBox = styled.div`
     position:absolute;
     top:47px;
@@ -228,8 +229,8 @@ class GroupInfoComponent extends Component {
     gotoGroup(id) {
         window.location.href = geturl() + `/groupDetail/${id}`
     }
-    needLogin() {
-        alert("로그인을 해주세요.");
+    async needLogin() {
+       await alert("로그인을 해주세요.","확인");
     }
     async like() {
         if (!this.props.userInfo) {
@@ -248,8 +249,8 @@ class GroupInfoComponent extends Component {
             setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
         }
     }
-    handleMoreViewDescription(description) {
-        alert(description);
+    async handleMoreViewDescription(description) {
+        await alert(description,"확인");
     }
     gotoGroupModify() {
         let href = window.location.href.substring(0, window.location.href.search("groupDetail"));

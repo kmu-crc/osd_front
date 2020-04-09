@@ -4,6 +4,8 @@ import styled from "styled-components";
 import SectionBasic from "components/Groups/ModifyGroupInfo/SectionBasic"
 import { Modal } from "semantic-ui-react";
 import iDelete from "source/deleteItem.png"
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
 
@@ -281,11 +283,11 @@ class CreateGroup extends Component {
   onSubmit = async e => {
     const warning = "필수 입력항목을 모두 입력하지 않아 작업을 완료할 수 없습니다.\n";
     if (this.state.groupThumbnail === "" || this.state.groupThumbnail == null) {
-      alert(warning+"섬네일 이미지를 등록해주세요!");
+      await alert(warning+"섬네일 이미지를 등록해주세요","확인");
       return;
     }
     else if (this.state.groupTitle === "" || this.state.groupTitle == null) {
-      alert(warning+"그룹의 이름을 입력해주세요!");
+      await alert(warning+"그룹의 이름을 입력해주세요","확인");
       return;
     }
     // else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
@@ -308,12 +310,12 @@ class CreateGroup extends Component {
       data.files[0].value === this.props.GroupDetail.img.m_img) delete data.files;
 
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
-      .then(res => {
+      .then(async (res) => {
         if (res.data && res.data.success === true) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다.","확인");
           this.props.history.push(`/groupDetail/${this.props.id}`);
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요","확인");
           this.setState({
             loading: false
           });

@@ -4,6 +4,8 @@ import { Modal } from "semantic-ui-react";
 import styled from "styled-components";
 import iChecked from "source/checked.png"
 import CheckBox2 from "components/Commons/CheckBox";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const CustomModal = styled(Modal)`
     min-width: 1200px;
@@ -359,42 +361,42 @@ class SignUpModal extends Component {
         let formData = { email: this.state.email, password: this.state.password, nick_name: this.state.nick_name };
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (checkedMail.test(this.state.email) === false) {
-            alert("이메일 형식이 올바르지 않습니다");
+            await alert("이메일 형식이 올바르지 않습니다","확인");
             return;
         }
         else if (this.state.password === "") {
-            alert("패스워드를 입력해주세요!");
+            await alert("패스워드를 입력해주세요!","확인");
             return;
         }
         else if (this.state.password !== this.state.password2) {
-            alert("패스워드가 일치하지 않습니다");
+            await alert("패스워드가 일치하지 않습니다","확인");
             return;
         }
         else if (this.state.nick_name === "") {
-            alert("닉네임을 입력해주세요!")
+            await alert("닉네임을 입력해주세요!","확인")
             return;
         }
         else if (this.state.checked === false) {
-            alert("이용약관에 동의해주세요")
+            await alert("이용약관에 동의해주세요","확인")
             return;
         }
         //닉네임 중복 체크
         if (await this.checkEmail() === false) {
-            alert("중복된 이메일입니다");
+            await alert("중복된 이메일입니다","확인");
             return;
         }
         if (await this.checkNickname() === false) {
-            alert("중복된 닉네임입니다");
+            await alert("중복된 닉네임입니다","확인");
             return;
         }
 
         await this.setState({ loading: true });
         console.log("signupformdata", formData);
         this.props.SignUpRequest(formData)
-            .then(res => {
+            .then(async res => {
                 console.log(res);
                 if (res) {
-                    alert("회원 가입 되었습니다.");
+                    await alert("회원 가입 되었습니다.","확인");
                     this.setState({ success_signup: true, loading: true });
                     let href = window.location.href.substring(0, window.location.href.search("signup"))
                     setTimeout(() => {
@@ -403,7 +405,7 @@ class SignUpModal extends Component {
                     }, 2000);
                 } else {
                     console.log("this!");
-                    alert("다시 시도해주세요");
+                    await alert("다시 시도해주세요","확인");
                     this.setState({
                         loading: false
                     });

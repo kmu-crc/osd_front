@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DeleteGroupRequest,GetGroupDetailRequest, UpdateGroupRequest } from "redux/modules/group";
 import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 class ModifyGroupInfoContainer extends Component {
   state = {
     isAuthor: false
@@ -10,9 +11,9 @@ class ModifyGroupInfoContainer extends Component {
   componentDidMount() {
     console.log("권한:",this.props)
     this.props.GetGroupDetailRequest(this.props.id)
-      .then(() => {
+      .then(async () => {
         if (this.props.userInfo.uid !== this.props.GroupDetail.user_id) {
-          alert("그룹에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.")
+          await alert("그룹에 대한 수정권한이 없습니다. 이전페이지로 돌아갑니다.","확인")
           this.props.history.go(-1)
         } else { this.setState({ isAuthor: true }) }
       })

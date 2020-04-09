@@ -14,7 +14,8 @@ import { Dropdown, Modal } from "semantic-ui-react";
 import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const designImageText = "디자인 이미지";
 const MainBanner = styled.div`
@@ -752,13 +753,13 @@ class ModifyDesign extends Component {
     }
     this.setState({ loading: true });
     this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
-      .then((data) => {
+      .then(async(data) => {
         console.log(data, data.res && data.res.success);
         if (data.res && data.res.success) {
-          alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.");
+          await alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.","확인");
           window.location.href = geturl() + '/designDetail/' + this.props.DesignDetail.uid;
         } else {
-          alert("디자인 정보 수정에 실패하였습니다.");
+          await alert("디자인 정보 수정에 실패하였습니다.","확인");
         }
       })
     this.setState({ loading: false });
@@ -814,8 +815,8 @@ class ModifyDesign extends Component {
   }
   deleteDesign = () => {
     this.props.DeleteDesignRequest(this.props.id, this.props.token)
-      .then(() => {
-        alert("삭제되었습니다.");
+      .then(async () => {
+        await alert("삭제되었습니다.","확인");
         window.location.href = geturl() + `/design`;
       })
   }

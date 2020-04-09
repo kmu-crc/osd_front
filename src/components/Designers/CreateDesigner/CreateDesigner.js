@@ -4,6 +4,8 @@ import { FormControl } from "modules/FormControl";
 import SectionBasic from "components/Designers/CreateDesigner/ModifyMyDetail/SectionBasic"
 import SectionAdditional from "components/Designers/CreateDesigner/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Designers/CreateDesigner/ModifyMyDetail/SectionBuziness"
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
@@ -326,13 +328,13 @@ class ModifyMyDetail extends Component {
     }
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
-        alert("중복된 닉네임입니다");
+        await alert("중복된 닉네임입니다","확인");
         return;
       }
     }
 
     if (this.state.nick_name === "") {
-      alert("닉네임을 입력해주세요");
+      await alert("닉네임을 입력해주세요","확인");
       return;
     }
 
@@ -341,18 +343,18 @@ class ModifyMyDetail extends Component {
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-        alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
+        await alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오","확인");
         return false;
       }
       if (this.state.password !== this.state.passwordCheck) {
-        alert("비밀번호 확인을 다시 해주십시오");
+        await alert("비밀번호 확인을 다시 해주십시오","확인");
         return false;
       }
       delete formData.passwordCheck;
     }
 
     if (this.state.category_level1 === -1) {
-      alert("카테고리를 선택해주세요!");
+      await alert("카테고리를 선택해주세요!","확인");
       return;
     }
 
@@ -360,21 +362,21 @@ class ModifyMyDetail extends Component {
     // return;
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
-      .then(res => {
+      .then(async(res) => {
         if (res.success) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다.","확인");
 
           // window.location.href = "/designer";
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요","확인");
           this.setState({
             loading: false
           });
         }
       })
-      .catch(e => {
+      .catch(async e => {
         console.log("실패", e);
-        alert("다시 시도해주세요");
+        await alert("다시 시도해주세요","확인");
         this.setState({
           loading: false
         });
@@ -386,8 +388,8 @@ class ModifyMyDetail extends Component {
   onChangePassword = () => {
     this.setState({ change_password: true })
   }
-  onDeleteUser = () => {
-    let confirm = window.confirm("정말 탈퇴하시겠습니까?");
+  onDeleteUser = async () => {
+    let confirm = await confirm("정말 탈퇴하시겠습니까?","예","아니오");
     if (confirm) {
       this.props.SecessionRequest(this.props.token);
     }

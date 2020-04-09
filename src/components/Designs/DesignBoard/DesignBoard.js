@@ -7,6 +7,8 @@ import BoardUpdate from "components/Designs/DesignBoard/BoardUpdate";
 import opendesign_style from "opendesign_style";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
 import TextFormat from "modules/TextFormat";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const CustomModal = styled(Modal)`
   border: "1px solid";
@@ -270,12 +272,12 @@ class DesignBoard extends Component {
   ModifyComplete = () => {
     this.setState({ active: false });
   };
-  onDelete = () => {
+  onDelete = async () => {
     if (this.props.board.cards && this.props.board.cards.length > 0) {
-      alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.");
+      await alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.","확인");
       return;
     }
-    const confirm = window.confirm("단계를 삭제하시겠습니까?");
+    const confirm = await confirm("단계를 삭제하시겠습니까?","예","아니오");
     if (confirm) {
       this.props
         .DeleteDesignBoardRequest(

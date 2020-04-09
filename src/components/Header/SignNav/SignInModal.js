@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 // import { SetSession } from "modules/Sessions"
 // import close from "source/close_white.png"
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 const MainBox = styled.form`
     width:64%;
     margin-left:18%;
@@ -156,28 +158,28 @@ class SignInModal extends Component {
         this.handlesubmitEnter = this.handlesubmitEnter.bind(this);
 
     }
-    signin = () => {
+    signin = async () => {
 
         const { email, password } = this.state
 
         // ---------------- 예외처리
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (email === "") {
-            alert("아이디를 입력해주세요");
+            await alert("아이디를 입력해주세요","확인");
             return;
         }
         else if (checkedMail.test(this.state.email) === false) {
-            alert("이메일 형식이 올바르지 않습니다");
+            await alert("이메일 형식이 올바르지 않습니다","확인");
             return;
         }
         else if (password === "") {
-            alert("비밀번호를 입력해주세요");
+            await alert("비밀번호를 입력해주세요","확인");
             return;
         }
         // -----------------------
 
         this.props.signinrequest({ email: email, password: password })
-            .then(res => {
+            .then(async (res) => {
                 console.log("cap", res)
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
@@ -185,7 +187,7 @@ class SignInModal extends Component {
                     .then(window.history.back());
                 }
                 else {
-                    alert('로그인에 실패하였습니다');
+                    await alert('로그인에 실패하였습니다',"확인");
                     this.setState({ password: "" })
                     //this.onClose()
                 }
@@ -231,15 +233,15 @@ class SignInModal extends Component {
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
         if (this.state.email === "") {
-            alert("아이디를 입력해주세요!");
+            await alert("아이디를 입력해주세요","확인");
             return;
         }
         else if (checkedMail.test(this.state.email) === false) {
-            alert("올바른 양식이 아닙니다!");
+            await alert("올바른 양식이 아닙니다","확인");
             return;
         }
         else if (await this.checkEmail() === true) {
-            alert("등록되지 않은 아이디입니다.");
+            await alert("등록되지 않은 아이디입니다","확인");
             return;
         }
 
@@ -247,7 +249,7 @@ class SignInModal extends Component {
         this.props.FindPwRequest(data);
         this.setState({ loading: true });
 
-        alert("해당 아이디로 메일 전송이 완료되었습니다!");
+        await alert("해당 아이디로 메일 전송이 완료되었습니다","확인");
         this.props.close();
     };
 

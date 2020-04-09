@@ -5,7 +5,8 @@ import styled from "styled-components";
 import SectionBasic from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBasic"
 import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const MainBanner = styled.div`
 width: 100%;
@@ -301,11 +302,11 @@ class ModifyMyDetail extends Component {
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-        alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
+        await alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오","확인");
         return false;
       }
       if (this.state.password !== this.state.passwordCheck) {
-        alert("비밀번호 확인을 다시 해주십시오");
+        await alert("비밀번호 확인을 다시 해주십시오","확인");
         return false;
       }
       delete formData.passwordCheck;
@@ -316,13 +317,13 @@ class ModifyMyDetail extends Component {
     // return
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.success) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다.","확인");
           window.location.href = "/";
         } else {
           console.log("form-data", formData, "token:", this.props.token);
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요","확인");
           this.setState({
             loading: false
           });
@@ -342,8 +343,8 @@ class ModifyMyDetail extends Component {
   onChangePassword = () => {
     this.setState({ change_password: true })
   }
-  onDeleteUser = () => {
-    let confirm = window.confirm("정말 탈퇴하시겠습니까?");
+  onDeleteUser = async () => {
+    let confirm = await confirm("정말 탈퇴하시겠습니까?","예","아니오");
     if (confirm) {
       this.props.SecessionRequest(this.props.token);
     }

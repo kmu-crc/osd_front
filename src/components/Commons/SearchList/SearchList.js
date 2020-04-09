@@ -8,7 +8,8 @@ import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown"
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 // css styling
 
 const Wrapper = styled.div`
@@ -125,12 +126,12 @@ class SearchList extends Component {
     });
   }
 
-  getSearchValue = (e) => {
+  getSearchValue = async (e) => {
     const target = e.target;
     const value = target.value;
     let regExp = /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
     if (!value.match(regExp)) {
-      alert("특수문자는 사용할 수 없습니다.");
+      await alert("특수문자는 사용할 수 없습니다.","확인");
       target.value = "";
       return;
     } else {
@@ -146,17 +147,17 @@ class SearchList extends Component {
     }
   }
 
-  onSearchSubmit = (data) => {
+  onSearchSubmit = async (data) => {
     if (this.state.keyword === null || this.state.keyword === "") {
-      alert("키워드를 입력해주세요");
+      await alert("키워드를 입력해주세요");
     } else {
       this.props.history.replace(`/${this.props.sort}/${this.state.keyword}`);
       this.changeState();
     }
   }
 
-  typeChange = (e, { value }) => {
-    alert(value);
+  typeChange = async (e, { value }) => {
+    await alert(value);
     return;
     this.props.history.replace(`/search/${this.props.sort}/${this.props.keyword}`);
   }

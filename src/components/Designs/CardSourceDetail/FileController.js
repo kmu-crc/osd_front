@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import { FormControl } from "modules/FormControl";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const FileWrap = styled.div`
   width: 100%;

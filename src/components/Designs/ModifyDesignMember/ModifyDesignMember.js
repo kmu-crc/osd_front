@@ -6,6 +6,8 @@ import opendesign_style from "opendesign_style";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const ModalContent = styled(Modal.Content)`
   & .ui.grid {
@@ -50,25 +52,25 @@ class ModifyDesignMember extends Component {
     this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
     this.props.DesignWaitingToAcceptListRequest(this.props.match.params.id, this.props.token);
   }
-  addMember(email, s_img, nick_name, uid) {
+  async addMember(email, s_img, nick_name, uid) {
     let member = { email: email, s_img: s_img, nick_name: nick_name, uid: uid };
 
     for (var i = 0; i < this.props.DesignDetail.member.length; i++) {
       if (this.props.DesignDetail.member[i].user_id === member.uid) {
-        alert("이미 등록된 디자이너입니다.");
+        await alert("이미 등록된 디자이너입니다.","확인");
         return;
       }
     }
     if (this.state.members.find(mem => mem.uid === member.uid)) {
-      alert("이미 초대목록에 있는 디자이너입니다.");
+      await alert("이미 초대목록에 있는 디자이너입니다.","확인");
       return;
     }
     if (this.props.WaitingList.find(mem => mem.user_id === member.uid)) {
-      alert("\"가입 신청중인 멤버\"에 있는 디자이너입니다.");
+      await alert("\"가입 신청중인 멤버\"에 있는 디자이너입니다.","확인");
       return;
     }
     if (this.props.WaitingToAcceptList.find(mem => mem.user_id === member.uid)) {
-      alert("\"승인대기중인 멤버\"에 있는 디자이너입니다.");
+      await alert("\"승인대기중인 멤버\"에 있는 디자이너입니다.","확인");
       return;
     }
 
@@ -90,12 +92,12 @@ class ModifyDesignMember extends Component {
     this.props.SearchMemberRequest(this.props.match.params.id, { key: data }, this.props.token);
   }
 
-  getoutMember = (flag, id) => {
+  getoutMember = async (flag, id) => {
     const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?" : "가입 요청을 거절하시겠습니까?";
-    if (!window.confirm(msg)) return;
+    if (!await confirm(msg,"예","아니오")) return;
 
     this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, flag)
-      .then(res => {
+      .then(async(res) => {
         console.log("res:", res);
         if (res.data && res.data.success) {
           if (flag === "DesignGetout") {
@@ -107,23 +109,23 @@ class ModifyDesignMember extends Component {
             this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
           }
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.","확인");
         }
       });
   }
 
-  acceptMember = (id) => {
-    const confirm = window.confirm("가입을 승인하시겠습니까?");
+  acceptMember = async (id) => {
+    const confirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
     if (confirm) {
       this.props.AcceptDesignRequest(this.props.match.params.id, id, this.props.token)
-        .then(res => {
+        .then(async(res) => {
           if (res.data && res.data.success) {
             // alert("승인되었습니다.");
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
               .then(this.props.GetDesignCountRequest(this.props.match.params.id))
               .then(this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token));
           } else {
-            alert("다시 시도해주세요.");
+            await alert("다시 시도해주세요.","확인");
           }
         });
     } else {
@@ -131,22 +133,22 @@ class ModifyDesignMember extends Component {
     }
   }
 
-  joinMember = () => {
+  joinMember = async() => {
     const data = this.state.members;
     console.log("data:", data);
     if (data.length <= 0 || data == null) {
-      alert("초대할 멤버를 선택해주세요!");
+      await alert("초대할 멤버를 선택해주세요!","확인");
       return;
     }
     // return;
     this.props.JoinDesignRequest(this.props.match.params.id, data, 1, this.props.token)
-      .then(res => {
+      .then(async(res) => {
         console.log("joinMember:", res.data);
         if (res.data && res.data.success) {
-          alert("가입 요청을 보냈습니다.");
+          await alert("가입 요청을 보냈습니다.","확인");
           this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token);
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.","확인");
         }
       });
   }

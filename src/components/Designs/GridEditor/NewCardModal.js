@@ -8,6 +8,8 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import CardSourceDetail from 'components/Designs/CardSourceDetail';
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
@@ -300,9 +302,9 @@ class NewCardModal extends Component {
         card_content: { deleteContent: [], newContent: [], updateContent: [] },
         closed: false,
     };
-    handleCancel = (obj) => {
+    handleCancel = async (obj) => {
         if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?","예","아니오")) {
                 return "keep";
             }
         }
@@ -344,7 +346,7 @@ class NewCardModal extends Component {
     submit = async (obj) => {
         let files = null;
         if (!this.state.title || this.state.title === "") {
-            alert("컨텐츠의 제목을 입력하세요.");
+            await alert("컨텐츠의 제목을 입력하세요.","확인");
             return;
         }
         // new card
@@ -371,7 +373,7 @@ class NewCardModal extends Component {
                                 })
                                 .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
                         } else {
-                            alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
+                            await alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.","확인");
                         }
                     });
             });
@@ -380,7 +382,7 @@ class NewCardModal extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         if (!this.state.title) {
-            alert("컨텐츠의 제목을 입력하세요.");
+            await alert("컨텐츠의 제목을 입력하세요.","확인");
             return;
         }
         await this.setState({ loading: true, hook: true });

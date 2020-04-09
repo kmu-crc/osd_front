@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
 import { MultiUpload } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const CardSource = styled.div`
   margin-bottom: 2rem;
@@ -105,7 +107,7 @@ export class CardSourcUpdate extends Component {
           this.props.changeActive("INIT");
           this.setState({ deleteSources: [], sources: [] });
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요","확인");
         }
       });
     }).catch(e => {

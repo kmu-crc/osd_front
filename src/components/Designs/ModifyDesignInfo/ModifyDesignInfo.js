@@ -6,6 +6,8 @@ import Button from "components/Commons/Button";
 import { FormInput, FormThumbnail, FormCheckBox, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import opendesign_style from "opendesign_style";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -122,11 +124,11 @@ class ModifyDesignInfo extends Component {
       this.props.setLoader();
       this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid,
         this.props.token)
-        .then(data => {
+        .then(async (data) => {
           if (data.res && data.res.success) {
             this.props.history.push(`/designDetail/${data.res.design_id}`);
           } else {
-            alert("다시 시도해주세요");
+            await alert("다시 시도해주세요","확인");
             // this.state.member.value = JSON.parse(this.state.member.value);
             this.props.setLoader();
           }

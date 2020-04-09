@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const CommentBox = styled.div`
     *{
@@ -199,9 +201,9 @@ class Comment extends Component {
     reset() {
         this.setState({ reply: false, targetId: undefined, this_comment: "", this_reply: "", ing: false });
     };
-    checkPermission() {
+    async checkPermission() {
         if (this.props.my == null) {
-            alert("로그인 해주세요.");
+            await alert("로그인 해주세요.","확인");
             return false;
         }
         return true
@@ -233,20 +235,20 @@ class Comment extends Component {
         }
         this.reset();
     };
-    removeComment(commentId) {
-        if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
+    async removeComment(commentId) {
+        if (await confirm("선택하신 댓글을 삭제하시겠습니까?","예","아니오") === false) {
             return;
         }
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
         if (comm.replies && comm.replies.length > 0) {
-            alert("답변이 있는 댓글은 삭제할 수 없습니다.");
+            await alert("답변이 있는 댓글은 삭제할 수 없습니다.","확인");
         }
         else {
             this.props.removeComment(commentId);
         }
     };
-    removeReply(commentId) {
-        if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
+    async removeReply(commentId) {
+        if (await confirm("선택하신 댓글을 삭제하시겠습니까?","예","아니오") === false) {
             return;
         }
         this.props.removeComment(commentId);

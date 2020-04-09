@@ -16,7 +16,8 @@ import TextController from "../CardSourceDetail/TextControllerPlus";
 // import GridEditor from "components/Designs/GridEditor";
 import { geturl } from "config";
 import Loading from "components/Commons/Loading";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 // import { geturl } from "config";
 
 const MainBanner = styled.div`
@@ -617,13 +618,13 @@ class CreateDesign extends Component {
     this.checkInputForm = this.checkInputForm.bind(this);
     this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
   }
-  handleOnChangeThumbnail = (event) => {
+  handleOnChangeThumbnail = async (event) => {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
     const regExp = /.(jpe?g|png|bmp)$/i;
     if (!regExp.test(file.name)) {
-      alert('파일의 확장자가 올바른지 확인해주세요.');
+      await alert('파일의 확장자가 올바른지 확인해주세요.',"확인");
       return;
     }
     reader.onload = () => {
@@ -640,30 +641,30 @@ class CreateDesign extends Component {
       reader.readAsDataURL(file);
     }
   };
-  checkInputForm = () => {
+  checkInputForm = async () => {
     const warning = "필수 입력항목을 모두 입력하지 않아 다음 단계를 진행할 수 없습니다.\n";
     if (this.state.step === 0) {
 
       if (this.state.thumbnail === noimg) {
-        alert(warning + designImageText + "를 등록해주세요");
+        await alert(warning + designImageText + "를 등록해주세요","확인");
         return;
       }
       else if (this.state.title === "") {
-        alert(warning + "제목을 입력해주세요.");
+        await alert(warning + "제목을 입력해주세요.","확인");
         return;
       }
     }
     else if (this.state.step === 1) {
       if (this.state.categoryLevel1 === false) {
-        alert(warning + "카테고리를 선택해주세요.");
+        await alert(warning + "카테고리를 선택해주세요.","확인");
         return;
       }
       else if ((this.state.alone === false && this.state.members.length === 0)) {
-        alert(warning + "멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.");
+        await alert(warning + "멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.","확인");
         return;
       }
       else if (this.state.license1 === false || this.state.license2 === false || this.state.license3 === false) {
-        alert(warning + "라이센스 사용에 동의해주세요.");
+        await alert(warning + "라이센스 사용에 동의해주세요.","확인");
         return;
       }
     }
@@ -936,7 +937,7 @@ class CreateDesign extends Component {
     this.setState({ contents: update(this.state.contents, { [order]: { contents: { $set: data.content } } }) });
   };
   onDelete = async (order) => {
-    if (window.confirm("선택하신 컨텐츠를 삭제하시겠습니까?") === false) {
+    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?","예","아니오") === false) {
       return;
     }
     let copyContent = [...this.state.contents];
