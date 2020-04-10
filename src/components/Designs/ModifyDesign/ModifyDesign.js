@@ -753,13 +753,13 @@ class ModifyDesign extends Component {
     }
     this.setState({ loading: true });
     this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
-      .then(async(data) => {
+      .then(async (data) => {
         console.log(data, data.res && data.res.success);
         if (data.res && data.res.success) {
-          await alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.","확인");
+          await alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.", "확인");
           window.location.href = geturl() + '/designDetail/' + this.props.DesignDetail.uid;
         } else {
-          await alert("디자인 정보 수정에 실패하였습니다.","확인");
+          await alert("디자인 정보 수정에 실패하였습니다.", "확인");
         }
       })
     this.setState({ loading: false });
@@ -810,13 +810,13 @@ class ModifyDesign extends Component {
     await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
 
     if (this.state.members.length === 0) {
-          this.setState({ alone: true })
+      this.setState({ alone: true })
     }
   }
   deleteDesign = () => {
     this.props.DeleteDesignRequest(this.props.id, this.props.token)
       .then(async () => {
-        await alert("삭제되었습니다.","확인");
+        await alert("삭제되었습니다.", "확인");
         window.location.href = geturl() + `/design`;
       })
   }
@@ -939,7 +939,9 @@ class ModifyDesign extends Component {
                     : <p>카테고리를 가져오고 있습니다.</p>}
                   {/* invite member*/}
                   <InviteMemberBox>
-                    <div className="additionalTitle ">멤버 초대하기<sup style={{ color: "red" }}>*</sup></div>
+                    <div className="additionalTitle ">멤버 초대하기
+                    {/* <sup style={{ color: "red" }}>*</sup> */}
+                    </div>
                     <div className="searchBox" >
                       <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
                     </div>

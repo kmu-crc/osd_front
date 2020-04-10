@@ -624,7 +624,7 @@ class CreateDesign extends Component {
     const file = event.target.files[0];
     const regExp = /.(jpe?g|png|bmp)$/i;
     if (!regExp.test(file.name)) {
-      await alert('파일의 확장자가 올바른지 확인해주세요.',"확인");
+      await alert('파일의 확장자가 올바른지 확인해주세요.', "확인");
       return;
     }
     reader.onload = () => {
@@ -646,17 +646,17 @@ class CreateDesign extends Component {
     if (this.state.step === 0) {
 
       if (this.state.thumbnail === noimg) {
-        await alert(warning + designImageText + "를 등록해주세요","확인");
+        await alert(warning + designImageText + "를 등록해주세요", "확인");
         return;
       }
       else if (this.state.title === "") {
-        await alert(warning + "제목을 입력해주세요.","확인");
+        await alert(warning + "제목을 입력해주세요.", "확인");
         return;
       }
     }
     else if (this.state.step === 1) {
       if (this.state.categoryLevel1 === false) {
-        await alert(warning + "카테고리를 선택해주세요.","확인");
+        await alert(warning + "카테고리를 선택해주세요.", "확인");
         return;
       }
       // else if ((this.state.alone === false && this.state.members.length === 0)) {
@@ -664,7 +664,7 @@ class CreateDesign extends Component {
       //   return;
       // }
       else if (this.state.license1 === false || this.state.license2 === false || this.state.license3 === false) {
-        await alert(warning + "라이센스 사용에 동의해주세요.","확인");
+        await alert(warning + "라이센스 사용에 동의해주세요.", "확인");
         return;
       }
     }
@@ -795,12 +795,12 @@ class CreateDesign extends Component {
       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
     this.setState({ loading: false });
   };
-  onChangeCategory1 = (event, { value }) => {
-    this.setState({ categoryLevel1: { value }.value });
+  onChangeCategory1 = async (event, { value }) => {
+    await this.setState({ categoryLevel1: { value }.value });
     this.checkFinishAdditional();
   };
-  onChangeCategory2 = (event, { value }) => {
-    this.setState({ categoryLevel2: { value }.value })
+  onChangeCategory2 = async (event, { value }) => {
+    await this.setState({ categoryLevel2: { value }.value })
     this.checkFinishAdditional();
   };
   onCheckedLicense01 = async () => {
@@ -937,7 +937,7 @@ class CreateDesign extends Component {
     this.setState({ contents: update(this.state.contents, { [order]: { contents: { $set: data.content } } }) });
   };
   onDelete = async (order) => {
-    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?","예","아니오") === false) {
+    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?", "예", "아니오") === false) {
       return;
     }
     let copyContent = [...this.state.contents];
@@ -1023,15 +1023,15 @@ class CreateDesign extends Component {
               <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
               <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
               <div className="imagebox">
-              <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px",marginBottom:"20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height:"max-content" }}>
-                <ReactCrop
-                  src={this.state.thumbnail} crop={this.state.crop}
-                  onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
-              </div>
-              <div style={{ marginTop: "20px", display: "flex" }} >
-                <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
-                <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
-              </div>
+                <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: "max-content" }}>
+                  <ReactCrop
+                    src={this.state.thumbnail} crop={this.state.crop}
+                    onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
+                </div>
+                <div style={{ marginTop: "20px", display: "flex" }} >
+                  <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
+                  <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
+                </div>
               </div>
             </CropperDialog> : null}
 
@@ -1121,7 +1121,9 @@ class CreateDesign extends Component {
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* INVITE MEMBER */}
                 <InviteMemberBox>
-                  <div className="additionalTitle">멤버 초대하기<sup style={{ color: "red" }}>*</sup></div>
+                  <div className="additionalTitle">멤버 초대하기
+                  {/* <sup style={{ color: "red" }}>*</sup> */}
+                  </div>
                   <div className="searchBox">
                     {/* {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />} */}
                     <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
