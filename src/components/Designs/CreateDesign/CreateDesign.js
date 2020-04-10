@@ -187,7 +187,7 @@ const PeerBox = styled.div`
   margin-right: 25px;
   margin-bottom: 10px;
   .nameLabel{
-    width: 112px;
+    width: max-content;
     height: 29px;
     margin-top: 1px;
     margin-left: 10px;
@@ -659,10 +659,10 @@ class CreateDesign extends Component {
         await alert(warning + "카테고리를 선택해주세요.","확인");
         return;
       }
-      else if ((this.state.alone === false && this.state.members.length === 0)) {
-        await alert(warning + "멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.","확인");
-        return;
-      }
+      // else if ((this.state.alone === false && this.state.members.length === 0)) {
+      //   await alert(warning + "멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.","확인");
+      //   return;
+      // }
       else if (this.state.license1 === false || this.state.license2 === false || this.state.license3 === false) {
         await alert(warning + "라이센스 사용에 동의해주세요.","확인");
         return;
@@ -1138,11 +1138,11 @@ class CreateDesign extends Component {
                     <div className="memberList">{arrSummaryList}</div>
                   </InviteMemberListBox>
                   {/* LEAVE ME ALONE */}
-                  <NoInviteMemberBox>
+                  {/* <NoInviteMemberBox>
                     <CheckBox2 onChange={this.LeaveMeAlone} checked={this.state.alone} />
 
                     <span className="textLabel">멤버를 초대하지 않습니다.</span>
-                  </NoInviteMemberBox>
+                  </NoInviteMemberBox> */}
                 </div>
                 <HRline />
                 {/* LICENSE */}
