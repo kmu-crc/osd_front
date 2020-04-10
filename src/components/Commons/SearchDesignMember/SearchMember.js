@@ -38,8 +38,8 @@ const SearchWrap = styled.div`
       height: 30px;
       font-size: 18px;
       margin-top: 15px;
-      margin-left: 50px;
-      padding:20px;
+      margin-left: 20px;
+      padding:10px;
       border-radius:5px;
       outline:none;
       
