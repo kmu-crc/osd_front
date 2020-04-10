@@ -6,6 +6,7 @@ import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
+import { confirm } from 'components/Commons/Confirm/Confirm';
 
 const DesignBox = styled.div`
   & .boxTitle {
@@ -24,7 +25,7 @@ class EditDesignListContainer extends Component {
     this.setState({ reload: !this.state.reload });
   }
   setOut = async (target) => {
-    const isconfirm = await confirm("이 디자인을 그룹에서 삭제하시겠습니까?","예","아니오");
+    const isconfirm = await confirm("이 디자인을 그룹에서 삭제하시겠습니까?", "예", "아니오");
     if (!isconfirm) {
       return;
     }
