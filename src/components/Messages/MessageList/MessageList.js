@@ -408,13 +408,13 @@ class Messages extends React.Component {
       render: false
     });
     this.setState({ render: true });
-    setTimeout(async () => {
-      await this.props.GetMyChatRoomsListRequest(this.props.token);
-      this.setState({ render: true });
-    }, 250)
+    // setTimeout(async () => {
+    //   await this.props.GetMyChatRoomsListRequest(this.props.token);
+    //   this.setState({ render: true });
+    // }, 250)
     await this.handleCloseMember();
     await document.getElementById("sendMsgBox") && await document.getElementById("sendMsgBox").focus();
-    await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
+    // await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
   }
   onSubmitForm = async (data) => {
     if (this.state.selectId === null) {
@@ -493,7 +493,7 @@ class Messages extends React.Component {
                   <SummaryList id="searchRect">
                     {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
                       this.props.ChatRooms.map(chat => chat.recent != null ?
-                        <div key={chat.uid} onClick={() => this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}>
+                        <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
                           <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
                         </div> : null)}
                   </SummaryList>
