@@ -36,11 +36,13 @@ import ClientTemplate from "templates/ClientTemplate"
 import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
 
+import Notice from "components/Header/Notice";
+
 class App extends Component {
   render() {
-
     return (
       <BrowserRouter>
+        <Notice />
         <ClientTemplate>
           <Switch>
             {/* GROUP A - main */}

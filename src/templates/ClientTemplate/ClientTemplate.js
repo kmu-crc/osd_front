@@ -34,7 +34,7 @@ const ChildrenContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
   
-  width:${props=>props.screenWidth>1920?1920:props.screenWidth}px;
+  width:${props => props.screenWidth > 1920 ? 1920 : props.screenWidth}px;
   // @media only screen and (max-width: 1920px) {
   //   width:${window.innerWidth}px;
   // }
@@ -44,7 +44,7 @@ const ChildrenContainer = styled.div`
 `;
 
 class ClientTemplate extends Component {
-  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0,screenWidth: window.innerWidth }
+  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0, screenWidth: window.innerWidth }
   componentDidMount() {
     window.addEventListener("resize", this.handleResize, false);
   }

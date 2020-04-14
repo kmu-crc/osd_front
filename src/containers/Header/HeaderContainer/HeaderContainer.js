@@ -2,15 +2,14 @@ import React, { Component } from 'react'
 import Header from "components/Header/Header"
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { SignInRequest, SignOutRequest,CheckEmailRequest } from "redux/modules/auth"
+import { SignInRequest, SignOutRequest, CheckEmailRequest } from "redux/modules/auth"
 import { FindPwRequest } from "redux/modules/account";
 
 
 class HeaderContainer extends Component {
     render() {
-        //console.log("HC:", this.props)
         return (
-            <Header {...this.props} style={{margin:"0 auto"}}/>
+            <Header {...this.props} style={{ margin: "0 auto" }} />
         )
     }
 }
