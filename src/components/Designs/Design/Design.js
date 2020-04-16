@@ -17,6 +17,7 @@ const DesignElement = styled.div`
   *{
     cursor:pointer;
   }
+  cursor:pointer;
   position: relative;
   z-index: 700;
   width: 330px;
@@ -29,9 +30,9 @@ const DesignElement = styled.div`
   color: white;
   font-size: 20px;
   font-family: "Noto Sans KR";
-  cursor: default;
+  // cursor: default;
   .cover {
-    cursor: default;
+    // cursor: default;
     z-index: 701;
     position: absolute;
     border-radius: 15px;
@@ -59,7 +60,7 @@ const DesignElement = styled.div`
     font-weight: 400;
     text-align: right;
     text-shadow:2px 2px 6px rgb(80,80,80,1);
-    cursor: default;
+    // cursor: default;
   }
   .innerbox {
     z-index: 703;
@@ -89,13 +90,13 @@ const DesignElement = styled.div`
       text-shadow:2px 2px 6px gray;
       line-height: 25px;
       text-align: right;
-      cursor: default;
+      // cursor: default;
     }
     .user-name {
       font-size: 20px;
       font-weight: 300;
       text-shadow:2px 2px 6px gray;
-      cursor: default;
+      // cursor: default;
     }  
     .user-update-wrapper {
       width: 285px;
@@ -126,7 +127,7 @@ const DesignElement = styled.div`
   .view-count {
     z-index: 703;
     margin-right: 6px;
-    cursor: default;
+    // cursor: default;
   }
   .like {
     z-index: 703;
@@ -139,7 +140,7 @@ const DesignElement = styled.div`
   .like-count {
     z-index: 703;
     margin-right: 6px;
-    cursor: default;
+    // cursor: default;
   }
   .fork {
     z-index: 703;
@@ -152,7 +153,7 @@ const DesignElement = styled.div`
   .fork-count {
     z-index: 703;
     margin-right: 0px;
-    cursor: default;
+    // cursor: default;
   }
 `;
 
