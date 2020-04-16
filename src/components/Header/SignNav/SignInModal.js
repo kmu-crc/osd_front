@@ -158,10 +158,10 @@ class SignInModal extends Component {
         this.handlesubmitEnter = this.handlesubmitEnter.bind(this);
 
     }
-    signin = async () => {
+    signin = async (event) => {
 
         const { email, password } = this.state
-
+        
         // ---------------- 예외처리
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (email === "") {
@@ -214,6 +214,7 @@ class SignInModal extends Component {
 
     handlesubmitEnter = (e) => {
         if (e.keyCode === 13) {
+            e.target.blur();
             this.signin();
         }
     }
