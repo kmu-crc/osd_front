@@ -168,7 +168,7 @@ class ModifyDesignMember extends Component {
               <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                 {currentDesign.member && currentDesign.member.length > 0 &&
                   currentDesign.member.map((mem, i) =>
-                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
+                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "25px" }}>
                       <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
                       <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
                       {this.props.mine && this.props.DesignDetail.user_id !== mem.user_id &&
@@ -185,7 +185,7 @@ class ModifyDesignMember extends Component {
                 <Label>가입 신청중인 멤버</Label>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                   {this.props.WaitingList.map((mem, i) =>
-                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
+                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "25px" }}>
                       <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
                       <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
                       <div onClick={() => this.acceptMember(mem.user_id)} title={"가입 요청을 승인합니다"} style={{marginLeft: "25px",  fontWeight: "500", fontSize: "15px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }}>승인</div>
@@ -200,7 +200,7 @@ class ModifyDesignMember extends Component {
                 <Label>승인대기중인 멤버</Label>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                   {this.props.WaitingToAcceptList.map((mem, i) =>
-                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
+                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "25px",paddingRight:"10px" }}>
                       <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
                       <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
                     </div>)}

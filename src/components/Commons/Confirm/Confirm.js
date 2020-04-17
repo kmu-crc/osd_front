@@ -71,6 +71,9 @@ const Button = styled.div`
 
 
 class Confirm extends React.Component {
+    constructor(props){
+        super(props);
+    }
     render() {
         const {
             proceedLabel, cancelLabel, title, confirmation,
@@ -78,9 +81,10 @@ class Confirm extends React.Component {
         } = this.props;
 
         return (
-            <ModalBox
+            <ModalBox 
                 open={show}
-                onClose={() => proceed(false)}>
+                onClose={() => proceed(false)}
+                >
 
                 {title ?
                     <div className="titleBox">
@@ -94,10 +98,10 @@ class Confirm extends React.Component {
                 </div>
 
                 <div className="buttonBox">
-                    <Button color="red" onClick={() => proceed(true)}>
+                    <Button id="redbtn" color="red" onClick={() => proceed(true)}>
                         <div className="text">{proceedLabel}</div>
                     </Button>
-                    <Button color="gray" onClick={() => proceed(false)}>
+                    <Button id="graybtn" color="gray" onClick={() => proceed(false)}>
                         <div className="text">{cancelLabel}</div>
                     </Button>
                 </div>

@@ -54,7 +54,7 @@ class Group extends Component {
                             : <div id={`child-${index}`} key={index} style={{ marginRight: "5px", height: "70px", width: "70px", borderRadius: "15px", backgroundColor: "#EFEFEF" }} />)
                     })}
                 </div>
-                <div style={{ border: "2px solid #EFEFEF", height: "230px", width: "230px", borderRadius: "15px", backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: group.thumbnailUrl && group.thumbnailUrl.m_img ? `url(${group.thumbnailUrl.m_img})` : `url(${noimg})` }} />
+                <div style={{ border: "2px solid #EFEFEF", height: "230px", width: "230px", borderRadius: "15px", backgroundColor: "#D6D6D6", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center center", backgroundImage: group.thumbnailUrl && group.thumbnailUrl.l_img ? `url(${group.thumbnailUrl.l_img})` : `url(${noimg})` }} />
                 <div >
                     <div style={{ marginTop: "19px", width: "655px", marginLeft: "17px", fontFamily: "Noto Sans KR" }}>
                         <div style={{

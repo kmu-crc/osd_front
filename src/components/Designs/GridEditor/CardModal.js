@@ -452,7 +452,9 @@ class CardModal extends Component {
         this.setState({ edit: this.state.edit })
     };
     removeCard = async (event) => {
+        
         event.stopPropagation();
+        event.target.blur();
         if (await confirm("컨텐츠를 삭제하시겠습니까?", "예", "아니오")) {
             this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })

@@ -75,22 +75,30 @@ const CommentInner = styled.div`
             cursor: pointer;
        }
         .del {
-            width: max-content;
-            font-size: 13px;
-            font-weight: 500;
-            margin-left: 5px;
+            // width: max-content;
+            // height: 16px;
+            // font-weight: 500;
+            // margin-left: 5px;
             color: red;
-            cursor: pointer;
+            // cursor: pointer;
         }
     };
 `;
 const CommentInputTextContainer = styled.div`
+   height:max-content;
    margin-bottom: 30px;
    margin-top: 15px;
-//    margin-left: 15px;
    display: flex;
     &.reply {
         margin-left: 50px;
+    }
+    .writeBox {
+        font-size: 15px;
+        line-height: 22px;
+        color: #707070;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        margin-bottom:5px;
     }
    .face {
        width: 58px;
@@ -105,16 +113,12 @@ const CommentInputTextContainer = styled.div`
        border-radius: 50%;
    }
    .wrapper {
+       width:75%;
+       height:max-content;
        margin-left: 24px;
-        .writing {
-            font-size: 15px;
-            line-height: 22px;
-            color: #707070;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-        }
+
        textarea {
-           width: 560px;
+           width: 100%;
            min-width: 100px;
            height: 100%;
            padding: 7px;
@@ -130,13 +134,17 @@ const CommentInputTextContainer = styled.div`
            background-repeat: no-repeat;
            border-radius: 5px;
        }
+       .marginBottom{
+           margin-bottom:30px;
+       }
    }
    .another-wrapper { 
-       margin-left: auto;
-       margin-right: 20px;
-       margin-top: 41px;
+    //    margin-left: auto;
+    //    margin-right: 20px;
+    //    margin-top: 41px;
        display: flex;
-       // border: 1px solid red;
+       align-items:flex-end;
+       padding:5px;
        textarea {
            width: 560px;
            min-width: 100px;
@@ -156,7 +164,8 @@ const CommentInputTextContainer = styled.div`
        }
        .submit {
            width: max-content;
-           height: 22px;
+           height:max-content;
+        //    height: 22px;
            margin-left: 18px;
            font-size: 20px;
            font-weight: 500;
@@ -167,7 +176,8 @@ const CommentInputTextContainer = styled.div`
        }
        .cancel {
            width: max-content;
-           height: 22px;
+           height:max-content;
+        //    height: 22px;
            margin-left: 18px;
            font-size: 20px;
            font-weight: 300;
@@ -272,7 +282,7 @@ class Comment extends Component {
                                 <div className="create-time">({DateFormat(item.create_time)})</div>
                                 <div className="button-wrapper">
                                     {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
-                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
+                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="reply del">삭제하기</div>}
                                 </div>
                             </div>
                             <div className="comment"
@@ -301,17 +311,22 @@ class Comment extends Component {
 
                     {/* input-text of replie */}
                     {reply && item.uid === this.state.targetId &&
-                        <CommentInputTextContainer className="reply" face={myface}>
+                    <React.Fragment>
+                        <CommentInputTextContainer className="reply" style={{flexDirection:"column"}} face={myface}>
+                        <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
+                        <div style={{display:"flex"}}>
                             {/* <div className="face" /> */}
-                            <div className="wrapper">
-                                <div className="writing" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
+                            <div className="wrapper ">
                                 <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
                             </div>
                             <div className="another-wrapper">
                                 <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
                                 <div className="cancel" onClick={this.undoReply}>취소</div>
                             </div>
-                        </CommentInputTextContainer>}
+                        </div>
+                        </CommentInputTextContainer>
+                        </React.Fragment>
+                        }
                 </Comments>)
             })}
 

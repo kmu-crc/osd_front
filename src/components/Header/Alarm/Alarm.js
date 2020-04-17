@@ -362,7 +362,7 @@ class Alarm extends Component {
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>
                 <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                    &nbsp;&nbsp;<TextFormat txt={item.reply_preview} />
+                    &nbsp;&nbsp;<TextFormat txt={item.reply_preview} chars={MAXLENGTH - 15}s />
                 </div>
             </React.Fragment>
         }
@@ -371,14 +371,14 @@ class Alarm extends Component {
                 {/* <ArrowRtoL color={"#404040"} /> */}
                 {/* <div style={{ width: "max-content", cursor: "default" }}>가입요청</div> */}
                 {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
-                <TextFormat txt={item.title} chars={MAXLENGTH} />
+                <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "GETOUT") {
             return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
                 {/* <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div> */}
                 {/* <ArrowLtoR color={"red"} /> */}
-                <TextFormat txt={item.title} chars={MAXLENGTH} />
+                <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
         else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT")) {
@@ -422,7 +422,7 @@ class Alarm extends Component {
         }
         else {
             return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                <TextFormat txt={item.title} chars={MAXLENGTH} />
+                <TextFormat txt={item.title} chars={MAXLENGTH-15} />
             </div>
         }
         // else if (item.type === "DESIGN" && item.kinds === "LIKE")
