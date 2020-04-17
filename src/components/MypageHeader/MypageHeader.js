@@ -43,7 +43,7 @@ const CategoryLabel = styled.div`
     text-align:left;
 `;
 const ExplainBox01 = styled.div`
-    width: 100%;
+    width: 97%;
     height: 140px;
     font-size: 20px;
     font-weight: 200;

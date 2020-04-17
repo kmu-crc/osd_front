@@ -8,6 +8,7 @@ import TextFormat from 'modules/TextFormat';
 const CreateStepContainer = styled.div`
     position: relative;
     display: flex;
+    align-items:center;
     width: 200px;
     height: 77px;
     border-radius: 15px;
@@ -17,13 +18,15 @@ const CreateStepContainer = styled.div`
     cursor: pointer;
     .close-box{
         poistion: relative;
-        margin-top: 22.5px;
+        // margin-top: 22.5px;
         margin-left: 19.5px;
         margin-right: 15px;
+        display:flex;
+        align-items:center;
     }
     .create-button{
         opacity: ${props => props.disabled}; 
-        margin-top: 23px;
+        // margin-top: 23px;
         height: 29px;
         color: #707070;
         font-family: Noto Sans KR;
@@ -61,11 +64,12 @@ const StepCardStyle = styled.div`
     position: relative;
     cursor: pointer;
     display: flex;
+    align-items:center;
     width: 200px;
     height: 77px;
     border-radius: 15px;
     border: 2px solid #707070;
-    margin-top: ${props => props.marginTop}px;
+    // margin-top: ${props => props.marginTop}px;
     margin-left: ${props => props.marginLeft}px;
     margin-right: ${props => props.marginRight}px;
     margin-bottom: ${props => props.marginBottom}px;
@@ -73,9 +77,9 @@ const StepCardStyle = styled.div`
     background-color: white;
     overflow:hidden;
     .text-area{
-        margin-top: 24px;
+        // margin-top: 24px;
         margin-left: 12px;
-        height: 29px;
+        // height: 29px;
         width: 178px;
         color: #707070;
         font-family: Noto Sans KR;
@@ -160,12 +164,10 @@ export const ContentCard = (props) => {
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
                 <React.Fragment>
-                    {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
                     <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                         <TextFormat txt={props.card.title} />
                     </div>
-                    {/* <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}> */}
                     {/* #EAEAEA */}
                     <AuthorBox>
                         <div style={{ fontSize: "17px", fontWeight: "400" }}>

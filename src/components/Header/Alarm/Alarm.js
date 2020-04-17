@@ -362,7 +362,7 @@ class Alarm extends Component {
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>
                 <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                    &nbsp;&nbsp;<TextFormat txt={item.reply_preview} chars={MAXLENGTH - 15}s />
+                    &nbsp;&nbsp;<TextFormat txt={item.reply_preview} chars={MAXLENGTH - 15} />
                 </div>
             </React.Fragment>
         }

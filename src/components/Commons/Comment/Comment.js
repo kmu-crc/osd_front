@@ -59,6 +59,7 @@ const CommentInner = styled.div`
             font-size: 16px;
             max-width: 560px;
             background-color: white;
+            margin-top:10px;
         };
     };
 
