@@ -260,7 +260,7 @@ class SignInModal extends Component {
         return (
             <React.Fragment>
                 {this.state.findPW === false ?
-                    <CustomModal open={open} onClose={this.onClose}>
+                    <CustomModal open={open} /*onClose={this.onClose}*/>
                         <Modal.Content>
                             <div className="title">OPEN SOURCE DESIGN</div>
                             <MainBox onSubmit={this.signin}>

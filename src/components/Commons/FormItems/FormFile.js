@@ -18,6 +18,7 @@ const Message = styled.div`
   position: absolute;
   color: ${opendesign_style.color.main.basic};
   left: 0;
+  margin-left:55px;
 `
 
 export class FormFile extends Component {

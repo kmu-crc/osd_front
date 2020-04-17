@@ -125,7 +125,6 @@ export class FormThumbnailEx extends Component {
               <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
             </div>
           </label>
-        </div>
         <FormFile
           name={name}
           id={id ? id : name}
@@ -136,6 +135,7 @@ export class FormThumbnailEx extends Component {
           validates={validates}
           onlyImage={true}
         />
+        </div>
       </InputWrap>
     );
   }

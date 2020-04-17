@@ -42,6 +42,7 @@ const InputWrapper = styled.div`
             font-size: 20px;
             font-family: Noto Sans KR;
             font-weight: 300;
+            outline:none;
         }
         @media only screen and (min-width: 0px) and (max-width: 680px) {
             width: 200px;
