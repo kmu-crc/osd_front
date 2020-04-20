@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer";
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer";
@@ -58,17 +58,17 @@ const Title = styled.div`
   z-index: 2;
   transform: translateY(-50%);
   & input {
-    font-size: ${opendesign_style.font.size.heading1};
+    font-size: ${StyleGuide.font.size.heading1};
     line-height: 50px;
     border: none;
     text-align: left;
     vertical-align: middle;
     background-color: transparent;
-    color: ${opendesign_style.color.grayScale.scale7};
+    color: ${StyleGuide.color.geyScale.scale7};
     padding: 10px;
     padding-left: 20px;
     &::placeholder {
-      color: ${opendesign_style.color.grayScale.scale3};
+      color: ${StyleGuide.color.geyScale.scale3};
     }
   }
   & .searchBtn {
@@ -82,8 +82,8 @@ const Title = styled.div`
     }
   }
   & .searchBtn .icon {
-    font-size: ${opendesign_style.font.size.heading2};
-    color: ${opendesign_style.color.gey.basic};
+    font-size: ${StyleGuide.font.size.heading2};
+    color: ${StyleGuide.color.gey.basic};
   }
 `;
 
@@ -91,7 +91,7 @@ const MenuWrap = styled.div`
   background-color: white;
   margin-bottom: 30px;
   border-top: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 2px 2px 2px ${opendesign_style.color.grayScale.scale3};
+  box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
 `;
 
 const type = [
@@ -128,7 +128,7 @@ class SearchList extends Component {
   getSearchValue = (e) => {
     const target = e.target;
     const value = target.value;
-    let regExp =  /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
+    let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
     if (!value.match(regExp)) {
       alert("특수문자는 사용할 수 없습니다.");
       target.value = "";
@@ -173,7 +173,6 @@ class SearchList extends Component {
                    placeholder="검색어를 입력하세요"
                    onChange={this.getSearchValue}
                    onKeyDown={this.submitEnter}
-                   maxLength = "100"
                    />
             <button onClick={this.onSearchSubmit} className="searchBtn">
               <i aria-hidden="true" size="huge" className="search icon"></i>

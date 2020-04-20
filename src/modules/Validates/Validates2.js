@@ -190,8 +190,8 @@ Validates.OnlyImages = (data, target) => {
         if (
           item.type === "image/jpeg" ||
           item.type === "image/png" ||
-          item.type === "image/bmp" ||
           item.type === "image/gif"
+          // item.type === "image/bmp" ||
           // item.type === "image/webp"
         ) {
           await resolve(true);
@@ -229,9 +229,9 @@ Validates.NotSpecialCharacters = (data, target) => {
     if (Validates.NotRequired(data)) {
       resolve(true);
     } else {
-      let regExp = /^[a-zA-Zㄱ-힣0-9~!_]*$/i;
+      let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
       if (!data.match(regExp)) {
-        message = "'~','!','_' 를 제외한 특수문자는 사용할 수 없습니다.";
+        message = "특수문자는 사용할 수 없습니다.";
         reject({ message, target });
       } else {
         resolve(true);

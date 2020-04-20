@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 const MemberItem = styled.div`
   display: inline-block;
-  padding: 10px 10px;
-  background-color: #4D5256;
-  color: #F8FAFB;
+  padding: 5px 10px;
+  background-color: #4d5256;
+  color: #f8fafb;
   border-radius: 3px;
   margin-right: 5px;
   margin-bottom: 5px;
@@ -24,58 +24,35 @@ const DeleteBtn = styled.button`
 const MemberWrap = styled.div`
   margin-top: 1rem;
 `
+
 const SearchWrap = styled.div`
-  display: ${props => props.display};
   position: relative;
-  .input-style {
-    box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    padding-left: 10px;
-    outline: none;
-    border: none;
-    width: 353px;
-    height: 40px;
-    font-size: 18px;
-    margin-left: 50px;
-  }
 `
+
 const MemberList = styled.ul`
-  display: ${props => props.display};
-  width: 353px;
-  margin-left: 50px;
+  width: 100%;
   padding: 0.5rem;
-  min-height: 0px;
+  min-height: 100px;
   max-height: 300px;
   overflow-Y: scroll;
   box-sizing: border-box;
-  background: white;
-  border-radius: 10px;
-  box-shadow:0px 2px 10px 2px rgba(0,0,0,0.1);
+  border: 1px solid #181818;
+  border-radius: 3px;
 `
+
 const MemberListItem = styled.li`
   width: 100%;
   padding: 10px;
-  background:#EFEFEF;
-  color:#707070;
-  border-radius: 10px;
+  border: 1px solid #181818;
+  border-radius: 3px;
   margin-bottom: 5px;
 `
-const SearchInputText = styled(FormInput)`
-    box-shadow:0px 1px 2px #000000 ;
-    border-radius:10px;
-    padding-left:10px;
-    outline:none;
-    border:none;
-    width:353px;
-    height:40px;
-    font-size:18px;
-    margin-left:50px;
-
-`
-
 
 class SearchMember extends Component {
-  state = { member: [], open: false }
+  state = {
+    member: [],
+    open: false
+  }
 
   componentDidMount() {
     if (this.props.originalMember) {
@@ -87,21 +64,37 @@ class SearchMember extends Component {
 
   getValue = (value) => {
     console.log("get", value);
-    this.setState({ open: true });
-    if (!value) {
-      this.setState({ open: false });
+    this.setState({open: true});
+    if(!value) {
+      this.setState({open: false});
       return;
     }
-    this.props.SearchMemberRequest(null, { key: value }, this.props.token).then(data => { })
+    this.props.SearchMemberRequest({ key: value }, this.props.token).then(data => {
+
+    })
   }
 
   addMember = async (data) => {
-    console.log("ADDMEMBER:", data)
-    this.props.addMemberItem && this.props.addMemberItem(data.uid, data.nick_name);
+    let is_only = true;
+    if(this.state.member.length > 0) {
+      for( let item of this.state.member){
+        if(item.uid === data.uid){
+          is_only = await false;
+          break;
+        }
+      }
+    }
+    if(is_only){
+      this.setState({
+        member: [...this.state.member, data],
+        open: false
+      });
+      this.returnData();
+    }
   }
   closeList = () => {
     console.log("close")
-    this.setState({ open: false });
+    this.setState({open: false});
   }
 
   deleteMember = (index) => {
@@ -115,28 +108,26 @@ class SearchMember extends Component {
 
   returnData = () => {
     setTimeout(() => {
-      if (this.props.onChangeMembers) this.props.onChangeMembers(this.state.member);
+      if(this.props.onChangeMembers) this.props.onChangeMembers(this.state.member);
     }, 100)
   }
-
   render() {
     return (
-      <SearchWrap id = "searchRect" style={{display:"inline-block"}}>
-        <SearchInputText  id = "searchRect" type="text" 
-        name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
-        <MemberList  id = "searchRect" style={this.state.open ? {display: "block"} : {display: "none"}}>
+      <SearchWrap>
+        <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
+        <MemberList style={this.state.open ? {display: "block"} : {display: "none"}}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
         </MemberList>
-        <MemberWrap  id = "searchRect">
+        <MemberWrap>
           {this.state.member.map((data, index) => {
             console.log(data);
-            return (<MemberItem  id = "searchRect" key={index}>
+            return (<MemberItem key={index}>
               {data.nick_name}
               <span>
-                <DeleteBtn  id = "searchRect" type="button" onClick={() => this.deleteMember(index)}>
-                  <Icon  id = "searchRect" name="remove" />
+                <DeleteBtn type="button" onClick={() => this.deleteMember(index)}>
+                  <Icon name="remove" />
                 </DeleteBtn>
               </span>
             </MemberItem>)

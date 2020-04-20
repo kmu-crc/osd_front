@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import {  Header, Grid } from "semantic-ui-react";
+import { Container, Header, Grid } from "semantic-ui-react";
 import ContentBox from "components/Commons/ContentBox";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 
 const FromFieldCard = styled.div`
   margin-top: 2rem;
@@ -12,8 +12,8 @@ const FromFieldCard = styled.div`
   box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
   padding: 40px;
   & .para {
-    font-size: ${opendesign_style.font.size.paragraph};
-    color: ${opendesign_style.color.grayScale.scale7};
+    font-size: ${StyleGuide.font.size.paragraph};
+    color: ${StyleGuide.color.geyScale.scale7};
   }
 `;
 

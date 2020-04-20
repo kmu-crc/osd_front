@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
-import opendesign_style from 'opendesign_style';
+import StyleGuide from 'StyleGuide';
 
 const CateColumn = styled(Grid.Column)`
   @media only screen and (max-width: 1200px) {
@@ -19,7 +19,7 @@ const CateColumn = styled(Grid.Column)`
       padding-top: 1rem;
       padding-bottom: 1rem;
       &:hover {
-        color: ${opendesign_style.color.main.basic};
+        color: ${StyleGuide.color.main.basic};
         &:hover ul.subCateUl {
           display: block;
         }
@@ -27,7 +27,7 @@ const CateColumn = styled(Grid.Column)`
     }
     & li.active {
       font-weight: bold;
-      color: ${opendesign_style.color.main.basic};
+      color: ${StyleGuide.color.main.basic};
     }
     &::after {
       content: "";
@@ -41,10 +41,10 @@ const CateColumn = styled(Grid.Column)`
     z-index: 2;
     top: 40px;
     left: 0;
-    background-color: ${opendesign_style.color.grayScale.scale0};
-    border: 1px solid ${opendesign_style.color.grayScale.scale2};
-    box-shadow: 1px 0px 3px ${opendesign_style.color.grayScale.scale2};
-    color: ${opendesign_style.color.grayScale.scale6};
+    background-color: ${StyleGuide.color.geyScale.scale0};
+    border: 1px solid ${StyleGuide.color.geyScale.scale2};
+    box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
+    color: ${StyleGuide.color.geyScale.scale6};
     font-weight: normal;
     &:hover {
       display: block;
@@ -53,7 +53,7 @@ const CateColumn = styled(Grid.Column)`
       width: 120px;
       padding: .7rem 1rem;
       &:hover {
-        background-color: ${opendesign_style.color.grayScale.scale2};
+        background-color: ${StyleGuide.color.geyScale.scale2};
       }
     }
   }
@@ -93,7 +93,7 @@ class Category2 extends Component {
             {list && list.length !== 0 && list.map((subcate, i) => (
               subcate.value !== 0 &&
                 <SubCateItem key={i}
-                             className={subcate.value === this.props.cate2
+                             className={subcate.value == this.props.cate2
                                         ? "active" : ""}
                              onClick={(e) => this.onChangeCategory2(e, subcate.parent, subcate.value)}>
                   {subcate.text}
@@ -113,7 +113,7 @@ class Category2 extends Component {
           {this.props.category1.map((cate, i) => (
             cate.value !== 0 &&
               <CateItem key={i}
-                        className={cate.value === this.props.cate1 ||
+                        className={cate.value == this.props.cate1 ||
                                   (cate.value === 0 && this.props.cate1 === null) ||
                                   (cate.value === 0 && this.props.cate1 === "null")
                                   ? "active" : ""}

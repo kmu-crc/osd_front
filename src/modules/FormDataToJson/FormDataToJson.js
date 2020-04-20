@@ -1,6 +1,7 @@
 const FormDataToJson = (formData) => {
   let jsonObject = {};
-  for (const [key, value] of formData.entries()) {
+
+  for (const [key, value]  of formData.entries()) {
     jsonObject[key] = value;
   }
   return jsonObject;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
 
 const DeleteImg = styled.div`
@@ -15,7 +15,7 @@ const DeleteImg = styled.div`
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${opendesign_style.color.main.basic};
+  color: ${StyleGuide.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `
@@ -31,7 +31,6 @@ const DeleteImgItem = styled.div`
 const ItemImg = styled.div`
   width: 100%;
   height: 100px;
-  background-image: url(${props => props.bg});
   background-position: center;
   background-size: cover;
   background-clip: content-box;
@@ -78,7 +77,7 @@ export class DeleteItems extends Component {
     images: null
   };
 
-  componentDidMount() {
+  componentDidMount(){
     this.setState({
       images: this.props.ViewImg
     });
@@ -86,7 +85,7 @@ export class DeleteItems extends Component {
   }
 
   init = async () => {
-    await this.setState({ target: this.input })
+    await this.setState({target: this.input})
     this.returnData();
   }
 
@@ -104,8 +103,8 @@ export class DeleteItems extends Component {
   };
 
   returnData = async (e) => {
-    if (this.props.getValue) await this.props.getValue(this.state);
-    if (e && this.props.onBlur) await this.props.onBlur();
+    if(this.props.getValue) await this.props.getValue(this.state);
+    if(e && this.props.onBlur) await this.props.onBlur();
   }
 
   render() {
@@ -117,14 +116,24 @@ export class DeleteItems extends Component {
             this.state.images.map((item, index) => {
               return (
                 <DeleteImgItem key={index}>
-                  <ItemImg bg={item.link} />
+                  <ItemImg
+                    style={{ backgroundImage: `url("${item.link}")` }}
+                  />
                   <ItemText>{item.name}</ItemText>
-                  <DeleteBtn onClick={() => this.onDelete(index)}><Icon name="close" /></DeleteBtn>
+                  <DeleteBtn onClick={() => this.onDelete(index)}>
+                    <Icon name="close" />
+                  </DeleteBtn>
                 </DeleteImgItem>
               );
             })}
         </DeleteImg>
-        <input type="hidden" name={name && name} id={id ? id : name} placeholder={placeholder && placeholder} ref={ref => this.input = ref} />
+        <input
+          type="hidden"
+          name={name && name}
+          id={id ? id : name}
+          placeholder={placeholder && placeholder}
+          ref={ref => this.input = ref}
+        />
         <Message></Message>
       </div>
     );

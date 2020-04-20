@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
+import StyleGuide from "StyleGuide";
 
 const FileWrap = styled.div`
   display: inline-block;
@@ -11,6 +12,7 @@ const FileWrap = styled.div`
   height: 70px;
   margin-right: 1rem;
   position: relative;
+  float: left;
   &::before {
     display: block;
     content: "";
@@ -53,7 +55,6 @@ const FileWrap = styled.div`
 `;
 class FileIcon extends React.Component {
   render() {
-    console.log("FileWrap:", this.props);
     return (
       <FileWrap>
         <Icon name="code" />

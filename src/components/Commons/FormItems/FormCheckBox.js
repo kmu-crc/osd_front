@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
-  input {
-    display: none;
-  }
 `
 
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${opendesign_style.color.main.basic};
+  color: ${StyleGuide.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `
@@ -42,10 +39,6 @@ const CheckBoxLabel = styled.label`
     font-size: 12px;
     left: 4px;
     top: -1px;
-  }
-  &.disabled{
-    color: ${opendesign_style.color.grayScale.scale6}
-    // text-decoration-line: line-through;
   }
 `
 
@@ -84,42 +77,30 @@ export class FormCheckBox extends Component {
     if(e && this.props.onBlur) await this.props.onBlur();
   }
   render() {
-    const { name, value, disableMsg, disabled, placeholder, id } = this.props;
+    const { name, value, placeholder, id } = this.props;
     return (
       <InputWrap>
-      {disabled?(
-        <CheckBoxLabel      
-        className={this.state.value ? "disabled checked" : null}
-        htmlFor={id ? id+value : name+value}
-        onBlur={this.returnData}
-        title={disableMsg}
-        >{placeholder}</CheckBoxLabel>
-        
-        ):(
-          <CheckBoxLabel
+        <CheckBoxLabel
           className={this.state.value ? "checked" : null}
           htmlFor={id ? id+value : name+value}
           onClick={this.onChangeValue}
           onBlur={this.returnData}
           >{placeholder}</CheckBoxLabel>
-          )}
         <input
           type="checkbox"
           id={id ? id+value : name+value}
           name={name && name}
-          
+          style={{display: "none"}}
           defaultValue={value && value}
           ref={ref => (this.input = ref)}
           />
-        <Message/>
+        <Message></Message>
       </InputWrap>
-    )
+    );
   }
 }
 
 FormCheckBox.propTypes = {
-  disabled: PropTypes.bool,
-  disableMsg: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   id: PropTypes.string,

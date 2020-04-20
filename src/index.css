@@ -1,95 +1,95 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700&display=swap&subset=korean');
-/* Noto Sans KR
-  (100, Thin) 
-  (300, Light) 
-  (400, Regular) 
-  (500, Medium) 
-  (700, Bold) 
-*/
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif');
 
-html, body {
-  width:100vw;
-  overflow-x: hidden;
-  overflow-y: hidden;
+body {
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
-  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #F8FAFB;
+  color: #4D5256;
 }
-/* div {  */
-/* border: 1px solid black; */
-/* } */
-code {
-  font-family: source-code-pro, Menlo, Monaco, monospace, 
-  "Courier New", Consolas;
+h1, h2, h3, h4, h5, h6{
+  color: #292A2B;
 }
 
-
-.partial-scroll-on{
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-
-.partical-scroll-none::-webkit-scrollbar {
-  position: block;
-  width: 0px;
-}
-.partical-scroll-none::-webkit-scrollbar * {
-  background: transparent; 
-}
-.partical-scroll-none::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-.partial-scroll-on::-webkit-scrollbar {
-  position: block;
-  width: 3.9px;
-}
-.partial-scroll-on::-webkit-scrollbar * {
-  background: transparent;
-}
-.partial-scroll-on::-webkit-scrollbar-thumb {
-  background: rgba(255, 0, 0, 0.45) !important;
+* {
+  box-sizing: border-box;
 }
 
-.card-detail-scroll::-webkit-scrollbar {
-  position: absolute;
-  width: 3px;
-}
-.card-detail-scroll::-webkit-scrollbar-thumb {
-  background: #707070 !important;
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* .partical-scroll-none::-webkit-scrollbar {
-  position: absolute;
-  width: 0px;
-}
-.partical-scroll-none::-webkit-scrollbar * {
-  background: transparent; 
-}
-.partical-scroll-none::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-.partial-scroll-on::-webkit-scrollbar {
-  position: absolute;
-  width: 3.9px;
-}
-.partial-scroll-on::-webkit-scrollbar * {
-  background: transparent;
-}
-.partial-scroll-on::-webkit-scrollbar-thumb {
-  background: rgba(255, 0, 0, 0.45) !important;
+.clear {
+  display: block;
+  clear: both;
 }
 
-.card-detail-scroll::-webkit-scrollbar {
-  position: absolute;
-  width: 3px;
+.clearFix::after {
+  display: block;
+  clear: both;
+  content: "";
 }
-.card-detail-scroll::-webkit-scrollbar-thumb {
-  background: #707070 !important;
-} */
+
+a, button {
+  cursor: pointer;
+}
+
+.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
+  display: flex!important;
+}
+
+.ui.modal.transition.visible.active{
+  margin: 1rem auto!important
+}
+.ui.form .fields, .ui.form .field{
+  margin-bottom: 3rem;
+}
+
+.ui.form .field>label {
+  margin: 0 0 0.8rem 0;
+}
+
+label.checked::after{
+  content: "\f00c";
+}
+
+.ui.form textarea:not([rows]){
+  height: initial;
+}
+.ui.grid>.column:not(.row), .ui.grid>.row>.column{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media only screen and (max-width: 1919px) and (min-width: 1200px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 20%!important;
+  }
+}
+
+/* @media only screen and (max-width: 1699px) and (min-width: 1400px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 16.66666%!important;
+  }
+}*/
+@media only screen and (min-width: 1920px){
+  .ui.column.grid>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.column.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>.row>[class*="two wide large screen"].column.largeCustom,
+  .ui.grid>[class*="two wide large screen"].column.largeCustom {
+      width: 20%!important;
+  }
+}

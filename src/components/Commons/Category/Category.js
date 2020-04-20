@@ -1,144 +1,98 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import MenuContext from "Global/Context/GlobalContext"
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Grid } from "semantic-ui-react";
+import { FormSelect } from "components/Commons/FormItem";
 
-const Container = styled.div`
-    height: ${props => props.height};
-    width: 100%;
-    top: 50px;
-    position: relative;
-    z-index: 800;
-    background-color: #FFFFFF;
-    &.hidemenu {
-		top: -55px;
-		opacity: 0;
-    }&.larger {;}
-    
-    -webkit-transition: all 0.45s;
-	-moz-transition: all 0.45s;
-	-ms-transition: all 0.45s;
-	-o-transition: all 0.45s;
-	transition: all 0.45s;
-`
-const MainCategory = styled.div`
-    width: 100%;
-    position: fixed;
-    z-index: 820;
-    top: 50px;
-    padding-left: 115px;
-    display: flex;
-    background-color: #FFFFFF;
+// category width
+const CategoryColumn = styled(Grid.Column)`
+  @media only screen and (max-width: 1200px) {
+    display: block;
+  }
+  @media only screen and (min-width: 1200px) {
+    display: none;
+  }
+  & .selection.dropdown {
+    width: 14em;
+    float: left;
+  }
+  & .grid.ui {
+    margin: 0;
+  }
+`;
 
-    @media only screen and (max-width : 900px) {
-    top:100px;
-    padding-left:30px;
-    justify-content:flex-start;
-    overflow:scroll;
-    ::-webkit-scrollbar { display: none; }
-
-    }
-
-`
-const MainCateElement = styled.div`
-    z-index: 820;
-    height: 29px;
-    font-size: 20px;
-    font-weight: 300;
-    font-family: Noto Sans KR;
-    line-height: 29px;
-    text-align: left;
-    color: #FF0000;
-    margin-right: 30px;    
-    cursor: pointer;
-    white-space:nowrap;
-    
-    &.selected {
-        font-weight: 500;
-    }
-
-
-`
-const SubCategory = styled.div`
-    z-index: 810;
-    position: fixed;
-    width:${props=>props.screenWidth<1920?window.innerWidth+"px":"1920px"};
-    top: 70px;
-    padding-top: 17px;
-    height:70px;
-    display: flex;
-    justify-content: center;
-    background-color: #FFFFFF;
-    @media only screen and (max-width : 900px) {
-        justify-content: center;
-        ::-webkit-scrollbar { display: none; }
-    }
-    @media only screen and (max-width : 900px) {
-        top:120px;
-        overflow:scroll;
-        padding-left:30px;
-        justify-content: flex-start;
-        ::-webkit-scrollbar { display: none; }
-    }
-`
-const SubCateElement = styled.div`
-    z-index: 810;
-    height: 29px;
-    font-size: 20px;
-    font-weight: 300;
-    font-family: Noto Sans KR;
-    line-height: 29px;
-    text-align: center;
-    color: #707070;
-    margin-right: 20px;    
-    white-space:nowrap;
-
-    &.selected {
-        color: #FF0000;
-    }
-    &:hover {
-        color: #FFA0A0;
-    }
-    cursor: pointer;
-`
 class Category extends Component {
-    static contextType = MenuContext
-    constructor(props) {
-        super(props);
-        this.clickedMainCategory = this.clickedMainCategory.bind(this);
-        this.clickedSubCategory = this.clickedSubCategory.bind(this);
+  state = {
+    activeCate2: this.props.category2[0],
+    render: true
+  }
+
+  componentDidMount(){
+    if (this.props.cate1 && this.props.cate1 !== "null") {
+      this.setState({
+        activeCate2: this.props.category2[this.props.cate1]
+      });
     }
-    clickedMainCategory(category) {
-        this.props.category_clicked(category)
-        this.setState({ parent: category.value })
+  }
+
+  onChangeCategory1 = async value => {
+    if (value === 0) {
+      value = null;
+      await this.setState({
+        activeCate2: this.props.category2[0],
+        render: false
+      });
+    } else {
+      await this.setState({
+        activeCate2: this.props.category2[value],
+        render: false
+      });
     }
-    clickedSubCategory(category) {
-        this.props.subcategory_clicked(this.props.main_selected, category)
+    this.props.handleCate1(value);
+    this.setState({
+      render: true
+    });
+  };
+
+  onChangeCategory2 = async value => {
+    if (value === 0) {
+      value = null;
     }
-    render() {
-        // console.log("width",window.innerWidth);
-        const { category1, category2, main_selected, sub_selected } = this.props;
-        const selected = sub_selected && sub_selected.value;
-        const hidemenu = this.context.hidemenu ? "hidemenu " : "";
-        const larger = this.context.larger ? "larger " : "";
-        return (<Container className={`${hidemenu}${larger}`} >
-            <MainCategory>
-                {category1.map(element => {
-                    return <MainCateElement
-                        className={main_selected && main_selected.value === element.value ? "selected" : ""}
-                        onClick={() => this.clickedMainCategory(element)}
-                        key={element.value}>{element.text}</MainCateElement>
-                })}</MainCategory>
-            <SubCategory screenWidth={window.innerWidth}>
-                {category2 && category2.length > 0 && category2.map(element => {
-                    const style = element.value === selected ? "selected " : ""
-                    return <SubCateElement
-                        className={`${style}`}
-                        onClick={() => this.clickedSubCategory(element)}
-                        key={element.value}>{element.text}</SubCateElement>
-                })}
-                </SubCategory>
-        </Container>)
-    }
+    this.props.handleCate2(this.props.cate1, value);
+  };
+
+  render() {
+    return (
+      <CategoryColumn
+        className="category"
+        widescreen={this.props.widescreen ? this.props.widescreen : null}
+        largeScreen={this.props.largeScreen ? this.props.largeScreen : null}
+        computer={this.props.computer ? this.props.computer : null}
+        tablet={this.props.tablet ? this.props.tablet : null}
+        mobile={this.props.mobile ? this.props.mobile : null}
+      >
+        <Grid>
+          <Grid.Column mobile={8} tablet={5} computer={8}>
+            <FormSelect
+              placeholder="1차 카테고리"
+              value={this.props.cate1 === "null" ? null : this.props.cate1}
+              getValue={this.onChangeCategory1}
+              options={this.props.category1}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={8} tablet={5} computer={8}>
+          {this.state.render &&
+            <FormSelect
+              placeholder="2차 카테고리"
+              value={this.props.cate2 === "null" ? null : this.props.cate2}
+              getValue={this.onChangeCategory2}
+              options={this.state.activeCate2}
+            />
+          }
+          </Grid.Column>
+        </Grid>
+      </CategoryColumn>
+    );
+  }
 }
 
 export default Category;

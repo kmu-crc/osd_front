@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
 
 const Btn = styled.button`
   padding: 0.75em 2em;
   ${props => props.fluid && "width: 100%"};
-  font-size: ${props => props.size === "tiny"
-                ? "10px"
-                : props.size === "small"
+  font-size: ${props => props.size === "small"
                 ? "12px"
                 : props.size === "large"
                 ? "26px"
@@ -17,35 +15,35 @@ const Btn = styled.button`
   color: white;
   margin-right: 0.5rem;
   background-color: ${props => props.color === "Danger"
-                      ? opendesign_style.color.sub.purple.basic
+                      ? StyleGuide.color.sub.purple.basic
                       : props.color === "Primary"
-                      ? opendesign_style.color.sub.bule.basic
+                      ? StyleGuide.color.sub.bule.basic
                       : props.color === "Solid"
-                      ? opendesign_style.color.main.basic
-                      : opendesign_style.color.grayScale.scale5 };
+                      ? StyleGuide.color.main.basic
+                      : StyleGuide.color.geyScale.scale5 };
   border: 1px solid ${props => props.color === "Danger"
-                      ? opendesign_style.color.sub.purple.basic
+                      ? StyleGuide.color.sub.purple.basic
                       : props.color === "Primary"
-                      ? opendesign_style.color.sub.bule.basic
+                      ? StyleGuide.color.sub.bule.basic
                       : props.color === "Solid"
-                      ? opendesign_style.color.main.basic
-                      : opendesign_style.color.grayScale.scale5 };
+                      ? StyleGuide.color.main.basic
+                      : StyleGuide.color.geyScale.scale5 };
 
   &:hover{
     background-color: ${props => props.color === "Danger"
-                      ? opendesign_style.color.sub.purple.dark
+                      ? StyleGuide.color.sub.purple.dark
                       : props.color === "Primary"
-                      ? opendesign_style.color.sub.bule.dark
+                      ? StyleGuide.color.sub.bule.dark
                       : props.color === "Solid"
-                      ? opendesign_style.color.main.dark
-                      : opendesign_style.color.grayScale.scale7 };
+                      ? StyleGuide.color.main.dark
+                      : StyleGuide.color.geyScale.scale7 };
     border: 1px solid ${props => props.color === "Danger"
-                      ? opendesign_style.color.sub.purple.dark
+                      ? StyleGuide.color.sub.purple.dark
                       : props.color === "Primary"
-                      ? opendesign_style.color.sub.bule.dark
+                      ? StyleGuide.color.sub.bule.dark
                       : props.color === "Solid"
-                      ? opendesign_style.color.main.dark
-                      : opendesign_style.color.grayScale.scale7 };
+                      ? StyleGuide.color.main.dark
+                      : StyleGuide.color.geyScale.scale7 };
   }
 `
 

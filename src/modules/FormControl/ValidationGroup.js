@@ -10,7 +10,7 @@ export const ValidationGroup = async (list, isJSON) => {
   }
 
   console.log("qListArray", qListArray);
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     console.log("8");
     const readUploadedFileAsText = inputFile => {
       const temporaryFileReader = new FileReader();
@@ -67,7 +67,7 @@ export const ValidationGroup = async (list, isJSON) => {
           }
         }
         console.log("22222");
-        if (formData.files.length === 0) delete formData.files;
+        if(formData.files.length === 0) delete formData.files;
         resolve(formData);
       })
       .catch(err => {

@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 import { FormControl } from "modules/FormControl";
 
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
-  input {
-    display: ${props => props.display};
-  }
 `
 
 const Message = styled.div`
   bottom: -1.5rem;
   display: block;
   position: absolute;
-  color: ${opendesign_style.color.main.basic};
+  color: ${StyleGuide.color.main.basic};
   left: 0;
 `
 
@@ -57,10 +54,19 @@ export class FormFile extends Component {
   render() {
     const { name, placeholder, /*style,*/ id, hidden, onlyImage } = this.props;
     return (
-      <InputWrap display={hidden ? "none" : "block"}>
-        <input type="file" name={name && `${name}[]`} placeholder={placeholder && placeholder}
-          id={id ? id : name} onChange={this.onChangeValue} ref={ref => (this.input = ref)}
-          className="" accept={onlyImage ? "image/*" : "*"} />
+      <InputWrap>
+        <input
+          type="file"
+          name={name && `${name}[]`}
+          placeholder={placeholder && placeholder}
+          // style={style && style}
+          id={id ? id : name}
+          onChange={this.onChangeValue}
+          ref={ref => (this.input = ref)}
+          style={hidden ? { display: "none" } : null}
+          className=""
+          accept={onlyImage ? "image/*" : "*"}
+        />
         <Message></Message>
       </InputWrap>
     );

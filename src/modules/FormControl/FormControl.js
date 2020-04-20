@@ -5,7 +5,7 @@ export const FormControl = async obj => {
   if (obj === null) {
     console.log("nulll");
   }
-  if (!obj || !obj.hasOwnProperty("value")) return Promise.resolve(true);
+  if(!obj || !obj.hasOwnProperty("value")) return Promise.resolve(true);
   console.log("4", obj);
   // 검사받을 하나의 validation
   // console.log("검사받을 인풋의 arg : ", list);
@@ -22,13 +22,22 @@ export const FormControl = async obj => {
       let fnDatas = fn[1].split(")");
       fnList[i] = fn[0];
       fnData = fnDatas[0];
-      console.log("fn : ", fn, "fnDatas :", fnDatas, "fnList[i] :", fnList[i], "fnData : ", fnData);
+      console.log(
+        "fn : ",
+        fn,
+        "fnDatas :",
+        fnDatas,
+        "fnList[i] :",
+        fnList[i],
+        "fnData : ",
+        fnData
+      );
     }
     if (Validates[fnList[i]]) {
       await qArray.push(Validates[fnList[i]](value, target, fnData));
     }
   }
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     console.log("5");
     target.classList.remove("error");
     target.nextSibling.textContent = "";

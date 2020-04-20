@@ -89,9 +89,8 @@ position: relative;
   }
 `
 
-const FormDropBox = styled(Dropdown)`
-  width: 97%;
-  height: 95%;
+const FormDropBox = styled(Dropdown) `
+  width: 100%;
 `
 
 const UploaderButton = styled.label`
@@ -123,7 +122,7 @@ export class FormInput extends Component {
     const target = event.target;
     this.setState({ value: target.value });
     checkValidate(target.value, this.props.validates).then(data => {
-      if (this.props.getValue && data.status === "SUCCESS") this.props.getValue(target.value);
+      if(this.props.getValue && data.status === "SUCCESS") this.props.getValue(target.value);
       // if(this.props.onBlur && data.status === "SUCCESS") this.props.onBlur();
       this.setState(data);
     })
@@ -131,7 +130,7 @@ export class FormInput extends Component {
 
   render() {
     const { type, name, placeholder } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
     return (
@@ -155,12 +154,12 @@ export class FormRadio extends Component {
     }
   }
   onChangeRadio = () => {
-    if (this.props.onChange) this.props.onChange(this.props.value);
+    if(this.props.onChange) this.props.onChange(this.props.value);
   }
 
   render() {
     const { name, placeholder, currentValue, value } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.currentValue;
     delete newProps.onChange;
@@ -172,11 +171,7 @@ export class FormRadio extends Component {
     );
   }
 }
-const FormCehckBoxContainer = styled.div`
-  input {
-    display: none;
-  }
-`;
+
 export class FormCheckBox extends Component {
   state = {
     status: "SUCCESS",
@@ -187,11 +182,11 @@ export class FormCheckBox extends Component {
     if (this.props.checked) {
       this.setState({ checked: this.props.checked });
     } else if (this.props.checked === "0" || this.props.checked == null) {
-      this.setState({ checked: "0" });
+      this.setState({checked: "0"});
     }
   }
   onChangeCheckBox = async () => {
-    if (this.state.checked === "1") {
+    if(this.state.checked === "1") {
       await this.setState({ checked: "0" });
     } else {
       await this.setState({ checked: "1" });
@@ -204,17 +199,17 @@ export class FormCheckBox extends Component {
 
   render() {
     const { name, placeholder } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.currentValue;
     delete newProps.onChange;
     delete newProps.checked;
     return (
-      <FormCehckBoxContainer>
+      <div>
         <CheckBoxLabel className={this.state.checked === "1" ? "checked" : null} htmlFor={name}>{placeholder}</CheckBoxLabel>
-        <input status={this.state.status} {...newProps} id={name} type="checkbox" name={name} placeholder={placeholder} value={this.state.checked} onChange={this.onChangeCheckBox} />
+        <input status={this.state.status} {...newProps} id={name} type="checkbox" style={{ display: "none" }} name={name} placeholder={placeholder} value={this.state.checked} onChange={this.onChangeCheckBox} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
-      </FormCehckBoxContainer>
+      </div>
     );
   }
 }
@@ -244,66 +239,31 @@ export class FormTextArea extends Component {
 
   render() {
     const { name, placeholder } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
     return (
       <div>
-        <textarea cols="20" wrap="hard" status={this.state.status} name={name} {...newProps} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <textarea cols="20" wrap="hard" status={this.state.status} name={name} {...newProps} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue}></textarea>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
   }
 }
-const FormTextAreaRedContainer = styled.div`
-  .prevalue {
-    color: #555555;
-    font-size: 9pt;
-  }
-  textarea {
-    width: 70%;
-    outline: none !important;
-    border: 1px solid red;
-    resize: none;
-    display: inline-block;
-    position: relative;
-  }
-  .wrapper {
-    position: absolute;
-    display: inline-block;
-  }
-  .submit {
-    background-color: #E72327;
-    border-color: #E72327;
-    padding: 0.5em 1.7em;
-    margin-top: 6px;
-    color: #FFFFFF;
-    border: 0px;
-    border-radius: 5px 5px 5px 5px;
-    line-height: 25px;
-    margin-left: 3px;
-    width: 80px;
-  }
-  .cancel {
-    background-color: #FFFFFF;
-    border-color: #E72327;
-    padding: 0.5em 1.7em;
-    margin-top: 6px;
-    color: #666666;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px 5px 5px 5px;
-    line-height: 25px;
-    margin-left: 3px;
-    width: 80px;
-  }
+const TextAreaRed = styled.textarea`
+  
 `;
 export class FormTextAreaRed extends Component {
-  state = { status: "SUCCESS", message: null, value: "", preValue: "" }
+  state = {
+    status: "SUCCESS",
+    message: null,
+    value: "",
+    preValue: ""
+  }
 
   componentWillMount() {
     if (this.props.value) {
-      this.setState({ preValue: this.props.value, value: "" });
+      this.setState({ preValue:this.props.value, value:""});
     }
     if (!this.props.validates) {
       this.setState({ status: "SUCCESS" });
@@ -317,28 +277,35 @@ export class FormTextAreaRed extends Component {
       this.setState(data);
     })
   }
-  Reset = () => {
+  Reset = () =>{
     //this.setState({value:this.state.preValue});
     this.props.handleOnBlur();
   }
   render() {
-    const { name, placeholder } = this.props;
-    let newProps = { ...this.props };
+    const { name, placeholder} = this.props;
+    let newProps = {...this.props};
     delete newProps.handleOnBlur;
     delete newProps.getValue;
     delete newProps.onChange;
     return (
-      <FormTextAreaRedContainer>
-        <div className="prevalue">{this.state.preValue}</div>
-        <textarea
-          rows="3" wrap="hard"
-          status={this.state.status} name={name} {...newProps} value={this.state.value} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+      <div>
+        <div style={{color:"#555",fontSize:"9pt"}}>{this.state.preValue}</div>
+        <textarea style={{
+          width: "70%",
+          outline: "none !important",
+          border: "1px solid red",
+          resize: "none",
+          display:"inline-block",
+          position:"relative"
+        }} 
+        rows="3" wrap="hard"
+        status={this.state.status} name={name} {...newProps} value={this.state.value} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue}/>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
-        <div className="wrapperr">
-          <button className="submit" type="submit">게시</button>
-          <button className="cancel" onClick={this.Reset} type="reset">취소</button>
+        <div style={{position:"absolute",display:"inline-block"}}>
+          <button style={{backgroundColor: "#E72327",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#FFF",border:"0px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} type="submit">게시</button>
+          <button style={{backgroundColor: "#FFF",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#666",borderStyle:"solid",borderWidth:"1px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} onClick={this.Reset} type="reset">취소</button>
         </div>
-      </FormTextAreaRedContainer>
+      </div>
     );
   }
 }
@@ -358,29 +325,29 @@ export class FormSelect extends Component {
     // Number로 바꿔주는 로직
     let value = this.props.value;
     if (!this.props.validates) {
-      if (!isNaN(parseInt(value, 10))) {
-        value = parseInt(value, 10)
+      if(!isNaN(parseInt(value))){
+        value = parseInt(value);
       }
       // FormDropBox component의 defaultValue는 처음 render되었을때만 동작하기 때문에
       // 중간에 전달되는 value가 바뀌어도 defaultValue는 동작하지 않는다.
       // 때문에 state에 render 항목을 만들 props가 변경될 때 마다 FormDropBox를 비활성화 했다
       // 다시 활성화 시키는 방법으로 defaultValue 를 정상적으로 동작하게 만들었다.
-      await this.setState({ render: false });
+      await this.setState({render: false});
       if (this.props.options.length > 0 && value) {
-        await this.setState({ value: value, status: "SUCCESS" });
+        await this.setState({value: value, status: "SUCCESS"});
       }
       if (this.props.options.length > 0 && value == null) {
-        await this.setState({ value: this.props.options[0].value, status: "SUCCESS" });
+        await this.setState({value: this.props.options[0].value, status: "SUCCESS"});
       }
     } else {
       if (this.props.options.length > 0 && value) {
-        await this.setState({ value: value });
+        await this.setState({value: value});
       }
       if (this.props.options.length > 0 && value == null) {
-        await this.setState({ value: this.props.options[0].value });
+        await this.setState({value: this.props.options[0].value});
       }
     }
-    await this.setState({ render: true });
+    await this.setState({render: true});
   }
 
   componentDidUpdate(prevProps) {
@@ -391,7 +358,7 @@ export class FormSelect extends Component {
   }
 
   onChangeValue = async (event, { value }) => {
-    await this.setState({ render: false });
+    await this.setState({render: false});
     checkValidate(value, this.props.validates).then(data => {
       if (this.props.getValue) this.props.getValue(value);
       data.value = value;
@@ -402,7 +369,7 @@ export class FormSelect extends Component {
 
   render() {
     const { name, options, selection } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
     delete newProps.selection;
@@ -413,7 +380,7 @@ export class FormSelect extends Component {
             return <option key={data.text} value={data.value}>{data.text}</option>
           }) : null}
         </select>
-        {this.state.render ? <FormDropBox selection={selection} options={options} onChange={this.onChangeValue} defaultValue={this.state.value} /> : null}
+        { this.state.render ? <FormDropBox selection={selection} options={options} onChange={this.onChangeValue} defaultValue={this.state.value} /> : null}
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );
@@ -429,7 +396,7 @@ export class FormMultiSelect extends Component {
   componentWillMount() {
     if (this.props.value) {
       this.setState({ value: this.props.value });
-    } else if (this.props.options.length > 0) {
+    } else if( this.props.options.length > 0 ) {
       this.setState({ value: this.props.options[0].value });
     }
     if (!this.props.validates) {
@@ -448,7 +415,7 @@ export class FormMultiSelect extends Component {
     if (this.props.options && this.props.options.length > 0) {
       await this.setState({ value: this.props.options[0].value });
       if (this.props.getValue) this.props.getValue(this.props.options[0].value);
-      await this.onChangeValue(null, { value: this.state.value });
+      await this.onChangeValue(null, {value: this.state.value});
     }
   }
 
@@ -464,12 +431,12 @@ export class FormMultiSelect extends Component {
 
   render() {
     const { options } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
     return (
       <div>
-        <input type="text" {...newProps} name={this.props.name} {...this.props} status={this.state.status} value={this.state.value} style={{ display: "none" }} />
+        <input type="text" {...newProps} name={this.props.name} {...this.props} status={this.state.status} value={this.state.value} style={{ display: "none" }}/>
         <FormDropBox selection multiple options={options} onChange={this.onChangeValue} value={this.state.value} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
@@ -500,7 +467,7 @@ export class FormFile extends Component {
     await checkValidate(value, this.props.validates).then(data => {
       this.setState(data);
     });
-    if (this.state.status !== "SUCCESS") return;
+    if(this.state.status !== "SUCCESS") return;
     this.setState({ value });
     if (this.props.onChange) this.props.onChange(target);
     if (this.props.freeView) this.props.freeView(value);
@@ -508,7 +475,7 @@ export class FormFile extends Component {
 
   render() {
     const { name, placeholder, id } = this.props;
-    let newProps = { ...this.props };
+    let newProps = {...this.props};
     delete newProps.getValue;
     delete newProps.onChange;
     delete newProps.freeView;
@@ -517,14 +484,14 @@ export class FormFile extends Component {
         <UploaderButton htmlFor={id || name}>
           {
             !this.state.value
-              ? <span><Icon name="image" />{placeholder}</span>
-              : this.props.fileUploader
-                ? <span><Icon name="image" />{placeholder}</span>
-                : <span>{this.state.value.name}</span>
+            ? <span><Icon name="image" />{placeholder}</span>
+            : this.props.fileUploader
+            ? <span><Icon name="image" />{placeholder}</span>
+            : <span>{this.state.value.name}</span>
 
           }
         </UploaderButton>
-        <input style={{ display: "none" }} {...newProps} status={this.state.status} id={id || name} type="file" name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <input style={{display: "none"}} {...newProps} status={this.state.status} id={id || name} type="file" name={name} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );

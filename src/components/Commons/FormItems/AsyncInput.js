@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
 import { FormInput } from "./FormInput";
 
@@ -30,7 +30,7 @@ const InputWrap = styled.div`
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${opendesign_style.color.main.basic};
+  color: ${StyleGuide.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `;
@@ -59,8 +59,8 @@ const SearchBtn = styled.button`
   height: 100%;
   display: block;
   box-sizing: border-box;
-  background-color: ${opendesign_style.color.grayScale.scale3};
-  border: 1px solid ${opendesign_style.color.grayScale.scale2};
+  background-color: ${StyleGuide.color.geyScale.scale3};
+  border: 1px solid ${StyleGuide.color.geyScale.scale2};
   border-left: 0;
   border-radius: 0 0.3rem 0.3rem 0;
   padding: 0.67857143em 1em;
@@ -75,8 +75,8 @@ const List = styled.div`
   width: 100%;
   min-height: 50px;
   max-height: 200px;
-  border: 1px solid ${opendesign_style.color.grayScale.scale4};
-  background-color: ${opendesign_style.color.grayScale.scale0};
+  border: 1px solid ${StyleGuide.color.geyScale.scale4};
+  background-color: ${StyleGuide.color.geyScale.scale0};
   border-radius: 3px;
   position: absolute;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -89,26 +89,26 @@ const ListItem = styled.div`
   height: 4.5em;
   cursor: pointer;
   &:nth-child(2n) {
-    background-color: ${opendesign_style.color.grayScale.scale2};
+    background-color: ${StyleGuide.color.geyScale.scale2};
   }
   &:hover {
-    background-color: ${opendesign_style.color.sub.bule.light};
+    background-color: ${StyleGuide.color.sub.bule.light};
     .email {
-      color: ${opendesign_style.color.grayScale.scale9};
+      color: ${StyleGuide.color.geyScale.scale9};
     }
     .name {
-      color: ${opendesign_style.color.grayScale.scale0};
+      color: ${StyleGuide.color.geyScale.scale0};
     }
   }
   .email {
-    font-size: ${opendesign_style.font.size.paragraph};
-    color: ${opendesign_style.color.grayScale.scale7};
+    font-size: ${StyleGuide.font.size.paragraph};
+    color: ${StyleGuide.color.geyScale.scale7};
     margin-bottom: 0.5rem;
     font-weight: bold;
   }
   .name {
-    font-size: ${opendesign_style.font.size.small};
-    color: ${opendesign_style.color.grayScale.scale5};
+    font-size: ${StyleGuide.font.size.small};
+    color: ${StyleGuide.color.geyScale.scale5};
   }
 `;
 
@@ -131,8 +131,8 @@ const AddList = styled.div`
 `;
 
 const AddItem = styled.div`
-  font-size: ${opendesign_style.font.size.small};
-  background-color: ${opendesign_style.color.grayScale.scale7};
+  font-size: ${StyleGuide.font.size.small};
+  background-color: ${StyleGuide.color.geyScale.scale7};
   color: white;
   width: auto;
   display: inline-block;
@@ -202,7 +202,7 @@ export class AsyncInput extends Component {
       validates: data.validates,
       textValue: data.value
     });
-    if (e && e.key === "Enter") {
+    if (e && e.key === "Enter"){
       this.SearchList();
     }
     this.returnData();
@@ -210,7 +210,7 @@ export class AsyncInput extends Component {
 
   SearchList = async () => {
     const body = window.document.body.offsetHeight;
-    if (this.props.asyncFn && (this.state.textValue.length >= 1)) this.props.asyncFn(this.state.textValue);
+    if (this.props.asyncFn) this.props.asyncFn(this.state.textValue);
     if (body < this.state.target.getBoundingClientRect().y + 350) {
       await this.setState({ top: true });
     } else {
@@ -275,7 +275,7 @@ export class AsyncInput extends Component {
     if (e && this.props.onBlur) await this.props.onBlur();
   };
   render() {
-    const { type, name, value, style, id } = this.props;
+    const { type, name, value, /*placeholder,*/ style, id } = this.props;
     return (
       <InputWrap>
         <SearchBox>
@@ -290,7 +290,6 @@ export class AsyncInput extends Component {
               value={this.state.value}
               getValue={this.onChangeValue}
               prevent={true}
-              minLength="1"
               className=""
             />
           </InputBox>

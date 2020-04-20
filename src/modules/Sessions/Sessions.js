@@ -1,3 +1,4 @@
+
 function storageAvailable(type) {
   try {
     var storage = window[type],
@@ -22,7 +23,7 @@ function storageAvailable(type) {
   }
 }
 
-export function setCookie(cookie_name, value, days) {
+function setCookie(cookie_name, value, days) {
   var exdate = new Date();
   exdate.setDate(exdate.getDate() + days);
   // 설정 일수만큼 현재시간에 만료값으로 지정
@@ -31,44 +32,46 @@ export function setCookie(cookie_name, value, days) {
   document.cookie = cookie_name + '=' + cookie_value;
 }
 
-export const getCookie = (cookie_name) => {
-  var x, y;
-  var val = document.cookie.split(';');
-
-  for (var i = 0; i < val.length; i++) {
-    x = val[i].substr(0, val[i].indexOf('='));
-    y = val[i].substr(val[i].indexOf('=') + 1);
-    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
-    if (x === cookie_name) {
-      return btoa(y); // unescape로 디코딩 후 값 리턴
-    }
-  }
-  return null;
-};
-
-export const SetSession = (key, data) => {
+export const SetSession = (data) => {
+  const token_key = "admin_opendesign_token"
   return new Promise((resolve, reject) => {
     if (storageAvailable("localStorage")) {
-      window.localStorage.setItem(key, data)
+      window.localStorage.setItem(token_key, data)
     } else {
-      setCookie(key, data, 7);
+      setCookie(token_key, data, 7);
     }
     resolve(data);
   });
 };
 
-export const GetSession = (key) => {
+const getCookie = (cookie_name) => {
+  var x, y;
+  var val = document.cookie.split(';')
+
+  for (var i = 0; i < val.length; i++) {
+    x = val[i].substr(0, val[i].indexOf('='))
+    y = val[i].substr(val[i].indexOf('=') + 1)
+    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+    if (x === cookie_name) {
+      return btoa(y) // unescape로 디코딩 후 값 리턴
+    }
+  }
+  return null
+}
+
+export const GetSession = () => {
+  const token_key = "admin_opendesign_token"
   return new Promise((resolve, reject) => {
-    let token = null;
+    let token = null
     if (storageAvailable("localStorage")) {
-      token = window.localStorage.getItem(key);
+      token = window.localStorage.getItem(token_key)
     } else {
-      token = getCookie(key);
+      token = getCookie(token_key)
     }
-    if(token === "null" || token == null){
-      reject(null);
+    if (token === "null" || token == null) {
+      reject(null)
     } else {
-      resolve(token);
+      resolve(token)
     }
-  });
-};
+  })
+}

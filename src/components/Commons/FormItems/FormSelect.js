@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import opendesign_style from "opendesign_style";
+import StyleGuide from "StyleGuide";
 import { Dropdown } from "semantic-ui-react";
 
 const InputWrap = styled.div`
@@ -14,15 +14,12 @@ const InputWrap = styled.div`
     display: block;
     clear: both;
   }
-  select{
-    display: none;
-  }
 `;
 
 const Message = styled.div`
   display: block;
   position: absolute;
-  color: ${opendesign_style.color.main.basic};
+  color: ${StyleGuide.color.main.basic};
   left: 0;
   bottom: -1.5rem;
 `;
@@ -50,7 +47,7 @@ export class FormSelect extends Component {
     // 이전에 전달받은 options와 다르다면 새롭게 options를 render하고 그중 제일 첫번째 요소를 선택한다.
     if (
       JSON.stringify(prevProps.options) !==
-        JSON.stringify(this.props.options) ||
+      JSON.stringify(this.props.options) ||
       JSON.stringify(prevProps.value) !== JSON.stringify(this.props.value)
     ) {
       this.setValue();
@@ -60,9 +57,9 @@ export class FormSelect extends Component {
   setValue = async () => {
     // 전달받은 value가 Number의 형태를 하고 있지만 type이 string일 경우 검사하여
     // Number로 바꿔주는 로직
-    let value = this.props.value;
-    if (!isNaN(parseInt(value,10))) {
-      value = parseInt(value,10)
+    let value = this.props.value
+    if (!isNaN(parseInt(value, 10))) {
+      value = parseInt(value, 10)
     }
     // FormDropBox component의 defaultValue는 처음 render되었을때만 동작하기 때문에
     // 중간에 전달되는 value가 바뀌어도 defaultValue는 동작하지 않는다.
@@ -84,7 +81,7 @@ export class FormSelect extends Component {
     this.returnData();
   };
 
-  onChangeValue = async (event, {value}) => {
+  onChangeValue = async (event, { value }) => {
     await this.setState({ value: value, target: this.input });
     this.returnData();
   };
@@ -106,6 +103,7 @@ export class FormSelect extends Component {
           />
         ) : null}
         <select
+          style={{ display: "none" }}
           readOnly
           value={this.state.value}
           id={id ? id + value : name + value}
@@ -114,12 +112,12 @@ export class FormSelect extends Component {
         >
           {options
             ? options.map(data => {
-                return (
-                  <option key={data.text} value={data.value}>
-                    {data.text}
-                  </option>
-                );
-              })
+              return (
+                <option key={data.text} value={data.value}>
+                  {data.text}
+                </option>
+              );
+            })
             : null}
         </select>
         <Message />

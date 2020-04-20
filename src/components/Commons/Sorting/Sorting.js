@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Button } from "semantic-ui-react";
+import { Grid, Dropdown, Button } from "semantic-ui-react";
 import styled from "styled-components";
 
 const SortingButton=styled.div`
@@ -14,15 +14,19 @@ const SortingButton=styled.div`
     background-color: #fff;
     margin-left: 15px;
   }
+
   & .ui.button:hover{
     background-color: #E72327;
     color: white;
   }
+
+
   & .ui.button.btn-on{
     background-color: #E72327;
     color: white;
   }
-`;
+
+`
 
 class Sorting extends Component {
   render() {
