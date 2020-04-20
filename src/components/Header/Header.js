@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
-// import Notification from "components/Commons/Notification"
+
 import Message from "components/Header/Message"
 import logo from "source/logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
@@ -155,9 +155,8 @@ const RightMenu = styled.ul`
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { alarm: {}, selectCate: -1, screenWidth: window.innerWidth };
+        this.state = { notice: {}, alarm: {}, selectCate: -1, screenWidth: window.innerWidth };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
-
     }
     static contextType = MenuContext
     componentDidMount() {
@@ -169,11 +168,11 @@ class Header extends Component {
                 })
             } catch (err) {
                 //TODO v2: doesn't meaning in client, so! report administrator e-mail
-                console.log(err)
+                console.error(err);
             }
         }
         window.addEventListener("resize", this.handleResize, false);
-    }
+    };
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
     };
@@ -185,34 +184,37 @@ class Header extends Component {
     };
     render() {
         return (
-            <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
-                <RightMenu>
-                    <li className="searchItem">
-                        <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} />
-                    </li>
-                    {this.props.userInfo != null ? (
-                        <React.Fragment>
-                            <li className="IconItem"><Message noti={this.state.alarm} /></li>
-                            <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
-                        </React.Fragment>
-                    ) : null}
-                    <li className="redItem">
-                        <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
-                    <li className="profileItem">
-                        <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
-                </RightMenu>
+            <React.Fragment>
+                <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
+                    <RightMenu>
+                        <li className="searchItem">
+                            <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} />
+                        </li>
+                        {this.props.userInfo != null ? (
+                            <React.Fragment>
+                                <li className="IconItem"><Message noti={this.state.alarm} /></li>
+                                <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
+                            </React.Fragment>
+                        ) : null}
+                        <li className="redItem">
+                            <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
+                        <li className="profileItem">
+                            <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
+                    </RightMenu>
 
-                <LeftMenu>
-                    <li className="logoBox">
-                        <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
-                    <MenuItem isSelect={window.location.pathname === '/design' || (window.location.pathname.search('/designDetail/') > -1 ? true : false)}>
-                        <a className="link_tag" href="/design">디자인</a></MenuItem>
-                    <MenuItem isSelect={window.location.pathname === '/group' || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)}>
-                        <a className="link_tag" href="/group">그룹</a></MenuItem>
-                    <MenuItem isSelect={window.location.pathname === '/designer' || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)}>
-                        <a className="link_tag" href="/designer">디자이너</a></MenuItem>
-                </LeftMenu>
-            </Menu>
+                    <LeftMenu>
+                        <li className="logoBox">
+                            <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
+                        <MenuItem isSelect={window.location.pathname === '/design' || (window.location.pathname.search('/designDetail/') > -1 ? true : false)}>
+                            <a className="link_tag" href="/design">디자인</a></MenuItem>
+                        <MenuItem isSelect={window.location.pathname === '/group' || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)}>
+                            <a className="link_tag" href="/group">그룹</a></MenuItem>
+                        <MenuItem isSelect={window.location.pathname === '/designer' || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)}>
+                            <a className="link_tag" href="/designer">디자이너</a></MenuItem>
+                    </LeftMenu>
+                </Menu>
+
+            </React.Fragment>
         )
     }
 }
