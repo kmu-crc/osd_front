@@ -8,8 +8,10 @@ import styled from 'styled-components';
 const Head = styled.div`
   color: ${opendesign_style.color.grayScale.scale7};
   font-size: ${opendesign_style.font.size.heading2};
+  line-height: ${opendesign_style.font.size.heading2};
   text-align: center;
-  margin-bottom: 25px;
+  margin-top: 42px;
+  margin-bottom: 42px;
 `;
 class MainMyGroupContainer extends Component {
   componentWillMount() {
