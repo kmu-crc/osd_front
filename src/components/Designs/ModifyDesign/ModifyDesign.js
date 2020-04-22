@@ -816,9 +816,11 @@ class ModifyDesign extends Component {
   deleteDesign = () => {
     this.props.DeleteDesignRequest(this.props.id, this.props.token)
       .then(async () => {
-        await alert("삭제되었습니다.", "확인");
         window.location.href = geturl() + `/design`;
       })
+      .catch(() => {
+        await alert("삭제에 실패하였습니다.", "확인");
+      });
   }
   cancelDeleteDesign = () => {
     this.setState({ deleteModal: !this.state.deleteModal })
