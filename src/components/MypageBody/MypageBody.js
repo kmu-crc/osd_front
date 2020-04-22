@@ -12,34 +12,39 @@ import OrderOption from "components/Commons/OrderOption";
 const MypageBodyComp = styled.div`
     font-family: Noto Sans KR;
     .MypageCategory{
-        display:flex;
+        display: flex;
         justifyContent: space-start;
-        padding-top:32px;
-        font-size:20px;
-        color:#707070;
+        font-size: 20px;
+        color: #707070;
+    }}
+    .selectedCate {
+        opacity: 1.0;
     }
-    .selectedCate{
-        opacity:1.0;
+    .unSelectedCate {
+        opacity: 0.5;
     }
-    .unSelectedCate{
-        opacity:0.5;
+    .interested {
+        font-size: ${opendesign_style.font.size.heading2};
+        line-height: ${opendesign_style.font.size.heading2};
+        text-align: center;
+        margin-top: 42px;
+        margin-bottom: 42px;
+        color: #707070;
+        position: relative;
+        margin: auto;
+        padding-top: 42px;
+        padding-bottom: 42px;
     }
-    .interested{
-        position:relative;
-        font-size:20px;
-        font-weight:500;
-        font-family:Noto Sans KR;
-        color:#707070;
-        margin:47px 0px 23px 67px;
+    .interested-first-scroll {
+        padding-top: 15px;
     }
 `;
 const CategoryItems = styled.div`
-    font-size:20px;
-    font-weight:500;
-    font-family:Noto Sans KR;
-    cursor:pointer;
+    padding-left: ${props => props.paddingLeft}px;
+    padding-top: ${props => props.paddingTop}px;
+    opacity: ${props => props.opacity};
+    cursor: pointer;
     opacity:${props => props.opacity};
-    margin-left:${props => props.paddingLeft}px;
 `
 class MypageBody extends Component {
     constructor(props) {
@@ -130,10 +135,10 @@ class MypageBody extends Component {
         return (
             <MypageBodyComp>
                 <div className="MypageCategory">
-                    <CategoryItems paddingLeft={70} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group || 0)})</CategoryItems>
-                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>참여그룹({NumberFormat(Count.joined_group || 0)})</CategoryItems>
-                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</CategoryItems>
-                    <CategoryItems paddingLeft={40} opacity={this.state.cateIndex === 3 ? "1.0" : "0.5"} onClick={() => this.changeCategory(3)}>관심항목({NumberFormat(Count.total_favorite || 0)})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group || 0)})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>참여그룹({NumberFormat(Count.joined_group || 0)})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 3 ? "1.0" : "0.5"} onClick={() => this.changeCategory(3)}>관심항목({NumberFormat(Count.total_favorite || 0)})</CategoryItems>
                 </div>
 
                 {this.state.cateIndex === 0 &&

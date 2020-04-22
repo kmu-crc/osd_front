@@ -14,7 +14,6 @@ const DesignerDetailBody = styled.div`
     .MypageCategory{
         display: flex;
         justifyContent: space-start;
-        padding-top: 32px;
         font-size: 20px;
         color: #707070;
     }
@@ -26,29 +25,16 @@ const DesignerDetailBody = styled.div`
         padding-bottom: 15px;
     }
     .interested {
-        position: relative;
-        margin-left: 56px;
-        font-size: 20px;
+        font-size: ${opendesign_style.font.size.heading2};
+        line-height: ${opendesign_style.font.size.heading2};
+        text-align: center;
+        margin-top: 42px;
+        margin-bottom: 42px;
         color: #707070;
-        &.first {
-            display: flex;
-            justify-content: space-start;
-            padding-top: 15px;
-            margin-bottom: 25px;
-            .text {
-                padding-left: 67px;
-                font-weight: Medium;
-            }
-        }
-        &.second {
-            padding-top: 15px;
-            margin-bottom: 25px;
-        }
-        &.third {
-            padding-top: 15px;
-            margin-bottom: 25px;
-            // padding-left: 67px;
-        }
+        position: relative;
+        margin: auto;
+        padding-top: 42px;
+        padding-bottom: 42px;
     }
     .interested-first-scroll {
         padding-top: 15px;
@@ -56,6 +42,7 @@ const DesignerDetailBody = styled.div`
 `;
 const CategoryItems = styled.div`
     padding-left: ${props => props.paddingLeft}px;
+    padding-top: ${props => props.paddingTop}px;
     opacity: ${props => props.opacity};
     cursor: pointer;
 `;
@@ -153,10 +140,10 @@ class DesignerPageBody extends Component {
         return (
             <DesignerDetailBody>
                 <div className="MypageCategory">
-                    <CategoryItems paddingLeft={70} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group || 0)})</CategoryItems>
-                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>참여그룹({NumberFormat(Count.joined_group || 0)})</CategoryItems>
-                    <CategoryItems paddingLeft={50} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</CategoryItems>
-                    <CategoryItems paddingLeft={40} opacity={this.state.cateIndex === 3 ? "1.0" : "0.5"} onClick={() => this.changeCategory(3)}>관심항목({NumberFormat(Count.total_favorite || 0)})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group || 0)})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>참여그룹({NumberFormat(Count.joined_group || 0)})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</CategoryItems>
+                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 3 ? "1.0" : "0.5"} onClick={() => this.changeCategory(3)}>관심항목({NumberFormat(Count.total_favorite || 0)})</CategoryItems>
                 </div>
 
                 {this.state.cateIndex === 0 &&
@@ -192,20 +179,28 @@ class DesignerPageBody extends Component {
                 {this.state.cateIndex === 3 &&
                     <div className="compWrapper">
                         <div className="interested first">관심있는 그룹({NumberFormat(Count.like_group)})</div>
-                        {this.props.status === "INIT" ? <Loading /> :
+                        {this.props.status === "INIT" ?
+                            <Loading /> :
                             <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
-                                manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+                                manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />
+                        }
 
                         <div className="interested second">관심있는 디자인({NumberFormat(Count.like_design)})</div>
-                        {this.props.status === "INIT" ? <Loading /> :
+                        {this.props.status === "INIT" ?
+                            <Loading /> :
                             <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
-                                manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}
+                                manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />
+                        }
 
                         <div className="interested third">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
-                        {this.props.status === "INIT" ? <Loading /> :
+                        {this.props.status === "INIT" ?
+                            <Loading /> :
                             <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
-                                manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
-                    </div>}
+                                manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />
+                        }
+
+                    </div>
+                }
             </DesignerDetailBody >
         )
     }

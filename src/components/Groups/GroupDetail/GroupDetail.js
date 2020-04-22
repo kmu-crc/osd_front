@@ -37,6 +37,9 @@ const Tab = styled.div`
     opacity: 1.0;
   }
 `;
+const BlankDiv = styled.div`
+  padding-top: 50px;
+`;
 
 class GroupDetail extends Component {
   constructor(props) {
@@ -147,7 +150,7 @@ class GroupDetail extends Component {
             </React.Fragment> : null
           }
         </React.Fragment>}
-
+        <BlankDiv/>
     </React.Fragment>)
   }
 }
