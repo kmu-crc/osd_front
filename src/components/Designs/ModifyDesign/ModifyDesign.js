@@ -818,7 +818,7 @@ class ModifyDesign extends Component {
       .then(async () => {
         window.location.href = geturl() + `/design`;
       })
-      .catch(() => {
+      .catch(async () => {
         await alert("삭제에 실패하였습니다.", "확인");
       });
   }
