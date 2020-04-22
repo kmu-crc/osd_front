@@ -5,6 +5,68 @@ import Loading from "components/Commons/Loading";
 import DatePicker from 'react-date-picker';
 import { Dropdown } from "semantic-ui-react";
 import noimg from "source/noimg.png";
+import ScrollList from "components/Commons/ScrollList/ScrollList";
+import styled from "styled-components";
+import { Pagination } from 'semantic-ui-react'
+
+
+const MainBox = styled.div`
+// *{
+//   border:1px solid black;
+// }
+  display:flex;
+  width:max-content;
+  flex-direction:row;
+  margin-left:auto;
+  margin-right:auto;
+  .main{
+    margin-top:20px;
+    margin-bottom:10px;
+  }
+  .pageRange{
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    
+  }
+`
+const FilterBox = styled.div`
+  display:flex;
+  align-items:center;
+  .s_padding{
+    padding:10px;
+  }
+  .s_margin{
+    margin:10px;
+  }
+  .textRgn{
+    height:29px;
+    width:300px;
+  }
+  .btn{
+    width:100px;
+    height:29px;
+    display:flex;
+    align-item:center;
+    justify-content:center;
+    padding:5px;
+  }
+`
+
+const ListBox = styled.div`
+// border:1px solid black;
+  width:780px;
+  // height:max-content,
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  // justify-content:center;
+  margin-top:30px;
+
+`
 
 function getFormatDate(date) {
   if (date == null) return;
@@ -15,21 +77,93 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-
+function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,handleDel }) {
+  // console.log("title",title);
+  return <div style={{
+      position: "relative",
+      backgroundSize: "cover",
+      backgroundImage: `url(${thumbnailUrl==null?noimg:thumbnailUrl.m_img})`,
+      width: "150px",
+      height: "150px",
+      borderRadius: "5px",
+      marginRight: "5px",
+      marginBottom: "5px",
+  }}>
+      <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
+          <div
+          onClick={() => handleTop(uid)}
+          style={{
+              cursor: "pointer",
+              padding: "5px 10px",
+              width: "max-content",
+              color: "white",
+              backgroundColor: "orange",
+              borderRadius: "15px",
+          }}>인기디자인</div>
+      <div
+          onClick={() => handleDel(uid)}
+          style={{
+              cursor: "pointer",
+              padding: "5px 10px",
+              marginLeft: "auto",
+              width: "max-content",
+              color: "white",
+              backgroundColor: "red",
+              borderRadius: "15px",
+          }}>삭제</div>
+        </div>
+      <div style={{
+          bottom: "0px",
+          width: "100%",
+          position: "absolute",
+          padding:"5px",
+          backgroundColor: "#707070",
+      }}>
+          <div title={title} style={{
+              padding: "1px 2px",
+              fontSize: "16px",
+              height: "20px",
+              width: "100%",
+              color: "white",
+              wordWrap: "break-word",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis"
+          }}>
+              {title}({uid})</div>
+          <div title={userName} style={{
+              padding: "1px 2px",
+              fontSize: "12px",
+              height: "16px",
+              width: "100%",
+              color: "white",
+              wordWrap: "break-word",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              textAlign: "right"
+          }}>
+              {userName}</div>
+      </div>
+  </div>
+}
 // MANAGER
 class DesignManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      reload:false,
       // ui
       loading: false,
 
       // list
-      page: 0, max: 10,
+      page: 0, max: 20,
       editSpecial: false,
-      special: [], normal: [],
+      special: [], 
+      normal: [],
+      addNormal:[],
       count: null,
+      
 
       // filter
       keyword: "",
@@ -58,34 +192,57 @@ class DesignManager extends Component {
     this.search = this.search.bind(this);
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
+    this.goPage = this.goPage.bind(this);
+    this.handleReload=this.handleReload.bind(this);
   };
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ loading: true });
     this.GetCategoryRequest()
       .then(obj => {
         this.setState({ category1: obj.category1, category2: obj.category2 });
       })
-    this.GetDesignListRequest();
+     this.GetDesignListRequest();
+    //  this.goNext();
+    //  this.goNext();
+    //  this.goNext();
     this.GetDesignListCountRequest();
     this.setState({ loading: false });
   };
-  GetDesignListRequest(page = 0, max = 10, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
+  handleReload() {
+    this.setState({ reload: !this.state.reload });
+  }
+
+  GetDesignListRequest(page = 0, max = this.state.max, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise((resolve, reject) => {
       const url = `${host}/admins/DesignList/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
-        .then(data => this.setState({ normal: data }))
+        .then(async data => {
+          if(page==0){
+            await this.setState({addNormal:data,normal:data});
+            } else {
+            // let listdata = [...this.state.addNormal]
+            // listdata.concat(data);
+            await this.setState({addNormal:this.state.addNormal.concat(data),normal:data});
+            }
+            resolve(true);
+      
+      })
         .catch(error => alert(error));
     });
   };
-  GetDesignListCountRequest(page = 0, max = 10, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
+  GetDesignListCountRequest(page = 0, max = this.state.max, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise((resolve, reject) => {
       const url = `${host}/admins/DesignListCount/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
-        .then(data => this.setState({ count: data.cnt }))
+        .then((data) => {
+          this.setState({ count: data.cnt })
+          // alert(data.cnt);
+        }
+        )
         .catch(error => alert(error));
     });
   };
@@ -159,8 +316,15 @@ class DesignManager extends Component {
   };
   MakeTopDesign(id) {
     this.UpdateDesignRequest(id, { type: "insert", order: this.state.special.length || 0 }, this.props.admin_token)
-      .then(this.GetSpecialDesignListRequest())
-      .then(this.GetDesignListRequest());
+    .then(
+      ()=>{
+        const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
+        // await this.setState({ page: 0 });
+        this.GetDesignListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
+      }
+    )
+      // .then(this.GetSpecialDesignListRequest())
+      // .then(this.GetDesignListRequest());
   }
   EditSpecial() {
     if (this.state.editSpecial) { //to off
@@ -218,12 +382,17 @@ class DesignManager extends Component {
     this.setState({ cate2: value });
   }
   async search() {
+    // alert(this.state.keyword);
     const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
     await this.setState({ page: 0 });
-    this.GetDesignListRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
+    this.GetDesignListRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword :this.state.keyword)
+    .then(()=>this.GetDesignListCountRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
+
   }
   async goNext() {
+    console.log(this.state.page);
     await this.setState({ page: this.state.page + 1 });
+    console.log(this.state.page);
     const { page, max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
     this.GetDesignListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
   }
@@ -232,9 +401,16 @@ class DesignManager extends Component {
     const { page, max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
     this.GetDesignListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
   }
+  async goPage(activePage) {
+    // console.log(this.state.page);
+    await this.setState({ page: activePage});
+    // console.log(this.state.page);
+    const { page, max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
+    this.GetDesignListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword)
+  }
   render() {
-    const { special, normal, count, page, loading, editSpecial, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
-    const lastPage = parseInt(count / 10, 10);
+    const { special, addNormal,normal, count, page, loading, editSpecial, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
+    const lastPage = parseInt(count / this.state.max, 10)+1;
 
     // category1
     const combocate1 =
@@ -249,7 +425,7 @@ class DesignManager extends Component {
       (cate1 > 0 && category2 && category2.length > 0)
         ? category2.filter(cate2 => cate2.parents_id === cate1 || cate2.parents_id === 0)
           .map(cate2 => ({ text: cate2.text, value: cate2.value, key: cate2.value }))
-        : [{ key: "-", value: "-", text: "-" }];
+        : [{ key: "-", value: "-", text: "-"}];
     // console.log(combocate2);
 
     // sort
@@ -259,116 +435,108 @@ class DesignManager extends Component {
       { key: "title", value: "title", text: "제목" },
       { key: "like", value: "like", text: "인기순" }];
     // console.log(combosort);
-
+      console.log(this.state.normal,this.state.addNormal);
     return (
-      <div style={{ display: "flex", flexDirection: "row", marginLeft: "auto", marginRight: "auto", width: "max-content" }}>
-
+      <MainBox>
         {/* loading */}
         {loading ? <Loading /> : null}
-
-        {/* favorite design manager */}
-        <div style={{ width: editSpecial ? "750px" : "150px", overflowX: "hidden" }}>
-          <h1>인기디자인</h1>
-          <div
-            onClick={this.EditSpecial}
-            style={{ width: "max-content", padding: "15px", }}
-          >인기디자인 {editSpecial ? "닫기" : "수정"}</div>
-          <DesignReorderGrid list={special} update={this.handleUpdateRequest} />
-        </div>
-
         {/* normal design manager */}
-        <div>
+        <div className="main">
           {/* title */}
           <h1>디자인</h1>
 
-          <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto" }}>
+          <div>
             {/* filter */}
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div style={{ padding: "10px 5px", }}>
+            <FilterBox>
                 <Dropdown
+                  compact
+                  selection
                   defaultValue={cate1}
                   options={combocate1}
                   onChange={this.onChangeMainCate}
                 />
-              </div>
-              <div style={{ padding: "10px 5px", }}>
                 <Dropdown
+                  compact
+                  selection
                   defaultValue={cate2}
                   options={combocate2}
                   onChange={this.onChangeSubCate}
                 />
-              </div>
-
-              <div style={{ padding: "10px 5px", }}>
-                <input onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />keyword</div>
-              <div style={{ padding: "10px 5px", }}>
                 <Dropdown
+                  compact
+                  selection
                   defaultValue={sort}
                   options={combosort}
                   onChange={this.onChangeSort}
                 />
-              </div>
               <div
                 onClick={() => this.setState({ desc: !desc })}
-                style={{ padding: "10px 5px", }}>
+                className="s_padding">
                 {desc
                   ? <div>내림차순 ▼</div>
                   : <div>오림차순 △</div>}
                 {/* ▲ ▽  */}
               </div>
-              <div style={{ padding: "10px 5px", }}>
-                <DatePicker name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} /> ~
-                </div>
-              <div style={{ padding: "10px 5px", }}>
-                <DatePicker name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
-              </div>
-              <div>
-                <button onClick={this.search}>검색</button>
-              </div>
-            </div>
-
+              {/* <div style={{ padding: "10px 5px", }}> */}
+                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} /> ~
+                {/* </div> */}
+              {/* <div style={{ padding: "10px 5px", }}> */}
+                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
+              {/* </div> */}
+              
+            </FilterBox>
+            <FilterBox>
+            <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
+            <button className="btn" onClick={this.search}>검색</button>
+            </FilterBox>
             {/* list */}
-            <div>
+            {/* <div style={{width:"100%",height:"100%",display:"flex",justifyContent:"cneter"}}>
+            <ScrollList 
+                    manual={this.props.manual || false}
+                    getListRequest={this.goNext}
+                    type="design"
+                    dataList={normal} 
+                    dataListAdded={addNormal} 
+                    DeleteDesignRequest = {this.DeleteDesignRequest}
+                    MakeTopDesign={this.MakeTopDesign}
+                    handleReload={this.handleReload}
+                    />
+            </div> */}
+            <ListBox>
               {normal && normal.length > 0 ?
                 normal.map(item => {
-                  return <div key={item.uid} style={{ display: "flex", flexDirection: "row" }}>
-                    <div>
-                      <div
-                        onClick={() => this.MakeTopDesign(item.uid)}
-                        style={{ backgroundColor: "orange", color: "white", width: "100%", textAlign: "center", cursor: "pointer", borderRadius: "15px", padding: "3px 10px" }}
-                      >인기디자인 등록</div></div>
-                    <div><div style={{ width: "75px", height: "75px", borderRadius: "25%", backgroundImage: `url(${(item.thumbnailUrl && item.thumbnailUrl.m_img) || noimg}`, backgroundSize: "cover" }} /></div>
-                    <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.title}</div>
-                    <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.userName}</div>
-                    <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.create_time}</div>
-                    <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.update_time}</div>
-                    <div style={{ padding: "0px 10px", margin: "5px 15px" }}>
-                      <div
-                        onClick={() => this.DeleteDesignRequest(item)}
-                        style={{ backgroundColor: "red", color: "white", width: "max-content", textAlign: "center", cursor: "pointer", borderRadius: "15px", padding: "3px 20px" }}
-                      >삭제</div></div>
-                  </div>;
-                }) : <div>데이터가 없습니다.</div>}
-            </div>
+                    return (
+                      <ListElement item={item}
+                      handleTop={this.MakeTopDesign}
+                      handleDel={this.DeleteDesignRequest}/>
+                    )
+                  }) 
+                  : <div>데이터가 없습니다.</div>}
+            </ListBox>
           </div>
 
-          <div>
 
-            <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", display: "flex", flexDirection: "row" }}>
-              <div style={{ width: "50px" }}>
-                {page > 0 ? <div onClick={this.goPrev}>prev</div> : null}
-              </div>
-              <div style={{ width: "50px" }}>
-                <div style={{ textAlign: "center", borderRadius: "15px" }}>{this.state.page + 1}</div>
-              </div>
-              <div style={{ width: "50px" }}>
-                {lastPage > page + 1 ? <div onClick={this.goNext}>next</div> : null}
-              </div>
+            
+          <div className="pageRange">
+          <div> 
+          <Pagination
+                activePage={this.state.page}
+                boundaryRange={0}
+                defaultActivePage={1}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={1}
+                totalPages={lastPage}
+                onPageChange={(event,{activePage})=>{
+                  this.goPage(activePage-1);
+                }}
+              />
             </div>
 
           </div>
         </div>
-      </div>
+      </MainBox>
 
     )
   }
