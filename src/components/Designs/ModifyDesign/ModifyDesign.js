@@ -14,7 +14,7 @@ import { Dropdown, Modal } from "semantic-ui-react";
 import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const designImageText = "디자인 이미지";
@@ -851,7 +851,7 @@ class ModifyDesign extends Component {
             <span style={{ color: "#707070" }} onClick={this.cancelDeleteDesign}>취소</span>
           </div>
         </div>
-        <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div>
+        {/* <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div> */}
       </Modal>
       )
     }
