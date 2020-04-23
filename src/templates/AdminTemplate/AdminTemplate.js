@@ -25,7 +25,7 @@ class Footer extends Component {
       <Foot>
         <Grid padded={true} columns={1}>
           <Grid.Row>
-            <Grid.Column className="statusBar">오픈소스디자인 관리자 앱입니다.</Grid.Column>
+            <Grid.Column className="statusBar">마켓 관리자 앱입니다.</Grid.Column>
           </Grid.Row>
         </Grid>
       </Foot>

@@ -12,6 +12,7 @@ export default function RequiresAuthAdmin(Component) {
       }
       GetSession().then(token => {
         this.props.CheckAdminTokenRequest(token).then((data) => {
+          console.log(data);
           if (data.type === "AUTH_CHECK_ADMIN_TOKEN_FAILURE") {
             SetSession(null);
             return this._checkAndRedirect();
