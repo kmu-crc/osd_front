@@ -93,11 +93,15 @@ class HotDesignManager extends Component {
   };
   GetSpecialDesignListRequest() {
     return new Promise((resolve, reject) => {
-      const url = `${host}/admins/TopDesignList`;
+      const url = `${host}/admins/TopItemList`;
       console.log(url);
-      fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
+      fetch(url, { headers: { 'Content-Type': 'application/json'
+      , 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
-        .then(data => this.setState({ special: data }))
+        .then(data => {
+          this.setState({ special: data });
+          console.log(data);
+      })
         .catch(error => alert(error));
     })
   };

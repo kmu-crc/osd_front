@@ -15,6 +15,7 @@ export function CheckAdminTokenRequest(token) {
       .then(res => res.json())
       .then(res => {
         if (res.success) {
+          // alert("success")
           return dispatch(CkeckAdminTokenSuccess(res.info, token))
         } else {
           return dispatch(CkeckAdminTokenFailure())

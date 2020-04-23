@@ -4,12 +4,12 @@ import { ListManager } from "react-beautiful-dnd-grid";
 function sortList(list) {
     return list.slice().sort((first, second) => first.order - second.order);
 }
-function ListElement({ item: { userName, title, thumbnailUrl, uid }, handle }) {
+function ListElement({ item: { userName, title, thumbnail, uid }, handle }) {
     console.log("title",title);
     return <div style={{
         position: "relative",
         backgroundSize: "cover",
-        backgroundImage: `url(${thumbnailUrl.m_img})`,
+        backgroundImage: `url(${thumbnail})`,
         width: "150px",
         height: "150px",
         borderRadius: "5px",
@@ -143,7 +143,7 @@ class DesignReorderGrid extends React.Component {
     }
     render() {
         const { sortedList } = this.state;
-
+        console.log(sortedList)
         return (<React.Fragment>
             {sortedList && sortedList.length > 0 ?
                 <React.Fragment>

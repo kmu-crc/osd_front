@@ -8,7 +8,7 @@ import DesignManagerPage from "Admin/AdminPage/DesignManagerPage"
 import DesignerManagerPage from "Admin/AdminPage/DesignerManagerPage"
 import NoticeManagerPage from "Admin/AdminPage/NoticeManagerPage"
 import HotDesignManagerPage from "Admin/AdminPage/HotDesignManagerPage";
-import HotGroupManagerPage from "/Users/kmc/opendesign/admin/src/Admin/AdminPage/HotGroupManagerPage";
+import HotGroupManagerPage from "Admin/AdminPage/HotGroupManagerPage";
 
 class App extends Component {
   render() {
