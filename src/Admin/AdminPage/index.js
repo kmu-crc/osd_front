@@ -1,4 +1,6 @@
 export * from "./NoticeManagerPage"
 export * from "./GroupManagerPage"
 export * from "./DesignManagerPage"
+export * from "./HotGroupManagerPage"
+export * from "./HotDesignManagerPage"
 export { default } from "./AdminPage"

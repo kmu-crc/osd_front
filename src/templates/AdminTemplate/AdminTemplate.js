@@ -44,7 +44,7 @@ class AdminTemplate extends Component {
   };
   render() {
     return (
-      <div style={{ position: "relative" , paddingBottom: "33px", paddingTop: "60px"}} onClick={this.onClose}>
+      <div style={{ height:window.document.body.offsetHeight+70,position: "relative" , paddingBottom: "33px", paddingTop: "60px"}} onClick={this.onClose}>
         <AdminHeaderContainer active={this.props.isActive} />
         {this.props.children}
         <Footer />
