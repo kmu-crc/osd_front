@@ -8,8 +8,10 @@ import styled from 'styled-components';
 const Head = styled.div`
   color: ${opendesign_style.color.grayScale.scale7};
   font-size: ${opendesign_style.font.size.heading2};
+  line-height: ${opendesign_style.font.size.heading2};
   text-align: center;
-  margin-bottom: 25px;
+  margin-top: 42px;
+  margin-bottom: 42px;
 `;
 class MainMyDesignContainer extends Component {
   componentWillMount() {
@@ -27,7 +29,10 @@ class MainMyDesignContainer extends Component {
 
     return (
       <React.Fragment>
-        {this.props.MyMainDesignAdded && this.props.MyMainDesignAdded.length > 0 ? <Head>내디자인 / 관심디자인</Head> : null}
+        {this.props.MyMainDesignAdded &&
+          (this.props.MyMainDesignAdded.length > 0)
+          ? <Head>내디자인 / 관심디자인</Head>
+          : null}
         <ScrollList
           {...opendesign_style.design_margin}
           getListRequest={this.getList}

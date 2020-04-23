@@ -50,6 +50,9 @@ const ScrollListContainer = styled.div`
     position: relative;
     padding-top: 100px;
 `;
+const BlankDiv = styled.div`
+    padding-top: 50px;
+`;
 
 class GroupListContainer extends Component {
 
@@ -122,6 +125,7 @@ class GroupListContainer extends Component {
             <ScrollList {...osdstyle.group_margin} type="group" reload={reload} handleReload={this.handleReload}
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
         </ScrollListContainer>
+        <BlankDiv />
       </React.Fragment>
     )
   }
