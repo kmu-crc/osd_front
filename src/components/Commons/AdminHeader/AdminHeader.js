@@ -333,6 +333,9 @@ class AdminHeader extends Component {
             <MenuItem>
               <a href="/designerManager">디자이너</a>
             </MenuItem>
+            <MenuItem>
+              <a href="/makerManager">메이커</a>
+            </MenuItem>
           </MainMenu>
           <SubMenu>
             <SubMenuGroup>

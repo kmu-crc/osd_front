@@ -148,11 +148,11 @@ class ExpertReorderGrid extends React.Component {
         const { sortedList } = this.state;
         console.log(sortedList)
         return (<React.Fragment>
+            <div style={{ margin: "10px" }}>
+                <button style={{ padding: "5px", borderRadius: "5px", outline: "none" }} onClick={this.onApply}>변경내용저장</button>
+            </div>
             {sortedList && sortedList.length > 0 ?
                 <React.Fragment>
-                    <div style={{ margin: "10px" }}>
-                        <button style={{ padding: "5px", borderRadius: "5px", outline: "none" }} onClick={this.onApply}>변경내용저장</button>
-                    </div>
                     <ListManager
                         items={sortedList}
                         direction="horizontal"

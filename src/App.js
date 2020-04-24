@@ -6,6 +6,7 @@ import RequiresAuthAdmin from "containers/Commons/RequiresAuthAdmin"
 import GroupManagerPage from "Admin/AdminPage/GroupManagerPage"
 import DesignManagerPage from "Admin/AdminPage/DesignManagerPage"
 import DesignerManagerPage from "Admin/AdminPage/DesignerManagerPage"
+import MakerManagerPage from "Admin/AdminPage/MakerManagerPage"
 import NoticeManagerPage from "Admin/AdminPage/NoticeManagerPage"
 import HotDesignManagerPage from "Admin/AdminPage/HotDesignManagerPage";
 import HotGroupManagerPage from "Admin/AdminPage/HotGroupManagerPage";
@@ -19,8 +20,9 @@ class App extends Component {
           {/* completed */}
           <Route path="/hotDesignManager" component={RequiresAuthAdmin(HotDesignManagerPage)} />
           <Route path="/hotExpertManager" component={RequiresAuthAdmin(HotExpertManagerPage)} />
-          {/* on-going */}
           <Route path="/designerManager" component={RequiresAuthAdmin(DesignerManagerPage)} />
+          {/* on-going */}
+          <Route path="/MakerManager" component={RequiresAuthAdmin(MakerManagerPage)} />
 
           {/* deprecated */}
           <Route path="/noticeManager" component={RequiresAuthAdmin(NoticeManagerPage)} />

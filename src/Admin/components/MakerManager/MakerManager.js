@@ -4,14 +4,14 @@ import Loading from "components/Commons/Loading";
 import DatePicker from 'react-date-picker';
 import { Dropdown } from "semantic-ui-react";
 import noimg from "source/thumbnail.png";
-// import ScrollList from "components/Commons/ScrollList/ScrollList";
+import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 
 const MainBox = styled.div`
-  // *{
-  //   border:1px solid black;
-  // }
+// *{
+//   border:1px solid black;
+// }
   display:flex;
   width:max-content;
   flex-direction:row;
@@ -53,8 +53,9 @@ const FilterBox = styled.div`
     padding:5px;
   }
 `
+
 const ListBox = styled.div`
-  // border:1px solid black;
+// border:1px solid black;
   width:780px;
   // height:max-content,
   display:flex;
@@ -64,6 +65,7 @@ const ListBox = styled.div`
   margin-top:30px;
 
 `
+
 function getFormatDate(date) {
   if (date == null) return;
   var year = date.getFullYear();              //yyyy
@@ -74,7 +76,7 @@ function getFormatDate(date) {
   return year + '-' + month + '-' + day;
 }
 function ListElement({ item: { nick_name, categoryName, type, imgURL, uid }, item, handleTop, handleDel }) {
-  console.log("item::", item);
+  // console.log("item::", item);
 
   return <div style={{
     position: "relative",
@@ -146,7 +148,7 @@ function ListElement({ item: { nick_name, categoryName, type, imgURL, uid }, ite
   </div>
 }
 // MANAGER
-class DesignerManager extends Component {
+class MakerManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -168,10 +170,10 @@ class DesignerManager extends Component {
       category1: [], cate1: 0,
       category2: [], cate2: 0,
     };
-    this.GetDesignerListRequest = this.GetDesignerListRequest.bind(this);
-    this.GetDesignerListCountRequest = this.GetDesignerListCountRequest.bind(this);
+    this.GetMakerListRequest = this.GetMakerListRequest.bind(this);
+    this.GetMakerListCountRequest = this.GetMakerListCountRequest.bind(this);
     this.GetCategoryRequest = this.GetCategoryRequest.bind(this);
-    this.DeleteDesignerRequest = this.DeleteDesignerRequest.bind(this);
+    this.DeleteMakerRequest = this.DeleteMakerRequest.bind(this);
     this.UpdateHotExpertRequest = this.UpdateHotExpertRequest.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -189,14 +191,14 @@ class DesignerManager extends Component {
       .then(obj => {
         this.setState({ category1: obj.category1, category2: obj.category2 });
       })
-    this.GetDesignerListRequest();
-    this.GetDesignerListCountRequest();
+    this.GetMakerListRequest();
+    this.GetMakerListCountRequest();
     this.setState({ loading: false });
   };
   UpdateHotExpertRequest(id, data, token) {
     return new Promise(resolve => {
       if (data.type === "insert") {
-        const url = `${host}/admins/${id}/designer/insertTopExpert`;
+        const url = `${host}/admins/${id}/maker/insertTopExpert`;
         console.log(url);
         fetch(url, {
           headers: { 'x-access-token': token, "Content-Type": "application/json" },
@@ -206,7 +208,6 @@ class DesignerManager extends Component {
           .then(res => resolve(res))
           .catch(err => console.error(err));
       }
-
     });
   };
   MakeTopExpert(id) {
@@ -214,13 +215,13 @@ class DesignerManager extends Component {
       .then(
         () => {
           const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
-          this.GetDesignerListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
+          this.GetMakerListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
         }
       )
   }
-  GetDesignerListRequest(page = 0, max = 10, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
+  GetMakerListRequest(page = 0, max = 10, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise((resolve, reject) => {
-      const url = `${host}/admins/DesignerList/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
+      const url = `${host}/admins/MakerList/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
@@ -228,9 +229,9 @@ class DesignerManager extends Component {
         .catch(error => alert(error));
     });
   };
-  GetDesignerListCountRequest(page = 0, max = 10, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
+  GetMakerListCountRequest(page = 0, max = 10, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise((resolve, reject) => {
-      const url = `${host}/admins/DesignerListCount/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
+      const url = `${host}/admins/MakerListCount/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
@@ -258,10 +259,10 @@ class DesignerManager extends Component {
         }).catch(err => console.error(err));
     })
   };
-  DeleteDesignerRequest(item) {
+  DeleteMakerRequest(item) {
     const deleteRequest = () => {
       return new Promise((resolve, reject) => {
-        const url = `${host}/admins/DeleteDesigner/${item.uid}`;
+        const url = `${host}/admins/DeleteMaker/${item.uid}`;
         console.log(url);
         fetch(url, {
           headers: {
@@ -290,8 +291,8 @@ class DesignerManager extends Component {
 
     if (prompt === item.nick_name) {
       deleteRequest();
-      this.GetDesignerListCountRequest();
-      this.GetDesignerListRequest();
+      this.GetMakerListCountRequest();
+      this.GetMakerListRequest();
     } else {
       alert("잘못입력하셨습니다.");
     }
@@ -326,17 +327,17 @@ class DesignerManager extends Component {
     const { max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     await this.setState({ page: 0 });
     console.log(startDate)
-    this.GetDesignerListRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+    this.GetMakerListRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
   async goNext() {
     await this.setState({ page: this.state.page + 1 });
     const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
-    this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+    this.GetMakerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
   async goPrev() {
     await this.setState({ page: this.state.page - 1 });
     const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
-    this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+    this.GetMakerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
 
   render() {
@@ -344,7 +345,6 @@ class DesignerManager extends Component {
 
     const { special, addNormal, normal, count, page, loading, editSpecial, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
     const lastPage = parseInt(count / this.state.max, 10) + 1;
-
     // category1
     const combocate1 =
       (category1 && category1.length > 0)
@@ -373,13 +373,14 @@ class DesignerManager extends Component {
     // console.log(this.state.count);
     return (
       <MainBox>
+
         {/* loading */}
         {loading ? <Loading /> : null}
 
         {/* designer manager */}
         <div className="main">
           {/* title */}
-          <h1>디자이너</h1>
+          <h1>메이커</h1>
 
           <div>
             {/* filter */}
@@ -415,7 +416,7 @@ class DesignerManager extends Component {
               </div>
               {/* <div style={{ padding: "10px 5px", }}> */}
               <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
-    {/* </div> */}
+                {/* </div> */}
               {/* <div style={{ padding: "10px 5px", }}> */}
               <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
               {/* </div> */}
@@ -442,6 +443,7 @@ class DesignerManager extends Component {
                 : <div>데이터가 없습니다.</div>}
             </ListBox>
           </div>
+
           <div className="pageRange">
             <div>
               {count <= 10 ? null :
@@ -461,12 +463,14 @@ class DesignerManager extends Component {
               }
 
             </div>
+
           </div>
         </div>
       </MainBox>
+
     )
   }
 }
 
-export default DesignerManager;
+export default MakerManager;
 

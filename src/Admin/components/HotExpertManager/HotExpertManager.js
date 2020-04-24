@@ -74,8 +74,9 @@ class HotExpertManager extends Component {
     let promiseAry = [];
     promiseAry = jobs.map(job =>
       this.UpdateHotExpertRequest(job, this.props.admin_token))
-    await Promise.all(promiseAry);
-    this.GetHotExpertListRequest();
+
+    await Promise.all(promiseAry)
+      .then(this.GetHotExpertListRequest())
   };
 
   render() {
