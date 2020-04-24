@@ -87,14 +87,16 @@ class DesignerManager extends Component {
         .then((res) => {
           return res.json()
         }).then(function (res) {
+          console.log(res);
           let category1 = res.data.category1.map(data => {
             return { text: data.name, value: data.uid }
           })
           category1.unshift({ text: '전체', value: 0 });
           let category2 = [];
-          res.data.category2.map(data =>
-            data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
+          res.data.category2.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id }));
+          // data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
           category2.unshift({ text: '전체', value: 0, parents_id: 0 });
+          console.log("category_test:end")
           resolve({ category1: category1, category2: category2 });
         }).catch(err => console.error(err));
     })
@@ -273,8 +275,12 @@ class DesignerManager extends Component {
             <div>
               {normal && normal.length > 0 ?
                 normal.map(item => {
+                  console.log(item)
                   return <div key={item.uid} style={{ display: "flex", flexDirection: "row" }}>
-                    <div><div style={{ width: "75px", height: "75px", borderRadius: "50%", backgroundImage: `url(${(item.imgURL && item.imgURL.m_img) || noimg}`, backgroundSize: "cover" }} /></div>
+                    <div><div style={{
+                      width: "75px", height: "75px", borderRadius: "50%", backgroundImage:
+                        `url(${(item.imgURL && item.imgURL.m_img) || noimg}`, backgroundSize: "cover"
+                    }} /></div>
                     <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.categoryName || "전체"}</div>
                     <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.nick_name}</div>
                     <div style={{ padding: "0px 10px", margin: "5px 15px" }}>{item.email}</div>
