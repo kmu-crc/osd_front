@@ -77,7 +77,7 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,handleDel }) {
+function ListElement({ item: { userName, title, thumbnailUrl, uid },item, handleTop,handleDel }) {
   // console.log("title",title);
   return <div style={{
       position: "relative",
@@ -101,7 +101,7 @@ function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,h
               borderRadius: "15px",
           }}>인기디자인</div>
       <div
-          onClick={() => handleDel(uid)}
+          onClick={() => handleDel(item)}
           style={{
               cursor: "pointer",
               padding: "5px 10px",
@@ -170,7 +170,7 @@ class DesignManager extends Component {
 
       desc: true, sort: "update",
 
-      startDate: null, endDate: null, //new Date('1900-01-01'), new Date()
+      start: null, end: null, //new Date('1900-01-01'), new Date()
 
       category1: [], cate1: 0,
       category2: [], cate2: 0,
@@ -364,12 +364,12 @@ class DesignManager extends Component {
   }
   handleStartDateChange(date) {
     this.setState({
-      startDate: date
+      start: date
     });
   }
   handleEndDateChange(date) {
     this.setState({
-      endDate: date
+      end: date
     });
   }
   onChangeSort(e, { value }) {
@@ -478,10 +478,10 @@ class DesignManager extends Component {
                 {/* ▲ ▽  */}
               </div>
               {/* <div style={{ padding: "10px 5px", }}> */}
-                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} /> ~
+                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
                 {/* </div> */}
               {/* <div style={{ padding: "10px 5px", }}> */}
-                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
+                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
               {/* </div> */}
               
             </FilterBox>

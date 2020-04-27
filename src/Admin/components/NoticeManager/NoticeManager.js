@@ -3,6 +3,10 @@ import host from 'config'
 import DatePicker from 'react-date-picker'
 import { Icon } from 'semantic-ui-react'
 
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import styled from "styled-components";
+
 function dateFormat(date) {
     let newDate = new Date(date)
     return `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
@@ -20,7 +24,7 @@ class NoticeList extends Component {
     render() {
         const list = this.props.list
         return (<div>
-            <div onClick={this.handleNewNoti} ><Icon name="plus circle" size="large" /> + ADD NEW NOTICE + click here!</div>
+            <div style={{cursor:"pointer"}} onClick={this.handleNewNoti} ><Icon name="plus circle" size="large" /> + ADD NEW NOTICE + click here!</div>
             {list &&
                 (list.map(item =>
                     <div key={item.uid} style={{ cursor: "pointer", display: "flex" }} >
@@ -38,6 +42,8 @@ class NoticeList extends Component {
 class NoticeForm extends Component {
     state = { detail: null }
     submit = () => {
+        // console.log(this.state.detail);
+        // return;
         let form_data = this.refs.notice_form
         const op = form_data.uid.value === "" ? "add" : "edit"
         let data = {}
@@ -46,7 +52,8 @@ class NoticeForm extends Component {
         data.type = form_data.type.value
         data.start_time = new Date(this.state.detail.start_time)
         data.expiry_time = new Date(this.state.detail.expiry_time)
-        data.content = form_data.content.value && form_data.content.value.replace(/\n/g, "<br/>");
+        // data.content = form_data.content.value && form_data.content.value.replace(/\n/g, "<br/>");
+        data.content = this.state.detail["content"];
         data.start_time = `${data.start_time.getFullYear()}-${data.start_time.getMonth() + 1}-${data.start_time.getDate()}`
         data.expiry_time = `${data.expiry_time.getFullYear()}-${data.expiry_time.getMonth() + 1}-${data.expiry_time.getDate()}`
         if (data.title.trim().length === 0) { alert('제목입력!'); return }
@@ -94,6 +101,11 @@ class NoticeForm extends Component {
         detail[event.target.name] = event.target.value
         this.setState({ detail })
     }
+    handleeditChange=(value)=>{
+        let detail = this.state.detail
+        detail["content"] = value;
+        this.setState({ detail })  
+    }
     render() {
         const detail = this.state.detail
         const startDate = detail && this.state.detail.start_time ? new Date(this.state.detail.start_time) : null
@@ -125,7 +137,18 @@ class NoticeForm extends Component {
                                 <label>내용:</label>
                             </div>
                             <div>
-                                <textarea name="content" onChange={this.handleChange} value={detail.content} />
+                            <CKEditor
+                                // name="content"
+                                editor={ClassicEditor}
+                                data={this.state.detail["content"]}
+                                onInit={editor => { editor.editing.view.focus(); }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    this.handleeditChange(data);
+                                }}
+                                onBlur={(event, editor) => { console.log('Blur.', event, editor); }}
+                                onFocus={(event, editor) => { console.log('Focus.', editor); }} />
+                                {/* <textarea name="content" onChange={this.handleChange} value={detail.content} /> */}
                             </div>
                         </div>
                     </form>
