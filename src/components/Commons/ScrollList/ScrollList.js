@@ -35,7 +35,7 @@ function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,h
               color: "white",
               backgroundColor: "orange",
               borderRadius: "15px",
-          }}>인기디자인</div>
+          }}>인기아이템</div>
       <div
           onClick={() => handleDel(uid)}
           style={{

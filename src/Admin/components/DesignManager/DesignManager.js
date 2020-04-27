@@ -77,12 +77,12 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,handleDel }) {
+function ListElement({ item: { userName, title, thumbnail, uid,visible },item, handleTop,handleDel }) {
   // console.log("title",title);
   return <div style={{
       position: "relative",
       backgroundSize: "cover",
-      backgroundImage: `url(${thumbnailUrl==null?noimg:thumbnailUrl.m_img})`,
+      backgroundImage: `url(${thumbnail==null?noimg:thumbnail})`,
       width: "150px",
       height: "150px",
       borderRadius: "5px",
@@ -90,7 +90,7 @@ function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,h
       marginBottom: "5px",
   }}>
       <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-          <div
+      {visible==1?    <div
           onClick={() => handleTop(uid)}
           style={{
               cursor: "pointer",
@@ -99,9 +99,10 @@ function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,h
               color: "white",
               backgroundColor: "orange",
               borderRadius: "15px",
-          }}>인기디자인</div>
+          }}>인기아이템</div>
+          :null}
       <div
-          onClick={() => handleDel(uid)}
+          onClick={() => handleDel(item)}
           style={{
               cursor: "pointer",
               padding: "5px 10px",
@@ -170,7 +171,7 @@ class DesignManager extends Component {
 
       desc: true, sort: "update",
 
-      startDate: null, endDate: null, //new Date('1900-01-01'), new Date()
+      start: null, end: null, //new Date('1900-01-01'), new Date()
 
       category1: [], cate1: 0,
       category2: [], cate2: 0,
@@ -199,12 +200,10 @@ class DesignManager extends Component {
     this.setState({ loading: true });
     this.GetCategoryRequest()
       .then(obj => {
+        console.log(obj);
         this.setState({ category1: obj.category1, category2: obj.category2 });
       })
      this.GetDesignListRequest();
-    //  this.goNext();
-    //  this.goNext();
-    //  this.goNext();
     this.GetDesignListCountRequest();
     this.setState({ loading: false });
   };
@@ -214,7 +213,7 @@ class DesignManager extends Component {
 
   GetDesignListRequest(page = 0, max = this.state.max, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise((resolve, reject) => {
-      const url = `${host}/admins/DesignList/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
+      const url = `${host}/admins/ItemList/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
@@ -234,13 +233,15 @@ class DesignManager extends Component {
   };
   GetDesignListCountRequest(page = 0, max = this.state.max, cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise((resolve, reject) => {
-      const url = `${host}/admins/DesignListCount/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
+      const url = `${host}/admins/ItemListCount/${page}/${max}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
         .then((data) => {
+          // alert(data.cnt);
           this.setState({ count: data.cnt })
           // alert(data.cnt);
+          resolve(true);
         }
         )
         .catch(error => alert(error));
@@ -262,18 +263,35 @@ class DesignManager extends Component {
         .then((res) => {
           return res.json()
         }).then(function (res) {
+          console.log(res);
           let category1 = res.data.category1.map(data => {
             return { text: data.name, value: data.uid }
           })
           category1.unshift({ text: '전체', value: 0 });
           let category2 = [];
-          res.data.category2.map(data =>
-            data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
+          res.data.category2.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id }));
+            // data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
           category2.unshift({ text: '전체', value: 0, parents_id: 0 });
+          console.log("category_test:end")
           resolve({ category1: category1, category2: category2 });
         }).catch(err => console.error(err));
     })
   };
+  // UpdateDesignRequest(id, data, token) {
+  //   return new Promise(resolve => {
+  //     if (data.type === "insert") {
+  //       const url = `${host}/admins/${id}/insertTopDesign`;
+  //       console.log(url);
+  //       fetch(url, {
+  //         headers: { 'x-access-token': token, "Content-Type": "application/json" },
+  //         method: "POST",
+  //         body: JSON.stringify(data)
+  //       }).then(res => res.json())
+  //         .then(res => resolve(res))
+  //         .catch(err => console.error(err));
+  //     }
+  //   });
+  // };
   UpdateDesignRequest(id, data, token) {
     return new Promise((resolve) => {
       if (data.type === "delete") {
@@ -282,7 +300,7 @@ class DesignManager extends Component {
           method: "POST"
         })
           .then(res => res.json())
-          .then(res => { })
+          .then(res => {resolve(res); })
           .catch(err => console.error(err));
       }
       else if (data.type === "insert") {
@@ -291,7 +309,7 @@ class DesignManager extends Component {
           method: "POST",
           body: JSON.stringify(data)
         }).then(res => res.json())
-          .then(res => { })
+          .then(res => { resolve(res);})
           .catch(err => console.error(err));
       }
       else {
@@ -301,10 +319,10 @@ class DesignManager extends Component {
           body: JSON.stringify(data)
         })
           .then(res => res.json())
-          .then(res => { })
+          .then(res => { resolve(res);})
           .catch(err => console.error(err));
       }
-      resolve();
+      // resolve();
     });
   };
   async handleUpdateRequest(jobs) {
@@ -316,13 +334,10 @@ class DesignManager extends Component {
   };
   MakeTopDesign(id) {
     this.UpdateDesignRequest(id, { type: "insert", order: this.state.special.length || 0 }, this.props.admin_token)
-    .then(
-      ()=>{
-        const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
-        // await this.setState({ page: 0 });
-        this.GetDesignListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
-      }
-    )
+    .then( ()=>{
+      const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
+      this.GetDesignListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "")
+    })
       // .then(this.GetSpecialDesignListRequest())
       // .then(this.GetDesignListRequest());
   }
@@ -338,7 +353,7 @@ class DesignManager extends Component {
   DeleteDesignRequest(item) {
     const deleteRequest = () => {
       return new Promise((resolve, reject) => {
-        const url = `${host}/admins/DeleteDesign/${item.uid}`;
+        const url = `${host}/admins/DeleteItem/${item.uid}`;
         console.log(url);
         fetch(url, {
           headers: {
@@ -364,12 +379,12 @@ class DesignManager extends Component {
   }
   handleStartDateChange(date) {
     this.setState({
-      startDate: date
+      start: date
     });
   }
   handleEndDateChange(date) {
     this.setState({
-      endDate: date
+      end: date
     });
   }
   onChangeSort(e, { value }) {
@@ -411,7 +426,7 @@ class DesignManager extends Component {
   render() {
     const { special, addNormal,normal, count, page, loading, editSpecial, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
     const lastPage = parseInt(count / this.state.max, 10)+1;
-
+console.log(count);
     // category1
     const combocate1 =
       (category1 && category1.length > 0)
@@ -433,7 +448,8 @@ class DesignManager extends Component {
       { key: "update", value: "update", text: "업데이트" },
       { key: "create", value: "create", text: "등록순" },
       { key: "title", value: "title", text: "제목" },
-      { key: "like", value: "like", text: "인기순" }];
+      // { key: "like", value: "like", text: "인기순" }
+    ];
     // console.log(combosort);
       console.log(this.state.normal,this.state.addNormal);
     return (
@@ -478,10 +494,10 @@ class DesignManager extends Component {
                 {/* ▲ ▽  */}
               </div>
               {/* <div style={{ padding: "10px 5px", }}> */}
-                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} /> ~
+                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
                 {/* </div> */}
               {/* <div style={{ padding: "10px 5px", }}> */}
-                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
+                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
               {/* </div> */}
               
             </FilterBox>
@@ -505,6 +521,7 @@ class DesignManager extends Component {
             <ListBox>
               {normal && normal.length > 0 ?
                 normal.map(item => {
+                  console.log(item);
                     return (
                       <ListElement item={item}
                       handleTop={this.MakeTopDesign}
@@ -519,19 +536,22 @@ class DesignManager extends Component {
             
           <div className="pageRange">
           <div> 
-          <Pagination
-                activePage={this.state.page}
-                boundaryRange={0}
-                defaultActivePage={1}
-                ellipsisItem={null}
-                firstItem={null}
-                lastItem={null}
-                siblingRange={1}
-                totalPages={lastPage}
-                onPageChange={(event,{activePage})=>{
-                  this.goPage(activePage-1);
-                }}
-              />
+            {count<=10?null:
+              <Pagination
+              activePage={this.state.page}
+              boundaryRange={0}
+              defaultActivePage={1}
+              ellipsisItem={null}
+              firstItem={null}
+              lastItem={null}
+              siblingRange={1}
+              totalPages={lastPage}
+              onPageChange={(event,{activePage})=>{
+                this.goPage(activePage-1);
+              }}
+            />
+            }
+
             </div>
 
           </div>

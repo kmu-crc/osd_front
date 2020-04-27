@@ -2,7 +2,7 @@ import React from 'react';
 import { ListManager } from "react-beautiful-dnd-grid";
 
 function sortList(list) {
-    return list.slice().sort((first, second) => first.order - second.order);
+    return list==null?[]:list.slice().sort((first, second) => first.order - second.order);
 }
 function ListElement({ item: { userName, title, thumbnail, uid }, handle }) {
     console.log("title",title);
@@ -67,7 +67,7 @@ class DesignReorderGrid extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sortedList: []//sortList(props.list)
+            sortedList: sortList(props.list)||[],
         }
     }
     componentDidUpdate(prevProps) {
@@ -145,11 +145,11 @@ class DesignReorderGrid extends React.Component {
         const { sortedList } = this.state;
         console.log(sortedList)
         return (<React.Fragment>
-            {sortedList && sortedList.length > 0 ?
-                <React.Fragment>
                     <div style={{margin:"10px"}}>
                     <button style={{padding:"5px",borderRadius:"5px",outline:"none"}} onClick={this.onApply}>변경내용저장</button>
                     </div>
+            {sortedList && sortedList.length > 0 ?
+                <React.Fragment>
                     <ListManager
                         items={sortedList}
                         direction="horizontal"
