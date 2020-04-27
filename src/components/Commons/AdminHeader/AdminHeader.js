@@ -316,7 +316,7 @@ class AdminHeader extends Component {
               <a href="/noticeManager">공지사항</a>
             </MenuItem>
             <MenuItem>
-              <a href="/hotDesignManager">인기디자인</a>
+              <a href="/hotDesignManager">인기아이템</a>
             </MenuItem>
             <MenuItem>
               <a href="/hotExpertManager">인기 디자이너/메이커</a>
@@ -325,7 +325,7 @@ class AdminHeader extends Component {
             {/* <a href="/hotgroupManager">인기그룹</a> */}
             {/* </MenuItem> */}
             <MenuItem>
-              <a href="/designManager">디자인</a>
+              <a href="/designManager">아이템</a>
             </MenuItem>
             {/* <MenuItem> */}
             {/* <a href="/groupManager">그룹</a> */}

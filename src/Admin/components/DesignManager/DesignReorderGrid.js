@@ -143,9 +143,9 @@ class DesignReorderGrid extends React.Component {
         const { sortedList } = this.state;
 
         return (<React.Fragment>
+            <button onClick={this.onApply}>변경내용저장</button>
             {sortedList && sortedList.length > 0 ?
                 <React.Fragment>
-                    <button onClick={this.onApply}>변경내용저장</button>
                     <ListManager
                         items={sortedList}
                         direction="horizontal"
