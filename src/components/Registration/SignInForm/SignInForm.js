@@ -184,7 +184,7 @@ class SignInForm extends Component {
   }
   onCheckSaveLogin(event) {
     const result = document.getElementById(event.target.id).checked;
-    {
+    if (result) {
       cookie.remove(('saveid'), { path: '/' });
       cookie.remove(('savepassword'), { path: '/' });
     }

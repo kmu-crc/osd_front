@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import HeaderContainer from "containers/Commons/HeaderContainer";
 // import Footer from "components/Commons/Footer";
 import styled from "styled-components";
+import Notice from "components/Commons/Header/Notice.js";
 
 const Container = styled.div`
   margin-top: 30px;
@@ -30,13 +31,18 @@ class ClientTemplate extends Component {
   }
 
   render() {
-    return (<Container>
-      <HeaderContainer active={this.props.isActive} />
-      <div style={{ width: "1790px", position: "relative", }} onClick={this.onClose}>
-        {this.props.children}
-        {/* <Footer /> */}
+    return (
+      <div>
+        <Notice />
+        <Container>
+          <HeaderContainer active={this.props.isActive} />
+          <div style={{ width: "1790px", position: "relative", }} onClick={this.onClose}>
+            {this.props.children}
+            {/* <Footer /> */}
+          </div>
+        </Container>
       </div>
-    </Container>);
+    );
   }
 }
 
