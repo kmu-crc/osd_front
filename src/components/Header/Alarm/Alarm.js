@@ -133,7 +133,7 @@ class Alarm extends Component {
         const title = item.title && item.title.length > 32 ? item.title.slice(0, 32) + "..." : item.title;
         if (item.type === "DESIGN") {
             if (item.kinds === "INVITE") {
-                msg = `${item.title}디자인 멤버로 초대하였습니다.`;
+                msg = `${item.title}디자인 멤버로 초대되었습니다.`;
             } else if (item.kinds === "REQUEST") {
                 msg = `${from}님이 멤버 가입 신청을 하였습니다.`
             } else if (item.kinds === "INVITE_TRUE") {
