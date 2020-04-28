@@ -1,12 +1,13 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { withRouter } from "react-router-dom"
-import DesignDetail from "components/Designs/DesignDetail"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import DesignDetail from "components/Designs/DesignDetail";
 import {
   ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest,
+  DesignWaitingListRequest,
   GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
-} from "redux/modules/design"
+} from "redux/modules/design";
 
 class DesignDetailContainer extends Component {
   render() {
@@ -24,7 +25,8 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     valid: state.Authentication.status.valid,
     token: state.Authentication.status.token,
-    like: state.Design.status.like
+    like: state.Design.status.like,
+    WaitingList: state.Design.status.WaitingList
   }
 }
 
@@ -32,6 +34,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailRequest: (id, token) => {
       return dispatch(GetDesignDetailRequest(id, token))
+    },
+    DesignWaitingListRequest: (id, token) => {
+      return dispatch(DesignWaitingListRequest(id, token))
     },
     DesignDetailResetRequest: () => {
       return dispatch(DesignDetailResetRequest())

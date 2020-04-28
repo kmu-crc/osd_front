@@ -655,7 +655,7 @@ class DesignInfo extends Component {
         window.location.href = "/designDetail/" + designID;
     }
     async needLogin() {
-        await alert("로그인 해주세요.","확인");
+        await alert("로그인 해주세요.", "확인");
     }
     closeMemberList() {
         this.setState({ memberList: false });
@@ -665,12 +665,12 @@ class DesignInfo extends Component {
     }
     joinMember = async () => {
         if (!this.props.userInfo || !this.props.token) {
-            await alert("로그인을 해주세요.","확인");
+            await alert("로그인을 해주세요.", "확인");
         } else if (this.props.DesignDetail.waitingStatus === 1) {
-            await alert("가입 대기중인 디자인입니다.","확인");
+            await alert("가입 대기중인 디자인입니다.", "확인");
         } else {
             const data = [{ uid: this.props.userInfo.uid }];
-            if (await confirm("해당 디자인에 멤버로 가입 신청하시겠습니까?","예","아니오")) {
+            if (await confirm("해당 디자인에 멤버로 가입 신청하시겠습니까?", "예", "아니오")) {
                 this.props.JoinDesignRequest(this.props.id, data, 0, this.props.token)
                     .then(res => {
                         if (res && res.data && res.data.success) {
@@ -689,7 +689,7 @@ class DesignInfo extends Component {
         }
         if (!this.props.userInfo.is_designer) {
             console.log("userinfo", this.props.userInfo.is_designer)
-            await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.","확인")
+            await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.", "확인")
             return this.props.history.push("/myModify")
         }
         await this.setState({ forkDialog: 1 });
@@ -758,7 +758,7 @@ class DesignInfo extends Component {
     }
 
     render() {
-        const { isMyDesign, editor, DesignDetail, Count, like } = this.props
+        const { isMyDesign, editor, DesignDetail, Count, like, WaitingList } = this.props
         const { w } = this.state;
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
@@ -788,8 +788,6 @@ class DesignInfo extends Component {
                     {/* </Modal.Content> */}
                 </DesignCommentModalContainer>)
         }
-
-        // console.log(new Date(DesignDetail.create_time).toLocaleDateString('ko-KR'));
 
         return (
             <React.Fragment>
@@ -862,14 +860,17 @@ class DesignInfo extends Component {
                                                                 {DesignDetail.parent_title.slice(0, 4)} {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨</div>
                                                             : null}
 
-                                                        <button className="member-list-btn" onClick={this.openMemberList} >
-                                                            <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
-                                                                <TextFormat txt={DesignDetail.userName} chars={11} />
-                                                                <div style={{ fontSize: "0.95rem" }}>
-                                                                    {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명` : null}
+                                                        <div style={{ display: "flex" }}>
+                                                            <button className="member-list-btn" onClick={this.openMemberList} >
+                                                                <div className="design_member" style={{ display: "flex", flexDirection: "row", }}>
+                                                                    <TextFormat txt={DesignDetail.userName} chars={11} />
+                                                                    <div style={{ fontSize: "0.95rem" }}>
+                                                                        {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명 ` : null}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </button>
+                                                            </button>
+                                                            {WaitingList && WaitingList.length > 0 ? <div style={{ marginTop: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+                                                        </div>
 
                                                         {!isMyDesign && this.state.memberList &&
                                                             <DesignMemberList ref={this.memberRef} top={this.state.posY} left={this.state.posX} >
@@ -975,7 +976,7 @@ class DesignInfo extends Component {
                                     <div>
                                         {/* <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div> */}
                                         <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                                        <div className="update-time">등록 일자 {DesignDetail&&new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
+                                        <div className="update-time">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
                                     </div>
                                 </RightSide>
 
