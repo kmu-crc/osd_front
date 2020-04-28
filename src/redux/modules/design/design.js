@@ -674,3 +674,14 @@ export function DeleteDesignRequest(id, token) {
         });
     }
 }
+export function YesIHaveReadNewComment(id, token) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/designDetail/${id}/confirmDesignComment/`;
+        fetch(url, {
+            headers: { "x-access-token": token }, method: "GET"
+        })
+            .then(res => res.json())
+            .then(res => { console.log("success confirm design comment", res); resolve(true) })
+            .catch((error) => { console.log(error); reject(error) });
+    })
+}

@@ -49,7 +49,7 @@ class ModifyDesignMember extends Component {
     this.removeMember = this.removeMember.bind(this);
   }
   componentDidMount() {
-    this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
+    // this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
     this.props.DesignWaitingToAcceptListRequest(this.props.match.params.id, this.props.token);
   }
   async addMember(email, s_img, nick_name, uid) {

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Comment from 'components/Commons/Comment';
-import { GetDesignCountRequest, GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/modules/design";
+import {
+    GetCountDesignCommentRequest, GetDesignCountRequest, GetDesignCommentRequest,
+    CreateDesignCommentRequest, DeleteDesignCommentRequest
+} from "redux/modules/design";
 
 class DesignComment extends Component {
     componentDidMount() {
-        this.props.GetDesignCommentRequest(this.props.designId);
+        this.props.GetDesignCommentRequest(this.props.designId)
     }
+
     comment = (data) => {
         this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.token)
             .then(res => {
@@ -59,7 +63,10 @@ const mapDispatchToProps = dispatch => {
         },
         DeleteDesignCommentRequest: (design_id, comment_id, token) => {
             return dispatch(DeleteDesignCommentRequest(design_id, comment_id, token));
-        }
+        },
+        GetCountDesignCommentRequest: (id) => {
+            return dispatch(GetCountDesignCommentRequest(id))
+        },
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DesignComment);

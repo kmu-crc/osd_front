@@ -15,6 +15,8 @@ class DesignDetail extends Component {
       .then(async () => {
         if (this.props.userInfo === null) this.setState({ isMyDesign: false });
         else if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
+          this.props.DesignWaitingListRequest(this.props.id, this.props.token);
+          this.props.GetCountDesignCommentRequest(this.props.id);
           this.setState({ isMyDesign: true });
         }
         else {
@@ -30,12 +32,8 @@ class DesignDetail extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
-      // console.log("???");
       return true;
     }
-  }
-  gotoModifyPage = () => {
-    window.location.href = "/groupDetail/" + this.props.id + "/modify"
   }
   checkEditorPermission() {
     return (
@@ -45,7 +43,7 @@ class DesignDetail extends Component {
         this.props.DesignDetail.member.find(peer => { return peer.user_id === this.props.userInfo.uid }) ? true : false);
   }
   render() {
-    console.log(this.props,"designdetail");
+    console.log(this.props, "designdetail");
     // console.log("userinfo", this.props, this.state)
     const DesignDetail = this.props.DesignDetail;
     return (<React.Fragment>

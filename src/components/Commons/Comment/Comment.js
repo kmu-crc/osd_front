@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import { confirm } from "components/Commons/Confirm/Confirm";
@@ -13,24 +13,39 @@ const CommentBox = styled.div`
         color: #707070;
     }
 `;
+const blinker = keyframes`
+  0% {
+    background-color: #fffafa; 
+  }
+  50% {
+    background-color: #FFFFFF; 
+  }
+  100% {
+    background-color: #fffafa; 
+  }
+`;
 const Comments = styled.div`
     margin-bottom: 20px;
 `;
 const CommentInner = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-    &.reply {
-        margin-left: 55px;
-    };
-    .face {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background-image: url(${props => props.face});
-        background-size: cover;
-        border: 1px solid #EFEFEF;
-    };
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+
+  &.blinking {
+    animation: ${blinker} 1.15s 5;
+  }
+  &.reply {
+    margin-left: 55px;
+  };
+  .face {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-image: url(${props => props.face});
+    background-size: cover;
+    border: 1px solid #EFEFEF;
+  };
     .text-wrapper {
         margin-left: 10px;
         width: max-content;
@@ -58,7 +73,7 @@ const CommentInner = styled.div`
             font-weight: 300;
             font-size: 16px;
             max-width: 560px;
-            background-color: white;
+            // background-color: i;
             margin-top:10px;
         };
     };
@@ -76,12 +91,9 @@ const CommentInner = styled.div`
             cursor: pointer;
        }
         .del {
-            // width: max-content;
-            // height: 16px;
-            // font-weight: 500;
-            // margin-left: 5px;
+            font-size: 14px;
             color: red;
-            // cursor: pointer;
+            cursor: pointer;
         }
     };
 `;
@@ -214,7 +226,7 @@ class Comment extends Component {
     };
     async checkPermission() {
         if (this.props.my == null) {
-            await alert("로그인 해주세요.","확인");
+            await alert("로그인 해주세요.", "확인");
             return false;
         }
         return true
@@ -247,19 +259,19 @@ class Comment extends Component {
         this.reset();
     };
     async removeComment(commentId) {
-        if (await confirm("선택하신 댓글을 삭제하시겠습니까?","예","아니오") === false) {
+        if (await confirm("선택하신 댓글을 삭제하시겠습니까?", "예", "아니오") === false) {
             return;
         }
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
         if (comm.replies && comm.replies.length > 0) {
-            await alert("답변이 있는 댓글은 삭제할 수 없습니다.","확인");
+            await alert("답변이 있는 댓글은 삭제할 수 없습니다.", "확인");
         }
         else {
             this.props.removeComment(commentId);
         }
     };
     async removeReply(commentId) {
-        if (await confirm("선택하신 댓글을 삭제하시겠습니까?","예","아니오") === false) {
+        if (await confirm("선택하신 댓글을 삭제하시겠습니까?", "예", "아니오") === false) {
             return;
         }
         this.props.removeComment(commentId);
@@ -275,7 +287,8 @@ class Comment extends Component {
                 const face = item && item.s_img ? item.s_img : noface;
                 return (<Comments key={item.nick_name + index}>
                     {/* comments */}
-                    <CommentInner face={face} >
+                    <CommentInner face={face} className={item.read === 0 ? "blinking" : ""} >
+
                         <div className="face" />
                         <div className="text-wrapper">
                             <div className="nick">
@@ -295,7 +308,7 @@ class Comment extends Component {
                     {/* replies of comment */}
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
                         const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
-                        return (<CommentInner className="reply" key={repli.uid + repli_index} face={repli_face}>
+                        return (<CommentInner className={repli.read === 0 ? "reply blinking" : "reply"} key={repli.uid + repli_index} face={repli_face} >
                             <div className="face" />
                             <div className="text-wrapper">
                                 <div className="nick">
@@ -312,24 +325,25 @@ class Comment extends Component {
 
                     {/* input-text of replie */}
                     {reply && item.uid === this.state.targetId &&
-                    <React.Fragment>
-                        <CommentInputTextContainer className="reply" style={{flexDirection:"column"}} face={myface}>
-                        <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
-                        <div style={{display:"flex"}}>
-                            {/* <div className="face" /> */}
-                            <div className="wrapper ">
-                                <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
-                            </div>
-                            <div className="another-wrapper">
-                                <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
-                                <div className="cancel" onClick={this.undoReply}>취소</div>
-                            </div>
-                        </div>
-                        </CommentInputTextContainer>
+                        <React.Fragment>
+                            <CommentInputTextContainer className="reply" style={{ flexDirection: "column" }} face={myface}>
+                                <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
+                                <div style={{ display: "flex" }}>
+                                    {/* <div className="face" /> */}
+                                    <div className="wrapper ">
+                                        <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
+                                    </div>
+                                    <div className="another-wrapper">
+                                        <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
+                                        <div className="cancel" onClick={this.undoReply}>취소</div>
+                                    </div>
+                                </div>
+                            </CommentInputTextContainer>
                         </React.Fragment>
-                        }
+                    }
                 </Comments>)
-            })}
+            })
+            }
 
             {/* input-text of comment */}
             <CommentInputTextContainer face={myface}>
