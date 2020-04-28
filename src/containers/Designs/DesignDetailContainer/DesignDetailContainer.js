@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import DesignDetail from "components/Designs/DesignDetail";
 import {
   ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest,
-  DesignWaitingListRequest,
+  DesignWaitingListRequest, GetCountDesignCommentRequest, 
   GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
 } from "redux/modules/design";
@@ -26,7 +26,8 @@ const mapStateToProps = (state) => {
     valid: state.Authentication.status.valid,
     token: state.Authentication.status.token,
     like: state.Design.status.like,
-    WaitingList: state.Design.status.WaitingList
+    WaitingList: state.Design.status.WaitingList,
+    CountDesignComment: state.DesignComment.status.CountDesignComment,
   }
 }
 
@@ -34,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     GetDesignDetailRequest: (id, token) => {
       return dispatch(GetDesignDetailRequest(id, token))
+    },
+    GetCountDesignCommentRequest: (id) => {
+      return dispatch(GetCountDesignCommentRequest(id))
     },
     DesignWaitingListRequest: (id, token) => {
       return dispatch(DesignWaitingListRequest(id, token))

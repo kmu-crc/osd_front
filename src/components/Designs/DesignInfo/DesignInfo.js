@@ -17,6 +17,8 @@ import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "components/Designs/GridEditor/DesignComment";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import { YesIHaveReadNewComment, } from "redux/modules/design";
+
 const LeftSide = styled.div`
     display: flex;
     height: 220px;
@@ -757,8 +759,16 @@ class DesignInfo extends Component {
         this.setState({ memberList: true });
     }
 
+    async onClosedCommentModal() {
+        if (this.props.isMyDesign && this.props.CountDesignComment && this.props.CountDesignComment > 0) {
+            await YesIHaveReadNewComment(this.props.id, this.props.token);
+            this.props.GetCountDesignCommentRequest(this.props.id);
+        }
+        this.setState({ comment: false });
+    }
+
     render() {
-        const { isMyDesign, editor, DesignDetail, Count, like, WaitingList } = this.props
+        const { isMyDesign, editor, DesignDetail, Count, like, WaitingList, CountDesignComment } = this.props
         const { w } = this.state;
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
 
@@ -776,14 +786,16 @@ class DesignInfo extends Component {
         }
         const DesignCommentModal = () => {
             return (
-                <DesignCommentModalContainer open={this.state.comment} onClose={() => this.setState({ comment: false })}>
-                    <div className="close-box" onClick={() => this.setState({ comment: false })} >
+                <DesignCommentModalContainer open={this.state.comment} onClose={() => this.onClosedCommentModal()}>
+                    <div className="close-box" onClick={() => this.onClosedCommentModal()} >
                         <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
                     </div>
                     {/* <Modal.Content> */}
                     <div className="header-txt"><h2>댓글</h2></div>
                     <div className="body-container">
-                        <DesignComment designId={parseInt(this.props.id, 10)} requestDesignDetail={this.props.GetDesignCountRequest} />
+                        <DesignComment
+                            designId={parseInt(this.props.id, 10)}
+                            requestDesignDetail={this.props.GetDesignCountRequest} />
                     </div>
                     {/* </Modal.Content> */}
                 </DesignCommentModalContainer>)
@@ -793,7 +805,7 @@ class DesignInfo extends Component {
             <React.Fragment>
                 {/* modals */}
                 {this.state.memberList ? <MemberModal /> : null}
-                <DesignCommentModal />
+                {this.state.comment ? <DesignCommentModal /> : null}
 
                 {/* dialog */}
                 {this.state.forkDialog > 0 ?
@@ -893,7 +905,7 @@ class DesignInfo extends Component {
                                                                 <div className="txt">댓글</div>
                                                                 <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                                                             </div>
-                                                            {true ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+                                                            {CountDesignComment && CountDesignComment > 0 ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
                                                         </div>
 
 

@@ -16,6 +16,7 @@ class DesignDetail extends Component {
         if (this.props.userInfo === null) this.setState({ isMyDesign: false });
         else if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
           this.props.DesignWaitingListRequest(this.props.id, this.props.token);
+          this.props.GetCountDesignCommentRequest(this.props.id);
           this.setState({ isMyDesign: true });
         }
         else {

@@ -21,6 +21,10 @@ const DELETE_CARD_COMMENT = "DELETE_CARD_COMMENT"
 const DELETE_CARD_COMMENT_SUCCESS = "DELETE_CARD_COMMENT_SUCCESS"
 const DELETE_CARD_COMMENT_FAILURE = "DELETE_CARD_COMMENT_FAILURE"
 
+const GET_COUNT_DESIGN_COMMENT = "GET_COUNT_DESIGN_COMMENT";
+const GET_COUNT_DESIGN_COMMENT_SUCCESS = "GET_COUNT_DESIGN_COMMENT_SUCCESS";
+const GET_COUNT_DESIGN_COMMENT_FAILURE = "GET_COUNT_DESIGN_COMMENT_FAILURE";
+
 const GetCardComment = () => ({ type: GET_CARD_COMMENT })
 const GetCardCommentSuccess = data => ({ type: GET_CARD_COMMENT_SUCCESS, CardComment: data })
 const GetCardCommentFailure = error => ({ type: GET_CARD_COMMENT_FAILURE })
@@ -40,6 +44,10 @@ const DeleteDesignComment = () => { return { type: DELETE_DESIGN_COMMENT }; };
 const DeleteDesignCommentSuccess = res => { return { type: DELETE_DESIGN_COMMENT_SUCCESS, data: res }; };
 const DeleteDesignCommentFailure = error => { return { type: DELETE_DESIGN_COMMENT_FAILURE }; };
 
+const GetCountDesignComment = () => ({ type: GET_COUNT_DESIGN_COMMENT, });
+const GetCountDesignCommentSuccess = (res) => ({ type: GET_COUNT_DESIGN_COMMENT_SUCCESS, Count: res });
+const GetCountDesignCommentFailure = (error) => ({ type: GET_COUNT_DESIGN_COMMENT_FAILURE, error: error });
+
 const initialState = {
     GetCardComment: { status: "INIT" },
     CreateCardComment: { status: "INIT" },
@@ -47,7 +55,8 @@ const initialState = {
     GetDesignComment: { status: "INIT" },
     CreateDesignComment: { status: "INIT" },
     DeleteDesignComment: { status: "INIT" },
-    status: { Comment: [], CardComment: [] }
+    CountDesignComment: { status: "INIT" },
+    status: { Comment: [], CardComment: [], CountDesignComment: 0 }
 };
 
 export function DesignComment(state, action) {
@@ -119,8 +128,18 @@ export function DesignComment(state, action) {
             return update(state, { CreateCardComment: { status: { $set: "FAILURE" } } });
         case CREATE_CARD_COMMENT:
             return update(state, { CreateCardComment: { status: { $set: "WATTING" } } });
+
+        case GET_COUNT_DESIGN_COMMENT:
+            return update(state, { CountDesignComment: { status: { $set: "WATTING" } } });
+        case GET_COUNT_DESIGN_COMMENT_SUCCESS:
+            return update(state, {
+                CountDesignComment: { status: { $set: "SUCCESS" } },
+                status: { CountDesignComment: { $set: action.Count } }
+            });
+        case GET_COUNT_DESIGN_COMMENT_FAILURE:
+            return update(state, { CountDesignComment: { status: { $set: "FAILURE" } } });
         default:
-            return state
+            return state;
     }
 };
 
@@ -284,6 +303,22 @@ export const GetDesignCommentRequest = (design_id) => {
             .catch(error => {
                 console.log("get card comment err", error);
                 return dispatch(GetDesignCommentFailure(error));
+            });
+    };
+};
+export const GetCountDesignCommentRequest = (design_id) => {
+    return dispatch => {
+        dispatch(GetCountDesignComment());
+        const url = `${host}/design/designDetail/${design_id}/getCountComment`;
+        return fetch(url, {
+            headers: { "Content-Type": "application/json" },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(res => dispatch(GetCountDesignCommentSuccess(res.data)))
+            .catch(error => {
+                console.log("get count of design comment err", error);
+                return dispatch(GetCountDesignCommentFailure(error));
             });
     };
 };
