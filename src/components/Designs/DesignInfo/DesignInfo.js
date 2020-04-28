@@ -744,12 +744,12 @@ class DesignInfo extends Component {
     goParentDesign = (parent) => {
         window.location.href = geturl() + `/designDetail/${parent}`
     }
-    componentWillReceiveProps = async (nextProps) => {
-        if (nextProps !== this.props) {
-            console.log("reload");
-            return true;
-        }
-    }
+    // componentWillReceiveProps = async (nextProps) => {
+    //     if (nextProps !== this.props) {
+    //         console.log("reload");
+    //         return true;
+    //     }
+    // }
     getDesignComment() {
         this.setState({ comment: true });
     }
@@ -792,7 +792,7 @@ class DesignInfo extends Component {
         return (
             <React.Fragment>
                 {/* modals */}
-                <MemberModal />
+                {this.state.memberList ? <MemberModal /> : null}
                 <DesignCommentModal />
 
                 {/* dialog */}
@@ -888,9 +888,12 @@ class DesignInfo extends Component {
                                                                             </DesignMemberListElement>)}</div>
                                                             </DesignMemberList>}
 
-                                                        <div className="comment-box" onClick={this.getDesignComment} >
-                                                            <div className="txt">댓글</div>
-                                                            <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
+                                                        <div style={{ display: "flex", flexDirection: "row" }}>
+                                                            <div className="comment-box" onClick={this.getDesignComment} >
+                                                                <div className="txt">댓글</div>
+                                                                <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
+                                                            </div>
+                                                            {true ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
                                                         </div>
 
 
