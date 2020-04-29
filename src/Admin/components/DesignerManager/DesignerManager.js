@@ -354,8 +354,8 @@ class DesignerManager extends Component {
     const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
-  async goPage(page) {
-    await this.setState({ page: page });
+  async goPage(go) {
+    await this.setState({ page: go});
     const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
