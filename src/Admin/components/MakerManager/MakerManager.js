@@ -7,6 +7,7 @@ import noimg from "source/thumbnail.png";
 import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
+import Category from "components/Commons/Category";
 
 const MainBox = styled.div`
 // *{
@@ -251,7 +252,7 @@ class MakerManager extends Component {
           })
           category1.unshift({ text: '전체', value: 0 });
           let category2 = [];
-          res.data.category2.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id }));
+          res.data.category2.map(item => category2.push({ text: item.name, value: item.value, parents_id: item.parents_id }));
           // data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
           category2.unshift({ text: '전체', value: 0, parents_id: 0 });
           console.log("category_test:end")
@@ -312,16 +313,21 @@ class MakerManager extends Component {
       sort: value
     });
   }
-  onChangeMainCate(e, { value }) {
-    this.setState({
-      cate1: value,
-      cate2: 0
-    });
+  async onChangeMainCate(value) {
+    await this.setState({ cate1: value, cate2: 0 });
+    const { max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
+    await this.setState({ page: 0 });
+    this.GetMakerListRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
-  onChangeSubCate(e, { value }) {
-    this.setState({
-      cate2: value
-    });
+  async onChangeSubCate(parents_id,value) {
+    await this.setState({ cate2: value });
+    const { max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
+   await this.setState({ page: 0 });
+    this.GetMakerListRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+  }
+  resetCate = () => {
+    this.props.history.replace(`/designManage/${this.props.sort}`);
+    this.changeState();
   }
   async search() {
     const { max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
@@ -381,11 +387,21 @@ class MakerManager extends Component {
         <div className="main">
           {/* title */}
           <h1>메이커</h1>
-
+          <div>
+          <Category
+              handleCate2={this.onChangeSubCate} 
+              handleCate1={this.onChangeMainCate} 
+              resetCate={this.resetCate}
+              cate1={cate1} 
+              cate2={cate2}
+              category1={category1} 
+              category2={category2}
+              />
+          </div>
           <div>
             {/* filter */}
             <FilterBox>
-              <Dropdown
+              {/* <Dropdown
                 compact
                 selection
                 defaultValue={cate1}
@@ -398,7 +414,7 @@ class MakerManager extends Component {
                 defaultValue={cate2}
                 options={combocate2}
                 onChange={this.onChangeSubCate}
-              />
+              /> */}
               <Dropdown
                 compact
                 selection

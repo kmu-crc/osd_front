@@ -8,6 +8,7 @@ import noimg from "source/noimg.png";
 import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
+import Category from "components/Commons/Category";
 
 
 const MainBox = styled.div`
@@ -175,6 +176,8 @@ class DesignManager extends Component {
 
       category1: [], cate1: 0,
       category2: [], cate2: 0,
+
+      rendering:true,
     };
     this.GetDesignListRequest = this.GetDesignListRequest.bind(this);
     this.GetDesignListCountRequest = this.GetDesignListCountRequest.bind(this);
@@ -269,7 +272,7 @@ class DesignManager extends Component {
           })
           category1.unshift({ text: '전체', value: 0 });
           let category2 = [];
-          res.data.category2.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id }));
+          res.data.category2.map(item => category2.push({ text: item.name, value: item.value, parents_id: item.parents_id }));
             // data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
           category2.unshift({ text: '전체', value: 0, parents_id: 0 });
           console.log("category_test:end")
@@ -387,14 +390,37 @@ class DesignManager extends Component {
       end: date
     });
   }
+  changeState = async () => {
+    await this.setState({ rendering: false });
+    await this.setState({ rendering: true });
+  }
   onChangeSort(e, { value }) {
     this.setState({ sort: value });
   }
-  onChangeMainCate(e, { value }) {
-    this.setState({ cate1: value, cate2: 0 });
+  async onChangeMainCate(value) {
+    await this.setState({ cate1: value, cate2: 0 });
+    const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
+
+    console.log("ChangeCate",max, cate1, cate2, sort, desc, start, end, keyword );
+
+
+    await this.setState({ page: 0 });
+    this.GetDesignListRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword :this.state.keyword)
+    .then(()=>this.GetDesignListCountRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
   }
-  onChangeSubCate(e, { value }) {
-    this.setState({ cate2: value });
+  async onChangeSubCate(parents_id,value) {
+    await this.setState({ cate2: value });
+    const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
+
+    console.log("ChangeCate",max, cate1, cate2, sort, desc, start, end, keyword );
+
+    await this.setState({ page: 0 });
+    this.GetDesignListRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword :this.state.keyword)
+    .then(()=>this.GetDesignListCountRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
+  }
+  resetCate = () => {
+    this.props.history.replace(`/designManage/${this.props.sort}`);
+    this.changeState();
   }
   async search() {
     // alert(this.state.keyword);
@@ -451,7 +477,7 @@ console.log(count);
       // { key: "like", value: "like", text: "인기순" }
     ];
     // console.log(combosort);
-      console.log(this.state.normal,this.state.addNormal);
+      console.log(category2,cate2);
     return (
       <MainBox>
         {/* loading */}
@@ -460,11 +486,22 @@ console.log(count);
         <div className="main">
           {/* title */}
           <h1>디자인</h1>
-
+          <div>
+          <Category
+              handleCate2={this.onChangeSubCate} 
+              handleCate1={this.onChangeMainCate} 
+              resetCate={this.resetCate}
+              cate1={cate1} 
+              cate2={cate2}
+              category1={category1} 
+              category2={category2}
+              />
+          </div>
           <div>
             {/* filter */}
+           
             <FilterBox>
-                <Dropdown
+                {/* <Dropdown
                   compact
                   selection
                   defaultValue={cate1}
@@ -477,7 +514,7 @@ console.log(count);
                   defaultValue={cate2}
                   options={combocate2}
                   onChange={this.onChangeSubCate}
-                />
+                /> */}
                 <Dropdown
                   compact
                   selection
