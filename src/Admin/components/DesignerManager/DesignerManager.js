@@ -183,6 +183,7 @@ class DesignerManager extends Component {
     this.search = this.search.bind(this);
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
+    this.goPage = this.goPage.bind(this);
   };
   componentDidMount() {
     this.setState({ loading: true });
@@ -235,7 +236,10 @@ class DesignerManager extends Component {
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
-        .then(data => this.setState({ count: data.cnt }))
+        .then(data => {
+          this.setState({ count: data.cnt })
+          resolve(true);
+        })
         .catch(error => alert(error));
     });
   };
@@ -290,9 +294,9 @@ class DesignerManager extends Component {
                             디자이너 이름입력: ${item.nick_name}\n`);
 
     if (prompt === item.nick_name) {
-      deleteRequest();
-      this.GetDesignerListCountRequest();
-      this.GetDesignerListRequest();
+      deleteRequest()
+        .then(() => this.GetDesignerListCountRequest())
+        .then(() => this.GetDesignerListRequest())
     } else {
       alert("잘못입력하셨습니다.");
     }
@@ -321,9 +325,9 @@ class DesignerManager extends Component {
     await this.setState({ page: 0 });
     console.log(startDate)
     this.GetDesignerListRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
- 
+
   }
-  async onChangeSubCate(parents_id,value) {
+  async onChangeSubCate(parents_id, value) {
     this.setState({
       cate2: value
     });
@@ -331,7 +335,7 @@ class DesignerManager extends Component {
     await this.setState({ page: 0 });
     console.log(startDate)
     this.GetDesignerListRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
- 
+
   }
   resetCate = () => {
     this.props.history.replace(`/designManage/${this.props.sort}`);
@@ -350,6 +354,11 @@ class DesignerManager extends Component {
   }
   async goPrev() {
     await this.setState({ page: this.state.page - 1 });
+    const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
+    this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+  }
+  async goPage(go) {
+    await this.setState({ page: go });
     const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
@@ -396,15 +405,15 @@ class DesignerManager extends Component {
           {/* title */}
           <h1>디자이너</h1>
           <div>
-          <Category
-              handleCate2={this.onChangeSubCate} 
-              handleCate1={this.onChangeMainCate} 
+            <Category
+              handleCate2={this.onChangeSubCate}
+              handleCate1={this.onChangeMainCate}
               resetCate={this.resetCate}
-              cate1={cate1} 
+              cate1={cate1}
               cate2={cate2}
-              category1={category1} 
+              category1={category1}
               category2={category2}
-              />
+            />
           </div>
           <div>
             {/* filter */}
