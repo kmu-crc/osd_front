@@ -236,7 +236,10 @@ class DesignerManager extends Component {
       console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
-        .then(data => this.setState({ count: data.cnt }))
+        .then(data => {
+          this.setState({ count: data.cnt })
+          resolve(true);
+        })
         .catch(error => alert(error));
     });
   };
@@ -291,9 +294,9 @@ class DesignerManager extends Component {
                             디자이너 이름입력: ${item.nick_name}\n`);
 
     if (prompt === item.nick_name) {
-      deleteRequest();
-      this.GetDesignerListCountRequest();
-      this.GetDesignerListRequest();
+      deleteRequest()
+        .then(() => this.GetDesignerListCountRequest())
+        .then(() => this.GetDesignerListRequest())
     } else {
       alert("잘못입력하셨습니다.");
     }
@@ -355,7 +358,7 @@ class DesignerManager extends Component {
     this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
   async goPage(go) {
-    await this.setState({ page: go});
+    await this.setState({ page: go });
     const { page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     this.GetDesignerListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
