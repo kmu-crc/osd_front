@@ -11,6 +11,7 @@ import NoticeManagerPage from "Admin/AdminPage/NoticeManagerPage"
 import HotDesignManagerPage from "Admin/AdminPage/HotDesignManagerPage";
 import HotGroupManagerPage from "Admin/AdminPage/HotGroupManagerPage";
 import HotExpertManagerPage from "Admin/AdminPage/HotExpertManagerPage";
+import AccountManagerPage from "Admin/AdminPage/AccountManagerPage";
 
 class App extends Component {
   render() {
@@ -21,8 +22,9 @@ class App extends Component {
           <Route path="/hotDesignManager" component={RequiresAuthAdmin(HotDesignManagerPage)} />
           <Route path="/hotExpertManager" component={RequiresAuthAdmin(HotExpertManagerPage)} />
           <Route path="/designerManager" component={RequiresAuthAdmin(DesignerManagerPage)} />
-          {/* on-going */}
           <Route path="/MakerManager" component={RequiresAuthAdmin(MakerManagerPage)} />
+          {/* on-going */}
+          <Route path="/AccountManager" component={RequiresAuthAdmin(AccountManagerPage)} />
 
           {/* deprecated */}
           <Route path="/noticeManager" component={RequiresAuthAdmin(NoticeManagerPage)} />
