@@ -30,7 +30,7 @@ const Content = styled(ContentBox)`
 `;
 
 const MainMenu = styled.ul`
-  width: 400px;
+  width: max-content;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -42,6 +42,7 @@ const MainMenu = styled.ul`
 
 const MenuItem = styled.li`
   float: left;
+  margin-left: 10px;
   a {
     line-height: 60px;
   }
@@ -337,7 +338,7 @@ class AdminHeader extends Component {
               <a href="/makerManager">메이커</a>
             </MenuItem>
            <MenuItem>
-              <a href="/accountManager">메이커</a>
+              <a href="/accountManager">회원</a>
             </MenuItem>
           </MainMenu>
           <SubMenu>
