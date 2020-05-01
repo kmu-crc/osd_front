@@ -30,6 +30,7 @@ export class RedButton extends Component {
         this.onClickButton = this.onClickButton.bind(this);
     }
     onClickButton(event) {
+        if(this.props.onClick == null)return;
         if (this.props.isConfirm === false) {
             this.props.onClick(event);
         }

@@ -16,6 +16,8 @@ const Foot = styled.footer`
   & .ui.grid>.row {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    display:flex;
+    justify-content:space-between;
   }
   & .copyright {
   }
@@ -24,6 +26,16 @@ const Foot = styled.footer`
     margin-right: 3rem;
     font-size: 11px;
     cursor: pointer;
+  }
+
+  // new 
+  .row{
+    padding:5px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .ul > .Link{
+    margin-right:10px;
   }
 `;
 
@@ -36,24 +48,40 @@ class Footer extends Component {
   render() {
     return (
       <Foot>
-        <Grid padded={true} columns={2}>
-          <Grid.Row>
-            <Grid.Column className="copyright">
-              <div onClick={this.goNewWorld}>
-                <TextFormat txt="Copyright @ 2019 Open Design Inc." />
+        <div className="row">
+           <div onClick={this.goNewWorld}>
+                <TextFormat txt="Copyright @ 2020 Open Design Market Inc." />
               </div>
-            </Grid.Column>
-            <Grid.Column as="ul" className="list">
-              <Link to="/Info/info">사이트 소개</Link>
-              <Link to="/Term/term">이용약관</Link>
-              <Link to="/Privacy/privacy">개인정보보호정책</Link>
-              {/* <Link>Contact Us</Link> */}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+          <div>
+            <ul className="list">
+              <Link to="/">사이트 소개</Link>
+              <Link to="/">이용약관</Link>
+              <Link to="/">개인정보보호정책</Link>
+            </ul>
+          </div>
+        </div>
       </Foot>
     );
   }
 }
 
 export default Footer;
+
+{/* <Grid padded={true} columns={2}>
+<Grid.Row>
+  <Grid.Column className="copyright">
+    <div onClick={this.goNewWorld}>
+      <TextFormat txt="Copyright @ 2020 Open Design Market Inc." />
+    </div>
+  </Grid.Column>
+  <Grid.Column as="ul" className="list">
+    <Link to="/">사이트 소개</Link>
+    <Link to="/">이용약관</Link>
+    <Link to="/">개인정보보호정책</Link>
+  </Grid.Column>
+</Grid.Row>
+</Grid> */}
+{/* <Link to="/Info/info">사이트 소개</Link> */}
+{/* <Link to="/Term/term">이용약관</Link> */}
+{/* <Link to="/Privacy/privacy">개인정보보호정책</Link> */}
+{/* <Link>Contact Us</Link> */}

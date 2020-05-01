@@ -35,6 +35,7 @@ const Wrapper = styled(ContentBox)`
 `;
 const MainBox = styled.div`
   width:100%;
+  margin-bottom:15px;
   .title{
     width:170px;
     height:29px;
@@ -278,7 +279,7 @@ class Detail extends Component {
               {!MyDetail ?
                 <div style={{ marginTop: "30px", display: "flex" }}>
                   <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
-                    <RedButton value={"의뢰응답"} isConfirm={false}></RedButton>
+                    <RedButton value={"의뢰응답"} isConfirm={false} onClickButton={null}></RedButton>
                   </Link>
                   {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? <RedButton onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> : null}
                 </div>

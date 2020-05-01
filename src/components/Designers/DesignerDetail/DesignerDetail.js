@@ -146,7 +146,7 @@ const Introduction = styled.div`
     .text {
       width: 100%;
       margin-top: 15px;
-      margin-bottom:29px;
+      margin-bottom:25px;
       font-size: 15px;
       font-weight: 300;
       line-weight: 27px;
@@ -238,7 +238,7 @@ const ItemInfo = styled.div`
   border-radius: 20px;
   opacity: 1;
   font-family: Noto Sans KR;
-  padding: 30px;
+  padding: 30px 60px 30px 60px;
 
   .title {
     font-size: 19px;
@@ -300,7 +300,9 @@ const AdditionalInfo = styled.div`
   border-radius: 20px;
   opacity: 1;
   // padding: 90px 43px 161px 54px;
-  padding: 62px 59px 61px 60px;
+  // padding: 62px 59px 61px 60px;
+  padding: 30px 60px 30px 60px;
+
   font-family: Noto Sans KR;
   
   .title {
@@ -334,13 +336,13 @@ const AdditionalInfo = styled.div`
   }
   .wrapItem{
     max-width:100%;
-    max-height:100%;
+    max-height:85%;
     margin-top:30px;
     width:100%;
     // height:max-content;
     display:flex;
     overflow:hidden;
-    overflow-y:scroll;
+    overflow-y:auto;
     }
   // &:hover{
   //   .wrapItem{
@@ -446,7 +448,7 @@ const Wrapper = styled.div`
   display:flex;
   align-items:center;
   flex-direction:column;
-  margin-top: 138px;
+  margin-top: 60px;
   // *{border:1px solid red;};
   .contents_box{
     width:max-content;
@@ -796,9 +798,9 @@ class DesignerDetail extends Component {
 
       {/* 리뷰 */}
       {/*  */}
-      <AdditionalInfo width={1523} height={280} mTop={60}>
-        <div className="wrapItem" style={{ flexDirection: "column" }}>
+      <AdditionalInfo width={1523} height={290} mTop={60}>
           <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+        <div className="wrapItem" style={{ flexDirection: "column" }}>
           <div>
             <DesignerReviewContainer
               id={parseInt(this.props.id, 10)}
@@ -810,8 +812,9 @@ class DesignerDetail extends Component {
       {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
       {/* 경험 */}
-      <AdditionalInfo width={1523} height={280} mTop={60}>
+      <AdditionalInfo width={1523} height={290} mTop={60}>
         <div className="title margin_bottom">디자인 경험</div>
+        <div className="wrapItem">
         <ExpTable>
           <div className="header">
             <div className="th">업무</div>
@@ -820,19 +823,23 @@ class DesignerDetail extends Component {
           </div>
           {this.state.career.map((item, index) => {
             return (
+              <React.Fragment>
               <div className="row" key={index}>
                 <div className="td">{item.task}</div>
                 <div className="td">{item.during}</div>
                 <div className="td">{item.explain}</div>
               </div>
+              </React.Fragment>
             );
           })}
         </ExpTable>
+        </div>
+       
 
       </AdditionalInfo>
 
       {/**보유아이템 */}
-      <ItemInfo width={1523} height={491} mTop={60}>
+      <ItemInfo width={1523} height={490} mTop={60}>
         <div className="title">디자인 아이템</div>
         <div className="wrapItem">
           {<HaveInItemContainer id={this.props.id} />}

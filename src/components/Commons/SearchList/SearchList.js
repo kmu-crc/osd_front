@@ -65,13 +65,15 @@ const Title = styled.div`
   & input {
     font-size: ${StyleGuide.font.size.heading1};
     line-height: 50px;
-    border: none;
+    border:none;
+    border-bottom: 2px solid #EFEFEF;
     text-align: left;
     vertical-align: middle;
     background-color: transparent;
     color: ${StyleGuide.color.geyScale.scale7};
     padding: 10px;
     padding-left: 20px;
+    outline:none;
     &::placeholder {
       color: ${StyleGuide.color.geyScale.scale3};
     }

@@ -181,6 +181,7 @@ class ItemReview extends Component {
             review_writing: false,
             review_selected: -1,
             score: 0,
+            totalscore:0,
             // ing: false
         };
         this.onChangeValue = this.onChangeValue.bind(this);
@@ -195,6 +196,12 @@ class ItemReview extends Component {
         this.removeReply = this.removeReply.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleRate = this.handleRate.bind(this);
+    }
+    async componentWillUpdate(nextProps){
+        if(this.props.score !== nextProps.score){
+            await this.setState({totalscore:nextProps.score});
+            return true;
+        }
     }
     handleRate(e, { rating, maxRating }) {
         this.setState({ score: rating });
@@ -280,8 +287,12 @@ class ItemReview extends Component {
         const { review, payment, userInfo, total, score, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
-
+        const avgScore = this.props.score;
+        const TotalScore = ()=>{
+            return <Rating name="score" icon='star' defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />({total})
+        }
         const Review = (props) => {
+            console.log(props.score)
             return (
                 // <div className="line element-reply">
                 //     {!props.itsmine && props.sort_in_group && master ?
@@ -298,7 +309,11 @@ class ItemReview extends Component {
                     <div className="pics" />
                     <div>
                         <div className="nickname">{props.nick_name}</div>
-                        <div className="score">{Star(props.score)}</div>
+                        <div className="score">
+                            <Rating name="score" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled />
+
+                            {/* {Star(props.score)} */}
+                        </div>
                         <div className="comment">
                             {props.comment && props.comment.slice(0, 64)}
                             {props.comment && props.comment.length > 64 ? "..." : ""}</div>
@@ -306,12 +321,14 @@ class ItemReview extends Component {
                 </ReviewPiece>
             )
         }
-
+        console.log(parseInt(score,10)||0,total);
         return (<React.Fragment>
             <Reviews>
                 <div className="line" style={{ width: "max-content", marginLeft: "auto", marginRight: "15px" }}>
                     <div className="title">총점(리뷰수): </div>
-                    <div className="score">{Star(score)}({total})</div>
+                    <div className="score">
+                        {Star(score)}({total})
+                    </div>
                 </div>
                 {!master ?
                     payment && payment.length > 0 ?
