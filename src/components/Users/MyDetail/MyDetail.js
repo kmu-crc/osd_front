@@ -141,6 +141,8 @@ const MenuButton = styled.div`
 `;
 const BoardBox = styled.div`
     width:1388px;
+    height:max-content;
+    min-height:900px;
     border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
@@ -247,7 +249,7 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: -1 }
+    this.state = { selectMenu: 0 }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);

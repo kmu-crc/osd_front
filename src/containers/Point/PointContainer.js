@@ -5,10 +5,20 @@ import { withRouter } from "react-router-dom";
 import { GetMyPointRequest, GetHistoryRequest, PointUpRequest } from "actions/Point";
 
 class PointContainer extends Component {
+  constructor(props){
+    super(props);
+    this.handleGetMyPointRequest=this.handleGetMyPointRequest.bind(this);
+  }
   componentDidMount() {
     if (this.props.userInfo != null) {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
+    }
+  }
+  handleGetMyPointRequest(){
+    if(this.props.userInfo!=null)
+    {
+      this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
     }
   }
   render() {

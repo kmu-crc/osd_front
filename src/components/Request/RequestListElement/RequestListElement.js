@@ -78,8 +78,9 @@ const ThumbnailWriter = styled.div`
   height: 35px;
   border-radius: 50%;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
-  background-size: cover;
-  background-image: url(${props => props.src ? props.src.m_img : profile});
+  background-size: contain;
+  background-image: url(${props => props.src ? props.src : profile});
+  margin-right:10px;
 `;
 
 class DesignerBoardElement extends Component {
@@ -87,7 +88,7 @@ class DesignerBoardElement extends Component {
     const item = this.props.data;
     console.log("item:", item);
     // const Element = () =>
-
+    
     return (
       <NavLink to={"/requestDetail/" + item.uid}>
         <ListElement left={item.status === "response" ? 25 : 0}>
