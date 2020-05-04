@@ -44,9 +44,11 @@ const ListContainer = styled.div`
   }
 `;
 const NoData = styled.div`
-  margin-top: 75px;
-  margin-left: auto;
-  margin-right: auto;
+  min-width:100%;
+  min-height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   width: max-content;
   padding: 15px;
   text-align: center;
@@ -95,7 +97,7 @@ class ScrollList extends Component {
             </ListContainer>
           </InfiniteScroll>
         </ScrollContainer>
-        : <NoData>검색된 결과가 없습니다.</NoData>
+        : <NoData><div>검색 결과가 없습니다.</div></NoData>
     );
   }
 }

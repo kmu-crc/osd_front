@@ -45,6 +45,12 @@ const TabContainer = styled.div`
     color: #FF0000;
   }
 `;
+const CategoryItem = styled.div`
+  cursor:pointer;
+  &:hover{
+    opacity:0.8;
+  }
+`
 const TitleForm = styled.input`
   padding: 10px;
   resize: none;
@@ -149,23 +155,43 @@ const ListElement = styled.div`
   list-style: none;
   display: flex;
   fiex-direction: row;
-
   .title{
-    min-width:70%;
+    min-width:67%;
+    display:flex;
+    align-items:center;
     padding:5px;
+    // padding-left:15px;
   }
   .writer{
     min-width:10%;
-    padding:5px;
     display:flex;
-    // justify-content:center;
+    align-items:center;
+    padding:5px;
+    overflow:hidden;
+    // padding-left:15px;
   }
   .date{
     min-width:20%;
+    align-items:center;
     padding:5px;
-    display:flex;
-    // justify-content:center;
+    // padding-left:15px;
   }
+  // .title{
+  //   min-width:70%;
+  //   padding:5px;
+  // }
+  // .writer{
+  //   min-width:10%;
+  //   padding:5px;
+  //   display:flex;
+  //   // justify-content:center;
+  // }
+  // .date{
+  //   min-width:20%;
+  //   padding:5px;
+  //   display:flex;
+  //   // justify-content:center;
+  // }
 `;
 
 class RequestList extends Component {
@@ -243,10 +269,10 @@ class RequestList extends Component {
       <React.Fragment>
         <Content top={58}>
           <TabContainer>
-            <div className={type === "designer" ? "element active" : "element"} onClick={() => this.changeType("designer")}>디자이너</div>
-            <div className={type === "maker" ? "element active" : "element"} onClick={() => this.changeType("maker")}>메이커</div>
-            <div className={type === "item" ? "element active" : "element"} onClick={() => this.changeType("item")}>아이템</div>
-            <div className={type === "normal" ? "element active" : "element"} onClick={() => this.changeType("normal")}>일반</div>
+            <CategoryItem className={type === "designer" ? "element active" : "element"} onClick={() => this.changeType("designer")}>디자이너</CategoryItem>
+            <CategoryItem className={type === "maker" ? "element active" : "element"} onClick={() => this.changeType("maker")}>메이커</CategoryItem>
+            <CategoryItem className={type === "item" ? "element active" : "element"} onClick={() => this.changeType("item")}>아이템</CategoryItem>
+            <CategoryItem className={type === "normal" ? "element active" : "element"} onClick={() => this.changeType("normal")}>일반</CategoryItem>
           </TabContainer>
         </Content>
 

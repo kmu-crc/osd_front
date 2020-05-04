@@ -7,11 +7,12 @@ import profile from "source/thumbnail.png";
 // import TextFormat from "modules/TextFormat";
 // import NumberFormat from "modules/NumberFormat";
 import DateFormat from "modules/DateFormat";
+import { Icon } from "semantic-ui-react";
 
 // CSS STYLING
 const ListElement = styled.div`
   margin: 0 auto 0.9rem;
-  margin-left: ${props => props.left || 0}px;
+  // margin-left: ${props => props.left || 0}px;
   font-size: 13px;
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
@@ -25,8 +26,11 @@ const ListElement = styled.div`
   fiex-direction: row;
   cursor: default;
   // width:100%;
+  .non-status-box{
+    margin-left:5px;
+  }
   .status-box{
-    width: max-content;
+    min-width: 80px;
     line-height: 15px;
     font-family: Noto Sans KR;
     font-weight: 500;
@@ -41,7 +45,7 @@ const ListElement = styled.div`
       color: white;
     }
     &.response {
-      margin-left: 5px;
+      // margin-left: 5px;
       background: blue;
       color: white;
     }
@@ -50,8 +54,8 @@ const ListElement = styled.div`
       color: white;
     }
   }
-  .title{
-    min-width:70%;
+  .title_{
+    min-width:67%;
     display:flex;
     align-items:center;
     padding:5px;
@@ -61,6 +65,7 @@ const ListElement = styled.div`
     display:flex;
     align-items:center;
     padding:5px;
+    overflow:hidden;
   }
   .date{
     min-width:20%;
@@ -73,8 +78,9 @@ const ThumbnailWriter = styled.div`
   height: 35px;
   border-radius: 50%;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
-  background-size: cover;
-  background-image: url(${props => props.src ? props.src.m_img : profile});
+  background-size: contain;
+  background-image: url(${props => props.src ? props.src : profile});
+  margin-right:10px;
 `;
 
 class DesignerBoardElement extends Component {
@@ -82,26 +88,57 @@ class DesignerBoardElement extends Component {
     const item = this.props.data;
     console.log("item:", item);
     // const Element = () =>
-
+    
     return (
       <NavLink to={"/requestDetail/" + item.uid}>
         <ListElement left={item.status === "response" ? 25 : 0}>
-          <div className="title" style={{ marginRight: "15px", display: "flex", flexDirection: "row" }}>
+          <div className="title_" style={{  display: "flex", flexDirection: "row" }}>
             {item.completed === 1 && item.status === "request" ?
               <div className="status-box completed" >완료</div> : null}
-
+              
             {item.status === "normal"
-              ? <div className="status-box"></div>
+              ? <div className="non-status-box"/>
+              // <div className="status-box"></div>
               : item.status === "request"
                 ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
                 : item.status === "response" ?
-                  <div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> : ""}
-            {item.title || "글 제목"}</div>
+                  <React.Fragment>
+                  <Icon size="big" name="replyd"/><div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> 
+                  </React.Fragment>: ""}
+            {item.title || "글 제목"}
+          </div>
           {/* writer */}
+          {/* {item.status === "normal"
+          ?
           <div className="writer">
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
             <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
           </div>
+          : item.status === "request"
+          ?
+          <div className="writer">
+            <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+          </div>
+          : item.status === "response" ?
+          <div className="writer">
+            <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+          </div>
+          } */}
+          {
+            item.status=="response"?
+            <div className="writer">
+              <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+              <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+          </div>
+          :
+          <div className="writer">
+            <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+          </div>
+          }
+          
           {/* date */}
           <div className="date">{DateFormat(item.create_time)}</div>
           {/* view */}

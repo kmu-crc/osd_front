@@ -19,12 +19,15 @@ const Head = styled.div`
   width: max-content;
   text-align: left;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 2.6rem;
   line-height: 29px;
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
   opacity: 1;
+  margin-top: 42px;
+  margin-bottom: 42px;
+
 `;
 const TextWrapper = styled.div`
   padding-bottom: 30px;

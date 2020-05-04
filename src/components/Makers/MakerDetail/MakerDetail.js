@@ -148,7 +148,7 @@ const Introduction = styled.div`
     .text {
       width: 100%;
       margin-top: 15px;
-      margin-bottom:29px;
+      margin-bottom:25px;
       font-size: 15px;
       font-weight: 300;
       line-weight: 27px;
@@ -321,7 +321,7 @@ const AdditionalInfo = styled.div`
       border-radius: 20px;
       opacity: 1;
       // padding: 90px 43px 161px 54px;
-      padding: 62px 59px 61px 60px;
+      padding: 30px 60px 30px 60px;
       font-family: Noto Sans KR;
       position:relative;
 
@@ -354,12 +354,15 @@ const AdditionalInfo = styled.div`
         overflow:hidden;
       }
       .wrapItem{
+        max-width:100%;
+        max-height:85%;
         margin-top:30px;
         width:100%;
-        height:max-content;
-        overflow:hidden;
+        // height:max-content;
         display:flex;
-      }
+        overflow:hidden;
+        overflow-y:auto;
+        }
       .gradient_box{
         position:absolute;
         left:0px;
@@ -482,7 +485,7 @@ const Wrapper = styled.div`
     display:flex;
     align-items:center;
     flex-direction:column;
-    margin-top: 138px;
+    margin-top: 60px;
     // *{border:1px solid red;};
     .contents_box{
       width:max-content;
@@ -788,15 +791,18 @@ class MakerDetail extends Component {
           {/* 리뷰 */}
           <AdditionalInfo width={1523} height={280} mTop={60}>
             <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+            <div className="wrapItem" style={{ flexDirection: "column" }}>
             <MakerReviewContainer
               id={parseInt(this.props.id, 10)}
               handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
+              </div>
           </AdditionalInfo>
           {/* 리뷰자세히 모달*/}
           {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
           <AdditionalInfo width={1523} height={280} mTop={60}>
             <div className="title margin_bottom">제작 경험</div>
+            <div className="wrapItem">
             <ExpTable>
               <div className="header">
                 <div className="th">업무</div>
@@ -812,7 +818,7 @@ class MakerDetail extends Component {
                   </div>)
               }
             </ExpTable>
-
+              </div>
           </AdditionalInfo>
 
           {/**보유아이템 */}

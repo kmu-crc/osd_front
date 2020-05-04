@@ -4,7 +4,11 @@ import { GetHaveInGalleryRequest } from "actions/Gallery";
 import ScrollList from "components/Commons/ScrollList";
 import Gallery from "components/Gallery/Gallery/Gallery";
 import ModifyGallery from "components/Gallery/ModifyGallery/ModifyGallery";
-
+import styled from "styled-components";
+const ScrollBox = styled.div`
+    width: 100%;
+    height: 100%;
+`;
 
 class HaveInGalleryContainer extends Component {
   componentWillMount() {
@@ -17,11 +21,11 @@ class HaveInGalleryContainer extends Component {
 
   render() {
     return (
-      <div>
+      <ScrollBox>
         <ScrollList
           cols={6} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-      </div>
+      </ScrollBox>
 
 
     );

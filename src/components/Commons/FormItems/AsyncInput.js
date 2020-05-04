@@ -326,7 +326,7 @@ export class AsyncInput extends Component {
                     );
                   })
                 ) : (
-                  <NoneList>검색결과가 없습니다.</NoneList>
+                  <NoneList>검색 결과가 없습니다.</NoneList>
                 ))}
             </List>
           )}

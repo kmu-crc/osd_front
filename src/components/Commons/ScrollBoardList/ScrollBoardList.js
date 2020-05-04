@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import InfiniteScroll from "react-infinite-scroller";
 // import { Grid, Loader } from "semantic-ui-react";
 import styled from "styled-components";
+import { Pagination } from 'semantic-ui-react'
 
 // css styling
 const ScrollContainer = styled.div`
@@ -35,6 +36,10 @@ class ScrollBoardList extends Component {
   getLoadData = () => {
     this.props.getListRequest(this.state.page).catch((err) => { console.log(err); });
   };
+  goPage = async (pagenum) => {
+    await this.setState({ page:pagenum });
+    this.getLoadData();
+  };
 
   render() {
     const { total, dataList, ListComponent } = this.props;
@@ -47,14 +52,29 @@ class ScrollBoardList extends Component {
           dataList.map(content => <ListComponent key={content.uid} data={content} />)
           : <NoPage><div className="text">등록된 게시글이 없습니다.</div></NoPage>}
         <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", display: "flex", flexDirection: "row" }}>
-          <div style={{ width: "50px" }}>
+          {/* <div style={{ width: "50px" }}>
             {page > 0 ? <div onClick={this.goPrev}>prev</div> : null}
-          </div>
-          <div style={{ width: "50px" }}>
+          </div> */}
+          {/* <div style={{ width: "50px" }}>
             <div style={{ textAlign: "center", borderRadius: "15px" }}>{this.state.page + 1}</div>
-          </div>
+          </div> */}
           <div style={{ width: "50px" }}>
-            {lastPage > page ? <div onClick={this.goNext}>next</div> : null}
+            {10<total ?
+            // <div onClick={this.goNext}>next</div> 
+            <Pagination
+                  activePage={page+1}
+                  boundaryRange={0}
+                  defaultActivePage={1}
+                  ellipsisItem={null}
+                  firstItem={null}
+                  lastItem={null}
+                  siblingRange={1}
+                  totalPages={lastPage+1}
+                  onPageChange={(event, { activePage }) => {
+                    this.goPage(activePage-1);
+                  }}
+                />
+            : null}
           </div>
         </div>
       </ScrollContainer>

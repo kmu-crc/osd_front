@@ -112,6 +112,7 @@ const HeaderItem = styled.li`
         padding-left: 14px;
         padding-right: 45px;
         border: none;
+        outline:none;
         background: transparent;
       }
       .search-icon {
@@ -132,20 +133,21 @@ const HeaderItem = styled.li`
 const UserMenu = styled.div`
   z-index: 999;
   position: absolute;
-  height: 125px;
+  height: max-content;
   width: 175px;
-  padding-top:10px;
+  // padding:10px;
   pointer-events: auto;
   margin-top: 45px;
   border-radius: 15px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-  border-radius: 10px;
   color: #707070;
   font-size: 20px;
   font-weight: 500;
+  overflow:hidden;
   .item {
-    margin-top:5px;
+    border:1px solid #EFEFEF;
+    padding:10px;
     cursor: pointer;
     width: 100%;
     line-height: 30px;

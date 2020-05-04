@@ -23,17 +23,20 @@ import TextSlicer from "modules/TextSlicer"
 // `;
 const AlarmDropDown = styled.ul`
   position: absolute;
-  min-height: 50px;
+  min-height: max-content;
   max-height: 300px;
+  border-radius:5px;
   width: 320px;
   overflow-y: scroll;
   overflow-x: hidden;
   top: 90px;
   right: 60px;
   background-color: white;
+  padding:10px;
   // transform: translateX(-50%);
   // -ms-transform: translateX(-50%);
-  box-shadow: 1px 0px 3px ${StyleGuide.color.geyScale.scale2};
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+  border:1px solid #EFEFEF;
   z-index: 999;
 `;
 const AlarmItem = styled.li`
@@ -41,7 +44,8 @@ const AlarmItem = styled.li`
   text-align: left;
   position: relative;
   box-sizing: border-box;
-  padding: 2px 2px 1px 2px;
+  // padding: 2px 2px 1px 2px;
+  padding:10px;
   display: flex;
   .time {
     position: absolute;
@@ -114,7 +118,7 @@ export default class Alarm extends Component {
     window.location.reload();
   };
   allAlarmConfirm = () => {
-    alert('모든 알람들을 읽음으로 표시합니다.');
+    alert('모든 알림들을 읽음으로 표시합니다.');
     this.props.socket.emit("allConfirm", { user_id: this.props.userInfo.uid });
     window.location.reload();
   };
@@ -142,7 +146,7 @@ export default class Alarm extends Component {
       case "ITEM_PURCHASED_TO_EXPERT": msg = `${from}님이 아이템을 구매하였습니다.`; break;
       case "ITEM_PURCHASED_TO_USER": msg = `아이템'${name}'을 구매하였습니다`; break;
       default:
-        msg = `정의되지 않은 알람입니다.`;
+        msg = `정의되지 않은 알림입니다.`;
     }
     return msg;
   };
@@ -170,7 +174,7 @@ export default class Alarm extends Component {
     const converted = this.parseAlarms(alarms);
     // console.log(converted);
     return (
-      <button type="button" style={{ background: "none", border: "none", }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
+      <button type="button" style={{ background: "none", border: "none", outline:"none"}} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         {/* {this.props.children} */}
         <Icon className="grey alarm" size="large" />
         {unread > 0 ?
@@ -181,9 +185,9 @@ export default class Alarm extends Component {
           <AlarmDropDown>
             {alarms == null || alarms.length === 0 ? (
               <AlarmItem>
-                <div style={{ width: "2%", backgroundColor: "blue" }}>&nbsp;</div>
+                {/* <div style={{ width: "2%", backgroundColor: "blue" }}>&nbsp;</div> */}
                 <div style={{ paddingLeft: "5px" }}><Icon name="calendar outline" /></div>
-                <div><h4>알람이 없습니다.</h4></div>
+                <div><h4>알림이 없습니다.</h4></div>
               </AlarmItem>
             ) : (
                 <div>

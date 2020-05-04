@@ -6,7 +6,8 @@ import PointFormat from "modules/PointFormat";
 
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
-import customimg from "source/toolbox.png";
+// import { geturl } from 'config';
+// import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   *{
@@ -24,15 +25,8 @@ const Wrapper = styled.div`
 const ItemPic = styled.div`
   width: 247px;
   height: 206px;
-  font-size:30px;
-  font-weight:500;
-  color:white;
-  background-color:#EFEFEF;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  // background: transparent;
-  // background-image: url(${props => props.img});
+  background: transparent;
+  background-image: url(${props => props.img});
   background-size: cover;
   background-position: center center
 `;
@@ -88,7 +82,7 @@ const PrivateLabel = styled.div`
   border-radius: 15px;
 `;
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
-class Item extends Component {
+class Request extends Component {
   Keeper = () => {
     const item = this.props.data;
     if (item.uid) {
@@ -105,13 +99,11 @@ class Item extends Component {
   render() {
     const item = this.props.data || empty;
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
-    const img = item ? item.thumbnail ? item.thumbnail : item.custom ? customimg : noimg : noimg
-
     return (
       // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
         {/* picture */}
-        <ItemPic img={img} />
+        <ItemPic img={(item && item.thumbnail) || noimg} />
         {/* text */}
         <TextWrapper>
           <div className="title"><TextFormat txt={item.title} /></div>
@@ -142,4 +134,4 @@ class Item extends Component {
   }
 }
 
-export default Item;
+export default Request;

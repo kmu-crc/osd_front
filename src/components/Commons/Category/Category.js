@@ -17,6 +17,12 @@ const Container = styled.div`
     margin-top: 18px;
   }
 `;
+const CategoryItem =styled.div`
+  cursor:pointer;
+  &:hover{
+    opacity:0.7;
+  }
+`
 const CurrentCategory = styled.div`
   width: 180px;
   font-size: 20px;
@@ -67,18 +73,18 @@ class Category extends Component {
           <CurrentCategory onClick={this.resetCate}>{this.props.which}</CurrentCategory>
           <CategoryMenu>
             {category1.map((cate, i) => cate.value !== 0 &&
-              <div
+              <CategoryItem
                 onClick={() => this.onChangeCategory1(cate.value)}
                 key={i} className={`element ${cate.value === parseInt(cate1, 10) ? "active" : ""}`}>
-                {cate.text}</div>)}
+                {cate.text}</CategoryItem>)}
           </CategoryMenu></div>
         <div className="under">
           <CategoryMenu className="fly">
             {cate1 && category2 ? (
               category2.map((cate, i) => cate.value !== 0 &&
-                <div
+                <CategoryItem
                   onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
-                  key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</div>)) : null}
+                  key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</CategoryItem>)) : null}
           </CategoryMenu>
         </div>
       </Container>
