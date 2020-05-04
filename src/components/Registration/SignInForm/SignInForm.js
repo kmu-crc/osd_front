@@ -184,10 +184,10 @@ class SignInForm extends Component {
   }
   onCheckSaveLogin(event) {
     const result = document.getElementById(event.target.id).checked;
-    {
-      cookie.remove(('saveid'), { path: '/' });
-      cookie.remove(('savepassword'), { path: '/' });
-    }
+    // {
+    cookie.remove(('saveid'), { path: '/' });
+    cookie.remove(('savepassword'), { path: '/' });
+    // }
     this.setState({ saveLogin: result });
   }
 
