@@ -26,24 +26,28 @@ const LocationList = [
 ];
 
 const Wrapper = styled(ContentBox)`
-    width:100%;
-    margin-top:60px;
-    margin-bottom: 100px;
-    z-index:3;
-    // *{border:1px solid red;}
-    padding-left:130px;
+  width:100%;
+  background-color: white;
+  z-index: 3;
+  border: 1px solid white;
+  border-radius: 50px;
+  box-shadow: 5px 5px 10px #00000029;
+  transform: translate(0px, -100px);
 `;
 const MainBox = styled.div`
-  width:100%;
-  margin-bottom:15px;
-  .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans KR, Medium;
-    font-size:20px;
-    font-weight:500;
-    // margin-left:130px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
 
+  .title{
+    width: max-content;
+    height: 29px;
+    margin-left: 60px;
+    margin-top: 50px;
+    font-family: Noto Sans KR, Medium;
+    font-size: 29px;
+    font-weight: 500;
   }
   .contentsBox{
     position: relative;
@@ -61,8 +65,8 @@ const FormBox = styled.div`
     font-size:20px;
   }
   width: 939px;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
+  // box-shadow: 5px 5px 10px #00000029;
+  // border-radius: 20px;
   padding-left:59px;
   padding-top:49px;
   // margin: 50px;
@@ -130,6 +134,12 @@ const TagPiece = styled.div`
         height: max-content;
         padding: 0px 2px;
     }
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  margin-top: 30px;
+  margin-left: 50px;
+  margin-bottom: 40px;
 `;
 
 class Detail extends Component {
@@ -277,12 +287,12 @@ class Detail extends Component {
                 </div>
               </MainBox>
               {!MyDetail ?
-                <div style={{ marginTop: "30px", display: "flex" }}>
+                <ButtonWrapper>
                   <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                     <RedButton value={"의뢰응답"} isConfirm={false} onClickButton={null}></RedButton>
                   </Link>
                   {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? <RedButton onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> : null}
-                </div>
+                </ButtonWrapper>
                 : null}
             </Wrapper>
             :
@@ -376,7 +386,7 @@ class Detail extends Component {
                   </FormBox>
                 </div>
               </MainBox>
-              <div style={{ display: "flex" }}>
+              <ButtonWrapper>
                 {/* <RedButton onClick={() => window.history.back()} inactive={true}> */}
                 {/* <div>뒤로가기</div> */}
                 {/* </RedButton> */}
@@ -385,7 +395,7 @@ class Detail extends Component {
                 {/* {isPurchased ? <RedButton onClick={this.props.confirm}>
                   <div>구매확인</div>
                 </RedButton> : null} */}
-              </div>
+              </ButtonWrapper>
             </Wrapper>}
       </React.Fragment>
     );

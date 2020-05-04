@@ -255,6 +255,7 @@ class ItemReview extends Component {
             this.props.request({ score: this.state.score > 5 ? 5 : this.state.score, comment: this.state.this_comment, payment_id: id });
         console.log("change review writing");
         this.reset();
+        this.props.refresh && this.props.refresh();
     };
     removeComment(commentId) {
         if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {

@@ -142,6 +142,8 @@ class Point extends Component {
     this.pointChange = this.pointChange.bind(this);
     this.PointToMoney = this.PointToMoney.bind(this);
     this.onChangePoint = this.onChangePoint.bind(this);
+    this.onClickedPlusPointToMoney = this.onClickedPlusPointToMoney.bind(this);
+    this.onClickedMinusPointToMoney = this.onClickedMinusPointToMoney.bind(this);
   }
   pointChange(event){
     console.log(event.target.value);
@@ -183,6 +185,13 @@ class Point extends Component {
       point: event.target.value,
     });
   }
+  onClickedPlusPointToMoney() {
+    const { Point } = this.props;
+    Point >= 1000 * (this.state.point + 1) ? this.setState({ point: this.state.point + 1 }) : alert("현금화하실 포인트가 없습니다.");
+  }
+  onClickedMinusPointToMoney() {
+    this.state.point > 0 ? this.setState({ point: this.state.point - 1 }) : this.setState({ point: 0 })
+  }
   render() {
     const { Point, History, HistoryCount } = this.props;
     return (<Wrapper>
@@ -208,19 +217,17 @@ class Point extends Component {
               <Charge>
                 <div className="item flex">
                   {/* <FormStyle value={this.state.point} onChange={this.onChangePoint} type="number" /> */}
-                  <FormStyle type="number" onChange={this.pointChange} value={this.state.point} />
-                  <Button onClick={() => {
-                    this.setState({ point: this.state.point + 1 })}
-                    }>
-                    <div className="text">+</div></Button>
-                  <Button onClick={() => this.state.point > 0 ? this.setState({ point: this.state.point - 1 }) : this.setState({ point: 0 })}>
-                    <div className="text">-</div></Button>
-                  <Button onClick={() => {
-                    this.PointToMoney("CLICK")
-                    
-                      }
-                    }>
-                    <div className="text">클릭으로 전환</div></Button>
+                  <FormStyle type="number" value={this.state.point} />
+                  <Button onClick={this.onClickedPlusPointToMoney}>
+                    <div className="text">+</div>
+                  </Button>
+                  <Button onClick={this.onClickedMinusPointToMoney}>
+                    <div className="text">-</div>
+                  </Button>
+                  <Button onClick={() => this.PointToMoney("CLICK")}>
+                    <div className="text">클릭으로 전환</div>
+                  </Button>
+
                 </div>
               </Charge>
             </React.Fragment> : null

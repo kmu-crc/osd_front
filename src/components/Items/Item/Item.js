@@ -6,8 +6,7 @@ import PointFormat from "modules/PointFormat";
 
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
-// import { geturl } from 'config';
-// import { NavLink } from "react-router-dom";
+import customimg from "source/toolbox.png";
 
 const Wrapper = styled.div`
   *{
@@ -106,11 +105,13 @@ class Item extends Component {
   render() {
     const item = this.props.data || empty;
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
+    const img = item ? item.thumbnail ? item.thumbnail : item.custom ? customimg : noimg : noimg
+
     return (
       // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
         {/* picture */}
-        <ItemPic img={(item && item.thumbnail) || noimg} ><div>REQUEST</div></ItemPic>
+        <ItemPic img={img} />
         {/* text */}
         <TextWrapper>
           <div className="title"><TextFormat txt={item.title} /></div>

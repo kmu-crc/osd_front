@@ -541,7 +541,7 @@ class ItemDetail extends Component {
             </Board>
 
             <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingReview: !this.state.expandingReview })} className="button">
+              <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
                 <div className="font">
                   {expandingReview ? "접기" : "펼쳐보기"}
                 </div>
@@ -558,9 +558,9 @@ class ItemDetail extends Component {
               <ItemQuestionContainer user_id={item.user_id} />
             </Board>
             <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingBoard: !this.state.expandingBoard })} className="button">
+              <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
                 <div className="font">
-                  {expandingReview ? "접기" : "펼쳐보기"}
+                  {expandingBoard ? "접기" : "펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
@@ -590,7 +590,7 @@ class ItemDetail extends Component {
                 /> : null}
             </Content>
             <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingContent: !this.state.expandingContent })} className="button">
+              <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                 <div className="font">
                   {expandingContent ? "접기" : "펼쳐보기"}
                 </div>

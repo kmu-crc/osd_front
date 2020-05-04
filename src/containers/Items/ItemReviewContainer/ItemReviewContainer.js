@@ -10,8 +10,13 @@ class ItemReviewContainer extends Component {
         super(props);
         this.requestReview = this.requestReview.bind(this);
         this.getData = this.getData.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
     componentDidMount() {
+        this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+        this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
+    }
+    refresh() {
         this.props.GetItemReviewRequest(this.props.match.params.id, 0);
         this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
     }
@@ -20,6 +25,9 @@ class ItemReviewContainer extends Component {
             .then(res =>
                 res.data.success &&
                 this.props.GetItemReviewRequest(this.props.match.params.id, 0))
+            .then(
+                this.props.userInfo &&
+                this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0))
 
     }
     getData(page) {
@@ -27,6 +35,7 @@ class ItemReviewContainer extends Component {
     }
     render() {
         return (<ItemReview
+            refresh={this.refresh}
             handler={this.props.handler}
             id={this.props.match.params.id}
             getData={this.getData}
