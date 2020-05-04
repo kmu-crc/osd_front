@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyRequestItemRequest, UpdatePaymentRequest } from "actions/Payment";
-import Item from "components/Items/Item";
+import Request from "components/Request/Request";
 import ScrollList from "components/Commons/ScrollList";
 
 class MyRequestItemContainer extends Component {
@@ -25,7 +25,7 @@ class MyRequestItemContainer extends Component {
     return (
       <ScrollList
         getListRequest={this.getList}
-        ListComponent={Item}
+        ListComponent={Request}
         confirm={this.confirm}
         type="item"
         dataList={this.props.dataList}

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import HeaderContainer from "containers/Commons/HeaderContainer";
 // import Footer from "components/Commons/Footer";
 import styled from "styled-components";
-import Notice from "components/Commons/Header/Notice.js";
+import Notice from "components/Commons/Header/Notice";
+import Footer from "components/Commons/Footer/Footer"
 
 const Container = styled.div`
   margin-top: 30px;
@@ -41,6 +42,7 @@ class ClientTemplate extends Component {
             {/* <Footer /> */}
           </div>
         </Container>
+          <Footer/>
       </div>
     );
   }

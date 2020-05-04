@@ -64,7 +64,8 @@ const ItemInfo = styled.div`
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px; 
-  padding: 20px 35px 10px 15px;
+  // padding: 20px 35px 10px 15px;
+  padding:35px;
 
   // *{ border: 1px solid red; };
 
@@ -149,7 +150,7 @@ const ItemInfo = styled.div`
     bottom: 15px;
   };
   .buttons {
-    cursor: default;
+    cursor: pointer;
     .button { 
       width: 213px;
       height: 70px;

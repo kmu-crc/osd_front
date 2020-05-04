@@ -139,10 +139,14 @@ class Point extends Component {
       point: null,
     }
     this.PointUp = this.PointUp.bind(this);
+    this.pointChange = this.pointChange.bind(this);
     this.PointToMoney = this.PointToMoney.bind(this);
     this.onChangePoint = this.onChangePoint.bind(this);
   }
-
+  pointChange(event){
+    console.log(event.target.value);
+    this.setState({point:event.target.value});
+  }
   PointUp = (type) => {
     this.props.PointUpRequest(
       { id: this.props.userInfo.uid, token: this.props.token },
@@ -150,10 +154,12 @@ class Point extends Component {
     ).then(() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
+      alert("현금 전환이 완료되었습니다.");
     })
   };
   PointToMoney(type) {
-    if (this.props.Point < this.state.point) {
+    console.log(this.props.Point,this.state.point);
+    if (this.props.Point < parseInt(this.state.point,10)*1000) {
       alert("금액이 부족합니다.");
       return;
     }
@@ -168,7 +174,7 @@ class Point extends Component {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
     }).then(() => {
-      alert("현금 전환이 완료되었습니다!");
+      // alert("현금 전환이 완료되었습니다!");
       this.setState({ point: 0 });
     })
   }
@@ -202,12 +208,18 @@ class Point extends Component {
               <Charge>
                 <div className="item flex">
                   {/* <FormStyle value={this.state.point} onChange={this.onChangePoint} type="number" /> */}
-                  <FormStyle type="number" value={this.state.point} />
-                  <Button onClick={() => this.setState({ point: this.state.point + 1 })}>
+                  <FormStyle type="number" onChange={this.pointChange} value={this.state.point} />
+                  <Button onClick={() => {
+                    this.setState({ point: this.state.point + 1 })}
+                    }>
                     <div className="text">+</div></Button>
                   <Button onClick={() => this.state.point > 0 ? this.setState({ point: this.state.point - 1 }) : this.setState({ point: 0 })}>
                     <div className="text">-</div></Button>
-                  <Button onClick={() => this.PointToMoney("CLICK")}>
+                  <Button onClick={() => {
+                    this.PointToMoney("CLICK")
+                    
+                      }
+                    }>
                     <div className="text">클릭으로 전환</div></Button>
                 </div>
               </Charge>

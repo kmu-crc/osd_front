@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { GetHaveInItemRequest } from "actions/Product";
 import ScrollList from "components/Commons/ScrollList";
 import Item from "components/Items/Item";
-
+import styled from "styled-components";
+const ScrollBox = styled.div`
+    width: 100%;
+    height: 100%;
+`;
 class HaveInItemContainer extends Component {
   componentWillMount() {
     this.props.GetHaveInItemRequest(this.props.id, 0);
@@ -16,11 +20,11 @@ class HaveInItemContainer extends Component {
   render() {
     console.log("test-----",this.props);
     return(
-      <div>
+      <ScrollBox>
         <ScrollList
           cols={6} type="item" getListRequest={this.getList} ListComponent={Item}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />       
-      </div>
+      </ScrollBox>
 
       
     );

@@ -58,23 +58,40 @@ const ListElement = styled.div`
   list-style: none;
   display: flex;
   fiex-direction: row;
-
-  .title{
-    min-width:70%;
+  .title_{
+    min-width:67%;
+    display:flex;
+    align-items:center;
     padding:5px;
   }
   .writer{
     min-width:10%;
-    padding:5px;
     display:flex;
-    // justify-content:center;
+    align-items:center;
+    padding:5px;
+    overflow:hidden;
   }
   .date{
     min-width:20%;
+    align-items:center;
     padding:5px;
-    display:flex;
-    // justify-content:center;
   }
+  // .title{
+  //   min-width:70%;
+  //   padding:5px;
+  // }
+  // .writer{
+  //   min-width:10%;
+  //   padding:5px;
+  //   display:flex;
+  //   // justify-content:center;
+  // }
+  // .date{
+  //   min-width:20%;
+  //   padding:5px;
+  //   display:flex;
+  //   // justify-content:center;
+  // }
 `;
 
 export default class MakerRequestBoard extends Component {
@@ -85,7 +102,7 @@ export default class MakerRequestBoard extends Component {
         return (<React.Fragment>
             <Content>
                 <ListElement>
-                    {/* title   */}<div className="title">제목</div>
+                    {/* title   */}<div className="title_">제목</div>
                     {/* writer  */}<div className="writer">글쓴이</div>
                     {/* date    */}<div className="date">작성일</div>
                 </ListElement>
