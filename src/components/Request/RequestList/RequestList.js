@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Sorting from "components/Commons/Sorting";
 import ScrollRequestListContainer from "containers/Request/ScrollRequestListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
+import { Modal } from "semantic-ui-react";
+import Cross from "components/Commons/Cross";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -62,8 +63,13 @@ const CommentForm = styled.textarea`
   outline:none;
   border-radius:10px;
 `;
-const WriteReview = styled.div`
+const WriteNormalArticleModal = styled(Modal)`
   margin-bottom:10px;
+  .close-box{
+    width: max-content;
+    margin-left: auto;
+    margin-right: 25px;
+  }
   .form{
       width:100%;
       padding:10px;
@@ -94,7 +100,7 @@ const WriteReview = styled.div`
       }
   }
 `;
-const CreateReview = styled.div`
+const CreateNormalArticleButton = styled.div`
     width:100%;
     height:30px;
     margin-bottom:10px;
@@ -115,14 +121,6 @@ const CreateReview = styled.div`
         color:white;
     }
 `;
-//const RequestButton = styled.div`
-//  margin-left: 100px;
-//  width: 150px;
-//  color: #FF0000;
-//  font-family: Noto Sans KR;
-//  font-size: 20px;
-//  line-height: 29px;
-//`;
 const Container = styled.div`
   display: flex;
   justify-content:space-between;
@@ -269,7 +267,7 @@ class RequestList extends Component {
               <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
 
             {/* <div className="request" style={{ marginLeft: "auto" }}> */}
-              {/* {type !== "normal" && type !== "item" ?
+            {/* {type !== "normal" && type !== "item" ?
                 type === "designer" ?
                   <RequestButton>
                     <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link>
@@ -288,9 +286,9 @@ class RequestList extends Component {
         <Content top={50}>
           <ListElement>
             {/* no.    <div style={{ marginRight: "15px" }}>번호</div> */}
-                    {/* title   */}<div className="title">제목</div>
-                    {/* writer  */}<div className="writer">글쓴이</div>
-                    {/* date    */}<div className="date">작성일</div>
+            {/* title   */}<div className="title">제목</div>
+            {/* writer  */}<div className="writer">글쓴이</div>
+            {/* date    */}<div className="date">작성일</div>
             {/* {/* view    <div style={{ marginRight: "15px" }}>조회수</div> */}
             {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
           </ListElement>
@@ -303,7 +301,10 @@ class RequestList extends Component {
 
         <Content top={25} bottom={75}>
           {write ?
-            <WriteReview>
+            <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
+              <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
+                <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+              </div>
               <div className="form">
                 제목: <TitleForm
                   value={this.state.title || ""}
@@ -323,13 +324,13 @@ class RequestList extends Component {
                   </div>
                 </div>
               </div>
-            </WriteReview>
+            </WriteNormalArticleModal>
             :
-            <CreateReview onClick={() => this.setState({ write: true })}>
+            <CreateNormalArticleButton onClick={() => this.setState({ write: true })}>
               <div className="button">
                 <div className="font">게시글 작성</div>
               </div>
-            </CreateReview>
+            </CreateNormalArticleButton>
           }
         </Content>
 
