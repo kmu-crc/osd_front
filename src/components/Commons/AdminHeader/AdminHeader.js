@@ -328,16 +328,16 @@ class AdminHeader extends Component {
             <MenuItem>
               <a href="/designManager">아이템</a>
             </MenuItem>
-            {/* <MenuItem> */}
-            {/* <a href="/groupManager">그룹</a> */}
-            {/* </MenuItem> */}
+            <MenuItem>
+              <a href="/requestManager">게시글</a>
+            </MenuItem>
             <MenuItem>
               <a href="/designerManager">디자이너</a>
             </MenuItem>
             <MenuItem>
               <a href="/makerManager">메이커</a>
             </MenuItem>
-           <MenuItem>
+            <MenuItem>
               <a href="/accountManager">회원</a>
             </MenuItem>
           </MainMenu>
