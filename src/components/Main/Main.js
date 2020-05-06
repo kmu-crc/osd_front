@@ -5,13 +5,12 @@ import ScrollTopDesignerContainer from "containers/Commons/ScrollTopDesignerCont
 import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
 
 // CSS STYLE
+const Margin = 1 / 3 * 45;
 const MainContainer = styled.div`
-  margin-top: 31px;
 `;
-const ImgWrapper = styled.div``;
 const Wrapper = styled.div`
   width: 100%;
-  margin-top: ${props => props.top || 50}px;
+  padding-top: ${Margin}px;
 `;
 const Head = styled.div`
   margin-left: auto;
@@ -20,36 +19,38 @@ const Head = styled.div`
   text-align: left;
   font-weight: 500;
   font-size: 2.6rem;
-  line-height: 29px;
+  line-height: 2.6rem;
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
   opacity: 1;
-  margin-top: 42px;
-  margin-bottom: 42px;
-
 `;
 const TextWrapper = styled.div`
-  padding-bottom: 30px;
+  padding-top: ${Margin}px;
 `;
 class Main extends Component {
   render() {
-    return (
-      <MainContainer>
-        <ImgWrapper>
-          <MainSlide />
-        </ImgWrapper>
-        <Wrapper>
-          <TextWrapper>
-            <Head>인기 디자이너 / 메이커</Head></TextWrapper>
-          <ScrollTopDesignerContainer />
-        </Wrapper>
-        <Wrapper top={77}>
-          <TextWrapper><Head>인기 아이템</Head></TextWrapper>
-          <ScrollTopProductContainer />
-        </Wrapper>
-      </MainContainer>
-    );
+    return (<MainContainer>
+
+      <Wrapper>
+        <MainSlide />
+      </Wrapper>
+
+      <Wrapper>
+        <TextWrapper>
+          <Head>인기 디자이너 / 메이커</Head>
+        </TextWrapper>
+        <ScrollTopDesignerContainer />
+      </Wrapper>
+
+      <Wrapper>
+        <TextWrapper>
+          <Head>인기 아이템</Head>
+        </TextWrapper>
+        <ScrollTopProductContainer />
+      </Wrapper>
+
+    </MainContainer>);
   }
 }
 export default Main;
