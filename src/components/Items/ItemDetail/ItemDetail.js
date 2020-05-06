@@ -10,6 +10,7 @@ import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
+import { Rating } from 'semantic-ui-react'
 // import {confirmAlert} from "react-confirm-alert";
 // import {options} from "components/Commons/InputItem/AlertConfirm"
 // import NumberFormat from "modules/NumberFormat";
@@ -443,7 +444,12 @@ class ItemDetail extends Component {
     console.log("itemdetail", this.props);
     const item = this.props.item;
     const { expandingContent, expandingReview, expandingBoard } = this.state;
+    const {score} = this.props.item;
+    console.log(score);
 
+    const RenderStar = ()=>{
+      return  <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled />
+    }
     return item ?
       <React.Fragment>
         {(this.props.userInfo && item.members && item.members.length > 1)
@@ -462,10 +468,10 @@ class ItemDetail extends Component {
                 <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
                 <div className="expert line">
                   <div className="who" />
-                  <div className="nick">{item.userName}</div>
+                  <div className="nick">{item.userName}</div>       
                 </div>
                 <Introduction>
-                  <div className="wrapItem">
+                  <div className="wrapItem"> 
                     <div className="title">아이템 설명</div>
                     <div className="text">{item.description}</div>
                     <div className="gradient_box"><div>▾</div></div>
@@ -477,7 +483,10 @@ class ItemDetail extends Component {
                     <div className="price" style={{ marginRight: "35px" }}>
                       {PointFormat(item.price / 1000 || 0)} 천원</div>
                     <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                      {Star(item.score, 28)}({item.total || 0})</div>
+                      {/* {Star(item.score, 28)}({item.total || 0}) */}
+                      {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
+                      <RenderStar/>
+                      </div>
                   </div>
                 </div>
 

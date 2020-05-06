@@ -25,10 +25,16 @@ const Wrapper = styled.div`
 const ItemPic = styled.div`
   width: 247px;
   height: 206px;
-  background: transparent;
-  background-image: url(${props => props.img});
-  background-size: cover;
-  background-position: center center
+  // background: transparent;
+  // background-image: url(${props => props.img});
+  // background-size: cover;
+  // background-position: center center
+  background-color:#EFEFEF;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+  color:white;
 `;
 const TextWrapper = styled.div`
   margin-top: 8px;
@@ -103,7 +109,7 @@ class Request extends Component {
       // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
         {/* picture */}
-        <ItemPic img={(item && item.thumbnail) || noimg} />
+        <ItemPic img={(item && item.thumbnail) || noimg} ><div>REQUEST</div></ItemPic>
         {/* text */}
         <TextWrapper>
           <div className="title"><TextFormat txt={item.title} /></div>
@@ -116,7 +122,7 @@ class Request extends Component {
         <NumberWrapper>
           <div className="price">{PointFormat(item.price / 1000 || 0)}천원</div>
           <div className="score">
-            {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
+            {/* {Star(item.score + 0.5)}({NumberFormat(item.reviews)}) */}
           </div>
         </NumberWrapper>
         {item.custom && item.isPurchased === 0 ?

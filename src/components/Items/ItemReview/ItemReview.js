@@ -59,7 +59,8 @@ const WriteReview = styled.div`
       padding-left:10px;
       padding-right:10px;
       .score{
-
+        // display:flex;
+        // align-items:flex-end;
       }
       .buttonBox{
           .button{
@@ -290,7 +291,7 @@ class ItemReview extends Component {
         const master = user_id === (userInfo && userInfo.uid);
         const avgScore = this.props.score;
         const TotalScore = ()=>{
-            return <Rating name="score" icon='star' defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />({total})
+            return <Rating name="score" icon='star' size="large" defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />
         }
         const Review = (props) => {
             console.log(props.score)
@@ -328,7 +329,8 @@ class ItemReview extends Component {
                 <div className="line" style={{ width: "max-content", marginLeft: "auto", marginRight: "15px" }}>
                     <div className="title">총점(리뷰수): </div>
                     <div className="score">
-                        {Star(score)}({total})
+                        {/* {Star(score)}({total}) */}
+                        <TotalScore/>({total})
                     </div>
                 </div>
                 {!master ?

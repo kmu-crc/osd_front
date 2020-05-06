@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Star from "components/Commons/Star";
 import NumberFormat from "modules/NumberFormat";
 import PointFormat from "modules/PointFormat";
+import { Rating } from 'semantic-ui-react'
 
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
@@ -32,7 +33,7 @@ const ItemPic = styled.div`
   justify-content:center;
   align-items:center;
   // background: transparent;
-  // background-image: url(${props => props.img});
+  background-image: url(${props => props.img});
   background-size: cover;
   background-position: center center
 `;
@@ -105,8 +106,11 @@ class Item extends Component {
   render() {
     const item = this.props.data || empty;
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
-    const img = item ? item.thumbnail ? item.thumbnail : item.custom ? customimg : noimg : noimg
-
+    const img = item ? item.thumbnail : noimg;
+    console.log(this.props);
+    const RenderingStar = ()=>{
+      return <Rating name="score" icon='star' defaultRating={parseInt(item.score,10)||0} maxRating={5} disabled />
+    }
     return (
       // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
@@ -124,7 +128,8 @@ class Item extends Component {
         <NumberWrapper>
           <div className="price">{PointFormat(item.price / 1000 || 0)}천원</div>
           <div className="score">
-            {Star(item.score + 0.5)}({NumberFormat(item.reviews)})
+            {/* {Star(item.score + 0.5)}({NumberFormat(item.reviews)}) */}
+            <RenderingStar/>
           </div>
         </NumberWrapper>
         {item.custom && item.isPurchased === 0 ?
