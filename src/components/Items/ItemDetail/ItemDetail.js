@@ -19,7 +19,7 @@ import { Rating } from 'semantic-ui-react'
 const Wrapper = styled.div`
   // * { border: 1px solid red; };
   margin-top: 50px;
-
+  margin-bottom:50px;
   .line { 
     display: flex; 
   };
@@ -238,6 +238,14 @@ const Introduction = styled.div`
 
 
 `;
+const CoverGrident=styled.div`
+  width:100%;
+  height:100%;
+  position:absolute;
+  left:0;
+  top:0;
+  background:${props=>props.isGradient?"linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0))":null};
+`
 const Board = styled.div`
   // *{border: 1px solid red;}
   width: 1600px;
@@ -253,7 +261,7 @@ const Board = styled.div`
   font-size: 19px;
   line-height: 28px;
   text-align: left;
-
+  position:relative;
   .title {
     font-weight: 500;
   }
@@ -313,7 +321,7 @@ const Content = styled.div`
   font-size: 19px;
   line-height: 28px;
   text-align: left;
-
+  position:relative;
   .title {
     font-weight: 500;
     margin-bottom: 25px;
@@ -362,22 +370,24 @@ const Content = styled.div`
 const ExpandingButton = styled.div`
     width:${props => props.width}px;
     height:30px;
-    margin-bottom:10px;
+    margin-top:10px;
+    // margin-bottom:10px;
     display:flex;
     justify-content:center;
     .button{
-        width:80%;
+        width:100%;
         height:100%;
+        // width:80%;
+        // height:100%;
         display:flex;
         justify-content:center;
-        align-items:center;
-        border-radius:20px;
-        background-color:#707070;
+        align-items:cfius:20px;
+        // background-color:#707070;
         cursor:pointer;
     }
     .font{
         font-size:15px;
-        color:white;
+        color:gray;
     }
 `;
 
@@ -547,12 +557,13 @@ class ItemDetail extends Component {
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
                   detail={this.state.detail} /> : null}
+            <CoverGrident isGradient={!expandingReview}/>
             </Board>
 
             <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
                 <div className="font">
-                  {expandingReview ? "접기" : "펼쳐보기"}
+                  {expandingReview ? "▲접기" : "▼펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
@@ -565,11 +576,12 @@ class ItemDetail extends Component {
                   style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
               </div>
               <ItemQuestionContainer user_id={item.user_id} />
+              <CoverGrident isGradient={!expandingBoard}/>
             </Board>
             <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
                 <div className="font">
-                  {expandingBoard ? "접기" : "펼쳐보기"}
+                {expandingBoard ? "▲접기" : "▼펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
@@ -597,11 +609,12 @@ class ItemDetail extends Component {
                   bought={item.bought}
                 // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
                 /> : null}
+                <CoverGrident isGradient={true}/>
             </Content>
             <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                 <div className="font">
-                  {expandingContent ? "접기" : "펼쳐보기"}
+                {expandingContent ? "▲접기" : "▼펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
