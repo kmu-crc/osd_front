@@ -3,8 +3,8 @@ import { Modal } from 'semantic-ui-react';
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import arrow from "source/arrow.svg";
-// import Cross from "components/Commons/Cross";
-// import DateFormat from "modules/DateFormat";
+import Cross from "components/Commons/Cross";
+import DateFormat from "modules/DateFormat";
 import { GetDesignDetailRequest, } from "actions/Design";
 import {
     UpdateCardImagesRequest, UpdateCardContentRequest, UpdateCardTitleRequest,
@@ -15,45 +15,45 @@ import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
 
 import { GetItemStepsRequest, UpdateCardSourceRequest, DeleteItemCardRequest } from "actions/Item";
 
-// import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
-// import CardComment from './CardComment';
+import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
+import CardComment from './CardComment';
 
-// import { FormThumbnailEx } from "components/Commons/FormItems";
+import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
-// import TextFormat from 'modules/TextFormat';
-// import Loading from "components/Commons/Loading";
+import TextFormat from 'modules/TextFormat';
+import Loading from "components/Commons/Loading";
 
-// import {confirmAlert} from "react-confirm-alert";
-// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
+import {confirmAlert} from "react-confirm-alert";
+import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
-//const ContentBorder = styled.div`
-//    height: 29px;
-//    font-family: Noto Sans KR;
-//    font-size: 20px;
-//    color: #707070;
-//    font-weight: 500;
-//    line-height: 29px;
-//    margin-left: 50px;
-//    margin-top: 30px;
-//    padding-right: 25px;
-//    .border-line {
-//        border-bottom: 1px solid #707070;
-//    }
-//`;
-//const CommentWrapper = styled.div`
-//    .comment-title {
-//        margin-left: 45px;
-//    }
-//    .comment-body{
-//        margin-left: 52px;
-//        margin-top: 15px;
-//        color: #707070;
-//        font-size: 20px;
-//        font-weight: 500;
-//        font-family: Noto Sans KR;
-//        line-height: 29px;
-//    }
-//`;
+const ContentBorder = styled.div`
+   height: 29px;
+   font-family: Noto Sans KR;
+   font-size: 20px;
+   color: #707070;
+   font-weight: 500;
+   line-height: 29px;
+   margin-left: 50px;
+   margin-top: 30px;
+   padding-right: 25px;
+   .border-line {
+       border-bottom: 1px solid #707070;
+   }
+`;
+const CommentWrapper = styled.div`
+   .comment-title {
+       margin-left: 45px;
+   }
+   .comment-body{
+       margin-left: 52px;
+       margin-top: 15px;
+       color: #707070;
+       font-size: 20px;
+       font-weight: 500;
+       font-family: Noto Sans KR;
+       line-height: 29px;
+   }
+`;
 const CardDialog = styled(Modal)`
 
         margin-top: 50px !important;
@@ -219,142 +219,142 @@ const CardDialog = styled(Modal)`
         }
     }
 `
-//const EditCardHeaderContainer = styled.div`
-//    .edit-header-container {
-//        display: flex;
-//        margin-top: 15px;
-//        margin-left: 45px;
-//        width: max-content;
-//        .edit-card-info {
-//            width: max-content;
-//            height: 29px;
-//            font-size: 20px;
-//            font-weight: 500;
-//            font-family: Noto Sans KR;
-//            text-align: left;
-//            line-height: 40px;
-//            color: #707070;
-//        }
-//    }
-//    .edit-header-thumbnail {
-//        display: flex;
-//        margin-top: 25px;
-//        margin-left: 65px;
-//        .thumbnail-txt {
-//            width: 97px;
-//            height: 29px;
-//            font-size: 20px;
-//            font-weight: 500;
-//            font-family: Noto Sans KR;
-//            text-align: left;
-//            line-height: 40px;
-//            color: #707070;
-//        }
-//
-//    }
-//    .edit-header-title {
-//        display: flex;
-//        margin-top: 15px;
-//        margin-left: 65px;
-//        .title-txt {
-//            width: 97px;
-//            height: 29px;
-//            font-size: 20px;
-//            font-weight: 500;
-//            font-family: Noto Sans KR;
-//            text-align: left;
-//            line-height: 40px;
-//            color: #707070;
-//        }
-//        .title-input-container{
-//            margin-left: 31px;
-//            width: 500px;
-//            height: 56px;
-//            background-color: #EFEFEF;
-//            border-radius: 5px;
-//        }
-//        .title-input-style{
-//            border-radius: 5px;
-//            width: 100%;
-//            border: none;
-//            background: transparent;
-//            font-size: 20px;
-//            font-weight: 500;
-//            color: #707070;
-//            height: 100%;
-//            padding: 16px 23px 16px 23px;
-//        }
-//    }
-//    .edit-header-description{
-//        display: flex;
-//        margin-top: 15px;
-//        margin-left: 65px;
-//        .description-txt{
-//            width: 97px;
-//            height: 29px;
-//            font-size: 20px;
-//            font-weight: 500;
-//            font-family: Noto Sans KR;
-//            text-align: left;
-//            line-height: 40px;
-//            color: #707070;
-//        }
-//        .description-input-container{
-//            margin-left: 31px;
-//            width: 505px;
-//            height: 56px;
-//            background-color: #EFEFEF;
-//            border-radius: 5px;
-//        }
-//        .description-input-style{
-//            border-radius: 5px;
-//            width: 100%;
-//            border: none;
-//            background: transparent;
-//            font-size: 20px;
-//            font-weight: 500;
-//            color: #707070;
-//            height: 100%;
-//            padding: 16px 23px 16px 23px;
-//        }
-//    }
-//    .edit-header-button-container {
-//        width: max-content;
-//        margin-left: auto;
-//        margin-right: 25px;
-//        .edit-header-submit-button {
-//            border: none;
-//            background: none;
-//            width: max-content;
-//            height: 40px;
-//            line-height: 40px;
-//            color: #FF0000;
-//            padding-bottom: 1.5px;
-//            border-bottom: 1.5px solid #FF0000;
-//            font-size: 20px;
-//            font-weight: 500;
-//            font-family: Noto Sans KR;
-//            text-align: left;
-//            cursor: pointer;
-//        }
-//        .edit-header-cancel-button {
-//            margin-left: 10px;
-//            border: none;
-//            background: none;
-//            width: max-content;
-//            height: 40px;
-//            line-height: 40px;
-//            color: #707070;
-//            padding-bottom: 1.5px;
-//            border-bottom: 1.5px solid #707070;
-//            font-size: 20px;
-//            font-weight: 500;
-//            font-family: Noto Sans KR;
-//            text-align: left;
-//            cursor: pointer;
-//        }
-//    }
-//`;
+const EditCardHeaderContainer = styled.div`
+   .edit-header-container {
+       display: flex;
+       margin-top: 15px;
+       margin-left: 45px;
+       width: max-content;
+       .edit-card-info {
+           width: max-content;
+           height: 29px;
+           font-size: 20px;
+           font-weight: 500;
+           font-family: Noto Sans KR;
+           text-align: left;
+           line-height: 40px;
+           color: #707070;
+       }
+   }
+   .edit-header-thumbnail {
+       display: flex;
+       margin-top: 25px;
+       margin-left: 65px;
+       .thumbnail-txt {
+           width: 97px;
+           height: 29px;
+           font-size: 20px;
+           font-weight: 500;
+           font-family: Noto Sans KR;
+           text-align: left;
+           line-height: 40px;
+           color: #707070;
+       }
+
+   }
+   .edit-header-title {
+       display: flex;
+       margin-top: 15px;
+       margin-left: 65px;
+       .title-txt {
+           width: 97px;
+           height: 29px;
+           font-size: 20px;
+           font-weight: 500;
+           font-family: Noto Sans KR;
+           text-align: left;
+           line-height: 40px;
+           color: #707070;
+       }
+       .title-input-container{
+           margin-left: 31px;
+           width: 500px;
+           height: 56px;
+           background-color: #EFEFEF;
+           border-radius: 5px;
+       }
+       .title-input-style{
+           border-radius: 5px;
+           width: 100%;
+           border: none;
+           background: transparent;
+           font-size: 20px;
+           font-weight: 500;
+           color: #707070;
+           height: 100%;
+           padding: 16px 23px 16px 23px;
+       }
+   }
+   .edit-header-description{
+       display: flex;
+       margin-top: 15px;
+       margin-left: 65px;
+       .description-txt{
+           width: 97px;
+           height: 29px;
+           font-size: 20px;
+           font-weight: 500;
+           font-family: Noto Sans KR;
+           text-align: left;
+           line-height: 40px;
+           color: #707070;
+       }
+       .description-input-container{
+           margin-left: 31px;
+           width: 505px;
+           height: 56px;
+           background-color: #EFEFEF;
+           border-radius: 5px;
+       }
+       .description-input-style{
+           border-radius: 5px;
+           width: 100%;
+           border: none;
+           background: transparent;
+           font-size: 20px;
+           font-weight: 500;
+           color: #707070;
+           height: 100%;
+           padding: 16px 23px 16px 23px;
+       }
+   }
+   .edit-header-button-container {
+       width: max-content;
+       margin-left: auto;
+       margin-right: 25px;
+       .edit-header-submit-button {
+           border: none;
+           background: none;
+           width: max-content;
+           height: 40px;
+           line-height: 40px;
+           color: #FF0000;
+           padding-bottom: 1.5px;
+           border-bottom: 1.5px solid #FF0000;
+           font-size: 20px;
+           font-weight: 500;
+           font-family: Noto Sans KR;
+           text-align: left;
+           cursor: pointer;
+       }
+       .edit-header-cancel-button {
+           margin-left: 10px;
+           border: none;
+           background: none;
+           width: max-content;
+           height: 40px;
+           line-height: 40px;
+           color: #707070;
+           padding-bottom: 1.5px;
+           border-bottom: 1.5px solid #707070;
+           font-size: 20px;
+           font-weight: 500;
+           font-family: Noto Sans KR;
+           text-align: left;
+           cursor: pointer;
+       }
+   }
+`;
 const BlankSpace = styled.div`
     width: 250px;
     height: 250px;
@@ -470,7 +470,7 @@ class CardModal extends Component {
                 <React.Fragment>
                     <div style={{ zIndex: 100 }}>
                         <CardDialog open={this.props.open} onClose={this.onClose}>
-                            {/* {this.state.loading && <Loading />}
+                            {this.state.loading && <Loading />}
 
                         <div className="close-box" onClick={this.onClose} >
                             <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
@@ -539,7 +539,7 @@ class CardModal extends Component {
                                     isCancel
                                 />
                             </div>
-                        </div> */}
+                        </div>
                         </CardDialog>
                         <BlankSpace />
                     </div>

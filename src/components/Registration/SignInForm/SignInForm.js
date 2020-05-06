@@ -169,7 +169,9 @@ class SignInForm extends Component {
       } else {
         window.location.reload();
       }
-    }).then(window.history.back());
+    }).then(()=>{
+      window.history.go(-1)}
+      );
 
 
   }
