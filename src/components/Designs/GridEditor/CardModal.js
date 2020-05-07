@@ -21,15 +21,18 @@ import { ValidationGroup } from "modules/FormControl";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 const ContentBorder = styled.div`
-    height: 29px;
+    // border:1px solid black;
+    // width:100%;
+    // height: 29px;
     font-family: Noto Sans KR;
     font-size: 20px;
     color: #707070;
     font-weight: 500;
     line-height: 29px;
-    margin-left: 50px;
-    margin-top: 30px;
-    padding-right: 25px;
+    margin-top:20px;
+    margin-bottom:20px;
+    // margin-left: 50px;
+    // margin-top: 30px;
     .border-line {
         border-bottom: 1px solid #707070;
     }
@@ -49,6 +52,9 @@ const CommentWrapper = styled.div`
     }
 `;
 const CardDialog = styled(Modal)`
+// *{
+//     border:1px solid black;
+// }
     margin-top: 50px !important;
     margin-bottom: 50px !important;
     height: max-content;
@@ -57,6 +63,9 @@ const CardDialog = styled(Modal)`
     border: 1px solid #EFEFEF;
     border-radius: 10px;
     opacity: 1;
+    // padding-right: 45px;
+    // padding-left: 45px;
+    // padding-top:20px;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
@@ -65,9 +74,11 @@ const CardDialog = styled(Modal)`
         background: rgba(112, 112, 112, 0.45) !important;
     } 
     .content{
-        padding: 45px;
         margin-left: auto;
         line-height: 17px;
+        // padding-right: 45px;
+        // padding-left: 45px;
+        // padding-top:20px;
     }
     .prevPane {
         width: 115px;
@@ -122,13 +133,16 @@ const CardDialog = styled(Modal)`
         margin-top: 10px; 
     }
     .content-wrapper {
-        position: relative;
+        padding-right: 45px;
+        padding-left: 45px;
+        padding-top:20px;
+        // position: relative;
         .card-header-first {
             display: flex;
             justify-content: space-between;
             height: 29px;
-            margin-top: 30px;
-            margin-left: 52px;
+            // margin-top: 30px;
+            // margin-left: 52px;
             .header-title {
                 font-family: Noto Sans KR;
                 font-size: 20px;
@@ -178,12 +192,16 @@ const CardDialog = styled(Modal)`
         }
         .card-header-second {
             width: 100%;
-            height: 29px;
+            // height: 29px;
             display: flex;
             justify-content: flex-start;
-            padding-left: 52px;
+            // padding-left: 52px;
+            // padding-right:52px;
             margin-top: 30px;
+            margin-bottom:30px;
             .contents {
+                width:100%;
+                min-height:max-content;
                 font-size: 20px;
                 color: #707070;
                 font-weight: 300;
@@ -518,7 +536,7 @@ class CardModal extends Component {
 
                     <div className="content-wrapper" >
                         {this.state.edit === false
-                            ? <React.Fragment>
+                            ? <div>
                                 <div className="card-header-first">
                                     <div className="header-title">{card.title}</div>
                                     <div className="header-edit-button">
@@ -530,11 +548,12 @@ class CardModal extends Component {
                                     </div>
                                 </div>
                                 <div className="card-header-second" >
-                                    <div className="contents"><TextFormat txt={card.content || ""} chars={25} /></div>
-                                    <div className="nick-name">{card.nick_name}</div>
-                                    <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                                    <div className="contents">{card.content || ""}</div>
+                                    {/* <div className="contents"><TextFormat txt={card.content || ""}/></div> */}
+                                    {/* <div className="nick-name">{card.nick_name}</div> */}
+                                    {/* <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div> */}
                                 </div>
-                            </React.Fragment>
+                                </div>
 
                             : <React.Fragment>
                                 <EditCardHeaderContainer>
@@ -555,15 +574,16 @@ class CardModal extends Component {
                                     <div className="edit-header-description">
                                         <div className="description-txt">컨텐츠 설명</div>
                                         <div className="description-input-container">
-                                            <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="1000" placeholder="설명을 입력해주세요." />
+                                            <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="200" placeholder="설명을 입력해주세요." />
                                         </div>
                                     </div>
                                 </EditCardHeaderContainer>
                             </React.Fragment>}
 
-                        <ContentBorder><div className="border-line" /></ContentBorder>
+                        
 
                         <div className="content" >
+                        <ContentBorder><div className="border-line" /></ContentBorder>
                             <CardSourceDetailContainer
                                 design_id={this.props.designId}
                                 handleUpdate={this.handleUpdate}
