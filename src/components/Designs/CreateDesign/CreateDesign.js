@@ -706,46 +706,57 @@ class CreateDesign extends Component {
     await this.setState({ step: this.state.step + 1 });
   };
   gotoStep = (menu) => {
-    if (!this.state.basic && menu.step > 0) {
-      this.checkInputForm();
-      return;
-      // alert("디자인 기본정보를 모두 작성하셔야 이동하실 수 있습니다.");
-      // return;
+    console.log(menu);
+    if (menu.step === 0) {
     }
-    if (!this.state.additional && menu.step > 1) {
-      // alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
-      this.checkInputForm();
-      return;
-    }
-    if (this.state.basic && this.state.additional && menu.step <= 2) {
-      if (this.state.step === 1 && this.state.designId == null) {
-        let designId = null;
-        console.log(this.props);
-        // create design and next stage, next state will be load new design via grid editor
-        const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
-        let data = {
-          is_project: 1,
-          category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
-          files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
-          is_commercial: license1, is_display_creater: license2, is_modify: license3, member: JSON.stringify(members), title: title
-        };
-        console.log(data);
-        this.setState({ loading: true });
-        this.props.CreateDesignRequest(data, this.props.token)
-          .then(async (res) => {
-            if (res.success) {
-              designId = res.design_id;
-              this.props.GetDesignDetailRequest(designId, this.props.token)
-                .then(() => {
-                  this.props.GetDesignBoardRequest(designId)
-                })
-              await this.setState({ content: true, designId: designId, grid: true, loading: false });
-            }
-          })
-          .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
+    else if (menu.step === 1) {
+      if (!this.state.basic) {
+
       }
     }
-    this.setState({ step: menu.step });
+    else if (menu.step === 2) {
+
+    }
+    // if (!this.state.basic && menu.step > 0) {
+    //   this.checkInputForm();
+    //   return;
+    //   // alert("디자인 기본정보를 모두 작성하셔야 이동하실 수 있습니다.");
+    //   // return;
+    // }
+    // if (!this.state.additional && menu.step > 1) {
+    //   // alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
+    //   this.checkInputForm();
+    //   return;
+    // }
+    // if (this.state.basic && this.state.additional && menu.step <= 2) {
+    //   if (this.state.step === 1 && this.state.designId == null) {
+    //     let designId = null;
+    //     console.log(this.props);
+    //     // create design and next stage, next state will be load new design via grid editor
+    //     const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
+    //     let data = {
+    //       is_project: 1,
+    //       category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
+    //       files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
+    //       is_commercial: license1, is_display_creater: license2, is_modify: license3, member: JSON.stringify(members), title: title
+    //     };
+    //     console.log(data);
+    //     this.setState({ loading: true });
+    //     this.props.CreateDesignRequest(data, this.props.token)
+    //       .then(async (res) => {
+    //         if (res.success) {
+    //           designId = res.design_id;
+    //           this.props.GetDesignDetailRequest(designId, this.props.token)
+    //             .then(() => {
+    //               this.props.GetDesignBoardRequest(designId)
+    //             })
+    //           await this.setState({ content: true, designId: designId, grid: true, loading: false });
+    //         }
+    //       })
+    //       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
+    //   }
+    // }
+    // this.setState({ step: menu.step });
   };
   checkFinishBasic = async () => {
     const { title, thumbnail, } = this.state;
@@ -1005,12 +1016,36 @@ class CreateDesign extends Component {
           {/* scroll - menu */}
           <NavMenu>
             <div className="menuBox">
-              {scrollmenu.map((menu, index) => {
-                return (
-                  <MenuItem selected={this.state.step === index} onClick={() => this.gotoStep(menu)} borderBottom={index + 1 === scrollmenu.length} key={menu.txt}>
-                    <div className="MenuText">{menu.txt}</div>
-                  </MenuItem>)
-              })}
+              <MenuItem
+                selected={this.state.step === 0}
+                onClick={() =>
+                  this.setState({ step: 0 })}
+                borderBottom={false}>
+                <div className="MenuText">
+                  {scrollmenu[0].txt}
+                </div>
+              </MenuItem>
+              <MenuItem
+                selected={this.state.step === 1}
+                onClick={() =>
+                  this.state.basic ?
+                    this.setState({ step: 1 }) :
+                    alert("기본 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
+                borderBottom={false}>
+                <div className="MenuText">
+                  {scrollmenu[1].txt}
+                </div>
+              </MenuItem>
+              <MenuItem
+                selected={this.state.step === 2}
+                onClick={() => this.state.additional ?
+                  this.setState({ step: 2 }) :
+                  alert("부가 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
+                borderBottom={false}>
+                <div className="MenuText">
+                  {scrollmenu[2].txt}
+                </div>
+              </MenuItem>
             </div>
           </NavMenu>
 
