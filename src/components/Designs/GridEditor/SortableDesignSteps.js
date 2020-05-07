@@ -33,7 +33,7 @@ const VerticalDragHandle = SortableHandle(({ is_white }) => <DragBox>
 </DragBox>)
 const margin = { marginTop: "25px", marginRight: "0px", marginBottom: "37px" };
 const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id }) => (
-    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} design_id={design_id} >
+    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" editor={editor} uid={card.uid} {...margin} card={card} design_id={design_id} >
         {editor ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>
 
@@ -53,7 +53,7 @@ const HorizonBox = styled.div`
     margin-right:64px;
 `
 const DragHandler = styled.div`
-    cursor:move;
+    cursor:${props=>props.editor==true?"move":"default"};;
     width:110%;
     height:110%;
     position: absolute;
@@ -82,7 +82,7 @@ const DragHandler = styled.div`
     }
     :hover {
         .wrapper_ {
-            visibility: visible;
+            visibility: ${props=>props.editor==true?"visible":"none"};
         }
         .tip-txt {
             display: block;
@@ -93,13 +93,13 @@ const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_
     <HorizonBox>
             <div className="bound_box">
 
-        <DragHandler>
+        <DragHandler editor={editor}>
                 <div className="wrapper_">
                     {editor ? <HorizonDragHandle /> : null}
                     {/* <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div> */}
                 </div>
         </DragHandler>
-        <StepCard onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={0} marginBottom={0} marginLef={0} />
+        <StepCard editor={editor} onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={0} marginBottom={0} marginLef={0} />
 
 
         {step.cards && step.cards.length > 0 &&

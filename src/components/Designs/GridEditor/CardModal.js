@@ -194,6 +194,7 @@ const CardDialog = styled(Modal)`
             width: 100%;
             // height: 29px;
             display: flex;
+            flex-direction:column;
             justify-content: flex-start;
             // padding-left: 52px;
             // padding-right:52px;
@@ -208,26 +209,32 @@ const CardDialog = styled(Modal)`
                 font-family: Noto Sans KR;
                 line-height: 29px;   
             }
+            
+        }
+        .card-header-third {
+            margin-top:15px;
+            width: 100%;
+            display:flex;
+            justify-content:space-between;
             .nick-name {
                 width: max-content;
-                margin-left: auto;
-                margin-right: 5px;
+                // margin-left: auto;
+                // margin-right: 5px;
                 font-size: 20px;
                 color: #707070;
-                font-weight: 300;
+                font-weight: 400;
                 font-family: Noto Sans KR;
                 line-height: 29px;   
             }
             .update-time {
                 width: max-content;
-                margin-right: 75px;
+                // margin-right: 75px;
                 color: #707070;
                 font-size: 17px;
-                font-weight: 300;
+                font-weight: 400;
                 font-family: Noto Sans KR;
                 line-height: 29px;
             }
-        }
     }
 
 `
@@ -550,8 +557,10 @@ class CardModal extends Component {
                                 <div className="card-header-second" >
                                     <div className="contents">{card.content || ""}</div>
                                     {/* <div className="contents"><TextFormat txt={card.content || ""}/></div> */}
-                                    {/* <div className="nick-name">{card.nick_name}</div> */}
-                                    {/* <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div> */}
+                                    <div className="card-header-third">
+                                    <div className="nick-name">{card.nick_name}</div>
+                                    <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                                    </div>
                                 </div>
                                 </div>
 
