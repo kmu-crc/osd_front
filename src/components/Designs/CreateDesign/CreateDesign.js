@@ -604,7 +604,7 @@ class CreateDesign extends Component {
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
       showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: true, members: [], addmem: [], delmem: [],
+      categoryLevel1: this.props.userInfo.category1 || null, categoryLevel2: null, alone: true, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
     };
     this.addMember = this.addMember.bind(this);
@@ -704,59 +704,8 @@ class CreateDesign extends Component {
   };
   gotoNextStep = async () => {
     await this.setState({ step: this.state.step + 1 });
-  };
-  gotoStep = (menu) => {
-    console.log(menu);
-    if (menu.step === 0) {
-    }
-    else if (menu.step === 1) {
-      if (!this.state.basic) {
-
-      }
-    }
-    else if (menu.step === 2) {
-
-    }
-    // if (!this.state.basic && menu.step > 0) {
-    //   this.checkInputForm();
-    //   return;
-    //   // alert("디자인 기본정보를 모두 작성하셔야 이동하실 수 있습니다.");
-    //   // return;
-    // }
-    // if (!this.state.additional && menu.step > 1) {
-    //   // alert("디자인 부가정보를 모두 작성하셔야 이동하실 수 있습니다.");
-    //   this.checkInputForm();
-    //   return;
-    // }
-    // if (this.state.basic && this.state.additional && menu.step <= 2) {
-    //   if (this.state.step === 1 && this.state.designId == null) {
-    //     let designId = null;
-    //     console.log(this.props);
-    //     // create design and next stage, next state will be load new design via grid editor
-    //     const { categoryLevel1, categoryLevel2, title, explanation, license1, license2, license3, members, thumbnail, thumbnail_name } = this.state;
-    //     let data = {
-    //       is_project: 1,
-    //       category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
-    //       files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
-    //       is_commercial: license1, is_display_creater: license2, is_modify: license3, member: JSON.stringify(members), title: title
-    //     };
-    //     console.log(data);
-    //     this.setState({ loading: true });
-    //     this.props.CreateDesignRequest(data, this.props.token)
-    //       .then(async (res) => {
-    //         if (res.success) {
-    //           designId = res.design_id;
-    //           this.props.GetDesignDetailRequest(designId, this.props.token)
-    //             .then(() => {
-    //               this.props.GetDesignBoardRequest(designId)
-    //             })
-    //           await this.setState({ content: true, designId: designId, grid: true, loading: false });
-    //         }
-    //       })
-    //       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
-    //   }
-    // }
-    // this.setState({ step: menu.step });
+    this.checkFinishBasic();
+    this.checkFinishAdditional();
   };
   checkFinishBasic = async () => {
     const { title, thumbnail, } = this.state;
@@ -987,6 +936,7 @@ class CreateDesign extends Component {
   onChangeGridData = async (data) => {
     ;
   }
+
   render() {
     let arrSummaryList = [];
     if (this.state.members.length > 0) {
@@ -1150,8 +1100,23 @@ class CreateDesign extends Component {
                 {this.props.category1.length > 0 ?
                   <CategoryBox>
                     <div className="additionalTitle">카테고리<sup style={{ color: "red" }}>*</sup></div>
-                    <CategoryDropDown onChange={this.onChangeCategory1} options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요(필수)" />
-                    <CategoryDropDown id="category2" onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory} selection ref="dropdown2" value={this.state.categoryLevel2} />
+                    <CategoryDropDown
+                      selection
+                      ref="dropdown1"
+                      onChange={this.onChangeCategory1}
+                      options={this.props.category1}
+                      value={this.state.categoryLevel1}
+                      placeholder="카테고리를 선택해주세요(필수사항)"
+                    />
+                    <CategoryDropDown
+                      selection
+                      id="category2"
+                      ref="dropdown2"
+                      onChange={this.onChangeCategory2}
+                      options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
+                      value={this.state.categoryLevel2}
+                      placeholder="서부 카테고리를 선택해주세요(선택사항)"
+                    />
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* INVITE MEMBER */}
