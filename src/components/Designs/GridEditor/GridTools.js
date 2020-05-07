@@ -89,10 +89,11 @@ const StepCardStyle = styled.div`
         font-size: 20px;
         text-align: center;
         line-height: 29px;
+        cursor:pointer;
     }
     :hover{
         .icon-area{
-            display: block;
+            display: ${props=>props.editor==true?"block":"none"};
         }
     }
     .icon-area{
@@ -103,11 +104,11 @@ const StepCardStyle = styled.div`
         // border:3px solid black;
         margin-left: 165px;
         margin-top: 25px;
-        cursor:move;
+        cursor:${props=>props.editor==true?"move":"default"};;
     }
 `;
 export const StepCard = (props) => {
-    return (<StepCardStyle marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
+    return (<StepCardStyle editor={props.editor} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
         <div className="icon-area">{props.children}</div>
         <div className="text-area" id={props.id} uid={props.uid} title={props.title}>
             <TextFormat txt={props.title} />
@@ -142,8 +143,8 @@ const CardContainer = styled.div`
     cursor: pointer;
     :hover{
         .icon-area{
-            display: block;
-            cursor:move;
+            display: ${props=>props.editor==true?"block":"none"};
+            cursor:${props=>props.editor==true?"move":"default"};;
         }
     }
     .icon-area{
@@ -154,7 +155,7 @@ const CardContainer = styled.div`
         z-index: 2;
         opacity: 0.5;
         display: none;
-        cursor:move;
+        cursor:${props=>props.editor==true?"move":"default"};;
         border-radius:15px;
         background-color:gray;
         opacity:0.1;
@@ -193,7 +194,7 @@ export const ContentCard = (props) => {
     return (props.card
         ? 
         
-        <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
+        <CardContainer editor={props.editor} uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
             
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
