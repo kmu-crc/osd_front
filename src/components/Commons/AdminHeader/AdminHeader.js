@@ -31,6 +31,7 @@ const Content = styled(ContentBox)`
 
 const MainMenu = styled.ul`
   width: 600px;
+
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -42,7 +43,6 @@ const MainMenu = styled.ul`
 
 const MenuItem = styled.li`
   float: left;
-  
   a {
     line-height: 60px;
   }
@@ -328,16 +328,17 @@ class AdminHeader extends Component {
             <MenuItem>
               <a href="/designManager">아이템</a>
             </MenuItem>
-            {/* <MenuItem> */}
-            {/* <a href="/groupManager">그룹</a> */}
-            {/* </MenuItem> */}
+            <MenuItem>
+              <a href="/requestManager">게시글</a>
+            </MenuItem>
             <MenuItem>
               <a href="/designerManager">디자이너</a>
             </MenuItem>
             <MenuItem>
               <a href="/makerManager">메이커</a>
             </MenuItem>
-           <MenuItem>
+
+            <MenuItem>
               <a href="/accountManager">회원</a>
             </MenuItem>
           </MainMenu>
