@@ -112,12 +112,14 @@ const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_
                 </div>
             </Fragment>}
         {editor &&
-            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
+            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "0px" : "66px" }}>
                 {/* <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
                  */}
+                 
                 <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
 
-            </div>}
+            </div>
+            }
             </div>
     </HorizonBox>
 ));
