@@ -9,6 +9,7 @@ import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import Category from "components/Commons/Category";
+import Item from "Admin/Commons/Item/Item"
 
 
 const MainBox = styled.div`
@@ -16,11 +17,12 @@ const MainBox = styled.div`
 //   border:1px solid black;
 // }
   display:flex;
-  width:max-content;
+  width:1350px;
   flex-direction:row;
   margin-left:auto;
   margin-right:auto;
   .main{
+    width:100%;
     margin-top:20px;
     margin-bottom:10px;
   }
@@ -485,7 +487,7 @@ console.log(count);
         {/* normal design manager */}
         <div className="main">
           {/* title */}
-          <h1>디자인</h1>
+          <h1>아이템</h1>
           <div>
           <Category
               handleCate2={this.onChangeSubCate} 
@@ -560,7 +562,11 @@ console.log(count);
                 normal.map(item => {
                   console.log(item);
                     return (
-                      <ListElement item={item}
+                      <Item 
+                      data={item}
+                      isHotBtn={true}
+                      hotLabel={"인기아이템"}
+                      removeLabel={"삭제"}
                       handleTop={this.MakeTopDesign}
                       handleDel={this.DeleteDesignRequest}/>
                     )

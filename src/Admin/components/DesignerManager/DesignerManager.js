@@ -8,17 +8,20 @@ import noimg from "source/thumbnail.png";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import Category from "components/Commons/Category";
+import Expert from "Admin/Commons/Expert/Expert"
+
 
 const MainBox = styled.div`
-  // *{
-  //   border:1px solid black;
-  // }
+// *{
+//   border:1px solid black;
+// }
   display:flex;
-  width:max-content;
+  width:1350px;
   flex-direction:row;
   margin-left:auto;
   margin-right:auto;
   .main{
+    width:100%;
     margin-top:20px;
     margin-bottom:10px;
   }
@@ -56,7 +59,7 @@ const FilterBox = styled.div`
 `
 const ListBox = styled.div`
   // border:1px solid black;
-  width:780px;
+  width:100%;
   // height:max-content,
   display:flex;
   flex-direction:row;
@@ -74,78 +77,78 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-function ListElement({ item: { nick_name, categoryName, type, imgURL, uid }, item, handleTop, handleDel }) {
-  console.log("item::", item);
+// function ListElement({ item: { nick_name, categoryName, type, imgURL, uid }, item, handleTop, handleDel }) {
+//   console.log("item::", item);
 
-  return <div style={{
-    position: "relative",
-    backgroundSize: "cover",
-    backgroundImage: `url(${(imgURL && imgURL.m_img) || noimg})`,
-    width: "150px",
-    height: "150px",
-    borderRadius: "5px",
-    marginRight: "5px",
-    marginBottom: "5px",
-  }}>
-    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-      <div
-        onClick={() => handleTop(uid)}
-        style={{
-          cursor: "pointer",
-          padding: "5px 10px",
-          width: "max-content",
-          color: "white",
-          backgroundColor: "orange",
-          borderRadius: "15px",
-        }}>인기아이템</div>
-      <div
-        onClick={() => handleDel(item)}
-        style={{
-          cursor: "pointer",
-          padding: "5px 10px",
-          marginLeft: "auto",
-          width: "max-content",
-          color: "white",
-          backgroundColor: "red",
-          borderRadius: "15px",
-        }}>삭제</div>
-    </div>
-    <div style={{
-      bottom: "0px",
-      width: "100%",
-      position: "absolute",
-      padding: "5px",
-      backgroundColor: "#707070",
-    }}>
-      <div title={nick_name} style={{
-        padding: "1px 2px",
-        fontSize: "16px",
-        height: "20px",
-        width: "100%",
-        color: "white",
-        wordWrap: "break-word",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textOverflow: "ellipsis"
-      }}>
-        {nick_name}</div>
-      <div title={categoryName + "," + type} style={{
-        padding: "1px 2px",
-        fontSize: "12px",
-        height: "16px",
-        width: "100%",
-        color: "white",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-      }}>
-        <div>{categoryName}</div>
-        <div>{type === "designer" ? "디자이너" : "메이커"}</div>
-      </div>
-    </div>
-  </div>
-}
+//   return <div style={{
+//     position: "relative",
+//     backgroundSize: "cover",
+//     backgroundImage: `url(${(imgURL && imgURL.m_img) || noimg})`,
+//     width: "150px",
+//     height: "150px",
+//     borderRadius: "5px",
+//     marginRight: "5px",
+//     marginBottom: "5px",
+//   }}>
+//     <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+//       <div
+//         onClick={() => handleTop(uid)}
+//         style={{
+//           cursor: "pointer",
+//           padding: "5px 10px",
+//           width: "max-content",
+//           color: "white",
+//           backgroundColor: "orange",
+//           borderRadius: "15px",
+//         }}>인기아이템</div>
+//       <div
+//         onClick={() => handleDel(item)}
+//         style={{
+//           cursor: "pointer",
+//           padding: "5px 10px",
+//           marginLeft: "auto",
+//           width: "max-content",
+//           color: "white",
+//           backgroundColor: "red",
+//           borderRadius: "15px",
+//         }}>삭제</div>
+//     </div>
+//     <div style={{
+//       bottom: "0px",
+//       width: "100%",
+//       position: "absolute",
+//       padding: "5px",
+//       backgroundColor: "#707070",
+//     }}>
+//       <div title={nick_name} style={{
+//         padding: "1px 2px",
+//         fontSize: "16px",
+//         height: "20px",
+//         width: "100%",
+//         color: "white",
+//         wordWrap: "break-word",
+//         overflow: "hidden",
+//         whiteSpace: "nowrap",
+//         textOverflow: "ellipsis"
+//       }}>
+//         {nick_name}</div>
+//       <div title={categoryName + "," + type} style={{
+//         padding: "1px 2px",
+//         fontSize: "12px",
+//         height: "16px",
+//         width: "100%",
+//         color: "white",
+//         overflow: "hidden",
+//         display: "flex",
+//         flexDirection: "row",
+//         justifyContent: "space-between",
+//       }}>
+//         <div>{categoryName}</div>
+//         <div>{type === "designer" ? "디자이너" : "메이커"}</div>
+//       </div>
+//     </div>
+//   </div>
+// }
 // MANAGER
 class DesignerManager extends Component {
   constructor(props) {
@@ -466,11 +469,15 @@ class DesignerManager extends Component {
                 normal.map(item => {
                   // console.log(item);
                   return (
-                    <ListElement
+                    <Expert
                       key={item.uid}
-                      item={item}
+                      data={item}
+                      removeLabel={"삭제"}
+                      hotLabel={"인기 디자이너"}
+                      isHotBtn={true}
                       handleTop={this.MakeTopExpert}
-                      handleDel={this.DeleteDesignRequest} />
+                      handleDel={this.DeleteDesignerRequest} 
+                      />
                   )
                 })
                 : <div>데이터가 없습니다.</div>}
@@ -480,7 +487,7 @@ class DesignerManager extends Component {
             <div>
               {count <= 10 ? null :
                 <Pagination
-                  activePage={this.state.page}
+                  activePage={this.state.page+1}
                   boundaryRange={0}
                   defaultActivePage={1}
                   ellipsisItem={null}

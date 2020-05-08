@@ -8,17 +8,19 @@ import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import Category from "components/Commons/Category";
+import Expert from "Admin/Commons/Expert/Expert"
 
 const MainBox = styled.div`
 // *{
 //   border:1px solid black;
 // }
   display:flex;
-  width:max-content;
+  width:1350px;
   flex-direction:row;
   margin-left:auto;
   margin-right:auto;
   .main{
+    width:100%;
     margin-top:20px;
     margin-bottom:10px;
   }
@@ -57,7 +59,7 @@ const FilterBox = styled.div`
 
 const ListBox = styled.div`
 // border:1px solid black;
-  width:780px;
+  width:100%;
   // height:max-content,
   display:flex;
   flex-direction:row;
@@ -449,11 +451,15 @@ class MakerManager extends Component {
                 normal.map(item => {
                   // console.log(item);
                   return (
-                    <ListElement
+                    <Expert
                       key={item.uid}
-                      item={item}
+                      data={item}
+                      removeLabel={"삭제"}
+                      hotLabel={"인기 메이커"}
+                      isHotBtn={true}
                       handleTop={this.MakeTopExpert}
-                      handleDel={this.DeleteDesignRequest} />
+                      handleDel={this.DeleteDesignRequest} 
+                      handleDel={this.DeleteMakerRequest} />
                   )
                 })
                 : <div>데이터가 없습니다.</div>}
@@ -464,7 +470,7 @@ class MakerManager extends Component {
             <div>
               {count <= 10 ? null :
                 <Pagination
-                  activePage={this.state.page}
+                  activePage={this.state.page+1}
                   boundaryRange={0}
                   defaultActivePage={1}
                   ellipsisItem={null}

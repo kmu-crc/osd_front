@@ -126,7 +126,7 @@ class HotDesignManager extends Component {
         {loading ? <Loading /> : null}
 
         {/* favorite design manager */}
-        <div style={{ width: editSpecial ? "770px" : "150px", overflowX: "hidden",marginTop:"20px",marginBottom:"10px" }}>
+        <div style={{ width: editSpecial ? "1350px" : "150px", overflowX: "hidden",marginTop:"20px",marginBottom:"10px" }}>
           <h1>인기아이템</h1>
           <DesignReorderGrid list={special} update={this.handleUpdateRequest} />
         </div>

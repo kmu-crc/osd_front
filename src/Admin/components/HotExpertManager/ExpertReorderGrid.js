@@ -1,74 +1,75 @@
 import React from 'react';
 import { ListManager } from "react-beautiful-dnd-grid";
+import Expert from "Admin/Commons/Expert/Expert"
 
 function sortList(list) {
     return list.slice().sort((first, second) => first.order - second.order);
 }
-function ListElement({ item: { nick_name, categoryName, type, m_img, uid }, handle }) {
-    // : "협상/상담"
-    // category_level1: 2
-    // category_level2: 1
-    // create_time: "2020-02-12T08:30:23.000Z"
-    // imgURL: null
-    // update_time: "2020-02-12T08:30:23.000Z"
-    // user_id: 3
-    return <div style={{
-        position: "relative",
-        backgroundSize: "cover",
-        backgroundImage: `url(${m_img})`,
-        width: "150px",
-        height: "150px",
-        borderRadius: "5px",
-        marginRight: "5px",
-        marginBottom: "5px",
-    }}>
-        <div
-            onClick={() => handle(uid)}
-            style={{
-                cursor: "pointer",
-                padding: "5px 10px",
-                marginLeft: "auto",
-                width: "max-content",
-                color: "white",
-                backgroundColor: "red",
-                borderRadius: "15px",
-            }}>삭제</div>
-        <div style={{
-            bottom: "0px",
-            width: "100%",
-            position: "absolute",
-            padding: "5px",
-            backgroundColor: "#707070",
-        }}>
-            <div title={nick_name} style={{
-                padding: "1px 2px",
-                fontSize: "16px",
-                height: "20px",
-                width: "100%",
-                color: "white",
-                wordWrap: "break-word",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis"
-            }}>
-                {nick_name}</div>
-            <div title={categoryName + "," + type} style={{
-                padding: "1px 2px",
-                fontSize: "12px",
-                height: "16px",
-                width: "100%",
-                color: "white",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-            }}>
-                <div>{categoryName}</div>
-                <div>{type === "designer" ? "디자이너" : "메이커"}</div>
-            </div>
-        </div>
-    </div>
-}
+// function ListElement({ item: { nick_name, categoryName, type, m_img, uid }, handle }) {
+//     // : "협상/상담"
+//     // category_level1: 2
+//     // category_level2: 1
+//     // create_time: "2020-02-12T08:30:23.000Z"
+//     // imgURL: null
+//     // update_time: "2020-02-12T08:30:23.000Z"
+//     // user_id: 3
+//     return <div style={{
+//         position: "relative",
+//         backgroundSize: "cover",
+//         backgroundImage: `url(${m_img})`,
+//         width: "150px",
+//         height: "150px",
+//         borderRadius: "5px",
+//         marginRight: "5px",
+//         marginBottom: "5px",
+//     }}>
+//         <div
+//             onClick={() => handle(uid)}
+//             style={{
+//                 cursor: "pointer",
+//                 padding: "5px 10px",
+//                 marginLeft: "auto",
+//                 width: "max-content",
+//                 color: "white",
+//                 backgroundColor: "red",
+//                 borderRadius: "15px",
+//             }}>삭제</div>
+//         <div style={{
+//             bottom: "0px",
+//             width: "100%",
+//             position: "absolute",
+//             padding: "5px",
+//             backgroundColor: "#707070",
+//         }}>
+//             <div title={nick_name} style={{
+//                 padding: "1px 2px",
+//                 fontSize: "16px",
+//                 height: "20px",
+//                 width: "100%",
+//                 color: "white",
+//                 wordWrap: "break-word",
+//                 overflow: "hidden",
+//                 whiteSpace: "nowrap",
+//                 textOverflow: "ellipsis"
+//             }}>
+//                 {nick_name}</div>
+//             <div title={categoryName + "," + type} style={{
+//                 padding: "1px 2px",
+//                 fontSize: "12px",
+//                 height: "16px",
+//                 width: "100%",
+//                 color: "white",
+//                 overflow: "hidden",
+//                 display: "flex",
+//                 flexDirection: "row",
+//                 justifyContent: "space-between",
+//             }}>
+//                 <div>{categoryName}</div>
+//                 <div>{type === "designer" ? "디자이너" : "메이커"}</div>
+//             </div>
+//         </div>
+//     </div>
+// }
 
 class ExpertReorderGrid extends React.Component {
     constructor(props) {
@@ -158,9 +159,10 @@ class ExpertReorderGrid extends React.Component {
                         direction="horizontal"
                         maxItems={5}
                         render={item =>
-                            <ListElement
-                                item={item}
-                                handle={(id) => this.removeFromSortedList(id)}
+                            <Expert
+                                data={item}
+                                removeLabel={"삭제"}
+                                handleDel={(id) => this.removeFromSortedList(id)}
                             />}
                         onDragEnd={this.reorderList}
                     />

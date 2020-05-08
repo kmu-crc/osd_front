@@ -1,67 +1,68 @@
 import React from 'react';
 import { ListManager } from "react-beautiful-dnd-grid";
+import Item from "Admin/Commons/Item/Item"
 
 function sortList(list) {
     return list==null?[]:list.slice().sort((first, second) => first.order - second.order);
 }
-function ListElement({ item: { userName, title, thumbnail, uid }, handle }) {
-    console.log("title",title);
-    return <div style={{
-        position: "relative",
-        backgroundSize: "cover",
-        backgroundImage: `url(${thumbnail})`,
-        width: "150px",
-        height: "150px",
-        borderRadius: "5px",
-        marginRight: "5px",
-        marginBottom: "5px",
-    }}>
-        <div
-            onClick={() => handle(uid)}
-            style={{
-                cursor: "pointer",
-                padding: "5px 10px",
-                marginLeft: "auto",
-                width: "max-content",
-                color: "white",
-                backgroundColor: "red",
-                borderRadius: "15px",
-            }}>삭제</div>
-        <div style={{
-            bottom: "0px",
-            width: "100%",
-            position: "absolute",
-            padding:"5px",
-            backgroundColor: "#707070",
-        }}>
-            <div title={title} style={{
-                padding: "1px 2px",
-                fontSize: "16px",
-                height: "20px",
-                width: "100%",
-                color: "white",
-                wordWrap: "break-word",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis"
-            }}>
-                {title}({uid})</div>
-            <div title={userName} style={{
-                padding: "1px 2px",
-                fontSize: "12px",
-                height: "16px",
-                width: "100%",
-                color: "white",
-                wordWrap: "break-word",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                textAlign: "right"
-            }}>
-                {userName}</div>
-        </div>
-    </div>
-}
+// function ListElement({ item: { userName, title, thumbnail, uid }, handle }) {
+//     console.log("title",title);
+//     return <div style={{
+//         position: "relative",
+//         backgroundSize: "cover",
+//         backgroundImage: `url(${thumbnail})`,
+//         width: "150px",
+//         height: "150px",
+//         borderRadius: "5px",
+//         marginRight: "5px",
+//         marginBottom: "5px",
+//     }}>
+//         <div
+//             onClick={() => handle(uid)}
+//             style={{
+//                 cursor: "pointer",
+//                 padding: "5px 10px",
+//                 marginLeft: "auto",
+//                 width: "max-content",
+//                 color: "white",
+//                 backgroundColor: "red",
+//                 borderRadius: "15px",
+//             }}>삭제</div>
+//         <div style={{
+//             bottom: "0px",
+//             width: "100%",
+//             position: "absolute",
+//             padding:"5px",
+//             backgroundColor: "#707070",
+//         }}>
+//             <div title={title} style={{
+//                 padding: "1px 2px",
+//                 fontSize: "16px",
+//                 height: "20px",
+//                 width: "100%",
+//                 color: "white",
+//                 wordWrap: "break-word",
+//                 overflow: "hidden",
+//                 whiteSpace: "nowrap",
+//                 textOverflow: "ellipsis"
+//             }}>
+//                 {title}({uid})</div>
+//             <div title={userName} style={{
+//                 padding: "1px 2px",
+//                 fontSize: "12px",
+//                 height: "16px",
+//                 width: "100%",
+//                 color: "white",
+//                 wordWrap: "break-word",
+//                 overflow: "hidden",
+//                 whiteSpace: "nowrap",
+//                 textOverflow: "ellipsis",
+//                 textAlign: "right"
+//             }}>
+//                 {userName}</div>
+//         </div>
+//     </div>
+// }
 
 class DesignReorderGrid extends React.Component {
     constructor(props) {
@@ -155,13 +156,13 @@ class DesignReorderGrid extends React.Component {
                         direction="horizontal"
                         maxItems={5}
                         render={item =>
-                            <ListElement
-                                item={item}
-                                handle={
+                            <Item
+                                data = {item}
+                                removeLabel = {"삭제"}
+                                handleDel={
                                     (id) => this.removeFromSortedList(id)
-                                    // alert(id)
-                                    // sortedList.splice(sortedList.findIndex(item => item.uid === id), 1)
-                                }
+                                    }
+                                isHotBtn={false}
                             />}
                         onDragEnd={this.reorderList}
                     />
