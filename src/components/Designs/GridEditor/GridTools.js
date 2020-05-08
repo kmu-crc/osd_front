@@ -45,7 +45,7 @@ export const CreateStep = (props) => {
 export const CreateCard = (props) => {
     return (<div onClick={props.onClick}
         style={{
-            width: "200px", height: "200px", marginRight: props.marginRight,
+            width: "215px", height: "215px", marginRight: props.marginRight,
             borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
             cursor: "pointer",marginBottom:"10px"
         }}>
