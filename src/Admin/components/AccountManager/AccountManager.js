@@ -7,17 +7,18 @@ import noimg from "source/thumbnail.png";
 // import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
-
+import Account from "Admin/Commons/Account/Account"
 const MainBox = styled.div`
   // *{
   //   border:1px solid black;
   // }
   display:flex;
-  width:max-content;
+  width:1350px;
   flex-direction:row;
   margin-left:auto;
   margin-right:auto;
   .main{
+    width:100%;
     margin-top:20px;
     margin-bottom:10px;
   }
@@ -55,7 +56,7 @@ const FilterBox = styled.div`
 `
 const ListBox = styled.div`
   // border:1px solid black;
-  width:780px;
+  width:100%;
   // height:max-content,
   display:flex;
   flex-direction:row;
@@ -130,7 +131,7 @@ class AccountManager extends Component {
       loading: false,
 
       // list
-      page: 0, max: 20,
+      page: 0, max: 10,
       normal: [],
       count: null,
 
@@ -250,10 +251,10 @@ class AccountManager extends Component {
     this.GetAccountListRequest(page, max, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
   async goPage(activePage) {
-    alert(activePage);
+    // alert(activePage);
     await this.setState({ page: activePage });
     const { page, max, sort, desc, startDate, endDate, keyword } = this.state;
-    this.GetAccountListRequest(page, max, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+    this.GetAccountListRequest(activePage, max, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
   render() {
     const { normal, count, loading, keyword, desc, sort } = this.state;
@@ -314,9 +315,10 @@ class AccountManager extends Component {
                 normal.map(item => {
                   // console.log(item);
                   return (
-                    <ListElement
+                    <Account
                       key={item.uid}
-                      item={item}
+                      data={item}
+                      removeLabel={"삭제"}
                       handleDel={this.DeleteAccountRequest} />
                   )
                 })
@@ -327,7 +329,7 @@ class AccountManager extends Component {
             <div>
               {count <= this.state.max ? null :
                 <Pagination
-                  activePage={this.state.page}
+                  activePage={this.state.page+1}
                   boundaryRange={0}
                   defaultActivePage={1}
                   ellipsisItem={null}
@@ -336,7 +338,7 @@ class AccountManager extends Component {
                   siblingRange={1}
                   totalPages={lastPage}
                   onPageChange={(event, { activePage }) => {
-                    this.goPage(activePage - 1);
+                    this.goPage(activePage-1);
                   }}
                 />
               }

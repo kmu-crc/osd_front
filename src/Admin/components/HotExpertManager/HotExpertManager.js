@@ -89,7 +89,7 @@ class HotExpertManager extends Component {
         {loading ? <Loading /> : null}
 
         {/* favorite design manager */}
-        <div style={{ width: "770px", overflowX: "hidden", marginTop: "20px", marginBottom: "10px" }}>
+        <div style={{ width: "1350px", overflowX: "hidden", marginTop: "20px", marginBottom: "10px" }}>
           <h1>인기 디자이너/메이커</h1>
           {experts && experts.length > 0
             ? <ExpertReorderGrid list={experts} update={this.handleUpdateRequest} />
