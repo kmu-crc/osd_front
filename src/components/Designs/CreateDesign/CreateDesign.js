@@ -13,7 +13,7 @@ import osdcss from "opendesign_style";
 import FileController from "../CardSourceDetail/FileController";
 import EmbController from "../CardSourceDetail/EmbController";
 import TextController from "../CardSourceDetail/TextControllerPlus";
-// import GridEditor from "components/Designs/GridEditor";
+import TemplateGridEditor from "components/Designs/CreateDesign/TemplateGridEditor";
 import { geturl } from "config";
 import Loading from "components/Commons/Loading";
 import { confirm } from "components/Commons/Confirm/Confirm";
@@ -549,7 +549,9 @@ const DelBtn = styled.button`
 const SectionContainer = styled.section`
   display: ${props => props.display};
   // width: ${props => props.width || "100%"};
+  // *{border:1px solid black;}
 `;
+
 const CropperDialog = styled(Modal)`
   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
   // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
@@ -583,6 +585,77 @@ const ToProjectInfoDialog = styled(Modal)`
     margin-top: 38px;
   }
 `;
+
+// content form, templete selector
+const DesignTemplateSelector = styled.div`
+  .title {
+    width: max-content;
+    margin: auto;
+    color: #707070;
+    padding: 10px 5px;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 2rem;
+  }
+  .template-wrapper {
+    display: flex;
+  }
+  .element {
+    min-width: 150px;
+    border: 1px solid #EFEFEF;
+    padding: 5px;
+    :hover{
+      border: 1px solid #777777;
+    }
+  }
+`;
+const DesignTypeSelectorWrapper = styled.div`
+  .title {
+    width: max-content;
+    margin: auto;
+    color: #707070;
+    padding: 10px 5px;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 2rem;
+  }
+  .selector {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+  }
+  .panel {
+    opacity: 0.75;
+    margin: 25px;
+    width: 450px;
+    height: 300px;
+    border: 3px solid #FFB6C1;
+    box-shadow: 10px 10px rgba(255, 100, 100, .1);
+    padding: 17px;
+    overflow: hidden;
+
+    :hover {
+      opacity: 1;
+      background-color: rgba(255, 100, 100, .125);
+      box-shadow: 10px 10px rgba(255, 100, 100, .2);
+    }
+  }
+`;
+const EditorWrapper = styled.div`
+.title {
+  width: max-content;
+  margin: auto;
+  color: #707070;
+  padding: 10px 5px;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 2rem;
+}
+.editor{
+  opacity: .75;
+}
+`;
 const designImageText = "디자인 이미지";
 const emptyCategory = [{ value: 0, text: "" }];
 const scrollmenu = [{ step: 0, txt: "기본 정보" }, { step: 1, txt: "부가 정보" }, { step: 2, txt: "컨텐츠 입력" }];
@@ -595,6 +668,14 @@ function Peer(props) {
     </PeerBox>
   );
 };
+
+const template = [
+  { type: "empty", text: "빈 템플릿" },
+  { type: "fashion", text: "패션디자인 템플릿" },
+  { type: "engineering", text: "공학디자인 템플릿" },
+  { type: "software", text: "소프트웨어디자인 템플릿" },
+];
+
 class CreateDesign extends Component {
   constructor(props) {
     super(props);
@@ -603,9 +684,13 @@ class CreateDesign extends Component {
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0,
-      showSearch: false, title: "", thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false, grid: false,
-      categoryLevel1: this.props.userInfo.category1 || null, categoryLevel2: null, alone: true, members: [], addmem: [], delmem: [],
+      showSearch: false,
+      title: "",
+      thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false,
+      categoryLevel1: this.props.userInfo.category1 || null, categoryLevel2: null,
+      alone: true, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
+      type: null, template: null,
     };
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -717,7 +802,6 @@ class CreateDesign extends Component {
   };
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
-    console.log("checkFinishAdditional", categoryLevel1, ((alone && members.length === 0) || (!alone && members.length > 0)), license1, license2, license3);
     if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
       await this.setState({ additional: true, content: true });
     } else {
@@ -736,12 +820,19 @@ class CreateDesign extends Component {
     });
     let data = {
       uid: this.props.userInfo.uid,
-      is_project: this.state.is_project, contents: contents,
+      is_project: this.state.is_project,
+      contents: contents, // [*]
       category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
       files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
       is_commercial: license1 ? 1 : 0, is_display_creater: license2 ? 1 : 0, is_modify: license3 ? 1 : 0,
-      members: { add: this.state.addmem, del: this.state.delmem },
-      title: title
+      members: {
+        add: this.state.addmem, del: this.state.delmem
+      },
+      title: title,
+
+      // added
+      type: this.state.type, steps: this.state.steps,
+
     };
 
     let designId = null;
@@ -938,31 +1029,23 @@ class CreateDesign extends Component {
   }
 
   render() {
-    let arrSummaryList = [];
-    if (this.state.members.length > 0) {
-      arrSummaryList = this.state.members.map((item, index) => {
-        return (
-          <div onClick={() => this.removeMember(item.user_id)} key={index}>
-            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
-          </div>
-        )
-      });
-    }
 
     const { step, is_project, contents } = this.state;
     const thumbnailURL = this.state.thumbnail;
-    // console.log(this.state.contents);
     console.log(this.props, this.state);
+ 
     return (
-      <div onClick={this.handleCloseMember}>
+      <div>
+
         <MainBanner>
           <div className="title">디자인 등록하기</div>
         </MainBanner>
 
-        {this.state.loading ?
-          <Loading /> : null}
-
         <MainSection>
+ 
+          {this.state.loading ?
+            <Loading /> : null}
+
           {/* scroll - menu */}
           <NavMenu>
             <div className="menuBox">
@@ -977,24 +1060,25 @@ class CreateDesign extends Component {
               </MenuItem>
               <MenuItem
                 selected={this.state.step === 1}
+                borderBottom={false}
                 onClick={() =>
                   this.state.basic ?
                     this.setState({ step: 1 }) :
                     alert("기본 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
-                borderBottom={false}>
+              >
                 <div className="MenuText">
-                  {scrollmenu[1].txt}
-                </div>
+                  {scrollmenu[1].txt}</div>
               </MenuItem>
               <MenuItem
                 selected={this.state.step === 2}
-                onClick={() => this.state.additional ?
-                  this.setState({ step: 2 }) :
-                  alert("부가 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
-                borderBottom={false}>
+                borderBottom={false}
+                onClick={() =>
+                  this.state.additional ?
+                    this.setState({ step: 2 }) :
+                    alert("부가 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
+              >
                 <div className="MenuText">
-                  {scrollmenu[2].txt}
-                </div>
+                  {scrollmenu[2].txt}</div>
               </MenuItem>
             </div>
           </NavMenu>
@@ -1137,7 +1221,15 @@ class CreateDesign extends Component {
                 <div>
                   {/* INVITED MEMBER */}
                   <InviteMemberListBox>
-                    <div className="memberList">{arrSummaryList}</div>
+                    <div className="memberList">
+                      {this.state.members && this.state.members.length > 0 ?
+                        this.state.members.map((item, index) => {
+                          return (
+                            <div onClick={() => this.removeMember(item.user_id)} key={index}>
+                              <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+                            </div>
+                          )
+                        }) : null}</div>
                   </InviteMemberListBox>
                   {/* LEAVE ME ALONE */}
                   {/* <NoInviteMemberBox>
@@ -1160,51 +1252,178 @@ class CreateDesign extends Component {
             </SectionContainer>
 
             <SectionContainer display={step === 2 ? "block" : "none"}>
-              {is_project === 0 ?
-                <React.Fragment>
-                  {/* edit mode */}
-                  {contents && contents.length > 0 ? (
+              {/* select type */}
+              {this.state.type === null ?
+                <DesignTypeSelectorWrapper>
+                  <div className="title">
+                    디자인의 형태를 선택 하실 수 있습니다!</div>
+
+                  <div className="selector">
+                    <div
+                      className="panel"
+                      onClick={() => this.setState({ type: "normal", content: true, is_project: 0 })}
+                    >
+                      <div style={{ marginTop: "10px", borderBottom: "3px solid gray", backgroundColor: "gray", width: "52%", height: "0px" }} />
+                      <div style={{ margintop: "10px", borderbottom: "3px solid gray", backgroundcolor: "gray", width: "15%", height: "0px" }} />
+                      <div style={{ marginTop: "20px", marginLeft: "10px", borderBottom: "3px solid gray", backgroundColor: "gray", width: "25%", height: "0px" }} />
+                      <div style={{ marginTop: "10px", border: "3px solid gray", width: "50%", height: "50%", boxShadow: "10px 10px rgba(255, 100, 100, .125)" }} />
+                      <div style={{ marginTop: "20px", marginLeft: "10px", borderBottom: "3px solid gray", backgroundColor: "gray", width: "25%", height: "0px" }} />
+                      <div style={{ marginTop: "10px", borderBottom: "3px solid gray", backgroundColor: "gray", width: "15%", height: "0px" }} />
+                      <div style={{ marginTop: "10px", border: "3px solid gray", width: "35%", height: "35%" }} />
+                    </div>
+                    <div
+                      className="panel"
+                      onClick={() => this.setState({ type: "grid", is_project: 1 })}
+                    >
+                      <div style={{ display: "flex", padding: "10px" }}>
+                        <div style={{ margin: "5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "25px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "25px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "25px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "25px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "25px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                      </div>
+
+                      <div style={{ display: "flex", padding: "10px" }}>
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                      </div>
+
+                      <div style={{ display: "flex", padding: "10px" }}>
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "0px solid gray", width: "60px", height: "60px", }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                        <div style={{ margin: "0px 5px", borderRadius: "15px", border: "2px solid gray", width: "60px", height: "60px", boxShadow: "5px 5px rgba(255, 100, 100, .125)" }} />
+                      </div>
+
+                    </div>
+                  </div>
+                </DesignTypeSelectorWrapper> : null}
+
+              {/* selected blog */}
+              {/* just as we have */}
+              {this.state.type === "normal" ?
+                <div>
+                  {is_project === 0 ?
                     <React.Fragment>
-                      {contents.map(item => {
-                        return (<ControllerWrap key={item.order}>
-                          <div className="contentWrap">
-                            {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
-                            {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
-                            {item.type === "EMBED" ? (<EmbController />) : null}
-                          </div>
-                          <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
-                          {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
-                          {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
-                        </ControllerWrap>)
-                      })}
-                      <AddContent getValue={this.onAddValue} order={contents.length} />
-                    </React.Fragment>) : <AddContent getValue={this.onAddValue} order={0} change={this.openInfoToProject} />}
-                </React.Fragment>
-                : <React.Fragment>
-                  <Loading />
-                  <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", marginLeft: "auto", fontSize: "28px" }}>디자인페이지로 이동합니다.</div>
-                  {/* <GridEditor getData={this.onChangeGridData} editor={true} local={true} userInfo={this.props.userInfo} nick_name={this.props.userInfo.nickName} user_id={this.props.userInfo.uid} design={{ uid: "local" }} /> */}
-                </React.Fragment>}
+                      {/* edit mode */}
+                      {contents && contents.length > 0 ?
+                        (<React.Fragment>
+                          {contents.map(item => {
+                            return (<ControllerWrap key={item.order}>
+                              <div className="contentWrap">
+                                {item.type === "FILE" ?
+                                  (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />)
+                                  : null}
+                                {item.type === "TEXT" ?
+                                  (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />)
+                                  : null}
+                                {item.type === "EMBED" ?
+                                  (<EmbController />)
+                                  : null}
+                              </div>
+                              <DelBtn
+                                type="button"
+                                className="editBtn"
+                                onClick={() => this.onDelete(item.order)}>
+                                <i className="trash alternate icon large" />
+                              </DelBtn>
+                              {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
+                              {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
+                            </ControllerWrap>)
+                          })}
+                          <AddContent getValue={this.onAddValue} order={contents.length} />
+                        </React.Fragment>)
+                        : <AddContent getValue={this.onAddValue} order={0} change={this.openInfoToProject} />}
+                    </React.Fragment> : null}
+                </div> : null}
+
+              {/* selected grid */}
+              {this.state.type === "grid" ?
+                /* first suggest design templete */
+                <DesignTemplateSelector>
+
+                  <div className="title">
+                    템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
+                      </div>
+
+                  <div className="template-wrapper">
+                    {template &&
+                      template.length > 0 &&
+                      template.map(item =>
+                        <label
+                          className="element"
+                          key={item.type}
+                          onClick={async () => await this.setState({ template: item.type })}>
+                          <div>
+                            <input
+                              name="template"
+                              type="radio"
+                              value={item.type} />{item.text}</div>
+                          <div>contents</div>
+                        </label>
+                      )}
+                    {/* <label
+                      className="element"
+                      onClick={async () => await this.setState({ template: "my-design" })}>
+                      <div>
+                        <input
+                          name="template"
+                          type="radio"
+                          value={"my-design"} />내 디자인에서 가져오기</div>
+                      <div>contents</div>
+                    </label>
+                      )} */}
+                  </div>
+                </DesignTemplateSelector>
+                : null}
+
+              {(this.state.type === "grid" && this.state.template != null && this.state.template !== "my-design")
+                ? <EditorWrapper>
+                  <div className="editor">
+                    <TemplateGridEditor selected={content => this.setState({ steps: content, is_project: 1 })} type={this.state.template} />
+                  </div>
+                  <div className="title">
+                    선택하신 템플릿으로 시작하시고 싶으시다면 아래에 완료 버튼을 클릭해주세요.
+                  </div>
+                </EditorWrapper>
+                : null}
+              {/* {(this.state.type === "grid" && this.state.template != null && this.state.template === "my-design")
+                ? <div>
+                  ;
+                </div>
+                : null} */}
+
             </SectionContainer>
 
             {/* buttons*/}
             <div className="buttonBox">
               {step === 0 && <React.Fragment>
-                <CompleteButton onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm} isComplete={this.state.basic}>
-                  <BtnText>다음</BtnText>
-                </CompleteButton>
+                <CompleteButton
+                  onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm}
+                  isComplete={this.state.basic}>
+                  <BtnText>다음</BtnText></CompleteButton>
               </React.Fragment>}
               {step === 1 && <React.Fragment>
                 <BackButton onClick={this.gotoPrevStep}>
-                  <BtnText>뒤로</BtnText>
-                </BackButton>
-                <CompleteButton onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm} isComplete={this.state.additional}>
-                  <BtnText>다음</BtnText>
-                </CompleteButton>
+                  <BtnText>뒤로</BtnText></BackButton>
+                <CompleteButton
+                  onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
+                  isComplete={this.state.additional}>
+                  <BtnText>다음</BtnText></CompleteButton>
               </React.Fragment>}
               {step === 2 && <React.Fragment>
-                <BackButton onClick={this.gotoPrevStep}><BtnText>뒤로</BtnText></BackButton>
-                <CompleteButton onClick={this.state.content ? this.submit : this.checkInputForm} isComplete={true}><BtnText>완료</BtnText></CompleteButton>
+                <BackButton onClick={this.gotoPrevStep}>
+                  <BtnText>뒤로</BtnText></BackButton>
+                <CompleteButton
+                  // onClick={this.state.content && this.state.type ? () => alert("true") : () => alert("false")} //this.submit : this.checkInputForm}
+                  isComplete={((this.state.type === "normal" && this.state.content) || (this.state.type === "grid" && this.state.template))}
+                  onClick={((this.state.type === "normal" && this.state.content) || (this.state.type === "grid" && this.state.template)) ? this.submit : this.checkInputForm}>
+                  <BtnText>완료</BtnText>
+                </CompleteButton>
               </React.Fragment>}
             </div>
           </InputBoard>
@@ -1212,7 +1431,6 @@ class CreateDesign extends Component {
       </div >)
   };
 }
-
 export default CreateDesign;
 
 const ControllerWrap = styled.div`
@@ -1271,33 +1489,6 @@ const NewController = styled.li`
   text-align: center;
   cursor: pointer;
 `;
-const Tip = styled.div`
-  .wrapper {
-    z-index: 900;
-    position: absolute;
-    display: flex;
-    visibility: hidden;
-  }
-  .tip-txt {
-    display: none;
-    width: max-content;
-    background-color: #707070;
-    color: #EFEFEF;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px 5px;
-    margin-top: -5px;
-    font-size: 14px;
-  }
-  :hover {
-    .wrapper {
-        visibility: visible;
-    }
-    .tip-txt {
-        display: block;
-    }
-  }
-`;
 class AddContent extends Component {
   constructor(props) {
     super(props);
@@ -1331,7 +1522,7 @@ class AddContent extends Component {
         <div className="innerBox">
           <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
           <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
-          {this.props.order === 0 ? <NewController className="txt complecated" width="max-content" height="29px">
+          {/* {this.props.order === 0 ? <NewController className="txt complecated" width="max-content" height="29px">
             <div onClick={this.changeType} className="txt">단계 생성하기</div>
             <Tip>
               <sup>&nbsp;?</sup>
@@ -1339,7 +1530,7 @@ class AddContent extends Component {
                 <div className="tip-txt"><font style={{ color: "pink" }}>*&nbsp;</font>디자인 수행 단계를 생성합니다.</div>
               </div>
             </Tip>
-          </NewController> : null}
+          </NewController> : null} */}
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>
