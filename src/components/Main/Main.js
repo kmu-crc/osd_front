@@ -11,10 +11,13 @@ const MainContainer = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   padding-top: ${Margin}px;
+  // border:1px solid black;
 `;
 const Head = styled.div`
   margin-left: auto;
   margin-right: auto;
+  margin-bottom:30px;
+  // border:1px solid black;
   width: max-content;
   text-align: left;
   font-weight: 500;

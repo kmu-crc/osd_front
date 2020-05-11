@@ -104,9 +104,9 @@ export class InputPrice extends Component {
                         id="price"
                         width={this.props.width == null ? "150" : this.props.width}
                         placeholder={this.props.placeholder}
-                        value={this.state.price || 0}
+                        value={this.state.price*1000 || 0}
                         onChange={this.onChangePrice}
-                    /><div className="won">천원</div>
+                    /><div className="won">원</div>
 
                     <Button onClick={() => this.onClickButton(1000/1000)}><div className="text">+1천</div></Button>
                     <Button onClick={() => this.onClickButton(10000/1000)}><div className="text">+1만</div></Button>
