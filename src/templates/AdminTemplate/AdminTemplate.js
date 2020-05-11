@@ -18,6 +18,12 @@ const Foot = styled.footer`
     text-align: center;
   }
 `;
+const ContentBox = styled.div`
+  width:100%;
+  .contents_list{
+    margin-left:100px;
+  }
+`
 
 class Footer extends Component {
   render() {
@@ -46,7 +52,11 @@ class AdminTemplate extends Component {
     return (
       <div style={{ height:window.document.body.offsetHeight+70,position: "relative" , paddingBottom: "33px", paddingTop: "60px"}} onClick={this.onClose}>
         <AdminHeaderContainer active={this.props.isActive} />
-        {this.props.children}
+        <ContentBox>
+            <div className="contents_list">
+              {this.props.children}
+            </div>
+        </ContentBox>
         <Footer />
       </div>
     );
