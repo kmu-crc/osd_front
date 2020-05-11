@@ -179,6 +179,12 @@ class Header extends Component {
   componentDidMount() {
     this.getNews();
   }
+  componentWillUpdate(nextProps){
+    if(this.props.valid!=nextProps.valid){
+      console.log(nextProps.userInfo);
+    }
+    return true;
+  }
   getNews = () => {
     const url = `${host}/common/notice`;
     return fetch(url, {
@@ -307,7 +313,7 @@ class Header extends Component {
               <Icon className="grey envelope" size="large" />
             </div>
 
-            <div onClick={() => this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+            <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
               <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
               <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
               {this.state.active ?
