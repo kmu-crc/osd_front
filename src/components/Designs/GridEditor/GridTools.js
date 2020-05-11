@@ -45,13 +45,13 @@ export const CreateStep = (props) => {
 export const CreateCard = (props) => {
     return (<div onClick={props.onClick}
         style={{
-            width: "200px", height: "200px", marginRight: props.marginRight,
+            width: "215px", height: "215px", marginRight: props.marginRight,
             borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
-            cursor: "pointer"
+            cursor: "pointer",marginBottom:"10px"
         }}>
         <div style={{ position: "relative", marginTop: "38.58px", marginLeft: "66.59px" }}>
             <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>컨텐츠 등록하기</div>
+        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px"}}>컨텐츠 등록하기</div>
     </div>)
 }
 export const TipDiv = (props) => {
@@ -61,14 +61,17 @@ export const TipDiv = (props) => {
     </div>)
 }
 const StepCardStyle = styled.div`
+    *{
+        cursor: pointer;
+    }
     position: relative;
-    cursor: pointer;
     display: flex;
     align-items:center;
     width: 200px;
     height: 77px;
     border-radius: 15px;
     border: 2px solid #707070;
+    margin-top:10px;
     // margin-top: ${props => props.marginTop}px;
     margin-left: ${props => props.marginLeft}px;
     margin-right: ${props => props.marginRight}px;
@@ -86,22 +89,26 @@ const StepCardStyle = styled.div`
         font-size: 20px;
         text-align: center;
         line-height: 29px;
+        cursor:pointer;
     }
     :hover{
         .icon-area{
-            display: block;
+            display: ${props=>props.editor==true?"block":"none"};
         }
     }
     .icon-area{
         opacity: 0.5;
         display: none;
         position: absolute;
+        z-index:0;
+        // border:3px solid black;
         margin-left: 165px;
         margin-top: 25px;
+        cursor:${props=>props.editor==true?"move":"default"};;
     }
 `;
 export const StepCard = (props) => {
-    return (<StepCardStyle marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
+    return (<StepCardStyle editor={props.editor} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
         <div className="icon-area">{props.children}</div>
         <div className="text-area" id={props.id} uid={props.uid} title={props.title}>
             <TextFormat txt={props.title} />
@@ -109,13 +116,21 @@ export const StepCard = (props) => {
     </StepCardStyle >)
 }
 const CardContainer = styled.div`
+
+    // *{
+    //     // border:1px solid black;
+    //     cursor:pointer;
+    // }
+
     position: relative;
-    z-index: 700;
-    cursor: pointer;
-    width: ${PxtoRem(200)};
-    height: ${PxtoRem(200)};
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index: 702;
+    width: ${PxtoRem(215)};
+    height: ${PxtoRem(215)};
     border-radius: 15px;
-    overflow:hidden;
+    // overflow:hidden;
     border: 2px solid rgba(112, 112, 112, 1);
     background-color: rgba(112, 112, 112, .15);
     margin-top:${props => props.marginTop};
@@ -124,28 +139,45 @@ const CardContainer = styled.div`
     margin-bottom:${props => props.marginBottom};
     background-clip: padding-box;
     background-size: cover;
-    background-position: 50%;
-    background-image: url(${props => props.first_img && props.first_img.m_img});
+    background-position: center;
+    cursor: pointer;
     :hover{
         .icon-area{
-            display: block;
+            display: ${props=>props.editor==true?"block":"none"};
+            cursor:${props=>props.editor==true?"move":"default"};;
         }
     }
     .icon-area{
+        position: absolute;
+        width:110%;
+        height:110%;
         color: ${props => props.first_img ? "white" : "black"};
-        z-index: 720;
+        z-index: 2;
         opacity: 0.5;
         display: none;
-        position: absolute;
-        margin-left: 165px;
-        margin-top: 25px;
+        cursor:${props=>props.editor==true?"move":"default"};;
+        border-radius:15px;
+        background-color:gray;
+        opacity:0.1;
+        // margin-left: 165px;
+        // margin-top: 25px;
+
     }
-}}>
+    .bound_box_{
+        width:100%;
+        height:100%;
+        border-radius:15px;
+        overflow:hidden;
+        cursor:pointer;
+        position:absolute;
+        z-index:700;
+        background-image: url(${props => props.first_img && props.first_img.m_img});
+       }
 `;
 const AuthorBox = styled.div`
   z-index: 702;
   background: rgba(234, 234, 234, 0.35);
-  width: 170px;
+  width: 100%;
   height: 63px;
   border-radius: 5px;
   font-family: Noto Sans KR;
@@ -153,19 +185,22 @@ const AuthorBox = styled.div`
   color: #707070;
   text-align: center;
   margin-top: 120px;
-  margin-left: 13px;
+//   margin-left: 13px;
   padding: 8px;
 `;
 
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
-        ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
+        ? 
+        
+        <CardContainer editor={props.editor} uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
+            
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
-                <React.Fragment>
-                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
+                <div className="bound_box_">
+                    <div style={{ zIndex: "701", cursor: "pointer",borderRadius:"15px", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
+                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px",}}>
                         <TextFormat txt={props.card.title} />
                     </div>
                     {/* #EAEAEA */}
@@ -175,12 +210,14 @@ export const ContentCard = (props) => {
                         <div style={{ fontSize: "15px", marginTop: "6px", fontWeight: "400" }}>
                             {DateFormat(props.card.update_time)}</div>
                     </AuthorBox>
-                </React.Fragment> :
+                </div> 
+                :
                 <React.Fragment>
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
+                 <div className="bound_box_">
+                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px",  }}>
                         <TextFormat txt={props.card.title || ""} />
                     </div>
-                    <div style={{ zIndex: "702", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
+                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
                         <div style={{ fontSize: "17px" }}>
                             <TextFormat txt={props.card.nick_name || ""} />
                         </div>
@@ -188,7 +225,10 @@ export const ContentCard = (props) => {
                             {DateFormat(props.card.update_time)}
                         </div>
                     </div>
-                </React.Fragment>}
+                    </div>
+                {/* // </div> */}
+                </React.Fragment>
+                }
         </CardContainer>
         : <CardContainer />
     )

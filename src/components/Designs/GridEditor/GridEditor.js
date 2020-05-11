@@ -221,7 +221,6 @@ class GridEditor extends Component {
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
-        console.log("card detail:", this.props);
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
@@ -231,7 +230,7 @@ class GridEditor extends Component {
                         </WhitePane> : null}
 
                         {right ? <WhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
+                            <Arrow angle="180deg" c  gap={gap} right={50} onClick={this.ScrollRight} />
                         </WhitePane> : null}
 
                         {editor && newcard ? <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} /> : null}
@@ -253,7 +252,7 @@ class GridEditor extends Component {
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
-                                    {editor && <div style={{ display: "flex" }}>
+                                    {editor && <div style={{ display: "flex",marginTop:"10px",marginLeft:"10px" }}>
                                         <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
                                     </div>}
                                 </div>

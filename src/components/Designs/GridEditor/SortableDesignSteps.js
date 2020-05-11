@@ -15,29 +15,59 @@ const AsBelowArrow = styled.div`
     border-right:${props => props.percent * 50}px solid transparent;
     transform: rotate(${props => props.angle}deg);
 `;
+const DragBox=styled.div`
+    // display:flex;
+    width:100%;
+    height:100%;
+    // border:1px solid black;
+`
+
 const Container = SortableContainer(({ children }) => { return <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul> });
-const HorizonDragHandle = SortableHandle(() => <div style={{ display: "flex" }}>
-    <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={7} />
-    <AsBelowArrow color="#FF0000" angle={-90} percent={.21} />
-</div>)
-const VerticalDragHandle = SortableHandle(({ is_white }) => <div>
-    <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={180} percent={.21} />
-    <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.21} marginTop={7} />
-</div>)
-const margin = { marginTop: "25px", marginRight: "74px", marginBottom: "37px" };
+const HorizonDragHandle = SortableHandle(() => <DragBox>
+    {/* <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={7} />
+    <AsBelowArrow color="#FF0000" angle={-90} percent={.21} /> */}
+</DragBox>)
+const VerticalDragHandle = SortableHandle(({ is_white }) => <DragBox>
+    {/* <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={180} percent={.21} /> */}
+    {/* <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.21} marginTop={7} /> */}
+</DragBox>)
+const margin = { marginTop: "25px", marginRight: "0px", marginBottom: "37px" };
 const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id }) => (
-    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} design_id={design_id} >
+    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" editor={editor} uid={card.uid} {...margin} card={card} design_id={design_id} >
         {editor ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>
 
 ));
+const HorizonBox = styled.div`
+    position:relative;
+    
+    .bound_box{
+        // border:1px solid black;
+        width:110%;
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        border-radius:15px;
+    }
+    margin-right:64px;
+`
 const DragHandler = styled.div`
+    cursor:${props=>props.editor==true?"move":"default"};;
+    width:110%;
+    height:110%;
     position: absolute;
-    margin-left: 150px;
-    margin-top: 30px;
-    z-index: 800;
-    .wrapper {
+    z-index:0;
+    // z-index: 800;
+    // margin-left: 150px;
+    // margin-top: 30px;
+    .wrapper_ {
+        background-color:gray;
+        opacity:0.1;
+        width:100%;
+        height:100%;
         display: flex;
+        border-radius:15px;
         visibility: hidden;
     }
     .tip-txt {
@@ -51,8 +81,8 @@ const DragHandler = styled.div`
         margin-top: -10px;
     }
     :hover {
-        .wrapper {
-            visibility: visible;
+        .wrapper_ {
+            visibility: ${props=>props.editor==true?"visible":"none"};
         }
         .tip-txt {
             display: block;
@@ -60,29 +90,38 @@ const DragHandler = styled.div`
     }
 `;
 const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_id, openCard, createCard, reorder }) => (
-    <div style={{ position: "relative" }}>
-        <DragHandler>
-            <div className="wrapper">
-                {editor ? <HorizonDragHandle /> : null}
-                <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div>
-            </div>
+    <HorizonBox>
+            <div className="bound_box">
+
+        <DragHandler editor={editor}>
+                <div className="wrapper_">
+                    {editor ? <HorizonDragHandle /> : null}
+                    {/* <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div> */}
+                </div>
         </DragHandler>
-        <StepCard onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={74} marginBottom={0} marginLef={0} />
+        <StepCard editor={editor} onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={0} marginBottom={0} marginLef={0} />
+
 
         {step.cards && step.cards.length > 0 &&
             <Fragment>
                 <div style={{ marginTop: "25px" }}>
-                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
+                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
                 </div>
                 <div>
                     <SortableDesignCards editor={editor} boardId={boardId} items={step.cards} design_id={design_id} openCard={openCard} reorder={reorder} />
                 </div>
             </Fragment>}
         {editor &&
-            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "25px" : "66px" }}>
-                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
-            </div>}
-    </div>
+            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "0px" : "66px" }}>
+                {/* <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
+                 */}
+                 
+                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
+
+            </div>
+            }
+            </div>
+    </HorizonBox>
 ));
 class SortableDesignCards extends Component {
     state = { items: this.props.items };
