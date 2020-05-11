@@ -654,6 +654,7 @@ const EditorWrapper = styled.div`
 }
 .editor{
   opacity: .75;
+  overflow: auto;
 }
 `;
 const designImageText = "디자인 이미지";
