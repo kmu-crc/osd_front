@@ -221,8 +221,6 @@ class GridEditor extends Component {
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
-        // console.log("card detail:", this.props.DesignDetailStepCard, cardDetail);
-        console.log(this.props);
         return (
             <div style={{ position: "relative" }}>
                 {design.uid ?
