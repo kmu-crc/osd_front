@@ -19,8 +19,8 @@ const software = [
 ];
 const engineering = [
     { order: 0, title: "기획" },
-    { order: 1, title: "요구사항 분석" },
-    { order: 2, title: "소프트웨어 설계" },
+    { order: 1, title: "시스템 분석" },
+    { order: 2, title: "시스템 설계" },
     { order: 3, title: "시스템 구현" },
     { order: 4, title: "시스템 테스트 및 평가" },
 ];
@@ -112,8 +112,8 @@ class TemplateGridEditor extends Component {
                         </div>)
                     : null
                 }
-                <div style={{width:"max-content"}}>
-                    <CreateStep/>
+                <div style={{ width: "max-content" }}>
+                    <CreateStep />
                 </div>
             </div>
 

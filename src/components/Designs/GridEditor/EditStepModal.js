@@ -143,9 +143,10 @@ class EditStepModal extends Component {
             return;
         }
         if (await confirm("단계를 삭제하시겠습니까?", "예", "아니오")) {
-            this.props.RemoveStep(step.uid);
+            if (step && step.uid)
+                this.props.RemoveStep(step.uid);
         }
-        this.onClose();
+        this.props.close && this.props.close();
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.title !== this.props.title) {
