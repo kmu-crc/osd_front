@@ -7,10 +7,14 @@ import { SignInRequest, FBSignInRequest } from "actions/Registration";
 class SignInContainer extends Component {
   render() {
     return (
-      <SignInForm {...this.props}/>
+      <SignInForm {...this.props} />
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  token: state.Authentication.status.token,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -23,4 +27,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(SignInContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignInContainer));

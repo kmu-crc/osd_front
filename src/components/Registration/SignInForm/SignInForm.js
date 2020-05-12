@@ -160,18 +160,21 @@ class SignInForm extends Component {
     }
 
     e.preventDefault();
-    const data = { email: this.state.email, password: this.state.password };
-    this.props.SignInRequest(data).then(data => {
+    const senddata = { email: this.state.email, password: this.state.password };
+    this.props.SignInRequest(senddata).then(data => {
+      console.log(data);
       if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
         alert("opendesign회원이 아닙니다.");
       } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
         alert("비밀번호가 일치하지 않습니다.");
       } else {
-        window.location.reload();
+        window.history.go(-1)
+        // window.location.reload();
       }
     })
-      .then(()=>{
-        window.history.go(-1)
+      .then(() => {
+        // alert(this.props.token);
+        // console.log(this.props.token);
       })
 
 

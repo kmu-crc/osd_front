@@ -86,7 +86,7 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    console.log("item:", item);
+    // console.log("item:", item);
     // const Element = () =>
     
     return (

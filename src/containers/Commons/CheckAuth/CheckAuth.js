@@ -28,6 +28,7 @@ export default function CheckAuth(Components) {
       GetSession("market").then(token => {
         this.props.CheckTokenRequest(token).then(data => {
           this.setState({ valid: true });
+          // console.log(data);
           // if (data && data.info) {
           //   if (!data.info.isDetail) {
           //     if (this.props.location.pathname === "/inserUserDetail") {

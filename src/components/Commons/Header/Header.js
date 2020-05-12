@@ -179,9 +179,11 @@ class Header extends Component {
   componentDidMount() {
     this.getNews();
   }
-  componentWillUpdate(nextProps){
-    if(this.props.valid!=nextProps.valid){
-      console.log(nextProps.userInfo);
+  componentWillUpdate(nextProps) {
+    if (this.props != nextProps) {
+      if (nextProps.signed) {
+        window.location.reload();
+      }
     }
     return true;
   }

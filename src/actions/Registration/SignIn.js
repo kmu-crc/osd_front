@@ -13,8 +13,9 @@ export function SignInRequest(data) {
       })
       .then(function (res) {
         if (res.isMember && res.isPassword) {
+          console.log(res);
           SetSession("market", res.token);
-          return dispatch(SignInSuccess());
+          return dispatch(SignInSuccess(res.token));
         } else {
           if (!res.isMember) {
             return dispatch(SignInIsNotMember())
@@ -51,6 +52,7 @@ export function SignInIsNotPassword() {
 export function SignInSuccess(token) {
   return {
     type: types.AUTH_SIGNIN_SUCCESS,
+    success: true,
     token: token
   }
 };

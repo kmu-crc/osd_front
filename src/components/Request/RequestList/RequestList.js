@@ -263,7 +263,7 @@ class RequestList extends Component {
 
   render() {
     const { type, sort, category1, category2, cate1, cate2 } = this.props;
-    console.log(category1, category2, cate1, cate2, sort);
+    // console.log(category1, category2, cate1, cate2, sort);
     const { write } = this.state;
     return (
       <React.Fragment>

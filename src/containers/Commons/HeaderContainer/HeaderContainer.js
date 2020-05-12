@@ -20,7 +20,8 @@ const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
   valid: state.Authentication.status.valid,
   userInfo: state.Authentication.status.userInfo,
-  isActive: state.OpenDesign.isActive
+  isActive: state.OpenDesign.isActive,
+  signed: state.SignIn.status.success
 });
 const mapDispatchToProps = (dispatch) => ({
   SignOutRequest: () => dispatch(SignOutRequest()),

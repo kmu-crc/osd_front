@@ -29,24 +29,36 @@ export function SignIn(state, action) {
       return update(state, {
         signIn: {
           status: { $set: "SUCCESS" }
+        },
+        status: {
+          success: { $set: action.success }
         }
       });
     case types.AUTH_SIGNIN_FAILURE:
       return update(state, {
         signIn: {
           status: { $set: "FAILURE" }
+        },
+        status: {
+          success: { $set: action.success }
         }
       });
     case types.AUTH_SIGNIN_IS_NOT_MEMBER:
       return update(state, {
         signIn: {
           status: { $set: "NOTMEMBER" }
+        },
+        status: {
+          success: { $set: action.success }
         }
       });
     case types.AUTH_SIGNIN_IS_NOT_PASSWORD:
       return update(state, {
         signIn: {
           status: { $set: "NOTMATCHINGPASSWORD" }
+        },
+        status: {
+          success: { $set: action.success }
         }
       });
     /////////////////////////
