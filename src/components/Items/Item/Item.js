@@ -107,7 +107,7 @@ class Item extends Component {
     const item = this.props.data || empty;
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
     const img = item ? item.thumbnail : noimg;
-    console.log(this.props);
+    // console.log(this.props);
     const RenderingStar = ()=>{
       return <Rating name="score" icon='star' defaultRating={parseInt(item.score,10)||0} maxRating={5} disabled />
     }

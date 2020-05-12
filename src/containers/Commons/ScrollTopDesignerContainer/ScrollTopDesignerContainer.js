@@ -11,7 +11,7 @@ class ScrollTopExpertContainer extends Component {
   }
 
   render() {
-    console.log(this.props.dataList);
+    // console.log(this.props.dataList);
     return (
       this.props.status === "INIT"
         ? <Loading />

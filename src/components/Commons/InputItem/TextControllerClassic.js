@@ -16,6 +16,7 @@ export class TextControllerClassic extends Component {
         const { item } = this.props;
         return (<EditorWrapper>
             <CKEditor
+                id="classicEditor_"
                 editor={ClassicEditor}
                 data={item.content}
                 onInit={editor => { editor.editing.view.focus(); }}

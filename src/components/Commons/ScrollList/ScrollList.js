@@ -97,7 +97,7 @@ class ScrollList extends Component {
             </ListContainer>
           </InfiniteScroll>
         </ScrollContainer>
-        : <NoData><div>검색 결과가 없습니다.</div></NoData>
+        : <NoData><div>해당 항목 없음</div></NoData>
     );
   }
 }
