@@ -9,7 +9,7 @@ export const GetTopExpertListRequest = () => {
       headers: { "Content-Type": "application/json" }, method: "GET"
     })
       .then(res => res.json())
-      .then(data => {console.log("GetTopExpertListRequest",data);
+      .then(data => {
         dispatch(GetTopExpertListSuccess(data ? data : []))
       }
         )

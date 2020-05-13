@@ -13,7 +13,13 @@ class ItemReviewContainer extends Component {
         this.refresh = this.refresh.bind(this);
     }
     componentDidMount() {
-        this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+        this.props.GetItemReviewRequest(this.props.match.params.id, 0)
+        .then(
+            ()=>{
+                console.log(this.props.review.length);
+                return this.props.isExpanding(this.props.review.length>1?true:false);
+            }
+        )
         this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
     }
     refresh() {
