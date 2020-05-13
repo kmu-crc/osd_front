@@ -6,6 +6,7 @@ import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -53,36 +54,60 @@ const CategoryItem = styled.div`
 `
 const TitleForm = styled.input`
   padding: 10px;
-  resize: none;
   width: 100%;
   height: 30px;
-  border: 1px solid #E6E6E6;
+  border-radius: 20px;
+  background-color:#EFEFEF;
   outline: none;
-  border-radius: 10px;
+  border:none;
+  resize: none;
+
 `;
 const CommentForm = styled.textarea`
-  padding:10px;
-  resize:none;
-  width:100%;
-  height:100px;
-  border:1px solid #E6E6E6;
-  outline:none;
-  border-radius:10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background-color:#EFEFEF;
+    outline: none;
+    border:none;
+    resize: none;
+
 `;
 const WriteNormalArticleModal = styled(Modal)`
+  min-width:300px;
+  min-height:200px;
+  max-width:760px;
+  width:40%;
+  height:max-height;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   margin-bottom:10px;
+  border-radius:15px !important;
+  padding:10px;
   .close-box{
-    width: max-content;
-    margin-left: auto;
-    margin-right: 25px;
+    width: 100%;
+    height:10%;
+    display:flex;
+    justify-content:flex-end;
+  }
+  .title_label{
+    min-width:100px;
+    height:max-content;
   }
   .form{
       width:100%;
+      height:10%;
       padding:10px;
+      display:flex;
+  }
+  .align_item_center{
+    align-items:center;
+  }
+  .form_height{
+    height:max-content;
   }
   .contents{
       display:flex;
-      justify-content:space-between;
+      justify-content:flex-end;
       padding-left:10px;
       padding-right:10px;
       .score{
@@ -197,10 +222,11 @@ const ListElement = styled.div`
 class RequestList extends Component {
   constructor(props) {
     super(props);
+    this.onChangValue=this.onChangValue.bind(this);
     this.state = {
       rendering: true,
       path: "request",
-      write: false,
+      write: true,
       title: "",
       comment: "",
     };
@@ -245,7 +271,7 @@ class RequestList extends Component {
       status: "normal",
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      content: this.state.comment,
+      content: this.state.content,
       title: this.state.title,
       expert_id: this.props.id || null,
       personal: this.props.id || null,
@@ -260,6 +286,18 @@ class RequestList extends Component {
       })
       .catch(err => alert("에러발생" + err));
   }
+  async onChangValue(data) {
+    console.log(data);
+    // let copyContent = data;
+    // const copyData = { ...data };
+    // for (let item of copyContent) {
+    //     if (item.order === copyData.order) {
+    //         item.content = data.content
+    //     }
+    // }
+    await this.setState({ content: data.content });
+    // this.returnState();
+};
 
   render() {
     const { type, sort, category1, category2, cate1, cate2 } = this.props;
@@ -329,20 +367,31 @@ class RequestList extends Component {
           {write ?
             <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
               <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
-                <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+                <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
               </div>
-              <div className="form">
-                제목: <TitleForm
+              <div className="form align_item_center">
+                <div className="title_label">제목</div>
+                 <TitleForm
                   value={this.state.title || ""}
                   onChange={event => this.setState({ [event.target.name]: event.target.value })}
                   name="title"
                 />
-                내용: <CommentForm
+                </div>
+                <div className="form form_height">
+                <div className="title_label ">내용</div>
+                <TextControllerClassic
+                  item={{content:this.state.content}}
+                  name={"comment"}
+                  getValue={this.onChangValue}
+                  // initClick={this.state.click}
+                  // deleteItem={this.deleteItem}
+                />
+                 {/* <CommentForm
                   value={this.state.comment || ""}
                   onChange={event => this.setState({ [event.target.name]: event.target.value })}
                   name="comment"
-                />
-              </div>
+                /> */}
+                </div>
               <div className="contents">
                 <div className="buttonBox">
                   <div className="button" onClick={this.createNoneRequest} >

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
+import Cross from "components/Commons/Cross"
+
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
@@ -57,6 +59,7 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
+  // border:1px solid black;
   position: relative;
   margin-left: 50px;
   width: 900px;
@@ -78,6 +81,7 @@ const ItemInfo = styled.div`
   }
   .expert {
     margin-top: 19px;
+    position:relative;
     .who {
       width: 49px;
       height: 50px;
@@ -88,6 +92,7 @@ const ItemInfo = styled.div`
       margin-right: 26px;
     }
     .nick{
+      cursor:pointer;
       font-size: 20px;
       font-weight: 300;
       line-height: 29px;
@@ -242,9 +247,10 @@ const CoverGrident=styled.div`
   width:100%;
   height:100%;
   position:absolute;
+  z-index:900;
   left:0;
   top:0;
-  background:${props=>props.isGradient?"linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0))":null};
+  background:${props=>props.isGradient?"linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))":null};
 `
 const Board = styled.div`
   // *{border: 1px solid red;}
@@ -366,6 +372,12 @@ const Content = styled.div`
       text-align: left;
     }
   }
+  .detail_board{
+    height:max-content;
+    // border:1px solid black;
+    // overflow:scroll;
+    // scroll-y:hidden;
+  }
 `;
 const ExpandingButton = styled.div`
     width:${props => props.width}px;
@@ -391,12 +403,53 @@ const ExpandingButton = styled.div`
     }
 `;
 
+const MemberBox=styled.div`
+    width:300px;
+    height:200px;
+    position:absolute;
+    background-color:white;
+    border:1px solid #EFEFEF;
+    left:70px;
+    top:40px;
+    border-radius:15px;
+    box-shadow: 5px 5px 10px #00000029;
+    z-index:990;
+    padding:10px;
+    .close{
+      width:100%;
+      display:flex;
+      justify-content:flex-end;
+      cursor:pointer;
+    }
+    .member_list{
+      width:100%;
+      oveflow-y:auto;
+    }
+
+`
+const PeerBox = styled.div`
+  width:100%;
+  display:flex;
+  align-items:center;
+  margin-bottom:5px;
+  .thumbnail{
+    width:20px;
+    height:20px;
+    background-image: url(${prop => prop.imgURL});
+    border-radius:20px;
+    margin:5px;
+  }
+
+`
+
 class ItemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isShowmember:false,
       isLike: this.props.like == null ? false : this.props.like,
       expandingContent: false, expandingReview: false, expandingBoard: false,
+      isexpandingContent: false, isexpandingReview: false, isexpandingBoard: false,
       //for review detail
       reviewdetail: false, detail: null
     }
@@ -457,14 +510,44 @@ class ItemDetail extends Component {
     const {score} = this.props.item;
     console.log(score);
 
+    const isWrapperContent = window.document.getElementById("detail_board")&&
+    window.document.getElementById("detail_board").scrollHeight>window.document.getElementById("detail_board").clientHeight;
+    console.log(window.document.getElementById("detail_board")&&
+    window.document.getElementById("detail_board").scrollHeight>window.document.getElementById("detail_board").clientHeight)
+    // console.log(window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").
+    // ,window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").scrollHeight)
+    
     const RenderStar = ()=>{
       return  <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled />
     }
+    const MemberListBox=()=>{
+      return(
+        <MemberBox>
+        <div onClick={()=>{this.setState({isShowmember:!this.state.isShowmember})}} className="close">
+            <Cross angle={45} color={"#000000"} weight={2} width={15} height={15} />
+        </div>
+        
+        <div className="member_list">
+        {
+            item.members.map((item,index)=>{
+              return(
+                <PeerBox imgURL = {item.s_img} key={index}>
+                  <div className="thumbnail"/>
+                  <div className="name_label">{item.nick_name}</div>
+                </PeerBox>
+              );
+            })
+        }  
+        </div>
+        </MemberBox> 
+      );
+    }
     return item ?
       <React.Fragment>
-        {(this.props.userInfo && item.members && item.members.length > 1)
+        {/* {(this.props.userInfo && item.members && item.members.length > 1)
           ? <ConnectedMemberContainer id={this.props.itemId} members={item.members} userInfo={this.props.userInfo} />
-          : null}
+          : null} */}
+
         <Wrapper>
           {/* thumbnail and item-info */}
           <div className="line">
@@ -477,9 +560,17 @@ class ItemDetail extends Component {
 
                 <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
                 <div className="expert line">
+                  {(this.props.userInfo && item.members && item.members.length > 0&&this.state.isShowmember)
+                  ? <MemberListBox/>
+                  : null}  
                   <div className="who" />
-                  <div className="nick">{item.userName}</div>       
+                  <div className="nick" onClick={()=>this.setState({isShowmember:!this.state.isShowmember})}>{item.userName}
+                  {this.props.userInfo && item.members && item.members.length > 0
+                  ?
+                  `외 ${item.members.length}명`:null}
+                  </div>     
                 </div>
+
                 <Introduction>
                   <div className="wrapItem"> 
                     <div className="title">아이템 설명</div>
@@ -550,23 +641,28 @@ class ItemDetail extends Component {
 
               <ItemReviewContainer
                 user_id={item.user_id}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
+                handler={detail => this.setState({ reviewdetail: true, detail: detail })} 
+                isExpanding={(result)=>{this.setState({isexpandingReview:result})}}/>
 
               {this.state.reviewdetail ?
                 <ReviewDetailModal
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
                   detail={this.state.detail} /> : null}
-            <CoverGrident isGradient={!expandingReview}/>
+            {this.state.isexpandingReview&&<CoverGrident isGradient={!expandingReview}/>}
             </Board>
 
-            <ExpandingButton width={1600}>
+            {
+              this.state.isexpandingReview&&
+              <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
                 <div className="font">
                   {expandingReview ? "▲접기" : "▼펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
+            }
+
           </div>
 
           <div style={{ marginTop: "35px" }}>
@@ -575,49 +671,62 @@ class ItemDetail extends Component {
                 <div
                   style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
               </div>
-              <ItemQuestionContainer user_id={item.user_id} />
-              <CoverGrident isGradient={!expandingBoard}/>
+              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result)=>{this.setState({isexpandingBoard:result})}}/>
+              {this.state.isexpandingBoard&&<CoverGrident isGradient={!expandingBoard}/>}
             </Board>
-            <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
-                <div className="font">
-                {expandingBoard ? "▲접기" : "▼펼쳐보기"}
+            {this.state.isexpandingBoard&&
+              <ExpandingButton width={1600}>
+                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
+                  <div className="font">
+                  {expandingBoard ? "▲접기" : "▼펼쳐보기"}
+                  </div>
                 </div>
-              </div>
-            </ExpandingButton>
+              </ExpandingButton>
+            }
 
           </div>
 
           {/* item-contents */}
           <div style={{ marginTop: "35px" }}>
             <Content
+              id="contents_rgn"
               style={{ marginTop: "15px", overflow: "hidden" }}
-              height={expandingContent ? "100%" : "175px"}
+              height={expandingContent ? "100%" : "400px"}
               width={1600}>
               <div className="title">아이템 상세내용</div>
               {item && item.upload_type === "blog"
-                ? <CardSourceDetailContainer
+                ? <div className="detail_board" id="detail_board">
+                  <CardSourceDetailContainer
                   bought={item.bought}
                   isCancel
                   cardId={item.cardId}
                 // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                /> : null}
+                />
+                </div>
+                   : null}
               {item && item.upload_type === "project"
-                ? <ItemStepContainer
+                ? 
+                <div className="detail_board" id="detail_board">
+                  <ItemStepContainer
                   item={item}
                   id={item["item-id"]}
                   bought={item.bought}
                 // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                /> : null}
-                <CoverGrident isGradient={true}/>
+                /> 
+                </div>
+                : null}
+                {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>}
             </Content>
-            <ExpandingButton width={1600}>
+           {isWrapperContent&&
+           <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                 <div className="font">
                 {expandingContent ? "▲접기" : "▼펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
+           } 
+             
           </div>
 
         </Wrapper>

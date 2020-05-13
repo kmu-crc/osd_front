@@ -13,7 +13,7 @@ class ScrollTopProductContainer extends Component {
     return this.props.GetTopItemListRequest(page);
   }
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     
     return (
       this.props.status === "INIT" ? <Loading /> :
