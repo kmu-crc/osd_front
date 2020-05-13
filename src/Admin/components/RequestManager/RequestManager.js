@@ -53,6 +53,15 @@ const FilterBox = styled.div`
     justify-content:center;
     padding:5px;
   }
+  .range-box {
+    text-align: center;
+    display: flex;
+    p{
+      font-size: 20px;
+      height: 12px;
+      vertical-align: middle;
+    }
+  }
 `
 
 const ListBox = styled.div`
@@ -381,12 +390,12 @@ class RequestManager extends Component {
                 : <div>오림차순 △</div>}
               {/* ▲ ▽  */}
             </div>
-            {/* <div style={{ padding: "10px 5px", }}> */}
-            <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
-                {/* </div> */}
-            {/* <div style={{ padding: "10px 5px", }}> */}
-            <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
-            {/* </div> */}
+            <div className="range-box">
+              <p>기간:</p>
+              <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} />
+              <p>~</p>
+              <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
+            </div>
 
           </FilterBox>
           <FilterBox>
