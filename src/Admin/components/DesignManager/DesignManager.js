@@ -57,6 +57,15 @@ const FilterBox = styled.div`
     justify-content:center;
     padding:5px;
   }
+  .range-box {
+    text-align: center;
+    display: flex;
+    p{
+      font-size: 20px;
+      height: 12px;
+      vertical-align: middle;
+    }
+  }
 `
 
 const ListBox = styled.div`
@@ -80,75 +89,75 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-function ListElement({ item: { userName, title, thumbnail, uid,visible },item, handleTop,handleDel }) {
+function ListElement({ item: { userName, title, thumbnail, uid, visible }, item, handleTop, handleDel }) {
   // console.log("title",title);
   return <div style={{
-      position: "relative",
-      backgroundSize: "cover",
-      backgroundImage: `url(${thumbnail==null?noimg:thumbnail})`,
-      width: "150px",
-      height: "150px",
-      borderRadius: "5px",
-      marginRight: "5px",
-      marginBottom: "5px",
+    position: "relative",
+    backgroundSize: "cover",
+    backgroundImage: `url(${thumbnail == null ? noimg : thumbnail})`,
+    width: "150px",
+    height: "150px",
+    borderRadius: "5px",
+    marginRight: "5px",
+    marginBottom: "5px",
   }}>
-      <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-      {visible==1?    <div
-          onClick={() => handleTop(uid)}
-          style={{
-              cursor: "pointer",
-              padding: "5px 10px",
-              width: "max-content",
-              color: "white",
-              backgroundColor: "orange",
-              borderRadius: "15px",
-          }}>인기아이템</div>
-          :null}
+    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+      {visible == 1 ? <div
+        onClick={() => handleTop(uid)}
+        style={{
+          cursor: "pointer",
+          padding: "5px 10px",
+          width: "max-content",
+          color: "white",
+          backgroundColor: "orange",
+          borderRadius: "15px",
+        }}>인기아이템</div>
+        : null}
       <div
-          onClick={() => handleDel(item)}
-          style={{
-              cursor: "pointer",
-              padding: "5px 10px",
-              marginLeft: "auto",
-              width: "max-content",
-              color: "white",
-              backgroundColor: "red",
-              borderRadius: "15px",
-          }}>삭제</div>
-        </div>
-      <div style={{
-          bottom: "0px",
-          width: "100%",
-          position: "absolute",
-          padding:"5px",
-          backgroundColor: "#707070",
+        onClick={() => handleDel(item)}
+        style={{
+          cursor: "pointer",
+          padding: "5px 10px",
+          marginLeft: "auto",
+          width: "max-content",
+          color: "white",
+          backgroundColor: "red",
+          borderRadius: "15px",
+        }}>삭제</div>
+    </div>
+    <div style={{
+      bottom: "0px",
+      width: "100%",
+      position: "absolute",
+      padding: "5px",
+      backgroundColor: "#707070",
+    }}>
+      <div title={title} style={{
+        padding: "1px 2px",
+        fontSize: "16px",
+        height: "20px",
+        width: "100%",
+        color: "white",
+        wordWrap: "break-word",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis"
       }}>
-          <div title={title} style={{
-              padding: "1px 2px",
-              fontSize: "16px",
-              height: "20px",
-              width: "100%",
-              color: "white",
-              wordWrap: "break-word",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis"
-          }}>
-              {title}({uid})</div>
-          <div title={userName} style={{
-              padding: "1px 2px",
-              fontSize: "12px",
-              height: "16px",
-              width: "100%",
-              color: "white",
-              wordWrap: "break-word",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              textAlign: "right"
-          }}>
-              {userName}</div>
-      </div>
+        {title}({uid})</div>
+      <div title={userName} style={{
+        padding: "1px 2px",
+        fontSize: "12px",
+        height: "16px",
+        width: "100%",
+        color: "white",
+        wordWrap: "break-word",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        textAlign: "right"
+      }}>
+        {userName}</div>
+    </div>
   </div>
 }
 // MANAGER
@@ -156,18 +165,18 @@ class DesignManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      reload:false,
+      reload: false,
       // ui
       loading: false,
 
       // list
       page: 0, max: 20,
       editSpecial: false,
-      special: [], 
+      special: [],
       normal: [],
-      addNormal:[],
+      addNormal: [],
       count: null,
-      
+
 
       // filter
       keyword: "",
@@ -179,7 +188,7 @@ class DesignManager extends Component {
       category1: [], cate1: 0,
       category2: [], cate2: 0,
 
-      rendering:true,
+      rendering: true,
     };
     this.GetDesignListRequest = this.GetDesignListRequest.bind(this);
     this.GetDesignListCountRequest = this.GetDesignListCountRequest.bind(this);
@@ -199,7 +208,7 @@ class DesignManager extends Component {
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
     this.goPage = this.goPage.bind(this);
-    this.handleReload=this.handleReload.bind(this);
+    this.handleReload = this.handleReload.bind(this);
   };
   async componentDidMount() {
     this.setState({ loading: true });
@@ -208,7 +217,7 @@ class DesignManager extends Component {
         console.log(obj);
         this.setState({ category1: obj.category1, category2: obj.category2 });
       })
-     this.GetDesignListRequest();
+    this.GetDesignListRequest();
     this.GetDesignListCountRequest();
     this.setState({ loading: false });
   };
@@ -223,16 +232,16 @@ class DesignManager extends Component {
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
         .then(async data => {
-          if(page==0){
-            await this.setState({addNormal:data,normal:data});
-            } else {
+          if (page == 0) {
+            await this.setState({ addNormal: data, normal: data });
+          } else {
             // let listdata = [...this.state.addNormal]
             // listdata.concat(data);
-            await this.setState({addNormal:this.state.addNormal.concat(data),normal:data});
-            }
-            resolve(true);
-      
-      })
+            await this.setState({ addNormal: this.state.addNormal.concat(data), normal: data });
+          }
+          resolve(true);
+
+        })
         .catch(error => alert(error));
     });
   };
@@ -275,7 +284,7 @@ class DesignManager extends Component {
           category1.unshift({ text: '전체', value: 0 });
           let category2 = [];
           res.data.category2.map(item => category2.push({ text: item.name, value: item.value, parents_id: item.parents_id }));
-            // data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
+          // data.map(item => category2.push({ text: item.name, value: item.uid, parents_id: item.parents_id })));
           category2.unshift({ text: '전체', value: 0, parents_id: 0 });
           console.log("category_test:end")
           resolve({ category1: category1, category2: category2 });
@@ -305,7 +314,7 @@ class DesignManager extends Component {
           method: "POST"
         })
           .then(res => res.json())
-          .then(res => {resolve(res); })
+          .then(res => { resolve(res); })
           .catch(err => console.error(err));
       }
       else if (data.type === "insert") {
@@ -314,7 +323,7 @@ class DesignManager extends Component {
           method: "POST",
           body: JSON.stringify(data)
         }).then(res => res.json())
-          .then(res => { resolve(res);})
+          .then(res => { resolve(res); })
           .catch(err => console.error(err));
       }
       else {
@@ -324,7 +333,7 @@ class DesignManager extends Component {
           body: JSON.stringify(data)
         })
           .then(res => res.json())
-          .then(res => { resolve(res);})
+          .then(res => { resolve(res); })
           .catch(err => console.error(err));
       }
       // resolve();
@@ -339,12 +348,12 @@ class DesignManager extends Component {
   };
   MakeTopDesign(id) {
     this.UpdateDesignRequest(id, { type: "insert", order: this.state.special.length || 0 }, this.props.admin_token)
-    .then( ()=>{
-      const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
-      this.GetDesignListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "")
-    })
-      // .then(this.GetSpecialDesignListRequest())
-      // .then(this.GetDesignListRequest());
+      .then(() => {
+        const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
+        this.GetDesignListRequest(0, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "")
+      })
+    // .then(this.GetSpecialDesignListRequest())
+    // .then(this.GetDesignListRequest());
   }
   EditSpecial() {
     if (this.state.editSpecial) { //to off
@@ -403,22 +412,22 @@ class DesignManager extends Component {
     await this.setState({ cate1: value, cate2: 0 });
     const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
 
-    console.log("ChangeCate",max, cate1, cate2, sort, desc, start, end, keyword );
+    console.log("ChangeCate", max, cate1, cate2, sort, desc, start, end, keyword);
 
 
     await this.setState({ page: 0 });
-    this.GetDesignListRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword :this.state.keyword)
-    .then(()=>this.GetDesignListCountRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
+    this.GetDesignListRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword)
+      .then(() => this.GetDesignListCountRequest(this.state.page, max, value, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
   }
-  async onChangeSubCate(parents_id,value) {
+  async onChangeSubCate(parents_id, value) {
     await this.setState({ cate2: value });
     const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
 
-    console.log("ChangeCate",max, cate1, cate2, sort, desc, start, end, keyword );
+    console.log("ChangeCate", max, cate1, cate2, sort, desc, start, end, keyword);
 
     await this.setState({ page: 0 });
-    this.GetDesignListRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword :this.state.keyword)
-    .then(()=>this.GetDesignListCountRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
+    this.GetDesignListRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword)
+      .then(() => this.GetDesignListCountRequest(this.state.page, max, cate1, value, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
   }
   resetCate = () => {
     this.props.history.replace(`/designManage/${this.props.sort}`);
@@ -428,8 +437,8 @@ class DesignManager extends Component {
     // alert(this.state.keyword);
     const { max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
     await this.setState({ page: 0 });
-    this.GetDesignListRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword :this.state.keyword)
-    .then(()=>this.GetDesignListCountRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
+    this.GetDesignListRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword)
+      .then(() => this.GetDesignListCountRequest(this.state.page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword));
 
   }
   async goNext() {
@@ -446,15 +455,15 @@ class DesignManager extends Component {
   }
   async goPage(activePage) {
     // console.log(this.state.page);
-    await this.setState({ page: activePage});
+    await this.setState({ page: activePage });
     // console.log(this.state.page);
     const { page, max, cate1, cate2, sort, desc, start, end, keyword } = this.state;
     this.GetDesignListRequest(page, max, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : this.state.keyword)
   }
   render() {
-    const { special, addNormal,normal, count, page, loading, editSpecial, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
-    const lastPage = parseInt(count / this.state.max, 10)+1;
-console.log(count);
+    const { special, addNormal, normal, count, page, loading, editSpecial, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
+    const lastPage = parseInt(count / this.state.max, 10) + 1;
+    console.log(count);
     // category1
     const combocate1 =
       (category1 && category1.length > 0)
@@ -468,7 +477,7 @@ console.log(count);
       (cate1 > 0 && category2 && category2.length > 0)
         ? category2.filter(cate2 => cate2.parents_id === cate1 || cate2.parents_id === 0)
           .map(cate2 => ({ text: cate2.text, value: cate2.value, key: cate2.value }))
-        : [{ key: "-", value: "-", text: "-"}];
+        : [{ key: "-", value: "-", text: "-" }];
     // console.log(combocate2);
 
     // sort
@@ -479,7 +488,7 @@ console.log(count);
       // { key: "like", value: "like", text: "인기순" }
     ];
     // console.log(combosort);
-      console.log(category2,cate2);
+    console.log(category2, cate2);
     return (
       <MainBox>
         {/* loading */}
@@ -489,21 +498,21 @@ console.log(count);
           {/* title */}
           <h1>아이템</h1>
           <div>
-          <Category
-              handleCate2={this.onChangeSubCate} 
-              handleCate1={this.onChangeMainCate} 
+            <Category
+              handleCate2={this.onChangeSubCate}
+              handleCate1={this.onChangeMainCate}
               resetCate={this.resetCate}
-              cate1={cate1} 
+              cate1={cate1}
               cate2={cate2}
-              category1={category1} 
+              category1={category1}
               category2={category2}
-              />
+            />
           </div>
           <div>
             {/* filter */}
-           
+
             <FilterBox>
-                {/* <Dropdown
+              {/* <Dropdown
                   compact
                   selection
                   defaultValue={cate1}
@@ -517,13 +526,13 @@ console.log(count);
                   options={combocate2}
                   onChange={this.onChangeSubCate}
                 /> */}
-                <Dropdown
-                  compact
-                  selection
-                  defaultValue={sort}
-                  options={combosort}
-                  onChange={this.onChangeSort}
-                />
+              <Dropdown
+                compact
+                selection
+                defaultValue={sort}
+                options={combosort}
+                onChange={this.onChangeSort}
+              />
               <div
                 onClick={() => this.setState({ desc: !desc })}
                 className="s_padding">
@@ -532,17 +541,17 @@ console.log(count);
                   : <div>오림차순 △</div>}
                 {/* ▲ ▽  */}
               </div>
-              {/* <div style={{ padding: "10px 5px", }}> */}
-                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
-                {/* </div> */}
-              {/* <div style={{ padding: "10px 5px", }}> */}
-                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
-              {/* </div> */}
-              
+              <div className="range-box">
+                <p>기간:</p>
+                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} />
+                <p>~</p>
+                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
+              </div>}
+
             </FilterBox>
             <FilterBox>
-            <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
-            <button className="btn" onClick={this.search}>검색</button>
+              <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
+              <button className="btn" onClick={this.search}>검색</button>
             </FilterBox>
             {/* list */}
             {/* <div style={{width:"100%",height:"100%",display:"flex",justifyContent:"cneter"}}>
@@ -561,39 +570,39 @@ console.log(count);
               {normal && normal.length > 0 ?
                 normal.map(item => {
                   console.log(item);
-                    return (
-                      <Item 
+                  return (
+                    <Item
                       data={item}
                       isHotBtn={true}
                       hotLabel={"인기아이템"}
                       removeLabel={"삭제"}
                       handleTop={this.MakeTopDesign}
-                      handleDel={this.DeleteDesignRequest}/>
-                    )
-                  }) 
-                  : <div>데이터가 없습니다.</div>}
+                      handleDel={this.DeleteDesignRequest} />
+                  )
+                })
+                : <div>데이터가 없습니다.</div>}
             </ListBox>
           </div>
 
 
-            
+
           <div className="pageRange">
-          <div> 
-            {count<=10?null:
-              <Pagination
-              activePage={this.state.page}
-              boundaryRange={0}
-              defaultActivePage={1}
-              ellipsisItem={null}
-              firstItem={null}
-              lastItem={null}
-              siblingRange={1}
-              totalPages={lastPage}
-              onPageChange={(event,{activePage})=>{
-                this.goPage(activePage-1);
-              }}
-            />
-            }
+            <div>
+              {count <= 10 ? null :
+                <Pagination
+                  activePage={this.state.page}
+                  boundaryRange={0}
+                  defaultActivePage={1}
+                  ellipsisItem={null}
+                  firstItem={null}
+                  lastItem={null}
+                  siblingRange={1}
+                  totalPages={lastPage}
+                  onPageChange={(event, { activePage }) => {
+                    this.goPage(activePage - 1);
+                  }}
+                />
+              }
 
             </div>
 

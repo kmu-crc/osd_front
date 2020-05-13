@@ -56,6 +56,15 @@ const FilterBox = styled.div`
     justify-content:center;
     padding:5px;
   }
+  .range-box {
+    text-align: center;
+    display: flex;
+    p{
+      font-size: 20px;
+      height: 12px;
+      vertical-align: middle;
+    }
+  }
 `
 const ListBox = styled.div`
   // border:1px solid black;
@@ -392,9 +401,9 @@ class DesignerManager extends Component {
     const combosort = [
       { key: "update", value: "update", text: "업데이트" },
       { key: "create", value: "create", text: "등록순" },
-      { key: "title", value: "title", text: "제목" },
-      { key: "like", value: "like", text: "인기순" }];
-    // console.log(combosort);
+      { key: "nick_name", value: "nick_name", text: "닉네임" },
+      { key: "like", value: "like", text: "인기순" }
+    ];
 
 
     // console.log(this.state.count);
@@ -450,12 +459,12 @@ class DesignerManager extends Component {
                   : <div>오림차순 △</div>}
                 {/* ▲ ▽  */}
               </div>
-              {/* <div style={{ padding: "10px 5px", }}> */}
-              <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
-    {/* </div> */}
-              {/* <div style={{ padding: "10px 5px", }}> */}
-              <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
-              {/* </div> */}
+              <div className="range-box">
+                <p>기간:</p>
+                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} />
+                <p>~</p>
+                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
+              </div>
 
             </FilterBox>
             <FilterBox>
@@ -476,8 +485,8 @@ class DesignerManager extends Component {
                       hotLabel={"인기 디자이너"}
                       isHotBtn={true}
                       handleTop={this.MakeTopExpert}
-                      handleDel={this.DeleteDesignerRequest} 
-                      />
+                      handleDel={this.DeleteDesignerRequest}
+                    />
                   )
                 })
                 : <div>데이터가 없습니다.</div>}
@@ -487,7 +496,7 @@ class DesignerManager extends Component {
             <div>
               {count <= 10 ? null :
                 <Pagination
-                  activePage={this.state.page+1}
+                  activePage={this.state.page + 1}
                   boundaryRange={0}
                   defaultActivePage={1}
                   ellipsisItem={null}

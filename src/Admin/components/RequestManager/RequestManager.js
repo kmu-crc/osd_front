@@ -3,35 +3,34 @@ import host from "config";
 import Loading from "components/Commons/Loading";
 import DatePicker from 'react-date-picker';
 import { Dropdown } from "semantic-ui-react";
-import noimg from "source/thumbnail.png";
-import ScrollList from "components/Commons/ScrollList/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import Category from "components/Commons/Category";
+import { Icon } from "semantic-ui-react";
+import profile from "source/thumbnail.png";
+import DateFormat from "modules/DateFormat";
 
 const MainBox = styled.div`
-// *{
-//   border:1px solid black;
-// }
-  display:flex;
-  width:max-content;
-  flex-direction:row;
-  margin-left:auto;
-  margin-right:auto;
-  .main{
-    margin-top:20px;
-    margin-bottom:10px;
+
+  display: flex;
+  width: max-content;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+
+  .main {
+    margin-top: 20px;
+    margin-bottom: 10px;
   }
-  .pageRange{
-    width:100%;
-    margin-left:auto;
-    margin-right:auto;
-    margin-top:30px;
-    display:flex;
-    justify-content:center;
-    
+  .pageRange {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
   }
-`
+`;
 const FilterBox = styled.div`
   display:flex;
   align-items:center;
@@ -62,19 +61,98 @@ const FilterBox = styled.div`
       vertical-align: middle;
     }
   }
-`
-
+`;
 const ListBox = styled.div`
-// border:1px solid black;
   width:780px;
-  // height:max-content,
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  // justify-content:center;
   margin-top:30px;
-
-`
+  // display:flex;
+  // flex-direction:row;
+  // flex-wrap:wrap;
+`;
+const ThumbnailWriter = styled.div`
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
+  background-size: contain;
+  background-image: url(${props => props.src ? props.src : profile});
+  margin-right:10px;
+`;
+const ListElementWrapper = styled.div`
+  margin: 0 auto 0.9rem;
+  // margin-left: ${props => props.left || 0}px;
+  font-size: 13px;
+  border-radius: 3px 3px 3px 3px;
+  overflow: hidden;
+  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
+  background-color: #fff;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 10px;
+  list-style: none;
+  display: flex;
+  fiex-direction: row;
+  cursor: default;
+  // width:100%;
+  .non-status-box{
+    margin-left:5px;
+  }
+  .status-box{
+    min-width: 80px;
+    line-height: 15px;
+    font-family: Noto Sans KR;
+    font-weight: 500;
+    padding: 7px 15px 7px 15px;
+    border-radius: 15px;
+    margin-right: 10px;
+    display:flex;
+    justify-content:center;
+    align-itmes:center;
+    &.request {
+      background: hotpink;
+      color: white;
+    }
+    &.response {
+      // margin-left: 5px;
+      background: blue;
+      color: white;
+    }
+    &.completed {
+      background: gray;
+      color: white;
+    }
+  }
+  .title_{
+    min-width:67%;
+    display:flex;
+    align-items:center;
+    padding:5px;
+  }
+  .writer{
+    width: max-content;
+    display:flex;
+    align-items:center;
+    padding:5px;
+    overflow:hidden;
+  }
+  .date{
+    width: max-content;
+    align-items: center;
+    padding: 5px;
+  }
+  .del {
+    height: 25px;
+    width: 75px;
+    color: white;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: 25px;
+    border-radius: 15px;
+    background-color: red;
+  }
+`;
 const TabContainer = styled.div`
   cursor: default;
   display: flex;
@@ -99,67 +177,39 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-function ListElement({ item: { nick_name, categoryName, type, imgURL, uid }, item, handleTop, handleDel }) {
-  // console.log("item::", item);
+function ListElement({ item: item, handleDel }) {
+  return <ListElementWrapper left={item.status === "response" ? 25 : 0}>
+    <div className="title_" style={{ display: "flex", flexDirection: "row" }}>
+      {item.completed === 1 && item.status === "request" ?
+        <div className="status-box completed" >완료</div> : null}
+      {item.status === "normal"
+        ? <div className="non-status-box" />
+        // <div className="status-box"></div>
+        : item.status === "request"
+          ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
+          : item.status === "response" ?
+            <React.Fragment>
+              <Icon size="small" name="reply" style={{ color: "black", transform: "rotate(180deg)" }} />
+              <div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div>
+            </React.Fragment> : ""}
+      {item.title || "글 제목"}
+    </div>
 
-  return <div style={{
-    position: "relative",
-    backgroundSize: "cover",
-    backgroundImage: `url(${(imgURL && imgURL.m_img) || noimg})`,
-    width: "150px",
-    height: "150px",
-    borderRadius: "5px",
-    marginRight: "5px",
-    marginBottom: "5px",
-  }}>
-    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-      <div
-        onClick={() => handleDel(item)}
-        style={{
-          cursor: "pointer",
-          padding: "5px 10px",
-          marginLeft: "auto",
-          width: "max-content",
-          color: "white",
-          backgroundColor: "red",
-          borderRadius: "15px",
-        }}>삭제</div>
-    </div>
-    <div style={{
-      bottom: "0px",
-      width: "100%",
-      position: "absolute",
-      padding: "5px",
-      backgroundColor: "#707070",
-    }}>
-      <div title={nick_name} style={{
-        padding: "1px 2px",
-        fontSize: "16px",
-        height: "20px",
-        width: "100%",
-        color: "white",
-        wordWrap: "break-word",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textOverflow: "ellipsis"
-      }}>
-        {nick_name}</div>
-      <div title={categoryName + "," + type} style={{
-        padding: "1px 2px",
-        fontSize: "12px",
-        height: "16px",
-        width: "100%",
-        color: "white",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-      }}>
-        <div>{categoryName}</div>
-        <div>{type === "designer" ? "디자이너" : "메이커"}</div>
+    {item.status == "response" ?
+      <div className="writer">
+        <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+        <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
       </div>
-    </div>
-  </div>
+      :
+      <div className="writer">
+        <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+        <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+      </div>
+    }
+
+    <div className="date">{DateFormat(item.create_time)}</div>
+    <div className="del" onClick={() => handleDel(item)}>삭제</div>
+  </ListElementWrapper>
 }
 // MANAGER
 class RequestManager extends Component {
@@ -183,7 +233,6 @@ class RequestManager extends Component {
       category2: [], cate2: 0,
     };
     this.GetRequestListRequest = this.GetRequestListRequest.bind(this);
-    this.GetRequestListCountRequest = this.GetRequestListCountRequest.bind(this);
     this.GetCategoryRequest = this.GetCategoryRequest.bind(this);
     this.DeleteRequestRequest = this.DeleteRequestRequest.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
@@ -204,27 +253,19 @@ class RequestManager extends Component {
         this.setState({ category1: obj.category1, category2: obj.category2 });
       })
     this.GetRequestListRequest();
-    this.GetRequestListCountRequest();
     this.setState({ loading: false });
   };
 
-  GetRequestListRequest(page = 0, max = this.state.max, type = "designer", cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
+  GetRequestListRequest(page = 0, max = this.state.max, type = "designer", cate1 = "null", cate2 = "null", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise(resolve => {
       const url = `${host}/admins/RequestList/${page}/${max}/${type}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
-      console.log(url);
+
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
-        .then(data => { this.setState({ normal: data }); resolve(true) })
-        .catch(error => alert(error));
-    });
-  };
-  GetRequestListCountRequest(page = 0, max = this.state.max, type = "designer", cate1 = "0", cate2 = "0", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
-    return new Promise(resolve => {
-      const url = `${host}/admins/RequestListCount/${page}/${max}/${type}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
-      console.log(url);
-      fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
-        .then(res => res.json())
-        .then(data => { this.setState({ count: data.cnt }); resolve(true); })
+        .then(data => {
+          this.setState({ normal: data.data.requests, count: data.data.total });
+          resolve(true);
+        })
         .catch(error => alert(error));
     });
   };
@@ -276,11 +317,10 @@ class RequestManager extends Component {
     const prompt = window.prompt(`
       선택하신 게시글을 삭제합니다.
       확인 차 아래 입력창에 게시글 제목을 입력해주세요.\n
-      게시글 이름입력: ${item.nick_name}\n`);
+      게시글 이름입력: ${item.title}\n`);
 
-    if (prompt === item.nick_name) {
+    if (prompt === item.title) {
       deleteRequest()
-        .then(() => this.GetRequestListCountRequest())
         .then(() => this.GetRequestListRequest())
     } else {
       alert("삭제가 취소되습니다.");
@@ -345,7 +385,7 @@ class RequestManager extends Component {
     const combosort = [
       { key: "update", value: "update", text: "업데이트" },
       { key: "create", value: "create", text: "등록순" },
-      { key: "title", value: "title", text: "제목" }, // { key: "like", value: "like", text: "인기순" }
+      { key: "title", value: "title", text: "제목" },
     ];
 
     return (<MainBox>
@@ -361,6 +401,7 @@ class RequestManager extends Component {
           <div className={type === "item" ? "element active" : "element"} onClick={() => this.setState({ type: "item" })}>아이템</div>
           <div className={type === "normal" ? "element active" : "element"} onClick={() => this.setState({ type: "normal" })}>일반</div>
         </TabContainer>
+
         <div>
           <Category
             handleCate2={this.onChangeSubCate}
@@ -369,9 +410,9 @@ class RequestManager extends Component {
             cate1={cate1}
             cate2={cate2}
             category1={category1}
-            category2={category2}
-          />
+            category2={category2} />
         </div>
+
         <div>
           {/* filter */}
           <FilterBox>
@@ -392,9 +433,9 @@ class RequestManager extends Component {
             </div>
             <div className="range-box">
               <p>기간:</p>
-              <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} />
+              <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} />
               <p>~</p>
-              <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
+              <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
             </div>
 
           </FilterBox>
@@ -421,7 +462,7 @@ class RequestManager extends Component {
           <div>
             {count <= max ? null :
               <Pagination
-                activePage={this.state.page}
+                // activePage={this.state.page}
                 boundaryRange={0}
                 defaultActivePage={1}
                 ellipsisItem={null}
