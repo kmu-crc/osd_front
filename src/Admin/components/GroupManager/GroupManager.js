@@ -52,6 +52,15 @@ const FilterBox = styled.div`
     justify-content:center;
     padding:5px;
   }
+  .range-box {
+    text-align: center;
+    display: flex;
+    p{
+      font-size: 20px;
+      height: 12px;
+      vertical-align: middle;
+    }
+  }
 `
 
 const ListBox = styled.div`
@@ -75,74 +84,74 @@ function getFormatDate(date) {
   day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
   return year + '-' + month + '-' + day;
 }
-function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop,handleDel }) {
+function ListElement({ item: { userName, title, thumbnailUrl, uid }, handleTop, handleDel }) {
   // console.log("title",title);
   return <div style={{
-      position: "relative",
-      backgroundSize: "cover",
-      backgroundImage: `url(${thumbnailUrl==null?noimg:thumbnailUrl.m_img})`,
-      width: "150px",
-      height: "150px",
-      borderRadius: "5px",
-      marginRight: "5px",
-      marginBottom: "5px",
+    position: "relative",
+    backgroundSize: "cover",
+    backgroundImage: `url(${thumbnailUrl == null ? noimg : thumbnailUrl.m_img})`,
+    width: "150px",
+    height: "150px",
+    borderRadius: "5px",
+    marginRight: "5px",
+    marginBottom: "5px",
   }}>
-      <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-          <div
-          onClick={() => handleTop(uid)}
-          style={{
-              cursor: "pointer",
-              padding: "5px 10px",
-              width: "max-content",
-              color: "white",
-              backgroundColor: "orange",
-              borderRadius: "15px",
-          }}>인기디자인</div>
+    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
       <div
-          onClick={() => handleDel(uid)}
-          style={{
-              cursor: "pointer",
-              padding: "5px 10px",
-              marginLeft: "auto",
-              width: "max-content",
-              color: "white",
-              backgroundColor: "red",
-              borderRadius: "15px",
-          }}>삭제</div>
-        </div>
-      <div style={{
-          bottom: "0px",
-          width: "100%",
-          position: "absolute",
-          padding:"5px",
-          backgroundColor: "#707070",
+        onClick={() => handleTop(uid)}
+        style={{
+          cursor: "pointer",
+          padding: "5px 10px",
+          width: "max-content",
+          color: "white",
+          backgroundColor: "orange",
+          borderRadius: "15px",
+        }}>인기디자인</div>
+      <div
+        onClick={() => handleDel(uid)}
+        style={{
+          cursor: "pointer",
+          padding: "5px 10px",
+          marginLeft: "auto",
+          width: "max-content",
+          color: "white",
+          backgroundColor: "red",
+          borderRadius: "15px",
+        }}>삭제</div>
+    </div>
+    <div style={{
+      bottom: "0px",
+      width: "100%",
+      position: "absolute",
+      padding: "5px",
+      backgroundColor: "#707070",
+    }}>
+      <div title={title} style={{
+        padding: "1px 2px",
+        fontSize: "16px",
+        height: "20px",
+        width: "100%",
+        color: "white",
+        wordWrap: "break-word",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis"
       }}>
-          <div title={title} style={{
-              padding: "1px 2px",
-              fontSize: "16px",
-              height: "20px",
-              width: "100%",
-              color: "white",
-              wordWrap: "break-word",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis"
-          }}>
-              {title}({uid})</div>
-          <div title={userName} style={{
-              padding: "1px 2px",
-              fontSize: "12px",
-              height: "16px",
-              width: "100%",
-              color: "white",
-              wordWrap: "break-word",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              textAlign: "right"
-          }}>
-              {userName}</div>
-      </div>
+        {title}({uid})</div>
+      <div title={userName} style={{
+        padding: "1px 2px",
+        fontSize: "12px",
+        height: "16px",
+        width: "100%",
+        color: "white",
+        wordWrap: "break-word",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        textAlign: "right"
+      }}>
+        {userName}</div>
+    </div>
   </div>
 }
 // MANAGER
@@ -154,7 +163,7 @@ class GroupManager extends Component {
       loading: false,
 
       // list
-      page: 0, max:20,
+      page: 0, max: 20,
       editSpecial: false,
       special: [], normal: [],
       count: null,
@@ -319,9 +328,9 @@ class GroupManager extends Component {
     const { max, sort, desc, start, end, keyword } = this.state;
     await this.setState({ page: 0 });
     this.GetGroupListRequest(this.state.page, max, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "")
-    .then(()=>{
-      this.GetGroupListCountRequest(this.state.page, max, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "")
-    })
+      .then(() => {
+        this.GetGroupListCountRequest(this.state.page, max, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "")
+      })
   }
   async goNext() {
     await this.setState({ page: this.state.page + 1 });
@@ -335,14 +344,14 @@ class GroupManager extends Component {
   }
   async goPage(activePage) {
     // console.log(this.state.page);
-    await this.setState({ page: activePage});
+    await this.setState({ page: activePage });
     // console.log(this.state.page);
-     const { page, max, sort, desc, start, end, keyword } = this.state;
+    const { page, max, sort, desc, start, end, keyword } = this.state;
     this.GetGroupListRequest(page, max, sort, desc ? "desc" : "asc", getFormatDate(start), getFormatDate(end), keyword ? keyword : "");
   }
   render() {
     const { special, normal, count, page, loading, editSpecial, keyword, desc, sort } = this.state;
-    const lastPage = parseInt(count / this.state.max, 10)+1;
+    const lastPage = parseInt(count / this.state.max, 10) + 1;
 
     // sort
     const combosort = [
@@ -367,15 +376,15 @@ class GroupManager extends Component {
             {/* filter */}
             <FilterBox>
               {/* <div style={{ padding: "10px 5px", }}> */}
-                
-                {/* </div> */}
-                <Dropdown
-                  compact
-                  selection
-                  defaultValue={sort}
-                  options={combosort}
-                  onChange={this.onChangeSort}
-                />
+
+              {/* </div> */}
+              <Dropdown
+                compact
+                selection
+                defaultValue={sort}
+                options={combosort}
+                onChange={this.onChangeSort}
+              />
               <div
                 onClick={() => this.setState({ desc: !desc })}
                 className="s_padding">
@@ -384,13 +393,16 @@ class GroupManager extends Component {
                   : <div>오림차순 △</div>}
                 {/* ▲ ▽  */}
               </div>
-                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} /> ~
-                <DatePicker className="s_margin"  name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
-              
+              <div className="range-box">
+                <p>기간:</p>
+                <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} />
+                <p>~</p>
+                <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />
+              </div>
             </FilterBox>
             <FilterBox>
-            <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
-            <button className="btn" onClick={this.search}>검색</button>
+              <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
+              <button className="btn" onClick={this.search}>검색</button>
             </FilterBox>
             {/* list */}
             <ListBox>
@@ -398,8 +410,8 @@ class GroupManager extends Component {
                 normal.map(item => {
                   return (
                     <ListElement item={item}
-                    handleTop={this.MakeTopGroup}
-                    handleDel={this.DeleteGroupRequest}/>
+                      handleTop={this.MakeTopGroup}
+                      handleDel={this.DeleteGroupRequest} />
                   )
                   // return <div key={item.uid} style={{ display: "flex", flexDirection: "row" }}>
                   //   <div>
@@ -418,14 +430,14 @@ class GroupManager extends Component {
                   //       style={{ backgroundColor: "red", color: "white", width: "max-content", textAlign: "center", cursor: "pointer", borderRadius: "15px", padding: "3px 20px" }}
                   //     >삭제</div></div>
                   // </div>;
-                }) 
+                })
                 : <div>데이터가 없습니다.</div>}
             </ListBox>
           </div>
 
           <div className="pageRange">
-          <div> 
-          <Pagination
+            <div>
+              <Pagination
                 boundaryRange={0}
                 defaultActivePage={1}
                 ellipsisItem={null}
@@ -433,8 +445,8 @@ class GroupManager extends Component {
                 lastItem={null}
                 siblingRange={1}
                 totalPages={lastPage}
-                onPageChange={(event,{activePage})=>{
-                  this.goPage(activePage-1);
+                onPageChange={(event, { activePage }) => {
+                  this.goPage(activePage - 1);
                 }}
               />
             </div>
