@@ -6,6 +6,7 @@ import Loading from "components/Commons/Loading";
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -39,14 +40,14 @@ const MainBox = styled.div`
     font-family:Noto Sans KR, Medium;
     font-size:20px;
     font-weight:500;
-    margin-left:130px;
+    // margin-left:130px;
 
   }
   .contentsBox{
     position: relative;
     width:100%;
     display:flex;
-    padding-left:130px;
+    // padding-left:130px;
     padding-top:36px;
   }
 
@@ -57,16 +58,18 @@ const FormBox = styled.div`
     font-family:Noto Sans KR;
     font-weight:500;
     font-size:20px;
+    // border:1px solid black;
   }
   width:939px;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
+  padding-right:59px;
   padding-top:49px;
-  margin:50px;
+  margin-right:10px;
   .wrapper{
     width:100%;
-    margin-bottom:35px;
+    margin-bottom:70px;
   }
   .margin_zero{
     margin:0px;
@@ -82,15 +85,9 @@ const FormBox = styled.div`
     margin-bottom:26px;
     display:flex;
   }
-  .textBox{
-    width:70%;
-    border:1px solid #E6E6E6;
-    border-radius:20px;
-    padding: 0.67857143em 1em;
-  }
   .label{
     min-width:157px;
-    height:29px;
+    height:max-content;
   }
   .label_centering{
     text-align:center;
@@ -99,6 +96,9 @@ const FormBox = styled.div`
     width:30px;
     height:30px;
     color:#707070;
+  }
+  .textBox{
+    font-weight:200;
   }
 
 `;
@@ -160,8 +160,8 @@ class ResponseToDesignerReq extends Component {
     super(props);
     this.state = {
       category_level1: 0, category_level2: 0,
-      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, ownership: -1, endDate: null, dayDate: null,
-
+      title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, 
+      ownership: -1, startDate:null,endDate: null, dayDate: null,
       res_content: "", res_price: "",
     }
 
@@ -169,9 +169,9 @@ class ResponseToDesignerReq extends Component {
     this.onChangeResponseContent = this.onChangeResponseContent.bind(this);
     this.onChangeResponsePrice = this.onChangeResponsePrice.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
+    this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
-    this.getDayDateValue = this.getDayDateValue.bind(this);
-
+    this.getDayDateValue=this.getDayDateValue.bind(this);
   }
   // componentDidMount() {
   //   // //test 데이터 초기화
@@ -189,10 +189,11 @@ class ResponseToDesignerReq extends Component {
   //   // });
   // };
 
-  onChangeResponseContent(event) {
-    this.setState({
-      res_content: event.target.value,
-    })
+  async onChangeResponseContent(data) {
+    await this.setState({ content: data.content });
+    // this.setState({
+    //   res_content: event.target.value,
+    // })
   }
   onChangeResponsePrice(event) {
     this.setState({
@@ -202,12 +203,14 @@ class ResponseToDesignerReq extends Component {
   async getPriceValue(value) {
     await this.setState({ res_price: value });
   }
+  async getStartDateValue(value){
+    await this.setState({ startDate: value });
+  }
   async getEndDateValue(value) {
-    await console.log("endDate", value);
     await this.setState({ endDate: value });
   }
-  async getDayDateValue(value) {
-    await this.setState({ dayDate: value })
+  async getDayDateValue(value){
+    await this.setState({dayDate:value})
   }
   onSubmit() {
     const data = {
@@ -216,16 +219,18 @@ class ResponseToDesignerReq extends Component {
       group_id: this.props.detail.group_id,
       sort_in_group: this.props.detail.sort_in_group,
       title: this.props.detail.title,
-      content: this.state.res_content,
+      content: this.state.content,
       price: this.state.res_price,
       expert_id: this.props.userInfo.uid || null,
       personal: this.props.detail.personal || null,
-      term: this.state.endDate,
+      start_date:this.state.startDate,
+      end_date:this.state.endDate,
     }
     // // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
+          // alert("성공");
           if (this.props.detail.personal)
             window.location.href = `/designerDetail/${this.props.detail.personal}`;
           else
@@ -330,7 +335,14 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex">
                 <div className="label">응답 내용</div>
-                <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} />
+                {/* <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} /> */}
+                <TextControllerClassic
+                  item={{content:this.state.content,height:700}}
+                  name={"comment"}
+                  getValue={this.onChangeResponseContent}
+                  // initClick={this.state.click}
+                  // deleteItem={this.deleteItem}
+                />
               </div>
 
               <div className="wrapper flex">
@@ -340,7 +352,9 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering">
                 <div className="label ">기간</div>
-                <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} />
+                {/* <InputCalendar name="calendar" getDayDateValue={this.getDayDateValue} getEndDateValue={this.getEndDateValue} /> */}
+                <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
+                 getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
               </div>
 
             </FormBox>

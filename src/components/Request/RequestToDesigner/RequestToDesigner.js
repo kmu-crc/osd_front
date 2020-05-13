@@ -6,6 +6,7 @@ import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -208,10 +209,11 @@ class RequestToDesigner extends Component {
   onChangeLocation(event, { value }) {
     this.setState({ location: { value }.value });
   }
-  onChangeContent(event) {
-    this.setState({
-      content: event.target.value,
-    })
+  async onChangeContent(data) {
+    await this.setState({ content: data.content });
+    // this.setState({
+    //   content: event.target.value,
+    // })
   }
   onChangeOwnership(event, { value }) {
     this.setState({
@@ -296,7 +298,14 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
-                  <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
+                  {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
+                  <TextControllerClassic
+                  item={{content:this.state.content,height:500}}
+                  name={"comment"}
+                  getValue={this.onChangeContent}
+                  // initClick={this.state.click}
+                  // deleteItem={this.deleteItem}
+                />
                 </div>
 
                 <div className="wrapper flex centering">

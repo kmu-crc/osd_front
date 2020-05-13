@@ -76,13 +76,13 @@ const CommentForm = styled.textarea`
 const WriteNormalArticleModal = styled(Modal)`
   min-width:300px;
   min-height:200px;
-  max-width:760px;
-  width:40%;
+  max-width:790px;
+  width:45%;
   height:max-height;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   margin-bottom:10px;
   border-radius:15px !important;
-  padding:10px;
+  padding:20px;
   .close-box{
     width: 100%;
     height:10%;
@@ -226,7 +226,7 @@ class RequestList extends Component {
     this.state = {
       rendering: true,
       path: "request",
-      write: true,
+      write: false,
       title: "",
       comment: "",
     };
@@ -367,7 +367,7 @@ class RequestList extends Component {
           {write ?
             <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
               <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
-                <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={20} height={20} />
               </div>
               <div className="form align_item_center">
                 <div className="title_label">제목</div>

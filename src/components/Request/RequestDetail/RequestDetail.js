@@ -26,28 +26,28 @@ const LocationList = [
 ];
 
 const Wrapper = styled(ContentBox)`
-  width:100%;
-  background-color: white;
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 100px;
   z-index: 3;
-  border: 1px solid white;
-  border-radius: 50px;
-  box-shadow: 5px 5px 10px #00000029;
-  transform: translate(0px, -100px);
+  // width:100%;
+  // background-color: white;
+  // z-index: 3;
+  // border: 1px solid white;
+  // border-radius: 50px;
+  // box-shadow: 5px 5px 10px #00000029;
+  // transform: translate(0px, -100px);
 `;
 const MainBox = styled.div`
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-
+  width:100%;
   .title{
-    width: max-content;
-    height: 29px;
-    margin-left: 60px;
-    margin-top: 50px;
-    font-family: Noto Sans KR, Medium;
-    font-size: 29px;
-    font-weight: 500;
+    width:170px;
+    height:29px;
+    font-family:Noto Sans KR, Medium;
+    font-size:20px;
+    font-weight:500;
+    // margin-left:ㅇpx;
+
   }
   .contentsBox{
     position: relative;
@@ -57,24 +57,49 @@ const MainBox = styled.div`
     padding-top:36px;
   }
 
-`
+`;
+// const MainBox = styled.div`
+//   width: 100%;
+//   margin-left: auto;
+//   margin-right: auto;
+//   margin-top: 30px;
+
+//   .title{
+//     width: max-content;
+//     height: 29px;
+//     margin-left: 60px;
+//     margin-top: 50px;
+//     font-family: Noto Sans KR, Medium;
+//     font-size: 29px;
+//     font-weight: 500;
+//   }
+//   .contentsBox{
+//     position: relative;
+//     width:100%;
+//     display:flex;
+//     // padding-left:130px;
+//     padding-top:36px;
+//   }
+
+// `
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
     font-size:20px;
+    // border:1px solid black;
   }
-  width: 939px;
-  // box-shadow: 5px 5px 10px #00000029;
-  // border-radius: 20px;
+  width:939px;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
   padding-left:59px;
+  padding-right:59px;
   padding-top:49px;
-  // margin: 50px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-right:10px;
+
   .wrapper{
     width:100%;
-    margin-bottom:35px;
+    margin-bottom:70px;
   }
   .margin_zero{
     margin:0px;
@@ -90,15 +115,9 @@ const FormBox = styled.div`
     margin-bottom:26px;
     display:flex;
   }
-  .textBox{
-    width:70%;
-    border:1px solid #E6E6E6;
-    border-radius:20px;
-    padding: 0.67857143em 1em;
-  }
   .label{
     min-width:157px;
-    height:29px;
+    height:max-content;
   }
   .label_centering{
     text-align:center;
@@ -108,11 +127,15 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
+  .textBox{
+    font-weight:200;
+  }
+
 `;
 const TagList = styled.div`
     width: 100%;
     display: flex;
-    padding: 10px;
+    // padding: 10px;
     flex-wrap: wrap;
 `;
 const TagPiece = styled.div`
@@ -124,10 +147,10 @@ const TagPiece = styled.div`
     color: #707070;
     padding: 5px;
     padding-left: 10px;
-    padding-right: 10px
+    padding-right: 10px;
     border-radius: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     .close {
         margin-left: 10px;
         width: max-content;
@@ -138,7 +161,7 @@ const TagPiece = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   margin-top: 30px;
-  margin-left: 50px;
+  // margin-left: 50px;
   margin-bottom: 40px;
 `;
 
@@ -196,7 +219,7 @@ class Detail extends Component {
 
                   <div className="wrapper flex centering">
                     <div className="label">내용</div>
-                    <div className="textBox">{Detail.content || ""}</div>
+                    <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}></div>
                   </div>
                 </FormBox>
               </div>
@@ -207,7 +230,7 @@ class Detail extends Component {
           Detail.sort_in_group === 0 ?
             <Wrapper>
               <MainBox>
-                <div className="title">의뢰내용</div>
+                <div className="title">{TypeText} 의뢰</div>
                 <div className="contentsBox">
                   <FormBox>
 
@@ -230,18 +253,18 @@ class Detail extends Component {
                       <div className="label">태그</div>
                       <TagList>
                         {Detail && Detail.tag && Detail.tag.split(",").map((item, index) =>
-                          <TagPiece key={index}>{item}</TagPiece>)}
+                          <TagPiece key={index}><div>{item}</div></TagPiece>)}
                       </TagList>
                     </div>
 
 
                     <div className="wrapper flex centering">
-                      <div className="label">내용</div>
-                      <div className="textBox">{Detail.content}</div>
+                      <div className="label">의뢰 내용</div>
+                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}/>
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">희망비용</div>
+                      <div className="label">희망 비용</div>
                       <div className="textBox">{parseInt(Detail.price, 10) / 1000 + "천원"}</div>
                     </div>
 
@@ -316,7 +339,7 @@ class Detail extends Component {
                       <div className="label">태그</div>
                       <TagList>
                         {Detail && Detail.request && Detail.request.tag && Detail.request.tag.split(",").map((item, index) =>
-                          <TagPiece key={index}>{item}</TagPiece>)}
+                          <TagPiece key={index}><div>{item}</div></TagPiece>)}
                       </TagList>
                     </div>
 
@@ -332,7 +355,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">의뢰 내용</div>
-                      <div className="textBox">{Detail && Detail.request && Detail.request.content}</div>
+                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail && Detail.request && Detail.request.content}` }}/>
                     </div>
 
                     <div className="wrapper flex centering">
@@ -365,7 +388,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex">
                       <div className="label">설명</div>
-                      <div className="textBox">{Detail.content}</div>
+                      <div className="textBox"  dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}></div>
                     </div>
                     {
                       Detail.type === "maker" &&

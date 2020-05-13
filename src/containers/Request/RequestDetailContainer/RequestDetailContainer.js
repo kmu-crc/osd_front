@@ -55,16 +55,13 @@ class RequestDetailContainer extends Component {
     console.log(this.props);
 
     return (
-      <div style={{ backgroundColor: "#F0F0F0" }}>
-        <div style={{ height: "150px", backgroundColor: "#f8e6e4", backgroundImage: `url(${bg})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
-        <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", }}>
+      <React.Fragment>
           <RequestDetail
             {...this.props}
             purchase={this.Purchase}
             confirm={this.ConfirmPayment}
           />
-        </div>
-      </div >
+      </React.Fragment>
     )
   }
 }
