@@ -10,11 +10,15 @@ const EditorWrapper = styled.div`
         margin-left: auto;
         font-size: 0.5rem;
     }
+    .ck-editor__editable_inline {
+        min-width:600px;
+        min-height: ${props=>props.height||70}px;
+    }
 `;
 export class TextControllerClassic extends Component {
     render() {
         const { item } = this.props;
-        return (<EditorWrapper>
+        return (<EditorWrapper height={item.height==null?false:item.height}>
             <CKEditor
                 id="classicEditor_"
                 editor={ClassicEditor}
