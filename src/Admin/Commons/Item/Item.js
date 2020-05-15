@@ -141,35 +141,35 @@ class Item extends Component {
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
     const img = item ? item.thumbnail : noimg;
     console.log(this.props);
-    const RenderingStar = ()=>{
-      return <Rating name="score" icon='star' defaultRating={parseInt(item.score,10)||0} maxRating={5} disabled />
+    const RenderingStar = () => {
+      return <Rating name="score" icon='star' defaultRating={parseInt(item.score, 10) || 0} maxRating={5} disabled />
     }
     return (
       // const ItemContent = () =>
       <Wrapper>
         {/* picture */}
-        {this.props.isHotBtn?<HotBtn onClick={()=>this.props.handleTop(item.uid)}>{this.props.hotLabel}</HotBtn>:null}
-        <DeleteHotBtn onClick={()=>this.props.handleDel(item.uid)}><div>{this.props.removeLabel||"삭제"}</div></DeleteHotBtn>
+        {this.props.isHotBtn ? <HotBtn onClick={() => this.props.handleTop(item.uid)}>{this.props.hotLabel}</HotBtn> : null}
+        <DeleteHotBtn onClick={() => this.props.handleDel(item)}><div>{this.props.removeLabel || "삭제"}</div></DeleteHotBtn>
         <ItemPic img={img} />
         <div className="board">
-        <TextWrapper>
-          <div className="title"><TextFormat txt={item.title} /></div>
-          <div className="author">
-            <TextFormat txt={item.userName} />
-            <div className="date">{date}</div>
-          </div>
-        </TextWrapper>
-        {/* numbers */}
-        <NumberWrapper>
-          <div className="price">{PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만원":"천원"}</div>
-          <div className="score">
-            <RenderingStar/>
-          </div>
-        </NumberWrapper>
-        {item.custom && item.isPurchased === 0 ?
-          <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
-            <div>구매확인</div>
-          </PrivateLabel> : null}
+          <TextWrapper>
+            <div className="title"><TextFormat txt={item.title} /></div>
+            <div className="author">
+              <TextFormat txt={item.userName} />
+              <div className="date">{date}</div>
+            </div>
+          </TextWrapper>
+          {/* numbers */}
+          <NumberWrapper>
+            <div className="price">{PointFormat(item.price / (parseInt(item.price) > 9999 ? 10000 : 1000) || 0)}{parseInt(item.price) > 9999 ? "만원" : "천원"}</div>
+            <div className="score">
+              <RenderingStar />
+            </div>
+          </NumberWrapper>
+          {item.custom && item.isPurchased === 0 ?
+            <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
+              <div>구매확인</div>
+            </PrivateLabel> : null}
         </div>
         {/* text */}
 
