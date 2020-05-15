@@ -386,11 +386,10 @@ class GroupManager extends Component {
               </div>
                 <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.start} minDate={new Date('1900-01-01')} /> ~
                 <DatePicker className="s_margin"  name="start" onChange={this.handleEndDateChange} value={this.state.end} maxDate={new Date()} />
-              
             </FilterBox>
             <FilterBox>
-            <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
-            <button className="btn" onClick={this.search}>검색</button>
+              <input className="textRgn" placeholder="검색어" onChange={e => this.setState({ keyword: e.target.value })} value={keyword} />
+              <button className="btn" onClick={this.search}>검색</button>
             </FilterBox>
             {/* list */}
             <ListBox>
@@ -426,6 +425,7 @@ class GroupManager extends Component {
           <div className="pageRange">
           <div> 
           <Pagination
+                activePage={this.state.page+1}
                 boundaryRange={0}
                 defaultActivePage={1}
                 ellipsisItem={null}
