@@ -167,7 +167,7 @@ class RequestToDesigner extends Component {
       endDate: null,
       dayDate: null,
 
-      fileurl: null,
+      file_url: null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -258,13 +258,12 @@ class RequestToDesigner extends Component {
   onFileChange = async event => {
     const file = event.currentTarget.files;
     const s3path = await FileUploadRequest(file);
-    console.log(s3path);
-    alert(s3path);
     this.setState({
-      fileurl: s3path,
+      file_url: s3path.path,
       filename: file[0].name
     });
   }
+
   onSubmit() {
     const data = {
       type: "designer",
@@ -282,7 +281,8 @@ class RequestToDesigner extends Component {
       offline_consultation: this.state.offline,
       start_date: this.state.startDate,
       end_date: this.state.endDate,
-      fileurl: this.state.fileurl,
+
+      file_url: this.state.file_url,
       filename: this.state.filename,
     }
     this.props.CreateRequestRequest(data, this.props.token)
