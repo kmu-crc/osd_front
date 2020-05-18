@@ -222,7 +222,7 @@ export class InputCalendar extends Component {
                     <FormStyle
                         id="startDate"
                         placeholder={this.props.placeholder}
-                        value={this.state.startDate}
+                        value={this.state.startDate || ""}
                         onChange={this.onChangeStartDate}
                     />
                 </FormBox>
@@ -230,14 +230,14 @@ export class InputCalendar extends Component {
                     <FormStyle
                         id="endDate"
                         placeholder={this.props.placeholder}
-                        value={this.state.endDate}
+                        value={this.state.endDate || ""}
                         onChange={this.onChangeEndDate}
                     />
                 </FormBox>
                 <FormText
                     id="dateDate"
                     width={80}
-                    value={this.state.dayDate}
+                    value={this.state.dayDate || ""}
                     onChange={this.onChangeDayDate}
                     onClick={this.onClickDayDate}
                 />일
