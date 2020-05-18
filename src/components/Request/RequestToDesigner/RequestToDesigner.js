@@ -5,8 +5,9 @@ import { Dropdown } from "semantic-ui-react"
 import { InputTag } from "components/Commons/InputItem/InputTag"
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
-import {RedButton,GrayButton} from "components/Commons/CustomButton"
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import { FileUploadRequest } from "actions/Uploads";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -97,7 +98,16 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
-
+  .faded-text {
+    border-radius: 15px;
+    background-color: #EAEAEA;
+    padding: 15px 15px;
+  }
+  .information {
+    color: red;
+    font-size: 16px;
+    margin-left: 10px;
+  }
 `;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -125,10 +135,6 @@ const InputTextarea = styled.textarea`
   padding: 0.67857143em 1em;
 
 `;
-//const Margin = styled.div`
-//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-//`;
 const DropBox = styled(Dropdown)`
     min-width:200px !important;
     background-color:#E9E9E9 !important;
@@ -148,8 +154,20 @@ class RequestToDesigner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category_level1: null, category_level2: null,
-      title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0,startDate:null,endDate:null,dayDate:null,
+      category_level1: null,
+      category_level2: null,
+      title: "",
+      tag: [],
+      price: 0,
+      content: "",
+      location: 15,
+      ownership: 1,
+      offline: 0,
+      startDate: null,
+      endDate: null,
+      dayDate: null,
+
+      fileurl: null,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -166,8 +184,9 @@ class RequestToDesigner extends Component {
     this.getPriceValue = this.getPriceValue.bind(this);
     this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
-    this.getDayDateValue=this.getDayDateValue.bind(this);
-    }
+    this.getDayDateValue = this.getDayDateValue.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
+  }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
   }
@@ -183,9 +202,11 @@ class RequestToDesigner extends Component {
     })
   }
   async getPriceValue(value) {
-    await this.setState({ price: value });
+    await this.setState({
+      price: value
+    });
   }
-  async getStartDateValue(value){
+  async getStartDateValue(value) {
     // await console.log("startDate",value);
     await this.setState({ startDate: value });
   }
@@ -193,8 +214,8 @@ class RequestToDesigner extends Component {
     // await console.log("endDate",value);
     await this.setState({ endDate: value });
   }
-  async getDayDateValue(value){
-    await this.setState({dayDate:value})
+  async getDayDateValue(value) {
+    await this.setState({ dayDate: value })
   }
   getTagValue(data) {
     this.setState({
@@ -207,10 +228,14 @@ class RequestToDesigner extends Component {
     })
   }
   onChangeLocation(event, { value }) {
-    this.setState({ location: { value }.value });
+    this.setState({
+      location: { value }.value
+    });
   }
   async onChangeContent(data) {
-    await this.setState({ content: data.content });
+    await this.setState({
+      content: data.content
+    });
     // this.setState({
     //   content: event.target.value,
     // })
@@ -230,7 +255,16 @@ class RequestToDesigner extends Component {
       tag: tag.slice(),
     });
   }
-
+  onFileChange = async event => {
+    const file = event.currentTarget.files;
+    const s3path = await FileUploadRequest(file);
+    console.log(s3path);
+    alert(s3path);
+    this.setState({
+      fileurl: s3path,
+      filename: file[0].name
+    });
+  }
   onSubmit() {
     const data = {
       type: "designer",
@@ -246,8 +280,10 @@ class RequestToDesigner extends Component {
       location: this.state.location,
       ownership: this.state.ownership,
       offline_consultation: this.state.offline,
-      start_date:this.state.startDate,
-      end_date:this.state.endDate,
+      start_date: this.state.startDate,
+      end_date: this.state.endDate,
+      fileurl: this.state.fileurl,
+      filename: this.state.filename,
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -273,9 +309,9 @@ class RequestToDesigner extends Component {
             <div className="contentsBox">
               <FormBox>
 
-              <div className="wrapper flex centering" >
+                <div className="wrapper flex centering" >
                   <div className="label">의뢰자</div>
-                  <div>{this.props.userInfo.nickName||null}</div>
+                  <div>{this.props.userInfo.nickName || null}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -285,8 +321,18 @@ class RequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                  <DropBox id="category_level1"
+                    value={this.state.category_level1}
+                    selection
+                    options={category1}
+                    placeholder="대분류"
+                    onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2"
+                    value={this.state.category_level2}
+                    selection
+                    options={category2}
+                    placeholder="소분류"
+                    onChange={this.onClickCategorylevel2} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -300,23 +346,43 @@ class RequestToDesigner extends Component {
                   <div className="label">의뢰 내용</div>
                   {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
                   <TextControllerClassic
-                  item={{content:this.state.content,height:500}}
-                  name={"comment"}
-                  getValue={this.onChangeContent}
+                    item={{ content: this.state.content, height: 500 }}
+                    name={"comment"}
+                    getValue={this.onChangeContent}
                   // initClick={this.state.click}
                   // deleteItem={this.deleteItem}
-                />
+                  />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label">파일 등록</div>
+                  <div className="faded-text" >
+                    <input
+                      type="file"
+                      name="source"
+                      ref={ref => (this.input = ref)}
+                      onChange={this.onFileChange}
+                      accept=".pdf" />
+                  </div>
+                  <div className="information">
+                    * pdf파일만 등록이 가능합니다.
+                      </div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  < InputPrice name="price" getValue={this.getPriceValue} />
+                  <InputPrice name="price" getValue={this.getPriceValue} />
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label ">기간</div>
-                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
-                  getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
+                  <InputCalendar
+                    startDate={this.state.startDate}
+                    endDate={this.state.endDate}
+                    name="calendar"
+                    getStartDateValue={this.getStartDateValue}
+                    getEndDateValue={this.getEndDateValue}
+                    getDayDateValue={this.getDayDateValue} />
                 </div>
 
                 <HRLine />
@@ -343,10 +409,10 @@ class RequestToDesigner extends Component {
 
               </FormBox>
             </div>
-              <div className="contentsBox">
-                <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true}/>
-                <GrayButton value={"취소"} onClick={()=>{window.history.back()}} isConfirm={true}/>
-              </div>
+            <div className="contentsBox">
+              <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+            </div>
           </MainBox>
         </Wrapper>
       </React.Fragment>
