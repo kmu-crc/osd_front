@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Button from "components/Commons/Button";
 import { FormInput } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
-
 const BtnWrap = styled.div`
   margin-bottom: 1rem;
 `;
@@ -18,6 +17,29 @@ const Label = styled.div`
   font-weight: 700;
   text-transform: none;
 `;
+
+const MainBox=styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:600px;
+  height:100%;
+  max-width:1350px;
+  min-width:100%;
+  flex-direction:row;
+  margin-left:auto;
+  margin-right:auto;
+  .main{
+    width:100%;
+    height:100%;
+    margin-top:20px;
+    margin-bottom:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
+`
 
 class AdminSignInForm extends Component {
   onChangeValue = async data => {
@@ -50,7 +72,10 @@ class AdminSignInForm extends Component {
 
   render() {
     return (
-      <div style={{width:"350px",alignContent:"center"}}>
+      <MainBox>
+        <div className="main">
+        <h1>관리자 로그인</h1>
+        <div style={{width:"350px",alignContent:"center"}}>
         <form onSubmit={this.onSubmit}>
           <Label>ADMIN ID</Label>
           <FormInput
@@ -74,6 +99,8 @@ class AdminSignInForm extends Component {
           </BtnWrap>
         </form>
       </div>
+      </div>
+      </MainBox>
     );
   }
 }

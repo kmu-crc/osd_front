@@ -27,6 +27,8 @@ const Head = styled.header`
 
 const Content = styled(ContentBox)`
   position: relative;
+  display:flex;
+  justify-content:space-between;
 `;
 
 const MainMenu = styled.ul`
@@ -53,11 +55,11 @@ const MenuItem = styled.li`
 
 const SubMenu = styled.div`
   display: block;
-  position: absolute;
-  width: 300px;
+  // position: absolute;
+  // width: 300px;
   height: 100%;
-  right: 0;
-  top: 0;
+  // right: 0;
+  // top: 0;
   line-height: 60px;
   &::after {
     display: block;
@@ -343,7 +345,7 @@ class AdminHeader extends Component {
             </MenuItem>
           </MainMenu>
           <SubMenu>
-            <SubMenuGroup>
+            {/* <SubMenuGroup> */}
               {/* {this.props.admin_valid && (
                 <div>
                   <SubMenuItem className="submenu-item">
@@ -354,7 +356,7 @@ class AdminHeader extends Component {
             </SubMenuItem>
                 </div>
               )} */}
-            </SubMenuGroup>
+            {/* </SubMenuGroup> */}
             <SubMenuItem>
               {this.props.admin_valid ? <LoginNav /> : <LogOutNav />}
             </SubMenuItem>
