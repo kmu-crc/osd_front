@@ -11,7 +11,7 @@ const EditorWrapper = styled.div`
 width:100%;
 .ck-editor__editable_inline {
     min-width:100%;
-    min-height: ${props=>props.height||70}px;
+    min-height: ${props => props.height || 70}px;
 }
 `
 const MainBox = styled.div`
@@ -79,21 +79,21 @@ const MainBox = styled.div`
     }
 `
 const Button = styled.div`
-    width:${props=>props.width==null?"max-content":props.width+"%"};
+    width:${props => props.width == null ? "max-content" : props.width + "%"};
     min-width:max-content;
     height:max-content;
     padding:5px;
     border-radius:5px;
-    background-color:${props=>props.backgroundColor==null?"white":props.backgroundColor};
-    color:${props=>props.fontColor==null?"gray":props.fontColor};
+    background-color:${props => props.backgroundColor == null ? "white" : props.backgroundColor};
+    color:${props => props.fontColor == null ? "gray" : props.fontColor};
     cursor:pointer;
     margin-left:10px;
     box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.1);
 
 `
-const InputText = styled.input.attrs({type:"text"})`
-    width:${props=>props.width==null?"98%":props.width+"px"};
-    height${props=>props.height==null?"98%":props.height+"px"}px;
+const InputText = styled.input.attrs({ type: "text" })`
+    width:${props => props.width == null ? "98%" : props.width + "px"};
+    height${props => props.height == null ? "98%" : props.height + "px"}px;
     border-radius:5px;
     background-color:#EFEFEF;
     border:none;
@@ -119,66 +119,64 @@ class NoticeList extends Component {
     render() {
         const list = this.props.list
         return (
-        // <div>
-        //     <div style={{cursor:"pointer"}} onClick={this.handleNewNoti} ><Icon name="plus circle" size="large" /> + ADD NEW NOTICE + click here!</div>
-        //     {list &&
-        //         (list.map(item =>
-        //             <div key={item.uid} style={{ cursor: "pointer", display: "flex" }} >
-        //                 <div style={{ display: "flex" }} onClick={() => this.handleClicked(item.uid)}>
-        //                     <div>제목:{item.title}|&nbsp;&nbsp;&nbsp;</div>
-        //                     <div>기간:{dateFormat(item.start_time)} ~ {dateFormat(item.expiry_time)}</div>
-        //                 </div>
-        //                 <div><input type="button" value="del" onClick={() => this.handleDelete(item.uid)} /></div>
-        //             </div>))
-        //     }
-        // </div>
-        <MainBox>
-            <div className="titleBox"><div className="bold font_big">공지사항</div></div>
-            <div className="contentsBox">
-            <div className="writeButtonBox">
-            <Button onClick={this.handleNewNoti} width="15" backgroundColor="#707070" fontColor="white">공지사항 작성</Button>
-            </div>
-                <div className="contents_title">
-                    <div className="label_small bold">번호</div>
-                    <div className="label_big bold">제목</div>
-                    <div className="label_middle bold">공지기간</div>
-                    <div className="label_small bold"></div>
-                </div>
-            {
-                list&&
-                list.map((item)=>{
-                    return(
-                    <div key={item.uid} className="contents_piece">
-                        <div className="label_small">{item.uid}</div>
-                        <div className="label_big cursor_pointer" onClick={() => this.handleClicked(item.uid)}>{item.title}</div>
-                        <div className="label_middle">{dateFormat(item.start_time)} ~ {dateFormat(item.expiry_time)}</div>
-                        <div className="label_small bold">
-                            <Button width="100" onClick={() => this.handleDelete(item.uid)} ><div>삭제</div></Button>
-                        </div>
+            // <div>
+            //     <div style={{cursor:"pointer"}} onClick={this.handleNewNoti} ><Icon name="plus circle" size="large" /> + ADD NEW NOTICE + click here!</div>
+            //     {list &&
+            //         (list.map(item =>
+            //             <div key={item.uid} style={{ cursor: "pointer", display: "flex" }} >
+            //                 <div style={{ display: "flex" }} onClick={() => this.handleClicked(item.uid)}>
+            //                     <div>제목:{item.title}|&nbsp;&nbsp;&nbsp;</div>
+            //                     <div>기간:{dateFormat(item.start_time)} ~ {dateFormat(item.expiry_time)}</div>
+            //                 </div>
+            //                 <div><input type="button" value="del" onClick={() => this.handleDelete(item.uid)} /></div>
+            //             </div>))
+            //     }
+            // </div>
+            <MainBox>
+                <div className="titleBox"><div className="bold font_big">공지사항</div></div>
+                <div className="contentsBox">
+                    <div className="writeButtonBox">
+                        <Button onClick={this.handleNewNoti} width="15" backgroundColor="#707070" fontColor="white">공지사항 작성</Button>
                     </div>
-                    )
-                })
-            
-            }
- 
-            </div>
-        </MainBox>
+                    <div className="contents_title">
+                        <div className="label_small bold">번호</div>
+                        <div className="label_big bold">제목</div>
+                        <div className="label_middle bold">공지기간</div>
+                        <div className="label_small bold"></div>
+                    </div>
+                    {
+                        list &&
+                        list.map((item) => {
+                            return (
+                                <div key={item.uid} className="contents_piece">
+                                    <div className="label_small">{item.uid}</div>
+                                    <div className="label_big cursor_pointer" onClick={() => this.handleClicked(item.uid)}>{item.title}</div>
+                                    <div className="label_middle">{dateFormat(item.start_time)} ~ {dateFormat(item.expiry_time)}</div>
+                                    <div className="label_small bold">
+                                        <Button width="100" onClick={() => this.handleDelete(item.uid)} ><div>삭제</div></Button>
+                                    </div>
+                                </div>
+                            )
+                        })
+
+                    }
+
+                </div>
+            </MainBox>
         )
     }
 }
 class NoticeForm extends Component {
     state = { detail: null }
     submit = () => {
-        // console.log(this.state.detail);
-        // return;
         let form_data = this.refs.notice_form
         const op = form_data.uid.value === "" ? "add" : "edit"
         let data = {}
         data.uid = op === "add" ? null : form_data.uid.value
         data.title = form_data.title.value
         // data.type = form_data.type.value
-        data.start_time = new Date(this.state.detail.start_time)
-        data.expiry_time = new Date(this.state.detail.expiry_time)
+        data.start_time = this.state.detail.start_time ? new Date(this.state.detail.start_time) : new Date();
+        data.expiry_time = this.state.detail.expiry_time ? new Date(this.state.detail.expiry_time) : new Date();
         // data.content = form_data.content.value && form_data.content.value.replace(/\n/g, "<br/>");
         data.content = this.state.detail["content"];
         data.start_time = `${data.start_time.getFullYear()}-${data.start_time.getMonth() + 1}-${data.start_time.getDate()}`
@@ -228,10 +226,10 @@ class NoticeForm extends Component {
         detail[event.target.name] = event.target.value
         this.setState({ detail })
     }
-    handleeditChange=(value)=>{
+    handleeditChange = (value) => {
         let detail = this.state.detail
         detail["content"] = value;
-        this.setState({ detail })  
+        this.setState({ detail })
     }
     render() {
         const detail = this.state.detail
@@ -240,11 +238,11 @@ class NoticeForm extends Component {
         return (
             detail ?
                 <MainBox>
-                     <form ref="notice_form">
-                     <input name="uid" value={detail.uid} onChange={this.handleChange} hidden />
-                    <div className="titleBox"><div className="bold font_big">공지사항</div></div>
+                    <form ref="notice_form">
+                        <input name="uid" value={detail.uid} onChange={this.handleChange} hidden />
+                        <div className="titleBox"><div className="bold font_big">공지사항</div></div>
                         <div className="contentsBox">
-                            <div className="writeButtonBox"/>
+                            <div className="writeButtonBox" />
                             <div className="contents_title">
                                 <div className="label_small bold">제목</div>
                                 <InputText name="title" onChange={this.handleChange} value={detail.title} />
@@ -253,39 +251,43 @@ class NoticeForm extends Component {
                                 <div className="label_small bold">공지기간</div>
                                 <div className="inner_Box">
                                     <div className="margin_right">시작일자</div>
-                                    <div className="margin_right"><DatePicker name="start" onChange={this.handleStartDateChange} value={startDate} minDate={new Date()} /></div>
+                                    <div className="margin_right">
+                                        <DatePicker name="start" onChange={this.handleStartDateChange} value={startDate} minDate={new Date()} />
+                                    </div>
                                     <div className="margin_right">~</div>
                                     <div className="margin_right">종료일자</div>
-                                    <div className="margin_right"><DatePicker name="end" onChange={this.handleEndDateChange} value={endDate} minDate={new Date()} /></div>
+                                    <div className="margin_right">
+                                        <DatePicker name="end" onChange={this.handleEndDateChange} value={endDate} minDate={new Date()} />
+                                    </div>
                                 </div>
                             </div>
                             <div className="contents_piece">
                                 <div className="label_small bold">내용</div>
                                 <div className="inner_Box">
                                     <EditorWrapper height={300}>
-                                <CKEditor
-                                // name="content"
-                                editor={ClassicEditor}
-                                data={this.state.detail["content"]}
-                                onInit={editor => { editor.editing.view.focus(); }}
-                                onChange={(event, editor) => {
-                                    const data = editor.getData();
-                                    this.handleeditChange(data);
-                                }}
-                                onBlur={(event, editor) => { console.log('Blur.', event, editor); }}
-                                onFocus={(event, editor) => { console.log('Focus.', editor); }} />
-                                </EditorWrapper>
+                                        <CKEditor
+                                            // name="content"
+                                            editor={ClassicEditor}
+                                            data={this.state.detail["content"]}
+                                            onInit={editor => { editor.editing.view.focus(); }}
+                                            onChange={(event, editor) => {
+                                                const data = editor.getData();
+                                                this.handleeditChange(data);
+                                            }}
+                                            onBlur={(event, editor) => { console.log('Blur.', event, editor); }}
+                                            onFocus={(event, editor) => { console.log('Focus.', editor); }} />
+                                    </EditorWrapper>
                                 </div>
                             </div>
                             <div className="writeButtonBox">
                                 <Button onClick={this.cancel} width="15" backgroundColor="white" fontColor="#707070">취소</Button>
                                 <Button onClick={this.submit} width="15" backgroundColor="#707070" fontColor="white">{detail.uid ? "수정" : "추가"}</Button>
                             </div>
-                    </div>
-                </form>
+                        </div>
+                    </form>
 
                 </MainBox>
-                : 
+                :
                 <div>no data</div>
         )
     }
@@ -349,44 +351,3 @@ class NoticeManager extends Component {
     }
 }
 export default NoticeManager
-{/* <form ref="notice_form">
-                        <input name="uid" value={detail.uid} onChange={this.handleChange} hidden />
-                        <div>
-                            <div><label>제목:</label></div>
-                            <div><input name="title" onChange={this.handleChange} value={detail.title} /></div>
-                        </div>
-                        <div>
-                            <div><label>기간:</label></div>
-                            <div>
-                                시작일자:<DatePicker name="start" onChange={this.handleStartDateChange} value={startDate} minDate={new Date()} />00:00부터<br />
-                                종료일자:<DatePicker name="end" onChange={this.handleEndDateChange} value={endDate} minDate={new Date()} />23:59까지
-                            </div>
-                        </div>
-                        <div>
-                            <div><label>형식:</label></div>
-                            <div>
-                                <input name="type" type="radio" value="div" checked disabled />div(현재는 div만 가능)
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <label>내용:</label>
-                            </div>
-                            <div>
-                            <CKEditor
-                                // name="content"
-                                editor={ClassicEditor}
-                                data={this.state.detail["content"]}
-                                onInit={editor => { editor.editing.view.focus(); }}
-                                onChange={(event, editor) => {
-                                    const data = editor.getData();
-                                    this.handleeditChange(data);
-                                }}
-                                onBlur={(event, editor) => { console.log('Blur.', event, editor); }}
-                                onFocus={(event, editor) => { console.log('Focus.', editor); }} />
-                                {/* <textarea name="content" onChange={this.handleChange} value={detail.content} /> */}
-                    //         </div>
-                    //     </div>
-                    // </form>
-                    // <button onClick={this.submit}>{detail.uid ? "수정" : "추가"}</button>
-                    // <button onClick={this.cancel}>취소</button> */}
