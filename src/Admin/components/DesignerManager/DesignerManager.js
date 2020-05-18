@@ -12,9 +12,7 @@ import Expert from "Admin/Commons/Expert/Expert"
 
 
 const MainBox = styled.div`
-// *{
-//   border:1px solid black;
-// }
+
   display:flex;
   width:1350px;
   flex-direction:row;
@@ -59,6 +57,12 @@ const FilterBox = styled.div`
   .range-box {
     text-align: center;
     display: flex;
+    align-items:center;
+    .classic{
+      font-size:17px;
+      margin-left:10px;
+      vertical-align: middle;
+    }
     p{
       font-size: 20px;
       height: 12px;
@@ -400,7 +404,7 @@ class DesignerManager extends Component {
     // sort
     const combosort = [
       { key: "update", value: "update", text: "업데이트" },
-      { key: "create", value: "create", text: "등록순" },
+      { key: "create", value: "create", text: "등록일" },
       { key: "nick_name", value: "nick_name", text: "닉네임" },
       { key: "like", value: "like", text: "인기순" }
     ];
@@ -460,7 +464,7 @@ class DesignerManager extends Component {
                 {/* ▲ ▽  */}
               </div>
               <div className="range-box">
-                <p>기간:</p>
+                <div className="classic">기간</div>
                 <DatePicker className="s_margin" name="start" onChange={this.handleStartDateChange} value={this.state.startDate} minDate={new Date('1900-01-01')} />
                 <p>~</p>
                 <DatePicker className="s_margin" name="start" onChange={this.handleEndDateChange} value={this.state.endDate} maxDate={new Date()} />

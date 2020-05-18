@@ -205,9 +205,9 @@ class HotGroupManager extends Component {
     // sort
     const combosort = [
       { key: "update", value: "update", text: "업데이트" },
-      { key: "create", value: "create", text: "등록순" },
+      { key: "create", value: "create", text: "등록일" },
       { key: "title", value: "title", text: "제목" },
-      { key: "like", value: "like", text: "인기순" }];
+      { key: "like", value: "like", text: "인기" }];
     // console.log(combosort);
 
     return (
