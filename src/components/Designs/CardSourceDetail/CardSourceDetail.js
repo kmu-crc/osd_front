@@ -529,10 +529,10 @@ class CardSourceDetail extends Component {
       <ButtonContainer >
         {(this.props.edit && this.props.uid) &&
           <EditorBottonWrapper>
-            <button onClick={this.onSubmit} className="submit" type="button">
-              <i className="icon outline save" />저장</button>
             <button onClick={this.onCancel} className="cancel" type="button">
               <i className="icon trash" />취소</button>
+            <button onClick={this.onSubmit} className="submit" type="button">
+              <i className="icon outline save" />저장</button>
           </EditorBottonWrapper>}
       </ButtonContainer>
     </div>);

@@ -280,8 +280,8 @@ class CardSourceDetail extends Component {
       <ButtonContainer >
         {this.state.edit &&
           <EditorBottonWrapper top={this.state.top} left={this.state.left}>
-            <button onClick={this.onSubmit} className="submit" type="button"><i className="icon outline save" />등록</button>
             <button onClick={this.onCancel} className="cancel" type="button"><i className="icon trash" />취소</button>
+            <button onClick={this.onSubmit} className="submit" type="button"><i className="icon outline save" />등록</button>
           </EditorBottonWrapper>
         }
         {this.state.edit === false && this.props.isTeam && (content.length > 0 ? (

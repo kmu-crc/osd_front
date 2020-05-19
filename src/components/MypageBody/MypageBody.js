@@ -10,6 +10,7 @@ import OrderOption from "components/Commons/OrderOption";
 
 //css
 const MypageBodyComp = styled.div`
+    padding-bottom:50px;
     font-family: Noto Sans KR;
     .MypageCategory{
         display: flex;

@@ -334,8 +334,8 @@ class Comment extends Component {
                                         <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
                                     </div>
                                     <div className="another-wrapper">
-                                        <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
                                         <div className="cancel" onClick={this.undoReply}>취소</div>
+                                        <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
                                     </div>
                                 </div>
                             </CommentInputTextContainer>
@@ -352,8 +352,8 @@ class Comment extends Component {
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
                 </div>
                 <div className="another-wrapper">
-                    <div className="submit" onClick={this.requestComment}>게시</div>
                     <div className="cancel" onClick={this.undoComment}>취소</div>
+                    <div className="submit" onClick={this.requestComment}>게시</div>
                 </div>
             </CommentInputTextContainer>
         </CommentBox >)

@@ -141,10 +141,14 @@ const RightMenu = styled.ul`
         }
     }
     .profileItem{
+        *{
+            cursor:pointer;
+        }
         min-width:55px;
         height:29px;
         margin-right:17px;
         margin-top:11px;
+        cursor:pointer;
         @media only screen and (max-width : 900px) {
             margin-top:5px;
             margin-bottom:5px;

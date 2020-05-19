@@ -88,7 +88,7 @@ class Notice extends Component {
                     && blacklist.includes(whereami) === false
                     && notice.map(notifi => {
                         let startDif = Math.floor((new Date()-new Date(notifi.start_time)) / (1000 * 60 * 60 * 24));
-                        let endDif = Math.ceil((new Date(notifi.expiry_time)-new Date()) / (1000 * 60 * 60 * 24));
+                        let endDif = Math.ceil0((new Date(notifi.expiry_time)-new Date()) / (1000 * 60 * 60 * 24));
                         console.log(startDif,endDif);
 
                         return (getCookie('noti_' + notifi.uid)) ? null :

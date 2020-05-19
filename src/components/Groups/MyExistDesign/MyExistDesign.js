@@ -50,8 +50,8 @@ class MyExistDesign extends Component {
     return(
       <ValidateForm onSubmit={this.handleSubmit}>
         <FormField name="exist_design" label="가입된 / 신청 중인 내 디자인" options={this.props.MyDesignList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-        <Btn type="submit">가입 취소</Btn>
         <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
+        <Btn type="submit">가입 취소</Btn>
       </ValidateForm>
     );
   }

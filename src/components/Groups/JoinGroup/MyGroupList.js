@@ -47,8 +47,8 @@ class MyGroupList extends Component {
         <FormField name="join_group" label="내 그룹 리스트" options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
         </div>
         <div style={{height:"70px",marginBottom:"10px"}}>
-        <Btn type="submit" style={{bottom:"0px",left:"20px",background:"#FF0000"}} >가입 신청</Btn>
         <Btn type="button" style={{bottom:"0px",left:"170px"}} onClick={this.props.handleCloseModal}>취소</Btn>
+        <Btn type="submit" style={{bottom:"0px",left:"20px",background:"#FF0000"}} >가입 신청</Btn>
         </div>
       </ValidateForm>
     );

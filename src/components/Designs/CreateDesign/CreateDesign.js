@@ -122,7 +122,8 @@ const MenuItem = styled.div`
     }
 `;
 const InputBoard = styled.div`
-  width: ${window.innerWidth > 1920 ? 1422 : window.innerWidth - 500}px;
+  // width: ${window.innerWidth > 1920 ? 1422 : window.innerWidth - 500}px;
+  width:77%;
   padding-bottom:100px;
   margin-bottom:100px;
   position:relative;
@@ -132,8 +133,13 @@ const InputBoard = styled.div`
   .buttonBox{
     width: max-content;
     display: flex;
+    justify-content:flex-end;
     margin-top: 21px;
     margin-left: auto;
+    padding:10px 0px 10px 10px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
   }
 
   @media only screen and (min-width : 780px) and (max-width:1440px) {
@@ -727,7 +733,7 @@ const emptyCategory = [
 const scrollmenu = [
   { step: 0, txt: "기본 정보" },
   { step: 1, txt: "부가 정보" },
-  { step: 2, txt: "컨텐츠 입력" }];
+  { step: 2, txt: "컨텐츠 정보" }];
 
 function Peer(props) {
   return (
@@ -1173,8 +1179,9 @@ class CreateDesign extends Component {
                     onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
                 </div>
                 <div style={{ marginTop: "20px", display: "flex" }} >
+                  <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", 
+                  fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
                   <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
-                  <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
                 </div>
               </div>
             </CropperDialog> : null}
@@ -1203,7 +1210,7 @@ class CreateDesign extends Component {
                 </TitleBox>
                 {/* EXPLANATION */}
                 <ExplainBox>
-                  <div className="title">설명</div>
+                  <div className="title">디자인 설명</div>
                   <textarea id="explainBox" onChange={this.onChangeValueExplanation} className="inputTextareaBox"
                     maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
                 </ExplainBox>
@@ -1393,7 +1400,7 @@ class CreateDesign extends Component {
             <div className="buttonBox">
               <CustomButton
                 onClick={() => window.history.go(-1)}
-                isComplete={true}>
+                isComplete={false}>
                 <BtnText>취소</BtnText>
               </CustomButton>
               {step === 0 && <React.Fragment>
@@ -1404,7 +1411,7 @@ class CreateDesign extends Component {
                 </CustomButton>
               </React.Fragment>}
               {step === 1 && <React.Fragment>
-                <CustomButton isComplete={true} onClick={this.gotoPrevStep}>
+                <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
                   <BtnText>뒤로</BtnText>
                 </CustomButton>
                 <CustomButton
@@ -1414,7 +1421,7 @@ class CreateDesign extends Component {
                 </CustomButton>
               </React.Fragment>}
               {step === 2 && <React.Fragment>
-                <CustomButton isComplete={true} onClick={this.gotoPrevStep}>
+                <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
                   <BtnText>뒤로</BtnText>
                 </CustomButton>
                 <CustomButton

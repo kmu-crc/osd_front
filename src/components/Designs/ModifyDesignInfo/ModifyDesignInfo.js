@@ -243,10 +243,10 @@ class ModifyDesignInfo extends Component {
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
-            <Button type="submit">수정</Button>
             <Link to={`/designDetail/${this.props.DesignDetail.uid}`}>
               <Button type="button">취소</Button>
             </Link>
+            <Button type="submit">수정</Button>
           </form>
         }
       </InfoWrapper>

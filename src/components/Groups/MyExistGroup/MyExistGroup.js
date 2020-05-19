@@ -48,8 +48,8 @@ class MyExistGroup extends Component {
     return(
       <ValidateForm onSubmit={this.handleSubmit}>
         <FormField name="exist_group" label="가입된 / 신청 중인 내 그룹" options={this.props.MyGroupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-        <Btn type="submit">가입 취소</Btn>
         <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
+        <Btn type="submit">가입 취소</Btn>
       </ValidateForm>
     );
   }

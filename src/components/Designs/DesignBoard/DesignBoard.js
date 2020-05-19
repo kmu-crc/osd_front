@@ -354,8 +354,8 @@ class DesignBoard extends Component {
                 <SortableComponent getCardList={this.handleGetCardList} items={cardList} />
               </div><br />
               <ButtonWrapper align="right" >
-                <button className="submit" onClick={this.requestReSortCardList}>완료</button>
                 <button className="cancel" onClick={this.closeSortableModal}> 취소</button>
+                <button className="submit" onClick={this.requestReSortCardList}>완료</button>
               </ButtonWrapper>
             </Modal.Content>
           </CustomModal>

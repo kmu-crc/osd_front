@@ -91,10 +91,8 @@ class BoardUpdate extends Component {
             />
           </FInput>
           <ButtonWrap>
+            <Button type="button" size="small" onClick={this.handelCloseBtn}>취소</Button>
             <Button type="submit" size="small">수정</Button>
-            <Button type="button" size="small" onClick={this.handelCloseBtn}>
-              취소
-            </Button>
           </ButtonWrap>
         </form>
       </Update>
