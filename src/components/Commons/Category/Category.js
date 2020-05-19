@@ -28,7 +28,6 @@ const MainCategory = styled.div`
     padding-left: 115px;
     display: flex;
     background-color: #FFFFFF;
-
     @media only screen and (max-width : 900px) {
     top:100px;
     padding-left:30px;
@@ -48,9 +47,10 @@ const MainCateElement = styled.div`
     line-height: 29px;
     text-align: left;
     color: #FF0000;
-    margin-right: 30px;    
+    margin-right: 25px;    
     cursor: pointer;
     white-space:nowrap;
+    padding-right:5px;
     
     &.selected {
         font-weight: 500;
@@ -68,6 +68,7 @@ const SubCategory = styled.div`
     display: flex;
     justify-content: center;
     background-color: #FFFFFF;
+    margin-right:25px;
     @media only screen and (max-width : 900px) {
         justify-content: center;
         ::-webkit-scrollbar { display: none; }
@@ -89,7 +90,8 @@ const SubCateElement = styled.div`
     line-height: 29px;
     text-align: center;
     color: #707070;
-    margin-right: 20px;    
+    margin-right: 15px;    
+    padding-right:5px;
     white-space:nowrap;
 
     &.selected {

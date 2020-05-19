@@ -9,8 +9,18 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
-
+const Wrapper = styled.div`
+  position:relative;
+  .orderBox{
+    margin-top:10px;
+    width:100%;
+    height:max-content;
+  }
+`
 const TextWrapper = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
     top: 25px;
     font-size: 25px;
     font-family: Noto Sans KR;
@@ -19,37 +29,38 @@ const TextWrapper = styled.div`
     cursor: pointer;
     margin-top:100px;
     @media only screen and (max-width : 900px) {
-      margin-top:150px;
-      
+    margin-top:150px;
     }
     .title{
     width:300px;
     text-align:center;
-    position:absolute;
-    @media only screen {
-        right:${props => (props.centerPos - 300) / 2}px;
-  }
-}
-`;
-const JoinDesigner = styled.div`
-    position: relative;
-    left: 1724px;
-    width:max-content;
-    text-align: left;
-    font-size: 20px;
-    cursor: pointer;
-    font-family: Noto Sans KR;
-    font-weight:500;
-    color: red;
-    line-height: 29px;
-    border-bottom: 1.5px solid red;
+    }
 `;
 const JoinDesignerContainer = styled.div`
-    position: relative;
+    display:flex;
+    justify-content:flex-end;
+    padding:10px;
+    .joinDesigner{
+        width:max-content;
+        height:29px;
+        text-align: left;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: Noto Sans KR;
+        font-weight:500;
+        color: red;
+        line-height: 29px;
+        border-bottom: 1.5px solid red;
+        margin-top:10px;
+    }
+
 `;
 const ScrollListContainer = styled.div`
     padding-top: 100px;
     padding-bottom: 68px;
+`;
+const BlankDiv = styled.div`
+    padding-top: 50px;
 `;
 class DesignerListContainer extends Component {
     constructor(props) {
@@ -122,6 +133,7 @@ class DesignerListContainer extends Component {
         const { this_category, main_category, sub_category, reload, this_order } = this.state
         const { category1, category2, Count, status } = this.props
         return (<React.Fragment>
+            <Wrapper>
             <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
                 category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
 
@@ -130,10 +142,10 @@ class DesignerListContainer extends Component {
             </TextWrapper>
 
             <JoinDesignerContainer>
-                <JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner>
+                <div className="joinDesigner" onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</div>
             </JoinDesignerContainer>
 
-            <div style={{ width: "100%", marginTop: "50px",  height: "1px", position: "relative" }}>
+            <div className="orderBox">
                 <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
             </div>
 
@@ -143,6 +155,8 @@ class DesignerListContainer extends Component {
                     : <ScrollList {...opendesign_style.designer_margin} reload={reload} handleReload={this.handleReload}
                         type="designer" dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
             </ScrollListContainer>
+        </Wrapper>
+        <BlankDiv />
         </React.Fragment>)
     }
 }

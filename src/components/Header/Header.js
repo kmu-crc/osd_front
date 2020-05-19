@@ -17,15 +17,24 @@ const MediumMaxWidth = 1440;
 const LargeMinWidth = 1440;
 const LargeMaxWidth = 1920;
 // CSS
+const WrapperBox = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
+`
 const Menu = styled.div`
     z-index: 900;
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${LargeMaxWidth}px) {
+        width:100%;
+    }
+    @media only screen and (min-width : ${LargeMaxWidth}px) {
+        width:1920px;
+    }
     width: 100%;
     position: fixed;
     display: flex;
     flex-direction:row-reverse;
-    @media only screen and (max-width : 900px) {
-        display:block;
-    }
+
     justify-content: space-between;
     font-size: 20px;
     font-weight: 500;
@@ -41,6 +50,9 @@ const Menu = styled.div`
     -ms-transition: all 0.45s;
     -o-transition: all 0.45s;
     transition: all 0.45s;    
+    @media only screen and (max-width : 900px) {
+        display:block;
+    }
 `
 const LeftMenu = styled.ul`
     // position: absolute;
@@ -66,13 +78,17 @@ const LeftMenu = styled.ul`
     }
 `
 const MenuItem = styled.li`
-    min-width:55px;
+    min-width:55x;
     height:29px;
-    margin-left:50px;
+    margin-left:55px;
     margin-top:11px;
     text-align:center;
     .link_tag{
         color:${props => props.isSelect === true ? "#FF0000" : "#707070"}
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+        margin-left:0px;
+        margin-right:50px;
     }
 
     // @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
@@ -121,6 +137,7 @@ const RightMenu = styled.ul`
         height:34px;
         margin-right:50px;
         margin-top:10px;
+        position:relative;
         @media only screen and (max-width : 900px) {
             margin-top:5px;
             margin-bottom:5px;
@@ -198,6 +215,7 @@ class Header extends Component {
     render() {
         return (
             <React.Fragment>
+                <WrapperBox>
                 <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
                     <RightMenu>
                         <li className="searchItem">
@@ -226,7 +244,7 @@ class Header extends Component {
                             <a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     </LeftMenu>
                 </Menu>
-
+                </WrapperBox>
             </React.Fragment>
         )
     }
