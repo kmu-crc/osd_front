@@ -4,7 +4,12 @@ import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
-
+const SmallMinWidth = 0;
+const SmallMaxWidth = 480;
+const MediumMinWidth = 480;
+const MediumMaxWidth = 1440;
+const LargeMinWidth = 1440;
+const LargeMaxWidth = 1920;
 const CommentBox = styled.div`
     *{
         font-family: Noto Sans KR;
@@ -39,11 +44,14 @@ const CommentInner = styled.div`
     margin-left: 55px;
   };
   .face {
-    width: 45px;
-    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
+    max-width: 45px;
+    max-height: 45px;
     border-radius: 50%;
     background-image: url(${props => props.face});
     background-size: cover;
+    background-position:center;
     border: 1px solid #EFEFEF;
   };
     .text-wrapper {
@@ -51,6 +59,7 @@ const CommentInner = styled.div`
         width: max-content;
         min-width: 150px;
         max-width: 560px;
+        height:max-content;
         .nick {
             display: flex;
             flex-direction: row;
@@ -82,6 +91,7 @@ const CommentInner = styled.div`
         display: flex;
         flex-direction: row;
         margin-left: 7px;
+        
         .reply {
             width: max-content;
             height: 16px;
@@ -96,6 +106,34 @@ const CommentInner = styled.div`
             cursor: pointer;
         }
     };
+
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px){
+        display:flex;
+        flex-wrap:wrap;
+        .text-wrapper{
+            min-width:100%;
+            .nick{
+                min-width:100%;
+                display:flex;
+                flex-wrap:wrap;
+                .name{
+                    width:100%;
+                    white-space: nowrap; 
+                    overflow: hidden; 
+                    text-overflow: ellipsis; 
+                }
+                .create-time{
+                    margin-left:0px;
+                }
+            }
+        }
+        .button-wrapper{
+            .del{
+                margin-top:5px;
+                margin:3px;
+            }
+        }
+    }
 `;
 const CommentInputTextContainer = styled.div`
    height:max-content;
@@ -114,14 +152,14 @@ const CommentInputTextContainer = styled.div`
         margin-bottom:5px;
     }
    .face {
-       width: 58px;
-       height: 58px;
+       max-width: 58px;
+       max-height: 58px;
        min-width: 58px;
        min-height: 58px;
        background-image: url(${props => props.face});
        background-repeat: no-repeat;
        background-size: cover;
-       background-position: 50%;
+       background-position: center;
        background-color: #D6D6D6;
        border-radius: 50%;
    }
@@ -150,6 +188,9 @@ const CommentInputTextContainer = styled.div`
        .marginBottom{
            margin-bottom:30px;
        }
+   }
+   .flex_Input{
+       display:flex;
    }
    .another-wrapper { 
     //    margin-left: auto;
@@ -197,6 +238,22 @@ const CommentInputTextContainer = styled.div`
            text-align: left;
            color: #707070;
            cursor: pointer;
+       }
+   }
+   @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px){
+       display:flex;
+       .wrapper{
+           margin-left:0px;
+           width:100%;
+       }
+       .flex_Input{
+           flex-direction:column;
+           align-items:flex-end;
+       }
+       .another-wrapper{
+           .cancel{
+               margin-left:0px;
+           }
        }
    }
 `;
@@ -328,7 +385,7 @@ class Comment extends Component {
                         <React.Fragment>
                             <CommentInputTextContainer className="reply" style={{ flexDirection: "column" }} face={myface}>
                                 <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
-                                <div style={{ display: "flex" }}>
+                                <div className="flex_Input">
                                     {/* <div className="face" /> */}
                                     <div className="wrapper ">
                                         <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
@@ -348,12 +405,14 @@ class Comment extends Component {
             {/* input-text of comment */}
             <CommentInputTextContainer face={myface}>
                 <div className="face" />
+                <div className="flex_Input">
                 <div className="wrapper">
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
                 </div>
                 <div className="another-wrapper">
                     <div className="cancel" onClick={this.undoComment}>취소</div>
                     <div className="submit" onClick={this.requestComment}>게시</div>
+                </div>
                 </div>
             </CommentInputTextContainer>
         </CommentBox >)

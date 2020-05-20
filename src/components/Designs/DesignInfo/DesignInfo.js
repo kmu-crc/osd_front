@@ -25,188 +25,15 @@ const MediumMinWidth = 480;
 const MediumMaxWidth = 1440;
 const LargeMinWidth = 1440;
 const LargeMaxWidth = 1920;
-const LeftSide = styled.div`
-    display: flex;
-    height: 220px;
-    justify-content: space-between;
-    flex-direction: column !important;
-    .left_wrapper{
-        // border:1px solid black;
-    }
-    .title {
-        display: block !important;
-        position: absolute;
-        height: 29px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        text-align: left;
-        line-height: 29px;
-        cursor: pointer;
-    }
-    .box {
-        position: relative;
-        margin-top: 40px;
-        .goto-parent {
-            position: relative;
-            width: 165px;
-            height: 25px;
-            color: #FF0000;
-            font-size: 17px;
-            font-weight: 300;
-            text-align: left;
-            line-height: 25px;
-            cursor: pointer;
-            &.no {
-                cursor: default;
-            }
-        }
-        .design_member {
-            width: max-content;
-            max-width: 156px;
-            font-size: 16px;
-            font-weight: 300;            
-        }
-        .member-list-btn {
-            width: max-content;
-            max-width: 170px;
-            height: 29px;
-            margin-top: 10px;
-            margin-left: -5px;
-            border: none;
-            outline: none;
-            background: none;
-            font-size: 17px;
-            color: #707070;
-            font-weight: 300;
-            text-align: left;
-            line-height: 29px;
-            cursor: pointer;
-        }
-        .comment-box {
-            width: max-content;
-            display: flex;
-            cursor: pointer;
-            margin-top: 10px;
-            color: #FF0000;
-            font-family: Noto Sans KR;
-            font-weight: 300;
-            .txt {
-                font-size: 17px;
-            }
-            .count {
-                margin-left: 10px;
-                font-size: 15px
-            }
-        }
-        .fork-list-btn {
-            width: 165px;
-            height: 29px;
-            margin-top: 10px;
-            margin-left: -5px;
-            background: none;
-            border: none;
-            outline: none;
-            display: flex;
-            color: #FF0000;
-            font-size: 17px;
-            font-weight: 500;
-            line-height: 29px;
-            text-align: left;
-            align-items: bottom;
-            cursor: pointer;
-            .fork-count {
-                margin-left: 10px;
-            }
-            &.no {
-                cursor: default;
-            }
-        }
-    }
-    .count-box {
-        // position: absolute;
-        width: 165px;
-        height: 29px;
-        margin-bottom: 8px;
-        font-size: 15px;
-        color: #707070;
-        font-weight: 500;
-        text-align: left;
-        display: flex;
-        .view {
-            margin-top: 11px;
-        }
-        .view-count {
-            margin-top: auto;
-            margin-left: 6px;
-            width: 34px;
-        }
-        .like {
-            margin-top: auto;
-            margin-left: 22px;
-            width: 22px;
-            height: 22px;
-            padding: 0px;
-            &i {
-                margin-top: auto;
-                font-size: 20px;
-            }
-        }
-        .like-count {
-            margin-top: auto;
-            margin-left: 6px;
-            width: 34px;
-        }
-    }
-`;
-const DescriptionContainer = styled.div`
-    @media only screen and (min-width : ${0}px) and (max-width : ${750}px) {
-        display: none;
-    }
-    display: flex;
-    flex-direction: column !important;
-    width: ${props => props.w}px;
-    height: 200px;
-    .category-name {
-        margin-top: 42px;
-        width: max-content;
-        height: 25px;
-        color: #FF0000;
-        font-size: 17px;
-        font-weight: 300;
-        line-height: 25px;
-        text-align: left;
-        font-family: Noto Sans KR;
-    }
-    .txt {
-        display: inline-block; 
-        width: 100%;
-        height: 200px;
-        font-size: 20px;
-        font-weight: 200;
-        font-family: Noto Sans KR;
-        line-height: 35px;
-        margin-top: 20px;
-        color: #707070;
 
-        white-space: nowrap; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        white-space: normal; 
-        text-align: left; 
-        word-wrap: break-word; 
-        display: -webkit-box; 
-        -webkit-line-clamp: 3; 
-        -webkit-box-orient: vertical;
-    }
-`;
 const DesignMemberList = styled.div`
     display: ${props => props.display};
     z-index: 900;
     position: absolute;
     pointer-events: auto;
-    top: ${props => props.top};
-    left: ${props => props.left};
+    // top: ${props => props.top};
+    // left: ${props => props.left};
+    top:35px;
     z-index: 904;
     height: 250px;
     max-height: 550px;
@@ -215,8 +42,15 @@ const DesignMemberList = styled.div`
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
     font-family: Noto Sans KR;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
+    @media only screen and (min-width : ${SmallMaxWidth}px) and (max-width : ${1080}px) { 
+        left:-150px;
+     }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+        left:-150px;
+
+     }
     .close-box {
         position: absolute;
         cursor: pointer;
@@ -241,6 +75,7 @@ const DesignMemberList = styled.div`
             overflow-y: auto;
             overflow-x: hidden;
     }
+
 `;
 const DesignMemberListElement = styled.div`
     width: max-content;
@@ -320,95 +155,42 @@ const ListItem = styled.div`
         }
     } 
 `;
-const ForkDialogContainer = styled.div`
-    z-index: 950;
-    position: fixed;
-    width: 576px;
-    height: 200px;
-    top: 255px;
-    left: 618px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #000000;
-    border-radius: 5px;
-    opacity: 1;
-    .close-box {
-        cursor:pointer;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
-    .txt {
-        margin-top: 25px;
-        margin-left: 62.5px;
-        width: 394px;
-        height: 69px;
-        text-align: center;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 35px;
-        font-family: Noto Sans KR;
-        letter-spacing: 0;
-        color: #707070;
-        opacity: 1
-    }
-    .confirm {
-        cursor: pointer;
-        margin-top: 45px;
-        margin-left: 200px;
-        width: 130px;
-        height: 29px;
-        text-align: center;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 29px;
-        font-family: Noto Sans KR;
-        letter-spacing: 0;
-        color: #FF0000;
+
+const LikeDialogContainer = styled.div`
+    width:100%;
+    height:100%;
+    position:absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:700;
+    .likeDialog{
+        width: 396px;
+        height: 138px;
+        box-shadow: 0px 3px 6px #000000;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border-radius: 5px;
         opacity: 1;
-        padding-bottom: 1.5px;
-        border-bottom: 1.5px solid #FF0000;
-    }
-    .ing-txt{
-        margin-top: 39.5px;
-        margin-left: 149.5px;
-        width: 278px;
-        height: 149px;
-        text-align: center;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 40px;
-        font-family: Noto Sans KR;
-        letter-spacing: 0;
-        color: #707070;
-        opacity: 1;
-        p {
-            color: #FF0000;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        .txt {
+            width: 273px;
+            height: max-content;
+            text-align: center;
+            color: #707070;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            line-height: 40px;
         }
     }
-`;
-const LikeDialogContainer = styled.div`
-    position: absolute;
-    width: 396px;
-    height: 138px;
-    // top: 47px;
-    // left: 763px;
-    
-    box-shadow: 0px 3px 6px #000000;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border-radius: 5px;
-    opacity: 1;
-    .txt {
-        width: 273px;
-        height: 69px;
-        margin-top: 31.5px;
-        margin-left: 62.5px;
-        text-align: center;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 40px;
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+       .likeDialog{
+            width:90%;
+       }
     }
+
 `;
 const DesignMemberModalContainer = styled(Modal)`
     .close-box {
@@ -435,192 +217,17 @@ const DesignCommentModalContainer = styled(Modal)`
     .body-container {
         width: 100%;
     }
-`;
+    @media only screen and (min-width : ${SmallMaxWidth}px) and (max-width : ${1080}px) { 
+        min-width:100%;
+     }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+        min-width:100%;
 
-// new
-const Header = styled.div`
-    width: ${props => props.width}px;
-    display: flex;
-    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
-        margin-top: 50px;
-    }
-    .headerBox{
-        width:${props=>props.width}px;
-        height:250px;
-        background-color:#EFEFEF;
-        display:flex;
-        flex-direction:row;
-    }
-    .leftSec{
-        .leftBoard{
-            width:100%;
-            margin-top:15px;
-            margin-left:25px;
-            display:flex;
-            flex-direction:row;
-            .detailBoard{
-                margin-left:35px;
-            }
-        }
-        
-    }
+     }
 `;
-const ThumbnailBox = styled.div`
-    .fork-mark {
-        position: absolute;
-        margin-left: 175px;
-        width: 32px;
-        height: 70px;
-        background-image: url(${forked});
-        background-size: cover; 
-    }
-    width: 220px;
-    min-width: 220px;
-    height: 220px;
-    border-radius: 15px;
-    background-color: #D6D6D6;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-image: ${props => `url(${props.imageURL})`};
-`;
-const RightSide = styled.div`
-    display: flex;
-    height: 220px;
-    justify-content: space-between;
-    flex-direction: column !important;
-    .do-fork-btn {
-        width: max-content;
-        margin-top: 15px;
-        margin-left: auto;
-        text-align: right;
-        color: #FF0000;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        cursor: pointer;
-    }
-    .join-box {
-        width: max-content;
-        height: 25px;
-        display: flex;
-        margin-top: 15px;
-        margin-left: auto;
-        .waiting-txt {
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 20px;
-            color: #FF0000;
-            text-align: right;
-            margin-left: auto;
-            font-weight: 300;
-        }
-        .join-txt {
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 20px;
-            color: #FF0000;
-            text-align: right;
-            margin-left: auto;
-            font-weight: 300;
-            cursor: pointer;
-        }
-    }
-    .design-edit-box {
-        width: max-content;
-        height: 35px;
-        display: flex;
-        margin-top: 15px;
-        margin-left: auto;
-        cursor: pointer;
-        .edit-txt {
-            margin-top: 15px;
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 17px;
-            font-weight: 300;
-            color: #707070;
-            text-align: right;
-        }
-        .edit-icon {
-            width: 35px; 
-            height: 35px; 
-            margin-left: 15px; 
-            background: url(${iEdit}); 
-            background-size: 45px 45px; 
-            background-position: center center; 
-            background-repeat: no-repeat;
-        }
-    }
-    .design-like-box {
-        width: max-content;
-        height: 35px;
-        display: flex;
-        margin-top: 10px;
-        margin-left: auto;
-        cursor: pointer;
-        .like-txt {
-            margin-top: 15px;
-            height: 25px;
-            font-family: Noto Sans KR;
-            font-size: 17px;
-            font-weight: 300;
-            color: #707070;
-            text-align: right;
-        }
-        .like-icon {
-            width: 35px;
-            height: 35px;
-            margin-left: 15px;
-            opacity: ${props => props.like_opacity};
-            background: url(${thumbup});
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    }
-    .msg-icon-box {
-        width: max-content;
-        display: flex;
-        height: 35px;
-        margin-top: 15px;
-        margin-left: auto;
-        cursor: pointer;
-        .msg-txt {
-            height: 25px;
-            margin-top: 10px;
-            margin-left: auto;
-            text-align: right;
-            color: #707070;
-            font-size: 17px;
-            font-weight: 300;
-            font-family: Noto Sans KR;
-        }
-        .msg-icon {
-            margin-left: 15px;
-            width: 33px;
-            height: 33px;
-            background: url(${email});
-            background-size: cover;
-            background-position: center center;
-        }
-    }
-    .update-time {
-        margin-top: 5px;
-        width: 200px;
-        height: 25px;
-        // right: 3px;
-        // margin-bottom: 5px;
-        text-align: right;
-        color: #707070;
-        font-size: 17px;
-        font-weight: 300;
-        font-family: Noto Sans KR;
-    }
-`;
-
 // new style
 const Thumbnail = styled.div`
+
     .fork-mark {
         position: absolute;
         margin-left: 175px;
@@ -629,30 +236,44 @@ const Thumbnail = styled.div`
         background-image: url(${forked});
         background-size: cover; 
     }
+    position:relative;
     width: 220px;
-    min-width: 220px;
     height: 220px;
-    margin-right:15px;
+    margin-right:30px;
     border-radius: 15px;
     background-color: #D6D6D6;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     background-image: ${props => `url(${props.imageURL})`};
+    @media only screen and (min-width : ${0}px) and (max-width : ${SmallMaxWidth}px) {
+        width:100px;
+        height:100px;
+        .fork-mark {
+            position: absolute;
+            right:10px;
+            top:0px;
+            width: 16px;
+            height: 35px;
+            background-image: url(${forked});
+            background-size: cover; 
+        }
+    }
 `
 const MainBox = styled.div`
-    *{
-        border:1px solid black;
-    }
+
     width:100%;
+    position:relative;
     .wrapper{
         width:100%;
         height:100%;
         background-color:#EFEFEF;
         display:flex;
         padding:15px;
+        padding-left:25px;
     }      
     .font_big{font-size:20px;}
+    .font_midBig{font-size:17px;}
     .font_middle{font-size:16px;}
     .font_small{font-size:12px;}
     .font_bold{font-weight:500;}
@@ -661,7 +282,11 @@ const MainBox = styled.div`
     .flexBox{display:flex;}
     .algin_right{text-align:right;}
     .margin_top{margin-top:15px;}
+    .margin_bottom{margin-bottom:10px;}
+    .margin_bottom_small{margin-bottom:5px;}
     .alignItem_end{align-items:flex-end;}
+    .line_height{line-height:20px;}
+    .position_relative{position:relative;}
     .transparent_btn{
         width: max-content;
         margin-top:15px;
@@ -677,13 +302,22 @@ const MainBox = styled.div`
     @media only screen and (min-width : ${LargeMaxWidth}px){
         width:1920px;
     }
+    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
+        height:max-content;
+        margin-top: 50px;
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${900}px) {
+        .wrapper{
+            flex-wrap:wrap
+        }
+    }
 `
 const CustomIcon = styled.div`
     width: 35px; 
     height: 35px; 
     margin-left: 15px; 
     background: url(${props => props.iconName}); 
-    background-size: 45px 45px; 
+    background-size: cover; 
     background-position: center center; 
     background-repeat: no-repeat;
     opacity: ${props => props.like_opacity==null?1:props.like_opacity};
@@ -692,6 +326,8 @@ const CustomIcon = styled.div`
 const ThreeSideBox=styled.div`
     *{
         text-align:right;
+        font-family:Noto Sans KR;
+        color:#707070;
     }
     margin-left:auto;
     display: flex;
@@ -700,14 +336,25 @@ const ThreeSideBox=styled.div`
     flex-direction: column;
     .content_box{
         ._txt{
-            height: 25px;
+            height: max-content;
             font-family: Noto Sans KR;
             text-align: right;
             margin-left: auto;
+            margin-top:5px;
+            
         }
     }
+    @media only screen and (min-width : ${SmallMaxWidth}px) and (max-width : ${900}px) { 
+        width:100%;
+        height:max-content;
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+        width:100%;
+        height:max-content;
+    }
 `
-const TwoSideBox=styled.div`
+const TwoSideBox=styled.div`    
+    min-width:165px;
     margin-left:30px;
     .descriptionContainer{
         width: ${props => props.w}px;
@@ -747,12 +394,60 @@ const TwoSideBox=styled.div`
             -webkit-box-orient: vertical;
         }
     }
+
+
+    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${900}px) {
+        height:max-content;
+        width:300px;
+        margin-left:0px;
+        margin-top:10px;
+        margin-bottom:10px;
+        .descriptionContainer{
+            width:100%;
+            height:max-content;
+            .category-name {
+                margin-top: 10px;
+                line-height:0px;
+                height:max-content;
+            }
+            .txt{
+                height:max-content;
+                min-width:100%;
+            }
+        }
+
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+        height:max-content;
+        width:100%;
+        margin-left:0px;
+        margin-top:10px;
+        margin-bottom:10px;
+        .descriptionContainer{
+            height:max-content;
+            width:100%;
+            .category-name {
+                margin-top: 10px;
+                line-height:0px;
+                height:max-content;
+            }
+            .txt{
+                height:max-content;
+            }
+        }
+
+    }
+
     
 `
 const OneSideBox=styled.div`
-    border:1px solid red;
+    *{
+        color:#707070;
+    }
+
     position:relative;
-    width:250px;
+    width:165px;
+    min-width:165px;
     height:220px;
     .title{
         display: block !important;
@@ -765,6 +460,7 @@ const OneSideBox=styled.div`
         line-height: 29px;
         cursor: pointer;
     }
+
     .info{
         margin-top:5px;
         .goto-parent {
@@ -808,29 +504,50 @@ const OneSideBox=styled.div`
         font-weight: 500;
         text-align: left;
         display: flex;
-        .view {
-            margin-top: 11px;
-        }
+        align-items:flex-end;
         .view-count {
             margin-top: auto;
             margin-left: 6px;
             width: 34px;
-        }
-        .like {
-            margin-top: auto;
-            margin-left: 22px;
-            width: 22px;
-            height: 22px;
-            padding: 0px;
-            &i {
-                margin-top: auto;
-                font-size: 20px;
-            }
+            margin-right:15px;
         }
         .like-count {
             margin-top: auto;
             margin-left: 6px;
             width: 34px;
+            margin-right:15px;
+        }
+    }
+    @media only screen and (min-width : ${900}px) and (max-width : ${LargeMinWidth}px) {
+        height:220px;
+        margin-right:15px;
+        position:relative;
+        .title{
+            width:300px !important;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+    }
+    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${900}px) {
+        height:220px;
+        width:${window.document.width-320}px;
+        margin-right:15px;
+        position:relative;
+        .title{
+            width:165px !important;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+        height:170px;
+        .title{
+            width:100% !important;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
         }
     }
 `
@@ -1094,15 +811,19 @@ class DesignInfo extends Component {
                  {this.state.memberList ? <MemberModal /> : null}
                  {this.state.comment ? <DesignCommentModal /> : null}
 
-                {/* dialog */}
-                {/* {this.state.likeDialog ?
-                    <LikeDialogContainer>
-                        <div className="txt">
-                            관심 디자인으로 등록되었습니다.<br />
-                            내 정보에서 확인 가능합니다.</div>
-                    </LikeDialogContainer>
-                : null} */}
                 <MainBox>
+
+                {/* dialog */}
+                {this.state.likeDialog ?
+                    <LikeDialogContainer>
+                        <div className="likeDialog">
+                            <div className="txt">
+                            관심 디자인으로 등록되었습니다.<br />
+                            내 정보에서 확인 가능합니다.
+                            </div>
+                        </div>
+                    </LikeDialogContainer>
+                : null}
                     <div className="wrapper">
                         <Thumbnail imageURL={thumbnail}>
                             {DesignDetail.parent_design && <div className="fork-mark" />}
@@ -1119,9 +840,9 @@ class DesignInfo extends Component {
                                         {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
                                     </div>}
 
-                                    <div className="flexBox">
+                                    <div className="flexBox position_relative">
                                         <button className="transparent_btn cursor_pointer" onClick={this.openMemberList} >
-                                            <div className="design_member flexBox">
+                                            <div className="flexBox font_fit font_middle cursor_pointer">
                                                 <TextFormat txt={DesignDetail.userName} chars={11} />
                                                 <div style={{ fontSize: "0.95rem" }}>
                                                     {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명 ` : null}
@@ -1129,12 +850,12 @@ class DesignInfo extends Component {
                                             </div>
                                         </button>
                                         {WaitingList && WaitingList.length > 0 ? <div style={{ marginTop: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+                                        {!isMyDesign && this.state.memberList &&<MemberListModal/>}
                                     </div>
-                                    {!isMyDesign && this.state.memberList &&<MemberListModal/>}
                                     <div className="flexBox">
                                         <div className="comment-box" onClick={this.getDesignComment} >
-                                            <div className="txt">댓글</div>
-                                            <div className="count">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
+                                            <div className="txt font_red">댓글</div>
+                                            <div className="count font_red">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                                         </div>
                                         {CountDesignComment && CountDesignComment > 0 ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
                                      </div>
@@ -1148,9 +869,9 @@ class DesignInfo extends Component {
                                     {this.state.forkDesignList &&<ForkDesignListModal/>}
                                 </div>
                                 <div className="count-box">
-                                         <div className="view"><IconView width="20px" height="17px" fill="#707070" /></div>
+                                         <IconView width="20px" height="17px" fill="#707070" />
                                          <div className="view-count">{NumberFormat(Count.view_count)}</div>
-                                         <div className="like"><i className="material-icons">&#xE8DC;</i></div>
+                                         <i className="material-icons">&#xE8DC;</i>
                                          <div className="like-count">{NumberFormat(Count.like_count)}</div>
                                 </div>
                         </OneSideBox>
@@ -1162,7 +883,7 @@ class DesignInfo extends Component {
                                     </p>
                                 </div>
                         </TwoSideBox>
-                        <ThreeSideBox like_opacity={like ? 1 : 0.45}>
+                        <ThreeSideBox>
                                 <div className="content_box">
                                         <div className="cursor_pointer font_red font_bold font_big" 
                                         onClick={() => this.forkDesign()}>파생 디자인 생성</div>
@@ -1170,30 +891,30 @@ class DesignInfo extends Component {
                                         <div className="flexBox margin_top">
                                             {editor === false ?
                                                 DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                                    <div className="transparent_btn font_red font_fit font_big">가입승인 대기중</div>
-                                                    : <div className="transparent_btn cursor_pointer font_red font_fit font_big" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
+                                                    <div className="_txt transparent_btn font_red font_fit font_big">가입승인 대기중</div>
+                                                    : <div className="_txt transparent_btn cursor_pointer font_red font_fit font_big" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
                                         </div>}
                                         {isMyDesign === true ?
-                                            <div className="flexBox margin_top alignItem_end" onClick={this.gotoDesignModify}  >
-                                                <div className="_txt font_middle font_fit">디자인 수정하기</div>
+                                            <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.gotoDesignModify}  >
+                                                <div className="_txt font_midBig font_fit" style={{lineHeight:"20px"}}>디자인 수정하기</div>
                                                 <CustomIcon iconName={iEdit} />
                                             </div>
                                             :
-                                            <div className="design-like-box" onClick={this.like} >
-                                                <div className="_txt" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
-                                                <div className="like-icon" />
+                                            <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.like} >
+                                                <div className="_txt font_midBig font_fit margin_bottom_small" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
+                                                <CustomIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} />
                                             </div>}
                                         {isMyDesign === true ?
                                         null :
-                                        <div className="msg-icon-box" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
-                                        <div className="_txt">메시지 보내기</div>
-                                             <div className="msg-icon" />
+                                        <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
+                                        <div className="_txt font_midBig font_fit margin_bottom_small">메시지 보내기</div>
+                                                <CustomIcon  iconName={email} />
                                          </div>}
                                  </div>
                                  <div className="content_box">
                                      {/* <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div> */}
-                                     <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                                     <div className="update-time">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                                     <div className="_txt font_midBig font_fit margin_bottom">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                                     <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
                                 </div>
                         </ThreeSideBox>
                     </div>
