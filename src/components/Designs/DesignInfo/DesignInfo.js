@@ -19,12 +19,7 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { YesIHaveReadNewComment, } from "redux/modules/design";
 
-const SmallMinWidth = 0;
-const SmallMaxWidth = 480;
-const MediumMinWidth = 480;
-const MediumMaxWidth = 1440;
-const LargeMinWidth = 1440;
-const LargeMaxWidth = 1920;
+import opendesign_style from "opendesign_style"
 
 const DesignMemberList = styled.div`
     display: ${props => props.display};
@@ -44,10 +39,12 @@ const DesignMemberList = styled.div`
     font-family: Noto Sans KR;
     overflow-y: auto;
     overflow-x: hidden;
-    @media only screen and (min-width : ${SmallMaxWidth}px) and (max-width : ${1080}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) { 
         left:-150px;
      }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
         left:-150px;
 
      }
@@ -185,7 +182,8 @@ const LikeDialogContainer = styled.div`
             line-height: 40px;
         }
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
        .likeDialog{
             width:90%;
        }
@@ -217,10 +215,12 @@ const DesignCommentModalContainer = styled(Modal)`
     .body-container {
         width: 100%;
     }
-    @media only screen and (min-width : ${SmallMaxWidth}px) and (max-width : ${1080}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) { 
         min-width:100%;
      }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
         min-width:100%;
 
      }
@@ -246,7 +246,8 @@ const Thumbnail = styled.div`
     background-size: cover;
     background-position: center center;
     background-image: ${props => `url(${props.imageURL})`};
-    @media only screen and (min-width : ${0}px) and (max-width : ${SmallMaxWidth}px) {
+    @media only screen and (min-width : ${0}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
         width:100px;
         height:100px;
         .fork-mark {
@@ -299,14 +300,15 @@ const MainBox = styled.div`
     .cursor_pointer{
         cursor:pointer;
     }
-    @media only screen and (min-width : ${LargeMaxWidth}px){
+    @media only screen and (min-width : ${opendesign_style.resolutions.LargeMaxWidth}px){
         width:1920px;
     }
-    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
+    @media only screen and (min-width : ${0}px) and (max-width : ${1024}px) {
         height:max-content;
         margin-top: 50px;
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${900}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${1024}px) {
         .wrapper{
             flex-wrap:wrap
         }
@@ -344,11 +346,13 @@ const ThreeSideBox=styled.div`
             
         }
     }
-    @media only screen and (min-width : ${SmallMaxWidth}px) and (max-width : ${900}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) { 
         width:100%;
         height:max-content;
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) { 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
         width:100%;
         height:max-content;
     }
@@ -396,7 +400,8 @@ const TwoSideBox=styled.div`
     }
 
 
-    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${900}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
+    and (max-width : ${1024}px) {
         height:max-content;
         width:300px;
         margin-left:0px;
@@ -417,7 +422,8 @@ const TwoSideBox=styled.div`
         }
 
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
         height:max-content;
         width:100%;
         margin-left:0px;
@@ -518,7 +524,8 @@ const OneSideBox=styled.div`
             margin-right:15px;
         }
     }
-    @media only screen and (min-width : ${900}px) and (max-width : ${LargeMinWidth}px) {
+    @media only screen and (min-width : ${1024}px) 
+    and (max-width : ${opendesign_style.resolutions.LargeMinWidth}px) {
         height:220px;
         margin-right:15px;
         position:relative;
@@ -529,7 +536,8 @@ const OneSideBox=styled.div`
             text-overflow:ellipsis;
         }
     }
-    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${900}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
+    and (max-width : ${1024}px) {
         height:220px;
         width:${window.document.width-320}px;
         margin-right:15px;
@@ -541,7 +549,8 @@ const OneSideBox=styled.div`
             text-overflow:ellipsis;
         }
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
         height:170px;
         .title{
             width:100% !important;

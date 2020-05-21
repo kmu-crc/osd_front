@@ -9,13 +9,8 @@ import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
 import Socket from "modules/Socket"
+import opendesign_style from "opendesign_style"
 
-const SmallMinWidth = 0;
-const SmallMaxWidth = 480;
-const MediumMinWidth = 480;
-const MediumMaxWidth = 1440;
-const LargeMinWidth = 1440;
-const LargeMaxWidth = 1920;
 // CSS
 const WrapperBox = styled.div`
     width:100%;
@@ -24,17 +19,17 @@ const WrapperBox = styled.div`
 `
 const Menu = styled.div`
     z-index: 900;
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${LargeMaxWidth}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.LargeMaxWidth}px) {
         width:100%;
     }
-    @media only screen and (min-width : ${LargeMaxWidth}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.LargeMaxWidth}px) {
         width:1920px;
     }
     width: 100%;
     position: fixed;
     display: flex;
     flex-direction:row-reverse;
-
     justify-content: space-between;
     font-size: 20px;
     font-weight: 500;
@@ -50,7 +45,7 @@ const Menu = styled.div`
     -ms-transition: all 0.45s;
     -o-transition: all 0.45s;
     transition: all 0.45s;    
-    @media only screen and (max-width : 900px) {
+    @media only screen and (max-width : 1024px) {
         display:block;
     }
 `
@@ -64,9 +59,6 @@ const LeftMenu = styled.ul`
     display: flex;
     line-height: 29px;
     list-style: none;
-    @media only screen and (max-width: 900px) {
-        justify-content:center;
-    }
     .logoBox{
         height: 55px;
         min-width: 55px;
@@ -76,6 +68,13 @@ const LeftMenu = styled.ul`
             height: 55px;
         }
     }
+       @media only screen and (max-width: 1024px) {
+           justify-content:center;
+       }
+       @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+       and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+          min-width:100%;
+       }
 `
 const MenuItem = styled.li`
     min-width:55x;
@@ -86,27 +85,15 @@ const MenuItem = styled.li`
     .link_tag{
         color:${props => props.isSelect === true ? "#FF0000" : "#707070"}
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
         margin-left:0px;
-        margin-right:50px;
+        margin-right:10%;
+        font-size:18px;
     }
-
-    // @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
-    //     width: ${SmallMaxWidth}px;
-    // }
-    //   @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${MediumMaxWidth}px) {
-    //     width: ${MediumMaxWidth}px;
-    // }
-    //   @media only screen and (min-width : ${LargeMinWidth}px) and (max-width : ${LargeMaxWidth}px) {
-    //     width: ${LargeMaxWidth}px;
-    // }
-    //   @media only screen and (min-width : ${LargeMaxWidth}px){
-    //     width: ${LargeMaxWidth}px;
-    // }
 `
 const RightMenu = styled.ul`
-    min-width:480px;
-    // position:absolute;
+    width:max-content;
     background-color:#FFFFFF;
 
     right:0px;
@@ -117,20 +104,13 @@ const RightMenu = styled.ul`
     line-height:29px;
     vertical-align:top;
 
-    @media only screen and (max-width : 900px) {
-        background-color:#EFEFEF;
-        justify-content:center;
-    }
+
 
     .searchItem{
         height:36px;
         margin-right:50px;
         margin-top:9px
         border:none;
-        @media only screen and (max-width : 900px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
     }
     .IconItem{
         width:34px;
@@ -138,10 +118,6 @@ const RightMenu = styled.ul`
         margin-right:50px;
         margin-top:10px;
         position:relative;
-        @media only screen and (max-width : 900px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
     }
     .redItem{
         min-width:97px;
@@ -152,7 +128,7 @@ const RightMenu = styled.ul`
         color: red;
         border-bottom: 1.5px solid red;
         cursor: pointer;
-        @media only screen and (max-width : 900px) {
+        @media only screen and (max-width : 1024px) {
             margin-top:5px;
             margin-bottom:5px;
         }
@@ -166,11 +142,77 @@ const RightMenu = styled.ul`
         margin-right:17px;
         margin-top:11px;
         cursor:pointer;
-        @media only screen and (max-width : 900px) {
+    }
+    @media only screen and (max-width : 1440px) {
+
+        .searchItem{
+            margin-right:25px;
+        }
+        .IconItem{
+            margin-right:25px;
+        }
+        .redItem{
+            margin-right:25px;
+        }
+        .profileItem{
+        }
+    }
+    @media only screen and (max-width : 1024px) {
+        width:100%;
+        background-color:#EFEFEF;
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+
+        .searchItem{
+            margin-right:3%;
+            min-width:200px;
+            margin-top:5px;
+            margin-bottom:5px;
+            display:flex;
+            justify-content:center;
+        }
+        .IconItem{
+            margin-right:3%;
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+        .redItem{
+            margin-right:3%;
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+        .profileItem{
+            margin-right:3%;
             margin-top:5px;
             margin-bottom:5px;
         }
     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+        max-width:100%;
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+        .searchItem{
+            min-width:100%;
+            max-width:300px;
+            margin-right:0px;
+            display:flex;
+            justify-content:center;
+        }
+        .IconItem{
+            margin-right:25px;
+        }
+        .redItem{
+            margin-right:25px;
+        }
+        .profileItem{
+            margin-right:0px;
+        }
+
+    }
+
 `
 
 class Header extends Component {
@@ -217,7 +259,8 @@ class Header extends Component {
             <React.Fragment>
                 <WrapperBox>
                 <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
-                    <RightMenu>
+
+                     <RightMenu>
                         <li className="searchItem">
                             <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} />
                         </li>
@@ -232,7 +275,6 @@ class Header extends Component {
                         <li className="profileItem">
                             <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
                     </RightMenu>
-
                     <LeftMenu>
                         <li className="logoBox">
                             <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
@@ -243,6 +285,9 @@ class Header extends Component {
                         <MenuItem isSelect={window.location.pathname === '/designer' || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)}>
                             <a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     </LeftMenu>
+
+                  
+
                 </Menu>
                 </WrapperBox>
             </React.Fragment>

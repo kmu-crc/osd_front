@@ -6,12 +6,8 @@ import noimg from "source/noimg.png";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
-const SmallMinWidth = 0;
-const SmallMaxWidth = 480;
-const MediumMinWidth = 480;
-const MediumMaxWidth = 1440;
-const LargeMinWidth = 1440;
-const LargeMaxWidth = 1920;
+import opendesign_style from "opendesign_style"
+
 const AlarmIcon = styled.div`
     width: 34px;
     height: 34px;
@@ -31,9 +27,14 @@ const AlarmList = styled.div`
     pointer-events: auto;
     top: 60px;
     left:0px;
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
-        width:370px;
-        left:-170px;
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) {
+        left:-150px;
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+        width:360px;
+        left:-100px;
     }
     // right: 300px;
     // left: ${props => props.left + "px"};
