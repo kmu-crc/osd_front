@@ -335,8 +335,8 @@ class CreateGroup extends Component {
         <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
           <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.groupTitle}를<br />삭제하시겠습니까?</div>
           <div style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px"}}>
-            <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteGroup}>확인</span>
             <span style={{color:"#707070"}} onClick={this.cancelDeleteGroup}>취소</span>
+            <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteGroup}>확인</span>
           </div>
           <div onClick={this.handleOnClickDeleteDesign} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
         </Modal>

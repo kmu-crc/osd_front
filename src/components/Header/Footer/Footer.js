@@ -32,6 +32,11 @@ const FooterContainer = styled.div`
         cursor: pointer;
         margin-right: 13px;
     }
+    @media only screen and (min-width : ${0}px) and (max-width : ${500}px) {
+        .origin{font-size:10px;}
+        .term{font-size:10px;}
+        .security{font-size:10px;}
+    }
 `
 
 const gitInfo = GitInfo();

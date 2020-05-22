@@ -11,6 +11,7 @@ import OrderOption from "components/Commons/OrderOption";
 //css
 const DesignerDetailBody = styled.div`
     font-family: Noto Sans KR;
+    padding-bottom:50px;
     .MypageCategory{
         display: flex;
         justifyContent: space-start;

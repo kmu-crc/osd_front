@@ -6,6 +6,12 @@ import noimg from "source/noimg.png";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
+const SmallMinWidth = 0;
+const SmallMaxWidth = 480;
+const MediumMinWidth = 480;
+const MediumMaxWidth = 1440;
+const LargeMinWidth = 1440;
+const LargeMaxWidth = 1920;
 const AlarmIcon = styled.div`
     width: 34px;
     height: 34px;
@@ -16,17 +22,22 @@ const AlarmIcon = styled.div`
     background-position: center center;
 `;
 const AlarmList = styled.div`
-    // div{ border:1px solid red; }
+
+    height: 520px;
+    width: 380px;
     display: ${props => props.display};
     z-index: 999;
     position: absolute;
     pointer-events: auto;
     top: 60px;
-    right: 300px;
-    left: ${props => props.left + "px"};
+    left:0px;
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
+        width:370px;
+        left:-170px;
+    }
+    // right: 300px;
+    // left: ${props => props.left + "px"};
     z-index: 904;
-    height: 520px;
-    width: 380px;
     border-radius: 15px;
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
@@ -50,6 +61,7 @@ const AlarmList = styled.div`
             overflow-y: scroll;
         }
     }
+
 `;
 const ListItem = styled.div`
     display: flex;

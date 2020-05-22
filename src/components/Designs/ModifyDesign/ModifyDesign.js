@@ -128,58 +128,84 @@ const MenuText = styled.div`
 //    font-size:15px;
 //`
 const InputBoard = styled.div`
-// width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
-width:77%;
-padding-bottom:100px;
-margin-bottom:100px;
-position:relative;
-padding-top:45px;
-border-radius:5px;
-border:8px solid #F5F4F4;
-.buttonBox{
-  display: flex;
-  margin-top: 20.54px;
-  justifyContent: flex-end;
-}
+  // width: ${window.innerWidth > 1920 ? 1422 : window.innerWidth - 500}px;
+  width:77%;
+  padding-bottom:100px;
+  margin-bottom:100px;
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    width: max-content;
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 21px;
+    margin-left: auto;
+    padding:10px 0px 10px 10px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+  }
 
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  width:100%;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  width:100%;
-}
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+    width:100%;
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    width:100%;
+  }
 `
 const ButtonBox = styled.div`
-      height:100px;
+      // height:100px;
+      // display: flex;
+      // margin-top: 30.54px;
+      // justify-content: flex-end;
+      width: max-content;
       display: flex;
-      margin-top: 30.54px;
-      justify-content: flex-end;
+      margin-top: 21px;
+      margin-left: auto;
 `
 const BackButton = styled.div`
-      position:absolute;
-      right:120px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:#FF0000;
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
+      cursor: pointer;
+      width: 104.5px;
+      height: 44px;
+      border-radius: 5px;
+      background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top: 6px;
+      padding-left: 15px;
+      margin-right: 25px;
+      // position:absolute;
+      // right:120px;
+      // bottom:35px;
+      // cursor:pointer;
+      // width:104.5px;
+      // height:44px;
+      // border-radius:5px;
+      // background-color:#707070;
+      // padding-top:6px;
+      // padding-left:15px;
+      // margin-right:53px;
 `
 const CompleteButton = styled.div`
-      position:absolute;
-      right:9px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
+        cursor: pointer;
+        width: 104.5px;
+        height: 44px;
+        border-radius: 5px;
+        background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+        padding-top: 6px;
+        padding-left: 15px;
+        margin-right: 25px;
+      // position:absolute;
+      // right:9px;
+      // bottom:35px;
+      // cursor:pointer;
+      // width:104.5px;
+      // height:44px;
+      // border-radius:5px;
+      // background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
+      // padding-top:6px;
+      // padding-left:15px;
+      // margin-right:53px;
   `
 const HRline = styled.div`
   width:95%;
@@ -200,9 +226,10 @@ const BtnText = styled.p`
 
 //---sectionbasic---//
 const ContentsBox = styled.div`
-padding-left: 47px;
+  padding-left: 47px;
   display:flex;
   flex-direction:column;
+  height:max-content;
   .title{
 
         min-width:100px;
@@ -847,8 +874,8 @@ class ModifyDesign extends Component {
         <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.title}(을)를<br />삭제하시겠습니까?</div>
         <div style={{ fontWeight: "500", width: "100%", height: "25px", fontFamily: "Noto Sans KR", fontSize: "20px" }}>
           <div style={{ marginLeft: "auto", marginRight: "auto", width: "max-content", cursor: "pointer", }} >
-            <span style={{ marginRight: "10px", color: "#FF0000" }} onClick={this.deleteDesign}>확인</span>
             <span style={{ color: "#707070" }} onClick={this.cancelDeleteDesign}>취소</span>
+            <span style={{ marginRight: "10px", color: "#FF0000" }} onClick={this.deleteDesign}>확인</span>
           </div>
         </div>
         {/* <div style={{ marginTop: "5px", width: "100%", height: "20px", fontWeight: "300", fontFamily: "Noto Sans KR", fontSize: "15px", color: "#FF0000" }}>* 디자인 내에 포함된 모든 컨텐츠가 삭제되며, 되 돌릴수 없습니다.</div> */}
@@ -1006,19 +1033,19 @@ class ModifyDesign extends Component {
               </section>
 
               {/* BUTTONS */}
-              <ButtonBox>
+              <div className="buttonBox">
                 {step === 0 && <React.Fragment>
                   <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
                 </React.Fragment>}
                 {step === 1 && <React.Fragment>
-                  <BackButton onClick={this.gotoPrevStep} isComplete={true}><BtnText>뒤로</BtnText></BackButton>
+                  <BackButton onClick={this.gotoPrevStep} isComplete={false}><BtnText>뒤로</BtnText></BackButton>
                   <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
                 </React.Fragment>}
                 {step === 2 && <React.Fragment>
-                  <BackButton onClick={this.gotoPrevStep} isComplete={true}><BtnText>뒤로</BtnText></BackButton>
+                  <BackButton onClick={this.gotoPrevStep} isComplete={false}><BtnText>뒤로</BtnText></BackButton>
                   <CompleteButton onClick={this.submit} isComplete={true}><BtnText>완료</BtnText></CompleteButton>
                 </React.Fragment>}
-              </ButtonBox>
+              </div>
               {/* </form> */}
             </InputBoard>
           </MainSection>

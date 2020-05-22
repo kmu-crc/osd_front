@@ -9,8 +9,25 @@ import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "opendesign_style";
+const SmallMinWidth = 0;
+const MediumMinWidth = 480;
+const LargeMinWidth = 1440;
+const WideMinWidth = 1920;
+const LeftWhitePane = styled.div`
+    position: absolute;
+    z-index: 830;
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    left: ${props => props.left}px;
+    right: ${props => props.right}px;
+    background: #FFFFFF; // transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
+    backgroundRepeat: no-repeat;
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+        background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 20%,rgba(255,255,255, 1) 70%);
+    }
 
-const WhitePane = styled.div`
+`;
+const RightWhitePane = styled.div`
     position: absolute;
     z-index: 830;
     width: ${props => props.width}px;
@@ -19,6 +36,10 @@ const WhitePane = styled.div`
     right: ${props => props.right}px;
     background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
     backgroundRepeat: no-repeat;
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+        background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 20%, rgba(255,255,255, 1) 70%);
+    }
+
 `;
 const Arrow = styled.div`
     width: 17px;
@@ -39,6 +60,12 @@ const Arrow = styled.div`
         opacity: 1;
     }
     cursor: pointer;
+    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${1060}px) { 
+        top: ${props => props.gap}px;
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+        top: ${props => props.gap}px;
+    }
 `;
 const GridEditorWrapper = styled.div`
     display: flex;
@@ -51,6 +78,9 @@ const GridEditorWrapper = styled.div`
         white-space: nowrap;
         display: flex;
         margin-top: 90px;
+    }
+    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+        margin-left:60px;
     }
 `;
 
@@ -225,13 +255,13 @@ class GridEditor extends Component {
             <div style={{ position: "relative" }}>
                 {design.uid ?
                     <React.Fragment>
-                        {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                        {left ? <LeftWhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
-                        </WhitePane> : null}
+                        </LeftWhitePane> : null}
 
-                        {right ? <WhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                        {right ? <RightWhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                             <Arrow angle="180deg" c  gap={gap} right={50} onClick={this.ScrollRight} />
-                        </WhitePane> : null}
+                        </RightWhitePane> : null}
 
                         {editor && newcard ? <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} /> : null}
                         {card && <CardModal

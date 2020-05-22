@@ -9,13 +9,26 @@ import MainMyDesignListContainer from "containers/Designs/MainMyDesignContainer"
 import MainMyGroupListContainer from "containers/Groups/MainMyGroupContainer";
 
 const BannerWrapper = styled.div`
-  width: ${props => props.width}px;
+  // width: ${props => props.width}px;
+  width:100%;
   height: 349.5px;
   margin-top: 15px;
   margin-bottom: 25px;
   background: url(${props => props.img});
   background-repeat: no-repeat;
   background-size: 100% 349.5px;
+
+  @media only screen and (min-width : 1920){
+    width:1920px;
+  }
+  @media only screen and (min-width : 0px) and (max-width:1920px) {
+    background-size:cover;
+    background-position:center center;
+  }
+  @media only screen and (max-width : 480px){
+      background-size:100%;
+      height:max-content;
+  }
 `;
 const Context = styled.div`
   width: 504px;
@@ -26,6 +39,10 @@ const Context = styled.div`
   background-repeat: no-repeat;
   background-size: 504px 196px;
   margin: auto;
+  @media only screen and (min-width : 0px) and (max-width:500px) {
+    width:100%;
+    background-size: contain;
+  }
 `;
 
 export default class Main extends Component {

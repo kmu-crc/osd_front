@@ -335,8 +335,8 @@ export class FormTextAreaRed extends Component {
           status={this.state.status} name={name} {...newProps} value={this.state.value} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
         <div className="wrapperr">
-          <button className="submit" type="submit">게시</button>
           <button className="cancel" onClick={this.Reset} type="reset">취소</button>
+          <button className="submit" type="submit">게시</button>
         </div>
       </FormTextAreaRedContainer>
     );

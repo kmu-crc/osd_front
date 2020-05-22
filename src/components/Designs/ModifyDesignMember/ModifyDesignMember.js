@@ -216,7 +216,7 @@ class ModifyDesignMember extends Component {
                     <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
                       <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
                       <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
-                      <div title={"취소하기"} onClick={() => this.removeMember(i)} style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={5} width={16} height={16} /></div>
+                      <div title={"취소"} onClick={() => this.removeMember(i)} style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={5} width={16} height={16} /></div>
                     </div>
                   )}
                 </div></React.Fragment>}

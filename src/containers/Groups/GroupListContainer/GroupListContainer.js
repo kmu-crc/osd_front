@@ -7,49 +7,57 @@ import ScrollList from "components/Commons/ScrollList";
 import Loading from "components/Commons/Loading";
 import osdstyle from "opendesign_style";
 
+const Wrapper = styled.div`
+  position:relative;
+  .orderBox{
+    margin-top:10px;
+    width:100%;
+    height:max-content;
+  }
+`
 const TextWrapper = styled.div`
-      top: 25px;
-      font-size: 25px;
-      font-family: Noto Sans KR;
-      font-weight: 700;
-      color: red;
-      cursor: pointer;
-      margin-top:100px;
-      @media only screen and (max-width : 900px) {
-        margin-top:150px;
-        
-      }
+    width:100%;
+    display:flex;
+    justify-content:center;
+    top: 25px;
+    font-size: 25px;
+    font-family: Noto Sans KR;
+    font-weight: 700;
+    color: red;
+    cursor: pointer;
+    margin-top:100px;
+    @media only screen and (max-width : 900px) {
+    margin-top:150px;
+    }
     .title{
-      width:300px;
-      text-align:center;
-      position:absolute;
-      @media only screen {
-        right:${props => (props.centerPos - 300) / 2}px;
-      }
+    width:300px;
+    text-align:center;
     }
 `;
 const JoinGroupContainer = styled.div`
-    // border: 1px solid red;
-    width: max-content;
-    margin-left: auto;
-    margin-right: 45px;
-`;
-const JoinGroup = styled.div`
-    position: relative;
-    width: 115px;
-    text-align: left;
-    font-size: 20px;
-    cursor: pointer;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    color: red;
-    line-height: 29px;
-    border-bottom: 1.5px solid red;
+    display:flex;
+    justify-content:flex-end;
+    padding:10px;
+    .joinGroup{
+        width:max-content;
+        height:29px;
+        text-align: left;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: Noto Sans KR;
+        font-weight:500;
+        color: red;
+        line-height: 29px;
+        border-bottom: 1.5px solid red;
+        margin-top:10px;
+    }
+
 `;
 const ScrollListContainer = styled.div`
-    position: relative;
     padding-top: 100px;
+    padding-bottom: 68px;
 `;
+
 const BlankDiv = styled.div`
     padding-top: 50px;
 `;
@@ -106,16 +114,16 @@ class GroupListContainer extends Component {
     const { dataList, dataListAdded } = this.props
     return (
       <React.Fragment>
-
+      <Wrapper>
         <TextWrapper centerPos={this.state.screenWidth}>
           <div className="title">그룹({count})</div>
         </TextWrapper>
 
         <JoinGroupContainer>
-          <JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup>
+          <div className="joinGroup" onClick={() => this.createGroup()}>그룹 등록하기</div>
         </JoinGroupContainer>
 
-        <div style={{ width: "100%", marginTop: "50px", height: "1px", position: "relative" }}>
+        <div className="orderBox">
           <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
         </div>
 
@@ -126,6 +134,7 @@ class GroupListContainer extends Component {
               dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
         </ScrollListContainer>
         <BlankDiv />
+      </Wrapper>
       </React.Fragment>
     )
   }

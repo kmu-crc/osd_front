@@ -11,7 +11,7 @@ const ContentContainer = styled.div`
   right: 0px;
   bottom: 0px;
   overflow-y: overlay;
-  overflow-x: hidden;
+  overflow-x: overlay;
   &.hidemenu {
     top: 0px;
   }
