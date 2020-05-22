@@ -26,6 +26,7 @@ const BannerWrapper = styled.div`
     background-position:center center;
   }
   @media only screen and (max-width : 480px){
+      margin-top:50px;
       background-size:100%;
       height:max-content;
   }

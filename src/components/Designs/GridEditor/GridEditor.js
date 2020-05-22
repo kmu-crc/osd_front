@@ -22,7 +22,8 @@ const LeftWhitePane = styled.div`
     right: ${props => props.right}px;
     background: #FFFFFF; // transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
     backgroundRepeat: no-repeat;
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
         background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 20%,rgba(255,255,255, 1) 70%);
     }
 
@@ -36,7 +37,8 @@ const RightWhitePane = styled.div`
     right: ${props => props.right}px;
     background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
     backgroundRepeat: no-repeat;
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
         background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 20%, rgba(255,255,255, 1) 70%);
     }
 
@@ -60,11 +62,14 @@ const Arrow = styled.div`
         opacity: 1;
     }
     cursor: pointer;
-    @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${1060}px) { 
+    @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) 
+    and (max-width : ${1024}px) { 
         top: ${props => props.gap}px;
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
-        top: ${props => props.gap}px;
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+        top:110px;
+        // top: ${props => props.gap}px;
     }
 `;
 const GridEditorWrapper = styled.div`
@@ -79,7 +84,8 @@ const GridEditorWrapper = styled.div`
         display: flex;
         margin-top: 90px;
     }
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${MediumMinWidth}px) { 
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
         margin-left:60px;
     }
 `;

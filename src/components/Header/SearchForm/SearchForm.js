@@ -14,12 +14,16 @@ const SearchContainer = styled.div`
     position:relative;
     overflow:hidden;
     width: 350px;
+    min-width:150px;
     height: 36px;
     @media only screen and (min-width : ${flag_MinWidth}px) and (max-width : ${flag_MaxWidth}px) {
         width:${props => (350 - (flag_MaxWidth - props.formSize)) > 36 ? (350 - (flag_MaxWidth - props.formSize)) : 36}px;
     }
+    @media only screen and (max-width : 1024px) {
+        min-width:90%;
+    }
     @media only screen and (max-width : ${flag_MinWidth}px) {
-        width: 36px;
+        width: 90%;
     }
     @media only screen and (min-width : ${flag_MaxWidth}px) {
         width: 350px;

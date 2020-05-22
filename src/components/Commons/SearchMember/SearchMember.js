@@ -25,6 +25,8 @@ const MemberWrap = styled.div`
   margin-top: 1rem;
 `
 const SearchWrap = styled.div`
+  width:100%;
+  max-width:400px;
   display: ${props => props.display};
   justify-content:
   position: relative;
@@ -72,10 +74,10 @@ const SearchInputText = styled(FormInput)`
     padding-left:10px;
     outline:none;
     border:none;
-    width:353px;
+    width:${props=>props.InputWidth==null?"353px":props.InputWidth+"%"};
     height:40px;
     font-size:18px;
-     margin-left:20px;
+     margin-left:${props=>props.marginLeft==null?"20px":props.marginLeft+"px"};
 
 `
 
@@ -127,8 +129,8 @@ class SearchMember extends Component {
   render() {
     return (
       <SearchWrap id="searchRect" style={{ display: "inline-block" }}>
-        <SearchInputText id="searchRect" type="text"
-          name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+        <SearchInputText InputWidth={this.props.inputWidth} marginLeft={this.props.marginLeft} id="searchRect" type="text"
+          name="search" placeholder="찾고 싶은 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
         <MemberList id="searchRect" style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.nick_name}</MemberListItem>);

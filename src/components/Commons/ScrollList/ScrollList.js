@@ -48,7 +48,10 @@ const FlexBox = styled.div`
   margin-right: ${props => props.marginRight}px;
   &.bottom-last { margin-bottom: ${props => props.marginBottomLast}px; }
   &.right-last { 
-    
+
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {   
+      margin-right: 0px;
+      }
     @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {   margin-right: ${props =>
     props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
       props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
@@ -198,7 +201,8 @@ class ScrollList extends Component {
         {dataListAdded.map((item, i) => {
           const last = (i + 1) % cols === 0 && i !== 0 ? "right-last" : "";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
-          return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+          return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom} 
+                            marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
             {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
             {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
             {type === "design" ? <Design data={item} /> : null}

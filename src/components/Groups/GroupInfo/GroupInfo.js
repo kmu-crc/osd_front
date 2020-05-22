@@ -277,6 +277,7 @@ class GroupInfoComponent extends Component {
 
         return (
             <React.Fragment>
+                
                 {this.state.likeDialog ?
                     <PopupBox>
                         <div className="message_label">

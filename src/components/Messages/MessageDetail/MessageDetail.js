@@ -46,6 +46,12 @@ const ReceiveMessageBox = styled.div`
     font-weight: 300;
     margin-left:10px;
   }
+
+  @media only screen and (min-width : 0px) and (max-width:1024px) {
+    .messageReceiveBubble{
+      width:70%;
+    }
+  }
 `;
 const SendMessageBox = styled.div`
     width: 100%;
@@ -78,6 +84,12 @@ const SendMessageBox = styled.div`
       font-family: Noto Sans KR;
       font-weight: 300;
       margin-right:10px;
+    }
+
+    @media only screen and (min-width : 0px) and (max-width:1024px) {
+      .messageSendBubble{
+        width:70%;
+      }
     }
 `;
 
