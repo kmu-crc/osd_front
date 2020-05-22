@@ -1,8 +1,8 @@
 const opendesign_style = {
   resolutions: {
-    SmallMinWidth:0, SmallMaxWidth:480, 
-    MediumMinWidth:480, MediumMaxWidth:1440, 
-    LargeMinWidth:1440, LargeMaxWidth:1920
+    SmallMinWidth: 0, SmallMaxWidth: 480,
+    MediumMinWidth: 480, MediumMaxWidth: 1440,
+    LargeMinWidth: 1440, LargeMaxWidth: 1920
   },
   font: {
     notoSans: "'Noto Sans KR', sans-serif",
@@ -87,26 +87,22 @@ const opendesign_style = {
     big: { marginRightLast: 9, cols: 5, },
   },
   group_margin: {
-    width: 902,
-    height: 230,
     marginRight: 94,
     marginBottom: 60,
     marginBottomLast: 0,
-    small: { marginRightLast: 0, cols: 1, },
+    small: { marginRightLast: 0, cols: 1,},
     medium: { marginRightLast: 433, cols: 1, },
     large: { marginRightLast: 11, cols: 2, },
     big: { marginRightLast: 11, cols: 2, },
   },
   designer_margin: {
-    width: 590,
-    height: 150,
     marginRight: 63,
     marginBottom: 80,
     marginBottomLast: 0,
     small: { marginRightLast: 0, cols: 1, },
-    medium: { marginRightLast: 192, cols: 2, },
-    large: { marginRightLast: 12, cols: 3, },
-    big: { marginRightLast: 12, cols: 3, },
+    medium: { marginRightLast: 0, cols: 2, },
+    large: { marginRightLast: 0, cols: 3, },
+    big: { marginRightLast: 0, cols: 3, },
   }
 }
 

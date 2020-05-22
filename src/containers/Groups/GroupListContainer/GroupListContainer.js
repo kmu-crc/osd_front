@@ -114,27 +114,33 @@ class GroupListContainer extends Component {
     const { dataList, dataListAdded } = this.props
     return (
       <React.Fragment>
-      <Wrapper>
-        <TextWrapper centerPos={this.state.screenWidth}>
-          <div className="title">그룹({count})</div>
-        </TextWrapper>
+        <Wrapper>
+          <TextWrapper centerPos={this.state.screenWidth}>
+            <div className="title">그룹({count})</div>
+          </TextWrapper>
 
-        <JoinGroupContainer>
-          <div className="joinGroup" onClick={() => this.createGroup()}>그룹 등록하기</div>
-        </JoinGroupContainer>
+          <JoinGroupContainer>
+            <div className="joinGroup" onClick={() => this.createGroup()}>그룹 등록하기</div>
+          </JoinGroupContainer>
 
-        <div className="orderBox">
-          <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-        </div>
+          <div className="orderBox">
+            <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
+          </div>
 
-        <ScrollListContainer id="list">
-          {this.props.status === "INIT" ?
-            <Loading /> :
-            <ScrollList {...osdstyle.group_margin} type="group" reload={reload} handleReload={this.handleReload}
-              dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
-        </ScrollListContainer>
-        <BlankDiv />
-      </Wrapper>
+          <ScrollListContainer id="list">
+            {this.props.status === "INIT"
+              ? <Loading />
+              : <ScrollList
+                {...osdstyle.group_margin}
+                type="group"
+                reload={reload}
+                handleReload={this.handleReload}
+                dataList={dataList}
+                dataListAdded={dataListAdded}
+                getListRequest={this.getList} />}
+          </ScrollListContainer>
+          <BlankDiv />
+        </Wrapper>
       </React.Fragment>
     )
   }
