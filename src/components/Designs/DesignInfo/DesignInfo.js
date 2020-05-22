@@ -305,7 +305,7 @@ const MainBox = styled.div`
     }
     @media only screen and (min-width : ${0}px) and (max-width : ${1024}px) {
         height:max-content;
-        margin-top: 50px;
+        margin-top: 90px;
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width : ${1024}px) {

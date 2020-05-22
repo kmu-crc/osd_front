@@ -11,32 +11,180 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const MainBox = styled.div`
+
 width:100%;
-height:870px;
-display:flex;
-flex-direction:column;
+height:${window.innerHeight*0.8}px;
+min-height:600px;
+margin-top:10px;
+margin-bottom:20px;
+*{
+  // border:1px solid black;
+  font-family:Noto Sans KR;
+  color:#707070;
+}
+  .flexBox_column{display:flex;flex-direction:column;}
+  .flexBox_row{display:flex;}
+  .content_center{justify-content:center;}
+  .items_center{align-items:center;}
+  .bg_gray{background-color:#EFEFEF}
+  .font_big{font-size:20px};
+  .font_middle{font-size:18px;}
+  .font_small{font-size:16px;}
+  .font_mini{font-size:12px;}
+  .cursor_pointer{cursor:pointer;}
+  .font_fit{font-weight:300;}
+  .font_bold{font-weight:500;}
+  .border_radius{border-radius:25px;}
+  .fitBox{width:max-content;height:max-content;}
+
   .mainBanner{
     width:100%;
-    height:48px;
+    height:40px;
     display:flex;
-    margin-top:8px;
-    background-color:#EFEFEF;
-    padding:10px 65px;
-    .mainBanner_label{
-      font-size:20px;
-      font-weight:500;
-      font-family:Noto Sans KR;
-      color:#707070;
+    justify-content:center;
+    align-items:center;
+
+    .label{
+      min-width:90%;
     }
   }
   .mainContent{
     width:100%;
     height:100%;
-    margin-top:26px;
+    margin-top:25px;
     display:flex;
     justify-content:center;
+    position:relative;
+  }
+  .wrapper{
+    width:90%;
+    height:100%;
+    display:flex;
+    overflow:hidden;
+  }
+  @media only screen and (min-width : 500px) and (max-width:1024px) {
+    margin-top:50px;
+    .wrapper{
+      height:90%;
+      flex-direction:column;
+    }
+  }
+  @media only screen and (min-width : 0px) and (max-width:500px) {
+    
+    // border:1px solid black;
+    min-height:500px;
+    margin-top:100px;
+    .wrapper{
+      height:90%;
+      flex-direction:column;
+    }
   }
 `
+const RoomListBox = styled.div`
+    width:25%;
+    min-width:375px;
+    height:100%;
+    background-color:#EFEFEF;
+    padding:25px 40px;
+    .header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:relative;
+    }
+    .roomList{
+      width:100%;
+      height:100%;
+    }
+    @media only screen and (min-width : 500px) and (max-width:1024px) {
+      padding:10px 40px;
+      width:100%;
+      height:40%;
+      overflow:hidden;
+    }
+    @media only screen and (min-width : 0px) and (max-width:500px) {
+      padding:10px 40px;
+      width:100%;
+      height:40%;
+      overflow:hidden;
+    }
+`
+const WhiteBox = styled.div`
+    width:1%;
+    min-width:5px;
+    height:100%;
+    background-color:white;
+    @media only screen and (min-width : 500px) and (max-width:1024px) {
+      width:100%;
+      height:1%;
+    }
+    @media only screen and (min-width : 0px) and (max-width:500px) {
+      width:100%;
+      height:1%;
+    }
+`
+const ChatBox = styled.div`
+// *{
+//   border:1px solid black;
+// }
+    width:74%;
+    height:100%;
+    background-color:#EFEFEF;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    .header{
+      margin-top:25px;
+      margin-left:40px;
+      width:100%;
+      height:50px;
+      display:flex;
+      align-items:center;
+    }
+    .wrapper{
+      width:100%;
+      height:100%;
+      // border:1px solid blue;
+    }
+    .content{
+      width:100%;
+      height:75%;
+      display:flex;
+      justify-content:center;
+      padding:0px 2%;
+    }
+    .send{
+      position:absolute;
+      bottom:0px;
+      width:100%;
+      height:25%;
+      display:flex;
+      justify-content:center;
+      .sendBox{
+        width:100%;
+        height:100%;
+        border-top:1px solid #707070;
+        background-color:#dddddd;
+      }
+    }
+    @media only screen and (min-width : 500px) and (max-width:1024px) {
+      width:100%;
+      min-height:70%;
+      .send{
+        absolute:fixed;
+        height:25%;
+      }
+    }
+    @media only screen and (min-width : 0px) and (max-width:500px) {
+      width:100%;
+      min-height:70%;
+      .send{
+        absolute:fixed;
+        height:25%;
+      }
+    }
+  `
 const MessageBox = styled.div`
   width:91%;
   height:100%;
@@ -51,6 +199,12 @@ const MessageBox = styled.div`
   @media only screen and (min-width : 360px) and (max-width:780px) {
       flex-direction:column;
   }
+`
+const SearchMemberBox = styled.div`
+  width:100%;
+  height:max-content;
+  position:absolute;
+  top:50px;
 `
 const NavSection = styled.div`
   min-width:400px;
@@ -184,6 +338,7 @@ const SendButton = styled.div`
   width:117px;
   height:100%;
   background-color:white;
+  border:1px solid #EFEFEF;
   border-radius:0px 0px 25px 0px;
   border-top:1px solid #707070;
   display:flex;
@@ -201,7 +356,7 @@ const SendButton = styled.div`
 `
 const SendMessageTextarea = styled.textarea`
   width:95%;
-  height:147px;
+  height:100%;
   font-size:18px;
   font-weight:500;
   color:#707070;
@@ -220,12 +375,22 @@ const SendMessageTextarea = styled.textarea`
   }
 `;
 const SummaryList = styled.div`
+  width:100%;
   height:100%;
-  padding-top:14px;
-  padding-left:54px;
+  position:relative;
   overflow-y: hidden;
+  overflow-x: hidden;
+  padding-top:15px;
+  padding-bottom:50px;
   &:hover {
     overflow-y:overlay;
+  }
+  @media only screen and (min-width : 500px) and (max-width:1024px) {
+    padding-top:5px;
+
+  }
+  @media only screen and (min-width : 0px) and (max-width:500px) {
+    padding-top:5px;
   }
 `;
 const SummaryItemBox = styled.div`
@@ -234,44 +399,67 @@ const SummaryItemBox = styled.div`
   }
   cursor:pointer;
   position:relative;
-  overflow:hidden;
-  width:336px;
+  // overflow:hidden;
+  width:100%;
   height:70px;
   margin-bottom:30px;
   opacity:${props => props.isSelect === true ? 1 : 0.5};
+  display:flex;
+  .summary_box{
+    width:75%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:10px;
+  }
   .summary_Name{
-    width:244px;
+    width:100%;
     height:29px;
-    position:absolute;
-    left:92px;
     font-size:17px;
     font-weight:500;
     font-family:Noto Sans KR;
     color:#707070;
     text-align:left;
-    line-height:29px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
   }
   .summary_message{
-    overflow:hidden;
-    width:200px;
+    width:100%;
     height:28px;
-    position:absolute;
-    left:92px;
-    bottom:3px;
     font-size:17px;
     font-weight:100;
     font-family:Noto Sans KR;
     color:#707070;
     text-align:left;
     line-height:29px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  @media only screen and (min-width : 500px) and (max-width:1024px) {
+    padding-top:5px;
+    margin-bottom:0px;
+    height:max-content;
+    .summary_message{
+      // display:none;
+    }
+  }
+  @media only screen and (min-width : 0px) and (max-width:500px) {
+    padding-top:5px;
+    margin-bottom:0px;
+    height:max-content;
+    .summary_message{
+      display:none;
+    }
   }
 `;
 const SummaryIcon = styled.div`
-  width:70px;
-  height:70px;
-  position:absolute;
-  left:0px;
-  top:0px;
+  min-width:70px;
+  min-height:70px;
+  max-width:70px;
+  max-height:70px;
   border-radius:50%;
   background:url(${props => props.imageURL});
   background-size:cover;
@@ -282,6 +470,12 @@ const SummaryIcon = styled.div`
     background-color:#FF0000;
     border-radius:50%;
   }
+  @media only screen and (min-width : 0px) and (max-width:500px) {
+    min-width:35px;
+    min-height:35px;
+    max-width:35px;
+    max-height:35px;
+  }
 `;
 
 function SummaryItem(props) {
@@ -290,8 +484,10 @@ function SummaryItem(props) {
       <SummaryIcon imageURL={props.s_img}>
         {props.noti ? <div className="noti" /> : undefined}
       </SummaryIcon>
+      <div className="summary_box">
       <div className="summary_Name">{props.friend_name}</div>
       <div className="summary_message">{props.message && props.message.replace(/<br\/>/g, "")}</div>
+      </div>
     </SummaryItemBox>);
 }
 
@@ -346,7 +542,6 @@ class Messages extends React.Component {
   }
   shouldComponentUpdate(nextProps) {
     setTimeout(() => {
-      //this.list._reactInternalFiber.child.stateNode.scrollTop = this.list._reactInternalFiber.child.stateNode.scrollHeight;
     }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
@@ -373,72 +568,65 @@ class Messages extends React.Component {
     this.props.SearchMemberRequest(null, { key: value }, this.props.token);
   }
   selectMember = async (data) => {
-    await this.setState({
-      render: false
-    });
-    const index = this.state.friendList.indexOf(data.uid);
-    console.log(this.state, this.props.MessageList, index);
-    if (index === -1) {
-      this.setState({
-        selectId: data.uid,
-        selectName: data.nick_name,
-        openMember: false,
-        msgId: -1,
-        render: true
-      });
-    } else {
-      this.setState({
-        selectId: data.uid,
-        selectName: data.nick_name,
-        openMember: false,
-        msgId: this.props.MessageList[index].uid,
-        render: true
-      });
-    }
-    console.log("1111111111" + this.state.selectId);
+        await this.setState({
+          render: false
+        });
+        const index = this.state.friendList.indexOf(data.uid);
+        console.log(this.state, this.props.MessageList, index);
+        if (index === -1) {
+          this.setState({
+            selectId: data.uid,
+            selectName: data.nick_name,
+            openMember: false,
+            msgId: -1,
+            render: true
+          });
+        } else {
+          this.setState({
+            selectId: data.uid,
+            selectName: data.nick_name,
+            openMember: false,
+            msgId: this.props.MessageList[index].uid,
+            render: true
+          });
+        }
+        console.log("1111111111" + this.state.selectId);
   }
   setMsgId = async (group_id, user_id, user_name) => {
-
-
-    await this.setState({
-      msgId: group_id,
-      selectId: user_id,
-      selectName: user_name,
-      openMember: false,
-      render: false
-    });
-    this.setState({ render: true });
-    // setTimeout(async () => {
-    //   await this.props.GetMyChatRoomsListRequest(this.props.token);
-    //   this.setState({ render: true });
-    // }, 250)
-    await this.handleCloseMember();
-    await document.getElementById("sendMsgBox") && await document.getElementById("sendMsgBox").focus();
-    // await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
+        await this.setState({
+          msgId: group_id,
+          selectId: user_id,
+          selectName: user_name,
+          openMember: false,
+          render: false
+        });
+        this.setState({ render: true });
+        await this.handleCloseMember();
+        await document.getElementById("sendMsgBox") && await document.getElementById("sendMsgBox").focus();
   }
   onSubmitForm = async (data) => {
-    if (this.state.selectId === null) {
-      await alert("받는 사람을 지정해주세요.","확인")
-      return
-    }
-    let msg = ``;
-    if (this.state.msgValue && this.state.msgValue.length > 0) {
-      msg = this.state.msgValue.replace(/\n/g, "<br/>");
-    } else {
-      await alert("텍스트를 입력해주세요.","확인");
-      return;
-    }
-
-    this.props.SendMessageRequest(this.props.token, { message: msg }, this.state.selectId)
-      .then(async res => {
-        if (res.data && res.data.success === true) {
-          await this.props.GetMyMsgListRequest(this.props.token)
-          await this.setState({ msgId: res.data.groupId, render: false });
+        if (this.state.selectId === null) {
+          await alert("받는 사람을 지정해주세요.","확인")
+          return
         }
-        this.setState({ render: true });
-        this.props.history.replace("/message");
-      });
-    this.initMsgValue();
+        let msg = ``;
+        if (this.state.msgValue && this.state.msgValue.length > 0) {
+          msg = this.state.msgValue.replace(/\n/g, "<br/>");
+        } else {
+          await alert("텍스트를 입력해주세요.","확인");
+          return;
+        }
+
+        this.props.SendMessageRequest(this.props.token, { message: msg }, this.state.selectId)
+          .then(async res => {
+            if (res.data && res.data.success === true) {
+              await this.props.GetMyMsgListRequest(this.props.token)
+              await this.setState({ msgId: res.data.groupId, render: false });
+            }
+            this.setState({ render: true });
+            this.props.history.replace("/message");
+          });
+        this.initMsgValue();
   }
   handleChangeMsgValue(event) {
     this.setState({ msgValue: event.target.value })
@@ -472,54 +660,100 @@ class Messages extends React.Component {
     const H = window.innerHeight < maxH ? window.innerHeight - 200 : 869
     return (
       <React.Fragment>
-        <MainBox>
-          <div className="mainBanner">
-            <div className="mainBanner_label">메시지함</div>
-          </div>
-          <div className="mainContent">
-            <MessageBox>
-              <NavSection >
-                <div className="NavHeader">
-                  <div className="Nav_label">받은 메세지함</div>
-                  <PlusIcon onClick={this.handleOpenMember} />
+          <MainBox>
+              <div className="mainBanner bg_gray">
+                <div className="label font_big font_bold">메시지함</div>
+              </div>
+              <div className="mainContent flexBox justifyContent">
+                <div className="wrapper border_radius">
+                  <RoomListBox>
+                    <div className="header">
+                      <div className="fitBox font_big font_bold">받은 메시지함</div>
+                      <PlusIcon onClick={this.handleOpenMember} />
+                      {this.state.showSearch &&
+                      (<SearchMemberBox>
+                        {this.state.hideSearch === true ? null :
+                          <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+                      </SearchMemberBox>)}
+                    </div>
+                    <div className="roomList">
+                      <SummaryList id="searchRect">
+                        {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
+                          this.props.ChatRooms.map(chat => chat.recent != null ?
+                            <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
+                              <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
+                            </div> : null)}
+                      </SummaryList>
+                    </div>
+                  </RoomListBox>
+                  <WhiteBox/>
+                  <ChatBox>
+                    <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>  
+                    <div className="wrapper">
+                       <div className="content">
+                            {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
+                        </div>
+                        <div className="send">
+                          <div className="sendBox">
+                            <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                          <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
+                            <div className="sendButton_label">전송하기</div></SendButton>
+                        </div>
+                    </div>
+                  </ChatBox>
                 </div>
-                <div className="NavContent">
-                  {this.state.showSearch &&
-                    (<div>
-                      {this.state.hideSearch === true ? null :
-                        <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
-                    </div>)}
-
-                  <SummaryList id="searchRect">
-                    {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-                      this.props.ChatRooms.map(chat => chat.recent != null ?
-                        <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
-                          <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-                        </div> : null)}
-                  </SummaryList>
-                </div>
-              </NavSection>
-              <WhiteLine />
-              <AsideSection>
-                <div className="asideHeader"><div className="asideHeader_label">{this.state.selectName}</div></div>
-                <div className="asideContent">
-                  <div className="aside_messageList">
-                    {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
-                  </div>
-                </div>
-                <div className="asideSend">
-                  <div className="sendBox">
-                    <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
-                  <SendButton onClick={this.onSubmitForm}>
-                    <div className="sendButton_label">전송하기</div></SendButton>
-                </div>
-              </AsideSection>
-            </MessageBox>
-          </div>
-        </MainBox>
+              </div>
+          </MainBox>
       </React.Fragment>
     );
   }
 }
 
 export default Messages;
+
+
+{/* <MainBox>
+<div className="mainBanner">
+  <div className="mainBanner_label">메시지함</div>
+</div>
+<div className="mainContent">
+  <MessageBox>
+    <NavSection >
+      <div className="NavHeader">
+        <div className="Nav_label">받은 메세지함</div>
+        <PlusIcon onClick={this.handleOpenMember} />
+      </div>
+      <div className="NavContent">
+        {this.state.showSearch &&
+          (<div>
+            {this.state.hideSearch === true ? null :
+              <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+          </div>)}
+
+        <SummaryList id="searchRect">
+          {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
+            this.props.ChatRooms.map(chat => chat.recent != null ?
+              <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
+                <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
+              </div> : null)}
+        </SummaryList>
+      </div>
+    </NavSection>
+    <WhiteLine />
+    <AsideSection>
+      <div className="asideHeader"><div className="asideHeader_label">{this.state.selectName}</div></div>
+      <div className="asideContent">
+        <div className="aside_messageList">
+          {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
+        </div>
+      </div>
+      <div className="asideSend">
+        <div className="sendBox">
+          <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+        <SendButton onClick={this.onSubmitForm}>
+          <div className="sendButton_label">전송하기</div></SendButton>
+      </div>
+    </AsideSection>
+  </MessageBox>
+</div>
+</MainBox> */}

@@ -68,7 +68,8 @@ const Arrow = styled.div`
     }
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
-        top: ${props => props.gap}px;
+        top:110px;
+        // top: ${props => props.gap}px;
     }
 `;
 const GridEditorWrapper = styled.div`
@@ -84,7 +85,7 @@ const GridEditorWrapper = styled.div`
         margin-top: 90px;
     }
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
-    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
         margin-left:60px;
     }
 `;
