@@ -4,12 +4,9 @@ import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
-const SmallMinWidth = 0;
-const SmallMaxWidth = 480;
-const MediumMinWidth = 480;
-const MediumMaxWidth = 1440;
-const LargeMinWidth = 1440;
-const LargeMaxWidth = 1920;
+
+import opendesign_style from "opendesign_style"
+
 const CommentBox = styled.div`
     *{
         font-family: Noto Sans KR;
@@ -107,7 +104,7 @@ const CommentInner = styled.div`
         }
     };
 
-    @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px){
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px){
         display:flex;
         flex-wrap:wrap;
         .text-wrapper{
@@ -240,7 +237,7 @@ const CommentInputTextContainer = styled.div`
            cursor: pointer;
        }
    }
-   @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px){
+   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px){
        display:flex;
        .wrapper{
            margin-left:0px;
