@@ -9,14 +9,15 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
+
 const Wrapper = styled.div`
-  position:relative;
-  .orderBox{
-    margin-top:10px;
-    width:100%;
-    height:max-content;
+  position: relative;
+  .orderBox {
+    margin-top: 10px;
+    width: 100%;
+    height: max-content;
   }
-`
+`;
 const TextWrapper = styled.div`
     width:100%;
     display:flex;
@@ -62,6 +63,7 @@ const ScrollListContainer = styled.div`
 const BlankDiv = styled.div`
     padding-top: 50px;
 `;
+
 class DesignerListContainer extends Component {
     constructor(props) {
         super(props);
@@ -134,29 +136,35 @@ class DesignerListContainer extends Component {
         const { category1, category2, Count, status } = this.props
         return (<React.Fragment>
             <Wrapper>
-            <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
+                <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+                    category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
 
-            <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
-                <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
-            </TextWrapper>
+                <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
+                    <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
+                </TextWrapper>
 
-            <JoinDesignerContainer>
-                <div className="joinDesigner" onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</div>
-            </JoinDesignerContainer>
+                <JoinDesignerContainer>
+                    <div className="joinDesigner" onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</div>
+                </JoinDesignerContainer>
 
-            <div className="orderBox">
-                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-            </div>
+                <div className="orderBox">
+                    <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+                </div>
 
-            <ScrollListContainer>
-                {status === "INIT"
-                    ? <Loading />
-                    : <ScrollList {...opendesign_style.designer_margin} reload={reload} handleReload={this.handleReload}
-                        type="designer" dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
-            </ScrollListContainer>
-        </Wrapper>
-        <BlankDiv />
+                <ScrollListContainer>
+                    {status === "INIT"
+                        ? <Loading />
+                        : <ScrollList
+                            {...opendesign_style.designer_margin}
+                            type="designer"
+                            reload={reload}
+                            handleReload={this.handleReload}
+                            dataList={this.props.dataList}
+                            dataListAdded={this.props.dataListAdded}
+                            getListRequest={this.getList} />}
+                </ScrollListContainer>
+            </Wrapper>
+            <BlankDiv />
         </React.Fragment>)
     }
 }
@@ -171,7 +179,6 @@ const mapStateToProps = (state) => {
         status: state.DesignerList.status
     }
 }
-
 const mapDispatchToProps = (dispatch) => {
     return {
         GetDesignerListRequest: (page, sort, cate1, cate2, keyword) => {
