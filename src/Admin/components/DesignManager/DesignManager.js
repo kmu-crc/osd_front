@@ -381,7 +381,8 @@ class DesignManager extends Component {
         })
           .then(res => res.json())
           .then(data => data.success ? alert("삭제성공") : alert("삭제실패"))
-          .catch(error => alert(error));
+          .catch(error => reject(error));
+        resolve(true);
       });
     }
     const prompt = window.prompt(`
@@ -604,8 +605,7 @@ class DesignManager extends Component {
                   onPageChange={(event, { activePage }) => {
                     this.goPage(activePage - 1);
                   }}
-                />
-              }
+                />}
 
             </div>
 

@@ -267,7 +267,7 @@ class RequestManager extends Component {
   GetRequestListRequest(page = 0, max = this.state.max, type = "designer", cate1 = "null", cate2 = "null", sort = "update", desc = "desc", start = "2000-01-01", end = "2020-12-31", keyword = null) {
     return new Promise(resolve => {
       const url = `${host}/admins/RequestList/${page}/${max}/${type}/${cate1}/${cate2}/${sort}/${desc}/${start}/${end}/${keyword}`;
-
+      console.log(url);
       fetch(url, { headers: { 'Content-Type': 'application/json', 'x-access-token': this.props.admin_token }, method: "GET" })
         .then(res => res.json())
         .then(data => {
@@ -350,7 +350,7 @@ class RequestManager extends Component {
     });
   }
   async onChangeMainCate(value) {
-    await this.setState({ cate1: value, cate2: 0, page: 0 });
+    await this.setState({ cate1: value, cate2: null, page: 0 });
     const { page, max, type, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     this.GetRequestListRequest(this.state.page, max, type, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
@@ -384,7 +384,11 @@ class RequestManager extends Component {
     const { type, page, max, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
     this.GetRequestListRequest(page, max, type, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
   }
-
+  async changeTab(pType) {
+    this.setState({ type: pType });
+    const { page, max, type, cate1, cate2, sort, desc, startDate, endDate, keyword } = this.state;
+    this.GetRequestListRequest(page, max, type, cate1, cate2, sort, desc ? "desc" : "asc", getFormatDate(startDate), getFormatDate(endDate), keyword ? keyword : "");
+  }
   render() {
     const { max, type, normal, count, loading, category1, cate1, category2, cate2, keyword, desc, sort } = this.state;
     const lastPage = parseInt(count / max, 10) + 1;
@@ -404,10 +408,10 @@ class RequestManager extends Component {
         {/* title */}
         <h1>게시글</h1>
         <TabContainer>
-          <div className={type === "designer" ? "element active" : "element"} onClick={() => this.setState({ type: "designer" })}>디자이너</div>
-          <div className={type === "maker" ? "element active" : "element"} onClick={() => this.setState({ type: "maker" })}>메이커</div>
-          <div className={type === "item" ? "element active" : "element"} onClick={() => this.setState({ type: "item" })}>아이템</div>
-          <div className={type === "normal" ? "element active" : "element"} onClick={() => this.setState({ type: "normal" })}>일반</div>
+          <div className={type === "designer" ? "element active" : "element"} onClick={() => this.changeTab("designer")}>디자이너</div>
+          <div className={type === "maker" ? "element active" : "element"} onClick={() => this.changeTab("maker")}>메이커</div>
+          <div className={type === "item" ? "element active" : "element"} onClick={() => this.changeTab("item")}>아이템</div>
+          <div className={type === "normal" ? "element active" : "element"} onClick={() => this.changeTab("normal")}>일반</div>
         </TabContainer>
 
         <div>
