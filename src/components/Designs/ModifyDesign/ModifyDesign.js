@@ -16,6 +16,7 @@ import CheckBox2 from "components/Commons/CheckBox";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 const designImageText = "디자인 이미지";
 const MainBanner = styled.div`
@@ -840,8 +841,9 @@ class ModifyDesign extends Component {
       this.setState({ alone: true })
     }
   }
-  deleteDesign = () => {
-    this.props.DeleteDesignRequest(this.props.id, this.props.token)
+  deleteDesign = async () => {
+    const answer = await confirm("디자인을 삭제하시겠습니까?", "확인", "취소");
+    answer && this.props.DeleteDesignRequest(this.props.id, this.props.token)
       .then(async () => {
         window.location.href = geturl() + `/design`;
       })
@@ -908,9 +910,12 @@ class ModifyDesign extends Component {
                       <MenuText selected={this.state.step === index}>{menu.txt}</MenuText>
                     </MenuItem>)
                 })}
-                <MenuItem className="white" onClick={this.deleteDialog}>
+                <MenuItem className="white" onClick={this.deleteDesign}>
                   <div className="deleteText">디자인 삭제하기</div>
                 </MenuItem>
+                {/* <MenuItem className="white" onClick={this.deleteDialog}> */}
+                {/* <div className="deleteText">디자인 삭제하기</div> */}
+                {/* </MenuItem> */}
               </div>
             </NavMenu>
             {/* <ModifyMenuDelete onClick={this.deleteDialog} >디자인 삭제하기</ModifyMenuDelete> */}
