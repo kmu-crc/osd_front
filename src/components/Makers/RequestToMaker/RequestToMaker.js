@@ -7,7 +7,7 @@ import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-
+import { FileUploadRequest } from "actions/Uploads";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -237,6 +237,15 @@ class RequestToMaker extends Component {
   async getPriceValue(value) {
     await this.setState({ price: value });
   }
+  onFileChange = async event => {
+    const file = event.currentTarget.files;
+    const s3path = await FileUploadRequest(file);
+
+    this.setState({
+      file_url: s3path.path,
+      filename: file[0].name
+    });
+  }
 
   onSubmit() {
     const data = {
@@ -256,6 +265,8 @@ class RequestToMaker extends Component {
       offline_consultation: this.state.offline,
       start_date: this.state.startDate,
       end_date: this.state.endDate,
+      file_url: this.state.file_url,
+      filename: this.state.filename,
     }
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -310,12 +321,27 @@ class RequestToMaker extends Component {
                   <div className="label">의뢰 내용</div>
                   {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
                   <TextControllerClassic
-                  item={{content:this.state.content,height:500}}
-                  name={"comment"}
-                  getValue={this.onChangeContent}
+                    item={{ content: this.state.content, height: 500 }}
+                    name={"comment"}
+                    getValue={this.onChangeContent}
                   // initClick={this.state.click}
                   // deleteItem={this.deleteItem}
-                />
+                  />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label">파일 등록</div>
+                  <div className="faded-text" >
+                    <input
+                      type="file"
+                      name="source"
+                      ref={ref => (this.input = ref)}
+                      onChange={this.onFileChange}
+                      accept=".pdf" />
+                  </div>
+                  <div className="information">
+                    * pdf파일만 등록이 가능합니다.
+                      </div>
                 </div>
 
                 <div className="wrapper flex centering">

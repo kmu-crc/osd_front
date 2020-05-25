@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ContentBox from "components/Commons/ContentBox";
 import Loading from "components/Commons/Loading";
-// import { Grid, Icon } from "semantic-ui-react";
-// import Button from "components/Commons/Button";
-import { RedButton, /*GrayButton*/ } from "components/Commons/CustomButton"
+import { RedButton, } from "components/Commons/CustomButton"
+import FileIcon from "components/Commons/FileIcon";
+
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -260,8 +260,19 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">의뢰 내용</div>
-                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}/>
+                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }} />
                     </div>
+
+                    {Detail && Detail.file_url ?
+                      <div className="wrapper flex centering">
+                        <div className="label">첨부 파일</div>
+                        <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
+                          <FileIcon type={"application"} extension={"pdf"} />
+                          {Detail.filename}
+                        </a>
+                      </div>
+                      : null}
+
 
                     <div className="wrapper flex centering">
                       <div className="label">희망 비용</div>
@@ -355,7 +366,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">의뢰 내용</div>
-                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail && Detail.request && Detail.request.content}` }}/>
+                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail && Detail.request && Detail.request.content}` }} />
                     </div>
 
                     <div className="wrapper flex centering">
@@ -388,7 +399,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex">
                       <div className="label">설명</div>
-                      <div className="textBox"  dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}></div>
+                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}></div>
                     </div>
                     {
                       Detail.type === "maker" &&
