@@ -18,7 +18,7 @@ import DesignComment from "components/Designs/GridEditor/DesignComment";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { YesIHaveReadNewComment, } from "redux/modules/design";
-
+import { Icon } from 'semantic-ui-react'
 import opendesign_style from "opendesign_style"
 
 const DesignMemberList = styled.div`
@@ -272,10 +272,25 @@ const MainBox = styled.div`
         display:flex;
         padding:15px;
         padding-left:25px;
+        .seemore{
+            margin-top:15px;
+            width:100%;
+            height:max-content;
+            background-color:#E6E6E6;
+            padding:3px;
+            border-radius:3px;
+            display:none;
+            .txt{
+                width:max-content;
+                height:max-content;
+                color:#707070;
+            }
+        }
     }      
     .font_big{font-size:20px;}
     .font_midBig{font-size:17px;}
     .font_middle{font-size:16px;}
+    .font_smallthan{font-size:14px;}
     .font_small{font-size:12px;}
     .font_bold{font-weight:500;}
     .font_fit{font-weight:300;}
@@ -307,10 +322,22 @@ const MainBox = styled.div`
         height:max-content;
         margin-top: 90px;
     }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
     and (max-width : ${1024}px) {
         .wrapper{
             flex-wrap:wrap
+        }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+
+        .wrapper{
+            flex-wrap:wrap
+            .seemore{
+                display:flex;
+                justify-content:center;
+                align-items:center;
+            }
         }
     }
 `
@@ -325,6 +352,48 @@ const CustomIcon = styled.div`
     opacity: ${props => props.like_opacity==null?1:props.like_opacity};
 
 `
+const MiniIcon = styled.div`
+    width: 30px; 
+    height: 30px; 
+    background: url(${props => props.iconName}); 
+    background-size: contain; 
+    background-position: center center; 
+    background-repeat: no-repeat;
+    opacity: ${props => props.like_opacity==null?1:props.like_opacity};
+
+`
+const MobileSeeMore = styled.div`
+    margin-top:15px;
+    display:${props=>props.isShow==false?"none":"flex"};
+    flex-direction:column;
+    width:100%;
+    .explain-box{
+        margin-bottom:15px;
+        color:#707070;
+    }
+    .icon-box{
+        margin-top:30px;
+        width:100%;
+        height:60px;
+        display:flex;
+        .icon-wrapper{
+            width:20%;
+            min-width:50px;
+            height:100%;  
+        }
+        .icon-piece{
+            cursor:pointer;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            width:95%;
+            height:95%;
+            border-radius:5px;
+            background-color:#DEDEDE;
+        }
+    }
+    `
 const ThreeSideBox=styled.div`
     *{
         text-align:right;
@@ -353,6 +422,7 @@ const ThreeSideBox=styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+        display:none;
         width:100%;
         height:max-content;
     }
@@ -424,6 +494,7 @@ const TwoSideBox=styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+        display:none;
         height:max-content;
         width:100%;
         margin-left:0px;
@@ -433,6 +504,7 @@ const TwoSideBox=styled.div`
             height:max-content;
             width:100%;
             .category-name {
+                display:none;
                 margin-top: 10px;
                 line-height:0px;
                 height:max-content;
@@ -441,6 +513,7 @@ const TwoSideBox=styled.div`
                 height:max-content;
             }
         }
+        
 
     }
 
@@ -522,6 +595,18 @@ const OneSideBox=styled.div`
             margin-left: 6px;
             width: 34px;
             margin-right:15px;
+        }        
+        .smallMode-category-name {
+            margin-top: 42px;
+            width: max-content;
+            height: 25px;
+            color: #FF0000;
+            font-size: 17px;
+            font-weight: 300;
+            line-height: 25px;
+            text-align: left;
+            font-family: Noto Sans KR;
+            display:none;
         }
     }
     @media only screen and (min-width : ${1024}px) 
@@ -551,12 +636,29 @@ const OneSideBox=styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-        height:170px;
+        height:120px;
         .title{
             width:100% !important;
             white-space:nowrap;
             overflow:hidden;
             text-overflow:ellipsis;
+        }
+        .info{
+            .goto-parent{
+                display:none;
+            }
+            .flexBox{
+                .comment-box{
+                    display:none;
+                }
+                .fork-design{
+                    display:none;
+                }
+                .smallMode-category-name{
+                    color:red;
+                    display:block;
+                }
+            }
         }
     }
 `
@@ -568,7 +670,7 @@ class DesignInfo extends Component {
             posX: -1, posY: -1, w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
             likeDialog: false, forkDialog: 0, memberDialog: false,
             forkDesignList: false, memberList: false,
-            comment: false
+            comment: false,isSeeMore:false,
         };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
@@ -862,6 +964,9 @@ class DesignInfo extends Component {
                                         {!isMyDesign && this.state.memberList &&<MemberListModal/>}
                                     </div>
                                     <div className="flexBox">
+                                        <div className="smallMode-category-name">{DesignDetail.categoryName}</div>
+                                    </div>
+                                    <div className="flexBox">
                                         <div className="comment-box" onClick={this.getDesignComment} >
                                             <div className="txt font_red">댓글</div>
                                             <div className="count font_red">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
@@ -870,10 +975,12 @@ class DesignInfo extends Component {
                                      </div>
 
                                      <div className="flexBox">
+                                         <div className="fork-design">
                                             {DesignDetail.children_count["count(*)"] > 0&&
                                             <button className="transparent_btn cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
                                              파생된 디자인 <span>{DesignDetail.children_count["count(*)"]}</span>
                                          </button>}
+                                         </div>
                                     </div>
                                     {this.state.forkDesignList &&<ForkDesignListModal/>}
                                 </div>
@@ -926,6 +1033,52 @@ class DesignInfo extends Component {
                                      <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
                                 </div>
                         </ThreeSideBox>
+                        <MobileSeeMore isShow={this.state.isSeeMore}>
+                                            <div className="explain-box font_middle">{DesignDetail.explanation}</div>
+                                            <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                                            <div className="_txt font_smallthan font_fit">등록 일자 
+                                                {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
+                                                .substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
+                                            </div>
+                                            <div className="icon-box">
+                                               {editor === false ?
+                                                DesignDetail && DesignDetail.waitingStatus == 1 ?
+                                                <div className="icon-wrapper">
+                                                    <div className="icon-piece"><Icon color="grey" className="sign in" size="big"/>
+                                                    <div className="font_small">승인대기</div></div> 
+                                                </div>
+                                                :
+                                                <div className="icon-wrapper">
+                                                   <div onClick={this.joinMember}  className="icon-piece"><Icon color="grey" className="sign in" size="big"/>
+                                                   <div className="font_small">가입신청</div></div> 
+                                                </div>
+                                                :
+                                                null
+                                               }
+                                               <div className="icon-wrapper"><div onClick={() => this.forkDesign()} className="icon-piece"><Icon color="grey" className="fork" size="big"/><div className="font_small">디자인파생</div></div></div>
+                                               <div className="icon-wrapper"><div onClick={this.getDesignComment} className="icon-piece"><Icon color="grey" className="talk" size="big"/><div className="font_small">덧글</div></div></div>
+                                               {isMyDesign === true ?
+                                                null
+                                                :
+                                                <div className="icon-wrapper">
+                                                    <div onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)} className="icon-piece"><Icon color="grey" className="mail" size="big"/><div className="font_small">메시지</div></div>
+                                                </div>
+                                               }
+                                               {isMyDesign === true ?
+                                                <div className="icon-wrapper">
+                                                    <div onClick={this.gotoDesignModify} className="icon-piece"><MiniIcon iconName={iEdit}/><div className="font_small">디자인수정</div></div>
+                                                </div>
+                                                :                                 
+                                               <div className="icon-wrapper" >
+                                                   <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup}/><div className="font_small">관심디자인</div></div>
+                                                </div>
+                                                }
+                                            </div>
+                        </MobileSeeMore>
+                        <div className="seemore cursor_pointer" onClick={()=>{this.setState({isSeeMore:!this.state.isSeeMore})}}>
+                            <div className="txt">{this.state.isSeeMore==false?"▼ 더보기":"▲ 접기"}</div>
+                            {/* <div className="txt">더보기</div> */}
+                        </div>
                     </div>
                 </MainBox>
             </React.Fragment >
