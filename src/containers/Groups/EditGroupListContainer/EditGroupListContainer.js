@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
 import { confirm } from "components/Commons/Confirm/Confirm";
-import { alert } from "components/Commons/Alert/Alert";
+// import { alert } from "components/Commons/Alert/Alert";
 
 const GroupBox = styled.div`
   margin-bottom: 1rem;

@@ -21,6 +21,7 @@ import { alert } from "components/Commons/Alert/Alert";
 // import { geturl } from "config";
 import templateImgDesign from "source/template-image-design.png";
 import templateImgSofware from "source/template-image-software.png";
+import templateImgEngineering from "source/template-image-engineering.png";
 import templateImgEmpty from "source/template-image-empty.png";
 
 const MainBanner = styled.div`
@@ -569,20 +570,24 @@ const DesignElement = styled.div`
   *{
     cursor:pointer;
   }
-  cursor:pointer;
   position: relative;
-  z-index: 700;
-  width: 300px;
-  height: 300px;
-  border-radius: 15px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-image: url(${props => props.img});
+  cursor: pointer;
   color: white;
   font-size: 20px;
   font-family: "Noto Sans KR";
-  // cursor: default;
+  z-index: 700;
+  width: 300px;
+  height: 150px;
+  border-radius: 15px;
+  // background-size: cover;
+  img{
+    max-width: 100%;
+    max-height: 100%;
+    // background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(${props => props.img});
+  }
+  
   .cover {
     // cursor: default;
     z-index: 701;
@@ -698,16 +703,18 @@ const DesignTemplateSelector = styled.div`
     line-height: 2rem;
   }
   .template-wrapper {
+    // width: 450px;
     display: flex;
+    // flex-direction: row;
     overflow: auto;
   }
   .element {
     min-width: 150px;
-
-    border: 1px solid #EFEFEF;
+    margin: 5px;
+    border: 2px solid #EFEFEF;
     padding: 5px;
     :hover{
-      border: 1px solid #777777;
+      border: 2px solid #777777;
     }
   }
 `;
@@ -749,7 +756,7 @@ function Peer(props) {
 const template = [
   { type: "empty", text: "빈 템플릿", img: templateImgEmpty },
   { type: "fashion", text: "일반디자인 템플릿", img: templateImgDesign },
-  { type: "engineering", text: "공학디자인 템플릿", img: templateImgSofware },
+  { type: "engineering", text: "공학디자인 템플릿", img: templateImgEngineering },
   { type: "software", text: "소프트웨어디자인 템플릿", img: templateImgSofware },
 ];
 const ResetButtonWrapper = styled.div`
@@ -1179,8 +1186,10 @@ class CreateDesign extends Component {
                     onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
                 </div>
                 <div style={{ marginTop: "20px", display: "flex" }} >
-                  <div style={{ marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500", 
-                  fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer" }} onClick={() => this.closeCropper()} >취소</div>
+                  <div style={{
+                    marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500",
+                    fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer"
+                  }} onClick={() => this.closeCropper()} >취소</div>
                   <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
                 </div>
               </div>
@@ -1355,14 +1364,8 @@ class CreateDesign extends Component {
                           className="element"
                           key={item.type}
                           onClick={async () => await this.setState({ template: item.type })}>
-                          {/* <div>
-                            <input
-                              name="template"
-                              type="radio"
-                              value={item.type} />{item.text}</div>
-                          <div>contents</div> */}
                           {item.text}
-                          <DesignElement img={item.img} />
+                          <DesignElement img={item.img}><img src={item.img} /></DesignElement>
                         </label>
                       )}
                     {/* <label

@@ -15,7 +15,7 @@ import {
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import CardComment from './CardComment';
 import { FormThumbnailEx } from "components/Commons/FormItems";
-import TextFormat from 'modules/TextFormat';
+// import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 import { ValidationGroup } from "modules/FormControl";
 import { confirm } from "components/Commons/Confirm/Confirm";
@@ -477,7 +477,7 @@ class CardModal extends Component {
         this.setState({ edit: this.state.edit })
     };
     removeCard = async (event) => {
-        
+
         event.stopPropagation();
         event.target.blur();
         if (await confirm("컨텐츠를 삭제하시겠습니까?", "예", "아니오")) {
@@ -558,11 +558,11 @@ class CardModal extends Component {
                                     <div className="contents">{card.content || ""}</div>
                                     {/* <div className="contents"><TextFormat txt={card.content || ""}/></div> */}
                                     <div className="card-header-third">
-                                    <div className="nick-name">{card.nick_name}</div>
-                                    <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                                        <div className="nick-name">{card.nick_name}</div>
+                                        <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
 
                             : <React.Fragment>
                                 <EditCardHeaderContainer>
@@ -589,10 +589,10 @@ class CardModal extends Component {
                                 </EditCardHeaderContainer>
                             </React.Fragment>}
 
-                        
+
 
                         <div className="content" >
-                        <ContentBorder><div className="border-line" /></ContentBorder>
+                            <ContentBorder><div className="border-line" /></ContentBorder>
                             <CardSourceDetailContainer
                                 design_id={this.props.designId}
                                 handleUpdate={this.handleUpdate}

@@ -11,7 +11,7 @@ import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
 import { geturl } from "config"
 import Loading from "components/Commons/Loading"
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 class ModifyDesignInfoContainer extends Component {
   constructor(props) {

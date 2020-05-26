@@ -59,7 +59,7 @@ class TemplateGridEditor extends Component {
         this.getTempTemplate();
     }
     async componentDidUpdate(prevProps, prevState) {
-        if (this.props.type != prevProps.type) {
+        if (this.props.type !== prevProps.type) {
             await this.getTempTemplate();
         }
     }
@@ -94,13 +94,12 @@ class TemplateGridEditor extends Component {
     // }
 
     render() {
-        const { type } = this.props;
+        // const { type } = this.props;
         const { steps } = this.state;
 
         return (<EditorWrapper>
 
-            <div>
-                {type}</div>
+            {/* <div>{type}</div> */}
 
             <div className="steps">
                 {(steps && steps.length > 0)

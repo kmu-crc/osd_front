@@ -8,7 +8,7 @@ import Category from "components/Commons/Category"
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer"
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const SearchForm = styled.div`

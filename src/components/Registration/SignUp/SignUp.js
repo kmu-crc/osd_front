@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-
 import { Modal } from "semantic-ui-react";
 import styled from "styled-components";
 import iChecked from "source/checked.png"
 import CheckBox2 from "components/Commons/CheckBox";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const CustomModal = styled(Modal)`

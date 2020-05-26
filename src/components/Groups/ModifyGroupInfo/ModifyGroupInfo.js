@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SectionBasic from "components/Groups/ModifyGroupInfo/SectionBasic"
 import { Modal } from "semantic-ui-react";
 import iDelete from "source/deleteItem.png"
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
@@ -113,7 +113,7 @@ const MenuText = styled.div`
   border-bottom:${props => props.borderBottom};
 `
 const InputBoard = styled.div`
-width:${window.innerWidth>1920?1422+'px':100+'%'};
+width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
 padding-bottom:100px;
 margin-bottom:100px;
 position:relative;
@@ -276,18 +276,18 @@ class CreateGroup extends Component {
       });
 
   }
-  cancelDeleteGroup = ()=>{
+  cancelDeleteGroup = () => {
     this.setState({ isDelete: !this.state.isDelete });
   }
 
   onSubmit = async e => {
     const warning = "필수 입력항목을 모두 입력하지 않아 작업을 완료할 수 없습니다.\n";
     if (this.state.groupThumbnail === "" || this.state.groupThumbnail == null) {
-      await alert(warning+"섬네일 이미지를 등록해주세요","확인");
+      await alert(warning + "섬네일 이미지를 등록해주세요", "확인");
       return;
     }
     else if (this.state.groupTitle === "" || this.state.groupTitle == null) {
-      await alert(warning+"그룹의 이름을 입력해주세요","확인");
+      await alert(warning + "그룹의 이름을 입력해주세요", "확인");
       return;
     }
     // else if (this.state.groupExplain === "" || this.state.groupExplain == null) {
@@ -312,10 +312,10 @@ class CreateGroup extends Component {
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
       .then(async (res) => {
         if (res.data && res.data.success === true) {
-          await alert("정보가 수정되었습니다.","확인");
+          await alert("정보가 수정되었습니다.", "확인");
           this.props.history.push(`/groupDetail/${this.props.id}`);
         } else {
-          await alert("다시 시도해주세요","확인");
+          await alert("다시 시도해주세요", "확인");
           this.setState({
             loading: false
           });
@@ -323,10 +323,10 @@ class CreateGroup extends Component {
       });
   };
   handleOnClickDeleteDesign() {
-      this.setState({ isDelete: !this.state.isDelete })
+    this.setState({ isDelete: !this.state.isDelete })
   }
 
-  
+
   render() {
     const { step } = this.state
 
@@ -334,9 +334,9 @@ class CreateGroup extends Component {
       return (
         <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
           <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.groupTitle}를<br />삭제하시겠습니까?</div>
-          <div style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px"}}>
-            <span style={{color:"#707070"}} onClick={this.cancelDeleteGroup}>취소</span>
-            <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteGroup}>확인</span>
+          <div style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px" }}>
+            <span style={{ color: "#707070" }} onClick={this.cancelDeleteGroup}>취소</span>
+            <span style={{ marginRight: "10px", color: "#FF0000" }} onClick={this.deleteGroup}>확인</span>
           </div>
           <div onClick={this.handleOnClickDeleteDesign} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
         </Modal>
