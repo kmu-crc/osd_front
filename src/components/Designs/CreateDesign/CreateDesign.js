@@ -1487,7 +1487,7 @@ const NewController = styled.li`
     display: flex;
     flex-direction: row;
     .txt{
-      border-bottom: 1.5px solid #FF0000;
+      // border-bottom: 1.5px solid #FF0000;
     }
   }
   &.txt{
@@ -1565,13 +1565,13 @@ class AddContent extends Component {
           {this.props.order === 0 ?
             <NewController className="txt complecated" width="max-content" height="29px">
               <div onClick={this.changeType} className="txt">템플릿 선택하기</div>
-              <Tip>
+              {/* <Tip>
                 <sup>&nbsp;?</sup>
                 <div className="wrapper">
                   <div className="tip-txt">
                     <font style={{ color: "pink" }}>*&nbsp;</font>...</div>
                 </div>
-              </Tip>
+              </Tip> */}
             </NewController> : null}
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
