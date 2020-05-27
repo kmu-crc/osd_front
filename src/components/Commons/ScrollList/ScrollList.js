@@ -192,7 +192,7 @@ class ScrollList extends Component {
 
   myRef = React.createRef();
   render() {
-    const { type, manual, handleAccept, handleReject, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
+    const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
     // console.log(this.props);
     return (dataListAdded && dataListAdded.length > 0 ?
