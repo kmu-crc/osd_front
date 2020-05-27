@@ -49,7 +49,7 @@ class DesignDetail extends Component {
     return (<React.Fragment>
       {DesignDetail && DesignDetail.uid ? <React.Fragment>
         {/* design info */}
-        <DesignInfo {...this.props} {...this.state} />
+        {/* <DesignInfo {...this.props} {...this.state} /> */}
         {/* design detail */}
         {DesignDetail && DesignDetail.is_project === 1
           ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)

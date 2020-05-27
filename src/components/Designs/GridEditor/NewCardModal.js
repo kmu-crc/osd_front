@@ -446,7 +446,7 @@ class NewCardModal extends Component {
                         </div>
                     </div>
                 </NewCardDialogWrapper>
-                <BlankSpace />
+                {/* <BlankSpace /> */}
             </React.Fragment >
             //     <ButtonContainer >
             //         <EditorBottonWrapper>
