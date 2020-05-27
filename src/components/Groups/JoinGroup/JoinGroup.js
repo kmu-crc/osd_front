@@ -9,6 +9,7 @@ import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 import Cross from "components/Commons/Cross";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import { Icon } from 'semantic-ui-react'
 
 const ModalContent = styled.div`
   & .icon.close {
@@ -27,6 +28,23 @@ const JoinGroupWrap = styled.div`
   width:max-content;
   .header{
   }
+  .font_small{width:max-content;font-size:12px;}
+  .icon-wrapper{
+    width:20%;
+    min-width:50px;
+    height:100%;  
+    }
+    .icon-piece{
+        cursor:pointer;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        width:95%;
+        height:95%;
+        border-radius:5px;
+        background-color:#DEDEDE;
+    }
 `;
 
 const Title = styled.h2`
@@ -83,9 +101,15 @@ class JoinGroup extends Component {
     const { open, active } = this.state;
     return (
       <JoinGroupWrap>
-        <div className="header" onClick={this.handleModal}>
+        {this.props.isIcon==null?
+          <div className="header" onClick={this.handleModal}>
           그룹 가입 신청
-        </div>
+          </div>
+          :
+            <div onClick={this.handleModal} className="icon-piece">
+              <Icon color="grey" className="sign in" size="big"/>
+              <div className="font_small">그룹가입</div></div>
+        }
         <Modal
           open={open}
           closeOnEscape={true}
