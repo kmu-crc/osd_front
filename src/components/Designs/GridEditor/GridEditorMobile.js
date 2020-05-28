@@ -284,8 +284,8 @@ class GridEditorMobile extends Component {
                 />}
 
             {/* step detail */}
-            {design.uid
-                ? <EditorWrapper>
+            {design.uid &&
+                <EditorWrapper>
                     {/* step */}
                     <div className="step-wrapper">
                         {this.state.step === DesignDetailStep.length ?
@@ -350,8 +350,7 @@ class GridEditorMobile extends Component {
                             </div> : null}
 
                     </div>
-                </EditorWrapper>
-                : null}
+                </EditorWrapper>}
         </React.Fragment>)
     }
 }
