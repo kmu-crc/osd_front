@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal } from 'semantic-ui-react';
 import { connect } from "react-redux";
 import styled from 'styled-components';
-import arrow from "source/arrow.svg";
+// import arrow from "source/arrow.svg";
 import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import {

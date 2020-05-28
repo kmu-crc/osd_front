@@ -374,12 +374,12 @@ const EditCardHeaderContainer = styled.div`
         }
     }
 `;
-const BlankSpace = styled.div`
-    width: 250px;
-    height: 250px;
-    background-color: "white";
-    borderRadius: 15px
-`;
+//const BlankSpace = styled.div`
+//    width: 250px;
+//    height: 250px;
+//    background-color: "white";
+//    borderRadius: 15px
+//`;
 class CardModal extends Component {
     constructor(props) {
         super(props);

@@ -7,13 +7,14 @@ import {
   GetDesignDetailRequest, GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
   UpdateCardTitleRequest, UpdateDesignBoardRequest, UpdateDesignTime
 } from "redux/modules/design";
+import opendesigncss from "opendesign_style";
 
 class DesignDetailStepContainer extends Component {
   componentDidMount() {
     this.props.GetDesignBoardRequest(this.props.design.uid);
   }
   render() {
-    const mobile = window.innerWidth <= 480;
+    const mobile = window.innerWidth <= opendesigncss.resolutions.SmallMaxWidth;
 
     return (mobile
       ? <GridEditorMobile {...this.props} />

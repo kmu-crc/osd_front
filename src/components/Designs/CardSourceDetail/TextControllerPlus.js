@@ -40,7 +40,7 @@ class TextControllerPlus extends Component {
   }
   render() {
     const { item } = this.props;
-    console.log("editor");
+    // console.log("editor");
     return (
       <div>
         <CKEditor

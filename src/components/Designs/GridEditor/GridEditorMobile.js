@@ -11,7 +11,7 @@ import arrow from "source/arrow.svg";
 
 const EditorWrapper = styled.div`
     // border: 1px solid blue;
-    margin-top: 100px;
+    margin-top: 10px;
     padding-bottom: 35px;
     width: 100%;
 
@@ -214,7 +214,7 @@ class GridEditorMobile extends Component {
         console.log(this.props);
         console.log(Step, card);
 
-        return (<React.Fragment> mobile version
+        return (<React.Fragment> 
             {/* edit step modal */}
             {editor && <EditStepModal
                 open={editstep}
@@ -317,7 +317,7 @@ class GridEditorMobile extends Component {
                             ? <div className="normal left">
                                 <Arrow angle="0deg" onClick={() => this.changeStep(-1)} />
                             </div> : null}
-                        {this.state.step < (DesignDetailStep && DesignDetailStep.length || 0)
+                        {this.state.step < ((DesignDetailStep && DesignDetailStep.length) || 0)
                             ? <div className="normal right">
                                 <Arrow angle="180deg" onClick={() => this.changeStep(+1)} />
                             </div> : null}
