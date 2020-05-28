@@ -20,229 +20,158 @@ import Loading from "components/Commons/Loading";
 import { ValidationGroup } from "modules/FormControl";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+
 const ContentBorder = styled.div`
-    // border:1px solid black;
-    // width:100%;
-    // height: 29px;
-    font-family: Noto Sans KR;
-    font-size: 20px;
-    color: #707070;
-    font-weight: 500;
-    line-height: 29px;
-    margin-top:20px;
-    margin-bottom:20px;
-    // margin-left: 50px;
-    // margin-top: 30px;
-    .border-line {
-        border-bottom: 1px solid #707070;
-    }
+//    font-family: Noto Sans KR;
+//    font-size: 20px;
+//    color: #707070;
+//    font-weight: 500;
+//    line-height: 29px;
+//    margin-top:20px;
+//    margin-bottom:20px;
+//    .border-line {
+//        border-bottom: 1px solid #707070;
+//    }
 `;
 const CommentWrapper = styled.div`
-    .comment-title {
-        margin-left: 45px;
-    }
-    .comment-body{
-        margin-left: 52px;
-        margin-top: 15px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 29px;
-    }
+   .comment-title {
+       margin-left: 15px;
+   }
+   .comment-body{
+       margin-left: 25px;
+       margin-top: 15px;
+       color: #707070;
+       font-size: 16px;
+       font-weight: 500;
+       font-family: Noto Sans KR;
+       line-height: 19px;
+   }
 `;
 const CardDialog = styled(Modal)`
-// *{
-//     border:1px solid black;
-// }
-    margin-top: 50px !important;
-    margin-bottom: 50px !important;
-    height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
     border: 1px solid #EFEFEF;
     border-radius: 10px;
     opacity: 1;
-    // padding-right: 45px;
-    // padding-left: 45px;
-    // padding-top:20px;
-    ::-webkit-scrollbar {
-        position: absolute;
-        width: 3.9px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: rgba(112, 112, 112, 0.45) !important;
-    } 
-    .content{
-        margin-left: auto;
-        line-height: 17px;
-        // padding-right: 45px;
-        // padding-left: 45px;
-        // padding-top:20px;
-    }
-    .prevPane {
-        width: 115px;
-        height: 813.28px;
-        position: absolute;
-        left: 0%;
-        margin-left: -195px;
-        margin-top: 75.7px;
-        border-radius: 0px 10px 10px 0px;
-        background-color: #FFFFFF;
-    }
-    .prevArrow {
-        width: 14px;
-        height: 47px;
-        position: absolute;
-        left: 0%;
-        margin-top: 409.81px;
-        margin-left: -47px;
-        background-image: url(${arrow});
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .nextPane {
-        width: 115px;
-        height: 813.28px;
-        position: absolute;
-        left: 100%;
-        margin-left: 80px;
-        margin-top: 75.7px;
-        border-radius: 10px 0px 0px 10px;
-        background-color: #FFFFFF;
-    }
-    .nextArrow {
-        width: 14px;
-        height: 47px;
-        position: absolute;
-        left: 100%;
-        margin-top: 409.81px;
-        margin-left: 33px;
-        background-image: url(${arrow});
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .close-box {
-        width: max-content;
-        cursor: pointer;
-        position: relative;
-        margin-left: auto;
-        margin-right: 10px;
-        margin-top: 10px; 
-    }
+   ::-webkit-scrollbar {
+           position: absolute;
+           width: 3.9px;
+   }
+   ::-webkit-scrollbar-thumb {
+           background: rgba(112, 112, 112, 0.45) !important;
+   } 
+   .content{
+           margin-left: auto;
+           line-height: 17px;
+   }
+   .close-box {
+           width: max-content;
+           cursor: pointer;
+           position: relative;
+           margin-left: auto;
+           margin-right: 10px;
+           margin-top: 10px; 
+   }
     .content-wrapper {
-        padding-right: 45px;
-        padding-left: 45px;
-        padding-top:20px;
-        // position: relative;
-        .card-header-first {
-            display: flex;
-            justify-content: space-between;
-            height: 29px;
-            // margin-top: 30px;
-            // margin-left: 52px;
-            .header-title {
-                font-family: Noto Sans KR;
-                font-size: 20px;
-                color: #707070;
-                font-weight: 500;
-                line-height: 29px;
-            }
-            .header-edit-button {
-                font-family: Noto Sans KR;
-                font-size: 17px;
-                color: #707070;
-                font-weight: 900;
-                line-height: 29px;
-                margin-right: 75px;
-                .edit-btn {
-                    border: none;
-                    background: none;
-                    width: max-content;
-                    height: 40px;
-                    line-height: 40px;
-                    color: #FF0000;
-                    padding-bottom: 1.5px;
-                    border-bottom: 1.5px solid #FF0000;
-                    font-size: 20px;
-                    font-weight: 500;
-                    font-family: Noto Sans KR;
-                    text-align: left;
-                    cursor: pointer;
-                }
-                .cancel-btn {
-                    margin-left: 25px;
-                    border: none;
-                    background: none;
-                    width: max-content;
-                    height: 40px;
-                    line-height: 40px;
-                    color: #707070;
-                    padding-bottom: 1.5px;
-                    border-bottom: 1.5px solid #707070;
-                    font-size: 20px;
-                    font-weight: 500;
-                    font-family: Noto Sans KR;
-                    text-align: left;
-                    cursor: pointer;
-                }
-            }
-        }
-        .card-header-second {
-            width: 100%;
-            // height: 29px;
-            display: flex;
-            flex-direction:column;
-            justify-content: flex-start;
-            // padding-left: 52px;
-            // padding-right:52px;
-            margin-top: 30px;
-            margin-bottom:30px;
-            .contents {
-                width:100%;
-                min-height:max-content;
-                font-size: 20px;
-                color: #707070;
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                line-height: 29px;   
-            }
-            
-        }
-        .card-header-third {
-            margin-top:15px;
-            width: 100%;
-            display:flex;
-            justify-content:space-between;
-            .nick-name {
-                width: max-content;
-                // margin-left: auto;
-                // margin-right: 5px;
-                font-size: 20px;
-                color: #707070;
-                font-weight: 400;
-                font-family: Noto Sans KR;
-                line-height: 29px;   
-            }
-            .update-time {
-                width: max-content;
-                // margin-right: 75px;
-                color: #707070;
-                font-size: 17px;
-                font-weight: 400;
-                font-family: Noto Sans KR;
-                line-height: 29px;
-            }
-    }
+        padding: 25px 20px;
+       .card-header-first {
+           height: 29px;
 
-`
+           .header-title {
+               font-family: Noto Sans KR;
+               font-size: 20px;
+               color: #707070;
+               font-weight: 500;
+               line-height: 29px;
+           }
+           .header-edit-button {
+               font-family: Noto Sans KR;
+               font-size: 17px;
+               color: #707070;
+               font-weight: 900;
+               line-height: 29px;
+               width: max-content;
+               margin-left: auto;
+               margin-right: 15px;
+               .edit-btn {
+                   border: none;
+                   background: none;
+                   width: max-content;
+                   height: 40px;
+                   line-height: 40px;
+                   color: #FF0000;
+                   padding-bottom: 1.5px;
+                   border-bottom: 1.5px solid #FF0000;
+                   font-size: 20px;
+                   font-weight: 500;
+                   font-family: Noto Sans KR;
+                   text-align: left;
+                   cursor: pointer;
+               }
+               .cancel-btn {
+                   margin-left: 25px;
+                   border: none;
+                   background: none;
+                   width: max-content;
+                   height: 40px;
+                   line-height: 40px;
+                   color: #707070;
+                   padding-bottom: 1.5px;
+                   border-bottom: 1.5px solid #707070;
+                   font-size: 20px;
+                   font-weight: 500;
+                   font-family: Noto Sans KR;
+                   text-align: left;
+                   cursor: pointer;
+               }
+           }
+       }
+       .card-header-second {
+           width: 100%;
+           display: flex;
+           flex-direction:column;
+           justify-content: flex-start;
+           margin-top: 30px;
+           margin-bottom:30px;
+           .contents {
+               width:100%;
+               min-height:max-content;
+               font-size: 20px;
+               color: #707070;
+               font-weight: 300;
+               font-family: Noto Sans KR;
+               line-height: 29px;   
+           }
+           
+       }
+       .card-header-third {
+           margin-top:15px;
+           width: 100%;
+           display:flex;
+           justify-content:space-between;
+           .nick-name {
+               width: max-content;
+               font-size: 20px;
+               color: #707070;
+               font-weight: 400;
+               font-family: Noto Sans KR;
+               line-height: 29px;   
+           }
+           .update-time {
+               width: max-content;
+               color: #707070;
+               font-size: 17px;
+               font-weight: 400;
+               font-family: Noto Sans KR;
+               line-height: 29px;
+           }
+   }
+`;
 const EditCardHeaderContainer = styled.div`
     .edit-header-container {
         display: flex;
         margin-top: 15px;
-        margin-left: 45px;
+        margin-left: 5px;
         width: max-content;
         .edit-card-info {
             width: max-content;
@@ -256,13 +185,13 @@ const EditCardHeaderContainer = styled.div`
         }
     }
     .edit-header-thumbnail {
-        display: flex;
+        width: max-content;
         margin-top: 25px;
-        margin-left: 65px;
+        margin-left: 15px;
         .thumbnail-txt {
-            width: 97px;
+            width: max-content;
             height: 29px;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
@@ -272,9 +201,9 @@ const EditCardHeaderContainer = styled.div`
 
     }
     .edit-header-title {
-        display: flex;
+        // display: flex;
         margin-top: 15px;
-        margin-left: 65px;
+        margin-left: 5px;
         .title-txt {
             width: 97px;
             height: 29px;
@@ -286,8 +215,9 @@ const EditCardHeaderContainer = styled.div`
             color: #707070;
         }
         .title-input-container{
-            margin-left: 31px;
-            width: 500px;
+            margin-left: 10px;
+            margin-top: 10px;
+            width: 230px;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
@@ -305,9 +235,9 @@ const EditCardHeaderContainer = styled.div`
         }
     }
     .edit-header-description{
-        display: flex;
+        // display: flex;
         margin-top: 15px;
-        margin-left: 65px;
+        margin-left: 5px;
         .description-txt{
             width: 97px;
             height: 29px;
@@ -319,8 +249,9 @@ const EditCardHeaderContainer = styled.div`
             color: #707070;
         }
         .description-input-container{
-            margin-left: 31px;
-            width: 505px;
+            margin-left: 10px;
+            margin-top: 10px;
+            width: 260px;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
@@ -340,7 +271,7 @@ const EditCardHeaderContainer = styled.div`
     .edit-header-button-container {
         width: max-content;
         margin-left: auto;
-        margin-right: 25px;
+        margin-right: 10px;
         .edit-header-submit-button {
             border: none;
             background: none;
@@ -350,7 +281,7 @@ const EditCardHeaderContainer = styled.div`
             color: #FF0000;
             padding-bottom: 1.5px;
             border-bottom: 1.5px solid #FF0000;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
@@ -366,7 +297,7 @@ const EditCardHeaderContainer = styled.div`
             color: #707070;
             padding-bottom: 1.5px;
             border-bottom: 1.5px solid #707070;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
@@ -374,22 +305,21 @@ const EditCardHeaderContainer = styled.div`
         }
     }
 `;
-const BlankSpace = styled.div`
-    width: 250px;
-    height: 250px;
-    background-color: "white";
-    borderRadius: 15px
-`;
-class CardModal extends Component {
+
+class CardModalMobile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sroll: false, edit: false, closed: false,
-            title: "", content: "", isEdited: false,
+            sroll: false,
+            edit: false,
+            closed: false,
+            title: "",
+            content: "",
+            isEdited: false,
         }
     };
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.card !== this.props.card) {
+    componentDidUpdate(prevProps) {
+        if (prevProps.card !== this.props.card) {
             return true;
         }
     };
@@ -453,13 +383,17 @@ class CardModal extends Component {
                     title: this.state.title,
                     thumbnail: files && thumbnail,
                     content: this.state.content,
-                    data: { deleteContent: formData.deleteContent, newContent: formData.newContent, updateContent: formData.updateContent }
+                    data: {
+                        deleteContent: formData.deleteContent,
+                        newContent: formData.newContent,
+                        updateContent: formData.updateContent
+                    }
                 };
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
-                    .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetDesignBoardRequest(this.props.designId) })
-                    .then(() => { this.props.GetDesignDetailRequest(this.props.designId, this.props.token) })
-                    .then(() => { this.props.GetCardDetailRequest(this.props.card.uid) })
+                    .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
+                    .then(this.props.GetDesignBoardRequest(this.props.designId))
+                    .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token))
+                    .then(this.props.GetCardDetailRequest(this.props.card.uid))
                     .catch(err => alert(err + ''));
                 this.onClose();
             }).catch(err => alert(err + ''));
@@ -477,12 +411,11 @@ class CardModal extends Component {
         this.setState({ edit: this.state.edit })
     };
     removeCard = async (event) => {
-
         event.stopPropagation();
         event.target.blur();
         if (await confirm("컨텐츠를 삭제하시겠습니까?", "예", "아니오")) {
             this.props.DeleteDesignCardRequest(this.props.boardId, this.props.card.uid, this.props.token)
-                .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
+                .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
                 .then(async () => {
                     await this.setState({ edit: false });
                     this.props.GetDesignBoardRequest(this.props.designId);
@@ -529,11 +462,11 @@ class CardModal extends Component {
 
     render() {
         const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
-        const { card, isTeam } = this.props;
+        const { card, isTeam, open } = this.props;
 
         return (
             <React.Fragment>
-                <CardDialog open={this.props.open} onClose={this.onClose}>
+                <CardDialog open={open ? true : false} onClose={this.onClose}>
 
                     {this.state.loading && <Loading />}
 
@@ -618,7 +551,6 @@ class CardModal extends Component {
                         </CommentWrapper>
                     </div>
                 </CardDialog>
-                {/* <BlankSpace /> */}
             </React.Fragment >)
     }
 }
@@ -663,4 +595,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
+export default connect(mapStateToProps, mapDispatchToProps)(CardModalMobile);

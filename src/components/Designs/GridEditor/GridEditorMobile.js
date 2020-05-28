@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { StepCard, ContentCard, CreateCard, CreateStep, } from "./GridTools";
 import NewStepModal from "./NewStepModal";
 import EditStepModal from "./EditStepModal";
-import CardModal from "./CardModal";
+import CardModal from "./CardModalMobile";
 import NewCardModal from "./NewCardModal";
 import StepReOrderModal from "./StepReOrderModal";
 import CardReOrderModal from "./CardReOrderModal";
 import arrow from "source/arrow.svg";
-import Cross from 'components/Commons/Cross';
-// import osdcss from "opendesign_style";
 
 const EditorWrapper = styled.div`
     // border: 1px solid blue;
