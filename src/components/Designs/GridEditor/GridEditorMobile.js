@@ -289,7 +289,9 @@ class GridEditorMobile extends Component {
                     {/* step */}
                     <div className="step-wrapper">
                         {this.state.step === DesignDetailStep.length ?
-                            <CreateStep /> :
+                            <CreateStep
+                                onClick={() => editor && this.setState({ newstep: true, more: false })} />
+                            :
                             <StepCard
                                 onClick={() => editor && this.setState({ editstep: true, more: false })}
                                 id={Step.id}
