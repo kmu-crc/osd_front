@@ -6,6 +6,7 @@ import EditStepModal from "./EditStepModal";
 import CardModal from "./CardModal";
 import NewCardModal from "./NewCardModal";
 import StepReOrderModal from "./StepReOrderModal";
+import CardReOrderModal from "./CardReOrderModal";
 import arrow from "source/arrow.svg";
 import Cross from 'components/Commons/Cross';
 // import osdcss from "opendesign_style";
@@ -42,6 +43,12 @@ const EditorWrapper = styled.div`
             margin: 0;
             padding: 0;
             list-style: none;
+          }
+          li {
+              padding: 10px;
+              font-size: 1rem;
+              color: #707070;
+              font-weight: 500;
           }
           &.active {
             display: block;
@@ -107,6 +114,7 @@ class GridEditorMobile extends Component {
         this.RemoveStep = this.RemoveStep.bind(this);
         this.StepReOrderModal = this.StepReOrderModal.bind(this);
         this.requestReorder = this.requestReorder.bind(this);
+        this.requestCardReorder = this.requestCardReorder.bind(this);
     };
 
     // navigation
@@ -186,13 +194,19 @@ class GridEditorMobile extends Component {
         await Promise
             .all(promiseAry)
             .then(this.props.GetDesignBoardRequest(this.props.design.uid));
+    }
+    async requestCardReorder(jobs, step_uid) {
+        if (jobs == null && jobs.length === 0)
+            return;
+        let promiseAry
+            = jobs.map(job =>
+                this.props.UpdateCardTitleRequest(
+                    { order: job.neworder }, this.props.token, job.uid));
 
-        // items.forEach((element, index) => {
-        // if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
-        // });
-        // if (jobs.length === 0) return;
-        // promiseAry = jobs.map((job) => this.props.UpdateDesignBoardRequest(job.uid, this.props.token, { order: job.neworder }))
-        // await Promise.all(promiseAry).then(() => this.props.GetDesignBoardRequest(this.props.design.uid))
+        await Promise
+            .all(promiseAry)
+            .then(this.props.GetDesignBoardRequest(this.props.design.uid))
+            .then(this.props.GetDesignCardRequest(this.props.design.uid, step_uid));
     }
 
     render() {
@@ -247,22 +261,27 @@ class GridEditorMobile extends Component {
 
             {editor &&
                 <StepReOrderModal
+                    title={"단계"}
                     open={stepreorder}
                     close={() => this.setState({ stepreorder: false })}
-                    title={"단계"}
                     current={Step.order}
-                    options={DesignDetailStep.map(step => ({ value: step.order, text: step.order, uid: step.uid }))}
+                    options={DesignDetailStep.map(step =>
+                        ({ value: step.order, text: `(${step.order}) ${step.title}`, uid: step.uid }))}
                     reorder={this.requestReorder}
                 />}
 
-            {/* {editor &&
-                <StepReOrderModal
-                    title={"단계"}
-                    current={Step.order}
-                    options={this.props.DesignDetailStep.map(step => { return { value: step.order, text: step.order } })}
+            {editor &&
+                <CardReOrderModal
+                    title={"카드"}
                     open={cardreorder}
                     close={() => this.setState({ cardreorder: false })}
-                />} */}
+                    options={Step.cards &&
+                        Step.cards.length > 0 &&
+                        Step.cards.map(card =>
+                            ({ value: card.order, text: `(${card.order}) ${card.title}`, uid: card.uid }))}
+                    reorder={(data) =>
+                        this.requestCardReorder(data, Step.uid)}
+                />}
 
             {/* step detail */}
             {design.uid
@@ -284,8 +303,7 @@ class GridEditorMobile extends Component {
                             <i aria-hidden="true" className="ellipsis vertical icon"></i>
                         </div>
 
-                        <div className={`more-menu ${more ? "active" : ""}`} //className={more ? "more-menu active" : "more-menu"}>
-                        >
+                        <div className={`more-menu ${more ? "active" : ""}`} >
                             <ul>
                                 <li onClick={() => this.StepReOrderModal()}>단계 순서변경</li>
                                 <li onClick={() => this.CardReOrderModal()}>카드 순서변경</li>
