@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import showPw from "source/show_password.svg";
 import styled from "styled-components";
+import opendesign_style from "opendesign_style";
 
 const SectionSecurityContainer = styled.section`
   padding-left:47px;
@@ -111,6 +112,19 @@ const SectionSecurityContainer = styled.section`
           width:80%;
         }
       }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        padding:15px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        .pw{
+          width:100%;
+        }
+        .pw-verify{
+          width:100%;
+        }
     }
 `;
 class SectionSecurity extends Component {

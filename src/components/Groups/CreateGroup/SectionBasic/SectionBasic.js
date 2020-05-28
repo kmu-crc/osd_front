@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png"
+import opendesign_style from "opendesign_style";
 
 const ContentsBox = styled.div`
 padding-left: 47px;
 display:flex;
 flex-direction:column;
+position:relative;
 .title{
   min-width: 105px;
   height: 29px;
@@ -15,16 +17,20 @@ flex-direction:column;
   line-height: 29px;
   color: #707070;
 }
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  justify-content:center;
+
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+  padding:15px;
   .title{
     margin-bottom:10px;
   }
 }
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  .title{
-    margin-bottom:10px;
-  }
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 `
 const ImageBox = styled.div`
@@ -37,6 +43,11 @@ const ImageBox = styled.div`
     background: ${props => `url(${props.imageURL})`};
     background-size:cover;
     background-position:center center;
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        margin-left:0px;
+    }
+}
 `
 const ThumbnailBox = styled.div`
 display:flex;
@@ -47,7 +58,7 @@ flex-direction:row;
   margin-top:100px;
 }
 .findThumbnailBtn{
-  width:63px;
+  width:max-content;
   height:25px;
   cursor:pointer;
 }
@@ -76,11 +87,23 @@ flex-direction:row;
   }
 }
 
-@media only screen and (min-width : 780px) and (max-width:1440px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
   flex-direction:column;
 }
-@media only screen and (min-width : 360px) and (max-width:780px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
   flex-direction:column;
+  width:100%;
+.findThumbnailBox{
+  margin-left:0px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  .thumbnailExplainText{
+    width:100%;
+  }
+}
 }
 `
 const TitleBox = styled.div`
@@ -115,13 +138,29 @@ flex-direction:row;
   flex-direction:column;
   .inputText{
     margin-left:0px;
-    width:80%;
+    width:100%;
+  }
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+  flex-direction:column;
+  .inputText{
+    margin-left:0px;
+  }
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  flex-direction:column;
+  width:100%;
+  .inputText{
+    margin-left:0px;
+    width:100%;
   }
 }
 `
 
 const ExplainBox = styled.div`
-margin-top: 103px;
+  margin-top: 103px;
   display: flex;
   justify-content:flex-start;
   flex-direction:row;
@@ -152,10 +191,14 @@ margin-top: 103px;
     flex-direction:column;
 
     .inputTextareaBox {
-      width:90%;
+      width:100%;
       margin-left: 0px;
     }
   }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  width:100%;
+}
 `
 const GroupImageText = "그룹 이미지";
 

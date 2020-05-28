@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const CheckboxContainer = styled.label`
+width:max-content;
+height:max-content;
     .control {
+        width:max-content;
+        height:max-content;
         font-family: arial;
         display: block;
         position: relative;

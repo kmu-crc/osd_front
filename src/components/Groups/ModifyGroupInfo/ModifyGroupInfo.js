@@ -6,6 +6,7 @@ import { Modal } from "semantic-ui-react";
 import iDelete from "source/deleteItem.png"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
 
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
 
@@ -15,7 +16,7 @@ height:140px;
 display: flex;
 justify-content: center;
 .title{
-  width: 196px;
+  width: max-content;
   height: 37px;
   margin-top: 45px;
   font-size: 25px;
@@ -25,24 +26,42 @@ justify-content: center;
   font-weight: 700;
 }
 
-@media only screen and (min-width : 780px) and (max-width:1440px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
   align-items:flex-end;
 }
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  align-items:flex-end;
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  margin-bottom:20px;
 }
 `
 const MainSection = styled.div`
 display: flex;
 flex-direction:row;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     flex-direction:column;
 }
 `
-
+const MobileDeleteBox = styled.div`
+  width: 100%;
+  padding:10px 20px;
+  justify-content:flex-end;
+  display:none;
+  .deleteText{
+    font-family:Noto Sans KR;
+    font-size:20px;
+    font-family:Noto Sans KR;
+    font-weight:500;
+    text-align:left;
+    color:#FF0000;
+    border-bottom:${props => props.borderBottom};
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+      display:flex;
+  }
+`
 const NavMenu = styled.div`
 min-width:433px;
 height:300px;
@@ -82,8 +101,8 @@ position:relative;
   color:#FF0000;
   border-bottom:${props => props.borderBottom};
 }
-
-@media only screen and (min-width : 780px) and (max-width:1440px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
   display:flex;
   justify-content:center;
   align-items:center;
@@ -92,15 +111,9 @@ position:relative;
     position: static; 
   }
 }
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  .menuBox{
-    margin-left:0px;  
-    position:static;  
-
-  }
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  display:none;
 }
 `
 
@@ -188,6 +201,10 @@ const CompleteButton = styled.div`
   padding-top:6px;
   padding-left:15px;
   margin-right:53px;
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    margin-right:0px;
+  }
 `;
 class CreateGroup extends Component {
 
@@ -322,33 +339,37 @@ class CreateGroup extends Component {
         }
       });
   };
-  handleOnClickDeleteDesign() {
-      this.setState({ isDelete: !this.state.isDelete })
+  async handleOnClickDeleteDesign() {
+    if (await confirm(`${this.state.groupTitle}를 삭제하시겠습니까?`, "예", "아니오")) {
+        this.deleteGroup();
+      }
   }
 
   
   render() {
     const { step } = this.state
 
-    const DeleteGroupModal = () => {
-      return (
-        <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
-          <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.groupTitle}를<br />삭제하시겠습니까?</div>
-          <div style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px"}}>
-            <span style={{color:"#707070"}} onClick={this.cancelDeleteGroup}>취소</span>
-            <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteGroup}>확인</span>
-          </div>
-          <div onClick={this.handleOnClickDeleteDesign} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
-        </Modal>
-      );
-    }
+    // const DeleteGroupModal = () => {
+    //   return (
+    //     <Modal open={this.state.isDelete} style={{ boxShadow: "0px 3px 6px #000000", position: "relative", width: "576px", height: "200px", textAlign: "center", bottom: "318px" }}>
+    //       <div style={{ width: "100%", height: "69px", fontFamily: "Noto Sans KR", fontSize: "20px", color: "#707070", lineHeight: "40px", marginTop: "35px", marginBottom: "31px" }}>{this.state.groupTitle}를<br />삭제하시겠습니까?</div>
+    //       <div style={{ cursor: "pointer", width: "100%", height: "29px", fontFamily: "Noto Sans KR", fontSize: "20px"}}>
+    //         <span style={{color:"#707070"}} onClick={this.cancelDeleteGroup}>취소</span>
+    //         <span style={{marginRight:"10px",color: "#FF0000"}} onClick={this.deleteGroup}>확인</span>
+    //       </div>
+    //       <div onClick={this.handleOnClickDeleteDesign} style={{ cursor: "pointer", position: "absolute", right: "-50px", top: "0px", width: "22px", height: "22px", backgroundImage: `url(${iDelete})`, backgroundSize: "cover", backgroundPosition: "center center" }}></div>
+    //     </Modal>
+    //   );
+    // }
 
     return (<React.Fragment>
 
       <MainBanner>
         <div className="title">그룹 수정하기</div>
       </MainBanner>
-
+      <MobileDeleteBox>
+            <div className="deleteText" onClick={this.handleOnClickDeleteDesign}>그룹 삭제하기</div>
+      </MobileDeleteBox>
       <MainSection>
         {/* scroll - menu */}
         <NavMenu>
@@ -391,7 +412,7 @@ class CreateGroup extends Component {
             </div>
           </form>
         </InputBoard>
-        <DeleteGroupModal />
+        {/* <DeleteGroupModal /> */}
       </MainSection>
     </React.Fragment>)
   }
