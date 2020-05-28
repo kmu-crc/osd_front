@@ -111,7 +111,7 @@
     "start": "HTTPS=true REACT_APP_TYPE=aws node scripts/start.js",
     "local": "REACT_APP_TYPE=local node scripts/start.js",
     "dev": "HTTPS=true REACT_APP_TYPE=aws_dev node scripts/start.js",
-    "build": "REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
+    "build": "GENERATE_SOURCEMAP=false REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
     "DevBuild": "HTTPS=true REACT_APP_BUILD=true REACT_APP_TYPE=aws_dev node scripts/build.js",
     "test": "node scripts/test.js"
   },
