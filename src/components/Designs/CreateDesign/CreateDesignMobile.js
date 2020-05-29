@@ -46,8 +46,6 @@ const MainBanner = styled.div`
 const MainSection = styled.div`
   // *{border:1px solid black;}
 
-  display: flex;
-  flex-direction: row;
   @media only screen and (min-width : 780px) and (max-width:1440px) {
     flex-direction: column;
   }
@@ -93,12 +91,6 @@ const CustomButton = styled.div`
   padding-left: 15px;
   margin-right: 25px;
 `;
-//const HRline = styled.div`
-//  width: 95%;
-//  margin-top: 60px;
-//  margin-bottom: 67px;
-//  border-bottom: 5px solid #F5F4F4;
-//`;
 const BtnText = styled.p`
   width: 74px;
   padding: 0px;
@@ -692,7 +684,7 @@ const ResetButtonWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 20px;
 `;
-class CreateDesign extends Component {
+class CreateDesignMobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1133,6 +1125,7 @@ class CreateDesign extends Component {
                 : <p>카테고리를 가져오고 있습니다.</p>}
             </ContentsBox>
 
+            {/* MEMBERS */}
             <ContentsBox>
               <TitleBox>
                 <div className="title">멤버 초대하기</div>
@@ -1177,16 +1170,28 @@ class CreateDesign extends Component {
               <LicenseBox>
                 <div className="licenseList">
                   <div className="licenseItem">
-                    <CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
+                    <CheckBox2
+                      checked={this.state.license1}
+                      onChange={this.onCheckedLicense01} />
+                    <span className="textLabel">상업적으로 이용이 가능합니다</span>
+                  </div>
                   <div className="licenseItem">
-                    <CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
+                    <CheckBox2
+                      checked={this.state.license2}
+                      onChange={this.onCheckedLicense02} />
+                    <span className="textLabel">원작자를 표시합니다</span>
+                  </div>
                   <div className="licenseItem">
-                    <CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다</span></div>
+                    <CheckBox2
+                      hecked={this.state.license3}
+                      onChange={this.onCheckedLicense03} />
+                    <span className="textLabel">추후에 수정이 가능합니다</span>
+                  </div>
                 </div>
               </LicenseBox>
             </ContentsBox>
 
-            {/* design contents */}
+            {/* DESIGN CONTENTS */}
             <ContentsBox>
               <TitleBox>
                 <div className="title">디자인 컨텐츠</div>
@@ -1284,7 +1289,7 @@ class CreateDesign extends Component {
                 </EditorWrapper>}
             </ContentsBox>
 
-            {/* buttons*/}
+            {/* BUTTONS */}
             <div className="buttonBox">
               <CustomButton
                 onClick={() => window.history.go(-1)}
@@ -1303,7 +1308,7 @@ class CreateDesign extends Component {
       </React.Fragment >)
   };
 }
-export default CreateDesign;
+export default CreateDesignMobile;
 
 
 const ControllerWrap = styled.div`
