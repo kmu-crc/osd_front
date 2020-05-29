@@ -78,7 +78,7 @@ class Notice extends Component {
     render() {
         const { notice, blacklist } = this.state;
         const whereami = window.location.href.replace(`${geturl()}/`, "");
-        console.log(this.state.notice);
+        // console.log(this.state.notice);
         // const now = new Date();
         // console.log(// new Date().getTime() // new Date(notifi.expiry_time).getTime());
 
