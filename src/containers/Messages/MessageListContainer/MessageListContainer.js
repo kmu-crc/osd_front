@@ -13,15 +13,13 @@ class MessageListContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ChatRooms: state.Message.status.Rooms,
-    token: state.Authentication.status.token,
-    MessageList: state.Message.status.MsgList,
-    userInfo: state.Authentication.status.userInfo,
-    members: state.Search.status.members,
-  };
-};
+const mapStateToProps = (state) => ({
+  ChatRooms: state.Message.status.Rooms,
+  token: state.Authentication.status.token,
+  MessageList: state.Message.status.MsgList,
+  userInfo: state.Authentication.status.userInfo,
+  members: state.Search.status.members,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   GetMyChatRoomsListRequest: (token) => dispatch(GetMyChatRoomsListRequest(token)),

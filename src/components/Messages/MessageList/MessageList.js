@@ -205,6 +205,7 @@ const SearchMemberBox = styled.div`
   height:max-content;
   position:absolute;
   top:50px;
+  z-index: 900;
 `
 // const NavSection = styled.div`
 //   min-width:400px;
@@ -494,7 +495,18 @@ function SummaryItem(props) {
 class Messages extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, msgValue: '', msgId: -1, selectId: null, selectName: null, openMember: false, showSearch: false, friendList: [], render: true };
+    this.state = {
+      w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+      msgValue: '',
+      msgId: -1,
+      selectId: null,
+      selectName: null,
+      openMember: false,
+      showSearch: false,
+      friendList: [],
+      render: true,
+      memberSearch: false,
+    };
     this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
     this.handleClickSend = this.handleClickSend.bind(this);
     this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
@@ -540,8 +552,7 @@ class Messages extends React.Component {
     document.getElementById("sendMsgBox") && document.getElementById("sendMsgBox").focus();
   }
   shouldComponentUpdate(nextProps) {
-    setTimeout(() => {
-    }, 100);
+    setTimeout(() => { }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
         let id = parseInt(nextProps.id, 10);
@@ -589,7 +600,7 @@ class Messages extends React.Component {
         render: true
       });
     }
-    console.log("1111111111" + this.state.selectId);
+    // console.log("1111111111" + this.state.selectId);
   }
   setMsgId = async (group_id, user_id, user_name) => {
     await this.setState({
@@ -644,7 +655,7 @@ class Messages extends React.Component {
   }
   handleClickSearchMemberItem(id, name, event) {
     this.setMsgId(-1, id, name);
-
+    this.setState({ memberSearch: false });
   }
   handleCloseMember() {
     this.setState({ showSearch: false })
@@ -653,6 +664,21 @@ class Messages extends React.Component {
     const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;
     this.setState({ w: w });
   }
+
+  // member search(+) button
+  searchRef = React.createRef();
+  checkClickOutSideMemberSearch = event => {
+    if (this.searchRef.current === null) return;
+    if (!this.searchRef.current.contains(event.target)) {
+      document.removeEventListener("mousedown", this.checkClickOutSideMemberSearch);
+      this.setState({ memberSearch: false })
+    }
+  }
+  openMemberSearch = event => {
+    document.addEventListener("mousedown", this.checkClickOutSideMemberSearch);
+    this.setState({ memberSearch: true })
+  }
+
   render() {
     // const { w } = this.state;
     const maxH = 869 + 25 + 48 + 8 + 55
@@ -668,11 +694,10 @@ class Messages extends React.Component {
               <RoomListBox>
                 <div className="header">
                   <div className="fitBox font_big font_bold">받은 메시지함</div>
-                  <PlusIcon onClick={this.handleOpenMember} />
-                  {this.state.showSearch &&
-                    (<SearchMemberBox>
-                      {this.state.hideSearch === true ? null :
-                        <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
+                  <PlusIcon onClick={this.openMemberSearch} />
+                  {this.state.memberSearch &&
+                    (<SearchMemberBox ref={this.searchRef}>
+                      <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
                     </SearchMemberBox>)}
                 </div>
                 <div className="roomList">
@@ -710,49 +735,3 @@ class Messages extends React.Component {
 
 export default Messages;
 
-
-/* <MainBox>
-<div className="mainBanner">
-  <div className="mainBanner_label">메시지함</div>
-</div>
-<div className="mainContent">
-  <MessageBox>
-    <NavSection >
-      <div className="NavHeader">
-        <div className="Nav_label">받은 메세지함</div>
-        <PlusIcon onClick={this.handleOpenMember} />
-      </div>
-      <div className="NavContent">
-        {this.state.showSearch &&
-          (<div>
-            {this.state.hideSearch === true ? null :
-              <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
-          </div>)}
-
-        <SummaryList id="searchRect">
-          {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-            this.props.ChatRooms.map(chat => chat.recent != null ?
-              <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
-                <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-              </div> : null)}
-        </SummaryList>
-      </div>
-    </NavSection>
-    <WhiteLine />
-    <AsideSection>
-      <div className="asideHeader"><div className="asideHeader_label">{this.state.selectName}</div></div>
-      <div className="asideContent">
-        <div className="aside_messageList">
-          {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
-        </div>
-      </div>
-      <div className="asideSend">
-        <div className="sendBox">
-          <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
-        <SendButton onClick={this.onSubmitForm}>
-          <div className="sendButton_label">전송하기</div></SendButton>
-      </div>
-    </AsideSection>
-  </MessageBox>
-</div>
-</MainBox> */
