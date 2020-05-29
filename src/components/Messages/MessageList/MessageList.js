@@ -93,7 +93,7 @@ margin-bottom:20px;
     min-height:300px;
     margin-bottom:0px;
     height:${window.innerHeight*0.7}px;
-    .mobilelistIocn{
+    .mobilelistIcon{
       display:flex;
     }
     .mainBanner{

@@ -6,8 +6,6 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
     this.state = { signin_modal: true, email: "", password: "", findPW: false }
-    // this.findIDPW = this.findIDPW.bind(this);
-    // this.handlesubmitEnter=this.handlesubmitEnter.bind(this);
   }
   signin = () => {
     this.closeModal()
@@ -20,22 +18,6 @@ class SignInForm extends Component {
         else {
           window.history.go(-1)
         }
-    // window.history.go(-1).then(
-    //   () => {
-    //     if (window.location.href.search("SignUp") > -1) {
-    //       window.history.go(-1)
-    //       .then(window.location.reload())
-    //     }
-    //     else {
-    //       window.location.reload()
-
-    //     }
-
-    //   }
-
-    // );
-    // //console.log("history",window.history);return;
-    // //window.location.reload()
   }
   closeModal = () => { this.setState({ signin_modal: false }) }
   signout = () => {

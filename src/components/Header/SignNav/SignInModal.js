@@ -6,7 +6,11 @@ import styled from 'styled-components'
 // import close from "source/close_white.png"
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
+
+
 const MainBox = styled.form`
+
     width:64%;
     margin-left:18%;
     margin-top:107px;
@@ -62,7 +66,7 @@ const MainBox = styled.form`
         }
     }
     .titleLabel{
-        width:300px;
+        width:max-content;
         height:29px;
         margin-left:0px;
         font-size:20px;
@@ -80,6 +84,20 @@ const MainBox = styled.form`
         color:#707070;
         line-height:29px;
         text-align:left;
+    }
+
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        width:100%;
+        padding-bottom:70px;
+        margin:0px;
+
+        .subItemBox{
+            margin-top:10px;
+        }
     }
 `
 const InputText = styled.input`
@@ -103,6 +121,7 @@ const InputText = styled.input`
     }
 `
 const CustomModal = styled(Modal)`
+
     min-width: 1200px;
     height: 900px;
     border-radius: 35px; 
@@ -119,11 +138,18 @@ const CustomModal = styled(Modal)`
         width: 450px;
         height: 37px;
     }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
         min-width:90%;
     }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-        min-width:90%;
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        min-width:100%;
+        height:max-content;
+        padding:10px !important;
+        .title{
+            width:100%;
+        }
     }
 `
 const SmallCustomModal = styled(Modal)`
@@ -143,11 +169,18 @@ const SmallCustomModal = styled(Modal)`
         text-align: center;
         line-height: 37px;
     }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-        min-width:90%;
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+        min-width:100%;
     }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-        min-width:90%;
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        min-width:100%;
+        height:max-content;
+        .title{
+            width:100%;
+            margin-top:44px;
+        }
     }
 `
 class SignInModal extends Component {
@@ -282,8 +315,8 @@ class SignInModal extends Component {
                                     <div className="titleLabel" style={{ cursor: "pointer" }} onClick={this.findIDPW}>비밀번호 찾기</div>
                                 </div>
                                 <div className="subItemBox">
-                                    <div className="titleLabel">아직 계정이 없으신가요?<br />
-                                        <Link style={{ color: "#FF0000", lineHeight: "3em" }} to="/signup" onClick={this.onClose}>회원가입</Link>
+                                    <div className="titleLabel">아직 계정이 없으신가요?</div>
+                                    <div className="titleLabel"><Link style={{ color: "#FF0000"}} to="/signup" onClick={this.onClose}>회원가입</Link>
                                     </div>
                                 </div>
                             </MainBox>
