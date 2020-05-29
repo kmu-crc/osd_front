@@ -5,12 +5,12 @@ import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberCo
 import styled from "styled-components";
 import { geturl } from "config";
 import noimg from "source/noimg.png"
-import forked from "source/forked.svg";
+//import forked from "source/forked.svg";
 import noface from "source/thumbnail.png";
 // import iDelete from "source/deleteItem.png"
 import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
-import { Dropdown, Modal } from "semantic-ui-react";
+import { Dropdown, } from "semantic-ui-react";
 import Logo from "source/logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";

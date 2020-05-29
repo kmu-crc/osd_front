@@ -166,7 +166,7 @@ const MiniIcon = styled.div`
 `
 const MobileSeeMore = styled.div`
     margin-top:15px;
-    display:${props=>props.isShow==false?"none":"flex"};
+    display:${props=>props.isShow===false?"none":"flex"};
     flex-direction:column;
     width:100%;
     .explain-box{
@@ -1051,7 +1051,7 @@ class DesignInfo extends Component {
                                             </div>
                                             <div className="icon-box">
                                                {editor === false ?
-                                                DesignDetail && DesignDetail.waitingStatus == 1 ?
+                                                DesignDetail && DesignDetail.waitingStatus === 1 ?
                                                 <div className="icon-wrapper">
                                                     <div className="icon-piece"><Icon color="grey" className="sign in" size="big"/>
                                                     <div className="font_small">승인대기</div></div> 
@@ -1085,7 +1085,7 @@ class DesignInfo extends Component {
                                             </div>
                         </MobileSeeMore>
                         <div className="seemore cursor_pointer" onClick={()=>{this.setState({isSeeMore:!this.state.isSeeMore})}}>
-                            <div className="txt">{this.state.isSeeMore==false?"▼ 더보기":"▲ 접기"}</div>
+                            <div className="txt">{this.state.isSeeMore===false?"▼ 더보기":"▲ 접기"}</div>
                             {/* <div className="txt">더보기</div> */}
                         </div>
                     </div>

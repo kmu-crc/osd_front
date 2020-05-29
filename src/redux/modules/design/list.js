@@ -116,7 +116,7 @@ export function GetTopDesignListRequest(page) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design data >>", data)
+            // console.log("design data >>", data)
 
             if (!data) {
                 console.log("no data")

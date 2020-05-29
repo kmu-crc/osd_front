@@ -237,7 +237,7 @@ class Header extends Component {
         window.addEventListener("resize", this.handleResize, false);
     };
     componentWillUpdate(nextProps){
-        console.log(this.props.userInfo)
+        // console.log(this.props.userInfo)
         if(this.props.userInfo!=null&&nextProps.userInfo!=null&&this.props.userInfo.uid!=null&&nextProps.userInfo.uid!=null){
             if(this.props.userInfo.uid!==nextProps.userInfo.uid){
                 window.history.go(0);

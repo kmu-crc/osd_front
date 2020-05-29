@@ -148,7 +148,7 @@ const RoomListBox = styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-      height:${props=>props.isSelectMsg==true?"60px":"100%"};
+      height:${props => props.isSelectMsg == true ? "60px" : "100%"};
       overflow:hidden;
   }
 `
@@ -228,7 +228,7 @@ const ChatBox = styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
       and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-        display:${props=>props.isSelectMsg==true?"flex":"none"}
+        display:${props => props.isSelectMsg == true ? "flex" : "none"}
         .content{
           padding: 0px 5%;
         }
@@ -316,7 +316,7 @@ const PlusIcon = styled.div`
   }
   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-    display:${props=>props.isSelectMsg==true?"none":"flex"}
+    display:${props => props.isSelectMsg == true ? "none" : "flex"}
   }
 `
 // const WhiteLine = styled.div`
@@ -553,7 +553,18 @@ function SummaryItem(props) {
 class Messages extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, msgValue: '', msgId: -1, selectId: null, selectName: null, openMember: false, showSearch: false, friendList: [], render: true };
+    this.state = {
+      w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+      msgValue: '',
+      msgId: -1,
+      selectId: null,
+      selectName: null,
+      openMember: false,
+      showSearch: false,
+      friendList: [],
+      render: true,
+      memberSearch: false,
+    };
     this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
     this.handleClickSend = this.handleClickSend.bind(this);
     this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
@@ -599,8 +610,7 @@ class Messages extends React.Component {
     document.getElementById("sendMsgBox") && document.getElementById("sendMsgBox").focus();
   }
   shouldComponentUpdate(nextProps) {
-    setTimeout(() => {
-    }, 100);
+    setTimeout(() => { }, 100);
     if (JSON.stringify(this.props.id) !== JSON.stringify(nextProps.id)) {
       if (nextProps.id && nextProps.name) {
         let id = parseInt(nextProps.id, 10);
@@ -648,7 +658,7 @@ class Messages extends React.Component {
         render: true
       });
     }
-    console.log("1111111111" + this.state.selectId);
+    // console.log("1111111111" + this.state.selectId);
   }
   setMsgId = async (group_id, user_id, user_name) => {
     await this.setState({
@@ -703,7 +713,7 @@ class Messages extends React.Component {
   }
   handleClickSearchMemberItem(id, name, event) {
     this.setMsgId(-1, id, name);
-
+    this.setState({ memberSearch: false });
   }
   handleCloseMember() {
     this.setState({ showSearch: false })
@@ -712,54 +722,69 @@ class Messages extends React.Component {
     const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;
     this.setState({ w: w });
   }
+
+  // member search(+) button
+  searchRef = React.createRef();
+  checkClickOutSideMemberSearch = event => {
+    if (this.searchRef.current === null) return;
+    if (!this.searchRef.current.contains(event.target)) {
+      document.removeEventListener("mousedown", this.checkClickOutSideMemberSearch);
+      this.setState({ memberSearch: false })
+    }
+  }
+  openMemberSearch = event => {
+    document.addEventListener("mousedown", this.checkClickOutSideMemberSearch);
+    this.setState({ memberSearch: true })
+  }
+
   render() {
     // const { w } = this.state;
     const maxH = 869 + 25 + 48 + 8 + 55
     const H = window.innerHeight < maxH ? window.innerHeight - 200 : 869
     return (
       <React.Fragment>
-          <MainBox>
-              <div className="mainBanner bg_gray">
-                <div className="label font_big font_bold">메시지함</div>
-              </div>
-              <div className="mainContent flexBox justifyContent">
-                <div className="wrapper border_radius">
-                  <RoomListBox isSelectMsg={this.state.msgId==-1?false:true}>
-                    <div className="header"> 
-                      <div className="header-item fixed">
-                      <div className="fitBox font_big font_bold">받은 메시지함</div>
-                      <PlusIcon isSelectMsg={this.state.msgId==-1?false:true} onClick={this.handleOpenMember} /></div>
-                      <div onClick={()=>{this.setMsgId(-1, this.props.id, this.props.name)}} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey"/></div>
-                      {this.state.showSearch &&
-                      (<SearchMemberBox>
-                          <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
-                      </SearchMemberBox>)}
-                    </div>
-                    <div className="roomList">
-                      <SummaryList id="searchRect">
-                        {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-                          this.props.ChatRooms.map(chat => chat.recent != null ?
-                            <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
-                              <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-                            </div> : null)}
-                      </SummaryList>
-                    </div>
-                  </RoomListBox>
-                  <WhiteBox/>
-                  <ChatBox isSelectMsg={this.state.msgId==-1?false:true}>
-                    <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>  
-                    <div className="wrapper">
-                       <div className="content">
-                            {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
-                        </div>
-                        <div className="send">
-                          <div className="sendBox">
-                            <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
-                          <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
-                            <div className="sendButton_label">전송하기</div></SendButton>
-                        </div>
-                    </div>
-                  </ChatBox>
+        <MainBox>
+          <div className="mainBanner bg_gray">
+            <div className="label font_big font_bold">메시지함</div>
+          </div>
+          <div className="mainContent flexBox justifyContent">
+            <div className="wrapper border_radius">
+              <RoomListBox isSelectMsg={this.state.msgId == -1 ? false : true}>
+                <div className="header">
+                  <div className="header-item fixed">
+                    <div className="fitBox font_big font_bold">받은 메시지함</div>
+                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.handleOpenMember} /></div>
+                  <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
+                  {this.state.showSearch &&
+                    (<SearchMemberBox>
+                      <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
+                    </SearchMemberBox>)}
+                </div>
+                <div className="roomList">
+                  <SummaryList id="searchRect">
+                    {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
+                      this.props.ChatRooms.map(chat => chat.recent != null ?
+                        <div key={chat.uid} onClick={async () => { await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token); await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name) }}>
+                          <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
+                        </div> : null)}
+                  </SummaryList>
+                </div>
+              </RoomListBox>
+              <WhiteBox />
+              <ChatBox isSelectMsg={this.state.msgId == -1 ? false : true}>
+                <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>
+                <div className="wrapper">
+                  <div className="content">
+                    {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
+                  </div>
+                  <div className="send">
+                    <div className="sendBox">
+                      <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                    <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
+                      <div className="sendButton_label">전송하기</div></SendButton>
+                  </div>
+                </div>
+              </ChatBox>
             </div>
           </div>
         </MainBox>
@@ -770,49 +795,3 @@ class Messages extends React.Component {
 
 export default Messages;
 
-
-/* <MainBox>
-<div className="mainBanner">
-  <div className="mainBanner_label">메시지함</div>
-</div>
-<div className="mainContent">
-  <MessageBox>
-    <NavSection >
-      <div className="NavHeader">
-        <div className="Nav_label">받은 메세지함</div>
-        <PlusIcon onClick={this.handleOpenMember} />
-      </div>
-      <div className="NavContent">
-        {this.state.showSearch &&
-          (<div>
-            {this.state.hideSearch === true ? null :
-              <SearchMemberContainer id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />}
-          </div>)}
-
-        <SummaryList id="searchRect">
-          {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-            this.props.ChatRooms.map(chat => chat.recent != null ?
-              <div key={chat.uid} onClick={async () => {await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name)}}>
-                <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-              </div> : null)}
-        </SummaryList>
-      </div>
-    </NavSection>
-    <WhiteLine />
-    <AsideSection>
-      <div className="asideHeader"><div className="asideHeader_label">{this.state.selectName}</div></div>
-      <div className="asideContent">
-        <div className="aside_messageList">
-          {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
-        </div>
-      </div>
-      <div className="asideSend">
-        <div className="sendBox">
-          <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
-        <SendButton onClick={this.onSubmitForm}>
-          <div className="sendButton_label">전송하기</div></SendButton>
-      </div>
-    </AsideSection>
-  </MessageBox>
-</div>
-</MainBox> */

@@ -457,7 +457,7 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm && this.props.alarm.list;
         alarms && alarms.length > 0 && alarms.sort((a, b) => (a.confirm > b.confirm) ? 1 : (a.create_time < b.create_time) ? 1 : -1);
-        console.log(alarms);
+        // console.log(alarms);
 
         return (
             <React.Fragment>

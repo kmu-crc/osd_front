@@ -585,7 +585,7 @@ export function GetMyMainDesignListRequest(token, page) {
     return (dispatch) => {
         // https://https.opensrcdesign.com/users/myMain/0
         const url = `${host}/users/myMainDesign/${page}`;
-        console.log("url:", url);
+        // console.log("url:", url);
         return fetch(url, {
             headers: { "Content-Type": "application/json", "x-access-token": token },
             method: "GET"
@@ -602,7 +602,7 @@ export function GetMyMainDesignListRequest(token, page) {
 export function GetMyMainGroupListRequest(token, page) {
     return (dispatch) => {
         const url = `${host}/users/myMainGroup/${page}`;
-        console.log("url:", url);
+        // console.log("url:", url);
         return fetch(url, {
             headers: { "Content-Type": "application/json", "x-access-token": token },
             method: "GET"

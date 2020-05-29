@@ -26,7 +26,7 @@ class MainMyGroupContainer extends Component {
       this.props.token, page);
 
   render() {
-    console.log("groups:", this.props.MyMainGroupAdded)
+    // console.log("groups:", this.props.MyMainGroupAdded)
 
     return (
       <React.Fragment>
