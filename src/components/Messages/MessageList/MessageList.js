@@ -2,6 +2,7 @@ import React from 'react';
 import plusImg from "source/plus_cross_gray.png";
 import noImage from "source/thumbnail.png"
 import styled from "styled-components";
+import { Icon } from "semantic-ui-react";
 
 import SearchMemberContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
@@ -9,9 +10,9 @@ import Socket from "modules/Socket"
 
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
 
 const MainBox = styled.div`
-
 width:100%;
 height:${window.innerHeight * 0.8}px;
 min-height:600px;
@@ -62,6 +63,14 @@ margin-bottom:20px;
     display:flex;
     overflow:hidden;
   }
+  .mobilelistIcon{
+    padding:0px 5px;
+    width:50px;
+    height:50px;
+    display:none;
+    justify-content:center;
+    align-items:center;
+  }
   @media only screen and (min-width : 500px) and (max-width:1024px) {
     margin-top:50px;
     .wrapper{
@@ -79,6 +88,22 @@ margin-bottom:20px;
       flex-direction:column;
     }
   }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    min-height:300px;
+    margin-bottom:0px;
+    height:${window.innerHeight * 0.7}px;
+    .mobilelistIocn{
+      display:flex;
+    }
+    .mainBanner{
+      display:none;
+    }
+    .wrapper{
+      width:100%;
+      height:100%;
+    }
+  }
 `
 const RoomListBox = styled.div`
     width:25%;
@@ -86,12 +111,24 @@ const RoomListBox = styled.div`
     height:100%;
     background-color:#EFEFEF;
     padding:25px 40px;
+    z-index:900;
     .header{
       width:100%;
       display:flex;
       justify-content:space-between;
       align-items:center;
       position:relative;
+
+      .header-item{
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      }
+      // .fixed{
+      //   position:fixed;
+      // }
+      .opacity_trans{opacity:0;}
     }
     .roomList{
       width:100%;
@@ -104,11 +141,16 @@ const RoomListBox = styled.div`
       overflow:hidden;
     }
     @media only screen and (min-width : 0px) and (max-width:500px) {
-      padding:10px 40px;
+      padding:5px 40px;
       width:100%;
       height:40%;
       overflow:hidden;
     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+      height:${props => props.isSelectMsg == true ? "60px" : "100%"};
+      overflow:hidden;
+  }
 `
 const WhiteBox = styled.div`
     width:1%;
@@ -184,6 +226,16 @@ const ChatBox = styled.div`
         height:25%;
       }
     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+      and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        display:${props => props.isSelectMsg == true ? "flex" : "none"}
+        .content{
+          padding: 0px 5%;
+        }
+        .header{
+          margin-top:0px;
+        }
+    }
   `
 // const MessageBox = styled.div`
 //   width:91%;
@@ -205,7 +257,7 @@ const SearchMemberBox = styled.div`
   height:max-content;
   position:absolute;
   top:50px;
-  z-index: 900;
+  z-index:900;
 `
 // const NavSection = styled.div`
 //   min-width:400px;
@@ -261,6 +313,11 @@ const PlusIcon = styled.div`
   opacity: 1.0;
   :hover {
     opacity: 0.5;
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:${props => props.isSelectMsg == true ? "none" : "flex"}
+  }
 `
 // const WhiteLine = styled.div`
 //   min-width:7px;
@@ -391,6 +448,7 @@ const SummaryList = styled.div`
   }
   @media only screen and (min-width : 0px) and (max-width:500px) {
     padding-top:5px;
+    overflow-y:auto;
   }
 `;
 const SummaryItemBox = styled.div`
@@ -651,7 +709,7 @@ class Messages extends React.Component {
     this.setState(state => ({ selectId: select_id, selectName: select_name, msgId: msgID }));
   }
   handleOpenMember() {
-    this.setState({ showSearch: true });
+    this.setState({ showSearch: !this.state.showSearch });
   }
   handleClickSearchMemberItem(id, name, event) {
     this.setMsgId(-1, id, name);
@@ -691,12 +749,14 @@ class Messages extends React.Component {
           </div>
           <div className="mainContent flexBox justifyContent">
             <div className="wrapper border_radius">
-              <RoomListBox>
+              <RoomListBox isSelectMsg={this.state.msgId == -1 ? false : true}>
                 <div className="header">
-                  <div className="fitBox font_big font_bold">받은 메시지함</div>
-                  <PlusIcon onClick={this.openMemberSearch} />
-                  {this.state.memberSearch &&
-                    (<SearchMemberBox ref={this.searchRef}>
+                  <div className="header-item fixed">
+                    <div className="fitBox font_big font_bold">받은 메시지함</div>
+                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.handleOpenMember} /></div>
+                  <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
+                  {this.state.showSearch &&
+                    (<SearchMemberBox>
                       <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
                     </SearchMemberBox>)}
                 </div>
@@ -711,7 +771,7 @@ class Messages extends React.Component {
                 </div>
               </RoomListBox>
               <WhiteBox />
-              <ChatBox>
+              <ChatBox isSelectMsg={this.state.msgId == -1 ? false : true}>
                 <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>
                 <div className="wrapper">
                   <div className="content">

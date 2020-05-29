@@ -5,6 +5,9 @@ import SectionBasic from "components/Groups/CreateGroup/SectionBasic";
 import Loading from "components/Commons/Loading";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
+
+
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 
 const MainBanner = styled.div`
@@ -13,7 +16,7 @@ const MainBanner = styled.div`
   display: flex;
   justify-content: center;
   .title{
-    width: 196px;
+    width: max-content;
     height: 37px;
     margin-top: 45px;
     font-size: 25px;
@@ -23,23 +26,23 @@ const MainBanner = styled.div`
     font-weight: 700;
   }
 
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     align-items:flex-end;
   }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    align-items:flex-end;
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    margin-bottom:20px;
   }
 `;
 
 const MainSection = styled.div`
 display: flex;
 flex-direction:row;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-}
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+      flex-direction:column;
+  }
 `;
 
 const NavMenu = styled.div`
@@ -71,8 +74,8 @@ const NavMenu = styled.div`
     color:#FF0000;
     border-bottom:${props => props.borderBottom};
   }
-
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     display:flex;
     justify-content:center;
     align-items:center;
@@ -81,15 +84,9 @@ const NavMenu = styled.div`
       position: static; 
     }
   }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    .menuBox{
-      margin-left:0px;  
-      position:static;  
-
-    }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:none;
   }
 `;
 const MenuText = styled.div`
@@ -109,9 +106,13 @@ padding-top:45px;
 border-radius:5px;
 border:8px solid #F5F4F4;
 .buttonBox{
+  width:100%;
   display: flex;
   margin-top: 20.54px;
   justifyContent: flex-end;
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
 }
 `;
 
@@ -128,7 +129,7 @@ const BtnText = styled.p`
 
 const CompleteButton = styled.div`
   position:absolute;
-  right:9px;
+  right:10px;
   bottom:35px;
   cursor:pointer;
   width:104.5px;
@@ -138,6 +139,10 @@ const CompleteButton = styled.div`
   padding-top:6px;
   padding-left:15px;
   margin-right:53px;
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    margin-right:0px;
+  }
 `;
 class CreateGroup extends Component {
   constructor(props) {

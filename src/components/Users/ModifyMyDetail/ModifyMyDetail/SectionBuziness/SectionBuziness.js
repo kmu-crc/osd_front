@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import CheckBox2 from "components/Commons/CheckBox";
 import { Icon } from "semantic-ui-react";
+import opendesign_style from "opendesign_style";
 
 const ExperienceBox = styled.div`
   *{
@@ -55,6 +56,30 @@ const ExperienceBox = styled.div`
         width:30%;
       }
     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+      .careerBox{
+        .number_wrapper{
+          font-size:16px;
+          margin-right:5px;
+        }
+        .text_wrapper{
+          font-size:16px;
+          text-align:center;
+        }
+      }
+      .labelBox{
+        .number_label{
+          font-size:16px;
+          margin-right:5px;
+          
+        }
+        .text_label{
+          font-size:16px;
+          text-align:center;
+        }
+      }
+    }
 `
 const Button = styled.div`
     width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -72,58 +97,83 @@ const Button = styled.div`
     
 `;
 const ContentsBox = styled.div`
-  padding-left:47px;
-  .title{
-    width:100px;
-    height:29px;
-    font-size:20px;
-    font-weight:500;
-    line-height:29px;
-    text-align:left;
-    color:#707070;
-  }
-  .tipTitle {
-    // width: 375px;
-    height: 25px;
-    text-align:left;
-    margin-left: 410px;
-    font-size: 17px;
-    color: #FF0000;
-    text-align: left;
-  }
-  .tipDescription {
-    width: 550px;
-    margin-top: 5px;
-    margin-left: 608px;
-    font-size: 17px;
-    font-weight: 200;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 25px;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-        flex-direction:column;
-        .tipTitle {
-          margin-top:15px;
-          margin-left:0px;
-        }
-        .tipDescription {
-        margin-left:0px;
-        }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
+
+    padding-left:47px;
+    .title{
+        width:100px;
+        height:29px;
+        font-size:20px;
+        font-weight:500;
+        line-height:29px;
+        text-align:left;
+        color:#707070;
+    }
+    .tipTitle {
+      // width: 375px;
+      width:max-content;
+      height: 25px;
+      text-align:left;
+      margin-left: 375px;
+      font-size: 17px;
+      color: #FF0000;
+      text-align: left;
+    }
+
+    .tipDescription {
+      width: 550px;
+      margin-top: 5px;
+      margin-left: 608px;
+      font-size: 17px;
+      font-weight: 200;
+      font-family: Noto Sans KR;
+      color: #707070;
+      line-height: 25px;
+      .mobileTipTitle {
+        display:none;
+        width:max-content;
+        height: 25px;
+        text-align:left;
+        margin-left: 375px;
+        font-size: 17px;
+        color: #FF0000;
+        text-align: left;
+      }
+    }
+    @media only screen and (min-width : 780px) and (max-width:1440px) {
       flex-direction:column;
       .tipTitle {
-        margin-top:15px;
+        margin-top:30px;
         margin-left:0px;
       }
       .tipDescription {
       margin-left:0px;
-      width: 90%;
       }
-  }
+    }
+    @media only screen and (min-width : 360px) and (max-width:780px) {
+        flex-direction:column;
+        .tipTitle {
+          margin-top:30px;
+          margin-left:0px;
+        }
+        .tipDescription {
+        margin-left:0px;
+        width: 90%;
+        }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+      padding-left:22px;
 
-`
+      .tipTitle{
+        display:none;
+      }
+      .tipDescription{
+        .mobileTipTitle{
+          display:block;
+        }
+      }
+    }
+`;
 const IsDesignerBox = styled.div`
   display:flex;
   flex-direction:row;
@@ -142,6 +192,10 @@ const IsDesignerBox = styled.div`
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
       flex-direction:column;
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    flex-direction:row;
   }
 `
 const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
@@ -300,7 +354,11 @@ class SectionBuziness extends Component {
           </div>
           <div className="tipTitle">TIP</div>
         </IsDesignerBox>
-        <div className="tipDescription">{description[0]}<br />{description[1]}<br />{description[2]}</div>
+        <div className="tipDescription">
+        <div className="mobileTipTitle">TIP</div>
+          {description[0]}<br />
+          {description[1]}<br />
+          {description[2]}</div>
         <ExperienceBox>
           <div className="title">경험</div>
           <div className="labelBox">

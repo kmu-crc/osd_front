@@ -9,6 +9,7 @@ import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/Sect
 import Loading from "components/Commons/Loading";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
 
 const MainBanner = styled.div`
   width: 100%;
@@ -26,11 +27,13 @@ const MainBanner = styled.div`
     font-weight: 700;
   }
 
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     align-items:flex-end;
   }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    align-items:flex-end;
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    margin-bottom:20px;
   }
 `
 const MainSection = styled.div`
@@ -73,7 +76,8 @@ const NavMenu = styled.div`
     border-bottom:${props => props.borderBottom};
   }
 
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     display:flex;
     justify-content:center;
     align-items:center;
@@ -82,15 +86,9 @@ const NavMenu = styled.div`
       position: static; 
     }
   }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    .menuBox{
-      margin-left:0px;  
-      position:static;  
-
-    }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:none;
   }
 `
 const MenuText = styled.div`
@@ -117,8 +115,9 @@ const InputBoard = styled.div`
     display: flex;
     margin-top: 20.54px;
     justifyContent: flex-end;
-  }
+  }  
 `
+
 const CompleteButton = styled.div`
   position:absolute;
   right:9px;
@@ -131,6 +130,10 @@ const CompleteButton = styled.div`
   padding-top:6px;
   padding-left:15px;
   margin-right:53px;
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    margin-right:0px;
+  }
 `
 const HRline = styled.div`
   margin-top:100px;
