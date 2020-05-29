@@ -114,6 +114,7 @@ class GridEditorMobile extends Component {
         this.requestReorder = this.requestReorder.bind(this);
         this.requestCardReorder = this.requestCardReorder.bind(this);
     };
+    moreRef = React.createRef();
 
     // navigation
     changeStep(offset) {
@@ -207,6 +208,22 @@ class GridEditorMobile extends Component {
             .then(this.props.GetDesignCardRequest(this.props.design.uid, step_uid));
     }
 
+    // open more button
+    checkClickOutSideMoreButton = event => {
+        if (this.moreRef.current === null)
+            return;
+        if (!this.moreRef.current.contains(event.target)) {
+            this.setState({ more: false });
+            document.removeEventListener("mousedown", this.checkClickOutSideMoreButton);
+            console.log("event removed");
+        }
+    }
+    openMoreMenu = _ => {
+        document.addEventListener("mousedown", this.checkClickOutSideMoreButton);
+        console.log("event added");
+        this.setState({ more: true });
+    }
+
     render() {
         const { design, DesignDetailStep, editor, userInfo, } = this.props;
         const { editstep, newstep, card, newcard, more, stepreorder, cardreorder } = this.state;
@@ -214,7 +231,7 @@ class GridEditorMobile extends Component {
         console.log(this.props);
         console.log(Step, card);
 
-        return (<React.Fragment> 
+        return (<React.Fragment>
             {/* edit step modal */}
             {editor && <EditStepModal
                 open={editstep}
@@ -298,17 +315,17 @@ class GridEditorMobile extends Component {
                                 editor={editor}
                                 marginTop={0} marginLeft={0} marginBottom={10} marginRight={0}
                             />}
+                        {editor &&
+                            <div className="more-button" onClick={this.openMoreMenu}>
+                                <i aria-hidden="true" className="ellipsis vertical icon"></i>
+                            </div>}
 
-                        <div className="more-button" onClick={() => this.setState({ more: !more })}>
-                            <i aria-hidden="true" className="ellipsis vertical icon"></i>
-                        </div>
-
-                        <div className={`more-menu ${more ? "active" : ""}`} >
+                        {more && <div ref={this.moreRef} className="more-menu active" >
                             <ul>
                                 <li onClick={() => this.StepReOrderModal()}>단계 순서변경</li>
                                 <li onClick={() => this.CardReOrderModal()}>카드 순서변경</li>
                             </ul>
-                        </div>
+                        </div>}
                     </div>
 
                     {/* navigation */}
