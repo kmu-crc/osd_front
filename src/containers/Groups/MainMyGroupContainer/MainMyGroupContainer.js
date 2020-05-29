@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyMainGroupListRequest } from "redux/modules/personal";
-import ScrollList from "components/Commons/ScrollList/ScrollListReboot";
+import ScrollList from "components/Commons/ScrollList";
 import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 

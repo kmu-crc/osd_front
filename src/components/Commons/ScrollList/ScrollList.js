@@ -12,12 +12,14 @@ import osdcss from "opendesign_style";
 // }
 // css 
 const FlexContainer = styled.div`
-  width:100%;
+// *{border: 1px solid blue;}
+  width: 100%;
   padding: 0;
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
   @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 30 : props.type === "group" ? 10 : 10}px;
-    width: ${osdcss.resolutions.SmallMaxWidth}px;
+    width: 330px;
   }
   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
     margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
@@ -69,6 +71,9 @@ const FlexBox = styled.div`
   }
   display: inline-block;
   position: relative;
+  @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+    margin-right: 0px;
+  }
 `;
 const OutBtn = styled.button`
   position: absolute;
