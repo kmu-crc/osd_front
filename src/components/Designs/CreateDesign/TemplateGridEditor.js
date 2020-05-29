@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import host from "config";
 import styled from "styled-components";
 import { StepCard, CreateStep, CreateCard, } from "components/Designs/GridEditor";
+import arrow from "source/arrow.svg";
 
 const fashion = [
     { order: 0, title: "Ideation" },
@@ -26,13 +27,95 @@ const engineering = [
 ];
 
 const EditorWrapper = styled.div`
-    padding-top: 35px;
-
+    padding-top: ${props => props.mobile ? 0 : 35}px;
     .steps {
         display: flex;
     }
     .step {
         margin-right: 10px;
+    }
+    .create-step {
+        width: max-content;
+    }
+`;
+const EditorWrapperMobile = styled.div`
+    margin-top: 10px;
+    padding-bottom: 5px;
+    width: 100%;
+
+    .step-wrapper {
+        width: max-content;
+        margin: auto;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+
+        .more-button {
+          position: absolute;
+          right: -50px;
+        }
+        .more-menu {
+          position: absolute;
+          border: 2px solid #707070;
+          border-radius: 5px;
+          box-shadow: 2.5px 2.5px #EFEFEF;
+          background-color: white;
+          width: 150px;
+          right: -50px;
+          top: 30px;
+          display: none;
+          ul {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+          li {
+              padding: 10px;
+              font-size: 1rem;
+              color: #707070;
+              font-weight: 500;
+          }
+          &.active {
+            display: block;
+          }
+        }
+    }
+    .navigation {
+        position: relative;
+        .normal {
+            position: absolute;
+            top: 50px;
+        }
+        .left {
+            left: 5px;
+        }
+        .right {
+            right: 5px;
+        }
+    }
+    .cards-wrapper {
+        width: max-content;
+        margin: auto;
+        .card {
+            margin: 15px;
+        }
+    }
+`;
+const Arrow = styled.div`
+    width: 17px;
+    height: 48px;
+    z-index: 831;
+    border: none;
+    background-image: url(${arrow});
+    background-size: cover;
+    background-position: 50%;
+    transform: rotate(${props => props.angle});
+    opacity: 0.9;
+    cursor:pointer;
+
+    :hover{
+        opacity: 1;
     }
 `;
 const AsBelowArrow = styled.div`
@@ -51,15 +134,20 @@ const AsBelowArrow = styled.div`
 class TemplateGridEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = { steps: [] };
+        this.state = { steps: [], step: 0 };
         this.getTempTemplate = this.getTempTemplate.bind(this);
-    }
+        this.changeStep = this.changeStep.bind(this);
+    };
     componentDidMount() {
         // this.getAllTemplate();
         this.getTempTemplate();
     }
+    // navigation
+    changeStep(offset) {
+        this.setState({ step: this.state.step + offset, });
+    }
     async componentDidUpdate(prevProps, prevState) {
-        if (this.props.type != prevProps.type) {
+        if (this.props.type !== prevProps.type) {
             await this.getTempTemplate();
         }
     }
@@ -79,43 +167,62 @@ class TemplateGridEditor extends Component {
             this.props.selected && this.props.selected(this.state.steps);
         }
     }
-    // getAllTemplate = async () => {
-    //     const url = `${host}/design/createDesign/getAllTemplate`;
-    //     await fetch(url, {
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             method: "GET"
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(res => res.success ?
-    //             this.setState({ templates: res.data }) : alert("템플릿을 가져오지 못했습니다."))
-    //         .catch(err => alert("500에러:", err));
-    // }
 
     render() {
-        const { type } = this.props;
-        const { steps } = this.state;
+        const { mobile } = this.props;
+        const { steps, step } = this.state;
 
-        return (<EditorWrapper>
+        return (<EditorWrapper mobile={mobile}>
+            {mobile
+                ?
+                <EditorWrapperMobile>
+                    {/* step */}
+                    <div className="step-wrapper">
+                        {step === steps.length ?
+                            <CreateStep />
+                            :
+                            <StepCard
+                                title={(steps && steps[step].title) || "제목없음"}
+                                marginTop={0} marginLeft={0} marginBottom={10} marginRight={0}
+                            />}
+                    </div>
 
-            <div>
-                {type}</div>
+                    {/* navigation */}
+                    <div className="navigation">
+                        {step > 0
+                            ? <div className="normal left">
+                                <Arrow angle="0deg" onClick={() => this.changeStep(-1)} />
+                            </div> : null}
+                        {step < steps.length - 1 //(steps && steps.length || 0)
+                            ? <div className="normal right">
+                                <Arrow angle="180deg" onClick={() => this.changeStep(+1)} />
+                            </div> : null}
+                    </div>
 
-            <div className="steps">
-                {(steps && steps.length > 0)
-                    ? steps.map((step, index) =>
-                        <div key={step + index} className="step">
-                            <StepCard title={step.title} />
-                            <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={85} />
-                            <CreateCard />
-                        </div>)
-                    : null
-                }
-                <div style={{ width: "max-content" }}>
-                    <CreateStep />
-                </div>
-            </div>
+                    {/* cards */}
+                    <div id="cards-wrapper" className="cards-wrapper">
+                        <div className="card">
+                            <CreateCard
+                                title={""} step={"카드 "}
+                                marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
+                        </div>
+                    </div>
+                </EditorWrapperMobile>
+                :
+                <div className="steps">
+                    {(steps && steps.length > 0)
+                        ? steps.map((step, index) =>
+                            <div key={step + index} className="step">
+                                <StepCard title={step.title} />
+                                <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={85} />
+                                <CreateCard />
+                            </div>)
+                        : null
+                    }
+                    <div className="create-step">
+                        <CreateStep />
+                    </div>
+                </div>}
 
         </EditorWrapper>);
     }

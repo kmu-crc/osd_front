@@ -1,4 +1,5 @@
 export { default } from "./GridEditor";
+export * from "./GridEditorMobile";
 export * from "./GridTools";
 export * from "./NewCardModal";
 export * from "./NewStepModal";

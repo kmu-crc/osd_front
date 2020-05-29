@@ -16,7 +16,7 @@ import { geturl } from 'config';
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import TextFormat from 'modules/TextFormat';
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 const PopupBox = styled.div`
     position:absolute;

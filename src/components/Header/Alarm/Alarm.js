@@ -370,7 +370,7 @@ class Alarm extends Component {
 
     getAlarmItem = (item) => {
         const MAXLENGTH = 32;
-        const targetThumbnail = item.targetThumbnail || noimg;
+        // const targetThumbnail = item.targetThumbnail || noimg;
 
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>

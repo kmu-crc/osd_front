@@ -15,7 +15,7 @@ const AsBelowArrow = styled.div`
     border-right:${props => props.percent * 50}px solid transparent;
     transform: rotate(${props => props.angle}deg);
 `;
-const DragBox=styled.div`
+const DragBox = styled.div`
     // display:flex;
     width:100%;
     height:100%;
@@ -53,7 +53,7 @@ const HorizonBox = styled.div`
     margin-right:64px;
 `
 const DragHandler = styled.div`
-    cursor:${props=>props.editor==true?"move":"default"};;
+    cursor:${props => props.editor === true ? "move" : "default"};;
     width:110%;
     height:110%;
     position: absolute;
@@ -82,7 +82,7 @@ const DragHandler = styled.div`
     }
     :hover {
         .wrapper_ {
-            visibility: ${props=>props.editor==true?"visible":"none"};
+            visibility: ${props => props.editor === true ? "visible" : "none"};
         }
         .tip-txt {
             display: block;
@@ -91,36 +91,36 @@ const DragHandler = styled.div`
 `;
 const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_id, openCard, createCard, reorder }) => (
     <HorizonBox>
-            <div className="bound_box">
+        <div className="bound_box">
 
-        <DragHandler editor={editor}>
+            <DragHandler editor={editor}>
                 <div className="wrapper_">
                     {editor ? <HorizonDragHandle /> : null}
                     {/* <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div> */}
                 </div>
-        </DragHandler>
-        <StepCard editor={editor} onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={0} marginBottom={0} marginLef={0} />
+            </DragHandler>
+            <StepCard editor={editor} onClick={() => editStep(step.title, step.uid)} title={step.title} uid={step.uid} id="stepcard" marginTop={0} marginRight={0} marginBottom={0} marginLef={0} />
 
 
-        {step.cards && step.cards.length > 0 &&
-            <Fragment>
-                <div style={{ marginTop: "25px" }}>
-                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
-                </div>
-                <div>
-                    <SortableDesignCards editor={editor} boardId={boardId} items={step.cards} design_id={design_id} openCard={openCard} reorder={reorder} />
-                </div>
-            </Fragment>}
-        {editor &&
-            <div style={{ marginTop: step.cards && step.cards.length > 0 ? "0px" : "66px" }}>
-                {/* <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
+            {step.cards && step.cards.length > 0 &&
+                <Fragment>
+                    <div style={{ marginTop: "25px" }}>
+                        <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
+                    </div>
+                    <div>
+                        <SortableDesignCards editor={editor} boardId={boardId} items={step.cards} design_id={design_id} openCard={openCard} reorder={reorder} />
+                    </div>
+                </Fragment>}
+            {editor &&
+                <div style={{ marginTop: step.cards && step.cards.length > 0 ? "0px" : "66px" }}>
+                    {/* <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
                  */}
-                 
-                <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
 
-            </div>
+                    <CreateCard onClick={() => createCard(step.order, boardId)} title={""} step={"카드 "} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
+
+                </div>
             }
-            </div>
+        </div>
     </HorizonBox>
 ));
 class SortableDesignCards extends Component {

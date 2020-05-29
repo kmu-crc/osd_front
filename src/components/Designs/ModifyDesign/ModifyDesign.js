@@ -156,16 +156,16 @@ const InputBoard = styled.div`
     width:100%;
   }
 `
-const ButtonBox = styled.div`
-      // height:100px;
-      // display: flex;
-      // margin-top: 30.54px;
-      // justify-content: flex-end;
-      width: max-content;
-      display: flex;
-      margin-top: 21px;
-      margin-left: auto;
-`
+// const ButtonBox = styled.div`
+//       // height:100px;
+//       // display: flex;
+//       // margin-top: 30.54px;
+//       // justify-content: flex-end;
+//       width: max-content;
+//       display: flex;
+//       margin-top: 21px;
+//       margin-left: auto;
+// `
 const BackButton = styled.div`
       cursor: pointer;
       width: 104.5px;
@@ -499,18 +499,18 @@ width:645px;
   width:92%;
 }
 `
-const NoInviteMemberBox = styled.div`
-  margin-left: 167px;
-  margin-top: 30px;
-  font-size: 20px;
-  font-weight: 500;
-  font-family: Noto Sans KR;
-  display:flex;
-  color: #707070;
-  .textLabel {
-    vertical-align: top;
-  }
-`;
+// const NoInviteMemberBox = styled.div`
+//   margin-left: 167px;
+//   margin-top: 30px;
+//   font-size: 20px;
+//   font-weight: 500;
+//   font-family: Noto Sans KR;
+//   display:flex;
+//   color: #707070;
+//   .textLabel {
+//     vertical-align: top;
+//   }
+// `;
 //const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 //      width:25px;
 //      height:25px;

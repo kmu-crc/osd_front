@@ -17,6 +17,7 @@ import { alert } from "components/Commons/Alert/Alert";
 // css styling
 const ControllerWrap = styled.div`
   position: relative;
+  width: 100%;
   &:hover {
     border: 1px dashed ${osdcss.color.grayScale.scale3};
     background-color: ${osdcss.color.grayScale.scale0};
@@ -294,7 +295,7 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onDelete(order) {
-    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?","예","아니오") === false) {
+    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?", "예", "아니오") === false) {
       return;
     }
     let copyContent = [...this.state.content];
@@ -366,7 +367,7 @@ class CardSourceDetail extends Component {
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
     if (newContent === oldContent) {
-      await alert("변경된 내용이 없습니다.","확인");
+      await alert("변경된 내용이 없습니다.", "확인");
       return;
     }
     if (event != null) event.preventDefault();
@@ -484,17 +485,21 @@ class CardSourceDetail extends Component {
           {content.map((item, index) => {
             if (item.type === "FILE" && item.data_type === "image")
               return <div className="imgContent" key={index}>
-                <img key={index} src={item.content} alt="이미지" download={item.file_name} /></div>
+                <img src={item.content} alt="이미지" download={item.file_name} /></div>
 
             if (item.type === "FILE" && item.data_type === "video")
-              return <span>
+              return <span key={index}>
                 <span className="LinkFileName">{item.file_name}</span>
-                <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                <video
+                  className="iconWrap"
+                  width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
+                  height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
+                  controls="controls">
                   <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
               </span>
 
             if (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video")
-              return <a key={index} href={item.content} download={item.file_name} className="iconWrap">
+              return <a className="iconWrap" key={index} href={item.content} download={item.file_name} >
                 <FileIcon type={item.data_type} extension={item.extension} />
                 <span className="LinkFileName">{item.file_name}</span>
               </a>
@@ -517,9 +522,14 @@ class CardSourceDetail extends Component {
                 {item.type === "EMBED" ? (<EmbController />) : null}
               </div>
 
-              <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}><i className="trash alternate icon large" /></DelBtn>
-              {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null}
-              {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null}
+              <DelBtn className="editBtn" type="button" onClick={() => this.onDelete(item.order)}>
+                <i className="trash alternate icon large" /></DelBtn>
+              {content.length - 1 >= item.order && item.order !== 0 ?
+                <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}>
+                  <i className="angle up alternate icon large" /></UpBtn> : null}
+              {content.length - 1 !== item.order && item.order >= 0 ?
+                <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}>
+                  <i className="angle down alternate icon large" /></DownBtn> : null}
             </ControllerWrap>)
           })}
           <AddContent getValue={this.onAddValue} order={content.length} />
@@ -589,6 +599,12 @@ const NewController = styled.li`
   font-family: Noto Sans KR;
   text-align: center;
   cursor: pointer;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 16px;
+    margin-left: 15px;
+    width: max-content;
+  }
 `;
 
 class AddContent extends Component {

@@ -35,7 +35,7 @@ function _findBound( position, value, lookBack, model ) {
 
 	let lastNode = null;
 
-	while ( node && node.getAttribute( 'linkHref' ) == value ) {
+	while ( node && node.getAttribute( 'linkHref' ) === value ) {
 		lastNode = node;
 		node = lookBack ? node.previousSibling : node.nextSibling;
 	}

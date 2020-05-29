@@ -47,11 +47,11 @@ export const CreateCard = (props) => {
         style={{
             width: "215px", height: "215px", marginRight: props.marginRight,
             borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
-            cursor: "pointer",marginBottom:"10px"
+            cursor: "pointer", marginBottom: "10px"
         }}>
         <div style={{ position: "relative", marginTop: "38.58px", marginLeft: "66.59px" }}>
             <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px"}}>컨텐츠 등록하기</div>
+        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>컨텐츠 등록하기</div>
     </div>)
 }
 export const TipDiv = (props) => {
@@ -93,7 +93,7 @@ const StepCardStyle = styled.div`
     }
     :hover{
         .icon-area{
-            display: ${props=>props.editor==true?"block":"none"};
+            display: ${props => props.editor === true ? "block" : "none"};
         }
     }
     .icon-area{
@@ -104,7 +104,7 @@ const StepCardStyle = styled.div`
         // border:3px solid black;
         margin-left: 165px;
         margin-top: 25px;
-        cursor:${props=>props.editor==true?"move":"default"};;
+        cursor:${props => props.editor === true ? "move" : "default"};;
     }
 `;
 export const StepCard = (props) => {
@@ -143,8 +143,8 @@ const CardContainer = styled.div`
     cursor: pointer;
     :hover{
         .icon-area{
-            display: ${props=>props.editor==true?"block":"none"};
-            cursor:${props=>props.editor==true?"move":"default"};;
+            display: ${props => props.editor === true ? "block" : "none"};
+            cursor:${props => props.editor === true ? "move" : "default"};;
         }
     }
     .icon-area{
@@ -155,7 +155,7 @@ const CardContainer = styled.div`
         z-index: 2;
         opacity: 0.5;
         display: none;
-        cursor:${props=>props.editor==true?"move":"default"};;
+        cursor:${props => props.editor === true ? "move" : "default"};;
         border-radius:15px;
         background-color:gray;
         opacity:0.1;
@@ -192,15 +192,15 @@ const AuthorBox = styled.div`
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
-        ? 
-        
+        ?
+
         <CardContainer editor={props.editor} uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
-            
+
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
                 <div className="bound_box_">
-                    <div style={{ zIndex: "701", cursor: "pointer",borderRadius:"15px", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
-                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px",}}>
+                    <div style={{ zIndex: "701", cursor: "pointer", borderRadius: "15px", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
+                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", }}>
                         <TextFormat txt={props.card.title} />
                     </div>
                     {/* #EAEAEA */}
@@ -210,25 +210,25 @@ export const ContentCard = (props) => {
                         <div style={{ fontSize: "15px", marginTop: "6px", fontWeight: "400" }}>
                             {DateFormat(props.card.update_time)}</div>
                     </AuthorBox>
-                </div> 
+                </div>
                 :
                 <React.Fragment>
-                 <div className="bound_box_">
-                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px",  }}>
-                        <TextFormat txt={props.card.title || ""} />
-                    </div>
-                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
-                        <div style={{ fontSize: "17px" }}>
-                            <TextFormat txt={props.card.nick_name || ""} />
+                    <div className="bound_box_">
+                        <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", }}>
+                            <TextFormat txt={props.card.title || ""} />
                         </div>
-                        <div style={{ fontSize: "15px", marginTop: "6px" }}>
-                            {DateFormat(props.card.update_time)}
+                        <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
+                            <div style={{ fontSize: "17px" }}>
+                                <TextFormat txt={props.card.nick_name || ""} />
+                            </div>
+                            <div style={{ fontSize: "15px", marginTop: "6px" }}>
+                                {DateFormat(props.card.update_time)}
+                            </div>
                         </div>
                     </div>
-                    </div>
-                {/* // </div> */}
+                    {/* // </div> */}
                 </React.Fragment>
-                }
+            }
         </CardContainer>
         : <CardContainer />
     )
