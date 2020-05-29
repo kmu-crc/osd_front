@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
+import opendesign_style from "opendesign_style";
 
 const emptyCategory = [{ value: 0, text: "" }]
 const ContentsBox = styled.div`
@@ -14,15 +15,19 @@ padding-left:47px;
         line-height:29px;
         color:#707070;
     }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
+
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
       .title{
         margin-bottom:10px;
       }
     }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-      .title{
-        margin-bottom:10px;
-      }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        padding:15px;
+        .title{
+          margin-bottom:10px;
+        }
     }
 `
 const CategoryBox = styled.div`
@@ -30,9 +35,6 @@ width:100%;
 display:flex;
 justify-contant:flex-start;
 flex-direction:row;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  // flex-direction:column;
-}
 @media only screen and (min-width : 360px) and (max-width:780px) {
   flex-direction:column;
 }
@@ -44,12 +46,11 @@ border-radius:5px;
 font-size:20px;
 background-color:#EFEFEF !important;
 margin-right:30px;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-  
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  margin-top:10px;
-  width:90%;
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  width:100%;
+  margin-right:0px;
+  margin-bottom:5px;
 }
 `
 class SectionAdditional extends Component {

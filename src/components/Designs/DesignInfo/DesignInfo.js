@@ -21,213 +21,8 @@ import { YesIHaveReadNewComment, } from "redux/modules/design";
 import { Icon } from 'semantic-ui-react'
 import opendesign_style from "opendesign_style"
 
-const DesignMemberList = styled.div`
-    display: ${props => props.display};
-    z-index: 900;
-    position: absolute;
-    pointer-events: auto;
-    // top: ${props => props.top};
-    // left: ${props => props.left};
-    top:35px;
-    z-index: 904;
-    height: 250px;
-    max-height: 550px;
-    width: 365px;
-    border-radius: 15px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-    font-family: Noto Sans KR;
-    overflow-y: auto;
-    overflow-x: hidden;
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-    and (max-width : ${1024}px) { 
-        left:-150px;
-     }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-        left:-150px;
-
-     }
-    .close-box {
-        position: absolute;
-        cursor: pointer;
-        z-index: 901;
-        right: 10px;
-        top: 10px;
-    } 
-    &.list::-webkit-scrollbar {
-        position: absolute;
-        width: 4px;
-    }
-
-    &.list::-webkit-scrollbar-thumb {
-        background: rgba(112, 112, 112, 0.45) !important;
-    }
-    &.list {
-      padding: 15px;
-      padding-right: 36px;
-      padding-bottom: 5px;
-      height: 490px;
-        &:hover{
-            overflow-y: auto;
-            overflow-x: hidden;
-    }
-
-`;
-const DesignMemberListElement = styled.div`
-    width: max-content;
-    padding: 5px;
-    margin-left: 15px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-right: 50px;
-    border-radius: 15px;
-    background: #EFEFEF;
-    align-items: center;
-    display: flex;
-    cursor: pointer;
-    .face {
-        background-image: url(${props => props.face});
-        background-size: cover;
-        background-position: center;
-        background-color: #D6D6D6;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-    }
-    .nick-name {
-        width: max-content;
-        height: 29px;
-        margin-top: 1px;
-        margin-left: 10px;
-        color: #707070;
-        font-size: 20px;
-        text-align: left;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 29px;
-    }
-    .star {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        justify-content: center;
-        border-radius: 50%;
-        background-color: none;
-        &i{
-            margin-left: auto;
-            margin-right: auto;
-            color: #707070;
-        }
-    }
-`;
-const ListItem = styled.div`
-    display:flex;
-    padding-left:15px;
-    padding-top: 15px;
-    flex-direction: column;
-    width: 365px;
-    height: 85px;
-    display: flex;
-    border-bottom: 1px solid #B7B7B7;
-    color: #707070;
-    &:hover {
-        background-color: #EFEFEF;
-        opacity: 0.90;
-    }
-    .wrapper {
-        cursor: pointer;
-        display: flex;
-        .design-thumbnail {
-            width: 50px;
-            height: 50px;
-            border-radius: 5px;
-            background-image: url(${props => props.img});
-            background-size: cover;
-            background-position: center;
-        }
-        .design-title {
-            margin-left: 16px;
-            font-size: 17px;
-        }
-    } 
-`;
-
-const LikeDialogContainer = styled.div`
-    width:100%;
-    height:100%;
-    position:absolute;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:700;
-    .likeDialog{
-        width: 396px;
-        height: 138px;
-        box-shadow: 0px 3px 6px #000000;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        border-radius: 5px;
-        opacity: 1;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        .txt {
-            width: 273px;
-            height: max-content;
-            text-align: center;
-            color: #707070;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            line-height: 40px;
-        }
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-       .likeDialog{
-            width:90%;
-       }
-    }
-
-`;
-const DesignMemberModalContainer = styled(Modal)`
-    .close-box {
-        cursor:pointer;
-        position: absolute;
-        right:10px;
-        top:10px;
-    }
-`;
-const DesignCommentModalContainer = styled(Modal)`
-    padding: 60px;
-    min-width: 800px;
-    // width: max-content;
-    // max-width: 1440px;
-    .close-box {
-        cursor:pointer;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-    }
-    .header-txt {
-        margin-bottom:20px;
-    }
-    .body-container {
-        width: 100%;
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-    and (max-width : ${1024}px) { 
-        min-width:100%;
-     }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-        min-width:100%;
-
-     }
-`;
 // new style
 const Thumbnail = styled.div`
-
     .fork-mark {
         position: absolute;
         margin-left: 175px;
@@ -262,7 +57,6 @@ const Thumbnail = styled.div`
     }
 `
 const MainBox = styled.div`
-
     width:100%;
     position:relative;
     .wrapper{
@@ -662,6 +456,211 @@ const OneSideBox = styled.div`
         }
     }
 `
+
+const DesignMemberList = styled.div`
+    display: ${props => props.display};
+    z-index: 900;
+    position: absolute;
+    pointer-events: auto;
+    // top: ${props => props.top};
+    // left: ${props => props.left};
+    top:35px;
+    z-index: 904;
+    height: 250px;
+    max-height: 550px;
+    width: 365px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    font-family: Noto Sans KR;
+    overflow-y: auto;
+    overflow-x: hidden;
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) { 
+        left:-150px;
+     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+        left:-150px;
+
+     }
+    .close-box {
+        position: absolute;
+        cursor: pointer;
+        z-index: 901;
+        right: 10px;
+        top: 10px;
+    } 
+    &.list::-webkit-scrollbar {
+        position: absolute;
+        width: 4px;
+    }
+
+    &.list::-webkit-scrollbar-thumb {
+        background: rgba(112, 112, 112, 0.45) !important;
+    }
+    &.list {
+      padding: 15px;
+      padding-right: 36px;
+      padding-bottom: 5px;
+      height: 490px;
+        &:hover{
+            overflow-y: auto;
+            overflow-x: hidden;
+    }
+
+`;
+const DesignMemberListElement = styled.div`
+    width: max-content;
+    padding: 5px;
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 50px;
+    border-radius: 15px;
+    background: #EFEFEF;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    .face {
+        background-image: url(${props => props.face});
+        background-size: cover;
+        background-position: center;
+        background-color: #D6D6D6;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+    .nick-name {
+        width: max-content;
+        height: 29px;
+        margin-top: 1px;
+        margin-left: 10px;
+        color: #707070;
+        font-size: 20px;
+        text-align: left;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        line-height: 29px;
+    }
+    .star {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: none;
+        &i{
+            margin-left: auto;
+            margin-right: auto;
+            color: #707070;
+        }
+    }
+`;
+const ListItem = styled.div`
+    display:flex;
+    padding-left:15px;
+    padding-top: 15px;
+    flex-direction: column;
+    width: 365px;
+    height: 85px;
+    display: flex;
+    border-bottom: 1px solid #B7B7B7;
+    color: #707070;
+    &:hover {
+        background-color: #EFEFEF;
+        opacity: 0.90;
+    }
+    .wrapper {
+        cursor: pointer;
+        display: flex;
+        .design-thumbnail {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            background-image: url(${props => props.img});
+            background-size: cover;
+            background-position: center;
+        }
+        .design-title {
+            margin-left: 16px;
+            font-size: 17px;
+        }
+    } 
+`;
+
+const LikeDialogContainer = styled.div`
+    width:100%;
+    height:100%;
+    position:absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:700;
+    .likeDialog{
+        width: 396px;
+        height: 138px;
+        box-shadow: 0px 3px 6px #000000;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        opacity: 1;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        .txt {
+            width: 273px;
+            height: max-content;
+            text-align: center;
+            color: #707070;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            line-height: 40px;
+        }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+       .likeDialog{
+            width:90%;
+       }
+    }
+
+`;
+const DesignMemberModalContainer = styled(Modal)`
+    .close-box {
+        cursor:pointer;
+        position: absolute;
+        right:10px;
+        top:10px;
+    }
+`;
+const DesignCommentModalContainer = styled(Modal)`
+    padding: 60px;
+    min-width: 800px;
+    // width: max-content;
+    // max-width: 1440px;
+    .close-box {
+        cursor:pointer;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+    .header-txt {
+        margin-bottom:20px;
+    }
+    .body-container {
+        width: 100%;
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) { 
+        min-width:100%;
+     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+        min-width:100%;
+
+     }
+`;
 class DesignInfo extends Component {
 
     constructor(props) {

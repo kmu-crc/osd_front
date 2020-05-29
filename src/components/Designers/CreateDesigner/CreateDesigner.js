@@ -6,6 +6,7 @@ import SectionAdditional from "components/Designers/CreateDesigner/ModifyMyDetai
 import SectionBuziness from "components/Designers/CreateDesigner/ModifyMyDetail/SectionBuziness"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
 
 const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
@@ -26,20 +27,20 @@ justify-content: center;
   font-weight: 700;
 }
 
-@media only screen and (min-width : 780px) and (max-width:1440px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
   align-items:flex-end;
 }
-@media only screen and (min-width : 360px) and (max-width:780px) {
-  align-items:flex-end;
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  margin-bottom:20px;
 }
 `
 const MainSection = styled.div`
 display: flex;
 flex-direction:row;
-@media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-}
-@media only screen and (min-width : 360px) and (max-width:780px) {
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     flex-direction:column;
 }
 `
@@ -74,7 +75,8 @@ const NavMenu = styled.div`
     border-bottom:${props => props.borderBottom};
   }
 
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
     display:flex;
     justify-content:center;
     align-items:center;
@@ -83,15 +85,9 @@ const NavMenu = styled.div`
       position: static; 
     }
   }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    .menuBox{
-      margin-left:0px;  
-      position:static;  
-
-    }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:none;
   }
 `
 const MenuText = styled.div`
@@ -119,7 +115,29 @@ const InputBoard = styled.div`
     margin-top: 20.54px;
     justifyContent: flex-end;
   }
-
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:none;
+  }
+`
+const MobileBoard = styled.div`
+  display:none;
+  width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
+  padding-bottom:100px;
+  margin-bottom:100px;
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    display: flex;
+    margin-top: 20.54px;
+    justifyContent: flex-end;
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:block;
+  }
 `
 const CompleteButton = styled.div`
       position:absolute;
@@ -133,6 +151,10 @@ const CompleteButton = styled.div`
       padding-top:6px;
       padding-left:15px;
       margin-right:53px;
+      @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+      and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        margin-right:0px;
+      }
   `
 const HRline = styled.div`
 
@@ -466,6 +488,38 @@ class ModifyMyDetail extends Component {
             </CompleteButton>
           </div>
         </InputBoard>
+        <MobileBoard isModifyAnother={this.state.isClickModify}>
+          <form>
+            <SectionBasic
+                  updateThumbnail={this.updateThumbnail}
+                  updateNickName={this.updateNickName}
+                  updateIntroduce={this.updateIntroduce}
+                  MyDetail={this.props.MyDetail} />
+            <HRline />
+
+            <SectionAdditional
+              MyDetail={this.props.MyDetail}
+              category1={this.props.category1}
+              category2={this.props.category2}
+              updateCategory1={this.updateCategory1}
+              updateCategory2={this.updateCategory2} />
+            <HRline />
+            <SectionBuziness
+              MyDetail={this.props.MyDetail}
+              updateIsDesigner={this.updateIsDesigner}
+              updateCareerlist={this.updateCareerlist}
+            // updateTeam={this.updateTeam}
+            // updateCareer={this.updateCareer}
+            // updateLocation={this.updateLocation}
+            // updateContact={this.updateContact} 
+            />
+          </form>
+          <div className="buttonBox">
+            <CompleteButton isComplete={true} onClick={this.onSubmit}>
+              <BtnText>등록</BtnText>
+            </CompleteButton>
+          </div>
+        </MobileBoard>
       </MainSection>
     </React.Fragment>)
   }

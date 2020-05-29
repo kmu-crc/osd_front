@@ -1,17 +1,35 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png"
+import opendesign_style from "opendesign_style";
 
 const ContentsBox = styled.div`
-    padding-left:47px;
-    .title{
-        width:105px;
-        height:29px;
-        text-align:left;
-        font-size:20px;
-        font-weight:500;
-        line-height:29px;
-        color:#707070;
+padding-left: 47px;
+display:flex;
+flex-direction:column;
+position:relative;
+.title{
+  min-width: 105px;
+  height: 29px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 29px;
+  color: #707070;
+}
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+    padding:15px;
+        .title{
+            margin-bottom:10px;
+        }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        padding:15px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
     }
 `
 const ImageBox = styled.div`
@@ -24,50 +42,68 @@ const ImageBox = styled.div`
     background-position:center center;
 `
 const ThumbnailBox = styled.div`
-    display:flex;
-    width:1200px;
-    .explainBox{
-        margin-left:54px;
-        margin-top:100px;
-    }
-    .findThumbnailBtn{
-        width:63px;
-        height:25px;
-        cursor:pointer;
-    }
-    .findThumbnailText{
-        font-family:Noto Sans KR;
-        font-size:17px;
-        font-weight:500;
-        text-align:left;
-        line-height:25px;
-        color:#FF0000;
-        border-bottom:1.5px solid #FF000;
-        cursor:pointer;
-    }
-    .findThumbnailBox{
-        margin-left:54px;
-        margin-top:100px;
+display:flex;
+justify-content:flex-start;
+flex-direction:row;
+.explainBox{
+  margin-left:54px;
+  margin-top:100px;
+}
+.findThumbnailBtn{
+  width:max-content;
+  height:25px;
+  cursor:pointer;
+}
+.findThumbnailText{
+  font-family:Noto Sans KR;
+  font-size:17px;
+  font-weight:500;
+  text-align:left;
+  line-height:25px;
+  color:#FF0000;
+  border-bottom:1.5px solid #FF000;
+  cursor:pointer;
+}
+.findThumbnailBox{
+  margin-left:54px;
+  margin-top:100px;
+  .thumbnailExplainText{
+    width:341px;
+    height:45px;
+    margin-top:11px;
+    font-weight:300;
+    font-size:14px;
+    color:#707070;
+    line-height:20px;
+    text-align:left;
+  }
+}
 
-    }
-    .thumbnailExplainText{
-        width:341px;
-        height:45px;
-        margin-top:11px;
-        font-weight:300;
-        font-size:14px;
-        color:#707070;
-        line-height:20px;
-        text-align:left;
-    }
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+  flex-direction:column;
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  flex-direction:column;
+  width:100%;
+.findThumbnailBox{
+  margin-left:0px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  .thumbnailExplainText{
+    width:100%;
+  }
+}
+}
 `
 const TitleBox = styled.div`
-        width:1200px;
-        display:flex;
-        margin-top:96px;
-
-
-        .inputText{
+            display:flex;
+            margin-top:96px;
+            justify-content:flex-start;
+            flex-direction:row;
+            .inputText{
             width:505px;
             height:56px;
             margin-left:67px;
@@ -82,31 +118,78 @@ const TitleBox = styled.div`
             border-radius:5px;
             outline:none;
             background-color:#EFEFEF;
-        
-        }
+            }
+        @media only screen and (min-width : 780px) and (max-width:1440px) {
+            flex-direction:column;
+            .inputText{
+              margin-left:0px;
+            }
+          
+          }
+          @media only screen and (min-width : 360px) and (max-width:780px) {
+            flex-direction:column;
+            .inputText{
+              margin-left:0px;
+              width:100%;
+            }
+          }
+          @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+          and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+            flex-direction:column;
+            .inputText{
+              margin-left:0px;
+            }
+          }
+          @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+          and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+            flex-direction:column;
+            width:100%;
+            .inputText{
+              margin-left:0px;
+              width:100%;
+            }
+          }
 `
 const ExplainBox = styled.div`
+margin-top: 103px;
+display: flex;
+justify-content:flex-start;
+flex-direction:row;
+.inputTextareaBox {
+  width: 717px;
+  height: 244px;
+  margin-left: 70px;
+  padding: 22px 26px 34px 32px;
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-weight: 300;
+  color: #707070;
+  line-height: 35px;
+  text-align: left;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+  background-color: #EFEFEF;
+}
+@media only screen and (min-width : 780px) and (max-width:1440px) {
+  flex-direction:column;
+  .inputTextareaBox {
+    margin-left: 0px;
+  }
+}
+@media only screen and (min-width : 360px) and (max-width:780px) {
+  flex-direction:column;
 
-        width:1200px;
-        margin-top:103px;
-        display:flex;
-        .inputTextareaBox{
-            width:717.5px;
-            height:244px;
-            margin-left:70px;
-            padding:22px 26px 34px 32px;
-            font-family:Noto Sans KR;
-            font-size:20px;
-            font-weight:300;
-            color:#707070;
-            line-height:35px;
-            text-align:left;
-            outline:none;
-            border:none;
-            border-radius:5px;
-            resize:none;
-            background-color:#EFEFEF;
-        }
+  .inputTextareaBox {
+    width:100%;
+    margin-left: 0px;
+  }
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+width:100%;
+}
 `
 
 // const BasicSecBox = {paddingLeft:"47px"}
