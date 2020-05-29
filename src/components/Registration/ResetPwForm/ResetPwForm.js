@@ -5,7 +5,7 @@ import { FormInput } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import Button from "components/Commons/Button";
 import ResetPwModal from "./ResetPwModal";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 const Bg = styled.div`
   width: 100vw;
@@ -55,11 +55,11 @@ class ResetPwForm extends Component {
         this.setState({ loading: false });
         this.props.history.push('./signin');
         console.log("this loading state success >> ", this.state.loading);
-        await alert(nextProps.message,"확인");
+        await alert(nextProps.message, "확인");
       } else if (nextProps.status === "FAILURE") {
         this.setState({ loading: false });
         console.log("this loading state failure >> ", this.state.loading);
-        await alert(nextProps.message,"확인");
+        await alert(nextProps.message, "확인");
       }
     }
     return true;

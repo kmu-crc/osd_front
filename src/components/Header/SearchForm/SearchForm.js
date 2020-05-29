@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import zoom from "source/zoom.svg"
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const flag_MaxWidth = 1440;
@@ -62,7 +62,7 @@ class SearchForm extends Component {
     submitEnter = async (e) => {
         if (e.keyCode === 13) {
             if (this.state.searchKeyword.trim() === "") {
-                await alert("검색할 내용을 입력하세요.","확인");
+                await alert("검색할 내용을 입력하세요.", "확인");
                 return;
             }
             this.goSearch();
@@ -70,12 +70,12 @@ class SearchForm extends Component {
     };
     onClickedIcon = async (e) => {
         if (this.state.searchKeyword.trim() === "") {
-            await alert("검색할 내용을 입력하세요.","확인");
+            await alert("검색할 내용을 입력하세요.", "확인");
             return;
         }
         this.goSearch();
     }
-    handleKeyDown = async(e) => {
+    handleKeyDown = async (e) => {
         if (e.keyCode === 13) {
             this.goSearch();
         }
@@ -85,7 +85,7 @@ class SearchForm extends Component {
         // let regExp = /^[a-zA-Zㄱ-힣0-9"_-]*$/i;
         let regExp = /^[a-zA-Zㄱ-힣0-9"_-\s]*$/;
         if (!value.match(regExp)) {
-            await alert("특수문자는 사용할 수 없습니다.","확인");
+            await alert("특수문자는 사용할 수 없습니다.", "확인");
             target.value = "";
             return;
         } else {

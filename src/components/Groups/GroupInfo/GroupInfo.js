@@ -17,7 +17,7 @@ import { Icon } from 'semantic-ui-react'
 
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import TextFormat from 'modules/TextFormat';
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 

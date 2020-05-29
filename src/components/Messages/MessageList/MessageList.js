@@ -8,13 +8,13 @@ import SearchMemberContainer from "containers/Commons/SearchMemberContainer/Sear
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Socket from "modules/Socket"
 
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 
 const MainBox = styled.div`
 width:100%;
-height:${window.innerHeight*0.8}px;
+height:${window.innerHeight * 0.8}px;
 min-height:600px;
 margin-top:10px;
 margin-bottom:20px;
@@ -67,7 +67,7 @@ margin-bottom:20px;
     padding:0px 5px;
     width:50px;
     height:50px;
-    display:flex;
+    display:none;
     justify-content:center;
     align-items:center;
   }
@@ -93,6 +93,9 @@ margin-bottom:20px;
     min-height:300px;
     margin-bottom:0px;
     height:${window.innerHeight*0.7}px;
+    .mobilelistIocn{
+      display:flex;
+    }
     .mainBanner{
       display:none;
     }
@@ -234,21 +237,21 @@ const ChatBox = styled.div`
         }
     }
   `
-const MessageBox = styled.div`
-  width:91%;
-  height:100%;
-  background-color:#EFEFEF;
-  border-radius:25px;
-  display:flex;
-  justify-contnet:flex-start;
-  flex-direction:row;
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+// const MessageBox = styled.div`
+//   width:91%;
+//   height:100%;
+//   background-color:#EFEFEF;
+//   border-radius:25px;
+//   display:flex;
+//   justify-contnet:flex-start;
+//   flex-direction:row;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-      flex-direction:column;
-  }
-`
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//       flex-direction:column;
+//   }
+// `
 const SearchMemberBox = styled.div`
   width:100%;
   height:max-content;
@@ -256,50 +259,49 @@ const SearchMemberBox = styled.div`
   top:50px;
   z-index:900;
 `
-const NavSection = styled.div`
-  min-width:400px;
-  width:25%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  .NavHeader{
-    width:100%;
-    height:8.5%;
-    padding-left:54px;
-    padding-right:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    .Nav_label{
-      height:50px;
-      line-height:50px;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      color:#707070;
-    }
-    }
-  }
-  .NavContent{
-    height:91.5%;
-    width:100%;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+// const NavSection = styled.div`
+//   min-width:400px;
+//   width:25%;
+//   height:100%;
+//   display:flex;
+//   flex-direction:column;
+//   overflow:hidden;
+//   .NavHeader{
+//     width:100%;
+//     height:8.5%;
+//     padding-left:54px;
+//     padding-right:20px;
+//     display:flex;
+//     justify-content:space-between;
+//     align-items:flex-end;
+//     .Nav_label{
+//       height:50px;
+//       line-height:50px;
+//       font-size:20px;
+//       font-family:Noto Sans KR;
+//       font-weight:500;
+//       color:#707070;
+//     }
+//     }
+//   }
+//   .NavContent{
+//     height:91.5%;
+//     width:100%;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-      width:100%;
-      height:35%;
-      .NavHeader{
-        height:50px;
-      }
-      .NavContent{
-        height:90%;
-      }
-
-  }
-`
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//       width:100%;
+//       height:35%;
+//       .NavHeader{
+//         height:50px;
+//       }
+//       .NavContent{
+//         height:90%;
+//       }
+//   }
+// `
 const PlusIcon = styled.div`
   width: 50px;
   height: 50px;
@@ -317,78 +319,78 @@ const PlusIcon = styled.div`
     display:${props=>props.isSelectMsg==true?"none":"flex"}
   }
 `
-const WhiteLine = styled.div`
-  min-width:7px;
-  height:100%;
-  background-color:white;
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+// const WhiteLine = styled.div`
+//   min-width:7px;
+//   height:100%;
+//   background-color:white;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    max-height:7px;
-    min-height:7px;
-    width:100%;
-  }
-`
-const AsideSection = styled.div`
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     max-height:7px;
+//     min-height:7px;
+//     width:100%;
+//   }
+// `
+// const AsideSection = styled.div`
 
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  .asideHeader{
-    width:100%;
-    height:8%;
-    padding-left:54px;
-    padding-right:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    .asideHeader_label{
-      height:50px;
-      line-height:50px;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      color:#707070;
-    }
-  }
-  .asideContent{
-    width:100%;
-    height:69%;
-    display:flex;
-    justify-content:center;
-    .aside_messageList{
-      width:94%;
-      height:100%;
-    }
-  }
-  .asideSend{
-    padding-bottom:26px;
-    width:100%;
-    height:25%;
-    display:flex;
-    justify-content:center;
-    .sendBox{
-      width:85%;
-      height:100%;
-      border-top:1px solid #707070;
-      background-color:#dddddd;
-    }
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   width:100%;
+//   height:100%;
+//   display:flex;
+//   flex-direction:column;
+//   .asideHeader{
+//     width:100%;
+//     height:8%;
+//     padding-left:54px;
+//     padding-right:20px;
+//     display:flex;
+//     justify-content:space-between;
+//     align-items:flex-end;
+//     .asideHeader_label{
+//       height:50px;
+//       line-height:50px;
+//       font-size:20px;
+//       font-family:Noto Sans KR;
+//       font-weight:500;
+//       color:#707070;
+//     }
+//   }
+//   .asideContent{
+//     width:100%;
+//     height:69%;
+//     display:flex;
+//     justify-content:center;
+//     .aside_messageList{
+//       width:94%;
+//       height:100%;
+//     }
+//   }
+//   .asideSend{
+//     padding-bottom:26px;
+//     width:100%;
+//     height:25%;
+//     display:flex;
+//     justify-content:center;
+//     .sendBox{
+//       width:85%;
+//       height:100%;
+//       border-top:1px solid #707070;
+//       background-color:#dddddd;
+//     }
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    .asideHeader{
-      height:50px;
-    }
-    .asideContent{
-      height:100%;
-    }
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     .asideHeader{
+//       height:50px;
+//     }
+//     .asideContent{
+//       height:100%;
+//     }
 
-  }
-`
+//   }
+// `
 const SendButton = styled.div`
   width:117px;
   height:100%;
@@ -541,8 +543,8 @@ function SummaryItem(props) {
         {props.noti ? <div className="noti" /> : undefined}
       </SummaryIcon>
       <div className="summary_box">
-      <div className="summary_Name">{props.friend_name}</div>
-      <div className="summary_message">{props.message && props.message.replace(/<br\/>/g, "")}</div>
+        <div className="summary_Name">{props.friend_name}</div>
+        <div className="summary_message">{props.message && props.message.replace(/<br\/>/g, "")}</div>
       </div>
     </SummaryItemBox>);
 }
@@ -624,65 +626,65 @@ class Messages extends React.Component {
     this.props.SearchMemberRequest(null, { key: value }, this.props.token);
   }
   selectMember = async (data) => {
-        await this.setState({
-          render: false
-        });
-        const index = this.state.friendList.indexOf(data.uid);
-        console.log(this.state, this.props.MessageList, index);
-        if (index === -1) {
-          this.setState({
-            selectId: data.uid,
-            selectName: data.nick_name,
-            openMember: false,
-            msgId: -1,
-            render: true
-          });
-        } else {
-          this.setState({
-            selectId: data.uid,
-            selectName: data.nick_name,
-            openMember: false,
-            msgId: this.props.MessageList[index].uid,
-            render: true
-          });
-        }
-        console.log("1111111111" + this.state.selectId);
+    await this.setState({
+      render: false
+    });
+    const index = this.state.friendList.indexOf(data.uid);
+    console.log(this.state, this.props.MessageList, index);
+    if (index === -1) {
+      this.setState({
+        selectId: data.uid,
+        selectName: data.nick_name,
+        openMember: false,
+        msgId: -1,
+        render: true
+      });
+    } else {
+      this.setState({
+        selectId: data.uid,
+        selectName: data.nick_name,
+        openMember: false,
+        msgId: this.props.MessageList[index].uid,
+        render: true
+      });
+    }
+    console.log("1111111111" + this.state.selectId);
   }
   setMsgId = async (group_id, user_id, user_name) => {
-        await this.setState({
-          msgId: group_id,
-          selectId: user_id,
-          selectName: user_name,
-          openMember: false,
-          render: false
-        });
-        this.setState({ render: true });
-        await this.handleCloseMember();
-        await document.getElementById("sendMsgBox") && await document.getElementById("sendMsgBox").focus();
+    await this.setState({
+      msgId: group_id,
+      selectId: user_id,
+      selectName: user_name,
+      openMember: false,
+      render: false
+    });
+    this.setState({ render: true });
+    await this.handleCloseMember();
+    await document.getElementById("sendMsgBox") && await document.getElementById("sendMsgBox").focus();
   }
   onSubmitForm = async (data) => {
-        if (this.state.selectId === null) {
-          await alert("받는 사람을 지정해주세요.","확인")
-          return
-        }
-        let msg = ``;
-        if (this.state.msgValue && this.state.msgValue.length > 0) {
-          msg = this.state.msgValue.replace(/\n/g, "<br/>");
-        } else {
-          await alert("텍스트를 입력해주세요.","확인");
-          return;
-        }
+    if (this.state.selectId === null) {
+      await alert("받는 사람을 지정해주세요.", "확인")
+      return
+    }
+    let msg = ``;
+    if (this.state.msgValue && this.state.msgValue.length > 0) {
+      msg = this.state.msgValue.replace(/\n/g, "<br/>");
+    } else {
+      await alert("텍스트를 입력해주세요.", "확인");
+      return;
+    }
 
-        this.props.SendMessageRequest(this.props.token, { message: msg }, this.state.selectId)
-          .then(async res => {
-            if (res.data && res.data.success === true) {
-              await this.props.GetMyMsgListRequest(this.props.token)
-              await this.setState({ msgId: res.data.groupId, render: false });
-            }
-            this.setState({ render: true });
-            this.props.history.replace("/message");
-          });
-        this.initMsgValue();
+    this.props.SendMessageRequest(this.props.token, { message: msg }, this.state.selectId)
+      .then(async res => {
+        if (res.data && res.data.success === true) {
+          await this.props.GetMyMsgListRequest(this.props.token)
+          await this.setState({ msgId: res.data.groupId, render: false });
+        }
+        this.setState({ render: true });
+        this.props.history.replace("/message");
+      });
+    this.initMsgValue();
   }
   handleChangeMsgValue(event) {
     this.setState({ msgValue: event.target.value })
@@ -758,9 +760,9 @@ class Messages extends React.Component {
                         </div>
                     </div>
                   </ChatBox>
-                </div>
-              </div>
-          </MainBox>
+            </div>
+          </div>
+        </MainBox>
       </React.Fragment>
     );
   }
@@ -769,7 +771,7 @@ class Messages extends React.Component {
 export default Messages;
 
 
-{/* <MainBox>
+/* <MainBox>
 <div className="mainBanner">
   <div className="mainBanner_label">메시지함</div>
 </div>
@@ -813,4 +815,4 @@ export default Messages;
     </AsideSection>
   </MessageBox>
 </div>
-</MainBox> */}
+</MainBox> */

@@ -10,7 +10,7 @@ import IconView from "source/IconView";
 import iEdit from 'source/edit_1.png';
 import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 import opendesign_style from "opendesign_style";

@@ -7,7 +7,7 @@ import opendesign_style from "opendesign_style";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 import Cross from "components/Commons/Cross";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Icon } from 'semantic-ui-react'
 

@@ -289,12 +289,12 @@ const EditCardHeaderContainer = styled.div`
         }
     }
 `;
-const BlankSpace = styled.div`
-    width: 250px;
-    height: 250px;
-    background-color: "white";
-    borderRadius: 15px
-`;
+//const BlankSpace = styled.div`
+//    width: 250px;
+//    height: 250px;
+//    background-color: "white";
+//    borderRadius: 15px
+//`;
 
 class NewCardModal extends Component {
     state = {
@@ -446,7 +446,7 @@ class NewCardModal extends Component {
                         </div>
                     </div>
                 </NewCardDialogWrapper>
-                <BlankSpace />
+                {/* <BlankSpace /> */}
             </React.Fragment >
             //     <ButtonContainer >
             //         <EditorBottonWrapper>

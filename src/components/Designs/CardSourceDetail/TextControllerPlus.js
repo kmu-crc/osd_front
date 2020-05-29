@@ -13,7 +13,7 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-import noimg from "source/noimg.png"
+// import noimg from "source/noimg.png"
 
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
@@ -40,7 +40,7 @@ class TextControllerPlus extends Component {
   }
   render() {
     const { item } = this.props;
-    console.log("editor");
+    // console.log("editor");
     return (
       <div>
         <CKEditor

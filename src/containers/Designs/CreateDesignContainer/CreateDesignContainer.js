@@ -2,12 +2,14 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import CreateDesign from "components/Designs/CreateDesign"
+import CreateDesignMobile from "components/Designs/CreateDesign/CreateDesignMobile"
 import {
   CreateDesignBoardRequest, UpdateDesignTime, UpdateCardTitleRequest, GetDesignCardRequest, UpdateDesignBoardRequest, DeleteDesignBoardRequest,
   CreateDesignRequest, GetDesignDetailRequest, GetDesignBoardRequest
 } from "redux/modules/design"
 import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
+import opendesigncss from "opendesign_style"
 
 class CreateDesignFormContainer extends Component {
   constructor(props) {
@@ -26,15 +28,22 @@ class CreateDesignFormContainer extends Component {
     // this.props.history.push("/myModify")
   }
   render() {
-    // console.log("props:", this.props)
-    return (<React.Fragment>
-      {
-        // this.props.userInfo.is_designer === 1 ?
-        <CreateDesign {...this.props} />
-        // : this.gotoMyModify()
-      }
-    </React.Fragment>)
+    const mobile = window.innerWidth <= opendesigncss.resolutions.SmallMaxWidth;
+
+    return (mobile
+      ? <CreateDesignMobile {...this.props} />
+      : <CreateDesign {...this.props} />)
   }
+
+  // console.log("props:", this.props)
+  // return (<React.Fragment>
+  // {
+  // this.props.userInfo.is_designer === 1 ?
+  // <CreateDesign {...this.props} />
+  // : this.gotoMyModify()
+  // }
+  // </React.Fragment>)
+  // }
 }
 
 
