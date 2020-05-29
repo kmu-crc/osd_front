@@ -5,6 +5,7 @@ import iChecked from "source/checked.png"
 import CheckBox2 from "components/Commons/CheckBox";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
 
 const CustomModal = styled(Modal)`
     min-width: 1200px;
@@ -66,9 +67,14 @@ const CustomModal = styled(Modal)`
         width:542px;
         height:900px;
         position:absolute;
-        left:850px;
+        left:880px;
         top:0px;
         background-color:white;
+    }
+    .relativeBox{
+        width:100%;
+        height:100%;
+        position:relative;
     }
     .termText{
         width:450px;
@@ -85,7 +91,7 @@ const CustomModal = styled(Modal)`
     .termOKBtn{
         position:absolute;
         right:35px;
-        bottom:100px;
+        bottom:35px;
         font-size:20px;
         font-weight:500;
         font-family:Noto Sans KR;
@@ -94,27 +100,38 @@ const CustomModal = styled(Modal)`
     }
 
 }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-        min-width:90%;
-        .termBox{
-            width:100%;
-            left:0px;
-        }
-        .termText{
-            width:90%;
-        }
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+    min-width:100%;
+    .termBox{
+        width:100%;
+        left:0px;
     }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-        min-width:90%;
-        .termBox{
-            left:0px;
-            width:90%;
-        }
-        .termText{
-            width:90%;
-            width:90%;
-        }
+    .termText{
+        width:90%;
     }
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    min-width:100%;
+    margin:0px;
+
+    .termBox{
+        width:100%; 
+        margin:0px;
+        z-index:900;
+        left:0px;
+    }
+    .termText{
+        margin:10px;
+        width:95%;
+        height:max-content;
+    }
+    .title{
+        width:100%;
+    }
+}
+    
 `
 const SignUPBox = styled.form`
     width:64%;
@@ -170,16 +187,26 @@ const SignUPBox = styled.form`
         line-height:29px;
         text-align:left;
     }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+        min-width:100%;
+        padding:10px !important;
+        margin:0px;
     }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-        .itemBox{
-            .normalBox{
-                margin-top:55px;
-            }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+        min-width:100%;
+        height:max-content;
+        padding:10px !important;
+        margin:0px;
+        .title{
+            width:100%;
+        }
+        .termOkBtn{
+            bottom:0px;
         }
     }
+    
 `
 const InputText = styled.input.attrs({ type: 'text' })`
     width:100%;
@@ -438,6 +465,7 @@ class SignUpModal extends Component {
                     (<CustomModal open={open} onClose={this.onClose}>
                         {this.state.open_term &&
                             <div className="termBox">
+                                <div className="relativeBox">
                                 <div className="termText">
                                     [차례]<br />
                                     제1장<br />
@@ -448,7 +476,9 @@ class SignUpModal extends Component {
                                     계약 당사자의 의무 제12조 회사의 의무 제13조 회원의 의무 제4장 서비스의 이용 제14조 서비스 제공 제15조 서비스의 변경 제16조 정보의 제공 및 광고의 게재 제17조 게시물의 관리 제18조 게시물의 저작권 제19조 권리의 귀속 제20조 계약 해지 제21조 서비스 이용제한 또는 중지 및 회원 탈퇴 제22조 손해배상 제23조 책임제한 제24조 재판권 및 준거법<br />
                                 </div>
                                 <div className="termOKBtn" onClick={this.agree}>동의하고 닫기</div>
-                            </div>}
+                                </div>
+                            </div>
+                            }
                         <Modal.Content >
                             <div className="title">OPEN SOURCE DESIGN</div>
                             <SignUPBox>

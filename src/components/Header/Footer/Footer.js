@@ -19,16 +19,19 @@ const FooterContainer = styled.div`
     background-color:white;
     z-index: 999;
     .origin{
+        min-width:max-content;
         cursor: pointer;
         margin-left:15px;
         float:left;
     }
     .term{
+        min-width:max-content;
         cursor: pointer;
         margin-left:auto;
         margin-right:17px;
     }
     .security{
+        min-width:max-content;
         cursor: pointer;
         margin-right: 13px;
     }

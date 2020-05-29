@@ -24,20 +24,20 @@ const Wrapper = styled.div`
 const Box = styled.div`
   width: 330px;
   border: 1px solid green;
-  flex: 1 1 330px;
+  // flex: 1 1 330px;
   // margin-bottom: ${props => props.marginBottom}px; 
   // margin-right: ${props => props.marginRight}px; 
-  // margin: auto;
+  margin: auto;
   // margin-top: ${props => props.marginTop}px; 
   // margin-left: ${props => props.marginLeft}px; 
 `;
 
 const margin = { "mobile": 330, "design": 330, "group": 902, "designer": 587 };
-// const cols = {
-// "small": { "design": 1, "group": 1, "designer": 1 },
-// "medium": { "design": 3, "group": 1, "designer": 3 },
-// "large": { "design": 5, "group": 2, "designer": 1 },
-// }
+const cols = {
+  "mobile": { "design": 1, "group": 1, "designer": 1 },
+  "tablet": { "design": 3, "group": 1, "designer": 3 },
+  "desktop": { "design": 5, "group": 2, "designer": 1 },
+}
 class ScrollListReboot extends Component {
   // constructor(props) {
   //  super(props);
@@ -48,6 +48,8 @@ class ScrollListReboot extends Component {
     // CHECK MOBILE 
     const { dataListAdded, type, } = this.props;
     const mobile = window.innerWidth <= opendesigncss.resolutions.SmallMaxWidth;
+    const tablet = window.innerWidth > opendesigncss.resolutions.SmallMaxWidth && window.innerWidth <= opendesigncss.resolutions.MediumMaxWidth;
+    const desktop = window.innerWidth > opendesigncss.resolutions.MediumMaxWidth;
 
     console.log(
       mobile,
@@ -59,6 +61,7 @@ class ScrollListReboot extends Component {
       this.props);
 
     const marginBottom = (window.innerWidth - margin[mobile ? "mobile" : type]) / 2;
+    const boxWidth = mobile ? margin["mobile"] : cols[tablet ? "tablet" : "desktop"][type];
 
     return (<Cosmos>
       {/* SCROLL-LIST REBOOT */}
@@ -67,10 +70,11 @@ class ScrollListReboot extends Component {
           dataListAdded.map(item =>
             <Box
               key={item.uid}
-              // marginTop={0}
-              // marginBottom={marginBottom}
-              // marginLeft={"auto"}
-              // marginRight={"auto"}
+              width={boxWidth}
+            // marginTop={0}
+            // marginBottom={marginBottom}
+            // marginLeft={"auto"}
+            // marginRight={"auto"}
             >
               {type === "design" && <Design data={item} />}
               {type === "group" && <Group data={item} />}

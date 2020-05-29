@@ -92,8 +92,8 @@ margin-bottom:20px;
   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
     min-height:300px;
     margin-bottom:0px;
-    height:${window.innerHeight * 0.7}px;
-    .mobilelistIocn{
+    height:${window.innerHeight*0.7}px;
+    .mobilelistIcon{
       display:flex;
     }
     .mainBanner{
