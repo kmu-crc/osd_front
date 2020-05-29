@@ -106,6 +106,14 @@ const MainBox = styled.div`
         outline:none;
         display:flex;
     }
+    .transparent_btn_nomargin{
+        width: max-content;
+        margin-left:-5px;
+        background:none;
+        border:none;
+        outline:none;
+        display:flex;
+    }
     .cursor_pointer{
         cursor:pointer;
     }
@@ -482,6 +490,8 @@ const DesignMemberList = styled.div`
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
         left:-150px;
+        width:350px;
+        box-shadow: 1px 3px 6px 1px rgba(0,0,0,0.5);
 
      }
     .close-box {
@@ -556,6 +566,7 @@ const DesignMemberListElement = styled.div`
             color: #707070;
         }
     }
+
 `;
 const ListItem = styled.div`
     display:flex;
@@ -587,6 +598,10 @@ const ListItem = styled.div`
             font-size: 17px;
         }
     } 
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+        padding:0px;
+    }
 `;
 
 const LikeDialogContainer = styled.div`
@@ -972,7 +987,7 @@ class DesignInfo extends Component {
 
                                 <div className="flexBox">
                                     {DesignDetail.children_count["count(*)"] > 0 &&
-                                        <button className="transparent_btn cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
+                                        <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
                                             파생된 디자인 <span>{DesignDetail.children_count["count(*)"]}</span>
                                         </button>}
                                 </div>
