@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import opendesigncss from "opendesign_style";
 
 const OrderWrapper = styled.div`
     width:100%;
@@ -26,6 +27,9 @@ const OrderElement = styled.div`
     &.unselected {
         color: #707070;
         margin-left: ${props => props.marginRight};
+    }
+    @media only screen and (min-width : ${opendesigncss.resolutions.SmallMinWidth}px) and (max-width : ${opendesigncss.resolutions.SmallMaxWidth}px) {
+        font-size: 16px;
     }
 `
 class OrderOption extends Component {

@@ -13,16 +13,16 @@ import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 
 const MainBox = styled.div`
-width:100%;
-height:${window.innerHeight * 0.8}px;
-min-height:600px;
-margin-top:10px;
-margin-bottom:20px;
-*{
-  // border:1px solid black;
-  font-family:Noto Sans KR;
-  color:#707070;
-}
+  width:100%;
+  height:${window.innerHeight * 0.8}px;
+  min-height:600px;
+  margin-top:10px;
+  margin-bottom:20px;
+  *{
+    // border:1px solid black;
+    font-family:Noto Sans KR;
+    color:#707070;
+  }
   .flexBox_column{display:flex;flex-direction:column;}
   .flexBox_row{display:flex;}
   .content_center{justify-content:center;}
@@ -92,7 +92,7 @@ margin-bottom:20px;
   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
     min-height:300px;
     margin-bottom:0px;
-    height:${window.innerHeight*0.7}px;
+    height:${window.innerHeight * 0.7}px;
     .mobilelistIcon{
       display:flex;
     }
@@ -104,7 +104,7 @@ margin-bottom:20px;
       height:100%;
     }
   }
-`
+`;
 const RoomListBox = styled.div`
     width:25%;
     min-width:375px;
@@ -151,7 +151,7 @@ const RoomListBox = styled.div`
       height:${props => props.isSelectMsg == true ? "60px" : "100%"};
       overflow:hidden;
   }
-`
+`;
 const WhiteBox = styled.div`
     width:1%;
     min-width:5px;
@@ -165,11 +165,11 @@ const WhiteBox = styled.div`
       width:100%;
       height:1%;
     }
-`
+`;
 const ChatBox = styled.div`
-// *{
-//   border:1px solid black;
-// }
+    // *{
+    //   border:1px solid black;
+    // }
     width:74%;
     height:100%;
     background-color:#EFEFEF;
@@ -237,71 +237,14 @@ const ChatBox = styled.div`
         }
     }
   `
-// const MessageBox = styled.div`
-//   width:91%;
-//   height:100%;
-//   background-color:#EFEFEF;
-//   border-radius:25px;
-//   display:flex;
-//   justify-contnet:flex-start;
-//   flex-direction:row;
-//   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-//   }
-//   @media only screen and (min-width : 360px) and (max-width:780px) {
-//       flex-direction:column;
-//   }
-// `
 const SearchMemberBox = styled.div`
   width:100%;
   height:max-content;
   position:absolute;
   top:50px;
   z-index:900;
-`
-// const NavSection = styled.div`
-//   min-width:400px;
-//   width:25%;
-//   height:100%;
-//   display:flex;
-//   flex-direction:column;
-//   overflow:hidden;
-//   .NavHeader{
-//     width:100%;
-//     height:8.5%;
-//     padding-left:54px;
-//     padding-right:20px;
-//     display:flex;
-//     justify-content:space-between;
-//     align-items:flex-end;
-//     .Nav_label{
-//       height:50px;
-//       line-height:50px;
-//       font-size:20px;
-//       font-family:Noto Sans KR;
-//       font-weight:500;
-//       color:#707070;
-//     }
-//     }
-//   }
-//   .NavContent{
-//     height:91.5%;
-//     width:100%;
-//   }
-//   @media only screen and (min-width : 780px) and (max-width:1440px) {
-
-//   }
-//   @media only screen and (min-width : 360px) and (max-width:780px) {
-//       width:100%;
-//       height:35%;
-//       .NavHeader{
-//         height:50px;
-//       }
-//       .NavContent{
-//         height:90%;
-//       }
-//   }
-// `
+`;
 const PlusIcon = styled.div`
   width: 50px;
   height: 50px;
@@ -318,79 +261,7 @@ const PlusIcon = styled.div`
   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
     display:${props => props.isSelectMsg == true ? "none" : "flex"}
   }
-`
-// const WhiteLine = styled.div`
-//   min-width:7px;
-//   height:100%;
-//   background-color:white;
-//   @media only screen and (min-width : 780px) and (max-width:1440px) {
-
-//   }
-//   @media only screen and (min-width : 360px) and (max-width:780px) {
-//     max-height:7px;
-//     min-height:7px;
-//     width:100%;
-//   }
-// `
-// const AsideSection = styled.div`
-
-//   width:100%;
-//   height:100%;
-//   display:flex;
-//   flex-direction:column;
-//   .asideHeader{
-//     width:100%;
-//     height:8%;
-//     padding-left:54px;
-//     padding-right:20px;
-//     display:flex;
-//     justify-content:space-between;
-//     align-items:flex-end;
-//     .asideHeader_label{
-//       height:50px;
-//       line-height:50px;
-//       font-size:20px;
-//       font-family:Noto Sans KR;
-//       font-weight:500;
-//       color:#707070;
-//     }
-//   }
-//   .asideContent{
-//     width:100%;
-//     height:69%;
-//     display:flex;
-//     justify-content:center;
-//     .aside_messageList{
-//       width:94%;
-//       height:100%;
-//     }
-//   }
-//   .asideSend{
-//     padding-bottom:26px;
-//     width:100%;
-//     height:25%;
-//     display:flex;
-//     justify-content:center;
-//     .sendBox{
-//       width:85%;
-//       height:100%;
-//       border-top:1px solid #707070;
-//       background-color:#dddddd;
-//     }
-//   }
-//   @media only screen and (min-width : 780px) and (max-width:1440px) {
-
-//   }
-//   @media only screen and (min-width : 360px) and (max-width:780px) {
-//     .asideHeader{
-//       height:50px;
-//     }
-//     .asideContent{
-//       height:100%;
-//     }
-
-//   }
-// `
+`;
 const SendButton = styled.div`
   width:117px;
   height:100%;
@@ -410,7 +281,7 @@ const SendButton = styled.div`
     font-weight:500;
     color:#707070;
   }
-`
+`;
 const SendMessageTextarea = styled.textarea`
   width:95%;
   height:100%;
@@ -726,6 +597,12 @@ class Messages extends React.Component {
   // member search(+) button
   searchRef = React.createRef();
   checkClickOutSideMemberSearch = event => {
+
+    console.log(
+      event,
+      this.searchRef.current,
+      event.target);
+
     if (this.searchRef.current === null) return;
     if (!this.searchRef.current.contains(event.target)) {
       document.removeEventListener("mousedown", this.checkClickOutSideMemberSearch);
@@ -753,10 +630,10 @@ class Messages extends React.Component {
                 <div className="header">
                   <div className="header-item fixed">
                     <div className="fitBox font_big font_bold">받은 메시지함</div>
-                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.handleOpenMember} /></div>
+                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.openMemberSearch} /></div>
                   <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
-                  {this.state.showSearch &&
-                    (<SearchMemberBox>
+                  {this.state.memberSearch &&
+                    (<SearchMemberBox ref={this.searchRef}>
                       <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
                     </SearchMemberBox>)}
                 </div>
@@ -795,3 +672,129 @@ class Messages extends React.Component {
 
 export default Messages;
 
+// const MessageBox = styled.div`
+//   width:91%;
+//   height:100%;
+//   background-color:#EFEFEF;
+//   border-radius:25px;
+//   display:flex;
+//   justify-contnet:flex-start;
+//   flex-direction:row;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//       flex-direction:column;
+//   }
+// `
+// const NavSection = styled.div`
+//   min-width:400px;
+//   width:25%;
+//   height:100%;
+//   display:flex;
+//   flex-direction:column;
+//   overflow:hidden;
+//   .NavHeader{
+//     width:100%;
+//     height:8.5%;
+//     padding-left:54px;
+//     padding-right:20px;
+//     display:flex;
+//     justify-content:space-between;
+//     align-items:flex-end;
+//     .Nav_label{
+//       height:50px;
+//       line-height:50px;
+//       font-size:20px;
+//       font-family:Noto Sans KR;
+//       font-weight:500;
+//       color:#707070;
+//     }
+//     }
+//   }
+//   .NavContent{
+//     height:91.5%;
+//     width:100%;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//       width:100%;
+//       height:35%;
+//       .NavHeader{
+//         height:50px;
+//       }
+//       .NavContent{
+//         height:90%;
+//       }
+//   }
+// `
+// const WhiteLine = styled.div`
+//   min-width:7px;
+//   height:100%;
+//   background-color:white;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     max-height:7px;
+//     min-height:7px;
+//     width:100%;
+//   }
+// `
+// const AsideSection = styled.div`
+//   width:100%;
+//   height:100%;
+//   display:flex;
+//   flex-direction:column;
+//   .asideHeader{
+//     width:100%;
+//     height:8%;
+//     padding-left:54px;
+//     padding-right:20px;
+//     display:flex;
+//     justify-content:space-between;
+//     align-items:flex-end;
+//     .asideHeader_label{
+//       height:50px;
+//       line-height:50px;
+//       font-size:20px;
+//       font-family:Noto Sans KR;
+//       font-weight:500;
+//       color:#707070;
+//     }
+//   }
+//   .asideContent{
+//     width:100%;
+//     height:69%;
+//     display:flex;
+//     justify-content:center;
+//     .aside_messageList{
+//       width:94%;
+//       height:100%;
+//     }
+//   }
+//   .asideSend{
+//     padding-bottom:26px;
+//     width:100%;
+//     height:25%;
+//     display:flex;
+//     justify-content:center;
+//     .sendBox{
+//       width:85%;
+//       height:100%;
+//       border-top:1px solid #707070;
+//       background-color:#dddddd;
+//     }
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     .asideHeader{
+//       height:50px;
+//     }
+//     .asideContent{
+//       height:100%;
+//     }
+//   }
+// `
