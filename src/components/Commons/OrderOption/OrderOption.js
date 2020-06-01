@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import opendesigncss from "opendesign_style";
 
 const OrderWrapper = styled.div`
-    width:100%;
-    z-index:820;
-    display:flex;
-    justify-content:flex-end;
+    width: 100%;
+    z-index: 820;
+    display: flex;
+    justify-content: flex-end;
     font-size: 20px;
     font-family: Noto Sans KR;
-    padding:10px;
+    padding: 10px;
 `
 const OrderElement = styled.div`
     font-family: Noto Sans KR;
@@ -17,8 +17,7 @@ const OrderElement = styled.div`
     line-height: 29px;
     font-size: 20px;
     cursor: pointer;
-    z-index: 800;
-
+    
     &.selected {
         color: #FF0000;
         margin-left: ${props => props.marginRight};
@@ -29,7 +28,14 @@ const OrderElement = styled.div`
         margin-left: ${props => props.marginRight};
     }
     @media only screen and (min-width : ${opendesigncss.resolutions.SmallMinWidth}px) and (max-width : ${opendesigncss.resolutions.SmallMaxWidth}px) {
-        font-size: 16px;
+        font-size: 15px;
+        width: max-content;
+        &.unselected {
+            margin-left: 10px;
+        }
+        &.selected {
+            margin-left: 10px;
+        }
     }
 `
 class OrderOption extends Component {
@@ -47,9 +53,9 @@ class OrderOption extends Component {
         const { options } = this.state
         const { selected, style } = this.props
         return (
-            
+
             <OrderWrapper style={style}>
-                
+
                 {options.map(opt => {
                     return (<OrderElement
                         marginRight={opt.marginRight}
