@@ -45,8 +45,15 @@ const CategoryItems = styled.div`
     padding-top: ${props => props.paddingTop}px;
     opacity: ${props => props.opacity};
     cursor: pointer;
-    opacity:${props => props.opacity};
-`
+    opacity: ${props => props.opacity};
+    @media only screen and (min-width: ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width: ${opendesign_style.resolutions.SmallMaxWidth}px) {
+      font-size: 15px;
+      width: max-content;
+      margin: 0px;
+      padding: 13px;
+    }
+`;
 class MypageBody extends Component {
     constructor(props) {
         super(props);

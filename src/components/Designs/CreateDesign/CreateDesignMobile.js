@@ -420,24 +420,20 @@ const InviteMemberListBox = styled.div`
   }
 `;
 const LicenseBox = styled.div`
-  display: flex;
   margin-top: 22px;
+  width: 100%;
   .licenseList {
-  .licenseItem {
-  margin-bottom: 15px;
-  color: #707070;
-  font-size: 16px;
-  font-weight: 500;
-  font-family: Noto Sans KR;
-  .textLabel {
-  margin-left: 25px;
-  vertical-align: top;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  flex-direction:column;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-  flex-direction:column;
+    .licenseItem {
+      margin-bottom: 15px;
+      color: #707070;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: Noto Sans KR;
+      .textLabel {
+        margin-left: 25px;
+        vertical-align: top;
+      }
+    }
   }
 `;
 const DelBtn = styled.button`
@@ -1183,7 +1179,7 @@ class CreateDesignMobile extends Component {
                   </div>
                   <div className="licenseItem">
                     <CheckBox2
-                      hecked={this.state.license3}
+                      checked={this.state.license3}
                       onChange={this.onCheckedLicense03} />
                     <span className="textLabel">추후에 수정이 가능합니다</span>
                   </div>

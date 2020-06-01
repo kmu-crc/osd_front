@@ -36,6 +36,13 @@ const Tab = styled.div`
   &.selected { 
     opacity: 1.0;
   }
+  @media only screen and (min-width: ${osdstyle.resolutions.SmallMinWidth}px) 
+  and (max-width: ${osdstyle.resolutions.SmallMaxWidth}px) {
+    font-size: 15px;
+    width: max-content;
+    margin: 0px;
+    padding: 13px;
+  }
 `;
 const BlankDiv = styled.div`
   padding-top: 50px;
