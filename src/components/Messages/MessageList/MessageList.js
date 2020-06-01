@@ -712,7 +712,7 @@ class Messages extends React.Component {
     this.setState({ showSearch: !this.state.showSearch });
   }
   handleClickSearchMemberItem(id, name, event) {
-    this.setMsgId(-1, id, name);
+    this.setMsgId(-2, id, name);
     this.setState({ memberSearch: false });
   }
   handleCloseMember() {
