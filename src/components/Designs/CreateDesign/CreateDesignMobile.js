@@ -1361,7 +1361,7 @@ const NewController = styled.li`
   }
   line-height: 29px;
   padding-bottom: 1.5px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   font-family: Noto Sans KR;
   text-align: center;
