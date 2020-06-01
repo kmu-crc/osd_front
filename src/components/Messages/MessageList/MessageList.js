@@ -111,7 +111,7 @@ const RoomListBox = styled.div`
     height:100%;
     background-color:#EFEFEF;
     padding:25px 40px;
-    z-index:900;
+    z-index:500;
     .header{
       width:100%;
       display:flex;
