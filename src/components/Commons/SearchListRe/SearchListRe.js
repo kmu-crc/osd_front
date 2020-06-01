@@ -10,24 +10,42 @@ import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContai
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import opendesigncss from "opendesign_style";
 
+const SearchContainer = styled.div`
+    position: relative;
+    overflow: hidden;
+    *{ border: 1px solid red; }
+`;
 const SearchForm = styled.div`
-    width:100%;
+    // width: 100%;
     font-family: Noto Sans KR;
-    position:relative;
-    margin-top:50px;
-    justify-content:column;
-    .searchBox{
+    position: relative;
+    margin-top: 50px;
+    justify-content: column;
+    .searchBox {
         display:flex;
         justify-content:center;
     }
+    @media only screen and (min-width : ${opendesigncss.resolutions.SmallMinWidth}px) and (max-width : ${opendesigncss.resolutions.SmallMaxWidth}px) {
+        .inputBox {
+            width: 350px;
+            input {
+                // border: 1px solid blue;
+                width: 230px;
+            }
+        }
+    }
     .inputBox{
         z-index:1000;
-        width:760px;
+        // width:760px;
         position:relative;
         padding-top:105px;
         height: 49px;
         border-bottom: 1.5px solid black;
+        input {
+            // width: 80%;
+        }
     }
     .zoomImg {
         z-index:500;
@@ -48,8 +66,8 @@ const SearchForm = styled.div`
         font-size:23px;
         color: #707070;
         opacity: 1;
-        border: 0;
         width: 600px;
+        border: none;
     }
     .Box{
         display: flex;  
@@ -90,21 +108,18 @@ const SearchForm = styled.div`
         color: #707070;
         opacity: 1;
     }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-        .inputBox{
-            width:50%;
-        }
-    }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-        .inputBox{
-            width:60%;
-        }
-    }
+    // @media only screen and (min-width : 780px) and (max-width:1440px) {
+    //     .inputBox{
+    //         width:50%;
+    //     }
+    // }
+    // @media only screen and (min-width : 360px) and (max-width:780px) {
+    //     .inputBox{
+    //         width:60%;
+    //     }
+    // }
 `;
-const SearchContainer = styled.div`
-    position: relative;
-    overflow: hidden;
-`;
+
 
 class SearchListRe extends Component {
     constructor(props) {
@@ -208,7 +223,10 @@ class SearchListRe extends Component {
                 <SearchForm>
                     <div className="searchBox">
                         <div className="inputBox">
-                            <div className="zoomImg"><img src={zoom} alt="" /></div>
+                            <div className="zoomImg">
+                                {/* <img src={zoom} alt="" /> */}
+                                검색어:
+                                </div>
                             <input
                                 className="searchInput"
                                 id="searchInput"
