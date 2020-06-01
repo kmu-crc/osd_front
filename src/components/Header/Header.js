@@ -236,14 +236,14 @@ class Header extends Component {
         }
         window.addEventListener("resize", this.handleResize, false);
     };
-    componentWillUpdate(nextProps){
+    componentWillUpdate(nextProps) {
         // console.log(this.props.userInfo)
-        if(this.props.userInfo!=null&&nextProps.userInfo!=null&&this.props.userInfo.uid!=null&&nextProps.userInfo.uid!=null){
-            if(this.props.userInfo.uid!==nextProps.userInfo.uid){
+        if (this.props.userInfo != null && nextProps.userInfo != null && this.props.userInfo.uid != null && nextProps.userInfo.uid != null) {
+            if (this.props.userInfo.uid !== nextProps.userInfo.uid) {
                 window.history.go(0);
-             }     
+            }
         }
-        
+
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
@@ -258,37 +258,38 @@ class Header extends Component {
         return (
             <React.Fragment>
                 <WrapperBox>
-                <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
+                    <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
 
-                     <RightMenu>
-                        <li className="searchItem">
-                            <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} />
-                        </li>
-                        {this.props.userInfo != null ? (
-                            <React.Fragment>
-                                <li className="IconItem"><Message noti={this.state.alarm} /></li>
-                                <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
-                            </React.Fragment>
-                        ) : null}
-                        <li className="redItem">
-                            <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
-                        <li className="profileItem">
-                            <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
-                    </RightMenu>
-                    <LeftMenu>
-                        <li className="logoBox">
-                            <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
-                        <MenuItem isSelect={window.location.pathname === '/design' || (window.location.pathname.search('/designDetail/') > -1 ? true : false)}>
-                            <a className="link_tag" href="/design">디자인</a></MenuItem>
-                        <MenuItem isSelect={window.location.pathname === '/group' || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)}>
-                            <a className="link_tag" href="/group">그룹</a></MenuItem>
-                        <MenuItem isSelect={window.location.pathname === '/designer' || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)}>
-                            <a className="link_tag" href="/designer">디자이너</a></MenuItem>
-                    </LeftMenu>
+                        <RightMenu>
+                            {window.location.href.search('/search') > -1 ? null :
+                                <li className="searchItem">
+                                    <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
+                                </li>}
+                            {this.props.userInfo != null ? (
+                                <React.Fragment>
+                                    <li className="IconItem"><Message noti={this.state.alarm} /></li>
+                                    <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
+                                </React.Fragment>
+                            ) : null}
+                            <li className="redItem">
+                                <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
+                            <li className="profileItem">
+                                <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
+                        </RightMenu>
+                        <LeftMenu>
+                            <li className="logoBox">
+                                <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
+                            <MenuItem isSelect={window.location.pathname === '/design' || (window.location.pathname.search('/designDetail/') > -1 ? true : false)}>
+                                <a className="link_tag" href="/design">디자인</a></MenuItem>
+                            <MenuItem isSelect={window.location.pathname === '/group' || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)}>
+                                <a className="link_tag" href="/group">그룹</a></MenuItem>
+                            <MenuItem isSelect={window.location.pathname === '/designer' || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)}>
+                                <a className="link_tag" href="/designer">디자이너</a></MenuItem>
+                        </LeftMenu>
 
-                  
 
-                </Menu>
+
+                    </Menu>
                 </WrapperBox>
             </React.Fragment>
         )
