@@ -819,6 +819,7 @@ class CreateDesign extends Component {
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
     }
+    this.checkFinishBasic();
   };
   checkInputForm = async () => {
     const warning = "필수 입력항목을 모두 입력하지 않아 다음 단계를 진행할 수 없습니다.\n";
@@ -995,6 +996,7 @@ class CreateDesign extends Component {
       this.setState({ thumbnail_name: "", thumbnail: noimg });
     }
     this.setState({ cropper: false, crop: { unit: "%", width: 50, aspect: 1 } });
+    this.checkFinishBasic();
   };
   toDataURL = url => fetch(url)
     .then(response => response.blob())
@@ -1011,6 +1013,7 @@ class CreateDesign extends Component {
         this.setState({ thumbnail: dataUrl });
       })
     this.setState({ cropper: false });
+    this.checkFinishBasic();
   };
   onImageLoaded = image => {
     this.imageRef = image;
