@@ -168,7 +168,11 @@ class Alarm extends Component {
                 msg = `${from}님이 디자인 카드에 댓글을 달았습니다.`;
             } else if (item.kinds === "COMMENT_COMMENT") {
                 msg = `${to}님의 디자인 댓글에 답변이 달렸습니다.`;
+            } else if (item.kinds === "LIVE_CHAT"){
+                // const date = new Date();
+                msg = `${from}님이 회의를 개설하였습니다.`
             }
+
         } else if (item.type === "GROUP") {
             if (item.kinds === "JOIN") {
                 msg = `${from}님이 그룹 가입 신청을 하였습니다.`;
@@ -376,6 +380,17 @@ class Alarm extends Component {
             return <React.Fragment>
                 <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
                     &nbsp;&nbsp;<TextFormat txt={item.reply_preview} chars={MAXLENGTH - 15} />
+                </div>
+            </React.Fragment>
+        }
+        else if(item.type==="DESIGN"&& item.kinds === "LIVE_CHAT"){
+            const date = new Date();/////////// 회의시작날짜입력
+            return <React.Fragment>
+                <div style={{ display: "flex", flexDirection: "column", fontSize: "16px" }}>
+                    <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
+                    <div style={{fontSize:"12px"}}>
+                    {`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`} 
+                    </div>
                 </div>
             </React.Fragment>
         }
