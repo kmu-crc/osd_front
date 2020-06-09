@@ -300,24 +300,32 @@ class NewCardModal extends Component {
     state = {
         loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
         card_content: { deleteContent: [], newContent: [], updateContent: [] },
-        closed: false,
+        closed: false, isEdited: false,
     };
-    handleCancel = async (obj) => {
-        if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?","예","아니오")) {
-                return "keep";
+    //handleCancel = async (obj) => {
+    //    if (this.state.title !== "" || this.state.content !== "") {
+    //        if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?", "예", "아니오")) {
+    //            return "keep";
+    //        }
+    //    }
+    //    // this.onClose();"" || this.state.content !== """
+    //};
+    onClose = async () => {
+        if (this.state.isEdited || this.state.title !== "" || this.state.content !== "") {
+            if (!await confirm("작성한 내용이 저장되지 않습니다. 창을 닫으시겠습니까?", "예", "아니오")) {
+                return;
             }
         }
-        // this.onClose();
+        this.props.close();
     };
-    onClose = async () => {
-        await this.setState({ closed: true });
+    handleUpdate = (obj) => {
+        const modified = JSON.stringify(obj.content) !== JSON.stringify(obj.origin);
+        this.setState({ isEdited: modified });
     };
     handleClosed = (obj) => {
-        console.log(obj);
-        if (this.handleCancel(obj) !== "keep")
-            this.props.close();
-        this.setState({ closed: false });
+        // console.log(obj);
+        // if (this.handleCancel(obj) === "keep")
+        // this.setState({ closed: false });
     }
     onChangeValueThumbnail = async data => {
         let obj = {};
@@ -346,7 +354,7 @@ class NewCardModal extends Component {
     submit = async (obj) => {
         let files = null;
         if (!this.state.title || this.state.title === "") {
-            await alert("컨텐츠의 제목을 입력하세요.","확인");
+            await alert("컨텐츠의 제목을 입력하세요.", "확인");
             return;
         }
         // new card
@@ -373,7 +381,7 @@ class NewCardModal extends Component {
                                 })
                                 .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
                         } else {
-                            await alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.","확인");
+                            await alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.", "확인");
                         }
                     });
             });
@@ -382,7 +390,7 @@ class NewCardModal extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         if (!this.state.title) {
-            await alert("컨텐츠의 제목을 입력하세요.","확인");
+            await alert("컨텐츠의 제목을 입력하세요.", "확인");
             return;
         }
         await this.setState({ loading: true, hook: true });
@@ -430,6 +438,7 @@ class NewCardModal extends Component {
                                 uid={"new"}
                                 isTeam={true}
                                 edit={true}
+                                handleUpdate={this.handleUpdate}
                                 closed={this.state.closed}
                                 handleClosed={this.handleClosed}
                                 handleCancel={this.onClose}//this.handleCancel}
