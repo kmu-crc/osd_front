@@ -482,40 +482,42 @@ class CardSourceDetail extends Component {
       {/* view mode */}
       {this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
-          {content.map((item, index) => {
-            if (item.type === "FILE" && item.data_type === "image")
-              return <div className="imgContent" key={index}>
-                <img src={item.content} alt="이미지" download={item.file_name} /></div>
+          {content.map((item, index) =>
+            <div key={index + item.uid}>
+              {(item.type === "FILE" && item.data_type === "image") ?
+                <div className="imgContent" >
+                  <img src={item.content} alt="이미지" download={item.file_name} />
+                </div>
 
-            if (item.type === "FILE" && item.data_type === "video")
-              return <span key={index}>
-                <span className="LinkFileName">{item.file_name}</span>
-                <video
-                  className="iconWrap"
-                  width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
-                  height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
-                  controls="controls">
-                  <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
-              </span>
+                : (item.type === "FILE" && item.data_type === "video") ?
+                  <span >
+                    <span className="LinkFileName">{item.file_name}</span>
+                    <video
+                      className="iconWrap"
+                      width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
+                      height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
+                      controls="controls">
+                      <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
+                  </span>
 
-            if (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video")
-              return <a className="iconWrap" key={index} href={item.content} download={item.file_name} >
-                <FileIcon type={item.data_type} extension={item.extension} />
-                <span className="LinkFileName">{item.file_name}</span>
-              </a>
+                  : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
+                    <a className="iconWrap" href={item.content} download={item.file_name} >
+                      <FileIcon type={item.data_type} extension={item.extension} />
+                      <span className="LinkFileName">{item.file_name}</span>
+                    </a>
 
-            if (item.type === "TEXT") {
-              return <div className="textWrap" key={index} dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
-            }
-            return <div>올바른형식의 아이템이 아닙니다.</div>;
-          })}
+                    : (item.type === "TEXT") ?
+                      <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+                      : <div>올바른형식의 아이템이 아닙니다.</div>}
+            </div>
+          )}
         </ViewContent>}
 
       {/* edit mode */}
       {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
         content && content.length > 0 ? (<Fragment>
           {content.map(item => {
-            return (<ControllerWrap key={item.order}>
+            return (<ControllerWrap key={item.uid}>
               <div className="contentWrap">
                 {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
                 {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
