@@ -6,6 +6,7 @@ import Loading from "components/Commons/Loading";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 
 const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
@@ -106,10 +107,15 @@ padding-top:45px;
 border-radius:5px;
 border:8px solid #F5F4F4;
 .buttonBox{
-  width:100%;
+  width: max-content;
   display: flex;
-  margin-top: 20.54px;
-  justifyContent: flex-end;
+  justify-content:flex-end;
+  margin-top: 21px;
+  margin-left: auto;
+  padding:10px 0px 10px 10px;
+  position:absolute;
+  right:0px;
+  bottom:0px;
 }
 @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
 and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
@@ -127,23 +133,26 @@ const BtnText = styled.p`
   color: #FFFFFF;
 `;
 
+const BackButton = styled.div`
+      cursor: pointer;
+      width: 104.5px;
+      height: 44px;
+      border-radius: 5px;
+      background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top: 6px;
+      padding-left: 15px;
+      margin-right: 25px;
+`
 const CompleteButton = styled.div`
-  position:absolute;
-  right:10px;
-  bottom:35px;
-  cursor:pointer;
-  width:104.5px;
-  height:44px;
-  border-radius:5px;
-  background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-  padding-top:6px;
-  padding-left:15px;
-  margin-right:53px;
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-    margin-right:0px;
-  }
-`;
+        cursor: pointer;
+        width: 104.5px;
+        height: 44px;
+        border-radius: 5px;
+        background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+        padding-top: 6px;
+        padding-left: 15px;
+        margin-right: 25px;
+  `
 class CreateGroup extends Component {
   constructor(props) {
     super(props);
@@ -254,6 +263,16 @@ class CreateGroup extends Component {
                 designTitle={this.state.groupTitle}
                 thumbnail={this.state.groupThumbnail === "" || this.state.groupThumbnail == null ? noimg : this.state.groupThumbnail} {...this.props} />}
             <div className="buttonBox">
+                <BackButton
+                  onClick={async() => 
+                    {    
+                      if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                      window.history.go(-1)
+                    }
+                  }}
+                  isComplete={false}>
+                  <BtnText>취소</BtnText>
+                </BackButton>
               <CompleteButton isComplete={this.state.isPossibleNextStep}
                 onClick={this.onSubmit} >
                 <BtnText>완료</BtnText>

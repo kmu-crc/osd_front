@@ -43,6 +43,7 @@ const ExperienceBox = styled.div`
       }
       .text_label{
         width:30%;
+        padding-left:2%;
       }
     }
     .careerBox{
@@ -199,7 +200,8 @@ const IsDesignerBox = styled.div`
   }
 `
 const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
-  width: ${props => props.width == null ? "505px" : props.width + "px"};
+  // width: ${props => props.width == null ? "505px" : props.width + "px"};
+  width:90%;
   height: 56px;
   padding-left: 15px;
   font-size: 20px;
@@ -211,7 +213,7 @@ const InputText = styled.input.attrs({ type: 'text', maxLength: 100 })`
   border-radius: 5px;
   outline: none;
   @media only screen and (min-width : 780px) and (max-width:1440px) {
-    width:505px;
+    width:90%;
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
     width:80%

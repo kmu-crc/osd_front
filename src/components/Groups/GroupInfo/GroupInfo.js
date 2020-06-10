@@ -21,6 +21,19 @@ import TextFormat from 'modules/TextFormat';
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 
+const NewAlarmLogo=styled.div`
+width:10px;
+height:100%;
+display:flex;
+margin-right:2px;
+.circle{
+    background-color:red;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+}
+
+`
 const Thumbnail = styled.div`
     position:relative;
     min-width: 170px;
@@ -347,6 +360,10 @@ const ThreeSideBox= styled.div`
         cursor: pointer
     }
     .ButtonItem {
+        .displayFlex{
+            display:flex;
+            justify-content:flex-end;
+        }
         width: max-content;
         height: 30px;
         display: flex;
@@ -667,6 +684,7 @@ class GroupInfoComponent extends Component {
     }
 
     render() {
+        console.log("GROUPINFO==========",this.props);
         const { like, GroupDetail, userInfo } = this.props;
         const group_user_id = GroupDetail && GroupDetail.user_id;
         const user_id = userInfo && userInfo.uid;
@@ -772,7 +790,12 @@ class GroupInfoComponent extends Component {
                                                 <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
 
                                             <div className="ButtonItem" onClick={this.changeEditMode}>
-                                                <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                                
+                                                <div className="button_text_label displayFlex">
+                                                    {this.props.waitingDesign.length>0||this.props.waitingGroup.length>0?
+                                                    manager?null:<NewAlarmLogo><div className="circle"/></NewAlarmLogo>
+                                                    :null}
+                                                    {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
                                                 <NormalIcon imageURL={iINOUT} opacity={0.5} /></div>
 
                                         </React.Fragment>

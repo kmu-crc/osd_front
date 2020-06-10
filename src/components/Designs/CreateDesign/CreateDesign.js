@@ -1093,6 +1093,7 @@ class CreateDesign extends Component {
   onAddValue = async (data) => {
     let copyContent = [...this.state.contents];
     let copyData = { ...data };
+
     copyData.initClick = true;
     for (let item of copyContent) {
       if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
@@ -1405,7 +1406,12 @@ class CreateDesign extends Component {
             {/* buttons*/}
             <div className="buttonBox">
               <CustomButton
-                onClick={() => window.history.go(-1)}
+                onClick={async() => 
+                  {    
+                    if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                    window.history.go(-1)
+                  }
+                }}
                 isComplete={false}>
                 <BtnText>취소</BtnText>
               </CustomButton>
