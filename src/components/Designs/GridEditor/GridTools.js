@@ -172,6 +172,28 @@ const CardContainer = styled.div`
         position:absolute;
         z-index:700;
         background-image: url(${props => props.first_img && props.first_img.m_img});
+        .gradient {
+            z-index: 701;
+            cursor: pointer;
+            border-radius: 15px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%);
+        }
+        .text {
+            z-index: 702;
+            position: absolute;
+            width: 100%; 
+            height: 74px;
+            font-size: 20px; 
+            font-family: Noto Sans KR;
+            font-weight: 500;
+            color: #FFFFFF; 
+            text-align: center; 
+            line-height: 40px; 
+            margin-top: 27px;
+        }
        }
 `;
 const AuthorBox = styled.div`
@@ -189,6 +211,26 @@ const AuthorBox = styled.div`
   padding: 8px;
 `;
 
+const LockContainer = styled.div`
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 703;
+    display: flex;
+
+    .icon-wrapper {
+        background-color: red;
+        width: max-content;
+        border-radius: 50%;
+        padding: 3px;
+        text-align: center;
+
+        i {
+            margin: auto;
+            color: white;
+        }
+    }
+`;
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
@@ -196,11 +238,20 @@ export const ContentCard = (props) => {
 
         <CardContainer editor={props.editor} uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
 
+            {props.card.private === 1 ?
+                <LockContainer>
+                    <div className="icon-wrapper">
+                        <i className="lock icon" />
+                    </div>
+                    <div>(비공개)</div>
+                </LockContainer>
+                : null}
+
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
                 <div className="bound_box_">
-                    <div style={{ zIndex: "701", cursor: "pointer", borderRadius: "15px", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
-                    <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", }}>
+                    <div className="gradient" />
+                    <div className="text">
                         <TextFormat txt={props.card.title} />
                     </div>
                     {/* #EAEAEA */}
