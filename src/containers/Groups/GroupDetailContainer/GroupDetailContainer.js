@@ -6,12 +6,18 @@ import {
   GetLikeGroupRequest, LikeGroupRequest,
   UnlikeGroupRequest, DeleteGroupRequest,
   GetDesignInGroupRequest, GetGroupInGroupRequest,
-  GetTotalCountGroupInGroupRequest
+  GetTotalCountGroupInGroupRequest,
+  GetWaitingDesignRequest,
+  GetWaitingGroupRequest
 } from "redux/modules/group"
 import GroupDetail from "components/Groups/GroupDetail"
 class GroupDetailContainer extends Component {
+  componentWillMount() {
+    this.props.GetWaitingDesignRequest(this.props.id, null);
+    this.props.GetWaitingGroupRequest(this.props.id, null);
+  }
   render() {
-    console.log(this.props.GroupList, "LIST");
+    console.log(this.props.id, "LIST");
     return (
       <GroupDetail {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />
     )
@@ -28,12 +34,20 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
     like: state.Group.status.like,
-    Count: state.Group.status.Count
+    Count: state.Group.status.Count,
+    waitingDesign: state.Group.status.waitingDesign,
+    waitingGroup: state.Group.status.waitingGroup,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    GetWaitingDesignRequest: (id, sort) => {
+      return dispatch(GetWaitingDesignRequest(id, sort))
+    },
+    GetWaitingGroupRequest: (id, sort) => {
+      return dispatch(GetWaitingGroupRequest(id, sort))
+    },
     GetGroupDetailRequest: (id) => {
       return dispatch(GetGroupDetailRequest(id))
     },

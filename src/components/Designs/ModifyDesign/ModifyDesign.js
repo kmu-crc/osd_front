@@ -175,17 +175,6 @@ const BackButton = styled.div`
       padding-top: 6px;
       padding-left: 15px;
       margin-right: 25px;
-      // position:absolute;
-      // right:120px;
-      // bottom:35px;
-      // cursor:pointer;
-      // width:104.5px;
-      // height:44px;
-      // border-radius:5px;
-      // background-color:#707070;
-      // padding-top:6px;
-      // padding-left:15px;
-      // margin-right:53px;
 `
 const CompleteButton = styled.div`
         cursor: pointer;
@@ -196,17 +185,6 @@ const CompleteButton = styled.div`
         padding-top: 6px;
         padding-left: 15px;
         margin-right: 25px;
-      // position:absolute;
-      // right:9px;
-      // bottom:35px;
-      // cursor:pointer;
-      // width:104.5px;
-      // height:44px;
-      // border-radius:5px;
-      // background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-      // padding-top:6px;
-      // padding-left:15px;
-      // margin-right:53px;
   `
 const HRline = styled.div`
   width:95%;
@@ -1039,6 +1017,16 @@ class ModifyDesign extends Component {
 
               {/* BUTTONS */}
               <div className="buttonBox">
+              <BackButton
+                  onClick={async() => 
+                    {    
+                      if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                      window.history.go(-1)
+                    }
+                  }}
+                  isComplete={false}>
+                  <BtnText>취소</BtnText>
+                </BackButton>
                 {step === 0 && <React.Fragment>
                   <CompleteButton onClick={this.gotoNextStep} isComplete={true}><BtnText>다음</BtnText></CompleteButton>
                 </React.Fragment>}

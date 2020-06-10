@@ -85,20 +85,20 @@ const CardDialog = styled(Modal)`
                line-height: 29px;
            }
            .header-edit-button {
+            //    border:1px solid black;
                font-family: Noto Sans KR;
                font-size: 17px;
                color: #707070;
                font-weight: 900;
-               line-height: 29px;
-               width: max-content;
-               margin-left: auto;
-               margin-right: 15px;
+               width:100%;
+               margin-bottom:50px;
+               display:flex;
+               justify-content:flex-end;
                .edit-btn {
+                   margin-left: 20px;
                    border: none;
                    background: none;
                    width: max-content;
-                   height: 40px;
-                   line-height: 40px;
                    color: #FF0000;
                    padding-bottom: 1.5px;
                    border-bottom: 1.5px solid #FF0000;
@@ -109,12 +109,9 @@ const CardDialog = styled(Modal)`
                    cursor: pointer;
                }
                .cancel-btn {
-                   margin-left: 25px;
                    border: none;
                    background: none;
                    width: max-content;
-                   height: 40px;
-                   line-height: 40px;
                    color: #707070;
                    padding-bottom: 1.5px;
                    border-bottom: 1.5px solid #707070;
@@ -197,6 +194,7 @@ const EditCardHeaderContainer = styled.div`
             text-align: left;
             line-height: 40px;
             color: #707070;
+            margin-bottom:20px;
         }
 
     }
@@ -482,8 +480,8 @@ class CardModalMobile extends Component {
                                     <div className="header-edit-button">
                                         {this.props.edit ?
                                             <React.Fragment>
-                                                <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button>
                                                 <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제</button>
+                                                <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button>
                                             </React.Fragment> : undefined}
                                     </div>
                                 </div>
