@@ -238,7 +238,7 @@ class SignInModal extends Component {
             }
         );
         console.log("qwer", returnvalue);
-        return returnvalue;
+        return !returnvalue;
     }
     findIDPW() {
         this.setState({ findPW: true });
@@ -274,7 +274,7 @@ class SignInModal extends Component {
             await alert("올바른 양식이 아닙니다","확인");
             return;
         }
-        else if (await this.checkEmail() === true) {
+        else if (await this.checkEmail() === false) {
             await alert("등록되지 않은 아이디입니다","확인");
             return;
         }
