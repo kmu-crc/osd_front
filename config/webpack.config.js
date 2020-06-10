@@ -192,6 +192,7 @@ module.exports = function (webpackEnv) {
               ecma: 8,
             },
             compress: {
+              drop_console: true,
               ecma: 5,
               warnings: false,
               // Disabled because of an issue with Uglify breaking seemingly valid code:
@@ -223,7 +224,7 @@ module.exports = function (webpackEnv) {
           parallel: !isWsl,
           // Enable file caching
           cache: true,
-          sourceMap: shouldUseSourceMap,
+          sourceMap: true,// shouldUseSourceMap,
         }),
         // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
