@@ -9,8 +9,246 @@ import SearchDesignMemberContainer from "containers/Commons/SearchMemberContaine
 import { InputPrice } from "components/Commons/InputItem/InputPrice";
 import Loading from "components/Commons/Loading";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
+import templateImgDesign from "source/template-image-design.png";
+import templateImgSofware from "source/template-image-software.png";
+import templateImgEngineering from "source/template-image-engineering.png";
+import templateImgEmpty from "source/template-image-empty.png";
+import { StepCard, CreateStep, CreateCard, } from "components/GridEditor";
+import arrow from "source/arrow.svg";
 
+const fashion = [
+  { order: 0, title: "Ideation" },
+  { order: 1, title: "Purpose" },
+  { order: 2, title: "Design" },
+  { order: 3, title: "Mock-up" },
+  { order: 4, title: "Establish" },
+];
+const software = [
+  { order: 0, title: "기획" },
+  { order: 1, title: "요구사항 분석" },
+  { order: 2, title: "소프트웨어 설계" },
+  { order: 3, title: "시스템 구현" },
+  { order: 4, title: "시스템 테스트 및 평가" },
+];
+const engineering = [
+  { order: 0, title: "기획" },
+  { order: 1, title: "시스템 분석" },
+  { order: 2, title: "시스템 설계" },
+  { order: 3, title: "시스템 구현" },
+  { order: 4, title: "시스템 테스트 및 평가" },
+];
 
+const EditorContainer = styled.div`
+    padding-top: ${props => props.mobile ? 0 : 35}px;
+    .steps {
+        display: flex;
+    }
+    .step {
+        margin-right: 10px;
+    }
+    .create-step {
+        width: max-content;
+    }
+`;
+const EditorWrapperMobile = styled.div`
+    margin-top: 10px;
+    padding-bottom: 5px;
+    width: 100%;
+
+    .step-wrapper {
+        width: max-content;
+        margin: auto;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+
+        .more-button {
+          position: absolute;
+          right: -50px;
+        }
+        .more-menu {
+          position: absolute;
+          border: 2px solid #707070;
+          border-radius: 5px;
+          box-shadow: 2.5px 2.5px #EFEFEF;
+          background-color: white;
+          width: 150px;
+          right: -50px;
+          top: 30px;
+          display: none;
+          ul {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+          li {
+              padding: 10px;
+              font-size: 1rem;
+              color: #707070;
+              font-weight: 500;
+          }
+          &.active {
+            display: block;
+          }
+        }
+    }
+    .navigation {
+        position: relative;
+        .normal {
+            position: absolute;
+            top: 50px;
+        }
+        .left {
+            left: 5px;
+        }
+        .right {
+            right: 5px;
+        }
+    }
+    .cards-wrapper {
+        width: max-content;
+        margin: auto;
+        .card {
+            margin: 15px;
+        }
+    }
+`;
+const Arrow = styled.div`
+    width: 17px;
+    height: 48px;
+    z-index: 831;
+    border: none;
+    background-image: url(${arrow});
+    background-size: cover;
+    background-position: 50%;
+    transform: rotate(${props => props.angle});
+    opacity: 0.9;
+    cursor:pointer;
+
+    :hover{
+        opacity: 1;
+    }
+`;
+const AsBelowArrow = styled.div`;
+    margin-left: ${props => props.marginLeft + "px" || "0px"};
+    margin-top: ${props => props.marginTop + "px" || "0px"};
+    margin-bottom: ${props => props.marginBottom + "px" || "0px"};
+    width: ${props => props.percent * 100}px;
+    height: ${props => props.percent * 65}px;
+    background: #707070 0% 0% no-repeat padding-box;
+    opacity: ${props => props.opacity};
+    border-top: ${props => props.percent * 65}px solid ${props => props.color || "#707070"};
+    border-left: ${props => props.percent * 50}px solid transparent;
+    border-right:${props => props.percent * 50}px solid transparent;
+    transform: rotate(${props => props.angle}deg);
+`;
+class TemplateGridEditor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { steps: [], step: 0 };
+    this.getTempTemplate = this.getTempTemplate.bind(this);
+    this.changeStep = this.changeStep.bind(this);
+  };
+  componentDidMount() {
+    // this.getAllTemplate();
+    this.getTempTemplate();
+  }
+  // navigation
+  changeStep(offset) {
+    this.setState({ step: this.state.step + offset, });
+  }
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevProps.reset !== this.props.reset) {
+      this.setState({ steps: this.props.steps });
+    }
+    if (this.props.type !== prevProps.type) {
+      await this.getTempTemplate();
+    }
+  }
+  getTempTemplate = async () => {
+    const { type } = this.props;
+    if (type === "empty") {
+      await this.setState({ steps: [] });
+      this.props.selected && this.props.selected(this.state.steps);
+    } else if (type === "fashion") {
+      await this.setState({ steps: fashion });
+      this.props.selected && this.props.selected(this.state.steps);
+    } else if (type === "engineering") {
+      await this.setState({ steps: engineering });
+      this.props.selected && this.props.selected(this.state.steps);
+    } else if (type === "software") {
+      await this.setState({ steps: software });
+      this.props.selected && this.props.selected(this.state.steps);
+    }
+  }
+
+  render() {
+    const { mobile } = this.props;
+    const { steps, step } = this.state;
+
+    return (<EditorContainer mobile={mobile}>
+      {mobile
+        ?
+        <EditorWrapperMobile>
+          {/* step */}
+          <div className="step-wrapper">
+            {step === steps.length ?
+              <CreateStep />
+              :
+              <StepCard
+                title={(steps && steps[step].title) || "제목없음"}
+                marginTop={0} marginLeft={0} marginBottom={10} marginRight={0}
+              />}
+          </div>
+
+          {/* navigation */}
+          <div className="navigation">
+            {step > 0
+              ? <div className="normal left">
+                <Arrow angle="0deg" onClick={() => this.changeStep(-1)} />
+              </div> : null}
+            {step < steps.length - 1 //(steps && steps.length || 0)
+              ? <div className="normal right">
+                <Arrow angle="180deg" onClick={() => this.changeStep(+1)} />
+              </div> : null}
+          </div>
+
+          {/* cards */}
+          <div id="cards-wrapper" className="cards-wrapper">
+            <div className="card">
+              <CreateCard
+                title={""} step={"카드 "}
+                marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
+            </div>
+          </div>
+        </EditorWrapperMobile>
+        :
+        <div className="steps">
+          {(steps && steps.length > 0)
+            ? steps.map((step, index) =>
+              <div key={step + index} className="step">
+                <StepCard title={step.title} />
+                <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={85} />
+                <CreateCard />
+              </div>)
+            : null
+          }
+          <div className="create-step">
+            <CreateStep />
+          </div>
+        </div>}
+
+    </EditorContainer>);
+  }
+}
+
+const template = [
+  { type: "empty", text: "빈 템플릿", img: templateImgEmpty },
+  { type: "fashion", text: "일반디자인 템플릿", img: templateImgDesign },
+  { type: "engineering", text: "공학디자인 템플릿", img: templateImgEngineering },
+  { type: "software", text: "소프트웨어디자인 템플릿", img: templateImgSofware },
+];
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
@@ -21,6 +259,132 @@ const ItemType = [
   { text: "지적재산권", value: 6 },
   { text: "제작품", value: 7 }
 ];
+const DesignElement = styled.div`
+  *{
+    cursor:pointer;
+  }
+  position: relative;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  font-family: "Noto Sans KR";
+  z-index: 700;
+  width: 300px;
+  height: 150px;
+  border-radius: 15px;
+  // background-size: cover;
+  img{
+    max-width: 100%;
+    max-height: 100%;
+    // background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(${props => props.img});
+  }
+  
+  .cover {
+    // cursor: default;
+    z-index: 701;
+    position: absolute;
+    border-radius: 15px;
+    background-image: linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(32,32,32, 0.7)100%); 
+    width: 330px;
+    height: 330px;
+  }
+
+  .innerbox {
+    z-index: 703;
+    position: absolute;
+    width: 274.08px;
+    color: #FFFFFF;
+    line-height: 40px;
+    height: 35px;
+    font-family: Noto Sans KR;
+    margin-left: 25px;
+    margin-top: 201px;
+    .design-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-shadow:2px 2px 6px gray;
+      display: flex;
+      justify-content: space-between;
+    }
+    .update-time { 
+      margin-top: 5px;
+      font-weight: 300;
+      border: 1px solid red;
+      width: max-content;
+      height: 25px;
+      font-size: 17px;
+      font-family: Noto Sans KR;
+      text-shadow:2px 2px 6px gray;
+      line-height: 25px;
+      text-align: right;
+      // cursor: default;
+    }
+    .user-name {
+      font-size: 20px;
+      font-weight: 300;
+      text-shadow:2px 2px 6px gray;
+      // cursor: default;
+    }  
+    .user-update-wrapper {
+      width: 285px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .counter {
+    z-index: 703;
+    position: absolute;
+    left: 24.92px;
+    top: 286px;
+    display: flex;
+    justify-content: space-start;
+    width: 291px;
+    height: 22px;
+    text-align: left;
+    line-height: 40px;
+    font-size: 15px;
+    font-weight: 500;
+    align-items: center;
+  }
+  .view {
+    z-index: 703;
+    margin-right: 4.25px;
+  }
+  .view-count {
+    z-index: 703;
+    margin-right: 6px;
+    // cursor: default;
+  }
+  .like {
+    z-index: 703;
+    margin-right: 4px;
+    img{
+      width: 13px;
+      height: 13px;
+    }
+  } 
+  .like-count {
+    z-index: 703;
+    margin-right: 6px;
+    // cursor: default;
+  }
+  .fork {
+    z-index: 703;
+    margin-right: 4px;
+    img {
+      width: 22px;
+      height: 11px;
+    }
+  }
+  .fork-count {
+    z-index: 703;
+    margin-right: 0px;
+    // cursor: default;
+  }
+`;
 const MainBox = styled.div`
   width:100%;
   .title{
@@ -30,11 +394,11 @@ const MainBox = styled.div`
     font-size:20px;
     font-weight:500;
   }
-  .contentsBox{
-    width:100%;
-    display:flex;
-    padding-left:130px;
-    padding-top:36px;
+  .contentsBox {
+    display: flex;
+    width: 100%;
+    padding-top: 36px;
+    padding-left: 30px;
   }
   .font_red {
     width: 7px;
@@ -87,6 +451,7 @@ const Thumbnail = styled.div`
 `;
 const FormBox = styled.div`
   *{
+    // border: 1px solid blue;
     font-family: Noto Sans KR;
     font-weight: 500;
     font-size: 20px;
@@ -95,6 +460,10 @@ const FormBox = styled.div`
   height:${props => props.height || "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
   border-radius: 20px;
+  padding: 20px;
+  margin-top: ${props => props.marginTop || 0}px;
+  margin-bottom: ${props => props.marginBottom || 0}px;
+  
   
   .contentWrap{
     border-radius: 20px;
@@ -181,7 +550,30 @@ const InfoContentChooseItemType = styled.div`
   font-size: 24px;
   color: #707070;
 `;
-
+const EditorWrapper = styled.div`
+  .title {
+    color: #707070;
+    width: max-content;
+    font-size: 26px;
+    font-weight: 300;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+  .editor{
+    opacity: .75;
+    overflow: auto;
+  }
+`;
+const ResetButtonWrapper = styled.div`
+  width: max-content;
+  margin-left: auto;
+  margin-right: 25px;
+  color: #707070;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
 class CreateProductForm extends Component {
   constructor(props) {
     super(props);
@@ -387,10 +779,36 @@ class CreateProductForm extends Component {
 }
 export default CreateProductForm;
 
+const DesignTemplateSelector = styled.div`
+  .title {
+    color: #707070;
+    font-weight: 300;
+    width: max-content;
+    font-size: 26px;
+    margin-bottom: 15px;
+    // padding: 10px 5px;
+    // line-height: 2rem;
+  }
+  .template-wrapper {
+    // width: 450px;
+    display: flex;
+    // flex-direction: row;
+    overflow: auto;
+  }
+  .element {
+    min-width: 150px;
+    margin: 5px;
+    border: 2px solid #EFEFEF;
+    padding: 5px;
+    :hover{
+      border: 2px solid #777777;
+    }
+  }
+`;
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { additional: null, content: [], steps: [], type: "blog" };
+    this.state = { reset: 0, additional: null, content: [], steps: [], type: this.props.itemType === 1 ? "project" : "blog", template: null };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -428,6 +846,7 @@ class ItemTypeForm extends Component {
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
     const {/* additional, */content, steps } = this.state;
+    // console.log(this.state, this.props);
 
     return (
       <MainBox>
@@ -445,25 +864,82 @@ class ItemTypeForm extends Component {
           </div>
         </FormBox>
 
-        <FormBox boxShadow={true} width={1570}>
+        <FormBox boxShadow={true} width={1570} marginTop={25}>
+          <ResetButtonWrapper
+            onClick={async () => {
+              await this.setState({
+                additional: null,
+                content: [],
+                steps: [],
+                type: this.props.itemType === 1 ? "project" : "blog",
+                template: null,
+                is_project: 0,
+                reset: (++this.state.reset) % 10,
+              });
+              this.returnState();
+            }}>
+            작업취소하기<i className="undo icon" />
+          </ResetButtonWrapper>
           {this.state.type === "blog" ?
-            <div className="contentWrap">
-              <InputContent
-                projectable={true}
-                content={content}
-                toProject={this.toProject}
-                returnState={this.onHandleContent} />
-            </div>
+            // <div className="contentWrap">
+            <InputContent
+              reset={this.state.reset}
+              projectable={true}
+              content={content}
+              toProject={this.toProject}
+              returnState={this.onHandleContent} />
+            // </div>
             :
             // {/* 로컬 그리드 에디터 - */}
-            <div className="contentsBox">
-              <LocalGridEditor
-                userInfo={this.props.userInfo}
-                content={steps}
-                returnContent={this.onHandleGrid}
-                editor={true} />
-            </div>
-          }
+            <React.Fragment>
+              <div className="contentsBox">
+                <DesignTemplateSelector>
+                  <div className="title">
+                    템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
+                  </div>
+                  <div className="template-wrapper">
+                    {template &&
+                      template.length > 0 &&
+                      template.map(item =>
+                        <label
+                          className="element"
+                          key={item.type}
+                          onClick={
+                            async () => {
+                              await this.setState({ template: item.type })
+                            }}>
+                          {item.text}
+                          <DesignElement ><img alt="" src={item.img} /></DesignElement>
+                        </label>
+                      )}
+                  </div>
+                </DesignTemplateSelector>
+                {/* 
+                  <LocalGridEditor
+                    userInfo={this.props.userInfo}
+                    content={steps}
+                    returnContent={this.onHandleGrid}
+                    editor={true} />
+                */}
+              </div>
+              <div className="contentsBox">
+                <EditorWrapper>
+                  <div className="editor">
+                    <TemplateGridEditor
+                      reset={this.state.reset}
+                      selected={
+                        content => {
+                          this.setState({ steps: content, type: "project", is_project: 1 });
+                          this.returnState();
+                        }}
+                      type={this.state.template} />
+                  </div>
+                  <div className="title">
+                    선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.
+                  </div>
+                </EditorWrapper>
+              </div>
+            </React.Fragment>}
 
         </FormBox>
 
