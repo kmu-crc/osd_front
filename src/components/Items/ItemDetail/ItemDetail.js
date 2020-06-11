@@ -716,13 +716,13 @@ class ItemDetail extends Component {
                   />
                 </div>
                 : null}
-              {isWrapperContent && <CoverGrident isGradient={!expandingContent} />}
+              {isWrapperContent && expandingContent === false && <CoverGrident isGradient={!expandingContent} />}
             </Content>
             {isWrapperContent &&
               <ExpandingButton width={1600}>
                 <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                   <div className="font">
-                    {expandingContent ? "▲접기" : "▼펼쳐보기"}
+                    {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
                   </div>
                 </div>
               </ExpandingButton>
