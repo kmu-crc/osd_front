@@ -288,6 +288,27 @@ const EditCardHeaderContainer = styled.div`
             cursor: pointer;
         }
     }
+    .private-box-toggle {
+        position: absolute;
+        top: 20px;
+        right: 100px;
+        width: max-content;
+        .icon-wrapper {
+            padding: 10px;
+            width: max-content;
+            border-radius: 50%;
+            background-color: #707070;
+            &.lock {
+                background-color: #707070;
+            }
+            &.unlock {
+                background-color: #FF0000;
+            }
+            i {
+                color: white;
+            }
+        }
+    }
 `;
 //const BlankSpace = styled.div`
 //    width: 250px;
@@ -301,6 +322,7 @@ class NewCardModal extends Component {
         loading: false, scroll: false, edit: false, title: "", content: "", hook: false,
         card_content: { deleteContent: [], newContent: [], updateContent: [] },
         closed: false, isEdited: false,
+        private: false,
     };
     //handleCancel = async (obj) => {
     //    if (this.state.title !== "" || this.state.content !== "") {
@@ -370,7 +392,7 @@ class NewCardModal extends Component {
                             let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
 
                             this.props.UpdateCardSourceRequest({
-                                title: this.state.title, thumbnail: thumbnail, content: this.state.content,
+                                title: this.state.title, thumbnail: thumbnail, content: this.state.content, private: this.state.private,
                                 data: { deleteContent: [], newContent: obj.newContent, updateContent: [] }
                             }, card_id, this.props.token)
                                 .then(() => { this.props.UpdateDesignTime(this.props.designId, this.props.token) })
@@ -400,14 +422,28 @@ class NewCardModal extends Component {
         return (
             <React.Fragment>
                 <NewCardDialogWrapper open={this.props.open} onClose={this.onClose}>
-                    <div className="close-box" onClick={this.onClose} >
+                    <div className="close-box"
+                        onClick={this.onClose} >
                         <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                     </div>
-
                     {this.state.loading && <Loading />}
 
                     <div className="content-wrapper">
                         <EditCardHeaderContainer>
+                            <div className="private-box-toggle" >
+                                <div className={`icon-wrapper ${!this.state.private ? "lock" : "unlock"}`}
+                                    onClick={() =>
+                                        this.setState({ private: !this.state.private })}>
+                                    {(this.state.private === true)
+                                        ? <i className="lock big icon" />
+                                        : <i className="unlock big icon" />}
+                                </div>
+                                <div>
+                                    컨텐츠를 {this.state.private ? "비공개" : "공개"}로 변경합니다.
+                                                </div>
+                            </div>
+
+
                             <div className="edit-header-container">
                                 <div className="edit-card-info">새 컨텐츠</div>
                             </div>
