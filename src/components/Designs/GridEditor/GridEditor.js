@@ -289,7 +289,7 @@ class GridEditor extends Component {
                                 <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
-                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} />}
+                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} userInfo={userInfo}/>}
                                     {editor && <div style={{ display: "flex", marginTop: "10px", marginLeft: "10px" }}>
                                         <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
                                     </div>}

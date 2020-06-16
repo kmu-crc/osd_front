@@ -11,7 +11,6 @@ import {
 
 class DesignDetailContainer extends Component {
   render() {
-
     return (<DesignDetail {...this.props} />)
   }
 }

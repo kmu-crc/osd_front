@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { CreateCard, StepCard, ContentCard } from "./GridTools";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
+import { alert } from 'components/Commons/Alert/Alert';
 
 const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};
@@ -32,9 +33,19 @@ const VerticalDragHandle = SortableHandle(({ is_white }) => <DragBox>
     {/* <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.21} marginTop={7} /> */}
 </DragBox>)
 const margin = { marginTop: "25px", marginRight: "0px", marginBottom: "37px" };
-const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id }) => (
-    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" editor={editor} uid={card.uid} {...margin} card={card} design_id={design_id} >
-        {editor ? <VerticalDragHandle is_white={card.first_img} /> : null}
+const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id, userInfo }) => (
+    // console.log(card, userInfo)
+    <ContentCard
+        onClick={() => card.private === 1 && card.user_id !== userInfo.uid ? alert("이 컨텐츠는 비공개컨텐츠 입니다.\n컨텐츠작성자만 열람할 수 있습니다.") : openCard(card, card.order, boardId)}
+        id="contentcard"
+        editor={editor}
+        uid={card.uid}
+        {...margin}
+        card={card}
+        design_id={design_id} >
+        {editor
+            ? <VerticalDragHandle is_white={card.first_img} />
+            : null}
     </ContentCard>
 
 ));
@@ -89,7 +100,7 @@ const DragHandler = styled.div`
         }
     }
 `;
-const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_id, openCard, createCard, reorder }) => (
+const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_id, openCard, createCard, reorder, userInfo }) => (
     <HorizonBox>
         <div className="bound_box">
 
@@ -108,7 +119,7 @@ const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_
                         <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
                     </div>
                     <div>
-                        <SortableDesignCards editor={editor} boardId={boardId} items={step.cards} design_id={design_id} openCard={openCard} reorder={reorder} />
+                        <SortableDesignCards editor={editor} boardId={boardId} items={step.cards} design_id={design_id} openCard={openCard} reorder={reorder} userInfo={userInfo} />
                     </div>
                 </Fragment>}
             {editor &&
@@ -143,14 +154,15 @@ class SortableDesignCards extends Component {
 
     render() {
         const { items } = this.state;
-        const { editor, design_id, openCard, createCard, boardId } = this.props;
+        const { editor, design_id, openCard, createCard, boardId, userInfo } = this.props;
+        console.log("!!!!", userInfo);
         return (<Container
             axis="y"
             pressThreshold={5}
             onSortEnd={this.onSortEnd}
             onSortStart={(_, event) => event.preventDefault()}
             useDragHandle>
-            {items.map((item, index) => (<SortableCard createCard={createCard} openCard={openCard} boardId={boardId} design_id={design_id} editor={editor} key={`step-${index}`} index={index} card={item} />))}
+            {items.map((item, index) => (<SortableCard createCard={createCard} openCard={openCard} boardId={boardId} design_id={design_id} editor={editor} key={`step-${index}`} index={index} card={item} userInfo={userInfo} />))}
         </Container>)
     }
 }
@@ -185,7 +197,7 @@ class SortableDesignSteps extends Component {
     }
     render() {
         const { items } = this.state;
-        const { editor, design_id, cardReorder, createCard, openCard } = this.props;
+        const { editor, design_id, cardReorder, createCard, openCard, userInfo } = this.props;
         return (<Container
             axis="x"
             pressThreshold={5}
@@ -195,7 +207,7 @@ class SortableDesignSteps extends Component {
             useDragHandle>
             <div style={{ display: "flex" }}>
                 {items.map((item, index) => (
-                    <SortableStep editStep={this.props.editStep} boardId={item.uid} createCard={createCard} openCard={openCard} reorder={cardReorder} design_id={design_id} disabled={!editor} editor={editor} key={`step-${index}`} index={index} step={item} />
+                    <SortableStep editStep={this.props.editStep} boardId={item.uid} createCard={createCard} openCard={openCard} reorder={cardReorder} design_id={design_id} disabled={!editor} editor={editor} key={`step-${index}`} index={index} step={item} userInfo={userInfo} />
                 ))}
             </div>
         </Container >)
