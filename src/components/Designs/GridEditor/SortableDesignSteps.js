@@ -36,7 +36,10 @@ const margin = { marginTop: "25px", marginRight: "0px", marginBottom: "37px" };
 const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_id, userInfo }) => (
     // console.log(card, userInfo)
     <ContentCard
-        onClick={() => card.private === 1 && card.user_id !== userInfo.uid ? alert("이 컨텐츠는 비공개컨텐츠 입니다.\n컨텐츠작성자만 열람할 수 있습니다.") : openCard(card, card.order, boardId)}
+        onClick={() =>
+            (card.private === 1 && (userInfo == null || card.user_id !== userInfo.uid))
+                ? alert("이 컨텐츠는 비공개컨텐츠 입니다.\n컨텐츠작성자만 열람할 수 있습니다.")
+                : openCard(card, card.order, boardId)}
         id="contentcard"
         editor={editor}
         uid={card.uid}
