@@ -652,7 +652,8 @@ const DesignMemberModalContainer = styled(Modal)`
 `;
 const DesignCommentModalContainer = styled(Modal)`
     padding: 60px;
-    min-width: 800px;
+    max-width: 800px;
+    width:400px;
     // width: max-content;
     // max-width: 1440px;
     .close-box {

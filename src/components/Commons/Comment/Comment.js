@@ -141,6 +141,7 @@ const CommentInputTextContainer = styled.div`
         margin-left: 50px;
     }
     .writeBox {
+
         font-size: 15px;
         line-height: 22px;
         color: #707070;
@@ -187,6 +188,7 @@ const CommentInputTextContainer = styled.div`
        }
    }
    .flex_Input{
+       width:100%;
        display:flex;
    }
    .another-wrapper { 

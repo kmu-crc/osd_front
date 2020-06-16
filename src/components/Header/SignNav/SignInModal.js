@@ -224,8 +224,8 @@ class SignInModal extends Component {
                     this.setState({ password: "" })
                     //this.onClose()
                 }
-            })
-    }
+                })
+        }
     async checkEmail() {
         const data = { email: this.state.email }
         let returnvalue = true;

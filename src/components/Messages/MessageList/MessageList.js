@@ -282,19 +282,20 @@ const SendButton = styled.div`
     color:#707070;
   }
 `;
-const SendMessageTextarea = styled.textarea`
+const SendMessageTextarea = styled.div`
   width:95%;
   height:100%;
   font-size:18px;
-  font-weight:500;
-  color:#707070;
+  // font-weight:500;
+  // color:#707070;
   text-align:left;
   line-height:27px;
   background-color:#dddddd;
   resize:none;
-  border:none;
+  border:none;글
   outline:none;
   padding:20px;
+  overflow:auto;
   @media only screen and (min-width : 780px) and (max-width:1440px) {
 
   }
@@ -426,7 +427,7 @@ class Messages extends React.Component {
     super(props);
     this.state = {
       w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
-      msgValue: '',
+      // msgValue: '',
       msgId: -1,
       selectId: null,
       selectName: null,
@@ -436,12 +437,12 @@ class Messages extends React.Component {
       render: true,
       memberSearch: false,
     };
-    this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
+    // this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
     this.handleClickSend = this.handleClickSend.bind(this);
     this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
     this.handleOpenMember = this.handleOpenMember.bind(this);
     this.handleClickSearchMemberItem = this.handleClickSearchMemberItem.bind(this);
-    this.initMsgValue = this.initMsgValue.bind(this);
+    // this.initMsgValue = this.initMsgValue.bind(this);
     this.handleCloseMember = this.handleCloseMember.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.getValue = this.getValue.bind(this);
@@ -548,15 +549,16 @@ class Messages extends React.Component {
       await alert("받는 사람을 지정해주세요.", "확인")
       return
     }
-    let msg = ``;
-    if (this.state.msgValue && this.state.msgValue.length > 0) {
-      msg = this.state.msgValue.replace(/\n/g, "<br/>");
-    } else {
+    // let msg = ``;
+    const innerHtmlValue = document.getElementById("sendMsgBox").innerHTML;
+    console.log(innerHtmlValue);
+   
+    if (innerHtmlValue=="") {
       await alert("텍스트를 입력해주세요.", "확인");
       return;
     }
 
-    this.props.SendMessageRequest(this.props.token, { message: msg }, this.state.selectId)
+    this.props.SendMessageRequest(this.props.token, { message: innerHtmlValue }, this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {
           await this.props.GetMyMsgListRequest(this.props.token)
@@ -565,14 +567,17 @@ class Messages extends React.Component {
         this.setState({ render: true });
         this.props.history.replace("/message");
       });
-    this.initMsgValue();
+
+
+      document.getElementById("sendMsgBox").innerHTML="";
+    // this.initMsgValue();
   }
-  handleChangeMsgValue(event) {
-    this.setState({ msgValue: event.target.value })
-  }
-  initMsgValue() {
-    this.setState({ msgValue: "" })
-  }
+  // handleChangeMsgValue(event) {
+  //   this.setState({ msgValue: event.target.value })
+  // }
+  // initMsgValue() {
+  //   this.setState({ msgValue: "" })
+  // }
   handleClickSend() {
     console.log(this.props);
   }
@@ -656,7 +661,9 @@ class Messages extends React.Component {
                   </div>
                   <div className="send">
                     <div className="sendBox">
-                      <SendMessageTextarea id="sendMsgBox" type="textarea" onChange={this.handleChangeMsgValue} value={this.state.msgValue} /></div>
+                      <SendMessageTextarea  contentEditable="true" id="sendMsgBox">
+                      </SendMessageTextarea>
+                      </div>
                     <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
                       <div className="sendButton_label">전송하기</div></SendButton>
                   </div>

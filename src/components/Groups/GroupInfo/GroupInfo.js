@@ -792,11 +792,13 @@ class GroupInfoComponent extends Component {
                                             <div className="ButtonItem" onClick={this.changeEditMode}>
                                                 
                                                 <div className="button_text_label displayFlex">
-                                                    {this.props.waitingDesign.length>0||this.props.waitingGroup.length>0?
+
+                                                    {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                                <NormalIcon imageURL={iINOUT} opacity={0.5} />
+                                                {this.props.waitingDesign.length>0||this.props.waitingGroup.length>0?
                                                     manager?null:<NewAlarmLogo><div className="circle"/></NewAlarmLogo>
                                                     :null}
-                                                    {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                                <NormalIcon imageURL={iINOUT} opacity={0.5} /></div>
+                                                </div>
 
                                         </React.Fragment>
                                         : <React.Fragment>

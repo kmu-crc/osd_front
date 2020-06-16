@@ -705,6 +705,7 @@ const DesignTemplateSelector = styled.div`
   .template-wrapper {
     // width: 450px;
     display: flex;
+    justify-content:center;
     // flex-direction: row;
     overflow: auto;
   }
