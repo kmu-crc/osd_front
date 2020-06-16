@@ -63,8 +63,7 @@ class GroupDetail extends Component {
     let tab = "group";
     if (this.props.GroupDetail) {
       const { design, group } = this.props.Count;
-      if (design > group && design > 0) tab = "design";
-      if (group > design && group > 0) tab = "group";
+      if (group== 0) tab = "design";
     }
     await this.setState({ currentTab: tab });
   }
@@ -119,7 +118,7 @@ class GroupDetail extends Component {
   render() {
     const { status, GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
     const { currentTab, manager, reload, this_order } = this.state
-
+console.log(currentTab);
     return (<React.Fragment>
 
       <GroupInfo handleSwitchMode={this.switchMode} {...this.props} />

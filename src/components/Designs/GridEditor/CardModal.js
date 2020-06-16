@@ -148,20 +148,30 @@ const CardDialog = styled(Modal)`
        }
     }
     .private-box-toggle {
+        min-width:150px;
         position: absolute;
-        top: 20px;
-        right: 100px;
+        top: 0px;
+        right: 0px;
         width: max-content;
+        display:flex;
+        jusitfy-content:flex-start;
+        align-items:center;
         .icon-wrapper {
-            padding: 10px;
-            width: max-content;
+            min-width:50px;
+            min-height:50px;
+            max-width:50px;
+            max-height:50px;
             border-radius: 50%;
             background-color: #707070;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-right:10px;
             &.lock {
-                background-color: #707070;
+                background-color: #FF0000;
             }
             &.unlock {
-                background-color: #FF0000;
+                background-color: #707070;
             }
             i {
                 color: white;
@@ -192,7 +202,7 @@ const CardDialog = styled(Modal)`
                 color: #707070;
                 font-weight: 900;
                 line-height: 29px;
-                margin-right: 75px;
+                // margin-right: 75px;
                 .edit-btn {
                     border: none;
                     background: none;
@@ -275,6 +285,7 @@ const CardDialog = styled(Modal)`
 
 `;
 const EditCardHeaderContainer = styled.div`
+    position:relative;
     .edit-header-container {
         display: flex;
         margin-top: 15px;
@@ -581,15 +592,7 @@ class CardModal extends Component {
                     </div>
 
                     {(card.private === 1) && (card.user_id !== (this.props.userInfo && this.props.userInfo.uid)) ?
-                        <div className="private-box" >
-                            <div className="icon-wrapper">
-                                <i className="lock big icon" />
-                            </div>
-                            <div className="text">
-                                비공개 컨텐츠입니다.<br />
-                                 작성자만 열람이 가능합니다.
-                            </div>
-                        </div>
+                        null
                         :
                         <div className="content-wrapper" >
                             {this.state.edit === false
@@ -618,15 +621,15 @@ class CardModal extends Component {
                                     <EditCardHeaderContainer>
                                         {(card.user_id === (this.props.userInfo && this.props.userInfo.uid)) ?
                                             <div className="private-box-toggle" >
-                                                <div className={`icon-wrapper ${!this.state.private ? "lock" : "unlock"}`} onClick={() => this.setState({ private: !this.state.private })}>
-                                                    {(this.state.private === true)
+                                                <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`} onClick={() => this.setState({ private: !this.state.private })}>
+                                                    {this.state.private
                                                         ? <i className="lock big icon" />
                                                         : <i className="unlock big icon" />}
                                                     {/* {card.private !== 1 ? */}
                                                     {/* } */}
                                                 </div>
                                                 <div>
-                                                    컨텐츠를 {this.state.private ? "비공개" : "공개"}로 변경합니다.
+                                                    {this.state.private ? "비공개" : "공개"}컨텐츠
                                                 </div>
                                             </div>
                                             : null}
