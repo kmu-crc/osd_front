@@ -289,20 +289,30 @@ const EditCardHeaderContainer = styled.div`
         }
     }
     .private-box-toggle {
+        min-width:150px;
         position: absolute;
-        top: 20px;
-        right: 100px;
+        top: 0px;
+        right: 0px;
         width: max-content;
+        display:flex;
+        jusitfy-content:flex-start;
+        align-items:center;
         .icon-wrapper {
-            padding: 10px;
-            width: max-content;
+            min-width:50px;
+            min-height:50px;
+            max-width:50px;
+            max-height:50px;
             border-radius: 50%;
             background-color: #707070;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-right:10px;
             &.lock {
-                background-color: #707070;
+                background-color: #FF0000;
             }
             &.unlock {
-                background-color: #FF0000;
+                background-color: #707070;
             }
             i {
                 color: white;
@@ -431,15 +441,15 @@ class NewCardModal extends Component {
                     <div className="content-wrapper">
                         <EditCardHeaderContainer>
                             <div className="private-box-toggle" >
-                                <div className={`icon-wrapper ${!this.state.private ? "lock" : "unlock"}`}
-                                    onClick={() =>
-                                        this.setState({ private: !this.state.private })}>
-                                    {(this.state.private === true)
+                                <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`} onClick={() => this.setState({ private: !this.state.private })}>
+                                    {this.state.private
                                         ? <i className="lock big icon" />
                                         : <i className="unlock big icon" />}
+                                    {/* {card.private !== 1 ? */}
+                                    {/* } */}
                                 </div>
                                 <div>
-                                    컨텐츠를 {this.state.private ? "비공개" : "공개"}로 변경합니다.
+                                    {this.state.private ? "비공개" : "공개"}컨텐츠
                                                 </div>
                             </div>
 

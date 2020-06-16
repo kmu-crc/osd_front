@@ -53,116 +53,159 @@ const CardDialog = styled(Modal)`
     border: 1px solid #EFEFEF;
     border-radius: 10px;
     opacity: 1;
-   ::-webkit-scrollbar {
-           position: absolute;
-           width: 3.9px;
-   }
-   ::-webkit-scrollbar-thumb {
-           background: rgba(112, 112, 112, 0.45) !important;
-   } 
-   .content{
-           margin-left: auto;
-           line-height: 17px;
-   }
-   .close-box {
-           width: max-content;
-           cursor: pointer;
-           position: relative;
-           margin-left: auto;
-           margin-right: 10px;
-           margin-top: 10px; 
-   }
+    ::-webkit-scrollbar {
+        position: absolute;
+        width: 3.9px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(112, 112, 112, 0.45) !important;
+    } 
+    .content {
+        margin-left: auto;
+        line-height: 17px;
+    }
+    .close-box {
+        width: max-content;
+        cursor: pointer;
+        position: relative;
+        margin-left: auto;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
     .content-wrapper {
         padding: 25px 20px;
-       .card-header-first {
-           height: 29px;
+        .card-header-first {
+            height: 29px;
+            .header-title {
+                font-family: Noto Sans KR;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 500;
+                line-height: 29px;
+            }
+            .header-edit-button {
+                font-family: Noto Sans KR;
+                font-size: 17px;
+                color: #707070;
+                font-weight: 900;
+                width: 100 %;
+                margin-bottom: 50px;
+                display: flex;
+                justify-content: flex-end;
+                .edit-btn {
+                    margin-left: 20px;
+                    border: none;
+                    background: none;
+                    width: max-content;
+                    color: #FF0000;
+                    padding-bottom: 1.5px;
+                    border-bottom: 1.5px solid #FF0000;
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: Noto Sans KR;
+                    text-align: left;
+                    cursor: pointer;
+                }
+                .cancel-btn {
+                    border: none;
+                    background: none;
+                    width: max-content;
+                    color: #707070;
+                    padding-bottom: 1.5px;
+                    border-bottom: 1.5px solid #707070;
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: Noto Sans KR;
+                    text-align: left;
+                    cursor: pointer;
+                }
+            }
+        }
+    .card-header-second {
+            width: 100 %;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        .contents {
+                width: 100 %;
+                min-height: max-content;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 29px;
+            }
 
-           .header-title {
-               font-family: Noto Sans KR;
-               font-size: 20px;
-               color: #707070;
-               font-weight: 500;
-               line-height: 29px;
-           }
-           .header-edit-button {
-            //    border:1px solid black;
-               font-family: Noto Sans KR;
-               font-size: 17px;
-               color: #707070;
-               font-weight: 900;
-               width:100%;
-               margin-bottom:50px;
-               display:flex;
-               justify-content:flex-end;
-               .edit-btn {
-                   margin-left: 20px;
-                   border: none;
-                   background: none;
-                   width: max-content;
-                   color: #FF0000;
-                   padding-bottom: 1.5px;
-                   border-bottom: 1.5px solid #FF0000;
-                   font-size: 20px;
-                   font-weight: 500;
-                   font-family: Noto Sans KR;
-                   text-align: left;
-                   cursor: pointer;
-               }
-               .cancel-btn {
-                   border: none;
-                   background: none;
-                   width: max-content;
-                   color: #707070;
-                   padding-bottom: 1.5px;
-                   border-bottom: 1.5px solid #707070;
-                   font-size: 20px;
-                   font-weight: 500;
-                   font-family: Noto Sans KR;
-                   text-align: left;
-                   cursor: pointer;
-               }
-           }
-       }
-       .card-header-second {
-           width: 100%;
-           display: flex;
-           flex-direction:column;
-           justify-content: flex-start;
-           margin-top: 30px;
-           margin-bottom:30px;
-           .contents {
-               width:100%;
-               min-height:max-content;
-               font-size: 20px;
-               color: #707070;
-               font-weight: 300;
-               font-family: Noto Sans KR;
-               line-height: 29px;   
-           }
-           
-       }
-       .card-header-third {
-           margin-top:15px;
-           width: 100%;
-           display:flex;
-           justify-content:space-between;
-           .nick-name {
-               width: max-content;
-               font-size: 20px;
-               color: #707070;
-               font-weight: 400;
-               font-family: Noto Sans KR;
-               line-height: 29px;   
-           }
-           .update-time {
-               width: max-content;
-               color: #707070;
-               font-size: 17px;
-               font-weight: 400;
-               font-family: Noto Sans KR;
-               line-height: 29px;
-           }
-   }
+        }
+    .card-header-third {
+            margin-top: 15px;
+            width: 100 %;
+            display: flex;
+            justify-content: space-between;
+        .nick-name {
+                width: max-content;
+                font-size: 20px;
+                color: #707070;
+                font-weight: 400;
+                font-family: Noto Sans KR;
+                line-height: 29px;
+            }
+        .update-time {
+                width: max-content;
+                color: #707070;
+                font-size: 17px;
+                font-weight: 400;
+                font-family: Noto Sans KR;
+                line-height: 29px;
+            }
+        }
+    .private-box {
+            padding: 25px;
+    .icon-wrapper{
+                padding: 10px;
+                width: max-content;
+                margin: auto;
+                font-size: 24px;
+            }
+    .text {
+                text-align: center;
+                font-weight: 500;
+                font-size: 36px;
+            }
+        }
+        .private-box-toggle {
+            min-width: 150px;
+            position: absolute;
+            top: 75px;
+            right: 0px;
+            width: max-content;
+            display:flex;
+            jusitfy-content:flex-start;
+            align-items:center;
+            .icon-wrapper {
+                min-width:50px;
+                min-height:50px;
+                max-width:50px;
+                max-height:50px;
+                border-radius: 50%;
+                background-color: #707070;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                margin-right:10px;
+                &.lock {
+                    background-color: #FF0000;
+                }
+                &.unlock {
+                    background-color: #707070;
+                }
+                i {
+                    color: white;
+                }
+            }
+        }
 `;
 const EditCardHeaderContainer = styled.div`
     .edit-header-container {
@@ -314,6 +357,7 @@ class CardModalMobile extends Component {
             title: "",
             content: "",
             isEdited: false,
+            private: this.props.card.private || false,
         }
     };
     componentDidUpdate(prevProps) {
@@ -381,6 +425,7 @@ class CardModalMobile extends Component {
                     title: this.state.title,
                     thumbnail: files && thumbnail,
                     content: this.state.content,
+                    private: this.state.private,
                     data: {
                         deleteContent: formData.deleteContent,
                         newContent: formData.newContent,
@@ -497,6 +542,20 @@ class CardModalMobile extends Component {
 
                             : <React.Fragment>
                                 <EditCardHeaderContainer>
+                                    {(card.user_id === (this.props.userInfo && this.props.userInfo.uid)) ?
+                                        <div className="private-box-toggle" >
+                                            <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`} onClick={() => this.setState({ private: !this.state.private })}>
+                                                {this.state.private
+                                                    ? <i className="lock big icon" />
+                                                    : <i className="unlock big icon" />}
+                                                {/* {card.private !== 1 ? */}
+                                                {/* } */}
+                                            </div>
+                                            <div>
+                                                {this.state.private ? "비공개" : "공개"}컨텐츠
+                                                </div>
+                                        </div>
+                                        : null}
                                     <div className="edit-header-container">
                                         <div className="edit-card-info">컨텐츠 정보 수정</div>
                                     </div>

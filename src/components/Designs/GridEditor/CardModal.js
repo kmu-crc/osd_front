@@ -592,6 +592,7 @@ class CardModal extends Component {
                     </div>
 
                     {(card.private === 1) && (card.user_id !== (this.props.userInfo && this.props.userInfo.uid)) ?
+                        // <div>이 컨텐츠는 비공개 컨텐츠입니다. 컨텐츠 작성자만 열람하실 수 있습니다.</div>
                         null
                         :
                         <div className="content-wrapper" >
