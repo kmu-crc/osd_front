@@ -100,7 +100,7 @@ class DetailView extends Component {
 
   onSubmitCmtForm = async data => {
     if (!this.props.token) {
-      await alert("로그인을 해주세요.","확인");
+      await alert("로그인 해주세요.","확인");
       return;
     }
     if (FormDataToJson(data) && FormDataToJson(data).content === "") {

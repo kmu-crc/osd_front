@@ -79,7 +79,7 @@ class DesignComment extends React.Component {
       d_flag: d_flag,
     }
     if (!this.props.token) {
-      await alert("로그인을 해주세요.","확인");
+      await alert("로그인 해주세요.","확인");
       return;
     }
     if (!this.state.reply && (packet.comment.length === 0 || packet.comment.trim() === "")) {

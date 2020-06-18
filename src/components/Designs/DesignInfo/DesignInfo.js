@@ -757,7 +757,7 @@ class DesignInfo extends Component {
     }
     joinMember = async () => {
         if (!this.props.userInfo || !this.props.token) {
-            await alert("로그인을 해주세요.", "확인");
+            await alert("로그인 해주세요.", "확인");
         } else if (this.props.DesignDetail.waitingStatus === 1) {
             await alert("가입 대기중인 디자인입니다.", "확인");
         } else {

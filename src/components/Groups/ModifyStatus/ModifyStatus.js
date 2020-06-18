@@ -55,7 +55,7 @@ class ModifyStatus extends Component {
 
   handleModal = async () => {
     if (!this.props.token) {
-      await alert("로그인을 해주세요.","확인");
+      await alert("로그인 해주세요.","확인");
       return;
     } else {
       this.setState({ open: true });

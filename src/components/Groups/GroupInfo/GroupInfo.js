@@ -649,7 +649,7 @@ class GroupInfoComponent extends Component {
         window.location.href = geturl() + `/groupDetail/${id}`
     }
     async needLogin() {
-       await alert("로그인을 해주세요.","확인");
+       await alert("로그인 해주세요.","확인");
     }
     async like() {
         if (!this.props.userInfo) {
