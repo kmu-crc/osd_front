@@ -990,7 +990,7 @@ class DesignInfo extends Component {
                                 <div className="flexBox">
                                     {DesignDetail.children_count["count(*)"] > 0 &&
                                         <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
-                                            파생된 디자인 <span>{DesignDetail.children_count["count(*)"]}</span>
+                                            파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
                                         </button>}
                                 </div>
                                 {this.state.forkDesignList && <ForkDesignListModal />}
