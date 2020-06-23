@@ -37,15 +37,10 @@ const SortableCard = SortableElement(({ editor, card, openCard, boardId, design_
     // console.log(card, userInfo)
     <ContentCard
         onClick={() =>
-            // 비공개인가
-            // 관리자인가 혹은 주인인가
-            // (userInfo && userInfo.uid !== 762) ||
-            // (card.private === 1 && (userInfo == null || userInfo.uid !== card.user_id)
-            // ? alert("이 컨텐츠는 비공개컨텐츠 입니다.\n컨텐츠작성자만 열람할 수 있습니다.")
             (card.private === 1)
                 ? (userInfo && (userInfo.uid === card.user_id || userInfo.uid === 77))
                     ? openCard(card, card.order, boardId)
-                    : alert("이 컨텐츠는 비공개컨텐츠 입니다.\n컨텐츠작성자만 열람할 수 있습니다.")
+                    : alert("이 컨텐츠는 비공개입니다.\n컨텐츠 작성자만 열람할 수 있습니다.")
                 : openCard(card, card.order, boardId)
             // : openCard(card, card.order, boardId)
         }

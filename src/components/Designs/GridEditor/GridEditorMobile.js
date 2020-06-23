@@ -342,6 +342,7 @@ class GridEditorMobile extends Component {
 
                     {/* cards */}
                     <div id="cards-wrapper" className="cards-wrapper">
+
                         {Step &&
                             Step.cards &&
                             Step.cards.length > 0 &&
@@ -349,7 +350,17 @@ class GridEditorMobile extends Component {
                                 <div className="card"
                                     key={card.uid + card.title}>
                                     <ContentCard
-                                        onClick={async () => await this.setState({ card: Step.cards.find(_card => _card.uid === card.uid) })}
+                                        onClick={async () =>
+                                            (card.private === 1)
+                                                ? (userInfo && (userInfo.uid === card.user_id || userInfo.uid === 77))
+                                                    ? await this.setState({ card: Step.cards.find(_card => _card.uid === card.uid) })
+                                                    : alert("이 컨텐츠는 비공개입니다.\n컨텐츠 작성자만 열람할 수 있습니다.")
+                                                : await this.setState({ card: Step.cards.find(_card => _card.uid === card.uid) })
+                                            // card.private === 1 && (userInfo && (userInfo.uid !== card.uid || userInfo.uid !== 77)) ?
+                                            // alert("비공개 컨텐츠입니다. 작성만 열람이 가능합니다.")
+                                            // :
+                                            // await this.setState({card: Step.cards.find(_card => _card.uid === card.uid) })
+                                        }
                                         id="contentcard"
                                         editor={false}
                                         uid={card.uid}

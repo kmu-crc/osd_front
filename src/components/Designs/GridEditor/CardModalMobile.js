@@ -552,7 +552,7 @@ class CardModalMobile extends Component {
                                                 {/* } */}
                                             </div>
                                             <div>
-                                                {this.state.private ? "비공개" : "공개"}컨텐츠
+                                                {this.state.private ? "비공개" : "공개"}
                                                 </div>
                                         </div>
                                         : null}
