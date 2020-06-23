@@ -757,7 +757,7 @@ class DesignInfo extends Component {
     }
     joinMember = async () => {
         if (!this.props.userInfo || !this.props.token) {
-            await alert("로그인을 해주세요.", "확인");
+            await alert("로그인 해주세요.", "확인");
         } else if (this.props.DesignDetail.waitingStatus === 1) {
             await alert("가입 대기중인 디자인입니다.", "확인");
         } else {
@@ -990,7 +990,7 @@ class DesignInfo extends Component {
                                 <div className="flexBox">
                                     {DesignDetail.children_count["count(*)"] > 0 &&
                                         <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
-                                            파생된 디자인 <span>{DesignDetail.children_count["count(*)"]}</span>
+                                            파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
                                         </button>}
                                 </div>
                                 {this.state.forkDesignList && <ForkDesignListModal />}

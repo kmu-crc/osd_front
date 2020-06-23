@@ -114,7 +114,7 @@ class DesignIssueDetail extends Component {
 
   onSubmitForm = async (data) => {
     if (!this.props.token) {
-      await alert("로그인을 해주세요.","확인");
+      await alert("로그인 해주세요.","확인");
       return;
     }
     this.props.CreateIssueCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
