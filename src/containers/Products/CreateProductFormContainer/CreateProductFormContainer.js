@@ -9,7 +9,7 @@ class CreateProductFormContainer extends Component {
   componentDidMount() {
     console.log("designer:", this.props, this.props.keep == null);
     if (this.props.keep == null) {
-      if (this.props.userInfo.isDesigner === 0 || this.props.userInfo.isMaker === 0) {
+      if (!(this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1)) {
         alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.");
         this.props.history.push("/myPage");
         ;

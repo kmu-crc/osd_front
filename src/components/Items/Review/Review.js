@@ -4,7 +4,9 @@ import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 
 const Wrapper = styled.div`
+
   min-width:600px;
+  max-width:600px;
   height:150px;
   margin-right:50px;
   margin-bottom:30px;
@@ -15,6 +17,9 @@ const Wrapper = styled.div`
     padding: 10px 30px;
     .row{
       width: max-content;
+      margin-bottom: 15px;
+    }
+    .row2{
       margin-bottom: 15px;
     }
   }
@@ -40,7 +45,7 @@ class Review extends Component {
       <div className="content">
         <div className="row">{Star(item.score, 28)}</div>
         <div className="row">{item.nick_name}</div>
-        <div className="row">{item.comment && item.comment.slice(0, 64)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
+        <div className="row2">{item.comment && item.comment.slice(0, 64)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
       </div>
     </Wrapper>)
   }
