@@ -216,11 +216,12 @@ const NaviMenu = styled.div`
 `;
 const NoInviteMemberBox = styled.div`
   margin-left: 167px;
-  margin-top: 30px;
+  // margin-top: 30px;
   font-size: 20px;
   font-weight: 500;
   font-family: Noto Sans KR;
   color: #707070;
+  display:flex;
   .textLabel {
         margin - left: 35px;
       vertical-align: top;
@@ -476,7 +477,7 @@ class ModifyItemInfo extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag width={370} taglist={this.state.tag.toString().split(',')} getValue={this.onHandleReturnedTags} />
+                  <InputTag width={370} taglist={this.props.ItemDetail.tag.split(',')} getValue={this.onHandleReturnedTags} />
                 </div>
               </div>
 
@@ -536,6 +537,7 @@ class ModifyItemInfo extends Component {
                         width={483} height={99} />
                     </Field>
                     <Field title="팀원 초대">
+                      <div style={{display:"flex"}}>
                       {!this.state.alone ?
                         <SearchDesignMemberContainer
                           originalMember={
@@ -546,8 +548,9 @@ class ModifyItemInfo extends Component {
                       {/* LEAVE ME ALONE */}
                       <NoInviteMemberBox>
                         <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
-                        <span className="textLabel">멤버를 초대하지 않습니다.</span>
+                        <div className="textLabel">멤버를 초대하지 않습니다.</div>
                       </NoInviteMemberBox>
+                      </div>
                     </Field>
                     <Field title="공개">
                       <RadioType
