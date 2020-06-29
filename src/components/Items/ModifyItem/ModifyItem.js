@@ -14,11 +14,9 @@ class ModifyItem extends Component {
   render() {
     // console.log("props", this.props)
     return (
-      <React.Fragment>
-        {/* <Wrapper> */}
-          <ModifyItemFormContainer history={this.props.history} id={this.props.id} />
-        {/* </Wrapper> */}
-      </React.Fragment>
+      <ModifyItemFormContainer
+        history={this.props.history}
+        id={this.props.id} />
     );
   }
 }

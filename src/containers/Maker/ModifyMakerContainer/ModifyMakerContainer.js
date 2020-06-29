@@ -6,7 +6,7 @@ import ContentBox from "components/Commons/ContentBox";
 // import mainSlide from "source/mainSlide.jpg";
 import { connect } from "react-redux";
 import { UpdateMakerDetailRequest } from "actions/Users/UserInfo";
-import { GetExpertMakerDetailRequest} from "actions/Expert"
+import { GetExpertMakerDetailRequest } from "actions/Expert"
 
 //const ImgWrapper = styled.div`
 //  background-image: url(${mainSlide});
@@ -51,16 +51,16 @@ const Wrapper = styled(ContentBox)`
 `;
 
 class ModifyMakerContainer extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.GetExpertMakerDetailRequest(this.props.id);
     //this.props.GetTopItemListRequest(0);
   }
   render() {
-    console.log("ModifyMakerContainer=====",this.props);
+    console.log("ModifyMakerContainer=====", this.props);
     return (
       <React.Fragment>
         <Wrapper>
-          <ModifyMaker {...this.props}/>
+          <ModifyMaker {...this.props} />
         </Wrapper>
       </React.Fragment>
     );

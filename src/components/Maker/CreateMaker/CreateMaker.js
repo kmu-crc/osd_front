@@ -372,15 +372,16 @@ class CreateMaker extends Component {
       .then(res => {
         console.log("res", res);
         const result = res;
+
         if (result.success) {
-          alert("정보가 수정되었습니다.");
+          // alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
-          window.location.href = "/designer";
+          // window.location.href = "/designer";
         } else {
-          alert("다시 시도해주세요");
-          this.setState({
-            loading: false
-          });
+          // alert("다시 시도해주세요");
+          // this.setState({
+          // loading: false
+          // });
         }
       })
       .catch(e => {
@@ -391,7 +392,7 @@ class CreateMaker extends Component {
         });
       });
 
-    window.location.href = "/myPage"
+    // window.location.href = "/myPage"
   }
 
   render() {

@@ -319,7 +319,7 @@ export class LocalGridEditor extends Component {
 
                 {/* alsdkjfaslkj */}
                 <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
-                    <GridEditorWrapper ref={this.grid} editorWidth={window.innerWidth}>
+                    <GridEditorWrapper editorWidth={window.innerWidth} ref={this.grid}>
                         <div className="Editor" ref={this.temp}>
                             {/* ------------ 단계 ------------*/}
                             {steps && steps.length > 0 ?
