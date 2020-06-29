@@ -252,17 +252,17 @@ class CreateMaker extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
-    this.setState({
-      thumbnail: noimg,
-      thumbnail_name: "sh",
-      category_level1: -1,
-      category_level2: -1,
-      explain: "블롸블라",
-      tag: ["가", "나", "다"],
-      equipment: ["장비1", "장비2", "장비3",],
-      technique: ["기술1", "기술2", "기술3",],
-      career: [{ number: 0, task: "테스트업무", explain: "테스트업무입니다", during: "1999~2001" }],
-    })
+    // this.setState({
+    //   thumbnail: noimg,
+    //   thumbnail_name: "sh",
+    //   category_level1: -1,
+    //   category_level2: -1,
+    //   explain: "블롸블라",
+    //   tag: ["가", "나", "다"],
+    //   equipment: ["장비1", "장비2", "장비3",],
+    //   technique: ["기술1", "기술2", "기술3",],
+    //   career: [{ number: 0, task: "테스트업무", explain: "테스트업무입니다", during: "1999~2001" }],
+    // })
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
