@@ -373,7 +373,8 @@ class CreateMaker extends Component {
         console.log("res", res);
         const result = res;
 
-        if (result.success) {
+        if (res.res.success) {
+          alert("!");
           // alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
           // window.location.href = "/designer";
